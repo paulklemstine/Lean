@@ -1,445 +1,281 @@
 #!/usr/bin/env python3
 """
-Tropical BSD Machine — Algorithms
+Algorithms for Tropical BSD Computation
 
-Implements the core algorithms underlying the tropical BSD framework:
-- Tropical L-series evaluation (min-plus envelope)
-- Tropical vanishing order computation
-- Tropical permanent (assignment problem)
-- BSD data construction and verification
-- Newton polygon extraction
+Implements the core algorithms for computing tropical arithmetic invariants:
+- Tropical L-series evaluation
+- Active set computation
+- Tropical order of vanishing
+- Tropical permanent (regulator)
+- Tropical residue decomposition
+- Tropical rank via independence testing
 
-All algorithms include complexity analysis and type hints.
+All algorithms operate on finite data and are fully computable.
 """
 
 import numpy as np
 from itertools import permutations
-from typing import Dict, List, Tuple, Optional, FrozenSet
-from dataclasses import dataclass
+from typing import List, Set, Dict, Tuple, Optional
 
 
-# ─────────────────────────────────────────────
-# Algorithm 1: Powerset Generation
-# ─────────────────────────────────────────────
+class TropicalLData:
+    """A tropical L-datum: coefficients and weights on a finite support."""
 
-def powerset(n: int) -> List[FrozenSet[int]]:
+    def __init__(self, support: List[int], a: Dict[int, float], w: Dict[int, float]):
+        """
+        Args:
+            support: Finite set of indices
+            a: Coefficient function a(n) for n in support
+            w: Weight function w(n) for n in support
+        """
+        self.support = support
+        self.a = a
+        self.w = w
+
+    def evaluate(self, s: float) -> float:
+        """
+        Evaluate the tropical L-series at parameter s.
+
+        L_trop(s) = inf_{n in S} (a(n) + s * w(n))
+
+        Time complexity: O(|S|)
+        Space complexity: O(1)
+        """
+        return min(self.a[n] + s * self.w[n] for n in self.support)
+
+    def active_set(self, s: float) -> Set[int]:
+        """
+        Compute the active set at parameter s.
+
+        ActiveSet(s) = {n in S : a(n) + s*w(n) = L_trop(s)}
+
+        Time complexity: O(|S|)
+        Space complexity: O(|S|)
+        """
+        min_val = self.evaluate(s)
+        return {n for n in self.support
+                if abs(self.a[n] + s * self.w[n] - min_val) < 1e-12}
+
+    def tropical_order_at_one(self) -> int:
+        """
+        Compute the tropical order of vanishing at s=1.
+
+        ord_trop(1) = |ActiveSet(1)| - 1
+
+        Time complexity: O(|S|)
+        Space complexity: O(|S|)
+        """
+        return len(self.active_set(1.0)) - 1
+
+    def breakpoints(self, s_range: Tuple[float, float] = (-5, 5),
+                    resolution: int = 10000) -> List[float]:
+        """
+        Find approximate breakpoints of the piecewise-linear L-series.
+
+        The tropical L-series is the lower envelope of affine functions,
+        so it is piecewise linear. Breakpoints occur where the active
+        set changes.
+
+        Time complexity: O(|S|^2 * log(|S|))
+        Space complexity: O(|S|^2)
+        """
+        breakpts = []
+        # For each pair of branches, find intersection
+        for i, n1 in enumerate(self.support):
+            for n2 in self.support[i+1:]:
+                dw = self.w[n1] - self.w[n2]
+                if abs(dw) > 1e-12:
+                    s_cross = (self.a[n2] - self.a[n1]) / dw
+                    if s_range[0] <= s_cross <= s_range[1]:
+                        breakpts.append(s_cross)
+        return sorted(set(breakpts))
+
+
+def tropical_permanent(M: np.ndarray) -> float:
     """
-    Generate all subsets of {0, ..., n-1}.
+    Compute the tropical permanent of an n×n matrix.
 
-    Time:  O(2^n)
-    Space: O(2^n · n)
+    tperm(M) = min_{σ ∈ S_n} Σ_i M[i][σ(i)]
 
-    Parameters
-    ----------
-    n : int
-        Size of the ground set.
+    This is the tropical analogue of the matrix permanent/determinant.
+    In the BSD context, it computes the tropical regulator.
 
-    Returns
-    -------
-    List[FrozenSet[int]]
-        All 2^n subsets, ordered by binary encoding.
+    Time complexity: O(n! * n)  — exact, exponential
+    Space complexity: O(n)
 
-    Example
-    -------
-    >>> powerset(2)
-    [frozenset(), frozenset({0}), frozenset({1}), frozenset({0, 1})]
-    """
-    result: List[FrozenSet[int]] = [frozenset()]
-    for i in range(n):
-        result = result + [s | {i} for s in result]
-    return result
-
-
-# ─────────────────────────────────────────────
-# Algorithm 2: Tropical L-Series Evaluation
-# ─────────────────────────────────────────────
-
-def evaluate_tropical_l_series(
-    n: int,
-    coefficients: Dict[FrozenSet[int], float],
-    t: float
-) -> Tuple[float, FrozenSet[int]]:
-    """
-    Evaluate the tropical L-series at parameter t and return the active piece.
-
-    L^trop(t) = min_{I ⊆ [n]} (|I| · t + c(I))
-
-    Time:  O(2^n)
-    Space: O(1) beyond input
-
-    Parameters
-    ----------
-    n : int
-        Rank parameter.
-    coefficients : Dict[FrozenSet[int], float]
-        Coefficient function c: 2^[n] → ℝ.
-    t : float
-        Evaluation point.
-
-    Returns
-    -------
-    Tuple[float, FrozenSet[int]]
-        (value, active_subset) where active_subset achieves the minimum.
-
-    Example
-    -------
-    >>> c = {frozenset(): 5, frozenset({0}): 0}
-    >>> evaluate_tropical_l_series(1, c, 1.0)
-    (1.0, frozenset({0}))
-    """
-    best_val = float('inf')
-    best_set = frozenset()
-
-    for I in powerset(n):
-        val = len(I) * t + coefficients[I]
-        if val < best_val:
-            best_val = val
-            best_set = I
-
-    return best_val, best_set
-
-
-# ─────────────────────────────────────────────
-# Algorithm 3: Tropical Vanishing Order
-# ─────────────────────────────────────────────
-
-def compute_vanishing_order(
-    n: int,
-    coefficients: Dict[FrozenSet[int], float],
-    tol: float = 1e-12
-) -> Tuple[int, List[FrozenSet[int]]]:
-    """
-    Compute the tropical vanishing order at t=0.
-
-    Pseudocode:
-        1. Compute min_val = min_{I} c(I)
-        2. Find minimizers = {I : c(I) = min_val}
-        3. Return min{|I| : I ∈ minimizers}
-
-    Time:  O(2^n)
-    Space: O(2^n) for minimizer list
-
-    Parameters
-    ----------
-    n : int
-        Rank parameter.
-    coefficients : Dict[FrozenSet[int], float]
-        Coefficient function.
-    tol : float
-        Tolerance for floating-point comparison.
-
-    Returns
-    -------
-    Tuple[int, List[FrozenSet[int]]]
-        (vanishing_order, minimizers)
-    """
-    ps = powerset(n)
-    min_val = min(coefficients[I] for I in ps)
-
-    minimizers = [I for I in ps if abs(coefficients[I] - min_val) < tol]
-    vanishing_order = min(len(I) for I in minimizers)
-
-    return vanishing_order, minimizers
-
-
-# ─────────────────────────────────────────────
-# Algorithm 4: Tropical Permanent (Hungarian-style)
-# ─────────────────────────────────────────────
-
-def tropical_permanent_brute(M: np.ndarray) -> Tuple[float, List[int]]:
-    """
-    Compute the tropical permanent by brute-force enumeration.
-
-    trop_perm(M) = min_{σ ∈ S_n} Σ_i M[i, σ(i)]
-
-    Time:  O(n! · n)
-    Space: O(n)
-
-    For production use with n > 10, use the Hungarian algorithm (O(n³)).
-
-    Parameters
-    ----------
-    M : np.ndarray
-        n×n real matrix.
-
-    Returns
-    -------
-    Tuple[float, List[int]]
-        (permanent_value, optimal_permutation)
-    """
-    n = M.shape[0]
-    if n == 0:
-        return 0.0, []
-
-    best_val = float('inf')
-    best_perm = list(range(n))
-
-    for perm in permutations(range(n)):
-        val = sum(M[i, perm[i]] for i in range(n))
-        if val < best_val:
-            best_val = val
-            best_perm = list(perm)
-
-    return best_val, best_perm
-
-
-def tropical_permanent_hungarian(M: np.ndarray) -> float:
-    """
-    Compute tropical permanent using a simplified Hungarian algorithm.
-
-    Time:  O(n³)
-    Space: O(n²)
-
-    This solves the linear assignment problem: minimize Σ M[i,σ(i)].
-
-    Parameters
-    ----------
-    M : np.ndarray
-        n×n cost matrix.
-
-    Returns
-    -------
-    float
-        Tropical permanent value.
+    For large n, use the Hungarian algorithm (O(n^3)) instead.
     """
     n = M.shape[0]
     if n == 0:
         return 0.0
 
-    # For small n, brute force is fine
-    if n <= 8:
-        return tropical_permanent_brute(M)[0]
+    indices = list(range(n))
+    min_val = float('inf')
+    min_perm = None
 
-    # Simplified Hungarian: reduce rows and columns
-    cost = M.copy()
+    for perm in permutations(indices):
+        val = sum(M[i][perm[i]] for i in indices)
+        if val < min_val:
+            min_val = val
+            min_perm = perm
 
-    # Row reduction
-    for i in range(n):
-        cost[i] -= cost[i].min()
-
-    # Column reduction
-    for j in range(n):
-        cost[:, j] -= cost[:, j].min()
-
-    # Greedy assignment (heuristic for large n)
-    used_cols = set()
-    total = 0.0
-    assignment = [-1] * n
-
-    for i in range(n):
-        best_j = -1
-        best_val = float('inf')
-        for j in range(n):
-            if j not in used_cols and cost[i, j] < best_val:
-                best_val = cost[i, j]
-                best_j = j
-        if best_j >= 0:
-            assignment[i] = best_j
-            used_cols.add(best_j)
-            total += M[i, best_j]
-
-    return total
+    return min_val
 
 
-# ─────────────────────────────────────────────
-# Algorithm 5: BSD Data Package
-# ─────────────────────────────────────────────
-
-@dataclass
-class TropicalBSDData:
+def tropical_permanent_hungarian(M: np.ndarray) -> float:
     """
-    Complete tropical BSD data package.
+    Compute the tropical permanent using the Hungarian algorithm.
 
-    Attributes
-    ----------
-    n : int
-        Rank parameter (tropical MW rank).
-    coefficients : Dict[FrozenSet[int], float]
-        Coefficient function for the L-series.
+    Time complexity: O(n^3)
+    Space complexity: O(n^2)
+
+    This is the efficient version for large matrices.
     """
-    n: int
-    coefficients: Dict[FrozenSet[int], float]
-
-    @property
-    def trop_rank(self) -> int:
-        """Tropical algebraic rank = n."""
-        return self.n
-
-    @property
-    def trop_ord(self) -> int:
-        """Tropical analytic rank (vanishing order)."""
-        return compute_vanishing_order(self.n, self.coefficients)[0]
-
-    @property
-    def is_generic(self) -> bool:
-        """Check if data satisfies the genericity condition."""
-        _, minimizers = compute_vanishing_order(self.n, self.coefficients)
-        full = frozenset(range(self.n))
-        return len(minimizers) == 1 and minimizers[0] == full
-
-    def verify_inequality(self) -> bool:
-        """Verify BSD inequality: trop_ord ≤ trop_rank."""
-        return self.trop_ord <= self.trop_rank
-
-    def verify_equality(self) -> bool:
-        """Check BSD equality (should hold iff generic)."""
-        return self.trop_ord == self.trop_rank
-
-    def l_series(self, t: float) -> float:
-        """Evaluate the tropical L-series."""
-        return evaluate_tropical_l_series(
-            self.n, self.coefficients, t)[0]
+    try:
+        from scipy.optimize import linear_sum_assignment
+        row_ind, col_ind = linear_sum_assignment(M)
+        return M[row_ind, col_ind].sum()
+    except ImportError:
+        return tropical_permanent(M)
 
 
-def construct_generic_bsd_data(
-    n: int,
-    penalty: float = 1.0
-) -> TropicalBSDData:
+def tropical_tamagawa(c: np.ndarray) -> float:
     """
-    Construct generic BSD data where univ is the unique minimizer.
+    Compute the tropical Tamagawa product (additive form).
 
-    c(univ) = 0, c(I) = (n - |I|) · penalty for I ≠ univ.
+    TropTam(c) = Σ_i c[i]
 
-    Time: O(2^n)
-
-    Parameters
-    ----------
-    n : int
-        Rank parameter.
-    penalty : float
-        Gap between rank levels.
-
-    Returns
-    -------
-    TropicalBSDData
-        Generic data satisfying BSD equality.
+    Time complexity: O(n)
+    Space complexity: O(1)
     """
-    full = frozenset(range(n))
-    c = {}
-    for I in powerset(n):
-        if I == full:
-            c[I] = 0.0
-        else:
-            c[I] = (n - len(I)) * penalty
-    return TropicalBSDData(n=n, coefficients=c)
+    return float(np.sum(c))
 
 
-def construct_residue_data(
-    n: int,
-    M: np.ndarray,
-    primes: List[int],
-    tau: Dict[int, float]
-) -> TropicalBSDData:
+def tropical_residue(R: np.ndarray, c: np.ndarray) -> float:
     """
-    Construct BSD data from regulator matrix and Tamagawa numbers.
+    Compute the tropical residue.
 
-    Time: O(n! · n + 2^n) for the permanent computation.
+    TropRes(R, c) = TropReg(R) + TropTam(c)
 
-    Parameters
-    ----------
-    n : int
-        Rank.
-    M : np.ndarray
-        Regulator matrix.
-    primes : List[int]
-        Bad reduction primes.
-    tau : Dict[int, float]
-        Tamagawa numbers.
-
-    Returns
-    -------
-    TropicalBSDData
+    Time complexity: O(n! * n) or O(n^3) with Hungarian
+    Space complexity: O(n^2)
     """
-    reg = tropical_permanent_brute(M)[0]
-    tam = sum(tau.get(p, 0) for p in primes)
-    base = reg + tam
-
-    c = {}
-    full = frozenset(range(n))
-    for I in powerset(n):
-        if len(I) == n:
-            c[I] = base
-        else:
-            c[I] = len(I) + base + 1
-    return TropicalBSDData(n=n, coefficients=c)
+    return tropical_permanent(R) + tropical_tamagawa(c)
 
 
-# ─────────────────────────────────────────────
-# Algorithm 6: Newton Polygon Extraction
-# ─────────────────────────────────────────────
-
-def compute_newton_polygon(
-    n: int,
-    coefficients: Dict[FrozenSet[int], float],
-    t_range: Tuple[float, float] = (-5.0, 5.0),
-    num_points: int = 1000
-) -> List[Tuple[float, float, int]]:
+def is_tropically_independent(gens: np.ndarray) -> bool:
     """
-    Extract the Newton polygon of the tropical L-series.
+    Test whether a family of valuation profiles is tropically independent.
 
-    The Newton polygon encodes the breakpoints where the active affine piece
-    changes. Each segment has a slope = cardinality of the active subset.
+    Two profiles v1, v2 are tropically equivalent if v1 - v2 = constant.
+    A family is independent if no two members are equivalent.
 
-    Time:  O(2^n · num_points)
-    Space: O(num_points)
+    Args:
+        gens: (m, k) array where gens[i] is the i-th valuation profile
 
-    Parameters
-    ----------
-    n : int
-        Rank parameter.
-    coefficients : Dict[FrozenSet[int], float]
-        Coefficient function.
-    t_range : Tuple[float, float]
-        Range of t values.
-    num_points : int
-        Number of sample points.
-
-    Returns
-    -------
-    List[Tuple[float, float, int]]
-        List of (t_break, value, slope_after) for each breakpoint.
+    Time complexity: O(m^2 * k)
+    Space complexity: O(m * k)
     """
-    t_vals = np.linspace(t_range[0], t_range[1], num_points)
-    breakpoints = []
-
-    prev_active = None
-    for t in t_vals:
-        val, active = evaluate_tropical_l_series(n, coefficients, t)
-        if active != prev_active:
-            breakpoints.append((float(t), float(val), len(active)))
-            prev_active = active
-
-    return breakpoints
+    m, k = gens.shape
+    for i in range(m):
+        for j in range(i + 1, m):
+            diff = gens[i] - gens[j]
+            if np.allclose(diff, diff[0]):
+                return False
+    return True
 
 
-# ─────────────────────────────────────────────
-# Usage Examples
-# ─────────────────────────────────────────────
+def tropical_rank(gens: np.ndarray) -> int:
+    """
+    Compute the tropical rank of a family of valuation profiles.
+
+    Returns the size of a maximal tropically independent subfamily.
+
+    Args:
+        gens: (m, k) array where gens[i] is the i-th valuation profile
+
+    Time complexity: O(m^2 * k) for greedy extraction
+    Space complexity: O(m * k)
+    """
+    m, k = gens.shape
+    independent = []
+
+    for i in range(m):
+        candidate = list(independent) + [i]
+        sub = gens[candidate]
+        if is_tropically_independent(sub):
+            independent.append(i)
+
+    return len(independent)
+
+
+def verify_tropical_bsd(gens: np.ndarray, L_data: TropicalLData) -> dict:
+    """
+    Verify the tropical BSD equality for given data.
+
+    Returns a dictionary with:
+    - tropical_order: the tropical order of vanishing at s=1
+    - tropical_rank: the tropical rank of generators
+    - equality_holds: whether order == rank
+    - active_set: the active set at s=1
+    """
+    order = L_data.tropical_order_at_one()
+    rank = tropical_rank(gens)
+
+    return {
+        'tropical_order': order,
+        'tropical_rank': rank,
+        'equality_holds': order == rank,
+        'active_set': L_data.active_set(1.0),
+        'active_set_size': len(L_data.active_set(1.0)),
+    }
+
+
+# ═══════════════════════════════════════════════════════════════
+# Example Usage
+# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    print("Tropical BSD Algorithms — Examples\n")
+    print("Tropical BSD Algorithms — Example Computations")
+    print("=" * 60)
 
-    # Example 1: Generic BSD data
-    data = construct_generic_bsd_data(3)
-    print(f"Generic BSD data (n=3):")
-    print(f"  Rank: {data.trop_rank}")
-    print(f"  Vanishing order: {data.trop_ord}")
-    print(f"  Generic: {data.is_generic}")
-    print(f"  Inequality holds: {data.verify_inequality()}")
-    print(f"  Equality holds: {data.verify_equality()}")
+    # Example: Rank-2 with compatible L-data
+    gens = np.array([
+        [1.0, 0.0, 2.0],  # generator 1
+        [0.0, 2.0, 1.0],  # generator 2
+    ])
+
+    L_data = TropicalLData(
+        support=[0, 1, 2],
+        a={0: 1.0, 1: 1.0, 2: 1.0},
+        w={0: 0.0, 1: 0.0, 2: 0.0}
+    )
+
+    result = verify_tropical_bsd(gens, L_data)
+
+    print(f"  Generators: {gens.tolist()}")
+    print(f"  Tropically independent: {is_tropically_independent(gens)}")
+    print(f"  Tropical rank: {result['tropical_rank']}")
+    print(f"  Tropical order: {result['tropical_order']}")
+    print(f"  Active set: {result['active_set']}")
+    print(f"  BSD equality holds: {result['equality_holds']}")
+
     print()
 
-    # Example 2: Tropical permanent
-    M = np.array([[1, 5, 9], [2, 4, 8], [3, 6, 7]], dtype=float)
-    perm_val, perm = tropical_permanent_brute(M)
-    print(f"Tropical permanent of M:")
-    print(f"  Value: {perm_val}")
-    print(f"  Optimal permutation: {perm}")
-    print()
+    # Example: Residue decomposition
+    R = np.array([[2.0, 5.0, 3.0],
+                  [4.0, 1.0, 6.0],
+                  [3.0, 7.0, 2.0]])
+    c = np.array([0.5, 0.3, 0.2])
 
-    # Example 3: Newton polygon
-    data = construct_generic_bsd_data(2, penalty=2.0)
-    breakpoints = compute_newton_polygon(2, data.coefficients)
-    print(f"Newton polygon breakpoints (n=2):")
-    for t, v, s in breakpoints:
-        print(f"  t = {t:.2f}, value = {v:.2f}, slope = {s}")
+    reg = tropical_permanent(R)
+    tam = tropical_tamagawa(c)
+    res = tropical_residue(R, c)
+
+    print(f"  Regulator matrix:\n{R}")
+    print(f"  Tamagawa data: {c}")
+    print(f"  Tropical regulator: {reg}")
+    print(f"  Tropical Tamagawa: {tam}")
+    print(f"  Tropical residue: {res}")
+    print(f"  Decomposition: {reg} + {tam} = {res}")
+    print(f"  Verified: {abs(res - reg - tam) < 1e-12}")
