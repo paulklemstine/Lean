@@ -159,22 +159,6 @@
     "timestamp": "2026-05-14T16:03:53.873971+00:00"
   },
   {
-    "id": "seed_005",
-    "title": "Navier-Stokes Regularity via Tropical Diffusion Operators",
-    "description": "Prove that tropical diffusion operators on min-plus function spaces satisfy maximum principles that prevent finite-time blowup of classical solutions, yielding a new regularity criterion for Navier-Stokes. Show that the idempotent energy dissipation rate bounds the vorticity growth, and that tropical viscosity provides a constructive barrier to singularity formation.",
-    "domains": [
-      "Physics",
-      "Tropical",
-      "EML"
-    ],
-    "priority_score": 0.93,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "181d8ba6",
-    "timestamp": "2026-05-14T16:03:53.811765+00:00"
-  },
-  {
     "id": "seed_060",
     "title": "Holographic Proof Renormalization: Ultrametric Compression of Formal Derivations",
     "description": "Develop an ultrametric theory of proof compression where the p-adic valuation of a derivation measures its local complexity, and prove that renormalization group flow on proof spaces converges to fixed points representing minimal proofs. Show that the tropical ultrametric distance between two proofs bounds their semantic distance, and that holographic renormalization yields a decidable approximation to theoremhood.",
@@ -806,10 +790,10 @@
       "Physics"
     ],
     "priority_score": 0.79,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d901ed3",
     "timestamp": "2026-05-14T16:03:53.837322+00:00"
   },
   {
@@ -1759,39 +1743,6 @@
     "timestamp": "2026-05-14T23:49:05.160972+00:00"
   },
   {
-    "id": "fd_0202",
-    "title": "Structural argument:",
-    "description": "Prove that every chord in the corpus is reachable from a fixed \"hub\" chord (e.g., C major in root position) with bounded cost. Then the diameter is at most twice the maximum hub distance. This requires enumerating the corpus and checking reachability.\n\n### Cross-Domain Connection\n\nThis connects to **graph theory** and **network science**. The chord graph is a small-world network (short diameter despite sparse local connectivity), and its structure encodes the navigability of harmonic space. Diameter bounds have applications in algorithmic composition (bounding the length of optimal harmonic paths) and music information retrieval (clustering chord vocabularies).\n\n---\n\n## Direction 5: Tropical Harmonic Composition Law\n\n### Theorem Target\n\n```lean\n-- Define a tropical semiring of chord progre",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "00fcfe9a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:49:05.168031+00:00"
-  },
-  {
-    "id": "fd_0204",
-    "title": "Min-plus matrix formulation:",
-    "description": "Represent the chord space as vertices of a weighted graph and define the tropical matrix product M₁ ⊗ M₂ where (M₁ ⊗ M₂)(i,j) = min_k (M₁(i,k) + M₂(k,j)). Prove that this product is associative (tropical matrix multiplication is associative in the min-plus semiring) and connects to multi-step progression costs.\n\n### Cross-Domain Connection\n\nThis extends `tropPath_cost_compose_bound` from the existing tropical HoTT module to the voice-leading setting. The tropical semiring structure on progression costs connects to:\n- **Tropical geometry:** algebraic geometry over the min-plus semifield\n- **Dynamic programming:** the Bellman equation for shortest paths is tropical matrix multiplication\n- **Formal language theory:** tropical semirings appear in weighted automata and the Viterbi algorithm\n\nTh",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "00fcfe9a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:49:05.182783+00:00"
-  },
-  {
     "id": "fd_0207",
     "title": "Direction 5",
     "description": "(tropical composition) — novel cross-domain bridge",
@@ -1997,34 +1948,6 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.221426+00:00"
-  },
-  {
-    "id": "fd_0202",
-    "title": "Certified computation",
-    "description": ": All results should be machine-verified, maintaining the standard set by the initial formalization.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.228185+00:00"
-  },
-  {
-    "id": "fd_0204",
-    "title": "Applications",
-    "description": ": Each theoretical advance should come with computational implementations and real-world case studies.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.241670+00:00"
   },
   {
     "id": "fd_0205",
@@ -2493,5 +2416,95 @@
     "source_exp_id": "ad615ded",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:34:54.003639+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "1. Continuous-Time Tropical Comparison Principle",
+    "description": "**Goal.** Formalize a differential-inequality version of the tropical barrier\ntheorem using continuous trajectories `ω : ℝ → (ι → ℝ)` and prove Grönwall-style\ntropical barrier estimates.\n\n**Hypothesis.** If `d/dt ω(t)(i) ≤ T_K(ω(t))(i) - ω(t)(i) + c(t)` with `c(t) ≤ 0`,\nthen `fmax(ω(t)) ≤ exp(-t) · fmax(ω(0))`.\n\n**Proof Strategy.**\n- Define piecewise-linear or step-function approximations of continuous trajectories.\n- Show that the discrete barrier theorem applies to each time step as the step size tends to zero.\n- Use Mathlib's `GronwallBound` or build a tropical variant of Grönwall's inequality.\n- Alternatively, use the monotone operator framework: define the tropical semigroup\n  `S(t) = lim_{n→∞} (Id + (t/n)·(T_K - Id))^n` and prove contraction.\n\n**Cross-Domain Connections.**\n- Hamilton",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "181d8ba6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:07:21.661696+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "2. Graph Navier–Stokes Vorticity Theorem",
+    "description": "**Goal.** Define a discrete incompressible flow on a weighted graph and prove that\ntropical viscosity prevents sup-norm vorticity blowup.\n\n**Hypothesis.** For a graph Laplacian `Δ` on `(V, E)` with edge weights, define\ndiscrete vorticity `ω_n = curl(v_n)` where `v_n` is a discrete velocity field\nsatisfying an incompressibility constraint (divergence-free). If the vorticity\nupdate satisfies `ω_{n+1}(i) ≤ min(ω_n(i), T_K(ω_n)(i))` where `K` encodes\nthe graph metric, then `sup_i |ω_n(i)|` is uniformly bounded.\n\n**Proof Strategy.**\n- Define discrete exterior calculus on finite graphs (0-forms = node functions,\n  1-forms = edge functions, 2-forms = face functions).\n- Define discrete curl and divergence operators.\n- Show that the Biot–Savart law on graphs yields velocity fields whose\n  self-adve",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "181d8ba6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:07:21.669955+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "3. Hamilton–Jacobi / Fluid Duality",
+    "description": "**Goal.** Prove that the tropical diffusion barriers correspond exactly to\nLax–Oleinik semigroup contraction on weighted graphs, establishing a formal\nduality between viscosity solutions and fluid regularity.\n\n**Hypothesis.** The tropical diffusion operator `T_K` is the one-step\nLax–Oleinik operator for a discrete Hamilton–Jacobi equation\n`u_{n+1}(i) = inf_j (u_n(j) + K(i,j))`. The barrier theorem then states\nthat solutions of this HJ equation cannot develop shocks (discontinuities\nin gradient) beyond the initial oscillation.\n\n**Proof Strategy.**\n- Define the discrete Hamilton–Jacobi equation on weighted graphs.\n- Show that `T_K^n` computes shortest-path distances in the `K`-weighted graph.\n- Prove that the Lax–Oleinik semigroup is a contraction in the sup norm\n  (already implied by our os",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "181d8ba6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:07:21.678568+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "4. Tropical Energy–Entropy Theorem",
+    "description": "**Goal.** Define idempotent entropy for min-plus distributions and prove\ndissipation monotonicity under barrier updates, connecting to tropical\nLandauer principles and thermodynamic irreversibility.\n\n**Hypothesis.** Define tropical entropy as\n`S(u) = -fmin(u)` (negative of the ground state energy in the min-plus setting).\nUnder dissipative updates with `c ≤ 0`, entropy is nondecreasing:\n`S(Φ(u)) ≥ S(u)`. This is the tropical second law of thermodynamics.\n\nMore ambitiously, define tropical relative entropy\n`D(u ‖ v) = sup_i (u(i) - v(i)) - inf_i (u(i) - v(i))`\nand prove contraction: `D(T_K(u) ‖ T_K(v)) ≤ D(u ‖ v)`.\n\n**Proof Strategy.**\n- The entropy nondecreasing result follows directly from the minimum preservation\n  theorem: `fmin(Φ(u)) ≤ fmin(u)` and `c ≤ 0` implies the minimum decreases",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "181d8ba6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:07:21.688174+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "5. Certified Stability for Tropical Neural ODEs",
+    "description": "**Goal.** Transfer the barrier theorem to min-plus recurrent neural network\ndynamics, giving provable no-explosion guarantees for tropical neural flows.\n\n**Hypothesis.** A tropical recurrent neural network evolves by\n`h_{n+1}(i) = min_j (W(i,j) + h_n(j))` where `W` is a weight matrix with\nnonneg entries. If `W(i,i) = 0`, the hidden state magnitude is nonincreasing.\nWith a contraction factor `λ < 1` (analogous to weight decay), the hidden\nstate decays exponentially.\n\n**Proof Strategy.**\n- Observe that the tropical RNN update is exactly `T_W(h_n)`.\n- Apply the barrier theorem directly: `fmax(h_n) ≤ λ^n · fmax(h_0)`.\n- For training stability, show that gradient-like updates preserve the\n  barrier structure when weight perturbations maintain `W ≥ 0` and `W(i,i) = 0`.\n- Extend to tropical atten",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "181d8ba6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:07:21.695979+00:00"
   }
 ]
