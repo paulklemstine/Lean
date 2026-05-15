@@ -1328,20 +1328,6 @@
     "timestamp": "2026-05-14T23:59:16.148110+00:00"
   },
   {
-    "id": "fd_0197",
-    "title": "Eigenvector perturbation",
-    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "c65fa1b5",
-    "timestamp": "2026-05-14T23:59:16.192013+00:00"
-  },
-  {
     "id": "fd_0187",
     "title": "Generalized inductive hypothesis",
     "description": ": Prove that for every formula φ with free variables, the function `(annotated_word) ↦ φ.evalWith(decode(annotated_word))` is tropically recognizable over the extended alphabet.",
@@ -1604,6 +1590,91 @@
     "source_exp_id": "a0c6f9fb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:24:26.577448+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Formalize definitions",
+    "description": "(1–2 days): Write all type signatures and definitions with `sorry` proofs.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c65fa1b5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:33:53.999729+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Verify skeleton",
+    "description": "(1 day): Ensure the overall structure compiles.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c65fa1b5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:33:54.007259+00:00"
+  },
+  {
+    "id": "fd_0204",
+    "title": "Prove lemmas bottom-up",
+    "description": "(3–7 days): Start with the simplest supporting lemmas and work toward the main theorem.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c65fa1b5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:33:54.013795+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Computational validation",
+    "description": "(1 day): Write Python scripts verifying the theorem computationally on concrete examples.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c65fa1b5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:33:54.020964+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "Documentation",
+    "description": "(1 day): Write detailed docstrings explaining the mathematical significance.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c65fa1b5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:33:54.027482+00:00"
+  },
+  {
+    "id": "fd_0207",
+    "title": "Integration",
+    "description": "(1 day): Connect to the existing tropical path algebra infrastructure.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c65fa1b5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T04:33:54.034482+00:00"
   },
   {
     "id": "seed_078",
