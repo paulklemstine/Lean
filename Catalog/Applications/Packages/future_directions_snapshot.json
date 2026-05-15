@@ -409,10 +409,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5d0ee4d",
     "timestamp": "2026-05-14T16:16:22.727172+00:00"
   },
   {
@@ -1889,5 +1889,121 @@
     "source_exp_id": "0e91ddc3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:20:42.798281+00:00"
+  },
+  {
+    "id": "fd_0216",
+    "title": "1. Tropical Channel Capacity",
+    "description": "**Goal:** Define a finite capacity-like invariant as the supremum of TMI over admissible encodings, and prove a first upper bound.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c133a545",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:29:13.506145+00:00"
+  },
+  {
+    "id": "fd_0217",
+    "title": "Target Theorem",
+    "description": "```lean\ntheorem tropicalCapacity_upper_bound {n : ℕ} {Y : Type} [Fintype Y] [Nonempty Y]\n    (K : Fin n → Y → ℝ) :\n    tropicalMutualInformation K ≤\n      2 * (Finset.univ.sup' Finset.univ_nonempty (fun x =>\n        Finset.univ.sup' Finset.univ_nonempty (fun y => K x y)) -\n      Finset.univ.sup' Finset.univ_nonempty (fun x =>\n        Finset.univ.inf' Finset.univ_nonempty (fun y => K x y)))\n```",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c133a545",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:29:13.515535+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "Significance",
+    "description": "This establishes TMI as a monotone invariant of the tropical Blackwell order, the natural preorder on statistical experiments in the max-plus world. It opens the door to tropical statistical decision theory: a channel is \"more informative\" precisely when it preserves more distinguishability.\n\n---",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c133a545",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:29:13.529355+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "4. Learning-Theoretic Compression Theorem",
+    "description": "**Goal:** Formalize tropical representation maps and prove information contraction under compression layers in max-plus neural networks.",
+    "domains": [
+      "Tropical",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c133a545",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:29:13.538136+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "Target Theorem (Tensor Equality)",
+    "description": "```lean\ntheorem tropical_mutual_information_tensor_eq\n    {X₁ Y₁ X₂ Y₂ : Type}\n    [Fintype X₁] [Nonempty X₁] [Fintype Y₁] [Nonempty Y₁]\n    [Fintype X₂] [Nonempty X₂] [Fintype Y₂] [Nonempty Y₂]\n    (K₁ : X₁ → Y₁ → ℝ) (K₂ : X₂ → Y₂ → ℝ) :\n    tropicalMutualInformation (tensorChannel K₁ K₂) =\n      tropicalMutualInformation K₁ + tropicalMutualInformation K₂\n```",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c133a545",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:29:13.549732+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "Conjectured Theorem",
+    "description": "For convex `φ` with `φ(0) = 0`, the tropical f-divergence satisfies a data processing inequality under surjective post-processing, provided `φ` is monotone on `[0, ∞)`.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c133a545",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:29:13.561240+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "7. Tropical Markov Chains and Contraction Rates",
+    "description": "**Goal:** Define tropical Markov chains (iterated max-plus matrix multiplication) and prove geometric contraction of TMI under mixing conditions.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c133a545",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:29:13.569978+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Summary Priority",
+    "description": "| Priority | Direction | Difficulty | Impact |\n|----------|-----------|------------|--------|\n| 1 | Tensor equality (§5) | Low | Enables coding rates |\n| 2 | Blackwell order (§3) | Low | Decision theory bridge |\n| 3 | Spectral bound (§2) | Medium | Connects to Birkhoff theory |\n| 4 | Channel capacity (§1) | Medium | Coding theory foundation |\n| 5 | Compression theorem (§4) | Low | ML applications |\n| 6 | f-Divergences (§6) | High | Full divergence theory |\n| 7 | Markov contraction (§7) | High | Dynamical systems bridge |\n\nThe first five directions can be pursued immediately with the infrastructure established in this work. Directions 6 and 7 require additional mathematical development but would significantly expand the scope of tropical information theory.",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c133a545",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T15:29:13.582275+00:00"
   }
 ]

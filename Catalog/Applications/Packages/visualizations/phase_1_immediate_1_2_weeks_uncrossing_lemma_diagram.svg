@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300">
+  <style>
+    text { font-family: 'Georgia', serif; }
+    .title { font-size: 16px; font-weight: bold; fill: #333; }
+    .label { font-size: 14px; fill: #555; }
+    .cost { font-size: 13px; fill: #c00; font-weight: bold; }
+    .crossed { stroke: #e74c3c; stroke-width: 2.5; fill: none; }
+    .uncrossed { stroke: #27ae60; stroke-width: 2.5; fill: none; }
+    .point { fill: #2c3e50; }
+  </style>
+
+  <text x="300" y="25" text-anchor="middle" class="title">Uncrossing Lemma: Why Sorted Matching Wins</text>
+
+  <!-- Left: Crossed -->
+  <text x="150" y="55" text-anchor="middle" class="label">Crossed (costly)</text>
+  <circle cx="80" cy="100" r="6" class="point"/>
+  <circle cx="80" cy="200" r="6" class="point"/>
+  <circle cx="220" cy="120" r="6" class="point"/>
+  <circle cx="220" cy="220" r="6" class="point"/>
+  <text x="60" y="105" class="label">a</text>
+  <text x="60" y="205" class="label">b</text>
+  <text x="235" y="125" class="label">d</text>
+  <text x="235" y="225" class="label">c</text>
+  <line x1="80" y1="100" x2="220" y2="220" class="crossed"/>
+  <line x1="80" y1="200" x2="220" y2="120" class="crossed"/>
+  <text x="150" y="260" text-anchor="middle" class="cost">|a−d| + |b−c|</text>
+
+  <!-- Right: Uncrossed -->
+  <text x="450" y="55" text-anchor="middle" class="label">Uncrossed (optimal)</text>
+  <circle cx="380" cy="100" r="6" class="point"/>
+  <circle cx="380" cy="200" r="6" class="point"/>
+  <circle cx="520" cy="120" r="6" class="point"/>
+  <circle cx="520" cy="220" r="6" class="point"/>
+  <text x="360" y="105" class="label">a</text>
+  <text x="360" y="205" class="label">b</text>
+  <text x="535" y="125" class="label">c</text>
+  <text x="535" y="225" class="label">d</text>
+  <line x1="380" y1="100" x2="520" y2="120" class="uncrossed"/>
+  <line x1="380" y1="200" x2="520" y2="220" class="uncrossed"/>
+  <text x="450" y="260" text-anchor="middle" class="cost" style="fill: #27ae60;">|a−c| + |b−d| ≤</text>
+
+  <!-- Inequality arrow -->
+  <text x="300" y="170" text-anchor="middle" style="font-size: 24px; fill: #e74c3c;">≥</text>
+</svg>
