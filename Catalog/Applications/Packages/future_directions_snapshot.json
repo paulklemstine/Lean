@@ -264,10 +264,10 @@
       "Bridges"
     ],
     "priority_score": 0.86,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6558c42b",
     "timestamp": "2026-05-14T16:03:53.825917+00:00"
   },
   {
@@ -948,20 +948,6 @@
     "timestamp": "2026-05-15T12:05:00.975190+00:00"
   },
   {
-    "id": "fd_0210",
-    "title": "Walk surgery lemmas",
-    "description": ": Formalizing that optimal walks in nonneg-weight graphs use each wormhole at most once. This is needed for the perturbative comparison bound and extends to multi-wormhole settings.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3c1c085d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T13:04:21.841373+00:00"
-  },
-  {
     "id": "fd_0211",
     "title": "Tropical linear algebra",
     "description": ": The surgery operation as a rank-2 min-plus matrix update. This connects to tropical eigenvalue theory and spectral bounds.",
@@ -1049,22 +1035,6 @@
     "source_exp_id": "50208fa8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T13:04:44.664357+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "Geometric (long-term):",
-    "description": "Tropical varieties (#2), requiring significant tropical geometry infrastructure",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9cabdd3c",
-    "consumed_by_exp_id": "7d5cf911",
-    "timestamp": "2026-05-15T13:05:09.705505+00:00"
   },
   {
     "id": "fd_0224",
@@ -1868,23 +1838,6 @@
     "timestamp": "2026-05-15T09:07:29.342835+00:00"
   },
   {
-    "id": "fd_0210",
-    "title": "Direction 3: Categorical Composition Operators on Tropical Style Spaces",
-    "description": "**Hypothesis**: Musical transformations (transposition, inversion, retrograde, augmentation) form a category where morphisms are tropical-cost-preserving maps, and style classes are isomorphism classes under this category.\n\n**Proof Strategy**:\n1. Define the category **TropCP** whose objects are (cantus, melody) pairs equipped with their cost vectors (vertical, melodic, parallel) and whose morphisms are pitch-space maps that preserve or bound cost change.\n2. Prove that transposition by k semitones is an isomorphism in **TropCP** (cost is transposition-invariant by definition).\n3. Prove that inversion is a cost-preserving morphism when consonance is symmetric (which it is by the |k| symmetry).\n4. Define a functor from **TropCP** to the category of weighted graphs, sending each voice-leading ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7b109bab",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T09:19:36.838185+00:00"
-  },
-  {
     "id": "fd_0212",
     "title": "Direction 5: Mod-12 Pitch-Class Counterpoint and Interval-Class Geometry",
     "description": "**Hypothesis**: Working modulo 12 (pitch classes rather than absolute pitches) changes the optimization landscape qualitatively: the tropical cost becomes periodic, the DP lattice becomes a torus, and new symmetries enable faster algorithms and richer Pareto structure.\n\n**Proof Strategy**:\n1. Redefine Melody(n) = Fin(n+1) → ZMod 12.\n2. Redefine consonance on ZMod 12 (interval classes: {0,3,4,5,7,8,9} are consonant, where 5 = P4 is now included as an inversion of P5).\n3. Prove the zero-cost equivalence carries over to the mod-12 setting with the modified consonance table.\n4. Show that the DP state space reduces from P to 12, giving O(n · 144) = O(n) complexity.\n5. Prove that the mod-12 Pareto frontier has a different structure from the absolute-pitch version: with only 12 possible intervals",
@@ -1981,5 +1934,153 @@
     "source_exp_id": "7566736e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T14:03:59.224575+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "1. Closedness and Topological Properties of Tropical Hypersurfaces",
+    "description": "**Status**: ✅ Completed in this cycle (`isClosed_tropHypersurface`).\n\n**Next theorem targets**:\n\n```lean\n/-- The complement of a tropical hypersurface is open and dense\n    when the polynomial has at least two distinct monomials. -/\ntheorem isOpen_compl_tropHypersurface {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) :\n    IsOpen (TropHypersurface p hp)ᶜ\n\n/-- The tropical hypersurface has empty interior when the polynomial\n    has at least two monomials with distinct exponent vectors. -/\ntheorem interior_tropHypersurface_eq_empty {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty)\n    (hdist : ∃ m₁ ∈ p, ∃ m₂ ∈ p, m₁.exp ≠ m₂.exp) :\n    interior (TropHypersurface p hp) = ∅\n```\n\n**Proof strategy**: The complement is open directly from closedness. For empty interior, use t",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d5cf911",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:21:34.094249+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "2. Convex-Complement Theorem: Unique Maximizer Regions",
+    "description": "**Theorem statement**:\n\n```lean\n/-- A region of unique maximizer: the set where monomial m strictly\n    dominates all others. -/\ndef StrictDominanceRegion {n : ℕ} (p : Finset (TropMonomial n))\n    (m : TropMonomial n) : Set (Fin n → ℝ) :=\n  {x | m ∈ p ∧ ∀ m' ∈ p, m' ≠ m → m'.eval x < m.eval x}\n\n/-- The complement of the tropical hypersurface is the union of\n    strict dominance regions. -/\ntheorem compl_tropHypersurface_eq_iUnion_strictDominance {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) :\n    (TropHypersurface p hp)ᶜ =\n      ⋃ m ∈ p, StrictDominanceRegion p m\n\n/-- Each strict dominance region is convex. -/\ntheorem convex_strictDominanceRegion {n : ℕ}\n    (p : Finset (TropMonomial n)) (m : TropMonomial n) :\n    Convex ℝ (StrictDominanceRegion p m)\n\n/-- Each strict dominanc",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d5cf911",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:21:34.104744+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "3. Newton Polytope Bridge",
+    "description": "**Theorem statement**:\n\n```lean\n/-- The Newton polytope of a tropical polynomial is the convex hull\n    of its exponent vectors (cast to ℝ). -/\ndef NewtonPolytope {n : ℕ} (p : Finset (TropMonomial n)) : Set (Fin n → ℝ) :=\n  convexHull ℝ (p.image (fun m => (fun i => (m.exp i : ℝ))) : Set (Fin n → ℝ))\n\n/-- The tropical polynomial evaluation is the Legendre-Fenchel transform\n    of the indicator of the lifted Newton polytope. Specifically,\n    tropPolyEval p hp x = sup_{α ∈ exponents(p)} (c_α + ⟨α, x⟩). -/\ntheorem tropPolyEval_eq_support_function {n : ℕ}\n    (p : Finset (TropMonomial n)) (hp : p.Nonempty) (x : Fin n → ℝ) :\n    tropPolyEval p hp x = p.sup' hp (fun m => m.coeff + ∑ i, (m.exp i : ℝ) * x i)\n```\n\n**Proof strategy**: This is essentially by definition, connecting the tropical polyno",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d5cf911",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:21:34.116795+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "4. Tropical Line in Dimension 2: The Standard Tripod",
+    "description": "**Theorem statement**:\n\n```lean\n/-- A standard tropical line in ℝ² is defined by three monomials:\n    the constant term c₀, the x-term c₁ + x, and the y-term c₂ + y. -/\ndef standardTropLine (c₀ c₁ c₂ : ℝ) : Finset (TropMonomial 2) :=\n  {⟨c₀, ![0, 0]⟩, ⟨c₁, ![1, 0]⟩, ⟨c₂, ![0, 1]⟩}\n\n/-- The tropical line has exactly three rays emanating from a single vertex.\n    When c₀ = c₁ = c₂ = 0, the vertex is the origin and the three rays\n    point in directions (-1,0), (0,-1), and (1,1). -/\ntheorem tropLine_vertex {x y : ℝ} :\n    IsTropRoot (standardTropLine 0 0 0) ⟨by decide⟩ ![x, y] ↔\n    (x ≤ 0 ∧ y ≤ 0 ∧ x = y) ∨\n    (x ≤ 0 ∧ y ≤ x) ∨\n    (y ≤ 0 ∧ x ≤ y)\n```\n\n**Proof strategy**: Direct computation. The three monomials evaluate to `0`, `x`, and `y` respectively. The tropical root condition requires",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d5cf911",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:21:34.128191+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "5. Optimization Bridge: Nondifferentiability Locus",
+    "description": "**Theorem statement**:\n\n```lean\n/-- A max-affine function is a tropical polynomial where exponents\n    are interpreted as slope vectors. -/\ndef MaxAffineFunc (n k : ℕ) := Fin k → (Fin n → ℝ) × ℝ  -- (slope, intercept) pairs\n\n/-- The active set at a point: indices whose affine piece achieves the max. -/\ndef activeSet {n k : ℕ} (f : MaxAffineFunc n k) (x : Fin n → ℝ) : Finset (Fin k) :=\n  Finset.univ.filter (fun j => ∀ j', innerProduct (f j).1 x + (f j).2 ≤\n                                      innerProduct (f j').1 x + (f j').2 →\n                                      innerProduct (f j).1 x + (f j).2 =\n                                      innerProduct (f j').1 x + (f j').2)\n\n/-- The nondifferentiability locus of a max-affine function equals\n    the tropical hypersurface of the corresponding",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d5cf911",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:21:34.138758+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "A. Tropical Convexity",
+    "description": "Develop a theory of tropical convex sets (closed under tropical linear combinations `max(a + x, b + y)`). Prove that tropical convex hulls are polyhedral. Connect to the existing formalization via the observation that each PairCell is a tropical halfspace.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d5cf911",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:21:34.149189+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "B. Max-Plus Spectral Theory",
+    "description": "Formalize the max-plus eigenvalue problem: given a matrix `A : Fin n → Fin n → ℝ`, find `λ` and `v` with `max_j (A_{ij} + v_j) = λ + v_i`. Connect the eigenspace geometry to tropical hypersurfaces of the characteristic polynomial.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d5cf911",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:21:34.159478+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "C. Tropical Intersection Theory",
+    "description": "Define tropical intersection multiplicities via balancing conditions. Prove Bézout's theorem for tropical curves in the plane: two generic tropical curves of degrees `d₁` and `d₂` intersect in `d₁ · d₂` points (counted with multiplicity).",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d5cf911",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:21:34.169414+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "D. Certified Piecewise-Linearity",
+    "description": "Prove that every tropical hypersurface admits a finite polyhedral complex structure. This is the gateway to computational tropical geometry: algorithms for tropical Gröbner bases, tropical resultants, and tropical discriminants.\n\n---",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d5cf911",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T14:21:34.178972+00:00"
   }
 ]

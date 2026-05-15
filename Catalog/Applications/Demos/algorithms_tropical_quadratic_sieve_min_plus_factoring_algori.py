@@ -1,38 +1,42 @@
 #!/usr/bin/env python3
 """
-Tropical Quadratic Sieve: Algorithm Implementations
+Tropical Quadratic Sieve Shadow: Core Algorithms
 
-Implements the core algorithms from the research paper:
-1. Smooth cost computation
-2. Tropical sieve scoring
-3. Tropical matrix-vector multiplication
-4. Divisor tropical convolution
-5. Full tropical quadratic sieve relation collector
+Implements the algorithms described in the research paper:
+- Tropical score computation
+- Score defect analysis  
+- Min-plus matrix multiplication
+- Tropical sieve relation collection
 """
 
-from typing import Dict, Set, List, Tuple, Optional
 import math
+from collections import Counter
+from typing import List, Dict, Tuple, Optional
+import numpy as np
 
 
-# ============================================================
-# Core: Prime Factorization
-# ============================================================
+def sieve_of_eratosthenes(limit: int) -> List[int]:
+    """Return list of primes up to limit."""
+    if limit < 2:
+        return []
+    is_prime = [True] * (limit + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(limit**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, limit + 1, i):
+                is_prime[j] = False
+    return [i for i in range(2, limit + 1) if is_prime[i]]
+
 
 def factorize(n: int) -> Dict[int, int]:
     """
-    Compute the prime factorization of n.
-
-    Returns:
-        Dictionary mapping primes to their exponents.
-        Empty dict for n <= 1.
-
-    Example:
-        >>> factorize(360)
-        {2: 3, 3: 2, 5: 1}
+    Return prime factorization of n as {prime: exponent}.
+    
+    Time complexity: O(sqrt(n))
     """
     if n <= 1:
         return {}
-    factors: Dict[int, int] = {}
+    factors = {}
     d = 2
     while d * d <= n:
         while n % d == 0:
@@ -40,335 +44,316 @@ def factorize(n: int) -> Dict[int, int]:
             n //= d
         d += 1
     if n > 1:
-        factors[n] = factors.get(n, 0) + 1
+        factors[n] = 1
     return factors
 
 
-def primes_up_to(B: int) -> List[int]:
-    """Sieve of Eratosthenes returning primes up to B."""
-    if B < 2:
-        return []
-    sieve = [True] * (B + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(B**0.5) + 1):
-        if sieve[i]:
-            for j in range(i*i, B + 1, i):
-                sieve[j] = False
-    return [i for i in range(2, B + 1) if sieve[i]]
-
-
-# ============================================================
-# Algorithm 1: Smooth Cost Computation
-# ============================================================
-
-INF = float('inf')
-
-
-def smooth_cost(P: Set[int], n: int) -> float:
+def p_adic_valuation(n: int, p: int) -> int:
     """
-    Compute the tropical smoothness cost of n relative to factor base P.
+    Compute v_p(n), the p-adic valuation of n.
+    
+    Returns the largest k such that p^k divides n.
+    """
+    if n == 0 or p < 2:
+        return 0
+    v = 0
+    while n % p == 0:
+        v += 1
+        n //= p
+    return v
 
-    Algorithm: ComputeSmoothCost(P, n)
-    1. Compute F ← factorize(n)
-    2. cost ← 0
-    3. For each (p, e) in F:
-    4.     If p ∉ P: cost ← cost + e
-    5. Return cost
 
+class TropicalScorer:
+    """
+    Tropical score computation engine.
+    
+    Given a factor base P = {p_1, ..., p_k}, computes:
+    - tropicalScore(n) = sum_{p in P} v_p(n) * log(p)
+    - scoreDefect(n) = log(n) - tropicalScore(n)
+    
+    Theorem: scoreDefect(n) >= 0, with equality iff n is P-smooth.
+    
+    Complexity: O(k * log(n)) per score computation, where k = |P|.
+    """
+    
+    def __init__(self, factor_base: List[int]):
+        """
+        Initialize with a factor base of primes.
+        
+        Args:
+            factor_base: List of primes forming the factor base.
+        """
+        self.factor_base = sorted(set(factor_base))
+        self.log_primes = {p: math.log(p) for p in self.factor_base}
+    
+    def valuation_vector(self, n: int) -> List[int]:
+        """
+        Compute the valuation vector w_P(n) = (v_{p_1}(n), ..., v_{p_k}(n)).
+        
+        This is the tropical weight vector encoding all factor-base information.
+        """
+        return [p_adic_valuation(n, p) for p in self.factor_base]
+    
+    def tropical_score(self, n: int) -> float:
+        """
+        Compute tropicalScore_P(n) = sum_{p in P} v_p(n) * log(p).
+        
+        This equals log(prod_{p in P} p^{v_p(n)}) by Theorem A.
+        """
+        if n <= 0:
+            return float('-inf')
+        return sum(
+            p_adic_valuation(n, p) * self.log_primes[p]
+            for p in self.factor_base
+        )
+    
+    def score_defect(self, n: int) -> float:
+        """
+        Compute scoreDefect_P(n) = log(n) - tropicalScore_P(n).
+        
+        Theorem C.1: This is always >= 0.
+        Theorem C.2: This equals 0 iff n is P-smooth.
+        """
+        if n <= 0:
+            return float('inf')
+        return math.log(n) - self.tropical_score(n)
+    
+    def is_smooth(self, n: int) -> bool:
+        """Check if n is P-smooth (all prime factors in factor base)."""
+        return abs(self.score_defect(n)) < 1e-10
+    
+    def classify(self, n: int, large_prime_bound: Optional[int] = None) -> str:
+        """
+        Classify n by its tropical defect:
+        - "smooth": defect = 0, full relation
+        - "one-large-prime": defect = log(q) for some prime q ≤ bound
+        - "non-smooth": defect too large
+        """
+        sd = self.score_defect(n)
+        if sd < 1e-10:
+            return "smooth"
+        
+        if large_prime_bound is not None:
+            # Check if residual is a single prime
+            residual = n
+            for p in self.factor_base:
+                while residual % p == 0:
+                    residual //= p
+            if 1 < residual <= large_prime_bound and all(
+                residual % p != 0 for p in range(2, int(residual**0.5) + 1)
+            ):
+                return f"one-large-prime (q={residual})"
+        
+        return "non-smooth"
+
+
+class MinPlusMatrix:
+    """
+    Min-plus (tropical) matrix algebra over ℕ∞ = ℕ ∪ {∞}.
+    
+    Operations:
+    - Tropical addition: a ⊕ b = min(a, b)
+    - Tropical multiplication: a ⊗ b = a + b
+    
+    Matrix multiplication: (A ⊗ B)_{ik} = min_j (A_{ij} + B_{jk})
+    
+    Theorem: This multiplication is associative (minPlusMatMul_assoc).
+    
+    Complexity: O(n³) for n×n matrix multiplication.
+    """
+    
+    INF = float('inf')
+    
+    def __init__(self, data: List[List[float]]):
+        """Initialize from a 2D list."""
+        self.data = [row[:] for row in data]
+        self.n = len(data)
+    
+    @classmethod
+    def identity(cls, n: int) -> 'MinPlusMatrix':
+        """Tropical identity matrix: 0 on diagonal, ∞ elsewhere."""
+        data = [[cls.INF] * n for _ in range(n)]
+        for i in range(n):
+            data[i][i] = 0
+        return cls(data)
+    
+    @classmethod
+    def from_graph(cls, adj: Dict[Tuple[int,int], float], n: int) -> 'MinPlusMatrix':
+        """Create from weighted directed graph."""
+        data = [[cls.INF] * n for _ in range(n)]
+        for i in range(n):
+            data[i][i] = 0
+        for (i, j), w in adj.items():
+            data[i][j] = w
+        return cls(data)
+    
+    def __matmul__(self, other: 'MinPlusMatrix') -> 'MinPlusMatrix':
+        """Min-plus matrix multiplication."""
+        assert self.n == other.n
+        n = self.n
+        result = [[self.INF] * n for _ in range(n)]
+        for i in range(n):
+            for k in range(n):
+                for j in range(n):
+                    val = self.data[i][j] + other.data[j][k]
+                    if val < result[i][k]:
+                        result[i][k] = val
+        return MinPlusMatrix(result)
+    
+    def power(self, k: int) -> 'MinPlusMatrix':
+        """Compute k-th min-plus power (shortest paths of length ≤ k)."""
+        result = MinPlusMatrix.identity(self.n)
+        base = MinPlusMatrix(self.data)
+        while k > 0:
+            if k % 2 == 1:
+                result = result @ base
+            base = base @ base
+            k //= 2
+        return result
+    
+    def __eq__(self, other: 'MinPlusMatrix') -> bool:
+        if self.n != other.n:
+            return False
+        for i in range(self.n):
+            for j in range(self.n):
+                a, b = self.data[i][j], other.data[i][j]
+                if a == self.INF and b == self.INF:
+                    continue
+                if abs(a - b) > 1e-10:
+                    return False
+        return True
+    
+    def __repr__(self) -> str:
+        rows = []
+        for row in self.data:
+            entries = []
+            for x in row:
+                entries.append("∞" if x == self.INF else f"{x:.0f}")
+            rows.append("[" + ", ".join(f"{e:>4}" for e in entries) + "]")
+        return "\n".join(rows)
+
+
+def tropical_sieve(N: int, factor_base: List[int], interval_size: int = 100,
+                   large_prime_bound: Optional[int] = None) -> Dict[str, list]:
+    """
+    Tropical sieve algorithm for finding smooth relations.
+    
+    Pseudocode:
+    1. Compute Q(x) = x² - N for x in sieve interval
+    2. For each x, compute tropicalScore(Q(x)) and scoreDefect(Q(x))
+    3. Accept x if scoreDefect = 0 (smooth) or scoreDefect ≤ log(large_prime_bound)
+    
     Args:
-        P: Set of primes forming the factor base.
-        n: Natural number to evaluate.
-
+        N: Number to factor
+        factor_base: List of primes
+        interval_size: Half-width of sieve interval
+        large_prime_bound: Optional bound for one-large-prime relations
+    
     Returns:
-        The smooth cost (int for n > 0, inf for n = 0).
-
-    Complexity: O(√n) for factorization, O(log n / log log n) for scoring.
-
-    Example:
-        >>> smooth_cost({2, 3, 5}, 60)  # 60 = 2² × 3 × 5
-        0
-        >>> smooth_cost({2, 3, 5}, 77)  # 77 = 7 × 11
-        2
+        Dictionary with 'smooth', 'one_large_prime', and 'statistics' keys.
+    
+    Complexity: O(M * B) where M = interval size, B = |factor_base|
     """
-    if n == 0:
-        return INF
-    factors = factorize(n)
-    return sum(e for p, e in factors.items() if p not in P)
-
-
-# ============================================================
-# Algorithm 2: Tropical Sieve Scoring
-# ============================================================
-
-def tropical_sieve_score(
-    N: int, M: int, R: int, P: Set[int]
-) -> List[Tuple[int, int, float]]:
-    """
-    Compute tropical sieve scores for Q_N(x) = x² - N over [M, M+R).
-
-    Algorithm: TropicalSieveScore(N, M, R, P)
-    1. For x ← M to M+R-1:
-    2.     Compute Q_N(x) = x² - N
-    3.     If Q_N(x) > 0: score ← smoothCost(P, Q_N(x))
-    4.     Else: score ← ⊤
-
-    Args:
-        N: Number to factor.
-        M: Start of sieve interval.
-        R: Length of sieve interval.
-        P: Factor base (set of primes).
-
-    Returns:
-        List of (x, Q_N(x), smooth_cost) triples.
-
-    Complexity: O(R · √max_Q) for brute-force; O(R · |P|) with sieve.
-
-    Example:
-        >>> scores = tropical_sieve_score(15347, 124, 10, {2,3,5,7,11,13})
-        >>> [(x, q, c) for x, q, c in scores if c == 0]  # smooth values
-    """
-    results = []
-    for x in range(M, M + R):
-        qn = x * x - N
-        if qn <= 0:
-            results.append((x, qn, INF))
-        else:
-            cost = smooth_cost(P, qn)
-            results.append((x, qn, cost))
-    return results
-
-
-# ============================================================
-# Algorithm 3: Tropical Matrix-Vector Multiplication
-# ============================================================
-
-def tropical_mat_vec(
-    M_mat: List[List[float]], v: List[float]
-) -> List[float]:
-    """
-    Min-plus matrix-vector multiplication.
-
-    Algorithm: TropicalMatVec(M, v)
-    (M ⊗ v)(i) = min_j (M(i,j) + v(j))
-
-    Args:
-        M_mat: Matrix as list of rows, entries in ℝ ∪ {∞}.
-        v: Vector, entries in ℝ ∪ {∞}.
-
-    Returns:
-        Result vector w where w[i] = min_j(M[i][j] + v[j]).
-
-    Complexity: O(m · n) where M is m × n.
-
-    Example:
-        >>> M = [[0, 3, INF], [2, 0, 1]]
-        >>> v = [1, 2, 4]
-        >>> tropical_mat_vec(M, v)
-        [1, 3]
-    """
-    m = len(M_mat)
-    n = len(v)
-    result = []
-    for i in range(m):
-        min_val = INF
-        for j in range(n):
-            val = M_mat[i][j] + v[j]
-            if val < min_val:
-                min_val = val
-        result.append(min_val)
-    return result
-
-
-# ============================================================
-# Algorithm 4: Divisor Tropical Convolution
-# ============================================================
-
-def divisors(n: int) -> List[int]:
-    """Return all divisors of n."""
-    if n <= 0:
-        return []
-    divs = []
-    for d in range(1, int(n**0.5) + 1):
-        if n % d == 0:
-            divs.append(d)
-            if d != n // d:
-                divs.append(n // d)
-    return sorted(divs)
-
-
-def divisor_trop_conv(
-    f: callable, g: callable, n: int
-) -> float:
-    """
-    Divisor tropical convolution of f and g at n.
-
-    (f ★ g)(n) = min_{d | n} (f(d) + g(n/d))
-
-    Args:
-        f, g: Functions ℕ → ℝ ∪ {∞}.
-        n: Point of evaluation.
-
-    Returns:
-        min over divisors d of n of f(d) + g(n/d).
-
-    Complexity: O(τ(n)) where τ is the divisor function.
-
-    Example:
-        >>> f = lambda x: smooth_cost({2,3}, x)
-        >>> divisor_trop_conv(f, f, 12)  # min over divisors of 12
-    """
-    if n <= 0:
-        return INF
-    return min(f(d) + g(n // d) for d in divisors(n))
-
-
-# ============================================================
-# Algorithm 5: Full Tropical QS Relation Collector
-# ============================================================
-
-def tropical_qs_collect_relations(
-    N: int, B: int, R_half: int
-) -> List[Tuple[int, int, Dict[int, int]]]:
-    """
-    Collect smooth relations for the quadratic sieve using tropical scoring.
-
-    Algorithm:
-    1. Build factor base P = {primes ≤ B with Legendre symbol (N/p) ≠ -1}
-    2. Set sieve interval [⌈√N⌉ - R_half, ⌈√N⌉ + R_half]
-    3. For each x in interval:
-    4.     Compute Q = x² - N
-    5.     If smoothCost(P, |Q|) = 0: record relation
-    6. Return all smooth relations
-
-    Args:
-        N: Number to factor.
-        B: Smoothness bound.
-        R_half: Half-width of sieve interval.
-
-    Returns:
-        List of (x, Q_N(x), factorization) for smooth values.
-
-    Example:
-        >>> relations = tropical_qs_collect_relations(15347, 30, 500)
-        >>> len(relations)  # number of smooth relations found
-    """
-    # Build factor base
-    P_primes = primes_up_to(B)
-    # Filter to primes where N is a quadratic residue
-    P_filtered = []
-    for p in P_primes:
-        if p == 2 or pow(N % p, (p - 1) // 2, p) <= 1:
-            P_filtered.append(p)
-    P = set(P_filtered)
-
-    # Sieve interval
-    sqrt_N = int(math.isqrt(N))
-    if sqrt_N * sqrt_N < N:
-        sqrt_N += 1
-
-    relations = []
-    for x in range(max(sqrt_N - R_half, 1), sqrt_N + R_half + 1):
+    scorer = TropicalScorer(factor_base)
+    base = int(math.isqrt(N)) + 1
+    
+    smooth_relations = []
+    large_prime_relations = []
+    total_scored = 0
+    
+    for i in range(-interval_size, interval_size + 1):
+        x = base + i
         Q = x * x - N
         if Q <= 0:
             continue
-        cost = smooth_cost(P, Q)
-        if cost == 0:
-            factors = factorize(Q)
-            relations.append((x, Q, factors))
+        
+        total_scored += 1
+        classification = scorer.classify(Q, large_prime_bound)
+        
+        if classification == "smooth":
+            smooth_relations.append({
+                'x': x,
+                'Q': Q,
+                'factorization': factorize(Q),
+                'valuation_vector': scorer.valuation_vector(Q),
+                'score': scorer.tropical_score(Q),
+                'defect': 0.0
+            })
+        elif classification.startswith("one-large-prime"):
+            large_prime_relations.append({
+                'x': x,
+                'Q': Q,
+                'factorization': factorize(Q),
+                'valuation_vector': scorer.valuation_vector(Q),
+                'score': scorer.tropical_score(Q),
+                'defect': scorer.score_defect(Q),
+                'classification': classification
+            })
+    
+    return {
+        'smooth': smooth_relations,
+        'one_large_prime': large_prime_relations,
+        'statistics': {
+            'N': N,
+            'factor_base': factor_base,
+            'interval_size': interval_size,
+            'total_scored': total_scored,
+            'smooth_count': len(smooth_relations),
+            'large_prime_count': len(large_prime_relations),
+            'work': total_scored * len(factor_base)
+        }
+    }
 
-    return relations
 
-
-# ============================================================
-# Algorithm 6: Valuation Vector (Exponent Profile)
-# ============================================================
-
-def valuation_vector(primes: List[int], n: int) -> List[int]:
+def verify_associativity(n: int = 4, trials: int = 10) -> bool:
     """
-    Compute the valuation vector of n over a list of primes.
-
-    The i-th component is v_{p_i}(n), the p_i-adic valuation of n.
-
-    Args:
-        primes: Ordered list of primes.
-        n: Natural number.
-
-    Returns:
-        List of valuations [v_{p_1}(n), ..., v_{p_k}(n)].
-
-    Example:
-        >>> valuation_vector([2, 3, 5], 60)  # 60 = 2² × 3 × 5
-        [2, 1, 1]
+    Verify min-plus matrix associativity on random instances.
+    
+    This is a computational check of the formally proven theorem
+    minPlusMatMul_assoc.
     """
-    factors = factorize(n)
-    return [factors.get(p, 0) for p in primes]
+    import random
+    INF = float('inf')
+    
+    for trial in range(trials):
+        A = MinPlusMatrix([[random.choice([random.randint(0, 20), INF]) 
+                           for _ in range(n)] for _ in range(n)])
+        B = MinPlusMatrix([[random.choice([random.randint(0, 20), INF]) 
+                           for _ in range(n)] for _ in range(n)])
+        C = MinPlusMatrix([[random.choice([random.randint(0, 20), INF]) 
+                           for _ in range(n)] for _ in range(n)])
+        
+        left = (A @ B) @ C
+        right = A @ (B @ C)
+        
+        if left != right:
+            return False
+    return True
 
-
-# ============================================================
-# Main: Demonstrate algorithms
-# ============================================================
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("TROPICAL QUADRATIC SIEVE: ALGORITHM DEMONSTRATIONS")
-    print("=" * 60)
-
-    # Algorithm 1: Smooth cost
-    print("\n--- Algorithm 1: Smooth Cost ---")
-    P = {2, 3, 5, 7}
-    for n in [1, 12, 60, 77, 360, 1001]:
-        cost = smooth_cost(P, n)
-        factors = factorize(n)
-        print(f"  smoothCost({P}, {n}) = {cost}  "
-              f"[{n} = {factors}]")
-
-    # Algorithm 2: Tropical sieve
-    print("\n--- Algorithm 2: Tropical Sieve Scoring ---")
-    N = 2021
-    M = int(math.isqrt(N)) + 1
-    P = {2, 3, 5, 7, 11}
-    scores = tropical_sieve_score(N, M, 50, P)
-    smooth = [(x, q, c) for x, q, c in scores if c == 0]
-    print(f"  N={N}, interval [{M}, {M+50}), base P={P}")
-    print(f"  Smooth candidates: {len(smooth)}")
-    for x, q, c in smooth[:5]:
-        print(f"    x={x}, Q={q} = {factorize(q)}")
-
-    # Algorithm 3: Tropical mat-vec
-    print("\n--- Algorithm 3: Tropical Matrix-Vector ---")
-    M_mat = [[0, 3, INF], [2, 0, 1], [INF, 1, 0]]
-    v = [1, 2, 4]
-    w = tropical_mat_vec(M_mat, v)
-    print(f"  M = {M_mat}")
-    print(f"  v = {v}")
-    print(f"  M ⊗ v = {w}")
-
-    # Algorithm 4: Divisor tropical convolution
-    print("\n--- Algorithm 4: Divisor Tropical Convolution ---")
-    P = {2, 3, 5}
-    f = lambda n: smooth_cost(P, n)
-    for n in [12, 30, 60, 77]:
-        conv_val = divisor_trop_conv(f, f, n)
-        direct = smooth_cost(P, n)
-        print(f"  (f★f)({n}) = {conv_val}, smoothCost({n}) = {direct}, "
-              f"conv ≤ direct: {conv_val <= direct}")
-
-    # Algorithm 5: Full QS relation collection
-    print("\n--- Algorithm 5: Tropical QS Relation Collection ---")
-    N = 15347
-    relations = tropical_qs_collect_relations(N, 30, 500)
-    print(f"  N = {N}, B = 30, R = 1000")
-    print(f"  Smooth relations found: {len(relations)}")
-    for x, Q, factors in relations[:8]:
-        print(f"    x={x}: {x}² - {N} = {Q} = {factors}")
-
-    # Algorithm 6: Valuation vectors
-    print("\n--- Algorithm 6: Valuation Vectors ---")
-    primes = [2, 3, 5, 7]
-    for n in [60, 42, 360, 77]:
-        vec = valuation_vector(primes, n)
-        print(f"  v({n}) over {primes} = {vec}")
-
-    print("\n" + "=" * 60)
-    print("All algorithm demonstrations completed.")
-    print("=" * 60)
+    print("=== Tropical Sieve Demo ===\n")
+    
+    # Factor a small semiprime
+    N = 15347  # = 113 × 137 (but we don't know this yet)
+    fb = sieve_of_eratosthenes(50)
+    
+    result = tropical_sieve(N, fb, interval_size=200, large_prime_bound=500)
+    
+    stats = result['statistics']
+    print(f"Factoring N = {N}")
+    print(f"Factor base: {fb}")
+    print(f"Work performed: {stats['work']} tropical operations")
+    print(f"Smooth relations found: {stats['smooth_count']}")
+    print(f"One-large-prime relations: {stats['large_prime_count']}")
+    
+    print("\nSmooth relations (defect = 0):")
+    for rel in result['smooth'][:10]:
+        print(f"  x={rel['x']}, Q(x)={rel['Q']}, factors={dict(rel['factorization'])}")
+    
+    print("\nOne-large-prime relations:")
+    for rel in result['one_large_prime'][:10]:
+        print(f"  x={rel['x']}, Q(x)={rel['Q']}, {rel['classification']}, defect={rel['defect']:.4f}")
+    
+    print(f"\n=== Associativity Check ===")
+    print(f"Min-plus associativity verified: {verify_associativity()}")
