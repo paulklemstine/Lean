@@ -1158,10 +1158,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c6fcabd0",
     "timestamp": "2026-05-14T16:24:30.119497+00:00"
   },
   {
@@ -1996,21 +1996,6 @@
     "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
-    "id": "fd_0181",
-    "title": "3. Extension from $L_\\infty$ to $L_2$ Robustness via Sheaves of Quadratic Forms",
-    "description": "**Objective**: Extend the cohomological certification framework from $L_\\infty$ perturbation balls to $L_2$ (Euclidean) perturbation balls by replacing real-valued margin sections with sections valued in positive-definite quadratic forms.\n\n**Approach**: On each activation region $U_i$, the network is affine: $f(x) = W_i x + b_i$. The local $L_2$-robustness radius at $x \\in U_i$ is $\\|W_i^{-1}\\| \\cdot (\\text{margin at } x)$, which depends on the local Hessian structure. Define a sheaf $\\mathcal{Q}$ assigning to $U_i$ the quadratic form $Q_i(v) = v^T W_i^T W_i \\, v$ (the local metric tensor). The overlap compatibility condition becomes: on $U_i \\cap U_j$, $Q_i$ and $Q_j$ must be comparable (within a multiplicative factor).\n\n**Key hypotheses**:\n- The $L_2$ certified radius is controlled by th",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "e4cd60b9",
-    "timestamp": "2026-05-14T18:36:13.855472+00:00"
-  },
-  {
     "id": "fd_0183",
     "title": "Cross-Cutting Themes",
     "description": "All five directions share a common architecture:\n- **Local-to-global principle**: compute locally, certify globally, diagnose obstructions topologically.\n- **Finite combinatorial models**: finite simplicial complexes, graph Laplacians, finite-dimensional cohomology.\n- **Quantitative topology**: not just existence/nonexistence of obstructions, but numerical bounds derived from cocycle norms.\n- **Formal verification**: all results are candidates for machine-checked proofs, extending the foundation established in this work.\n\nThe long-term vision is a **cohomological robustness calculus** — a systematic algebraic framework where robustness certificates are local-and-compositional, vulnerability diagnoses are topological invariants, and formal verification ensures correctness of safety-critical",
@@ -2466,5 +2451,35 @@
     "source_exp_id": "0d901ed3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T00:42:39.933027+00:00"
+  },
+  {
+    "id": "fd_0198",
+    "title": "Theorem Target",
+    "description": "```\ntheorem anisotropic_certified_robustness\n    (X : Set (E n)) (ι : Type*) [Fintype ι]\n    (U : ι → Set (E n))\n    (A : ι → (E n →L[ℝ] E n))\n    (margin : ι → E n → ℝ)\n    (pred : E n → α)\n    (hcover : X ⊆ ⋃ i, U i)\n    (hmargin_pos : ∀ i x, x ∈ X → x ∈ U i → 0 < margin i x)\n    (hlocal : ∀ i x, x ∈ X → x ∈ U i →\n      ∀ v, ‖A i v‖ < margin i x → pred (x + v) = pred x) :\n    ∀ x ∈ X, ∃ i, x ∈ U i ∧\n      ∀ v, ‖A i v‖ < margin i x → pred (x + v) = pred x\n```\n\nThe key is to retain the *ellipsoidal* perturbation set `{v : ‖A_i v‖ < m_i(x)}` instead of collapsing to the sphere `{v : ‖v‖ < m_i(x)/‖A_i‖}`. The volume ratio between the ellipsoid and the sphere is `∏ σ_max/σ_k` where `σ_k` are singular values, which can be exponentially large.",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e4cd60b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:53:06.598217+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Team Structure",
+    "description": "- **Formal methods team**: Maintains and extends the machine-verified theorem library.\n- **Geometry team**: Develops the Riemannian and cohomological infrastructure.\n- **ML applications team**: Implements algorithms, runs experiments on real networks.\n- **Theory team**: Pursues the information-geometric and spectral directions.\n\nEach direction should produce:\n1. A precise theorem statement (with dependencies clearly listed).\n2. A proof sketch with identified lemma targets.\n3. Machine-verified formalization.\n4. Computational experiments demonstrating the result on synthetic or real networks.",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e4cd60b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T00:53:06.620725+00:00"
   }
 ]
