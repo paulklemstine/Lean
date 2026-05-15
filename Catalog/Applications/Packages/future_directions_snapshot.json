@@ -127,22 +127,6 @@
     "timestamp": "2026-05-14T16:03:53.811453+00:00"
   },
   {
-    "id": "seed_075",
-    "title": "Aether Quality Control: Automated Counterexample Generation as Research Stress Testing",
-    "description": "Prove that automated counterexample generation is a sound method for stress-testing mathematical conjectures before they are promoted to theorems. Construct a Lean 4 tactic that, given a proposed result, generates maximally-difficult counterexample candidates in the negation of the result's type, and proves that a conjecture that survives this stress test has a provably lower false-positive rate. Show that integrating this into Aether's research pipeline eliminates shallow or false conjectures before resources are spent on proof attempts.",
-    "domains": [
-      "Meta",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.94,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "465c3121",
-    "timestamp": "2026-05-14T16:03:53.873971+00:00"
-  },
-  {
     "id": "seed_035",
     "title": "Quantum Gravity as Tropical Geometry: Min-Plus Spacetime at Planck Scale",
     "description": "Prove that at the Planck scale, spacetime geometry becomes tropical: the metric reduces to a min-plus distance function, and quantum superposition corresponds to the idempotent property of tropical addition. Show that the tropical Einstein equations yield a well-posed initial value problem, and that the tropical Schwarzschild solution has a horizon at the tropical fixed point of the radial coordinate.",
@@ -1566,6 +1550,77 @@
     "source_exp_id": "1b970ad9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Formalization lead",
+    "description": ": Maintains the growing certified refutation library, ensures all new theorems compile.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "465c3121",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:03:37.360195+00:00"
+  },
+  {
+    "id": "fd_0193",
+    "title": "Combinatorics researcher",
+    "description": ": Develops the sample-complexity and optimal test design theory (Directions 1–2).",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "465c3121",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:03:37.367610+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Proof complexity researcher",
+    "description": ": Develops the hardness hierarchy and complexity-theoretic aspects (Direction 3).",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "465c3121",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:03:37.375693+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Tactic engineer",
+    "description": ": Implements the syntax-to-semantics bridge and verified tactic (Direction 4).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "465c3121",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:03:37.382470+00:00"
+  },
+  {
+    "id": "fd_0196",
+    "title": "Systems researcher",
+    "description": ": Benchmarks the pipeline on real conjecture ensembles and validates the dominance theorem (Direction 5).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "465c3121",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T03:03:37.388621+00:00"
   },
   {
     "id": "seed_078",
