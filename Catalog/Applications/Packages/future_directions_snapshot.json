@@ -366,24 +366,6 @@
     "timestamp": "2026-05-14T16:16:22.718724+00:00"
   },
   {
-    "id": "fd_0082",
-    "title": "Alternative",
-    "description": ": Reduce from the Assignment Problem with precedence constraints, which is NP-hard and naturally maps to tropical matrix structure.\n\n### Key Lemmas Needed\n- `karp_reduction_forbidden_pairs_to_trop_factor`: A computable function from Shortest-Path-with-Forbidden-Pairs instances to tropical factorization instances, preserving YES/NO.\n- `trop_factor_in_NP`: A certificate (A, B) can be verified in polynomial time (tropMul is O(n³)).\n- `forbidden_pairs_is_NP_hard`: Standard NP-hardness result (from Gabow et al., 1976).\n\n### Candidate Lean Files\n- `Cryptography/TropicalNPHardness.lean`\n- `Cryptography/KarpReductions.lean`\n\n### Cross-Domain Connections\n- **Computational Complexity → Cryptography**: First formal Cook/Karp reduction linking tropical algebra to classical complexity classes.\n- **Oper",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "e5d0ee4d",
-    "timestamp": "2026-05-14T16:16:22.727172+00:00"
-  },
-  {
     "id": "fd_0084",
     "title": "Apply FO Transform",
     "description": ": The standard FO transform (Hofheinz-Hövelmanns-Kiltz variant) converts CPA-secure PKE to CCA2-secure KEM. Verify that tropical ElGamal satisfies the required structural properties: correctness, γ-spreadness (the ciphertext has sufficient entropy).",
@@ -800,20 +782,6 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
-    "id": "fd_0213",
-    "title": "Compute strong DPI constants",
-    "description": "(Direction 2): Requires new algebraic machinery for contraction coefficients.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a2e39b14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:51.219199+00:00"
-  },
-  {
     "id": "fd_0214",
     "title": "Bridge to quantum",
     "description": "(Direction 5): Requires connecting to the existing quantum-tropical bridge theorems.",
@@ -830,20 +798,6 @@
     "timestamp": "2026-05-15T15:04:51.227861+00:00"
   },
   {
-    "id": "fd_0223",
-    "title": "Curry/uncurry isomorphism",
-    "description": "and proof of adjunction `(- ⊗ m) ⊣ (m ⟶ -)`.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6558c42b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:26:49.685191+00:00"
-  },
-  {
     "id": "fd_0224",
     "title": "Coherence conditions",
     "description": "— associativity, unit, and triangle axioms for the monoidal structure.\n\n### Proof Strategy\n\nStart with the explicit function-space model where internal hom is literally `State n → (State m → State k) ≅ State n → Arch m k`. The adjunction follows from currying of functions, which is already in Mathlib. The challenge is bookkeeping the `Fin` indexing through the product/hom correspondence.\n\n### Cross-Domain Connections\n\n- **Programming language semantics**: Monoidal closed categories are the categorical semantics of typed lambda calculus. This direction would establish a Curry-Howard-style correspondence between architecture types and computational guarantees.\n- **Hypernetworks**: The internal hom formalizes networks that produce networks, connecting to dynamic architecture generation and me",
@@ -857,53 +811,6 @@
     "source_exp_id": "6558c42b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:26:49.696815+00:00"
-  },
-  {
-    "id": "fd_0233",
-    "title": "Concrete group actions",
-    "description": ": permutation matrices, rotation matrices, etc.\n\n### Proof Strategy\n\nStart with the finite group case (permutations), which is already proven. The Schur classification for the symmetric group representation on `Fin n → ℝ` follows from Schur's lemma plus the fact that the standard permutation representation decomposes into the trivial and standard irreducibles. Use Mathlib's representation theory infrastructure.\n\n### Cross-Domain Connections\n\n- **Geometric deep learning**: The Bronstein et al. (2021) program of geometric deep learning is exactly the study of equivariant architectures. Our framework provides formal foundations.\n- **Physics**: Gauge equivariance is the foundation of lattice gauge theory neural networks.\n\n---\n\n## Direction 4: Architecture Rewriting Systems and Normal Forms\n\n##",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6558c42b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:26:49.798968+00:00"
-  },
-  {
-    "id": "fd_0236",
-    "title": "Termination measure",
-    "description": ": complexity or term size strictly decreasing under each rule.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6558c42b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:26:49.833199+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "Confluence",
-    "description": ": Newman's lemma (local confluence + termination ⟹ confluence) or direct proof.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6558c42b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:26:49.842604+00:00"
   },
   {
     "id": "fd_0238",
@@ -965,35 +872,6 @@
     "timestamp": "2026-05-15T16:01:39.418538+00:00"
   },
   {
-    "id": "fd_0233",
-    "title": "Embed into existing tropical algebra",
-    "description": "Mathlib has `Tropical` type with min-plus structure. Define a homomorphism from progression costs into `Tropical ℕ`.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de9a421e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:01:39.505662+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Direction 1",
-    "description": "(Tropical Penrose) is most ambitious mathematically — it requires identifying the correct graph-theoretic mass functional.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "80ffadc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:05:16.115004+00:00"
-  },
-  {
     "id": "fd_0224",
     "title": "WMSO → Automata",
     "description": ": By structural induction on formulas, using closure of recognizable series under min, +, and quantification (projection). The quantification step uses the finite powerset construction.",
@@ -1039,24 +917,6 @@
     "timestamp": "2026-05-15T16:47:43.694536+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Prove minimality",
-    "description": "by showing any formula must reference at least the basis derivatives.\n\n### Cross-Domain Connections\n\n- **Compiler optimization**: Minimal formula representations correspond to optimally simplified cost expressions in program analysis.\n- **Data compression**: Representing a cost function by its minimal formula is a form of algebraic compression.\n\n---\n\n## Direction 3: Separation Between Tropical Formulas and Tropical Circuits\n\n### Precise Theorem Statement\n\n**Conjecture (Formula-Circuit Separation).** There exists a family of tropically recognizable series `{S_n}` over alphabet `{0,1}` such that:\n- Each `S_n` is computable by a tropical circuit (DAG of min and + gates) of polynomial size\n- Any equivalent tropical formula requires exponential size\n\n### Why It Is Breakthrough-Level\n\nThis would",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:47:43.736436+00:00"
-  },
-  {
     "id": "fd_0231",
     "title": "Candidate function",
     "description": ": The tropical determinant `tropdet(M) = min_σ Σ M(i,σ(i))` of an n×n matrix encoded as a word.",
@@ -1084,23 +944,6 @@
     "source_exp_id": "6acfb91e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T16:47:43.759664+00:00"
-  },
-  {
-    "id": "fd_0233",
-    "title": "Lower bound",
-    "description": ": Adapt Nečiporuk's method or the Karchmer-Wigderson framework to the tropical setting. The key insight is that tropical formulas correspond to tree-like communication protocols, while circuits allow graph-like protocols.\n\n### Cross-Domain Connections\n\n- **Algebraic complexity**: Connects to Valiant's VP vs VNP problem via tropicalization.\n- **Optimization theory**: Separates \"symbolic\" (formula) from \"dynamic\" (circuit/automaton) optimization.\n\n---\n\n## Direction 4: Complexity Bounds on Formula Size from Nerode Rank\n\n### Precise Theorem Statement\n\n**Theorem (Size-Rank Bound).** If a tropical series `S` over alphabet `σ` has Nerode index `n` (i.e., `n` distinct derivatives), then:\n- If `S` is formula-definable, some formula of size at most `n × |σ| + n` defines `S`.\n- There exist series wit",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6acfb91e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:47:43.773667+00:00"
   },
   {
     "id": "fd_0234",
@@ -1131,20 +974,6 @@
     "timestamp": "2026-05-15T16:47:43.802334+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Direction 2",
-    "description": "(Entropy) — Foundational for complexity analysis; uses pullback injectivity",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "564eb5bd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:08:31.597730+00:00"
-  },
-  {
     "id": "fd_0231",
     "title": "Direction 4",
     "description": "(Factor Maps) — Deepens the theoretical framework; connects to established fields",
@@ -1157,6 +986,72 @@
     "source_exp_id": "564eb5bd",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T17:08:31.608685+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Security analysis:",
+    "description": "Show that recovering `(A, B)` from `M` is as hard as general tropical factorization.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5d0ee4d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:30:25.932081+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Quantum resistance:",
+    "description": "Analyze whether Shor-type algorithms apply to tropical factorization.",
+    "domains": [
+      "Tropical",
+      "Physics"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5d0ee4d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:30:25.954880+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Key size analysis:",
+    "description": "Determine minimum `n, m, r` for λ-bit security.\n\n### Lean Target\n```lean\ntheorem tropical_owf_security :\n    NP_Hard_Average\n      (fun M : Matrix (Fin n) (Fin m) (WithTop ℤ) =>\n        HasTropFactorization r M)\n```\n\n### Cross-Domain Connections\n- **Post-quantum cryptography:** Alternative hardness assumption\n- **Lattice cryptography:** Tropical factorization as a \"min-plus lattice\" problem\n- **Network security:** Tropical one-way functions for lightweight IoT protocols\n\n---\n\n## Direction 4: Tropical SAT Correspondence\n\n### Statement\n**Theorem (target):** There is a polynomial-time reduction from CNF-SAT to tropical matrix factorization that preserves the satisfying assignment structure.\n\n### Why This Matters\nA direct SAT encoding would establish tropical factorization as a *universal* NP-",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5d0ee4d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:30:25.967806+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Transfer",
+    "description": "the NP-hardness result to the geometric setting.\n\n### Lean Target\n```lean\ntheorem tropical_secant_membership_NP_hard :\n    KarpNPHardRelative BoolMatFact\n      (fun p : TropicalPoint => p ∈ tropicalSecantVariety r (tropicalSegre n m))\n```\n\n### Cross-Domain Connections\n- **Algebraic geometry:** Computational complexity of secant varieties\n- **Convex optimization:** Hardness of tropical linear programming variants\n- **Phylogenetics:** Complexity of tree space decomposition (tropical Grassmannian)\n\n---\n\n## Implementation Priorities\n\n| Priority | Direction | Estimated Effort | Dependencies |\n|:--------:|:---------:|:----------------:|:------------:|\n| 1 | Fixed-rank hardness | 2-4 weeks | Graph coloring formalization |\n| 2 | Tropical crypto | 4-8 weeks | Average-case hardness theory |\n| 3 | Ap",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5d0ee4d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T17:30:26.004388+00:00"
   },
   {
     "id": "seed_079",
@@ -1685,24 +1580,6 @@
     "timestamp": "2026-05-15T14:21:34.104744+00:00"
   },
   {
-    "id": "fd_0223",
-    "title": "5. Optimization Bridge: Nondifferentiability Locus",
-    "description": "**Theorem statement**:\n\n```lean\n/-- A max-affine function is a tropical polynomial where exponents\n    are interpreted as slope vectors. -/\ndef MaxAffineFunc (n k : ℕ) := Fin k → (Fin n → ℝ) × ℝ  -- (slope, intercept) pairs\n\n/-- The active set at a point: indices whose affine piece achieves the max. -/\ndef activeSet {n k : ℕ} (f : MaxAffineFunc n k) (x : Fin n → ℝ) : Finset (Fin k) :=\n  Finset.univ.filter (fun j => ∀ j', innerProduct (f j).1 x + (f j).2 ≤\n                                      innerProduct (f j').1 x + (f j').2 →\n                                      innerProduct (f j).1 x + (f j).2 =\n                                      innerProduct (f j').1 x + (f j').2)\n\n/-- The nondifferentiability locus of a max-affine function equals\n    the tropical hypersurface of the corresponding",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d5cf911",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T14:21:34.138758+00:00"
-  },
-  {
     "id": "fd_0218",
     "title": "Direction 2: Integrate Distributivity via Knuth–Bendix Completion",
     "description": "**Goal:** Extend the normalizer to handle the distributive law `a + min(b, c) = min(a + b, a + c)`.\n\n**Key insight:** The current AC normalizer deliberately stops at the AC fragment. Distributivity introduces cross-operator interactions that require a fundamentally different normal form: tropical polynomials as sets of monomials (as in the existing `TropicalNF` module).\n\n**Proof strategy:**\n1. Define oriented rewrite rules: `add a (tmin b c) → tmin (add a b) (add a c)`.\n2. Show termination using a suitable measure (e.g., number of `add`-over-`tmin` patterns).\n3. Show confluence by verifying all critical pairs are joinable.\n4. Alternatively, bypass rewriting by directly normalizing to monomial support form.\n\n**Challenges:**\n- The distributive law is not terminating under naive orientation. ",
@@ -1750,23 +1627,6 @@
     "source_exp_id": "cccfadf1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:04:11.709801+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Boolean Logic Analogy",
-    "description": "Via the correspondence `min ↔ ∧` (tropical min corresponds to logical conjunction), AC normalization of `tmin` is analogous to clause canonicalization in SAT preprocessing. Extending this analogy could connect tropical algebra to certified SAT/SMT preprocessing.",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cccfadf1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:04:11.741098+00:00"
   },
   {
     "id": "fd_0215",
@@ -1907,38 +1767,6 @@
     "timestamp": "2026-05-15T15:29:13.549732+00:00"
   },
   {
-    "id": "fd_0223",
-    "title": "Summary Priority",
-    "description": "| Priority | Direction | Difficulty | Impact |\n|----------|-----------|------------|--------|\n| 1 | Tensor equality (§5) | Low | Enables coding rates |\n| 2 | Blackwell order (§3) | Low | Decision theory bridge |\n| 3 | Spectral bound (§2) | Medium | Connects to Birkhoff theory |\n| 4 | Channel capacity (§1) | Medium | Coding theory foundation |\n| 5 | Compression theorem (§4) | Low | ML applications |\n| 6 | f-Divergences (§6) | High | Full divergence theory |\n| 7 | Markov contraction (§7) | High | Dynamical systems bridge |\n\nThe first five directions can be pursued immediately with the infrastructure established in this work. Directions 6 and 7 require additional mathematical development but would significantly expand the scope of tropical information theory.",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c133a545",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T15:29:13.582275+00:00"
-  },
-  {
-    "id": "fd_0230",
-    "title": "Theorem Corpus as Metric Space",
-    "description": "All five directions share the perspective of viewing a theorem corpus as a finite metric space. This opens connections to:\n- **Persistent homology**: compute topological features of the novelty landscape\n- **Optimal transport**: measure the \"distance\" between two corpora\n- **Geometric group theory**: study symmetries of the novelty geometry",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9f168b29",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T16:04:54.696726+00:00"
-  },
-  {
     "id": "fd_0232",
     "title": "Theoretical Foundations",
     "description": "Directions 2 and 3 deepen the mathematical theory:\n- Compression duality connects novelty to information content\n- Ultrametric geometry reveals hierarchical structure\n- Together they suggest a \"spectral theory of novelty\" where eigenvalues of the distance matrix capture fundamental scales of conceptual variation.",
@@ -1952,21 +1780,6 @@
     "source_exp_id": "9f168b29",
     "consumed_by_exp_id": "9093673a",
     "timestamp": "2026-05-15T16:04:54.716000+00:00"
-  },
-  {
-    "id": "fd_0230",
-    "title": "Phase 1 (Immediate, 1-3 months)",
-    "description": "- Formalize Direction 1 for Markov triples (simplest non-Pythagorean case)\n- Implement the orbit hash function (Direction 3) and benchmark collision resistance\n- Compute spectral data for Berggren subtrees through depth 8 (Direction 4)",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a6ee9322",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:02:08.116396+00:00"
   },
   {
     "id": "fd_0231",
@@ -1996,23 +1809,5 @@
     "source_exp_id": "a6ee9322",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T17:02:08.139954+00:00"
-  },
-  {
-    "id": "fd_0233",
-    "title": "Team Structure",
-    "description": "- **Proof Engineering**: formalization in Lean 4, extending the existing verified codebase\n- **Computational Experiments**: Python/Julia implementations for empirical validation\n- **Theory Development**: cross-domain collaboration between number theorists, computer scientists, and dynamicists\n- **Applications**: cryptography group for hardness analysis, complexity group for classification\n\nEach direction is designed to be independently pursuable while contributing to the unified vision of *arithmetic automata on algebraic orbits* as a new field at the intersection of number theory, dynamical systems, and theoretical computer science.",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a6ee9322",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T17:02:08.150961+00:00"
   }
 ]
