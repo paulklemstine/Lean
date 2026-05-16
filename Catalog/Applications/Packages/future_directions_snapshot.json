@@ -244,10 +244,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbfb44da",
     "timestamp": "2026-05-14T16:16:22.746644+00:00"
   },
   {
@@ -310,23 +310,6 @@
     "source_exp_id": "6bbd4646",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:30.145614+00:00"
-  },
-  {
-    "id": "fd_0153",
-    "title": "Incremental updates",
-    "description": ": When a new theorem is added, only recompute levels along the affected dependency chain.\n\n### Cross-Domain Connections\n- Software engineering: build systems, dependency resolution (npm, cargo)\n- Formal methods: certified compilation, proof-carrying code\n- Education technology: adaptive learning systems, prerequisite graphs\n- Knowledge management: ontology design, skill trees in games\n\n---\n\n## Implementation Priority",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "14514045",
-    "timestamp": "2026-05-14T17:32:45.375913+00:00"
   },
   {
     "id": "fd_0154",
@@ -1801,5 +1784,83 @@
     "source_exp_id": "cc933f99",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:31:54.587045+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "1. Semiring-Valued Dependency Propagation",
+    "description": "**Goal:** Generalize the level function from $\\mathbb{N}$ to an arbitrary (complete, idempotent) semiring, enabling weighted dependency metrics such as proof cost, trust scores, compilation time, and complexity bounds.\n\n**Hypothesis:** The locality theorem holds for any function $f : V \\to S$ defined by $f(v) = \\bigoplus_{u \\in \\text{pred}(v)} g(f(u))$ over a complete idempotent semiring $(S, \\oplus, \\otimes, \\mathbf{0}, \\mathbf{1})$, where $g$ is the \"edge weight\" operation. The key requirement is that $\\oplus$ and $g$ respect the well-founded structure.\n\n**Proof Strategy:** Replace `Finset.sup'` with a general `Finset.fold` over the semiring operation. The locality lemma generalizes directly: if the operands are unchanged, the fold result is unchanged. The well-founded induction argument",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14514045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:34:26.462184+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "2. Certified Incremental Fixed-Point Theorem for Monotone Dataflow Frameworks",
+    "description": "**Goal:** Prove that for monotone functions on finite lattices, the least fixed point is unchanged outside the forward cone of a local operator modification. This subsumes the DAG level theorem as a special case and connects to abstract interpretation.\n\n**Hypothesis:** Let $(L, \\sqsubseteq)$ be a finite lattice and $F : (V \\to L) \\to (V \\to L)$ a monotone operator with $F(x)(v)$ depending only on $\\{x(u) : u \\in \\text{pred}(v)\\}$. If $F$ is modified to $F'$ with $F(x)(v) = F'(x)(v)$ for all $v$ outside a set $C$ (closed under successor), then $\\text{lfp}(F)$ and $\\text{lfp}(F')$ agree on $V \\setminus C$.\n\n**Proof Strategy:** Use Kleene's fixed-point theorem on finite lattices. Show by induction on the Kleene iteration that each iterate agrees outside $C$. Since the lattice is finite, the i",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14514045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:34:26.477173+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "3. Executable Recomputation Kernel with Verified Complexity Bounds",
+    "description": "**Goal:** Extract a verified executable function `incrementalRecompute` and prove that its time complexity is $O(|\\text{cone}| + |E_{\\text{cone}}|)$, i.e., proportional to the size of the affected region rather than the whole graph.\n\n**Concrete Deliverable:**\n```\ndef incrementalRecompute (oldLevels : V → ℕ) (pred' : PredFn V)\n    (new : V) (cone : Finset V) : V → ℕ\n```\nwith a proof that (1) the output matches global recomputation, and (2) the function inspects only vertices in `cone` and their predecessors.\n\n**Proof Strategy:**\n- Define the function by iteration over a topological sort of the cone\n- Prove termination using the finite cone size\n- Prove correctness by combining the locality theorem with the standard level computation correctness\n- Bound the work using `Finset.card` inequalit",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14514045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:34:26.492113+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "4. Theorem-Dependency Observer Interface and Proof-Carrying Updates",
+    "description": "**Goal:** Build a formal framework connecting the locality result to proof-code representations, enabling a \"proof-carrying update\" protocol: when a theorem is added to a database, generate a certificate that downstream proofs remain valid.\n\n**Design:**\n- Define an `Observer` type: a function that extracts data from a dependency graph\n- Prove that observers restricted to the complement of the forward cone are invariant under localized updates\n- Connect to the Lawvere fixed-point / proof-coding perspective: theorem updates as code transformations that preserve observer outputs\n\n**Concrete Theorem Target:**\n```\ntheorem observer_invariant (obs : Observer V) (hsupp : obs.support ⊆ Cᶜ) :\n    obs.eval predOld = obs.eval predNew\n```\n\n**Applications:**\n- Incremental proof checking for large formal",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14514045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:34:26.506444+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "5. Causal Semantics of Dependency Systems via Alexandrov Topology",
+    "description": "**Goal:** Interpret the forward cone as the Alexandrov future in a finite causal poset, and prove that the locality theorem is an instance of a general \"causal support\" principle analogous to finite-domain causality in physics and concurrency theory.\n\n**Hypothesis:** The DAG $(V, \\text{Reaches})$ is a finite causal set (a finite poset). The Alexandrov topology has open sets that are exactly the upward-closed sets. The level function is \"causal\" in the sense that $\\ell(v)$ depends only on the causal past of $v$. The locality theorem becomes: perturbations localized to the causal future of $n$ do not affect the causal complement.\n\n**Proof Strategy:**\n- Define the Alexandrov topology on the Reaches poset\n- Show that the support of the perturbation (where pred changes) is an open set\n- Prove a",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14514045",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:34:26.519818+00:00"
   }
 ]
