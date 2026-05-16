@@ -25,10 +25,10 @@
       "Tropical"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "73e6ebb7",
     "timestamp": "2026-05-14T16:03:53.819748+00:00"
   },
   {
@@ -547,21 +547,6 @@
     "source_exp_id": "09f78c38",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:05:20.487200+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "TropAut",
-    "description": ": Objects are tropical semimodules (α → ℝ), morphisms are tropical automorphisms (pullbacks along bijections).",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "bd77de91",
-    "consumed_by_exp_id": "8b829eb9",
-    "timestamp": "2026-05-16T10:49:05.580800+00:00"
   },
   {
     "id": "fd_0245",
@@ -1661,5 +1646,76 @@
     "source_exp_id": "9cb1f586",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:58:03.653565+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Formalization Plan",
+    "description": "- Define the stochastic Collatz model in Lean 4\n- Prove subadditivity of -log Z_N under appropriate conditions\n- Apply Fekete's lemma (already in Mathlib) to establish the limit\n- Prove convexity is preserved under pointwise limits",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b829eb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:28:58.123512+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Hypothesis",
+    "description": "If the thermodynamic limit f(θ) exists and is differentiable on an open interval, then the empirical distribution of stopping times satisfies a large deviation principle with rate function given by the Legendre transform of f:\n\n$$I(x) = \\sup_\\theta (\\theta x - f(\\theta))$$",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b829eb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:28:58.141131+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Key Technical Challenge",
+    "description": "The zeros of exponential polynomials ∑ a_k exp(α_k z) form a quasi-periodic set. The density of zeros per unit imaginary length is (α_max - α_min)/(2π) by a theorem of Langer. Formalizing this would be a significant contribution.",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b829eb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:28:58.161141+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Broader Impact",
+    "description": "This direction connects arithmetic thermodynamics to:\n- Information theory: S(E) is the rate function for the entropy of integers at energy level E\n- Optimization: the Legendre transform is central to convex optimization and duality theory\n- Economics: analogues of Gibbs measures appear in discrete choice theory (logit models)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b829eb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:28:58.186572+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Team Structure Recommendation",
+    "description": "- **Team A (Foundations)**: Legendre duality, entropy functions, ensemble equivalence\n- **Team B (Asymptotics)**: Thermodynamic limit, subadditivity, ergodic theory\n- **Team C (Probability)**: Large deviations, CLT, moderate deviations\n- **Team D (Complex Analysis)**: Yang-Lee zeros, exponential polynomials, potential theory\n- **Team E (Computation)**: Numerical experiments, visualization, conjecture generation\n\nEach team should iterate: formulate conjectures computationally, test them numerically, then formalize proofs. The finite-volume infrastructure established here provides the common foundation for all teams.",
+    "domains": [
+      "EML",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b829eb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:28:58.207944+00:00"
   }
 ]

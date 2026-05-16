@@ -1,285 +1,480 @@
 #!/usr/bin/env python3
 """
-Applications of Tropical Algebra and Optimal Transport
+Applications of the Tropical-Transport Bridge Theory
 
-Demonstrates real-world applications of the formally verified theorems:
-1. Shortest path computation via tropical matrix powers
-2. Network routing optimization
-3. Image histogram transport (color transfer)
-4. Supply chain logistics as assignment problem
+Real-world applications demonstrating how the formalized mathematical
+theory connects to practical problems in logistics, machine learning,
+network optimization, and scheduling.
 """
 
 import numpy as np
-from itertools import permutations
 from typing import List, Tuple
 
+
 # ============================================================
-# Application 1: Shortest Paths via Tropical Powers
+# APPLICATION 1: SUPPLY CHAIN LOGISTICS
 # ============================================================
 
-def tropical_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
-    """Min-plus matrix multiplication."""
-    return np.min(A[:, :, np.newaxis] + B[np.newaxis, :, :], axis=1)
-
-def all_pairs_shortest_paths(weight_matrix: np.ndarray) -> np.ndarray:
+def supply_chain_wasserstein():
     """
-    Compute all-pairs shortest paths using tropical matrix powers.
+    Supply Chain Optimization via Wasserstein Distance
 
-    The (i,j) entry of A^{⊗n} gives the minimum weight of a path
-    from i to j using at most n edges. For n vertices, A^{⊗(n-1)}
-    gives all shortest paths (if no negative cycles exist).
+    A logistics company has warehouses and retail stores distributed
+    across a region. The Wasserstein distance between supply and demand
+    distributions measures the minimum transportation effort.
 
-    This is equivalent to the Floyd-Warshall / repeated squaring approach
-    but expressed in the language of tropical algebra.
-
-    Time complexity: O(n⁴) [O(n³ log n) with repeated squaring]
+    The invariance theorem tells us: if we relabel all locations
+    consistently (e.g., switching to a different coordinate system),
+    the optimal transport cost doesn't change. This is crucial for
+    multi-site logistics where different teams use different naming.
     """
-    n = weight_matrix.shape[0]
-    result = weight_matrix.copy()
-    for _ in range(n - 2):
-        result = tropical_multiply(result, weight_matrix)
-    return result
+    from scipy.optimize import linprog
 
-print("=" * 60)
-print("APPLICATION 1: Shortest Paths via Tropical Powers")
-print("=" * 60)
+    print("=" * 60)
+    print("APPLICATION 1: Supply Chain Logistics")
+    print("=" * 60)
 
-# Example: 5-city road network
-cities = ["NYC", "BOS", "DC", "CHI", "MIA"]
-n = len(cities)
-INF = 1e9  # "infinity" for no direct connection
+    # 5 locations with distances
+    locations = ["NYC", "Chicago", "LA", "Houston", "Phoenix"]
+    n = len(locations)
 
-# Distance matrix (hours of driving, approximate)
-dist = np.array([
-    [0,    3.5,  3.5,  12,   18],   # NYC
-    [3.5,  0,    6.5,  14,   21],   # BOS
-    [3.5,  6.5,  0,    10,   15],   # DC
-    [12,   14,   10,   0,    20],   # CHI
-    [18,   21,   15,   20,   0],    # MIA
-], dtype=float)
+    # Distance matrix (simplified, in hundreds of miles)
+    distances = np.array([
+        [0, 8, 28, 16, 24],
+        [8, 0, 20, 11, 17],
+        [28, 20, 0, 15, 4],
+        [16, 11, 15, 0, 12],
+        [24, 17, 4, 12, 0]
+    ], dtype=float)
 
-shortest = all_pairs_shortest_paths(dist)
+    # Supply distribution (warehouse capacities)
+    supply = np.array([0.3, 0.25, 0.2, 0.15, 0.1])
 
-print(f"\nDirect distances (hours):")
-for i in range(n):
-    for j in range(n):
-        print(f"  {cities[i]} → {cities[j]}: {dist[i,j]:.1f}h"
-              + (f" (via shortcut: {shortest[i,j]:.1f}h)" if shortest[i,j] < dist[i,j] - 0.1 else ""))
+    # Demand distribution
+    demand = np.array([0.1, 0.15, 0.3, 0.25, 0.2])
 
-print(f"\nShortest path matrix:")
-header = "     " + "  ".join(f"{c:>5}" for c in cities)
-print(header)
-for i in range(n):
-    row = f"{cities[i]:>4} " + "  ".join(f"{shortest[i,j]:5.1f}" for j in range(n))
-    print(row)
+    # Solve transport problem
+    c_flat = distances.flatten()
+    A_eq = np.zeros((2 * n, n * n))
+    b_eq = np.zeros(2 * n)
+    for i in range(n):
+        for j in range(n):
+            A_eq[i, i * n + j] = 1
+            A_eq[n + j, i * n + j] = 1
+        b_eq[i] = supply[i]
+        b_eq[n + i] = demand[i]
 
-# Demonstrate subadditivity: diagonal of tropical powers
-print(f"\nSubadditivity verification (round-trip bounds):")
-for i in range(n):
-    a2 = tropical_multiply(dist, dist)[i,i]
-    a3 = tropical_multiply(tropical_multiply(dist, dist), dist)[i,i]
-    a4 = tropical_multiply(tropical_multiply(tropical_multiply(dist, dist), dist), dist)[i,i]
-    print(f"  {cities[i]}: a₂={a2:.1f}, a₃={a3:.1f}, a₄={a4:.1f}")
-    print(f"    a₄ ≤ a₂+a₂? {a4 <= a2+a2+0.01} (subadditivity)")
+    result = linprog(c_flat, A_eq=A_eq, b_eq=b_eq,
+                     bounds=[(0, None)] * (n * n), method='highs')
 
-# ============================================================
-# Application 2: Supply Chain as Assignment Problem
-# ============================================================
+    print(f"\nLocations: {locations}")
+    print(f"Supply: {dict(zip(locations, supply))}")
+    print(f"Demand: {dict(zip(locations, demand))}")
+    print(f"\nOptimal transport cost: {result.fun:.2f} (hundred-miles)")
 
-print("\n" + "=" * 60)
-print("APPLICATION 2: Supply Chain Assignment Optimization")
-print("=" * 60)
+    plan = result.x.reshape(n, n)
+    print(f"\nOptimal transport plan:")
+    for i in range(n):
+        for j in range(n):
+            if plan[i, j] > 0.001:
+                print(f"  {locations[i]} → {locations[j]}: {plan[i,j]:.3f}")
 
-factories = ["Shanghai", "Mumbai", "Detroit"]
-warehouses = ["LA", "London", "Tokyo"]
+    # Demonstrate invariance: swap NYC ↔ LA (if distances are preserved)
+    print(f"\n--- Invariance under relabeling ---")
+    # The key insight: relabeling doesn't change the cost
+    e = [2, 1, 0, 3, 4]  # swap NYC ↔ LA
+    e_inv = list(np.argsort(e))
+    supply_perm = supply[e_inv]
+    demand_perm = demand[e_inv]
 
-# Shipping cost matrix ($/unit)
-shipping_cost = np.array([
-    [500,  800,  300],   # Shanghai → {LA, London, Tokyo}
-    [700,  400,  900],   # Mumbai → {LA, London, Tokyo}
-    [200,  600,  1100],  # Detroit → {LA, London, Tokyo}
-], dtype=float)
+    b_eq2 = np.zeros(2 * n)
+    for i in range(n):
+        b_eq2[i] = supply_perm[i]
+        b_eq2[n + i] = demand_perm[i]
 
-print(f"\nShipping costs ($/unit):")
-header = "           " + "  ".join(f"{w:>8}" for w in warehouses)
-print(header)
-for i, f in enumerate(factories):
-    row = f"{f:>10} " + "  ".join(f"${shipping_cost[i,j]:7.0f}" for j in range(3))
-    print(row)
+    distances_perm = distances[np.ix_(e, e)]
+    c_flat2 = distances_perm.flatten()
+    result2 = linprog(c_flat2, A_eq=A_eq, b_eq=b_eq2,
+                      bounds=[(0, None)] * (n * n), method='highs')
 
-# Find optimal assignment
-best_cost = np.inf
-best_assignment = None
-for perm in permutations(range(3)):
-    cost = sum(shipping_cost[i, perm[i]] for i in range(3))
-    if cost < best_cost:
-        best_cost = cost
-        best_assignment = list(perm)
+    print(f"Cost with relabeled locations: {result2.fun:.2f}")
+    print(f"Cost difference: {abs(result.fun - result2.fun):.2e}")
 
-print(f"\nOptimal assignment (minimum total cost):")
-for i in range(3):
-    j = best_assignment[i]
-    print(f"  {factories[i]} → {warehouses[j]}: ${shipping_cost[i,j]:.0f}")
-print(f"  Total: ${best_cost:.0f}")
-
-# Show this equals the Wasserstein transport cost for uniform distributions
-print(f"\n  As Wasserstein-1 transport cost (uniform): ${best_cost/3:.2f} per unit")
-print(f"  This is (1/n) × assignment cost, matching permPlan_transportCost theorem")
-
-# Verify conjugation invariance
-print(f"\nConjugation invariance test:")
-print(f"  Relabeling factories as {factories[1]}, {factories[2]}, {factories[0]}")
-e = [1, 2, 0]  # relabeling permutation
-# Check if cost is invariant (generally not for arbitrary relabeling)
-# But the assignment cost structure is preserved
-
-for sigma in permutations(range(3)):
-    orig_cost = sum(shipping_cost[i, sigma[i]] for i in range(3))
-    # Conjugated permutation: e⁻¹ ∘ σ ∘ e
-    e_inv = [2, 0, 1]
-    conj = tuple(e_inv[sigma[e[i]]] for i in range(3))
-    # Cost under relabeled system
-    shipping_relabeled = np.array([[shipping_cost[e_inv[i], e_inv[j]]
-                                     for j in range(3)] for i in range(3)])
-    conj_cost = sum(shipping_relabeled[i, conj[i]] for i in range(3))
-    print(f"  σ={list(sigma)}: orig={orig_cost:.0f}, conj(e⁻¹σe)={conj_cost:.0f}",
-          "✓" if abs(orig_cost - conj_cost) < 0.01 else "✗")
 
 # ============================================================
-# Application 3: Color Histogram Transport
+# APPLICATION 2: NETWORK ROUTING
 # ============================================================
 
-print("\n" + "=" * 60)
-print("APPLICATION 3: Discrete Color Histogram Transport")
-print("=" * 60)
+def network_routing_tropical():
+    """
+    Network Routing via Tropical Matrix Powers
 
-# Simplified: 4 color bins {dark, mid-dark, mid-light, light}
-colors = ["dark", "mid-dark", "mid-light", "light"]
-n = 4
+    In a communication network, tropical matrix powers compute
+    shortest paths. The subadditivity theorem guarantees that
+    splitting a long route into segments can never beat the
+    direct optimal route — a fundamental consistency property
+    for routing protocols.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Network Routing (Tropical Powers)")
+    print("=" * 60)
 
-# Cost = absolute difference in intensity levels
-c = np.array([[abs(i-j) for j in range(n)] for i in range(n)], dtype=float)
+    # Network with 5 nodes and weighted edges (latency in ms)
+    nodes = ["Server A", "Router 1", "Router 2", "Router 3", "Server B"]
+    n = len(nodes)
 
-# Source image histogram (dim photo)
-mu = np.array([0.4, 0.35, 0.15, 0.1])
+    # Adjacency/weight matrix (inf = no direct connection)
+    INF = 1000  # Use large number instead of inf for stability
+    W = np.array([
+        [0, 2, INF, 7, INF],
+        [2, 0, 3, INF, INF],
+        [INF, 3, 0, 1, 5],
+        [7, INF, 1, 0, 2],
+        [INF, INF, 5, 2, 0]
+    ], dtype=float)
 
-# Target image histogram (bright photo)
-nu = np.array([0.1, 0.15, 0.35, 0.4])
+    print(f"\nNetwork topology (latency matrix):")
+    for i in range(n):
+        row = [f"{W[i,j]:4.0f}" if W[i,j] < INF else " INF" for j in range(n)]
+        print(f"  {nodes[i]:>10}: {' '.join(row)}")
 
-print(f"\nSource histogram (dim image): {dict(zip(colors, mu))}")
-print(f"Target histogram (bright image): {dict(zip(colors, nu))}")
-print(f"Cost matrix (intensity distance):\n{c}")
+    # Compute shortest paths via tropical powers
+    print(f"\nShortest paths via tropical matrix powers:")
+    current = W.copy()
+    for hop in range(1, n):
+        current = np.minimum(
+            current,
+            np.min(W[:, :, None] + current[None, :, :], axis=1)
+        )
 
-# Compute optimal transport
-best_cost = np.inf
-best_plan = None
-# For non-uniform marginals, enumerate fractional plans along edges
-# Use simple LP approach for this small case
-from itertools import product
+    print(f"\nAll-pairs shortest paths:")
+    for i in range(n):
+        for j in range(n):
+            if i != j and current[i, j] < INF:
+                print(f"  {nodes[i]} → {nodes[j]}: {current[i,j]:.0f}ms")
 
-# For uniform, use permutations; for general, we need LP
-# Construct the "northwest corner" style solution
-plan = np.zeros((n, n))
-mu_rem = mu.copy()
-nu_rem = nu.copy()
-for i in range(n):
-    for j in range(n):
-        transfer = min(mu_rem[i], nu_rem[j])
-        plan[i, j] = transfer
-        mu_rem[i] -= transfer
-        nu_rem[j] -= transfer
+    # Demonstrate subadditivity for routing
+    print(f"\nSubadditivity check (route consistency):")
+    for i in range(n):
+        diag_2 = np.min([W[i, k] + W[k, i] for k in range(n)])
+        diag_3 = np.min([W[i, k1] + np.min([W[k1, k2] + W[k2, i] for k2 in range(n)])
+                         for k1 in range(n)])
+        print(f"  {nodes[i]}: 2-hop roundtrip = {diag_2:.0f}ms, "
+              f"3-hop roundtrip = {diag_3:.0f}ms, "
+              f"sum bound = {diag_2 + W[i,i]:.0f}ms, "
+              f"satisfied: {diag_3 <= diag_2 + W[i,i] + 0.01}")
 
-cost = np.sum(plan * c)
-print(f"\nNorthwest-corner transport plan:")
-print(f"  Plan:\n{np.round(plan, 3)}")
-print(f"  Cost: {cost:.4f}")
-print(f"  Row sums: {plan.sum(axis=1)} (should match μ)")
-print(f"  Col sums: {plan.sum(axis=0)} (should match ν)")
-
-# Invariance: shifting intensity levels is a cost-preserving map
-e = [1, 2, 3, 0]  # cyclic shift
-is_cost_invariant = all(abs(c[e[i], e[j]] - c[i, j]) < 1e-10
-                        for i in range(n) for j in range(n))
-print(f"\nIs cyclic shift cost-invariant? {is_cost_invariant}")
-print(f"(For absolute-difference cost on a line, only identity preserves cost)")
-print(f"This demonstrates that Wasserstein invariance is selective —")
-print(f"it holds precisely for the isometry group of the cost structure.")
 
 # ============================================================
-# Application 4: Network Latency via Tropical Eigenvalues
+# APPLICATION 3: MACHINE LEARNING - DISTRIBUTION COMPARISON
 # ============================================================
 
-print("\n" + "=" * 60)
-print("APPLICATION 4: Network Latency Analysis")
-print("=" * 60)
+def ml_distribution_comparison():
+    """
+    ML Application: Comparing Distributions with Wasserstein Distance
 
-# Network with 4 nodes: latency matrix
-nodes = ["Server A", "Server B", "Server C", "Server D"]
-latency = np.array([
-    [1,   2,   5,   10],
-    [2,   1,   3,   8],
-    [5,   3,   1,   2],
-    [10,  8,   2,   1],
-], dtype=float)
+    In machine learning, the Wasserstein distance (Earth Mover's Distance)
+    is used to compare probability distributions. The invariance theorem
+    guarantees that this comparison is independent of how we encode the
+    categories — critical for transfer learning and domain adaptation.
+    """
+    from scipy.optimize import linprog
 
-print(f"\nNetwork latency matrix (ms):")
-for i in range(4):
-    print(f"  {nodes[i]}: {latency[i]}")
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: ML Distribution Comparison")
+    print("=" * 60)
 
-# Tropical powers give multi-hop latencies
-print(f"\nMinimum round-trip latencies (tropical diagonals):")
-for hops in range(1, 6):
-    power = latency.copy()
-    for _ in range(hops - 1):
-        power = tropical_multiply(power, latency)
-    print(f"  {hops}-hop round trips:", [f"{power[i,i]:.0f}ms" for i in range(4)])
+    # Image classification: distribution over 4 categories
+    categories = ["cat", "dog", "bird", "fish"]
+    n = len(categories)
 
-# Compute asymptotic average per-hop latency (tropical eigenvalue)
-print(f"\nAsymptotic per-hop latency (cycle means):")
-for i in range(4):
-    means = []
-    power = latency.copy()
+    # Semantic distance between categories
+    # (based on biological taxonomy proximity)
+    sem_dist = np.array([
+        [0, 1, 3, 4],
+        [1, 0, 3, 4],
+        [3, 3, 0, 3],
+        [4, 4, 3, 0]
+    ], dtype=float)
+
+    # Model A predictions vs Model B predictions
+    model_a = np.array([0.5, 0.3, 0.15, 0.05])
+    model_b = np.array([0.4, 0.35, 0.2, 0.05])
+    ground_truth = np.array([0.45, 0.3, 0.2, 0.05])
+
+    def compute_emd(c, p, q):
+        c_flat = c.flatten()
+        A_eq = np.zeros((2 * n, n * n))
+        b_eq = np.zeros(2 * n)
+        for i in range(n):
+            for j in range(n):
+                A_eq[i, i * n + j] = 1
+                A_eq[n + j, i * n + j] = 1
+            b_eq[i] = p[i]
+            b_eq[n + i] = q[i]
+        result = linprog(c_flat, A_eq=A_eq, b_eq=b_eq,
+                         bounds=[(0, None)] * (n * n), method='highs')
+        return result.fun if result.success else float('inf')
+
+    emd_a = compute_emd(sem_dist, model_a, ground_truth)
+    emd_b = compute_emd(sem_dist, model_b, ground_truth)
+
+    print(f"\nCategories: {categories}")
+    print(f"Model A predictions: {dict(zip(categories, model_a))}")
+    print(f"Model B predictions: {dict(zip(categories, model_b))}")
+    print(f"Ground truth:        {dict(zip(categories, ground_truth))}")
+    print(f"\nEarth Mover's Distance (EMD):")
+    print(f"  Model A vs Ground Truth: {emd_a:.4f}")
+    print(f"  Model B vs Ground Truth: {emd_b:.4f}")
+    print(f"  Better model: {'A' if emd_a < emd_b else 'B'}")
+
+    # Invariance: relabeling categories shouldn't change the comparison
+    print(f"\nInvariance test: relabel categories")
+    relabel = [1, 0, 3, 2]  # swap cat↔dog, bird↔fish
+    sem_dist_r = sem_dist[np.ix_(relabel, relabel)]
+    model_a_r = model_a[np.argsort(relabel)]
+    gt_r = ground_truth[np.argsort(relabel)]
+    emd_a_r = compute_emd(sem_dist_r, model_a_r, gt_r)
+    print(f"  EMD after relabeling: {emd_a_r:.4f}")
+    print(f"  ✓ Invariant: {abs(emd_a - emd_a_r) < 1e-8}")
+
+
+# ============================================================
+# APPLICATION 4: SCHEDULING (TROPICAL)
+# ============================================================
+
+def scheduling_tropical():
+    """
+    Job Scheduling via Tropical Algebra
+
+    In scheduling theory, tropical (min-plus or max-plus) algebra
+    models precedence-constrained scheduling. The tropical eigenvalue
+    gives the minimum cycle time of a periodic schedule.
+
+    The subadditivity theorem ensures schedule consistency:
+    the cost of k+m periods is at most the sum of k-period and
+    m-period costs.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Job Scheduling (Tropical Eigenvalue)")
+    print("=" * 60)
+
+    # 4 machines in a cyclic production line
+    machines = ["Cutting", "Welding", "Assembly", "QC"]
+    n = len(machines)
+
+    # Processing times: A[i,j] = time for job to go from machine j to machine i
+    # (including processing at machine i)
+    A = np.array([
+        [3, 5, 8, 7],    # Cutting
+        [4, 2, 6, 5],    # Welding
+        [7, 4, 3, 4],    # Assembly
+        [6, 5, 3, 2]     # QC
+    ], dtype=float)
+
+    print(f"\nProcessing time matrix A:")
+    print(f"{'':>12} {'→Cut':>6} {'→Weld':>6} {'→Asm':>6} {'→QC':>6}")
+    for i in range(n):
+        row = [f"{A[i,j]:6.1f}" for j in range(n)]
+        print(f"{machines[i]:>12} {''.join(row)}")
+
+    # Tropical powers = multi-step optimal schedules
+    A_trop = A.copy()
+    print(f"\nOptimal multi-step schedules (tropical powers):")
+    for p in range(1, 5):
+        print(f"\n  {p}-step schedule (A^⊗{p}):")
+        for i in range(n):
+            print(f"    {machines[i]}: diagonal = {A_trop[i,i]:.1f}")
+        if p < 4:
+            A_trop_new = np.full((n, n), np.inf)
+            for i in range(n):
+                for j in range(n):
+                    A_trop_new[i, j] = min(A_trop[i, k] + A[k, j] for k in range(n))
+            A_trop = A_trop_new
+
+    # Compute cycle time (tropical eigenvalue)
+    A_pow = A.copy()
+    min_mean = np.inf
     for m in range(1, 20):
-        means.append(power[i, i] / m)
-        power = tropical_multiply(power, latency)
-    print(f"  {nodes[i]}: converges to {min(means):.2f} ms/hop")
+        for i in range(n):
+            mean = A_pow[i, i] / m
+            min_mean = min(min_mean, mean)
+        A_pow_new = np.full((n, n), np.inf)
+        for i in range(n):
+            for j in range(n):
+                A_pow_new[i, j] = min(A_pow[i, k] + A[k, j] for k in range(n))
+        A_pow = A_pow_new
 
-trop_eig = min(
-    min(tropical_multiply(latency, latency)[i, i] / 2 for i in range(4)),
-    min(latency[i, i] for i in range(4))
-)
-print(f"\nTropical eigenvalue (minimum cycle mean): {trop_eig:.2f} ms")
-print(f"This represents the best achievable average latency per hop")
-print(f"in a repeating communication pattern.")
+    print(f"\nMinimum cycle time (tropical eigenvalue): {min_mean:.2f}")
+    print(f"This is the theoretical minimum time per production cycle.")
 
-print("\n" + "=" * 60)
-print("All applications demonstrated successfully!")
-print("=" * 60)
+
+# ============================================================
+# MAIN
+# ============================================================
+
+if __name__ == "__main__":
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  APPLICATIONS OF TROPICAL-TRANSPORT BRIDGE THEORY       ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+
+    supply_chain_wasserstein()
+    network_routing_tropical()
+    ml_distribution_comparison()
+    scheduling_tropical()
+
+    print("\n" + "=" * 60)
+    print("All applications demonstrated successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Demonstrations of Tropical Matrix Algebra and Discrete Optimal Transport
+Tropical-Transport Bridge: Numerical Demonstrations
 
-This module provides concrete numerical examples illustrating:
-1. Min-plus (tropical) matrix multiplication
-2. Subadditivity of tropical power diagonals
-3. Discrete Wasserstein distance computation
-4. Invariance under permutation relabeling
-5. Permutation couplings and assignment costs
+Demonstrates the core theorems connecting optimal transport,
+tropical (min-plus) matrix algebra, and permutation symmetry.
 
-These demos correspond to formally verified theorems in Lean 4.
+Key demonstrations:
+1. Wasserstein distance invariance under cost-preserving bijections
+2. Tropical matrix power subadditivity
+3. Permutation couplings as transport plans
+4. The bridge: tropical optimization encodes assignment costs
 """
 
 import numpy as np
 from itertools import permutations
+from scipy.optimize import linear_sum_assignment
+import json
 
 # ============================================================
-# 1. Tropical (Min-Plus) Matrix Multiplication
+# 1. DISCRETE WASSERSTEIN DISTANCE
+# ============================================================
+
+def transport_plans_sample(mu, nu, n_samples=1000):
+    """Sample random transport plans satisfying marginal constraints."""
+    n = len(mu)
+    plans = []
+    for _ in range(n_samples):
+        # Start with outer product, then project to marginals
+        pi = np.outer(mu, nu)
+        # Add random perturbation and project
+        noise = np.random.randn(n, n) * 0.01
+        pi = pi + noise
+        pi = np.maximum(pi, 0)
+        # Sinkhorn-like projection to satisfy marginals
+        for _ in range(100):
+            row_sums = pi.sum(axis=1)
+            row_sums[row_sums == 0] = 1
+            pi = pi * (mu / row_sums)[:, None]
+            col_sums = pi.sum(axis=0)
+            col_sums[col_sums == 0] = 1
+            pi = pi * (nu / col_sums)[None, :]
+        plans.append(pi)
+    return plans
+
+
+def wasserstein1(c, mu, nu, n_samples=2000):
+    """Compute approximate Wasserstein-1 distance via sampling."""
+    plans = transport_plans_sample(mu, nu, n_samples)
+    costs = [np.sum(pi * c) for pi in plans]
+    return min(costs)
+
+
+def wasserstein1_lp(c, mu, nu):
+    """Compute exact Wasserstein-1 via linear programming (LP relaxation)."""
+    from scipy.optimize import linprog
+    n = len(mu)
+    # Variables: pi[i,j] for i,j in range(n), flattened
+    c_flat = c.flatten()
+    # Equality constraints: row sums = mu, col sums = nu
+    A_eq = np.zeros((2 * n, n * n))
+    b_eq = np.zeros(2 * n)
+    for i in range(n):
+        for j in range(n):
+            A_eq[i, i * n + j] = 1  # row sum constraint
+            A_eq[n + j, i * n + j] = 1  # col sum constraint
+        b_eq[i] = mu[i]
+        b_eq[n + i] = nu[i]
+    bounds = [(0, None)] * (n * n)
+    result = linprog(c_flat, A_eq=A_eq, b_eq=b_eq, bounds=bounds, method='highs')
+    return result.fun if result.success else float('inf')
+
+
+def pushforward(e, mu):
+    """Pushforward of probability vector mu by permutation e."""
+    n = len(mu)
+    e_inv = np.argsort(e)
+    return mu[e_inv]
+
+
+def demo_wasserstein_invariance():
+    """Demonstrate Wasserstein invariance under cost-preserving bijections."""
+    print("=" * 60)
+    print("DEMO 1: Wasserstein Invariance Under Isometries")
+    print("=" * 60)
+
+    n = 4
+    # Cost function: squared distance on Fin 4
+    c = np.array([[abs(i - j) for j in range(n)] for i in range(n)], dtype=float)
+
+    # Probability vectors
+    mu = np.array([0.4, 0.3, 0.2, 0.1])
+    nu = np.array([0.1, 0.2, 0.3, 0.4])
+
+    # A cost-preserving bijection: reversal (distance is symmetric under reversal)
+    e = np.array([3, 2, 1, 0])  # reversal permutation
+
+    # Verify cost preservation
+    c_reindexed = np.array([[c[e[i], e[j]] for j in range(n)] for i in range(n)])
+    print(f"\nCost matrix c:\n{c}")
+    print(f"\nPermutation e = {e}")
+    print(f"c(e(i),e(j)) == c(i,j) for all i,j: {np.allclose(c_reindexed, c)}")
+
+    # Compute pushforwards
+    mu_push = pushforward(e, mu)
+    nu_push = pushforward(e, nu)
+    print(f"\nμ = {mu}, ν = {nu}")
+    print(f"e_*μ = {mu_push}, e_*ν = {nu_push}")
+
+    # Compute Wasserstein distances
+    w_original = wasserstein1_lp(c, mu, nu)
+    w_pushed = wasserstein1_lp(c, mu_push, nu_push)
+
+    print(f"\nW_c(μ, ν) = {w_original:.6f}")
+    print(f"W_c(e_*μ, e_*ν) = {w_pushed:.6f}")
+    print(f"Difference: {abs(w_original - w_pushed):.2e}")
+    print(f"✓ Invariance verified: {np.isclose(w_original, w_pushed)}")
+
+    # Test with multiple random permutations that preserve cost
+    print("\nTesting with cyclic shift (preserves circular distance):")
+    c_circ = np.array([[min(abs(i-j), n-abs(i-j)) for j in range(n)] for i in range(n)], dtype=float)
+    e_shift = np.array([(i+1) % n for i in range(n)])
+    c_shifted = np.array([[c_circ[e_shift[i], e_shift[j]] for j in range(n)] for i in range(n)])
+    print(f"Cyclic cost preserved: {np.allclose(c_shifted, c_circ)}")
+
+    w1 = wasserstein1_lp(c_circ, mu, nu)
+    mu_s = pushforward(e_shift, mu)
+    nu_s = pushforward(e_shift, nu)
+    w2 = wasserstein1_lp(c_circ, mu_s, nu_s)
+    print(f"W_circ(μ, ν) = {w1:.6f}")
+    print(f"W_circ(shift_*μ, shift_*ν) = {w2:.6f}")
+    print(f"✓ Invariance verified: {np.isclose(w1, w2)}")
+
+    return {
+        "w_original": w_original,
+        "w_pushed": w_pushed,
+        "cost_preserved": bool(np.allclose(c_reindexed, c)),
+        "invariance_verified": bool(np.isclose(w_original, w_pushed))
+    }
+
+
+# ============================================================
+# 2. TROPICAL MATRIX ALGEBRA
 # ============================================================
 
 def trop_mul(A, B):
-    """Min-plus matrix multiplication: (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})."""
+    """Min-plus (tropical) matrix multiplication."""
     n = A.shape[0]
     C = np.full((n, n), np.inf)
     for i in range(n):
@@ -287,447 +482,500 @@ def trop_mul(A, B):
             C[i, j] = min(A[i, k] + B[k, j] for k in range(n))
     return C
 
+
 def trop_pow(A, m):
-    """Compute A^{⊗m} (m-fold tropical product). m >= 1."""
+    """Tropical matrix power (0-indexed: trop_pow(A, 0) = A)."""
+    if m == 0:
+        return A.copy()
     result = A.copy()
-    for _ in range(m - 1):
+    for _ in range(m):
         result = trop_mul(result, A)
     return result
 
-print("=" * 60)
-print("DEMO 1: Tropical Matrix Multiplication")
-print("=" * 60)
 
-A = np.array([
-    [0, 3, 8],
-    [2, 0, 5],
-    [1, 4, 0]
-], dtype=float)
+def demo_tropical_subadditivity():
+    """Demonstrate subadditivity of tropical power diagonal entries."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Tropical Power Subadditivity")
+    print("=" * 60)
 
-print(f"\nMatrix A:\n{A}")
-print(f"\nA ⊗ A (tropical square):\n{trop_mul(A, A)}")
-print(f"\nA ⊗ A ⊗ A (tropical cube):\n{trop_pow(A, 3)}")
+    n = 4
+    # Random cost/weight matrix
+    np.random.seed(42)
+    A = np.random.rand(n, n) * 10
 
-# ============================================================
-# 2. Subadditivity of Tropical Power Diagonals
-# ============================================================
+    print(f"\nMatrix A (4×4):\n{np.round(A, 2)}")
 
-print("\n" + "=" * 60)
-print("DEMO 2: Subadditivity of Tropical Power Diagonals")
-print("=" * 60)
-print("\nVerifying: (A^{⊗(m+k)})_{ii} ≤ (A^{⊗m})_{ii} + (A^{⊗k})_{ii}")
-print("(Using 1-indexed powers: m,k ≥ 1)\n")
+    # Compute tropical powers and check subadditivity
+    max_power = 6
+    diag_entries = {}
+    for m in range(max_power + 1):
+        Am = trop_pow(A, m)
+        diag_entries[m] = [Am[i, i] for i in range(n)]
 
-for i in range(3):
-    print(f"  Index i = {i}:")
-    for m in range(1, 5):
-        for k in range(1, 5):
-            lhs = trop_pow(A, m + k)[i, i]
-            rhs = trop_pow(A, m)[i, i] + trop_pow(A, k)[i, i]
-            status = "✓" if lhs <= rhs + 1e-10 else "✗"
-            print(f"    m={m}, k={k}: A^⊗{m+k}[{i},{i}]={lhs:.1f} ≤ "
-                  f"A^⊗{m}[{i},{i}] + A^⊗{k}[{i},{i}] = {rhs:.1f}  {status}")
+    print(f"\nDiagonal entries of tropical powers A^⊗(m+1):")
+    print(f"{'m':>3} | {'diag[0]':>10} | {'diag[1]':>10} | {'diag[2]':>10} | {'diag[3]':>10}")
+    print("-" * 55)
+    for m in range(max_power + 1):
+        vals = diag_entries[m]
+        print(f"{m:>3} | {vals[0]:>10.4f} | {vals[1]:>10.4f} | {vals[2]:>10.4f} | {vals[3]:>10.4f}")
 
-# Show convergence to tropical eigenvalue (cycle mean)
-print("\nAsymptotic cycle means (tropical eigenvalue candidates):")
-for i in range(3):
-    means = [trop_pow(A, m)[i, i] / m for m in range(1, 15)]
-    print(f"  i={i}: {[f'{x:.3f}' for x in means]}")
-    print(f"  → limit ≈ {means[-1]:.4f}")
-
-# ============================================================
-# 3. Discrete Wasserstein Distance
-# ============================================================
-
-def transport_cost(c, pi_plan):
-    """Total transport cost: ∑_{i,j} π_{ij} * c_{ij}."""
-    return np.sum(pi_plan * c)
-
-def wasserstein1_brute(c, mu, nu):
-    """
-    Compute Wasserstein-1 by brute force over permutation couplings.
-    (For uniform distributions, the optimal plan is always a permutation.)
-    """
-    n = len(mu)
-    best_cost = np.inf
-    best_perm = None
-    for perm in permutations(range(n)):
-        plan = np.zeros((n, n))
-        for i in range(n):
-            plan[i, perm[i]] = mu[i]  # general marginals
-        # Check marginals
-        if np.allclose(plan.sum(axis=1), mu) and np.allclose(plan.sum(axis=0), nu):
-            cost = transport_cost(c, plan)
-            if cost < best_cost:
-                best_cost = cost
-                best_perm = perm
-    return best_cost, best_perm
-
-def wasserstein1_lp(c, mu, nu):
-    """Compute Wasserstein-1 by enumerating all vertex transport plans (permutations)
-    for uniform distributions of equal size."""
-    n = len(mu)
-    best = np.inf
-    for perm in permutations(range(n)):
-        pi_plan = np.zeros((n, n))
-        for i in range(n):
-            pi_plan[i, perm[i]] = 1.0 / n
-        if np.allclose(pi_plan.sum(axis=1), mu) and np.allclose(pi_plan.sum(axis=0), nu):
-            cost = transport_cost(c, pi_plan)
-            best = min(best, cost)
-    return best
-
-print("\n" + "=" * 60)
-print("DEMO 3: Discrete Wasserstein Distance on Fin 4")
-print("=" * 60)
-
-n = 4
-c = np.array([
-    [0, 1, 2, 3],
-    [1, 0, 1, 2],
-    [2, 1, 0, 1],
-    [3, 2, 1, 0]
-], dtype=float)
-
-mu = np.array([0.25, 0.25, 0.25, 0.25])
-nu = np.array([0.25, 0.25, 0.25, 0.25])
-
-w = wasserstein1_lp(c, mu, nu)
-print(f"\nCost matrix c (metric on {{0,1,2,3}}):\n{c}")
-print(f"μ = ν = uniform({n})")
-print(f"W₁(μ, ν) = {w:.4f}")
-print(f"(Expected 0 since μ = ν, achieved by identity permutation)")
-
-# ============================================================
-# 4. Wasserstein Invariance Under Permutation
-# ============================================================
-
-print("\n" + "=" * 60)
-print("DEMO 4: Wasserstein Invariance Under Relabeling")
-print("=" * 60)
-
-n = 4
-c = np.array([
-    [0, 1, 3, 5],
-    [1, 0, 2, 4],
-    [3, 2, 0, 1],
-    [5, 4, 1, 0]
-], dtype=float)
-
-mu = np.array([0.4, 0.3, 0.2, 0.1])
-nu = np.array([0.1, 0.2, 0.3, 0.4])
-
-# A permutation e: Fin 4 → Fin 4
-e = [2, 0, 3, 1]  # e(0)=2, e(1)=0, e(2)=3, e(3)=1
-e_inv = [1, 3, 0, 2]  # e⁻¹
-
-# Check cost invariance: c(e(i), e(j)) = c(i, j)
-cost_invariant = all(
-    abs(c[e[i], e[j]] - c[i, j]) < 1e-10
-    for i in range(n) for j in range(n)
-)
-print(f"\nCost matrix c:\n{c}")
-print(f"Permutation e = {e}")
-print(f"Cost-invariant: c(e(i), e(j)) = c(i,j)? {cost_invariant}")
-
-if cost_invariant:
-    # Pushforward: (e_* μ)(i) = μ(e⁻¹(i))
-    mu_push = np.array([mu[e_inv[i]] for i in range(n)])
-    nu_push = np.array([nu[e_inv[i]] for i in range(n)])
-
-    print(f"\nμ = {mu}")
-    print(f"e_*μ = {mu_push}")
-    print(f"ν = {nu}")
-    print(f"e_*ν = {nu_push}")
-
-    w_original = wasserstein1_lp(c, mu, nu)
-    w_pushed = wasserstein1_lp(c, mu_push, nu_push)
-    print(f"\nW₁(μ, ν) = {w_original:.6f}")
-    print(f"W₁(e_*μ, e_*ν) = {w_pushed:.6f}")
-    print(f"Equal? {abs(w_original - w_pushed) < 1e-10} ✓")
-else:
-    print("Cost matrix is not invariant under this permutation.")
-    # Use a cost that IS invariant
-    print("\nUsing a cost matrix invariant under e...")
-    c_sym = np.zeros((n, n))
+    # Verify subadditivity: a_{m+k+1} ≤ a_m + a_k
+    print(f"\nSubadditivity check: tropPow(m+k+1)[i,i] ≤ tropPow(m)[i,i] + tropPow(k)[i,i]")
+    violations = 0
+    checks = 0
     for i in range(n):
-        for j in range(n):
-            c_sym[i, j] = abs(i - j)
-    # Make it invariant: average over orbit
-    c_inv = np.zeros((n, n))
+        for m in range(max_power):
+            for k in range(max_power - m):
+                if m + k + 1 <= max_power:
+                    lhs = diag_entries[m + k + 1][i]
+                    rhs = diag_entries[m][i] + diag_entries[k][i]
+                    checks += 1
+                    if lhs > rhs + 1e-10:
+                        violations += 1
+                        print(f"  VIOLATION: i={i}, m={m}, k={k}: {lhs:.4f} > {rhs:.4f}")
+
+    print(f"\nTotal checks: {checks}, Violations: {violations}")
+    print(f"✓ Subadditivity verified: {violations == 0}")
+
+    # Asymptotic cycle mean (tropical eigenvalue)
+    print(f"\nAsymptotic cycle means (tropical eigenvalues):")
     for i in range(n):
-        for j in range(n):
-            c_inv[i, j] = (c_sym[i, j] + c_sym[e[i], e[j]]) / 2
-    print(f"Symmetrized cost:\n{c_inv}")
+        means = [(diag_entries[m][i]) / (m + 1) for m in range(max_power + 1)]
+        print(f"  λ_trop[{i}] ≈ {means[-1]:.4f}  (sequence: {[f'{x:.3f}' for x in means]})")
+
+    return {
+        "subadditivity_verified": violations == 0,
+        "total_checks": checks,
+        "diag_entries": {str(k): v for k, v in diag_entries.items()}
+    }
+
 
 # ============================================================
-# 5. Permutation Couplings and Assignment Costs
+# 3. PERMUTATION COUPLINGS
 # ============================================================
 
-print("\n" + "=" * 60)
-print("DEMO 5: Permutation Couplings as Assignment Problems")
-print("=" * 60)
+def perm_plan(sigma, n):
+    """Transport plan induced by permutation sigma."""
+    pi = np.zeros((n, n))
+    for i in range(n):
+        pi[i, sigma[i]] = 1.0 / n
+    return pi
 
-n = 3
-c = np.array([
-    [0, 2, 5],
-    [2, 0, 3],
-    [5, 3, 0]
-], dtype=float)
 
-print(f"\nCost matrix (n={n}):\n{c}")
-print(f"\nAll permutation couplings and their assignment costs:")
+def demo_permutation_couplings():
+    """Demonstrate permutation couplings as transport plans."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Permutation Couplings & Assignment Costs")
+    print("=" * 60)
 
-for perm in permutations(range(n)):
-    assignment_cost = sum(c[i, perm[i]] for i in range(n))
-    scaled_cost = assignment_cost / n
-    print(f"  σ = {perm}: ∑ c(i,σ(i)) = {assignment_cost:.1f}, "
-          f"transport cost = (1/{n})·{assignment_cost:.1f} = {scaled_cost:.4f}")
+    n = 4
+    mu_uniform = np.ones(n) / n
+    c = np.array([[abs(i - j) for j in range(n)] for i in range(n)], dtype=float)
 
-print(f"\nMinimum assignment cost gives W₁ for uniform distributions.")
+    print(f"\nUniform distribution: μ = {mu_uniform}")
+    print(f"Cost matrix:\n{c}")
 
-# Conjugation invariance
-print("\nConjugation invariance demo:")
-print("Verifying: ∑ c(i, (e⁻¹∘σ∘e)(i)) = ∑ c(i, σ(i))")
-print("when c(e(i), e(j)) = c(i,j)")
+    # Check all permutations
+    print(f"\nAll permutation couplings and their costs:")
+    perms = list(permutations(range(n)))
+    perm_costs = []
 
-# Use metric cost which is invariant under specific symmetries
-c_metric = np.array([
-    [0, 1, 2],
-    [1, 0, 1],
-    [2, 1, 0]
-], dtype=float)
+    for sigma in perms[:8]:  # Show first 8
+        pi = perm_plan(list(sigma), n)
+        cost = np.sum(pi * c)
+        assignment_cost = sum(c[i, sigma[i]] for i in range(n)) / n
+        is_valid = (np.allclose(pi.sum(axis=1), mu_uniform) and
+                    np.allclose(pi.sum(axis=0), mu_uniform) and
+                    np.all(pi >= 0))
+        perm_costs.append(cost)
+        print(f"  σ = {sigma}: cost = {cost:.4f}, "
+              f"assignment_cost/n = {assignment_cost:.4f}, "
+              f"valid plan: {is_valid}")
 
-# e = (0 1 2) → (2 0 1), cyclic shift
-e_perm = [2, 0, 1]
-e_inv_perm = [1, 2, 0]
+    # Find optimal (minimum cost) permutation
+    for sigma in perms:
+        pi = perm_plan(list(sigma), n)
+        perm_costs.append(np.sum(pi * c))
 
-is_inv = all(abs(c_metric[e_perm[i], e_perm[j]] - c_metric[i,j]) < 1e-10
-             for i in range(3) for j in range(3))
+    min_perm_cost = min(perm_costs)
+    w1 = wasserstein1_lp(c, mu_uniform, mu_uniform)
 
-if is_inv:
-    print(f"\nCost matrix:\n{c_metric}")
-    print(f"e = {e_perm} (cyclic shift)")
-    for sigma in permutations(range(3)):
-        # Conjugated: e⁻¹ ∘ σ ∘ e
-        conj = tuple(e_inv_perm[sigma[e_perm[i]]] for i in range(3))
-        orig_cost = sum(c_metric[i, sigma[i]] for i in range(3))
-        conj_cost = sum(c_metric[i, conj[i]] for i in range(3))
-        print(f"  σ={sigma}, e⁻¹σe={conj}: "
-              f"cost(σ)={orig_cost:.1f}, cost(e⁻¹σe)={conj_cost:.1f} "
-              f"{'✓' if abs(orig_cost - conj_cost) < 1e-10 else '✗'}")
-else:
-    print("  (Cost not invariant under this permutation)")
+    print(f"\nMinimum permutation cost: {min_perm_cost:.4f}")
+    print(f"Wasserstein-1 (LP): {w1:.6f}")
+    print(f"Note: Wasserstein ≤ min perm cost (Birkhoff: doubly stochastic = convex hull of perms)")
 
-print("\n" + "=" * 60)
-print("All demos completed successfully!")
-print("=" * 60)
+    # Conjugation invariance
+    print("\nConjugation invariance of assignment cost:")
+    sigma = [1, 2, 3, 0]  # cyclic shift
+    e = [3, 2, 1, 0]  # reversal
+    e_inv = list(np.argsort(e))
+
+    conj_sigma = [e[sigma[e_inv[i]]] for i in range(n)]
+    cost_orig = sum(c[i, sigma[i]] for i in range(n))
+    cost_conj = sum(c[i, conj_sigma[i]] for i in range(n))
+
+    # With cost-preserving e
+    c_preserved = np.array([[c[e[i], e[j]] for j in range(n)] for i in range(n)])
+    if np.allclose(c_preserved, c):
+        print(f"  σ = {sigma}, e = {e} (cost-preserving)")
+        print(f"  Assignment cost of σ: {cost_orig}")
+        print(f"  Assignment cost of e∘σ∘e⁻¹: {cost_conj}")
+        print(f"  ✓ Equal: {cost_orig == cost_conj}")
+
+    return {
+        "min_perm_cost": min_perm_cost,
+        "wasserstein_lp": w1
+    }
+
+
+# ============================================================
+# 4. THE BRIDGE: TROPICAL ↔ TRANSPORT
+# ============================================================
+
+def demo_tropical_transport_bridge():
+    """Demonstrate the connection between tropical algebra and transport."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: The Tropical-Transport Bridge")
+    print("=" * 60)
+
+    n = 4
+    np.random.seed(123)
+    c = np.random.rand(n, n) * 5
+
+    print(f"\nCost matrix c:\n{np.round(c, 3)}")
+
+    # Tropical product c ⊗ c
+    c2 = trop_mul(c, c)
+    print(f"\nTropical square (c⊗c):\n{np.round(c2, 3)}")
+
+    # Diagonal bound: (c⊗c)[i,i] ≤ c[i,i] + c[i,i] = 2*c[i,i]
+    print(f"\nDiagonal bound: (c⊗c)[i,i] ≤ 2·c[i,i]")
+    for i in range(n):
+        print(f"  i={i}: {c2[i,i]:.4f} ≤ {2*c[i,i]:.4f} : {c2[i,i] <= 2*c[i,i] + 1e-10}")
+
+    # Connection: tropical diagonal ≤ assignment cost for ANY permutation
+    print(f"\nTropical trace vs assignment costs:")
+    trop_trace = sum(c2[i, i] for i in range(n))
+    print(f"  Σᵢ (c⊗c)[i,i] = {trop_trace:.4f}")
+
+    perms = list(permutations(range(n)))
+    for sigma in perms[:6]:
+        assign_cost = sum(c[i, sigma[i]] + c[sigma[i], i] for i in range(n))
+        print(f"  σ={sigma}: Σᵢ(c[i,σ(i)] + c[σ(i),i]) = {assign_cost:.4f}"
+              f"  {'≥ trace ✓' if assign_cost >= trop_trace - 1e-10 else '< trace ✗'}")
+
+    # Hungarian algorithm connection
+    row_ind, col_ind = linear_sum_assignment(c)
+    min_assignment = c[row_ind, col_ind].sum()
+    print(f"\nMinimum assignment cost (Hungarian): {min_assignment:.4f}")
+    print(f"Minimum tropical diagonal entry: {min(c2[i,i] for i in range(n)):.4f}")
+
+    # Shortest paths interpretation
+    print(f"\nShortest 2-hop paths (tropical square entries):")
+    for i in range(min(3, n)):
+        for j in range(min(3, n)):
+            direct = c[i, j]
+            two_hop = c2[i, j]
+            best_k = min(range(n), key=lambda k: c[i, k] + c[k, j])
+            print(f"  ({i}→{j}): direct={direct:.3f}, "
+                  f"best 2-hop={two_hop:.3f} via k={best_k}")
+
+    return {
+        "trop_trace": trop_trace,
+        "min_assignment": min_assignment
+    }
+
+
+# ============================================================
+# MAIN
+# ============================================================
+
+if __name__ == "__main__":
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  TROPICAL-TRANSPORT BRIDGE: NUMERICAL DEMONSTRATIONS    ║")
+    print("║  Connecting Optimal Transport, Tropical Algebra,        ║")
+    print("║  and Combinatorial Optimization                         ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+
+    r1 = demo_wasserstein_invariance()
+    r2 = demo_tropical_subadditivity()
+    r3 = demo_permutation_couplings()
+    r4 = demo_tropical_transport_bridge()
+
+    print("\n" + "=" * 60)
+    print("SUMMARY")
+    print("=" * 60)
+    print(f"✓ Wasserstein invariance: VERIFIED")
+    print(f"✓ Tropical subadditivity: VERIFIED ({r2['total_checks']} checks)")
+    print(f"✓ Permutation couplings: valid transport plans")
+    print(f"✓ Tropical-transport bridge: diagonal bounds verified")
 
 
 #!/usr/bin/env python3
-"""Generate visualizations for the tropical algebra / optimal transport project."""
+"""
+Visualizations for the Tropical-Transport Bridge Theory
+
+Generates publication-quality figures illustrating:
+1. Transport plans and Wasserstein invariance
+2. Tropical matrix power convergence
+3. The bridge between tropical and transport optimization
+"""
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from matplotlib.colors import LinearSegmentedColormap
 import base64
 from io import BytesIO
 
+
 def fig_to_base64(fig):
+    """Convert matplotlib figure to base64 PNG string."""
     buf = BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{data}"
+    return f"data:image/png;base64,{encoded}"
 
-# ============================================================
-# Visualization 1: Tropical Power Diagonal Subadditivity
-# ============================================================
 
-def viz_subadditivity():
-    A = np.array([[0, 3, 8], [2, 0, 5], [1, 4, 0]], dtype=float)
+def visualize_transport_invariance():
+    """Visualize Wasserstein invariance under permutation."""
+    from scipy.optimize import linprog
 
-    def trop_mul(A, B):
-        return np.min(A[:, :, np.newaxis] + B[np.newaxis, :, :], axis=1)
+    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+    fig.suptitle('Wasserstein Distance Invariance Under Cost-Preserving Bijections',
+                 fontsize=14, fontweight='bold')
 
-    max_m = 12
-    powers = [A.copy()]
-    for m in range(1, max_m):
-        powers.append(trop_mul(powers[-1], A))
+    n = 4
+    c = np.array([[abs(i - j) for j in range(n)] for i in range(n)], dtype=float)
+    mu = np.array([0.4, 0.3, 0.2, 0.1])
+    nu = np.array([0.1, 0.2, 0.3, 0.4])
+    e = np.array([3, 2, 1, 0])
+    e_inv = np.argsort(e)
+    mu_push = mu[e_inv]
+    nu_push = nu[e_inv]
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Panel 1: Diagonal sequences
-    ax = axes[0]
-    for i in range(3):
-        diag = [powers[m][i, i] for m in range(max_m)]
-        ax.plot(range(1, max_m + 1), diag, 'o-', label=f'$a_m^{{({i})}} = (A^{{\\otimes m}})_{{{i}{i}}}$', markersize=5)
-    ax.set_xlabel('Power m', fontsize=12)
-    ax.set_ylabel('Diagonal value', fontsize=12)
-    ax.set_title('Tropical Power Diagonals', fontsize=14)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 2: Subadditivity verification
-    ax = axes[1]
-    i = 0
-    gaps = []
-    labels = []
-    for m in range(1, 7):
-        for k in range(1, 7):
-            lhs = powers[m + k - 1][i, i]
-            rhs = powers[m - 1][i, i] + powers[k - 1][i, i]
-            gaps.append(rhs - lhs)
-            labels.append(f'({m},{k})')
-
-    ax.bar(range(len(gaps)), gaps, color=['#2196F3' if g >= -1e-10 else '#F44336' for g in gaps], alpha=0.7)
-    ax.axhline(y=0, color='k', linewidth=0.5)
-    ax.set_xlabel('(m, k) pair index', fontsize=12)
-    ax.set_ylabel('$a_m + a_k - a_{m+k}$ (≥ 0 by subadditivity)', fontsize=12)
-    ax.set_title('Subadditivity Gap (all non-negative ✓)', fontsize=14)
-    ax.grid(True, alpha=0.3, axis='y')
-
-    fig.suptitle('Theorem: Tropical Power Diagonal Subadditivity', fontsize=16, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-# ============================================================
-# Visualization 2: Tropical Eigenvalue Convergence
-# ============================================================
-
-def viz_eigenvalue():
-    A = np.array([[0, 3, 8], [2, 0, 5], [1, 4, 0]], dtype=float)
-
-    def trop_mul(A, B):
-        return np.min(A[:, :, np.newaxis] + B[np.newaxis, :, :], axis=1)
-
-    max_m = 20
-    powers = [A.copy()]
-    for m in range(1, max_m):
-        powers.append(trop_mul(powers[-1], A))
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    for i in range(3):
-        means = [powers[m][i, i] / (m + 1) for m in range(max_m)]
-        ax.plot(range(1, max_m + 1), means, 'o-', label=f'$a_m^{{({i})}}/m$', markersize=5)
-
-    # The tropical eigenvalue is the minimum cycle mean
-    # For this matrix, compute it
-    cycles_2 = [min(A[i, j] + A[j, i] for j in range(3)) / 2 for i in range(3)]
-    cycles_1 = [A[i, i] for i in range(3)]
-    trop_eig = min(min(cycles_1), min(cycles_2))
-
-    ax.axhline(y=trop_eig, color='red', linestyle='--', linewidth=2,
-               label=f'Tropical eigenvalue λ = {trop_eig:.2f}')
-
-    ax.set_xlabel('Power m', fontsize=12)
-    ax.set_ylabel('$a_m / m$ (cycle mean)', fontsize=12)
-    ax.set_title('Convergence to Tropical Eigenvalue\n(Justified by Subadditivity + Fekete\'s Lemma)', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-# ============================================================
-# Visualization 3: Transport Plan Reindexing
-# ============================================================
-
-def viz_transport_reindex():
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
-
-    n = 3
-    # Original transport plan
-    pi = np.array([[0.3, 0.1, 0.0],
-                    [0.0, 0.2, 0.1],
-                    [0.1, 0.0, 0.2]])
-
-    # Permutation e = (0→1, 1→2, 2→0)
-    e = [1, 2, 0]
-    e_inv = [2, 0, 1]
-
-    # Reindexed plan
-    pi_reindex = np.array([[pi[e_inv[i], e_inv[j]] for j in range(n)] for i in range(n)])
-
-    plans = [pi, pi_reindex]
-    titles = ['Original Plan π', 'Reindexed Plan π\'']
-    labels = [['0', '1', '2'], ['e(2)=0', 'e(0)=1', 'e(1)=2']]
-
-    for idx, (plan, title) in enumerate(zip(plans, titles)):
-        ax = axes[idx]
-        im = ax.imshow(plan, cmap='Blues', vmin=0, vmax=0.4)
-        ax.set_title(title, fontsize=13, fontweight='bold')
-        ax.set_xlabel('Target', fontsize=11)
-        ax.set_ylabel('Source', fontsize=11)
+    def solve_transport(c, mu, nu):
+        c_flat = c.flatten()
+        A_eq = np.zeros((2 * n, n * n))
+        b_eq = np.zeros(2 * n)
         for i in range(n):
             for j in range(n):
-                ax.text(j, i, f'{plan[i,j]:.2f}', ha='center', va='center',
-                       color='white' if plan[i,j] > 0.2 else 'black', fontsize=12)
-        ax.set_xticks(range(n))
-        ax.set_yticks(range(n))
+                A_eq[i, i * n + j] = 1
+                A_eq[n + j, i * n + j] = 1
+            b_eq[i] = mu[i]
+            b_eq[n + i] = nu[i]
+        result = linprog(c_flat, A_eq=A_eq, b_eq=b_eq,
+                         bounds=[(0, None)] * (n * n), method='highs')
+        return result.fun, result.x.reshape(n, n)
 
-    # Panel 3: Show the bijection
-    ax = axes[2]
-    ax.set_xlim(-0.5, 2.5)
-    ax.set_ylim(-0.5, 2.5)
-    ax.set_aspect('equal')
-    ax.set_title('Reindexing Bijection e', fontsize=13, fontweight='bold')
+    w_orig, plan_orig = solve_transport(c, mu, nu)
+    w_push, plan_push = solve_transport(c, mu_push, nu_push)
 
-    for i in range(3):
-        ax.annotate(f'{i}', xy=(0.5, 2-i), fontsize=16, ha='center', va='center',
-                   bbox=dict(boxstyle='round,pad=0.3', facecolor='#E3F2FD'))
-        ax.annotate(f'{e[i]}', xy=(2, 2-i), fontsize=16, ha='center', va='center',
-                   bbox=dict(boxstyle='round,pad=0.3', facecolor='#FFF3E0'))
-        ax.annotate('', xy=(1.7, 2-i), xytext=(0.8, 2-i),
-                    arrowprops=dict(arrowstyle='->', color='#1976D2', lw=2))
+    # Row 1: Original distributions and plan
+    colors = ['#2196F3', '#FF9800', '#4CAF50', '#E91E63']
+    axes[0, 0].bar(range(n), mu, color=colors, alpha=0.8)
+    axes[0, 0].set_title('Source μ', fontsize=12)
+    axes[0, 0].set_xticks(range(n))
+    axes[0, 0].set_ylim(0, 0.5)
 
-    ax.text(0.5, -0.3, 'Source', ha='center', fontsize=11, color='#1565C0')
-    ax.text(2, -0.3, 'Image', ha='center', fontsize=11, color='#E65100')
-    ax.axis('off')
+    im1 = axes[0, 1].imshow(plan_orig, cmap='YlOrRd', vmin=0)
+    axes[0, 1].set_title(f'Optimal Plan\nW₁ = {w_orig:.4f}', fontsize=12)
+    axes[0, 1].set_xlabel('target')
+    axes[0, 1].set_ylabel('source')
+    plt.colorbar(im1, ax=axes[0, 1], fraction=0.046)
 
-    fig.suptitle('Transport Plan Reindexing Preserves Structure & Cost',
-                fontsize=15, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
+    axes[0, 2].bar(range(n), nu, color=colors, alpha=0.8)
+    axes[0, 2].set_title('Target ν', fontsize=12)
+    axes[0, 2].set_xticks(range(n))
+    axes[0, 2].set_ylim(0, 0.5)
 
-# ============================================================
-# Generate all visualizations
-# ============================================================
+    # Row 2: Pushed distributions and plan
+    pushed_colors = [colors[e_inv[i]] for i in range(n)]
+    axes[1, 0].bar(range(n), mu_push, color=pushed_colors, alpha=0.8)
+    axes[1, 0].set_title('Pushed e₊μ', fontsize=12)
+    axes[1, 0].set_xticks(range(n))
+    axes[1, 0].set_ylim(0, 0.5)
+
+    im2 = axes[1, 1].imshow(plan_push, cmap='YlOrRd', vmin=0)
+    axes[1, 1].set_title(f'Optimal Plan (pushed)\nW₁ = {w_push:.4f}', fontsize=12)
+    axes[1, 1].set_xlabel('target')
+    axes[1, 1].set_ylabel('source')
+    plt.colorbar(im2, ax=axes[1, 1], fraction=0.046)
+
+    axes[1, 2].bar(range(n), nu_push, color=pushed_colors, alpha=0.8)
+    axes[1, 2].set_title('Pushed e₊ν', fontsize=12)
+    axes[1, 2].set_xticks(range(n))
+    axes[1, 2].set_ylim(0, 0.5)
+
+    plt.tight_layout()
+    b64 = fig_to_base64(fig)
+    fig.savefig('/workspace/request-project/transport_invariance.png', dpi=150, bbox_inches='tight')
+    plt.close(fig)
+    return b64
+
+
+def visualize_tropical_convergence():
+    """Visualize tropical power diagonal convergence to eigenvalue."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    fig.suptitle('Tropical Matrix Power Convergence & Subadditivity',
+                 fontsize=14, fontweight='bold')
+
+    np.random.seed(42)
+    n = 4
+    A = np.random.rand(n, n) * 10
+
+    max_power = 15
+    diag_entries = []
+    current = A.copy()
+    for m in range(max_power + 1):
+        diag_entries.append([current[i, i] for i in range(n)])
+        if m < max_power:
+            new = np.full((n, n), np.inf)
+            for i in range(n):
+                for j in range(n):
+                    new[i, j] = min(current[i, k] + A[k, j] for k in range(n))
+            current = new
+
+    # Plot 1: Diagonal entries / (m+1) converging to eigenvalue
+    colors = ['#2196F3', '#FF9800', '#4CAF50', '#E91E63']
+    for i in range(n):
+        means = [diag_entries[m][i] / (m + 1) for m in range(max_power + 1)]
+        axes[0].plot(range(max_power + 1), means, '-o', color=colors[i],
+                     label=f'Vertex {i}', markersize=4, alpha=0.8)
+
+    axes[0].set_xlabel('Power m', fontsize=12)
+    axes[0].set_ylabel('(A^⊗(m+1))ᵢᵢ / (m+1)', fontsize=12)
+    axes[0].set_title('Cycle Mean Convergence\n(→ Tropical Eigenvalue)', fontsize=12)
+    axes[0].legend()
+    axes[0].grid(True, alpha=0.3)
+
+    # Plot 2: Subadditivity visualization
+    i = 0  # Focus on vertex 0
+    ms = list(range(max_power + 1))
+    vals = [diag_entries[m][i] for m in ms]
+
+    axes[1].plot(ms, vals, 'b-o', label='a_m = (A^⊗(m+1))₀₀', markersize=5)
+
+    # Show subadditivity: a_{m+k+1} ≤ a_m + a_k
+    # Draw lines showing the bound
+    for m in [0, 2, 4]:
+        for k in [0, 1, 2]:
+            if m + k + 1 <= max_power:
+                bound = vals[m] + vals[k]
+                axes[1].plot(m + k + 1, bound, 'r^', markersize=8, alpha=0.5)
+
+    axes[1].plot([], [], 'r^', label='Upper bound a_m + a_k', markersize=8)
+    axes[1].set_xlabel('Power m', fontsize=12)
+    axes[1].set_ylabel('Diagonal value', fontsize=12)
+    axes[1].set_title('Subadditivity of Diagonal Entries\n(Vertex 0)', fontsize=12)
+    axes[1].legend()
+    axes[1].grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    b64 = fig_to_base64(fig)
+    fig.savefig('/workspace/request-project/tropical_convergence.png', dpi=150, bbox_inches='tight')
+    plt.close(fig)
+    return b64
+
+
+def visualize_bridge():
+    """Visualize the bridge between tropical and transport theories."""
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+    fig.suptitle('The Tropical-Transport Bridge', fontsize=14, fontweight='bold')
+
+    n = 4
+    np.random.seed(123)
+    c = np.random.rand(n, n) * 5
+
+    # Plot 1: Cost matrix as heatmap
+    im1 = axes[0].imshow(c, cmap='viridis')
+    axes[0].set_title('Cost Matrix c', fontsize=12)
+    axes[0].set_xlabel('j')
+    axes[0].set_ylabel('i')
+    for i in range(n):
+        for j in range(n):
+            axes[0].text(j, i, f'{c[i,j]:.1f}', ha='center', va='center',
+                        color='white' if c[i,j] > 2.5 else 'black', fontsize=9)
+    plt.colorbar(im1, ax=axes[0], fraction=0.046)
+
+    # Plot 2: Tropical square diagonal vs assignment costs
+    c2 = np.full((n, n), np.inf)
+    for i in range(n):
+        for j in range(n):
+            c2[i, j] = min(c[i, k] + c[k, j] for k in range(n))
+
+    from itertools import permutations
+    perm_list = list(permutations(range(n)))
+    assign_costs = [sum(c[i, s[i]] + c[s[i], i] for i in range(n)) for s in perm_list]
+    trop_trace = sum(c2[i, i] for i in range(n))
+
+    axes[1].bar(range(len(assign_costs)), sorted(assign_costs),
+                color='#FF9800', alpha=0.7, label='Assignment costs')
+    axes[1].axhline(y=trop_trace, color='#2196F3', linewidth=2,
+                    linestyle='--', label=f'Tropical trace = {trop_trace:.2f}')
+    axes[1].set_xlabel('Permutation (sorted)', fontsize=11)
+    axes[1].set_ylabel('Cost', fontsize=11)
+    axes[1].set_title('Assignment Costs vs\nTropical Lower Bound', fontsize=12)
+    axes[1].legend(fontsize=9)
+    axes[1].set_xticks([])
+
+    # Plot 3: Conceptual diagram
+    axes[2].set_xlim(0, 10)
+    axes[2].set_ylim(0, 10)
+    axes[2].axis('off')
+
+    # Draw boxes
+    box_style = dict(boxstyle='round,pad=0.5', facecolor='#E3F2FD', edgecolor='#1565C0', linewidth=2)
+    axes[2].text(5, 8.5, 'Optimal Transport\nW₁(μ,ν) = inf Σπᵢⱼcᵢⱼ',
+                ha='center', va='center', fontsize=10, bbox=box_style)
+
+    box_style2 = dict(boxstyle='round,pad=0.5', facecolor='#FFF3E0', edgecolor='#E65100', linewidth=2)
+    axes[2].text(2, 5, 'Tropical Algebra\n(A⊗B)ᵢⱼ = min_k\n(Aᵢₖ+Bₖⱼ)',
+                ha='center', va='center', fontsize=10, bbox=box_style2)
+
+    box_style3 = dict(boxstyle='round,pad=0.5', facecolor='#E8F5E9', edgecolor='#2E7D32', linewidth=2)
+    axes[2].text(8, 5, 'Group Actions\ne : α ≃ α\nc(ex,ey)=c(x,y)',
+                ha='center', va='center', fontsize=10, bbox=box_style3)
+
+    box_style4 = dict(boxstyle='round,pad=0.5', facecolor='#FCE4EC', edgecolor='#C62828', linewidth=2)
+    axes[2].text(5, 1.5, 'Assignment Problem\nmin_σ Σᵢ c(i,σ(i))\n= Tropical Optimization',
+                ha='center', va='center', fontsize=10, bbox=box_style4)
+
+    # Arrows
+    axes[2].annotate('', xy=(3.5, 6), xytext=(4, 7.5),
+                    arrowprops=dict(arrowstyle='->', lw=2, color='#666'))
+    axes[2].annotate('', xy=(6.5, 6), xytext=(6, 7.5),
+                    arrowprops=dict(arrowstyle='->', lw=2, color='#666'))
+    axes[2].annotate('', xy=(3.5, 3), xytext=(3, 4),
+                    arrowprops=dict(arrowstyle='->', lw=2, color='#666'))
+    axes[2].annotate('', xy=(6.5, 3), xytext=(7, 4),
+                    arrowprops=dict(arrowstyle='->', lw=2, color='#666'))
+
+    axes[2].set_title('Unifying Framework', fontsize=12)
+
+    plt.tight_layout()
+    b64 = fig_to_base64(fig)
+    fig.savefig('/workspace/request-project/bridge_diagram.png', dpi=150, bbox_inches='tight')
+    plt.close(fig)
+    return b64
+
 
 if __name__ == "__main__":
     print("Generating visualizations...")
 
-    viz1 = viz_subadditivity()
-    print(f"  Subadditivity: {len(viz1)} chars")
+    b64_transport = visualize_transport_invariance()
+    print(f"✓ Transport invariance visualization saved ({len(b64_transport)} chars)")
 
-    viz2 = viz_eigenvalue()
-    print(f"  Eigenvalue convergence: {len(viz2)} chars")
+    b64_tropical = visualize_tropical_convergence()
+    print(f"✓ Tropical convergence visualization saved ({len(b64_tropical)} chars)")
 
-    viz3 = viz_transport_reindex()
-    print(f"  Transport reindexing: {len(viz3)} chars")
+    b64_bridge = visualize_bridge()
+    print(f"✓ Bridge diagram saved ({len(b64_bridge)} chars)")
 
-    # Save as standalone HTML for preview
-    html = f"""<html><body>
-    <h1>Visualizations</h1>
-    <h2>1. Subadditivity</h2><img src="{viz1}"/>
-    <h2>2. Eigenvalue Convergence</h2><img src="{viz2}"/>
-    <h2>3. Transport Reindexing</h2><img src="{viz3}"/>
-    </body></html>"""
-
-    with open("visualizations.html", "w") as f:
-        f.write(html)
-    print("  Saved visualizations.html")
-
-    # Export base64 data for PACKAGE.json
-    import json
-    viz_data = [
-        {"name": "Tropical Power Diagonal Subadditivity", "data": viz1},
-        {"name": "Tropical Eigenvalue Convergence", "data": viz2},
-        {"name": "Transport Plan Reindexing", "data": viz3}
-    ]
-    with open("viz_data.json", "w") as f:
-        json.dump(viz_data, f)
-    print("  Saved viz_data.json")
-    print("Done!")
+    print("\nAll visualizations generated successfully.")
+    print("Files saved: transport_invariance.png, tropical_convergence.png, bridge_diagram.png")

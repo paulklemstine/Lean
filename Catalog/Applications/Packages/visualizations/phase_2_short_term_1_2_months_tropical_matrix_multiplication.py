@@ -1,419 +1,392 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Matrix Algebra and Discrete Optimal Transport
+Algorithms for Tropical-Transport Theory
 
-Implements the core algorithms underlying the formally verified theorems:
-1. Tropical (min-plus) matrix multiplication and powers
-2. Tropical eigenvalue computation via cycle means
-3. Discrete Wasserstein-1 distance (exact and LP-based)
-4. Transport plan verification and pushforward
-5. Assignment cost computation
-
-All algorithms include type hints, docstrings, and complexity analysis.
+Implements the core algorithms arising from the formalized theory:
+1. Tropical matrix multiplication and powers
+2. Tropical eigenvalue computation (cycle mean)
+3. Wasserstein distance via LP
+4. Assignment problem (Hungarian-style)
+5. Sinkhorn projections for transport plans
 """
 
 import numpy as np
 from typing import Tuple, List, Optional
-from itertools import permutations
+
 
 # ============================================================
-# Tropical Matrix Algebra
+# TROPICAL MATRIX ALGEBRA
 # ============================================================
 
 def tropical_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
-    """
-    Min-plus (tropical) matrix multiplication.
+    """Min-plus (tropical) matrix multiplication.
 
-    (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})
+    (A ⊗ B)[i,j] = min_k (A[i,k] + B[k,j])
 
-    Time complexity: O(n³)
-    Space complexity: O(n²)
+    Complexity: O(n³) where n is the matrix dimension.
 
     Args:
-        A: n×n matrix
-        B: n×n matrix
+        A: n×n real matrix
+        B: n×n real matrix
 
     Returns:
-        n×n tropical product matrix
+        n×n matrix with (A⊗B)[i,j] = min_k(A[i,k] + B[k,j])
     """
     n = A.shape[0]
-    assert A.shape == (n, n) and B.shape == (n, n), "Matrices must be square and same size"
-    # Vectorized implementation using broadcasting
-    # A[:, :, None] has shape (n, n, 1), B[None, :, :] has shape (1, n, n)
-    # Sum has shape (n, n, n), min over axis 1 gives (n, n)
-    return np.min(A[:, :, np.newaxis] + B[np.newaxis, :, :], axis=1)
+    # Vectorized: for each (i,j), compute min over k
+    # A[i,:] has shape (n,), B[:,j] has shape (n,)
+    # We want min_k A[i,k] + B[k,j]
+    C = np.min(A[:, :, None] + B[None, :, :], axis=1)
+    return C
 
 
 def tropical_power(A: np.ndarray, m: int) -> np.ndarray:
-    """
-    Compute A^{⊗m}: m-fold tropical matrix product.
+    """Compute the m-th tropical power A^⊗m.
 
-    Time complexity: O(n³ · m)
-    Space complexity: O(n²)
+    Uses repeated squaring for efficiency when m is large.
+
+    Complexity: O(n³ log m)
 
     Args:
-        A: n×n matrix
-        m: positive integer exponent
+        A: n×n real matrix
+        m: power (must be ≥ 1)
 
     Returns:
-        A^{⊗m} as n×n matrix
+        A^⊗m (m-fold tropical product)
     """
-    assert m >= 1, "Power must be positive"
+    if m <= 0:
+        raise ValueError("Power must be positive")
+    if m == 1:
+        return A.copy()
+
     result = A.copy()
-    for _ in range(m - 1):
-        result = tropical_multiply(result, A)
+    base = A.copy()
+    m -= 1
+    while m > 0:
+        if m % 2 == 1:
+            result = tropical_multiply(result, base)
+        base = tropical_multiply(base, base)
+        m //= 2
     return result
 
 
-def tropical_diagonal_sequence(A: np.ndarray, i: int, max_power: int = 20) -> List[float]:
-    """
-    Compute the sequence a_m = (A^{⊗m})_{ii} for m = 1, ..., max_power.
+def tropical_eigenvalue(A: np.ndarray, max_power: int = 100) -> Tuple[float, np.ndarray]:
+    """Compute the tropical eigenvalue (minimum cycle mean) of A.
 
-    This sequence is subadditive: a_{m+k} ≤ a_m + a_k.
-    By Fekete's lemma, lim a_m/m exists and equals inf a_m/m.
+    By the subadditivity theorem (tropPow_diag_subadditive),
+    the diagonal entries of tropical powers satisfy
+        a_{m+k} ≤ a_m + a_k
+    and by Fekete's lemma, the limit
+        λ = lim_{n→∞} a_n / n = inf_{n≥1} a_n / n
+    exists and equals the minimum cycle mean.
+
+    Complexity: O(n⁴) via Karp's algorithm (we use the naive approach here).
 
     Args:
-        A: n×n matrix
-        i: diagonal index
-        max_power: number of terms to compute
+        A: n×n real matrix
+        max_power: maximum power to compute
 
     Returns:
-        List of diagonal values
+        (eigenvalue, cycle_means) where eigenvalue is the minimum
+        cycle mean and cycle_means[i] is the cycle mean for vertex i.
     """
     n = A.shape[0]
-    assert 0 <= i < n
-    diag_vals = []
-    power = A.copy()
+    cycle_means = np.full(n, np.inf)
+
+    current = A.copy()
     for m in range(1, max_power + 1):
-        diag_vals.append(power[i, i])
+        for i in range(n):
+            cycle_means[i] = min(cycle_means[i], current[i, i] / m)
         if m < max_power:
-            power = tropical_multiply(power, A)
-    return diag_vals
+            current = tropical_multiply(current, A)
+
+    eigenvalue = np.min(cycle_means)
+    return eigenvalue, cycle_means
 
 
-def tropical_eigenvalue(A: np.ndarray, max_power: int = 50) -> float:
-    """
-    Estimate the tropical eigenvalue (minimum cycle mean) of matrix A.
+def karp_cycle_mean(A: np.ndarray) -> Tuple[float, List[int]]:
+    """Karp's algorithm for minimum cycle mean.
 
-    The tropical eigenvalue λ satisfies:
-        λ = lim_{m→∞} (A^{⊗m})_{ii} / m  (for any i on an optimal cycle)
-        λ = min_i lim_{m→∞} (A^{⊗m})_{ii} / m
-        λ = min over all cycles C of (weight(C) / length(C))
+    Computes the minimum average weight cycle in a weighted digraph
+    represented by matrix A. This is the tropical eigenvalue.
 
-    Uses the subadditivity theorem to justify convergence.
-
-    Time complexity: O(n³ · max_power)
+    Complexity: O(n³) time, O(n²) space.
 
     Args:
-        A: n×n matrix
-        max_power: number of powers to compute for estimation
+        A: n×n weight matrix (A[i,j] = weight of edge i→j, np.inf if no edge)
 
     Returns:
-        Estimated tropical eigenvalue
+        (min_mean, cycle) where min_mean is the minimum cycle mean
+        and cycle is a list of vertices forming the optimal cycle.
     """
     n = A.shape[0]
-    best_mean = np.inf
-    for i in range(n):
-        seq = tropical_diagonal_sequence(A, i, max_power)
-        # By Fekete's lemma, the limit is inf a_m/m
-        means = [seq[m] / (m + 1) for m in range(len(seq))]
-        best_mean = min(best_mean, min(means))
-    return best_mean
+
+    # D[k][v] = minimum weight of a k-edge walk ending at v
+    D = np.full((n + 1, n), np.inf)
+    # Predecessor for path reconstruction
+    pred = np.full((n + 1, n), -1, dtype=int)
+
+    # Base case: 0-edge walks
+    for v in range(n):
+        D[0][v] = 0  # Start anywhere with cost 0
+
+    # Fill DP table
+    for k in range(1, n + 1):
+        for v in range(n):
+            for u in range(n):
+                if D[k-1][u] + A[u][v] < D[k][v]:
+                    D[k][v] = D[k-1][u] + A[u][v]
+                    pred[k][v] = u
+
+    # Compute cycle means using Karp's formula
+    # λ* = min_v max_k (D[n][v] - D[k][v]) / (n - k)
+    min_mean = np.inf
+    best_v = 0
+
+    for v in range(n):
+        max_val = -np.inf
+        for k in range(n):
+            if D[n][v] < np.inf and D[k][v] < np.inf:
+                val = (D[n][v] - D[k][v]) / (n - k)
+                max_val = max(max_val, val)
+        if max_val < min_mean:
+            min_mean = max_val
+            best_v = v
+
+    # Reconstruct cycle (simplified)
+    cycle = [best_v]
+    v = best_v
+    for k in range(n, 0, -1):
+        v = pred[k][v]
+        if v == -1:
+            break
+        cycle.append(v)
+        if v == best_v and len(cycle) > 1:
+            break
+    cycle.reverse()
+
+    return min_mean, cycle
 
 
 # ============================================================
-# Discrete Optimal Transport
+# OPTIMAL TRANSPORT
 # ============================================================
 
-def is_transport_plan(pi: np.ndarray, mu: np.ndarray, nu: np.ndarray,
-                      tol: float = 1e-10) -> bool:
-    """
-    Check if π is a valid transport plan from μ to ν.
+def wasserstein_lp(c: np.ndarray, mu: np.ndarray, nu: np.ndarray) -> Tuple[float, np.ndarray]:
+    """Compute Wasserstein-1 distance via linear programming.
 
-    A valid plan satisfies:
-    1. π_{ij} ≥ 0 for all i, j
-    2. ∑_j π_{ij} = μ_i for all i (row marginals)
-    3. ∑_i π_{ij} = ν_j for all j (column marginals)
+    Solves: min_{π ≥ 0} Σ_{i,j} π_{ij} c_{ij}
+            s.t. Σ_j π_{ij} = μ_i  (row marginals)
+                 Σ_i π_{ij} = ν_j  (column marginals)
 
-    Args:
-        pi: n×n matrix (candidate transport plan)
-        mu: source distribution (length n)
-        nu: target distribution (length n)
-        tol: numerical tolerance
-
-    Returns:
-        True if π is a valid transport plan
-    """
-    nonneg = np.all(pi >= -tol)
-    row_ok = np.allclose(pi.sum(axis=1), mu, atol=tol)
-    col_ok = np.allclose(pi.sum(axis=0), nu, atol=tol)
-    return bool(nonneg and row_ok and col_ok)
-
-
-def transport_cost(c: np.ndarray, pi: np.ndarray) -> float:
-    """
-    Compute the transport cost: ∑_{i,j} π_{ij} · c_{ij}.
+    Complexity: O(n³) via network simplex (using scipy's HiGHS solver).
 
     Args:
         c: n×n cost matrix
-        pi: n×n transport plan
+        mu: probability vector of length n
+        nu: probability vector of length n
 
     Returns:
-        Total transport cost
+        (distance, optimal_plan) where distance is W₁(μ,ν)
+        and optimal_plan is the optimal coupling.
     """
-    return float(np.sum(pi * c))
-
-
-def wasserstein1_exact(c: np.ndarray, mu: np.ndarray, nu: np.ndarray) -> Tuple[float, np.ndarray]:
-    """
-    Compute the exact Wasserstein-1 distance by enumerating all
-    permutation-based transport plans (vertices of the Birkhoff polytope).
-
-    For small n, this is exact. For larger n, use LP methods.
-
-    Time complexity: O(n! · n²)
-
-    Args:
-        c: n×n cost matrix
-        mu: source distribution
-        nu: target distribution
-
-    Returns:
-        (optimal_cost, optimal_plan) tuple
-    """
+    from scipy.optimize import linprog
     n = len(mu)
-    assert n <= 8, "Brute force only feasible for small n"
 
-    best_cost = np.inf
-    best_plan = None
+    c_flat = c.flatten()
+    A_eq = np.zeros((2 * n, n * n))
+    b_eq = np.zeros(2 * n)
 
-    for perm in permutations(range(n)):
-        # Construct plan: π_{i,σ(i)} = min(μ_i, ν_{σ(i)}) for perm plans
-        # For general marginals, we need to check feasibility
-        plan = np.zeros((n, n))
-        for i in range(n):
-            plan[i, perm[i]] = mu[i]
-
-        if is_transport_plan(plan, mu, nu):
-            cost = transport_cost(c, plan)
-            if cost < best_cost:
-                best_cost = cost
-                best_plan = plan.copy()
-
-    return best_cost, best_plan
-
-
-def pushforward(e: List[int], mu: np.ndarray) -> np.ndarray:
-    """
-    Compute the pushforward e_*μ of distribution μ by permutation e.
-
-    (e_*μ)(i) = μ(e⁻¹(i))
-
-    Args:
-        e: permutation as list (e[i] = image of i)
-        mu: source distribution
-
-    Returns:
-        Pushforward distribution
-    """
-    n = len(mu)
-    e_inv = [0] * n
-    for i in range(n):
-        e_inv[e[i]] = i
-    return np.array([mu[e_inv[i]] for i in range(n)])
-
-
-def reindex_plan(e: List[int], pi: np.ndarray) -> np.ndarray:
-    """
-    Reindex a transport plan by permutation e:
-    π'(i,j) = π(e⁻¹(i), e⁻¹(j))
-
-    Args:
-        e: permutation as list
-        pi: transport plan
-
-    Returns:
-        Reindexed transport plan
-    """
-    n = len(e)
-    e_inv = [0] * n
-    for i in range(n):
-        e_inv[e[i]] = i
-    result = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
-            result[i, j] = pi[e_inv[i], e_inv[j]]
-    return result
+            A_eq[i, i * n + j] = 1
+            A_eq[n + j, i * n + j] = 1
+        b_eq[i] = mu[i]
+        b_eq[n + i] = nu[i]
+
+    bounds = [(0, None)] * (n * n)
+    result = linprog(c_flat, A_eq=A_eq, b_eq=b_eq, bounds=bounds, method='highs')
+
+    if result.success:
+        plan = result.x.reshape(n, n)
+        return result.fun, plan
+    else:
+        return float('inf'), np.zeros((n, n))
 
 
-def permutation_plan(sigma: List[int], n: int) -> np.ndarray:
-    """
-    Construct the transport plan induced by permutation σ
-    between uniform distributions.
+def sinkhorn_transport(c: np.ndarray, mu: np.ndarray, nu: np.ndarray,
+                       epsilon: float = 0.1, max_iter: int = 1000,
+                       tol: float = 1e-8) -> Tuple[float, np.ndarray]:
+    """Compute regularized optimal transport via Sinkhorn iterations.
 
-    π(i, j) = 1/n if σ(i) = j, else 0.
+    Solves the entropy-regularized problem:
+        min_{π ≥ 0} Σ_{i,j} π_{ij} c_{ij} + ε Σ_{i,j} π_{ij} log(π_{ij})
+
+    Complexity: O(n² × iterations)
 
     Args:
-        sigma: permutation as list
-        n: size
+        c: n×n cost matrix
+        mu: source probability vector
+        nu: target probability vector
+        epsilon: regularization parameter
+        max_iter: maximum iterations
+        tol: convergence tolerance
 
     Returns:
-        n×n transport plan matrix
+        (cost, plan) where cost is the regularized transport cost
     """
-    plan = np.zeros((n, n))
-    for i in range(n):
-        plan[i, sigma[i]] = 1.0 / n
-    return plan
+    n = len(mu)
+    K = np.exp(-c / epsilon)
 
+    u = np.ones(n)
+    v = np.ones(n)
+
+    for iteration in range(max_iter):
+        u_old = u.copy()
+        u = mu / (K @ v)
+        v = nu / (K.T @ u)
+
+        if np.max(np.abs(u - u_old)) < tol:
+            break
+
+    plan = np.diag(u) @ K @ np.diag(v)
+    cost = np.sum(plan * c)
+    return cost, plan
+
+
+# ============================================================
+# ASSIGNMENT PROBLEM
+# ============================================================
 
 def assignment_cost(c: np.ndarray, sigma: List[int]) -> float:
-    """
-    Compute the assignment cost: ∑_i c(i, σ(i)).
+    """Compute the assignment cost Σᵢ c[i, σ(i)].
 
     Args:
-        c: cost matrix
-        sigma: permutation
+        c: n×n cost matrix
+        sigma: permutation as list
 
     Returns:
-        Assignment cost
+        Total assignment cost
     """
     return sum(c[i, sigma[i]] for i in range(len(sigma)))
 
 
-def optimal_assignment_brute(c: np.ndarray) -> Tuple[float, List[int]]:
-    """
-    Find the optimal assignment (minimum cost permutation) by brute force.
+def brute_force_assignment(c: np.ndarray) -> Tuple[float, List[int]]:
+    """Solve assignment problem by brute force (for small n).
 
-    This is equivalent to finding the minimum Wasserstein cost
-    among permutation couplings for uniform distributions.
-
-    Time complexity: O(n! · n)
+    Complexity: O(n! × n)
 
     Args:
         c: n×n cost matrix
 
     Returns:
-        (minimum_cost, optimal_permutation)
+        (min_cost, optimal_permutation)
     """
+    from itertools import permutations
     n = c.shape[0]
-    best_cost = np.inf
-    best_perm = None
+    best_cost = float('inf')
+    best_perm = list(range(n))
+
     for perm in permutations(range(n)):
-        cost = assignment_cost(c, list(perm))
+        cost = sum(c[i, perm[i]] for i in range(n))
         if cost < best_cost:
             best_cost = cost
             best_perm = list(perm)
+
     return best_cost, best_perm
 
 
 # ============================================================
-# Verification Routines
+# VERIFICATION UTILITIES
 # ============================================================
 
-def verify_subadditivity(A: np.ndarray, max_power: int = 8) -> bool:
-    """
-    Verify the subadditivity theorem for all diagonal entries and all powers.
+def verify_subadditivity(A: np.ndarray, max_power: int = 10) -> bool:
+    """Verify the tropical power diagonal subadditivity theorem numerically.
 
-    Checks: (A^{⊗(m+k)})_{ii} ≤ (A^{⊗m})_{ii} + (A^{⊗k})_{ii}
+    Checks: tropPow(A, m+k+1)[i,i] ≤ tropPow(A, m)[i,i] + tropPow(A, k)[i,i]
+    for all valid m, k, and i.
 
-    Returns True if all inequalities hold (up to numerical tolerance).
+    Args:
+        A: n×n matrix
+        max_power: maximum power to check
+
+    Returns:
+        True if subadditivity holds for all tested cases
     """
     n = A.shape[0]
-    powers = [tropical_power(A, m) for m in range(1, max_power + 1)]
-    tol = 1e-10
+    powers = {}
+    current = A.copy()
+    powers[0] = A.copy()
+    for m in range(1, max_power + 1):
+        current = tropical_multiply(current, A)
+        powers[m] = current.copy()
 
     for i in range(n):
-        for m in range(1, max_power + 1):
-            for k in range(1, max_power + 1 - m):
-                lhs = powers[m + k - 1][i, i]
-                rhs = powers[m - 1][i, i] + powers[k - 1][i, i]
-                if lhs > rhs + tol:
-                    print(f"VIOLATION: i={i}, m={m}, k={k}: {lhs} > {rhs}")
-                    return False
+        for m in range(max_power):
+            for k in range(max_power - m):
+                if m + k + 1 <= max_power:
+                    lhs = powers[m + k + 1][i, i]
+                    rhs = powers[m][i, i] + powers[k][i, i]
+                    if lhs > rhs + 1e-10:
+                        return False
     return True
 
 
 def verify_wasserstein_invariance(c: np.ndarray, mu: np.ndarray, nu: np.ndarray,
-                                   e: List[int]) -> bool:
-    """
-    Verify that W₁(e_*μ, e_*ν) = W₁(μ, ν) when c is invariant under e.
+                                   e: np.ndarray) -> bool:
+    """Verify Wasserstein invariance under a cost-preserving bijection.
 
-    Returns True if the invariance holds (up to numerical tolerance).
+    Checks: W_c(μ,ν) = W_c(e_*μ, e_*ν) when c(e(i),e(j)) = c(i,j).
+
+    Args:
+        c: n×n cost matrix
+        mu, nu: probability vectors
+        e: permutation (as array)
+
+    Returns:
+        True if invariance holds
     """
     n = len(mu)
-    # Check cost invariance
+    e_inv = np.argsort(e)
+
+    # Check cost preservation
     for i in range(n):
         for j in range(n):
             if abs(c[e[i], e[j]] - c[i, j]) > 1e-10:
-                print(f"Cost not invariant: c({e[i]},{e[j]}) ≠ c({i},{j})")
                 return False
 
-    mu_push = pushforward(e, mu)
-    nu_push = pushforward(e, nu)
+    # Compute pushforwards
+    mu_push = mu[e_inv]
+    nu_push = nu[e_inv]
 
-    w_orig, _ = wasserstein1_exact(c, mu, nu)
-    w_push, _ = wasserstein1_exact(c, mu_push, nu_push)
+    # Compute Wasserstein distances
+    w1, _ = wasserstein_lp(c, mu, nu)
+    w2, _ = wasserstein_lp(c, mu_push, nu_push)
 
-    return abs(w_orig - w_push) < 1e-10
+    return abs(w1 - w2) < 1e-8
 
-
-# ============================================================
-# Main: Run all verifications
-# ============================================================
 
 if __name__ == "__main__":
-    print("Tropical Matrix Algebra & Optimal Transport — Algorithm Verification")
-    print("=" * 70)
+    print("Algorithms module - run demo.py for demonstrations")
 
-    # Test 1: Subadditivity
-    print("\n[Test 1] Tropical power diagonal subadditivity")
-    for trial in range(5):
-        A = np.random.rand(4, 4) * 10
-        result = verify_subadditivity(A, max_power=6)
-        print(f"  Random 4×4 matrix (trial {trial+1}): {'PASS ✓' if result else 'FAIL ✗'}")
-
-    # Test 2: Tropical eigenvalue
-    print("\n[Test 2] Tropical eigenvalue estimation")
-    A = np.array([[0, 3, 8], [2, 0, 5], [1, 4, 0]], dtype=float)
-    eig = tropical_eigenvalue(A)
-    print(f"  A = [[0,3,8],[2,0,5],[1,4,0]]")
-    print(f"  Tropical eigenvalue ≈ {eig:.6f}")
-    print(f"  (Minimum cycle mean over all cycles)")
-
-    # Test 3: Wasserstein invariance
-    print("\n[Test 3] Wasserstein invariance under isometries")
-    c = np.array([[0, 1, 2], [1, 0, 1], [2, 1, 0]], dtype=float)
-    mu = np.array([0.5, 0.3, 0.2])
-    nu = np.array([0.2, 0.5, 0.3])
-    e = [1, 2, 0]  # cyclic shift
-
-    # Check if cost is invariant
-    inv_check = all(abs(c[e[i], e[j]] - c[i, j]) < 1e-10
-                    for i in range(3) for j in range(3))
-    print(f"  Cost invariant under e={e}? {inv_check}")
-    if inv_check:
-        result = verify_wasserstein_invariance(c, mu, nu, e)
-        print(f"  Wasserstein invariance: {'PASS ✓' if result else 'FAIL ✗'}")
-
-    # Test 4: Permutation coupling verification
-    print("\n[Test 4] Permutation couplings")
+    # Quick self-test
     n = 3
-    c = np.array([[0, 2, 5], [2, 0, 3], [5, 3, 0]], dtype=float)
-    best_cost, best_perm = optimal_assignment_brute(c)
-    print(f"  Optimal assignment cost: {best_cost:.1f}")
-    print(f"  Optimal permutation: {best_perm}")
-    print(f"  Wasserstein-1 (uniform): {best_cost/n:.4f}")
+    A = np.array([[1, 2, 3], [4, 0, 1], [2, 3, 2]], dtype=float)
 
-    # Test 5: Associativity
-    print("\n[Test 5] Tropical multiplication associativity")
-    for trial in range(5):
-        A = np.random.rand(3, 3) * 10
-        B = np.random.rand(3, 3) * 10
-        C = np.random.rand(3, 3) * 10
-        lhs = tropical_multiply(tropical_multiply(A, B), C)
-        rhs = tropical_multiply(A, tropical_multiply(B, C))
-        ok = np.allclose(lhs, rhs, atol=1e-10)
-        print(f"  Random 3×3 (trial {trial+1}): {'PASS ✓' if ok else 'FAIL ✗'}")
+    print(f"\nTest matrix:\n{A}")
 
-    print("\n" + "=" * 70)
-    print("All tests completed!")
+    # Tropical multiplication
+    A2 = tropical_multiply(A, A)
+    print(f"\nA⊗A:\n{A2}")
+
+    # Tropical eigenvalue
+    lam, means = tropical_eigenvalue(A, max_power=20)
+    print(f"\nTropical eigenvalue: {lam:.4f}")
+    print(f"Cycle means: {means}")
+
+    # Karp's algorithm
+    lam_karp, cycle = karp_cycle_mean(A)
+    print(f"Karp's min cycle mean: {lam_karp:.4f}")
+
+    # Subadditivity
+    print(f"\nSubadditivity verified: {verify_subadditivity(A)}")
