@@ -25,10 +25,10 @@
       "Tropical"
     ],
     "priority_score": 0.91,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e8932e8e",
     "timestamp": "2026-05-14T16:03:53.833462+00:00"
   },
   {
@@ -1045,6 +1045,62 @@
     "timestamp": "2026-05-16T07:35:37.606186+00:00"
   },
   {
+    "id": "fd_0236",
+    "title": "Formulate hypotheses",
+    "description": "as precise Lean theorem statements.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d8b1150",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:30:22.901441+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Build infrastructure",
+    "description": "(definitions, helper lemmas) incrementally.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d8b1150",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:30:22.914707+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Validate computationally",
+    "description": "using Python implementations before formalizing.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d8b1150",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:30:22.926225+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Cross-pollinate",
+    "description": "— results in one direction often unlock proofs in another.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d8b1150",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:30:22.938952+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1156,21 +1212,6 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "816ac9ca",
     "timestamp": "2026-05-14T18:36:13.850536+00:00"
-  },
-  {
-    "id": "fd_0181",
-    "title": "3. Extension from $L_\\infty$ to $L_2$ Robustness via Sheaves of Quadratic Forms",
-    "description": "**Objective**: Extend the cohomological certification framework from $L_\\infty$ perturbation balls to $L_2$ (Euclidean) perturbation balls by replacing real-valued margin sections with sections valued in positive-definite quadratic forms.\n\n**Approach**: On each activation region $U_i$, the network is affine: $f(x) = W_i x + b_i$. The local $L_2$-robustness radius at $x \\in U_i$ is $\\|W_i^{-1}\\| \\cdot (\\text{margin at } x)$, which depends on the local Hessian structure. Define a sheaf $\\mathcal{Q}$ assigning to $U_i$ the quadratic form $Q_i(v) = v^T W_i^T W_i \\, v$ (the local metric tensor). The overlap compatibility condition becomes: on $U_i \\cap U_j$, $Q_i$ and $Q_j$ must be comparable (within a multiplicative factor).\n\n**Key hypotheses**:\n- The $L_2$ certified radius is controlled by th",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "8d8b1150",
-    "timestamp": "2026-05-14T18:36:13.855472+00:00"
   },
   {
     "id": "fd_0179",

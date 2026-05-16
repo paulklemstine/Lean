@@ -1,229 +1,244 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Contraction Theory of Collatz Dynamics.
+Algorithms for Tropical Bellman Contraction in Collatz Dynamics
 
-Implements the core algorithms from the research paper:
-1. Bellman Value Iteration (Algorithm 1)
-2. Lipschitz Constant Estimation (Algorithm 2)
-3. Tropical Spectral Radius Estimation
-4. Collatz Orbit Analysis in Log-Coordinates
+Implements the core algorithms from the research paper with full
+docstrings, type hints, and complexity analysis.
 """
 
-import numpy as np
-from typing import Callable, Optional, Tuple, List
+from typing import Dict, List, Tuple, Callable, Optional
+import math
+
+
+def collatz_step(n: int) -> int:
+    """Accelerated Collatz step: n/2 if even, (3n+1)/2 if odd.
+    
+    Fixed points at 0 and 1. This is the standard compressed map
+    that combines 3n+1 with the mandatory halving.
+    
+    Time complexity: O(1)
+    
+    Examples:
+        >>> collatz_step(1)
+        1
+        >>> collatz_step(6)
+        3
+        >>> collatz_step(3)
+        5
+    """
+    if n <= 1:
+        return n
+    return n // 2 if n % 2 == 0 else (3 * n + 1) // 2
+
+
+def collatz_orbit(n: int, max_steps: int = 10000) -> List[int]:
+    """Compute the full Collatz orbit from n to 1 (or until max_steps).
+    
+    Returns the sequence [n, T(n), T²(n), ...] stopping at 1 or max_steps.
+    
+    Time complexity: O(min(orbit_length, max_steps))
+    Space complexity: O(min(orbit_length, max_steps))
+    
+    Examples:
+        >>> collatz_orbit(3)
+        [3, 5, 8, 4, 2, 1]
+        >>> collatz_orbit(1)
+        [1]
+    """
+    orbit = [n]
+    current = n
+    for _ in range(max_steps):
+        if current <= 1:
+            break
+        current = collatz_step(current)
+        orbit.append(current)
+    return orbit
 
 
 def bellman_value_iteration(
     gamma: float,
-    a: float,
-    b: float,
+    step_fn: Callable[[int], int],
+    target: int,
     N: int,
-    epsilon: float = 1e-12,
-    max_iter: int = 10000,
-    f0: Optional[np.ndarray] = None,
-) -> Tuple[np.ndarray, List[float], int]:
+    epsilon: float = 1e-10,
+    max_iters: int = 10000
+) -> Tuple[Dict[int, float], List[float], int]:
+    """Run value iteration for a general Bellman operator.
+    
+    Computes the unique fixed point V* of the operator:
+        B_γ(V)(n) = 0 if n = target, else 1 + γ · V(step(n))
+    
+    Args:
+        gamma: Discount factor in [0, 1)
+        step_fn: The dynamical system step function
+        target: Target state (fixed point of step_fn)
+        N: Upper bound on state space {0, ..., N}
+        epsilon: Convergence tolerance
+        max_iters: Maximum number of iterations
+    
+    Returns:
+        V: Approximate fixed point as dict {state: value}
+        errors: List of sup-norm errors at each iteration
+        num_iters: Number of iterations performed
+    
+    Time complexity: O(N · log(1/ε) / log(1/γ))
+    Space complexity: O(N)
+    
+    Convergence guarantee: ||V_k - V*||∞ ≤ γ^k · ||V_0 - V*||∞
     """
-    Compute the fixed point of the discounted Collatz Bellman operator
-    by Picard (value) iteration.
-
-    The operator is: (Bf)(n) = γ · min(f(n//2) + a, f((3n+1)//2) + b)
-
-    Parameters
-    ----------
-    gamma : float
-        Discount factor, must be in [0, 1).
-    a : float
-        Cost of the even branch.
-    b : float
-        Cost of the odd branch.
-    N : int
-        Domain size [0, N).
-    epsilon : float
-        Convergence tolerance in sup-norm.
-    max_iter : int
-        Maximum number of iterations.
-    f0 : np.ndarray, optional
-        Initial function. Defaults to zero.
-
-    Returns
-    -------
-    f : np.ndarray
-        Approximate fixed point.
-    diffs : list of float
-        Sup-norm differences between successive iterates.
-    iterations : int
-        Number of iterations performed.
-
-    Complexity
-    ----------
-    Time: O(N · log(1/ε) / log(1/γ))
-    Space: O(N)
-    """
-    if not (0 <= gamma < 1):
-        raise ValueError(f"gamma must be in [0, 1), got {gamma}")
-
-    f = np.zeros(N) if f0 is None else f0.copy()
-    diffs = []
-
-    for k in range(max_iter):
-        f_new = np.empty(N)
-        for n in range(N):
-            even_val = f[n // 2] + a
-            odd_idx = min((3 * n + 1) // 2, N - 1)
-            odd_val = f[odd_idx] + b
-            f_new[n] = gamma * min(even_val, odd_val)
-
-        diff = np.max(np.abs(f_new - f))
-        diffs.append(diff)
-        f = f_new
-
-        if diff < epsilon:
-            break
-
-    return f, diffs, len(diffs)
+    V = {n: 0.0 for n in range(N + 1)}
+    errors = []
+    
+    for iteration in range(max_iters):
+        V_new = {}
+        for n in range(N + 1):
+            if n == target:
+                V_new[n] = 0.0
+            else:
+                next_state = step_fn(n)
+                V_new[n] = 1.0 + gamma * V.get(next_state, 0.0)
+        
+        error = max(abs(V_new[n] - V[n]) for n in range(N + 1))
+        errors.append(error)
+        V = V_new
+        
+        if error < epsilon:
+            return V, errors, iteration + 1
+    
+    return V, errors, max_iters
 
 
-def estimate_lipschitz_constant(
+def discounted_orbit_cost(
     gamma: float,
-    a: float,
-    b: float,
+    n: int,
+    step_fn: Callable[[int], int] = collatz_step,
+    target: int = 1,
+    max_steps: int = 100000
+) -> Tuple[float, int]:
+    """Compute discounted orbit cost directly along the orbit.
+    
+    Returns V*(n) = Σ_{k=0}^{s-1} γ^k where s is the number of steps
+    to reach the target.
+    
+    Args:
+        gamma: Discount factor in [0, 1)
+        n: Starting state
+        step_fn: Step function (default: collatzStep)
+        target: Target state (default: 1)
+        max_steps: Maximum orbit length
+    
+    Returns:
+        cost: The discounted orbit cost
+        steps: Number of steps to reach target (or max_steps)
+    
+    Time complexity: O(min(orbit_length, max_steps))
+    """
+    cost = 0.0
+    power = 1.0
+    current = n
+    steps = 0
+    
+    while current != target and steps < max_steps:
+        cost += power
+        power *= gamma
+        current = step_fn(current)
+        steps += 1
+    
+    return cost, steps
+
+
+def contraction_verification(
+    gamma: float,
+    step_fn: Callable[[int], int],
+    target: int,
     N: int,
-    num_trials: int = 500,
-    seed: int = 42,
-) -> float:
+    num_iters: int = 20
+) -> Tuple[List[float], List[float]]:
+    """Verify the contraction property by computing error ratios.
+    
+    Returns the sequence of errors and their ratios to confirm
+    that each ratio is ≤ γ.
+    
+    Args:
+        gamma: Discount factor
+        step_fn: Step function
+        target: Target state
+        N: State space bound
+        num_iters: Number of iterations
+    
+    Returns:
+        errors: Sup-norm errors at each iteration
+        ratios: Error ratios (errors[k+1] / errors[k])
     """
-    Empirically estimate the Lipschitz constant of the Bellman operator.
-
-    For each trial, generates random bounded functions f, g, applies the
-    operator, and computes the ratio dist(Tf, Tg) / dist(f, g).
-
-    The theorem guarantees this ratio is always ≤ γ.
-
-    Parameters
-    ----------
-    gamma : float
-        Discount factor.
-    a, b : float
-        Branch costs.
-    N : int
-        Domain size.
-    num_trials : int
-        Number of random trials.
-    seed : int
-        Random seed for reproducibility.
-
-    Returns
-    -------
-    float
-        Maximum observed Lipschitz ratio.
-    """
-    rng = np.random.RandomState(seed)
-    max_ratio = 0.0
-
-    for _ in range(num_trials):
-        f = rng.randn(N) * 5
-        g = rng.randn(N) * 5
-
-        Tf = np.array([
-            gamma * min(f[n // 2] + a, f[min((3*n+1)//2, N-1)] + b)
-            for n in range(N)
-        ])
-        Tg = np.array([
-            gamma * min(g[n // 2] + a, g[min((3*n+1)//2, N-1)] + b)
-            for n in range(N)
-        ])
-
-        dist_out = np.max(np.abs(Tf - Tg))
-        dist_in = np.max(np.abs(f - g))
-
-        if dist_in > 1e-10:
-            max_ratio = max(max_ratio, dist_out / dist_in)
-
-    return max_ratio
-
-
-def collatz_orbit(n: int, max_steps: int = 10000) -> List[int]:
-    """Compute the Collatz orbit of n until reaching 1 or max_steps."""
-    orbit = [n]
-    while n != 1 and len(orbit) < max_steps:
-        n = n // 2 if n % 2 == 0 else 3 * n + 1
-        orbit.append(n)
-    return orbit
-
-
-def log_orbit_analysis(n: int) -> dict:
-    """
-    Analyze a Collatz orbit in tropical (logarithmic) coordinates.
-
-    Returns statistics about the orbit including step count,
-    maximum log value, average drift, and branch sequence.
-    """
-    orbit = collatz_orbit(n)
-    log_orbit = [np.log(x) for x in orbit]
-
-    # Compute branch sequence (True = odd step, False = even step)
-    branches = [orbit[i] % 2 == 1 for i in range(len(orbit) - 1)]
-    even_count = branches.count(False)
-    odd_count = branches.count(True)
-
-    steps = len(orbit) - 1
-    return {
-        "n": n,
-        "steps": steps,
-        "max_log": max(log_orbit),
-        "min_log": min(log_orbit),
-        "avg_drift": (log_orbit[-1] - log_orbit[0]) / max(steps, 1),
-        "even_fraction": even_count / max(steps, 1),
-        "odd_fraction": odd_count / max(steps, 1),
-        "orbit": orbit,
-        "log_orbit": log_orbit,
-    }
-
-
-def tropical_branch_product(word: str) -> float:
-    """
-    Compute the total log-drift of a parity word.
-
-    Parameters
-    ----------
-    word : str
-        String of 'E' (even) and 'O' (odd) characters.
-
-    Returns
-    -------
-    float
-        Total drift: sum of -log(2) for E and +log(3/2) for O.
-    """
-    drift = 0.0
-    for c in word:
-        if c == 'E':
-            drift -= np.log(2)
-        elif c == 'O':
-            drift += np.log(3) - np.log(2)
+    _, errors, _ = bellman_value_iteration(
+        gamma, step_fn, target, N, 
+        epsilon=0, max_iters=num_iters
+    )
+    
+    ratios = []
+    for i in range(len(errors) - 1):
+        if errors[i] > 1e-15:
+            ratios.append(errors[i + 1] / errors[i])
         else:
-            raise ValueError(f"Unknown branch character: {c}")
-    return drift
+            ratios.append(0.0)
+    
+    return errors, ratios
 
 
-if __name__ == "__main__":
-    print("=== Bellman Value Iteration ===")
-    f_star, diffs, iters = bellman_value_iteration(0.9, 1.0, 1.5, 100)
-    print(f"Converged in {iters} iterations")
-    print(f"Fixed point values (first 10): {f_star[:10].round(4)}")
-    print(f"Final diff: {diffs[-1]:.2e}")
+def expansion_ratio(
+    step_fn: Callable[[int], int],
+    m: int,
+    n: int
+) -> float:
+    """Compute the distance expansion ratio |T(m)-T(n)| / |m-n|.
+    
+    Used to verify Theorem E (obstruction to contraction).
+    
+    Returns inf if m == n.
+    """
+    if m == n:
+        return float('inf')
+    d_input = abs(m - n)
+    d_output = abs(step_fn(m) - step_fn(n))
+    return d_output / d_input
 
-    print("\n=== Lipschitz Constant Estimation ===")
-    for g in [0.5, 0.9, 0.99]:
-        lip = estimate_lipschitz_constant(g, 1.0, 1.5, 100)
-        print(f"γ = {g:.2f}: estimated Lip. constant = {lip:.6f} (theoretical: {g:.6f})")
 
-    print("\n=== Orbit Analysis ===")
-    for n in [27, 97, 127]:
-        info = log_orbit_analysis(n)
-        print(f"n={n}: {info['steps']} steps, avg_drift={info['avg_drift']:.4f}, "
-              f"even%={info['even_fraction']:.1%}")
+def find_max_expansion(
+    step_fn: Callable[[int], int],
+    N: int
+) -> Tuple[float, int, int]:
+    """Find the maximum expansion ratio over pairs in {0, ..., N}.
+    
+    Returns (max_ratio, m, n) achieving the maximum.
+    """
+    max_ratio = 0.0
+    best_m, best_n = 0, 0
+    
+    for m in range(N + 1):
+        for n in range(m):
+            ratio = expansion_ratio(step_fn, m, n)
+            if ratio > max_ratio:
+                max_ratio = ratio
+                best_m, best_n = m, n
+    
+    return max_ratio, best_m, best_n
 
-    print("\n=== Tropical Branch Products ===")
-    for word in ["EEO", "EEEO", "EEEEO", "EOE", "OEE"]:
-        drift = tropical_branch_product(word)
-        print(f"Word '{word}': drift = {drift:.4f} ({'contracting' if drift < 0 else 'expanding'})")
+
+if __name__ == '__main__':
+    # Example usage
+    print("=== Bellman Value Iteration for Collatz ===")
+    gamma = 0.9
+    V, errors, iters = bellman_value_iteration(gamma, collatz_step, 1, 100)
+    print(f"Converged in {iters} iterations (γ = {gamma})")
+    print(f"V*(3) = {V[3]:.6f}")
+    print(f"V*(27) = {V[27]:.6f}")
+    
+    print("\n=== Direct Orbit Cost ===")
+    for n in [3, 7, 27]:
+        cost, steps = discounted_orbit_cost(gamma, n)
+        print(f"n={n}: cost={cost:.6f}, steps={steps}")
+    
+    print("\n=== Maximum Expansion Ratio ===")
+    ratio, m, n = find_max_expansion(collatz_step, 20)
+    print(f"Max ratio = {ratio:.3f} at (m,n) = ({m},{n})")
+    print(f"T({m}) = {collatz_step(m)}, T({n}) = {collatz_step(n)}")
