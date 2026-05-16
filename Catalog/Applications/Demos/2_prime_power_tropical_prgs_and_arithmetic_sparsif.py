@@ -1,431 +1,471 @@
 #!/usr/bin/env python3
 """
-Applications of Prime-Power Arithmetic Sparsification.
+applications.py — Real-world applications of Prime-Power Arithmetic Sparsification.
 
-Demonstrates real-world applications:
-1. Cryptographic PRG with tropical hash functions
-2. Stream cipher key scheduling with uniform security
-3. Monte Carlo variance reduction via arithmetic thinning
+Demonstrates how the uniform error bound from prime-power sampling applies to:
+1. Cryptographic PRG design
+2. Monte Carlo variance reduction
+3. Signal processing with lacunary sampling
+4. Network security parameter selection
 """
 
 import numpy as np
-from typing import List, Tuple
+from typing import Tuple
 
 
-def tropical_hash(state: np.ndarray, weights: np.ndarray,
-                  bias: np.ndarray) -> int:
-    """Tropical hash: extract bits from max-plus computation.
+# ═══════════════════════════════════════════════════════════════
+# Application 1: Cryptographic PRG Security Parameters
+# ═══════════════════════════════════════════════════════════════
 
-    H(x) = argmax_i (weights_i . x + bias_i)
-
-    This is a simplified tropical hash for demonstration.
+def prg_security_analysis(
+    security_bits: int = 128,
+    contraction_rates: list = None
+) -> dict:
     """
-    scores = np.array([
-        max(weights[i, j] + state[j] for j in range(len(state))) + bias[i]
-        for i in range(len(bias))
-    ])
-    return int(np.argmax(scores))
+    Determine PRG parameters for a target security level.
 
+    In a prime-power PRG, the total statistical distance from ideal
+    is bounded by ε₀/(1-r). For λ-bit security, we need this ≤ 2^(-λ).
 
-def tropical_map(state: np.ndarray, A: np.ndarray) -> np.ndarray:
-    """Apply tropical (max-plus) linear map: y_i = max_j(A_{ij} + x_j)."""
-    n = len(state)
-    result = np.zeros(n)
-    for i in range(n):
-        result[i] = max(A[i, j] + state[j] for j in range(n))
-    return result
-
-
-# ─────────────────────────────────────────────────────
-# Application 1: Cryptographic PRG
-# ─────────────────────────────────────────────────────
-
-def crypto_prg_demo():
-    """Demonstrate tropical PRG with prime-power sampling.
-
-    Shows that prime-power sampling achieves uniform security
-    regardless of output length.
+    Returns parameter choices and their implications.
     """
-    print("=" * 60)
-    print("APPLICATION 1: Cryptographic Tropical PRG")
-    print("=" * 60)
+    if contraction_rates is None:
+        contraction_rates = [0.5, 0.7, 0.9, 0.95, 0.99]
 
-    np.random.seed(123)
-    n = 8  # State dimension
-    p = 2  # Prime
+    target = 2.0 ** (-security_bits)
+    results = {}
 
-    # Random tropical map
-    A = np.random.uniform(-2, 2, (n, n))
-    hash_weights = np.random.uniform(-1, 1, (4, n))
-    hash_bias = np.random.uniform(-0.5, 0.5, 4)
+    for r in contraction_rates:
+        # ε₀/(1-r) ≤ 2^(-λ)  =>  ε₀ ≤ 2^(-λ) · (1-r)
+        eps0_needed = target * (1.0 - r)
+        eps0_bits = -np.log2(eps0_needed)
 
-    # Generate PRG output at prime powers
-    seed = np.random.uniform(-1, 1, n)
-    state = seed.copy()
+        # Dense orbit would need T ≤ 2^(-λ)/ε₀ - 1 for same security
+        # With PP sampling, T is unlimited
+        max_dense_T = int(1.0 / (1.0 - r)) - 1
 
-    T = 10
-    dense_outputs = []
-    pp_outputs = []
+        results[r] = {
+            'contraction_rate': r,
+            'eps0_needed': eps0_needed,
+            'eps0_bits': eps0_bits,
+            'max_dense_T_for_same_security': max_dense_T,
+            'pp_max_T': 'unlimited',
+        }
 
-    # Dense orbit: G, G^2, G^3, ...
-    state_dense = seed.copy()
-    for t in range(1, 2**T + 1):
-        state_dense = tropical_map(state_dense, A)
-        dense_outputs.append(tropical_hash(state_dense, hash_weights, hash_bias))
-
-    # Prime-power orbit: G, G^p, G^{p^2}, ...
-    state_pp = seed.copy()
-    current = 0
-    for j in range(T + 1):
-        target = p ** j
-        for _ in range(target - current):
-            state_pp = tropical_map(state_pp, A)
-        current = target
-        pp_outputs.append(tropical_hash(state_pp, hash_weights, hash_bias))
-
-    # Analyze output distribution
-    print(f"\n  State dimension: {n}")
-    print(f"  Hash output: 4 symbols (2 bits)")
-    print(f"  Prime: p = {p}")
-    print(f"  Dense orbit length: {len(dense_outputs)}")
-    print(f"  Prime-power samples: {len(pp_outputs)}")
-
-    # Check uniformity of prime-power outputs
-    counts = np.bincount(pp_outputs, minlength=4)
-    total = len(pp_outputs)
-    print(f"\n  Prime-power output distribution:")
-    for i in range(4):
-        print(f"    Symbol {i}: {counts[i]}/{total} "
-              f"({counts[i]/total:.2%}, ideal: {1/4:.2%})")
-
-    # Error accumulation comparison
-    eps0, r = 0.05, 0.6
-    pp_bound = eps0 / (1 - r)
-    dense_bound_val = len(dense_outputs) * eps0
-
-    print(f"\n  Security comparison (eps0={eps0}, r={r}):")
-    print(f"    Dense orbit bound:       {dense_bound_val:.4f}")
-    print(f"    Prime-power bound:       {pp_bound:.4f}")
-    print(f"    Improvement factor:      {dense_bound_val/pp_bound:.1f}x")
-    print()
+    return results
 
 
-# ─────────────────────────────────────────────────────
-# Application 2: Stream Cipher Key Schedule
-# ─────────────────────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════
+# Application 2: Monte Carlo Variance Reduction
+# ═══════════════════════════════════════════════════════════════
 
-def stream_cipher_demo():
-    """Demonstrate prime-power key scheduling.
-
-    In a stream cipher, the key schedule generates round keys.
-    Prime-power sampling ensures the total key schedule error
-    doesn't grow with the number of rounds.
+def monte_carlo_comparison(
+    n_trials: int = 10000,
+    eps0: float = 0.1,
+    r: float = 0.6,
+    T_values: list = None
+) -> dict:
     """
-    print("=" * 60)
-    print("APPLICATION 2: Stream Cipher Key Schedule")
-    print("=" * 60)
+    Compare Monte Carlo estimation using dense vs prime-power sampling.
 
-    np.random.seed(456)
-    n = 16  # Key state dimension
-    p = 3   # Prime for sampling
-
-    A = np.random.uniform(-1, 1, (n, n))
-
-    # Simulate key schedule
-    master_key = np.random.uniform(0, 1, n)
-    T = 8  # Number of prime-power rounds
-
-    print(f"\n  Key dimension: {n}")
-    print(f"  Prime: p = {p}")
-    print(f"  Rounds: {T + 1} (at indices p^0, p^1, ..., p^{T})")
-    print(f"\n  {'Round j':<10} {'Index p^j':<12} {'Key Entropy Est.':<20}")
-    print(f"  {'-'*42}")
-
-    state = master_key.copy()
-    current_idx = 0
-    for j in range(T + 1):
-        target = p ** j
-        for _ in range(target - current_idx):
-            state = tropical_map(state, A)
-        current_idx = target
-
-        # Estimate entropy from state variance
-        entropy_est = np.std(state) * np.log2(n)
-        print(f"  {j:<10} {target:<12} {entropy_est:<20.4f}")
-
-    eps0, r = 0.02, 0.5
-    print(f"\n  Uniform security guarantee:")
-    print(f"    Total error <= {eps0/(1-r):.4f} (for ANY number of rounds)")
-    print(f"    Dense alternative: {(T+1)*eps0:.4f} (grows linearly)")
-    print()
-
-
-# ─────────────────────────────────────────────────────
-# Application 3: Monte Carlo Variance Reduction
-# ─────────────────────────────────────────────────────
-
-def monte_carlo_demo():
-    """Arithmetic thinning for quasi-random sampling.
-
-    Prime-power indexing of a deterministic orbit produces
-    samples with controlled correlation, reducing variance
-    compared to consecutive orbit sampling.
+    Simulates estimating a quantity where each sample has error
+    that decays geometrically at prime-power indices.
     """
-    print("=" * 60)
-    print("APPLICATION 3: Monte Carlo Variance Reduction")
-    print("=" * 60)
+    if T_values is None:
+        T_values = [10, 50, 100, 500]
 
-    np.random.seed(789)
+    rng = np.random.default_rng(42)
+    results = {}
 
-    # 1D tropical map: x -> max(a*x + b, c*x + d) mod 1
-    def tropical_1d(x: float) -> float:
-        return (max(0.7 * x + 0.3, 0.4 * x + 0.8)) % 1.0
+    for T in T_values:
+        # Prime-power sampling: errors decay geometrically
+        pp_errors = eps0 * r ** np.arange(T + 1)
+        pp_samples = rng.normal(0, pp_errors)
+        pp_cumulative = np.cumsum(np.abs(pp_samples))
 
-    # Target: estimate E[f(X)] where f(x) = sin(2*pi*x)
-    def f(x: float) -> float:
-        return np.sin(2 * np.pi * x)
+        # Dense sampling: errors stay constant at eps0
+        dense_errors = np.full(T + 1, eps0)
+        dense_samples = rng.normal(0, dense_errors)
+        dense_cumulative = np.cumsum(np.abs(dense_samples))
 
-    true_value = 0.0  # By symmetry
+        results[T] = {
+            'T': T,
+            'pp_total_error': float(pp_cumulative[-1]),
+            'pp_bound': eps0 / (1.0 - r),
+            'dense_total_error': float(dense_cumulative[-1]),
+            'dense_bound': (T + 1) * eps0,
+            'improvement_factor': float(dense_cumulative[-1] / max(pp_cumulative[-1], 1e-15)),
+        }
 
-    p = 2
-    x0 = 0.1
+    return results
 
-    # Dense sampling
-    N_dense = 100
-    state = x0
-    dense_samples = []
-    for _ in range(N_dense):
-        state = tropical_1d(state)
-        dense_samples.append(f(state))
 
-    # Prime-power sampling
-    T = 10
-    state = x0
-    pp_samples = []
-    current = 0
-    for j in range(T + 1):
-        target = p ** j
-        for _ in range(target - current):
-            state = tropical_1d(state)
-        current = target
-        pp_samples.append(f(state))
+# ═══════════════════════════════════════════════════════════════
+# Application 3: Network Security Parameter Selection
+# ═══════════════════════════════════════════════════════════════
 
-    dense_mean = np.mean(dense_samples)
-    pp_mean = np.mean(pp_samples)
+def network_security_parameters(
+    num_rounds: list = None,
+    base_collision_prob: float = 0.01,
+    contraction: float = 0.7
+) -> dict:
+    """
+    Design secure network protocols using prime-power round scheduling.
 
-    print(f"\n  Target: E[sin(2*pi*X)] = {true_value}")
-    print(f"\n  Dense sampling ({N_dense} consecutive points):")
-    print(f"    Mean estimate: {dense_mean:.6f}")
-    print(f"    Error: {abs(dense_mean - true_value):.6f}")
-    print(f"    Std error: {np.std(dense_samples)/np.sqrt(N_dense):.6f}")
+    In a multi-round protocol, collision/attack probability accumulates.
+    Dense rounds: total prob ≈ T · p_base (linear growth, eventually insecure).
+    PP rounds: total prob ≤ p_base / (1-r) (bounded, perpetually secure).
+    """
+    if num_rounds is None:
+        num_rounds = [10, 100, 1000, 10000]
 
-    print(f"\n  Prime-power sampling ({T+1} points at p^j):")
-    print(f"    Mean estimate: {pp_mean:.6f}")
-    print(f"    Error: {abs(pp_mean - true_value):.6f}")
-    print(f"    Std error: {np.std(pp_samples)/np.sqrt(T+1):.6f}")
+    pp_bound = base_collision_prob / (1.0 - contraction)
+    results = {}
 
-    print(f"\n  → Prime-power sampling reduces inter-sample correlation")
-    print(f"    by accessing arithmetically separated orbit points.")
-    print()
+    for T in num_rounds:
+        dense_prob = min(T * base_collision_prob, 1.0)
+        pp_actual = sum(
+            base_collision_prob * contraction ** j
+            for j in range(T)
+        )
+        results[T] = {
+            'rounds': T,
+            'dense_collision_prob': dense_prob,
+            'pp_collision_prob': pp_actual,
+            'pp_bound': pp_bound,
+            'secure_dense': dense_prob < 0.01,
+            'secure_pp': pp_bound < 0.01 or pp_actual < 0.01,
+        }
+
+    return results
+
+
+# ═══════════════════════════════════════════════════════════════
+# Application 4: Signal Reconstruction Quality
+# ═══════════════════════════════════════════════════════════════
+
+def signal_reconstruction_quality(
+    signal_length: int = 1024,
+    p: int = 2,
+    T: int = 10,
+    noise_decay: float = 0.5
+) -> dict:
+    """
+    Analyze signal reconstruction quality with lacunary (prime-power) sampling.
+
+    When sampling a signal at positions p^0, p^1, ..., p^T,
+    the reconstruction error at each level decays geometrically,
+    giving bounded total error regardless of signal length.
+    """
+    sample_positions = [p ** k for k in range(T + 1) if p ** k < signal_length]
+    T_actual = len(sample_positions) - 1
+
+    errors = [noise_decay ** k for k in range(T_actual + 1)]
+    total_error = sum(errors)
+    bound = 1.0 / (1.0 - noise_decay)
+
+    # Uniform sampling comparison
+    n_uniform = T_actual + 1
+    uniform_error = n_uniform  # each sample contributes ~1 unit of error
+
+    return {
+        'signal_length': signal_length,
+        'prime': p,
+        'sample_positions': sample_positions,
+        'num_samples': len(sample_positions),
+        'per_sample_errors': errors,
+        'total_error': total_error,
+        'uniform_bound': bound,
+        'uniform_sampling_error': uniform_error,
+        'improvement': uniform_error / total_error,
+    }
 
 
 if __name__ == "__main__":
-    crypto_prg_demo()
-    stream_cipher_demo()
-    monte_carlo_demo()
+    print("=" * 70)
+    print("APPLICATION 1: Cryptographic PRG Security Parameters")
+    print("=" * 70)
+    results = prg_security_analysis(128)
+    for r, info in results.items():
+        print(f"  r={r:.2f}: need ε₀ ≤ 2^(-{info['eps0_bits']:.1f}), "
+              f"dense limited to T≤{info['max_dense_T_for_same_security']}")
+
+    print()
+    print("=" * 70)
+    print("APPLICATION 2: Monte Carlo Variance Reduction")
+    print("=" * 70)
+    results = monte_carlo_comparison()
+    for T, info in results.items():
+        print(f"  T={T:4d}: PP={info['pp_total_error']:.4f} "
+              f"(bound {info['pp_bound']:.4f}), "
+              f"Dense={info['dense_total_error']:.4f} "
+              f"(bound {info['dense_bound']:.1f}), "
+              f"improvement={info['improvement_factor']:.1f}×")
+
+    print()
+    print("=" * 70)
+    print("APPLICATION 3: Network Security Parameters")
+    print("=" * 70)
+    results = network_security_parameters()
+    for T, info in results.items():
+        print(f"  T={T:5d}: Dense prob={info['dense_collision_prob']:.4f} "
+              f"({'SECURE' if info['secure_dense'] else 'INSECURE'}), "
+              f"PP prob={info['pp_collision_prob']:.6f} "
+              f"({'SECURE' if info['secure_pp'] else 'INSECURE'})")
+
+    print()
+    print("=" * 70)
+    print("APPLICATION 4: Signal Reconstruction Quality")
+    print("=" * 70)
+    result = signal_reconstruction_quality()
+    print(f"  Samples: {result['num_samples']} at positions {result['sample_positions']}")
+    print(f"  Total error: {result['total_error']:.4f} ≤ {result['uniform_bound']:.4f}")
+    print(f"  vs uniform: {result['uniform_sampling_error']:.4f}")
+    print(f"  Improvement: {result['improvement']:.1f}×")
+
+    print("\nAll applications demonstrated successfully.")
 
 
 #!/usr/bin/env python3
 """
-Demo: Prime-Power Tropical PRGs and Arithmetic Sparsification
+demo.py — Numerical demonstrations of Prime-Power Tropical PRG Error Bounds.
 
-Demonstrates the core theorems with concrete numerical examples:
-1. Geometric decay of stage errors
-2. Uniform cumulative error bounds
-3. Comparison with dense orbit bounds
-4. Fiber decorrelation row bounds
+Shows concrete examples of how arithmetic sparsification (sampling at prime-power
+indices) yields uniformly bounded cumulative error, in contrast to linear growth
+for dense orbit sampling.
 """
 
 import numpy as np
 
+def stagewise_decay(eps0: float, r: float, T: int) -> np.ndarray:
+    """Compute err(j) = eps0 * r^j for j = 0, ..., T."""
+    return eps0 * r ** np.arange(T + 1)
 
-def stagewise_decay(err0: float, r: float, T: int) -> np.ndarray:
-    """Compute error sequence satisfying err(j+1) = r * err(j)."""
-    errors = np.zeros(T + 1)
-    errors[0] = err0
-    for j in range(T):
-        errors[j + 1] = r * errors[j]
-    return errors
-
-
-def cumulative_error(errors: np.ndarray) -> np.ndarray:
-    """Compute cumulative sums of errors."""
-    return np.cumsum(errors)
-
+def cumulative_error(eps0: float, r: float, T: int) -> float:
+    """Sum of err(j) for j = 0, ..., T."""
+    return np.sum(stagewise_decay(eps0, r, T))
 
 def geometric_bound(eps0: float, r: float) -> float:
     """The uniform bound eps0 / (1 - r)."""
-    return eps0 / (1 - r)
+    return eps0 / (1.0 - r)
+
+def dense_orbit_bound(eps0: float, T: int) -> float:
+    """The naive dense-orbit bound (T+1) * eps0."""
+    return (T + 1) * eps0
 
 
-def dense_orbit_bound(eps: float, T: int) -> float:
-    """The naive dense orbit bound (T+1)*eps."""
-    return (T + 1) * eps
-
-
-def demo_stagewise_decay():
-    """Demonstrate Theorem: prime_power_stagewise_decay"""
-    print("=" * 60)
-    print("THEOREM 1: Stagewise Geometric Decay")
-    print("  err(j) <= eps0 * r^j")
-    print("=" * 60)
-
-    eps0, r = 0.1, 0.5
-    T = 10
-
+# ─────────────────────────────────────────────────
+# Demo 1: Stagewise decay visualization
+# ─────────────────────────────────────────────────
+def demo_stagewise():
+    eps0, r = 0.1, 0.6
+    T = 20
     errors = stagewise_decay(eps0, r, T)
-    bounds = np.array([eps0 * r**j for j in range(T + 1)])
-
-    print(f"\n  Parameters: eps0 = {eps0}, r = {r}")
-    print(f"  {'Stage j':<10} {'err(j)':<15} {'eps0*r^j':<15} {'Verified':<10}")
-    print(f"  {'-'*50}")
-    for j in range(T + 1):
-        ok = errors[j] <= bounds[j] + 1e-15
-        print(f"  {j:<10} {errors[j]:<15.8f} {bounds[j]:<15.8f} {'✓' if ok else '✗'}")
+    print("═" * 60)
+    print("DEMO 1: Stagewise Geometric Decay")
+    print(f"  ε₀ = {eps0}, r = {r}")
+    print("═" * 60)
+    for j, e in enumerate(errors):
+        bar = "█" * int(e * 500)
+        print(f"  j={j:2d}  err(j) = {e:.6f}  {bar}")
     print()
 
 
-def demo_cumulative_bound():
-    """Demonstrate Theorem: prime_power_geometric_error_bound"""
-    print("=" * 60)
-    print("THEOREM 2: Uniform Cumulative Error Bound")
-    print("  sum_{j=0}^T err(j) <= eps0 / (1-r)")
-    print("=" * 60)
-
+# ─────────────────────────────────────────────────
+# Demo 2: Cumulative error vs uniform bound
+# ─────────────────────────────────────────────────
+def demo_cumulative():
     eps0, r = 0.1, 0.7
     bound = geometric_bound(eps0, r)
-
-    print(f"\n  Parameters: eps0 = {eps0}, r = {r}")
-    print(f"  Uniform bound: eps0/(1-r) = {bound:.6f}")
-    print(f"\n  {'T':<8} {'Cumulative Error':<20} {'Bound':<15} {'Verified':<10}")
-    print(f"  {'-'*53}")
-
-    for T in [1, 5, 10, 20, 50, 100, 1000]:
-        errors = stagewise_decay(eps0, r, T)
-        cum = errors.sum()
-        ok = cum <= bound + 1e-12
-        print(f"  {T:<8} {cum:<20.10f} {bound:<15.6f} {'✓' if ok else '✗'}")
-    print(f"\n  → Cumulative error converges to {bound:.6f}, independent of T")
+    print("═" * 60)
+    print("DEMO 2: Cumulative Error vs Uniform Bound")
+    print(f"  ε₀ = {eps0}, r = {r}, bound = ε₀/(1-r) = {bound:.6f}")
+    print("═" * 60)
+    for T in [1, 2, 5, 10, 20, 50, 100, 500, 1000]:
+        cum = cumulative_error(eps0, r, T)
+        ratio = cum / bound * 100
+        print(f"  T={T:4d}  Σerr = {cum:.6f}  bound = {bound:.6f}  "
+              f"({ratio:.1f}% of bound)")
     print()
 
 
+# ─────────────────────────────────────────────────
+# Demo 3: Prime-power vs dense orbit comparison
+# ─────────────────────────────────────────────────
 def demo_comparison():
-    """Demonstrate Theorem: prime_power_beats_dense_orbit"""
-    print("=" * 60)
-    print("THEOREM 3: Prime-Power vs Dense Orbit Comparison")
-    print("  eps0/(1-r) < (T+1)*eps0 when T+1 > 1/(1-r)")
-    print("=" * 60)
-
-    eps0, r = 0.1, 0.9
+    eps0 = 0.05
+    r = 0.5
     pp_bound = geometric_bound(eps0, r)
-    threshold = 1 / (1 - r)
-
-    print(f"\n  Parameters: eps0 = {eps0}, r = {r}")
-    print(f"  Prime-power bound: {pp_bound:.4f}")
-    print(f"  Crossover at T+1 > {threshold:.1f}")
-    print(f"\n  {'T':<8} {'Dense (T+1)*eps0':<20} {'Prime-Power':<15} {'PP Wins?':<10}")
-    print(f"  {'-'*53}")
-
-    for T in [1, 5, 10, 15, 20, 50, 100]:
+    print("═" * 60)
+    print("DEMO 3: Prime-Power vs Dense Orbit Bounds")
+    print(f"  ε₀ = {eps0}, r = {r}")
+    print(f"  Prime-power bound: {pp_bound:.4f} (UNIFORM for all T)")
+    print("═" * 60)
+    for T in [1, 5, 10, 50, 100, 500, 1000]:
         dense = dense_orbit_bound(eps0, T)
-        wins = pp_bound < dense
-        print(f"  {T:<8} {dense:<20.4f} {pp_bound:<15.4f} {'✓ YES' if wins else '  no'}")
-
-    print(f"\n  → For T > {int(threshold)}, prime-power bound is STRICTLY better")
+        ratio = dense / pp_bound
+        print(f"  T={T:4d}  Dense: {dense:8.2f}  PP: {pp_bound:.4f}  "
+              f"Dense/PP = {ratio:.1f}×")
     print()
 
 
-def demo_fiber_decorrelation():
-    """Demonstrate Theorem: prime_power_fiber_decorrelation_row_bound"""
-    print("=" * 60)
-    print("THEOREM 4: Fiber Decorrelation Row Bound")
-    print("  sum_j C(p^i, p^j) <= C0 * (2/(1-rho) - 1)")
-    print("=" * 60)
-
-    C0, rho = 1.0, 0.6
-    p = 2
-    bound = C0 * (2 / (1 - rho) - 1)
-
-    print(f"\n  Parameters: C0 = {C0}, rho = {rho}, p = {p}")
-    print(f"  Row bound: C0*(2/(1-rho)-1) = {bound:.4f}")
-
-    for i in [0, 3, 7]:
-        print(f"\n  Fixed i = {i}:")
-        print(f"  {'T':<8} {'Row Sum':<20} {'Bound':<15} {'Verified':<10}")
-        print(f"  {'-'*53}")
-        for T in [5, 10, 20, 50, 100]:
-            row_sum = sum(C0 * rho ** abs(i - j) for j in range(T + 1))
-            ok = row_sum <= bound + 1e-10
-            print(f"  {T:<8} {row_sum:<20.8f} {bound:<15.4f} {'✓' if ok else '✗'}")
+# ─────────────────────────────────────────────────
+# Demo 4: Fiber decorrelation
+# ─────────────────────────────────────────────────
+def demo_decorrelation():
+    C0, rho = 1.0, 0.4
+    print("═" * 60)
+    print("DEMO 4: Prime-Power Fiber Decorrelation Matrix")
+    print(f"  C₀ = {C0}, ρ = {rho}")
+    print(f"  C(p^i, p^j) ≤ C₀ · ρ^|i-j|")
+    print("═" * 60)
+    N = 8
+    print("      ", end="")
+    for j in range(N):
+        print(f"  j={j:d}   ", end="")
+    print()
+    for i in range(N):
+        print(f"  i={i:d}", end="")
+        for j in range(N):
+            val = C0 * rho ** abs(i - j)
+            print(f"  {val:.4f}", end="")
+        print()
+    bound = C0 * (2.0 / (1 - rho) - 1)
+    print(f"\n  Row sum bound: C₀ · (2/(1-ρ) - 1) = {bound:.4f}")
+    for i in range(N):
+        row_sum = sum(C0 * rho ** abs(i - j) for j in range(100))
+        print(f"  Row i={i}: sum (T=99) = {row_sum:.4f} ≤ {bound:.4f}")
     print()
 
 
-def demo_extraction_sequence():
-    """Demonstrate prime-power extraction error along p^j orbit."""
-    print("=" * 60)
-    print("THEOREM 5: Prime-Power Extraction Uniform Bound")
-    print("  Full extraction theorem combining all ingredients")
-    print("=" * 60)
-
-    p = 3
-    eps0, r = 0.05, 0.4
-    bound = geometric_bound(eps0, r)
-
-    print(f"\n  Prime p = {p}, eps0 = {eps0}, r = {r}")
-    print(f"  Uniform extraction bound: {bound:.6f}")
-    print(f"\n  {'j':<6} {'p^j':<12} {'baseErr(p^j)':<18} {'Cumulative':<18} {'Bound':<12}")
-    print(f"  {'-'*66}")
-
-    cum = 0.0
-    for j in range(12):
-        err_j = eps0 * r**j
-        cum += err_j
-        idx = p**j
-        print(f"  {j:<6} {idx:<12} {err_j:<18.10f} {cum:<18.10f} {bound:<12.6f}")
-
-    print(f"\n  → Total extraction error converges to {bound:.6f}")
+# ─────────────────────────────────────────────────
+# Demo 5: Varying contraction rate
+# ─────────────────────────────────────────────────
+def demo_varying_r():
+    eps0 = 0.1
+    print("═" * 60)
+    print("DEMO 5: Effect of Contraction Rate r")
+    print(f"  ε₀ = {eps0}")
+    print("═" * 60)
+    for r in [0.1, 0.2, 0.3, 0.5, 0.7, 0.8, 0.9, 0.95, 0.99]:
+        bound = geometric_bound(eps0, r)
+        T_crossover = int(np.ceil(1.0 / (1.0 - r)))
+        print(f"  r={r:.2f}  bound={bound:.4f}  "
+              f"PP beats dense at T≥{T_crossover}")
     print()
 
 
 if __name__ == "__main__":
-    print("\n" + "=" * 60)
-    print("  PRIME-POWER TROPICAL PRG: NUMERICAL DEMONSTRATIONS")
-    print("=" * 60 + "\n")
-
-    demo_stagewise_decay()
-    demo_cumulative_bound()
+    demo_stagewise()
+    demo_cumulative()
     demo_comparison()
-    demo_fiber_decorrelation()
-    demo_extraction_sequence()
+    demo_decorrelation()
+    demo_varying_r()
+    print("All demos completed successfully.")
 
-    print("All demonstrations completed successfully.")
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json with all deliverables bundled."""
+
+import json
+from visualizations import generate_all_figures
+
+# Read all text files
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+lean_code = read_file('Tropical/PRG/PrimePowerAmplification.lean')
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+
+# Generate visualizations
+print("Generating visualizations...")
+figs = generate_all_figures()
+
+package = {
+    "title": "Prime-Power Tropical PRGs and Arithmetic Sparsification",
+    "domain": "Tropical Mathematics / Pseudorandom Generation / Arithmetic Combinatorics",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Prime-Power Error Bound Demonstrations",
+            "code": demo_code
+        },
+        {
+            "name": "Real-World Applications",
+            "code": applications_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Geometric Error Bound Computation",
+            "pseudocode": "ComputeGeometricBound(eps0, r, T):\n  For j = 0..T: err[j] = eps0 * r^j\n  cumulative = sum(err)\n  bound = eps0 / (1 - r)\n  Return (err, cumulative, bound)\n\nTime: O(T), Space: O(T)",
+            "code": algorithms_code
+        },
+        {
+            "name": "Fiber Decorrelation Analysis",
+            "pseudocode": "FiberDecorrelation(C0, rho, N):\n  For i,j = 0..N-1: C[i,j] = C0 * rho^|i-j|\n  row_sums[i] = sum_j C[i,j]\n  bound = C0 * (2/(1-rho) - 1)\n  Return (C, row_sums, bound)\n\nTime: O(N^2), Space: O(N^2)",
+            "code": algorithms_code
+        },
+        {
+            "name": "Crossover Point Computation",
+            "pseudocode": "CrossoverPoint(eps0, r):\n  T* = ceil(1/(1-r))\n  Return T*\n\nTime: O(1), Space: O(1)",
+            "code": algorithms_code
+        }
+    ],
+    "visualizations": [
+        {
+            "name": "Stagewise Geometric Decay of Prime-Power Errors",
+            "data": figs['stagewise_decay']
+        },
+        {
+            "name": "Prime-Power vs Dense Orbit Cumulative Error",
+            "data": figs['cumulative_comparison']
+        },
+        {
+            "name": "Fiber Decorrelation Heatmap",
+            "data": figs['decorrelation_heatmap']
+        },
+        {
+            "name": "Contraction Rate Sensitivity Analysis",
+            "data": figs['contraction_sensitivity']
+        },
+        {
+            "name": "Error Decay Across Different Prime Bases",
+            "data": figs['multi_prime']
+        }
+    ],
+    "lean_proofs": lean_code
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print(f"PACKAGE.json written ({len(json.dumps(package))} chars)")
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Prime-Power Tropical PRGs and Arithmetic Sparsification.
+visualizations.py — Generate figures for Prime-Power Arithmetic Sparsification.
 
-Generates publication-quality figures:
-1. Geometric decay of stage errors
+Produces publication-quality charts showing:
+1. Stagewise geometric decay of errors
 2. Cumulative error: prime-power vs dense orbit
 3. Fiber decorrelation heatmap
-4. Convergence behavior for different contraction rates
+4. Contraction rate sensitivity analysis
 """
 
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
 import base64
 from io import BytesIO
 
@@ -433,251 +473,207 @@ from io import BytesIO
 def fig_to_base64(fig) -> str:
     """Convert matplotlib figure to base64 PNG data URI."""
     buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{data}"
+    return f"data:image/png;base64,{encoded}"
 
 
 def plot_stagewise_decay():
-    """Plot geometric decay of stage errors for multiple contraction rates."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    eps0 = 0.1
-    T = 15
-    js = np.arange(T + 1)
-
-    rates = [0.3, 0.5, 0.7, 0.9]
-    colors = ['#2196F3', '#4CAF50', '#FF9800', '#F44336']
-
-    for r, color in zip(rates, colors):
-        errors = eps0 * r ** js
-        ax1.semilogy(js, errors, 'o-', color=color, label=f'r = {r}',
-                     markersize=5, linewidth=1.5)
-
-    ax1.set_xlabel('Stage j', fontsize=12)
-    ax1.set_ylabel('err(j)', fontsize=12)
-    ax1.set_title('Stagewise Error Decay: err(j) ≤ ε₀ · rʲ', fontsize=13)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_xlim(-0.5, T + 0.5)
-
-    # Cumulative sums
-    for r, color in zip(rates, colors):
-        errors = eps0 * r ** js
-        cumsum = np.cumsum(errors)
-        bound = eps0 / (1 - r)
-        ax2.plot(js, cumsum, 'o-', color=color, label=f'r={r}, bound={bound:.3f}',
-                 markersize=5, linewidth=1.5)
-        ax2.axhline(y=bound, color=color, linestyle='--', alpha=0.5, linewidth=1)
-
-    ax2.set_xlabel('Truncation T', fontsize=12)
-    ax2.set_ylabel('Cumulative Error', fontsize=12)
-    ax2.set_title('Cumulative Error: ∑ err(j) ≤ ε₀/(1-r)', fontsize=13)
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-
-    fig.suptitle('Prime-Power Geometric Error Bounds', fontsize=15, y=1.02)
-    fig.tight_layout()
-
-    fig.savefig('/workspace/request-project/fig_stagewise_decay.png',
-                dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def plot_pp_vs_dense():
-    """Plot comparison of prime-power vs dense orbit bounds."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    eps0 = 0.05
-    T_values = np.arange(1, 101)
-
-    # Left: absolute bounds
-    for r, color, ls in [(0.5, '#2196F3', '-'), (0.7, '#4CAF50', '-'),
-                          (0.9, '#F44336', '-')]:
-        pp_bound = eps0 / (1 - r)
-        dense_bounds = (T_values + 1) * eps0
-        ax1.plot(T_values, dense_bounds, color='gray', linewidth=1,
-                 alpha=0.3)
-        ax1.axhline(y=pp_bound, color=color, linewidth=2,
-                    label=f'PP (r={r}): {pp_bound:.3f}')
-        crossover = 1 / (1 - r) - 1
-        ax1.axvline(x=crossover, color=color, linestyle=':', alpha=0.5)
-
-    ax1.plot(T_values, (T_values + 1) * eps0, 'k-', linewidth=2,
-             label=f'Dense: (T+1)·ε₀', alpha=0.7)
-    ax1.set_xlabel('Orbit Length T', fontsize=12)
-    ax1.set_ylabel('Error Bound', fontsize=12)
-    ax1.set_title('Absolute Error Bounds', fontsize=13)
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(0, 3)
-
-    # Right: improvement ratio
-    for r, color in [(0.5, '#2196F3'), (0.7, '#4CAF50'), (0.9, '#F44336')]:
-        ratio = (T_values + 1) * (1 - r)
-        ax2.plot(T_values, ratio, color=color, linewidth=2, label=f'r = {r}')
-
-    ax2.axhline(y=1, color='black', linestyle='--', alpha=0.5)
-    ax2.fill_between(T_values, 1, 0, alpha=0.05, color='red')
-    ax2.fill_between(T_values, 1, max(T_values) * 0.5, alpha=0.05, color='green')
-    ax2.set_xlabel('Orbit Length T', fontsize=12)
-    ax2.set_ylabel('Improvement Ratio', fontsize=12)
-    ax2.set_title('Dense / Prime-Power Ratio (>1 = PP wins)', fontsize=13)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(0, 15)
-
-    fig.suptitle('Prime-Power Sparsification vs Dense Orbit Sampling',
-                 fontsize=15, y=1.02)
-    fig.tight_layout()
-
-    fig.savefig('/workspace/request-project/fig_pp_vs_dense.png',
-                dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def plot_decorrelation_heatmap():
-    """Plot fiber decorrelation decay heatmap."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    T = 15
-    rho = 0.6
-    C0 = 1.0
-
-    # Collision matrix C(p^i, p^j) = C0 * rho^|i-j|
-    C = np.zeros((T + 1, T + 1))
-    for i in range(T + 1):
-        for j in range(T + 1):
-            C[i, j] = C0 * rho ** abs(i - j)
-
-    im1 = ax1.imshow(C, cmap='YlOrRd', aspect='equal',
-                     interpolation='nearest')
-    ax1.set_xlabel('Stage j', fontsize=12)
-    ax1.set_ylabel('Stage i', fontsize=12)
-    ax1.set_title(f'C(p^i, p^j) = C₀ · ρ^|i-j|  (ρ={rho})', fontsize=13)
-    plt.colorbar(im1, ax=ax1, shrink=0.8)
-
-    # Row sums
-    row_sums = C.sum(axis=1)
-    bound = C0 * (2 / (1 - rho) - 1)
-
-    ax2.bar(range(T + 1), row_sums, color='#2196F3', alpha=0.7,
-            label='Row sum')
-    ax2.axhline(y=bound, color='#F44336', linewidth=2, linestyle='--',
-                label=f'Bound: {bound:.2f}')
-    ax2.set_xlabel('Row index i', fontsize=12)
-    ax2.set_ylabel('Row Sum', fontsize=12)
-    ax2.set_title('Per-Row Decorrelation Bound', fontsize=13)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3, axis='y')
-
-    fig.suptitle('Fiber Decorrelation Along Prime-Power Indices',
-                 fontsize=15, y=1.02)
-    fig.tight_layout()
-
-    fig.savefig('/workspace/request-project/fig_decorrelation.png',
-                dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-def plot_convergence():
-    """Plot convergence behavior for different primes and rates."""
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    """Figure 1: Stagewise geometric decay of prime-power errors."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
     eps0 = 0.1
     T = 20
     js = np.arange(T + 1)
 
-    # Top-left: different primes, same rate
-    ax = axes[0, 0]
+    for r, color, ls in [(0.3, '#2196F3', '-'),
+                          (0.5, '#4CAF50', '--'),
+                          (0.7, '#FF9800', '-.'),
+                          (0.9, '#F44336', ':')]:
+        errors = eps0 * r ** js
+        ax.semilogy(js, errors, color=color, linestyle=ls, linewidth=2.5,
+                    marker='o', markersize=5, label=f'r = {r}')
+
+    ax.set_xlabel('Stage j (prime-power index p^j)', fontsize=14)
+    ax.set_ylabel('Error err(j)', fontsize=14)
+    ax.set_title('Stagewise Geometric Decay of Prime-Power Errors',
+                fontsize=16, fontweight='bold')
+    ax.legend(fontsize=12, framealpha=0.9)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(-0.5, T + 0.5)
+
+    return fig
+
+
+def plot_cumulative_comparison():
+    """Figure 2: Cumulative error — prime-power bound vs dense orbit."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    eps0 = 0.1
     r = 0.6
-    for p, color in [(2, '#2196F3'), (3, '#4CAF50'), (5, '#FF9800'), (7, '#9C27B0')]:
-        errors = eps0 * r ** js
-        cum = np.cumsum(errors)
-        ax.plot(js, cum, 'o-', color=color, label=f'p = {p}', markersize=4)
-    ax.axhline(y=eps0/(1-r), color='red', linestyle='--', label=f'Bound: {eps0/(1-r):.3f}')
-    ax.set_title(f'Different Primes (r = {r})', fontsize=12)
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-    ax.set_xlabel('Stage j')
-    ax.set_ylabel('Cumulative Error')
+    T_max = 50
+    Ts = np.arange(1, T_max + 1)
 
-    # Top-right: rate sensitivity
-    ax = axes[0, 1]
-    rates = np.linspace(0.01, 0.99, 100)
-    bounds = eps0 / (1 - rates)
-    ax.plot(rates, bounds, 'b-', linewidth=2)
-    ax.fill_between(rates, bounds, alpha=0.1, color='blue')
-    ax.set_xlabel('Contraction Rate r', fontsize=12)
-    ax.set_ylabel('Uniform Bound ε₀/(1-r)', fontsize=12)
-    ax.set_title('Bound Sensitivity to Contraction Rate', fontsize=12)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, 2)
+    # Prime-power cumulative
+    pp_cum = np.array([np.sum(eps0 * r ** np.arange(T + 1)) for T in Ts])
+    pp_bound = eps0 / (1.0 - r)
 
-    # Bottom-left: error budget consumption
-    ax = axes[1, 0]
-    for r, color in [(0.3, '#2196F3'), (0.5, '#4CAF50'), (0.7, '#FF9800'), (0.9, '#F44336')]:
-        errors = eps0 * r ** js
-        fraction = np.cumsum(errors) / (eps0 / (1 - r))
-        ax.plot(js, fraction * 100, '-', color=color, linewidth=2,
-                label=f'r = {r}')
-    ax.set_xlabel('Stage j', fontsize=12)
-    ax.set_ylabel('Budget Used (%)', fontsize=12)
-    ax.set_title('Error Budget Consumption', fontsize=12)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, 105)
+    # Dense orbit cumulative
+    dense_cum = (Ts + 1) * eps0
 
-    # Bottom-right: advantage over dense orbit
-    ax = axes[1, 1]
-    T_range = np.arange(1, 51)
-    for r, color in [(0.5, '#2196F3'), (0.7, '#4CAF50'), (0.9, '#F44336')]:
-        savings = 1 - 1 / ((T_range + 1) * (1 - r))
-        ax.plot(T_range, savings * 100, '-', color=color, linewidth=2,
-                label=f'r = {r}')
-    ax.axhline(y=0, color='black', linestyle='--', alpha=0.3)
-    ax.set_xlabel('Orbit Length T', fontsize=12)
-    ax.set_ylabel('Error Reduction (%)', fontsize=12)
-    ax.set_title('Error Reduction vs Dense Orbit', fontsize=12)
-    ax.legend(fontsize=10)
+    ax.plot(Ts, pp_cum, color='#2196F3', linewidth=2.5,
+            label='Prime-power cumulative error')
+    ax.axhline(y=pp_bound, color='#2196F3', linestyle='--', linewidth=1.5,
+              label=f'PP uniform bound: ε₀/(1-r) = {pp_bound:.3f}')
+    ax.plot(Ts, dense_cum, color='#F44336', linewidth=2.5,
+            label='Dense orbit cumulative error')
+
+    # Shade the gap
+    ax.fill_between(Ts, pp_cum, dense_cum, alpha=0.15, color='#F44336')
+
+    # Mark crossover
+    crossover = int(np.ceil(1.0 / (1.0 - r)))
+    ax.axvline(x=crossover, color='gray', linestyle=':', linewidth=1.5,
+              label=f'Crossover at T = {crossover}')
+
+    ax.set_xlabel('Truncation length T', fontsize=14)
+    ax.set_ylabel('Cumulative error', fontsize=14)
+    ax.set_title('Prime-Power vs Dense Orbit: Cumulative Error Growth',
+                fontsize=16, fontweight='bold')
+    ax.legend(fontsize=11, loc='upper left', framealpha=0.9)
     ax.grid(True, alpha=0.3)
 
-    fig.suptitle('Convergence Analysis of Arithmetic Sparsification',
-                 fontsize=15, y=1.01)
+    return fig
+
+
+def plot_decorrelation_heatmap():
+    """Figure 3: Fiber decorrelation heatmap C(p^i, p^j) ≤ C₀ · ρ^|i-j|."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    N = 12
+    for ax, (rho, title) in zip(axes, [(0.3, 'Strong decorrelation (ρ=0.3)'),
+                                         (0.8, 'Weak decorrelation (ρ=0.8)')]):
+        C = np.array([[rho ** abs(i - j) for j in range(N)] for i in range(N)])
+        im = ax.imshow(C, cmap='YlOrRd_r', vmin=0, vmax=1, aspect='equal')
+        ax.set_xlabel('Stage j', fontsize=12)
+        ax.set_ylabel('Stage i', fontsize=12)
+        ax.set_title(title, fontsize=14, fontweight='bold')
+        plt.colorbar(im, ax=ax, shrink=0.8)
+
+    fig.suptitle('Prime-Power Fiber Collision Bounds C(p^i, p^j)',
+                fontsize=16, fontweight='bold', y=1.02)
     fig.tight_layout()
 
-    fig.savefig('/workspace/request-project/fig_convergence.png',
-                dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
+    return fig
+
+
+def plot_contraction_sensitivity():
+    """Figure 4: Uniform bound as a function of contraction rate."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    eps0 = 0.1
+    rs = np.linspace(0.01, 0.99, 200)
+    bounds = eps0 / (1.0 - rs)
+
+    # Left: bound vs r
+    ax1.plot(rs, bounds, color='#2196F3', linewidth=2.5)
+    ax1.fill_between(rs, 0, bounds, alpha=0.1, color='#2196F3')
+    ax1.set_xlabel('Contraction rate r', fontsize=14)
+    ax1.set_ylabel('Uniform bound ε₀/(1-r)', fontsize=14)
+    ax1.set_title('Uniform Error Bound vs Contraction Rate',
+                 fontsize=14, fontweight='bold')
+    ax1.set_ylim(0, 5)
+    ax1.grid(True, alpha=0.3)
+
+    # Annotate key points
+    for r_val in [0.5, 0.7, 0.9]:
+        b = eps0 / (1.0 - r_val)
+        ax1.plot(r_val, b, 'ro', markersize=8)
+        ax1.annotate(f'r={r_val}\nbound={b:.2f}',
+                    xy=(r_val, b), xytext=(r_val - 0.15, b + 0.3),
+                    fontsize=10, ha='center',
+                    arrowprops=dict(arrowstyle='->', color='gray'))
+
+    # Right: crossover T vs r
+    crossovers = 1.0 / (1.0 - rs)
+    ax2.semilogy(rs, crossovers, color='#4CAF50', linewidth=2.5)
+    ax2.set_xlabel('Contraction rate r', fontsize=14)
+    ax2.set_ylabel('Crossover length T*', fontsize=14)
+    ax2.set_title('Crossover: When PP Beats Dense Orbit',
+                 fontsize=14, fontweight='bold')
+    ax2.grid(True, alpha=0.3)
+
+    fig.tight_layout()
+    return fig
+
+
+def plot_multi_prime():
+    """Figure 5: Comparison across different primes."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    eps0 = 0.1
+    r = 0.5
+    T = 15
+
+    primes = [2, 3, 5, 7, 11]
+    colors = ['#2196F3', '#4CAF50', '#FF9800', '#F44336', '#9C27B0']
+
+    for p, color in zip(primes, colors):
+        js = np.arange(T + 1)
+        orbit_times = p ** js
+        errors = eps0 * r ** js
+
+        ax.semilogy(orbit_times, errors, 'o-', color=color,
+                   linewidth=1.5, markersize=6, label=f'p = {p}')
+
+    bound = eps0 / (1.0 - r)
+    ax.axhline(y=bound, color='black', linestyle='--', linewidth=1.5,
+              label=f'Uniform bound = {bound:.2f}', alpha=0.5)
+
+    ax.set_xlabel('Orbit time n = p^j', fontsize=14)
+    ax.set_ylabel('Stage error err(j)', fontsize=14)
+    ax.set_title('Error Decay Across Different Prime Bases',
+                fontsize=16, fontweight='bold')
+    ax.legend(fontsize=11, framealpha=0.9)
+    ax.grid(True, alpha=0.3)
+    ax.set_xscale('log')
+
+    return fig
+
+
+def generate_all_figures():
+    """Generate all figures and return as base64 data URIs."""
+    figures = {}
+
+    print("Generating Figure 1: Stagewise decay...")
+    figures['stagewise_decay'] = fig_to_base64(plot_stagewise_decay())
+
+    print("Generating Figure 2: Cumulative comparison...")
+    figures['cumulative_comparison'] = fig_to_base64(plot_cumulative_comparison())
+
+    print("Generating Figure 3: Decorrelation heatmap...")
+    figures['decorrelation_heatmap'] = fig_to_base64(plot_decorrelation_heatmap())
+
+    print("Generating Figure 4: Contraction sensitivity...")
+    figures['contraction_sensitivity'] = fig_to_base64(plot_contraction_sensitivity())
+
+    print("Generating Figure 5: Multi-prime comparison...")
+    figures['multi_prime'] = fig_to_base64(plot_multi_prime())
+
+    return figures
 
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
+    # Generate and save figures
+    figs = generate_all_figures()
+    for name, data in figs.items():
+        # Save as standalone files too
+        img_data = base64.b64decode(data.split(',')[1])
+        with open(f'{name}.png', 'wb') as f:
+            f.write(img_data)
+        print(f"Saved {name}.png ({len(img_data)} bytes)")
 
-    b64_1 = plot_stagewise_decay()
-    print(f"  fig_stagewise_decay.png: {len(b64_1)} chars")
-
-    b64_2 = plot_pp_vs_dense()
-    print(f"  fig_pp_vs_dense.png: {len(b64_2)} chars")
-
-    b64_3 = plot_decorrelation_heatmap()
-    print(f"  fig_decorrelation.png: {len(b64_3)} chars")
-
-    b64_4 = plot_convergence()
-    print(f"  fig_convergence.png: {len(b64_4)} chars")
-
-    print("\nAll visualizations generated successfully.")
-
-    # Save base64 data for JSON package
-    import json
-    viz_data = {
-        "stagewise_decay": b64_1,
-        "pp_vs_dense": b64_2,
-        "decorrelation": b64_3,
-        "convergence": b64_4
-    }
-    with open('/workspace/request-project/viz_data.json', 'w') as f:
-        json.dump(viz_data, f)
-    print("Base64 data saved to viz_data.json")
+    print(f"\nGenerated {len(figs)} figures successfully.")
