@@ -512,10 +512,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0839f238",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1646adc6",
     "timestamp": "2026-05-16T12:59:24.025803+00:00"
   },
   {
@@ -670,20 +670,6 @@
     "timestamp": "2026-05-16T14:39:14.314331+00:00"
   },
   {
-    "id": "fd_0257",
-    "title": "Triangle inequality",
-    "description": ": For any ε > 0, pick near-optimal group elements g₁, g₂ for (μ,ν) and (ν,ρ). Then g₁·g₂ is a candidate for (μ,ρ), and the triangle inequality for W_c gives the bound.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3fc0fc4e",
-    "consumed_by_exp_id": "92317e70",
-    "timestamp": "2026-05-16T14:39:14.454757+00:00"
-  },
-  {
     "id": "fd_0245",
     "title": "Hypothesis formulation",
     "description": ": State the target theorem precisely in dependent type theory.",
@@ -781,48 +767,6 @@
     "source_exp_id": "3ef884fe",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T16:52:28.952192+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Direction 2",
-    "description": "(Strong DPI) — highest short-term impact, most likely to succeed",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3392003d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:56:13.942252+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Direction 1",
-    "description": "(Sidon sets) — natural generalization, moderate difficulty",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3392003d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:56:13.958310+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "Direction 4",
-    "description": "(Higher-rank) — most ambitious, requires substantial infrastructure",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3392003d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:56:13.974818+00:00"
   },
   {
     "id": "fd_0113",
@@ -1815,5 +1759,48 @@
     "source_exp_id": "d032c89b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T16:34:16.252979+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Goal",
+    "description": "Prove that under reflexivity, symmetry, nonnegativity, and diagonal invariance, the orbit cost is a pseudometric on the orbit space `α / G`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "92317e70",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T17:45:48.210357+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Theorem Signatures",
+    "description": "```lean\n/-- Orbit cost is nonneg if the base cost is. -/\ntheorem orbitCost_nonneg\n    (G : Type*) {α : Type*} [Group G] [MulAction G α]\n    (Wc : α → α → ℝ)\n    (hnn : ∀ x y, 0 ≤ Wc x y)\n    (hbd : ∀ μ ν, BddBelow (Set.range fun g : G => Wc μ (g • ν))) :\n    ∀ μ ν, 0 ≤ orbitCost G Wc μ ν\n\n/-- Orbit cost is symmetric if Wc is symmetric and the action is bi-invariant. -/\ntheorem orbitCost_symm\n    (G : Type*) {α : Type*} [Group G] [MulAction G α]\n    (Wc : α → α → ℝ)\n    (hsymm : ∀ x y, Wc x y = Wc y x)\n    (hinv : ∀ x y g, Wc (g • x) (g • y) = Wc x y)\n    (hbd : ∀ μ ν, BddBelow (Set.range fun g : G => Wc μ (g • ν))) :\n    ∀ μ ν, orbitCost G Wc μ ν = orbitCost G Wc ν μ\n\n/-- Package: orbit cost as a PseudoMetricSpace on the quotient. -/\ninstance orbitCostPseudoMetric\n    (G : Type*) {α : Type",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "92317e70",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T17:45:48.227667+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Cross-Cutting Themes",
+    "description": "All five directions share a common mechanism: **the orbit-cost construction is functorial**. Given:\n- A category of \"cost spaces\" (objects with a cost function satisfying triangle inequality),\n- A group acting by cost-preserving maps,\n\nthe orbit cost is a functor to the category of \"quotient cost spaces.\" Future work should formalize this categorical perspective, potentially using Mathlib's category theory library.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "92317e70",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T17:45:48.267292+00:00"
   }
 ]
