@@ -631,21 +631,6 @@
     "timestamp": "2026-05-16T08:34:17.348881+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Iterate",
-    "description": "until the zero matrix is reached.\n\n### Cross-Domain Significance\n\nThis connects the Birkhoff polytope to our permutation coupling theory: every transport plan between uniform measures decomposes into permutation couplings. Combined with `permPlan_is_transportPlan`, this would show that Wasserstein-1 between uniform measures can always be computed by optimizing over permutations alone — the bridge between continuous optimization and combinatorial assignment.\n\n---\n\n## Direction 3: Tropical Eigenvalue = Minimum Cycle Mean (Karp's Theorem)\n\n### Theorem Statement\n\nFor a matrix A representing edge weights of a complete directed graph on n vertices, the tropical eigenvalue (the limit of diagonal entries of tropical powers divided by the power) equals the minimum cycle mean:\n\n$$\\lambda(A) = \\min_{",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "816ac9ca",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:34:17.392110+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "Connect to transport",
     "description": ": by `permPlan_transportCost`, this gives an algorithm for Wasserstein-1 between uniform distributions.\n\n### Cross-Domain Significance\n\nThis would be the first formally verified assignment algorithm that simultaneously lives in the transport, tropical, and combinatorial optimization worlds. Combined with conjugation invariance (`assignment_cost_conjugation_invariant`), it would show that the algorithm is equivariant: relabeling the cost matrix by a symmetry merely permutes the output.\n\n---\n\n## Direction 5: Wasserstein Quotient by Finite Group Actions\n\n### Theorem Statement\n\nIf a finite group G acts on `Fin n` preserving the cost function c, then the Wasserstein distance descends to a well-defined metric on the space of orbits of probability measures under G.\n\n### Lean Type Signature\n\n```le",
@@ -740,20 +725,6 @@
     "timestamp": "2026-05-16T09:18:22.944252+00:00"
   },
   {
-    "id": "fd_0247",
-    "title": "Show that any factor rank decomposition induces a row span",
-    "description": "If $M_{ij} = \\min_k (U_k(i) + V_k(j))$, then each row of M is tropically dominated by the rank-1 rows $\\{V_k\\}$, shifted by $\\{U_k(i)\\}$.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b18b8608",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:18:22.957431+00:00"
-  },
-  {
     "id": "fd_0248",
     "title": "Construct a counterexample",
     "description": "for the reverse inequality: the identity-like matrix $M_{ij} = 0$ if $i=j$, $\\infty$ otherwise has tropical rank 1 (it's already in echelon form) but factor rank $n$.\n\n### Cross-Domain Connections\n\n- **Communication complexity**: tropical rank is analogous to the log of the communication complexity of a Boolean matrix; factor rank bounds the extension complexity. The gap between them mirrors the gap between nondeterministic and deterministic communication.\n- **Optimization**: In linear programming over the tropical semiring, the rank controls the dimension of the feasible region, while factor rank controls the size of an extended formulation.\n\n---\n\n## 2. Subadditivity and Composition Under Tropical Matrix Product\n\n### Conjecture\n\nFor tropical matrix multiplication $C = A \\otimes B$ (where ",
@@ -771,34 +742,6 @@
     "timestamp": "2026-05-16T09:18:22.969171+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Single head",
-    "description": ": The attention matrix $A_{ij} = \\min_l (Q_{il} + K_{jl})$ is already a tropical rank-$d_k$ decomposition with $U_l(i) = Q_{il}$ and $V_l(j) = K_{jl}$.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b18b8608",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:18:22.980173+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Multi-head",
-    "description": ": By subadditivity, the tropical sum (min) of $h$ heads each of factor rank $\\leq d_k$ has factor rank $\\leq h \\cdot d_k$.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b18b8608",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:18:22.991072+00:00"
-  },
-  {
     "id": "fd_0251",
     "title": "Tightness",
     "description": ": Construct examples achieving the bound using random queries/keys.\n\n### Cross-Domain Connections\n\n- **Low-rank transformers**: Factor rank provides a formal measure of attention \"compression\" — low factor rank means the attention pattern is representable with few separable templates, justifying low-rank approximation methods like Linformer and Performer.\n- **Interpretability**: Each rank-1 summand $u(i) + v(j)$ in the decomposition represents a \"pure attention template\" that independently ranks tokens. Factor rank counts the minimum number of such templates.\n\n---\n\n## 5. Extension Complexity and Communication Complexity\n\n### Conjecture\n\nThe tropical factor rank of a distance/cost matrix provides lower bounds on the extension complexity of the corresponding tropical polytope:\n\n$$\\text{ext}(",
@@ -814,34 +757,6 @@
     "source_exp_id": "b18b8608",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:18:23.003359+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "Prove Yannakakis-type theorems",
-    "description": ": the minimum number of facets in an extended formulation equals the nonneg rank, which for tropical polytopes equals the factor rank.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b18b8608",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:18:23.041869+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Direction 2",
-    "description": "(reversible = zero cost) — Closest to the current codebase, requires only `entropyDefect` and injectivity characterization.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e8932e8e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:20:05.398841+00:00"
   },
   {
     "id": "seed_052",
@@ -1079,7 +994,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "0d4e55a6",
+    "consumed_by_exp_id": "0c823664",
     "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
@@ -1483,20 +1398,6 @@
     "timestamp": "2026-05-16T08:33:28.641269+00:00"
   },
   {
-    "id": "fd_0224",
-    "title": "Goal",
-    "description": "Extend from the 3-state sibling walk (degree 1 only) to the full product space of Berggren words {1, 2, 3}^L, with degree-k product tests depending on at most k coordinates.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "51691e39",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:34:40.210282+00:00"
-  },
-  {
     "id": "fd_0225",
     "title": "Formalization Steps",
     "description": "- Define `BerggrenWordSpace L := Fin L → Fin 3`.\n- Define the product noise operator as a `LinearMap`.\n- Construct the degree-k submodule as the span of functions depending on ≤ k coordinates.\n- Prove the tensor product eigenvalue decomposition.\n- Instantiate `bias_bound_of_spectral_decay`.",
@@ -1585,23 +1486,6 @@
     "timestamp": "2026-05-16T09:16:46.812655+00:00"
   },
   {
-    "id": "fd_0247",
-    "title": "Direction 4: Universality Classes Across Arithmetic Systems",
-    "description": "**Hypothesis**: Different arithmetic dynamical systems (Collatz, Syracuse, Euclidean algorithm, continued fraction expansion, `ax + b` maps) exhibit the same free-energy critical exponents, grouping them into universality classes analogous to those in statistical mechanics.\n\n**Strategy**:\n1. Compute (numerically and, where possible, rigorously) the tail exponent β for each system.\n2. For the Euclidean algorithm (GCD computation), the stopping time is the number of division steps. Known results (Dixon, Knuth) give polynomial tails, predicting bounded free energy.\n3. For Collatz, numerical evidence suggests logarithmic stopping times with possible power-law corrections — determine the exact exponent.\n4. Compare with continued fraction systems where the Gauss–Kuzmin–Wirsing operator provides ",
-    "domains": [
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a386325",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:16:46.828621+00:00"
-  },
-  {
     "id": "fd_0248",
     "title": "Direction 5: Bellman Equations and Computational Complexity of Arithmetic Descen",
     "description": "**Hypothesis**: The discounted value function $V_\\gamma(n)$ satisfies a Bellman-type fixed-point equation, and the computational complexity of evaluating $V_\\gamma$ is related to the arithmetic complexity of the underlying map.\n\n**Strategy**:\n1. Formalize the Bellman equation: $V_\\gamma(n) = 1 + \\gamma \\cdot V_\\gamma(T(n))$ for $n$ not at the target, and $V_\\gamma(n) = 0$ at the target.\n2. Prove existence and uniqueness of the solution via the Banach fixed-point theorem (the contraction factor is γ < 1).\n3. Relate the complexity of computing $V_\\gamma(n)$ to the stopping time $\\tau(n)$.\n4. Investigate whether the free energy $F_N(\\gamma )\\to \\infty$ as $\\gamma \\to 1^-$ can be used as a certificate of computational hardness — systems where many orbits have long stopping times should have di",
@@ -1616,20 +1500,6 @@
     "source_exp_id": "1a386325",
     "consumed_by_exp_id": "edf517ad",
     "timestamp": "2026-05-16T09:16:46.845693+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Implementation Notes",
-    "description": "Each direction above is designed to be pursued independently, building on the foundational decomposition and comparison theorems formalized in this project. The formalized theorems provide the essential infrastructure:\n\n- **Direction 1** extends the finitary sums to operator-theoretic objects.\n- **Direction 2** specializes the weight function to Dirichlet weights $w(n) = n^{-s}$.\n- **Direction 3** uses the free energy as a cumulant generating function.\n- **Direction 4** applies the comparison theorems across multiple systems.\n- **Direction 5** recasts the definitions in terms of fixed-point equations.\n\nThe most immediately tractable directions for further formalization are **Direction 4** (computational experiments) and **Direction 5** (the Bellman equation, which is a simple algebraic ide",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a386325",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:16:46.863154+00:00"
   },
   {
     "id": "fd_0246",
@@ -1648,24 +1518,6 @@
     "timestamp": "2026-05-16T09:29:02.728591+00:00"
   },
   {
-    "id": "fd_0247",
-    "title": "Direction 2: Monotone Semiring Valuations and Tropical Generalization",
-    "description": "**Hypothesis:** The level function `v ↦ 1 + sup(predecessors)` is a special case of a max-plus (tropical) linear recurrence. The incremental kernel generalizes to arbitrary monotone semiring valuations over acyclic dependency graphs.\n\n**Approach:**\n- Replace `ℕ` with an arbitrary ordered semiring `(S, ⊕, ⊗, ≤)` where `⊕` is the \"join\" and `⊗` is the \"combine\" operation.\n- Define `recomputeLevel` as `⊗(unit, ⊕{s(u) | u ∈ pred(v)})` for an appropriate unit.\n- Prove the same fold-correctness and complexity theorems in this abstract setting.\n- Instantiate to recover: DAG levels (max-plus over ℕ), shortest paths (min-plus over ℝ≥0 ∪ {∞}), widest paths (max-min), Boolean reachability (OR-AND).\n\n**Cross-domain connection:** This bridges to tropical geometry, where semiring valuations over graphs ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c2ddc3a7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:29:02.744729+00:00"
-  },
-  {
     "id": "fd_0248",
     "title": "Direction 3: Localized Fixpoint Maintenance for Temporal Logic",
     "description": "**Hypothesis:** Model checking a temporal logic formula (CTL, μ-calculus) on a finite Kripke structure is a fixpoint computation on a dependency graph. When the Kripke structure is locally modified, the truth values can be incrementally maintained by recomputing only within the affected cone.\n\n**Approach:**\n- Formalize the connection between DAG level computation and monotone fixpoint iteration on finite lattices.\n- Show that the incremental fold is equivalent to one-pass fixpoint stabilization on the restricted cone operator.\n- Extend from DAG levels to nested fixpoints (alternation depth > 1) by layering cone computations.\n- Prove that incremental model checking of μ-calculus formulas on locally-modified Kripke structures has complexity proportional to the affected region, not the full s",
@@ -1682,37 +1534,6 @@
     "source_exp_id": "c2ddc3a7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:29:02.760147+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Direction 4: Certified Self-Adjusting Computation Framework",
-    "description": "**Hypothesis:** The incremental fold pattern generalizes to a *self-adjusting computation* framework where arbitrary pure functions over DAG-structured inputs can be incrementally maintained under local input changes.\n\n**Approach:**\n- Define a `Computation` type that records the dependency graph of a pure functional computation.\n- Instrument computations with automatic dependency tracking (analogous to Acar's self-adjusting computation, but with machine-checked correctness).\n- Prove that the `incrementalFold` pattern, when applied to the recorded dependency graph, correctly updates the computation's output.\n- Prove complexity bounds showing that the update cost is proportional to the \"change propagation region\" — the set of intermediate values that actually change.\n\n**Cross-domain connecti",
-    "domains": [
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c2ddc3a7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:29:02.777861+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Direction 5: Sparse Neural Update Certificates",
-    "description": "**Hypothesis:** Message-passing neural networks (GNNs) compute vertex features by iterating a local aggregation rule over a graph — mathematically identical to iterated level computation. When the graph is locally modified, the network's output can be incrementally updated by recomputing only within the receptive field cone.\n\n**Approach:**\n- Formalize the connection between GNN message-passing rounds and iterated `recomputeLevel` with a general aggregation function.\n- Define the \"receptive field cone\" of depth `k` around a modified vertex as the set of vertices whose `k`-hop neighborhood intersects the modification.\n- Prove that the incremental kernel correctly updates GNN features with work proportional to the receptive field size.\n- Extend to attention-based aggregation (transformers on ",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c2ddc3a7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:29:02.795624+00:00"
   },
   {
     "id": "fd_0239",
@@ -1783,20 +1604,112 @@
     "timestamp": "2026-05-16T09:33:50.714492+00:00"
   },
   {
-    "id": "fd_0243",
-    "title": "Direction 5: Tropical Hardness Calibration for Post-Quantum Cryptography",
-    "description": "**Hypothesis:** The explicit family of matrices with known factor rank can be used to formally separate \"easy\" from \"hard\" instances of tropical matrix problems, providing calibration for cryptographic hardness assumptions.\n\n**Research plan:**\n1. Characterize the *easy* regime: diagonal and block-diagonal matrices where factor rank is efficiently computable (as shown in this work).\n2. Formalize the *hard* regime: generic tropical matrices where factor rank is NP-hard (following Shitov).\n3. Construct a formal *gap theorem*: there exist matrix families where factor rank transitions sharply from easy to hard as structure is perturbed.\n4. Use this gap to design tropical cryptographic primitives with certified hardness margins: keys are structured (easy to generate), while breaking the scheme r",
+    "id": "fd_0244",
+    "title": "Direction 1: Walk Decomposition and Exact Spectral Identification",
+    "description": "**Status**: High priority, high feasibility\n\n**Goal**: Close the gap between `tropRate` and `maxCycleMean` by proving the reverse inequality:\n\n```\ntropRate(W) ≤ maxCycleMean(W)\n```\n\nCombined with the already-proved `maxCycleMean(W) ≤ tropRate(W)`, this establishes exact equality.\n\n**Proof Strategy**:\n1. Formalize walks as functions `Fin(m+2) → Fin(n+1)` with boundary conditions.\n2. Prove `tropPow W m i j = max over all walks of walkWeight`.\n3. Prove the **Pigeonhole Cycle Extraction Lemma**: any walk of length > n on n+1 vertices contains a repeated vertex, hence a cycle of length ≤ n+1.\n4. Prove that any closed walk decomposes into simple cycles, each with mean ≤ maxCycleMean.\n5. Conclude: `tropPow W m i i ≤ (m+1) * maxCycleMean W`.\n\n**Key Lemma**:\n```\ntheorem walk_cycle_decomposition :\n ",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "23a76967",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:39:33.525513+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Direction 2: Formal Verification of Karp's Algorithm",
+    "description": "**Status**: High priority, medium feasibility\n\n**Goal**: Formalize Karp's 1978 algorithm for computing the maximum cycle mean in O(n³) time, and prove it correct against the formal definition of `maxCycleMean`.\n\n**Algorithm** (to formalize):\n```\ndef karpMCM (W : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) : ℝ :=\n  -- F k i = max weight walk of k edges ending at i\n  -- μ = max_i min_{k<n+1} (F (n+1) i - F k i) / (n+1-k)\n```\n\n**Proof obligations**:\n1. Correctness: `karpMCM W = maxCycleMean W`\n2. Complexity: runs in O(n³) arithmetic operations\n\n**Hypotheses to validate**:\n- The min-over-k characterization encodes exactly the maximum cycle mean\n- The algorithm handles all edge cases (negative weights, self-loops)\n\n**Impact**: Verified algorithms for safety-critical timing analysis (e.g., avionics, medic",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "23a76967",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:39:33.554044+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Direction 3: Tropical Additive Eigenvectors (Bellman Eigenpairs)",
+    "description": "**Status**: High priority, medium-high feasibility\n\n**Goal**: Prove existence of additive eigenpairs for the tropical Bellman operator.\n\n**Formal target**:\n```\ntheorem tropical_bellman_eigenpair\n    (W : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) :\n    ∃ (λ : ℝ) (v : Fin (n+1) → ℝ),\n      λ = tropRate W ∧\n      ∀ i, (Finset.univ.sup' Finset.univ_nonempty fun j => W i j + v j) = λ + v i\n```\n\n**Proof Strategy**:\n1. Define the Bellman operator T : (Fin(n+1) → ℝ) → (Fin(n+1) → ℝ) by (Tx)(i) = max_j(W(i,j) + x(j)).\n2. Show T is order-preserving and additively homogeneous: T(x + c) = Tx + c.\n3. Shift by the eigenvalue: define W' = W - μ with μ = tropRate(W).\n4. Show T' has eigenvalue 0; find v with T'v = v.\n5. Use the critical graph (subgraph of edges achieving equality) and a shortest-path construction.",
     "domains": [
       "Tropical",
-      "Physics",
-      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "23a76967",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:39:33.570144+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Direction 5: Two-Player Mean-Payoff Games",
+    "description": "**Status**: Medium priority, high impact, challenging feasibility\n\n**Goal**: Extend the tropical Perron–Frobenius theorem to the minimax setting of two-player mean-payoff games.\n\n**Formal target**:\n```\ntheorem mean_payoff_game_value\n    (W : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (player : Fin (n+1) → Bool)  -- vertex ownership\n    : ∃ (v : Fin (n+1) → ℝ),\n      ∀ i, v i = if player i then\n        Finset.univ.sup' _ (fun j => W i j + v j)  -- Max player\n      else\n        Finset.univ.inf' _ (fun j => W i j + v j)  -- Min player\n```\n\n**Proof Strategy**:\n1. Define the two-player Bellman operator combining max and min.\n2. Use strategy improvement or value iteration to show convergence.\n3. Connect to the determinacy theorem for mean-payoff games (Ehrenfeucht-Mycielski).\n\n**Hypotheses**:\n- The g",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "23a76967",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:39:33.601873+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Priority Ordering",
+    "description": "1. Walk decomposition (Direction 1) — completes the current work\n2. Karp's algorithm (Direction 2) — highest practical value\n3. Bellman eigenvectors (Direction 3) — richest mathematical content\n4. Eventual periodicity (Direction 4) — deepest structural result\n5. Mean-payoff games (Direction 5) — broadest application scope",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "23a76967",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:39:33.646795+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Validation Protocol",
+    "description": "For each direction:\n1. State the main theorem precisely in Lean\n2. Write computational tests (Python) to validate on examples\n3. Identify the key lemmas and prove them bottom-up\n4. Use the subadditive/Fekete infrastructure established here as a foundation\n5. Document cross-domain applications with worked examples\n\n---",
+    "domains": [
       "Bridges"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "64a1fefb",
+    "source_exp_id": "23a76967",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:33:50.727253+00:00"
+    "timestamp": "2026-05-16T09:39:33.661157+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Timeline Estimate",
+    "description": "| Direction | Estimated Effort | Dependencies |\n|-----------|-----------------|--------------|\n| 1. Walk decomposition | 2-4 weeks | None |\n| 2. Karp's algorithm | 2-3 weeks | Direction 1 |\n| 3. Bellman eigenvectors | 3-5 weeks | Direction 1 |\n| 4. Eventual periodicity | 4-8 weeks | Directions 1, 3 |\n| 5. Mean-payoff games | 6-10 weeks | Direction 3 |\n| 6. Full max-plus | 3-5 weeks | Direction 1 |\n| 7. Representation theory | 8+ weeks | Directions 1, 3 |\n\n---\n\n*This roadmap is designed so that each direction produces independently valuable formal mathematics while building toward a comprehensive tropical spectral theory.*",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "23a76967",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:39:33.674570+00:00"
   }
 ]
