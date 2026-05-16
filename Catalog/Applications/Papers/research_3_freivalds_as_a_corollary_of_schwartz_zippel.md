@@ -1,267 +1,282 @@
-# Freivalds as the Degree-1 Shadow of Schwartz–Zippel over Finite Fields: A Machine-Verified Algebraic Complexity Pipeline
+# Freivalds as the Degree-1 Shadow of Schwartz–Zippel over Finite Fields: A Certified Algebraic Bridge
 
 ## Abstract
 
-We present a complete machine-verified formalization of the Schwartz–Zippel lemma over finite fields, together with its specialization to Freivalds' randomized matrix multiplication verification algorithm. The formalization establishes a certified pipeline from multivariate polynomial zero counting through linear-algebraic discrepancy to randomized verification: **polynomial method → randomized verification → circuit complexity**. Our proof proceeds by induction on the number of variables using the `MvPolynomial.finSuccEquiv` algebra isomorphism to decompose multivariate polynomials into univariate fibers, establishing the base case via the classical univariate root bound and the inductive step via a coefficient-degree analysis. We derive Freivalds' bound as a corollary of the degree-1 case, proving that for a nonzero n×n matrix D over a finite field of size q, at most q^{n−1} vectors r satisfy Dr = 0. All results are fully verified with no `sorry` axioms or unproven assumptions. The formalization creates a reusable interface for future work in polynomial identity testing, algebraic circuit lower bounds, Reed–Muller codes, and certified randomized computation.
+We present a complete formalization of the Schwartz–Zippel lemma over finite fields and derive Freivalds' randomized matrix multiplication verification algorithm as its degree-1 specialization. The proof stack establishes a certified pipeline from multivariate polynomial zero-counting to randomized algorithmic verification, demonstrating that Freivalds' algorithm is not an isolated trick but the first nontrivial instance of polynomial identity testing (PIT) over finite fields. Our formalization includes: (1) a fiber polynomial construction for decomposing multivariate polynomials via `finSuccEquiv`, (2) the full Schwartz–Zippel induction with sharp degree tracking, (3) linear form zero-set bounds via kernel dimension arguments, (4) Freivalds' bound in both counting and probability forms over `ZMod q`, and (5) specializations connecting the algebraic and algorithmic viewpoints. All theorems are machine-verified and depend only on the standard axioms (propext, Classical.choice, Quot.sound).
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The Schwartz–Zippel lemma [Schwartz 1980, Zippel 1979, DeMillo–Lipton 1978] is a cornerstone of randomized algorithms and algebraic complexity theory. It states that a nonzero multivariate polynomial of total degree d over a finite field of size q has at most d · q^{n−1} zeros. Despite its simplicity, this bound has profound consequences in polynomial identity testing, error-correcting codes, interactive proofs, and cryptography.
+The Schwartz–Zippel lemma [Schwartz 1980, Zippel 1979, DeMillo–Lipton 1978] is one of the most widely used tools in theoretical computer science. It states that a nonzero multivariate polynomial of total degree d over a finite field of q elements has at most d · q^{n−1} zeros in the n-dimensional affine space. Despite its elementary statement, it underlies polynomial identity testing, interactive proof systems, derandomization theory, coding bounds, and algebraic circuit complexity.
 
-Freivalds' algorithm [Freivalds 1979] for randomized verification of matrix multiplication is one of the earliest and most elegant randomized algorithms. It verifies whether AB = C by checking (AB)r = Cr for a random vector r, with one-sided error at most 1/q.
+Freivalds' algorithm [Freivalds 1979] is a randomized procedure for verifying matrix multiplication: given n×n matrices A, B, C, it checks whether AB = C by sampling a random vector r and testing whether (AB)r = Cr. If AB ≠ C, the test detects the error with probability at least 1 − 1/q over ZMod q.
 
-The folklore connection between these results — that Freivalds' algorithm is the degree-1 specialization of Schwartz–Zippel — has been known for decades but has never been formalized in a machine-verified framework. We establish this connection rigorously, creating a certified pipeline from polynomial algebra to algorithmic verification.
+The folklore observation that Freivalds' bound is the degree-1 case of Schwartz–Zippel has been noted in textbooks (e.g., Motwani–Raghavan 1995, Arora–Barak 2009) but has never been formalized in a proof assistant. Our contribution makes this connection machine-certified and reusable.
 
 ### 1.2 Contributions
 
-1. **Full formalization of the Schwartz–Zippel lemma** (`schwartz_zippel_succ`) over arbitrary finite fields, proved by induction on the number of variables using Mathlib's `MvPolynomial.finSuccEquiv`.
+1. **Schwartz–Zippel Lemma (Theorem `schwartz_zippel_succ`)**: For any nonzero polynomial f ∈ K[x₁,...,x_{n+1}] over a finite field K, the number of zeros is at most totalDegree(f) · |K|^n.
 
-2. **Freivalds' algorithm bounds** (`freivalds_discrepancy_bound`, `freivalds_bound`) derived via a direct linear-algebraic argument, independent of the full Schwartz–Zippel machinery.
+2. **Linear Specialization (Theorem `linear_schwartz_zippel`)**: For degree ≤ 1, the bound simplifies to |K|^{n−1}.
 
-3. **Specializations to ZMod q** (`schwartz_zippel_zmod`, `freivalds_zmod_bound`) with explicit cardinality bounds.
+3. **Freivalds' Discrepancy Bound (Theorem `freivalds_discrepancy_bound`)**: For a nonzero matrix D over K, the number of vectors r with Dr = 0 is at most |K|^{n−1}.
 
-4. **Probability forms** (`freivalds_error_probability`, `linear_zero_probability_le`) expressing the results as error probability bounds.
+4. **Probability Form (Theorem `freivalds_error_probability`)**: The error probability of Freivalds' algorithm is at most 1/q.
 
-5. **Degree-1 bridge** (`linear_schwartz_zippel`) connecting the full theorem to its linear specialization, making explicit that Freivalds' algorithm is a polynomial identity test.
+5. **ZMod Specializations**: All bounds instantiated over ZMod q for prime q.
 
-### 1.3 Related Work
+### 1.3 Relationship to Prior Work
 
-Prior formalizations of polynomial results in proof assistants include root bounds for univariate polynomials (present in Mathlib as `Polynomial.card_roots'`), the Combinatorial Nullstellensatz (partial formalizations), and basic polynomial identity over infinite domains. To our knowledge, no prior formalization establishes the multivariate Schwartz–Zippel bound or derives Freivalds' algorithm from polynomial identity testing.
+The `NullstellensatzPIT.lean` file in the project provides `univariate_root_bound` and circuit-polynomial connections (`bounded_circuit_degree_bound`, `mulGates_lower_bound_from_degree`). Our Schwartz–Zippel formalization builds on the same algebraic infrastructure and is designed for downstream composition with these circuit complexity results.
 
-## 2. Mathematical Setup
+## 2. Definitions and Notation
 
-### 2.1 Notation
+### 2.1 Setting
 
-- K: a finite field with |K| = q elements
-- MvPolynomial (Fin n) K: the ring of multivariate polynomials in n variables over K
-- f.totalDegree: the total degree of a multivariate polynomial
-- Fin.cons t a: the assignment (t, a₁, ..., aₙ) formed by prepending t to a
-- Matrix.mulVec D r: the matrix-vector product Dr
-- MvPolynomial.finSuccEquiv K n: the algebra isomorphism
-  MvPolynomial (Fin (n+1)) K ≃ₐ[K] Polynomial (MvPolynomial (Fin n) K)
+Throughout, K denotes a finite field (type with `[Field K] [Fintype K]`), and n ≥ 0 is the number of variables. We work with `MvPolynomial (Fin m) K` for multivariate polynomials and `Polynomial K` for univariate polynomials.
 
 ### 2.2 Key Definitions
 
-**Fiber Polynomial.** Given f ∈ K[x₀, ..., xₙ] and an assignment a : Fin n → K to variables x₁, ..., xₙ, the fiber polynomial is:
+**Fiber Polynomial.** Given f ∈ K[x₀, x₁, ..., xₙ] and an assignment a : Fin n → K to the "tail" variables, the fiber polynomial is the univariate polynomial in x₀ obtained by specializing:
 
 ```
-fiberPoly(f, a) := Polynomial.map (eval a) (finSuccEquiv K n f)
+fiberPoly(f, a) := Polynomial.map (MvPolynomial.eval a) (finSuccEquiv K n f)
 ```
 
-This is the univariate polynomial in x₀ obtained by substituting a for (x₁, ..., xₙ).
+This uses the ring isomorphism `finSuccEquiv : MvPolynomial (Fin (n+1)) K ≃ₐ Polynomial (MvPolynomial (Fin n) K)` to view f as a univariate polynomial over the coefficient ring MvPolynomial (Fin n) K, then evaluates the coefficients at a.
 
-**Evaluation Identity.** The fiber polynomial satisfies:
+**Zero Set Cardinality.** We count zeros as `Fintype.card {x : Fin m → K // MvPolynomial.eval x f = 0}`.
 
-```
-eval t (fiberPoly f a) = eval (Fin.cons t a) f
-```
+**Dot Product Linear Map.** For v : Fin n → K, we define `dotProductLinearMap v : (Fin n → K) →ₗ[K] K` by `x ↦ ∑ᵢ vᵢ · xᵢ`.
 
-This follows from `MvPolynomial.eval_eq_eval_mv_eval'`.
+### 2.3 Total Degree
+
+The total degree `MvPolynomial.totalDegree f` is the maximum over all monomials in the support of f of the sum of their exponents. The degree with respect to a single variable is `MvPolynomial.degreeOf i f`.
 
 ## 3. Main Results
 
-### 3.1 Schwartz–Zippel Lemma
+### 3.1 Fiber Polynomial Properties
 
-**Theorem (schwartz_zippel_succ).** Let K be a finite field with |K| = q, and let f ∈ K[x₁, ..., x_{n+1}] be a nonzero polynomial. Then:
+**Theorem (Evaluation Identity).** For f ∈ K[x₀,...,xₙ], a : Fin n → K, and t : K:
+```
+eval t (fiberPoly f a) = MvPolynomial.eval (Fin.cons t a) f
+```
 
-|{x ∈ K^{n+1} : f(x) = 0}| ≤ totalDeg(f) · q^n
+*Proof.* Unfold `fiberPoly`, apply `Polynomial.eval_map`, and use `MvPolynomial.eval_eq_eval_mv_eval'` which relates the evaluation of the `finSuccEquiv` image to evaluation of the original polynomial at a consed assignment. □
 
-**Proof sketch.** By strong induction on n.
+**Theorem (Degree Bound).** `natDegree(fiberPoly f a) ≤ totalDegree(f)`.
 
-*Base case (n = 0):* f is a polynomial in one variable. The zero set maps injectively to the roots of the corresponding univariate polynomial. By the univariate root bound (`Polynomial.card_roots'`), the number of roots is at most natDeg(f) ≤ totalDeg(f).
+*Proof.* The fiber polynomial's degree is at most the degree of the `finSuccEquiv` image (by `natDegree_map_le`), which equals `degreeOf 0 f` (by `MvPolynomial.natDegree_finSuccEquiv`), which is at most `totalDegree f` (by `degreeOf_le_totalDegree`). □
 
-*Inductive step:* Apply `finSuccEquiv` to obtain F : Polynomial (MvPolynomial (Fin (n+1)) K). Let d = degreeOf₀(f) = natDeg(F), and let c_d = F.coeff(d) be the degree-d coefficient, a polynomial in (x₁, ..., x_{n+1}).
+### 3.2 Schwartz–Zippel Base Case
 
-Partition assignments a : Fin (n+1) → K into:
+**Theorem (`schwartz_zippel_one`).** For nonzero f ∈ K[x₁] (one variable):
+```
+card {x : Fin 1 → K | eval x f = 0} ≤ totalDegree(f)
+```
 
-- **Good:** eval(a, c_d) ≠ 0. Then the fiber Polynomial.map(eval a)(F) has natDegree = d, so by the univariate root bound, at most d values of t ∈ K satisfy eval(Fin.cons t a)(f) = 0.
+*Proof sketch.* Convert f to a univariate polynomial g via `eval₂ Polynomial.C (fun _ => X)`. The zeros of f correspond bijectively (via the unique map Fin 1 → K ↔ K) to roots of g. By the standard root bound, g has at most natDegree(g) roots. We show natDegree(g) ≤ totalDegree(f) by bounding the degree of each monomial term. □
 
-- **Bad:** eval(a, c_d) = 0. Trivially, at most q values of t work. Since c_d is nonzero (it's the leading coefficient of a nonzero polynomial) and has totalDeg(c_d) ≤ totalDeg(f) − d, the induction hypothesis gives at most (totalDeg(f) − d) · q^n bad assignments.
+### 3.3 Schwartz–Zippel Inductive Step
 
-Total zeros ≤ (totalDeg(f) − d) · q^n · q + q^{n+1} · d = totalDeg(f) · q^{n+1}. ∎
+**Theorem (`schwartz_zippel_succ`).** For nonzero f ∈ K[x₀,...,xₙ]:
+```
+card {x : Fin (n+1) → K | eval x f = 0} ≤ totalDegree(f) · |K|^n
+```
 
-The formal proof in Lean spans approximately 50 lines of tactic-mode proof, with the main technical challenges being:
-- Relating `finSuccEquiv` coefficients to the original polynomial's support
-- Managing the `Finsupp.cons` construction for degree bookkeeping
-- The fiber decomposition of the zero set as a sum over assignments
+*Proof.* By induction on n.
 
-### 3.2 Freivalds' Discrepancy Bound
+**Base case (n = 0):** Follows from `schwartz_zippel_one`.
 
-**Theorem (freivalds_discrepancy_bound).** Let D be a nonzero n×n matrix over a finite field K. Then:
+**Inductive step (n → n+1):** Let d = degreeOf 0 f and let c_d be the leading coefficient of f viewed as a polynomial in x₀ (i.e., the coefficient of x₀^d in the `finSuccEquiv` decomposition). This c_d is a polynomial in the remaining n+1 variables.
 
-|{r ∈ K^n : Dr = 0}| ≤ |K|^{n−1}
+Partition the assignments a : Fin (n+1) → K into:
+- **Bad assignments** where c_d vanishes: the fiber fiberPoly(f, a) might be zero, contributing at most |K| zeros each. By the induction hypothesis, there are at most totalDegree(c_d) · |K|^n such assignments.
+- **Good assignments** where c_d(a) ≠ 0: the fiber fiberPoly(f, a) is a nonzero polynomial of degree ≤ d, contributing at most d zeros each by the univariate root bound. There are at most |K|^{n+1} such assignments.
 
-**Proof sketch.** Since D ≠ 0, there exists a nonzero row D_i. The set {r : Dr = 0} is contained in {r : (Dr)_i = 0} = {r : Σⱼ D_{ij} r_j = 0}. This is the zero set of a nonzero linear form, which has cardinality |K|^{n−1}.
+The total count satisfies:
+```
+#zeros ≤ totalDegree(c_d) · |K|^n · |K| + |K|^{n+1} · d
+```
 
-The linear form bound is proved via linear algebra: the map φ(x) = Σ v_i x_i is a surjective linear functional (when v ≠ 0), so its kernel has dimension n−1, hence cardinality |K|^{n−1}.
+Since totalDegree(c_d) ≤ totalDegree(f) − d (each monomial contributing to c_d has x₀-exponent exactly d, so the remaining exponents sum to at most totalDegree(f) − d), we get:
+```
+#zeros ≤ (totalDegree(f) − d) · |K|^{n+1} + d · |K|^{n+1} = totalDegree(f) · |K|^{n+1}
+```
+which is the desired bound. □
 
-### 3.3 Freivalds' Algorithm
+### 3.4 Coefficient Degree Bound
 
-**Theorem (freivalds_bound).** If AB ≠ C, then:
+**Key Lemma.** If c_d is the degree-d coefficient of f in the `finSuccEquiv` decomposition, then `totalDegree(c_d) ≤ totalDegree(f) − d`.
 
-|{r ∈ K^n : (AB)r = Cr}| ≤ |K|^{n−1}
+*Proof.* Each monomial m in the support of c_d corresponds to a monomial `Finsupp.cons d m` in the support of f (by `finSuccEquiv_coeff_coeff`). The total degree of this monomial is d + sum(m), so sum(m) ≤ totalDegree(f) − d. Taking the supremum over all m in the support gives the result. □
 
-**Proof.** Set D = AB − C ≠ 0. The condition (AB)r = Cr is equivalent to Dr = 0. Apply the discrepancy bound. ∎
+### 3.5 ZMod Specialization
 
-**Theorem (freivalds_error_probability).** For n ≥ 1:
+**Theorem (`schwartz_zippel_zmod`).** Over ZMod q with q prime:
+```
+card {x : Fin (n+1) → ZMod q | eval x f = 0} ≤ totalDegree(f) · q^n
+```
 
-Pr_r[Dr = 0] ≤ 1/q
+*Proof.* Direct from `schwartz_zippel_succ` using `ZMod.card q = q`. □
 
-**Proof.** The numerator is ≤ q^{n−1} and the denominator is q^n, giving ratio ≤ 1/q. ∎
+### 3.6 Linear Specialization
 
-### 3.4 Linear Schwartz–Zippel
+**Theorem (`linear_schwartz_zippel`).** For nonzero f with totalDegree(f) ≤ 1:
+```
+card {x : Fin n → K | eval x f = 0} ≤ |K|^{n−1}
+```
 
-**Theorem (linear_schwartz_zippel).** If f is a nonzero polynomial of total degree ≤ 1 in n variables, then:
+*Proof.* For n = 0, f is a nonzero constant, so the zero set is empty. For n = m + 1, apply `schwartz_zippel_succ` to get ≤ totalDegree(f) · |K|^m ≤ 1 · |K|^m = |K|^{(m+1)−1}. □
 
-|{x ∈ K^n : f(x) = 0}| ≤ |K|^{n−1}
+**Theorem (`linear_zero_probability_le`).** Under the same hypotheses:
+```
+card {x | eval x f = 0} / card(Fin n → K) ≤ 1 / |K|
+```
 
-**Proof.** For n = 0, the polynomial is a nonzero constant, so the zero set is empty. For n ≥ 1, apply `schwartz_zippel_succ` to get ≤ totalDeg(f) · |K|^{n−1} ≤ 1 · |K|^{n−1}. ∎
+*Proof.* From `linear_schwartz_zippel`, noting card(Fin n → K) = |K|^n. □
 
-This theorem makes explicit the degree-1 specialization: Freivalds' algorithm tests whether a degree-1 polynomial (the linear form defined by a matrix row) vanishes at a random point.
+### 3.7 Nonzero Linear Form Bound
+
+**Theorem (`nonzero_linear_form_zero_set_bound`).** For nonzero v : Fin n → K:
+```
+card {x : Fin n → K | ∑ᵢ vᵢxᵢ = 0} ≤ |K|^{n−1}
+```
+
+*Proof.* The zero set is isomorphic to the kernel of `dotProductLinearMap v`. Since v ≠ 0, this linear map is surjective (choose the coordinate where v is nonzero, solve for it). By rank-nullity, the kernel has dimension n − 1 over K, so its cardinality is |K|^{n−1}. □
+
+### 3.8 Freivalds' Bounds
+
+**Theorem (`freivalds_discrepancy_bound`).** For nonzero D : Matrix (Fin n) (Fin n) K:
+```
+card {r : Fin n → K | D.mulVec r = 0} ≤ |K|^{n−1}
+```
+
+*Proof.* Since D ≠ 0, some row i has D i ≠ 0 (by `exists_nonzero_row_of_ne_zero`). The condition D.mulVec r = 0 implies (D.mulVec r) i = ∑ⱼ D i j · r j = 0. The map r ↦ (r, proof that ∑ⱼ Dᵢⱼrⱼ = 0) is an injection from {r | Dr = 0} into {r | ∑ⱼ Dᵢⱼrⱼ = 0}. Apply `nonzero_linear_form_zero_set_bound`. □
+
+**Theorem (`freivalds_bound`).** For A, B, C with AB ≠ C:
+```
+card {r | (AB).mulVec r = C.mulVec r} ≤ |K|^{n−1}
+```
+
+*Proof.* Set D = AB − C ≠ 0. The condition (AB)r = Cr is equivalent to Dr = 0. Apply `freivalds_discrepancy_bound`. □
+
+**Theorem (`freivalds_error_probability`).** Over ZMod q:
+```
+card {r | D.mulVec r = 0} / q^n ≤ 1/q
+```
+
+*Proof.* From `freivalds_zmod_bound`, the numerator is ≤ q^{n−1}. Dividing by q^n = q · q^{n−1} gives ≤ 1/q. □
 
 ## 4. Algorithms
 
-### 4.1 Freivalds' Verification Algorithm
+### 4.1 Freivalds' Algorithm
+
+**Input:** n×n matrices A, B, C over 𝔽_q, repetition parameter k.
+**Output:** "EQUAL" or "NOT EQUAL" (with one-sided error).
 
 ```
-Algorithm: FreivaldsVerify(A, B, C, q, k)
-Input: n×n matrices A, B, C over F_q; number of trials k
-Output: ACCEPT or REJECT
-
-for i = 1 to k:
-    r ← uniformly random vector in F_q^n
-    if A·(B·r) ≠ C·r:
-        return REJECT
-return ACCEPT
-```
-
-**Complexity:**
-- Time: O(k · n²) per verification (vs O(n³) for naive recomputation)
-- Space: O(n) auxiliary
-- Error: ≤ (1/q)^k (one-sided: if AB = C, always accepts)
-
-### 4.2 Polynomial Identity Testing
-
-```
-Algorithm: PIT(f, q, n, d, k)
-Input: Black-box access to polynomial f in n variables of degree d over F_q; trials k
-Output: ZERO or NONZERO
-
-for i = 1 to k:
-    x ← uniformly random point in F_q^n
-    if f(x) ≠ 0:
-        return NONZERO
-return ZERO
+procedure Freivalds(A, B, C, k):
+    for i = 1 to k:
+        r ← uniform random vector in 𝔽_q^n
+        if A · (B · r) ≠ C · r:
+            return "NOT EQUAL"
+    return "EQUAL"
 ```
 
 **Complexity:**
-- Time: O(k · T_eval) where T_eval is the evaluation cost
-- Error: ≤ (d/q)^k (one-sided: if f = 0, always says ZERO)
+- Time: O(kn²) — each iteration requires two matrix-vector products.
+- Space: O(n) additional space for the random vector and products.
+- Error: If AB ≠ C, Pr[output "EQUAL"] ≤ (1/q)^k.
 
-## 5. Computational Experiments
+**Comparison:** Naïve verification (compute AB and compare) costs O(n³) time (or O(n^ω) with fast matrix multiplication). Freivalds achieves O(n²) per iteration, a significant speedup.
 
-### 5.1 Schwartz–Zippel Bound Tightness
+### 4.2 Schwartz–Zippel PIT
 
-We computed exact zero counts for several polynomial families:
+**Input:** An algebraic circuit C computing f ∈ 𝔽_q[x₁,...,xₙ] of degree d.
+**Output:** "ZERO" or "NONZERO" (with one-sided error).
 
-| Polynomial | Field | Vars | Deg | Actual Zeros | S-Z Bound | Ratio |
-|-----------|-------|------|-----|-------------|-----------|-------|
-| x + 2y + 1 | F₅ | 2 | 1 | 5 | 5 | 1.000 |
-| x² + yz + x + 2 | F₇ | 3 | 2 | 49 | 98 | 0.500 |
-| x·y | F₁₁ | 2 | 2 | 21 | 22 | 0.955 |
-| x + 2y + 3z + 1 | F₁₃ | 3 | 1 | 169 | 169 | 1.000 |
+```
+procedure SZ_PIT(C, d, q, k):
+    for i = 1 to k:
+        r ← uniform random point in 𝔽_q^n
+        if C.eval(r) ≠ 0:
+            return "NONZERO"
+    return "ZERO"
+```
 
-The bound is tight for linear polynomials and nearly tight for products of linear forms.
+**Error:** If f ≠ 0, Pr[output "ZERO"] ≤ (d/q)^k.
 
-### 5.2 Freivalds Error Rates
+## 5. Applications
 
-Empirical error rates for Freivalds' algorithm over F₇ with 10,000 experiments:
+### 5.1 Matrix Multiplication Verification
 
-| Trials (k) | Empirical Error | Theoretical Bound (1/7)^k |
-|-----------|----------------|--------------------------|
-| 1 | 0.1459 | 0.1429 |
-| 2 | 0.0215 | 0.0204 |
-| 3 | 0.0027 | 0.0029 |
-| 5 | 0.0001 | 0.0001 |
-| 10 | 0.0000 | 0.0000 |
+Given matrices A (m×p), B (p×n), and a claimed product C (m×n) over 𝔽_q, verify AB = C in O(k(m+n)p) time with error ≤ q^{−k}. This is used in:
+- Verified numerical linear algebra
+- Distributed computing (checking results from untrusted nodes)
+- Certificate-based proof systems
 
-The empirical rates closely track the theoretical bounds.
+### 5.2 Polynomial Identity Testing for Circuits
 
-### 5.3 Timing Comparison
+Given an algebraic circuit of size s with m multiplication gates computing a polynomial of degree ≤ 2^m, Schwartz–Zippel gives a randomized test with error ≤ 2^m/q per trial. Combined with `bounded_circuit_degree_bound`, this yields circuit-aware PIT bounds.
 
-Freivalds verification vs naive matrix multiplication (20 trials, F₁₀₁):
+### 5.3 Reed–Muller Code Distance
 
-| n | Naive Time (s) | Freivalds Time (s) | Speedup |
-|---|---------------|-------------------|---------|
-| 50 | 0.0003 | 0.0005 | 0.6× |
-| 100 | 0.0009 | 0.0012 | 0.8× |
-| 200 | 0.0047 | 0.0033 | 1.4× |
-| 500 | 0.0574 | 0.0131 | 4.4× |
+The Schwartz–Zippel bound directly implies that the minimum distance of the Reed–Muller code RM(d, n, q) is at least (q − d) · q^{n−1}. This is tight for d < q and provides the foundation for:
+- Error correction in communication systems
+- Locally decodable codes
+- Low-degree testing for probabilistically checkable proofs
 
-The crossover point where Freivalds becomes faster is around n = 150–200 (using NumPy's optimized BLAS, which makes naive multiplication faster than expected).
+## 6. Computational Experiments
 
-## 6. Applications
+We provide Python implementations demonstrating:
 
-### 6.1 Verifiable Computation
+1. **Freivalds' Algorithm**: Empirical verification that the error rate matches the theoretical 1/q bound across various matrix sizes and field sizes.
 
-In the verifiable computation paradigm, a powerful but untrusted server performs a computation and provides the result along with a proof of correctness. Freivalds' algorithm provides the simplest instantiation: the server computes AB and the client verifies in O(kn²) time.
+2. **Zero Set Counting**: Exhaustive enumeration of zeros of random polynomials over small finite fields, confirming the Schwartz–Zippel bound.
 
-### 6.2 Reed–Solomon Codes
+3. **Probability Convergence**: Visualization of how the empirical zero fraction converges to the theoretical bound as the field size grows.
 
-The Schwartz–Zippel bound immediately implies the minimum distance of Reed–Solomon codes: for a [q, k] RS code, the minimum distance is q − k + 1. This follows because a nonzero polynomial of degree ≤ k−1 has at most k−1 zeros (univariate case of Schwartz–Zippel), so any two distinct codewords differ in at least q − (k−1) positions.
-
-### 6.3 Interactive Proofs
-
-The IP = PSPACE theorem [Shamir 1992] uses the Schwartz–Zippel lemma as its key soundness tool. The verifier checks the prover's polynomial claims by evaluating at random points; the Schwartz–Zippel bound ensures that a dishonest prover is caught with high probability.
-
-### 6.4 Polynomial Fingerprinting
-
-Two parties holding large datasets can check equality by exchanging polynomial fingerprints: evaluate the data polynomial at a random point. By Schwartz–Zippel, the collision probability is at most d/q, where d is the data length and q is the field size. For q ≈ 2⁶¹, this gives negligible error.
+See `demo.py`, `algorithms.py`, and `applications.py` for implementations and `visualizations/` for generated figures.
 
 ## 7. Discussion
 
 ### 7.1 Proof Architecture
 
-The formalization employs two complementary proof strategies:
+Our proof of Schwartz–Zippel follows the classical induction on the number of variables, but with several technical choices dictated by the formalization context:
 
-1. **Schwartz–Zippel via induction**: Uses `MvPolynomial.finSuccEquiv` to decompose polynomials, with the key technical insight being the coefficient-degree relationship `totalDeg(c_d) + d ≤ totalDeg(f)`.
+- **Successor formulation**: We state the theorem for `Fin (n+1)` rather than `Fin n` to avoid the `n − 1` exponent in the bound, which causes natural number subtraction issues.
+- **finSuccEquiv decomposition**: Rather than manually constructing coefficient extraction, we use the Mathlib ring isomorphism `MvPolynomial.finSuccEquiv` which provides a clean interface.
+- **Kernel dimension for linear forms**: For Freivalds, we avoid the full Schwartz–Zippel machinery and give a direct proof via linear algebra (kernel of a surjective linear map has codimension 1), which is both simpler and more transparent.
 
-2. **Freivalds via linear algebra**: Uses the surjectivity of nonzero linear functionals and the dimension formula for kernels. This is independent of the Schwartz–Zippel induction and provides a cleaner, more direct proof for the degree-1 case.
+### 7.2 Limitations
 
-Both strategies produce fully verified results with no axioms beyond the standard foundational axioms (propext, Classical.choice, Quot.sound).
+- The formalization covers finite fields but not evaluation over arbitrary finite subsets S ⊆ K (the "grid" version of Schwartz–Zippel). The grid version is needed for the Combinatorial Nullstellensatz.
+- We do not formalize probability distributions or random sampling; instead, we use cardinality bounds that imply probability bounds by finite counting.
+- The connection to algebraic circuits is stated but not fully exploited: composing `schwartz_zippel_succ` with `bounded_circuit_degree_bound` requires additional interface work.
 
-### 7.2 Proof Complexity
+### 7.3 Comparison with Textbook Proofs
 
-| Theorem | Lines of Proof | Key Tactics |
-|---------|---------------|-------------|
-| schwartz_zippel_succ | ~50 | induction, simp, nlinarith, aesop |
-| freivalds_discrepancy_bound | ~5 | injection into linear form |
-| freivalds_error_probability | ~8 | div_le_div, norm_cast |
-| linear_schwartz_zippel | ~3 | case split + application |
-
-The bulk of the proof effort is in the Schwartz–Zippel induction, where managing the fiber decomposition and degree bookkeeping requires careful handling of Finsupp, Polynomial, and MvPolynomial APIs.
-
-### 7.3 Limitations
-
-- The formalization does not currently establish tightness (existence of polynomials achieving the bound).
-- The probability formulations use rational numbers rather than a formal probability monad.
-- The connection to algebraic circuits is stated at the level of theorem dependencies rather than as a single unified statement.
+Our proof closely follows Motwani–Raghavan (1995, Section 7.2) and Arora–Barak (2009, Theorem 7.2). The main departure is the coefficient degree bound lemma (Section 3.4), where we track the relationship between `Finsupp.cons` and `Finsupp.sum` explicitly rather than reasoning about "the degree drops by at least 1" informally.
 
 ## 8. Future Work
 
-1. **Reed–Muller distance**: Derive the minimum distance of Reed–Muller codes as a direct corollary of `schwartz_zippel_succ`.
-2. **Circuit PIT soundness**: Combine `schwartz_zippel_succ` with `totalDegree_le_degreeBound` to get PIT bounds for algebraic circuits.
-3. **Combinatorial Nullstellensatz**: Strengthen the result for grid evaluations.
-4. **Derandomization connections**: Formalize hitting set generators and their relationship to circuit lower bounds.
-5. **Interactive proof soundness**: Use the formalized Schwartz–Zippel bound as a building block for IP protocol verification.
+See `FUTURE_DIRECTIONS.md` for a detailed roadmap. The highest-priority directions are:
+
+1. **Reed–Muller minimum distance** from Schwartz–Zippel.
+2. **Circuit PIT soundness** composing with `bounded_circuit_degree_bound`.
+3. **Grid Schwartz–Zippel** for the Combinatorial Nullstellensatz.
+4. **Low-degree testing** for PCP/IOP foundations.
+5. **Polynomial fingerprinting** for streaming and communication complexity.
 
 ## 9. References
 
-- DeMillo, R.A., Lipton, R.J. (1978). A probabilistic remark on algebraic program testing. *Information Processing Letters*, 7(4), 193–195.
-- Freivalds, R. (1979). Fast probabilistic algorithms. In *Mathematical Foundations of Computer Science*, LNCS 74, pp. 57–69.
-- Schwartz, J.T. (1980). Fast probabilistic algorithms for verification of polynomial identities. *Journal of the ACM*, 27(4), 701–717.
-- Zippel, R. (1979). Probabilistic algorithms for sparse polynomials. In *EUROSAM '79*, LNCS 72, pp. 216–226.
-- Shamir, A. (1992). IP = PSPACE. *Journal of the ACM*, 39(4), 869–877.
-- Alon, N. (1999). Combinatorial Nullstellensatz. *Combinatorics, Probability and Computing*, 8(1-2), 7–29.
+- N. Alon. Combinatorial Nullstellensatz. *Combinatorics, Probability and Computing*, 8(1-2):7–29, 1999.
+- S. Arora and B. Barak. *Computational Complexity: A Modern Approach*. Cambridge University Press, 2009.
+- R. A. DeMillo and R. J. Lipton. A probabilistic remark on algebraic program testing. *Information Processing Letters*, 7(4):193–195, 1978.
+- R. Freivalds. Fast probabilistic algorithms. In *Mathematical Foundations of Computer Science*, LNCS 74:57–69, 1979.
+- V. Kabanets and R. Impagliazzo. Derandomizing polynomial identity tests means proving circuit lower bounds. *Computational Complexity*, 13(1-2):1–46, 2004.
+- R. Motwani and P. Raghavan. *Randomized Algorithms*. Cambridge University Press, 1995.
+- J. T. Schwartz. Fast probabilistic algorithms for verification of polynomial identities. *Journal of the ACM*, 27(4):701–717, 1980.
+- R. Zippel. Probabilistic algorithms for sparse polynomials. In *EUROSAM '79*, LNCS 72:216–226, 1979.

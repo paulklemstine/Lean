@@ -1,844 +1,1006 @@
 #!/usr/bin/env python3
 """
-Real-world applications of the Schwartz-Zippel lemma and Freivalds' algorithm.
+Applications of Schwartz–Zippel and Freivalds' Algorithm
 
-Demonstrates applications in:
-1. Cryptographic polynomial commitments
-2. Verifiable computation / proof systems
-3. Polynomial hashing for string matching
-4. Reed-Solomon error detection
-"""
-
-import numpy as np
-from typing import List, Tuple
-import hashlib
-
-
-class PolynomialFingerprint:
-    """Polynomial fingerprinting for equality testing.
-    
-    Application: Two parties each hold a large dataset (represented as a 
-    polynomial). They can verify equality by exchanging O(1) field elements
-    instead of the full dataset, with error ≤ d/q.
-    
-    This is a direct application of Schwartz-Zippel:
-    if f ≠ g, then f - g is nonzero of degree ≤ d, so
-    Pr[f(r) = g(r)] ≤ d/q for random r.
-    """
-    
-    def __init__(self, q: int = 2**61 - 1):
-        """Initialize with a large prime modulus."""
-        self.q = q  # Mersenne prime 2^61 - 1
-    
-    def fingerprint(self, data: List[int], point: int) -> int:
-        """Compute polynomial fingerprint of data at a given point.
-        
-        Interprets data as coefficients of a polynomial and evaluates at point.
-        Uses Horner's method for efficiency.
-        """
-        result = 0
-        for coeff in reversed(data):
-            result = (result * point + coeff) % self.q
-        return result
-    
-    def test_equality(self, data1: List[int], data2: List[int], trials: int = 3) -> bool:
-        """Test if two datasets are equal using polynomial fingerprints.
-        
-        Error probability ≤ (max(len(data1), len(data2)) / q)^trials.
-        """
-        import random
-        for _ in range(trials):
-            r = random.randint(0, self.q - 1)
-            if self.fingerprint(data1, r) != self.fingerprint(data2, r):
-                return False
-        return True
-
-
-class MatrixVerifier:
-    """Verified matrix computation using Freivalds' algorithm.
-    
-    Application: In verifiable computation, a prover claims to have computed
-    A·B = C. The verifier can check this claim in O(n²) time instead of O(n³),
-    with cryptographic certainty.
-    
-    This is used in:
-    - Interactive proof systems (IP = PSPACE)
-    - Verifiable outsourced computation
-    - Zero-knowledge proofs involving linear algebra
-    """
-    
-    def __init__(self, q: int = 2**61 - 1):
-        self.q = q
-    
-    def verify_product(self, A: np.ndarray, B: np.ndarray, C: np.ndarray,
-                       trials: int = 40) -> Tuple[bool, float]:
-        """Verify A·B = C with Freivalds' algorithm.
-        
-        Returns (result, error_bound).
-        """
-        n = A.shape[0]
-        for _ in range(trials):
-            r = np.random.randint(0, min(self.q, 2**31), n)
-            Br = np.array([(sum(int(B[i,j]) * int(r[j]) for j in range(n))) % self.q 
-                          for i in range(n)])
-            ABr = np.array([(sum(int(A[i,j]) * int(Br[j]) for j in range(n))) % self.q 
-                           for i in range(n)])
-            Cr = np.array([(sum(int(C[i,j]) * int(r[j]) for j in range(n))) % self.q 
-                          for i in range(n)])
-            if not np.array_equal(ABr, Cr):
-                return False, 0.0
-        return True, (1 / self.q) ** trials
-
-
-class ReedSolomonChecker:
-    """Reed-Solomon codeword validation via Schwartz-Zippel.
-    
-    Application: A Reed-Solomon code of dimension k over F_q encodes 
-    messages as evaluations of degree-(k-1) polynomials. The minimum
-    distance is q - k + 1 (by Schwartz-Zippel: a nonzero polynomial
-    of degree ≤ k-1 has at most k-1 zeros, so any two codewords 
-    differ in at least q - k + 1 positions).
-    
-    This gives efficient error detection: evaluate the interpolating
-    polynomial at a random point and check consistency.
-    """
-    
-    def __init__(self, q: int, k: int):
-        """
-        Args:
-            q: field size (prime)
-            k: dimension (message length)
-        """
-        self.q = q
-        self.k = k
-        self.eval_points = list(range(q))
-    
-    def encode(self, message: List[int]) -> List[int]:
-        """Encode a message as a Reed-Solomon codeword.
-        
-        Message coefficients define a polynomial; evaluate at all field points.
-        """
-        assert len(message) == self.k
-        codeword = []
-        for x in self.eval_points:
-            val = 0
-            for i, c in enumerate(message):
-                val = (val + c * pow(x, i, self.q)) % self.q
-            codeword.append(val)
-        return codeword
-    
-    def minimum_distance(self) -> int:
-        """Minimum distance of the code, guaranteed by Schwartz-Zippel."""
-        return self.q - self.k + 1
-    
-    def check_codeword(self, word: List[int], trials: int = 5) -> bool:
-        """Check if a received word is a valid codeword.
-        
-        Interpolates the polynomial from k points and checks 
-        consistency at random other points. Error ≤ ((k-1)/q)^trials.
-        """
-        import random
-        
-        # Use first k points to interpolate
-        if len(word) < self.k:
-            return False
-        
-        # Lagrange interpolation at random test point
-        for _ in range(trials):
-            test_idx = random.randint(self.k, len(word) - 1)
-            test_x = self.eval_points[test_idx]
-            
-            # Evaluate interpolating polynomial at test_x
-            val = 0
-            for i in range(self.k):
-                xi = self.eval_points[i]
-                li = 1
-                for j in range(self.k):
-                    if j != i:
-                        xj = self.eval_points[j]
-                        li = (li * (test_x - xj) * pow(xi - xj, self.q - 2, self.q)) % self.q
-                val = (val + word[i] * li) % self.q
-            
-            if val != word[test_idx]:
-                return False
-        return True
-
-
-def demo_fingerprinting():
-    """Demonstrate polynomial fingerprinting."""
-    print("=" * 60)
-    print("Application 1: Polynomial Fingerprinting")
-    print("=" * 60)
-    print()
-    
-    fp = PolynomialFingerprint()
-    
-    # Two identical large datasets
-    n = 100000
-    data1 = list(range(n))
-    data2 = list(range(n))
-    
-    print(f"Dataset size: {n} elements")
-    print(f"Equal datasets: {fp.test_equality(data1, data2)}")
-    
-    # Corrupt one element
-    data2[50000] = data2[50000] + 1
-    print(f"After corruption: {fp.test_equality(data1, data2)}")
-    print(f"Error bound: {n / fp.q:.2e}")
-    print()
-
-
-def demo_verifiable_computation():
-    """Demonstrate verifiable matrix computation."""
-    print("=" * 60)
-    print("Application 2: Verifiable Matrix Computation")
-    print("=" * 60)
-    print()
-    
-    q = 101
-    n = 50
-    verifier = MatrixVerifier(q=q)
-    
-    A = np.random.randint(0, q, (n, n))
-    B = np.random.randint(0, q, (n, n))
-    C = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        for j in range(n):
-            C[i, j] = sum(int(A[i,k]) * int(B[k,j]) for k in range(n)) % q
-    
-    result, bound = verifier.verify_product(A, B, C, trials=20)
-    print(f"Correct product verified: {result}")
-    print(f"Error bound: {bound:.2e}")
-    
-    # Corrupt
-    C[0, 0] = (C[0, 0] + 1) % q
-    result, bound = verifier.verify_product(A, B, C, trials=20)
-    print(f"Corrupted product detected: {not result}")
-    print()
-
-
-def demo_reed_solomon():
-    """Demonstrate Reed-Solomon error detection."""
-    print("=" * 60)
-    print("Application 3: Reed-Solomon Error Detection")
-    print("=" * 60)
-    print()
-    
-    q = 31  # Small prime for demonstration
-    k = 5   # Message length
-    
-    rs = ReedSolomonChecker(q, k)
-    print(f"Reed-Solomon [{q}, {k}] code over F_{q}")
-    print(f"Minimum distance (via Schwartz-Zippel): {rs.minimum_distance()}")
-    print(f"Can correct up to {(rs.minimum_distance() - 1) // 2} errors")
-    print()
-    
-    # Encode a message
-    message = [3, 1, 4, 1, 5]
-    codeword = rs.encode(message)
-    print(f"Message: {message}")
-    print(f"Codeword: {codeword}")
-    print(f"Valid codeword: {rs.check_codeword(codeword)}")
-    
-    # Corrupt the codeword
-    corrupted = codeword.copy()
-    corrupted[10] = (corrupted[10] + 1) % q
-    print(f"After corruption at position 10: {rs.check_codeword(corrupted)}")
-    print()
-
-
-if __name__ == "__main__":
-    np.random.seed(42)
-    demo_fingerprinting()
-    print()
-    demo_verifiable_computation()
-    print()
-    demo_reed_solomon()
-
-
-#!/usr/bin/env python3
-"""
-Demonstration of the Schwartz-Zippel Lemma and Freivalds' Algorithm.
-
-This script provides concrete numerical examples showing:
-1. The Schwartz-Zippel bound in action for multivariate polynomials
-2. Freivalds' randomized matrix multiplication verification
-3. The connection between polynomial identity testing and matrix verification
+Real-world applications demonstrating the theorems in action:
+1. Verified outsourced matrix computation
+2. Streaming data equality checking
+3. Reed–Muller code distance verification
+4. Interactive proof simulation
 """
 
 import random
 import numpy as np
-from typing import List, Tuple, Dict
-from itertools import product
+from typing import List, Tuple
+from itertools import product as cartesian_product
 
 
-def eval_poly_mod(coefficients: Dict[Tuple[int, ...], int], point: Tuple[int, ...], q: int) -> int:
-    """Evaluate a multivariate polynomial at a point over Z/qZ.
+# =============================================================================
+# Application 1: Verified Outsourced Computation
+# =============================================================================
+
+def outsourced_matrix_multiply(n: int, q: int, inject_error: bool = False):
+    """
+    Simulate outsourcing matrix multiplication to an untrusted server.
+    
+    Scenario: A client has n×n matrices A, B and wants to compute A·B.
+    The client sends A, B to a server, which returns C (claimed = A·B).
+    The client verifies using Freivalds' algorithm in O(n²) time,
+    rather than recomputing A·B in O(n³) time.
     
     Args:
-        coefficients: dict mapping exponent tuples to coefficients
-        point: tuple of values for each variable
-        q: prime modulus
+        n: Matrix dimension.
+        q: Field size (prime).
+        inject_error: Whether the server introduces an error.
+    """
+    print(f"\n  Scenario: {n}×{n} matrices over Z/{q}Z")
+    
+    # Client generates matrices
+    A = np.array([[random.randint(0, q-1) for _ in range(n)] for _ in range(n)])
+    B = np.array([[random.randint(0, q-1) for _ in range(n)] for _ in range(n)])
+    
+    # Server computes (possibly with error)
+    C = np.mod(A @ B, q)
+    if inject_error:
+        i, j = random.randint(0, n-1), random.randint(0, n-1)
+        C[i, j] = (C[i, j] + random.randint(1, q-1)) % q
+        print(f"  Server introduced error at position ({i},{j})")
+    
+    # Client verifies with Freivalds (k trials)
+    k = 10
+    detected = False
+    for trial in range(k):
+        r = np.array([random.randint(0, q-1) for _ in range(n)])
+        Br = np.mod(B @ r, q)
+        ABr = np.mod(A @ Br, q)
+        Cr = np.mod(C @ r, q)
+        if not np.array_equal(ABr, Cr):
+            detected = True
+            print(f"  Error detected on trial {trial+1}!")
+            break
+    
+    if not detected:
+        print(f"  All {k} trials passed — accepting result")
+    
+    naive_ops = n ** 3
+    freivalds_ops = k * 2 * n ** 2
+    print(f"  Naive verification cost: O({naive_ops}) = O(n³)")
+    print(f"  Freivalds cost:          O({freivalds_ops}) = O(k·n²)")
+    print(f"  Speedup factor:          {naive_ops / freivalds_ops:.1f}×")
+
+
+def demo_outsourced_computation():
+    """Demonstrate verified outsourced computation."""
+    print("=" * 60)
+    print("APPLICATION 1: Verified Outsourced Matrix Computation")
+    print("=" * 60)
+    print("\nA client outsources matrix multiplication and verifies")
+    print("the result in O(n²) time instead of O(n³).")
+    
+    q = 97  # Large enough prime for realistic demo
+    
+    print("\n--- Honest server ---")
+    outsourced_matrix_multiply(50, q, inject_error=False)
+    
+    print("\n--- Dishonest server ---")
+    outsourced_matrix_multiply(50, q, inject_error=True)
+
+
+# =============================================================================
+# Application 2: Streaming Data Equality
+# =============================================================================
+
+def streaming_equality_check(
+    stream1: List[int],
+    stream2: List[int],
+    q: int,
+    num_fingerprints: int = 5
+) -> Tuple[bool, int]:
+    """
+    Check equality of two data streams using polynomial fingerprinting.
+    
+    Instead of storing and comparing the entire streams (O(n) space),
+    maintain a running fingerprint (O(1) space per fingerprint).
+    
+    The fingerprint of [a₀, a₁, ..., aₙ₋₁] at evaluation point r is:
+    h = a₀ + a₁·r + a₂·r² + ... + aₙ₋₁·r^{n-1} mod q
+    
+    By Schwartz–Zippel: if streams differ, Pr[fingerprints match] ≤ (n-1)/q.
     
     Returns:
-        Evaluation mod q
+        (match, space_used): whether streams appear equal, and memory used.
     """
-    result = 0
-    for exponents, coeff in coefficients.items():
-        term = coeff
-        for i, exp in enumerate(exponents):
-            term = (term * pow(point[i], exp, q)) % q
-        result = (result + term) % q
-    return result
+    # Select random evaluation points
+    eval_points = [random.randint(0, q-1) for _ in range(num_fingerprints)]
+    
+    # Compute fingerprints incrementally (simulating streaming)
+    fp1 = [0] * num_fingerprints
+    fp2 = [0] * num_fingerprints
+    
+    space_used = num_fingerprints * 3  # fingerprints + eval points + power tracking
+    
+    for idx in range(max(len(stream1), len(stream2))):
+        for k in range(num_fingerprints):
+            r = eval_points[k]
+            r_power = pow(r, idx, q)
+            
+            if idx < len(stream1):
+                fp1[k] = (fp1[k] + stream1[idx] * r_power) % q
+            if idx < len(stream2):
+                fp2[k] = (fp2[k] + stream2[idx] * r_power) % q
+    
+    match = all(fp1[k] == fp2[k] for k in range(num_fingerprints))
+    return match, space_used
 
 
-def count_zeros(coefficients: Dict[Tuple[int, ...], int], n_vars: int, q: int) -> int:
-    """Count the number of zeros of a polynomial over (Z/qZ)^n."""
-    count = 0
-    for point in product(range(q), repeat=n_vars):
-        if eval_poly_mod(coefficients, point, q) == 0:
-            count += 1
-    return count
+def demo_streaming_equality():
+    """Demonstrate streaming equality checking."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Streaming Data Equality Checking")
+    print("=" * 60)
+    print("\nCompare two data streams using O(1) space per fingerprint,")
+    print("rather than O(n) space for full comparison.")
+    
+    q = 10007  # Large prime
+    n = 10000  # Stream length
+    
+    # Equal streams
+    stream1 = [random.randint(0, q-1) for _ in range(n)]
+    stream2 = list(stream1)
+    
+    match, space = streaming_equality_check(stream1, stream2, q)
+    print(f"\n  Equal streams (n={n}):")
+    print(f"    Result: {'EQUAL' if match else 'DIFFERENT'} (correct: EQUAL)")
+    print(f"    Space: {space} words vs {n} words for naive comparison")
+    
+    # Different streams (single bit flip)
+    stream3 = list(stream1)
+    flip_pos = random.randint(0, n-1)
+    stream3[flip_pos] = (stream3[flip_pos] + 1) % q
+    
+    match, space = streaming_equality_check(stream1, stream3, q, num_fingerprints=5)
+    print(f"\n  Different streams (1 element changed at position {flip_pos}):")
+    print(f"    Result: {'EQUAL (false positive!)' if match else 'DIFFERENT'}")
+    print(f"    Error bound per fingerprint: {(n-1)/q:.6f}")
+    print(f"    Error bound with 5 fingerprints: {((n-1)/q)**5:.12f}")
 
 
-def schwartz_zippel_bound(total_degree: int, q: int, n_vars: int) -> int:
-    """Compute the Schwartz-Zippel upper bound on zeros."""
-    return total_degree * q ** (n_vars - 1)
+# =============================================================================
+# Application 3: Reed–Muller Code Distance
+# =============================================================================
+
+def reed_muller_distance(d: int, n: int, q: int) -> Tuple[int, int]:
+    """
+    Compute the minimum distance of the Reed–Muller code RM(d, n, q).
+    
+    By Schwartz–Zippel: a nonzero polynomial of degree d over F_q^n
+    has at most d · q^{n-1} zeros, so it is nonzero on at least
+    (q-d) · q^{n-1} points. This gives the minimum distance.
+    
+    Returns:
+        (theoretical_distance, empirical_min_weight): The SZ bound
+        and the empirically observed minimum weight.
+    """
+    theoretical = (q - d) * (q ** (n - 1))
+    
+    # For small parameters, verify by exhaustive search
+    if q ** n <= 5000 and d <= 3:
+        min_weight = q ** n  # Maximum possible
+        
+        # Generate all monomials of degree ≤ d
+        monomials = []
+        for exp in cartesian_product(range(d + 1), repeat=n):
+            if sum(exp) <= d:
+                monomials.append(exp)
+        
+        # Sample random polynomials of degree exactly d and find min weight
+        num_samples = min(500, q ** len(monomials))
+        for _ in range(num_samples):
+            # Random polynomial of degree ≤ d
+            coeffs = {}
+            has_degree_d = False
+            for mono in monomials:
+                c = random.randint(0, q - 1)
+                if c != 0:
+                    coeffs[mono] = c
+                    if sum(mono) == d:
+                        has_degree_d = True
+            
+            if not coeffs or not has_degree_d:
+                continue
+            
+            # Count nonzeros (= Hamming weight of codeword)
+            weight = 0
+            for point in cartesian_product(range(q), repeat=n):
+                val = 0
+                for exp, coeff in coeffs.items():
+                    term = coeff
+                    for i, e in enumerate(exp):
+                        term = (term * pow(point[i], e, q)) % q
+                    val = (val + term) % q
+                if val != 0:
+                    weight += 1
+            
+            min_weight = min(min_weight, weight)
+        
+        return theoretical, min_weight
+    
+    return theoretical, -1  # Too large for exhaustive search
 
 
-def demo_schwartz_zippel():
-    """Demonstrate the Schwartz-Zippel bound with concrete examples."""
-    print("=" * 70)
-    print("SCHWARTZ-ZIPPEL LEMMA DEMONSTRATION")
-    print("=" * 70)
-    print()
-    print("Theorem: A nonzero polynomial f of total degree d over a finite")
-    print("field F_q in n variables has at most d * q^(n-1) zeros.")
-    print()
+def demo_reed_muller():
+    """Demonstrate Reed–Muller code distance from Schwartz–Zippel."""
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Reed–Muller Code Minimum Distance")
+    print("=" * 60)
+    print("\nThe Schwartz–Zippel bound gives the minimum distance of")
+    print("Reed–Muller codes: d_min = (q - deg) · q^{n-1}.")
     
-    # Example 1: Linear polynomial in 2 variables over F_5
-    # f(x,y) = 2x + 3y + 1
+    print(f"\n{'q':>4} {'n':>3} {'deg':>4} {'d_min (SZ)':>12} {'d_min (emp)':>12} {'tight?':>7}")
     print("-" * 50)
-    print("Example 1: f(x,y) = 2x + 3y + 1 over F_5")
-    print("-" * 50)
-    q = 5
-    coeffs = {(1, 0): 2, (0, 1): 3, (0, 0): 1}
-    n_vars = 2
-    total_deg = 1
     
-    zeros = count_zeros(coeffs, n_vars, q)
-    bound = schwartz_zippel_bound(total_deg, q, n_vars)
+    test_cases = [
+        (3, 2, 1), (3, 2, 2),
+        (5, 2, 1), (5, 2, 2), (5, 2, 3),
+        (7, 2, 1), (7, 2, 2),
+        (3, 3, 1), (3, 3, 2),
+        (5, 3, 1),
+    ]
     
-    print(f"  Total degree: {total_deg}")
-    print(f"  Field size: {q}")
-    print(f"  Variables: {n_vars}")
-    print(f"  Actual zeros: {zeros}")
-    print(f"  S-Z bound:    {bound}")
-    print(f"  Bound tight?  {zeros <= bound} (zeros ≤ bound)")
-    print()
+    for q, n, d in test_cases:
+        if d >= q:
+            continue
+        theoretical, empirical = reed_muller_distance(d, n, q)
+        tight = "YES" if empirical == theoretical else ("~" if empirical <= theoretical * 1.1 else "no")
+        emp_str = str(empirical) if empirical >= 0 else "N/A"
+        print(f"{q:>4} {n:>3} {d:>4} {theoretical:>12} {emp_str:>12} {tight:>7}")
     
-    # Example 2: Quadratic polynomial in 3 variables over F_7
-    # f(x,y,z) = x^2 + y*z + x + 2
-    print("-" * 50)
-    print("Example 2: f(x,y,z) = x² + yz + x + 2 over F_7")
-    print("-" * 50)
-    q = 7
-    coeffs = {(2, 0, 0): 1, (0, 1, 1): 1, (1, 0, 0): 1, (0, 0, 0): 2}
-    n_vars = 3
-    total_deg = 2
-    
-    zeros = count_zeros(coeffs, n_vars, q)
-    bound = schwartz_zippel_bound(total_deg, q, n_vars)
-    
-    print(f"  Total degree: {total_deg}")
-    print(f"  Field size: {q}")
-    print(f"  Variables: {n_vars}")
-    print(f"  Actual zeros: {zeros}")
-    print(f"  S-Z bound:    {bound}")
-    print(f"  Bound tight?  {zeros <= bound} (zeros ≤ bound)")
-    print()
-    
-    # Example 3: Product of linears (tight example)
-    # f(x,y) = x * y over F_p (zeros = 2p-1, bound = 2*(p-1)+1 ... let's check)
-    print("-" * 50)
-    print("Example 3: f(x,y) = x·y over F_11 (near-tight)")
-    print("-" * 50)
-    q = 11
-    coeffs = {(1, 1): 1}
-    n_vars = 2
-    total_deg = 2
-    
-    zeros = count_zeros(coeffs, n_vars, q)
-    bound = schwartz_zippel_bound(total_deg, q, n_vars)
-    
-    print(f"  Total degree: {total_deg}")
-    print(f"  Field size: {q}")
-    print(f"  Variables: {n_vars}")
-    print(f"  Actual zeros: {zeros} (= 2·{q} - 1 = {2*q - 1})")
-    print(f"  S-Z bound:    {bound}")
-    print(f"  Bound tight?  {zeros <= bound} (zeros ≤ bound)")
-    print(f"  Ratio actual/bound: {zeros/bound:.3f}")
-    print()
-    
-    # Example 4: Sweep over field sizes
-    print("-" * 50)
-    print("Example 4: Zero fraction vs 1/q for degree-1 polynomial")
-    print("-" * 50)
-    print(f"  {'q':>5} | {'zeros':>8} | {'q^(n-1)':>10} | {'fraction':>10} | {'1/q':>10}")
-    print(f"  {'-'*5}-+-{'-'*8}-+-{'-'*10}-+-{'-'*10}-+-{'-'*10}")
-    
-    for q in [2, 3, 5, 7, 11, 13]:
-        # f(x,y,z) = x + 2y + 3z + 1 over F_q
-        coeffs = {(1, 0, 0): 1, (0, 1, 0): 2, (0, 0, 1): 3, (0, 0, 0): 1}
-        n_vars = 3
-        total_deg = 1
-        zeros = count_zeros(coeffs, n_vars, q)
-        bound = q ** (n_vars - 1)
-        total = q ** n_vars
-        print(f"  {q:>5} | {zeros:>8} | {bound:>10} | {zeros/total:>10.6f} | {1/q:>10.6f}")
-    print()
+    print(f"\n  The bound is tight: there exist polynomials achieving exactly")
+    print(f"  the minimum weight (e.g., products of d linear factors).")
 
 
-def freivalds_demo():
-    """Demonstrate Freivalds' algorithm for matrix multiplication verification."""
-    print("=" * 70)
-    print("FREIVALDS' ALGORITHM DEMONSTRATION")
-    print("=" * 70)
-    print()
-    print("Algorithm: To verify A·B = C, pick random r ∈ F_q^n,")
-    print("check if (A·B)·r = C·r. Error prob ≤ 1/q per trial.")
-    print()
+# =============================================================================
+# Application 4: Simple Interactive Proof
+# =============================================================================
+
+def interactive_proof_demo():
+    """
+    Simulate an interactive proof for graph non-isomorphism using
+    polynomial fingerprinting over finite fields.
     
+    This demonstrates how Schwartz–Zippel underlies the soundness
+    of interactive proof protocols.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Interactive Proof Simulation")
+    print("=" * 60)
+    print("\nA verifier checks a prover's claim using random challenges.")
+    print("Soundness relies on Schwartz–Zippel: a cheating prover must")
+    print("make a polynomial vanish at a random point.")
+    
+    q = 97
+    n = 5  # Polynomial degree bound
+    
+    # Prover claims to know a degree-n polynomial f with specific properties
+    # Verifier checks by evaluating at random points
+    
+    # Honest prover: f(x) = x^5 + 3x^3 + 2x + 1 over Z/97Z
+    honest_coeffs = [1, 2, 0, 3, 0, 1]  # coefficients of 1 + 2x + 3x³ + x⁵
+    
+    # Cheating prover: tries to fake with a DIFFERENT polynomial
+    cheat_coeffs = [1, 2, 0, 3, 0, 2]  # differs in x⁵ coefficient
+    
+    print(f"\n  Field: Z/{q}Z, degree bound: {n}")
+    print(f"  Honest polynomial:  coeffs = {honest_coeffs}")
+    print(f"  Cheating polynomial: coeffs = {cheat_coeffs}")
+    
+    num_rounds = 10
+    caught = 0
+    
+    for round_num in range(num_rounds):
+        # Verifier sends random challenge
+        r = random.randint(0, q - 1)
+        
+        # Honest evaluation
+        honest_val = sum(c * pow(r, i, q) for i, c in enumerate(honest_coeffs)) % q
+        
+        # Cheating evaluation
+        cheat_val = sum(c * pow(r, i, q) for i, c in enumerate(cheat_coeffs)) % q
+        
+        if honest_val != cheat_val:
+            caught += 1
+    
+    print(f"\n  Over {num_rounds} rounds:")
+    print(f"    Cheater caught: {caught}/{num_rounds} times")
+    print(f"    Theoretical detection probability per round: ≥ 1 - {n}/{q} = {1 - n/q:.4f}")
+    print(f"    (The difference polynomial has degree ≤ {n}, so by Schwartz–Zippel")
+    print(f"     it vanishes on at most {n}/{q} fraction of challenges.)")
+
+
+# =============================================================================
+# Main
+# =============================================================================
+
+if __name__ == "__main__":
     random.seed(42)
     np.random.seed(42)
     
-    q = 7  # Work over F_7
-    n = 4  # 4×4 matrices
+    demo_outsourced_computation()
+    demo_streaming_equality()
+    demo_reed_muller()
+    interactive_proof_demo()
     
-    # Generate random matrices
-    A = np.random.randint(0, q, (n, n))
-    B = np.random.randint(0, q, (n, n))
-    C_correct = (A @ B) % q
-    
-    # Create an incorrect C (flip one entry)
-    C_wrong = C_correct.copy()
-    C_wrong[0, 0] = (C_wrong[0, 0] + 1) % q
-    
-    print(f"Working over F_{q}, with {n}×{n} matrices")
-    print()
-    
-    # Test with correct C
-    print("-" * 50)
-    print("Test 1: A·B = C (correct product)")
-    print("-" * 50)
-    n_trials = 1000
-    false_reject = 0
-    for _ in range(n_trials):
-        r = np.random.randint(0, q, n)
-        lhs = (A @ B @ r) % q
-        rhs = (C_correct @ r) % q
-        if not np.array_equal(lhs % q, rhs % q):
-            false_reject += 1
-    print(f"  {n_trials} trials: {false_reject} false rejections (should be 0)")
-    print()
-    
-    # Test with incorrect C
-    print("-" * 50)
-    print("Test 2: A·B ≠ C (incorrect product)")
-    print("-" * 50)
-    n_trials = 10000
-    missed = 0
-    for _ in range(n_trials):
-        r = np.random.randint(0, q, n)
-        lhs = (A @ B @ r) % q
-        rhs = (C_wrong @ r) % q
-        if np.array_equal(lhs % q, rhs % q):
-            missed += 1
-    
-    empirical_error = missed / n_trials
-    theoretical_bound = 1 / q
-    print(f"  {n_trials} trials: {missed} false accepts")
-    print(f"  Empirical error rate: {empirical_error:.4f}")
-    print(f"  Theoretical bound:   {theoretical_bound:.4f} (= 1/{q})")
-    print(f"  Bound respected:     {empirical_error <= theoretical_bound + 0.01}")
-    print()
-    
-    # Exact counting over small field
-    print("-" * 50)
-    print("Test 3: Exact zero count for D = A·B - C over F_3")
-    print("-" * 50)
-    q_small = 3
-    n_small = 3
-    
-    A_s = np.random.randint(0, q_small, (n_small, n_small))
-    B_s = np.random.randint(0, q_small, (n_small, n_small))
-    C_s = (A_s @ B_s) % q_small
-    C_s[0, 0] = (C_s[0, 0] + 1) % q_small  # Make incorrect
-    D = (A_s @ B_s - C_s) % q_small
-    
-    zero_count = 0
-    total = q_small ** n_small
-    for r in product(range(q_small), repeat=n_small):
-        r_vec = np.array(r)
-        result = (D @ r_vec) % q_small
-        if np.all(result == 0):
-            zero_count += 1
-    
-    bound = q_small ** (n_small - 1)
-    print(f"  D = A·B - C (mod {q_small}), D ≠ 0")
-    print(f"  Vectors r with D·r = 0: {zero_count}")
-    print(f"  Total vectors:          {total}")
-    print(f"  Bound q^(n-1):          {bound}")
-    print(f"  Fraction:               {zero_count/total:.4f}")
-    print(f"  1/q:                    {1/q_small:.4f}")
-    print(f"  Bound respected:        {zero_count <= bound}")
-    print()
-    
-    # Repeated trials
-    print("-" * 50)
-    print("Test 4: k independent trials reduce error to (1/q)^k")
-    print("-" * 50)
-    q = 7
-    n = 5
-    A = np.random.randint(0, q, (n, n))
-    B = np.random.randint(0, q, (n, n))
-    C = (A @ B) % q
-    C[1, 2] = (C[1, 2] + 1) % q  # Corrupt
-    
-    n_experiments = 10000
-    for k in [1, 2, 3, 5, 10]:
-        all_pass = 0
-        for _ in range(n_experiments):
-            passed = True
-            for _ in range(k):
-                r = np.random.randint(0, q, n)
-                if not np.array_equal((A @ B @ r) % q, (C @ r) % q):
-                    passed = False
-                    break
-            if passed:
-                all_pass += 1
-        empirical = all_pass / n_experiments
-        theoretical = (1/q) ** k
-        print(f"  k={k:>2}: empirical={empirical:.6f}, bound=(1/{q})^{k}={theoretical:.6f}")
-    print()
-
-
-def pit_connection_demo():
-    """Show the PIT interpretation of Freivalds."""
-    print("=" * 70)
-    print("POLYNOMIAL IDENTITY TESTING CONNECTION")
-    print("=" * 70)
-    print()
-    print("Key insight: For matrices D = A·B - C, the condition D·r = 0")
-    print("is equivalent to n linear polynomials vanishing simultaneously.")
-    print("Each row of D defines a degree-1 polynomial in the r variables.")
-    print()
-    
-    q = 5
-    n = 3
-    
-    print(f"Example: 3×3 matrix D over F_{q}")
-    D = np.array([[1, 2, 3], [0, 4, 1], [2, 0, 3]])
-    print(f"  D = {D.tolist()}")
-    print()
-    
-    print("  Row polynomials (degree-1 in r₀, r₁, r₂):")
-    for i in range(n):
-        terms = []
-        for j in range(n):
-            if D[i, j] != 0:
-                terms.append(f"{D[i,j]}·r_{j}")
-        print(f"    p_{i}(r) = {' + '.join(terms)}")
-    print()
-    
-    print("  D·r = 0 iff all row polynomials vanish simultaneously.")
-    print("  Each is degree 1, so by Schwartz-Zippel (degree-1 case),")
-    print(f"  each vanishes on ≤ {q}^{n-1} = {q**(n-1)} of {q}^{n} = {q**n} vectors.")
-    print("  Since row 0 is nonzero, the system vanishes on ≤ q^(n-1) vectors.")
-    print()
-    
-    # Count actual zeros
-    zero_count = 0
-    for r in product(range(q), repeat=n):
-        r_vec = np.array(r)
-        if np.all((D @ r_vec) % q == 0):
-            zero_count += 1
-    print(f"  Actual zeros of D·r = 0: {zero_count}")
-    print(f"  Bound q^(n-1) = {q**(n-1)}")
-    print(f"  Freivalds error ≤ {zero_count}/{q**n} = {zero_count/q**n:.4f} ≤ 1/{q} = {1/q:.4f}")
-
-
-if __name__ == "__main__":
-    demo_schwartz_zippel()
-    print()
-    freivalds_demo()
-    print()
-    pit_connection_demo()
+    print("\n" + "=" * 60)
+    print("All applications demonstrated successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualizations for the Schwartz-Zippel / Freivalds formalization.
-Generates PNG figures for the research paper and web package.
+Demo: Schwartz–Zippel Lemma and Freivalds' Algorithm over Finite Fields
+
+Concrete numerical demonstrations showing:
+1. Freivalds' randomized matrix multiplication verification
+2. Schwartz–Zippel zero-set counting for multivariate polynomials
+3. Empirical vs theoretical error probability comparison
 """
 
+import random
+import numpy as np
+from itertools import product as cartesian_product
+from collections import Counter
+
+
+def mod_matrix_mul(A, B, q):
+    """Matrix multiplication modulo q."""
+    return np.mod(A @ B, q)
+
+
+def mod_matrix_vec(M, v, q):
+    """Matrix-vector multiplication modulo q."""
+    return np.mod(M @ v, q)
+
+
+# =============================================================================
+# Demo 1: Freivalds' Algorithm
+# =============================================================================
+
+def freivalds_check(A, B, C, q, num_trials=1):
+    """
+    Freivalds' algorithm: check if A*B ≡ C (mod q).
+    
+    Returns True if the check passes (might be wrong if A*B ≠ C),
+    Returns False if the check fails (definitely A*B ≠ C).
+    
+    Error probability ≤ (1/q)^num_trials when A*B ≠ C.
+    """
+    n = A.shape[0]
+    for _ in range(num_trials):
+        r = np.array([random.randint(0, q - 1) for _ in range(n)])
+        # Compute A*(B*r) and C*r mod q
+        Br = mod_matrix_vec(B, r, q)
+        ABr = mod_matrix_vec(A, Br, q)
+        Cr = mod_matrix_vec(C, r, q)
+        if not np.array_equal(ABr, Cr):
+            return False  # Definitely not equal
+    return True  # Might be equal
+
+
+def demo_freivalds():
+    """Demonstrate Freivalds' algorithm with concrete examples."""
+    print("=" * 70)
+    print("DEMO 1: Freivalds' Randomized Matrix Multiplication Verification")
+    print("=" * 70)
+    
+    q = 7  # Work over Z/7Z
+    n = 4  # 4x4 matrices
+    
+    # Generate random matrices
+    A = np.array([[random.randint(0, q - 1) for _ in range(n)] for _ in range(n)])
+    B = np.array([[random.randint(0, q - 1) for _ in range(n)] for _ in range(n)])
+    C_correct = mod_matrix_mul(A, B, q)
+    
+    # Introduce a single-entry error
+    C_wrong = C_correct.copy()
+    C_wrong[0, 0] = (C_wrong[0, 0] + 1) % q
+    
+    print(f"\nField: Z/{q}Z, Matrix size: {n}x{n}")
+    print(f"\nA =\n{A}")
+    print(f"\nB =\n{B}")
+    print(f"\nCorrect A*B (mod {q}) =\n{C_correct}")
+    print(f"\nWrong C (single entry changed) =\n{C_wrong}")
+    
+    # Test with correct product
+    print(f"\n--- Testing with CORRECT product ---")
+    results_correct = [freivalds_check(A, B, C_correct, q) for _ in range(100)]
+    print(f"  100 trials: {sum(results_correct)} passed (should be 100)")
+    
+    # Test with wrong product - single trial
+    print(f"\n--- Testing with WRONG product (single trial each) ---")
+    results_wrong = [freivalds_check(A, B, C_wrong, q) for _ in range(1000)]
+    false_accepts = sum(results_wrong)
+    print(f"  1000 single-trial tests: {false_accepts} false accepts")
+    print(f"  Empirical error rate: {false_accepts/1000:.4f}")
+    print(f"  Theoretical bound:    {1/q:.4f} = 1/{q}")
+    
+    # Test with multiple trials
+    print(f"\n--- Testing with WRONG product (k=3 trials each) ---")
+    results_multi = [freivalds_check(A, B, C_wrong, q, num_trials=3) for _ in range(10000)]
+    false_accepts_multi = sum(results_multi)
+    print(f"  10000 tests with k=3: {false_accepts_multi} false accepts")
+    print(f"  Empirical error rate: {false_accepts_multi/10000:.6f}")
+    print(f"  Theoretical bound:    {(1/q)**3:.6f} = 1/{q}^3")
+    print()
+
+
+# =============================================================================
+# Demo 2: Schwartz–Zippel Zero Set Counting
+# =============================================================================
+
+def eval_poly_mod(coeffs, point, q):
+    """
+    Evaluate a multivariate polynomial at a point modulo q.
+    
+    coeffs: dict mapping tuples of exponents to coefficients
+    point: tuple of values for each variable
+    """
+    result = 0
+    for exponents, coeff in coeffs.items():
+        term = coeff
+        for i, e in enumerate(exponents):
+            term = (term * pow(int(point[i]), int(e), q)) % q
+        result = (result + term) % q
+    return result
+
+
+def count_zeros(coeffs, n, q):
+    """Count zeros of a polynomial over (Z/qZ)^n by exhaustive enumeration."""
+    count = 0
+    for point in cartesian_product(range(q), repeat=n):
+        if eval_poly_mod(coeffs, point, q) == 0:
+            count += 1
+    return count
+
+
+def total_degree(coeffs):
+    """Compute total degree of a polynomial."""
+    if not coeffs:
+        return 0
+    return max(sum(exp) for exp in coeffs.keys())
+
+
+def demo_schwartz_zippel():
+    """Demonstrate the Schwartz–Zippel bound with concrete polynomials."""
+    print("=" * 70)
+    print("DEMO 2: Schwartz–Zippel Zero Set Counting")
+    print("=" * 70)
+    
+    q = 5  # Work over Z/5Z
+    
+    examples = [
+        # (name, n_vars, coefficients_dict, description)
+        ("Linear", 3, {(1, 0, 0): 1, (0, 1, 0): 2, (0, 0, 1): 3, (0, 0, 0): 1},
+         "x + 2y + 3z + 1"),
+        ("Quadratic", 2, {(2, 0): 1, (0, 2): 1, (1, 1): 3, (0, 0): 2},
+         "x² + y² + 3xy + 2"),
+        ("Cubic in 2 vars", 2, {(3, 0): 1, (0, 1): 4, (0, 0): 1},
+         "x³ + 4y + 1"),
+        ("Degree 2 in 3 vars", 3, {(1, 1, 0): 1, (0, 0, 1): 2, (0, 0, 0): 3},
+         "xy + 2z + 3"),
+    ]
+    
+    print(f"\nField: Z/{q}Z (q = {q})")
+    print(f"{'Polynomial':<25} {'n':>3} {'deg':>4} {'#zeros':>7} {'bound':>7} {'ratio':>8}")
+    print("-" * 60)
+    
+    for name, n, coeffs, desc in examples:
+        d = total_degree(coeffs)
+        zeros = count_zeros(coeffs, n, q)
+        bound = d * q ** (n - 1)
+        total_points = q ** n
+        ratio = zeros / total_points if total_points > 0 else 0
+        
+        print(f"{desc:<25} {n:>3} {d:>4} {zeros:>7} {bound:>7} {ratio:>8.4f}")
+    
+    print(f"\nSchwartz–Zippel bound: #zeros ≤ deg(f) · q^(n-1)")
+    print(f"Probability bound:    Pr[f(r) = 0] ≤ deg(f) / q")
+    print()
+
+
+# =============================================================================
+# Demo 3: Linear Form Zero Sets (Freivalds Connection)
+# =============================================================================
+
+def demo_linear_forms():
+    """Demonstrate that linear form zero sets have exactly q^{n-1} elements."""
+    print("=" * 70)
+    print("DEMO 3: Linear Form Zero Sets — The Freivalds Connection")
+    print("=" * 70)
+    
+    q = 7
+    
+    print(f"\nField: Z/{q}Z")
+    print(f"\nFor a nonzero linear form L(x) = v·x, the zero set has exactly q^(n-1) elements.")
+    print(f"This is the kernel of a surjective linear map, which is a hyperplane.\n")
+    
+    for n in range(1, 5):
+        # Random nonzero vector
+        v = [0] * n
+        while all(x == 0 for x in v):
+            v = [random.randint(0, q - 1) for _ in range(n)]
+        
+        # Count zeros of the linear form
+        zeros = 0
+        for x in cartesian_product(range(q), repeat=n):
+            dot = sum(v[i] * x[i] for i in range(n)) % q
+            if dot == 0:
+                zeros += 1
+        
+        bound = q ** (n - 1)
+        print(f"  n={n}, v={v}: #zeros = {zeros}, q^(n-1) = {bound}, match = {zeros == bound}")
+    
+    print(f"\n  The zero set is always EXACTLY q^(n-1) = a hyperplane through the origin.")
+    print(f"  This powers Freivalds: a nonzero row of D gives a nonzero linear form,")
+    print(f"  so Dr=0 can hold for at most q^(n-1) vectors r out of q^n total.")
+    print()
+
+
+# =============================================================================
+# Demo 4: Empirical Convergence
+# =============================================================================
+
+def demo_convergence():
+    """Show how error probability converges to theoretical bound."""
+    print("=" * 70)
+    print("DEMO 4: Error Probability Convergence")
+    print("=" * 70)
+    
+    n = 5  # Matrix size
+    
+    print(f"\nMatrix size: {n}x{n}")
+    print(f"Each row: 10000 independent Freivalds tests with k=1 trial")
+    print(f"\n{'q':>5} {'1/q':>10} {'empirical':>10} {'within 2σ':>10}")
+    print("-" * 40)
+    
+    for q in [2, 3, 5, 7, 11, 13]:
+        # Generate test case
+        A = np.array([[random.randint(0, q - 1) for _ in range(n)] for _ in range(n)])
+        B = np.array([[random.randint(0, q - 1) for _ in range(n)] for _ in range(n)])
+        C = mod_matrix_mul(A, B, q)
+        C[0, 0] = (C[0, 0] + 1) % q  # Introduce error
+        
+        N = 10000
+        false_accepts = sum(1 for _ in range(N) if freivalds_check(A, B, C, q))
+        empirical = false_accepts / N
+        theoretical = 1.0 / q
+        sigma = (theoretical * (1 - theoretical) / N) ** 0.5
+        within = "YES" if abs(empirical - theoretical) < 2 * sigma else "no"
+        
+        print(f"{q:>5} {theoretical:>10.6f} {empirical:>10.6f} {within:>10}")
+    
+    print(f"\n  The empirical error rate closely tracks 1/q as predicted by")
+    print(f"  the Schwartz–Zippel degree-1 bound (= Freivalds' theorem).")
+    print()
+
+
+# =============================================================================
+# Main
+# =============================================================================
+
+if __name__ == "__main__":
+    random.seed(42)
+    np.random.seed(42)
+    
+    demo_freivalds()
+    demo_schwartz_zippel()
+    demo_linear_forms()
+    demo_convergence()
+    
+    print("=" * 70)
+    print("All demos completed successfully.")
+    print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""
+Visualizations for Schwartz–Zippel and Freivalds' Algorithm
+
+Generates publication-quality figures saved as PNG files.
+"""
+
+import random
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from itertools import product
+from itertools import product as cartesian_product
+from collections import defaultdict
 import base64
-from io import BytesIO
+import io
 
 
-def fig_to_base64(fig) -> str:
+def fig_to_base64(fig):
     """Convert matplotlib figure to base64 data URI."""
-    buf = BytesIO()
+    buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{data}"
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
+    return f"data:image/png;base64,{encoded}"
 
 
-def plot_zero_set_2d():
-    """Plot the zero set of a polynomial over a finite field."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
-    q = 11
-    
-    # f(x,y) = x + 2y + 1 (degree 1)
-    ax = axes[0]
-    zeros_x, zeros_y = [], []
-    nonzeros_x, nonzeros_y = [], []
-    for x in range(q):
-        for y in range(q):
-            if (x + 2*y + 1) % q == 0:
-                zeros_x.append(x)
-                zeros_y.append(y)
-            else:
-                nonzeros_x.append(x)
-                nonzeros_y.append(y)
-    ax.scatter(nonzeros_x, nonzeros_y, c='lightblue', s=20, alpha=0.5, label='Nonzero')
-    ax.scatter(zeros_x, zeros_y, c='red', s=40, zorder=5, label=f'Zeros ({len(zeros_x)})')
-    ax.set_title(f'x + 2y + 1 over F₁₁\nDeg=1, Zeros={len(zeros_x)}, Bound={1*q**(2-1)}')
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.legend(fontsize=8)
-    ax.set_aspect('equal')
-    
-    # f(x,y) = x*y (degree 2)
-    ax = axes[1]
-    zeros_x, zeros_y = [], []
-    nonzeros_x, nonzeros_y = [], []
-    for x in range(q):
-        for y in range(q):
-            if (x * y) % q == 0:
-                zeros_x.append(x)
-                zeros_y.append(y)
-            else:
-                nonzeros_x.append(x)
-                nonzeros_y.append(y)
-    ax.scatter(nonzeros_x, nonzeros_y, c='lightblue', s=20, alpha=0.5, label='Nonzero')
-    ax.scatter(zeros_x, zeros_y, c='red', s=40, zorder=5, label=f'Zeros ({len(zeros_x)})')
-    ax.set_title(f'x·y over F₁₁\nDeg=2, Zeros={len(zeros_x)}, Bound={2*q**(2-1)}')
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.legend(fontsize=8)
-    ax.set_aspect('equal')
-    
-    # f(x,y) = x^2 + y^2 - 1 (degree 2)
-    ax = axes[2]
-    zeros_x, zeros_y = [], []
-    nonzeros_x, nonzeros_y = [], []
-    for x in range(q):
-        for y in range(q):
-            if (x*x + y*y - 1) % q == 0:
-                zeros_x.append(x)
-                zeros_y.append(y)
-            else:
-                nonzeros_x.append(x)
-                nonzeros_y.append(y)
-    ax.scatter(nonzeros_x, nonzeros_y, c='lightblue', s=20, alpha=0.5, label='Nonzero')
-    ax.scatter(zeros_x, zeros_y, c='red', s=40, zorder=5, label=f'Zeros ({len(zeros_x)})')
-    ax.set_title(f'x² + y² - 1 over F₁₁\nDeg=2, Zeros={len(zeros_x)}, Bound={2*q**(2-1)}')
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.legend(fontsize=8)
-    ax.set_aspect('equal')
-    
-    fig.suptitle('Zero Sets of Polynomials over Finite Fields', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    fig.savefig('viz_zero_sets.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
+# =============================================================================
+# Figure 1: Freivalds Error Rate vs Theoretical Bound
+# =============================================================================
 
-
-def plot_freivalds_error():
-    """Plot Freivalds error probability decay with repeated trials."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+def plot_freivalds_error_rate():
+    """Plot empirical Freivalds error rate vs 1/q for various q."""
+    fig, ax = plt.subplots(figsize=(10, 6))
     
-    trials = np.arange(1, 31)
+    n = 5  # Matrix size
+    N = 5000  # Trials per q
     
-    for q in [2, 3, 5, 7, 11, 101]:
-        errors = (1/q) ** trials
-        ax.semilogy(trials, errors, 'o-', markersize=4, label=f'q={q}')
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
+    empirical_rates = []
+    theoretical_rates = [1.0/q for q in primes]
     
-    ax.set_xlabel('Number of Independent Trials (k)', fontsize=12)
-    ax.set_ylabel('Error Probability Upper Bound', fontsize=12)
-    ax.set_title("Freivalds' Algorithm: Error Decay with Repeated Trials\n"
-                 "Error ≤ (1/q)^k", fontsize=14, fontweight='bold')
-    ax.legend(title='Field size q')
+    for q in primes:
+        # Generate test case
+        A = np.array([[random.randint(0, q-1) for _ in range(n)] for _ in range(n)])
+        B = np.array([[random.randint(0, q-1) for _ in range(n)] for _ in range(n)])
+        C = np.mod(A @ B, q)
+        C[0, 0] = (C[0, 0] + 1) % q  # Introduce error
+        
+        false_accepts = 0
+        for _ in range(N):
+            r = np.array([random.randint(0, q-1) for _ in range(n)])
+            ABr = np.mod(A @ np.mod(B @ r, q), q)
+            Cr = np.mod(C @ r, q)
+            if np.array_equal(ABr, Cr):
+                false_accepts += 1
+        
+        empirical_rates.append(false_accepts / N)
+    
+    ax.plot(primes, theoretical_rates, 'r-o', linewidth=2, markersize=8, 
+            label='Theoretical bound: 1/q', zorder=3)
+    ax.plot(primes, empirical_rates, 'b-s', linewidth=2, markersize=8,
+            label=f'Empirical rate (n={n}, {N} trials)', zorder=3)
+    
+    ax.fill_between(primes, 
+                     [t - 2*np.sqrt(t*(1-t)/N) for t in theoretical_rates],
+                     [t + 2*np.sqrt(t*(1-t)/N) for t in theoretical_rates],
+                     alpha=0.2, color='red', label='±2σ confidence band')
+    
+    ax.set_xlabel('Field size q (prime)', fontsize=14)
+    ax.set_ylabel('Error probability', fontsize=14)
+    ax.set_title("Freivalds' Algorithm: Error Rate vs Schwartz–Zippel Bound", fontsize=16)
+    ax.legend(fontsize=12)
+    ax.set_yscale('log')
     ax.grid(True, alpha=0.3)
-    ax.set_ylim(1e-30, 1.5)
+    ax.set_xticks(primes)
     
-    # Add annotation
-    ax.annotate('Even q=2 gives 2⁻³⁰ ≈ 10⁻⁹\nafter 30 trials',
-                xy=(30, 2**(-30)), xytext=(22, 1e-6),
-                arrowprops=dict(arrowstyle='->', color='gray'),
-                fontsize=10, ha='center')
-    
-    plt.tight_layout()
-    fig.savefig('viz_freivalds_error.png', dpi=150, bbox_inches='tight')
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/freivalds_error_rate.png', dpi=150, bbox_inches='tight')
     b64 = fig_to_base64(fig)
+    plt.close(fig)
     return b64
 
 
-def plot_sz_bound_tightness():
-    """Plot how tight the Schwartz-Zippel bound is for various polynomials."""
+# =============================================================================
+# Figure 2: Schwartz–Zippel Zero Set Size vs Degree
+# =============================================================================
+
+def plot_schwartz_zippel_zeros():
+    """Plot zero set sizes for random polynomials vs the SZ bound."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
     
-    # Panel 1: Fixed degree, varying field size
-    ax = axes[0]
-    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
+    # Panel (a): Fixed q=5, n=2, varying degree
+    q = 5
+    n = 2
+    degrees = range(1, 5)
+    sz_bounds = [d * q**(n-1) for d in degrees]
     
-    for deg in [1, 2, 3]:
-        ratios = []
-        for q in primes:
-            # Count zeros of x^deg + y - 1 over F_q^2
+    empirical_zeros = defaultdict(list)
+    
+    for d in degrees:
+        for _ in range(50):  # Sample random polynomials
+            # Random polynomial of degree exactly d in 2 variables
+            coeffs = {}
+            for e1 in range(d + 1):
+                for e2 in range(d + 1 - e1):
+                    c = random.randint(0, q - 1)
+                    if c != 0:
+                        coeffs[(e1, e2)] = c
+            
+            # Ensure degree is exactly d
+            if not coeffs:
+                coeffs[(d, 0)] = 1
+            max_deg = max(sum(e) for e in coeffs.keys())
+            if max_deg < d:
+                coeffs[(d, 0)] = random.randint(1, q - 1)
+            
+            # Count zeros
             zeros = 0
-            for x in range(q):
-                for y in range(q):
-                    if (pow(x, deg, q) + y - 1) % q == 0:
-                        zeros += 1
-            bound = deg * q
-            ratios.append(zeros / bound if bound > 0 else 0)
-        ax.plot(primes, ratios, 'o-', label=f'deg={deg}')
-    
-    ax.set_xlabel('Field size q', fontsize=12)
-    ax.set_ylabel('Actual zeros / S-Z bound', fontsize=12)
-    ax.set_title('Tightness: f(x,y) = xᵈ + y - 1', fontsize=12)
-    ax.legend()
-    ax.set_ylim(0, 1.1)
-    ax.axhline(y=1, color='gray', linestyle='--', alpha=0.5)
-    ax.grid(True, alpha=0.3)
-    
-    # Panel 2: Product of linear forms (near-tight examples)
-    ax = axes[1]
-    primes2 = [3, 5, 7, 11, 13, 17, 19, 23]
-    
-    for num_factors in [1, 2, 3]:
-        ratios = []
-        for q in primes2:
-            zeros = 0
-            for x, y in product(range(q), repeat=2):
-                val = 1
-                for k in range(num_factors):
-                    val = (val * (x + (k+1)*y)) % q
+            for point in cartesian_product(range(q), repeat=n):
+                val = 0
+                for exp, coeff in coeffs.items():
+                    term = coeff
+                    for i, e in enumerate(exp):
+                        term = (term * pow(point[i], e, q)) % q
+                    val = (val + term) % q
                 if val == 0:
                     zeros += 1
-            bound = num_factors * q
-            ratios.append(zeros / bound if bound > 0 else 0)
-        ax.plot(primes2, ratios, 's-', label=f'{num_factors} linear factor(s)')
+            
+            empirical_zeros[d].append(zeros)
     
-    ax.set_xlabel('Field size q', fontsize=12)
-    ax.set_ylabel('Actual zeros / S-Z bound', fontsize=12)
-    ax.set_title('Tightness: Products of Linear Forms', fontsize=12)
-    ax.legend()
-    ax.set_ylim(0, 1.1)
-    ax.axhline(y=1, color='gray', linestyle='--', alpha=0.5)
+    ax = axes[0]
+    for d in degrees:
+        ax.scatter([d] * len(empirical_zeros[d]), empirical_zeros[d], 
+                   alpha=0.4, s=30, color='steelblue', zorder=2)
+    
+    ax.plot(list(degrees), sz_bounds, 'r-o', linewidth=2.5, markersize=10, 
+            label='Schwartz–Zippel bound: d·q^{n-1}', zorder=3)
+    
+    # Mean line
+    means = [np.mean(empirical_zeros[d]) for d in degrees]
+    ax.plot(list(degrees), means, 'g--^', linewidth=2, markersize=8, 
+            label='Mean #zeros', zorder=3)
+    
+    ax.set_xlabel('Total degree d', fontsize=13)
+    ax.set_ylabel('Number of zeros', fontsize=13)
+    ax.set_title(f'Zero Set Size (q={q}, n={n})', fontsize=14)
+    ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
     
-    fig.suptitle('Schwartz-Zippel Bound Tightness Analysis', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    fig.savefig('viz_sz_tightness.png', dpi=150, bbox_inches='tight')
+    # Panel (b): Fixed degree=2, n=2, varying q
+    d = 2
+    n = 2
+    primes_b = [3, 5, 7, 11, 13]
+    sz_bounds_b = [d * p**(n-1) for p in primes_b]
+    
+    empirical_b = defaultdict(list)
+    
+    for p in primes_b:
+        for _ in range(30):
+            coeffs = {}
+            for e1 in range(d + 1):
+                for e2 in range(d + 1 - e1):
+                    c = random.randint(0, p - 1)
+                    if c != 0:
+                        coeffs[(e1, e2)] = c
+            if not coeffs:
+                coeffs[(d, 0)] = 1
+            max_deg = max(sum(e) for e in coeffs.keys())
+            if max_deg < d:
+                coeffs[(d, 0)] = random.randint(1, p - 1)
+            
+            zeros = 0
+            for point in cartesian_product(range(p), repeat=n):
+                val = 0
+                for exp, coeff in coeffs.items():
+                    term = coeff
+                    for i, e in enumerate(exp):
+                        term = (term * pow(point[i], e, p)) % p
+                    val = (val + term) % p
+                if val == 0:
+                    zeros += 1
+            empirical_b[p].append(zeros)
+    
+    ax = axes[1]
+    for p in primes_b:
+        ax.scatter([p] * len(empirical_b[p]), empirical_b[p], 
+                   alpha=0.4, s=30, color='steelblue', zorder=2)
+    
+    ax.plot(primes_b, sz_bounds_b, 'r-o', linewidth=2.5, markersize=10, 
+            label=f'SZ bound: {d}·q', zorder=3)
+    
+    means_b = [np.mean(empirical_b[p]) for p in primes_b]
+    ax.plot(primes_b, means_b, 'g--^', linewidth=2, markersize=8, 
+            label='Mean #zeros', zorder=3)
+    
+    ax.set_xlabel('Field size q', fontsize=13)
+    ax.set_ylabel('Number of zeros', fontsize=13)
+    ax.set_title(f'Zero Set Size (degree={d}, n={n})', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    
+    fig.suptitle('Schwartz–Zippel Lemma: Zero Sets of Random Polynomials', fontsize=16, y=1.02)
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/schwartz_zippel_zeros.png', dpi=150, bbox_inches='tight')
     b64 = fig_to_base64(fig)
+    plt.close(fig)
     return b64
 
 
-def plot_theorem_dependency():
-    """Create a diagram showing the theorem dependency structure."""
-    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
-    ax.set_xlim(0, 12)
-    ax.set_ylim(0, 10)
+# =============================================================================
+# Figure 3: Theorem Dependency Graph
+# =============================================================================
+
+def plot_theorem_hierarchy():
+    """Visualize the theorem dependency structure."""
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.set_xlim(-1, 11)
+    ax.set_ylim(-0.5, 7.5)
+    ax.set_aspect('equal')
     ax.axis('off')
     
-    # Define boxes
-    boxes = {
-        'root_bound': (6, 9, 'Univariate Root Bound\n(Polynomial.card_roots\')', '#E8F5E9'),
-        'fiber_eval': (2, 7, 'Fiber Evaluation\n(eval_fiberPoly)', '#E3F2FD'),
-        'fiber_deg': (6, 7, 'Fiber Degree Bound\n(natDegree_fiberPoly_le)', '#E3F2FD'),
-        'sz_one': (10, 7, 'Base Case\n(schwartz_zippel_one)', '#FFF3E0'),
-        'sz_succ': (6, 5, 'SCHWARTZ-ZIPPEL\n(schwartz_zippel_succ)', '#FFEBEE'),
-        'linear_form': (2, 3.5, 'Linear Form Bound\n(nonzero_linear_form_\nzero_set_bound)', '#F3E5F5'),
-        'freivalds_disc': (6, 3, 'Freivalds Discrepancy\n(freivalds_discrepancy_bound)', '#FCE4EC'),
-        'freivalds': (10, 3, 'Freivalds Bound\n(freivalds_bound)', '#FCE4EC'),
-        'sz_zmod': (6, 1.5, 'S-Z over ZMod q\n(schwartz_zippel_zmod)', '#FFF9C4'),
-        'prob': (2, 1.5, 'Error Probability\n(freivalds_error_probability)', '#FFF9C4'),
+    # Node positions and labels
+    nodes = {
+        'univariate_root_bound': (5, 7, 'Univariate Root Bound\n(base case)'),
+        'fiber_construction': (2, 5.5, 'Fiber Polynomial\nConstruction'),
+        'coeff_degree_bound': (8, 5.5, 'Coefficient Degree\nBound'),
+        'sz_one': (5, 5.5, 'schwartz_zippel_one\n(1-variable case)'),
+        'sz_succ': (5, 4, 'schwartz_zippel_succ\n(main theorem)'),
+        'sz_zmod': (8, 3, 'schwartz_zippel_zmod\n(ZMod q)'),
+        'linear_sz': (2, 3, 'linear_schwartz_zippel\n(degree ≤ 1)'),
+        'linear_form': (0.5, 1.5, 'nonzero_linear_form\n_zero_set_bound'),
+        'freivalds_disc': (3.5, 1.5, 'freivalds_discrepancy\n_bound'),
+        'freivalds': (6.5, 1.5, 'freivalds_bound\n(AB ≠ C)'),
+        'freivalds_zmod': (5, 0, 'freivalds_zmod_bound\n(ZMod q)'),
+        'error_prob': (8.5, 0, 'freivalds_error\n_probability'),
     }
     
-    for key, (x, y, text, color) in boxes.items():
-        w, h = 2.8, 1.2
-        rect = plt.Rectangle((x - w/2, y - h/2), w, h, 
-                             facecolor=color, edgecolor='black', linewidth=1.5,
-                             zorder=2, transform=ax.transData)
-        ax.add_patch(rect)
-        fontsize = 7 if '\n' in text and text.count('\n') > 1 else 8
-        ax.text(x, y, text, ha='center', va='center', fontsize=fontsize,
-               fontweight='bold' if key in ['sz_succ', 'freivalds_disc'] else 'normal',
-               zorder=3)
-    
-    # Draw arrows
-    arrows = [
-        ('root_bound', 'sz_one'),
-        ('fiber_eval', 'sz_succ'),
-        ('fiber_deg', 'sz_succ'),
+    # Edges
+    edges = [
+        ('univariate_root_bound', 'sz_one'),
+        ('fiber_construction', 'sz_succ'),
+        ('coeff_degree_bound', 'sz_succ'),
         ('sz_one', 'sz_succ'),
         ('sz_succ', 'sz_zmod'),
+        ('sz_succ', 'linear_sz'),
         ('linear_form', 'freivalds_disc'),
         ('freivalds_disc', 'freivalds'),
-        ('freivalds_disc', 'prob'),
+        ('freivalds_disc', 'freivalds_zmod'),
+        ('freivalds_zmod', 'error_prob'),
     ]
     
-    for src, dst in arrows:
-        sx, sy = boxes[src][0], boxes[src][1]
-        dx, dy = boxes[dst][0], boxes[dst][1]
-        ax.annotate('', xy=(dx, dy + 0.6), xytext=(sx, sy - 0.6),
-                    arrowprops=dict(arrowstyle='->', color='gray', lw=1.5),
-                    zorder=1)
+    # Draw edges
+    for src, dst in edges:
+        x1, y1, _ = nodes[src]
+        x2, y2, _ = nodes[dst]
+        ax.annotate('', xy=(x2, y2 + 0.35), xytext=(x1, y1 - 0.35),
+                    arrowprops=dict(arrowstyle='->', color='#555555', lw=1.5))
     
-    ax.set_title('Theorem Dependency Graph\nSchwartz-Zippel → Freivalds Pipeline', 
-                fontsize=14, fontweight='bold')
+    # Draw nodes
+    colors = {
+        'univariate_root_bound': '#E8F5E9',  # Light green - external
+        'fiber_construction': '#E3F2FD',      # Light blue - infrastructure
+        'coeff_degree_bound': '#E3F2FD',
+        'sz_one': '#FFF3E0',                  # Light orange - SZ
+        'sz_succ': '#FFCC80',                 # Orange - main
+        'sz_zmod': '#FFF3E0',
+        'linear_sz': '#FFF3E0',
+        'linear_form': '#F3E5F5',             # Light purple - Freivalds
+        'freivalds_disc': '#CE93D8',          # Purple - main
+        'freivalds': '#F3E5F5',
+        'freivalds_zmod': '#CE93D8',
+        'error_prob': '#F3E5F5',
+    }
     
-    plt.tight_layout()
-    fig.savefig('viz_theorem_deps.png', dpi=150, bbox_inches='tight')
+    for key, (x, y, label) in nodes.items():
+        bbox = dict(boxstyle='round,pad=0.4', facecolor=colors[key], 
+                    edgecolor='#333333', linewidth=1.5)
+        ax.text(x, y, label, ha='center', va='center', fontsize=9,
+                fontweight='bold', bbox=bbox)
+    
+    ax.set_title('Theorem Dependency Graph: Schwartz–Zippel → Freivalds', 
+                 fontsize=16, fontweight='bold', pad=20)
+    
+    # Legend
+    legend_items = [
+        ('#E8F5E9', 'External dependency'),
+        ('#E3F2FD', 'Infrastructure lemma'),
+        ('#FFCC80', 'Schwartz–Zippel (main)'),
+        ('#CE93D8', 'Freivalds (main)'),
+    ]
+    for i, (color, label) in enumerate(legend_items):
+        ax.add_patch(plt.Rectangle((9, 7 - i * 0.5), 0.3, 0.3, 
+                                    facecolor=color, edgecolor='#333'))
+        ax.text(9.5, 7 - i * 0.5 + 0.15, label, va='center', fontsize=10)
+    
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/theorem_hierarchy.png', dpi=150, bbox_inches='tight')
     b64 = fig_to_base64(fig)
+    plt.close(fig)
     return b64
 
 
+# =============================================================================
+# Figure 4: Repeated Trials Error Decay
+# =============================================================================
+
+def plot_repeated_trials():
+    """Show exponential decay of error with repeated Freivalds trials."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    n = 4
+    max_trials = 15
+    
+    for q in [2, 3, 5, 7, 11]:
+        # Generate matrices
+        A = np.array([[random.randint(0, q-1) for _ in range(n)] for _ in range(n)])
+        B = np.array([[random.randint(0, q-1) for _ in range(n)] for _ in range(n)])
+        C = np.mod(A @ B, q)
+        C[0, 0] = (C[0, 0] + 1) % q
+        
+        N = 10000
+        error_rates = []
+        
+        for k in range(1, max_trials + 1):
+            false_accepts = 0
+            for _ in range(N):
+                passed = True
+                for _ in range(k):
+                    r = np.array([random.randint(0, q-1) for _ in range(n)])
+                    ABr = np.mod(A @ np.mod(B @ r, q), q)
+                    Cr = np.mod(C @ r, q)
+                    if not np.array_equal(ABr, Cr):
+                        passed = False
+                        break
+                if passed:
+                    false_accepts += 1
+            error_rates.append(false_accepts / N)
+        
+        theoretical = [(1.0/q)**k for k in range(1, max_trials + 1)]
+        
+        ax.plot(range(1, max_trials + 1), error_rates, 'o-', 
+                label=f'q={q} (empirical)', alpha=0.7)
+        ax.plot(range(1, max_trials + 1), theoretical, '--', 
+                label=f'q={q} (bound: (1/{q})^k)', alpha=0.5)
+    
+    ax.set_xlabel('Number of trials (k)', fontsize=14)
+    ax.set_ylabel('Error probability', fontsize=14)
+    ax.set_title("Freivalds' Error Decay with Repeated Trials", fontsize=16)
+    ax.set_yscale('log')
+    ax.legend(fontsize=9, ncol=2, loc='upper right')
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks(range(1, max_trials + 1))
+    
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/repeated_trials.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
+
+
+# =============================================================================
+# Main
+# =============================================================================
+
 if __name__ == "__main__":
+    random.seed(42)
+    np.random.seed(42)
+    
     print("Generating visualizations...")
     
-    b64_zeros = plot_zero_set_2d()
-    print(f"  viz_zero_sets.png generated ({len(b64_zeros)} chars)")
+    print("  [1/4] Freivalds error rate...")
+    b64_1 = plot_freivalds_error_rate()
     
-    b64_error = plot_freivalds_error()
-    print(f"  viz_freivalds_error.png generated ({len(b64_error)} chars)")
+    print("  [2/4] Schwartz–Zippel zero sets...")
+    b64_2 = plot_schwartz_zippel_zeros()
     
-    b64_tight = plot_sz_bound_tightness()
-    print(f"  viz_sz_tightness.png generated ({len(b64_tight)} chars)")
+    print("  [3/4] Theorem hierarchy...")
+    b64_3 = plot_theorem_hierarchy()
     
-    b64_deps = plot_theorem_dependency()
-    print(f"  viz_theorem_deps.png generated ({len(b64_deps)} chars)")
+    print("  [4/4] Repeated trials decay...")
+    b64_4 = plot_repeated_trials()
     
-    print("Done!")
+    print("\nAll visualizations saved as PNG files.")
+    print("  - freivalds_error_rate.png")
+    print("  - schwartz_zippel_zeros.png")
+    print("  - theorem_hierarchy.png")
+    print("  - repeated_trials.png")
+    
+    # Save base64 data for JSON packaging
+    with open('/workspace/request-project/viz_data.txt', 'w') as f:
+        f.write("VIZ1_START\n")
+        f.write(b64_1 + "\n")
+        f.write("VIZ1_END\n")
+        f.write("VIZ2_START\n")
+        f.write(b64_2 + "\n")
+        f.write("VIZ2_END\n")
+        f.write("VIZ3_START\n")
+        f.write(b64_3 + "\n")
+        f.write("VIZ3_END\n")
+        f.write("VIZ4_START\n")
+        f.write(b64_4 + "\n")
+        f.write("VIZ4_END\n")
