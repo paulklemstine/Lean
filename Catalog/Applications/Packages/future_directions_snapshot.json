@@ -57,10 +57,10 @@
       "Tropical"
     ],
     "priority_score": 0.87,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "69b261f0",
     "timestamp": "2026-05-14T16:03:53.858089+00:00"
   },
   {
@@ -1712,5 +1712,92 @@
     "source_exp_id": "8b829eb9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T14:28:58.207944+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "1. Extend Canonicalization to ACI (AC + Idempotence of min)",
+    "description": "**Hypothesis:** The `min` operation is idempotent (`min a a = a`), creating semantic equalities not captured by AC alone. A canonicalization procedure that also quotients by idempotence would handle a strictly larger fragment.\n\n**Proof Strategy:**\n- Replace multiset-based children lists with *sets* (deduplicated sorted lists) for `tmin` nodes.\n- After flattening and sorting, remove duplicates from `tmin` children.\n- Prove that this extended normalizer is sound and complete for the ACI congruence.\n- The key difficulty: idempotence interacts nontrivially with nested `add` subterms.\n\n**Cross-Domain Connections:** ACI normalization connects to lattice theory (min as meet) and to BDD/ZDD construction in Boolean function manipulation, where idempotent operations are canonicalized via hash-consin",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d4e55a6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:52:12.487513+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "2. Integrate Distributivity via Knuth–Bendix Completion",
+    "description": "**Hypothesis:** The full equational theory of `(ℝ, min, +)` includes distributivity `a + min(b, c) = min(a+b, a+c)`. A completion-based approach can extend the AC normalizer to handle this identity.\n\n**Proof Strategy:**\n- Define oriented rewrite rules for distributivity (e.g., always distribute `+` over `min`).\n- Prove termination using a suitable measure (e.g., number of `add`-above-`min` patterns).\n- Prove local confluence by analyzing critical pairs between AC rules and distributivity.\n- The canonical form after completion would be a \"sum of minima\" normal form, analogous to DNF in Boolean logic.\n\n**Cross-Domain Connections:** This connects to Gröbner basis theory for commutative algebra, where completion yields canonical polynomial representatives. In the tropical setting, the analogou",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d4e55a6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:52:12.507486+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "3. Build a Reflection Tactic Using `normalize_ca`",
+    "description": "**Hypothesis:** The canonical form theorem can be used to build a proof-producing tactic that automatically proves AC-equivalences of tropical expressions by computation.\n\n**Proof Strategy:**\n- Define a decidable `TropExpr` type with computable comparison (using rational approximations or exact rational arithmetic instead of `ℝ`).\n- Implement a `reflect` function that maps Lean expressions to `TropExpr`.\n- Use `normalize_ca_complete` as the reflection theorem: if `normalize_ca (reflect e₁) = normalize_ca (reflect e₂)` (checked by `native_decide`), then `e₁ = e₂`.\n- Package as a Lean 4 tactic `tropical_ac`.\n\n**Cross-Domain Connections:** This mirrors the `ring` tactic architecture (Horner normal forms for polynomial equality) and the `omega` tactic (Presburger arithmetic). A `tropical_ac` t",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d4e55a6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:52:12.526923+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "4. Define Certified Tropical Polynomial Normal Forms",
+    "description": "**Hypothesis:** Tropical polynomials `p(x₁,...,xₙ) = min(a₁ + c₁₁x₁ + ... + c₁ₙxₙ, ..., aₖ + cₖ₁x₁ + ... + cₖₙxₙ)` admit a canonical \"Newton polytope\" representation that extends the AC normal form.\n\n**Proof Strategy:**\n- Define a `TropPoly` type as a sorted list of (coefficient vector, constant) pairs.\n- Normalize by sorting lexicographically and removing dominated terms (those never achieving the minimum).\n- Prove soundness and completeness for the full tropical polynomial identity `∀ x, p(x) = q(x)`.\n- This requires the geometric insight that tropical polynomial identity is equivalent to Newton polytope equality.\n\n**Cross-Domain Connections:** Newton polytopes appear in algebraic geometry (toric varieties), optimization (linear programming duality), and phylogenetics (tree space geometr",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d4e55a6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:52:12.548248+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "5. Connect Canonical Tropical Syntax to Shortest-Path Circuit Extraction",
+    "description": "**Hypothesis:** Tropical expressions encode shortest-path computations in weighted graphs. The AC canonical form corresponds to a canonical circuit representation for shortest-path programs, enabling certified common-subexpression elimination.\n\n**Proof Strategy:**\n- Define a graph semantics for `TropExpr`: `tmin` is path choice (take the shorter), `add` is path concatenation (sum weights).\n- Show that AC-equivalent expressions compute the same shortest-path function.\n- Prove that the canonical form minimizes the number of distinct subexpressions (up to AC), enabling optimal memoization.\n- Connect to dynamic programming: the canonical form is a canonical DP table.\n\n**Cross-Domain Connections:** This links to circuit complexity (VP vs. VNP in the tropical semiring), compiler optimization (CS",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0d4e55a6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:52:12.567136+00:00"
   }
 ]
