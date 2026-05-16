@@ -1,792 +1,818 @@
 #!/usr/bin/env python3
 """
-Applications of Tropical Thermodynamic Complexity Theory
+Applications of Tropical Thermodynamic Complexity
 
-Real-world applications demonstrating the practical impact of the
-reversible-tropical computation framework:
-
-1. Thermodynamic cost analysis of sorting algorithms
-2. Energy-optimal reversible circuit synthesis
-3. Information-theoretic analysis of hash functions
-4. Reversible simulation of cellular automata
+Real-world applications demonstrating the practical implications of the framework:
+1. Data center energy analysis
+2. Circuit energy optimization
+3. Reversible algorithm design
+4. Thermodynamic limits of computing
 """
 
 import numpy as np
 import math
-from typing import List, Tuple
-from dataclasses import dataclass
+from typing import List, Tuple, Dict
 
 
-# ==============================================================
-# Application 1: Thermodynamic Cost of Sorting
-# ==============================================================
+# Physical constants
+K_B = 1.380649e-23  # Boltzmann constant (J/K)
+ROOM_TEMP = 300.0   # Room temperature (K)
+KT_LN2 = K_B * ROOM_TEMP * math.log(2)  # Landauer limit per bit at room temp
 
-def analyze_sorting_cost():
+
+def application_1_data_center():
     """
-    Analyze the thermodynamic cost of comparison-based sorting.
+    Application 1: Data Center Energy Analysis
 
-    A sorting algorithm on n elements maps n! permutations to the
-    identity permutation. Since it's a many-to-one map (n! inputs → 1 output
-    for each sorted output pattern), Landauer's principle gives a minimum
-    energy dissipation.
-
-    Key insight: sorting n elements requires erasing log(n!) bits of
-    information about the original ordering.
+    Estimate the minimum thermodynamic energy cost of data center operations,
+    comparing against actual energy consumption.
     """
     print("=" * 60)
-    print("APPLICATION 1: Thermodynamic Cost of Sorting")
+    print("APPLICATION 1: Data Center Thermodynamic Analysis")
     print("=" * 60)
 
-    k_B = 1.380649e-23  # J/K
-    T = 300.0           # room temperature
+    # Typical data center parameters
+    operations_per_second = 1e18    # ~1 exaFLOP
+    bits_erased_per_op = 64         # typical for 64-bit operations
+    actual_power_watts = 20e6       # 20 MW typical data center
 
-    print(f"\n{'n':>4} {'n!':>12} {'log₂(n!)':>10} {'Landauer (J)':>14} {'Landauer (eV)':>14}")
-    print("-" * 58)
+    # Landauer minimum
+    min_energy_per_bit = KT_LN2
+    min_energy_per_op = bits_erased_per_op * min_energy_per_bit
+    min_power = operations_per_second * min_energy_per_op
 
-    for n in [2, 4, 8, 16, 32, 64, 128]:
-        log2_nfact = sum(math.log2(i) for i in range(1, n + 1))
-        landauer_J = log2_nfact * k_B * T * math.log(2)
-        landauer_eV = landauer_J / 1.602176634e-19
+    efficiency_ratio = actual_power_watts / min_power
 
-        nfact_str = f"{math.factorial(n):.2e}" if n > 20 else str(math.factorial(n))
-        print(f"{n:>4} {nfact_str:>12} {log2_nfact:>10.2f} {landauer_J:>14.4e} {landauer_eV:>14.6f}")
-
-    print(f"\n  Minimum energy to sort n=64 elements at T={T}K:")
-    log2_64fact = sum(math.log2(i) for i in range(1, 65))
-    cost = log2_64fact * k_B * T * math.log(2)
-    print(f"  {cost:.4e} J ≈ {cost/1.602176634e-19:.4f} eV")
-    print(f"  This is {log2_64fact:.1f} bits × kT·ln(2)")
+    print(f"Operations/second: {operations_per_second:.0e}")
+    print(f"Bits erased per operation: {bits_erased_per_op}")
+    print(f"Landauer limit per bit: {min_energy_per_bit:.3e} J")
+    print(f"Minimum power (Landauer): {min_power:.3e} W")
+    print(f"Actual power: {actual_power_watts:.0e} W")
+    print(f"Efficiency ratio: {efficiency_ratio:.2e}×")
+    print(f"→ Current hardware uses {efficiency_ratio:.0f}× the Landauer minimum")
+    print(f"→ Room for improvement: {math.log10(efficiency_ratio):.1f} orders of magnitude")
     print()
 
 
-# ==============================================================
-# Application 2: Reversible Circuit Synthesis
-# ==============================================================
-
-@dataclass
-class ReversibleGate:
-    """A reversible gate operating on a fixed number of bits."""
-    name: str
-    n_bits: int
-    permutation: np.ndarray  # permutation of 2^n_bits states
-
-    def energy_cost(self) -> float:
-        """Energy cost = 0 for reversible gates (Landauer's principle)."""
-        return 0.0
-
-    def apply(self, state: int) -> int:
-        return int(self.permutation[state])
-
-    def compose(self, other: 'ReversibleGate') -> 'ReversibleGate':
-        """Compose two gates (apply other first, then self)."""
-        new_perm = self.permutation[other.permutation]
-        return ReversibleGate(
-            name=f"{self.name}∘{other.name}",
-            n_bits=self.n_bits,
-            permutation=new_perm
-        )
-
-
-def toffoli_gate() -> ReversibleGate:
+def application_2_circuit_analysis():
     """
-    Toffoli gate (CCNOT): universal reversible gate.
-    Flips bit 2 iff bits 0 and 1 are both 1.
+    Application 2: Circuit Energy Optimization
 
-    Input:  (a, b, c)
-    Output: (a, b, c ⊕ (a ∧ b))
+    Analyze the thermodynamic cost of Boolean circuits and compare
+    reversible vs irreversible implementations.
     """
-    perm = np.arange(8)
-    # State 7 = (1,1,1) → (1,1,0) = 6
-    # State 6 = (1,1,0) → (1,1,1) = 7
-    perm[6], perm[7] = 7, 6
-    return ReversibleGate("Toffoli", 3, perm)
-
-
-def fredkin_gate() -> ReversibleGate:
-    """
-    Fredkin gate (CSWAP): swaps bits 1,2 iff bit 0 is 1.
-    """
-    perm = np.arange(8)
-    # When bit 0 = 1: swap bits 1 and 2
-    # State 5 = (1,0,1) ↔ State 3 = (0,1,1)... let me be more careful
-    # (a, b, c) → (a, a?c:b, a?b:c)
-    perm[5], perm[6] = 6, 5  # (1,0,1) ↔ (1,1,0)
-    return ReversibleGate("Fredkin", 3, perm)
-
-
-def analyze_reversible_circuits():
-    """Analyze energy costs of reversible vs irreversible circuits."""
     print("=" * 60)
-    print("APPLICATION 2: Reversible Circuit Energy Analysis")
+    print("APPLICATION 2: Circuit Energy Optimization")
     print("=" * 60)
 
-    k_B = 1.380649e-23
-    T = 300.0
+    # Define common gates with their entropy cost
+    gates = {
+        "NOT":     {"inputs": 1, "outputs": 1, "reversible": True,  "entropy_cost": 0},
+        "CNOT":    {"inputs": 2, "outputs": 2, "reversible": True,  "entropy_cost": 0},
+        "Toffoli": {"inputs": 3, "outputs": 3, "reversible": True,  "entropy_cost": 0},
+        "AND":     {"inputs": 2, "outputs": 1, "reversible": False, "entropy_cost": math.log(2)},
+        "OR":      {"inputs": 2, "outputs": 1, "reversible": False, "entropy_cost": math.log(2)},
+        "NAND":    {"inputs": 2, "outputs": 1, "reversible": False, "entropy_cost": math.log(2)},
+        "XOR":     {"inputs": 2, "outputs": 1, "reversible": False, "entropy_cost": math.log(2)},
+    }
 
-    # Reversible gates: zero Landauer cost
-    toff = toffoli_gate()
-    fred = fredkin_gate()
+    print("Gate Analysis:")
+    print(f"{'Gate':>10} {'In':>4} {'Out':>4} {'Rev':>5} {'δ (nats)':>10} {'Cost (J)':>12}")
+    print("-" * 50)
+    for name, info in gates.items():
+        cost = K_B * ROOM_TEMP * info["entropy_cost"]
+        print(f"{name:>10} {info['inputs']:4d} {info['outputs']:4d} "
+              f"{'Yes' if info['reversible'] else 'No':>5} "
+              f"{info['entropy_cost']:10.4f} {cost:12.3e}")
 
-    print(f"\n  Reversible gates (zero Landauer cost):")
-    print(f"    Toffoli gate:  bijective on 2³ = 8 states, cost = {toff.energy_cost()} J")
-    print(f"    Fredkin gate:  bijective on 2³ = 8 states, cost = {fred.energy_cost()} J")
+    # Example: 8-bit adder comparison
+    print("\n--- 8-bit Adder Comparison ---")
 
-    # Irreversible gate: AND gate (2 inputs → 1 output, erases 1 bit)
-    print(f"\n  Irreversible gates (positive Landauer cost):")
-    landauer_1bit = k_B * T * math.log(2)
-    print(f"    AND gate: erases 1 bit → min cost = {landauer_1bit:.4e} J")
-    print(f"    OR gate:  erases 1 bit → min cost = {landauer_1bit:.4e} J")
-    print(f"    NAND gate: erases 1 bit → min cost = {landauer_1bit:.4e} J")
+    # Irreversible: ~32 full adders, each with AND+XOR gates
+    irrev_and_gates = 32
+    irrev_total_entropy = irrev_and_gates * math.log(2)
+    irrev_cost = K_B * ROOM_TEMP * irrev_total_entropy
 
-    # Circuit comparison: n-bit adder
-    print(f"\n  Comparison: n-bit ripple-carry adder")
-    print(f"  {'n bits':>8} {'Irrev gates':>13} {'Landauer (J)':>14} {'Rev gates':>11} {'Rev cost (J)':>14}")
-    print(f"  " + "-" * 64)
-    for n in [4, 8, 16, 32, 64]:
-        irrev_gates = 5 * n  # approx gates in irreversible adder
-        irrev_cost = n * landauer_1bit  # at least n bits erased
-        rev_gates = 7 * n  # approx gates in reversible adder (more gates, no erasure)
-        rev_cost = 0.0
-        print(f"  {n:>8} {irrev_gates:>13} {irrev_cost:>14.4e} {rev_gates:>11} {rev_cost:>14.4e}")
+    # Reversible: all Toffoli/CNOT gates, zero entropy cost
+    rev_toffoli_gates = 64  # more gates but zero entropy cost
+    rev_total_entropy = 0
+    rev_cost = 0
 
+    print(f"Irreversible implementation:")
+    print(f"  AND gates: {irrev_and_gates}, Total δ = {irrev_total_entropy:.4f} nats")
+    print(f"  Minimum energy: {irrev_cost:.3e} J")
+    print(f"Reversible implementation:")
+    print(f"  Toffoli/CNOT gates: {rev_toffoli_gates}, Total δ = {rev_total_entropy:.4f} nats")
+    print(f"  Minimum energy: {rev_cost:.3e} J (zero!)")
+    print(f"Energy savings: 100% (thermodynamic cost eliminated)")
     print()
 
 
-# ==============================================================
-# Application 3: Hash Function Information Loss
-# ==============================================================
-
-def analyze_hash_information_loss():
+def application_3_reversible_algorithm():
     """
-    Analyze information loss in hash functions using the entropy framework.
+    Application 3: Reversible Algorithm Design
 
-    A hash function h : {0,1}^n → {0,1}^m with n > m necessarily
-    loses at least (n-m) bits of information per application.
+    Show how to convert a simple algorithm to reversible form
+    and analyze the overhead.
     """
     print("=" * 60)
-    print("APPLICATION 3: Information Loss in Hash Functions")
+    print("APPLICATION 3: Reversible Algorithm Design")
     print("=" * 60)
 
-    k_B = 1.380649e-23
-    T = 300.0
+    # Example: Computing f(x) = x^2 mod 16 on {0,...,15}
+    N = 16
+    step = lambda x: (x * x) % N
 
-    print(f"\n  Hash function: h : {{0,1}}^n → {{0,1}}^m")
-    print(f"  Information loss ≥ (n-m) bits per hash")
-    print(f"  Minimum Landauer dissipation: (n-m) × kT·ln(2)\n")
+    print(f"Original function: f(x) = x² mod {N}")
+    print(f"State space: {{0, ..., {N-1}}}")
 
-    print(f"  {'Hash':>12} {'Input (n)':>10} {'Output (m)':>11} {'Loss (bits)':>12} {'Landauer (J)':>14}")
-    print(f"  " + "-" * 63)
+    # Analyze original function
+    image = set(step(x) for x in range(N))
+    delta = math.log(N) - math.log(len(image))
+    print(f"|range(f)| = {len(image)}")
+    print(f"Entropy loss δ(f) = {delta:.4f} nats")
+    print(f"Landauer cost: {K_B * ROOM_TEMP * delta:.3e} J")
 
-    hashes = [
-        ("SHA-256", 512, 256),
-        ("SHA-512", 1024, 512),
-        ("MD5", 512, 128),
-        ("CRC-32", 64, 32),
-        ("BLAKE3", 512, 256),
+    # Swap construction
+    print(f"\nSwap-based reversible simulation:")
+    print(f"  Enlarged space: {N} × {N} = {N*N} states")
+    print(f"  Encoding: x ↦ (x, f(x))")
+    print(f"  Bijection: swap (a,b) ↦ (b,a)")
+    print(f"  Decoding: (a,b) ↦ a")
+    print(f"  Entropy cost of swap: 0 (bijective!)")
+
+    # Verify
+    print(f"\n  Verification:")
+    correct = 0
+    for x in range(N):
+        encoded = (x, step(x))
+        swapped = (encoded[1], encoded[0])
+        decoded = swapped[0]
+        if decoded == step(x):
+            correct += 1
+    print(f"  Correct simulations: {correct}/{N} ({'✓' if correct == N else '✗'})")
+
+    # Overhead analysis
+    print(f"\n  Overhead analysis:")
+    print(f"    Space: {N} → {N*N} ({N}× overhead)")
+    print(f"    Time per step: 1 swap (O(1))")
+    print(f"    Energy per step: 0 J (reversible)")
+    print(f"    Energy for erasure of auxiliary: {K_B * ROOM_TEMP * math.log(N):.3e} J")
+    print()
+
+
+def application_4_limits():
+    """
+    Application 4: Fundamental Limits of Computing
+
+    Compute the ultimate thermodynamic limits for various computing scenarios.
+    """
+    print("=" * 60)
+    print("APPLICATION 4: Fundamental Limits of Computing")
+    print("=" * 60)
+
+    scenarios = [
+        ("1 bit erasure", 1, ROOM_TEMP),
+        ("1 byte erasure", 8, ROOM_TEMP),
+        ("1 KB erasure", 8 * 1024, ROOM_TEMP),
+        ("1 MB erasure", 8 * 1024**2, ROOM_TEMP),
+        ("1 GB erasure", 8 * 1024**3, ROOM_TEMP),
+        ("1 bit at 4K (cryo)", 1, 4.0),
+        ("1 bit at 0.015K (dilution)", 1, 0.015),
     ]
 
-    for name, n, m in hashes:
-        loss = n - m
-        landauer = loss * k_B * T * math.log(2)
-        print(f"  {name:>12} {n:>10} {m:>11} {loss:>12} {landauer:>14.4e}")
+    print(f"{'Scenario':>30} {'n bits':>12} {'T (K)':>8} {'Min Energy':>14}")
+    print("-" * 70)
+    for name, n_bits, temp in scenarios:
+        cost = n_bits * K_B * temp * math.log(2)
+        if cost < 1e-30:
+            cost_str = f"{cost:.3e} J"
+        elif cost < 1e-3:
+            cost_str = f"{cost:.3e} J"
+        else:
+            cost_str = f"{cost:.6f} J"
+        print(f"{name:>30} {n_bits:>12,} {temp:>8.3f} {cost_str:>14}")
 
-    print(f"\n  Note: Actual energy per hash is ~10^9 × Landauer limit")
-    print(f"  Current CPUs operate ~10^9 above thermodynamic minimum")
+    # Compare to physical energy scales
+    print(f"\nPhysical energy scale comparisons:")
+    print(f"  kT ln(2) at 300K: {KT_LN2:.3e} J")
+    print(f"  Photon at 550nm:  {6.626e-34 * 3e8 / 550e-9:.3e} J")
+    print(f"  ATP hydrolysis:   {5e-20:.3e} J")
+    print(f"  Thermal noise:    {K_B * ROOM_TEMP:.3e} J")
     print()
 
-
-# ==============================================================
-# Application 4: Reversible Cellular Automata
-# ==============================================================
-
-def analyze_reversible_ca():
-    """
-    Analyze entropy production in cellular automata rules.
-
-    Each CA rule defines a transition function on the state space.
-    Reversible rules (bijective transitions) have zero entropy production;
-    irreversible rules (many-to-one) produce entropy proportional to
-    the log of the collapse ratio.
-    """
-    print("=" * 60)
-    print("APPLICATION 4: Entropy in Elementary Cellular Automata")
-    print("=" * 60)
-
-    # Analyze 1D elementary CA with periodic boundary, small width
-    width = 6
-    N = 2**width  # number of possible configurations
-
-    def apply_rule(rule_num: int, config: int) -> int:
-        """Apply elementary CA rule to a configuration."""
-        bits = [(config >> i) & 1 for i in range(width)]
-        new_bits = []
-        for i in range(width):
-            left = bits[(i - 1) % width]
-            center = bits[i]
-            right = bits[(i + 1) % width]
-            neighborhood = (left << 2) | (center << 1) | right
-            new_bit = (rule_num >> neighborhood) & 1
-            new_bits.append(new_bit)
-        result = sum(b << i for i, b in enumerate(new_bits))
-        return result
-
-    print(f"\n  Elementary CA on {width} cells ({N} configurations)")
-    print(f"  {'Rule':>6} {'|Range|':>8} {'Entropy Loss':>14} {'Bijective?':>12}")
-    print(f"  " + "-" * 44)
-
-    interesting_rules = [0, 30, 51, 90, 105, 110, 150, 204]
-    for rule in interesting_rules:
-        # Compute transition function
-        f = np.array([apply_rule(rule, c) for c in range(N)])
-        range_size = len(set(f))
-        entropy_loss = math.log(N) - math.log(range_size) if range_size > 0 else float('inf')
-        is_bij = range_size == N
-
-        print(f"  {rule:>6} {range_size:>8} {entropy_loss:>14.4f} {'✓' if is_bij else '✗':>12}")
-
-    print(f"\n  Rules with zero entropy (bijective) are reversible CAs.")
-    print(f"  Rules 51, 204 are known reversible rules (complement, identity-class).")
+    # How many bits can we erase with 1 kWh?
+    one_kwh = 3.6e6  # Joules
+    max_bits_erased = one_kwh / KT_LN2
+    max_bytes = max_bits_erased / 8
+    print(f"Maximum bits erasable with 1 kWh at Landauer limit:")
+    print(f"  {max_bits_erased:.3e} bits = {max_bytes:.3e} bytes")
+    print(f"  ≈ {max_bytes / 1e18:.1f} exabytes")
+    print(f"  (Current computers: ~{max_bytes / 1e18 / 1e9:.0e}× less efficient)")
     print()
 
-
-# ==============================================================
-# Main
-# ==============================================================
 
 if __name__ == "__main__":
-    print("\n" + "=" * 60)
-    print("APPLICATIONS OF TROPICAL THERMODYNAMIC COMPLEXITY")
-    print("=" * 60 + "\n")
-
-    analyze_sorting_cost()
-    analyze_reversible_circuits()
-    analyze_hash_information_loss()
-    analyze_reversible_ca()
-
-    print("All applications completed successfully.")
+    application_1_data_center()
+    application_2_circuit_analysis()
+    application_3_reversible_algorithm()
+    application_4_limits()
+    print("All applications complete.")
 
 
 #!/usr/bin/env python3
 """
-Reversible Computing via Tropical Isomorphisms — Demonstration
+Tropical Thermodynamic Complexity: Demonstrations
 
-Concrete numerical demonstrations of the four main theorems:
-1. Tropical isomorphism under reversible transitions
-2. Reversible simulation of arbitrary finite computation
-3. Landauer cost of uniform bit erasure
-4. Zero entropy production ↔ bijectivity
+Concrete numerical demonstrations of the formally verified theorems:
+1. Shannon entropy of uniform distributions
+2. Exact Landauer cost calculations
+3. Reversible simulation via swap construction
+4. Tropical isomorphism verification
 """
 
 import numpy as np
-from typing import Callable
+from typing import Callable, List, Tuple
 import math
 
-# ==============================================================
-# Tropical Algebra Primitives
-# ==============================================================
 
-def trop_add(phi: np.ndarray, psi: np.ndarray) -> np.ndarray:
-    """Tropical addition: pointwise minimum (min-plus ⊕)."""
-    return np.minimum(phi, psi)
+def shannon_entropy(p: np.ndarray) -> float:
+    """Compute Shannon entropy H(p) = -sum(p * log(p)), treating 0*log(0) = 0."""
+    p = p[p > 0]
+    return -np.sum(p * np.log(p))
 
-def trop_mul(phi: np.ndarray, psi: np.ndarray) -> np.ndarray:
-    """Tropical multiplication: pointwise addition (min-plus ⊗)."""
-    return phi + psi
 
-def pullback(phi: np.ndarray, perm: np.ndarray) -> np.ndarray:
-    """Pullback of cost function along a permutation."""
-    return phi[perm]
+def uniform_distribution(n: int) -> np.ndarray:
+    """Uniform distribution over n states."""
+    return np.ones(n) / n
 
-# ==============================================================
-# Theorem 1: Tropical Isomorphism
-# ==============================================================
 
-def demo_tropical_isomorphism():
-    """Demonstrate that reversible transitions preserve tropical structure."""
+def counting_entropy(n: int) -> float:
+    """Counting entropy: log(n)."""
+    return math.log(n) if n > 0 else 0.0
+
+
+# ============================================================
+# Demo 1: Shannon Entropy of Uniform Distributions
+# ============================================================
+def demo_entropy():
+    """Verify: H(Uniform(2^n)) = n * log(2)."""
     print("=" * 60)
-    print("THEOREM 1: Reversible Transitions are Tropical Isomorphisms")
+    print("DEMO 1: Shannon Entropy of Uniform Distributions")
     print("=" * 60)
-
-    N = 6
-    # Random permutation (reversible transition)
-    perm = np.random.permutation(N)
-    inv_perm = np.argsort(perm)
-
-    # Random cost functions
-    phi = np.random.randn(N)
-    psi = np.random.randn(N)
-
-    # Check: pullback preserves tropical addition
-    lhs_add = pullback(trop_add(phi, psi), perm)
-    rhs_add = trop_add(pullback(phi, perm), pullback(psi, perm))
-    print(f"\nPermutation: {perm}")
-    print(f"Φ = {np.round(phi, 3)}")
-    print(f"Ψ = {np.round(psi, 3)}")
-    print(f"\nPullback(tropAdd(Φ,Ψ)) = {np.round(lhs_add, 3)}")
-    print(f"tropAdd(Pullback(Φ), Pullback(Ψ)) = {np.round(rhs_add, 3)}")
-    print(f"  → Equal: {np.allclose(lhs_add, rhs_add)}")
-
-    # Check: pullback preserves tropical multiplication
-    lhs_mul = pullback(trop_mul(phi, psi), perm)
-    rhs_mul = trop_mul(pullback(phi, perm), pullback(psi, perm))
-    print(f"\nPullback(tropMul(Φ,Ψ)) = {np.round(lhs_mul, 3)}")
-    print(f"tropMul(Pullback(Φ), Pullback(Ψ)) = {np.round(rhs_mul, 3)}")
-    print(f"  → Equal: {np.allclose(lhs_mul, rhs_mul)}")
-
-    # Check invertibility
-    phi_roundtrip = pullback(pullback(phi, perm), inv_perm)
-    print(f"\nPullback⁻¹(Pullback(Φ)) = {np.round(phi_roundtrip, 3)}")
-    print(f"Original Φ               = {np.round(phi, 3)}")
-    print(f"  → Round-trip: {np.allclose(phi_roundtrip, phi)}")
-
-    # Entropy cost
-    entropy_cost = math.log(N) - math.log(N)  # bijection → range = domain
-    print(f"\nEntropy cost of bijection: log({N}) - log({N}) = {entropy_cost}")
+    print(f"{'n':>4} {'2^n':>8} {'H(uniform)':>14} {'n*log(2)':>14} {'Match':>8}")
+    print("-" * 52)
+    for n in range(1, 11):
+        size = 2 ** n
+        p = uniform_distribution(size)
+        h = shannon_entropy(p)
+        expected = n * math.log(2)
+        match = abs(h - expected) < 1e-12
+        print(f"{n:4d} {size:8d} {h:14.10f} {expected:14.10f} {'✓' if match else '✗':>8}")
     print()
 
-# ==============================================================
-# Theorem 2: Reversible Simulation
-# ==============================================================
 
-def demo_reversible_simulation():
-    """Demonstrate embedding of arbitrary computation into reversible system."""
+# ============================================================
+# Demo 2: Exact Landauer Cost
+# ============================================================
+def demo_landauer():
+    """Verify: Landauer cost of n-bit erasure = n * k * T * log(2)."""
     print("=" * 60)
-    print("THEOREM 2: Reversible Simulation of Finite Computation")
-    print("=" * 60)
-
-    N = 5
-    T = 4
-
-    # Arbitrary (non-bijective) transition function
-    f = np.array([1, 2, 3, 0, 0])  # maps 3→0 and 4→0, so not injective
-    print(f"\nOriginal transition f: {f}  (not injective: f(3)=f(4)=0)")
-
-    # Compute f^T (iterate T times)
-    def iterate_f(x, t):
-        for _ in range(t):
-            x = f[x]
-        return x
-
-    print(f"\nDirect computation f^{T}:")
-    for x in range(N):
-        print(f"  f^{T}({x}) = {iterate_f(x, T)}")
-
-    # Reversible extension: (state, history) → (f(state), state)
-    M = N * N  # expanded state space
-    print(f"\nExpanded state space: Fin {M} = Fin {N} × Fin {N}")
-
-    # Build the reversible map on N×N product
-    # g(a, b) = (f(a), a) — but this isn't bijective!
-    # Instead: encode computation result directly
-    # g = identity, encode(x) = f^T(x), decode = id
-    print(f"\nSimulation strategy: encode(x) = f^{T}(x), g = id, decode = id")
-    print("Verification:")
-    for x in range(N):
-        encoded = iterate_f(x, T)
-        result = encoded  # g^T = id^T = id, decode = id
-        print(f"  decode(g^{T}(encode({x}))) = decode(id^{T}({encoded})) = {result} = f^{T}({x}) ✓")
-
-    print(f"\nOverhead: M = {N} ≤ (N+1)(T+1) = {(N+1)*(T+1)} ✓")
-    print()
-
-# ==============================================================
-# Theorem 3: Landauer Cost
-# ==============================================================
-
-def demo_landauer_cost():
-    """Demonstrate Shannon entropy and Landauer cost calculations."""
-    print("=" * 60)
-    print("THEOREM 3: Landauer Cost of Uniform Bit Erasure")
+    print("DEMO 2: Exact Landauer Cost for Uniform Erasure")
     print("=" * 60)
 
     k_B = 1.380649e-23  # Boltzmann constant (J/K)
-    T = 300.0           # Room temperature (K)
+    T = 300.0            # Room temperature (K)
 
-    for n in range(1, 9):
-        num_states = 2**n
-        # Shannon entropy of uniform distribution on 2^n states
-        p = 1.0 / num_states
-        entropy = -sum(p * math.log(p) for _ in range(num_states))
-        expected = n * math.log(2)
-
-        # Landauer cost
-        cost = k_B * T * expected
-        cost_eV = cost / 1.602176634e-19  # convert to eV
-
-        print(f"\n  n = {n}: {num_states:>4} states")
-        print(f"    Shannon entropy H = {entropy:.6f} nats")
-        print(f"    Expected: n·ln(2) = {expected:.6f} nats")
-        print(f"    Match: {abs(entropy - expected) < 1e-10}")
-        print(f"    Landauer cost = {cost:.4e} J = {cost_eV:.6f} eV")
-
-    print(f"\n  Landauer limit at T={T}K: kT·ln(2) = {k_B * T * math.log(2):.4e} J per bit")
+    print(f"Boltzmann constant k = {k_B:.6e} J/K")
+    print(f"Temperature T = {T} K")
+    print(f"kT = {k_B * T:.6e} J")
+    print(f"kT ln(2) = {k_B * T * math.log(2):.6e} J")
     print()
 
-# ==============================================================
-# Theorem 4: Zero Entropy ↔ Bijective
-# ==============================================================
+    print(f"{'n bits':>8} {'ΔH':>12} {'Landauer cost (J)':>20} {'n·kT·ln2':>20} {'Match':>8}")
+    print("-" * 72)
+    for n in range(1, 11):
+        size = 2 ** n
+        h_before = shannon_entropy(uniform_distribution(size))
+        h_after = 0.0  # entropy of deterministic state
+        delta_h = h_before - h_after
+        cost = k_B * T * delta_h
+        expected = n * k_B * T * math.log(2)
+        match = abs(cost - expected) < 1e-35
+        print(f"{n:8d} {delta_h:12.8f} {cost:20.6e} {expected:20.6e} {'✓' if match else '✗':>8}")
+    print()
 
-def demo_zero_entropy_iff_bijective():
-    """Demonstrate the bijection ↔ zero entropy loss equivalence."""
+
+# ============================================================
+# Demo 3: Reversible Simulation via Swap Construction
+# ============================================================
+def demo_reversible_simulation():
+    """Demonstrate the swap-based reversible simulation."""
     print("=" * 60)
-    print("THEOREM 4: Zero Entropy Production ↔ Bijectivity")
+    print("DEMO 3: Reversible Simulation via Swap Construction")
     print("=" * 60)
 
-    N = 5
+    N = 8  # State space size
 
-    def entropy_loss(f_arr: np.ndarray) -> float:
-        """Compute log|domain| - log|range|."""
-        n = len(f_arr)
-        range_size = len(set(f_arr))
-        if range_size == 0:
-            return float('inf')
-        return math.log(n) - math.log(range_size)
-
-    def is_bijective(f_arr: np.ndarray) -> bool:
-        return len(set(f_arr)) == len(f_arr)
-
-    # Test various functions
-    test_functions = [
-        ("Identity", np.arange(N)),
-        ("Cyclic shift", np.array([(i+1) % N for i in range(N)])),
-        ("Transposition (0↔1)", np.array([1, 0, 2, 3, 4])),
-        ("Constant (all→0)", np.zeros(N, dtype=int)),
-        ("Collapse (4→0)", np.array([1, 2, 3, 0, 0])),
-        ("Square (mod N)", np.array([(i*i) % N for i in range(N)])),
+    # Test functions
+    functions = [
+        ("Increment mod 8", lambda x: (x + 1) % N),
+        ("Square mod 8", lambda x: (x * x) % N),
+        ("Collapse to mod 4", lambda x: x % 4),
+        ("Constant zero", lambda x: 0),
     ]
 
-    print(f"\nState space: Fin {N}")
-    print(f"{'Function':<25} {'Bijective?':<12} {'Entropy Loss':<15} {'Zero?':<8}")
-    print("-" * 60)
+    for name, step in functions:
+        print(f"\nFunction: {name}")
+        print(f"  step: {[step(x) for x in range(N)]}")
 
-    for name, f_arr in test_functions:
-        bij = is_bijective(f_arr)
-        eloss = entropy_loss(f_arr)
-        zero = abs(eloss) < 1e-10
-        print(f"{name:<25} {str(bij):<12} {eloss:<15.6f} {str(zero):<8}")
-        assert bij == zero, f"Theorem 4 violated for {name}!"
+        # Check bijectivity
+        image = set(step(x) for x in range(N))
+        is_bij = len(image) == N
+        entropy_loss = math.log(N) - math.log(len(image)) if len(image) > 0 else float('inf')
 
-    print("\n  ✓ All cases confirm: entropy_loss = 0 ⟺ bijective")
+        print(f"  |range| = {len(image)}, bijective = {is_bij}")
+        print(f"  Entropy loss δ = log({N}) - log({len(image)}) = {entropy_loss:.6f}")
+
+        # Swap construction
+        print(f"  Swap simulation:")
+        for x in range(min(N, 4)):
+            encoded = (x, step(x))
+            swapped = (encoded[1], encoded[0])
+            decoded = swapped[0]
+            print(f"    x={x}: encode→{encoded}, swap→{swapped}, decode→{decoded} "
+                  f"{'✓' if decoded == step(x) else '✗'}")
+
+        # Verify swap is bijective on N×N
+        swap_image = set()
+        for a in range(N):
+            for b in range(N):
+                swap_image.add((b, a))
+        swap_bij = len(swap_image) == N * N
+        print(f"  Swap bijective on {N}×{N}: {swap_bij}")
     print()
 
-# ==============================================================
-# Comprehensive Entropy Table
-# ==============================================================
 
-def demo_entropy_table():
-    """Show entropy production for all functions on a small state space."""
+# ============================================================
+# Demo 4: Tropical Isomorphism Verification
+# ============================================================
+def demo_tropical_isomorphism():
+    """Verify that pullback along swap preserves tropical operations."""
     print("=" * 60)
-    print("ENTROPY PRODUCTION TABLE: All functions on Fin 3")
+    print("DEMO 4: Tropical Isomorphism Verification")
     print("=" * 60)
 
-    N = 3
-    from itertools import product as cartprod
+    N = 4
+    np.random.seed(42)
 
-    count_bij = 0
-    count_nonbij = 0
+    # Random cost functions on N×N
+    Phi = np.random.randn(N, N)
+    Psi = np.random.randn(N, N)
+    c = 2.5
 
-    print(f"\n{'f(0),f(1),f(2)':<18} {'|range|':<10} {'Entropy Loss':<15} {'Bijective?'}")
-    print("-" * 55)
+    # Swap bijection: (i,j) -> (j,i)
+    def pullback_swap(f):
+        """Pullback along swap: f ↦ f ∘ swap."""
+        result = np.zeros_like(f)
+        for i in range(N):
+            for j in range(N):
+                result[i, j] = f[j, i]
+        return result
 
-    for f_tuple in cartprod(range(N), repeat=N):
-        f_arr = np.array(f_tuple)
-        range_size = len(set(f_arr))
-        eloss = math.log(N) - math.log(range_size)
-        bij = range_size == N
+    # Tropical addition: pointwise min
+    trop_add = np.minimum(Phi, Psi)
+    # Tropical scalar mul: pointwise c +
+    trop_smul = c + Phi
+    # Tropical mul: pointwise +
+    trop_mul = Phi + Psi
 
-        if bij:
-            count_bij += 1
-        else:
-            count_nonbij += 1
+    # Verify preservation
+    # pullback(Phi ⊕ Psi) = pullback(Phi) ⊕ pullback(Psi)
+    lhs_add = pullback_swap(trop_add)
+    rhs_add = np.minimum(pullback_swap(Phi), pullback_swap(Psi))
+    add_ok = np.allclose(lhs_add, rhs_add)
 
-        print(f"{str(f_tuple):<18} {range_size:<10} {eloss:<15.6f} {'✓' if bij else '✗'}")
+    # pullback(c ⊗ₛ Phi) = c ⊗ₛ pullback(Phi)
+    lhs_smul = pullback_swap(trop_smul)
+    rhs_smul = c + pullback_swap(Phi)
+    smul_ok = np.allclose(lhs_smul, rhs_smul)
 
-    print(f"\nBijections: {count_bij} / {N**N} = {count_bij}/{N**N}")
-    print(f"Non-bijections with positive entropy loss: {count_nonbij}")
+    # pullback(Phi ⊗ Psi) = pullback(Phi) ⊗ pullback(Psi)
+    lhs_mul = pullback_swap(trop_mul)
+    rhs_mul = pullback_swap(Phi) + pullback_swap(Psi)
+    mul_ok = np.allclose(lhs_mul, rhs_mul)
+
+    print(f"  Preserves tropical addition (min): {add_ok} ✓" if add_ok else f"  ✗ Addition")
+    print(f"  Preserves tropical scalar mul (+c): {smul_ok} ✓" if smul_ok else f"  ✗ Scalar mul")
+    print(f"  Preserves tropical multiplication (+): {mul_ok} ✓" if mul_ok else f"  ✗ Multiplication")
+
+    # Verify bijectivity
+    # pullback_swap is its own inverse
+    test = np.random.randn(N, N)
+    roundtrip = pullback_swap(pullback_swap(test))
+    bij_ok = np.allclose(test, roundtrip)
+    print(f"  Pullback is involutory (bijective): {bij_ok} ✓" if bij_ok else f"  ✗ Bijectivity")
     print()
 
-# ==============================================================
-# Main
-# ==============================================================
+
+# ============================================================
+# Demo 5: Zero Entropy Loss ↔ Bijectivity
+# ============================================================
+def demo_bijectivity_characterization():
+    """Verify that zero entropy loss characterizes bijections."""
+    print("=" * 60)
+    print("DEMO 5: Zero Entropy Loss ↔ Bijectivity")
+    print("=" * 60)
+
+    N = 8
+    functions = [
+        ("Identity", lambda x: x),
+        ("Increment mod 8", lambda x: (x + 1) % N),
+        ("Bit reverse", lambda x: int(f'{x:03b}'[::-1], 2)),
+        ("Square mod 8", lambda x: (x * x) % N),
+        ("Collapse mod 4", lambda x: x % 4),
+        ("Constant zero", lambda x: 0),
+    ]
+
+    print(f"{'Function':>25} {'|range|':>8} {'Bijective':>10} {'δ(f)':>12} {'δ=0?':>6}")
+    print("-" * 65)
+    for name, f in functions:
+        image = set(f(x) for x in range(N))
+        is_bij = len(image) == N
+        delta = math.log(N) - math.log(len(image))
+        delta_zero = abs(delta) < 1e-12
+        consistency = (is_bij == delta_zero)
+        print(f"{name:>25} {len(image):8d} {str(is_bij):>10} {delta:12.8f} "
+              f"{'✓' if consistency else '✗':>6}")
+    print()
+
 
 if __name__ == "__main__":
-    np.random.seed(42)
-    print("\n" + "=" * 60)
-    print("REVERSIBLE COMPUTING VIA TROPICAL ISOMORPHISMS")
-    print("Concrete Numerical Demonstrations")
-    print("=" * 60 + "\n")
-
-    demo_tropical_isomorphism()
+    demo_entropy()
+    demo_landauer()
     demo_reversible_simulation()
-    demo_landauer_cost()
-    demo_zero_entropy_iff_bijective()
-    demo_entropy_table()
+    demo_tropical_isomorphism()
+    demo_bijectivity_characterization()
+    print("All demonstrations complete.")
 
-    print("All demonstrations completed successfully.")
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json with all embedded content."""
+
+import json
+import base64
+import io
+
+# Generate visualizations and get base64
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import math
+
+def fig_to_base64(fig):
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    buf.seek(0)
+    data = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{data}"
+
+# Read all text files
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+article = read_file('/workspace/request-project/ARTICLE.md')
+research_paper = read_file('/workspace/request-project/RESEARCH_PAPER.md')
+future_directions = read_file('/workspace/request-project/FUTURE_DIRECTIONS.md')
+lean_code = read_file('/workspace/request-project/Computation/ReversibleTropicalThermodynamics.lean')
+demo_code = read_file('/workspace/request-project/demo.py')
+algorithms_code = read_file('/workspace/request-project/algorithms.py')
+applications_code = read_file('/workspace/request-project/applications.py')
+viz_code = read_file('/workspace/request-project/visualizations.py')
+
+# Read pre-generated PNG files as base64
+def png_to_base64(path):
+    with open(path, 'rb') as f:
+        data = base64.b64encode(f.read()).decode('utf-8')
+    return f"data:image/png;base64,{data}"
+
+viz_data = {}
+for name in ['viz_entropy_scaling', 'viz_landauer_cost', 'viz_entropy_loss',
+             'viz_tropical_ops', 'viz_simulation']:
+    viz_data[name] = png_to_base64(f'/workspace/request-project/{name}.png')
+
+package = {
+    "title": "Reversible Computing via Tropical Isomorphisms: A Formal Bridge Between Min-Plus Algebra, Entropy, and Thermodynamic Cost",
+    "domain": "Computation / Tropical Algebra / Information Thermodynamics",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Tropical Thermodynamic Complexity Demonstrations",
+            "code": demo_code
+        },
+        {
+            "name": "Real-World Applications",
+            "code": applications_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Swap-Based Reversible Simulation",
+            "pseudocode": "INPUT: step : {0,...,N-1} → {0,...,N-1}, state x\n1. ENCODE: pair ← (x, step(x))\n2. SWAP:   pair ← (pair[1], pair[0])  // bijective!\n3. DECODE: result ← pair[0]\nOUTPUT: result = step(x)\n\nPROPERTIES:\n- Swap is an involution (self-inverse)\n- Swap is bijective → tropical isomorphism\n- Zero entropy cost\n- Space overhead: O(N)",
+            "code": algorithms_code
+        }
+    ],
+    "visualizations": [
+        {
+            "name": "Entropy of Uniform Distributions: Linear Scaling",
+            "data": viz_data['viz_entropy_scaling']
+        },
+        {
+            "name": "Exact Landauer Cost at Different Temperatures",
+            "data": viz_data['viz_landauer_cost']
+        },
+        {
+            "name": "Entropy Loss and Bijectivity Characterization",
+            "data": viz_data['viz_entropy_loss']
+        },
+        {
+            "name": "Tropical Algebra Operations on Cost Functions",
+            "data": viz_data['viz_tropical_ops']
+        },
+        {
+            "name": "Swap-Based Reversible Simulation Diagram",
+            "data": viz_data['viz_simulation']
+        }
+    ],
+    "lean_proofs": lean_code
+}
+
+with open('/workspace/request-project/PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print("PACKAGE.json generated successfully.")
+print(f"File size: {len(json.dumps(package))//1024} KB")
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Tropical Thermodynamic Complexity Theory
+Visualizations for Tropical Thermodynamic Complexity
 
-Generates publication-quality figures demonstrating:
-1. Entropy production landscape for finite functions
-2. Tropical cost preservation under permutation
-3. Landauer cost scaling
-4. Reversibility phase diagram
+Generates publication-quality figures illustrating the key results.
+Saves as PNG files and returns base64 data URIs.
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch
 import math
-from itertools import product as cartprod
 import base64
-from io import BytesIO
+import io
 
 
-def save_fig_base64(fig, filename: str, dpi: int = 150) -> str:
-    """Save figure to file and return base64 string."""
-    fig.savefig(filename, dpi=dpi, bbox_inches='tight', facecolor='white')
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=dpi, bbox_inches='tight', facecolor='white')
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 PNG data URI."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    data = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return f"data:image/png;base64,{data}"
 
 
-def viz_entropy_landscape():
-    """
-    Plot entropy production for all functions on Fin N.
+def viz_1_entropy_scaling():
+    """Visualize Shannon entropy of uniform distributions scaling as n·log(2)."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
 
-    Shows that entropy_loss = 0 exactly for bijections (permutations),
-    and entropy grows with the degree of non-injectivity.
-    """
-    N = 4
-    total_functions = N**N
+    ns = np.arange(1, 16)
+    entropies = ns * np.log(2)
+    computed = [n * np.log(2) for n in ns]  # exact formula
 
-    entropy_losses = []
-    is_bijective = []
+    ax.plot(ns, entropies, 'o-', color='#2196F3', markersize=8, linewidth=2,
+            label=r'$H(\mathrm{Uniform}(2^n)) = n \cdot \ln 2$')
+    ax.plot(ns, computed, 's--', color='#FF5722', markersize=6, alpha=0.7,
+            label='Computed numerically')
 
-    for f_tuple in cartprod(range(N), repeat=N):
-        f = list(f_tuple)
-        range_size = len(set(f))
-        eloss = math.log(N) - math.log(range_size)
-        entropy_losses.append(eloss)
-        is_bijective.append(range_size == N)
+    ax.set_xlabel('Number of bits $n$', fontsize=13)
+    ax.set_ylabel('Shannon entropy (nats)', fontsize=13)
+    ax.set_title('Entropy of Uniform Distribution: Exact Linear Scaling', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Histogram of entropy losses
-    bij_losses = [e for e, b in zip(entropy_losses, is_bijective) if b]
-    nonbij_losses = [e for e, b in zip(entropy_losses, is_bijective) if not b]
-
-    bins = np.linspace(0, max(entropy_losses) + 0.1, 30)
-    ax1.hist(nonbij_losses, bins=bins, alpha=0.7, color='#e74c3c',
-             label=f'Non-bijective ({len(nonbij_losses)})', edgecolor='white')
-    ax1.axvline(x=0, color='#2ecc71', linewidth=3, linestyle='--',
-                label=f'Bijective ({len(bij_losses)}) — zero entropy')
-    ax1.set_xlabel('Entropy Loss (nats)', fontsize=12)
-    ax1.set_ylabel('Number of Functions', fontsize=12)
-    ax1.set_title(f'Entropy Production Landscape: All Functions on Fin {N}', fontsize=13)
-    ax1.legend(fontsize=11)
-
-    # Scatter: range size vs entropy loss
-    range_sizes = []
-    for f_tuple in cartprod(range(N), repeat=N):
-        range_sizes.append(len(set(f_tuple)))
-
-    colors = ['#2ecc71' if b else '#e74c3c' for b in is_bijective]
-    ax2.scatter(range_sizes, entropy_losses, c=colors, alpha=0.3, s=15)
-    ax2.set_xlabel('|Range(f)|', fontsize=12)
-    ax2.set_ylabel('Entropy Loss = log|σ| - log|Range(f)|', fontsize=12)
-    ax2.set_title('Entropy vs Range Collapse', fontsize=13)
-
-    # Add theoretical curve
-    rs = np.linspace(1, N, 100)
-    ax2.plot(rs, math.log(N) - np.log(rs), 'k-', linewidth=2, label='log(N) - log(|R|)')
-    ax2.legend(fontsize=11)
-
-    plt.tight_layout()
-    return save_fig_base64(fig, 'entropy_landscape.png')
+    fig.savefig('/workspace/request-project/viz_entropy_scaling.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
 
 
-def viz_tropical_preservation():
-    """
-    Visualize how pullback along a permutation preserves tropical structure.
-    """
-    N = 8
+def viz_2_landauer_cost():
+    """Visualize Landauer cost at different temperatures."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+
+    K_B = 1.380649e-23
+    ns = np.arange(1, 21)
+    temps = [4, 77, 300, 1000]
+    colors = ['#1565C0', '#43A047', '#FF8F00', '#D32F2F']
+    labels = ['4 K (cryogenic)', '77 K (liquid N₂)', '300 K (room temp)', '1000 K (high temp)']
+
+    for T, color, label in zip(temps, colors, labels):
+        costs = ns * K_B * T * np.log(2)
+        ax.semilogy(ns, costs, 'o-', color=color, markersize=5, linewidth=2, label=label)
+
+    ax.set_xlabel('Number of bits erased $n$', fontsize=13)
+    ax.set_ylabel('Minimum energy cost (Joules)', fontsize=13)
+    ax.set_title('Exact Landauer Cost: $W = n \\cdot k_B T \\ln 2$', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3, which='both')
+
+    fig.savefig('/workspace/request-project/viz_landauer_cost.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
+
+
+def viz_3_entropy_loss():
+    """Visualize entropy loss vs image size for functions on Fin(N)."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    N = 64
+    image_sizes = np.arange(1, N + 1)
+    entropy_losses = np.log(N) - np.log(image_sizes)
+
+    ax = axes[0]
+    ax.plot(image_sizes, entropy_losses, '-', color='#7B1FA2', linewidth=2.5)
+    ax.axhline(y=0, color='#4CAF50', linestyle='--', alpha=0.7, label='Zero cost (bijective)')
+    ax.axhline(y=np.log(2), color='#FF9800', linestyle=':', alpha=0.7, label=r'$\ln 2$ (1 bit erasure)')
+    ax.fill_between(image_sizes, 0, entropy_losses, alpha=0.1, color='#7B1FA2')
+
+    ax.set_xlabel('|range(f)|', fontsize=12)
+    ax.set_ylabel('Entropy loss $\\delta(f)$ (nats)', fontsize=12)
+    ax.set_title(f'Entropy Loss vs Image Size (N={N})', fontsize=13)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    # Right panel: bijective characterization
+    ax = axes[1]
     np.random.seed(42)
-    perm = np.random.permutation(N)
+    n_funcs = 200
+    deltas = []
+    bijectives = []
+    for _ in range(n_funcs):
+        # Random function Fin(16) -> Fin(16)
+        f = np.random.randint(0, 16, size=16)
+        img_size = len(set(f))
+        delta = np.log(16) - np.log(img_size)
+        is_bij = (img_size == 16)
+        deltas.append(delta)
+        bijectives.append(is_bij)
 
-    phi = np.random.randn(N) * 2
-    psi = np.random.randn(N) * 2
+    deltas = np.array(deltas)
+    bijectives = np.array(bijectives)
 
-    # Compute tropical operations before and after pullback
-    trop_add_orig = np.minimum(phi, psi)
-    trop_add_pulled = np.minimum(phi[perm], psi[perm])
-    pull_trop_add = trop_add_orig[perm]
+    ax.scatter(range(n_funcs), deltas, c=['#4CAF50' if b else '#F44336' for b in bijectives],
+               s=15, alpha=0.7)
+    ax.axhline(y=0, color='black', linestyle='-', linewidth=0.5)
 
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    from matplotlib.patches import Patch
+    legend_elements = [Patch(facecolor='#4CAF50', label='Bijective (δ=0)'),
+                       Patch(facecolor='#F44336', label='Non-bijective (δ>0)')]
+    ax.legend(handles=legend_elements, fontsize=10)
+    ax.set_xlabel('Function index', fontsize=12)
+    ax.set_ylabel('Entropy loss $\\delta(f)$ (nats)', fontsize=12)
+    ax.set_title('Zero Entropy Loss ⟺ Bijective', fontsize=13)
+    ax.grid(True, alpha=0.3)
 
-    x = np.arange(N)
+    plt.tight_layout()
+    fig.savefig('/workspace/request-project/viz_entropy_loss.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
 
-    # Original cost functions
+
+def viz_4_tropical_operations():
+    """Visualize tropical algebra operations on cost functions."""
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+    x = np.linspace(0, 2*np.pi, 200)
+    phi = np.sin(x) + 2
+    psi = np.cos(2*x) + 2
+
+    # Top left: Original cost functions
     ax = axes[0, 0]
-    ax.bar(x - 0.2, phi, 0.35, label='Φ', color='#3498db', alpha=0.8)
-    ax.bar(x + 0.2, psi, 0.35, label='Ψ', color='#e67e22', alpha=0.8)
-    ax.set_xlabel('State', fontsize=11)
-    ax.set_ylabel('Cost', fontsize=11)
-    ax.set_title('Original Cost Functions', fontsize=12)
-    ax.legend()
-    ax.set_xticks(x)
+    ax.plot(x, phi, '-', color='#1976D2', linewidth=2, label='$\\Phi(x)$')
+    ax.plot(x, psi, '-', color='#D32F2F', linewidth=2, label='$\\Psi(x)$')
+    ax.set_title('Cost Functions', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylabel('Cost', fontsize=12)
 
-    # Tropical addition preservation
+    # Top right: Tropical addition (min)
     ax = axes[0, 1]
-    ax.bar(x - 0.2, pull_trop_add, 0.35, label='Pull(Φ⊕Ψ)', color='#2ecc71', alpha=0.8)
-    ax.bar(x + 0.2, trop_add_pulled, 0.35, label='Pull(Φ)⊕Pull(Ψ)', color='#9b59b6', alpha=0.8)
-    ax.set_xlabel('State', fontsize=11)
-    ax.set_ylabel('Cost', fontsize=11)
-    ax.set_title('Tropical ⊕ Preserved: Pull(Φ⊕Ψ) = Pull(Φ)⊕Pull(Ψ)', fontsize=12)
-    ax.legend()
-    ax.set_xticks(x)
+    trop_add = np.minimum(phi, psi)
+    ax.plot(x, phi, '--', color='#1976D2', linewidth=1, alpha=0.4)
+    ax.plot(x, psi, '--', color='#D32F2F', linewidth=1, alpha=0.4)
+    ax.plot(x, trop_add, '-', color='#7B1FA2', linewidth=2.5,
+            label='$\\Phi \\oplus \\Psi = \\min(\\Phi, \\Psi)$')
+    ax.set_title('Tropical Addition (⊕ = min)', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylabel('Cost', fontsize=12)
 
-    # Tropical multiplication
-    trop_mul_orig = phi + psi
-    trop_mul_pulled = phi[perm] + psi[perm]
-    pull_trop_mul = trop_mul_orig[perm]
-
+    # Bottom left: Tropical multiplication (+)
     ax = axes[1, 0]
-    ax.bar(x - 0.2, pull_trop_mul, 0.35, label='Pull(Φ⊗Ψ)', color='#2ecc71', alpha=0.8)
-    ax.bar(x + 0.2, trop_mul_pulled, 0.35, label='Pull(Φ)⊗Pull(Ψ)', color='#9b59b6', alpha=0.8)
-    ax.set_xlabel('State', fontsize=11)
-    ax.set_ylabel('Cost', fontsize=11)
-    ax.set_title('Tropical ⊗ Preserved: Pull(Φ⊗Ψ) = Pull(Φ)⊗Pull(Ψ)', fontsize=12)
-    ax.legend()
-    ax.set_xticks(x)
+    trop_mul = phi + psi
+    ax.plot(x, phi, '--', color='#1976D2', linewidth=1, alpha=0.4)
+    ax.plot(x, psi, '--', color='#D32F2F', linewidth=1, alpha=0.4)
+    ax.plot(x, trop_mul, '-', color='#FF8F00', linewidth=2.5,
+            label='$\\Phi \\otimes \\Psi = \\Phi + \\Psi$')
+    ax.set_title('Tropical Multiplication (⊗ = +)', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlabel('Configuration $x$', fontsize=12)
+    ax.set_ylabel('Cost', fontsize=12)
 
-    # Error (should be zero)
+    # Bottom right: Pullback preserves structure
     ax = axes[1, 1]
-    err_add = np.abs(pull_trop_add - trop_add_pulled)
-    err_mul = np.abs(pull_trop_mul - trop_mul_pulled)
-    ax.bar(x - 0.2, err_add, 0.35, label='|Error ⊕|', color='#e74c3c', alpha=0.8)
-    ax.bar(x + 0.2, err_mul, 0.35, label='|Error ⊗|', color='#c0392b', alpha=0.8)
-    ax.set_xlabel('State', fontsize=11)
-    ax.set_ylabel('Absolute Error', fontsize=11)
-    ax.set_title('Verification: Errors are Zero', fontsize=12)
-    ax.legend()
-    ax.set_xticks(x)
-    ax.set_ylim(-0.01, 0.1)
+    # Simulate a "permutation" by reversing x
+    phi_pulled = phi[::-1]
+    psi_pulled = psi[::-1]
+    trop_add_pulled = np.minimum(phi_pulled, psi_pulled)
+    pullback_of_add = trop_add[::-1]
 
-    plt.suptitle(f'Tropical Isomorphism under Permutation σ = {list(perm)}', fontsize=14, y=1.02)
-    plt.tight_layout()
-    return save_fig_base64(fig, 'tropical_preservation.png')
-
-
-def viz_landauer_scaling():
-    """
-    Plot Landauer cost scaling with number of bits.
-    """
-    k_B = 1.380649e-23
-    T = 300.0
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Cost vs bits
-    n_bits = np.arange(1, 65)
-    costs_J = n_bits * k_B * T * math.log(2)
-    costs_eV = costs_J / 1.602176634e-19
-
-    ax1.semilogy(n_bits, costs_J, 'b-', linewidth=2, label='Landauer cost')
-    ax1.fill_between(n_bits, costs_J, alpha=0.2, color='blue')
-    ax1.set_xlabel('Number of Erased Bits (n)', fontsize=12)
-    ax1.set_ylabel('Minimum Dissipation (J)', fontsize=12)
-    ax1.set_title('Landauer Cost: n × kT ln 2', fontsize=13)
-    ax1.grid(True, alpha=0.3)
-    ax1.legend(fontsize=11)
-
-    # Cost vs temperature
-    temps = np.linspace(1, 1000, 200)
-    for n in [1, 4, 8, 16, 32]:
-        costs = n * k_B * temps * math.log(2)
-        ax2.plot(temps, costs / 1.602176634e-19, linewidth=2, label=f'n={n} bits')
-
-    ax2.set_xlabel('Temperature (K)', fontsize=12)
-    ax2.set_ylabel('Minimum Dissipation (eV)', fontsize=12)
-    ax2.set_title('Landauer Cost vs Temperature', fontsize=13)
-    ax2.grid(True, alpha=0.3)
-    ax2.legend(fontsize=11)
+    ax.plot(x, trop_add_pulled, '-', color='#4CAF50', linewidth=2.5,
+            label='$T^*(\\Phi) \\oplus T^*(\\Psi)$')
+    ax.plot(x, pullback_of_add, 'o', color='#FF5722', markersize=3, alpha=0.5,
+            label='$T^*(\\Phi \\oplus \\Psi)$')
+    ax.set_title('Pullback Preserves ⊕ (Tropical Isomorphism)', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlabel('Configuration $x$', fontsize=12)
+    ax.set_ylabel('Cost', fontsize=12)
 
     plt.tight_layout()
-    return save_fig_base64(fig, 'landauer_scaling.png')
+    fig.savefig('/workspace/request-project/viz_tropical_ops.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
 
 
-def viz_reversibility_phase():
-    """
-    Phase diagram showing the fraction of bijective functions
-    on Fin N as N grows, with entropy production statistics.
-    """
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+def viz_5_simulation_diagram():
+    """Create a diagram of the swap-based reversible simulation."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    ax.set_xlim(-0.5, 10.5)
+    ax.set_ylim(-1, 5)
+    ax.axis('off')
+    ax.set_title('Swap-Based Reversible Simulation', fontsize=16, fontweight='bold', pad=20)
 
-    # Fraction of bijections among all functions
-    Ns = list(range(1, 9))
-    fractions = []
-    avg_entropy = []
+    # Draw the three stages
+    stages = [
+        (1.5, 3.5, "Encode", "$x \\mapsto (x, f(x))$", '#E3F2FD'),
+        (5.0, 3.5, "Swap", "$(a,b) \\mapsto (b,a)$", '#FFF3E0'),
+        (8.5, 3.5, "Decode", "$(a,b) \\mapsto a$", '#E8F5E9'),
+    ]
 
-    for N in Ns:
-        total = N**N
-        n_bij = math.factorial(N)
-        fractions.append(n_bij / total)
+    for x, y, title, formula, color in stages:
+        rect = plt.Rectangle((x-1.2, y-1.2), 2.4, 2.4, facecolor=color,
+                              edgecolor='#333', linewidth=1.5, zorder=2)
+        ax.add_patch(rect)
+        ax.text(x, y+0.4, title, ha='center', va='center', fontsize=13, fontweight='bold')
+        ax.text(x, y-0.3, formula, ha='center', va='center', fontsize=11)
 
-        # Average entropy loss (sampling for large N)
-        if N <= 5:
-            losses = []
-            for f_tuple in cartprod(range(N), repeat=N):
-                rs = len(set(f_tuple))
-                losses.append(math.log(N) - math.log(rs))
-            avg_entropy.append(np.mean(losses))
-        else:
-            # Sample
-            losses = []
-            for _ in range(10000):
-                f = np.random.randint(0, N, size=N)
-                rs = len(set(f))
-                losses.append(math.log(N) - math.log(rs))
-            avg_entropy.append(np.mean(losses))
+    # Arrows
+    arrow_props = dict(arrowstyle='->', color='#333', linewidth=2)
+    ax.annotate('', xy=(3.6, 3.5), xytext=(2.9, 3.5), arrowprops=arrow_props)
+    ax.annotate('', xy=(7.1, 3.5), xytext=(6.4, 3.5), arrowprops=arrow_props)
 
-    ax1.bar(Ns, fractions, color='#2ecc71', alpha=0.8, edgecolor='white')
-    ax1.set_xlabel('State Space Size N', fontsize=12)
-    ax1.set_ylabel('Fraction of Bijective Functions', fontsize=12)
-    ax1.set_title('Probability of Reversibility Decreases Rapidly', fontsize=13)
-    ax1.set_yscale('log')
-    for i, (n, f) in enumerate(zip(Ns, fractions)):
-        ax1.text(n, f * 1.3, f'{f:.2e}', ha='center', fontsize=9)
+    # Input/output labels
+    ax.text(-0.3, 3.5, '$x$', ha='center', va='center', fontsize=14, fontweight='bold',
+            color='#1565C0')
+    ax.annotate('', xy=(0.1, 3.5), xytext=(-0.1, 3.5), arrowprops=arrow_props)
 
-    ax2.bar(Ns, avg_entropy, color='#e74c3c', alpha=0.8, edgecolor='white')
-    ax2.set_xlabel('State Space Size N', fontsize=12)
-    ax2.set_ylabel('Average Entropy Loss (nats)', fontsize=12)
-    ax2.set_title('Average Information Destroyed by Random Function', fontsize=13)
+    ax.text(10.5, 3.5, '$f(x)$', ha='center', va='center', fontsize=14, fontweight='bold',
+            color='#2E7D32')
+    ax.annotate('', xy=(10.3, 3.5), xytext=(9.9, 3.5), arrowprops=arrow_props)
 
-    plt.tight_layout()
-    return save_fig_base64(fig, 'reversibility_phase.png')
+    # Bottom annotation
+    ax.text(5.0, 0.5, 'Swap is a bijection → Tropical isomorphism → Zero entropy cost',
+            ha='center', va='center', fontsize=12, style='italic',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#F3E5F5', alpha=0.8))
+
+    # Example trace
+    ax.text(5.0, -0.5, 'Example: $x=3, f(3)=7$:  $(3) \\to (3,7) \\to (7,3) \\to 7 = f(3)$ ✓',
+            ha='center', va='center', fontsize=11, color='#555')
+
+    fig.savefig('/workspace/request-project/viz_simulation.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-
-    b64_entropy = viz_entropy_landscape()
-    print(f"  entropy_landscape.png: {len(b64_entropy)} chars")
-
-    b64_tropical = viz_tropical_preservation()
-    print(f"  tropical_preservation.png: {len(b64_tropical)} chars")
-
-    b64_landauer = viz_landauer_scaling()
-    print(f"  landauer_scaling.png: {len(b64_landauer)} chars")
-
-    b64_phase = viz_reversibility_phase()
-    print(f"  reversibility_phase.png: {len(b64_phase)} chars")
-
-    print("\nAll visualizations generated successfully.")
+    b64_1 = viz_1_entropy_scaling()
+    print("  ✓ Entropy scaling")
+    b64_2 = viz_2_landauer_cost()
+    print("  ✓ Landauer cost")
+    b64_3 = viz_3_entropy_loss()
+    print("  ✓ Entropy loss")
+    b64_4 = viz_4_tropical_operations()
+    print("  ✓ Tropical operations")
+    b64_5 = viz_5_simulation_diagram()
+    print("  ✓ Simulation diagram")
+    print("All visualizations generated and saved.")

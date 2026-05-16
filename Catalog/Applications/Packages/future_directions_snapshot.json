@@ -469,20 +469,6 @@
     "timestamp": "2026-05-16T03:21:48.999090+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "H1",
-    "description": ": For a random 3-piece tropical function in $\\mathbb{R}^2$, the number of corner critical points on the corner locus equals $\\chi(\\text{corner complex}) + 1$.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:21:49.049347+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Combine with current NW theorem:",
     "description": "Apply the tropical NW PRG to the amplified hard function.\n\n### Key Technical Challenges\n- The XOR lemma requires a Goldreich-Levin style argument adapted to tropical computation.\n- Self-reducibility for tropical matrix powering is not immediate; it requires understanding the algebraic structure of min-plus matrix evaluation.\n- The worst-case to average-case reduction must preserve tropical circuit complexity.\n\n### Cross-Domain Connections\n- Fine-grained complexity: connects to APSP hardness conjectures.\n- Algebraic complexity: relates to VP vs VNP in the tropical setting.\n- Coding theory: XOR lemma connects to list-decoding of tropical codes.\n\n### Estimated Difficulty: Very High\n### Impact: Transformative — would establish a complete tropical complexity theory.\n\n---\n\n## Direction 2: Concre",
@@ -709,23 +695,6 @@
     "source_exp_id": "b18b8608",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:18:22.944252+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Construct a counterexample",
-    "description": "for the reverse inequality: the identity-like matrix $M_{ij} = 0$ if $i=j$, $\\infty$ otherwise has tropical rank 1 (it's already in echelon form) but factor rank $n$.\n\n### Cross-Domain Connections\n\n- **Communication complexity**: tropical rank is analogous to the log of the communication complexity of a Boolean matrix; factor rank bounds the extension complexity. The gap between them mirrors the gap between nondeterministic and deterministic communication.\n- **Optimization**: In linear programming over the tropical semiring, the rank controls the dimension of the feasible region, while factor rank controls the size of an extended formulation.\n\n---\n\n## 2. Subadditivity and Composition Under Tropical Matrix Product\n\n### Conjecture\n\nFor tropical matrix multiplication $C = A \\otimes B$ (where ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b18b8608",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:18:22.969171+00:00"
   },
   {
     "id": "fd_0251",
@@ -966,22 +935,6 @@
     "source_exp_id": "d2a18598",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.336933+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "Research Team Directive",
-    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "0c823664",
-    "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
     "id": "fd_0200",
@@ -1240,10 +1193,10 @@
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2b33dcea",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "332fc03e",
     "timestamp": "2026-05-16T03:24:38.355147+00:00"
   },
   {
@@ -1472,22 +1425,6 @@
     "timestamp": "2026-05-16T09:16:46.812655+00:00"
   },
   {
-    "id": "fd_0248",
-    "title": "Direction 5: Bellman Equations and Computational Complexity of Arithmetic Descen",
-    "description": "**Hypothesis**: The discounted value function $V_\\gamma(n)$ satisfies a Bellman-type fixed-point equation, and the computational complexity of evaluating $V_\\gamma$ is related to the arithmetic complexity of the underlying map.\n\n**Strategy**:\n1. Formalize the Bellman equation: $V_\\gamma(n) = 1 + \\gamma \\cdot V_\\gamma(T(n))$ for $n$ not at the target, and $V_\\gamma(n) = 0$ at the target.\n2. Prove existence and uniqueness of the solution via the Banach fixed-point theorem (the contraction factor is γ < 1).\n3. Relate the complexity of computing $V_\\gamma(n)$ to the stopping time $\\tau(n)$.\n4. Investigate whether the free energy $F_N(\\gamma )\\to \\infty$ as $\\gamma \\to 1^-$ can be used as a certificate of computational hardness — systems where many orbits have long stopping times should have di",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1a386325",
-    "consumed_by_exp_id": "edf517ad",
-    "timestamp": "2026-05-16T09:16:46.845693+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Direction 1: Query-Optimal Lower Bounds for Cone-Local Recomputation",
     "description": "**Hypothesis:** Any correct incremental recomputation algorithm for DAG levels must inspect at least every vertex in the affected cone and every edge entering it. The cone-linear upper bound is therefore *tight*.\n\n**Approach:**\n- Model the recomputation problem as an adaptive query process where each query reveals a predecessor set or a predecessor's level.\n- Construct an adversarial family of DAGs where any algorithm that skips a cone vertex or predecessor edge can be fooled into producing an incorrect level.\n- Formalize this as a certified lower bound theorem: `∀ algorithm, ∃ input, work(algorithm, input) ≥ |cone| + |E_cone|`.\n\n**Cross-domain connection:** This connects incremental computation to communication complexity and information-theoretic lower bounds. A formal gap between upper ",
@@ -1502,24 +1439,6 @@
     "source_exp_id": "c2ddc3a7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:29:02.728591+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Direction 3: Localized Fixpoint Maintenance for Temporal Logic",
-    "description": "**Hypothesis:** Model checking a temporal logic formula (CTL, μ-calculus) on a finite Kripke structure is a fixpoint computation on a dependency graph. When the Kripke structure is locally modified, the truth values can be incrementally maintained by recomputing only within the affected cone.\n\n**Approach:**\n- Formalize the connection between DAG level computation and monotone fixpoint iteration on finite lattices.\n- Show that the incremental fold is equivalent to one-pass fixpoint stabilization on the restricted cone operator.\n- Extend from DAG levels to nested fixpoints (alternation depth > 1) by layering cone computations.\n- Prove that incremental model checking of μ-calculus formulas on locally-modified Kripke structures has complexity proportional to the affected region, not the full s",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c2ddc3a7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:29:02.760147+00:00"
   },
   {
     "id": "fd_0239",
@@ -1606,22 +1525,6 @@
     "timestamp": "2026-05-16T09:39:33.525513+00:00"
   },
   {
-    "id": "fd_0245",
-    "title": "Direction 2: Formal Verification of Karp's Algorithm",
-    "description": "**Status**: High priority, medium feasibility\n\n**Goal**: Formalize Karp's 1978 algorithm for computing the maximum cycle mean in O(n³) time, and prove it correct against the formal definition of `maxCycleMean`.\n\n**Algorithm** (to formalize):\n```\ndef karpMCM (W : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) : ℝ :=\n  -- F k i = max weight walk of k edges ending at i\n  -- μ = max_i min_{k<n+1} (F (n+1) i - F k i) / (n+1-k)\n```\n\n**Proof obligations**:\n1. Correctness: `karpMCM W = maxCycleMean W`\n2. Complexity: runs in O(n³) arithmetic operations\n\n**Hypotheses to validate**:\n- The min-over-k characterization encodes exactly the maximum cycle mean\n- The algorithm handles all edge cases (negative weights, self-loops)\n\n**Impact**: Verified algorithms for safety-critical timing analysis (e.g., avionics, medic",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23a76967",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:39:33.554044+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Direction 3: Tropical Additive Eigenvectors (Bellman Eigenpairs)",
     "description": "**Status**: High priority, medium-high feasibility\n\n**Goal**: Prove existence of additive eigenpairs for the tropical Bellman operator.\n\n**Formal target**:\n```\ntheorem tropical_bellman_eigenpair\n    (W : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) :\n    ∃ (λ : ℝ) (v : Fin (n+1) → ℝ),\n      λ = tropRate W ∧\n      ∀ i, (Finset.univ.sup' Finset.univ_nonempty fun j => W i j + v j) = λ + v i\n```\n\n**Proof Strategy**:\n1. Define the Bellman operator T : (Fin(n+1) → ℝ) → (Fin(n+1) → ℝ) by (Tx)(i) = max_j(W(i,j) + x(j)).\n2. Show T is order-preserving and additively homogeneous: T(x + c) = Tx + c.\n3. Shift by the eigenvalue: define W' = W - μ with μ = tropRate(W).\n4. Show T' has eigenvalue 0; find v with T'v = v.\n5. Use the critical graph (subgraph of edges achieving equality) and a shortest-path construction.",
@@ -1637,23 +1540,6 @@
     "source_exp_id": "23a76967",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:39:33.570144+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Direction 5: Two-Player Mean-Payoff Games",
-    "description": "**Status**: Medium priority, high impact, challenging feasibility\n\n**Goal**: Extend the tropical Perron–Frobenius theorem to the minimax setting of two-player mean-payoff games.\n\n**Formal target**:\n```\ntheorem mean_payoff_game_value\n    (W : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (player : Fin (n+1) → Bool)  -- vertex ownership\n    : ∃ (v : Fin (n+1) → ℝ),\n      ∀ i, v i = if player i then\n        Finset.univ.sup' _ (fun j => W i j + v j)  -- Max player\n      else\n        Finset.univ.inf' _ (fun j => W i j + v j)  -- Min player\n```\n\n**Proof Strategy**:\n1. Define the two-player Bellman operator combining max and min.\n2. Use strategy improvement or value iteration to show convergence.\n3. Connect to the determinacy theorem for mean-payoff games (Ehrenfeucht-Mycielski).\n\n**Hypotheses**:\n- The g",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23a76967",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:39:33.601873+00:00"
   },
   {
     "id": "fd_0251",
@@ -1803,5 +1689,78 @@
     "source_exp_id": "5e0e0def",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:47:38.713993+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Hypothesis",
+    "description": "The data processing inequality states that for a Markov chain X → Y → Z:\n    I(X; Z) ≤ I(X; Y)\nwhere I denotes mutual information. We conjecture a tropical analogue:\n\n    tropical_mutual_info(X, Z) ≤ tropical_mutual_info(X, Y)\n\nwhere tropical mutual information is defined via min-plus convolution of cost matrices.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0c823664",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T10:43:08.701224+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Key Formalization",
+    "description": "```\ndef tropical_mutual_info(P_XY : Matrix) : ℝ :=\n  triangleCyc(-log P_XY) - triangleCyc(-log marginal_X(P_XY))\n\ntheorem tropical_data_processing :\n  tropical_mutual_info(compose(P_XY, P_YZ)) ≤ tropical_mutual_info(P_XY)\n```",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0c823664",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T10:43:08.715203+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Phase 2 (Medium-term, 3-6 months)",
+    "description": "- Formalize Direction 1 (Tropical Conductance) — requires building graph theory infrastructure\n- Formalize Direction 4 (Data Processing) — requires information theory infrastructure\n- Develop continuous-time analogues",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0c823664",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T10:43:08.743553+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Phase 3 (Long-term, 6-12 months)",
+    "description": "- Direction 2 (Large Deviations) — deepest mathematical content\n- Direction 5 (Quantum) — requires quantum information formalization\n- Comprehensive library of tropical-probabilistic bridge theorems",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0c823664",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T10:43:08.760563+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Cross-Cutting Tasks",
+    "description": "- Build a formal library of tropical semiring properties\n- Formalize Karp's algorithm correctness\n- Develop computational backends for tropical matrix operations\n- Create a benchmark suite of Markov chains for testing tropical bounds",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0c823664",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T10:43:08.775747+00:00"
   }
 ]
