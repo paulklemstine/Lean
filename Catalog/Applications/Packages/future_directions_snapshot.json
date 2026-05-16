@@ -528,20 +528,6 @@
     "timestamp": "2026-05-16T21:01:29.489920+00:00"
   },
   {
-    "id": "fd_0254",
-    "title": "Months 6–12:",
-    "description": "Direction 5 (Cap sets) — the most ambitious, requiring substantial new infrastructure.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "0ab00abc",
-    "timestamp": "2026-05-16T21:01:29.710311+00:00"
-  },
-  {
     "id": "fd_0264",
     "title": "Define `evalTropicalCircuit`",
     "description": ": recursive evaluation where AND = min, OR = max.",
@@ -618,20 +604,6 @@
     "timestamp": "2026-05-16T21:34:33.969194+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "Direction 1",
-    "description": "(O(n log n) bound) — natural extension, improves certified complexity.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4ba38644",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:41:28.102286+00:00"
-  },
-  {
     "id": "fd_0250",
     "title": "Formalization requires",
     "description": ":\n   - A clean definition of the interactive protocol state\n   - Lemma: partial sums over remaining variables produce degree-bounded univariate polynomials\n   - Composition of single-round soundness via the union bound\n\n### Key Lemmas to Formalize\n- Partial summation preserves polynomial degree\n- Single-round soundness from univariate Schwartz–Zippel\n- Protocol correctness: honest prover always passes\n\n### Cross-Domain Impact\n- **Verifiable computation**: Sum-check is the core of GKR, Spartan, and other proof systems.\n- **Interactive proofs**: IP = PSPACE relies on sum-check.\n- **Blockchain**: Polynomial commitment schemes use sum-check variants.\n\n---\n\n## Direction 3: Formal Low-Degree Testing Soundness\n\n### Target Theorem\n```\ntheorem low_degree_test_soundness\n  (𝔽 : Type*) [Field 𝔽] [Fint",
@@ -646,20 +618,6 @@
     "source_exp_id": "3e135d69",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:05:47.364615+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "Circuit complexity",
-    "description": ": Arithmetic circuits, depth, and size measures.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3e135d69",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:05:47.424096+00:00"
   },
   {
     "id": "fd_0260",
@@ -1022,6 +980,25 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
+    "id": "fd_0226",
+    "title": "4. Cryptography ↔ Learning ↔ Tropical Triads via Composed Morphisms",
+    "description": "**Hypothesis:** The bridge graph Height → Dimension → Security already hints at a three-way connection between arithmetic learning theory (heights), tropical geometry (dimensions), and cryptographic security (security parameters). A full triad would show that hardness results in any one domain automatically imply hardness results in the other two.\n\n**Proof Strategy:**\n- Formalize the tropical valuation as a `TheorySpec` with `inv = tropical_degree`.\n- Build a morphism from tropical specs to security specs via dimension bounds.\n- Build a morphism from learning specs (Lipschitz/margin bounds) to height specs.\n- Compose to get a certified triad: Learning → Height → Dimension → Security.\n- Prove: any new lower bound in learning theory automatically yields a new lower bound in cryptographic sec",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "8b09e852",
+    "timestamp": "2026-05-16T02:14:30.267025+00:00"
+  },
+  {
     "id": "fd_0218",
     "title": "1. Tropical Expanders and Extractor-Quality Orbit Families",
     "description": "**Hypothesis:** There exist explicit families of tropical matrices whose orbits satisfy the conditional extraction property with near-optimal parameters (ε ≈ 2^{-Ω(n)}).\n\n**Approach:**\n- Define a notion of *tropical expander*: a finite set S of n×n tropical matrices such that for any subset A ⊆ S with |A| ≥ δ|S|, the set {A·G : G ∈ S} has significantly more distinct elements than A.\n- Prove that tropical expansion implies bounded prefix fibers, which by our `conditional_minEntropy_from_fiber` theorem implies conditional extraction.\n- Construct explicit tropical expanders using Cayley graphs of matrix groups over the tropical semiring, analogous to classical expander constructions from SL(2, F_p).\n\n**Key Lemma to Formalize:**\n> If S is a (K, ε)-tropical expander, then `maxPrefixFiberCard S ",
@@ -1372,20 +1349,6 @@
     "timestamp": "2026-05-16T22:10:48.812835+00:00"
   },
   {
-    "id": "fd_0254",
-    "title": "Key Lemmas to Formalize",
-    "description": "- Maximum cycle mean computation for directed weighted graphs\n- Tropical matrix powers and periodicity\n- Connection between eigenvalue and long-term average growth",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "be71e654",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:13:17.408455+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "Hypothesis",
     "description": "The tropical semiring $(\\mathbb{R} \\cup \\{-\\infty\\}, \\max, +)$ with residual $a \\multimap c = c - a$ forms a residuated lattice, and tropical aggregation layers are residuated maps. The compositional stability theorem is then a statement about cut-elimination in a quantitative proof system.",
@@ -1449,24 +1412,6 @@
     "source_exp_id": "5cfffd08",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:25:54.739410+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "2. Tropical Reachability Algebras: Floyd–Warshall as Causal Closure",
-    "description": "**Theorem target**: Prove that the tropical matrix power `A^⊗k` computes k-hop causal reachability, and that the Kleene star `A* = ⊕_{k=0}^{n-1} A^⊗k` gives the transitive closure of matrix causality.\n\n```\ndef tropMatPow (A : Matrix (Fin n) (Fin n) ℝ) : ℕ → Matrix (Fin n) (Fin n) ℝ\n  | 0 => tropId n 0\n  | k + 1 => tropMatMul A (tropMatPow A k)\n\ndef tropicalKleeneStar (A : Matrix (Fin n) (Fin n) ℝ) : Matrix (Fin n) (Fin n) ℝ :=\n  fun i j => Finset.univ.inf' ... (fun k => tropMatPow A k i j)\n\ntheorem kleene_star_is_causal_closure (A : Matrix (Fin n) (Fin n) ℝ) (i j : Fin n) :\n    (∃ T, MatrixCausal A T i j) ↔ tropicalKleeneStar A i j < ⊤\n```\n\n**Lean definitions needed**: `tropMatPow`, `tropicalKleeneStar`, connection lemmas between matrix powers and path costs.\n\n**Proof strategy**: By induct",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cfffd08",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:25:54.759413+00:00"
   },
   {
     "id": "fd_0255",
@@ -1610,22 +1555,6 @@
     "timestamp": "2026-05-16T23:08:10.910288+00:00"
   },
   {
-    "id": "fd_0254",
-    "title": "1. General Schwartz–Zippel over Finite Fields in Mathlib Style",
-    "description": "**Status**: The inductive proof for `Fin (n+1)` variables is formalized in `SchwartzZippel.lean`. The next step is to generalize to arbitrary finite index types.\n\n**Target theorem**:\n```lean\ntheorem card_zeros_le_totalDegree_mul\n    {F : Type*} [Field F] [Fintype F] {σ : Type*} [Fintype σ] [DecidableEq σ]\n    (P : MvPolynomial σ F) (hP : P ≠ 0) :\n    Fintype.card {x : σ → F // MvPolynomial.eval x P = 0}\n      ≤ P.totalDegree * (Fintype.card F) ^ (Fintype.card σ - 1)\n```\n\n**Proof strategy**: Transport the existing `Fin (n+1)` result via `Fintype.truncEquivFinOfCardEq` to obtain the bound for arbitrary finite `σ`. The key technical challenge is showing that `totalDegree` is preserved under the renaming equivalence `MvPolynomial.rename`.\n\n**Cross-domain impact**: A general Schwartz–Zippel the",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e846ce5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:10:48.631140+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "2. Freivalds for Matrix Product Verification via PIT",
     "description": "**Target theorem**:\n```lean\ntheorem freivalds_product_verification\n    {q n : ℕ} [Fact q.Prime]\n    (A B C : Matrix (Fin n) (Fin n) (ZMod q))\n    (hneq : A * B ≠ C) :\n    Fintype.card {r : Fin n → ZMod q // (A * B).mulVec r = C.mulVec r}\n      ≤ q ^ (n - 1)\n```\n\n**Proof strategy**: Set `D = A * B - C`, observe `D ≠ 0`, and note that `D.mulVec r = 0 ↔ (A*B).mulVec r = C.mulVec r`. Apply `freivalds_from_schwartz_zippel` to `D`. This is already partially formalized in `Freivalds.lean` for square matrices; the rectangular generalization follows from the current work.\n\n**Application**: This formalizes the full Freivalds algorithm: given matrices A, B, C, pick a random vector r over ZMod q and check whether `A*(B*r) = C*r`. If `AB ≠ C`, the check catches the error with probability at least `1 - ",
@@ -1698,5 +1627,127 @@
     "source_exp_id": "7e846ce5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T23:10:48.744317+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "1. Semantic Completeness for Monotone Term Functions on Finite Chains",
+    "description": "**Theorem Target:** Every monotone function `f : (Fin k)^n → Fin k` is representable by some `MonotoneCircuit (Fin k) n`.\n\n**Proof Strategy:**\n- For `k = 2` (Boolean), this is the classical result that every monotone Boolean function can be computed by a monotone formula (using AND/OR without negation).\n- For general finite chains, proceed by structural induction on `k`. Use the threshold decomposition: express `f` as a min-max combination of threshold predicates `f(x) ≥ j` for each level `j`.\n- Formalize the construction as a recursive circuit builder and prove semantic correctness.\n\n**Cross-Domain Significance:**\n- Connects monotone circuit complexity to lattice-valued logic and multi-valued model checking.\n- Provides constructive witnesses for the representation theorem in universal alg",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5da3534",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:27:21.817566+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "2. Circuit Substitution and Clone Structure",
+    "description": "**Theorem Target:**\n```\ndef MonotoneCircuit.subst (c : MonotoneCircuit α n) (σ : Fin n → MonotoneCircuit α m) :\n    MonotoneCircuit α m\n\ntheorem MonotoneCircuit.eval_subst (c : MonotoneCircuit α n)\n    (σ : Fin n → MonotoneCircuit α m) (x : Fin m → α) :\n    eval (subst c σ) x = eval c (fun i => eval (σ i) x)\n```\n\n**Proof Strategy:**\n- Define `subst` by structural recursion: replace each `var i` with `σ i`, keep constants, recurse on gates.\n- Prove `eval_subst` by induction on `c`. The `var` case is definitional, the `const` case trivial, and the `and`/`or` cases follow by congruence.\n- Prove associativity: `subst (subst c σ) τ = subst c (fun i => subst (σ i) τ)`.\n\n**Cross-Domain Significance:**\n- Establishes that monotone circuits form a **clone** (operadic composition structure), connecti",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5da3534",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:27:21.837295+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "3. Distributive Normal Form Theorem",
+    "description": "**Theorem Target:** Define a normalization procedure that converts any circuit to a canonical \"max-of-mins\" (DNF-like) or \"min-of-maxs\" (CNF-like) form, and prove semantic preservation.\n\n```\ndef MonotoneCircuit.toDNF : MonotoneCircuit α n → MonotoneCircuit α n\ntheorem MonotoneCircuit.eval_toDNF (c : MonotoneCircuit α n) (x : Fin n → α) :\n    eval (toDNF c) x = eval c x\n```\n\n**Proof Strategy:**\n- Repeatedly apply the distributive law `min(a, max(b,c)) = max(min(a,b), min(a,c))` to push all `min` operations inside `max` operations.\n- Formalize as a recursive rewrite on the circuit tree structure.\n- Use `eval_and_or_distrib` (already proved) as the key soundness lemma for each rewrite step.\n- Prove termination via a suitable measure (e.g., number of `and`-over-`or` nestings).\n\n**Cross-Domain ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5da3534",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:27:21.857820+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "4. Threshold Bridge to Monotone Boolean Complexity",
+    "description": "**Theorem Target:**\n```\ndef thresholdPred (c : MonotoneCircuit α n) (θ : α) : (Fin n → α) → Prop :=\n    fun x => θ ≤ eval c x\n\ntheorem thresholdPred_monotone (c : MonotoneCircuit α n) (θ : α) :\n    ∀ x y : Fin n → α, (∀ i, x i ≤ y i) → thresholdPred c θ x → thresholdPred c θ y\n```\n\n**Proof Strategy:**\n- Direct consequence of `eval_mono`: if `θ ≤ eval c x` and `x ≤ y` coordinatewise, then `θ ≤ eval c x ≤ eval c y`.\n- Extend to show that the Boolean function obtained by thresholding at any level is a monotone Boolean function.\n- Prove a converse: every monotone Boolean function `{0,1}^n → {0,1}` arises as a threshold of some `MonotoneCircuit ℕ n`.\n\n**Cross-Domain Significance:**\n- Creates a formal bridge between numerical monotone computation and classical monotone Boolean complexity.\n- Enab",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5da3534",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:27:21.877044+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "5. Game-Theoretic / Dynamic Programming Semantics",
+    "description": "**Theorem Target:** Interpret monotone circuits as finite two-player min-max game trees and prove equivalence with the algebraic semantics.\n\n```\ninductive GameTree (α : Type*) where\n  | leaf : α → GameTree α\n  | minNode : GameTree α → GameTree α → GameTree α\n  | maxNode : GameTree α → GameTree α → GameTree α\n\ndef GameTree.value : GameTree α → α\n\ndef MonotoneCircuit.toGameTree (c : MonotoneCircuit α n) (x : Fin n → α) : GameTree α\n\ntheorem MonotoneCircuit.gameTree_value_eq_eval (c : MonotoneCircuit α n) (x : Fin n → α) :\n    (toGameTree c x).value = eval c x\n```\n\n**Proof Strategy:**\n- Define `toGameTree` by substituting input values at leaves and mapping `and`/`or` to min/max nodes.\n- Prove the value equivalence by structural induction — both sides satisfy the same recursive equations.\n- Ex",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5da3534",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:27:21.896666+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "6. Depth-Independent Lipschitz Constant",
+    "description": "**Theorem Target:** Prove that the 1-Lipschitz constant is tight and independent of circuit depth.\n\n```\n-- The constant 1 is tight: there exists a circuit achieving equality\ntheorem MonotoneCircuit.lipschitz_tight (n : ℕ) (hn : 0 < n) :\n    ∃ c : MonotoneCircuit ℝ n, ∃ x y : Fin n → ℝ,\n      (∀ i, |x i - y i| ≤ 1) ∧ |eval c x - eval c y| = 1\n\n-- Contrast with multiplicative circuits: depth d can amplify errors by 2^d\n```\n\n**Proof Strategy:**\n- For tightness, take `c = var 0` and `x = 0`, `y = 1`.\n- The deeper theorem is that NO circuit of ANY depth can exceed the bound, which is already proved by `eval_le_of_coordwise_le_add`.\n- Formalize the contrast with multiplicative circuits to highlight the structural advantage.\n\n**Cross-Domain Significance:**\n- This depth-independence property is un",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5da3534",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:27:21.917901+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "7. Tropical Polynomial Representation",
+    "description": "**Theorem Target:** Show that every circuit in DNF form corresponds to a tropical polynomial (max of affine-min terms) and characterize the representable functions.\n\n**Proof Strategy:**\n- After establishing `toDNF`, show that the normal form is a `max` of `min` terms, each being a `min` of variables and constants.\n- In the tropical semiring interpretation (with `⊕ = max`, `⊗ = min`), these are exactly tropical monomials combined by tropical addition.\n- Prove that over `ℝ`, these functions are exactly the piecewise-linear concave functions (intersection of half-spaces under max).\n\n**Cross-Domain Significance:**\n- Bridges monotone circuit theory to tropical algebraic geometry.\n- Connects to the Legendre-Fenchel transform and convex optimization.\n- Opens a path to formal tropical intersection",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5da3534",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:27:21.937720+00:00"
   }
 ]
