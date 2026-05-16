@@ -266,21 +266,6 @@
     "timestamp": "2026-05-14T16:24:30.145614+00:00"
   },
   {
-    "id": "fd_0154",
-    "title": "Direction 3 (Parallel Complexity)",
-    "description": "— Most accessible, builds directly on the existing theory, and has immediate practical applications for proof automation.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "9af9301e",
-    "timestamp": "2026-05-14T17:32:45.379046+00:00"
-  },
-  {
     "id": "fd_0158",
     "title": "Direction 4 (Entropy)",
     "description": "— Most speculative but potentially most impactful. Opens connections to information theory and computational complexity.",
@@ -514,22 +499,6 @@
     "timestamp": "2026-05-16T03:21:49.049347+00:00"
   },
   {
-    "id": "fd_0235",
-    "title": "Bridge",
-    "description": "(interactive proofs) → connects to complexity theory",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2da16d8d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:56.179846+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Combine with current NW theorem:",
     "description": "Apply the tropical NW PRG to the amplified hard function.\n\n### Key Technical Challenges\n- The XOR lemma requires a Goldreich-Levin style argument adapted to tropical computation.\n- Self-reducibility for tropical matrix powering is not immediate; it requires understanding the algebraic structure of min-plus matrix evaluation.\n- The worst-case to average-case reduction must preserve tropical circuit complexity.\n\n### Cross-Domain Connections\n- Fine-grained complexity: connects to APSP hardness conjectures.\n- Algebraic complexity: relates to VP vs VNP in the tropical setting.\n- Coding theory: XOR lemma connects to list-decoding of tropical codes.\n\n### Estimated Difficulty: Very High\n### Impact: Transformative — would establish a complete tropical complexity theory.\n\n---\n\n## Direction 2: Concre",
@@ -702,54 +671,6 @@
     "source_exp_id": "011ce99e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:11:31.800180+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "Formalize in Lean",
-    "description": ": use `MeasureTheory` from Mathlib for probability\n\n### Specific Formulation\n```\ntheorem approximate_hardness_transfer\n    (ε : ℝ) (hε : 0 ≤ ε) (hε' : ε < 1)\n    (μ : Measure (Fin (n+1)))\n    (hrec : μ {s | recoverSecret (tropPow G s) = s} ≥ 1 - ε) :\n    μ {s | rankInv (encode (recoverSecret (tropPow G s))) = s} ≥ 1 - ε\n```\n\n### Estimated Difficulty\n**Medium.** The mathematical content is straightforward (the reduction preserves success probability exactly), but formalizing measure theory in Lean requires careful API work.\n\n### Cross-Domain Impact\n- **Cryptography**: Real-world attacks are probabilistic; this extension is essential for practical security analysis\n- **Learning theory**: Connects to PAC learning of tropical functions\n\n---\n\n## Direction 3: Quantum Resistance of Tropical Key R",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.839161+00:00"
-  },
-  {
-    "id": "fd_0236",
-    "title": "Formalize quantum circuit model",
-    "description": "in Lean (or reference existing formalizations)",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.851330+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "Show structural obstructions",
-    "description": ": the idempotency of tropical addition prevents the quantum Fourier transform from producing useful interference patterns",
-    "domains": [
-      "Tropical",
-      "Physics"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.864563+00:00"
   },
   {
     "id": "fd_0239",
@@ -994,48 +915,6 @@
     "source_exp_id": "78b212ab",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:35:37.593533+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "Extract",
-    "description": "executable code via Lean's code generation.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "78b212ab",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:35:37.606186+00:00"
-  },
-  {
-    "id": "fd_0236",
-    "title": "Formulate hypotheses",
-    "description": "as precise Lean theorem statements.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8d8b1150",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:30:22.901441+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "Build infrastructure",
-    "description": "(definitions, helper lemmas) incrementally.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8d8b1150",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:30:22.914707+00:00"
   },
   {
     "id": "fd_0239",
@@ -1606,20 +1485,6 @@
     "timestamp": "2026-05-16T03:39:37.937805+00:00"
   },
   {
-    "id": "fd_0235",
-    "title": "Theorem Statement",
-    "description": "```\ntheorem tropical_perron_frobenius {n : ℕ}\n    (W : Matrix (Fin n.succ) (Fin n.succ) ℝ) :\n    ∃ λ : ℝ, ∀ ε > 0, ∃ N : ℕ, ∀ m ≥ N, ∀ i j : Fin n.succ,\n      |tropPow W m i j / (↑(m + 1)) - λ| < ε\n```\n\nThe tropical eigenvalue λ equals the maximum cycle mean: λ = max over all simple cycles C of (weight(C) / length(C)). This determines the asymptotic growth rate of tropical powers.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7998d3b1",
-    "consumed_by_exp_id": "23a76967",
-    "timestamp": "2026-05-16T04:31:45.413489+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Direction 3: Tropical Commitments and Weighted Automata Equivalence Hardness",
     "description": "**Hypothesis:** Binding of tropical matrix commitments is equivalent to the weighted automata inequivalence problem, establishing a novel connection between cryptographic security and formal language theory.\n\n**Theorem Target:**\n```\ntheorem tropical_binding_automata_equiv\n  (A B : TropMat m n) :\n  (∀ x₁ x₂ r₁ r₂, tropCommit A B x₁ r₁ = tropCommit A B x₂ r₂ → x₁ = x₂) ↔\n  WeightedAutomataInequivalent (encodeAsAutomaton A) (encodeAsAutomaton B)\n```\n\n**Strategy:**\n1. Encode a tropical matrix A as a weighted finite automaton where transitions have tropical weights.\n2. Show that tropMatVecMul A x corresponds to the automaton's evaluation on input x.\n3. A collision in the commitment scheme corresponds to two distinct inputs producing the same weighted language value—exactly the weighted automata",
@@ -1827,5 +1692,93 @@
     "source_exp_id": "d4155669",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:33:10.570979+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "1. Extension to Finite Distributive Lattices",
+    "description": "**Statement:** Generalize all theorems from `Bool` to an arbitrary finite distributive lattice `L`. Specifically, prove that for any idempotent, meet-compatible closure operator `O : L → L` on a finite distributive lattice, `O (⋀ S) = O (⋀ (O '' S))` for any finite multiset `S`, and that the result depends only on the underlying set of `S`.\n\n**Proof Strategy:** Replace `Bool` with a type `L` equipped with `[Fintype L] [DistribLattice L] [OrderBot L]`. Replace `foldAnd` with `Finset.inf`. The key lemma `foldAnd_support_invariant` lifts to the lattice setting because `inf` is idempotent, commutative, and associative—so `Finset.inf` depends only on the underlying set. The closure compatibility condition `O (a ⊓ b) = O (O a ⊓ O b)` generalizes directly.\n\n**Cross-Domain Significance:** This con",
+    "domains": [
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9af9301e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:28.603345+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "2. NC Upper Bound for Closure-Normalized Monotone Formulas",
+    "description": "**Statement:** Prove that if `φ` is a monotone Boolean formula of size `n`, and `O` is a polynomial-time-computable idempotent closure operator, then the closure-normalized value `O(φ)` can be computed in `NC^1` (logarithmic depth, polynomial size).\n\n**Proof Strategy:** (a) Use the balanced conjunction theorem to re-associate the formula into a balanced tree of depth `O(log n)`. (b) Show that applying `O` at each node can be done in constant additional depth. (c) Conclude that total depth is `O(log n)`, which is `NC^1`. The key technical lemma is that closure distributes over the balanced tree structure—this is exactly `balanced_parallel_sound`.\n\n**Cross-Domain Significance:** This bridges proof complexity and circuit complexity, giving a formal certificate that semantic simplification doe",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9af9301e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:28.620699+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "3. Stone-Style Representation for Finite Closed Proof States",
+    "description": "**Statement:** Prove a representation theorem: for a finite set of Boolean predicates over a finite type `α`, the lattice of fixed points of an idempotent closure operator `O` is isomorphic to the lattice of clopen sets of a finite Stone space (equivalently, a finite set with the discrete topology).\n\n**Proof Strategy:** (a) Use `kernel_fixedpoint_representation_pred` to establish the bijection between kernel classes and fixed points. (b) Show the fixed points form a finite Boolean algebra under pointwise operations (using `fixedpoints_closed_under_meet` and a dual result for join). (c) Apply Stone's representation theorem for finite Boolean algebras (which is elementary: every finite Boolean algebra is isomorphic to the powerset of its atoms).\n\n**Cross-Domain Significance:** This connects ",
+    "domains": [
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9af9301e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:28.641269+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "4. Certified Tactic Canonicalization via Closure Semilattice",
+    "description": "**Statement:** Define a \"tactic state\" as a finite conjunction of Boolean hypotheses. Prove that applying an idempotent closure operator to the conjunction yields a canonical representative that is invariant under hypothesis reordering, duplication, and re-association. Formalize this as a tactic normalization theorem: any two tactic states with the same \"semantic content\" (same closure class) have the same canonical form.\n\n**Proof Strategy:** Combine `foldAnd_perm_dup_invariant_under_closure` (for ordering/duplication invariance), `balanced_parallel_sound` (for re-association invariance), and `kernel_fixedpoint_representation_pred` (for canonical representative). The canonical form is `O (foldAnd hypotheses)`, which is a fixed point by idempotence.\n\n**Cross-Domain Significance:** This is d",
+    "domains": [
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9af9301e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:28.658317+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "5. Kernel-Fixedpoint Compression for Temporal/Modal Proof Systems",
+    "description": "**Statement:** Extend the framework to temporal logic (LTL or CTL) by defining a closure operator on temporal formulas that quotients by semantic equivalence. Prove that the fixedpoint compression theorem lifts to temporal formulas: every temporal formula has a unique canonical fixed-point representative under the closure, and conjunction of temporal formulas descends to the quotient.\n\n**Proof Strategy:** (a) Define temporal formulas as an inductive type with Boolean connectives plus temporal operators (next, until, always, eventually). (b) Define a semantic closure `O` that maps each formula to its semantically equivalent canonical form (e.g., by applying all valid temporal identities). (c) Apply `kernel_fixedpoint_representation_pred` at the level of `(State → Bool)` predicates (Kripke s",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9af9301e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:28.675465+00:00"
   }
 ]
