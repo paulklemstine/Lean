@@ -141,21 +141,6 @@
     "timestamp": "2026-05-14T16:16:22.737665+00:00"
   },
   {
-    "id": "fd_0107",
-    "title": "Formalizes definitions and conjectures",
-    "description": "in Lean 4, building on the existing `TropicalCurryHoward` module.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "b8bbbc75",
-    "consumed_by_exp_id": "7c012798",
-    "timestamp": "2026-05-14T16:17:21.765666+00:00"
-  },
-  {
     "id": "fd_0145",
     "title": "Idempotent convergence",
     "description": ": The sequence of tropical matrix powers `W, W², W³, ...` stabilizes at `W^(n-1)` for n-vertex graphs (Kleene star finiteness).\n\n### Proof Strategy\nUse the connection between tropical matrix multiplication and min-plus path composition. The rank-1 update formula is the tropical analogue of the Sherman–Morrison formula.\n\n### Cross-Domain Connections\n- Tropical linear algebra and the Kleene star\n- Dynamic graph algorithms (incremental shortest paths)\n- Operadic composition in higher algebra\n- Transfer matrix methods in statistical physics\n\n---\n\n## Direction 5: Tropical Holography via Boundary Distance Reconstruction\n\n### Hypothesis\nA weighted graph's internal structure can be reconstructed (up to isomorphism) from the boundary-to-boundary tropical distance matrix. This is a discrete analogue",
@@ -486,21 +471,6 @@
     "timestamp": "2026-05-16T13:42:08.381149+00:00"
   },
   {
-    "id": "fd_0258",
-    "title": "Convergence",
-    "description": ": Combine Fekete's lemma with the finite characterization to show convergence and identify the limit.\n\n### Cross-Domain Significance\nThis theorem is the tropical analogue of the Perron-Frobenius eigenvalue theorem. It connects:\n- **Graph theory**: minimum-weight cycles and shortest paths\n- **Dynamical systems**: asymptotic growth rates of iterated tropical maps\n- **Operations research**: cycle-time optimization in discrete event systems\n- **Formal verification**: a verified algorithm for computing tropical eigenvalues\n\nOur subadditivity theorem (`tropPow_diag_subadditive`) provides the key input.\n\n---\n\n## Direction 3: Birkhoff–von Neumann Decomposition\n\n### Theorem Statement\nEvery doubly stochastic matrix (nonneg entries with row and column sums equal to 1) is a convex combination of permu",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a6c55e7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:57:04.378420+00:00"
-  },
-  {
     "id": "fd_0261",
     "title": "Termination",
     "description": ": Since `Fin n → Fin n → ℝ` is finite-dimensional and each step increases the number of zeros, the process terminates in at most `n²-2n+2` steps.\n\n### Cross-Domain Significance\nThis theorem directly connects to our permutation coupling work: it shows that the Birkhoff polytope (set of doubly stochastic matrices) equals the convex hull of permutation matrices. Combined with our `permPlan_is_transportPlan`, this means:\n- Every transport plan between uniform measures is a convex combination of permutation plans\n- The Wasserstein distance for uniform measures can be computed as a minimum over permutation costs\n- This bridges optimal transport to combinatorial optimization (assignment problem)\n\n---\n\n## Direction 4: Hungarian Algorithm Correctness\n\n### Theorem Statement\nFormalize the Hungarian a",
@@ -513,20 +483,6 @@
     "source_exp_id": "a6c55e7c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T18:57:04.421460+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Well-definedness",
-    "description": ": Use our `wasserstein1_invariant_under_equiv` to show that `W(g·μ, ν) = W(g·μ, ν)` under the group action. Then show the orbit infimum is invariant under further group action on μ.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a6c55e7c",
-    "consumed_by_exp_id": "9ba4956d",
-    "timestamp": "2026-05-16T18:57:04.468119+00:00"
   },
   {
     "id": "fd_0240",
@@ -602,57 +558,6 @@
     "timestamp": "2026-05-16T19:15:45.209708+00:00"
   },
   {
-    "id": "fd_0245",
-    "title": "Union bound",
-    "description": ": Over n rounds, the total error probability is at most nd/q.\n\n### Formalization Target\n\n```lean\ntheorem sumCheck_soundness\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d : ℕ) (g : MvPolynomial (Fin n) 𝔽) (H_claimed H_true : 𝔽)\n    (hH : H_claimed ≠ H_true)\n    (hdeg : g.totalDegree ≤ d) :\n    verifierRejectProbability n d g H_claimed ≥ 1 - n * d / Fintype.card 𝔽\n```\n\n### Cross-Domain Connections\n- **Interactive proofs**: The sum-check protocol is the core of IP = PSPACE\n- **Zero-knowledge proofs**: Sum-check is used in zkSNARKs and zkSTARKs\n- **Verifiable computation**: Delegating computation to untrusted servers\n- **Cryptographic commitments**: Polynomial commitment schemes build on sum-check\n\n### Difficulty: ★★★★★\n\n---\n\n## Direction 3: Low-Degree Test Soundness (Rubinfeld–Sudan)\n\n### Ta",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.227595+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Distance amplification",
-    "description": ": Use the Reed–Muller minimum distance to convert \"close to a codeword\" into \"is a codeword.\"\n\n### Formalization Target\n\n```lean\ntheorem lowDegreeTest_soundness\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d : ℕ) (f : (Fin n → 𝔽) → 𝔽)\n    (hδ : relativeDistance f (closestCodeword f n d) ≥ δ) :\n    rejectProbability (lowDegreeTest f n d) ≥ c * δ\n```\n\n### Cross-Domain Connections\n- **PCP theorem**: Low-degree testing is the algebraic core of probabilistically checkable proofs\n- **Property testing**: Paradigmatic example of local testability\n- **Coding theory**: Testing proximity to a Reed–Muller codeword\n\n### Difficulty: ★★★★★\n\n---\n\n## Direction 4: Dual Reed–Muller Structure and Secret-Sharing Thresholds\n\n### Target Theorem\n\nThe dual code of RM_q(n, d) is RM_q(n, n(q−1)−d−1). This duality re",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.289863+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Threshold extraction",
-    "description": ": Derive secret-sharing parameters from code parameters.\n\n### Formalization Target\n\n```lean\ntheorem reedMuller_dual\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d : ℕ) (hd : d < n * (Fintype.card 𝔽 - 1)) :\n    dualCode (reedMullerCode 𝔽 n d) = reedMullerCode 𝔽 n (n * (Fintype.card 𝔽 - 1) - d - 1)\n```\n\n### Cross-Domain Connections\n- **Cryptography**: Optimal secret sharing, verifiable secret sharing\n- **Quantum error correction**: CSS codes from Reed–Muller and dual Reed–Muller\n- **Algebraic combinatorics**: Weight enumeration and association schemes\n\n### Difficulty: ★★★★☆\n\n---\n\n## Direction 5: Deterministic PIT for Restricted Circuit Classes\n\n### Target Theorem\n\nFor depth-3 ΣΠΣ circuits (sums of products of sums of variables) computing n-variate polynomials of degree d over 𝔽_q, there exis",
-    "domains": [
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.337803+00:00"
-  },
-  {
     "id": "fd_0253",
     "title": "Subspace-evasive sets",
     "description": ": Construct sets that avoid low-dimensional affine subspaces. These serve as hitting sets because the zero set of a ΣΠΣ circuit is a union of low-dimensional subspaces.",
@@ -665,48 +570,6 @@
     "source_exp_id": "38f08fce",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T19:15:45.356314+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Define `cherryReduceMetric`",
-    "description": ": Map Fin(n-1) → Fin(n) by skipping index j. For the merged point (corresponding to i), set D'(i',k') = D(i,k) - pendantLength(D,i,j,k_ref).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e1bdecc7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:05:46.959018+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Prove distance preservation",
-    "description": ": Show that distances in the extended tree match D.\n\n### Dependencies\n\n- `IsCherryPair` definition (proved to exist)\n- `pendantLength` properties (proved)\n- `LBTree.dist` infrastructure (proved)\n- Index manipulation lemmas for Fin(n) → Fin(n-1)\n\n### Cross-Domain Connection\n\n**Phylogenetics**: The cherry reduction is exactly the neighbor-joining step used in computational evolutionary biology. Formalizing it creates a verified foundation for phylogenetic software.\n\n---\n\n## Direction 2: Uniqueness / Canonicity Theorem\n\n### Theorem Statement\n\n```lean\n/-- Two reduced tree realizations of the same metric are isomorphic\nas weighted leaf-labeled trees. -/\ntheorem tree_realization_unique\n    {n : ℕ} (D : Matrix (Fin n) (Fin n) ℝ)\n    (hm : IsFiniteMetric D) (h4 : FourPointCondition D)\n    (t₁ t₂ :",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e1bdecc7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:05:47.016451+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Prove by induction on n",
-    "description": ": For n ≤ 3, direct. For n ≥ 4, both trees must have the same cherry pairs (determinable from D). Remove the same cherry from both, apply IH.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e1bdecc7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:05:47.059494+00:00"
   },
   {
     "id": "fd_0253",
@@ -723,20 +586,6 @@
     "source_exp_id": "e1bdecc7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T20:05:47.074705+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Define SPCondition",
-    "description": ": The analogue of the four-point condition for series-parallel metrics. This involves constraints on sextets of distances (6-point conditions).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e1bdecc7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:05:47.194187+00:00"
   },
   {
     "id": "fd_0260",
@@ -770,51 +619,6 @@
     "timestamp": "2026-05-16T20:05:47.250050+00:00"
   },
   {
-    "id": "fd_0262",
-    "title": "Show equivalence",
-    "description": ": The tropical Plücker relations for Gr(2,n) are exactly the four-point conditions when restricted to symmetric zero-diagonal matrices.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e1bdecc7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:05:47.265126+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Prove the reverse direction",
-    "description": ": Plücker relations plus metric axioms imply four-point (algebraic manipulation).\n\n### Dependencies\n\n- `FourPointCondition` (defined)\n- Tropical semiring definitions\n- Tropical Plücker coordinates\n\n### Cross-Domain Connection\n\n**Algebraic geometry**: The tropical Grassmannian is a fundamental object in tropical algebraic geometry. Connecting it to tree metrics creates a bridge between combinatorial optimization, algebraic geometry, and phylogenetics. This direction would also connect to the Dressian and the theory of valuated matroids.\n\n---\n\n## Implementation Priority",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e1bdecc7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:05:47.298444+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Direction 1",
-    "description": "(hypercontractivity) — most impactful single result",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "22fbf57d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:36:34.996106+00:00"
-  },
-  {
     "id": "fd_0248",
     "title": "Direction 2",
     "description": "(KKL/influence) — deep consequences for understanding arithmetic complexity",
@@ -827,34 +631,6 @@
     "source_exp_id": "22fbf57d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T20:36:35.014003+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Direction 4",
-    "description": "(thermodynamic bridge) — longest-term payoff, connects to broadest audience",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "22fbf57d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:36:35.029074+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Kantorovich duality",
-    "description": "completes the primal-dual picture for transport.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2204ee24",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:43:29.926918+00:00"
   },
   {
     "id": "fd_0251",
@@ -872,21 +648,6 @@
     "timestamp": "2026-05-16T20:43:29.945388+00:00"
   },
   {
-    "id": "fd_0252",
-    "title": "Birkhoff-von Neumann",
-    "description": "bridges the polytope/convex geometry between the two.",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2204ee24",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:43:29.963957+00:00"
-  },
-  {
     "id": "fd_0253",
     "title": "Wasserstein quotients",
     "description": "extends the invariance theorem to full group-theoretic generality.",
@@ -901,18 +662,107 @@
     "timestamp": "2026-05-16T20:43:29.985505+00:00"
   },
   {
-    "id": "fd_0254",
-    "title": "Hungarian algorithm",
-    "description": "grounds everything in verified computation.",
+    "id": "fd_0255",
+    "title": "1-Lipschitz aggregation",
+    "description": "(`tropicalAgg_lipschitz_of_pointwise`): The tropical proof-combinator `T_w(x) = max_i(w_i + x_i)` is non-expansive in the sup norm.",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2204ee24",
+    "source_exp_id": "7c012798",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:43:30.009237+00:00"
+    "timestamp": "2026-05-16T20:47:30.797963+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "2-Lipschitz selection",
+    "description": "(`tropicalSelect_lipschitz`): Joint perturbation of scores and values in hard attention changes output by at most `2ε`.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7c012798",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:47:30.814557+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "ReLU stability",
+    "description": "(`tropicalReluAgg_lipschitz_of_pointwise`): Composing with ReLU threshold preserves the 1-Lipschitz bound.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7c012798",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:47:30.830420+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Compositional stability",
+    "description": "(`tropicalAgg_comp_lipschitz`): Layered tropical networks remain 1-Lipschitz at any depth.\n\n---\n\n## Direction 1: Tropical Residuation and Linear Logic\n\n### Statement\nExtend the residuation adjunction into a full **residuated lattice** structure on tropical proof terms, connecting to Girard's linear logic.\n\n### Key Theorem Target\n```lean\n/-- The tropical semiring (ℝ, max, +) forms a residuated lattice. -/\nstructure TropicalResiduatedLattice where\n  carrier : Type*\n  join : carrier → carrier → carrier   -- max\n  mult : carrier → carrier → carrier   -- +\n  resid : carrier → carrier → carrier  -- tropical implication\n  adjunction : ∀ a b c, mult a b ≤ c ↔ b ≤ resid a c\n\n/-- Associativity of tropical composition. -/\ntheorem tropicalAgg_assoc {n m p : ℕ}\n    (W₁ : Fin (n+1) → Fin (m+1) → ℝ)\n    ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "7c012798",
+    "consumed_by_exp_id": "be71e654",
+    "timestamp": "2026-05-16T20:47:30.864971+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Tropical Algebra Lead",
+    "description": ": Formalize max-plus semiring theory, connecting to Mathlib's `Tropical` type.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7c012798",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:47:30.882604+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Proof Theory Lead",
+    "description": ": Develop the substructural logic connection, linear logic semantics.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7c012798",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:47:30.901140+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Complexity Theory Lead",
+    "description": ": Circuit lower bounds, expressivity characterizations.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7c012798",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:47:30.939622+00:00"
   },
   {
     "id": "fd_0113",
@@ -1609,73 +1459,6 @@
     "timestamp": "2026-05-16T14:28:58.186572+00:00"
   },
   {
-    "id": "fd_0258",
-    "title": "5. Channel Product Encodings and Information Capacity",
-    "description": "**Hypothesis:** The product encoding theorem provides the combinatorial foundation for proving that the capacity of a product of discrete memoryless channels equals the sum of individual capacities. Specifically, if channel 1 has input alphabet of size `2^k` and channel 2 has input alphabet of size `2^ℓ`, then the product channel admits `2^(k+ℓ)` distinguishable input states.\n\n**Proof Strategy:** Define a discrete memoryless channel as a stochastic matrix. Define the product channel. Use the product encoding theorem to show that the input space of the product channel can be injectively encoded with additive bit-length. Connect this to mutual information and channel capacity via the data processing inequality (which already has combinatorial shadows in the existing `EntropyBridge.lean` infr",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d032c89b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:34:16.252979+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "5. Tropical Fixed-Point Certificates for Piecewise-Linear Systems",
-    "description": "**Theorem statement:**\nFor a max-affine operator `T : (Fin n → ℝ) → (Fin n → ℝ)` defined by\n```\nT(x)_i = max_j (A i j + x j + b i j)\n```\nif `A` has tropical eigenvalue `λ < 0`, then `T` has a unique fixed point, and the iteration `x_{k+1} = T(x_k)` converges to it at rate `|λ|`.\n\n**Why it matters:** ReLU neural networks compute piecewise-linear functions. Each layer is a max-affine map (after applying ReLU). The tropical eigenvalue controls:\n- Whether the network amplifies or attenuates signals\n- The rate of convergence of iterative inference\n- Robustness certificates (Lipschitz bounds from spectral analysis)\n\nA formal tropical fixed-point theorem would enable certified analysis of neural network properties without training or simulation.\n\n**Proof strategy:**\n1. Prove the max-affine operat",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "04765070",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:12:09.887593+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "7. Tropical Transfer Learning via Spectral Alignment",
-    "description": "**Hypothesis**: Two tropical networks with similar spectral radii can be aligned via a tropical change of basis, enabling certified transfer of depth-stability guarantees.\n\n**Proof Strategy**:\n1. Define tropical similarity: `A ~ D⁻¹ ⊗ B ⊗ D` where `D` is a diagonal tropical matrix (scaling).\n2. Show that similar matrices have the same spectral radius (maximum cycle mean).\n3. Prove that the iterate bound transfers: if `A ~ B`, then depth-stability certificates for `A` apply to `B`.\n\n**Cross-domain significance**: This provides a mathematical framework for understanding when and how depth-stability guarantees transfer between architectures, a key question in practical deep learning.\n\n---",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "795174d8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:54:14.982988+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Theorem Target",
-    "description": "```\ntheorem qary_huffman_optimal\n    (q : ℕ) (hq : 2 ≤ q)\n    (p : α → ℝ) (hp_pos : ∀ a, 0 < p a) (hp_sum : ∑ a, p a = 1)\n    (ℓ_huffman : α → ℕ) (h_huffman : IsQaryHuffmanCode q p ℓ_huffman)\n    (ℓ_any : α → ℕ) (h_kraft : ∑ a, (q : ℝ) ^ (-(ℓ_any a : ℝ)) ≤ 1) :\n    ∑ a, p a * (ℓ_huffman a : ℝ) ≤ ∑ a, p a * (ℓ_any a : ℝ)\n```",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "52b15fb5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:35:36.646565+00:00"
-  },
-  {
     "id": "fd_0253",
     "title": "Hypothesis",
     "description": "The information bottleneck principle — that deep neural networks compress information about inputs while preserving information about outputs — can be formalized and certified using the q-ary tropical coding framework.",
@@ -1689,35 +1472,6 @@
     "source_exp_id": "52b15fb5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T19:35:36.681776+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Impact Assessment",
-    "description": "| Direction | Mathematical Depth | Engineering Impact | Novelty | Feasibility |\n|-----------|-------------------|-------------------|---------|-------------|\n| Huffman | ★★★☆ | ★★★★ | ★★☆☆ | ★★★★ |\n| Stochastic DPI | ★★★★ | ★★★★★ | ★★★☆ | ★★★☆ |\n| Rate-Distortion | ★★★★★ | ★★★★ | ★★★★ | ★★☆☆ |\n| Robustness Bridge | ★★★☆ | ★★★★★ | ★★★★★ | ★★★★ |\n| Free Energy | ★★★★★ | ★★★☆ | ★★★★ | ★★★☆ |\n| Channel Coding | ★★★★★ | ★★★★★ | ★★★☆ | ★★☆☆ |\n| Info Bottleneck | ★★★★ | ★★★★★ | ★★★★★ | ★★★☆ |",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "52b15fb5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:35:36.777527+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Precise Theorem Statement",
-    "description": "The Blahut-Arimoto algorithm converges to the global minimum of I(X;Y) + β·E[d(X,Y)] over all channels W : α → β. Formally: for every ε > 0, there exists N such that after N iterations, the channel Wₙ satisfies |I(μ; Wₙ) + β·D(μ, Wₙ) - R*(β)| < ε.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "473914a2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:06:14.593534+00:00"
   },
   {
     "id": "fd_0246",
