@@ -1,339 +1,297 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Grokking Detection
+Algorithms for Tropical Phase Transition Detection in Neural Networks
 
-Implements the core algorithms from the tropical grokking framework:
-1. Tropical polynomial evaluation and active set computation
-2. Corner-locus crossing detection
-3. Degeneracy index (order parameter) computation
-4. Grokking onset prediction via tropical order parameter monitoring
-
-All algorithms have explicit complexity analysis and type hints.
+Implements the core algorithms derived from the mathematical framework:
+1. Tropical score computation (max-plus polynomial evaluation)
+2. Tropical boundary gap computation
+3. Corner-locus detection
+4. Order parameter tracking along training trajectories
+5. Phase transition detection (grokking onset)
 """
 
 import numpy as np
-from typing import List, Tuple, FrozenSet, Optional
+from typing import List, Tuple, Optional, Dict
 from dataclasses import dataclass
 
 
 @dataclass
-class AffineForm:
-    """An affine form w·x + b on R^n.
-
-    Attributes:
-        w: Weight vector (linear coefficients)
-        b: Bias (constant term)
+class TropParams:
     """
-    w: np.ndarray
-    b: float
-
-    def eval(self, x: np.ndarray) -> float:
-        """Evaluate the affine form at x.
-
-        Time complexity: O(n) where n = dim(x)
-        """
-        return float(np.dot(self.w, x) + self.b)
-
-
-@dataclass
-class TropicalPolynomial:
-    """A tropical polynomial: minimum of finitely many affine forms.
-
-    This represents a piecewise-linear convex function, which is the
-    fundamental building block of ReLU neural network score functions
-    under tropicalization.
-
+    Parameters for a tropical (max-plus) neural classifier.
+    
     Attributes:
-        forms: List of affine forms whose minimum defines the polynomial
+        W: Weight tensor of shape (k, m, n) — k classes, m pieces, n input dims
+        b: Bias matrix of shape (k, m)
     """
-    forms: List[AffineForm]
-
-    def eval(self, x: np.ndarray) -> float:
-        """Evaluate the tropical polynomial at x.
-
-        Returns min_i (w_i · x + b_i).
-
-        Time complexity: O(m·n) where m = |forms|, n = dim(x)
-        """
-        return min(f.eval(x) for f in self.forms)
-
-    def active_set(self, x: np.ndarray, tol: float = 1e-10) -> FrozenSet[int]:
-        """Compute the active set: indices of forms achieving the minimum.
-
-        Time complexity: O(m·n)
-        Space complexity: O(m)
-
-        Args:
-            x: Point in parameter space
-            tol: Numerical tolerance for equality
-
-        Returns:
-            Frozenset of indices of active affine forms
-        """
-        val = self.eval(x)
-        return frozenset(
-            i for i, f in enumerate(self.forms)
-            if abs(f.eval(x) - val) < tol
-        )
-
-    def is_corner_crossing(self, x1: np.ndarray, x2: np.ndarray,
-                           tol: float = 1e-10) -> bool:
-        """Detect whether the active set changes between x1 and x2.
-
-        A corner crossing indicates that the trajectory has moved from one
-        tropical cell to another, which is the geometric signature of a
-        phase transition.
-
-        Time complexity: O(m·n)
-
-        Args:
-            x1, x2: Two points in parameter space
-            tol: Numerical tolerance
-
-        Returns:
-            True if the active sets differ (corner crossing detected)
-        """
-        return self.active_set(x1, tol) != self.active_set(x2, tol)
-
-
-@dataclass
-class TropicalClassifier:
-    """A tropical classifier: class scores given by tropical polynomials.
-
-    Each class j has a score function score_j(x) = min_i (w_{j,i} · x + b_{j,i}),
-    and the predicted class is argmin_j score_j(x).
-
-    Attributes:
-        class_scores: List of tropical polynomials, one per class
-    """
-    class_scores: List[TropicalPolynomial]
-
+    W: np.ndarray  # shape (k, m, n)
+    b: np.ndarray  # shape (k, m)
+    
     @property
-    def num_classes(self) -> int:
-        return len(self.class_scores)
-
-    def scores(self, x: np.ndarray) -> List[float]:
-        """Compute all class scores at x.
-
-        Time complexity: O(k·m·n) where k = classes, m = forms/class, n = dim
-        """
-        return [tp.eval(x) for tp in self.class_scores]
-
-    def predict(self, x: np.ndarray) -> int:
-        """Predict the class (argmin of scores).
-
-        Time complexity: O(k·m·n)
-        """
-        s = self.scores(x)
-        return int(np.argmin(s))
-
-    def margin(self, x: np.ndarray, y_true: int) -> float:
-        """Compute the decision margin for true class y_true.
-
-        margin(x) = min_{j ≠ y} (score_j(x) - score_y(x))
-
-        Positive margin means correct classification.
-        Larger margin means more robust to perturbations.
-
-        Time complexity: O(k·m·n)
-
-        Args:
-            x: Point in parameter space
-            y_true: Index of the true class
-
-        Returns:
-            Decision margin (positive = correct prediction)
-        """
-        s = self.scores(x)
-        return min(s[j] - s[y_true]
-                   for j in range(self.num_classes) if j != y_true)
-
-    def degeneracy_index(self, x: np.ndarray, y_true: int,
-                         delta: float) -> int:
-        """Compute the degeneracy index (tropical order parameter).
-
-        Counts how many competing classes have score within delta of the
-        true class. High degeneracy = near decision boundary for multiple classes.
-
-        Φ(x) = |{j ≠ y : score_j(x) - score_y(x) ≤ δ}|
-
-        Time complexity: O(k·m·n)
-        Space complexity: O(1)
-
-        Args:
-            x: Point in parameter space
-            y_true: Index of the true class
-            delta: Threshold for "near boundary"
-
-        Returns:
-            Number of classes within delta of the decision boundary
-        """
-        s = self.scores(x)
-        return sum(1 for j in range(self.num_classes)
-                   if j != y_true and s[j] - s[y_true] <= delta)
+    def n_classes(self) -> int:
+        return self.W.shape[0]
+    
+    @property
+    def n_pieces(self) -> int:
+        return self.W.shape[1]
+    
+    @property
+    def n_input(self) -> int:
+        return self.W.shape[2]
 
 
-def detect_grokking_onset(
-    trajectory: List[np.ndarray],
-    classifier: TropicalClassifier,
-    y_true: int,
-    delta: float,
-    margin_threshold: float = 0.05
-) -> Optional[int]:
-    """Detect grokking onset using the tropical order parameter.
-
+def compute_class_score(params: TropParams, c: int, x: np.ndarray) -> float:
+    """
+    Compute the max-plus tropical class score for class c at input x.
+    
     Algorithm:
-    1. Compute degeneracy index Φ(θ_t) along the trajectory
-    2. Find the first time t where Φ drops strictly
-    3. Verify that a margin jump occurs at or after this time
-
-    Time complexity: O(T·k·m·n) where T = trajectory length
-    Space complexity: O(T)
-
+        score_c(x) = max_{j=1..m} (b[c,j] + sum_i W[c,j,i] * x[i])
+    
+    Time complexity: O(m * n)
+    Space complexity: O(m)
+    
     Args:
-        trajectory: List of parameter vectors θ_0, θ_1, ..., θ_{T-1}
-        classifier: The tropical classifier
-        y_true: True class index
-        delta: Degeneracy threshold
-        margin_threshold: Minimum margin jump to count as grokking
-
+        params: Tropical classifier parameters
+        c: Class index (0-indexed)
+        x: Input vector of shape (n,)
+    
     Returns:
-        Time step of grokking onset, or None if not detected
+        The tropical score for class c at x
+    """
+    affine_values = params.b[c, :] + params.W[c, :, :] @ x
+    return float(np.max(affine_values))
+
+
+def compute_all_scores(params: TropParams, x: np.ndarray) -> np.ndarray:
+    """
+    Compute tropical scores for all classes at input x.
+    
+    Time complexity: O(k * m * n)
+    
+    Returns:
+        Array of shape (k,) with scores for each class
+    """
+    k = params.n_classes
+    return np.array([compute_class_score(params, c, x) for c in range(k)])
+
+
+def compute_tropical_boundary_gap(params: TropParams, x: np.ndarray) -> float:
+    """
+    Compute the tropical boundary gap at input x.
+    
+    Definition:
+        gap(x) = min_{c ≠ c'} |score_c(x) - score_{c'}(x)|
+    
+    This measures the minimum "distance" to the tropical decision boundary.
+    Returns 0 iff x lies on the corner locus.
+    
+    Time complexity: O(k² * m * n)
+    
+    Args:
+        params: Tropical classifier parameters
+        x: Input vector
+    
+    Returns:
+        The tropical boundary gap (always ≥ 0)
+    """
+    scores = compute_all_scores(params, x)
+    k = len(scores)
+    min_gap = float('inf')
+    for c in range(k):
+        for c_prime in range(k):
+            if c != c_prime:
+                min_gap = min(min_gap, abs(scores[c] - scores[c_prime]))
+    return min_gap
+
+
+def detect_corner_locus(params: TropParams, x: np.ndarray,
+                         tol: float = 1e-10) -> Tuple[bool, Optional[Tuple[int, int]]]:
+    """
+    Detect whether x lies on the corner locus (decision boundary).
+    
+    Returns:
+        (is_on_boundary, witness_pair) where witness_pair is (c, c') with
+        equal scores, or None if not on boundary.
+    
+    Time complexity: O(k² * m * n)
+    """
+    scores = compute_all_scores(params, x)
+    k = len(scores)
+    for c in range(k):
+        for c_prime in range(c + 1, k):
+            if abs(scores[c] - scores[c_prime]) < tol:
+                return True, (c, c_prime)
+    return False, None
+
+
+def compute_tropical_order_sum(params: TropParams, 
+                                dataset: List[np.ndarray]) -> float:
+    """
+    Compute the tropical order sum (unnormalized order parameter).
+    
+    Definition:
+        Φ(params, S) = Σ_{x ∈ S} gap(params, x)
+    
+    Time complexity: O(|S| * k² * m * n)
+    """
+    return sum(compute_tropical_boundary_gap(params, x) for x in dataset)
+
+
+def detect_phase_transition(
+    trajectory: List[TropParams],
+    dataset: List[np.ndarray],
+    window_size: int = 5
+) -> Dict:
+    """
+    Detect grokking-as-phase-transition along a training trajectory.
+    
+    Algorithm:
+    1. Compute the tropical order parameter at each step
+    2. Detect the first step where any sample hits the corner locus
+    3. Detect monotone decrease regions
+    4. Report the phase transition point and statistics
+    
+    Time complexity: O(T * |S| * k² * m * n)
+    
+    Args:
+        trajectory: List of TropParams at each training step
+        dataset: Training dataset
+        window_size: Size of smoothing window for transition detection
+    
+    Returns:
+        Dictionary with:
+        - 'order_parameters': list of Φ values
+        - 'transition_step': step where phase transition occurs (or None)
+        - 'corner_locus_events': list of (step, sample_idx, class_pair) tuples
+        - 'is_phase_transition': whether a clear transition was detected
     """
     T = len(trajectory)
-    if T < 2:
-        return None
-
-    # Phase 1: Compute order parameter along trajectory
-    degeneracies = [classifier.degeneracy_index(trajectory[t], y_true, delta)
-                    for t in range(T)]
-
-    # Phase 2: Find first strict drop in degeneracy
-    onset_candidate = None
-    for t in range(T - 1):
-        if degeneracies[t + 1] < degeneracies[t]:
-            onset_candidate = t
-            break
-
-    if onset_candidate is None:
-        return None
-
-    # Phase 3: Verify margin jump
-    margins = [classifier.margin(trajectory[t], y_true) for t in range(T)]
-    for t in range(onset_candidate, T - 1):
-        if margins[t + 1] - margins[t] > margin_threshold:
-            return t
-
-    return onset_candidate
-
-
-def detect_corner_crossings(
-    trajectory: List[np.ndarray],
-    poly: TropicalPolynomial,
-    tol: float = 1e-10
-) -> List[int]:
-    """Find all corner-locus crossings along a trajectory.
-
-    Time complexity: O(T·m·n)
-    Space complexity: O(T)
-
-    Args:
-        trajectory: List of parameter vectors
-        poly: Tropical polynomial whose active sets to monitor
-        tol: Numerical tolerance
-
-    Returns:
-        List of time steps where corner crossings occur
-    """
-    crossings = []
-    for t in range(len(trajectory) - 1):
-        if poly.is_corner_crossing(trajectory[t], trajectory[t + 1], tol):
-            crossings.append(t)
-    return crossings
-
-
-def compute_tropical_metrics(
-    trajectory: List[np.ndarray],
-    classifier: TropicalClassifier,
-    y_true: int,
-    delta: float
-) -> dict:
-    """Compute all tropical grokking metrics along a trajectory.
-
-    Returns a dictionary with:
-    - margins: List of decision margins
-    - degeneracies: List of degeneracy indices
-    - active_sets: List of active sets for the true class score
-    - corner_crossings: Time steps of corner crossings
-    - grokking_onset: Detected grokking onset time (or None)
-
-    Time complexity: O(T·k·m·n)
-
-    Args:
-        trajectory: Training trajectory
-        classifier: Tropical classifier
-        y_true: True class
-        delta: Degeneracy threshold
-
-    Returns:
-        Dictionary of metrics
-    """
-    T = len(trajectory)
-    true_poly = classifier.class_scores[y_true]
-
-    margins = [classifier.margin(trajectory[t], y_true) for t in range(T)]
-    degeneracies = [classifier.degeneracy_index(trajectory[t], y_true, delta)
-                    for t in range(T)]
-    active_sets_list = [true_poly.active_set(trajectory[t]) for t in range(T)]
-    crossings = detect_corner_crossings(trajectory, true_poly)
-    onset = detect_grokking_onset(trajectory, classifier, y_true, delta)
-
+    order_params = []
+    corner_events = []
+    
+    for t, params in enumerate(trajectory):
+        # Compute order parameter
+        op = compute_tropical_order_sum(params, dataset)
+        order_params.append(op)
+        
+        # Check for corner-locus events
+        for i, x in enumerate(dataset):
+            is_on, pair = detect_corner_locus(params, x)
+            if is_on:
+                corner_events.append((t, i, pair))
+    
+    # Detect transition: first time order parameter drops significantly
+    transition_step = None
+    if len(order_params) > window_size:
+        for t in range(window_size, T):
+            before = np.mean(order_params[t - window_size:t])
+            after = order_params[t]
+            if before > 0 and after / before < 0.5:
+                transition_step = t
+                break
+    
     return {
-        'margins': margins,
-        'degeneracies': degeneracies,
-        'active_sets': active_sets_list,
-        'corner_crossings': crossings,
-        'grokking_onset': onset,
+        'order_parameters': order_params,
+        'transition_step': transition_step,
+        'corner_locus_events': corner_events,
+        'is_phase_transition': transition_step is not None,
+        'first_corner_event': corner_events[0] if corner_events else None
     }
 
 
+def find_discrete_sign_change(gap_values: np.ndarray) -> Optional[int]:
+    """
+    Find the first discrete sign change in a sequence of gap values.
+    
+    Implements the Discrete Sign-Change Theorem (Theorem C):
+    If gap[0] < 0 and gap[-1] > 0, returns index i such that
+    gap[i] ≤ 0 and gap[i+1] ≥ 0.
+    
+    Time complexity: O(T)
+    
+    Args:
+        gap_values: Array of pairwise score differences along trajectory
+    
+    Returns:
+        Index of the sign change, or None if no sign change found
+    """
+    for i in range(len(gap_values) - 1):
+        if gap_values[i] <= 0 and gap_values[i + 1] >= 0:
+            return i
+    return None
+
+
+def interpolate_params(P: TropParams, Q: TropParams, alpha: float) -> TropParams:
+    """
+    Linear interpolation between two parameter configurations.
+    
+    Creates a "discrete geodesic" in parameter space.
+    
+    Args:
+        P, Q: Endpoint parameters
+        alpha: Interpolation parameter in [0, 1]
+    
+    Returns:
+        Interpolated TropParams at (1-α)P + αQ
+    """
+    return TropParams(
+        W=(1 - alpha) * P.W + alpha * Q.W,
+        b=(1 - alpha) * P.b + alpha * Q.b
+    )
+
+
 # ============================================================
-# Example usage
+# Example Usage
 # ============================================================
 
-if __name__ == '__main__':
-    print("Tropical Grokking Detection Algorithms")
+if __name__ == "__main__":
+    print("Tropical Phase Transition Detection Algorithm")
     print("=" * 50)
-
-    # Create a simple 2-class classifier in R^3
-    class0 = TropicalPolynomial([
-        AffineForm(np.array([1.0, 0.5, 0.2]), -1.0),
-        AffineForm(np.array([0.3, 1.0, 0.4]), -0.5),
-    ])
-    class1 = TropicalPolynomial([
-        AffineForm(np.array([0.8, 0.3, 0.5]), -0.8),
-        AffineForm(np.array([0.2, 0.7, 0.9]), -0.3),
-    ])
-    classifier = TropicalClassifier([class0, class1])
-
-    # Generate a trajectory
-    T = 40
-    trajectory = []
-    for t in range(T):
-        if t < 25:
-            theta = np.array([0.5 + 0.02*t, 0.3 + 0.01*t, 0.1 + 0.005*t])
-        else:
-            theta = np.array([1.0 + 0.05*(t-25), 0.55 + 0.03*(t-25),
-                              0.225 + 0.02*(t-25)])
-        trajectory.append(theta)
-
-    # Compute metrics
-    metrics = compute_tropical_metrics(trajectory, classifier, y_true=0, delta=0.2)
-
-    print(f"\nTrajectory length: {T}")
-    print(f"Corner crossings at: {metrics['corner_crossings']}")
-    print(f"Grokking onset at: {metrics['grokking_onset']}")
-    print(f"Margin range: [{min(metrics['margins']):.4f}, "
-          f"{max(metrics['margins']):.4f}]")
-    print(f"Degeneracy range: [{min(metrics['degeneracies'])}, "
-          f"{max(metrics['degeneracies'])}]")
+    
+    # Create a simple example
+    rng = np.random.RandomState(42)
+    n, k, m = 3, 3, 2
+    
+    # Start parameters (memorizing regime)
+    P_start = TropParams(
+        W=rng.randn(k, m, n),
+        b=rng.randn(k, m) * 2
+    )
+    
+    # End parameters (generalizing regime — engineered corner crossing)
+    P_end = TropParams(
+        W=P_start.W.copy(),
+        b=P_start.b.copy()
+    )
+    
+    dataset = [rng.randn(n) for _ in range(5)]
+    
+    # Engineer corner crossing at dataset[0]
+    s0 = compute_class_score(P_end, 0, dataset[0])
+    s1 = compute_class_score(P_end, 1, dataset[0])
+    P_end.b[1, 0] += (s0 - s1)
+    
+    # Create trajectory
+    T = 50
+    trajectory = [interpolate_params(P_start, P_end, t / T) for t in range(T + 1)]
+    
+    # Run detection
+    result = detect_phase_transition(trajectory, dataset)
+    
+    print(f"Phase transition detected: {result['is_phase_transition']}")
+    if result['transition_step'] is not None:
+        print(f"Transition step: {result['transition_step']}")
+    if result['first_corner_event'] is not None:
+        step, sample, pair = result['first_corner_event']
+        print(f"First corner-locus event: step {step}, sample {sample}, classes {pair}")
+    
+    # Verify sign change theorem
+    gap_01 = [compute_class_score(trajectory[t], 0, dataset[0]) - 
+              compute_class_score(trajectory[t], 1, dataset[0]) 
+              for t in range(T + 1)]
+    gap_arr = np.array(gap_01)
+    sign_change = find_discrete_sign_change(gap_arr)
+    if sign_change is not None:
+        print(f"\nDiscrete sign change (Theorem C): step {sign_change}")
+        print(f"  gap[{sign_change}] = {gap_arr[sign_change]:.6f}")
+        print(f"  gap[{sign_change+1}] = {gap_arr[sign_change+1]:.6f}")

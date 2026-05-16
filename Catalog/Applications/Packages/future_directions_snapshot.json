@@ -9,10 +9,10 @@
       "Computation"
     ],
     "priority_score": 0.96,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "66470415",
     "timestamp": "2026-05-14T16:03:53.865300+00:00"
   },
   {
@@ -690,20 +690,6 @@
     "timestamp": "2026-05-15T20:38:19.075691+00:00"
   },
   {
-    "id": "fd_0213",
-    "title": "Hypothesize",
-    "description": ": Formulate conjectures based on the semantic kernel.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "54f0e2a0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:41:02.961649+00:00"
-  },
-  {
     "id": "fd_0219",
     "title": "Finite-dimensional spectral theorem",
     "description": ": Eigenvalue decomposition for real symmetric matrices on `Fin n`.",
@@ -837,20 +823,6 @@
     "timestamp": "2026-05-15T22:01:06.662655+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Tropical eigenvector animator:",
-    "description": "Visualize tropical power iteration converging to the eigenvector.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bd33180",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:12:11.170879+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "Cycle-mean explorer:",
     "description": "Enumerate cycles and display their means, highlighting critical cycles.\n\n### Cross-Domain Collaborations",
@@ -879,20 +851,6 @@
     "source_exp_id": "6bd33180",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T22:12:11.220894+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Verify examples",
-    "description": "computationally with `#eval` or Python.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cd76a6a7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:22:05.156916+00:00"
   },
   {
     "id": "fd_0231",
@@ -925,20 +883,6 @@
     "timestamp": "2026-05-16T00:01:36.121253+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Decomposes into lemmas",
-    "description": "following the median → boundary-interior → bulk pipeline established in this work.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1185fa15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:05.376079+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "Iterates",
     "description": "between formalization and informal proof discovery.",
@@ -951,6 +895,51 @@
     "source_exp_id": "1185fa15",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T00:04:05.384135+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Medium-term",
+    "description": "(1 month): Closure tensorization and automata duality",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fb63810b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:51:28.222557+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Long-term",
+    "description": "(3 months): Logical product semantics and full tropical thermodynamics",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fb63810b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:51:28.233976+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Visionary",
+    "description": "(6+ months): Tropical proof complexity lower bounds and connections to P vs NP barriers",
+    "domains": [
+      "Tropical",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fb63810b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:51:28.244273+00:00"
   },
   {
     "id": "seed_052",
@@ -1205,22 +1194,6 @@
     "source_exp_id": "d2a18598",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.336933+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "Research Team Directive",
-    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "fb63810b",
-    "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
     "id": "fd_0200",
@@ -1485,22 +1458,6 @@
     "timestamp": "2026-05-15T22:33:29.237233+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "2. Tropical Production Network Generalization",
-    "description": "**Hypothesis:** For assembly networks combining serial (min) and parallel (+) stages in min-plus algebra, targeted upgrades on the tropical critical path yield provable throughput gains.\n\n**Proof Strategy:**\n- Define min-plus semiring operations on `ℕ∞` (or `WithTop ℕ`).\n- Model production networks as min-plus polynomials: `throughput = ⊓ᵢ (⊔ⱼ cᵢⱼ)` where ⊓ is min and ⊔ is addition.\n- Identify the critical set as the \"tropical variety\" — the support where minima are attained.\n- Generalize `bottleneck_raiseOn_one_step` to min-plus expressions.\n\n**Key Insight:** Serial throughput (our current theorem) is the degree-one case. Assembly networks with convergent stages require min-plus polynomials of higher degree.\n\n**Lean Target:**\n```\ndef TropicalNetwork (α : Type*) := α → WithTop ℕ\ndef tropic",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "476ffddd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:00:36.566738+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "3. Closure-Capacity Transfer Principle",
     "description": "**Hypothesis:** The bottleneck set of a finite min-capacity system corresponds to the fixed-point support of an associated closure operator, and capacity-improving moves correspond to raising the minimal fixed-point value.\n\n**Proof Strategy:**\n- Define a closure operator on `Finset α` by `cl(S) = {x ∈ s | c x ≤ s.inf' hs c + k}` for parameter k.\n- Show that `bottleneckSet` is `cl(∅)` for k = 0.\n- Prove that after a raiseOn upgrade, the new closure contracts: `cl_new(∅) ⊂ cl_old(∅)` when the upgrade is exactly on the bottleneck.\n- Connect to `certified_reconstruction_from_closure_capacity` by showing capacity reconstruction from closure data.\n\n**Long-Term Vision:** A categorical framework where capacity is a natural transformation between capacity functors, and upgrades are morphisms in the",
@@ -1638,22 +1595,6 @@
     "source_exp_id": "94c243f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:09:09.398477+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Direction 7: Certified Randomized Linear Algebra",
-    "description": "**Hypothesis**: Freivalds' algorithm generalizes to certified verification of other linear algebra operations: determinant, rank, matrix inverse, eigenvalues.\n\n**Proof Strategy**:\n1. Verify det(A) = d by checking A·adj(A) = d·I via Freivalds.\n2. Verify rank(A) = r by checking the kernel dimension via random projections.\n3. Verify A⁻¹ = B by checking A·B = I via Freivalds.\n4. Each reduces to matrix multiplication verification.\n\n**Key Theorem**:\n```\ntheorem verified_inverse (A B : Matrix (Fin n) (Fin n) K) (hAB : A * B ≠ 1) :\n    Fintype.card {r | (A * B).mulVec r = r} ≤ |K|^{n-1}\n```\n\n**Impact**: Complete certified randomized linear algebra toolkit. Applicable to verified numerical computation and certified symbolic algebra systems.\n\n**Cross-domain connections**: Numerical linear algebra, s",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.445949+00:00"
   },
   {
     "id": "fd_0242",
@@ -1813,37 +1754,6 @@
     "source_exp_id": "cb6bb980",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:30:41.692385+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "1. Right Adjoint Existence Criterion",
-    "description": "**Hypothesis:** A theory morphism `F : T → U` admits a right adjoint if and only if the image of the invariant function `U.Inv ∘ F.toFun` satisfies a \"downward completeness\" condition: for every `y ∈ U.Carrier`, the set `{ T.Inv x | U.Inv(F(x)) ≤ U.Inv(y) }` has a maximum.\n\n**Proof Strategy:**\n- Formalize a `HasRightAdjoint` predicate\n- Show the condition is equivalent to the existence of a map `G` satisfying the Galois biconditional\n- Connect to Mathlib's `GaloisConnection.l_sup` and order-completeness results\n- Apply to characterize exactly when catalog morphisms (e.g., height → dimension) admit right adjoints\n\n**Cross-Domain Connection:** This parallels the Freyd adjoint functor theorem in category theory and the existence criterion for best abstract domains in abstract interpretation.",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4f490452",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:33.344420+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "2. Bicategory of Research Theories with Adjunctions as 2-Cells",
-    "description": "**Hypothesis:** Research theories, theory morphisms, and adjunctions form a locally thin bicategory where:\n- Objects = Research theories\n- 1-cells = Theory morphisms\n- 2-cells = Adjunctions (an adjunction `F ⊣ G` defines a 2-cell from `F` to `G`)\n\n**Proof Strategy:**\n- Extend `ResearchTheoryBicategory.lean` by adding adjunctions as a new 2-cell type\n- Prove the interchange law for adjunction composition\n- Show that the identity adjunction is the unit 2-cell\n- Formalize the connection to Mathlib's `CategoryTheory.Adjunction`\n\n**Why This Matters:** This would provide a systematic framework for comparing different translations between theories. Two morphisms related by a 2-cell (adjunction) means one is provably \"tighter\" than the other at preserving invariant information.",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4f490452",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:33.358090+00:00"
   },
   {
     "id": "fd_0242",
