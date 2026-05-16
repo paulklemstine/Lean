@@ -849,22 +849,6 @@
     "timestamp": "2026-05-16T14:39:14.359620+00:00"
   },
   {
-    "id": "fd_0255",
-    "title": "Connection to transport",
-    "description": ": Use `permPlan_transportCost` and `permPlan_is_transportPlan` to relate the assignment optimum to the Wasserstein distance.\n\n### Cross-Domain Significance\n\n- **Combinatorics ↔ Transport**: A verified Hungarian algorithm would be the first formally verified optimal transport solver.\n- **Combinatorics ↔ Tropical**: The dual potentials in the Hungarian algorithm are tropical eigenfunction-like objects.\n- **Practical**: Verified algorithms for assignment/transport have applications in verified robotics, supply chain optimization, and certified ML pipelines.\n\n---\n\n## Direction 5: Wasserstein Quotient Under Finite Group Actions\n\n### Theorem Statement\n\nWhen a finite group G acts on Fin n by cost-preserving bijections, the Wasserstein distance descends to the quotient: define the equivalence rela",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fc0fc4e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:39:14.421193+00:00"
-  },
-  {
     "id": "fd_0257",
     "title": "Triangle inequality",
     "description": ": For any ε > 0, pick near-optimal group elements g₁, g₂ for (μ,ν) and (ν,ρ). Then g₁·g₂ is a candidate for (μ,ρ), and the triangle inequality for W_c gives the bound.",
@@ -877,6 +861,36 @@
     "source_exp_id": "3fc0fc4e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T14:39:14.454757+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Forward inclusion",
+    "description": ": A function depending on coordinates `S` with `|S| ≤ k` lies in the span of homogeneous sectors of degree ≤ k. Prove by writing the function in the product basis and observing that each basis function has degree ≤ |S|.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b52cd807",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:56:55.933033+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Backward inclusion",
+    "description": ": A function in homogeneous degree `d ≤ k` depends on at most `d ≤ k` coordinates by definition.\n3. Key lemma: every function on `(Fin 3)^L` has a unique decomposition into homogeneous degree sectors.\n\n### Dependencies\n- `degreeLeSubmodule`, `homogeneousDegreeSubmodule` (present work)\n- Linear algebra: direct sum decomposition\n- Orthogonality of homogeneous sectors (new)\n\n---\n\n## 4. Thermodynamic Formalism Bridge\n\n### Theorem Statement (Target)\nFor the Berggren transfer operator `L_φ` with potential `φ` depending on the first `k` coordinates:\n```lean\ntheorem transfer_operator_spectral_factorization :\n    ∃ (T : BerggrenFn L →ₗ[ℝ] BerggrenFn L),\n      (∀ f, L_φ f = productNoise L ρ (T f)) ∧\n      T.eigenvalues ⊆ {eigenvalues depending only on φ|_{Fin k}}\n```\n\n### Why It Matters\nThe Ruelle–P",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b52cd807",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:56:55.954097+00:00"
   },
   {
     "id": "fd_0113",
@@ -1225,24 +1239,6 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0225",
-    "title": "3. Adjunctions and Galois Connections Between Theories",
-    "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "b52cd807",
-    "timestamp": "2026-05-16T02:14:30.254922+00:00"
-  },
-  {
     "id": "fd_0226",
     "title": "4. Cryptography ↔ Learning ↔ Tropical Triads via Composed Morphisms",
     "description": "**Hypothesis:** The bridge graph Height → Dimension → Security already hints at a three-way connection between arithmetic learning theory (heights), tropical geometry (dimensions), and cryptographic security (security parameters). A full triad would show that hardness results in any one domain automatically imply hardness results in the other two.\n\n**Proof Strategy:**\n- Formalize the tropical valuation as a `TheorySpec` with `inv = tropical_degree`.\n- Build a morphism from tropical specs to security specs via dimension bounds.\n- Build a morphism from learning specs (Lipschitz/margin bounds) to height specs.\n- Compose to get a certified triad: Learning → Height → Dimension → Security.\n- Prove: any new lower bound in learning theory automatically yields a new lower bound in cryptographic sec",
@@ -1484,10 +1480,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "64a1fefb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d96d57a",
     "timestamp": "2026-05-16T09:33:50.685886+00:00"
   },
   {
@@ -1641,20 +1637,6 @@
     "source_exp_id": "41f0f930",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:12:11.751217+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Formalization Plan",
-    "description": "- Define the stochastic Collatz model in Lean 4\n- Prove subadditivity of -log Z_N under appropriate conditions\n- Apply Fekete's lemma (already in Mathlib) to establish the limit\n- Prove convexity is preserved under pointwise limits",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b829eb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:28:58.123512+00:00"
   },
   {
     "id": "fd_0242",
