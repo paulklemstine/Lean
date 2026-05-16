@@ -664,6 +664,91 @@
     "timestamp": "2026-05-16T14:39:14.454757+00:00"
   },
   {
+    "id": "fd_0245",
+    "title": "Hypothesis formulation",
+    "description": ": State the target theorem precisely in dependent type theory.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d96d57a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:43:03.406999+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Mathlib audit",
+    "description": ": Check which prerequisite results exist and which must be built.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d96d57a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:43:03.421578+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Skeleton construction",
+    "description": ": Build the proof skeleton with sorry'd helper lemmas.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d96d57a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:43:03.436771+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Bottom-up proving",
+    "description": ": Prove helper lemmas from simplest to most complex.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d96d57a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:43:03.451520+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Integration testing",
+    "description": ": Verify the full chain compiles and check axioms.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d96d57a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:43:03.465374+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Documentation",
+    "description": ": Add module-level docstrings explaining significance and cross-domain connections.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8d96d57a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:43:03.478518+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -711,6 +796,25 @@
     "source_exp_id": "f37e592e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:24:05.740910+00:00"
+  },
+  {
+    "id": "fd_0179",
+    "title": "Direction 1: Tropical Hankel Matrix Rank = Minimal Automaton Size",
+    "description": "**Hypothesis.** For a tropically recognizable language `L`, the min-plus rank of the tropical Hankel matrix `H_L(u, v) = L(u ++ v)` equals the number of states in the canonical Nerode automaton.\n\n**Why it matters.** This would provide a purely algebraic (matrix-rank) characterization of automaton complexity. In classical automata theory, the Boolean Hankel matrix rank equals the minimal DFA size. The tropical analogue would connect automata minimization to tropical linear algebra, enabling:\n- Lower bounds on automaton size via tropical rank bounds\n- Factorization-based learning algorithms for min-plus automata\n- Connections to tropical algebraic geometry\n\n**Proof Strategy.**\n1. Define the tropical Hankel matrix as a bilinear form over `WithTop ℕ`.\n2. Show that distinct rows of the Hankel m",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "28ca9606",
+    "consumed_by_exp_id": "3ef884fe",
+    "timestamp": "2026-05-14T17:33:19.336802+00:00"
   },
   {
     "id": "fd_0179",
@@ -1223,23 +1327,6 @@
     "source_exp_id": "51691e39",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Direction 2: Block-Diagonal Additivity",
-    "description": "**Hypothesis:** For block-diagonal matrices $A \\oplus B$ (with $\\infty$ in cross-blocks), factor rank is additive:\n\n$$\\text{tropFactorRank}(A \\oplus B) = \\text{tropFactorRank}(A) + \\text{tropFactorRank}(B)$$\n\n**Proof strategy:**\n- **Upper bound** ($\\leq$): Concatenate factorizations of $A$ and $B$, embedding each into the larger index set with $\\infty$ padding. This is straightforward.\n- **Lower bound** ($\\geq$): Show that any rank-1 matrix in a factorization of $A \\oplus B$ whose support intersects both blocks forces finite cross-block entries, contradicting the $\\infty$ structure. Therefore each rank-1 term belongs to at most one block, and the terms partition into those serving $A$ and those serving $B$.\n\n**Impact:** This creates a reusable theorem schema for computing factor rank of st",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "64a1fefb",
-    "consumed_by_exp_id": "8d96d57a",
-    "timestamp": "2026-05-16T09:33:50.685886+00:00"
   },
   {
     "id": "fd_0238",
