@@ -25,10 +25,10 @@
       "Cryptography"
     ],
     "priority_score": 0.92,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62116f58",
     "timestamp": "2026-05-14T16:03:53.839617+00:00"
   },
   {
@@ -654,20 +654,6 @@
     "source_exp_id": "0db1bd89",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T22:01:06.632160+00:00"
-  },
-  {
-    "id": "fd_0233",
-    "title": "Machine learning",
-    "description": "(attention, transformers, neural capacity)",
-    "domains": [
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0db1bd89",
-    "consumed_by_exp_id": "d7606a9d",
-    "timestamp": "2026-05-15T22:01:06.651798+00:00"
   },
   {
     "id": "fd_0234",
@@ -1619,5 +1605,33 @@
     "source_exp_id": "2b33dcea",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:24:38.355147+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "Formal Target",
+    "description": "```\ntheorem approx_rank_one_of_bounded_defect {n m : ℕ} [NeZero n] [NeZero m]\n    (A : Fin n → Fin m → ℝ) (ε : ℝ) (hε : 0 ≤ ε)\n    (hA : ∀ i i' j j', |delta₂ A i i' j j'| ≤ ε) :\n    ∃ p : Fin n → ℝ, ∃ q : Fin m → ℝ, ∀ i j, |A i j - p i - q j| ≤ ε\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d7606a9d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:32:14.490781+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "Impact",
+    "description": "This would establish the foundations for a complete tropical matrix rank theory, analogous to the classical theory built on minors and determinants.\n\n---",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d7606a9d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:32:14.502815+00:00"
   }
 ]
