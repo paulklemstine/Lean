@@ -1,307 +1,361 @@
-# Tropical Thermodynamics of Computation: Formally Verified Bridges Between Erasure, Entropy, and Circuit Complexity
+# Tropical Thermodynamics of Computation: A Formally Verified Framework
 
 ## Abstract
 
-We establish a formally verified mathematical framework connecting irreversible computation, information-theoretic entropy loss, and tropical (min-plus) circuit complexity. Three main results are proved with full machine-checked rigor:
+We present a formally verified mathematical framework connecting Landauer's principle of irreversible computation, tropical (min-plus) algebra, and circuit complexity theory. Working in Lean 4 with Mathlib, we prove three classes of theorems: (1) a fiber-counting Landauer bound establishing that any function whose fibers all have size ≥ m incurs an entropy defect of at least log m; (2) a free-energy/depth correspondence showing that the min-plus free energy of a tropical circuit equals its depth; and (3) bridge theorems connecting information erasure costs to circuit free energy through thermodynamic normalization. The framework provides a unified algebraic language in which computational irreversibility is literally an energy lower bound, and tropical circuit complexity becomes a thermodynamic invariant. All theorems are machine-verified with no axioms beyond the standard Lean foundations.
 
-1. **Tropical Landauer Bound:** For any constant map (erasure) on a finite type with at least 2 elements, the entropy defect — defined as log|α| − log|range(f)| — is at least log 2. A companion theorem shows that any non-injective map has non-negative entropy defect.
-
-2. **Free Energy–Depth Equivalence:** For tropical circuits with unit-weight gates, the min-plus free energy equals the circuit depth exactly. This identity holds for arbitrary combinations of sequential and parallel composition.
-
-3. **Bridge Theorems:** Circuit depth lower bounds transfer directly to free energy lower bounds, and any circuit performing an irreversible gate operation requires at least one unit of free energy.
-
-These results constitute the first formally verified thermodynamic semantics of irreversible computation in the tropical setting, opening routes to thermodynamic lower bounds for algorithms and resource-sensitive analysis of computational irreversibility.
-
-**Keywords:** tropical algebra, Landauer's principle, entropy defect, circuit complexity, min-plus semiring, irreversible computation, free energy, formal verification
+**Keywords:** Landauer principle, tropical algebra, circuit complexity, free energy, information erasure, formal verification, min-plus semiring
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 Background and Motivation
 
-Landauer's principle (1961) establishes that erasing one bit of information requires dissipating at least *kT* ln 2 of energy. This fundamental link between information processing and thermodynamics has been experimentally verified (Bérut et al., 2012) and extended to quantum systems (Reeb & Wolf, 2014). However, the mathematical core of Landauer's principle — the combinatorial relationship between state-space collapse and entropy increase — has not been isolated in a precise algebraic framework suitable for proving complexity-theoretic lower bounds.
+Landauer's principle (1961) establishes that erasing one bit of information in a computational device requires dissipating at least *kT* ln 2 of energy, where *k* is Boltzmann's constant and *T* is the temperature [1]. This fundamental connection between information processing and thermodynamics has been experimentally confirmed [2] and extends to quantum systems [3].
 
-Tropical (min-plus) algebra provides the natural setting. In the zero-temperature limit of statistical mechanics, the Gibbs free energy reduces to a minimum over energy levels — precisely the fundamental operation of the min-plus semiring. This observation suggests that tropical algebra is not merely analogous to thermodynamics but is its exact mathematical degeneration at absolute zero.
+Independently, tropical (min-plus) algebra has emerged as a powerful tool in optimization, algebraic geometry, and mathematical physics [4, 5]. The tropical semiring (ℝ ∪ {∞}, min, +) replaces conventional addition with minimization and conventional multiplication with addition. This structure naturally arises as the "zero-temperature limit" of statistical mechanics: when the partition function Z = Σᵢ exp(−βEᵢ) is dominated by its ground state as β → ∞, the log-partition function −β⁻¹ log Z converges to min{Eᵢ}, which is a tropical expression.
+
+Circuit complexity theory measures computational difficulty through circuit depth (the longest sequential chain of operations) and circuit size (total number of gates). Proving lower bounds on circuit depth remains one of the central challenges in theoretical computer science.
 
 ### 1.2 Contributions
 
-We formalize and prove three families of theorems:
+This paper establishes a precise, machine-verified bridge among these three domains:
 
-1. **Entropy defect bounds** for finite-type maps, capturing the combinatorial core of Landauer's principle without measure-theoretic or physical overhead.
+1. **Tropical Landauer Theorem** (Theorem 3.1): For a map f: α → β between finite types with [Nonempty α], if every fiber {x | f(x) = y} has cardinality ≥ m (m ≥ 2), then log m ≤ log|α| − log|range(f)|. This is the sharp tropical analogue of Landauer's principle.
 
-2. **Exact algebraic equivalence** between min-plus free energy and circuit depth for a simple but expressive circuit model with sequential and parallel composition.
+2. **Free Energy = Depth Theorem** (Theorem 4.1): For tropical circuits with sequential composition (costs add), parallel composition (costs take max), and unit-cost gates, the min-plus free energy equals the circuit depth.
 
-3. **Bridge theorems** that translate depth lower bounds into free energy lower bounds and establish minimum energy costs for irreversible computational steps.
+3. **Bridge Theorems** (Section 5): Erasure operations incur both entropy cost (≥ log 2) and free energy cost (≥ 1 unit), establishing that irreversible computation requires nonzero thermodynamic resources in both the information-theoretic and circuit-complexity senses.
 
-All proofs are machine-checked, depending only on standard mathematical axioms (propext, Classical.choice, Quot.sound).
+All results are formalized in Lean 4 with the Mathlib library, depending only on the standard axioms (propext, Classical.choice, Quot.sound).
 
 ### 1.3 Related Work
 
-**Landauer's principle:** Originally formulated by Landauer (1961), rigorously derived from quantum statistical mechanics by Reeb & Wolf (2014). Our formulation is purely combinatorial, capturing the information-theoretic essence without physical constants.
-
-**Tropical algebra in computation:** Tropical semirings appear in shortest-path algorithms (Mohri, 2002), automata theory (Simon, 1988), and neural network analysis (Zhang et al., 2018). The connection to circuit depth was implicit in the VLSI literature but not formally established.
-
-**Reversible and irreversible computation:** Bennett (1973) showed that any computation can be made reversible at the cost of additional space. Our entropy defect quantifies the information cost of not doing so.
-
-**Formal methods in physics:** Machine-verified proofs of physical theorems are rare. Our work contributes to the growing program of formalizing mathematical physics (Buzzard et al., 2020).
+Bennett [6] established that reversible computation can be performed with zero energy dissipation, extending Landauer's framework. The connection between tropical algebra and statistical mechanics has been explored by Litvinov [7] and Maslov [8]. Allender [9] has studied connections between computational complexity and Kolmogorov complexity with thermodynamic motivations. Our contribution is to make these connections precise, compositional, and machine-verified.
 
 ---
 
 ## 2. Definitions and Notation
 
-### 2.1 Entropy Defect
+### 2.1 Tropical Entropy
 
-**Definition 2.1** (Entropy Defect). For finite types α, β with decidable equality on β, and a function f : α → β, the *entropy defect* is:
+**Definition 2.1** (Tropical Entropy). For n ∈ ℕ, the tropical entropy is
 
-```
-entropyDefect(f) := log(|α|) − log(|range(f)|)
-```
+    Hₜ(n) = log(n)
 
-where |·| denotes Fintype.card (the cardinality of a finite type) and log is the natural logarithm.
+using the natural logarithm, with the convention log(0) = 0 (following the Lean/Mathlib convention for Real.log).
 
-**Remark.** When f is injective, |range(f)| = |α| and the entropy defect is 0. When f is constant on a nonempty domain, |range(f)| = 1 and the entropy defect equals log(|α|). The entropy defect measures the logarithmic ratio of input distinguishability to output distinguishability.
+**Proposition 2.1** (Monotonicity). For a ≤ b, Hₜ(a) ≤ Hₜ(b).
 
-### 2.2 Tropical Circuit
+*Proof.* Case analysis: if a = 0, then Hₜ(0) = 0 ≤ Hₜ(b) (since log is nonneg on [1,∞) and 0 when b = 0). If a > 0, by monotonicity of log on positive reals.
 
-**Definition 2.2** (Tropical Circuit). The type TropicalCircuit is defined inductively:
+### 2.2 Entropy Defect
 
-```
-TropicalCircuit ::= input | gate(C) | seq(A, B) | par(A, B)
-```
+**Definition 2.2** (Entropy Defect). For a function f: α → β between finite types, the entropy defect is
 
-where:
-- `input` is a zero-cost identity
-- `gate(C)` prepends a unit-cost gate to circuit C
-- `seq(A, B)` composes A and B sequentially
-- `par(A, B)` composes A and B in parallel
+    Δ(f) = log|α| − log|range(f)|
 
-### 2.3 Depth
+**Proposition 2.2**. For any f: α → β between finite types, Δ(f) ≥ 0.
 
-**Definition 2.3** (Circuit Depth). The depth function depth : TropicalCircuit → ℕ is defined recursively:
+*Proof.* Since |range(f)| ≤ |α| (a finite map cannot have more outputs than inputs), log|range(f)| ≤ log|α| by monotonicity.
+
+### 2.3 Tropical Circuit Model
+
+**Definition 2.3** (Tropical Circuit). The type of tropical circuits is defined inductively:
 
 ```
-depth(input)    = 0
-depth(gate(C))  = depth(C) + 1
-depth(seq(A,B)) = depth(A) + depth(B)
-depth(par(A,B)) = max(depth(A), depth(B))
+TropicalCircuit ::=
+  | input                           -- identity, zero cost
+  | gate(C : TropicalCircuit)       -- one computational step
+  | seq(A B : TropicalCircuit)      -- sequential composition
+  | par(A B : TropicalCircuit)      -- parallel composition
 ```
 
-### 2.4 Min-Plus Free Energy
-
-**Definition 2.4** (Free Energy). The free energy freeEnergy : TropicalCircuit → ℝ mirrors the depth definition over the reals:
-
+**Definition 2.4** (Depth).
 ```
-freeEnergy(input)    = 0
-freeEnergy(gate(C))  = freeEnergy(C) + 1
-freeEnergy(seq(A,B)) = freeEnergy(A) + freeEnergy(B)
-freeEnergy(par(A,B)) = max(freeEnergy(A), freeEnergy(B))
+depth(input)  = 0
+depth(gate C) = depth(C) + 1
+depth(seq A B) = depth(A) + depth(B)
+depth(par A B) = max(depth(A), depth(B))
 ```
+
+**Definition 2.5** (Min-Plus Free Energy).
+```
+FE(input)  = 0
+FE(gate C) = FE(C) + 1
+FE(seq A B) = FE(A) + FE(B)
+FE(par A B) = max(FE(A), FE(B))
+```
+
+### 2.4 Thermodynamic Cost
+
+**Definition 2.6** (Landauer Cost). For Boltzmann constant k, temperature T, and map f: α → β:
+
+    LC(k, T, f) = k · T · (log|α| − log|range(f)|)
+
+**Definition 2.7** (Thermal Landauer Cost). For domain size n and range size r:
+
+    TLC(k, T, n, r) = k · T · (log(n) − log(r))
 
 ---
 
-## 3. Main Results
+## 3. The Tropical Landauer Theorem
 
-### 3.1 Constant Map Range Cardinality
+### 3.1 Fiber-Counting Lemma
 
-**Theorem 3.1** (card_range_eq_one_of_constant). *Let α, β be finite types with α nonempty, and let f : α → β be constant (i.e., f(a) = f(a') for all a, a'). Then |range(f)| = 1.*
+**Lemma 3.1** (Fiber-Counting Inequality). Let f: α → β be a function between finite types, and let m ≥ 1. If every y ∈ range(f) satisfies |{x ∈ α | f(x) = y}| ≥ m, then
 
-**Proof sketch.** Since f is constant, range(f) = {f(a₀)} for any element a₀ ∈ α. A singleton set has cardinality 1. □
+    |range(f)| · m ≤ |α|
 
-### 3.2 Tropical Landauer Bound
+*Proof sketch.* The fibers {x | f(x) = y} for y ∈ range(f) are pairwise disjoint and their union is all of α. Therefore:
 
-**Theorem 3.2** (tropical_landauer_finite). *Let α, β be finite types with |α| ≥ 2, and let f : α → β be constant. Then:*
+    |α| = Σ_{y ∈ range(f)} |{x | f(x) = y}| ≥ Σ_{y ∈ range(f)} m = |range(f)| · m
 
-```
-log 2 ≤ entropyDefect(f)
-```
+The formal proof uses Fintype.card and Finset summation. □
 
-**Proof sketch.** By Theorem 3.1, |range(f)| = 1, so log(|range(f)|) = log(1) = 0. The entropy defect reduces to log(|α|). Since |α| ≥ 2 and log is monotone on positive reals, log(|α|) ≥ log(2). □
+### 3.2 Main Theorem
 
-**Corollary.** Erasing n ≥ 2 distinguishable states to a single state costs at least log 2 ≈ 0.693 nats of entropy. In bits, this is exactly 1 bit — the information-theoretic content of a binary choice.
+**Theorem 3.1** (Tropical Landauer Principle — Uniform Fiber Version). Let f: α → β be a function between finite types with α nonempty. If m ≥ 2 and every fiber of f has cardinality ≥ m, then:
 
-### 3.3 Non-Injective Map Bound
+    log(m) ≤ log|α| − log|range(f)|
 
-**Theorem 3.3** (tropical_landauer_noninjective). *Let f : α → β be a non-injective map between finite types. Then:*
+*Proof sketch.* From Lemma 3.1, |range(f)| · m ≤ |α|. Since α is nonempty, range(f) is nonempty, so |range(f)| ≥ 1 > 0. Since m ≥ 2 > 0, we can write:
 
-```
-0 ≤ entropyDefect(f)
-```
+    m ≤ |α| / |range(f)|
 
-**Proof sketch.** Non-injectivity is not directly needed; the bound holds because |range(f)| ≤ |α| always (the range cannot exceed the domain in cardinality). By monotonicity of log, log(|range(f)|) ≤ log(|α|), so the difference is non-negative.
+Taking logarithms (valid since both sides are positive):
 
-Note: the hypothesis of non-injectivity ensures the result is non-trivial (for injective f, the entropy defect is exactly 0). □
+    log(m) ≤ log(|α| / |range(f)|) = log|α| − log|range(f)|
 
-### 3.4 Free Energy = Depth
+The formal proof uses Real.log_div and le_div_iff₀ to convert the multiplicative inequality to a logarithmic one. □
 
-**Theorem 3.4** (freeEnergy_eq_depth). *For any tropical circuit C:*
+**Corollary 3.1** (Binary Landauer Bound). If every fiber of f has size ≥ 2, then log 2 ≤ Δ(f).
 
-```
-freeEnergy(C) = depth(C)
-```
+*Proof.* Instantiate Theorem 3.1 with m = 2. □
 
-*where the right-hand side is the natural coercion ℕ → ℝ.*
+### 3.3 Thermodynamic Normalization
 
-**Proof sketch.** By structural induction on C:
-- **Base case (input):** Both sides are 0.
-- **Gate case:** freeEnergy(gate(C)) = freeEnergy(C) + 1 = depth(C) + 1 = depth(gate(C)) by the inductive hypothesis and the definition of ℕ → ℝ coercion preserving addition.
-- **Sequential case:** freeEnergy(seq(A,B)) = freeEnergy(A) + freeEnergy(B) = depth(A) + depth(B) = depth(seq(A,B)) by the inductive hypothesis and Nat.cast_add.
-- **Parallel case:** freeEnergy(par(A,B)) = max(freeEnergy(A), freeEnergy(B)) = max(depth(A), depth(B)) = depth(par(A,B)) by the inductive hypothesis and the fact that max commutes with ℕ → ℝ coercion. □
+**Theorem 3.2** (Thermal Landauer Cost Nonnegativity). For k ≥ 0, T ≥ 0, and r ≤ n:
 
-### 3.5 Depth-to-Free-Energy Transfer
+    0 ≤ TLC(k, T, n, r)
 
-**Theorem 3.5** (depth_bound_implies_freeEnergy_bound). *For any circuit C and natural number k, if k ≤ depth(C) then (k : ℝ) ≤ freeEnergy(C).*
+*Proof.* Since r ≤ n, log(r) ≤ log(n) by monotonicity of log on nonneg reals. Hence log(n) − log(r) ≥ 0, and multiplication by k · T ≥ 0 preserves the inequality. □
 
-**Proof.** Immediate from Theorem 3.4 and monotonicity of ℕ → ℝ coercion. □
+**Theorem 3.3** (Thermal Binary Landauer Bound). Under the hypotheses of Corollary 3.1:
 
-### 3.6 Erasure Energy Bounds
+    k · T · log 2 ≤ LC(k, T, f)
 
-**Theorem 3.6** (erasure_freeEnergy_lower_bound). *For any circuit C, the gate circuit gate(C) has free energy at least 1:*
-
-```
-1 ≤ freeEnergy(gate(C))
-```
-
-**Proof.** By Theorem 3.5 with k = 1, since depth(gate(C)) = depth(C) + 1 ≥ 1. □
-
-**Interpretation.** Any circuit that performs at least one irreversible computational step (modeled by a gate) must have thermodynamic cost ≥ 1 in natural free-energy units. Combined with the Landauer bound (Theorem 3.2), this establishes that both the information-theoretic cost (entropy defect ≥ log 2) and the circuit-theoretic cost (free energy ≥ 1) are non-zero for irreversible operations.
+*Proof.* Multiply the bound from Corollary 3.1 by k · T ≥ 0. □
 
 ---
 
-## 4. Algorithms and Computational Methods
+## 4. Free Energy = Depth
 
-### 4.1 Entropy Defect Computation
+### 4.1 Inductive Circuit Model
 
-**Algorithm 1: Compute Entropy Defect**
+**Theorem 4.1** (Free Energy = Depth). For every tropical circuit C:
+
+    FE(C) = depth(C)
+
+*Proof.* By structural induction on C.
+
+- **Base case** (input): FE(input) = 0 = depth(input). ✓
+- **Gate case**: FE(gate C) = FE(C) + 1 = depth(C) + 1 = depth(gate C) by IH. ✓
+- **Sequential case**: FE(seq A B) = FE(A) + FE(B) = depth(A) + depth(B) = depth(seq A B) by IH. ✓
+- **Parallel case**: FE(par A B) = max(FE(A), FE(B)) = max(depth(A), depth(B)) = depth(par A B) by IH. ✓
+
+The formal proof casts ℕ to ℝ using Nat.cast properties (Nat.cast_add, Nat.cast_max). □
+
+**Corollary 4.1** (Free Energy Nonnegativity). FE(C) ≥ 0 for all C.
+
+**Corollary 4.2** (Erasure Free Energy Bound). FE(gate C) ≥ 1 for all C.
+
+**Corollary 4.3** (Depth Bound Transfer). If k ≤ depth(C), then k ≤ FE(C).
+
+### 4.2 Layered Circuit Model
+
+**Definition 4.1** (Layered Free Energy). For a circuit represented as a list of layers (each a list of gate operations):
 
 ```
-Input: A function f : [n] → [m] (given as an array)
-Output: entropyDefect(f)
-
-1. Compute S = |{f(0), f(1), ..., f(n-1)}|  (size of image)
-2. Return log(n) - log(S)
+LFE([]) = 0
+LFE(L :: Cs) = (if L = [] then 0 else 1) + LFE(Cs)
 ```
 
-**Complexity:** O(n log n) time using a hash set for image computation, O(n) space.
+**Theorem 4.2** (Layered Free Energy = Active Depth). If every layer in C is nonempty:
 
-### 4.2 Tropical Circuit Evaluation
+    LFE(C) = |C|     (the number of layers)
 
-**Algorithm 2: Compute Free Energy / Depth**
-
-```
-Input: A TropicalCircuit C
-Output: depth(C) (equivalently, freeEnergy(C) as a natural number)
-
-1. Match C:
-   - input: return 0
-   - gate(C'): return evaluate(C') + 1
-   - seq(A, B): return evaluate(A) + evaluate(B)
-   - par(A, B): return max(evaluate(A), evaluate(B))
-```
-
-**Complexity:** O(|C|) time where |C| is the number of nodes in the circuit tree.
+*Proof.* By induction on the list. Base case: LFE([]) = 0 = |[]|. Inductive step: LFE(L :: Cs) = 1 + LFE(Cs) = 1 + |Cs| = |L :: Cs|, using the hypothesis that L ≠ []. □
 
 ---
 
-## 5. Applications
+## 5. Bridge Theorems
 
-### 5.1 Lower Bounds for Irreversible Algorithms
+### 5.1 Information-Theoretic Bridge
 
-Consider a sorting network that sorts n elements using comparison-swap gates. Each swap that is not a no-op is an irreversible operation (it loses information about which elements were in which positions). The entropy defect of sorting n! permutations into a single sorted order is:
+**Theorem 5.1** (Shannon = Tropical for Uniform Distributions). For a uniform distribution on n outcomes:
 
-```
-entropyDefect(sort) = log(n!) - log(1) = log(n!) ≈ n log n
-```
+    H_Shannon(Uniform(n)) = Hₜ(n) = log(n)
 
-By the Landauer bound, any sorting circuit must dissipate at least kT · log(n!) energy. By the free-energy/depth equivalence, any circuit computing this function with unit-cost gates must have depth at least proportional to the entropy defect.
+This is a definitional equality: the Shannon entropy of the uniform distribution on n elements is Σᵢ (1/n) log(n) = log(n).
 
-### 5.2 Energy-Optimal Circuit Design
+### 5.2 Thermodynamic Bridge
 
-The free-energy/depth equivalence (Theorem 3.4) implies that minimizing circuit depth is equivalent to minimizing thermodynamic cost. This has direct implications for energy-efficient processor design: the critical path length of a combinational circuit is not just a performance metric but a physical cost metric.
+**Theorem 5.2** (Tropical Bridge). For a nonempty finite type α, a function f: α → β with all fibers of size ≥ 2, and any tropical circuit C:
 
-### 5.3 Analysis of Hash Functions
+    log 2 ≤ Δ(f)   and   1 ≤ FE(gate C)
 
-A cryptographic hash function h : {0,1}^n → {0,1}^m with m < n has entropy defect at least log(2^n) - log(2^m) = (n-m) · log(2). This lower bound on information loss is independent of the hash function's implementation and provides a thermodynamic baseline for the energy cost of hashing.
+Both the information erasure cost and the circuit free energy cost are simultaneously positive for irreversible computations.
+
+**Theorem 5.3** (Circuit Thermal Cost Lower Bound). For k ≥ 0, T ≥ 0:
+
+    k · T ≤ k · T · FE(gate C)
+
+*Proof.* Since FE(gate C) ≥ 1, multiply both sides by k · T ≥ 0. □
+
+### 5.3 Multi-Erasure Scaling
+
+**Theorem 5.4** (Multi-Erasure Free Energy). For every n ∈ ℕ, there exists a circuit C with FE(C) = n.
+
+*Proof.* By induction: C₀ = input (FE = 0), Cₙ₊₁ = gate(Cₙ) (FE = n + 1). □
 
 ---
 
 ## 6. Computational Experiments
 
-### 6.1 Entropy Defect of Random Functions
+### 6.1 Landauer Bound Verification
 
-We computed the entropy defect for random functions f : [n] → [n] for various n. The expected image size of a random function on [n] is approximately n(1 - 1/e) ≈ 0.632n (by the birthday problem analysis), yielding an expected entropy defect of:
+We computationally verify the Landauer bound for several families of functions:
 
-```
-E[entropyDefect] ≈ log(n) - log(0.632n) = -log(0.632) ≈ 0.459
-```
+| Function | Domain | Range | Min Fiber | Δ(f) | Bound log(m) | Satisfied? |
+|----------|--------|-------|-----------|------|--------------|------------|
+| f(x) = 0 (constant) | {0,1} | {0} | 2 | 0.6931 | 0.6931 | ✓ (tight) |
+| f(x) = x mod 2 | {0,...,3} | {0,1} | 2 | 0.6931 | 0.6931 | ✓ (tight) |
+| f(x) = x mod 3 | {0,...,8} | {0,1,2} | 3 | 1.0986 | 1.0986 | ✓ (tight) |
+| Binary AND | {0,...,3} | {0,1} | 1 | 0.6931 | 0 | ✓ (non-uniform) |
+| Full erasure | {0,...,1023} | {0} | 1024 | 6.9315 | 6.9315 | ✓ (tight) |
 
-Our simulations confirm this theoretical prediction, with the empirical mean converging to 0.459 for large n. See the accompanying Python demonstrations.
+The bound is tight when all fibers have exactly the same size m, confirming that the uniform-fiber theorem gives the optimal constant.
 
-### 6.2 Free Energy of Circuit Families
+### 6.2 Circuit Free Energy Verification
 
-We evaluated the free energy of several circuit families:
-- **Chain circuits** (depth d): freeEnergy = d (trivially)
-- **Binary tree circuits** (depth log₂ n): freeEnergy = log₂ n
-- **Mixed sequential/parallel circuits**: freeEnergy matches depth exactly, confirming Theorem 3.4 computationally.
+| Circuit | Depth | Free Energy | FE = Depth? |
+|---------|-------|-------------|-------------|
+| input | 0 | 0.0 | ✓ |
+| gate(input) | 1 | 1.0 | ✓ |
+| seq(gate, gate) | 2 | 2.0 | ✓ |
+| par(gate, gate) | 1 | 1.0 | ✓ |
+| gate³(input) | 3 | 3.0 | ✓ |
+| seq(gate, par(gate, gate)) | 2 | 2.0 | ✓ |
 
-### 6.3 Zero-Temperature Limit
+### 6.3 Thermodynamic Cost at Physical Temperatures
 
-We numerically computed the Gibbs free energy F_T(E) = -T log(∑ exp(-E(x)/T)) for random energy landscapes and verified convergence to min(E) as T → 0. The convergence rate is O(T log |α|), consistent with theoretical predictions.
+| Operation | T = 300 K | T = 4 K | T = 15 mK |
+|-----------|-----------|---------|-----------|
+| 1-bit erase | 2.87 × 10⁻²¹ J | 3.83 × 10⁻²³ J | 1.43 × 10⁻²⁵ J |
+| 10-bit erase | 2.87 × 10⁻²⁰ J | 3.83 × 10⁻²² J | 1.43 × 10⁻²⁴ J |
+| 1 KB erase | 2.35 × 10⁻¹⁷ J | 3.13 × 10⁻¹⁹ J | 1.17 × 10⁻²¹ J |
 
 ---
 
 ## 7. Discussion
 
-### 7.1 Interpretation
+### 7.1 Significance
 
-The three theorems established here form a coherent narrative:
+The framework establishes three key identities:
 
-1. **Landauer** (Theorem 3.2): Irreversible computation has an information-theoretic cost measured by entropy defect.
-2. **Free Energy = Depth** (Theorem 3.4): In the tropical setting, this information-theoretic cost equals a computational complexity measure.
-3. **Bridge** (Theorems 3.5–3.6): Lower bounds flow freely between the two perspectives.
+1. **Tropical entropy = max-entropy information**: Hₜ(n) = log(n) is the Shannon entropy of the uniform distribution, making tropical entropy the worst-case information measure.
 
-Together, they establish that entropy defect and circuit depth are two views of the same invariant — one from physics, one from computer science.
+2. **Free energy = circuit depth**: In the min-plus algebra, the compositional free energy of a circuit exactly equals its depth, making circuit complexity a thermodynamic invariant.
+
+3. **Information erasure = thermodynamic cost**: The Landauer bound, in tropical form, is a counting inequality (|range| · m ≤ |domain|) that converts to a logarithmic inequality and then to a physical energy bound.
 
 ### 7.2 Limitations
 
-**Circuit model.** Our TropicalCircuit is a simple tree-structured model. Real circuits have fan-out, feedback, and non-uniform gate costs. Extending to DAG-structured circuits with weighted edges is a natural next step.
+The current framework has several limitations:
 
-**Physical constants.** We work with dimensionless quantities (natural logarithms, unit gate costs). The connection to physical energy requires restoring Boltzmann's constant and temperature, which is straightforward but not formalized here.
+- **Unit-cost model**: The free energy = depth equality holds for unit-cost gates. Non-uniform gate costs would give free energy ≥ depth (lower bound) but not necessarily equality.
+- **Static analysis**: The framework treats functions and circuits as static objects, not dynamic processes. A full thermodynamic treatment would require time-dependent analysis.
+- **Classical only**: The framework addresses classical computation. Extension to quantum circuits requires additional structure (density matrices, von Neumann entropy).
 
-**Erasure model.** We model erasure as a constant function. More realistic models would consider partial erasure (non-injective but non-constant functions) and stochastic erasure (Markov kernels).
+### 7.3 Relation to Existing Work
 
-### 7.3 Relationship to Existing Work
-
-Our entropy defect is related to the Rényi entropy of order ∞ (min-entropy) and to the Hartley entropy (log of support size). The tropical free energy corresponds to the ground-state energy in statistical mechanics. The free-energy/depth equivalence is implicitly known in the VLSI timing analysis literature but has not previously been stated as a mathematical theorem with formal proof.
+The fiber-counting approach to Landauer's principle is, to our knowledge, new in the formal verification literature. The free-energy/depth correspondence is folklore in the tropical geometry community but has not previously been formalized or connected to Landauer's principle in a machine-verified framework.
 
 ---
 
 ## 8. Future Work
 
-1. **Tropical data processing inequality:** Prove that entropyDefect(g ∘ f) ≤ entropyDefect(f) + entropyDefect(g) for composable maps.
-
-2. **Zero-temperature limit theorem:** Formally prove that lim_{T→0} F_T(E) = min_x E(x) for finite energy landscapes.
-
-3. **Weighted circuits:** Extend TropicalCircuit with real-valued gate weights and prove the weighted free-energy/depth correspondence.
-
-4. **Thermodynamic lower bounds for branching programs:** Apply the entropy defect framework to standard complexity-theoretic models.
-
-5. **Categorical resource theory:** Formalize entropy defect as a lax monoidal functor in a resource-theoretic framework.
+1. **Tropical mutual information**: Define I_t(f, g) for pairs of maps and prove a tropical data processing inequality.
+2. **Reversibility characterization**: Prove Δ(f) = 0 iff f is injective (for nonempty finite domains).
+3. **Weighted gate energies**: Generalize to non-uniform gate costs and prove lower bounds for specific Boolean functions.
+4. **Categorical semantics**: Define a symmetric monoidal category of thermodynamic processes enriched over the tropical semiring.
+5. **Entropy comparison theorems**: Prove H_Shannon ≤ H_tropical ≤ log(dim) for finite-dimensional systems.
 
 ---
 
 ## References
 
-1. Bennett, C. H. (1973). Logical reversibility of computation. *IBM Journal of Research and Development*, 17(6), 525–532.
+[1] R. Landauer, "Irreversibility and Heat Generation in the Computing Process," *IBM J. Res. Dev.*, vol. 5, no. 3, pp. 183–191, 1961.
 
-2. Bérut, A., et al. (2012). Experimental verification of Landauer's principle linking information and thermodynamics. *Nature*, 483(7388), 187–189.
+[2] A. Bérut et al., "Experimental verification of Landauer's principle linking information and thermodynamics," *Nature*, vol. 483, pp. 187–189, 2012.
 
-3. Landauer, R. (1961). Irreversibility and heat generation in the computing process. *IBM Journal of Research and Development*, 5(3), 183–191.
+[3] K. Maruyama, F. Nori, and V. Vedral, "The physics of Maxwell's demon and information," *Rev. Mod. Phys.*, vol. 81, pp. 1–23, 2009.
 
-4. Mohri, M. (2002). Semiring frameworks and algorithms for shortest-distance problems. *Journal of Automata, Languages and Combinatorics*, 7(3), 321–350.
+[4] D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, AMS, 2015.
 
-5. Reeb, D., & Wolf, M. M. (2014). An improved Landauer principle with finite-size corrections. *New Journal of Physics*, 16(10), 103011.
+[5] G. Mikhalkin, "Enumerative tropical algebraic geometry in ℝ²," *J. Amer. Math. Soc.*, vol. 18, pp. 313–377, 2005.
 
-6. Simon, I. (1988). Recognizable sets with multiplicities in the tropical semiring. *Mathematical Foundations of Computer Science*, 324, 107–120.
+[6] C. H. Bennett, "Logical Reversibility of Computation," *IBM J. Res. Dev.*, vol. 17, no. 6, pp. 525–532, 1973.
 
-7. Zhang, L., Naitzat, G., & Lim, L.-H. (2018). Tropical geometry of deep neural networks. *Proceedings of the 35th International Conference on Machine Learning*, 5824–5832.
+[7] G. L. Litvinov, "The Maslov dequantization, idempotent and tropical mathematics," *J. Math. Sci.*, vol. 140, no. 3, pp. 349–386, 2007.
+
+[8] V. P. Maslov, "On a new principle of superposition for optimization problems," *Russ. Math. Surv.*, vol. 42, no. 3, pp. 43–54, 1987.
+
+[9] E. Allender, "The complexity of complexity," in *Computability and Complexity*, Springer, 2017, pp. 79–94.
+
+---
+
+## Appendix A: Complete Lean 4 Theorem Statements
+
+The following theorems are formally verified in Lean 4 with Mathlib:
+
+```lean
+-- Tropical entropy monotonicity
+theorem tropical_entropy_monotone {a b : ℕ} (h : a ≤ b) :
+    tropicalEntropy a ≤ tropicalEntropy b
+
+-- Fiber-counting inequality (combinatorial heart)
+theorem card_range_mul_fiber_le
+    {α β : Type*} [Fintype α] [Fintype β] [DecidableEq β]
+    (f : α → β) (m : ℕ) (hm : 1 ≤ m)
+    (hfiber : ∀ y ∈ Set.range f, m ≤ Fintype.card {x : α // f x = y}) :
+    Fintype.card (Set.range f) * m ≤ Fintype.card α
+
+-- Tropical Landauer principle
+theorem tropical_landauer_uniform_fiber
+    {α β : Type*} [Fintype α] [Fintype β] [DecidableEq β] [Nonempty α]
+    (f : α → β) (m : ℕ) (hm : 2 ≤ m)
+    (hfiber : ∀ y ∈ Set.range f, m ≤ Fintype.card {x : α // f x = y}) :
+    Real.log m ≤ Real.log (Fintype.card α) - Real.log (Fintype.card (Set.range f))
+
+-- Free Energy = Depth
+theorem TropicalCircuit.freeEnergy_eq_depth (C : TropicalCircuit) :
+    C.freeEnergy = (C.depth : ℝ)
+
+-- Layered model
+theorem layeredFreeEnergy_eq_depth
+    {α : Type*} (C : List (List α))
+    (hactive : ∀ L ∈ C, L ≠ []) :
+    layeredFreeEnergy C = C.length
+
+-- Bridge theorem
+theorem tropical_bridge
+    {α β : Type*} [Fintype α] [Fintype β] [DecidableEq β] [Nonempty α]
+    (f : α → β) (C : TropicalCircuit)
+    (hfiber : ∀ y ∈ Set.range f, 2 ≤ Fintype.card {x : α // f x = y}) :
+    Real.log 2 ≤ entropyDefect f ∧ 1 ≤ (TropicalCircuit.gate C).freeEnergy
+```
+
+All proofs depend only on axioms: propext, Classical.choice, Quot.sound.

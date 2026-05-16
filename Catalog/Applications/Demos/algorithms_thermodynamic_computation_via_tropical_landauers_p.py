@@ -1,411 +1,348 @@
+#!/usr/bin/env python3
 """
-Tropical Thermodynamics of Computation — Algorithms
+Algorithms for Tropical Thermodynamic Computation
 
-Implementations of the core algorithms from the research paper:
-1. Entropy defect computation
-2. Tropical circuit evaluation (depth and free energy)
-3. Zero-temperature limit computation
-4. Entropy defect analysis for function families
+Implements the core algorithms from the research paper:
+1. Fiber-counting Landauer bound computation
+2. Tropical circuit free energy evaluation
+3. Optimal erasure strategy computation
+4. Thermodynamic cost analysis for Boolean functions
 """
 
 import math
-from typing import List, Tuple, Optional, Callable
+from typing import Callable, Dict, List, Optional, Set, Tuple
 from dataclasses import dataclass
-from enum import Enum
 
 
 # ============================================================
-# Algorithm 1: Entropy Defect Computation
+# Algorithm 1: Fiber-Counting Landauer Bound
 # ============================================================
 
-def compute_entropy_defect(f: List[int], domain_size: Optional[int] = None) -> float:
-    """Compute the entropy defect of a function.
-    
-    The entropy defect is defined as:
-        H(f) = log(|domain|) - log(|range(f)|)
-    
-    This measures the information lost by applying f, in natural-log units.
-    
+@dataclass
+class LandauerAnalysis:
+    """Complete Landauer analysis of a finite map."""
+    domain_size: int
+    range_size: int
+    fiber_sizes: Dict[int, int]
+    min_fiber: int
+    max_fiber: int
+    entropy_defect: float
+    landauer_bound: float  # log(min_fiber) when all fibers ≥ min_fiber
+    is_injective: bool
+    is_constant: bool
+
+    def __repr__(self):
+        return (
+            f"LandauerAnalysis(\n"
+            f"  domain={self.domain_size}, range={self.range_size},\n"
+            f"  fibers={self.fiber_sizes},\n"
+            f"  min_fiber={self.min_fiber}, max_fiber={self.max_fiber},\n"
+            f"  entropy_defect={self.entropy_defect:.6f},\n"
+            f"  landauer_bound={self.landauer_bound:.6f},\n"
+            f"  injective={self.is_injective}, constant={self.is_constant}\n"
+            f")"
+        )
+
+
+def analyze_landauer(f: Callable[[int], int], domain: List[int]) -> LandauerAnalysis:
+    """Complete Landauer analysis of a finite map.
+
+    Computes fiber sizes, entropy defect, and Landauer lower bound.
+
+    Time complexity: O(|domain|)
+    Space complexity: O(|range|)
+
     Args:
-        f: Function represented as a list where f[i] is the image of i.
-        domain_size: Size of domain (defaults to len(f)).
-    
+        f: A function from integers to integers
+        domain: The finite domain as a list of integers
+
     Returns:
-        The entropy defect in nats. Returns 0.0 for empty domains.
-    
-    Time complexity: O(n) expected using hash set
-    Space complexity: O(n)
-    
-    Examples:
-        >>> compute_entropy_defect([0, 0])  # erasure on 2 states
-        0.6931471805599453
-        >>> compute_entropy_defect([0, 1, 2])  # identity (injective)
-        0.0
-        >>> compute_entropy_defect([0, 0, 1, 1])  # 2-to-1 map
-        0.6931471805599453
+        LandauerAnalysis with all computed quantities
     """
-    n = domain_size if domain_size is not None else len(f)
+    # Compute fibers
+    fibers: Dict[int, int] = {}
+    for x in domain:
+        y = f(x)
+        fibers[y] = fibers.get(y, 0) + 1
+
+    n = len(domain)
+    r = len(fibers)
+
     if n == 0:
-        return 0.0
-    range_size = len(set(f[:n]))
-    if range_size == 0:
-        return 0.0
-    return math.log(n) - math.log(range_size)
+        return LandauerAnalysis(
+            domain_size=0, range_size=0,
+            fiber_sizes={}, min_fiber=0, max_fiber=0,
+            entropy_defect=0.0, landauer_bound=0.0,
+            is_injective=True, is_constant=True
+        )
 
+    fiber_values = list(fibers.values())
+    min_f = min(fiber_values)
+    max_f = max(fiber_values)
 
-def compute_entropy_defect_bits(f: List[int], domain_size: Optional[int] = None) -> float:
-    """Compute the entropy defect in bits (base-2 logarithm).
-    
-    Args:
-        f: Function as a list.
-        domain_size: Size of domain.
-    
-    Returns:
-        Entropy defect in bits.
-    
-    Examples:
-        >>> compute_entropy_defect_bits([0, 0])  # 1 bit lost
-        1.0
-        >>> compute_entropy_defect_bits([0] * 8)  # 3 bits lost
-        3.0
-    """
-    return compute_entropy_defect(f, domain_size) / math.log(2)
+    # Entropy defect
+    log_n = math.log(n) if n > 0 else 0.0
+    log_r = math.log(r) if r > 0 else 0.0
+    defect = log_n - log_r
+
+    # Landauer bound: valid when all fibers ≥ min_f
+    bound = math.log(min_f) if min_f >= 1 else 0.0
+
+    return LandauerAnalysis(
+        domain_size=n, range_size=r,
+        fiber_sizes=fibers,
+        min_fiber=min_f, max_fiber=max_f,
+        entropy_defect=defect,
+        landauer_bound=bound,
+        is_injective=(min_f == 1 and max_f == 1),
+        is_constant=(r == 1)
+    )
 
 
 # ============================================================
 # Algorithm 2: Tropical Circuit Evaluation
 # ============================================================
 
-class CircuitType(Enum):
-    INPUT = "input"
-    GATE = "gate"
-    SEQ = "seq"
-    PAR = "par"
+@dataclass
+class CircuitNode:
+    """A node in a tropical circuit DAG."""
+    kind: str  # 'input', 'gate', 'seq', 'par'
+    children: List['CircuitNode']
+    _depth_cache: Optional[int] = None
+    _fe_cache: Optional[float] = None
 
+    @staticmethod
+    def input() -> 'CircuitNode':
+        return CircuitNode('input', [])
+
+    @staticmethod
+    def gate(c: 'CircuitNode') -> 'CircuitNode':
+        return CircuitNode('gate', [c])
+
+    @staticmethod
+    def seq(a: 'CircuitNode', b: 'CircuitNode') -> 'CircuitNode':
+        return CircuitNode('seq', [a, b])
+
+    @staticmethod
+    def par(a: 'CircuitNode', b: 'CircuitNode') -> 'CircuitNode':
+        return CircuitNode('par', [a, b])
+
+    def depth(self) -> int:
+        """Compute circuit depth with memoization.
+
+        Time: O(|circuit|) with memoization
+        """
+        if self._depth_cache is not None:
+            return self._depth_cache
+
+        if self.kind == 'input':
+            result = 0
+        elif self.kind == 'gate':
+            result = self.children[0].depth() + 1
+        elif self.kind == 'seq':
+            result = self.children[0].depth() + self.children[1].depth()
+        elif self.kind == 'par':
+            result = max(self.children[0].depth(), self.children[1].depth())
+        else:
+            raise ValueError(f"Unknown kind: {self.kind}")
+
+        self._depth_cache = result
+        return result
+
+    def free_energy(self) -> float:
+        """Compute min-plus free energy with memoization.
+
+        By the Free Energy = Depth theorem, this always equals depth.
+        Time: O(|circuit|) with memoization
+        """
+        if self._fe_cache is not None:
+            return self._fe_cache
+
+        if self.kind == 'input':
+            result = 0.0
+        elif self.kind == 'gate':
+            result = self.children[0].free_energy() + 1.0
+        elif self.kind == 'seq':
+            result = self.children[0].free_energy() + self.children[1].free_energy()
+        elif self.kind == 'par':
+            result = max(self.children[0].free_energy(), self.children[1].free_energy())
+        else:
+            raise ValueError(f"Unknown kind: {self.kind}")
+
+        self._fe_cache = result
+        return result
+
+    def verify_fe_eq_depth(self) -> bool:
+        """Verify the Free Energy = Depth theorem computationally."""
+        return abs(self.free_energy() - float(self.depth())) < 1e-12
+
+    def node_count(self) -> int:
+        """Count total nodes in the circuit."""
+        return 1 + sum(c.node_count() for c in self.children)
+
+    def gate_count(self) -> int:
+        """Count gate nodes (computational steps)."""
+        own = 1 if self.kind == 'gate' else 0
+        return own + sum(c.gate_count() for c in self.children)
+
+
+# ============================================================
+# Algorithm 3: Optimal Erasure Strategy
+# ============================================================
+
+def optimal_erasure_cost(n: int, target: int = 1) -> Tuple[float, List[Tuple[int, int]]]:
+    """Compute the minimum Landauer cost to erase n states down to target states.
+
+    Uses the fact that total cost = log(n/target) regardless of strategy,
+    by telescoping of entropy defects.
+
+    Args:
+        n: Initial number of distinguishable states
+        target: Target number of states (default 1 = full erasure)
+
+    Returns:
+        (total_cost, [(step_from, step_to), ...]) — cost and one optimal strategy
+
+    Time: O(log(n/target))
+    """
+    if n <= target:
+        return 0.0, []
+
+    total_cost = math.log(n) - math.log(target)
+    steps = []
+
+    # Binary halving strategy (one possible optimal decomposition)
+    current = n
+    while current > target:
+        next_size = max(target, current // 2)
+        steps.append((current, next_size))
+        current = next_size
+
+    return total_cost, steps
+
+
+# ============================================================
+# Algorithm 4: Thermodynamic Cost Analysis
+# ============================================================
 
 @dataclass
-class TropicalCircuit:
-    """Tropical circuit with sequential and parallel composition.
-    
-    A recursive tree structure representing:
-    - input: zero-cost identity operation
-    - gate(child): unit-cost computational step
-    - seq(left, right): sequential composition (costs add)
-    - par(left, right): parallel composition (depth = max)
-    """
-    kind: CircuitType
-    children: List['TropicalCircuit']
-    
-    @staticmethod
-    def input() -> 'TropicalCircuit':
-        return TropicalCircuit(CircuitType.INPUT, [])
-    
-    @staticmethod
-    def gate(child: 'TropicalCircuit') -> 'TropicalCircuit':
-        return TropicalCircuit(CircuitType.GATE, [child])
-    
-    @staticmethod
-    def seq(left: 'TropicalCircuit', right: 'TropicalCircuit') -> 'TropicalCircuit':
-        return TropicalCircuit(CircuitType.SEQ, [left, right])
-    
-    @staticmethod
-    def par(left: 'TropicalCircuit', right: 'TropicalCircuit') -> 'TropicalCircuit':
-        return TropicalCircuit(CircuitType.PAR, [left, right])
-    
-    def depth(self) -> int:
-        """Compute circuit depth (longest path from input to output).
-        
-        Time complexity: O(|C|) where |C| is the number of nodes.
-        
-        Returns:
-            Circuit depth as a natural number.
-        """
-        if self.kind == CircuitType.INPUT:
-            return 0
-        elif self.kind == CircuitType.GATE:
-            return self.children[0].depth() + 1
-        elif self.kind == CircuitType.SEQ:
-            return self.children[0].depth() + self.children[1].depth()
-        elif self.kind == CircuitType.PAR:
-            return max(self.children[0].depth(), self.children[1].depth())
-        raise ValueError(f"Unknown circuit type: {self.kind}")
-    
-    def free_energy(self) -> float:
-        """Compute min-plus free energy.
-        
-        By Theorem 3.4 (freeEnergy_eq_depth), this always equals depth.
-        This implementation mirrors the formal definition over ℝ.
-        
-        Time complexity: O(|C|)
-        
-        Returns:
-            Free energy as a real number.
-        """
-        if self.kind == CircuitType.INPUT:
-            return 0.0
-        elif self.kind == CircuitType.GATE:
-            return self.children[0].free_energy() + 1.0
-        elif self.kind == CircuitType.SEQ:
-            return self.children[0].free_energy() + self.children[1].free_energy()
-        elif self.kind == CircuitType.PAR:
-            return max(self.children[0].free_energy(), self.children[1].free_energy())
-        raise ValueError(f"Unknown circuit type: {self.kind}")
-    
-    def node_count(self) -> int:
-        """Count total nodes in the circuit tree."""
-        return 1 + sum(c.node_count() for c in self.children)
-    
-    def verify_fe_eq_depth(self) -> bool:
-        """Verify that free_energy == depth (Theorem 3.4) for this circuit."""
-        return abs(self.free_energy() - self.depth()) < 1e-10
+class ThermodynamicProfile:
+    """Thermodynamic profile of a computation."""
+    total_landauer_cost: float  # in units of kT
+    circuit_depth: int
+    circuit_free_energy: float
+    thermal_cost_joules: float  # at given temperature
+    bits_erased: float
+    efficiency: float  # ratio of minimum cost to actual cost
+
+    def __repr__(self):
+        return (
+            f"ThermodynamicProfile(\n"
+            f"  landauer_cost={self.total_landauer_cost:.4f} kT,\n"
+            f"  depth={self.circuit_depth},\n"
+            f"  free_energy={self.circuit_free_energy:.4f},\n"
+            f"  thermal_cost={self.thermal_cost_joules:.4e} J,\n"
+            f"  bits_erased={self.bits_erased:.2f},\n"
+            f"  efficiency={self.efficiency:.4f}\n"
+            f")"
+        )
 
 
-def build_chain(n: int) -> TropicalCircuit:
-    """Build a chain circuit of n gates: gate(gate(...gate(input)...)).
-    
+def thermodynamic_profile(
+    f: Callable[[int], int],
+    domain: List[int],
+    circuit: CircuitNode,
+    temperature: float = 300.0,
+    k_B: float = 1.380649e-23
+) -> ThermodynamicProfile:
+    """Compute the complete thermodynamic profile of a computation.
+
+    Combines Landauer analysis with circuit free energy to give
+    a unified thermodynamic characterization.
+
     Args:
-        n: Number of gates.
-    
-    Returns:
-        Circuit with depth n.
-    """
-    C = TropicalCircuit.input()
-    for _ in range(n):
-        C = TropicalCircuit.gate(C)
-    return C
+        f: The function being computed
+        domain: Finite domain
+        circuit: Circuit implementing f
+        temperature: Temperature in Kelvin
+        k_B: Boltzmann constant in J/K
 
-
-def build_binary_tree(depth_val: int) -> TropicalCircuit:
-    """Build a balanced binary tree of parallel compositions.
-    
-    Args:
-        depth_val: Depth of the tree.
-    
     Returns:
-        Circuit with depth depth_val.
+        ThermodynamicProfile with all quantities
     """
-    if depth_val == 0:
-        return TropicalCircuit.input()
-    leaf = TropicalCircuit.gate(TropicalCircuit.input())
-    if depth_val == 1:
-        return leaf
-    C = leaf
-    for _ in range(depth_val - 1):
-        C = TropicalCircuit.par(TropicalCircuit.gate(C), TropicalCircuit.gate(C))
-    return C
+    analysis = analyze_landauer(f, domain)
+    depth = circuit.depth()
+    fe = circuit.free_energy()
+
+    landauer = analysis.entropy_defect  # in natural units
+    bits = landauer / math.log(2) if math.log(2) > 0 else 0
+    thermal = k_B * temperature * landauer
+
+    # Efficiency: ratio of Landauer minimum to circuit free energy cost
+    eff = landauer / fe if fe > 0 else 1.0
+
+    return ThermodynamicProfile(
+        total_landauer_cost=landauer,
+        circuit_depth=depth,
+        circuit_free_energy=fe,
+        thermal_cost_joules=thermal,
+        bits_erased=bits,
+        efficiency=min(eff, 1.0)
+    )
 
 
 # ============================================================
-# Algorithm 3: Zero-Temperature Limit
-# ============================================================
-
-def gibbs_free_energy(energies: List[float], temperature: float) -> float:
-    """Compute Gibbs free energy F_T = -T * log(sum(exp(-E_i/T))).
-    
-    Uses log-sum-exp trick for numerical stability.
-    
-    Args:
-        energies: List of energy values E_1, ..., E_n.
-        temperature: Temperature T > 0.
-    
-    Returns:
-        Gibbs free energy F_T.
-    
-    Raises:
-        ValueError: If temperature <= 0 or energies is empty.
-    
-    Time complexity: O(n)
-    Space complexity: O(1) (streaming)
-    """
-    if not energies:
-        raise ValueError("Energy list must be non-empty")
-    if temperature <= 0:
-        raise ValueError("Temperature must be positive")
-    
-    E_min = min(energies)
-    # F_T = E_min - T * log(sum(exp(-(E_i - E_min)/T)))
-    log_sum = math.log(sum(math.exp(-(e - E_min) / temperature) for e in energies))
-    return E_min - temperature * log_sum
-
-
-def tropical_free_energy(energies: List[float]) -> float:
-    """Compute tropical (zero-temperature) free energy = min(energies).
-    
-    This is the T → 0 limit of gibbs_free_energy.
-    
-    Args:
-        energies: List of energy values.
-    
-    Returns:
-        min(energies)
-    """
-    return min(energies)
-
-
-def verify_tropical_limit(
-    energies: List[float],
-    temperatures: Optional[List[float]] = None,
-    tolerance: float = 1e-6
-) -> List[Tuple[float, float, float, bool]]:
-    """Verify convergence of Gibbs free energy to tropical limit.
-    
-    Args:
-        energies: Energy landscape.
-        temperatures: List of temperatures to test (default: geometric sequence).
-        tolerance: Convergence tolerance.
-    
-    Returns:
-        List of (temperature, F_T, |F_T - min(E)|, converged) tuples.
-    """
-    if temperatures is None:
-        temperatures = [10.0, 1.0, 0.1, 0.01, 0.001, 0.0001]
-    
-    E_min = tropical_free_energy(energies)
-    results = []
-    
-    for T in temperatures:
-        F_T = gibbs_free_energy(energies, T)
-        error = abs(F_T - E_min)
-        converged = error < tolerance
-        results.append((T, F_T, error, converged))
-    
-    return results
-
-
-# ============================================================
-# Algorithm 4: Entropy Defect Analysis
-# ============================================================
-
-def analyze_function_family(
-    domain_sizes: List[int],
-    function_generator: Callable[[int], List[int]],
-    num_samples: int = 1000
-) -> List[Tuple[int, float, float]]:
-    """Analyze entropy defect statistics for a family of functions.
-    
-    Args:
-        domain_sizes: List of domain sizes to test.
-        function_generator: Function that takes domain size and returns a random function.
-        num_samples: Number of samples per domain size.
-    
-    Returns:
-        List of (domain_size, mean_defect, std_defect) tuples.
-    """
-    import random
-    results = []
-    
-    for n in domain_sizes:
-        defects = []
-        for _ in range(num_samples):
-            f = function_generator(n)
-            defects.append(compute_entropy_defect(f, n))
-        
-        mean_d = sum(defects) / len(defects)
-        var_d = sum((d - mean_d) ** 2 for d in defects) / len(defects)
-        std_d = math.sqrt(var_d)
-        results.append((n, mean_d, std_d))
-    
-    return results
-
-
-def landauer_bound_check(f: List[int], is_constant: bool = False) -> dict:
-    """Check Landauer bound for a given function.
-    
-    Args:
-        f: Function as a list.
-        is_constant: Whether f is known to be constant.
-    
-    Returns:
-        Dictionary with entropy defect, bounds, and verification status.
-    """
-    n = len(f)
-    range_size = len(set(f))
-    ed = compute_entropy_defect(f)
-    is_injective = (range_size == n)
-    
-    result = {
-        "domain_size": n,
-        "range_size": range_size,
-        "entropy_defect_nats": ed,
-        "entropy_defect_bits": ed / math.log(2) if ed > 0 else 0.0,
-        "is_injective": is_injective,
-        "is_constant": range_size == 1 and n > 0,
-    }
-    
-    # Check bounds
-    if range_size == 1 and n >= 2:
-        result["landauer_bound_satisfied"] = ed >= math.log(2) - 1e-10
-        result["bound_type"] = "erasure (Theorem 3.2)"
-    elif not is_injective:
-        result["landauer_bound_satisfied"] = ed >= -1e-10
-        result["bound_type"] = "non-injective (Theorem 3.3)"
-    else:
-        result["landauer_bound_satisfied"] = True
-        result["bound_type"] = "injective (trivially satisfied)"
-    
-    return result
-
-
-# ============================================================
-# Main: Run examples
+# Main: Run all algorithms with examples
 # ============================================================
 
 if __name__ == "__main__":
-    import random
-    
-    print("=" * 60)
-    print("Tropical Thermodynamics — Algorithm Examples")
-    print("=" * 60)
-    print()
-    
-    # Algorithm 1: Entropy defect
-    print("--- Algorithm 1: Entropy Defect ---")
-    examples = [
-        ([0, 0], "erasure on 2 states"),
-        ([0, 0, 0, 0], "erasure on 4 states"),
-        ([0, 1, 0, 1], "2-to-1 map"),
-        ([0, 1, 2, 3], "identity (injective)"),
-    ]
-    for f, desc in examples:
-        result = landauer_bound_check(f)
-        print(f"  {desc}: defect = {result['entropy_defect_bits']:.2f} bits, "
-              f"bound: {result['bound_type']}, satisfied: {result['landauer_bound_satisfied']}")
-    print()
-    
+    print("=" * 70)
+    print("Algorithm Demonstrations")
+    print("=" * 70)
+
+    # Algorithm 1: Landauer analysis
+    print("\n--- Algorithm 1: Fiber-Counting Landauer Analysis ---")
+
+    # Binary AND gate
+    def binary_and(x: int) -> int:
+        """AND gate: (a,b) → a∧b, encoded as 4 inputs → 2 outputs."""
+        return 1 if x == 3 else 0  # Only (1,1)→1
+
+    analysis = analyze_landauer(binary_and, [0, 1, 2, 3])
+    print(f"\nBinary AND gate (4 inputs):")
+    print(analysis)
+
+    # Identity (reversible)
+    analysis_id = analyze_landauer(lambda x: x, list(range(8)))
+    print(f"\nIdentity on 8 elements:")
+    print(analysis_id)
+
     # Algorithm 2: Circuit evaluation
-    print("--- Algorithm 2: Circuit Depth & Free Energy ---")
-    circuits = [
-        ("chain(3)", build_chain(3)),
-        ("chain(5)", build_chain(5)),
-        ("binary_tree(3)", build_binary_tree(3)),
-    ]
-    for name, C in circuits:
-        assert C.verify_fe_eq_depth(), f"Theorem 3.4 violated for {name}!"
-        print(f"  {name}: depth = {C.depth()}, free_energy = {C.free_energy():.0f}, "
-              f"nodes = {C.node_count()}, FE=depth: ✓")
-    print()
-    
-    # Algorithm 3: Zero-temperature limit
-    print("--- Algorithm 3: Zero-Temperature Limit ---")
-    energies = [3.0, 1.5, 2.7, 4.1, 1.5]
-    results = verify_tropical_limit(energies)
-    print(f"  Energies: {energies}, min = {min(energies)}")
-    for T, F_T, error, converged in results:
-        print(f"    T = {T:>8.4f}: F_T = {F_T:.6f}, error = {error:.2e}, "
-              f"converged: {'✓' if converged else '✗'}")
-    print()
-    
-    # Algorithm 4: Random function analysis
-    print("--- Algorithm 4: Random Function Analysis ---")
-    random.seed(42)
-    def random_function(n):
-        return [random.randint(0, n - 1) for _ in range(n)]
-    
-    analysis = analyze_function_family([10, 50, 100, 500], random_function, 500)
-    theoretical = -math.log(1 - 1/math.e)
-    print(f"  Theoretical mean entropy defect for random f:[n]→[n]: {theoretical:.4f}")
-    for n, mean, std in analysis:
-        print(f"    n = {n:>4}: mean = {mean:.4f} ± {std:.4f}")
-    print()
-    
-    print("All algorithms verified successfully.")
+    print("\n--- Algorithm 2: Circuit Free Energy ---")
+    # Build a depth-5 circuit
+    c = CircuitNode.input()
+    for _ in range(5):
+        c = CircuitNode.gate(c)
+    print(f"\nDepth-5 pipeline:")
+    print(f"  Depth: {c.depth()}")
+    print(f"  Free energy: {c.free_energy()}")
+    print(f"  FE = depth: {c.verify_fe_eq_depth()}")
+    print(f"  Nodes: {c.node_count()}, Gates: {c.gate_count()}")
+
+    # Algorithm 3: Optimal erasure
+    print("\n--- Algorithm 3: Optimal Erasure Strategy ---")
+    for n in [2, 8, 256, 1024]:
+        cost, steps = optimal_erasure_cost(n)
+        print(f"\n  Erasing {n} → 1:")
+        print(f"    Minimum cost: {cost:.4f} = log({n}) = {cost/math.log(2):.2f} bits")
+        print(f"    Strategy ({len(steps)} steps): {steps}")
+
+    # Algorithm 4: Full thermodynamic profile
+    print("\n--- Algorithm 4: Thermodynamic Profile ---")
+    circuit = CircuitNode.seq(
+        CircuitNode.gate(CircuitNode.input()),
+        CircuitNode.gate(CircuitNode.input())
+    )
+    profile = thermodynamic_profile(binary_and, [0, 1, 2, 3], circuit)
+    print(f"\nAND gate with depth-2 circuit at 300K:")
+    print(profile)

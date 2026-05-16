@@ -121,10 +121,10 @@
       "Physics"
     ],
     "priority_score": 0.82,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd77de91",
     "timestamp": "2026-05-14T16:03:53.828694+00:00"
   },
   {
@@ -754,34 +754,6 @@
     "timestamp": "2026-05-16T08:34:17.487712+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Define",
-    "description": "`ReedMullerCode (d n : ℕ) (q : ℕ) [Fact q.Prime]` as the image of the evaluation map from polynomials of total degree ≤ d to functions Fin n → 𝔽_q → 𝔽_q.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.371463+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Apply",
-    "description": "`schwartz_zippel_succ` to bound the weight of any nonzero codeword from below.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.389732+00:00"
-  },
-  {
     "id": "fd_0232",
     "title": "Exhibit",
     "description": "a codeword achieving the bound (product of d linear factors) for tightness.\n\n### Key Lemmas Needed\n- `eval_map_injective_of_degree_lt_card`: the evaluation map is injective when d < q.\n- `hamming_weight_ge_of_schwartz_zippel`: minimum Hamming weight ≥ (q − d) · q^{n−1}.\n- `reedMuller_minimum_distance`: exact minimum distance computation.\n\n### Cross-Domain Connections\n- Coding theory (error-correcting codes, list decoding bounds)\n- Complexity theory (algebraic proof complexity, low-degree testing)\n- Cryptography (secret sharing via Reed–Muller codes)\n\n---\n\n## Direction 2: PIT Soundness for Algebraic Circuits\n\n### Hypothesis\nFor an algebraic circuit C of size s computing a polynomial of degree d over 𝔽_q, random evaluation at a point in 𝔽_q^n detects nonzeroness with probability ≥ 1 − d/q. C",
@@ -815,20 +787,6 @@
     "timestamp": "2026-05-16T09:05:20.422171+00:00"
   },
   {
-    "id": "fd_0234",
-    "title": "State",
-    "description": "the PIT soundness theorem: if C.toMvPolynomial ≠ 0 and we sample r uniformly from 𝔽_q^n, then Pr[C.eval r = 0] ≤ d/q.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.437749+00:00"
-  },
-  {
     "id": "fd_0235",
     "title": "Compose",
     "description": "with `bounded_circuit_degree_bound` and `mulGates_lower_bound_from_degree` to get circuit-complexity-aware bounds.\n\n### Key Theorems\n```\ntheorem circuit_pit_soundness (C : AlgCircuit K n)\n    (hC : C.toMvPolynomial ≠ 0) :\n    Fintype.card {x : Fin n → K // C.eval x = 0}\n      ≤ C.toMvPolynomial.totalDegree * (Fintype.card K) ^ (n - 1)\n```\n\n### Impact\nThis creates the first formal bridge between **circuit complexity** (syntactic) and **polynomial identity testing** (semantic), enabling future formalization of the Kabanets–Impagliazzo connection between PIT derandomization and circuit lower bounds.\n\n---\n\n## Direction 3: Polynomial Fingerprinting and Streaming Verification\n\n### Hypothesis\nTwo strings s₁, s₂ ∈ {0,1}^n are equal if and only if their polynomial encodings p_{s₁}(x) = p_{s₂}(x) as",
@@ -843,20 +801,6 @@
     "source_exp_id": "09f78c38",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:05:20.454171+00:00"
-  },
-  {
-    "id": "fd_0236",
-    "title": "Show",
-    "description": "that distinct strings give distinct polynomials of degree ≤ n − 1.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.469777+00:00"
   },
   {
     "id": "fd_0237",
@@ -874,20 +818,6 @@
     "timestamp": "2026-05-16T09:05:20.487200+00:00"
   },
   {
-    "id": "fd_0239",
-    "title": "Prove",
-    "description": "the Schwartz–Zippel-based distance bound: any nonzero polynomial of degree ≤ d agrees with the zero function on at most d · q^{n−1} points.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.514530+00:00"
-  },
-  {
     "id": "fd_0240",
     "title": "Reduce",
     "description": "to the Schwartz–Zippel bound over finite grids (not the full field, but subsets).",
@@ -902,32 +832,122 @@
     "timestamp": "2026-05-16T09:05:20.534901+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Generalize",
-    "description": "`schwartz_zippel_succ` to evaluation over product sets S₁ × ⋯ × Sₙ rather than all of K^n.",
+    "id": "fd_0246",
+    "title": "Define tropical rank",
+    "description": "as the minimum number of tropical rank-1 matrices whose tropical row span contains all rows of M. This is a weaker condition than decomposition (it only requires row containment, not entrywise equality).",
     "domains": [
-      "Bridges"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "09f78c38",
+    "source_exp_id": "b18b8608",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.549760+00:00"
+    "timestamp": "2026-05-16T09:18:22.944252+00:00"
   },
   {
-    "id": "fd_0243",
-    "title": "Update",
-    "description": "this document as each direction is completed, adding new sub-directions that become accessible.",
+    "id": "fd_0247",
+    "title": "Show that any factor rank decomposition induces a row span",
+    "description": "If $M_{ij} = \\min_k (U_k(i) + V_k(j))$, then each row of M is tropically dominated by the rank-1 rows $\\{V_k\\}$, shifted by $\\{U_k(i)\\}$.",
     "domains": [
-      "Bridges"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "09f78c38",
+    "source_exp_id": "b18b8608",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.583300+00:00"
+    "timestamp": "2026-05-16T09:18:22.957431+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Construct a counterexample",
+    "description": "for the reverse inequality: the identity-like matrix $M_{ij} = 0$ if $i=j$, $\\infty$ otherwise has tropical rank 1 (it's already in echelon form) but factor rank $n$.\n\n### Cross-Domain Connections\n\n- **Communication complexity**: tropical rank is analogous to the log of the communication complexity of a Boolean matrix; factor rank bounds the extension complexity. The gap between them mirrors the gap between nondeterministic and deterministic communication.\n- **Optimization**: In linear programming over the tropical semiring, the rank controls the dimension of the feasible region, while factor rank controls the size of an extended formulation.\n\n---\n\n## 2. Subadditivity and Composition Under Tropical Matrix Product\n\n### Conjecture\n\nFor tropical matrix multiplication $C = A \\otimes B$ (where ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b18b8608",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:18:22.969171+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Single head",
+    "description": ": The attention matrix $A_{ij} = \\min_l (Q_{il} + K_{jl})$ is already a tropical rank-$d_k$ decomposition with $U_l(i) = Q_{il}$ and $V_l(j) = K_{jl}$.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b18b8608",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:18:22.980173+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Multi-head",
+    "description": ": By subadditivity, the tropical sum (min) of $h$ heads each of factor rank $\\leq d_k$ has factor rank $\\leq h \\cdot d_k$.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b18b8608",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:18:22.991072+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Tightness",
+    "description": ": Construct examples achieving the bound using random queries/keys.\n\n### Cross-Domain Connections\n\n- **Low-rank transformers**: Factor rank provides a formal measure of attention \"compression\" — low factor rank means the attention pattern is representable with few separable templates, justifying low-rank approximation methods like Linformer and Performer.\n- **Interpretability**: Each rank-1 summand $u(i) + v(j)$ in the decomposition represents a \"pure attention template\" that independently ranks tokens. Factor rank counts the minimum number of such templates.\n\n---\n\n## 5. Extension Complexity and Communication Complexity\n\n### Conjecture\n\nThe tropical factor rank of a distance/cost matrix provides lower bounds on the extension complexity of the corresponding tropical polytope:\n\n$$\\text{ext}(",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b18b8608",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:18:23.003359+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Define tropical polytopes",
+    "description": "as the tropical convex hull of a set of points in $(\\text{WithTop}\\ \\mathbb{Z})^n$.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b18b8608",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:18:23.014527+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Prove Yannakakis-type theorems",
+    "description": ": the minimum number of facets in an extended formulation equals the nonneg rank, which for tropical polytopes equals the factor rank.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b18b8608",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:18:23.041869+00:00"
   },
   {
     "id": "seed_052",
@@ -1552,38 +1572,6 @@
     "timestamp": "2026-05-16T08:33:10.474613+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Direction 2: Stochastic Bellman Framework and Probabilistic Collatz",
-    "description": "**Hypothesis**: Replacing the deterministic Collatz step with a probabilistic model (each number is even or odd with probability 1/2, independently) yields a stochastic Bellman equation whose fixed point has expected value log₂(n) / (1 - 3/4 · γ). This provides a rigorous probabilistic baseline for the \"expected\" value function that can be compared with the actual deterministic fixed point.\n\n**Proof Strategy**:\n1. Define a stochastic Bellman operator on functions ℕ → ℝ using expected values.\n2. Prove contraction with the same discount mechanism.\n3. Compute the fixed point in closed form using the heuristic branching ratio.\n4. Compare with Tao's almost-all-orbits result to formalize probabilistic intuition.\n\n**Cross-Domain Connections**: Connects to the theory of random dynamical systems, m",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d4155669",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:33:10.489058+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Direction 4: Verified Termination Analysis via Bellman Ranking Functions",
-    "description": "**Hypothesis**: The discounted Bellman fixed point V* can serve as a certified ranking function for program termination analysis. For arithmetic programs with piecewise-affine transitions (if-then-else with linear arithmetic), the Bellman contraction framework automatically produces a ranking function that decreases at each step by at least 1 - γ · V*(T(n)) / V*(n).\n\n**Proof Strategy**:\n1. Generalize the ArithmeticSystem structure to programs with multiple branches and guards.\n2. Prove that the Bellman fixed point is a valid ranking function (V*(n) > 0 for n ≠ target, and V*(T(n)) < V*(n) outside the target).\n3. Connect to existing termination analysis tools (e.g., AProVE, T2) by providing Lean-certified ranking functions.\n4. Develop automated Lean tactics that compute approximate ranking ",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d4155669",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:33:10.525124+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Research Team Structure",
     "description": "Each direction is designed to be pursued by a 2-3 person team with complementary expertise:\n- **Direction 1**: Number theorist + formal verification expert\n- **Direction 2**: Probabilist + dynamical systems theorist\n- **Direction 3**: Statistical physicist + ergodic theorist\n- **Direction 4**: Program verification researcher + formal methods expert\n- **Direction 5**: Machine learning researcher + tropical geometer\n\nCross-pollination between teams, especially through the shared Lean library (Meta-Direction), would be essential for breakthrough progress.",
@@ -1616,38 +1604,6 @@
     "source_exp_id": "9af9301e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:33:28.641269+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Target Theorem",
-    "description": "```\ntheorem tropical_matroid_exchange\n    {P L : Type*} [Fintype P] [Fintype L] [DecidableEq P]\n    (C : TropicalIncidenceConfig P L)\n    (hrank : ∀ S : Finset P, S.card ≤ 3 →\n      ∃ ℓ, ∀ p ∈ S, tropDefect (C.line ℓ) (C.point p) = 0)\n    (B₁ B₂ : Finset P)\n    (hB₁ : B₁.card = 3 ∧ ∀ p ∈ B₁, ∀ ℓ, tropDefect (C.line ℓ) (C.point p) = 0 → \n            ∃ q ∈ B₁, q ≠ p ∧ tropDefect (C.line ℓ) (C.point q) = 0)\n    (hB₂ : B₂.card = 3)\n    (x : P) (hx : x ∈ B₁ \\ B₂) :\n    ∃ y ∈ B₂ \\ B₁, ∃ ℓ, ∀ p ∈ (B₁.erase x).cons y sorry, \n      tropDefect (C.line ℓ) (C.point p) = 0\n```",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d3c4fbdb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:33:53.813883+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Research Program Architecture",
-    "description": "These five directions form a coherent research program:\n\n```\nDirection 1 (Matroid Exchange)  ←→  Direction 3 (Spectral)\n         ↓                                  ↓\nDirection 5 (Helly)           ←→  Direction 4 (Coding)\n         ↓                                  ↓\n              Direction 2 (Stability)\n```\n\n- Directions 1 and 3 are algebraic/combinatorial (matroid + spectral)\n- Directions 4 and 5 are geometric/applied (codes + convexity)\n- Direction 2 is the numerical bridge connecting exact to approximate theory\n\nEach direction builds on the rigidity theorem and the defect framework established here. Together, they constitute a program for **tropical certified incidence geometry** — a new field at the intersection of tropical algebraic geometry, combinatorial optimization, coding theory,",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d3c4fbdb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:33:53.875177+00:00"
   },
   {
     "id": "fd_0224",
