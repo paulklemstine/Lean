@@ -735,6 +735,48 @@
     "timestamp": "2026-05-16T15:43:03.478518+00:00"
   },
   {
+    "id": "fd_0251",
+    "title": "Computational validation",
+    "description": ": Test with `#eval` on concrete examples.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d39daf16",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:33:21.182437+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Decomposition",
+    "description": ": Break into 3-8 helper lemmas, each independently provable.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d39daf16",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:33:21.200249+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Incremental verification",
+    "description": ": Prove lemmas bottom-up, building each time.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d39daf16",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:33:21.215808+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -958,22 +1000,6 @@
     "source_exp_id": "d2a18598",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.336933+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "Research Team Directive",
-    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "d39daf16",
-    "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
     "id": "fd_0200",
@@ -1528,22 +1554,6 @@
     "timestamp": "2026-05-16T14:52:12.526923+00:00"
   },
   {
-    "id": "fd_0254",
-    "title": "4. Oracle/Data Bottleneck Theorem",
-    "description": "**Goal:** Formalize that deterministic oracle post-processing cannot increase support entropy. If an oracle computes `g : β → γ` and we have a deterministic query strategy `f : α → β`, then the information content of the composed output `g ∘ f` is bounded by that of the query output `f`.\n\n```lean\ntheorem oracle_bottleneck\n    {α β γ : Type*} [Fintype α] [Fintype β] [Fintype γ]\n    [DecidableEq β] [DecidableEq γ]\n    (query : α → β) (oracle : β → γ) :\n    Fintype.card (Set.range (oracle ∘ query)) ≤ Fintype.card (Set.range query)\n```\n\n**Status:** This is exactly `support_entropy_comp_monotone` applied to the oracle setting. The formalization is complete; what remains is to build the interpretive infrastructure connecting it to oracle complexity theory.\n\n**Next steps:**\n- Define an `OracleQue",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d4efa6e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:07:11.477800+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "5. Kolmogorov-to-Shannon Bridge via Average Complexity",
     "description": "**Goal:** Use `compressor_gives_complexity_bound` to define a finite family complexity profile and compare its average bound to support entropy.\n\n```lean\ntheorem avg_complexity_bounds_entropy\n    (U : DescriptionMethod) (hU : IsUniversal U)\n    {α : Type*} [Fintype α] [DecidableEq α]\n    (embed : α → List Bool) (hembed : Function.Injective embed) :\n    ∃ c : ℕ, Nat.log 2 (Fintype.card α) ≤\n      (∑ a : α, (embed a).length) / Fintype.card α + c\n```\n\n**Strategy:**\n- Instantiate `compressor_gives_complexity_bound` with the identity compressor to get baseline bounds.\n- Use `complexity_bound_implies_finite_entropy_bound` to convert per-element complexity bounds into global cardinality bounds.\n- Average over all elements using `Finset.sum_div_pow_mul_pow_le_pow_mul` or similar combinatorial ineq",
@@ -1645,23 +1655,6 @@
     "timestamp": "2026-05-16T15:31:36.015827+00:00"
   },
   {
-    "id": "fd_0254",
-    "title": "3. Tropical Combinatorial Types as Abstract Interpretation Domains",
-    "description": "**Hypothesis:** The tropical type classification (which monomials achieve the minimum) defines an abstract interpretation domain, and our information-loss theorems correspond to precision bounds in program analysis.\n\n**Proof Strategy:**\n- Define a Galois connection between the concrete domain (integer triples with Diophantine constraints) and the abstract domain (tropical combinatorial types).\n- Prove that the abstraction function is not injective on any infinite concrete set (our Theorem C2).\n- Characterize the \"best abstract transformer\" for classical operations (addition, multiplication, exponentiation) in the tropical domain.\n- Show that the abstract transformer for exponentiation is the identity — formalizing why tropical methods cannot see the difference between x² + y² = z² and x^n ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "69b261f0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:31:36.082220+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "4. Counting Primitive Lattice Points on Tropical Hypersurfaces",
     "description": "**Hypothesis:** The number of primitive lattice points on a tropical hypersurface in a box of side length L grows as Θ(L^{d-1}) where d is the ambient dimension, matching classical results in the geometry of numbers for hyperplane arrangements.\n\n**Proof Strategy:**\n- For the tropical Fermat hypersurface in ℤ³, count primitive points (a,a,b) with gcd(a,b) = 1 and 1 ≤ a ≤ b ≤ L. This count is Θ(L²/ζ(2)) = Θ(6L²/π²) by Euler's totient summation.\n- Formalize this asymptotic using Mathlib's analysis library and the prime number theorem or Mertens' theorem.\n- Generalize to arbitrary tropical hyperplane arrangements in ℤ^d.\n- Compare with the zero count for classical Fermat: the contrast between Θ(L²) tropical solutions and O(1) classical solutions (by FLT) quantifies the information loss.\n\n**Key",
@@ -1750,24 +1743,5 @@
     "source_exp_id": "488e4767",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T16:31:39.044999+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "5. Decidability of Tropical Expression Equivalence",
-    "description": "**Goal**: Prove the full decidability theorem:\n\n```\ntheorem tropical_expr_decidable_eq_semantics\n  {n : ℕ} (e₁ e₂ : TropExpr n) :\n  Decidable (TropExpr.eval e₁ = TropExpr.eval e₂)\n```\n\n- This requires canonical normal forms (Direction 1) plus a decidable equality on canonical representatives.\n- The key mathematical content is that two minima of affine forms are equal as functions if and only if they have the same set of \"non-dominated\" affine forms (up to permutation).\n- This is equivalent to decidability of the equational theory of the tropical semiring, which is known to be decidable but has not been formally verified.\n\n**Hypothesis**: The equational theory of the tropical semiring (ℝ, min, +) restricted to the natural-multiplicity fragment is decidable by canonical normal form compariso",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "488e4767",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:31:39.066814+00:00"
   }
 ]

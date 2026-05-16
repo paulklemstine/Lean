@@ -1,242 +1,231 @@
 import Mathlib
 
-/-! # Tropical Factor Rank Encoding
+/-!
+# Bellman Duality for Amortized Complexity Certificates
 
-We define tropical factor rank for matrices over `WithTop ℤ` (min-plus semiring)
-and prove that the tropical identity-like matrix (0 on diagonal, ⊤ off-diagonal)
-has tropical factor rank exactly equal to its dimension.
+This module establishes **strong duality between amortized charge schedules and
+potential-function certificates** for finite execution traces. The main results are:
 
-## Main results
+1. `feasibleRate_iff_bellmanFeasible` — A constant rate `r` bounds all prefix averages
+   if and only if there exists a nonneg potential satisfying the Bellman inequality.
 
-* `tropFactorRank_encodeDiag` : For every `s : ℕ`, the `s × s` tropical identity-like
-  matrix has factor rank exactly `s`.
-* `tropFactorRank_encode_exact` : The encoding function `encode` maps each natural number
-  to a tropical matrix whose factor rank is that number.
+2. `amortized_rate_strong_duality_fin` — The infimum over primal feasible rates equals
+   the infimum over dual (Bellman) feasible rates.
 
-## Proof strategy
+3. `optimal_rate_eq_maxPrefixAvg` — The optimal rate equals the maximum
+   prefix average `max_{1 ≤ k ≤ n} (1/k) ∑_{i<k} cost_i`.
 
-**Upper bound**: Exhibit `s` rank-1 tropical matrices, one per diagonal position,
-whose entrywise infimum reconstructs the identity-like matrix.
+4. `exists_optimal_bellman_potential` — An explicit optimal potential witness exists.
 
-**Lower bound**: Show that any rank-1 matrix contributing to a matrix with all
-off-diagonal entries `⊤` can support at most one finite diagonal entry (by a
-support-separation argument). Then by pigeonhole (injectivity), at least `s`
-rank-1 summands are needed.
+## Mathematical significance
+
+This converts the informal "find a good potential function" heuristic of amortized
+analysis into a precise duality theorem: **optimal amortized bounds equal optimal
+dual Bellman certificates**. The Bellman inequality `cost_i + φ(i+1) - φ(i) ≤ r`
+is exactly a reduced-cost constraint, connecting amortized analysis to LP duality,
+min-cost flow, and tropical optimization.
 -/
+
+open Finset BigOperators
 
 noncomputable section
 
-open Finset
+/-! ## Core Definitions -/
 
-/-- Tropical matrix type: `n × n` matrices over `WithTop ℤ`. -/
-abbrev tropMat (n : ℕ) := Matrix (Fin n) (Fin n) (WithTop ℤ)
+/-- Extend a `Fin n → ℝ` function to `ℕ → ℝ` by zero-padding. -/
+def extendCost {n : ℕ} (cost : Fin n → ℝ) : ℕ → ℝ :=
+  fun i => if h : i < n then cost ⟨i, h⟩ else 0
 
-/-- A decomposition of a tropical matrix `A` into `k` rank-1 terms.
-    A rank-1 tropical matrix has entries `u(i) + v(j)`. The tropical sum
-    (entrywise infimum) of these rank-1 terms should equal `A`. -/
-def IsTropFactorization {n : ℕ} (A : tropMat n) (k : ℕ)
-    (u v : Fin k → Fin n → WithTop ℤ) : Prop :=
-  ∀ i j : Fin n, A i j = univ.inf (fun t => u t i + v t j)
+/-- Prefix sum of `cost` over the first `k` steps. For `k ≤ n`, this equals
+    `∑_{i<k} cost_i`. -/
+def prefixSum {n : ℕ} (cost : Fin n → ℝ) (k : ℕ) : ℝ :=
+  ∑ i ∈ Finset.range k, extendCost cost i
 
-/-- A tropical matrix has factor rank at most `k`. -/
-def HasTropFactorRankLE {n : ℕ} (A : tropMat n) (k : ℕ) : Prop :=
-  ∃ (u v : Fin k → Fin n → WithTop ℤ), IsTropFactorization A k u v
+theorem prefixSum_zero {n : ℕ} (cost : Fin n → ℝ) : prefixSum cost 0 = 0 := by
+  simp [prefixSum]
 
-/-
-The set of valid factorization sizes is nonempty: every `n × n` matrix
-    has factor rank at most `n * n`.
--/
-lemma hasTropFactorRankLE_sq {n : ℕ} (A : tropMat n) :
-    HasTropFactorRankLE A (n * n) := by
-      -- We need to show that any n×n matrix A has factor rank ≤ n*n. We can write A as the infimum of n*n rank-1 matrices, one for each entry.
-      use fun t i => if i = (Fin.mk (t.val % n) (by
-      exact Nat.mod_lt _ ( Fin.pos t |> fun x => Nat.pos_of_ne_zero ( by aesop_cat ) ))) then A (Fin.mk (t.val % n) (by
-      exact Nat.mod_lt _ ( Fin.pos t |> fun x => Nat.pos_of_ne_zero ( by aesop_cat ) ))) (Fin.mk (t.val / n) (by
-      exact Nat.div_lt_of_lt_mul <| by linarith [ Fin.is_lt t ] ;)) else ⊤, fun t j => if j = (Fin.mk (t.val / n) (by
-      exact Nat.div_lt_of_lt_mul <| by linarith [ Fin.is_lt t ] ;)) then 0 else ⊤
-      generalize_proofs at *;
-      intro i j;
-      refine' le_antisymm _ _ <;> simp +decide [ Finset.inf_le ];
-      · intro b; split_ifs <;> simp_all +decide [ Fin.ext_iff ] ;
-        congr!;
-      · refine' le_trans ( Finset.inf_le _ ) _;
-        exact ⟨ i + j * n, by nlinarith [ Fin.is_lt i, Fin.is_lt j ] ⟩;
-        · exact Finset.mem_univ _;
-        · norm_num [ Nat.add_mul_div_right _ _ ( Fin.pos i ), Nat.mod_eq_of_lt ];
-          simp +decide [ Nat.div_eq_of_lt, Fin.ext_iff ]
+theorem prefixSum_succ {n : ℕ} (cost : Fin n → ℝ) (k : ℕ) (hk : k < n) :
+    prefixSum cost (k + 1) = prefixSum cost k + cost ⟨k, hk⟩ := by
+  simp [prefixSum, Finset.sum_range_succ, extendCost, hk]
+
+/-- A rate `r` is primal-feasible if every prefix average is at most `r`:
+    `∀ k ∈ {0,...,n}, ∑_{i<k} cost_i ≤ r * k`. -/
+def feasibleRate {n : ℕ} (cost : Fin n → ℝ) (r : ℝ) : Prop :=
+  ∀ k : Fin (n + 1), prefixSum cost k.1 ≤ r * k.1
+
+/-- A rate `r` is Bellman-feasible (dual-feasible) if there exists a nonnegative
+    potential `φ` with `φ 0 = 0` satisfying the one-step Bellman inequality. -/
+def bellmanFeasible {n : ℕ} (cost : Fin n → ℝ) (r : ℝ) : Prop :=
+  ∃ φ : Fin (n + 1) → ℝ,
+    φ 0 = 0 ∧
+    (∀ k : Fin (n + 1), 0 ≤ φ k) ∧
+    ∀ i : Fin n, cost i + φ i.succ - φ i.castSucc ≤ r
+
+/-! ## Direction 1: Bellman feasible → Rate feasible (Telescoping) -/
 
 /-
-Monotonicity: if a matrix has factor rank ≤ k, then it has factor rank ≤ k' for k ≤ k'.
+Key telescoping lemma: summing the Bellman inequalities gives prefix bounds.
 -/
-lemma hasTropFactorRankLE_mono {n : ℕ} {A : tropMat n} {k k' : ℕ} (hk : k ≤ k')
-    (h : HasTropFactorRankLE A k) : HasTropFactorRankLE A k' := by
-      obtain ⟨ u, v, h ⟩ := h;
-      refine' ⟨ fun i j => if hi : i.val < k then u ⟨ i.val, hi ⟩ j else ⊤, fun i j => if hi : i.val < k then v ⟨ i.val, hi ⟩ j else ⊤, fun i j => _ ⟩;
-      simp_all +decide [ Finset.inf ];
-      convert h i j using 1;
-      refine' le_antisymm _ _ <;> simp +decide [ Finset.inf, fold ];
-      · rw [ List.ofFn_eq_map, List.ofFn_eq_map ];
-        rw [ ← List.take_append_drop k ( List.finRange k' ), List.map_append, List.foldr_append ];
-        rw [ show List.take k ( List.finRange k' ) = List.map ( fun x : Fin k => ⟨ x, by linarith [ Fin.is_lt x ] ⟩ ) ( List.finRange k ) from ?_ ];
-        · induction ( List.finRange k ) <;> aesop;
-        · refine' List.ext_get _ _ <;> aesop;
-      · rw [ List.ofFn_eq_map, List.ofFn_eq_map ];
-        have h_foldr_le : ∀ (l : List (WithTop ℤ)), List.foldr (fun x1 x2 => min x1 x2) ⊤ l ≤ List.foldr (fun x1 x2 => min x1 x2) ⊤ (l ++ List.replicate (k' - k) ⊤) := by
-          induction ( k' - k ) <;> simp_all +decide [ List.replicate ];
-        convert h_foldr_le _ using 2;
-        refine' List.ext_get _ _ <;> simp +decide [ List.get ];
-        · rw [ Nat.add_sub_of_le hk ];
-        · intro n hn hn'; split_ifs <;> simp_all +decide [ List.getElem_append ] ;
-
-/-- The tropical factor rank: minimum `k` such that `A` is the entrywise infimum
-    of `k` tropical rank-1 matrices. -/
-noncomputable def tropFactorRank {n : ℕ} (A : tropMat n) : ℕ :=
-  sInf {k : ℕ | HasTropFactorRankLE A k}
-
-/-- Factor rank is at most `k` if we have a factorization of size `k`. -/
-lemma tropFactorRank_le {n : ℕ} {A : tropMat n} {k : ℕ}
-    (h : HasTropFactorRankLE A k) : tropFactorRank A ≤ k :=
-  Nat.sInf_le h
-
-/-- Factor rank is at least `k` if every factorization has size ≥ `k`. -/
-lemma le_tropFactorRank {n : ℕ} {A : tropMat n} {k : ℕ}
-    (h : ∀ m : ℕ, HasTropFactorRankLE A m → k ≤ m) : k ≤ tropFactorRank A :=
-  le_csInf ⟨n * n, hasTropFactorRankLE_sq A⟩ h
-
-/-- The tropical identity-like matrix: `0` on diagonal, `⊤` off-diagonal. -/
-def encodeDiag (s : ℕ) : tropMat s := fun i j =>
-  if i = j then (0 : WithTop ℤ) else ⊤
-
-/-- The encoding function: maps `s` to an `s × s` tropical identity-like matrix. -/
-def encode (s : ℕ) : Σ n : ℕ, tropMat n := ⟨s, encodeDiag s⟩
-
-/-! ## Upper bound: `tropFactorRank (encodeDiag s) ≤ s`
-
-We exhibit an explicit factorization using `s` rank-1 matrices.
-The `t`-th rank-1 matrix places `0` at position `(t, t)` and `⊤` elsewhere.
--/
-
-/-- The explicit factorization vectors for the upper bound. -/
-def ubVec (s : ℕ) (t : Fin s) (i : Fin s) : WithTop ℤ :=
-  if i = t then (0 : WithTop ℤ) else ⊤
+theorem bellman_telescope {n : ℕ} {cost : Fin n → ℝ} {r : ℝ}
+    {φ : Fin (n + 1) → ℝ} (hφ0 : φ 0 = 0)
+    (hstep : ∀ i : Fin n, cost i + φ i.succ - φ i.castSucc ≤ r)
+    (k : ℕ) (hk : k ≤ n) :
+    prefixSum cost k + φ ⟨k, by omega⟩ ≤ r * k := by
+      induction' k with k ih;
+      · -- The prefix sum at 0 is 0, and φ 0 is 0 by hφ0.
+        simp [prefixSum_zero, hφ0];
+      · have := ih ( Nat.le_of_succ_le hk ) ; have := hstep ⟨ k, hk ⟩ ; simp_all +decide [ mul_add, add_assoc, prefixSum_succ ];
+        linarith! [ prefixSum_succ cost k ( Nat.lt_of_succ_le hk ) ]
 
 /-
-The explicit vectors give the correct factorization of `encodeDiag`.
+From a Bellman certificate, we can telescope to get prefix bounds.
 -/
-lemma ubVec_factorization (s : ℕ) :
-    IsTropFactorization (encodeDiag s) s (ubVec s) (ubVec s) := by
-      -- We need to show that for all $i j : Fin s$, $\text{encodeDiag s i j} = \text{univ.inf} (\lambda t, \text{ubVec s t i} + \text{ubVec s t j})$.
-      intro i j
-      simp [encodeDiag, ubVec];
-      refine' Eq.symm ( le_antisymm _ _ );
-      · exact Finset.inf_le ( Finset.mem_univ i ) |> le_trans <| by aesop;
-      · refine' Finset.le_inf fun t _ => _;
-        split_ifs <;> simp_all +decide [ Finset.inf_eq_iInf ]
+theorem bellmanFeasible_imp_feasibleRate
+    {n : ℕ} {cost : Fin n → ℝ} {r : ℝ}
+    (h : bellmanFeasible cost r) :
+    feasibleRate cost r := by
+      obtain ⟨ φ, hφ0, hφnn, hstep ⟩ := h;
+      exact fun k => by have := bellman_telescope hφ0 hstep k ( Nat.le_of_lt_succ k.2 ) ; linarith [ hφnn ⟨ k, by linarith [ Fin.is_lt k ] ⟩ ] ;
 
-/-- Upper bound on the factor rank of the tropical identity-like matrix. -/
-theorem tropFactorRank_encodeDiag_le (s : ℕ) :
-    tropFactorRank (encodeDiag s) ≤ s :=
-  tropFactorRank_le ⟨ubVec s, ubVec s, ubVec_factorization s⟩
+/-! ## Direction 2: Rate feasible → Bellman feasible (Constructive potential) -/
 
-/-! ## Lower bound: `s ≤ tropFactorRank (encodeDiag s)`
-
-### Key lemma: support separation
-
-A tropical rank-1 matrix whose off-diagonal entries are all `⊤` can have
-at most one finite diagonal entry. This is because if `u(i₁) + v(i₁) ≠ ⊤`
-and `u(i₂) + v(i₂) ≠ ⊤` for `i₁ ≠ i₂`, then all four values are finite,
-so `u(i₁) + v(i₂) ≠ ⊤`, contradicting the off-diagonal requirement.
--/
+/-- The canonical potential witness: `φ_k = r * k - prefixSum cost k`. -/
+def canonicalPotential {n : ℕ} (cost : Fin n → ℝ) (r : ℝ) : Fin (n + 1) → ℝ :=
+  fun k => r * k.1 - prefixSum cost k.1
 
 /-
-From a factorization of `encodeDiag s`, each rank-1 term has all
-    off-diagonal entries equal to `⊤`.
+Given prefix bounds, the canonical potential is a valid Bellman certificate.
 -/
-lemma factorization_offDiag_top {s k : ℕ} {u v : Fin k → Fin s → WithTop ℤ}
-    (hfact : IsTropFactorization (encodeDiag s) k u v)
-    (t : Fin k) (i j : Fin s) (hij : i ≠ j) :
-    u t i + v t j = ⊤ := by
-      -- By definition of `IsTropFactorization`, we know that `encodeDiag s i j = (Finset.univ : Finset (Fin k)).inf (fun t' => u t' i + v t' j)`. Since `i ≠ j`, this infimum is `⊤`.
-      have h_inf : (Finset.univ : Finset (Fin k)).inf (fun t' => u t' i + v t' j) = ⊤ := by
-        exact hfact i j ▸ by simp +decide [ hij, encodeDiag ] ;
-      contrapose! h_inf;
-      exact ne_of_lt ( lt_of_le_of_lt ( Finset.inf_le ( Finset.mem_univ t ) ) ( lt_top_iff_ne_top.mpr h_inf ) )
+theorem feasibleRate_imp_bellmanFeasible
+    {n : ℕ} {cost : Fin n → ℝ} {r : ℝ}
+    (h : feasibleRate cost r) :
+    bellmanFeasible cost r := by
+      -- Let's choose the canonical potential function as our witness.
+      use fun k => r * k.1 - prefixSum cost k.1;
+      simp_all +decide [ prefixSum_zero, prefixSum_succ ];
+      exact ⟨ fun k => h k, fun i => by linarith ⟩
+
+/-! ## Main Duality Theorem -/
+
+/-- **Bellman strong duality for amortized rates.**
+    A constant rate bounds all prefix averages if and only if
+    there exists a nonneg Bellman potential certificate. -/
+theorem feasibleRate_iff_bellmanFeasible
+    {n : ℕ} (cost : Fin n → ℝ) (r : ℝ) :
+    feasibleRate cost r ↔ bellmanFeasible cost r :=
+  ⟨feasibleRate_imp_bellmanFeasible, bellmanFeasible_imp_feasibleRate⟩
+
+/-! ## Strong Duality: Equality of Infima -/
+
+/-- The primal and dual infima coincide. -/
+theorem amortized_rate_strong_duality_fin
+    {n : ℕ} (cost : Fin n → ℝ) :
+    sInf {r : ℝ | feasibleRate cost r} = sInf {r : ℝ | bellmanFeasible cost r} := by
+  congr 1; ext r; exact feasibleRate_iff_bellmanFeasible cost r
+
+/-! ## Optimal Rate = Max Prefix Average -/
+
+/-- The maximum prefix average over `k ∈ {1,...,n}`. -/
+def maxPrefixAvg {n : ℕ} (cost : Fin n → ℝ) : ℝ :=
+  if hn : n = 0 then 0
+  else Finset.sup' (Finset.Icc 1 n)
+    (by rw [Finset.nonempty_Icc]; omega)
+    (fun k => prefixSum cost k / k)
 
 /-
-Key support-separation lemma: if all off-diagonal entries of a rank-1
-    matrix are `⊤`, it cannot have finite entries at two distinct diagonal
-    positions simultaneously.
+The maximum prefix average is feasible.
 -/
-lemma rankOne_no_two_finite_diag {s : ℕ} {u v : Fin s → WithTop ℤ}
-    (hoff : ∀ i j : Fin s, i ≠ j → u i + v j = ⊤)
-    {i₁ i₂ : Fin s} (hne : i₁ ≠ i₂)
-    (h₁ : u i₁ + v i₁ ≠ ⊤) (h₂ : u i₂ + v i₂ ≠ ⊤) : False := by
-      cases b : v i₂ <;> simp_all +decide [ WithTop.add_eq_top ];
-      grind +extAll
+theorem maxPrefixAvg_feasible {n : ℕ} (cost : Fin n → ℝ) :
+    feasibleRate cost (maxPrefixAvg cost) := by
+      intro k;
+      by_cases hk : 1 ≤ k.val <;> by_cases hn : n = 0 <;> simp_all +decide [ maxPrefixAvg ];
+      · grind;
+      · have := Finset.le_sup' ( f := fun k : ℕ => prefixSum cost k / ( k : ℝ ) ) ( show k.val ∈ Finset.Icc 1 n from Finset.mem_Icc.mpr ⟨ hk, by linarith [ Fin.is_lt k ] ⟩ ) ; simp_all +decide [ div_le_iff₀ ] ;
+        obtain ⟨ b, hb₁, hb₂ ⟩ := this; rw [ div_le_iff₀ ( by positivity ) ] at hb₂; exact le_trans hb₂ ( mul_le_mul_of_nonneg_right ( Finset.le_sup' ( fun k : ℕ => prefixSum cost k / ( k : ℝ ) ) ( Finset.mem_Icc.mpr hb₁ ) ) ( by positivity ) ) ;
+      · exact prefixSum_zero cost ▸ le_rfl;
+      · exact prefixSum_zero cost ▸ le_rfl
 
 /-
-Each diagonal position of `encodeDiag s` must be covered by some rank-1 term.
+Every feasible rate is at least the maximum prefix average.
 -/
-lemma diag_covered {s k : ℕ} {u v : Fin k → Fin s → WithTop ℤ}
-    (hfact : IsTropFactorization (encodeDiag s) k u v) (i : Fin s) :
-    ∃ t : Fin k, u t i + v t i ≠ ⊤ := by
-      -- By definition of `IsTropFactorization`, we know that `encodeDiag s i i = (Finset.univ.inf (fun t => u t i + v t i))`.
-      have h_eq_inf : encodeDiag s i i = Finset.univ.inf (fun t => u t i + v t i) := by
-        exact hfact i i;
-      -- Since `encodeDiag s i i = 0`, we have `0 = Finset.univ.inf (fun t => u t i + v t i)`.
-      have h_zero_inf : 0 = Finset.univ.inf (fun t => u t i + v t i) := by
-        grind +locals;
-      contrapose! h_zero_inf;
-      cases k <;> simp +decide [ h_zero_inf ]
+theorem feasibleRate_le_maxPrefixAvg {n : ℕ} (hn : 0 < n) (cost : Fin n → ℝ) (r : ℝ)
+    (hr : feasibleRate cost r) :
+    maxPrefixAvg cost ≤ r := by
+      unfold maxPrefixAvg;
+      split_ifs <;> simp_all +decide [ Nat.lt_succ_iff ];
+      exact fun k hk₁ hk₂ => by rw [ div_le_iff₀ ( by positivity ) ] ; exact hr ⟨ k, by linarith ⟩ ;
 
 /-
-From a factorization, we can build an injective function from `Fin s` to `Fin k`,
-    proving `s ≤ k`.
+**The optimal amortized rate equals the maximum prefix average.**
 -/
-theorem factorization_size_ge {s k : ℕ} {u v : Fin k → Fin s → WithTop ℤ}
-    (hfact : IsTropFactorization (encodeDiag s) k u v) :
-    s ≤ k := by
-      -- By diag_covered, for each i : Fin s, there exists t : Fin k with u t i + v t i ≠ ⊤.
-      have h_diag_covered : ∀ i : Fin s, ∃ t : Fin k, u t i + v t i ≠ ⊤ := by
-        exact?;
-      -- Define a function `f` that maps each `i : Fin s` to a `t : Fin k` such that `u t i + v t i ≠ ⊤`.
-      obtain ⟨f, hf⟩ : ∃ f : Fin s → Fin k, ∀ i : Fin s, u (f i) i + v (f i) i ≠ ⊤ := by
-        exact ⟨ fun i => Classical.choose ( h_diag_covered i ), fun i => Classical.choose_spec ( h_diag_covered i ) ⟩;
-      -- We prove that `f` is injective.
-      have h_injective : Function.Injective f := by
-        intros i₁ i₂ hij
-        have h_contradiction : u (f i₁) i₁ + v (f i₁) i₁ ≠ ⊤ ∧ u (f i₁) i₂ + v (f i₁) i₂ ≠ ⊤ := by
-          grind;
-        exact Classical.not_not.1 fun hi => rankOne_no_two_finite_diag ( fun i j hij => factorization_offDiag_top hfact ( f i₁ ) i j hij ) hi h_contradiction.1 h_contradiction.2;
-      simpa using Fintype.card_le_of_injective f h_injective
+theorem optimal_rate_eq_maxPrefixAvg {n : ℕ} (hn : 0 < n) (cost : Fin n → ℝ) :
+    sInf {r : ℝ | feasibleRate cost r} = maxPrefixAvg cost := by
+      rw [ @IsGLB.csInf_eq ];
+      · exact ⟨ fun r hr => feasibleRate_le_maxPrefixAvg hn cost r hr, fun r hr => hr ( maxPrefixAvg_feasible cost ) ⟩;
+      · exact ⟨ _, maxPrefixAvg_feasible cost ⟩
 
-/-- Lower bound on the factor rank of the tropical identity-like matrix. -/
-theorem tropFactorRank_encodeDiag_ge (s : ℕ) :
-    s ≤ tropFactorRank (encodeDiag s) := by
-  apply le_tropFactorRank
-  intro m ⟨u, v, hfact⟩
-  exact factorization_size_ge hfact
+/-! ## Existence of Optimal Bellman Potential -/
 
-/-! ## Main theorem -/
+/-- **There exists an optimal Bellman potential witness.** -/
+theorem exists_optimal_bellman_potential
+    {n : ℕ} (_hn : 0 < n) (cost : Fin n → ℝ) :
+    ∃ φ : Fin (n + 1) → ℝ,
+      φ 0 = 0 ∧
+      (∀ k : Fin (n + 1), 0 ≤ φ k) ∧
+      (∀ i : Fin n, cost i + φ i.succ - φ i.castSucc ≤ maxPrefixAvg cost) := by
+  exact (feasibleRate_iff_bellmanFeasible cost (maxPrefixAvg cost)).mp (maxPrefixAvg_feasible cost)
 
-/-- **Tropical Factor Rank Encoding Theorem.**
-    For every natural number `s`, the `s × s` tropical identity-like matrix
-    has factor rank exactly `s`. -/
-theorem tropFactorRank_encodeDiag (s : ℕ) :
-    tropFactorRank (encodeDiag s) = s :=
-  le_antisymm (tropFactorRank_encodeDiag_le s) (tropFactorRank_encodeDiag_ge s)
+/-! ## Representation Theorem: Schedule ↔ Potential -/
 
-/-- **Encoding Exactness Theorem.**
-    The encoding `encode` maps each natural number to a tropical matrix
-    whose factor rank is exactly that number. -/
-theorem tropFactorRank_encode_exact (s : ℕ) :
-    tropFactorRank (encode s).2 = s :=
-  tropFactorRank_encodeDiag s
+/-
+**Amortized schedule ↔ potential equivalence.**
+    A schedule `a` prefix-dominates `cost` iff there exists a nonneg potential
+    with `φ 0 = 0` decomposing `a` as `cost + Δφ`.
+-/
+theorem amortized_schedule_iff_potential
+    {n : ℕ} (cost a : Fin n → ℝ) :
+    (∀ k : Fin (n + 1),
+      prefixSum cost k.1 ≤ prefixSum a k.1) ↔
+    ∃ φ : Fin (n + 1) → ℝ,
+      φ 0 = 0 ∧
+      (∀ k : Fin (n + 1), 0 ≤ φ k) ∧
+      ∀ i : Fin n, a i = cost i + φ i.succ - φ i.castSucc := by
+        constructor;
+        · intro h
+          use fun k => prefixSum a k - prefixSum cost k;
+          simp_all +decide [ prefixSum_succ, Finset.sum_range_succ ];
+          exact ⟨ by unfold prefixSum; norm_num, fun i => by ring ⟩;
+        · intro h;
+          -- By definition of $prefixSum$, we can expand both sides.
+          have h_expand : ∀ k : (Fin (n + 1)), prefixSum a k.1 = prefixSum cost k.1 + (h.choose k) := by
+            intro k;
+            induction' k using Fin.inductionOn with k ih;
+            · simp +decide [ prefixSum, h.choose_spec.1 ];
+            · grind +suggestions;
+          grind
 
-/-- Tropical factor rank is surjective onto `ℕ`:
-    every natural number is realized as the factor rank of some tropical matrix. -/
-theorem tropFactorRank_surjective :
-    Function.Surjective (fun s => @tropFactorRank s (encodeDiag s)) :=
-  fun s => ⟨s, tropFactorRank_encodeDiag s⟩
+/-! ## Optimal Total Charge = Total Cost -/
+
+/-
+The optimal total amortized charge (under prefix dominance) equals the total cost.
+-/
+theorem amortized_optimal_value_eq_total_cost
+    {n : ℕ} (cost : Fin n → ℝ) :
+    sInf {B : ℝ | ∃ a : Fin n → ℝ,
+      (∀ k : Fin (n + 1),
+        prefixSum cost k.1 ≤ prefixSum a k.1) ∧
+      (∑ i, a i) = B}
+    = ∑ i, cost i := by
+      refine' le_antisymm ( csInf_le _ _ ) _;
+      · refine' ⟨ ∑ i : Fin n, cost i, fun B hB => _ ⟩;
+        obtain ⟨ a, ha₁, rfl ⟩ := hB;
+        convert ha₁ ⟨ n, Nat.lt_succ_self n ⟩ using 1 <;> simp +decide [ Finset.sum_range, prefixSum ];
+        · exact Finset.sum_congr rfl fun i hi => by unfold extendCost; aesop;
+        · exact Finset.sum_congr rfl fun i hi => by unfold extendCost; aesop;
+      · refine' ⟨ cost, _, _ ⟩ <;> aesop;
+      · refine' le_csInf _ _ <;> norm_num;
+        · exact ⟨ _, ⟨ cost, fun k => by rfl, rfl ⟩ ⟩;
+        · intro a ha; specialize ha ⟨ n, Nat.lt_succ_self n ⟩ ; simp_all +decide [ prefixSum ] ;
+          convert ha using 1 <;> simp +decide [ Finset.sum_range, extendCost ]
 
 end
