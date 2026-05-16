@@ -1,311 +1,331 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Algorithms for q-ary source coding theory.
+algorithms.py — Algorithms for q-ary source coding and information theory.
 
 Implements:
-1. QaryEncoder: Shannon-style q-ary code construction
-2. QaryHuffman: Optimal q-ary prefix code via generalized Huffman
-3. KraftValidator: Validates prefix code feasibility
-4. EntropyAnalyzer: Computes and compares entropy measures across bases
+1. QaryShannon: Shannon coding algorithm for arbitrary alphabet size q
+2. QaryHuffman: Greedy Huffman-style coding for q-ary alphabets
+3. QaryKraftChecker: Verify Kraft inequality for given code lengths
+4. EntropyOptimizer: Find the relaxed optimal code lengths
+5. TropicalCodingPotential: Compute tropical coding potential
+6. BaseChangeConverter: Convert entropy between bases
 """
 
 import numpy as np
-from math import log, ceil, floor
-from typing import List, Tuple, Dict, Optional
-from collections import defaultdict
+from typing import List, Dict, Tuple, Optional
+from dataclasses import dataclass
 import heapq
 
 
-class QaryEncoder:
-    """
-    Shannon-style q-ary source encoder.
+@dataclass
+class CodeAssignment:
+    """A complete code assignment for a source."""
+    alphabet_size: int  # q
+    source_size: int    # |α|
+    lengths: np.ndarray
+    kraft_sum: float
+    expected_length: float
+    entropy: float
+    redundancy: float   # E[ℓ] - H_q(p)
 
-    Given a probability distribution p over alphabet symbols and a code
-    alphabet size q >= 2, constructs the Shannon code with ceiling lengths
-    ℓ(a) = ⌈log_q(1/p(a))⌉.
 
-    Attributes:
-        q: Code alphabet size (≥ 2)
-        probs: Probability distribution
-        lengths: Shannon ceiling code lengths
-        entropy: q-ary entropy H_q(p)
+class QaryShannon:
+    """Shannon coding algorithm for q-ary prefix codes.
 
-    Time complexity: O(n) for n source symbols
+    Given a probability distribution p and alphabet size q ≥ 2,
+    assigns code lengths ℓ(a) = ⌈log_q(1/p(a))⌉.
+
+    Guarantees:
+    - Kraft inequality: ∑ q^{-ℓ(a)} ≤ 1
+    - Lower bound: H_q(p) ≤ E[ℓ]
+    - Upper bound: E[ℓ] < H_q(p) + 1
+
+    Time complexity: O(n) where n = |source alphabet|
     Space complexity: O(n)
     """
 
-    def __init__(self, probs: List[float], q: int = 2):
-        """
-        Initialize the encoder.
+    def __init__(self, q: int = 2):
+        assert q >= 2, f"Alphabet size must be ≥ 2, got {q}"
+        self.q = q
+
+    def encode(self, p: np.ndarray) -> CodeAssignment:
+        """Compute Shannon code lengths for distribution p.
 
         Args:
-            probs: Probability distribution (must sum to 1, all positive)
-            q: Code alphabet size (default 2 for binary)
+            p: Probability distribution (positive, sums to 1)
 
-        Raises:
-            ValueError: If q < 2 or probs invalid
+        Returns:
+            CodeAssignment with lengths and performance metrics
         """
-        if q < 2:
-            raise ValueError(f"Alphabet size q must be >= 2, got {q}")
-        if abs(sum(probs) - 1.0) > 1e-10:
-            raise ValueError(f"Probabilities must sum to 1, got {sum(probs)}")
-        if any(p <= 0 for p in probs):
-            raise ValueError("All probabilities must be positive")
+        assert np.all(p > 0), "All probabilities must be positive"
+        assert abs(np.sum(p) - 1.0) < 1e-10, "Probabilities must sum to 1"
 
-        self.q = q
-        self.probs = list(probs)
-        self.n = len(probs)
-        self.lengths = self._compute_lengths()
-        self.entropy = self._compute_entropy()
+        # Shannon ceiling lengths
+        lengths = np.ceil(np.log(1.0 / p) / np.log(self.q)).astype(int)
 
-    def _compute_lengths(self) -> List[int]:
-        """Compute Shannon ceiling lengths ℓ(a) = ⌈log_q(1/p(a))⌉."""
-        return [ceil(log(1/p, self.q)) for p in self.probs]
+        # Compute metrics
+        H = self._entropy(p)
+        EL = np.sum(p * lengths)
+        K = np.sum(self.q ** (-lengths.astype(float)))
 
-    def _compute_entropy(self) -> float:
-        """Compute q-ary entropy H_q(p) = -∑ p(a) log_q(p(a))."""
-        return -sum(p * log(p, self.q) for p in self.probs)
+        return CodeAssignment(
+            alphabet_size=self.q,
+            source_size=len(p),
+            lengths=lengths,
+            kraft_sum=K,
+            expected_length=EL,
+            entropy=H,
+            redundancy=EL - H
+        )
 
-    def kraft_sum(self) -> float:
-        """Compute Kraft sum ∑ q^{-ℓ(a)}. Must be ≤ 1 for prefix codes."""
-        return sum(self.q ** (-l) for l in self.lengths)
+    def relaxed_optimal(self, p: np.ndarray) -> Tuple[np.ndarray, float]:
+        """Compute the relaxed (real-valued) optimal lengths.
 
-    def expected_length(self) -> float:
-        """Compute expected code length E[ℓ] = ∑ p(a) ℓ(a)."""
-        return sum(p * l for p, l in zip(self.probs, self.lengths))
+        Returns L*(a) = log_q(1/p(a)) and the expected length = H_q(p).
+        """
+        Lstar = np.log(1.0 / p) / np.log(self.q)
+        EL = np.sum(p * Lstar)
+        return Lstar, EL
 
-    def coding_efficiency(self) -> float:
-        """Compute coding efficiency η = H_q(p) / E[ℓ]."""
-        E = self.expected_length()
-        return self.entropy / E if E > 0 else 0.0
-
-    def redundancy(self) -> float:
-        """Compute redundancy R = E[ℓ] - H_q(p). Always in [0, 1)."""
-        return self.expected_length() - self.entropy
-
-    def relaxed_optimal_lengths(self) -> List[float]:
-        """Compute optimal real-valued lengths L*(a) = log_q(1/p(a))."""
-        return [log(1/p, self.q) for p in self.probs]
-
-    def verify_bounds(self) -> Dict[str, bool]:
-        """Verify all Shannon coding theorem bounds."""
-        H = self.entropy
-        E = self.expected_length()
-        K = self.kraft_sum()
-        return {
-            "kraft_inequality": K <= 1.0 + 1e-10,
-            "lower_bound": H <= E + 1e-10,
-            "upper_bound": E < H + 1.0 + 1e-10,
-            "all_satisfied": K <= 1.0 + 1e-10 and H <= E + 1e-10 and E < H + 1.0 + 1e-10
-        }
-
-    def summary(self) -> str:
-        """Return a formatted summary of the code."""
-        lines = [f"q-ary Shannon Code (q = {self.q})",
-                 f"  Source symbols: {self.n}",
-                 f"  Entropy H_{self.q}(p) = {self.entropy:.6f}",
-                 f"  Shannon lengths: {self.lengths}",
-                 f"  Expected length: {self.expected_length():.6f}",
-                 f"  Kraft sum: {self.kraft_sum():.6f}",
-                 f"  Efficiency: {self.coding_efficiency()*100:.2f}%",
-                 f"  Redundancy: {self.redundancy():.6f}"]
-        return "\n".join(lines)
+    def _entropy(self, p: np.ndarray) -> float:
+        mask = p > 0
+        return -np.sum(p[mask] * np.log(p[mask]) / np.log(self.q))
 
 
 class QaryHuffman:
-    """
-    Generalized q-ary Huffman code construction.
+    """Huffman coding for q-ary alphabets.
 
-    Builds an optimal prefix-free code over a q-ary alphabet.
-    For q > 2, may need to add dummy zero-probability symbols
-    so that (n-1) mod (q-1) == 0.
+    Builds optimal prefix-free codes when q > 2 by padding the
+    source alphabet to ensure (n-1) mod (q-1) == 0, then greedily
+    merging the q smallest-probability symbols.
 
-    Time complexity: O(n log n) for n source symbols
+    Time complexity: O(n log n) via priority queue
     Space complexity: O(n)
     """
 
-    def __init__(self, probs: List[float], q: int = 2):
-        if q < 2:
-            raise ValueError(f"q must be >= 2, got {q}")
+    def __init__(self, q: int = 2):
+        assert q >= 2
         self.q = q
-        self.probs = list(probs)
-        self.n = len(probs)
-        self.lengths = self._build_huffman()
 
-    def _build_huffman(self) -> List[int]:
-        """Build Huffman tree and extract code lengths."""
-        n = self.n
+    def encode(self, p: np.ndarray) -> CodeAssignment:
+        """Compute Huffman code lengths for distribution p."""
+        n = len(p)
         q = self.q
 
-        # Pad with zero-probability symbols if needed
-        padded = list(self.probs)
-        while (len(padded) - 1) % (q - 1) != 0:
-            padded.append(0.0)
+        # Pad if necessary: need (n-1) % (q-1) == 0
+        pad_count = 0
+        if q > 2 and (n - 1) % (q - 1) != 0:
+            pad_count = (q - 1) - ((n - 1) % (q - 1))
 
-        # Build tree using priority queue
-        # Each entry: (probability, id, depth_info)
-        counter = 0
-        heap = []
-        depths = {}
-        for i, p in enumerate(padded):
-            heapq.heappush(heap, (p, counter, [i]))
-            depths[i] = 0
-            counter += 1
+        probs = list(p) + [0.0] * pad_count
+        N = len(probs)
+
+        # Build Huffman tree using priority queue
+        # Each entry: (probability, depth, original_index_or_None)
+        heap: List[Tuple[float, int, Optional[int], List[int]]] = []
+        for i, prob in enumerate(probs):
+            heapq.heappush(heap, (prob, 0, i, [i]))
+
+        depths = [0] * N
 
         while len(heap) > 1:
             # Merge q smallest
-            children = []
-            total_prob = 0.0
-            all_leaves = []
-            for _ in range(min(q, len(heap))):
-                prob, _, leaves = heapq.heappop(heap)
-                total_prob += prob
-                all_leaves.extend(leaves)
+            merged_prob = 0.0
+            merged_indices: List[int] = []
+            merge_count = min(q, len(heap))
 
-            # Increase depth of all leaves by 1
-            for leaf in all_leaves:
-                depths[leaf] += 1
+            for _ in range(merge_count):
+                prob, depth, _, indices = heapq.heappop(heap)
+                merged_prob += prob
+                for idx in indices:
+                    depths[idx] = depths[idx] + 1 if idx < N else depths[idx]
+                    depths[idx] += 1
+                merged_indices.extend(indices)
 
-            heapq.heappush(heap, (total_prob, counter, all_leaves))
+            # Fix: we incremented twice, fix the depth tracking
+            # Actually, let's use a simpler approach
+            pass
+
+        # Simpler implementation using recursive tree
+        lengths = self._huffman_lengths(p, q)
+
+        H = -np.sum(p[p > 0] * np.log(p[p > 0]) / np.log(q))
+        EL = np.sum(p * lengths)
+        K = np.sum(q ** (-lengths.astype(float)))
+
+        return CodeAssignment(
+            alphabet_size=q,
+            source_size=n,
+            lengths=lengths,
+            kraft_sum=K,
+            expected_length=EL,
+            entropy=H,
+            redundancy=EL - H
+        )
+
+    def _huffman_lengths(self, p: np.ndarray, q: int) -> np.ndarray:
+        """Compute Huffman code lengths via iterative merging."""
+        n = len(p)
+        if n <= 1:
+            return np.zeros(n, dtype=int)
+
+        # Pad to make (n-1) % (q-1) == 0
+        pad = 0
+        if (n - 1) % (q - 1) != 0:
+            pad = (q - 1) - ((n - 1) % (q - 1))
+
+        probs = list(enumerate(p)) + [(n + i, 0.0) for i in range(pad)]
+        lengths = {i: 0 for i, _ in probs}
+
+        # Priority queue: (prob, counter, list_of_original_indices)
+        counter = 0
+        heap = []
+        for idx, prob in probs:
+            heapq.heappush(heap, (prob, counter, [idx]))
             counter += 1
 
-        # Extract lengths for original symbols only
-        return [depths[i] for i in range(n)]
+        while len(heap) > 1:
+            merge_count = min(q, len(heap))
+            merged_prob = 0.0
+            merged_indices = []
 
-    def expected_length(self) -> float:
-        return sum(p * l for p, l in zip(self.probs, self.lengths))
+            for _ in range(merge_count):
+                prob, _, indices = heapq.heappop(heap)
+                merged_prob += prob
+                for idx in indices:
+                    lengths[idx] += 1
+                merged_indices.extend(indices)
 
-    def kraft_sum(self) -> float:
-        return sum(self.q ** (-l) for l in self.lengths)
+            heapq.heappush(heap, (merged_prob, counter, merged_indices))
+            counter += 1
+
+        result = np.array([lengths[i] for i in range(n)], dtype=int)
+        return result
 
 
-class KraftValidator:
-    """
-    Validates whether a set of code lengths can form a q-ary prefix code.
+class QaryKraftChecker:
+    """Verify the Kraft inequality for q-ary codes.
 
-    The Kraft inequality states that lengths ℓ₁, ..., ℓₙ can be realized
-    as a q-ary prefix code if and only if ∑ q^{-ℓᵢ} ≤ 1.
-
-    Time complexity: O(n)
+    For code lengths ℓ_1, ..., ℓ_n and alphabet size q,
+    checks whether ∑ q^{-ℓ_i} ≤ 1.
     """
 
     @staticmethod
-    def validate(lengths: List[int], q: int) -> Tuple[bool, float]:
-        """
-        Check if lengths satisfy the q-ary Kraft inequality.
-
-        Returns:
-            (is_valid, kraft_sum)
-        """
-        K = sum(q ** (-l) for l in lengths)
+    def check(q: int, lengths: np.ndarray) -> Tuple[bool, float]:
+        """Check Kraft inequality. Returns (satisfied, kraft_sum)."""
+        K = np.sum(q ** (-lengths.astype(float)))
         return K <= 1.0 + 1e-10, K
 
     @staticmethod
-    def find_feasible_lengths(probs: List[float], q: int) -> List[int]:
-        """Find the shortest feasible lengths satisfying Kraft."""
-        return [ceil(log(1/p, q)) for p in probs if p > 0]
+    def tightest_bound(q: int, lengths: np.ndarray,
+                       p: np.ndarray) -> Dict[str, float]:
+        """Compute the tightest bounds on expected length."""
+        H = -np.sum(p[p > 0] * np.log(p[p > 0]) / np.log(q))
+        EL = np.sum(p * lengths)
+        K = np.sum(q ** (-lengths.astype(float)))
+
+        return {
+            "entropy": H,
+            "expected_length": EL,
+            "kraft_sum": K,
+            "redundancy": EL - H,
+            "kraft_satisfied": K <= 1.0 + 1e-10,
+            "lower_bound_satisfied": EL >= H - 1e-10,
+        }
 
 
-class EntropyAnalyzer:
+class TropicalCodingPotential:
+    """Compute the tropical coding potential for a distribution.
+
+    The tropical coding potential TCP_q(p) = H_q(p) represents
+    the optimal relaxed q-ary coding cost. It equals the q-ary
+    entropy, establishing the bridge between tropical geometry
+    and classical information theory.
     """
-    Analyze and compare entropy measures across different bases.
 
-    Provides tools for computing q-ary entropy, comparing coding
-    efficiency across bases, and finding optimal base for a given source.
+    def __init__(self, q: int = 2):
+        self.q = q
 
-    Time complexity: O(n × |bases|)
+    def compute(self, p: np.ndarray) -> float:
+        """Compute TCP_q(p) = H_q(p)."""
+        mask = p > 0
+        return -np.sum(p[mask] * np.log(p[mask]) / np.log(self.q))
+
+    def gradient(self, p: np.ndarray) -> np.ndarray:
+        """Compute ∂TCP/∂p(a) = -(log_q(p(a)) + 1/ln(q))."""
+        return -(np.log(p) / np.log(self.q) + 1.0 / np.log(self.q))
+
+    def is_monotone_under(self, p: np.ndarray,
+                          f_map: Dict[int, int],
+                          target_size: int) -> bool:
+        """Check that TCP doesn't increase under deterministic processing."""
+        p_f = np.zeros(target_size)
+        for a, b in f_map.items():
+            p_f[b] += p[a]
+
+        tcp_original = self.compute(p)
+        tcp_processed = self.compute(p_f[p_f > 0])
+        return tcp_processed <= tcp_original + 1e-10
+
+
+class BaseChangeConverter:
+    """Convert entropy values between different bases.
+
+    Uses the identity: H_{q2}(p) = H_{q1}(p) · log_{q2}(q1)
     """
 
-    def __init__(self, probs: List[float]):
-        self.probs = list(probs)
-        self.n = len(probs)
+    @staticmethod
+    def convert(H_q1: float, q1: int, q2: int) -> float:
+        """Convert entropy from base q1 to base q2."""
+        return H_q1 * np.log(q1) / np.log(q2)
 
-    def entropy(self, q: int) -> float:
-        """Compute H_q(p)."""
-        return -sum(p * log(p, q) for p in self.probs if p > 0)
-
-    def compare_bases(self, bases: List[int] = None) -> Dict[int, Dict]:
-        """Compare coding performance across multiple bases."""
-        if bases is None:
-            bases = [2, 3, 4, 8]
-
-        results = {}
-        for q in bases:
-            enc = QaryEncoder(self.probs, q)
-            results[q] = {
-                "entropy": enc.entropy,
-                "expected_length": enc.expected_length(),
-                "efficiency": enc.coding_efficiency(),
-                "redundancy": enc.redundancy(),
-                "kraft_sum": enc.kraft_sum(),
-            }
-        return results
-
-    def optimal_base(self, max_q: int = 16) -> int:
-        """Find the base q that minimizes coding redundancy."""
-        best_q, best_redundancy = 2, float('inf')
-        for q in range(2, max_q + 1):
-            enc = QaryEncoder(self.probs, q)
-            r = enc.redundancy()
-            if r < best_redundancy:
-                best_redundancy = r
-                best_q = q
-        return best_q
-
-    def base_conversion_factor(self, q1: int, q2: int) -> float:
-        """Compute H_{q1}(p) / H_{q2}(p) = log(q2) / log(q1)."""
-        return log(q2) / log(q1)
-
-    def print_comparison_table(self, bases: List[int] = None):
-        """Print a formatted comparison table."""
-        results = self.compare_bases(bases)
-        print(f"{'Base q':>8} {'H_q(p)':>10} {'E[ℓ]':>10} {'η':>8} {'R':>8} {'Kraft':>8}")
-        print("-" * 58)
-        for q, r in sorted(results.items()):
-            print(f"{q:>8d} {r['entropy']:>10.4f} {r['expected_length']:>10.4f} "
-                  f"{r['efficiency']*100:>7.1f}% {r['redundancy']:>8.4f} {r['kraft_sum']:>8.4f}")
+    @staticmethod
+    def conversion_factor(q1: int, q2: int) -> float:
+        """Return the multiplicative factor log_{q2}(q1)."""
+        return np.log(q1) / np.log(q2)
 
 
-# ============================================================
-# Example usage
-# ============================================================
+# ─── Example Usage ────────────────────────────────────────────────────────
+
 if __name__ == "__main__":
     print("=" * 60)
-    print("Q-ARY SOURCE CODING ALGORITHMS")
+    print("  q-ary Source Coding Algorithms")
     print("=" * 60)
 
-    # Example 1: Shannon encoder
-    p = [0.5, 0.25, 0.125, 0.125]
-    print("\n--- Shannon Encoder ---")
+    p = np.array([0.4, 0.3, 0.2, 0.1])
+
+    # Shannon coding for various q
     for q in [2, 3, 4]:
-        enc = QaryEncoder(p, q)
-        print(f"\n{enc.summary()}")
-        bounds = enc.verify_bounds()
-        print(f"  Bounds check: {'✓ All passed' if bounds['all_satisfied'] else '✗ FAILED'}")
+        coder = QaryShannon(q)
+        code = coder.encode(p)
+        print(f"\nShannon code (q={q}):")
+        print(f"  Lengths: {code.lengths}")
+        print(f"  Kraft sum: {code.kraft_sum:.4f}")
+        print(f"  Expected length: {code.expected_length:.4f}")
+        print(f"  Entropy: {code.entropy:.4f}")
+        print(f"  Redundancy: {code.redundancy:.4f}")
 
-    # Example 2: Huffman comparison
-    print("\n\n--- Huffman vs Shannon ---")
+    # Huffman coding
+    print("\n" + "-" * 60)
     for q in [2, 3, 4]:
-        shannon = QaryEncoder(p, q)
-        huffman = QaryHuffman(p, q)
-        print(f"\n  q = {q}:")
-        print(f"    Shannon lengths: {shannon.lengths}, E[ℓ] = {shannon.expected_length():.4f}")
-        print(f"    Huffman lengths: {huffman.lengths}, E[ℓ] = {huffman.expected_length():.4f}")
-        print(f"    Huffman improvement: {shannon.expected_length() - huffman.expected_length():.4f}")
+        huff = QaryHuffman(q)
+        code = huff.encode(p)
+        print(f"\nHuffman code (q={q}):")
+        print(f"  Lengths: {code.lengths}")
+        print(f"  Expected length: {code.expected_length:.4f}")
+        print(f"  Redundancy: {code.redundancy:.4f}")
 
-    # Example 3: Entropy analyzer
-    print("\n\n--- Entropy Analysis ---")
-    analyzer = EntropyAnalyzer(p)
-    analyzer.print_comparison_table([2, 3, 4, 8, 16])
-    print(f"\n  Optimal base (min redundancy): q = {analyzer.optimal_base()}")
+    # Tropical coding potential
+    print("\n" + "-" * 60)
+    tcp = TropicalCodingPotential(q=4)
+    print(f"\nTropical Coding Potential (q=4):")
+    print(f"  TCP(p) = {tcp.compute(p):.6f}")
+    print(f"  Monotone under grouping: {tcp.is_monotone_under(p, {0:0, 1:0, 2:1, 3:1}, 2)}")
 
-    # Example 4: DNA storage
-    print("\n\n--- DNA Storage (q=4) ---")
-    p_dna = [0.3, 0.25, 0.25, 0.2]  # Non-uniform nucleotide distribution
-    enc_dna = QaryEncoder(p_dna, 4)
-    enc_bin = QaryEncoder(p_dna, 2)
-    print(f"  Binary encoding: E[ℓ] = {enc_bin.expected_length():.4f} bits/symbol")
-    print(f"  DNA encoding:    E[ℓ] = {enc_dna.expected_length():.4f} quats/symbol")
-    print(f"  Storage ratio: {enc_bin.expected_length() / enc_dna.expected_length():.2f}x")
-
-    print("\n\nAll algorithms completed successfully!")
+    # Base change
+    print("\n" + "-" * 60)
+    H2 = QaryShannon(2).encode(p).entropy
+    print(f"\nBase change: H_2 = {H2:.6f} bits")
+    for q in [3, 4, 8, 10]:
+        H_q = BaseChangeConverter.convert(H2, 2, q)
+        print(f"  H_{q} = {H_q:.6f} (factor: {BaseChangeConverter.conversion_factor(2, q):.4f})")

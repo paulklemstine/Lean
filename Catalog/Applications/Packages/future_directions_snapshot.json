@@ -669,6 +669,214 @@
     "timestamp": "2026-05-16T18:57:04.485981+00:00"
   },
   {
+    "id": "fd_0240",
+    "title": "Lower bound",
+    "description": ": Generalize Schwartz–Zippel using \"degree reduction\" — when d ≥ q−1, the polynomial x^q − x vanishes everywhere, so effective degree is controlled by the quotient-remainder decomposition.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.144476+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Extremal witness",
+    "description": ": The witness is\n   ```\n   f(x₁,...,xₙ) = ∏_{i=1}^{a} ∏_{c ∈ 𝔽_q \\ {0}} (xᵢ − c) · ∏_{j=1}^{b} (x_{a+1} − cⱼ)\n   ```\n   This vanishes on a precisely computable union of coordinate subspaces.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.160819+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Key challenge",
+    "description": ": The fibers are no longer parallel hyperplanes in a single coordinate; the zero set has a tensor-product structure across multiple coordinates.\n\n### Formalization Target\n\n```lean\ntheorem generalized_reedMuller_min_distance\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d a b : ℕ)\n    (h_decomp : d = a * (Fintype.card 𝔽 - 1) + b)\n    (hb : b < Fintype.card 𝔽 - 1)\n    (ha : a < n) :\n    reedMullerMinWeight 𝔽 n d = (Fintype.card 𝔽 - b) * (Fintype.card 𝔽) ^ (n - 1 - a)\n```\n\n### Cross-Domain Connections\n- **Coding theory**: Completes the parameter analysis for all generalized Reed–Muller codes\n- **Algebraic geometry**: Classification of extremal hypersurfaces in finite affine space\n- **Complexity theory**: Tight soundness bounds for algebraic PCPs with arbitrary degree\n\n### Difficulty: ★★★★☆\n\n--",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.179177+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Round-by-round analysis",
+    "description": ": At each round i, the prover sends a univariate polynomial sᵢ(xᵢ) of degree ≤ d. The verifier checks sᵢ(0) + sᵢ(1) against the expected partial sum, then replaces xᵢ with a random rᵢ.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.194343+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Inductive soundness",
+    "description": ": If the prover cheats in round i, they must send a polynomial sᵢ that disagrees with the true partial sum polynomial. By Schwartz–Zippel (d=1 univariate case), the verifier catches this with probability at least 1 − d/q.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.209708+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Union bound",
+    "description": ": Over n rounds, the total error probability is at most nd/q.\n\n### Formalization Target\n\n```lean\ntheorem sumCheck_soundness\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d : ℕ) (g : MvPolynomial (Fin n) 𝔽) (H_claimed H_true : 𝔽)\n    (hH : H_claimed ≠ H_true)\n    (hdeg : g.totalDegree ≤ d) :\n    verifierRejectProbability n d g H_claimed ≥ 1 - n * d / Fintype.card 𝔽\n```\n\n### Cross-Domain Connections\n- **Interactive proofs**: The sum-check protocol is the core of IP = PSPACE\n- **Zero-knowledge proofs**: Sum-check is used in zkSNARKs and zkSTARKs\n- **Verifiable computation**: Delegating computation to untrusted servers\n- **Cryptographic commitments**: Polynomial commitment schemes build on sum-check\n\n### Difficulty: ★★★★★\n\n---\n\n## Direction 3: Low-Degree Test Soundness (Rubinfeld–Sudan)\n\n### Ta",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.227595+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Agreement counting",
+    "description": ": If f agrees with some degree-≤d polynomial g on a random line with high probability, then f agrees with g on many points overall.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.257454+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Self-correction",
+    "description": ": Use agreement on many lines to show f is globally close to a low-degree polynomial.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.272710+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Distance amplification",
+    "description": ": Use the Reed–Muller minimum distance to convert \"close to a codeword\" into \"is a codeword.\"\n\n### Formalization Target\n\n```lean\ntheorem lowDegreeTest_soundness\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d : ℕ) (f : (Fin n → 𝔽) → 𝔽)\n    (hδ : relativeDistance f (closestCodeword f n d) ≥ δ) :\n    rejectProbability (lowDegreeTest f n d) ≥ c * δ\n```\n\n### Cross-Domain Connections\n- **PCP theorem**: Low-degree testing is the algebraic core of probabilistically checkable proofs\n- **Property testing**: Paradigmatic example of local testability\n- **Coding theory**: Testing proximity to a Reed–Muller codeword\n\n### Difficulty: ★★★★★\n\n---\n\n## Direction 4: Dual Reed–Muller Structure and Secret-Sharing Thresholds\n\n### Target Theorem\n\nThe dual code of RM_q(n, d) is RM_q(n, n(q−1)−d−1). This duality re",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.289863+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Dual code identification",
+    "description": ": Show the annihilator of RM_q(n, d) under the evaluation inner product is RM_q(n, n(q−1)−d−1).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.305527+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Threshold extraction",
+    "description": ": Derive secret-sharing parameters from code parameters.\n\n### Formalization Target\n\n```lean\ntheorem reedMuller_dual\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d : ℕ) (hd : d < n * (Fintype.card 𝔽 - 1)) :\n    dualCode (reedMullerCode 𝔽 n d) = reedMullerCode 𝔽 n (n * (Fintype.card 𝔽 - 1) - d - 1)\n```\n\n### Cross-Domain Connections\n- **Cryptography**: Optimal secret sharing, verifiable secret sharing\n- **Quantum error correction**: CSS codes from Reed–Muller and dual Reed–Muller\n- **Algebraic combinatorics**: Weight enumeration and association schemes\n\n### Difficulty: ★★★★☆\n\n---\n\n## Direction 5: Deterministic PIT for Restricted Circuit Classes\n\n### Target Theorem\n\nFor depth-3 ΣΠΣ circuits (sums of products of sums of variables) computing n-variate polynomials of degree d over 𝔽_q, there exis",
+    "domains": [
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.337803+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Subspace-evasive sets",
+    "description": ": Construct sets that avoid low-dimensional affine subspaces. These serve as hitting sets because the zero set of a ΣΠΣ circuit is a union of low-dimensional subspaces.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.356314+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Rank-based analysis",
+    "description": ": Decompose ΣΠΣ circuits by the rank of their linear forms. Low-rank circuits have structured zero sets; high-rank circuits have few zeros by Schwartz–Zippel.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.374103+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Bootstrapping",
+    "description": ": Use the minimum distance theorem to show that polynomials with structured zero sets must have very specific forms, enabling deterministic enumeration.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:15:45.389051+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -997,6 +1205,24 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "3. Adjunctions and Galois Connections Between Theories",
+    "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "22fbf57d",
+    "timestamp": "2026-05-16T02:14:30.254922+00:00"
   },
   {
     "id": "fd_0226",
@@ -1477,24 +1703,6 @@
     "timestamp": "2026-05-16T18:12:09.887593+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "1. Tropical Perron–Frobenius Exact Asymptotics for Vertical Composition",
-    "description": "**Hypothesis**: For irreducible tropical matrices (where the associated directed graph is strongly connected), the maximum cycle mean equals the tropical spectral radius, and vertical composition growth converges to exactly this rate.\n\n**Proof Strategy**:\n1. Formalize the notion of *irreducibility* for tropical matrices: the weighted digraph `G(A)` with edge weights `A_ij` is strongly connected.\n2. Define the *maximum cycle mean*: `μ(A) = max_{σ cycle} (∑_{(i,j)∈σ} A_ij) / |σ|`.\n3. Prove the tropical Perron–Frobenius theorem: for irreducible `A`, there exists a tropical eigenvector `v` with eigenvalue `μ(A)`, i.e., `A ⊗ v = μ(A) + v`.\n4. Use `tropical_eigenvector_iterate_exact` to deduce: `verticalIterate A k v = k * μ(A) + v`.\n5. Prove the *converse bound*: `supNorm(A^k ⊗ x) ≥ k * μ(A) + ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "795174d8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:54:14.881668+00:00"
-  },
-  {
     "id": "fd_0247",
     "title": "2. Subadditive Ergodic / Tropical Lyapunov Theory for Random Layer Composition",
     "description": "**Hypothesis**: When layers are drawn i.i.d. from a distribution over tropical matrices, the growth rate of `supNorm(A_k ⊗ ··· ⊗ A_1 ⊗ x)` converges almost surely to a deterministic tropical Lyapunov exponent by the subadditive ergodic theorem.\n\n**Proof Strategy**:\n1. Formalize the product of tropical matrices: `(A ⊗ B)_{ij} = max_k (A_{ik} + B_{kj})`.\n2. Show that `f(k) = supNorm(A_k ⊗ ··· ⊗ A_1 ⊗ 0)` is subadditive: `f(m+n) ≤ f(m) + f(n)` (up to a constant).\n3. Apply Kingman's subadditive ergodic theorem (formalized in Mathlib) to obtain almost-sure convergence.\n4. Identify the limit as the max-plus analogue of the top Lyapunov exponent.\n\n**Suggested theorem**:\n```lean\ntheorem tropical_lyapunov_exponent_exists\n    {n : ℕ} (μ : MeasureTheory.Measure (Fin (n+1) → Fin (n+1) → ℝ))\n    [Measu",
@@ -1527,26 +1735,6 @@
     "source_exp_id": "795174d8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T18:54:14.919312+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "6. Tropical Circuit Complexity and Depth Separation",
-    "description": "**Hypothesis**: The tropical spectral radius provides lower bounds on the depth required to compute certain functions, giving tropical analogues of circuit complexity depth-separation results.\n\n**Proof Strategy**:\n1. Show that functions with large \"tropical oscillation\" (many changes in which monomial is dominant) require depth proportional to `log(oscillation) / log(width)`.\n2. Prove that depth-k tropical circuits with width w can represent at most `w^k` linear regions.\n3. Use the spectral bound to show that certain functions require the iterate bound to be tight, implying depth lower bounds.\n\n**Cross-domain significance**: This connects tropical geometry to computational complexity, potentially yielding new lower bounds on the expressivity of neural networks.\n\n---",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "795174d8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:54:14.966831+00:00"
   },
   {
     "id": "fd_0252",
