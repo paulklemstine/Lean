@@ -234,21 +234,6 @@
     "timestamp": "2026-05-14T16:24:30.145614+00:00"
   },
   {
-    "id": "fd_0158",
-    "title": "Direction 4 (Entropy)",
-    "description": "— Most speculative but potentially most impactful. Opens connections to information theory and computational complexity.",
-    "domains": [
-      "Computation",
-      "Speculative"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "7d4efa6e",
-    "timestamp": "2026-05-14T17:32:45.392105+00:00"
-  },
-  {
     "id": "fd_0166",
     "title": "Apply to specific problems",
     "description": ": Show that certain functions (e.g., element distinctness, graph connectivity) require super-linear tropical cost in bounded-width branching programs.\n\n### Proof Strategy\n- Generalize the layered system framework from `Obstruction.lean`.\n- Use the block cost lemma within each layer.\n- Combine with the existing `layered_no_shortcut` theorem.\n\n### Cross-domain Impact\n- Circuit complexity (lower bounds for restricted circuits)\n- Streaming algorithms (space-bounded computation)\n- VLSI design (area-time tradeoffs)\n\n---\n\n## Direction 3: Tropical Communication Complexity via Min-Plus Protocol Cost\n\n### Goal\nDefine communication complexity over the min-plus semiring and prove direct-sum lower bounds using the cycle-gap framework.\n\n### Background\nIn classical communication complexity, Alice and Bob",
@@ -549,21 +534,6 @@
     "timestamp": "2026-05-16T09:05:20.487200+00:00"
   },
   {
-    "id": "fd_0245",
-    "title": "Characterize",
-    "description": "the thermodynamic meaning: first-order transitions correspond to coexistence of two \"phases\" of stopping-time behavior; second-order transitions to critical slowing down.\n\n### Key Examples\n- The Syracuse map (a variant of Collatz) may exhibit a phase transition at θ ≈ 0 due to the parity-dependent branching.\n- Random multiplicative cascades with arithmetic structure show exactly second-order transitions.\n\n### Cross-Domain Connection\nIn statistical mechanics, the Yang-Lee theory characterizes phase transitions via zeros of the partition function in the complex θ-plane. An arithmetic analogue would study zeros of Z_N(θ) analytically continued to ℂ and their limiting distribution as N → ∞.\n\n---\n\n## Direction 3: Moderate Deviations and Central Limit Corrections\n\n### Objective\nFormalize second-",
-    "domains": [
-      "EML",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.150524+00:00"
-  },
-  {
     "id": "fd_0260",
     "title": "Apply univariate root bound",
     "description": ": at most $n-1$ roots, so collision probability $\\leq (n-1)/q$.\n\n### Key Lean Targets\n```lean\ndef polynomialFingerprint (a : Fin n → K) (r : K) : K :=\n  ∑ i, a i * r ^ (i : ℕ)\n\ntheorem fingerprint_collision_bound\n    {K : Type*} [Field K] [Fintype K] {n : ℕ}\n    (a b : Fin n → K) (hab : a ≠ b) :\n    Fintype.card {r : K // polynomialFingerprint a r = polynomialFingerprint b r}\n      ≤ n - 1\n```\n\n### Cross-Domain Impact\n- **Streaming algorithms**: Communication-efficient comparison of data streams.\n- **Database verification**: Checking consistency of distributed databases.\n- **Network security**: Tamper detection in transmitted data.\n\n### Estimated Effort\nLow. This is essentially the univariate Schwartz–Zippel bound applied to the difference polynomial.\n\n---\n\n## Direction 5: Finite-Field Inc",
@@ -625,20 +595,6 @@
     "timestamp": "2026-05-16T13:37:23.977187+00:00"
   },
   {
-    "id": "fd_0239",
-    "title": "Exact Cover / Set Packing",
-    "description": ": Encode exact cover as a tropical CSP. This connects to the theory of NP-completeness via reduction.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:23.993854+00:00"
-  },
-  {
     "id": "fd_0240",
     "title": "Reusable Propagation Theorems",
     "description": ": Prove generic soundness and stabilization for any TropicalCSP equipped with a monotone propagation operator, parameterized by domain size and number of variables.\n\n### Proof Strategy\n- Define a `TropicalCSP.WithPropagation` extension structure that bundles a propagation operator with soundness and antitonicity proofs.\n- Prove a generic stabilization theorem: if Var and Val are finite, propagation stabilizes in |Var| × |Val| steps.\n- Instantiate for each CSP family.\n\n### Cross-Domain Impact\nThis would create the first machine-verified library of tropical CSPs, directly applicable to operations research, AI planning, and combinatorial optimization.\n\n---\n\n## Direction 2: Quantitative Phase Transition Theorem\n\n### Hypothesis\nFor a random clue model where k cells are chosen uniformly at rando",
@@ -655,20 +611,6 @@
     "timestamp": "2026-05-16T13:37:24.014796+00:00"
   },
   {
-    "id": "fd_0245",
-    "title": "Factor graph formalization",
-    "description": ": Define the Sudoku factor graph with variable nodes (cells) and factor nodes (row/column/box constraints). Each factor node computes a min-plus penalty.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.107831+00:00"
-  },
-  {
     "id": "fd_0243",
     "title": "Lower bound on factor rank",
     "description": ": Use the rectangle covering argument. The support of the Hamming distance matrix (entries ≤ threshold t) may require exponentially many rectangles.",
@@ -682,20 +624,6 @@
     "source_exp_id": "edf517ad",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:42:08.381149+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Q2",
-    "description": ": Begin Direction 4 (communication protocols), prove exponential separation for one explicit family",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edf517ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:42:08.412136+00:00"
   },
   {
     "id": "fd_0259",
@@ -816,20 +744,6 @@
     "source_exp_id": "3fc0fc4e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T14:39:14.329958+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Independence of vertex",
-    "description": ": For strongly connected A, any two vertices i, j can reach each other in bounded time. This bounds |a_m^{(i)} - a_m^{(j)}| by a constant, so after dividing by m, the limits agree.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fc0fc4e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:39:14.344128+00:00"
   },
   {
     "id": "fd_0251",
@@ -1454,22 +1368,6 @@
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
   },
   {
-    "id": "fd_0239",
-    "title": "Direction 1: Weighted Diagonal Factor Rank",
-    "description": "**Hypothesis:** For any diagonal tropical matrix $D$ with entries $d_0, \\ldots, d_{n-1}$ on the diagonal and $\\infty$ off-diagonal, the factor rank equals the number of finite diagonal entries:\n\n$$\\text{tropFactorRank}(D) = |\\{i : d_i \\neq \\infty\\}|$$\n\n**Proof strategy:** The support separation argument from our main theorem applies verbatim—it never uses the specific diagonal values, only the fact that off-diagonal entries are $\\infty$. The upper bound construction generalizes: the $t$-th rank-1 term uses $u_t(i) = d_i$ if $i = t$ (and $d_t \\neq \\infty$), else $\\infty$, and $v_t(j) = 0$ if $j = t$, else $\\infty$.\n\n**Impact:** This completes the characterization of factor rank for all diagonal matrices, not just the identity-like case. It provides a richer encoding family where the diagona",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "64a1fefb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:33:50.671282+00:00"
-  },
-  {
     "id": "fd_0240",
     "title": "Direction 2: Block-Diagonal Additivity",
     "description": "**Hypothesis:** For block-diagonal matrices $A \\oplus B$ (with $\\infty$ in cross-blocks), factor rank is additive:\n\n$$\\text{tropFactorRank}(A \\oplus B) = \\text{tropFactorRank}(A) + \\text{tropFactorRank}(B)$$\n\n**Proof strategy:**\n- **Upper bound** ($\\leq$): Concatenate factorizations of $A$ and $B$, embedding each into the larger index set with $\\infty$ padding. This is straightforward.\n- **Lower bound** ($\\geq$): Show that any rank-1 matrix in a factorization of $A \\oplus B$ whose support intersects both blocks forces finite cross-block entries, contradicting the $\\infty$ structure. Therefore each rank-1 term belongs to at most one block, and the terms partition into those serving $A$ and those serving $B$.\n\n**Impact:** This creates a reusable theorem schema for computing factor rank of st",
@@ -1502,21 +1400,6 @@
     "source_exp_id": "5e0e0def",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:47:38.621149+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "2. Repeated Freivalds Amplification Theorem",
-    "description": "**Target theorem**:\n```lean\ntheorem freivalds_t_fold_soundness\n    {q m n p : ℕ} [Fact q.Prime] (hp : 0 < p)\n    (A : Matrix (Fin m) (Fin n) (ZMod q))\n    (B : Matrix (Fin n) (Fin p) (ZMod q))\n    (K : Matrix (Fin m) (Fin p) (ZMod q))\n    (hne : K ≠ A * B)\n    (t : ℕ) :\n    ((Fintype.card {rs : Fin t → (Fin p → ZMod q) //\n        ∀ i, K.mulVec (rs i) = (A * B).mulVec (rs i)} : ℚ) /\n      (Fintype.card (Fin t → Fin p → ZMod q)))\n      ≤ (1 : ℚ) / q ^ t\n```\n\n**Proof strategy**: Model `t` independent trials as a product space `(Fin t → Fin p → ZMod q)`. The acceptance set is the product of `t` copies of the single-trial acceptance set. Use `Fintype.card_pi` and the single-trial bound `freivalds_soundness_card` to get `(q^(p-1))^t / (q^p)^t = q^{-t}`.\n\n**Impact**: This is the formal engine beh",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e0e0def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:47:38.636136+00:00"
   },
   {
     "id": "fd_0240",
@@ -1681,21 +1564,6 @@
     "timestamp": "2026-05-16T14:28:58.186572+00:00"
   },
   {
-    "id": "fd_0245",
-    "title": "Team Structure Recommendation",
-    "description": "- **Team A (Foundations)**: Legendre duality, entropy functions, ensemble equivalence\n- **Team B (Asymptotics)**: Thermodynamic limit, subadditivity, ergodic theory\n- **Team C (Probability)**: Large deviations, CLT, moderate deviations\n- **Team D (Complex Analysis)**: Yang-Lee zeros, exponential polynomials, potential theory\n- **Team E (Computation)**: Numerical experiments, visualization, conjecture generation\n\nEach team should iterate: formulate conjectures computationally, test them numerically, then formalize proofs. The finite-volume infrastructure established here provides the common foundation for all teams.",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b829eb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:28:58.207944+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "1. Extend Canonicalization to ACI (AC + Idempotence of min)",
     "description": "**Hypothesis:** The `min` operation is idempotent (`min a a = a`), creating semantic equalities not captured by AC alone. A canonicalization procedure that also quotients by idempotence would handle a strictly larger fragment.\n\n**Proof Strategy:**\n- Replace multiset-based children lists with *sets* (deduplicated sorted lists) for `tmin` nodes.\n- After flattening and sorting, remove duplicates from `tmin` children.\n- Prove that this extended normalizer is sound and complete for the ACI congruence.\n- The key difficulty: idempotence interacts nontrivially with nested `add` subterms.\n\n**Cross-Domain Connections:** ACI normalization connects to lattice theory (min as meet) and to BDD/ZDD construction in Boolean function manipulation, where idempotent operations are canonicalized via hash-consin",
@@ -1722,10 +1590,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0d4e55a6",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "488e4767",
     "timestamp": "2026-05-16T14:52:12.507486+00:00"
   },
   {
@@ -1765,12 +1633,39 @@
     "timestamp": "2026-05-16T14:52:12.548248+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "5. Connect Canonical Tropical Syntax to Shortest-Path Circuit Extraction",
-    "description": "**Hypothesis:** Tropical expressions encode shortest-path computations in weighted graphs. The AC canonical form corresponds to a canonical circuit representation for shortest-path programs, enabling certified common-subexpression elimination.\n\n**Proof Strategy:**\n- Define a graph semantics for `TropExpr`: `tmin` is path choice (take the shorter), `add` is path concatenation (sum weights).\n- Show that AC-equivalent expressions compute the same shortest-path function.\n- Prove that the canonical form minimizes the number of distinct subexpressions (up to AC), enabling optimal memoization.\n- Connect to dynamic programming: the canonical form is a canonical DP table.\n\n**Cross-Domain Connections:** This links to circuit complexity (VP vs. VNP in the tropical semiring), compiler optimization (CS",
+    "id": "fd_0251",
+    "title": "1. Data Processing Inequality for Finite Uniform Entropy",
+    "description": "**Goal:** Formalize a real-valued or `Nat.log`-based version of the data processing inequality:\n\n```\nH(range(g ∘ f)) ≤ H(range(f))\n```\n\n**Status:** The combinatorial version `support_entropy_comp_monotone` is proved:\n`|range(g ∘ f)| ≤ |range(f)|`. The next step is to wrap this in a `Nat.log`-based entropy definition and derive the logarithmic inequality. A real-valued entropy `H(α) := Real.log (Fintype.card α)` would be more expressive and enable connections to Shannon entropy proper.\n\n**Strategy:**\n- Define `uniformEntropy (α : Type*) [Fintype α] : ℝ := Real.log (Fintype.card α)`.\n- Prove monotonicity: if `|S| ≤ |T|` then `Real.log |S| ≤ Real.log |T|` using `Real.log_le_log`.\n- Derive `uniformEntropy (Set.range (g ∘ f)) ≤ uniformEntropy (Set.range f)` from `support_entropy_comp_monotone`.",
     "domains": [
-      "Tropical",
-      "Bridges",
+      "EML",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d4efa6e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:07:11.413008+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "2. Subadditivity Under Product Encodings — Strengthened Form",
+    "description": "**Goal:** Prove the full subadditivity with explicit injective encodings:\n\n```lean\ntheorem injective_prod_encoding\n    {α β : Type*} [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β] {k ℓ : ℕ}\n    (fα : α → Fin (2^k)) (fβ : β → Fin (2^ℓ))\n    (hα : Function.Injective fα) (hβ : Function.Injective fβ) :\n    ∃ f : α × β → Fin (2^(k + ℓ)), Function.Injective f\n```\n\n**Status:** `entropyBound_prod_of_entropyBound` proves the cardinality bound. The strengthened form would construct the explicit product encoding and prove its injectivity.\n\n**Strategy:** Define `f (a, b) := ⟨fα(a).val * 2^ℓ + fβ(b).val, ...⟩` and prove injectivity from the injectivity of the components. This requires careful arithmetic with `Fin` values.\n\n**Applications:** Enables formal analysis of joint coding schemes, prod",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d4efa6e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:07:11.436493+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "3. Compression Lower Bounds from Counting",
+    "description": "**Goal:** Formalize the contrapositive of the encoding bound: if `|α| > 2^k`, then no injective `k`-bit encoding exists.\n\n```lean\ntheorem compression_lower_bound_bitcode\n    {α : Type*} [Fintype α] [DecidableEq α] {k : ℕ}\n    (hcard : 2^k < Fintype.card α) :\n    ¬ ∃ f : α → (Fin k → Bool), Function.Injective f\n```\n\n**Status:** `no_injective_code_of_card_gt` proves this for `Fin (2^k)` codomain. The bitstring version `Fin k → Bool` follows from `fintype_card_fun_bool`.\n\n**Strategy:** Derive directly from `no_injective_code_of_card_gt` and the cardinality identity `|Fin k → Bool| = 2^k`.\n\n**Significance:** This is the formal foundation for proving that certain families are inherently incompressible — a cornerstone of complexity lower bounds.\n\n---",
+    "domains": [
       "Algebra",
       "Logic",
       "Computation"
@@ -1778,8 +1673,40 @@
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "0d4e55a6",
+    "source_exp_id": "7d4efa6e",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:52:12.567136+00:00"
+    "timestamp": "2026-05-16T15:07:11.456235+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "4. Oracle/Data Bottleneck Theorem",
+    "description": "**Goal:** Formalize that deterministic oracle post-processing cannot increase support entropy. If an oracle computes `g : β → γ` and we have a deterministic query strategy `f : α → β`, then the information content of the composed output `g ∘ f` is bounded by that of the query output `f`.\n\n```lean\ntheorem oracle_bottleneck\n    {α β γ : Type*} [Fintype α] [Fintype β] [Fintype γ]\n    [DecidableEq β] [DecidableEq γ]\n    (query : α → β) (oracle : β → γ) :\n    Fintype.card (Set.range (oracle ∘ query)) ≤ Fintype.card (Set.range query)\n```\n\n**Status:** This is exactly `support_entropy_comp_monotone` applied to the oracle setting. The formalization is complete; what remains is to build the interpretive infrastructure connecting it to oracle complexity theory.\n\n**Next steps:**\n- Define an `OracleQue",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d4efa6e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:07:11.477800+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "5. Kolmogorov-to-Shannon Bridge via Average Complexity",
+    "description": "**Goal:** Use `compressor_gives_complexity_bound` to define a finite family complexity profile and compare its average bound to support entropy.\n\n```lean\ntheorem avg_complexity_bounds_entropy\n    (U : DescriptionMethod) (hU : IsUniversal U)\n    {α : Type*} [Fintype α] [DecidableEq α]\n    (embed : α → List Bool) (hembed : Function.Injective embed) :\n    ∃ c : ℕ, Nat.log 2 (Fintype.card α) ≤\n      (∑ a : α, (embed a).length) / Fintype.card α + c\n```\n\n**Strategy:**\n- Instantiate `compressor_gives_complexity_bound` with the identity compressor to get baseline bounds.\n- Use `complexity_bound_implies_finite_entropy_bound` to convert per-element complexity bounds into global cardinality bounds.\n- Average over all elements using `Finset.sum_div_pow_mul_pow_le_pow_mul` or similar combinatorial ineq",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d4efa6e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:07:11.498731+00:00"
   }
 ]

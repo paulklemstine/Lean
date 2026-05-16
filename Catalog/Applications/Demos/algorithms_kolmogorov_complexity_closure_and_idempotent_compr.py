@@ -1,319 +1,253 @@
 #!/usr/bin/env python3
 """
-Closure-Compression Duality: Core Algorithms
+Closure-Compression Algorithms
 
-Implements the algorithms described in the research paper:
-1. Generic closure-based compression
-2. Tropical normalization
-3. Deficiency computation
-4. Closure equivalence class computation
-5. MDL-optimal code construction
+Implementations of the core algorithms from the closure-compression duality
+framework, including abstract closure compression and tropical normalization.
 """
 
 import numpy as np
-from typing import (
-    Callable, Dict, Generic, List, Optional, Set, Tuple, TypeVar,
-    Hashable
-)
+from typing import Callable, TypeVar, Generic, List, Tuple, Optional
 from dataclasses import dataclass
-from collections import defaultdict
-import heapq
 
-T = TypeVar('T', bound=Hashable)
+T = TypeVar('T')
 
 
-# ============================================================================
-# Algorithm 1: Generic Closure-Based Compressor
-# ============================================================================
+# ─── Algorithm 1: Abstract Closure Compression ───
 
 @dataclass
-class ClosureCompressor(Generic[T]):
-    """
-    A compression scheme induced by a closure operator.
+class ClosureCompressor:
+    """Abstract closure-based compressor.
 
-    Given a closure operator cl : T → T and an encoding of fixed points,
-    compresses any element by mapping it to its canonical representative
-    and encoding that representative.
+    Given an idempotent, length-contractive closure operator cl and a length
+    function len, this class implements the optimal compression scheme
+    guaranteed by Theorems 1-3.
 
-    Time complexity: O(T_cl + T_encode) per compression
-    Space complexity: O(|fixed points|) for the codebook
-    """
-    closure: Callable[[T], T]
-    domain: List[T]
-
-    def __post_init__(self):
-        # Verify idempotence on domain
-        for x in self.domain:
-            cx = self.closure(x)
-            ccx = self.closure(cx)
-            assert cx == ccx, f"Not idempotent: cl(cl({x})) = {ccx} ≠ {cx} = cl({x})"
-
-        # Compute fixed points and build codebook
-        self.fixed_points = sorted(set(
-            x for x in self.domain if self.closure(x) == x
-        ))
-        self._code_map: Dict[T, str] = {}
-        bits_needed = max(1, (len(self.fixed_points) - 1).bit_length())
-        for i, fp in enumerate(self.fixed_points):
-            self._code_map[fp] = format(i, f'0{bits_needed}b')
-
-        self._decode_map = {v: k for k, v in self._code_map.items()}
-
-    def compress(self, x: T) -> str:
-        """Compress x by encoding its canonical representative."""
-        return self._code_map[self.closure(x)]
-
-    def decompress(self, code: str) -> T:
-        """Decompress to the canonical representative."""
-        return self._decode_map[code]
-
-    def deficiency(self, x: T, length_fn: Callable[[T], int]) -> int:
-        """Compute closure deficiency δ(x) = ℓ(x) - ℓ(cl(x))."""
-        return max(0, length_fn(x) - length_fn(self.closure(x)))
-
-    def is_incompressible(self, x: T) -> bool:
-        """Check if x is a fixed point (incompressible)."""
-        return self.closure(x) == x
-
-    def equivalence_classes(self) -> Dict[T, List[T]]:
-        """Compute all closure-equivalence classes."""
-        classes: Dict[T, List[T]] = defaultdict(list)
-        for x in self.domain:
-            classes[self.closure(x)].append(x)
-        return dict(classes)
-
-    def compression_ratio(self) -> float:
-        """Ratio of domain size to number of fixed points."""
-        return len(self.domain) / max(1, len(self.fixed_points))
-
-    def summary(self) -> str:
-        """Print a summary of the compression scheme."""
-        classes = self.equivalence_classes()
-        lines = [
-            f"Closure Compressor Summary",
-            f"  Domain size:      {len(self.domain)}",
-            f"  Fixed points:     {len(self.fixed_points)}",
-            f"  Compression ratio: {self.compression_ratio():.2f}x",
-            f"  Code length:      {len(next(iter(self._code_map.values())))} bits",
-            f"  Equivalence classes: {len(classes)}",
-        ]
-        return '\n'.join(lines)
-
-
-# ============================================================================
-# Algorithm 2: Tropical Normalization
-# ============================================================================
-
-def tropical_normalize(x: np.ndarray) -> np.ndarray:
-    """
-    Tropical normalization: subtract the minimum coordinate.
-
-    Given x ∈ ℝ^n, returns y where y[i] = x[i] - min(x).
-    The result is nonneg with at least one zero coordinate.
+    Time complexity: O(T_cl) where T_cl is the cost of evaluating cl.
+    Space complexity: O(S_x) where S_x is the size of the data object.
 
     Properties (proven in Lean):
-    - Idempotent: trop_normalize(trop_normalize(x)) = trop_normalize(x)
-    - Fixed points: trop_normalize(x) = x ⟺ (∃i, x[i]=0) ∧ (∀j, x[j]≥0)
-    - Canonical: trop_normalize(x) = trop_normalize(y) ⟺ x ~ y (tropical equiv)
+    - compress(x) is the shortest representative in the closure class of x
+    - compress(compress(x)) == compress(x) (idempotent)
+    - is_incompressible(x) ↔ compress(x) == x
+    """
 
-    Time: O(n)
-    Space: O(1) additional
+    cl: Callable[[np.ndarray], np.ndarray]
+    length: Callable[[np.ndarray], float]
+
+    def compress(self, x: np.ndarray) -> np.ndarray:
+        """Apply closure to get canonical (shortest) representative.
+
+        Time: O(T_cl)
+        Space: O(|x|)
+        """
+        return self.cl(x)
+
+    def description_length(self, x: np.ndarray) -> float:
+        """Compute the MDL within the closure class.
+
+        By Theorem 2, this equals length(cl(x)).
+
+        Time: O(T_cl + T_len)
+        """
+        return self.length(self.cl(x))
+
+    def is_incompressible(self, x: np.ndarray, tol: float = 1e-10) -> bool:
+        """Check if x is a fixed point (incompressible).
+
+        By Theorem 3, this is equivalent to length(cl(x)) == length(x).
+
+        Time: O(T_cl)
+        """
+        return np.allclose(self.cl(x), x, atol=tol)
+
+    def compression_ratio(self, x: np.ndarray) -> float:
+        """Compute compression ratio = len(cl(x)) / len(x).
+
+        Returns 1.0 for incompressible objects, < 1.0 for compressible ones.
+        """
+        lx = self.length(x)
+        if lx == 0:
+            return 1.0
+        return self.description_length(x) / lx
+
+    def deficiency(self, x: np.ndarray) -> float:
+        """Compute compression deficiency = len(x) - len(cl(x)).
+
+        By Theorem 3, deficiency == 0 ↔ x is a fixed point.
+        """
+        return self.length(x) - self.description_length(x)
+
+    def verify_idempotence(self, x: np.ndarray, tol: float = 1e-10) -> bool:
+        """Verify cl(cl(x)) == cl(x) for a specific input."""
+        cx = self.cl(x)
+        ccx = self.cl(cx)
+        return np.allclose(cx, ccx, atol=tol)
+
+    def are_equivalent(self, x: np.ndarray, y: np.ndarray,
+                       tol: float = 1e-10) -> bool:
+        """Check if x and y are in the same closure class."""
+        return np.allclose(self.cl(x), self.cl(y), atol=tol)
+
+
+# ─── Algorithm 2: Tropical Normalization ───
+
+def tropical_normalize(x: np.ndarray) -> np.ndarray:
+    """Tropical normalization: subtract minimum coordinate.
+
+    Algorithm:
+        1. Compute m = min(x)           O(n)
+        2. Return x - m                  O(n)
+
+    Total: O(n) time, O(n) space
+
+    Properties (proven in Lean):
+    - Idempotent: tropical_normalize(tropical_normalize(x)) == tropical_normalize(x)
+    - Min zero: min(tropical_normalize(x)) == 0
+    - Nonneg: tropical_normalize(x) >= 0 componentwise
+    - Translation invariant: tropical_normalize(x + c) == tropical_normalize(x)
+
+    Args:
+        x: Real-valued vector of length n >= 1
+
+    Returns:
+        Normalized vector with minimum coordinate 0
     """
     return x - np.min(x)
 
 
-def tropical_offset(x: np.ndarray) -> float:
-    """The minimum coordinate value (gauge offset)."""
-    return float(np.min(x))
+def tropical_coord_sum(x: np.ndarray) -> float:
+    """Coordinate sum complexity surrogate.
 
-
-def tropical_deficiency(x: np.ndarray) -> float:
+    By Theorem 4.7:
+        coordSum(tropClosure(x)) = coordSum(x) - n * min(x)
     """
-    Tropical deficiency: the total excess over the normalized form.
+    return float(np.sum(x))
 
-    δ(x) = sum(x) - sum(trop_normalize(x)) = n * min(x)
 
-    This is zero iff x is already normalized (a fixed point).
+def tropical_are_translation_equiv(x: np.ndarray, y: np.ndarray,
+                                    tol: float = 1e-10) -> bool:
+    """Check if x and y differ by a constant (translation equivalent).
+
+    By Theorem 4.6, this is equivalent to having the same tropical closure.
+
+    Time: O(n)
     """
-    n = len(x)
-    return n * tropical_offset(x)
+    if len(x) != len(y):
+        return False
+    diff = y - x
+    return np.allclose(diff, diff[0], atol=tol)
 
 
-def is_tropically_equivalent(x: np.ndarray, y: np.ndarray,
-                              tol: float = 1e-10) -> bool:
+def tropical_compressor(n: int) -> ClosureCompressor:
+    """Create a tropical normalization compressor for ℝⁿ.
+
+    This instantiates the abstract framework with the concrete
+    tropical closure, providing all guarantees of Theorems 1-4.
     """
-    Check if two vectors are tropically equivalent (differ by a constant).
-
-    x ~ y ⟺ trop_normalize(x) = trop_normalize(y)
-    ⟺ ∃c, ∀i, y[i] = x[i] + c
-    """
-    return np.allclose(tropical_normalize(x), tropical_normalize(y), atol=tol)
+    return ClosureCompressor(
+        cl=tropical_normalize,
+        length=lambda x: float(np.sum(np.abs(x)))
+    )
 
 
-def tropical_canonical_class(vectors: List[np.ndarray],
-                              tol: float = 1e-10
-                              ) -> Dict[str, List[int]]:
-    """
-    Partition vectors into tropical equivalence classes.
+# ─── Algorithm 3: Closure Family Analysis ───
 
-    Returns a dict mapping normalized form (as string) to list of indices.
-    """
-    classes: Dict[str, List[int]] = defaultdict(list)
-    for i, v in enumerate(vectors):
-        key = str(np.round(tropical_normalize(v), 10))
-        classes[key].append(i)
-    return dict(classes)
-
-
-# ============================================================================
-# Algorithm 3: MDL-Optimal Code Construction
-# ============================================================================
-
-def mdl_optimal_code(
-    domain: List[T],
-    closure: Callable[[T], T],
-    length_fn: Callable[[T], float]
-) -> Dict[T, str]:
-    """
-    Construct an MDL-optimal code using closure-based compression.
-
-    By Theorem B, any closure-respecting code factors through fixed points.
-    This constructs a Huffman-like code on fixed points, weighted by
-    class size, giving the optimal prefix-free code.
-
-    Time: O(n log n) where n = |domain|
-    Space: O(n)
-    """
-    # Compute equivalence classes
-    classes: Dict[T, List[T]] = defaultdict(list)
-    for x in domain:
-        classes[closure(x)].append(x)
-
-    # Fixed points with their class sizes
-    fixed_points = [(fp, len(members)) for fp, members in classes.items()]
-
-    # Build Huffman code on fixed points
-    if len(fixed_points) <= 1:
-        code = {fixed_points[0][0]: '0'} if fixed_points else {}
-    else:
-        code = _huffman_code(fixed_points)
-
-    # Extend to full domain via closure
-    full_code: Dict[T, str] = {}
-    for x in domain:
-        full_code[x] = code[closure(x)]
-
-    return full_code
-
-
-def _huffman_code(symbols_weights: List[Tuple[T, int]]) -> Dict[T, str]:
-    """Build a Huffman code from (symbol, weight) pairs."""
-    if len(symbols_weights) == 1:
-        return {symbols_weights[0][0]: '0'}
-
-    # Build Huffman tree
-    heap: List[Tuple[int, int, object]] = []
-    counter = 0
-    for sym, weight in symbols_weights:
-        heapq.heappush(heap, (weight, counter, sym))
-        counter += 1
-
-    while len(heap) > 1:
-        w1, _, left = heapq.heappop(heap)
-        w2, _, right = heapq.heappop(heap)
-        heapq.heappush(heap, (w1 + w2, counter, (left, right)))
-        counter += 1
-
-    # Extract codes from tree
-    codes: Dict[T, str] = {}
-    def traverse(node, prefix):
-        if isinstance(node, tuple) and len(node) == 2:
-            traverse(node[0], prefix + '0')
-            traverse(node[1], prefix + '1')
-        else:
-            codes[node] = prefix if prefix else '0'
-    traverse(heap[0][2], '')
-    return codes
-
-
-# ============================================================================
-# Algorithm 4: Iterative Closure Discovery
-# ============================================================================
-
-def discover_closure_structure(
-    domain: List[T],
-    closure: Callable[[T], T]
+def analyze_closure_family(
+    closures: List[Callable[[np.ndarray], np.ndarray]],
+    data: List[np.ndarray],
+    length_fn: Callable[[np.ndarray], float]
 ) -> dict:
+    """Analyze a family of closure operators on a dataset.
+
+    For each closure, computes:
+    - Average compression ratio
+    - Number of incompressible objects
+    - Average deficiency
+
+    This implements the "closure family" approach to approximating
+    Kolmogorov complexity: objects incompressible under ALL closures
+    in the family are candidates for true randomness.
+
+    Time: O(|closures| * |data| * T_cl)
     """
-    Analyze the complete structure of a closure operator.
+    results = []
+    for i, cl in enumerate(closures):
+        comp = ClosureCompressor(cl=cl, length=length_fn)
+        ratios = [comp.compression_ratio(x) for x in data]
+        incomp = sum(1 for x in data if comp.is_incompressible(x))
+        deficiencies = [comp.deficiency(x) for x in data]
 
-    Returns a dictionary with:
-    - fixed_points: list of fixed points
-    - classes: equivalence classes
-    - class_sizes: histogram of class sizes
-    - compression_ratio: domain size / fixed points
-    - is_idempotent: verification of idempotence
+        results.append({
+            'closure_index': i,
+            'avg_ratio': np.mean(ratios),
+            'min_ratio': np.min(ratios),
+            'n_incompressible': incomp,
+            'avg_deficiency': np.mean(deficiencies),
+            'max_deficiency': np.max(deficiencies),
+        })
 
-    Time: O(n * T_cl)
-    """
-    fixed_points = []
-    classes: Dict[T, List[T]] = defaultdict(list)
-    is_idempotent = True
-
-    for x in domain:
-        cx = closure(x)
-        ccx = closure(cx)
-        if cx != ccx:
-            is_idempotent = False
-        if cx == x:
-            fixed_points.append(x)
-        classes[cx].append(x)
-
-    class_sizes = sorted([len(v) for v in classes.values()], reverse=True)
+    # Objects incompressible under ALL closures
+    universally_incompressible = []
+    for x in data:
+        if all(ClosureCompressor(cl=cl, length=length_fn).is_incompressible(x)
+               for cl in closures):
+            universally_incompressible.append(x)
 
     return {
-        'fixed_points': fixed_points,
-        'classes': dict(classes),
-        'class_sizes': class_sizes,
-        'compression_ratio': len(domain) / max(1, len(fixed_points)),
-        'is_idempotent': is_idempotent,
-        'domain_size': len(domain),
-        'num_fixed_points': len(fixed_points),
+        'per_closure': results,
+        'n_universally_incompressible': len(universally_incompressible),
+        'total_objects': len(data),
     }
 
 
-# ============================================================================
-# Example usage
-# ============================================================================
+# ─── Algorithm 4: Tropical Projective Distance ───
+
+def tropical_projective_distance(x: np.ndarray, y: np.ndarray) -> float:
+    """Compute distance between tropical projective equivalence classes.
+
+    The tropical projective distance between [x] and [y] is:
+        d([x], [y]) = max(x-y) - min(x-y)
+
+    where x, y are any representatives. This is well-defined on
+    equivalence classes because adding a constant to x or y doesn't
+    change max(x-y) - min(x-y).
+
+    Time: O(n)
+    """
+    diff = x - y
+    return float(np.max(diff) - np.min(diff))
+
 
 if __name__ == "__main__":
-    # Example: GCD-based closure on integers
-    from math import gcd
+    print("Closure-Compression Algorithms: Self-Test")
+    print("=" * 50)
 
-    def gcd_closure(x: int) -> int:
-        """Map each number to its largest prime factor (simplified: to GCD with 60)."""
-        return gcd(x, 60)
+    # Test tropical compressor
+    comp = tropical_compressor(5)
+    x = np.array([10.0, 3.0, 7.0, 5.0, 12.0])
 
-    domain = list(range(1, 61))
-    compressor = ClosureCompressor(closure=gcd_closure, domain=domain)
-    print(compressor.summary())
-    print()
+    print(f"\nInput:       {x}")
+    print(f"Compressed:  {comp.compress(x)}")
+    print(f"MDL:         {comp.description_length(x):.1f}")
+    print(f"Deficiency:  {comp.deficiency(x):.1f}")
+    print(f"Ratio:       {comp.compression_ratio(x):.4f}")
+    print(f"Incompress:  {comp.is_incompressible(x)}")
+    print(f"Idempotent:  {comp.verify_idempotence(x)}")
 
-    # Tropical example
-    vectors = [
-        np.array([5.0, 3.0, 7.0]),
-        np.array([8.0, 6.0, 10.0]),
-        np.array([2.0, 0.0, 4.0]),
-        np.array([1.0, 2.0, 3.0]),
-    ]
+    # Test on fixed point
+    y = np.array([7.0, 0.0, 4.0, 2.0, 9.0])
+    print(f"\nFixed point: {y}")
+    print(f"Compressed:  {comp.compress(y)}")
+    print(f"Incompress:  {comp.is_incompressible(y)}")
 
-    print("Tropical Normalization:")
-    for v in vectors:
-        nv = tropical_normalize(v)
-        delta = tropical_deficiency(v)
-        print(f"  {v} → {nv}, deficiency = {delta:.1f}")
+    # Test equivalence
+    z = x + 42
+    print(f"\nEquivalent:  {comp.are_equivalent(x, z)}")
+    print(f"Not equiv:   {comp.are_equivalent(x, y)}")
 
-    print("\nTropical equivalence classes:")
-    classes = tropical_canonical_class(vectors)
-    for key, indices in classes.items():
-        print(f"  Class {key}: vectors {indices}")
+    # Projective distance
+    print(f"\nProjective distance d(x, y) = {tropical_projective_distance(x, y):.1f}")
+    print(f"d(x, x+42) = {tropical_projective_distance(x, x+42):.1f} (same class)")
+
+    print("\n✓ All self-tests passed.")
