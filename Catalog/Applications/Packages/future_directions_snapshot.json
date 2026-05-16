@@ -149,10 +149,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "b8bbbc75",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c012798",
     "timestamp": "2026-05-14T16:17:21.765666+00:00"
   },
   {
@@ -882,21 +882,6 @@
     "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
-    "id": "fd_0181",
-    "title": "3. Extension from $L_\\infty$ to $L_2$ Robustness via Sheaves of Quadratic Forms",
-    "description": "**Objective**: Extend the cohomological certification framework from $L_\\infty$ perturbation balls to $L_2$ (Euclidean) perturbation balls by replacing real-valued margin sections with sections valued in positive-definite quadratic forms.\n\n**Approach**: On each activation region $U_i$, the network is affine: $f(x) = W_i x + b_i$. The local $L_2$-robustness radius at $x \\in U_i$ is $\\|W_i^{-1}\\| \\cdot (\\text{margin at } x)$, which depends on the local Hessian structure. Define a sheaf $\\mathcal{Q}$ assigning to $U_i$ the quadratic form $Q_i(v) = v^T W_i^T W_i \\, v$ (the local metric tensor). The overlap compatibility condition becomes: on $U_i \\cap U_j$, $Q_i$ and $Q_j$ must be comparable (within a multiplicative factor).\n\n**Key hypotheses**:\n- The $L_2$ certified radius is controlled by th",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "473914a2",
-    "timestamp": "2026-05-14T18:36:13.855472+00:00"
-  },
-  {
     "id": "fd_0179",
     "title": "Phase 1 (Immediate, 1-2 weeks)",
     "description": "- **Team A:** Four-voice generalization (Direction 1). Extend all definitions, re-run proofs, compute database.\n- **Team B:** Computational exploration. Enumerate all triad/seventh-chord transitions, visualize cost landscapes, identify patterns.",
@@ -1492,10 +1477,10 @@
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "41f0f930",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "477ce9c1",
     "timestamp": "2026-05-16T13:12:11.751217+00:00"
   },
   {
@@ -1622,5 +1607,33 @@
     "source_exp_id": "52b15fb5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T19:35:36.777527+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Precise Theorem Statement",
+    "description": "The Blahut-Arimoto algorithm converges to the global minimum of I(X;Y) + β·E[d(X,Y)] over all channels W : α → β. Formally: for every ε > 0, there exists N such that after N iterations, the channel Wₙ satisfies |I(μ; Wₙ) + β·D(μ, Wₙ) - R*(β)| < ε.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "473914a2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:06:14.593534+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Proposed Lean Type Signature",
+    "description": "```lean\ntheorem blahut_arimoto_convergence\n    {α β : Type*} [Fintype α] [Fintype β]\n    (μ : FinProbDist α) (d : α → β → ℝ) (s : ℝ) (hs : 0 < s)\n    (W₀ : Channel α β) :\n    ∀ ε > 0, ∃ N : ℕ, ∀ n ≥ N,\n      |lagrangianObjective μ d s (blahutArimotoStep^[n] μ d s W₀) -\n       lagrangianDual μ d s| < ε\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "473914a2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:06:14.612117+00:00"
   }
 ]

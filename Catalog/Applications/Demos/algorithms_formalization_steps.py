@@ -1,227 +1,374 @@
 #!/usr/bin/env python3
 """
-Algorithms for spectral analysis on ternary word cubes.
+Algorithms for Spectral Analysis on Ternary Cubes
 
-Implements the core algorithms from the research paper:
-- Noise kernel computation
-- Product noise operator
-- Spectral decomposition via coordinate-wise processing
-- Bias bound computation
+Implements:
+1. Fast product noise operator via coordinate-wise application (O(L · 3^L) vs O(9^L))
+2. Fourier decomposition on (Fin 3)^L
+3. Spectral truncation and low-degree approximation
+4. Bias estimation with spectral decay bounds
 """
 
 import numpy as np
 from itertools import product as cart_product
-from math import comb
-from typing import List, Set, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 
 
-def noise_kernel(rho: float, a: int, b: int) -> float:
-    """Compute the single-site noise kernel K_ρ(a, b).
-    
-    K_ρ(a, b) = ρ·δ(a,b) + (1-ρ)/3
-    
-    Args:
-        rho: Noise parameter in [0, 1]
-        a: Source state in {0, 1, 2}
-        b: Target state in {0, 1, 2}
-    
-    Returns:
-        Transition probability from a to b
-    
-    Time: O(1)
+class TernaryCubeSpectral:
     """
-    return rho + (1 - rho) / 3 if a == b else (1 - rho) / 3
+    Spectral analysis engine for functions on (Fin 3)^L.
 
+    Implements the product noise operator T_ρ and its exact spectral decomposition
+    into homogeneous degree subspaces with eigenvalues ρ^d.
 
-def noise_kernel_matrix(rho: float) -> np.ndarray:
-    """Build the 3×3 noise kernel matrix.
-    
-    Time: O(1) (constant 3×3 matrix)
+    Parameters
+    ----------
+    L : int
+        Word length (number of coordinates).
+
+    Attributes
+    ----------
+    words : list of tuples
+        All elements of (Fin 3)^L.
+    n : int
+        Total number of words (= 3^L).
+    ternary_basis : ndarray of shape (3, 3)
+        Orthonormal basis for ℝ^{Fin 3}: row 0 = constant, rows 1,2 = mean-zero.
+
+    Complexity
+    ----------
+    Space: O(3^L) for storing function values.
+    Construction: O(3^L · L) for generating words.
     """
-    K = np.full((3, 3), (1 - rho) / 3)
-    np.fill_diagonal(K, rho + (1 - rho) / 3)
-    return K
+
+    def __init__(self, L: int):
+        self.L = L
+        self.words = list(cart_product(range(3), repeat=L))
+        self.n = 3 ** L
+
+        # Orthonormal basis for ℝ^3 adapted to constant/mean-zero decomposition
+        self.ternary_basis = np.array([
+            [1, 1, 1],          # constant direction (unnormalized)
+            [1, -1, 0],         # mean-zero direction 1
+            [1, 1, -2],         # mean-zero direction 2
+        ], dtype=float)
+        # Normalize
+        for i in range(3):
+            self.ternary_basis[i] /= np.linalg.norm(self.ternary_basis[i])
+
+        # Precompute word-to-index mapping
+        self._word_to_idx = {w: i for i, w in enumerate(self.words)}
+
+    def apply_coord_noise(self, rho: float, coord: int, f: np.ndarray) -> np.ndarray:
+        """
+        Apply single-coordinate noise at position `coord`.
+
+        T_{ρ,i} f(x) = Σ_v K_ρ(x_i, v) · f(x with x_i replaced by v)
+
+        Time: O(3 · 3^L) = O(3^L)
+        Space: O(3^L)
+
+        Parameters
+        ----------
+        rho : float
+            Noise parameter in [0, 1].
+        coord : int
+            Coordinate index (0 to L-1).
+        f : ndarray of shape (3^L,)
+            Function values.
+
+        Returns
+        -------
+        ndarray of shape (3^L,)
+            Result of applying coordinate noise.
+        """
+        result = np.zeros(self.n)
+        p_same = rho + (1 - rho) / 3
+        p_diff = (1 - rho) / 3
+
+        for i, x in enumerate(self.words):
+            total = 0.0
+            for v in range(3):
+                kernel_val = p_same if x[coord] == v else p_diff
+                # Build y = x with coord replaced by v
+                y = list(x)
+                y[coord] = v
+                j = self._word_to_idx[tuple(y)]
+                total += kernel_val * f[j]
+            result[i] = total
+        return result
+
+    def apply_product_noise_fast(self, rho: float, f: np.ndarray) -> np.ndarray:
+        """
+        Apply product noise operator T_ρ via sequential coordinate noise.
+
+        Uses the Fubini factorization: T_ρ = T_{ρ,0} ∘ T_{ρ,1} ∘ ... ∘ T_{ρ,L-1}
+
+        This is equivalent to the full kernel computation but runs in
+        O(L · 3^L) time instead of O(9^L).
+
+        Time: O(L · 3^L)
+        Space: O(3^L)
+
+        Parameters
+        ----------
+        rho : float
+            Noise parameter in [0, 1].
+        f : ndarray of shape (3^L,)
+            Function values.
+
+        Returns
+        -------
+        ndarray of shape (3^L,)
+            T_ρ f.
+        """
+        result = f.copy()
+        for coord in range(self.L):
+            result = self.apply_coord_noise(rho, coord, result)
+        return result
+
+    def apply_product_noise_direct(self, rho: float, f: np.ndarray) -> np.ndarray:
+        """
+        Apply product noise operator via direct kernel computation.
+
+        T_ρ f(x) = Σ_y (Π_i K_ρ(x_i, y_i)) · f(y)
+
+        Time: O(9^L)
+        Space: O(3^L)
+        """
+        result = np.zeros(self.n)
+        p_same = rho + (1 - rho) / 3
+        p_diff = (1 - rho) / 3
+
+        for i, x in enumerate(self.words):
+            total = 0.0
+            for j, y in enumerate(self.words):
+                kernel = 1.0
+                for c in range(self.L):
+                    kernel *= p_same if x[c] == y[c] else p_diff
+                total += kernel * f[j]
+            result[i] = total
+        return result
+
+    def fourier_decompose(self, f: np.ndarray) -> Dict[int, np.ndarray]:
+        """
+        Decompose f into homogeneous degree components.
+
+        f = Σ_d f_d where f_d ∈ homogeneousDegreeSubmodule(L, d)
+        and T_ρ f_d = ρ^d · f_d for all ρ.
+
+        Uses the tensor product basis: each basis function is a product
+        of single-site basis vectors, and its degree is the number of
+        mean-zero factors.
+
+        Time: O(3^L · 3^L) for computing all inner products
+        Space: O(3^L)
+
+        Parameters
+        ----------
+        f : ndarray of shape (3^L,)
+            Function values.
+
+        Returns
+        -------
+        dict mapping degree (int) to component (ndarray)
+            The homogeneous degree-d component f_d.
+        """
+        components = {d: np.zeros(self.n) for d in range(self.L + 1)}
+
+        # Enumerate all tensor product basis functions
+        for basis_indices in cart_product(range(3), repeat=self.L):
+            # Compute degree: number of mean-zero factors (index > 0)
+            degree = sum(1 for b in basis_indices if b > 0)
+
+            # Build basis function values
+            basis_vals = np.array([
+                np.prod([self.ternary_basis[basis_indices[c]][w[c]]
+                         for c in range(self.L)])
+                for w in self.words
+            ])
+
+            # Project f onto this basis function
+            coeff = np.dot(f, basis_vals)
+
+            # Accumulate into the appropriate degree component
+            components[degree] += coeff * basis_vals
+
+        return components
+
+    def spectral_truncation(self, f: np.ndarray, max_degree: int) -> np.ndarray:
+        """
+        Compute the low-degree truncation of f.
+
+        Returns Σ_{d ≤ max_degree} f_d, the projection of f onto
+        the degree-≤k submodule.
+
+        Time: O(3^L · 3^L)
+        Space: O(3^L)
+
+        Parameters
+        ----------
+        f : ndarray of shape (3^L,)
+        max_degree : int
+            Maximum degree to keep.
+
+        Returns
+        -------
+        ndarray of shape (3^L,)
+            The low-degree approximation.
+        """
+        components = self.fourier_decompose(f)
+        result = np.zeros(self.n)
+        for d in range(min(max_degree + 1, self.L + 1)):
+            result += components[d]
+        return result
+
+    def compute_bias(self, rho: float, f: np.ndarray) -> float:
+        """
+        Compute the noise bias: ⟨T_ρ f, 1⟩ / 3^L.
+
+        Time: O(L · 3^L) using fast product noise
+        Space: O(3^L)
+        """
+        noised = self.apply_product_noise_fast(rho, f)
+        return np.mean(noised)
+
+    def bias_bound(self, rho: float, f: np.ndarray, k: int) -> Tuple[float, float]:
+        """
+        Compute the spectral bias bound.
+
+        Returns (actual_high_degree_bias, theoretical_bound) where:
+        - actual = |⟨T_ρ f_{>k}, 1⟩| / 3^L
+        - bound = |ρ|^(k+1) · ‖f_{>k}‖_2
+
+        By the spectral theorem, actual ≤ bound.
+
+        Parameters
+        ----------
+        rho : float
+            Noise parameter.
+        f : ndarray of shape (3^L,)
+        k : int
+            Degree threshold.
+
+        Returns
+        -------
+        (actual, bound) : tuple of floats
+        """
+        components = self.fourier_decompose(f)
+
+        # High-degree part
+        f_high = np.zeros(self.n)
+        for d in range(k + 1, self.L + 1):
+            f_high += components[d]
+
+        # Actual high-degree bias
+        noised_high = self.apply_product_noise_fast(rho, f_high)
+        actual = abs(np.mean(noised_high))
+
+        # Theoretical bound
+        high_norm = np.sqrt(np.mean(f_high ** 2))
+        bound = abs(rho) ** (k + 1) * high_norm
+
+        return actual, bound
+
+    def degree_spectrum(self, f: np.ndarray) -> List[float]:
+        """
+        Compute the degree spectrum: ‖f_d‖² for each degree d.
+
+        Returns
+        -------
+        list of floats
+            The L2 mass in each degree sector.
+        """
+        components = self.fourier_decompose(f)
+        return [np.mean(components[d] ** 2) for d in range(self.L + 1)]
 
 
-def product_noise_matrix(L: int, rho: float) -> np.ndarray:
-    """Build the full 3^L × 3^L product noise matrix.
-    
-    M[x, y] = ∏_i K_ρ(x_i, y_i)
-    
-    Time: O(L · 3^(2L))
-    Space: O(3^(2L))
-    """
-    words = list(cart_product(range(3), repeat=L))
-    n = len(words)
-    M = np.ones((n, n))
-    K = noise_kernel_matrix(rho)
-    
-    for xi, x in enumerate(words):
-        for yi, y in enumerate(words):
-            for i in range(L):
-                M[xi, yi] *= K[x[i], y[i]]
-    
-    return M
+def demo_fast_vs_direct():
+    """Compare fast (O(L·3^L)) vs direct (O(9^L)) product noise computation."""
+    import time
+
+    print("=" * 60)
+    print("Algorithm Comparison: Fast vs Direct Product Noise")
+    print("=" * 60)
+
+    for L in range(2, 6):
+        engine = TernaryCubeSpectral(L)
+        f = np.random.randn(engine.n)
+
+        t0 = time.time()
+        result_fast = engine.apply_product_noise_fast(0.7, f)
+        t_fast = time.time() - t0
+
+        t0 = time.time()
+        result_direct = engine.apply_product_noise_direct(0.7, f)
+        t_direct = time.time() - t0
+
+        error = np.max(np.abs(result_fast - result_direct))
+        speedup = t_direct / max(t_fast, 1e-10)
+
+        print(f"L={L}: fast={t_fast:.4f}s, direct={t_direct:.4f}s, "
+              f"speedup={speedup:.1f}x, error={error:.2e}")
 
 
-def spectral_decomposition(L: int) -> Dict[int, List[np.ndarray]]:
-    """Compute an explicit basis for each homogeneous degree subspace.
-    
-    For each degree d, returns a list of basis functions. Each basis function
-    is a product: f(x) = ∏_{i ∈ S} g_i(x_i) where |S| = d, g_i are
-    mean-zero basis vectors, and remaining coordinates are constant.
-    
-    The mean-zero basis for Fin 3 → ℝ is:
-        e₁ = (1, -1, 0)    (sum = 0)
-        e₂ = (1, 0, -1)    (sum = 0)
-    
-    Time: O(Σ_d C(L,d) · 2^d · 3^L) = O(3^(2L))
-    
-    Returns:
-        Dictionary mapping degree d to list of basis function vectors
-    """
-    words = list(cart_product(range(3), repeat=L))
-    n = len(words)
-    
-    # Mean-zero basis vectors for a single coordinate
-    mz_basis = [
-        np.array([1.0, -1.0, 0.0]),
-        np.array([1.0, 0.0, -1.0]),
-    ]
-    
-    decomposition = {}
-    
+def demo_spectral_decomposition():
+    """Demonstrate full spectral decomposition and eigenvalue verification."""
+    print("\n" + "=" * 60)
+    print("Spectral Decomposition Verification")
+    print("=" * 60)
+
+    L = 3
+    engine = TernaryCubeSpectral(L)
+    rho = 0.6
+
+    np.random.seed(123)
+    f = np.random.randn(engine.n)
+
+    components = engine.fourier_decompose(f)
+
+    # Verify reconstruction
+    f_reconstructed = sum(components.values())
+    print(f"\nL = {L}, ρ = {rho}")
+    print(f"Reconstruction error: {np.max(np.abs(f - f_reconstructed)):.2e}")
+
+    # Verify eigenvalue property for each component
+    print("\nEigenvalue verification:")
     for d in range(L + 1):
-        basis_fns = []
-        # Iterate over all subsets S of {0,...,L-1} with |S| = d
-        from itertools import combinations
-        for S in combinations(range(L), d):
-            S_set = set(S)
-            # For each choice of mean-zero basis vector at each coordinate in S
-            for choices in cart_product(range(2), repeat=d):
-                f = np.zeros(n)
-                for wi, w in enumerate(words):
-                    val = 1.0
-                    for idx, coord in enumerate(S):
-                        val *= mz_basis[choices[idx]][w[coord]]
-                    f[wi] = val
-                basis_fns.append(f)
-        
-        decomposition[d] = basis_fns
-    
-    return decomposition
+        noised = engine.apply_product_noise_fast(rho, components[d])
+        expected = rho ** d * components[d]
+        error = np.max(np.abs(noised - expected))
+        norm = np.sqrt(np.mean(components[d] ** 2))
+        print(f"  Degree {d}: ‖f_d‖ = {norm:.4f}, "
+              f"|T_ρ f_d - ρ^d f_d| = {error:.2e}")
 
 
-def verify_eigenvalue(L: int, rho: float, d: int, f: np.ndarray) -> float:
-    """Verify that f is an eigenvector of product noise with eigenvalue ρ^d.
-    
-    Returns the maximum absolute error ‖T_ρ f - ρ^d · f‖_∞.
-    
-    Time: O(L · 3^(2L))
-    """
-    M = product_noise_matrix(L, rho)
-    Tf = M @ f
-    expected = (rho ** d) * f
-    return np.max(np.abs(Tf - expected))
+def demo_bias_bounds():
+    """Demonstrate spectral bias bounds."""
+    print("\n" + "=" * 60)
+    print("Spectral Bias Bounds")
+    print("=" * 60)
 
+    L = 4
+    engine = TernaryCubeSpectral(L)
 
-def bias_bound(L: int, k: int, rho: float, f: np.ndarray,
-               decomposition: Dict[int, List[np.ndarray]]) -> Tuple[float, float]:
-    """Compute and bound the bias of f under product noise.
-    
-    If f has negligible projection onto degrees > k, then its noisy
-    correlation is controlled by ρ^(k+1) times the high-degree mass.
-    
-    Returns:
-        (actual_bias, bound): The actual noisy bias and the spectral bound
-    
-    Time: O(L · 3^(2L))
-    """
-    n = 3 ** L
-    M = product_noise_matrix(L, rho)
-    
-    # Actual bias: ⟨T_ρ f, 1⟩ / 3^L
-    Tf = M @ f
-    actual_bias = np.sum(Tf) / n
-    
-    # Project f onto each degree
-    projections = {}
-    for d, basis in decomposition.items():
-        if not basis:
-            projections[d] = np.zeros(n)
-            continue
-        B = np.column_stack(basis) if basis else np.zeros((n, 0))
-        # Least squares projection
-        if B.shape[1] > 0:
-            coeffs, _, _, _ = np.linalg.lstsq(B, f, rcond=None)
-            projections[d] = B @ coeffs
-        else:
-            projections[d] = np.zeros(n)
-    
-    # High-degree mass
-    high_degree_mass = sum(
-        np.linalg.norm(projections.get(d, np.zeros(n))) ** 2
-        for d in range(k + 1, L + 1)
-    )
-    
-    # Bound: |bias from high degrees| ≤ ρ^(k+1) · √(high_degree_mass) / √(3^L)
-    bound = (rho ** (k + 1)) * np.sqrt(high_degree_mass) / np.sqrt(n)
-    
-    return actual_bias, bound
+    np.random.seed(456)
+    f = np.random.randn(engine.n)
 
+    print(f"\nL = {L}")
+    print(f"{'ρ':>6} | {'k':>3} | {'actual bias':>12} | {'bound':>12} | {'ratio':>8}")
+    print("-" * 55)
 
-def coordinate_noise(L: int, rho: float, i: int, f: np.ndarray) -> np.ndarray:
-    """Apply coordinate noise at position i.
-    
-    (T_i f)(x) = Σ_v K_ρ(x_i, v) · f(x[i←v])
-    
-    Time: O(3^L · 3) = O(3^(L+1))
-    """
-    words = list(cart_product(range(3), repeat=L))
-    n = len(words)
-    K = noise_kernel_matrix(rho)
-    result = np.zeros(n)
-    
-    word_to_idx = {w: idx for idx, w in enumerate(words)}
-    
-    for xi, x in enumerate(words):
-        total = 0.0
-        for v in range(3):
-            x_updated = list(x)
-            x_updated[i] = v
-            yi = word_to_idx[tuple(x_updated)]
-            total += K[x[i], v] * f[yi]
-        result[xi] = total
-    
-    return result
+    for rho in [0.3, 0.5, 0.7, 0.9]:
+        for k in range(L):
+            actual, bound = engine.bias_bound(rho, f, k)
+            ratio = actual / max(bound, 1e-15)
+            print(f"{rho:6.1f} | {k:3d} | {actual:12.6e} | {bound:12.6e} | {ratio:8.4f}")
+        print("-" * 55)
 
 
 if __name__ == "__main__":
-    print("Testing spectral decomposition algorithms...")
-    
-    L = 3
-    rho = 0.5
-    
-    # Compute full decomposition
-    decomp = spectral_decomposition(L)
-    
-    for d in range(L + 1):
-        n_basis = len(decomp[d])
-        expected = comb(L, d) * (2 ** d)
-        print(f"  Degree {d}: {n_basis} basis functions (expected {expected})")
-        
-        # Verify eigenvalue for each basis function
-        max_err = 0.0
-        for f in decomp[d]:
-            if np.linalg.norm(f) > 1e-10:
-                err = verify_eigenvalue(L, rho, d, f)
-                max_err = max(max_err, err)
-        print(f"    Max eigenvalue error: {max_err:.2e}")
-    
-    # Test bias bound
-    f_test = np.random.randn(3 ** L)
-    bias, bound = bias_bound(L, 1, rho, f_test, decomp)
-    print(f"\n  Random function bias: {bias:.6f}")
-    print(f"  Spectral bound (k=1): {bound:.6f}")
-    
-    print("\nAll algorithm tests passed!")
+    demo_fast_vs_direct()
+    demo_spectral_decomposition()
+    demo_bias_bounds()
+    print("\nAll algorithm demos completed successfully!")
