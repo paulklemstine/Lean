@@ -683,10 +683,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cf94957b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a63dabd4",
     "timestamp": "2026-05-15T20:38:19.046704+00:00"
   },
   {
@@ -1095,21 +1095,6 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.844636+00:00"
-  },
-  {
-    "id": "fd_0180",
-    "title": "2. Hodge Decomposition for Adversarial Inconsistency Fields",
-    "description": "**Objective**: Prove a graph-theoretic Hodge decomposition theorem for the space of 1-cochains on the activation region overlap graph, decomposing any inconsistency field into a gradient (coboundary), a curl (cocycle), and a harmonic component.\n\n**Approach**: On the complete graph $K_\\iota$ with edge weights given by overlap volumes, define the combinatorial Laplacian $\\Delta = \\delta^* \\delta + \\delta \\delta^*$ where $\\delta$ is the coboundary operator. The Hodge decomposition gives:\n$$C^1(K_\\iota, \\mathbb{R}) = \\mathrm{im}(\\delta) \\oplus \\mathrm{im}(\\delta^*) \\oplus \\ker(\\Delta)$$\n\nThe gradient component is the \"fixable\" part of margin inconsistency; the harmonic component is the irreducible topological obstruction; the curl component detects local rotation in the margin field.\n\n**Key hy",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "cb6bb980",
-    "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
     "id": "fd_0181",
@@ -1837,5 +1822,92 @@
     "source_exp_id": "94c243f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:09:09.499683+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Direction 1: Weighted Hodge Decomposition on Overlap Complexes with Certified Ro",
+    "description": "**Hypothesis:** Equipping the cochain complex with edge weights w(i,j) proportional to the overlap volume between activation regions i and j yields a weighted Hodge decomposition where the harmonic energy provides a formally certified lower bound on adversarial vulnerability.\n\n**Proof Strategy:**\n1. Define the weighted inner product ⟨ω, η⟩_w = Σ_{i,j} w(i,j) ω(i,j) η(i,j) and prove it satisfies the inner product axioms when w > 0.\n2. Compute the weighted adjoint operators d₀†_w and d₁†_w explicitly.\n3. Prove the weighted Hodge decomposition C¹ = im(d₀) ⊕_w im(d₁†_w) ⊕_w ker(Δ₁_w).\n4. Establish that the weighted harmonic energy ‖h‖²_w lower-bounds the minimum perturbation energy needed to change the network's prediction across region boundaries.\n\n**Cross-Domain Connections:** This connects ",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cb6bb980",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:30:41.646536+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Direction 2: Persistent Harmonic Inconsistency Across Overlap Thresholds",
+    "description": "**Hypothesis:** As the overlap threshold τ varies from 0 to ∞, the harmonic dimension dim ker(Δ₁(τ)) traces a piecewise-constant function with jumps at topological critical values. The birth/death pairs of harmonic modes define a \"harmonic persistence diagram\" that captures the multi-scale topological complexity of the decision geometry.\n\n**Proof Strategy:**\n1. Define the filtered simplicial complex K(τ) where edge (i,j) exists iff overlap(i,j) ≥ τ.\n2. For each τ, compute the Hodge Laplacian Δ₁(τ) and its harmonic space.\n3. Prove that dim ker Δ₁(τ) equals the first Betti number β₁(K(τ)).\n4. Apply standard persistence theory to obtain stability results: small perturbations of the overlap function produce small perturbations of the persistence diagram (in bottleneck distance).\n\n**Cross-Domai",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cb6bb980",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:30:41.658871+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Direction 3: Discrete Helmholtz Decomposition for Gradient-Flow Training Dynamic",
+    "description": "**Hypothesis:** The gradient of the training loss, viewed as a vector field on the activation region complex, admits a Helmholtz decomposition into a potential component (driving convergence), a solenoidal component (causing oscillation), and a harmonic component (reflecting topological constraints on the loss landscape).\n\n**Proof Strategy:**\n1. Define the training dynamics as a flow ω(t) on the 1-cochain space, where ω(t)(i,j) represents the pairwise margin discrepancy at training step t.\n2. Decompose the time derivative dω/dt = d₀(φ) + d₁†(ψ) + h via the Hodge decomposition at each time step.\n3. Prove that the potential component d₀(φ) drives monotone decrease of a convex potential function (global convergence).\n4. Show that the solenoidal component d₁†(ψ) corresponds to cyclic oscillati",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cb6bb980",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:30:41.669258+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Direction 4: Hodge-Theoretic Adversarial Certificates via Harmonic Projection Bo",
+    "description": "**Hypothesis:** The projection of a perturbation field onto the harmonic subspace provides a certified lower bound on the adversarial perturbation needed to change a network's prediction. Specifically, if the harmonic projection of the perturbation has norm less than the spectral gap λ₁ of the Hodge Laplacian, then no adversarial example exists within that perturbation budget.\n\n**Proof Strategy:**\n1. Define the perturbation field δω induced by an input perturbation δx, where δω(i,j) is the change in pairwise margin.\n2. Decompose δω = d₀(δf) + d₁†(δη) + δh.\n3. Prove: if ‖δh‖ < λ₁ · (margin gap), then the network's prediction is stable. This follows from the spectral gap bounding the inverse of Δ₁ on the complement of ker(Δ₁).\n4. Show that this certificate is tighter than Lipschitz-based cer",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cb6bb980",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:30:41.680443+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Direction 5: Nonlinear and Tropical Hodge Theory for Piecewise-Linear Neural Dec",
+    "description": "**Hypothesis:** ReLU neural networks implement piecewise-linear (tropical) functions. The natural algebraic setting for their decision geometry is tropical geometry, where addition becomes min/max and multiplication becomes addition. A \"tropical Hodge theory\" should decompose inconsistency fields in this min-plus algebra, capturing combinatorial features invisible to the linear theory.\n\n**Proof Strategy:**\n1. Define the tropical cochain complex where d₀f(i,j) = f(j) ⊖ f(i) in the tropical semiring (min-plus or max-plus algebra).\n2. Define tropical curl: d₁ω(i,j,k) = ω(i,j) ⊖ ω(i,k) ⊕ ω(j,k) where ⊕ = min and ⊖ = tropical subtraction.\n3. Prove a tropical analogue of d₁ ∘ d₀ = 0 (this holds by the same telescoping argument in the tropical semiring).\n4. Define the tropical Hodge \"decompositio",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cb6bb980",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T23:30:41.692385+00:00"
   }
 ]
