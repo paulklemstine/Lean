@@ -153,10 +153,10 @@
       "Cryptography"
     ],
     "priority_score": 0.81,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "78b212ab",
     "timestamp": "2026-05-14T16:03:53.820235+00:00"
   },
   {
@@ -751,20 +751,6 @@
     "source_exp_id": "d85be8c8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:49:39.034440+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "Direction 4",
-    "description": "(Morse inequalities) connects geometry to topology.",
-    "domains": [
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "886e70ad",
-    "consumed_by_exp_id": "f06689b7",
-    "timestamp": "2026-05-16T04:34:23.473456+00:00"
   },
   {
     "id": "fd_0241",
@@ -1828,5 +1814,52 @@
     "source_exp_id": "9a668faa",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T05:30:16.450926+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Precise Theorem Statement",
+    "description": "For a finite weighted simplicial complex K with combinatorial Laplacian Δ_n acting on n-chains, and a discrete Morse function f on K with crit_n critical n-cells:\n\n> The number of eigenvalues of Δ_n below any threshold ε > 0 (in a suitable Witten-deformed Laplacian Δ_n^{(t)} = d_t^* d_t + d_t d_t^* where d_t is the twisted differential) converges to β_n as the deformation parameter t → ∞.\n\nAs a finite-dimensional formal target:\n```\ntheorem spectral_morse_bound\n  {K : Type*} [Field K] [DecidableEq K]\n  (C : FinChainComplex K)\n  (Δ : ∀ n, C.C n →ₗ[K] C.C n) -- combinatorial Laplacian\n  (hΔ : ∀ n, Δ n = (C.d n).adjoint.comp (C.d n) + (C.d (n-1)).comp (C.d (n-1)).adjoint) :\n  ∀ n, C.homologyFinrank n = finrank K (ker (Δ n))\n```",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f06689b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:30:17.030964+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Cross-Domain Connection",
+    "description": "This connects to existing catalog theorems `topology_low_freq_cutoff` and `dispersion_large_ell_bound`. The spectral cutoff in those theorems separates topologically meaningful eigenvalues (near zero) from high-frequency oscillations. Spectral Morse theory makes this separation precise: below the spectral gap, you see exactly β_n harmonic modes. The formal correspondence between \"number of low eigenvalues\" and \"number of critical cells\" would bridge spectral geometry and combinatorial topology.\n\n---",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f06689b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:30:17.044621+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Summary and Priorities",
+    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Spectral Morse | Medium | High | Inner products on chain groups |\n| 2. Verified Morse Reduction | Medium-High | Very High | Simplicial complex formalization |\n| 3. Witten Deformation | High | High | Real analysis, spectral theory |\n| 4. Persistent Homology | High | Very High | Direction 2, filtration machinery |\n| 5. Arithmetic Morse | Medium | Medium | Order complex construction |\n\n**Recommended execution order:** Direction 2 → Direction 4 → Direction 1 → Direction 5 → Direction 3.\n\nDirection 2 (verified Morse reduction) is the highest priority because it provides the concrete algorithmic foundation on which all other directions build. Direction 4 (persistent homology) is the most impa",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f06689b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:30:17.080367+00:00"
   }
 ]
