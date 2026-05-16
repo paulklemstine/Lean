@@ -324,6 +324,23 @@
     "timestamp": "2026-05-15T07:06:08.019179+00:00"
   },
   {
+    "id": "fd_0202",
+    "title": "Logarithmic bridge",
+    "description": ": The transform `W = -log P` converts to tropical geometry.",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5906278a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-15T07:06:08.035548+00:00"
+  },
+  {
     "id": "fd_0205",
     "title": "Ramanujan-type bounds",
     "description": ": optimal spectral bounds would make Berggren lattices provably good for derandomization.",
@@ -386,20 +403,6 @@
     "source_exp_id": "a2e39b14",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
-  },
-  {
-    "id": "fd_0219",
-    "title": "Finite-dimensional spectral theorem",
-    "description": ": Eigenvalue decomposition for real symmetric matrices on `Fin n`.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9093673a",
-    "consumed_by_exp_id": "3392003d",
-    "timestamp": "2026-05-15T20:42:44.426054+00:00"
   },
   {
     "id": "fd_0232",
@@ -674,10 +677,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3fc0fc4e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92317e70",
     "timestamp": "2026-05-16T14:39:14.454757+00:00"
   },
   {
@@ -778,6 +781,48 @@
     "source_exp_id": "3ef884fe",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T16:52:28.952192+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Direction 2",
+    "description": "(Strong DPI) — highest short-term impact, most likely to succeed",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3392003d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:56:13.942252+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Direction 1",
+    "description": "(Sidon sets) — natural generalization, moderate difficulty",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3392003d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:56:13.958310+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Direction 4",
+    "description": "(Higher-rank) — most ambitious, requires substantial infrastructure",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3392003d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:56:13.974818+00:00"
   },
   {
     "id": "fd_0113",
@@ -1533,6 +1578,23 @@
     "source_exp_id": "0d4e55a6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T14:52:12.487513+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "2. Integrate Distributivity via Knuth–Bendix Completion",
+    "description": "**Hypothesis:** The full equational theory of `(ℝ, min, +)` includes distributivity `a + min(b, c) = min(a+b, a+c)`. A completion-based approach can extend the AC normalizer to handle this identity.\n\n**Proof Strategy:**\n- Define oriented rewrite rules for distributivity (e.g., always distribute `+` over `min`).\n- Prove termination using a suitable measure (e.g., number of `add`-above-`min` patterns).\n- Prove local confluence by analyzing critical pairs between AC rules and distributivity.\n- The canonical form after completion would be a \"sum of minima\" normal form, analogous to DNF in Boolean logic.\n\n**Cross-Domain Connections:** This connects to Gröbner basis theory for commutative algebra, where completion yields canonical polynomial representatives. In the tropical setting, the analogou",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "0d4e55a6",
+    "consumed_by_exp_id": "f60e599f",
+    "timestamp": "2026-05-16T14:52:12.507486+00:00"
   },
   {
     "id": "fd_0248",
