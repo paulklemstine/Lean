@@ -642,38 +642,6 @@
     "timestamp": "2026-05-15T20:38:18.916506+00:00"
   },
   {
-    "id": "fd_0245",
-    "title": "Prove a tropical functional equation",
-    "description": ": Under palindromic weight symmetry, D_w(s) and D_w(-s) are related by a simple transformation.\n\n### Proof Strategy\n- The tropical Dirichlet series is a piecewise-linear function of s, with breakpoints at s_* = (w(m) - w(n))/(log n - log m).\n- The \"zeros\" (width-collapse loci) are intervals of s where all terms w(n) + s·log n are equal — which occurs only at isolated points for generic w.\n- The palindromic symmetry w(n) = -w(N+1-n) implies that the set of breakpoints is symmetric about s = 0.\n- The tropical functional equation follows from the substitution n ↔ N+1-n.\n\n### Cross-Domain Impact\n- **Number theory**: First formally verified tropical zeta function.\n- **Tropical geometry**: The tropical curve defined by Z(s, t) = 0 is a tropical analogue of the Riemann surface.\n- **Computational ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "cf94957b",
-    "consumed_by_exp_id": "3c13f65f",
-    "timestamp": "2026-05-15T20:38:19.025936+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Connect to zero spacing",
-    "description": ": Compare the tropical spectral width distribution with the spacings of Riemann zeta zeros.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf94957b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:38:19.075691+00:00"
-  },
-  {
     "id": "fd_0219",
     "title": "Finite-dimensional spectral theorem",
     "description": ": Eigenvalue decomposition for real symmetric matrices on `Fin n`.",
@@ -686,20 +654,6 @@
     "source_exp_id": "9093673a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T20:42:44.426054+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "Validate",
-    "description": "with computational experiments in Python (counterexample search, performance benchmarks).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "238a8453",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T21:00:44.689090+00:00"
   },
   {
     "id": "fd_0234",
@@ -742,10 +696,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ed53a6b6",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab93ccb9",
     "timestamp": "2026-05-15T21:34:31.382708+00:00"
   },
   {
@@ -807,36 +761,6 @@
     "timestamp": "2026-05-15T22:01:06.662655+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Cycle-mean explorer:",
-    "description": "Enumerate cycles and display their means, highlighting critical cycles.\n\n### Cross-Domain Collaborations",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bd33180",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:12:11.186389+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Algebraic geometry:",
-    "description": "Relate to tropical curves and divisors.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6bd33180",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:12:11.220894+00:00"
-  },
-  {
     "id": "fd_0231",
     "title": "Document",
     "description": "with module-level docstrings and cross-references.",
@@ -867,34 +791,6 @@
     "timestamp": "2026-05-16T00:01:36.121253+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Iterates",
-    "description": "between formalization and informal proof discovery.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1185fa15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:05.384135+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Medium-term",
-    "description": "(1 month): Closure tensorization and automata duality",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fb63810b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:51:28.222557+00:00"
-  },
-  {
     "id": "fd_0243",
     "title": "Long-term",
     "description": "(3 months): Logical product semantics and full tropical thermodynamics",
@@ -908,22 +804,6 @@
     "source_exp_id": "fb63810b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T00:51:28.233976+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "Visionary",
-    "description": "(6+ months): Tropical proof complexity lower bounds and connections to P vs NP barriers",
-    "domains": [
-      "Tropical",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fb63810b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:51:28.244273+00:00"
   },
   {
     "id": "fd_0235",
@@ -970,46 +850,80 @@
     "timestamp": "2026-05-16T01:33:06.166935+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "Direction 2 (Susceptibility)",
-    "description": "— concrete and provable, would add quantitative depth to the phase-transition picture",
+    "id": "fd_0243",
+    "title": "Log-sum inequality",
+    "description": ": I(μ, W_t) ≤ t·I(μ, W₁) + (1-t)·I(μ, W₂). This is the key step requiring formalization of the log-sum inequality.\n4. Combine: R(t·D₁+(1-t)·D₂) ≤ I(μ, W_t) ≤ t·I(μ,W₁) + (1-t)·I(μ,W₂).\n5. Take infimum to get ≤ t·R(D₁) + (1-t)·R(D₂).\n\n### Cross-Domain Connection\nConvexity of R(D) is equivalent to concavity of the Legendre-Fenchel dual, which connects to thermodynamic free energy. The log-sum inequality underlies the data processing inequality and is fundamental to statistical learning theory.\n\n---\n\n## Direction 3: Existence of Rate-Distortion Minimizers via Compactness\n\n### Precise Statement\n\nFor finite types α, β and a feasible distortion level D, the infimum in the rate-distortion function is attained: there exists a channel W* achieving I(μ, W*) = R(D).\n\n### Proposed Lean 4 Type Signatur",
     "domains": [
-      "Bridges"
+      "Bridges",
+      "Algebra",
+      "MachineLearning"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "70170a66",
+    "source_exp_id": "03df72f3",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:33:06.176991+00:00"
+    "timestamp": "2026-05-16T01:35:37.683656+00:00"
   },
   {
-    "id": "fd_0239",
-    "title": "Direction 1 (Deep networks)",
-    "description": "— most practically relevant, extends applicability to real architectures",
+    "id": "fd_0246",
+    "title": "Show mutual information is lower semicontinuous",
+    "description": ": On the compact feasible set, a lower semicontinuous function attains its infimum.\n4. This requires formalizing compactness of the probability simplex in Lean, which may need to build on Mathlib's `isCompact_Icc` and product topology results.\n\n### Cross-Domain Connection\nThe compactness argument connects to variational calculus, Prokhorov's theorem in probability, and Γ-convergence in the calculus of variations. In machine learning, existence of optimal codebooks underlies the theory of vector quantization.\n\n---\n\n## Direction 4: Categorical Adjunction Between Distortion Systems and Lawvere Spaces\n\n### Precise Statement\n\nDefine a category **FinDist** whose objects are finite distortion systems (Ω, d, μ) and morphisms are distortion-nonincreasing maps. Define a category **Law** of Lawvere m",
     "domains": [
-      "Bridges"
+      "Bridges",
+      "MachineLearning"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "70170a66",
+    "source_exp_id": "03df72f3",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:33:06.186458+00:00"
+    "timestamp": "2026-05-16T01:35:37.715477+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Direction 4 (Continuous flow)",
-    "description": "— important for connecting to optimization theory, but requires analysis not yet in Mathlib",
+    "id": "fd_0248",
+    "title": "Strong duality",
+    "description": ": Use the supporting hyperplane theorem for convex functions to show the supremum is attained. For finite alphabets, this reduces to a finite-dimensional convex optimization duality.",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "70170a66",
+    "source_exp_id": "03df72f3",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:33:06.208362+00:00"
+    "timestamp": "2026-05-16T01:35:37.736184+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Piecewise-linearity",
+    "description": ": The Lagrangian dual L(s) is the infimum of affine functions in s (one for each channel), hence concave piecewise-linear. The Legendre transform of a piecewise-linear function is piecewise-linear.\n\n### Cross-Domain Connection\nTropical Legendre duality connects rate-distortion theory to:\n- **Tropical geometry**: R(D) as a tropical hypersurface\n- **Thermodynamics**: Free energy / entropy as Legendre duals\n- **Economics**: Supply-demand equilibrium via dual prices\n- **Optimal transport**: Kantorovich duality for the Wasserstein distance\n\n---\n\n## Team Directive\n\nCreate a team to pursue these directions with the following roles:",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "03df72f3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T01:35:37.745545+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Tropical Geometry",
+    "description": ": Prove the Legendre duality (Direction 5).",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "03df72f3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T01:35:37.787305+00:00"
   },
   {
     "id": "seed_052",
@@ -1071,10 +985,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "67f5da38",
     "timestamp": "2026-05-14T16:17:39.952876+00:00"
   },
   {
@@ -1134,10 +1048,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "b1cc4321",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.855472+00:00"
   },
   {
@@ -1543,22 +1457,6 @@
     "timestamp": "2026-05-15T22:33:29.237233+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "3. Closure-Capacity Transfer Principle",
-    "description": "**Hypothesis:** The bottleneck set of a finite min-capacity system corresponds to the fixed-point support of an associated closure operator, and capacity-improving moves correspond to raising the minimal fixed-point value.\n\n**Proof Strategy:**\n- Define a closure operator on `Finset α` by `cl(S) = {x ∈ s | c x ≤ s.inf' hs c + k}` for parameter k.\n- Show that `bottleneckSet` is `cl(∅)` for k = 0.\n- Prove that after a raiseOn upgrade, the new closure contracts: `cl_new(∅) ⊂ cl_old(∅)` when the upgrade is exactly on the bottleneck.\n- Connect to `certified_reconstruction_from_closure_capacity` by showing capacity reconstruction from closure data.\n\n**Long-Term Vision:** A categorical framework where capacity is a natural transformation between capacity functors, and upgrades are morphisms in the",
-    "domains": [
-      "EML",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "476ffddd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:00:36.582536+00:00"
-  },
-  {
     "id": "fd_0243",
     "title": "4. Budget-Constrained Optimal Intervention (Multi-Round)",
     "description": "**Hypothesis:** Given a total upgrade budget of `B` units and a system of `n` components, the greedy strategy of repeatedly upgrading all current bottleneck elements is optimal for maximizing minimum throughput after `B` rounds.\n\n**Proof Strategy:**\n- Define an iterated upgrade process: `iterate_upgrade s c k` applies `raiseOn (bottleneckSet ...)` for `k` rounds.\n- Prove monotonicity: each round strictly increases the minimum (under gap conditions).\n- Prove termination: after at most `max(c) - min(c)` rounds, all capacities are equal.\n- Prove optimality by exchange argument: any deviation from bottleneck-first ordering can be matched or beaten.\n\n**Lean Target:**\n```\ndef iterateUpgrade (s : Finset α) (c : α → ℕ) (hs : s.Nonempty) : ℕ → (α → ℕ)\n  | 0 => c\n  | k + 1 => raiseOn (bottleneckSet ",
@@ -1575,35 +1473,6 @@
     "timestamp": "2026-05-15T23:00:36.595798+00:00"
   },
   {
-    "id": "fd_0244",
-    "title": "5. Latency Dual Theorem over ℚ",
-    "description": "**Hypothesis:** If capacity `c(x)` represents throughput rate and latency is `1/c(x)`, then upgrading the bottleneck by one unit yields a certified worst-case latency reduction of `1/(m(m+1))` where `m` is the old minimum capacity.\n\n**Proof Strategy:**\n- Work over `ℚ` or `ℝ` with positive capacity constraints.\n- Define latency as `sup' (fun x => 1 / c x)` (dual of inf' for capacity).\n- Use the capacity improvement theorem: new min capacity = m + 1.\n- Compute: old max latency = 1/m, new max latency = 1/(m+1), improvement = 1/(m(m+1)).\n\n**Lean Target:**\n```\ntheorem latency_improvement_from_bottleneck_upgrade\n    (s : Finset α) (c : α → ℚ) (hs : s.Nonempty)\n    (hpos : ∀ x ∈ s, 0 < c x)\n    (hgap : ...) :\n    s.sup' hs (fun x => 1 / c x) - s.sup' hs (fun x => 1 / c' x) =\n      1 / (m * (m + 1",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "476ffddd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:00:36.609932+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "6. Distributed Bottleneck Detection via Nerve Complexes",
-    "description": "**Hypothesis:** In distributed systems where bottleneck detection requires coordination across overlapping monitoring regions, the relevant critical set is encoded by the nerve of a covering, and upgrades must respect the nerve structure.\n\n**Proof Strategy:**\n- Model monitoring regions as a family of `Finset`s covering `s`.\n- Define the nerve complex: simplices correspond to non-empty intersections.\n- Show that the bottleneck set decomposes along the nerve.\n- Prove that distributed upgrades (each region upgrades its local bottleneck) achieve global optimality when the nerve is acyclic.\n\n**Connection to Catalog:** `certified_generalization_with_nerve_depth` provides depth bounds for nerve complexes. The bottleneck depth (number of nerve simplices containing a bottleneck element) bounds the ",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "476ffddd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:00:36.623817+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "7. Parametric Capacity Sensitivity Analysis",
     "description": "**Hypothesis:** The system throughput `s.inf' hs c` is a piecewise-linear function of a perturbation parameter `ε`, with breakpoints at values where the bottleneck set changes.\n\n**Proof Strategy:**\n- Define parameterized capacity: `c_ε(x) = c(x) + ε * d(x)` for direction `d`.\n- Show that for small ε, the bottleneck set is stable.\n- Prove that throughput is linear in ε within each stability interval.\n- Characterize breakpoints: ε values where `bottleneckSet` gains or loses elements.\n\n**Application:** Sensitivity analysis for infrastructure planning — understanding how robust a bottleneck upgrade is to uncertainty in capacity measurements.\n\n---",
@@ -1616,20 +1485,6 @@
     "source_exp_id": "476ffddd",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:00:36.637157+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "8. Certified Intervention Sequencing for Multi-Objective Systems",
-    "description": "**Hypothesis:** When multiple objectives (throughput, reliability, cost) each define their own bottleneck set, the Pareto-optimal intervention strategy can be characterized by the intersection structure of these bottleneck sets.\n\n**Proof Strategy:**\n- Define multi-objective capacity: `c : α → ℕ × ℕ × ℕ` (throughput, reliability, cost).\n- Each objective has its own bottleneck set.\n- Prove: if bottleneck sets have non-empty intersection, upgrading the intersection improves all objectives simultaneously.\n- Characterize Pareto frontiers when bottleneck sets are disjoint.\n\n**Application:** Infrastructure planning under competing objectives — e.g., a rail system that must simultaneously maximize throughput, minimize failure rate, and stay within budget.\n\n---",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "476ffddd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:00:36.649982+00:00"
   },
   {
     "id": "fd_0235",
@@ -1682,20 +1537,6 @@
     "timestamp": "2026-05-15T23:09:09.398477+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Phase 1 (Immediate, 1–2 months)",
-    "description": "- Direction 2: Circuit PIT soundness (builds directly on existing code)\n- Direction 3: Fingerprinting soundness (uses existing univariate root bound)\n- Direction 7: Inverse verification (trivial extension of Freivalds)",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.456785+00:00"
-  },
-  {
     "id": "fd_0243",
     "title": "Phase 2 (Medium-term, 3–6 months)",
     "description": "- Direction 1: Reed–Muller distance (requires Hamming weight formalization)\n- Direction 6: Combinatorial Nullstellensatz (independent but uses similar techniques)",
@@ -1708,35 +1549,6 @@
     "source_exp_id": "94c243f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:09:09.468128+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "Phase 3 (Long-term, 6–12 months)",
-    "description": "- Direction 4: Low-degree testing (requires oracle/query model formalization)\n- Direction 5: Derandomization hypotheses (requires complexity class formalization)",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.479054+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Cross-cutting Infrastructure Needed",
-    "description": "- Formalized probability distributions over finite types\n- Randomized algorithm correctness framework\n- Communication complexity model\n- Algebraic circuit evaluation semantics (partially exists)\n\n---",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.487662+00:00"
   },
   {
     "id": "fd_0246",
@@ -1841,20 +1653,6 @@
     "timestamp": "2026-05-15T23:30:41.692385+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "3. No-Go Criterion: Invariant Growth Rate Obstruction",
-    "description": "**Hypothesis:** If theory `T` has invariant growth rate `Θ(f(n))` (meaning the invariant achieves values proportional to `f(n)` on carrier elements of \"size\" `n`) and theory `U` has growth rate `Θ(g(n))`, then an adjunction `F ⊣ G` with `F : T → U` requires `f` and `g` to be asymptotically comparable. Specifically, if `g` grows superlinearly faster than `f`, no morphism `G : U → T` can satisfy both `G.monotone_inv` and the counit inequality.\n\n**Proof Strategy:**\n- Formalize invariant growth rate as a property of a theory restricted to elements below size `n`\n- Prove that the Height-Cell impossibility generalizes: any pair with `g(n)/f(n) → ∞` admits no adjunction\n- Construct restricted adjunctions on sub-theories where growth rates match\n- Apply to classify all adjunction-compatible pairs ",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4f490452",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:33.370635+00:00"
-  },
-  {
     "id": "fd_0243",
     "title": "4. Concrete Adjunction: VC Theory ⊣ Covering Number Theory",
     "description": "**Hypothesis:** There exists a natural adjunction between a theory of VC dimension and a theory of covering numbers, where:\n- `F` maps a hypothesis class to its covering number spectrum\n- `G` maps a covering number bound to the \"richest\" hypothesis class compatible with that bound\n\n**Proof Strategy:**\n- Define `VCTheory : ResearchTheory` with carrier = finite hypothesis classes and Inv = VC dimension\n- Define `CoveringTheory : ResearchTheory` with carrier = covering number functions and Inv = log of covering number at scale 1\n- The Sauer-Shelah lemma provides the left adjoint's monotonicity: `VC(H) ≤ log₂(covering(H))`\n- The right adjoint is the maximal class with at most `n` covering number\n- Prove the Galois biconditional using classical results in learning theory\n\n**Cross-Domain Connect",
@@ -1871,52 +1669,5 @@
     "source_exp_id": "4f490452",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T00:04:33.382691+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "5. Monad/Comonad Structure from Adjunction Composition",
-    "description": "**Hypothesis:** The composition `G ∘ F` of an adjunction `F ⊣ G` defines a monad on the source theory, and `F ∘ G` defines a comonad on the target theory. The monad's multiplication `μ` corresponds to the idempotence of the round-trip (which we already proved: `Inv(G(F(G(F(x))))) = Inv(G(F(x)))`), and the comonad's comultiplication encodes \"refinement of approximation.\"\n\n**Proof Strategy:**\n- Define `TheoryMonad` as the triple `(G ∘ F, unit, μ)` where `μ` is given by the idempotence\n- Prove the monad laws using the unit/counit equations\n- Show that the Kleisli category of this monad describes \"theory elements enriched with translation certificates\"\n- Connect to iterative theory compression: applying the monad repeatedly stabilizes, corresponding to the fixed point of an abstract interpreta",
-    "domains": [
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4f490452",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:33.396922+00:00"
-  },
-  {
-    "id": "fd_0238",
-    "title": "Precise Theorem Target",
-    "description": "```\ntheorem min_weight_pareto_iff_min_weight_transversal\n  {α ι : Type*} [DecidableEq α] [Fintype α] [Fintype ι]\n  (B : ι → Finset α) (w : α → ℕ) (S : Finset α) :\n  IsMinCostParetoOptimal B w S ↔ IsMinWeightTransversal B w S\n```\n\nwhere `IsMinCostParetoOptimal B w S` means `S` is a hitting set of minimum total weight $\\sum_{a \\in S} w(a)$, and `IsMinWeightTransversal` is the standard combinatorial notion.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a63dabd4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:53.413949+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "Research Program Summary",
-    "description": "| Direction | Core Question | Key Tool | Status |\n|-----------|--------------|----------|--------|\n| Weighted transversals | Cost-optimal Pareto plans | Weighted set cover | Ready for formalization |\n| Stochastic bottlenecks | Probabilistic certificates | FKG inequality | Requires probability theory |\n| Tropical sequencing | Order-dependent costs | Min-plus algebra | Requires tropical formalization |\n| Access structure duality | Cryptographic connections | Blocker theory | Requires matroid theory |\n| Complexity equivalence | Enumeration hardness | Hypergraph dualization | Foundational open problem |\n\nEach direction is independently valuable and connects the intervention theory to a distinct mathematical community. Together, they constitute a research program that could establish **certifie",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a63dabd4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:53.445820+00:00"
   }
 ]
