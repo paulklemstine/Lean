@@ -440,20 +440,6 @@
     "timestamp": "2026-05-16T19:15:45.144476+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Extremal witness",
-    "description": ": The witness is\n   ```\n   f(x₁,...,xₙ) = ∏_{i=1}^{a} ∏_{c ∈ 𝔽_q \\ {0}} (xᵢ − c) · ∏_{j=1}^{b} (x_{a+1} − cⱼ)\n   ```\n   This vanishes on a precisely computable union of coordinate subspaces.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "fdd38e71",
-    "timestamp": "2026-05-16T19:15:45.160819+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "Key challenge",
     "description": ": The fibers are no longer parallel hyperplanes in a single coordinate; the zero set has a tensor-product structure across multiple coordinates.\n\n### Formalization Target\n\n```lean\ntheorem generalized_reedMuller_min_distance\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d a b : ℕ)\n    (h_decomp : d = a * (Fintype.card 𝔽 - 1) + b)\n    (hb : b < Fintype.card 𝔽 - 1)\n    (ha : a < n) :\n    reedMullerMinWeight 𝔽 n d = (Fintype.card 𝔽 - b) * (Fintype.card 𝔽) ^ (n - 1 - a)\n```\n\n### Cross-Domain Connections\n- **Coding theory**: Completes the parameter analysis for all generalized Reed–Muller codes\n- **Algebraic geometry**: Classification of extremal hypersurfaces in finite affine space\n- **Complexity theory**: Tight soundness bounds for algebraic PCPs with arbitrary degree\n\n### Difficulty: ★★★★☆\n\n--",
@@ -674,6 +660,36 @@
     "source_exp_id": "3e135d69",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:05:47.424096+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Assume for contradiction",
+    "description": "that |E| < C(n,q) (the dimension of the degree-< n(q−1)/n polynomial space, or a simpler bound).\n2. By our vanishing theorem, there exists a nonzero polynomial f of controlled degree vanishing on all of E.\n3. The Kakeya property means E contains a line in every direction. A polynomial vanishing on a line of q points must have degree ≥ q in that direction (over 𝔽_q).\n4. But the degree bound from step 2 contradicts the degree requirement from step 3, giving the lower bound on |E|.\n\nThe key innovation is that step 2 is now *already formalized* — the vanishing polynomial theorem provides the witness directly.\n\n### Cross-Domain Significance\n\nThe finite-field Kakeya conjecture (now theorem) was a landmark application of the polynomial method. Formalizing it would:\n- Validate the polynomial metho",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fdd38e71",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:23:49.566276+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Cross-reference",
+    "description": "with the existing catalog (circuit complexity, Freivalds, commutative algebra).",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fdd38e71",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:23:49.625623+00:00"
   },
   {
     "id": "fd_0113",
@@ -907,10 +923,10 @@
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cb03e742",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f4ddb26",
     "timestamp": "2026-05-15T09:04:34.968723+00:00"
   },
   {
@@ -1522,36 +1538,6 @@
     "timestamp": "2026-05-16T22:52:54.320928+00:00"
   },
   {
-    "id": "fd_0261",
-    "title": "Cross-cutting Infrastructure Needs",
-    "description": "- Formalized Perron–Frobenius theory for stochastic matrices in Lean/Mathlib\n- Tropical matrix powers and their convergence properties\n- Large-deviation principles for finite Markov chains\n- Cheeger conductance and spectral gap inequalities\n\n---",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "99efecb5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:52:54.358251+00:00"
-  },
-  {
-    "id": "fd_0262",
-    "title": "Broader Vision",
-    "description": "These five directions collectively build toward a unified **tropical probability theory** where:\n1. Classical probabilistic inequalities have tropical counterparts\n2. Tropical spectral invariants acquire operational meaning as information-theoretic quantities\n3. Algorithmic certification of dynamical properties proceeds via tropical graph optimization\n4. The formal verification ecosystem provides machine-checked guarantees for all results\n\nThis program connects probability, combinatorial optimization, information theory, and formal mathematics into a single coherent framework.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "99efecb5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:52:54.376362+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "1. Extended Tropical Residuation on `WithBot ℝ`",
     "description": "**Objective:** Formalize tropical residuation over the complete tropical semiring `ℝ ∪ {−∞}`, modeled as `WithBot ℝ` in Lean/Mathlib.\n\n**Hypothesis:** The residuation theorems extend to `WithBot ℝ` with explicit handling of the `−∞` cases:\n- `sup(∅) = −∞` is naturally handled by `Finset.sup` with `OrderBot`.\n- The residual `c − a` when `c = −∞` should yield `−∞`.\n- When `a = −∞`, the translation `x + (−∞) = −∞` for all `x`, and the residual degenerates.\n\n**Proof Strategy:**\n1. Use `WithBot ℝ` which already has `OrderBot` and `SemilatticeSup` instances in Mathlib.\n2. Define tropical addition as `WithBot.map₂ (· + ·)` or via the existing `Tropical` type in Mathlib.\n3. Prove residuation with case analysis on `⊥` vs. `some x`.\n4. The matrix-level theorem should follow by the same pattern.\n\n**K",
@@ -1622,41 +1608,6 @@
     "source_exp_id": "9b1f62ec",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T23:08:10.910288+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "6. Tropical Galois Connections and Fixed-Point Theory",
-    "description": "**Objective:** Develop the fixed-point theory of tropical residuated maps. Prove tropical analogues of the Knaster-Tarski theorem and connect to iterative algorithms in dynamic programming.\n\n**Hypothesis:** If `f : ℝⁿ → ℝⁿ` is a tropical affine map (i.e., `f(x) = W ⊗ x` in max-plus notation), then:\n- `f` has a greatest fixed point computable as the infimum of the descending chain `f^k(⊤)`.\n- The residual `f♯` can accelerate convergence by providing tighter bounds.\n- The cycle time vector (tropical eigenvalue) is computable from the critical graph.\n\n**Proof Strategy:**\n1. Use Knaster-Tarski for complete lattices (available in Mathlib via `OrderHom.lfp`).\n2. Show tropical affine maps are order-preserving (from `tropicalMatMul_monotone`).\n3. Connect cycle time computation to strongly connecte",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b1f62ec",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:08:10.934945+00:00"
-  },
-  {
-    "id": "fd_0262",
-    "title": "7. Multi-Objective Tropical Optimization",
-    "description": "**Objective:** Extend tropical residuation to handle multiple output thresholds simultaneously, formalizing Pareto-optimal input bounds.\n\n**Hypothesis:** For a tropical network with output dimension `p`, the set of inputs satisfying `F(x) ≤ z` for a fixed `z` is a downward-closed set in `ℝᵐ`, and the backward residual gives its unique maximal element (componentwise).\n\n**Proof Strategy:**\n1. Prove that `{x | ∀ j, F(x)_j ≤ z_j}` is a principal downward ideal in `(ℝᵐ, ≤)`.\n2. The generator of this ideal is exactly `tropicalBackward W z`.\n3. For multi-layer networks, this extends by `tropical_two_layer_composition_residuation`.\n\n**Cross-Domain Impact:** Provides foundations for multi-objective robust optimization in tropical settings, with applications to multi-criteria scheduling and multi-ou",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b1f62ec",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:08:10.960000+00:00"
   },
   {
     "id": "fd_0254",
