@@ -96,22 +96,6 @@
     "timestamp": "2026-05-14T16:03:53.819748+00:00"
   },
   {
-    "id": "seed_024",
-    "title": "Grokking as Tropical Phase Transition in Neural Loss Landscapes",
-    "description": "Prove that the grokking phenomenon in neural networks is a phase transition in the tropical geometry of the loss landscape, where the min-plus distance to the decision boundary undergoes a sudden collapse. Construct a tropical order parameter that predicts grokking onset, and show that delayed generalization corresponds to the tropical geodesic crossing a corner locus.",
-    "domains": [
-      "MachineLearning",
-      "Tropical",
-      "Physics"
-    ],
-    "priority_score": 0.88,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "70170a66",
-    "timestamp": "2026-05-14T16:03:53.823866+00:00"
-  },
-  {
     "id": "seed_014",
     "title": "Homomorphic Encryption over Tropical Semirings",
     "description": "Construct a fully homomorphic encryption scheme over min-plus arithmetic where addition and multiplication of ciphertexts correspond to tropical operations on plaintexts. Prove correctness and security against chosen-plaintext attacks, showing that the idempotent property of tropical addition enables bootstrapping without the noise growth that plagues classical FHE.",
@@ -942,6 +926,92 @@
     "timestamp": "2026-05-16T00:51:28.244273+00:00"
   },
   {
+    "id": "fd_0235",
+    "title": "Tropical smooth critical points",
+    "description": ": where ∇L = 0 within a cell (standard critical points of affine functions, hence only global min/max within the cell)",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "70170a66",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T01:33:06.143602+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Tropical corner critical points",
+    "description": ": points on the corner locus where the gradients of adjacent cells point in opposing directions (no descent direction exists without crossing the locus)\n\nFurthermore, the Morse index of a tropical corner critical point equals the number of pairs of adjacent cells whose gradient projections along the corner locus have opposite sign.\n\nA tropical Morse inequality bounds the number of corner critical points by the topology of the tropical loss landscape (measured by tropical homology).\n\n### Why It Matters\n\nTropical Morse theory would provide a complete topological characterization of the training landscape, including:\n- How many grokking-type transitions a trajectory must undergo\n- Whether alternative paths with fewer transitions exist\n- The relationship between model complexity and the number",
+    "domains": [
+      "Tropical",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "70170a66",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T01:33:06.155789+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Direction 3 (Unification)",
+    "description": "— highest conceptual impact, builds directly on existing theorems, likely formalizable in current framework",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "70170a66",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T01:33:06.166935+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Direction 2 (Susceptibility)",
+    "description": "— concrete and provable, would add quantitative depth to the phase-transition picture",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "70170a66",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T01:33:06.176991+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Direction 1 (Deep networks)",
+    "description": "— most practically relevant, extends applicability to real architectures",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "70170a66",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T01:33:06.186458+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Direction 4 (Continuous flow)",
+    "description": "— important for connecting to optimization theory, but requires analysis not yet in Mathlib",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "70170a66",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T01:33:06.208362+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1212,6 +1282,21 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Summary: Research Roadmap",
+    "description": "| Priority | Direction | Key Theorem | Dependencies |\n|----------|-----------|-------------|--------------|\n| 1 | Finite Products | `finProd_universal` | Binary product (done) |\n| 2 | Termination | `product_reduction_terminates` | Product + well-founded induction |\n| 3 | Pressure Bounds | `pressure_product_bound` | Product + real analysis |\n| 4 | Automata Sync | `product_word_bound` | Product + combinatorics |\n| 5 | Security Comp | `composed_security_bound` | Dual (min) product |\n\nEach direction builds directly on the categorical product infrastructure established in this work. The key insight is that invariant-bearing systems form a category with enough structure (products, identity, composition, associativity) to support systematic compositional reasoning across thermodynamics, automata ",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "a015a16c",
+    "consumed_by_exp_id": "2b33dcea",
+    "timestamp": "2026-05-15T08:01:09.762727+00:00"
   },
   {
     "id": "fd_0193",

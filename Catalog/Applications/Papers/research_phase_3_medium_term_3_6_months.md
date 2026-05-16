@@ -1,247 +1,263 @@
-# Finite Rate-Distortion Theory Meets Categorical Voice-Leading Geometry: A Formally Verified Bridge
+# Finite Rate-Distortion Theory Meets Voice-Leading Geometry: A Formally Verified Bridge
 
 ## Abstract
 
-We develop a formally verified theory at the intersection of finite rate-distortion theory, categorical voice-leading geometry, and tropical optimization. Working over finite alphabets with explicit probability distributions and stochastic channels, we prove: (1) existence of rate-distortion minimizers for any feasible distortion level, (2) monotonicity (antitonicity) and convexity of the feasible distortion set, (3) a triangle inequality for voice-leading cost under permutation composition, making voice-leadings a Lawvere metric space, and (4) a grand bridge theorem establishing that voice-leading distortion induces a well-defined rate-distortion problem with guaranteed minimizers. All theorems are formalized in Lean 4 with Mathlib, producing sorry-free, machine-verified proofs. We implement Blahut-Arimoto computation and demonstrate the theory on concrete musical examples.
+We establish a formally verified mathematical bridge between finite rate-distortion theory and voice-leading geometry. Working in the Lean 4 proof assistant with Mathlib, we:
+(1) define and prove structural properties of the finite rate-distortion function R(D) — including monotonicity, Lagrangian dual bounds, and the tropical envelope structure;
+(2) prove that the space of equal-cardinality voicings equipped with optimal voice-leading cost forms a Lawvere metric space (pseudometric satisfying the triangle inequality);
+(3) prove a bridge theorem showing that voice-leading distortion instantiates a valid rate-distortion problem with all associated structural guarantees.
+All results are machine-verified with no unproven assumptions beyond standard Lean axioms (propext, Choice, Quot.sound). We provide Python implementations of the Blahut-Arimoto algorithm specialized to voice-leading distortion and demonstrate computational examples.
+
+**Keywords:** rate-distortion theory, voice-leading, optimal transport, tropical geometry, formal verification, Lawvere metric spaces
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Rate-distortion theory, introduced by Shannon (1959), characterizes the fundamental tradeoff between data fidelity and compression rate. For a source X with distribution μ and a distortion measure d, the rate-distortion function R(D) = inf{I(X;Y) : E[d(X,Y)] ≤ D} gives the minimum rate at which the source can be described with expected distortion at most D.
+Rate-distortion theory, initiated by Shannon (1959), characterizes the fundamental limits of lossy data compression. For a source random variable X with distribution μ and a distortion measure d, the rate-distortion function
 
-Voice-leading theory, formalized by Tymoczko (2006, 2011), studies the geometry of chord transitions. Given two chords (multisets of pitch classes), a voice-leading is an assignment of each note in the first chord to a note in the second. The cost is the total displacement, and the optimal voice-leading minimizes this cost.
+$$R(D) = \inf\{I(X;\hat{X}) : \mathbb{E}[d(X,\hat{X})] \leq D\}$$
 
-Lawvere metric spaces (Lawvere, 1973) provide a categorical framework for distance: a category enriched over ([0,∞], ≥, +), where the composition law d(x,z) ≤ d(x,y) + d(y,z) generalizes the triangle inequality.
+gives the minimum number of bits per symbol required to represent X with average distortion at most D.
 
-This paper proves that these three theories are compatible: voice-leading distance satisfies the Lawvere axioms, and voice-leading distortion induces a finite rate-distortion problem with guaranteed minimizers.
+Voice leading, in music theory, is the practice of connecting chords by moving individual voices (pitch components) minimally. The voice-leading cost between two equal-cardinality chords is the minimum total absolute pitch displacement over all bijective voice assignments — an optimal transport problem on the integer lattice.
+
+This paper establishes a formally verified connection: voice-leading cost is a valid distortion measure for rate-distortion theory, and the resulting R(D) function inherits monotonicity, Lagrangian duality, and tropical geometric structure.
 
 ### 1.2 Contributions
 
-1. **Finite Rate-Distortion Foundations**: Complete definitions of finite probability distributions, stochastic channels, mutual information, and rate-distortion functions in Lean 4, with formal proofs of:
-   - Existence of rate-distortion minimizers (Theorem 3.1)
-   - Antitonicity of R(D) on the feasible set (Theorem 3.2)
-   - Convexity of the feasible distortion set (Theorem 3.3)
+1. **Finite rate-distortion formalization** (§3): We define finite probability distributions, stochastic channels, mutual information, and the rate-distortion function in Lean 4. We prove:
+   - Monotonicity of R(D) on the feasible set
+   - Lagrangian dual lower bounds: R(D) ≥ L(s) - s·D for all s ≥ 0
+   - Linearity of expected distortion under channel mixing
+   - Existence of feasible distortion levels
 
-2. **Categorical Voice-Leading**: Formal definitions of voicings, voice-leadings, composition, and cost, with proofs of:
-   - Triangle inequality for voice-leading cost (Theorem 4.1)
-   - Triangle inequality for minimum voice-leading distance (Theorem 4.2)
-   - Lawvere metric space structure (Theorem 4.3)
+2. **Voice-leading metric space** (§4): We prove that optimal voice-leading cost satisfies:
+   - Non-negativity and identity of indiscernibles (zero self-distance)
+   - Symmetry
+   - Triangle inequality (composition of voice leadings)
+   This makes the space of n-voice chords a Lawvere pseudometric space.
 
-3. **Bridge Theorem**: Formal proof that voice-leading distortion induces a finite rate-distortion problem with existence of minimizers and antitonicity of the rate-distortion function (Theorem 5.1).
+3. **Bridge theorem** (§5): We show that voice-leading distortion instantiates the finite rate-distortion framework, inheriting all structural properties.
 
-4. **Computational Validation**: Blahut-Arimoto implementation and concrete R(D) curves for musical chord repertoires.
+4. **Algorithms and examples** (§6): We implement the Blahut-Arimoto algorithm for voice-leading R(D) computation and present numerical results for triad repertoires.
 
 ### 1.3 Related Work
 
-- Shannon (1959): Rate-distortion theory for discrete sources
-- Berger (1971): Rate-distortion theory textbook treatment
-- Tymoczko (2006, 2011): Geometry of musical chords
-- Lawvere (1973): Metric spaces as enriched categories
-- Litvinov et al. (2001): Idempotent/tropical mathematics and optimization
-- Blahut (1972), Arimoto (1972): Iterative algorithm for R(D) computation
+- **Rate-distortion theory**: Shannon (1959), Berger (1971), Blahut (1972), Arimoto (1972). Formal verification of information-theoretic results is sparse; Affeldt et al. (2020) formalized some basics in Coq.
+- **Voice-leading geometry**: Tymoczko (2006, 2011) established the geometric framework. Callender, Quinn, and Tymoczko (2008) identified voice-leading spaces with orbifolds.
+- **Optimal transport**: Villani (2003, 2009). The connection between voice-leading and transport was noted by Tymoczko and explored computationally.
+- **Tropical geometry in information theory**: The min-plus / tropical perspective on rate-distortion was developed by Litvinov, Maslov, and the idempotent analysis school.
 
-## 2. Definitions and Notation
+## 2. Preliminaries
 
-### 2.1 Finite Probability Distributions
+### 2.1 Notation
 
-**Definition 2.1** (FinProb). A finite probability distribution over a finite type α is a function μ : α → ℝ satisfying:
-- μ(x) ≥ 0 for all x
-- Σ_x μ(x) = 1
+- α, β: finite types (source and reproduction alphabets)
+- μ: FinProbDist α (source distribution)
+- W: Channel α β (stochastic channel, row-stochastic matrix)
+- d: α → β → ℝ (distortion function)
+- I(μ, W): mutual information
+- E_μ[d]: expected distortion
 
-### 2.2 Stochastic Channels
+### 2.2 Definitions in Lean 4
 
-**Definition 2.2** (Channel). A stochastic channel from α to β is a function K : α → β → ℝ satisfying:
-- K(x,y) ≥ 0 for all x, y
-- Σ_y K(x,y) = 1 for all x
-
-The joint distribution is p(x,y) = μ(x) · K(x,y), and the second marginal is p_Y(y) = Σ_x μ(x) · K(x,y).
-
-### 2.3 Expected Distortion and Mutual Information
-
-**Definition 2.3** (Expected Distortion).
-E[d(X,Y)] = Σ_{x,y} μ(x) · K(x,y) · d(x,y)
-
-**Definition 2.4** (Mutual Information).
-I(X;Y) = H(X) + H(Y) - H(X,Y)
-
-where H denotes Shannon entropy: H(p) = -Σ_i p_i log p_i, with the convention 0 log 0 = 0.
-
-### 2.4 Rate-Distortion Function
-
-**Definition 2.5** (Rate-Distortion Function).
-R(D) = inf { I(X;Y) : K is a channel, E[d(X,Y)] ≤ D }
-
-**Definition 2.6** (Feasibility). A distortion level D is *feasible* if there exists a channel K with E[d(X,Y)] ≤ D.
-
-### 2.5 Voice-Leading
-
-**Definition 2.7** (Voicing). A voicing of n notes is a function V : Fin(n) → ℤ.
-
-**Definition 2.8** (Voice-Leading). A voice-leading from V to W is a permutation σ of Fin(n). Its cost is:
-cost(σ) = Σ_i |V(i) - W(σ(i))|
-
-**Definition 2.9** (Voice-Leading Distance). The minimum voice-leading distance is:
-d_VL(V, W) = min_σ cost(σ)
-
-## 3. Finite Rate-Distortion Theorems
-
-### Theorem 3.1 (Existence of Minimizers)
-
-**Statement**: For finite types α, β with a source distribution μ and distortion d, if D is feasible, then there exists a channel K* that is a rate-distortion minimizer:
-- E[d(X,Y)] ≤ D under K*
-- I(X;Y) ≤ I(X;Y') for all feasible K'
-
-**Proof Sketch**: The space of channels α → β → ℝ satisfying the stochastic constraints (nonnegativity, row-sum-one) and the distortion constraint (E[d] ≤ D) is a closed, bounded subset of the finite-dimensional Euclidean space ℝ^(|α|×|β|). Hence it is compact. The mutual information, viewed as a function of the channel parameters, is continuous on this set (since all entropies are continuous functions of probabilities). By the extreme value theorem, the infimum is attained.
-
-The formal proof in Lean embeds the channel space as a function type α → β → ℝ, proves compactness of the feasible set using `IsCompact.of_isClosed_subset` applied to a product of intervals, proves continuity of mutual information using composition of continuous functions (including `Real.continuous_mul_log`), and applies `IsCompact.exists_isMinOn`.
-
-### Theorem 3.2 (Antitonicity)
-
-**Statement**: R(D) is antitone on the feasible set: if D₁ ≤ D₂ and D₁ is feasible, then R(D₂) ≤ R(D₁).
-
-**Proof Sketch**: The set of feasible channels at D₁ is a subset of those at D₂ (since the constraint E[d] ≤ D₁ ≤ D₂ is more restrictive). Hence the infimum over the larger set is at most the infimum over the smaller set. The formal proof uses `csInf_le_csInf` with a bounded-below argument showing mutual information values are bounded below by -(|α|·|β| + 1).
-
-### Theorem 3.3 (Convexity of Feasible Set)
-
-**Statement**: The feasible distortion set {D : ∃ K, E[d] ≤ D} is convex.
-
-**Proof Sketch**: Given channels K₁, K₂ feasible at D₁, D₂ respectively, the convex combination K_t = t·K₁ + (1-t)·K₂ is feasible at t·D₁ + (1-t)·D₂ by the affinity of expected distortion in the channel.
-
-## 4. Voice-Leading Geometry
-
-### Theorem 4.1 (Triangle Inequality for Voice-Leading Cost)
-
-**Statement**: For voicings V, W, U and voice-leadings f : V → W, g : W → U, the composed voice-leading f;g satisfies:
-cost(f;g) ≤ cost(f) + cost(g)
-
-**Proof**:
 ```
-cost(f;g) = Σ_i |V(i) - U(g(f(i)))|
-          ≤ Σ_i (|V(i) - W(f(i))| + |W(f(i)) - U(g(f(i)))|)    [by abs_sub_le]
-          = Σ_i |V(i) - W(f(i))| + Σ_i |W(f(i)) - U(g(f(i)))|
-          = cost(f) + Σ_j |W(j) - U(g(j))|                       [reindex j = f(i)]
-          = cost(f) + cost(g)
+structure FinProbDist (α : Type*) [Fintype α] where
+  prob : α → ℝ
+  prob_nonneg : ∀ a, 0 ≤ prob a
+  prob_sum : ∑ a, prob a = 1
+
+structure Channel (α β : Type*) [Fintype α] [Fintype β] where
+  cond : α → β → ℝ
+  cond_nonneg : ∀ a b, 0 ≤ cond a b
+  cond_sum : ∀ a, ∑ b, cond a b = 1
 ```
 
-The reindexing step uses `Equiv.sum_comp`, which states that Σ_i h(σ(i)) = Σ_i h(i) for any permutation σ.
+The joint distribution is `jointDist μ W a b := μ.prob a * W.cond a b`, and mutual information uses the KL divergence of the joint from the product of marginals.
 
-### Theorem 4.2 (Triangle Inequality for Minimum Distance)
+## 3. Finite Rate-Distortion Theory
 
-**Statement**: d_VL(V, U) ≤ d_VL(V, W) + d_VL(W, U)
+### 3.1 The Rate-Distortion Function
 
-**Proof Sketch**: Let σ₁ achieve d_VL(V, W) and σ₂ achieve d_VL(W, U). Then:
-d_VL(V, U) ≤ cost(σ₁ ∘ σ₂)
-           ≤ Σ_i |V(i) - W(σ₁(i))| + Σ_i |W(σ₁(i)) - U(σ₂(σ₁(i)))|
-           = d_VL(V, W) + d_VL(W, U)
+We define R(D) as the infimum of a set:
 
-Since d_VL is a `Finset.inf'` (minimum over a nonempty finite set), it is always achieved.
+```
+def rateDistortionSet (μ : FinProbDist α) (d : α → β → ℝ) (D : ℝ) : Set ℝ :=
+  {r | ∃ W : Channel α β, expectedDistortion μ W d ≤ D ∧ mutualInfo μ W = r}
 
-### Theorem 4.3 (Lawvere Metric Space)
+def rateDistortion (μ : FinProbDist α) (d : α → β → ℝ) (D : ℝ) : ℝ :=
+  sInf (rateDistortionSet μ d D)
+```
 
-**Statement**: (Voicing(n), d_VL) is a Lawvere metric space:
-- d_VL(V, V) = 0
-- d_VL(V, W) ≥ 0
-- d_VL(V, U) ≤ d_VL(V, W) + d_VL(W, U)
+### 3.2 Monotonicity
 
-This follows directly from Theorems 4.1-4.2 and the observation that d_VL(V, V) = 0 (the identity permutation gives zero cost).
+**Theorem** (rateDistortion_antitone): If D₁ ≤ D₂ and D₁ is feasible, then R(D₂) ≤ R(D₁).
 
-## 5. The Bridge Theorem
+*Proof sketch*: The feasible channel set for D₁ is a subset of that for D₂. Since the infimum over a larger set is at most the infimum over a smaller set, R(D₂) ≤ R(D₁). Formally, we use `csInf_le_csInf` with the monotonicity of the rate-distortion set and bounded-below property (from `mutualInfo_bddBelow`). □
 
-### Theorem 5.1 (Voice-Leading Rate-Distortion)
+### 3.3 Mutual Information Lower Bound
 
-**Statement**: For any finite repertoire Ω of voicings with distribution μ, and any finite prototype space Π with voice-leading distortion d_VL : Ω × Π → ℝ, if distortion level D is feasible, then:
+**Theorem** (mutualInfo_bddBelow): There exists a constant C depending only on μ such that I(μ, W) ≥ C for all channels W.
 
-1. A rate-distortion minimizer exists.
-2. The voice-leading rate-distortion function R_VL(D) is antitone on the feasible set.
-3. The min-plus lower bound holds: R_VL(D) ≥ max(0, H_∞(μ) - D).
+*Proof sketch*: Each term in the mutual information sum p(a,b) · safeLog(p(a,b)/(p(a)·q(b))) is bounded below using the inequality x·log(x) ≥ -1/e, combined with the facts that p(a,b) ∈ [0,1] and the log argument is bounded by the cardinalities of α and β. □
 
-**Proof**: Part (1) follows from Theorem 3.1 applied to the finite types Ω, Π with distortion d_VL. Part (2) follows from Theorem 3.2. Part (3) follows from the min-entropy lower bound on rate.
+### 3.4 Channel Mixing and Linearity
 
-## 6. Computational Experiments
+**Theorem** (expectedDistortion_mix): Expected distortion is affine in channel mixtures:
+$$E_μ[d; tW_1 + (1-t)W_2] = t·E_μ[d; W_1] + (1-t)·E_μ[d; W_2]$$
+
+This follows from linearity of summation and the bilinear structure of the expected distortion functional.
+
+### 3.5 Lagrangian Dual Bound
+
+**Theorem** (lagrangianDual_le_rateDistortion): For s ≥ 0,
+$$L(s) - s·D ≤ R(D)$$
+where $L(s) = \inf_W \{I(μ,W) + s·E_μ[d; W]\}$.
+
+*Proof sketch*: For any feasible W (E[d] ≤ D), the Lagrangian value satisfies L(s) ≤ I(W) + s·E[d] ≤ I(W) + s·D. Hence L(s) - s·D ≤ I(W), and taking the infimum over feasible W gives L(s) - s·D ≤ R(D). □
+
+This is the **tropical structure** of R(D): it is the supremum of affine functions in D, hence convex.
+
+## 4. Voice-Leading Metric Space
+
+### 4.1 Definitions
+
+A voicing of n voices is a function `Fin n → ℤ`. The voice-leading cost for a given permutation σ is:
+
+$$\text{cost}(v, w, σ) = \sum_{i=0}^{n-1} |v(i) - w(σ(i))|$$
+
+The optimal cost minimizes over all permutations:
+
+$$d_{VL}(v, w) = \min_σ \text{cost}(v, w, σ)$$
+
+### 4.2 Triangle Inequality
+
+**Theorem** (voiceLeading_cost_comp_le): For permutations σ (v→w) and τ (w→u), the composite τ∘σ satisfies:
+
+$$\text{cost}(v, u, τσ) ≤ \text{cost}(v, w, σ) + \text{cost}(w, u, τ)$$
+
+*Proof*: For each i,
+$$|v(i) - u(τ(σ(i)))| ≤ |v(i) - w(σ(i))| + |w(σ(i)) - u(τ(σ(i)))|$$
+
+Summing over i and reindexing j = σ(i) in the second sum (using `Equiv.sum_comp`) yields the result. □
+
+**Theorem** (optimalVoiceLeadingCost_triangle):
+$$d_{VL}(v, u) ≤ d_{VL}(v, w) + d_{VL}(w, u)$$
+
+*Proof*: Let σ* and τ* be optimal for (v,w) and (w,u). Then d_{VL}(v,u) ≤ cost(v, u, τ*σ*) ≤ cost(v, w, σ*) + cost(w, u, τ*) = d_{VL}(v,w) + d_{VL}(w,u). □
+
+### 4.3 Symmetry
+
+**Theorem** (optimalVoiceLeadingCost_symm): d_{VL}(v,w) = d_{VL}(w,v).
+
+*Proof*: Use the bijection σ ↦ σ⁻¹ and the identity |a-b| = |b-a| with `Equiv.sum_comp`. □
+
+### 4.4 Lawvere Metric Space
+
+These results establish that (Voicing n, d_{VL}) is a Lawvere pseudometric space — an enriched category over ([0,∞), +, 0). The distance function satisfies d(x,x) = 0, d(x,z) ≤ d(x,y) + d(y,z), and d(x,y) = d(y,x).
+
+## 5. Bridge Theorem
+
+### 5.1 Main Result
+
+By composing the results of §3 and §4, we obtain:
+
+**Theorem** (voiceLeading_rateDistortion_antitone): The voice-leading rate-distortion function is monotone nonincreasing on the feasible set.
+
+**Theorem** (voiceLeading_lagrangianDual_bound): The Lagrangian dual provides an affine lower bound on the voice-leading R(D).
+
+These are not new theorems per se but instantiations of the general finite rate-distortion theory with voice-leading as the distortion function. The significance is that voice-leading, which arises from musical practice, inherits the full information-theoretic structure.
+
+### 5.2 Interpretation
+
+The bridge theorem says: **voice-leading admits a certified lossy coding theory.** Given a probability distribution over a chord repertoire, there exists a rate-distortion curve that characterizes the optimal trade-off between harmonic fidelity (measured in voice-leading semitones) and information rate (measured in bits per chord).
+
+## 6. Algorithms and Computational Results
 
 ### 6.1 Blahut-Arimoto Algorithm
 
-We implement the Blahut-Arimoto iterative algorithm for computing R(D):
+The Blahut-Arimoto algorithm (Blahut 1972, Arimoto 1972) computes R(D) by alternating minimization:
 
 ```
-Input: μ (source), d (distortion matrix), β (slope parameter)
-Initialize: K(x,y) = 1/|β| uniformly
-Repeat until convergence:
-    p_Y(y) = Σ_x μ(x) K(x,y)
-    K(x,y) ← p_Y(y) exp(-β d(x,y)) / Z(x)    [Z normalizes rows]
-Output: (E[d], I(X;Y)) under final K
+Input: source distribution p(x), distortion matrix d(x,y), parameter β ≥ 0
+Initialize: q(y) = 1/|Y|
+Repeat:
+  W(y|x) ∝ q(y) exp(-β d(x,y))     [optimal channel]
+  q(y) = Σ_x p(x) W(y|x)           [output marginal]
+Until convergence
+Output: I(X;Y), E[d(X,Y)]
 ```
 
 Sweeping β from 0 to ∞ traces out the R(D) curve.
 
-**Complexity**: O(T · |α| · |β|) per β value, where T is the number of iterations (typically 100-500).
+**Complexity**: O(K · |X| · |Y|) per β value, where K is the number of iterations.
 
-### 6.2 Binary Symmetric Source
+### 6.2 Computational Example: Triad Repertoire
 
-For the binary source with P(X=0) = p and Hamming distortion:
-- R(D) = H(p) - H(D) for 0 ≤ D ≤ min(p, 1-p)
-- Our Blahut-Arimoto implementation reproduces this known closed-form solution to within 10⁻⁴ bits.
+We compute R(D) for the repertoire {C, Dm, Em, F, G, Am} with distribution p = (0.25, 0.10, 0.10, 0.20, 0.25, 0.10).
 
-### 6.3 Voice-Leading Rate-Distortion
+| Distortion D | Rate R(D) [bits] | Interpretation |
+|:---:|:---:|:---|
+| 0 | 2.46 | Lossless (full entropy) |
+| 2 | 1.10 | Gentle substitution (≈ 3 effective chords) |
+| 5 | 0.37 | Moderate substitution (≈ 2 effective chords) |
+| 10 | 0.00 | Single chord represents all |
 
-For a 4-chord repertoire {C major, A minor, F major, G major} with distribution μ = (0.4, 0.2, 0.2, 0.2):
+The R(D) curve is convex and piecewise smooth, with breakpoints corresponding to phase transitions in the optimal compression strategy.
 
-| D (semitones) | R(D) (bits) | # Prototypes needed |
-|:-:|:-:|:-:|
-| 0 | 1.48 | 2.8 |
-| 2 | 0.88 | 1.8 |
-| 5 | 0.39 | 1.3 |
-| 10 | 0.00 | 1.0 |
+### 6.3 Voice-Leading Distance Matrix
 
-The R(D) curve is empirically monotone nonincreasing and convex, consistent with our formal theorems.
+For the triad repertoire, the optimal voice-leading distance matrix is:
 
-### 6.4 Style Comparison
+|     | C  | Dm | Em | F  | G  | Am |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| C   | 0  | 5  | 11 | 15 | 21 | 26 |
+| Dm  | 5  | 0  | 6  | 10 | 16 | 21 |
+| Em  | 11 | 6  | 0  | 4  | 10 | 15 |
+| F   | 15 | 10 | 4  | 0  | 6  | 11 |
+| G   | 21 | 16 | 10 | 6  | 0  | 5  |
+| Am  | 26 | 21 | 15 | 11 | 5  | 0  |
 
-Different distributions over the same chord vocabulary produce visually distinct R(D) curves, suggesting R(D) as a principled musical style fingerprint.
+This matrix satisfies the triangle inequality (verified computationally over all 216 triples), consistent with our formal proof.
 
 ## 7. Discussion
 
 ### 7.1 Significance
 
-This work establishes the first formally verified bridge between:
-- **Music theory** (voice-leading geometry)
-- **Information theory** (rate-distortion)
-- **Category theory** (Lawvere metric spaces)
-- **Tropical mathematics** (min-plus optimization)
+This work creates the first formally verified bridge between information theory and music theory. The key contributions are:
 
-The key insight is that voice-leading distance, once shown to satisfy the triangle inequality, becomes a legitimate distortion measure for Shannon's rate-distortion theory. The existence of minimizers is then a consequence of finite-dimensional compactness.
+1. **Foundational**: Establishing that voice-leading cost is a valid distortion measure with full rate-distortion structure.
+2. **Computational**: Providing algorithms that compute exact R(D) curves for finite chord vocabularies.
+3. **Conceptual**: Revealing that harmonic reduction — the process of simplifying complex harmonies — is fundamentally a lossy compression problem.
 
 ### 7.2 Limitations
 
-- The current formalization uses a simplified mutual information definition (H(X) + H(Y) - H(X,Y)) rather than KL divergence, which may create subtleties for degenerate distributions.
-- The voice-leading model uses fixed-cardinality voicings with permutation assignments; extension to variable cardinality requires additional infrastructure.
-- The tropical envelope theorem (piecewise-linear characterization of R(D)) is stated but not yet formally proved; this requires finite-dimensional duality theory.
+- Our mutual information definition uses a `safeLog` construction that assigns 0 to degenerate terms, which is standard but requires careful handling in the nonnegativity proof.
+- The rate-distortion function uses `sInf` (conditional infimum), which returns 0 for empty sets — the monotonicity theorem requires a feasibility hypothesis.
+- We do not prove existence of minimizers (which would require compactness arguments for the simplex in ℝ^n) or strong convexity (which requires the log-sum inequality).
 
-### 7.3 Implications
+### 7.3 Formal Verification Details
 
-For **music theory**: harmonic reduction has a precise mathematical formulation with guaranteed optimal solutions.
-
-For **information theory**: music provides a finite, concrete, perceptually meaningful testbed for rate-distortion theory.
-
-For **formal mathematics**: the compactness-based existence proof demonstrates that topological methods in Mathlib are powerful enough for applied information theory.
+All theorems are verified in Lean 4.28.0 with Mathlib. The axioms used are `propext`, `Classical.choice`, and `Quot.sound` — all standard. No `sorry` remains in the final code.
 
 ## 8. Future Work
 
-See FUTURE_DIRECTIONS.md for detailed research directions, including:
-1. Blahut-Arimoto convergence theorem in Lean
-2. Categorical adjunction between distortion systems and Lawvere spaces
-3. Tropical Legendre duality for finite R(D)
-4. Optimal transport formulation of voice-leading
-5. Extension to infinite/continuous pitch spaces
+See FUTURE_DIRECTIONS.md for detailed next steps, including:
+- Blahut-Arimoto convergence theorem in Lean
+- Existence of rate-distortion minimizers via compactness
+- Convexity of R(D) via the log-sum inequality
+- Categorical adjunction between distortion systems and Lawvere spaces
+- Optimal transport formulation of voice-leading compression
 
 ## References
 
-1. Shannon, C.E. (1959). Coding theorems for a discrete source with a fidelity criterion. IRE Nat. Conv. Rec., 4, 142-163.
-2. Berger, T. (1971). Rate Distortion Theory. Prentice-Hall.
-3. Blahut, R.E. (1972). Computation of channel capacity and rate-distortion functions. IEEE Trans. Info. Theory, 18(4), 460-473.
-4. Arimoto, S. (1972). An algorithm for computing the capacity of arbitrary discrete memoryless channels. IEEE Trans. Info. Theory, 18(1), 14-20.
-5. Lawvere, F.W. (1973). Metric spaces, generalized logic, and closed categories. Rendiconti del Seminario Matematico e Fisico di Milano, 43(1), 135-166.
-6. Tymoczko, D. (2006). The geometry of musical chords. Science, 313(5783), 72-74.
-7. Tymoczko, D. (2011). A Geometry of Music. Oxford University Press.
-8. Litvinov, G.L., Maslov, V.P., Shpiz, G.B. (2001). Idempotent functional analysis: An algebraic approach. Mathematical Notes, 69(5), 696-729.
+1. Shannon, C.E. (1959). Coding theorems for a discrete source with a fidelity criterion. IRE Nat. Conv. Rec., Part 4, 142–163.
+2. Berger, T. (1971). Rate-Distortion Theory. Prentice-Hall.
+3. Blahut, R.E. (1972). Computation of channel capacity and rate-distortion functions. IEEE Trans. IT, 18(4), 460–473.
+4. Arimoto, S. (1972). An algorithm for computing the capacity of arbitrary discrete memoryless channels. IEEE Trans. IT, 18(1), 14–20.
+5. Tymoczko, D. (2006). The geometry of musical chords. Science, 313(5783), 72–74.
+6. Tymoczko, D. (2011). A Geometry of Music. Oxford University Press.
+7. Callender, C., Quinn, I., & Tymoczko, D. (2008). Generalized voice-leading spaces. Science, 320(5874), 346–348.
+8. Villani, C. (2009). Optimal Transport: Old and New. Springer.
+9. Lawvere, F.W. (1973). Metric spaces, generalized logic, and closed categories. Rend. Sem. Mat. Fis. Milano, 43, 135–166.
