@@ -671,22 +671,6 @@
     "timestamp": "2026-05-15T21:34:31.373128+00:00"
   },
   {
-    "id": "fd_0236",
-    "title": "What is the quantum complexity of tropical rank?",
-    "description": "Grover gives a quadratic speedup for search. Is there a super-quadratic quantum advantage?",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ed53a6b6",
-    "consumed_by_exp_id": "ab93ccb9",
-    "timestamp": "2026-05-15T21:34:31.382708+00:00"
-  },
-  {
     "id": "fd_0237",
     "title": "Can tropical factorization be used for homomorphic computation?",
     "description": "The min-plus semiring has interesting algebraic properties (idempotent addition) that might support novel FHE constructions.",
@@ -804,22 +788,6 @@
     "timestamp": "2026-05-16T01:33:06.143602+00:00"
   },
   {
-    "id": "fd_0236",
-    "title": "Tropical corner critical points",
-    "description": ": points on the corner locus where the gradients of adjacent cells point in opposing directions (no descent direction exists without crossing the locus)\n\nFurthermore, the Morse index of a tropical corner critical point equals the number of pairs of adjacent cells whose gradient projections along the corner locus have opposite sign.\n\nA tropical Morse inequality bounds the number of corner critical points by the topology of the tropical loss landscape (measured by tropical homology).\n\n### Why It Matters\n\nTropical Morse theory would provide a complete topological characterization of the training landscape, including:\n- How many grokking-type transitions a trajectory must undergo\n- Whether alternative paths with fewer transitions exist\n- The relationship between model complexity and the number",
-    "domains": [
-      "Tropical",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "70170a66",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:33:06.155789+00:00"
-  },
-  {
     "id": "fd_0237",
     "title": "Direction 3 (Unification)",
     "description": "— highest conceptual impact, builds directly on existing theorems, likely formalizable in current framework",
@@ -895,21 +863,6 @@
     "timestamp": "2026-05-16T01:35:37.745545+00:00"
   },
   {
-    "id": "fd_0253",
-    "title": "Tropical Geometry",
-    "description": ": Prove the Legendre duality (Direction 5).",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "03df72f3",
-    "consumed_by_exp_id": "56965cb0",
-    "timestamp": "2026-05-16T01:35:37.787305+00:00"
-  },
-  {
     "id": "fd_0229",
     "title": "Soundness step",
     "description": ": if the prover deviates, then g_i ≠ g_i* (the honest polynomial). By the univariate Schwartz–Zippel bound, Pr[g_i(r_i) = g_i*(r_i)] ≤ d_i/|S|.",
@@ -968,20 +921,6 @@
     "timestamp": "2026-05-16T02:46:33.699126+00:00"
   },
   {
-    "id": "fd_0236",
-    "title": "Week 2",
-    "description": ": Prove helper lemmas and verify the skeleton compiles.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "66470415",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:46:33.712324+00:00"
-  },
-  {
     "id": "fd_0237",
     "title": "Week 3",
     "description": ": Complete main proofs; run computational experiments.",
@@ -996,32 +935,78 @@
     "timestamp": "2026-05-16T02:46:33.728699+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "Week 4",
-    "description": ": Write up results; identify new directions opened.",
+    "id": "fd_0241",
+    "title": "Initial condition",
+    "description": ": Q_t u → u as t → 0⁺\n\n### Lean Encoding\n```lean\nnoncomputable def hopfLax (u : ℝ → ℝ) (t : ℝ) (x : ℝ) : ℝ :=\n  sInf (Set.range fun y : ℝ => u y + (x - y)^2 / (2 * t))\n\n-- Monotonicity\ntheorem hopfLax_mono (u v : ℝ → ℝ) (t : ℝ) (ht : 0 < t)\n    (h : ∀ x, u x ≤ v x) (x : ℝ) :\n    hopfLax u t x ≤ hopfLax v t x := by sorry\n\n-- Contraction\ntheorem hopfLax_contraction (u v : ℝ → ℝ) (t : ℝ) (ht : 0 < t)\n    (C : ℝ) (hC : ∀ x, |u x - v x| ≤ C) (x : ℝ) :\n    |hopfLax u t x - hopfLax v t x| ≤ C := by sorry\n\n-- Semigroup (for quadratic initial data)\ntheorem hopfLax_semigroup_quadratic (s t : ℝ) (hs : 0 < s) (ht : 0 < t) (x : ℝ) :\n    hopfLax (hopfLax (fun y => y^2 / 2) t) s x =\n    hopfLax (fun y => y^2 / 2) (s + t) x := by sorry\n```\n\n### Proof Strategy",
     "domains": [
-      "Bridges"
+      "Algebra",
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "66470415",
+    "source_exp_id": "56965cb0",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:46:33.741290+00:00"
+    "timestamp": "2026-05-16T02:49:26.966352+00:00"
   },
   {
-    "id": "fd_0239",
-    "title": "Iterate",
-    "description": ": Feed new results back into the framework; update governance thresholds.",
+    "id": "fd_0243",
+    "title": "Semigroup",
+    "description": ": for quadratic data, compute explicitly:\n   - Q_t(x²/2) = x²/(2(1+t)) by completing the square\n   - Q_s(Q_t(x²/2)) = x²/(2(1+s+t))\n   - Q_{s+t}(x²/2) = x²/(2(1+s+t))\n\n### Cross-Domain Significance\n- **Viscosity solutions**: the Hopf–Lax formula gives the unique viscosity solution\n- **Dynamic programming**: Q_t is the dynamic programming operator for optimal control\n- **Tropical convolution**: Q_t is inf-convolution with the quadratic cost kernel\n- **Image processing**: morphological operators are tropical semigroups\n\n### Difficulty: ★★★★★\n\n---\n\n## Research Roadmap\n\n### Phase 1 (Near-term): Generalize the Quadratic\n- Direction 1 (shifted quadratics) — extends the existing algebraic engine\n- Fenchel–Young for general p-norms (Young's inequality)\n\n### Phase 2 (Medium-term): Finite Tropical S",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "66470415",
+    "source_exp_id": "56965cb0",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:46:33.755352+00:00"
+    "timestamp": "2026-05-16T02:49:26.990135+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Build proof skeletons",
+    "description": ": Write Lean files with sorry'd lemmas",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56965cb0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:49:27.020146+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Prove bottom-up",
+    "description": ": Start with algebraic identities, build to supremum/infimum results",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56965cb0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:49:27.030229+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Cross-validate",
+    "description": ": Ensure classical and tropical formulations are equivalent",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56965cb0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:49:27.038788+00:00"
   },
   {
     "id": "seed_052",
@@ -1401,6 +1386,21 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
+    "id": "fd_0234",
+    "title": "Hypothesis",
+    "description": "Extend the lexical cost model from presence/absence to semantic distance: define $L(i)$ not as a scalar but as a point in a tropical module, representing the semantic position of lexical item $i$. Semantic drift is then a tropical translation in this module. The key conjecture:\n\n*Semantic change preserves tropical convexity: if a set of related meanings forms a tropically convex set in the ancestor language, its images under semantic drift remain tropically convex in descendant languages.*",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "1cdf4e96",
+    "consumed_by_exp_id": "7dc8bfbd",
+    "timestamp": "2026-05-15T20:09:21.809405+00:00"
+  },
+  {
     "id": "fd_0235",
     "title": "1. Gauge Classification by Cycle Holonomy",
     "description": "**Conjecture.** Two charge fields `A₁, A₂ : V → V → ℝ` yield the same charged tropical distances (up to endpoint potentials) if and only if their difference `A₁ - A₂` has zero circulation on every cycle.\n\n**Proof Strategy.**\n- Define the *holonomy* of a charge field around a cycle as its circulation (already formalized as `circulation`).\n- Prove the forward direction: if `A₁ - A₂` is exact (i.e., equals `φ(j) - φ(i)` for some potential `φ`), then their charged distances differ only by endpoint terms (follows from current theorems).\n- Prove the reverse direction: if all cycle circulations of `A₁ - A₂` vanish, then `A₁ - A₂` is exact. This is the discrete Poincaré lemma for graphs and requires showing that vanishing holonomy implies existence of a global potential.\n- The key technical challe",
@@ -1417,22 +1417,6 @@
     "source_exp_id": "169f3d7c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T22:03:46.232289+00:00"
-  },
-  {
-    "id": "fd_0236",
-    "title": "2. Functoriality Under Graph Surgeries",
-    "description": "**Target.** Formalize how edge insertion, deletion, vertex contraction, and weight updates act on the charged tropical distance operator, and identify which graph transformations preserve gauge equivalence classes.\n\n**Proof Strategy.**\n- Define a category of weighted directed graphs with morphisms given by graph homomorphisms preserving edge weights.\n- Show that the charged tropical distance is functorial: a weight-preserving graph morphism `f : G → H` induces a map on distances satisfying `d_H(f(s), f(t)) ≤ d_G(s, t)`.\n- Prove that gauge classes are preserved under edge subdivision (inserting a vertex on an edge with appropriate weight splitting).\n- Show that vertex contraction may destroy gauge triviality and characterize exactly when it does.\n\n**Applications.** Network design and routin",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "169f3d7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:03:46.244211+00:00"
   },
   {
     "id": "fd_0237",
@@ -1505,23 +1489,6 @@
     "timestamp": "2026-05-15T22:33:29.213852+00:00"
   },
   {
-    "id": "fd_0236",
-    "title": "4. Bipartite Cohomology Formulation",
-    "description": "**Goal:** Recast the tropical rank-1 factorization theorem as exactness of a discrete 1-cocycle on the complete bipartite graph K_{n,m}.\n\n**Mathematical Statement:**\nConsider the complete bipartite graph with vertex sets `Fin n` (left) and `Fin m` (right). A function `A : Fin n → Fin m → ℝ` assigns a weight to each edge. Define the *discrete coboundary operator* δ₀ mapping vertex potentials (u, v) to edge weights via `(δ₀(u,v))(i,j) = u(i) + v(j)`. Define the *rectangular curl* operator δ₁ mapping edge weights to face values via `(δ₁A)(i₁,i₂,j₁,j₂) = A(i₁,j₁) + A(i₂,j₂) - A(i₁,j₂) - A(i₂,j₁)`.\n\nThe rank-1 factorization theorem states: `ker(δ₁) = im(δ₀)`, i.e., the first cohomology group H¹(K_{n,m}; ℝ) vanishes.\n\n**Lean Signature:**\n```lean\ndef rectangular_curl {n m : ℕ} (A : Fin n → Fin m ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6fbf424c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:33:29.225775+00:00"
-  },
-  {
     "id": "fd_0237",
     "title": "5. Representation-Theoretic Rigidity Bridge",
     "description": "**Goal:** Connect local tropical minor constraints to global injectivity/rigidity phenomena, inspired by `gl3_tropical_satake_injective_of_edge_rank2_marginals` in the catalog.\n\n**Mathematical Statement:**\nConsider the tropicalization of the Satake transform for GL_n. The catalog theorem shows that edge rank-2 marginal constraints force injectivity for GL_3. The rank-1 factorization theorem provides the base case: if a tropicalized representation matrix has all 2×2 minors vanishing, then it is completely determined by boundary data (one row and one column potential).\n\nConcretely: define the *tropical Satake fiber* over a point as the set of matrices with prescribed row and column sums (marginals). For rank-1 matrices, the fiber is either empty or a single gauge orbit.\n\n**Lean Signature:**\n",
@@ -1584,23 +1551,6 @@
     "source_exp_id": "94c243f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:09:09.375173+00:00"
-  },
-  {
-    "id": "fd_0236",
-    "title": "Direction 2: PIT Soundness for Algebraic Circuits",
-    "description": "**Hypothesis**: Combining `schwartz_zippel_succ` with `bounded_circuit_degree_bound` from `AlgebraicCircuitComplexity.lean` yields: a circuit of degree bound d computing a nonzero polynomial evaluates to zero on at most d/|K| fraction of inputs.\n\n**Proof Strategy**:\n1. Use `totalDegree_le_degreeBound` to get totalDegree(C.toMvPolynomial) ≤ C.degreeBound.\n2. Apply `schwartz_zippel_succ` with the degree bound.\n3. Derive the probability statement.\n\n**Key Theorem**:\n```\ntheorem circuit_pit_soundness (C : AlgCircuit K n) (hC : C.toMvPolynomial ≠ 0) :\n    Fintype.card {x | C.eval x = 0} ≤ C.degreeBound * (Fintype.card K)^(n-1)\n```\n\n**Impact**: Bridges syntactic circuit complexity to semantic evaluation bounds. Foundation for certified lower-bound arguments.\n\n**Cross-domain connections**: Algebra",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.387571+00:00"
   },
   {
     "id": "fd_0237",
@@ -1712,27 +1662,6 @@
     "source_exp_id": "cb6bb980",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:30:41.680443+00:00"
-  },
-  {
-    "id": "fd_0236",
-    "title": "Direction 5: Nonlinear and Tropical Hodge Theory for Piecewise-Linear Neural Dec",
-    "description": "**Hypothesis:** ReLU neural networks implement piecewise-linear (tropical) functions. The natural algebraic setting for their decision geometry is tropical geometry, where addition becomes min/max and multiplication becomes addition. A \"tropical Hodge theory\" should decompose inconsistency fields in this min-plus algebra, capturing combinatorial features invisible to the linear theory.\n\n**Proof Strategy:**\n1. Define the tropical cochain complex where d₀f(i,j) = f(j) ⊖ f(i) in the tropical semiring (min-plus or max-plus algebra).\n2. Define tropical curl: d₁ω(i,j,k) = ω(i,j) ⊖ ω(i,k) ⊕ ω(j,k) where ⊕ = min and ⊖ = tropical subtraction.\n3. Prove a tropical analogue of d₁ ∘ d₀ = 0 (this holds by the same telescoping argument in the tropical semiring).\n4. Define the tropical Hodge \"decompositio",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cb6bb980",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:30:41.692385+00:00"
   },
   {
     "id": "fd_0243",
