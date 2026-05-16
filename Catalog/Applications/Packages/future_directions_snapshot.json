@@ -421,6 +421,21 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
+    "id": "fd_0256",
+    "title": "Establish the level estimate",
+    "description": "Show $c^* \\ge c$ using the sublevel set separation hypothesis.\n\n### Key Challenges\n- The deformation argument requires constructing explicit continuous deformations of paths in the tropical setting, which is complicated by the piecewise-linear structure.\n- The minimax principle needs compactness arguments that may require restricting to bounded domains.\n\n### Cross-Domain Connections\n- **Variational methods**: tropical analogue of the Ambrosetti-Rabinowitz theorem\n- **Optimization**: provides certified barriers for global optimization of piecewise-linear functions\n- **Statistical physics**: mountain passes correspond to transition states between metastable phases\n\n### Actionable Steps\n1. Formalize the minimax principle for continuous functions on compact sets in Lean.\n2. Prove the mountain ",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "ab93ccb9",
+    "consumed_by_exp_id": "6779942a",
+    "timestamp": "2026-05-16T03:21:48.915149+00:00"
+  },
+  {
     "id": "fd_0260",
     "title": "Connect to training dynamics",
     "description": "by showing that each grokking event corresponds to a corner critical crossing, and use the Morse inequality to lower-bound the number of such events.\n\n### Key Challenges\n- Computing the activation pattern complex of a realistic neural network is combinatorially explosive ($2^h$ possible patterns for $h$ hidden neurons).\n- The connection between topological invariants and actual training dynamics requires assumptions about the optimization algorithm.\n\n### Cross-Domain Connections\n- **Deep learning theory**: provides rigorous lower bounds on training complexity\n- **Computational topology**: applies persistent homology to neural network analysis\n- **Complexity theory**: connects the combinatorial complexity of activation patterns to computational hardness\n\n### Actionable Steps\n1. Implement ac",
@@ -874,6 +889,62 @@
     "timestamp": "2026-05-16T11:26:32.277814+00:00"
   },
   {
+    "id": "fd_0247",
+    "title": "Implement",
+    "description": "the tropical Sherman-Morrison formula (Direction 3) and test on large matrices",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d0d6476e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:09:09.240118+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Develop",
+    "description": "certified sensitivity algorithms (Direction 4) with executable code",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d0d6476e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:09:09.254524+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Investigate",
+    "description": "the interlacing conjecture (Direction 1) via computational experiments",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d0d6476e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:09:09.269770+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Prototype",
+    "description": "the control synthesis algorithm (Direction 5) for discrete event systems",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d0d6476e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:09:09.283758+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1219,23 +1290,6 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
-  },
-  {
-    "id": "fd_0211",
-    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
-    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7b109bab",
-    "consumed_by_exp_id": "d0d6476e",
-    "timestamp": "2026-05-15T09:19:36.848982+00:00"
   },
   {
     "id": "fd_0225",
