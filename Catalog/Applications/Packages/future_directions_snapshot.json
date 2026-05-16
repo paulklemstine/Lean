@@ -1017,10 +1017,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d8b1150",
     "timestamp": "2026-05-14T18:36:13.855472+00:00"
   },
   {
@@ -1633,5 +1633,94 @@
     "source_exp_id": "d7606a9d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:32:14.502815+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "1. Extend Canonicalization from AC to ACI (Idempotence of min)",
+    "description": "**Hypothesis:** The tropical min operation satisfies `min(a, a) = a`. Adding idempotence quotients to the AC normalizer produces a strictly more powerful decision procedure.\n\n**Proof Strategy:**\n- Extend `normalize_ca` to deduplicate sorted children after flattening (remove adjacent duplicates in the sorted list for `tmin` nodes).\n- The soundness proof extends directly since `min(a, a) = a`.\n- Completeness requires defining `ACIEquiv` with an additional `tmin_idem` constructor and showing the deduplication step respects it.\n- Idempotence follows from the same rebuild-sorted argument since deduplication of a deduplicated list is identity.\n\n**Cross-Domain Connection:** Idempotent semirings arise in shortest-path algorithms (Floyd-Warshall), lattice theory, and formal language theory (regular",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2cbb4165",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:39:37.909959+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "2. Integrate Distributivity via Knuth-Bendix Completion",
+    "description": "**Hypothesis:** The tropical distributive law `a + min(b, c) = min(a + b, a + c)` can be oriented as a rewrite rule and integrated into a convergent completion procedure.\n\n**Proof Strategy:**\n- Define oriented rewrite rules for distributivity (expand or factor).\n- Analyze critical pairs between AC rules and distributivity.\n- Either prove confluence directly or implement a completion loop.\n- The resulting normal form would canonicalize a strictly larger fragment of tropical equivalence.\n\n**Cross-Domain Connection:** This connects to Gröbner basis theory for polynomial rings, where distributivity is handled via S-polynomial reduction. A tropical analogue would yield \"tropical Gröbner bases.\"\n\n**Estimated Difficulty:** Hard. Critical pair analysis for AC + distributivity is nontrivial, and te",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2cbb4165",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:39:37.926354+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "3. Build a Reflection Tactic Using normalize_ca",
+    "description": "**Hypothesis:** The completeness theorem `ACEquiv e₁ e₂ → normalize_ca e₁ = normalize_ca e₂` can power a proof-producing tactic that solves tropical AC goals by computation.\n\n**Proof Strategy:**\n- Define a `reify` function that converts Lean expressions involving `min` and `+` on `ℝ` into `TropExpr` terms.\n- Apply `normalize_ca` to both sides.\n- Use `native_decide` or `decide` (after making `ble` decidable on a computable fragment) to check syntactic equality.\n- The soundness theorem provides the correctness certificate.\n\n**Cross-Domain Connection:** This mirrors the `ring` tactic for commutative rings and the `omega` tactic for linear arithmetic. A `tropical` tactic would automate a class of min-plus identities.\n\n**Estimated Difficulty:** Medium-Hard. The main challenge is efficient reifi",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2cbb4165",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:39:37.937805+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "4. Certified Tropical Polynomial Normal Form",
+    "description": "**Hypothesis:** Tropical polynomials (finite min-plus expressions with integer/rational coefficients and monomial structure) admit a computable canonical form that decides equivalence.\n\n**Proof Strategy:**\n- Define tropical monomials as `(coefficient, exponent vector)` pairs under the tropical semiring.\n- A tropical polynomial is a finite min of monomials.\n- Canonical form: sorted list of monomials with dominated monomials removed.\n- Prove that two tropical polynomials are semantically equal iff their canonical forms are equal (this is the tropical analogue of the Fundamental Theorem of Algebra for polynomials).\n\n**Cross-Domain Connection:** Tropical polynomials define piecewise-linear functions, which are the building blocks of ReLU neural networks. Canonical forms for tropical polynomial",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2cbb4165",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:39:37.949780+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "5. Connect Canonical Tropical Syntax to Shortest-Path Circuit Extraction",
+    "description": "**Hypothesis:** The AC canonical form for tropical expressions directly corresponds to an optimized circuit representation for shortest-path computations, enabling certified common-subexpression elimination.\n\n**Proof Strategy:**\n- Model shortest-path computations as tropical matrix expressions.\n- Show that AC normalization identifies and merges redundant sub-computations.\n- Prove that the canonical form minimizes the number of distinct subexpressions (up to AC equivalence).\n- Connect to tropical circuit complexity lower bounds.\n\n**Cross-Domain Connection:** This bridges formal verification of algorithms with tropical algebra, potentially enabling certified optimizers for dynamic programming and network routing.\n\n**Estimated Difficulty:** Medium. The circuit extraction is conceptually strai",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2cbb4165",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:39:37.961155+00:00"
   }
 ]
