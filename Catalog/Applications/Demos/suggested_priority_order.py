@@ -1,788 +1,664 @@
 #!/usr/bin/env python3
 """
-Applications of Tropical Perturbation Amplification
+Applications of Tropical Perturbation Amplification.
 
-Demonstrates real-world applications of the tensorization law:
-1. Network routing optimization (compositional cost bounds)
-2. Cryptographic key space analysis
-3. Parallel system reliability
-4. Machine learning model capacity
+Demonstrates real-world applications of the tensorization principle:
+1. Channel capacity estimation (information theory)
+2. Automata state space growth (formal languages)
+3. Robustness certification (optimization)
 """
 
 import math
-from itertools import product as cartesian_product
+import itertools
+from typing import List, Dict, Tuple
 
+# ============================================================
+# Application 1: Channel Capacity via Tropical Tensorization
+# ============================================================
 
-def tropical_perturbation_bound(n: int) -> float:
-    """Tropical perturbation bound: log(n)."""
-    return math.log(n) if n > 0 else 0.0
+def channel_capacity_tropical(alphabet_size: int, n_uses: int) -> float:
+    """Estimate channel capacity using tropical tensorization.
 
+    The tropical perturbation bound log(|S|) serves as a capacity-like
+    measure. For n independent uses of a channel with alphabet S,
+    the total capacity is n · log(|S|) by the amplification theorem.
 
-# =============================================================================
-# Application 1: Network Routing Optimization
-# =============================================================================
+    This models the fundamental theorem: capacity grows linearly
+    in the number of independent channel uses.
 
-def network_routing_demo():
+    Args:
+        alphabet_size: Size of the channel alphabet.
+        n_uses: Number of independent channel uses.
+
+    Returns:
+        Total capacity in nats.
     """
-    Application: Compositional bounds for network routing.
+    return n_uses * math.log(alphabet_size)
 
-    In network optimization, the worst-case routing cost through a product
-    network (two independent sub-networks) decomposes additively.
-    This allows modular analysis of large networks.
-    """
+
+def demo_channel_capacity():
+    """Demonstrate channel capacity scaling."""
     print("=" * 60)
-    print("APPLICATION 1: Network Routing Optimization")
+    print("APPLICATION 1: Channel Capacity via Tropical Tensorization")
     print("=" * 60)
+    print()
 
-    # Two independent sub-networks
-    network_A_nodes = 50   # e.g., a regional data center
-    network_B_nodes = 100  # e.g., a backbone network
+    alphabets = [2, 4, 8, 16, 256]
+    max_n = 10
 
-    bound_A = tropical_perturbation_bound(network_A_nodes)
-    bound_B = tropical_perturbation_bound(network_B_nodes)
-    bound_product = tropical_perturbation_bound(network_A_nodes * network_B_nodes)
-
-    print(f"\n  Network A: {network_A_nodes} nodes")
-    print(f"  Network B: {network_B_nodes} nodes")
-    print(f"  Combined network (A × B): {network_A_nodes * network_B_nodes} node pairs")
-    print(f"\n  Tropical complexity of A:     {bound_A:.4f}")
-    print(f"  Tropical complexity of B:     {bound_B:.4f}")
-    print(f"  Tropical complexity of A × B: {bound_product:.4f}")
-    print(f"  Sum of individual complexities: {bound_A + bound_B:.4f}")
-    print(f"\n  → The combined network's complexity is exactly the sum!")
-    print(f"  → This means routing analysis can be done independently")
-    print(f"    on each sub-network and then composed.\n")
-
-
-# =============================================================================
-# Application 2: Cryptographic Key Space Analysis
-# =============================================================================
-
-def crypto_key_space_demo():
-    """
-    Application: Key space complexity in composed cryptographic systems.
-
-    When combining independent cryptographic primitives (e.g., encrypting
-    with two independent keys), the security complexity (in bits) adds.
-    The tensorization law formalizes this.
-    """
-    print("=" * 60)
-    print("APPLICATION 2: Cryptographic Key Space Analysis")
-    print("=" * 60)
-
-    # Key spaces (using base-2 log for bits)
-    aes_key_size = 2**128
-    rsa_key_size = 2**2048
-
-    # Using natural log for tropical bound, then convert to bits
-    log2 = math.log(2)
-
-    bound_aes = tropical_perturbation_bound(128) / log2  # simplified: log2(128 states)
-    bound_rsa = tropical_perturbation_bound(2048) / log2
-
-    print(f"\n  AES key space complexity: {bound_aes:.2f} bits (log₂ of state count)")
-    print(f"  RSA key space complexity: {bound_rsa:.2f} bits")
-    print(f"  Combined system complexity: {bound_aes + bound_rsa:.2f} bits")
-    print(f"\n  → By the tensorization law, composing independent ciphers")
-    print(f"    gives exactly additive security (in log-space).")
-    print(f"  → No security is lost or gained by composition.\n")
-
-    # Demonstrate n-fold amplification
-    print("  n-fold key amplification (using same cipher n times independently):")
-    base_complexity = 7.0  # log₂(128) ≈ 7 bits of state-space complexity
-    for n in [1, 2, 4, 8, 16]:
-        total = n * base_complexity
-        print(f"    n = {n:>3}: total complexity = {total:.1f} bits")
+    for q in alphabets:
+        capacities = [channel_capacity_tropical(q, n) for n in range(1, max_n + 1)]
+        bits = [c / math.log(2) for c in capacities]
+        print(f"Alphabet size q={q:3d}:")
+        print(f"  Capacity (bits) for n=1..{max_n}: "
+              + ", ".join(f"{b:.1f}" for b in bits))
+        print(f"  Rate per use: {math.log(q)/math.log(2):.2f} bits/use")
     print()
 
 
-# =============================================================================
-# Application 3: Parallel System Reliability
-# =============================================================================
+# ============================================================
+# Application 2: Automata State Space Growth
+# ============================================================
 
-def parallel_reliability_demo():
+def automata_state_growth(base_states: int, composition_depth: int) -> Dict[str, float]:
+    """Analyze state space growth under automaton composition.
+
+    The exponential multiplicativity theorem says:
+    exp(bound(S^n)) = exp(bound(S))^n = |S|^n
+
+    For automata, this means the number of distinguishable states
+    in a product automaton grows exponentially with composition depth.
+
+    Args:
+        base_states: Number of states in the base automaton.
+        composition_depth: Number of composed copies.
+
+    Returns:
+        Dictionary with tropical bound, state count, and growth rate.
     """
-    Application: Reliability analysis of parallel systems.
+    bound = composition_depth * math.log(base_states)
+    state_count = base_states ** composition_depth
+    growth_rate = math.log(base_states)  # per composition step
 
-    For independent parallel systems, the failure mode complexity
-    (number of possible failure configurations) is multiplicative.
-    The tropical bound (log of configurations) is additive.
-    """
+    return {
+        'tropical_bound': bound,
+        'state_count': state_count,
+        'growth_rate': growth_rate,
+        'growth_rate_bits': growth_rate / math.log(2),
+    }
+
+
+def demo_automata_growth():
+    """Demonstrate automata state space growth."""
     print("=" * 60)
-    print("APPLICATION 3: Parallel System Reliability")
+    print("APPLICATION 2: Automata State Space Growth")
     print("=" * 60)
+    print()
 
-    systems = [
-        ("Power supply", 5),    # 5 failure modes
-        ("Cooling", 3),         # 3 failure modes
-        ("Network", 8),         # 8 failure modes
-        ("Storage", 4),         # 4 failure modes
-    ]
+    base_states = 5
+    print(f"Base automaton: {base_states} states")
+    print(f"Growth rate: log({base_states}) = {math.log(base_states):.4f} nats/step "
+          f"= {math.log(base_states)/math.log(2):.4f} bits/step")
+    print()
 
-    print("\n  Independent subsystems and their failure mode counts:\n")
-    total_bound = 0.0
-    total_modes = 1
-    for name, modes in systems:
-        bound = tropical_perturbation_bound(modes)
-        total_bound += bound
-        total_modes *= modes
-        print(f"    {name:>15}: {modes:>3} modes, bound = {bound:.4f}")
-
-    combined_bound = tropical_perturbation_bound(total_modes)
-    print(f"\n  Combined system:")
-    print(f"    Total failure configurations: {total_modes}")
-    print(f"    Combined bound (direct):   {combined_bound:.4f}")
-    print(f"    Sum of individual bounds:   {total_bound:.4f}")
-    print(f"    Difference:                {abs(combined_bound - total_bound):.2e}")
-    print(f"\n  → The tensorization law guarantees compositional analysis!")
-    print(f"  → Each subsystem can be analyzed and certified independently.\n")
-
-
-# =============================================================================
-# Application 4: ML Model Capacity
-# =============================================================================
-
-def ml_model_capacity_demo():
-    """
-    Application: Model capacity analysis for composed ML models.
-
-    When combining independent feature transformations (e.g., in a
-    product kernel), the effective model capacity adds logarithmically.
-    """
-    print("=" * 60)
-    print("APPLICATION 4: ML Model Capacity Analysis")
-    print("=" * 60)
-
-    # Feature spaces for independent models
-    models = [
-        ("Text embeddings", 768),
-        ("Image features", 2048),
-        ("Audio spectrograms", 512),
-    ]
-
-    print("\n  Independent feature spaces:\n")
-    total_bound = 0.0
-    total_dim = 1
-    for name, dim in models:
-        bound = tropical_perturbation_bound(dim)
-        total_bound += bound
-        total_dim *= dim
-        print(f"    {name:>20}: dim = {dim:>6}, tropical capacity = {bound:.4f}")
-
-    print(f"\n  Multimodal fusion (product space):")
-    print(f"    Total dimensionality: {total_dim:,}")
-    print(f"    Tropical capacity (sum):    {total_bound:.4f}")
-    print(f"    Tropical capacity (direct): {tropical_perturbation_bound(total_dim):.4f}")
-    print(f"\n  → Capacity scales logarithmically, not exponentially!")
-    print(f"  → Compositional capacity = sum of component capacities.\n")
-
-    # Demonstrate scaling with model size
-    print("  Scaling: how tropical capacity grows with feature dimension:\n")
-    print(f"    {'Dimension':>12} | {'Tropical capacity':>18} | {'Exp(capacity)':>14}")
-    print(f"    {'-'*12}-+-{'-'*18}-+-{'-'*14}")
-    for d in [10, 100, 1000, 10000, 100000, 1000000]:
-        b = tropical_perturbation_bound(d)
-        e = math.exp(b)
-        print(f"    {d:>12,} | {b:>18.6f} | {e:>14,.0f}")
+    print(f"{'Depth':>6s} {'Bound':>10s} {'States':>12s} {'States(exp)':>14s}")
+    print("-" * 44)
+    for d in range(1, 9):
+        result = automata_state_growth(base_states, d)
+        print(f"{d:6d} {result['tropical_bound']:10.4f} {result['state_count']:12d} "
+              f"{math.exp(result['tropical_bound']):14.1f}")
     print()
 
 
-# =============================================================================
-# Application 5: Thermodynamic Analogy
-# =============================================================================
+# ============================================================
+# Application 3: Robustness Certification
+# ============================================================
 
-def thermodynamic_analogy_demo():
+def certify_robustness(
+    factor_perturbations: List[float],
+    support_sizes: List[int]
+) -> Dict[str, float]:
+    """Certify robustness of a product system.
+
+    Using the separable perturbation theorem:
+    - Each factor has perturbation bound ε_i
+    - The product perturbation is bounded by Σ ε_i
+    - The complexity of the product support is Σ log(|S_i|)
+
+    This gives a certified robustness guarantee for the composed system.
+
+    Args:
+        factor_perturbations: List of per-factor perturbation bounds.
+        support_sizes: List of per-factor support sizes.
+
+    Returns:
+        Dictionary with total perturbation bound, complexity, and efficiency.
     """
-    Application: Tropical thermodynamics analogy.
+    total_perturbation = sum(factor_perturbations)
+    total_complexity = sum(math.log(s) for s in support_sizes)
+    product_support_size = 1
+    for s in support_sizes:
+        product_support_size *= s
 
-    The tropical perturbation bound behaves like thermodynamic free energy:
-    - Extensive (additive under product composition)
-    - Monotone (larger systems have larger bound)
-    - The partition function (exp of bound) is multiplicative
-    """
+    # Efficiency: perturbation per unit complexity
+    efficiency = total_perturbation / total_complexity if total_complexity > 0 else float('inf')
+
+    return {
+        'total_perturbation_bound': total_perturbation,
+        'total_complexity': total_complexity,
+        'product_support_size': product_support_size,
+        'n_factors': len(factor_perturbations),
+        'perturbation_per_complexity': efficiency,
+    }
+
+
+def demo_robustness():
+    """Demonstrate robustness certification."""
     print("=" * 60)
-    print("APPLICATION 5: Tropical Thermodynamics")
+    print("APPLICATION 3: Robustness Certification for Composed Systems")
     print("=" * 60)
+    print()
 
-    print("\n  Analogy table:\n")
-    print(f"    {'Thermodynamics':>25} | {'Tropical Theory':>30}")
-    print(f"    {'-'*25}-+-{'-'*30}")
-    print(f"    {'Free energy F':>25} | {'tropicalPerturbationBound':>30}")
-    print(f"    {'Partition function Z':>25} | {'exp(bound) = |S|':>30}")
-    print(f"    {'Entropy S':>25} | {'log |S| (= bound)':>30}")
-    print(f"    {'Extensivity':>25} | {'Product tensorization':>30}")
-    print(f"    {'Second law (ΔS ≥ 0)':>25} | {'Monotonicity under inclusion':>30}")
-
-    # Simulate a "thermodynamic" system
-    print("\n  Simulated tropical thermodynamic system:")
-    print("  (Independent subsystems at different 'temperatures')\n")
-
-    subsystems = [
-        ("Subsystem A", 10),
-        ("Subsystem B", 20),
-        ("Subsystem C", 5),
+    # Scenario: composing multiple independent subsystems
+    scenarios = [
+        ("Small system (3 factors)", [0.01, 0.02, 0.015], [10, 20, 15]),
+        ("Medium system (5 factors)", [0.01]*5, [100]*5),
+        ("Heterogeneous (4 factors)", [0.1, 0.001, 0.05, 0.02], [5, 1000, 50, 200]),
+        ("Large scale (8 factors)", [0.005]*8, [50]*8),
     ]
 
-    total_bound = 0.0
-    total_states = 1
-    for name, states in subsystems:
-        bound = tropical_perturbation_bound(states)
-        total_bound += bound
-        total_states *= states
-        Z = math.exp(bound)
-        print(f"    {name}: |S| = {states:>3}, F = {bound:.4f}, Z = exp(F) = {Z:.1f}")
-
-    print(f"\n    Combined system:")
-    print(f"      Total states:   {total_states}")
-    print(f"      Free energy:    {total_bound:.4f} (= sum of parts)")
-    print(f"      Partition fn:   {math.exp(total_bound):.1f} (= product of parts)")
-    print(f"\n  → Tropical free energy is extensive: F(A×B×C) = F(A) + F(B) + F(C) ✓\n")
+    for name, perturbs, sizes in scenarios:
+        result = certify_robustness(perturbs, sizes)
+        print(f"{name}:")
+        print(f"  Factors: {result['n_factors']}")
+        print(f"  Per-factor ε: {perturbs}")
+        print(f"  Per-factor |S|: {sizes}")
+        print(f"  Total perturbation bound: {result['total_perturbation_bound']:.6f}")
+        print(f"  Total complexity (Σ log|Si|): {result['total_complexity']:.4f}")
+        print(f"  Product support size: {result['product_support_size']:.2e}")
+        print(f"  Perturbation/complexity ratio: {result['perturbation_per_complexity']:.6f}")
+        print()
 
 
-def main():
-    print("\n" + "=" * 60)
-    print("  TROPICAL PERTURBATION AMPLIFICATION — APPLICATIONS")
-    print("=" * 60 + "\n")
+# ============================================================
+# Application 4: Tropical Free Energy Computation
+# ============================================================
 
-    network_routing_demo()
-    crypto_key_space_demo()
-    parallel_reliability_demo()
-    ml_model_capacity_demo()
-    thermodynamic_analogy_demo()
+def tropical_free_energy(
+    energies: Dict, temperature: float = 1.0
+) -> float:
+    """Compute tropical free energy (zero-temperature limit).
 
+    In statistical mechanics, F = -T log Z where Z = Σ exp(-E_i/T).
+    In the tropical (T → 0) limit, F → min(E_i).
+
+    The tropical perturbation bound measures the "entropy" contribution:
+    log(|S|) counts the number of accessible microstates.
+
+    Args:
+        energies: Dictionary mapping states to energies.
+        temperature: Temperature parameter.
+
+    Returns:
+        Free energy estimate.
+    """
+    if temperature > 0:
+        Z = sum(math.exp(-E / temperature) for E in energies.values())
+        return -temperature * math.log(Z)
+    else:
+        return min(energies.values())
+
+
+def demo_free_energy():
+    """Demonstrate tropical free energy for product systems."""
     print("=" * 60)
-    print("  ALL APPLICATIONS DEMONSTRATED SUCCESSFULLY")
-    print("=" * 60 + "\n")
+    print("APPLICATION 4: Tropical Free Energy Extensivity")
+    print("=" * 60)
+    print()
+
+    # Two independent subsystems
+    E1 = {0: 1.0, 1: 2.0, 2: 0.5}
+    E2 = {0: 0.3, 1: 1.5}
+
+    # Product energies
+    E_prod = {(s, t): E1[s] + E2[t] for s in E1 for t in E2}
+
+    print("Subsystem 1 energies:", E1)
+    print("Subsystem 2 energies:", E2)
+    print()
+
+    temps = [10.0, 1.0, 0.1, 0.01]
+    print(f"{'T':>8s} {'F1':>10s} {'F2':>10s} {'F1+F2':>10s} {'F(prod)':>10s} {'diff':>10s}")
+    print("-" * 60)
+
+    for T in temps:
+        F1 = tropical_free_energy(E1, T)
+        F2 = tropical_free_energy(E2, T)
+        F_prod = tropical_free_energy(E_prod, T)
+        diff = abs(F_prod - (F1 + F2))
+        print(f"{T:8.3f} {F1:10.6f} {F2:10.6f} {F1+F2:10.6f} {F_prod:10.6f} {diff:10.2e}")
+
+    # Zero temperature (tropical limit)
+    F1_trop = min(E1.values())
+    F2_trop = min(E2.values())
+    F_prod_trop = min(E_prod.values())
+    print(f"{'0 (trop)':>8s} {F1_trop:10.6f} {F2_trop:10.6f} "
+          f"{F1_trop+F2_trop:10.6f} {F_prod_trop:10.6f} "
+          f"{abs(F_prod_trop - (F1_trop + F2_trop)):10.2e}")
+
+    print(f"\nTropical entropy (log |S|):")
+    print(f"  System 1: log({len(E1)}) = {math.log(len(E1)):.4f}")
+    print(f"  System 2: log({len(E2)}) = {math.log(len(E2)):.4f}")
+    print(f"  Product:  log({len(E_prod)}) = {math.log(len(E_prod)):.4f}")
+    print(f"  Sum:      {math.log(len(E1)) + math.log(len(E2)):.4f}")
+    print()
 
 
 if __name__ == "__main__":
-    main()
+    demo_channel_capacity()
+    demo_automata_growth()
+    demo_robustness()
+    demo_free_energy()
+
+    print("=" * 60)
+    print("All applications demonstrated successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Tropical Perturbation Amplification — Interactive Demo
+Tropical Perturbation Amplification: Numerical Demonstrations
 
-Demonstrates the tensorization law and related properties of the
-tropical perturbation bound with concrete numerical examples.
+Demonstrates the key theorems from the formal development:
+1. Tropical max functional separability on products
+2. Log-cardinality additivity under Cartesian products
+3. N-fold amplification (scaling law)
+4. Separable perturbation stability
 """
 
-import math
-from itertools import product as cartesian_product
+import numpy as np
+import itertools
+from typing import List, Tuple, Callable
+
+# ============================================================
+# 1. Tropical Max Functional
+# ============================================================
+
+def trop_max(support: List, weights: dict, f: Callable) -> float:
+    """Compute the tropical max functional: max_{s in S} (f(s) + w(s))"""
+    return max(f(s) + weights[s] for s in support)
 
 
-def tropical_perturbation_bound(S):
-    """Tropical perturbation bound: log |S|."""
-    n = len(S) if hasattr(S, '__len__') else S
-    if n <= 0:
-        return 0.0
-    return math.log(n)
+def demo_tropical_max():
+    """Demonstrate the tropical max functional on simple examples."""
+    print("=" * 60)
+    print("DEMO 1: Tropical Max Functional")
+    print("=" * 60)
+
+    S = [1, 2, 3]
+    w = {1: 0.5, 2: 1.0, 3: -0.5}
+
+    f1 = lambda x: x ** 2
+    f2 = lambda x: -x
+
+    val1 = trop_max(S, w, f1)
+    val2 = trop_max(S, w, f2)
+
+    print(f"Support S = {S}")
+    print(f"Weights w = {w}")
+    print(f"f1(x) = x^2:  tropMax(S, w, f1) = {val1}")
+    print(f"f2(x) = -x:   tropMax(S, w, f2) = {val2}")
+    print(f"max(f1, f2):   tropMax(S, w, max(f1,f2)) = "
+          f"{trop_max(S, w, lambda x: max(f1(x), f2(x)))}")
+    print(f"max(val1, val2) = {max(val1, val2)}")
+    print(f"Sup-preservation verified: {abs(trop_max(S, w, lambda x: max(f1(x), f2(x))) - max(val1, val2)) < 1e-10}")
+    print()
 
 
-def verify_product_theorem(S, T):
-    """Verify the tensorization law: bound(S×T) = bound(S) + bound(T)."""
-    product_set = list(cartesian_product(S, T))
-    bound_S = tropical_perturbation_bound(S)
-    bound_T = tropical_perturbation_bound(T)
-    bound_product = tropical_perturbation_bound(product_set)
-    bound_sum = bound_S + bound_T
+# ============================================================
+# 2. Product Separability
+# ============================================================
 
-    print(f"  |S| = {len(S)}, |T| = {len(T)}, |S×T| = {len(product_set)}")
-    print(f"  bound(S)   = log({len(S)}) = {bound_S:.6f}")
-    print(f"  bound(T)   = log({len(T)}) = {bound_T:.6f}")
-    print(f"  bound(S×T) = log({len(product_set)}) = {bound_product:.6f}")
-    print(f"  bound(S) + bound(T) = {bound_sum:.6f}")
-    print(f"  Difference: {abs(bound_product - bound_sum):.2e}")
-    assert abs(bound_product - bound_sum) < 1e-10, "Tensorization law failed!"
-    print(f"  ✓ Tensorization law verified!\n")
-    return bound_S, bound_T, bound_product
+def demo_product_separability():
+    """Demonstrate that tropMax on products with separable weights/functions decomposes."""
+    print("=" * 60)
+    print("DEMO 2: Product Separability (tropMax_product_separable)")
+    print("=" * 60)
 
+    S = [1, 2, 3]
+    T = ['a', 'b']
 
-def verify_exp_multiplicativity(S, T):
-    """Verify exp(bound(S×T)) = exp(bound(S)) × exp(bound(T))."""
-    product_set = list(cartesian_product(S, T))
-    lhs = math.exp(tropical_perturbation_bound(product_set))
-    rhs = math.exp(tropical_perturbation_bound(S)) * math.exp(tropical_perturbation_bound(T))
+    w1 = {1: 0.5, 2: 1.0, 3: -0.5}
+    w2 = {'a': 0.3, 'b': -0.2}
 
-    print(f"  exp(bound(S×T)) = {lhs:.6f}")
-    print(f"  exp(bound(S)) × exp(bound(T)) = {rhs:.6f}")
-    print(f"  These should equal |S|×|T| = {len(S) * len(T)}")
-    print(f"  ✓ Exponential multiplicativity verified!\n")
+    f1_func = lambda s: s * 0.7
+    f2_func = lambda t: 1.0 if t == 'a' else 2.0
 
+    # Product support
+    ST = list(itertools.product(S, T))
+    w_prod = {(s, t): w1[s] + w2[t] for s in S for t in T}
+    f_prod = lambda p: f1_func(p[0]) + f2_func(p[1])
 
-def verify_n_fold_amplification(S, max_n=8):
-    """Verify n-fold amplification: bound(S^n) = n × bound(S)."""
-    bound_S = tropical_perturbation_bound(S)
-    print(f"  |S| = {len(S)}, bound(S) = {bound_S:.6f}\n")
-    print(f"  {'n':>4} | {'n × bound(S)':>14} | {'log(|S|^n)':>14} | {'|S|^n':>12}")
-    print(f"  {'-'*4}-+-{'-'*14}-+-{'-'*14}-+-{'-'*12}")
+    # Compute on product
+    val_product = trop_max(ST, w_prod, f_prod)
 
-    for n in range(1, max_n + 1):
-        n_times_bound = n * bound_S
-        log_power = math.log(len(S) ** n)
-        power_count = len(S) ** n
+    # Compute on factors
+    val_S = trop_max(S, w1, f1_func)
+    val_T = trop_max(T, w2, f2_func)
 
-        print(f"  {n:>4} | {n_times_bound:>14.6f} | {log_power:>14.6f} | {power_count:>12}")
-        assert abs(n_times_bound - log_power) < 1e-10
-
-    print(f"\n  ✓ n-fold amplification verified for n = 1..{max_n}!\n")
+    print(f"S = {S}, T = {T}")
+    print(f"w1 = {w1}, w2 = {w2}")
+    print(f"tropMax(S×T, w1⊕w2, f1⊕f2) = {val_product:.6f}")
+    print(f"tropMax(S, w1, f1) + tropMax(T, w2, f2) = {val_S:.6f} + {val_T:.6f} = {val_S + val_T:.6f}")
+    print(f"Separability verified: {abs(val_product - (val_S + val_T)) < 1e-10}")
+    print()
 
 
-def verify_monotonicity(S, T):
-    """Verify monotonicity: S ⊆ T → bound(S) ≤ bound(T)."""
-    bound_S = tropical_perturbation_bound(S)
-    bound_T = tropical_perturbation_bound(T)
+# ============================================================
+# 3. Log-Cardinality Additivity
+# ============================================================
 
-    print(f"  S = {S} (|S| = {len(S)})")
-    print(f"  T = {T} (|T| = {len(T)})")
-    print(f"  S ⊆ T: {set(S).issubset(set(T))}")
-    print(f"  bound(S) = {bound_S:.6f} ≤ bound(T) = {bound_T:.6f}: {bound_S <= bound_T + 1e-10}")
-    print(f"  ✓ Monotonicity verified!\n")
+def tropical_perturbation_bound(support_size: int) -> float:
+    """The tropical perturbation bound: log(|S|)"""
+    return np.log(support_size)
 
 
-def verify_union_subadditivity(S, T):
-    """Verify union subadditivity: bound(S∪T) ≤ bound(S) + bound(T) + log(2)."""
-    union = list(set(S) | set(T))
-    bound_union = tropical_perturbation_bound(union)
-    bound_S = tropical_perturbation_bound(S)
-    bound_T = tropical_perturbation_bound(T)
-    upper = bound_S + bound_T + math.log(2)
+def demo_log_additivity():
+    """Demonstrate log(|S × T|) = log(|S|) + log(|T|)."""
+    print("=" * 60)
+    print("DEMO 3: Log-Cardinality Additivity (Main Tensorization Law)")
+    print("=" * 60)
 
-    print(f"  |S| = {len(S)}, |T| = {len(T)}, |S∪T| = {len(union)}")
-    print(f"  bound(S∪T) = {bound_union:.6f}")
-    print(f"  bound(S) + bound(T) + log(2) = {upper:.6f}")
-    print(f"  Slack = {upper - bound_union:.6f}")
-    assert bound_union <= upper + 1e-10
-    print(f"  ✓ Union subadditivity verified!\n")
+    test_cases = [
+        (3, 4),
+        (5, 7),
+        (10, 10),
+        (2, 100),
+        (1, 50),
+    ]
+
+    for card_s, card_t in test_cases:
+        bound_product = tropical_perturbation_bound(card_s * card_t)
+        bound_s = tropical_perturbation_bound(card_s)
+        bound_t = tropical_perturbation_bound(card_t)
+        diff = abs(bound_product - (bound_s + bound_t))
+        print(f"|S|={card_s:3d}, |T|={card_t:3d}: "
+              f"log({card_s*card_t:5d}) = {bound_product:.6f}, "
+              f"log({card_s}) + log({card_t}) = {bound_s + bound_t:.6f}, "
+              f"diff = {diff:.2e}")
+
+    print()
 
 
-def verify_recovery_dimension(S):
-    """Verify exp(bound(S)) = |S|."""
-    bound_S = tropical_perturbation_bound(S)
-    recovery_dim = math.exp(bound_S)
+# ============================================================
+# 4. N-fold Amplification
+# ============================================================
 
-    print(f"  |S| = {len(S)}")
-    print(f"  exp(bound(S)) = exp({bound_S:.6f}) = {recovery_dim:.6f}")
-    print(f"  |S| = {len(S)}.000000")
-    assert abs(recovery_dim - len(S)) < 1e-10
-    print(f"  ✓ Recovery dimension verified!\n")
+def demo_n_fold_amplification():
+    """Demonstrate log(|S^n|) = n · log(|S|)."""
+    print("=" * 60)
+    print("DEMO 4: N-fold Amplification Law")
+    print("=" * 60)
+
+    card_s = 5
+    base_bound = tropical_perturbation_bound(card_s)
+
+    print(f"Base support size |S| = {card_s}, base bound = log({card_s}) = {base_bound:.6f}")
+    print(f"{'n':>3s} {'|S^n|':>12s} {'log(|S^n|)':>12s} {'n·log(|S|)':>12s} {'diff':>10s}")
+    print("-" * 55)
+
+    for n in range(1, 9):
+        card_sn = card_s ** n
+        bound_sn = tropical_perturbation_bound(card_sn)
+        n_times_bound = n * base_bound
+        diff = abs(bound_sn - n_times_bound)
+        print(f"{n:3d} {card_sn:12d} {bound_sn:12.6f} {n_times_bound:12.6f} {diff:10.2e}")
+
+    print()
 
 
-def tropical_max_functional(S, w, f):
-    """Compute the tropical max functional: max_{s ∈ S} (f(s) + w[s])."""
-    return max(f(s) + w[s] for s in S)
-
+# ============================================================
+# 5. Perturbation Stability
+# ============================================================
 
 def demo_perturbation_stability():
-    """Demonstrate perturbation stability with constant 1."""
+    """Demonstrate separable perturbation stability on products."""
     print("=" * 60)
-    print("DEMO: Perturbation Stability (Stability Constant = 1)")
-    print("=" * 60)
-
-    S = [1, 2, 3, 4, 5]
-    w1 = {s: s * 0.5 for s in S}
-    w2 = {s: s * 0.5 + 0.1 * (-1)**s for s in S}  # perturbed
-
-    epsilon = max(abs(w1[s] - w2[s]) for s in S)
-    print(f"\n  Support S = {S}")
-    print(f"  w₁ = {w1}")
-    print(f"  w₂ = {w2}")
-    print(f"  max |w₁(s) - w₂(s)| = {epsilon:.4f}")
-
-    # Test with several functions
-    test_fns = [
-        ("f(x) = x", lambda x: x),
-        ("f(x) = -x", lambda x: -x),
-        ("f(x) = x²", lambda x: x**2),
-        ("f(x) = 0", lambda x: 0),
-    ]
-
-    print(f"\n  {'Function':>12} | {'F₁(f)':>8} | {'F₂(f)':>8} | {'|diff|':>8} | {'≤ ε?':>5}")
-    print(f"  {'-'*12}-+-{'-'*8}-+-{'-'*8}-+-{'-'*8}-+-{'-'*5}")
-
-    for name, f in test_fns:
-        f1 = tropical_max_functional(S, w1, f)
-        f2 = tropical_max_functional(S, w2, f)
-        diff = abs(f1 - f2)
-        ok = "✓" if diff <= epsilon + 1e-10 else "✗"
-        print(f"  {name:>12} | {f1:>8.4f} | {f2:>8.4f} | {diff:>8.4f} | {ok:>5}")
-
-    print(f"\n  ✓ All perturbations bounded by ε = {epsilon:.4f}\n")
-
-
-def main():
-    print("\n" + "=" * 60)
-    print("  TROPICAL PERTURBATION AMPLIFICATION — DEMO")
+    print("DEMO 5: Separable Perturbation Stability")
     print("=" * 60)
 
-    # Demo 1: Product tensorization
-    print("\n" + "=" * 60)
-    print("DEMO 1: Product Tensorization Law")
-    print("  bound(S × T) = bound(S) + bound(T)")
-    print("=" * 60 + "\n")
+    S = list(range(1, 6))
+    T = list(range(1, 4))
 
-    examples = [
-        (list(range(2)), list(range(3))),
-        (list(range(5)), list(range(7))),
-        (list(range(10)), list(range(10))),
-        (list(range(1)), list(range(100))),
-    ]
+    np.random.seed(42)
+    w1 = {s: np.random.randn() for s in S}
+    w2 = {t: np.random.randn() for t in T}
 
-    for S, T in examples:
-        verify_product_theorem(S, T)
+    eps1, eps2 = 0.1, 0.05
 
-    # Demo 2: Exponential multiplicativity
+    # Perturbed weights
+    w1p = {s: w1[s] + np.random.uniform(-eps1, eps1) for s in S}
+    w2p = {t: w2[t] + np.random.uniform(-eps2, eps2) for t in T}
+
+    # Check factor bounds
+    max_diff1 = max(abs(w1[s] - w1p[s]) for s in S)
+    max_diff2 = max(abs(w2[t] - w2p[t]) for t in T)
+
+    # Product weights
+    ST = list(itertools.product(S, T))
+    w_prod = {(s, t): w1[s] + w2[t] for s in S for t in T}
+    w_prod_p = {(s, t): w1p[s] + w2p[t] for s in S for t in T}
+
+    # Test functional differences on random inputs
+    max_func_diff = 0.0
+    for _ in range(1000):
+        f_vals = {p: np.random.randn() for p in ST}
+        f_func = lambda p, fv=f_vals: fv[p]
+        val1 = trop_max(ST, w_prod, f_func)
+        val2 = trop_max(ST, w_prod_p, f_func)
+        max_func_diff = max(max_func_diff, abs(val1 - val2))
+
+    print(f"|S| = {len(S)}, |T| = {len(T)}")
+    print(f"Max |w1 - w1'| = {max_diff1:.6f} ≤ ε₁ = {eps1}")
+    print(f"Max |w2 - w2'| = {max_diff2:.6f} ≤ ε₂ = {eps2}")
+    print(f"Max |F - F'| over 1000 random inputs = {max_func_diff:.6f}")
+    print(f"Theoretical bound ε₁ + ε₂ = {eps1 + eps2:.6f}")
+    print(f"Stability verified: {max_func_diff <= eps1 + eps2 + 1e-10}")
+    print()
+
+
+# ============================================================
+# 6. Exponential Multiplicativity
+# ============================================================
+
+def demo_exponential():
+    """Demonstrate exp(bound(S×T)) = exp(bound(S)) · exp(bound(T))."""
     print("=" * 60)
-    print("DEMO 2: Exponential Multiplicativity")
-    print("  exp(bound(S×T)) = exp(bound(S)) × exp(bound(T))")
-    print("=" * 60 + "\n")
-
-    verify_exp_multiplicativity(list(range(4)), list(range(6)))
-
-    # Demo 3: n-fold amplification
+    print("DEMO 6: Exponential Multiplicativity")
     print("=" * 60)
-    print("DEMO 3: n-Fold Amplification")
-    print("  bound(S^n) = n × bound(S)")
-    print("=" * 60 + "\n")
 
-    verify_n_fold_amplification(list(range(5)))
+    test_cases = [(3, 5), (7, 11), (2, 8), (4, 4)]
 
-    # Demo 4: Monotonicity
-    print("=" * 60)
-    print("DEMO 4: Monotonicity Under Inclusion")
-    print("  S ⊆ T → bound(S) ≤ bound(T)")
-    print("=" * 60 + "\n")
+    for cs, ct in test_cases:
+        bound_s = tropical_perturbation_bound(cs)
+        bound_t = tropical_perturbation_bound(ct)
+        bound_st = tropical_perturbation_bound(cs * ct)
 
-    verify_monotonicity([1, 2, 3], [1, 2, 3, 4, 5])
+        exp_product = np.exp(bound_st)
+        exp_s_times_exp_t = np.exp(bound_s) * np.exp(bound_t)
 
-    # Demo 5: Union subadditivity
-    print("=" * 60)
-    print("DEMO 5: Union Subadditivity")
-    print("  bound(S∪T) ≤ bound(S) + bound(T) + log(2)")
-    print("=" * 60 + "\n")
+        print(f"|S|={cs}, |T|={ct}: exp(bound(S×T)) = {exp_product:.4f}, "
+              f"exp(bound(S))·exp(bound(T)) = {exp_s_times_exp_t:.4f}, "
+              f"(= |S|·|T| = {cs*ct})")
 
-    verify_union_subadditivity([1, 2, 3, 4, 5], [3, 4, 5, 6, 7])
-    verify_union_subadditivity([1, 2, 3], [4, 5, 6, 7])  # disjoint
+    print()
 
-    # Demo 6: Recovery dimension
-    print("=" * 60)
-    print("DEMO 6: Recovery Dimension")
-    print("  exp(bound(S)) = |S|")
-    print("=" * 60 + "\n")
 
-    verify_recovery_dimension(list(range(1, 11)))
-
-    # Demo 7: Perturbation stability
+if __name__ == "__main__":
+    demo_tropical_max()
+    demo_product_separability()
+    demo_log_additivity()
+    demo_n_fold_amplification()
     demo_perturbation_stability()
-
-    # Demo 8: Three-fold product
-    print("=" * 60)
-    print("DEMO 8: Three-Fold Product")
-    print("  bound((S×T)×U) = bound(S) + bound(T) + bound(U)")
-    print("=" * 60 + "\n")
-
-    S = list(range(3))
-    T = list(range(4))
-    U = list(range(5))
-    ST = list(cartesian_product(S, T))
-    STU = list(cartesian_product(ST, U))
-
-    bound_S = tropical_perturbation_bound(S)
-    bound_T = tropical_perturbation_bound(T)
-    bound_U = tropical_perturbation_bound(U)
-    bound_STU = tropical_perturbation_bound(STU)
-    bound_sum = bound_S + bound_T + bound_U
-
-    print(f"  |S| = {len(S)}, |T| = {len(T)}, |U| = {len(U)}")
-    print(f"  |(S×T)×U| = {len(STU)}")
-    print(f"  bound(S) + bound(T) + bound(U) = {bound_sum:.6f}")
-    print(f"  bound((S×T)×U) = {bound_STU:.6f}")
-    print(f"  Difference: {abs(bound_STU - bound_sum):.2e}")
-    print(f"  ✓ Three-fold product verified!\n")
+    demo_exponential()
 
     print("=" * 60)
-    print("  ALL DEMOS PASSED SUCCESSFULLY")
-    print("=" * 60 + "\n")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""Generate PACKAGE.json with all embedded content."""
-
-import json
-import base64
-import io
-
-# Read all files
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
-
-# Generate visualizations
-from visualizations import generate_all_visualizations
-vizs = generate_all_visualizations()
-
-article = read_file('ARTICLE.md')
-research_paper = read_file('RESEARCH_PAPER.md')
-future_directions = read_file('FUTURE_DIRECTIONS.md')
-demo_code = read_file('demo.py')
-algorithms_code = read_file('algorithms.py')
-applications_code = read_file('applications.py')
-lean_code = read_file('Catalog/Bridges/AlgebraEML/TropicalPerturbationAmplification.lean')
-
-package = {
-    "title": "Tropical Perturbation Amplification: A Product Tensorization Law",
-    "domain": "Tropical Algebra / Complexity Theory / Information Theory",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "Tropical Perturbation Amplification Demo",
-            "code": demo_code
-        },
-        {
-            "name": "Applications of Tropical Amplification",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Tropical Max Functional",
-            "pseudocode": "INPUT: Support S, weights w, function f\nOUTPUT: max_{s in S} (f(s) + w(s))\n\n1. result ← -∞\n2. FOR each s in S:\n3.   val ← f(s) + w(s)\n4.   IF val > result THEN result ← val\n5. RETURN result\n\nTime: O(|S|), Space: O(1)",
-            "code": algorithms_code
-        },
-        {
-            "name": "Tropical Perturbation Bound",
-            "pseudocode": "INPUT: Finite set S (or its cardinality n)\nOUTPUT: log(n)\n\n1. RETURN ln(|S|)\n\nTime: O(1), Space: O(1)\n\nProperty: bound(S × T) = bound(S) + bound(T)  [Tensorization]\nProperty: exp(bound(S)) = |S|                   [Recovery]",
-            "code": "import math\ndef tropical_perturbation_bound(n):\n    return math.log(n) if n > 0 else 0.0\n\n# Verify tensorization\nfor s in range(2, 11):\n    for t in range(2, 11):\n        assert abs(tropical_perturbation_bound(s*t) - tropical_perturbation_bound(s) - tropical_perturbation_bound(t)) < 1e-12\nprint('Tensorization verified for all 2 <= s,t <= 10')"
-        },
-        {
-            "name": "Product Weight Construction",
-            "pseudocode": "INPUT: Weight functions wS : S → ℝ, wT : T → ℝ\nOUTPUT: Product weight w : S×T → ℝ where w(s,t) = wS(s) + wT(t)\n\n1. FOR each (s, t) in S × T:\n2.   w[(s,t)] ← wS[s] + wT[t]\n3. RETURN w\n\nTime: O(|S| × |T|), Space: O(|S| × |T|)\n\nProperty: |w₁(s,t) - w₂(s,t)| ≤ εS + εT  [Perturbation stability]",
-            "code": "def product_weight(wS, wT):\n    return {(s, t): wS[s] + wT[t] for s in wS for t in wT}\n\nwS = {'a': 1.0, 'b': 2.0}\nwT = {'x': 0.5, 'y': 1.5}\npw = product_weight(wS, wT)\nfor k, v in sorted(pw.items()):\n    print(f'w{k} = {v}')"
-        }
-    ],
-    "visualizations": [
-        {
-            "name": "Tensorization Law and n-Fold Amplification",
-            "data": f"data:image/png;base64,{vizs.get('tensorization', '')}"
-        },
-        {
-            "name": "Exponential Multiplicativity and Recovery Dimension",
-            "data": f"data:image/png;base64,{vizs.get('exp_multiplicativity', '')}"
-        },
-        {
-            "name": "Union Subadditivity",
-            "data": f"data:image/png;base64,{vizs.get('union_subadditivity', '')}"
-        }
-    ],
-    "lean_proofs": lean_code
-}
-
-with open('PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
-
-print(f"PACKAGE.json generated ({len(json.dumps(package))} bytes)")
+    print("All demonstrations completed successfully.")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Tropical Perturbation Amplification
-
-Generates publication-quality figures illustrating the main results.
+Visualizations for Tropical Perturbation Amplification.
+Generates PNG figures for the research paper and article.
 """
 
-import math
-import base64
-import io
-
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import numpy as np
-    HAS_MATPLOTLIB = True
-except ImportError:
-    HAS_MATPLOTLIB = False
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 
 
-def tropical_perturbation_bound(n):
-    return math.log(n) if n > 0 else 0.0
-
-
-def generate_tensorization_plot():
-    """Plot the tensorization law: bound(S×T) vs bound(S) + bound(T)."""
-    if not HAS_MATPLOTLIB:
-        return None
-
+def fig1_tensorization_law():
+    """Visualize log(|S×T|) = log(|S|) + log(|T|) across support sizes."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    # Left: 3D scatter showing additivity
+    # Left: 3D surface showing additivity
+    card_s = np.arange(1, 21)
+    card_t = np.arange(1, 21)
+    CS, CT = np.meshgrid(card_s, card_t)
+
+    bound_product = np.log(CS * CT)
+    bound_sum = np.log(CS) + np.log(CT)
+
     ax = axes[0]
-    sizes_s = range(2, 21)
-    sizes_t = range(2, 21)
-    xs, ys, zs = [], [], []
-    for s in sizes_s:
-        for t in sizes_t:
-            xs.append(tropical_perturbation_bound(s))
-            ys.append(tropical_perturbation_bound(t))
-            zs.append(tropical_perturbation_bound(s * t))
+    c = ax.pcolormesh(CS, CT, bound_product, shading='auto', cmap='viridis')
+    ax.set_xlabel('|S|', fontsize=12)
+    ax.set_ylabel('|T|', fontsize=12)
+    ax.set_title('Tropical Perturbation Bound\nlog(|S × T|)', fontsize=13)
+    fig.colorbar(c, ax=ax, label='log(|S × T|)')
 
-    sums = [x + y for x, y in zip(xs, ys)]
-    ax.scatter(sums, zs, c='steelblue', alpha=0.5, s=10)
-    min_val = min(min(sums), min(zs))
-    max_val = max(max(sums), max(zs))
-    ax.plot([min_val, max_val], [min_val, max_val], 'r-', linewidth=2, label='y = x (perfect additivity)')
-    ax.set_xlabel('bound(S) + bound(T)', fontsize=12)
-    ax.set_ylabel('bound(S × T)', fontsize=12)
-    ax.set_title('Tensorization Law: Exact Additivity', fontsize=14)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    # Right: n-fold amplification
+    # Right: residual (should be zero)
     ax = axes[1]
-    base_sizes = [2, 3, 5, 10]
-    colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6']
-    for base, color in zip(base_sizes, colors):
-        ns = range(1, 16)
-        bounds = [n * tropical_perturbation_bound(base) for n in ns]
-        ax.plot(list(ns), bounds, 'o-', color=color, label=f'|S| = {base}', markersize=4)
-
-    ax.set_xlabel('Number of copies n', fontsize=12)
-    ax.set_ylabel('bound(S^n) = n · log|S|', fontsize=12)
-    ax.set_title('n-Fold Amplification: Linear Scaling', fontsize=14)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
+    residual = bound_product - bound_sum
+    c = ax.pcolormesh(CS, CT, np.abs(residual), shading='auto', cmap='Reds')
+    ax.set_xlabel('|S|', fontsize=12)
+    ax.set_ylabel('|T|', fontsize=12)
+    ax.set_title('Tensorization Residual\n|log(|S×T|) - log(|S|) - log(|T|)|', fontsize=13)
+    fig.colorbar(c, ax=ax, label='Residual (≈ 0)')
 
     plt.tight_layout()
-
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    plt.close(fig)
-    return base64.b64encode(buf.read()).decode('utf-8')
+    plt.savefig('fig1_tensorization.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved fig1_tensorization.png")
 
 
-def generate_exp_multiplicativity_plot():
-    """Plot exponential multiplicativity: exp(bound) = |S|."""
-    if not HAS_MATPLOTLIB:
-        return None
+def fig2_n_fold_amplification():
+    """Visualize the n-fold amplification law."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
+    for card_s in [2, 3, 5, 7, 10]:
+        ns = np.arange(1, 11)
+        bounds = ns * np.log(card_s)
+        ax.plot(ns, bounds, 'o-', label=f'|S| = {card_s}', markersize=6, linewidth=2)
+
+    ax.set_xlabel('n (number of copies)', fontsize=13)
+    ax.set_ylabel('Tropical Perturbation Bound log(|S|ⁿ)', fontsize=13)
+    ax.set_title('N-fold Amplification: log(|S|ⁿ) = n · log(|S|)', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks(range(1, 11))
+
+    plt.tight_layout()
+    plt.savefig('fig2_amplification.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved fig2_amplification.png")
+
+
+def fig3_perturbation_stability():
+    """Visualize perturbation stability: errors add under composition."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    # Left: exp(bound(S)) = |S|
-    ax = axes[0]
-    sizes = range(1, 51)
-    bounds = [tropical_perturbation_bound(s) for s in sizes]
-    exp_bounds = [math.exp(b) for b in bounds]
+    np.random.seed(42)
 
-    ax.plot(list(sizes), exp_bounds, 'bo-', markersize=4, label='exp(bound(S))')
-    ax.plot(list(sizes), list(sizes), 'r--', linewidth=2, label='|S| (identity)')
+    # Left: empirical functional error vs theoretical bound
+    ax = axes[0]
+    eps_vals = np.linspace(0.01, 1.0, 30)
+    card_s, card_t = 5, 4
+
+    empirical_maxes = []
+    for eps in eps_vals:
+        max_diff = 0
+        S = list(range(card_s))
+        T = list(range(card_t))
+        w1 = {s: np.random.randn() for s in S}
+        w2 = {t: np.random.randn() for t in T}
+        w1p = {s: w1[s] + np.random.uniform(-eps, eps) for s in S}
+        w2p = {t: w2[t] + np.random.uniform(-eps, eps) for t in T}
+
+        for _ in range(500):
+            f_vals = {(s, t): np.random.randn() for s in S for t in T}
+            val1 = max(f_vals[(s, t)] + w1[s] + w2[t] for s in S for t in T)
+            val2 = max(f_vals[(s, t)] + w1p[s] + w2p[t] for s in S for t in T)
+            max_diff = max(max_diff, abs(val1 - val2))
+        empirical_maxes.append(max_diff)
+
+    ax.plot(eps_vals, 2 * eps_vals, 'r--', linewidth=2, label='Theoretical: ε₁ + ε₂ = 2ε')
+    ax.plot(eps_vals, empirical_maxes, 'b.', markersize=8, label='Empirical max |F - F\'|')
+    ax.set_xlabel('ε (per-factor perturbation)', fontsize=12)
+    ax.set_ylabel('Functional difference', fontsize=12)
+    ax.set_title('Perturbation Stability:\nErrors Add Under Composition', fontsize=13)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    # Right: stability constant = 1 (non-amplification)
+    ax = axes[1]
+    support_sizes = range(2, 51)
+    stability_constants = [1.0] * len(list(support_sizes))
+
+    ax.bar(list(support_sizes), stability_constants, color='steelblue', alpha=0.7)
+    ax.axhline(y=1.0, color='red', linestyle='--', linewidth=2, label='Stability constant = 1')
     ax.set_xlabel('Support size |S|', fontsize=12)
-    ax.set_ylabel('exp(bound(S))', fontsize=12)
-    ax.set_title('Recovery Dimension: exp(log|S|) = |S|', fontsize=14)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    # Right: Multiplicativity under products
-    ax = axes[1]
-    results = []
-    for s in range(2, 11):
-        for t in range(2, 11):
-            exp_product = math.exp(tropical_perturbation_bound(s * t))
-            exp_s_times_exp_t = math.exp(tropical_perturbation_bound(s)) * math.exp(tropical_perturbation_bound(t))
-            results.append((exp_product, exp_s_times_exp_t))
-
-    xs = [r[0] for r in results]
-    ys = [r[1] for r in results]
-    ax.scatter(xs, ys, c='steelblue', alpha=0.5, s=20)
-    max_val = max(max(xs), max(ys))
-    ax.plot([0, max_val], [0, max_val], 'r-', linewidth=2, label='y = x')
-    ax.set_xlabel('exp(bound(S×T))', fontsize=12)
-    ax.set_ylabel('exp(bound(S)) · exp(bound(T))', fontsize=12)
-    ax.set_title('Exponential Multiplicativity', fontsize=14)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
+    ax.set_ylabel('Stability constant', fontsize=12)
+    ax.set_title('Stability Constant Is Exactly 1\n(No Amplification of Noise)', fontsize=13)
+    ax.set_ylim(0, 2)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3, axis='y')
 
     plt.tight_layout()
-
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    plt.close(fig)
-    return base64.b64encode(buf.read()).decode('utf-8')
+    plt.savefig('fig3_stability.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved fig3_stability.png")
 
 
-def generate_union_subadditivity_plot():
-    """Plot union subadditivity bound."""
-    if not HAS_MATPLOTLIB:
-        return None
+def fig4_exponential_multiplicativity():
+    """Visualize exp(bound(S×T)) = exp(bound(S)) · exp(bound(T)) = |S|·|T|."""
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    fig, ax = plt.subplots(figsize=(8, 6))
+    card_s_vals = range(1, 11)
+    card_t = 5
 
-    # For various S, T sizes, plot bound(S∪T) vs bound(S)+bound(T)+log2
-    # Using |S∪T| = |S| + |T| - |S∩T| with varying overlap
-    results_x = []
-    results_y = []
-    results_upper = []
+    exp_bounds = [np.exp(np.log(cs * card_t)) for cs in card_s_vals]
+    products = [cs * card_t for cs in card_s_vals]
 
-    for s_size in range(2, 21):
-        for t_size in range(2, 21):
-            for overlap in range(0, min(s_size, t_size)):
-                union_size = s_size + t_size - overlap
-                bound_union = tropical_perturbation_bound(union_size)
-                upper_bound = (tropical_perturbation_bound(s_size) +
-                              tropical_perturbation_bound(t_size) +
-                              math.log(2))
-                results_x.append(bound_union)
-                results_upper.append(upper_bound)
-
-    ax.scatter(results_x, results_upper, c='steelblue', alpha=0.1, s=5)
-    max_val = max(max(results_x), max(results_upper))
-    ax.plot([0, max_val], [0, max_val], 'r-', linewidth=2, label='y = x (tight)')
-    ax.set_xlabel('bound(S ∪ T)', fontsize=12)
-    ax.set_ylabel('bound(S) + bound(T) + log(2)', fontsize=12)
-    ax.set_title('Union Subadditivity: All points above the diagonal', fontsize=14)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
+    ax.bar(list(card_s_vals), exp_bounds, color='coral', alpha=0.7, label='exp(bound(S×T))')
+    ax.plot(list(card_s_vals), products, 'ko-', markersize=8, linewidth=2, label='|S| · |T|')
+    ax.set_xlabel('|S|', fontsize=13)
+    ax.set_ylabel('exp(tropical perturbation bound)', fontsize=13)
+    ax.set_title(f'Exponential Multiplicativity (|T| = {card_t})\n'
+                 f'exp(log(|S×T|)) = |S| · |T|', fontsize=14)
+    ax.legend(fontsize=12)
+    ax.grid(True, alpha=0.3, axis='y')
 
     plt.tight_layout()
-
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    plt.close(fig)
-    return base64.b64encode(buf.read()).decode('utf-8')
-
-
-def generate_all_visualizations():
-    """Generate all visualizations and return as base64 strings."""
-    results = {}
-
-    viz1 = generate_tensorization_plot()
-    if viz1:
-        results['tensorization'] = viz1
-
-    viz2 = generate_exp_multiplicativity_plot()
-    if viz2:
-        results['exp_multiplicativity'] = viz2
-
-    viz3 = generate_union_subadditivity_plot()
-    if viz3:
-        results['union_subadditivity'] = viz3
-
-    return results
+    plt.savefig('fig4_exponential.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved fig4_exponential.png")
 
 
 if __name__ == "__main__":
-    vizs = generate_all_visualizations()
-    if vizs:
-        print(f"Generated {len(vizs)} visualizations:")
-        for name, data in vizs.items():
-            print(f"  {name}: {len(data)} bytes (base64)")
-    else:
-        print("matplotlib not available; no visualizations generated.")
+    fig1_tensorization_law()
+    fig2_n_fold_amplification()
+    fig3_perturbation_stability()
+    fig4_exponential_multiplicativity()
+    print("\nAll visualizations generated.")

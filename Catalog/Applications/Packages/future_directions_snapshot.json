@@ -388,6 +388,20 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
+    "id": "fd_0219",
+    "title": "Finite-dimensional spectral theorem",
+    "description": ": Eigenvalue decomposition for real symmetric matrices on `Fin n`.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9093673a",
+    "consumed_by_exp_id": "3392003d",
+    "timestamp": "2026-05-15T20:42:44.426054+00:00"
+  },
+  {
     "id": "fd_0232",
     "title": "Target theorems",
     "description": ":\n- Kraft inequality: `∑ q^(-ℓ(a)) ≤ 1` for q-ary prefix codes.\n- Shannon coding bound: `H_q(p) ≤ E[ℓ] < H_q(p) + 1` where `H_q` uses log base q.\n- Relaxed optimizer: `L⋆(a) = log_q(1/p(a))` achieves equality.\n\n**Strategy**: The existing proofs generalize cleanly by replacing 2 with q throughout. The key lemma `Real.rpow_logb` works for any base b > 0, b ≠ 1. The Gibbs inequality (log x ≤ x - 1) is base-independent.\n\n**Broader significance**: q-ary codes arise naturally in DNA storage (q=4), ternary computing, and multi-level cell flash memory. Formal verification of q-ary optimality enables certified codec design for these technologies.\n\n---\n\n## Direction 3: Tropical Data Processing Inequality\n\n**Goal**: Prove that processing data through a channel cannot increase the tropical coding pote",
@@ -636,20 +650,6 @@
     "timestamp": "2026-05-16T14:39:14.314331+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "From subadditivity to convergence",
-    "description": ": Our `tropPow_diag_subadditive` theorem gives the sequence a_m = tropPow(A, m)(i,i) as subadditive. By Fekete's lemma (which may need to be formalized for this shifted indexing), lim a_m/(m+1) = inf a_m/(m+1) exists.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fc0fc4e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:39:14.329958+00:00"
-  },
-  {
     "id": "fd_0257",
     "title": "Triangle inequality",
     "description": ": For any ε > 0, pick near-optimal group elements g₁, g₂ for (μ,ν) and (ν,ρ). Then g₁·g₂ is a candidate for (μ,ρ), and the triangle inequality for W_c gives the bound.",
@@ -718,20 +718,6 @@
     "source_exp_id": "8d96d57a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T15:43:03.451520+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Integration testing",
-    "description": ": Verify the full chain compiles and check axioms.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8d96d57a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:43:03.465374+00:00"
   },
   {
     "id": "fd_0250",
@@ -1524,23 +1510,6 @@
     "timestamp": "2026-05-16T14:52:12.487513+00:00"
   },
   {
-    "id": "fd_0247",
-    "title": "2. Integrate Distributivity via Knuth–Bendix Completion",
-    "description": "**Hypothesis:** The full equational theory of `(ℝ, min, +)` includes distributivity `a + min(b, c) = min(a+b, a+c)`. A completion-based approach can extend the AC normalizer to handle this identity.\n\n**Proof Strategy:**\n- Define oriented rewrite rules for distributivity (e.g., always distribute `+` over `min`).\n- Prove termination using a suitable measure (e.g., number of `add`-above-`min` patterns).\n- Prove local confluence by analyzing critical pairs between AC rules and distributivity.\n- The canonical form after completion would be a \"sum of minima\" normal form, analogous to DNF in Boolean logic.\n\n**Cross-Domain Connections:** This connects to Gröbner basis theory for commutative algebra, where completion yields canonical polynomial representatives. In the tropical setting, the analogou",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0d4e55a6",
-    "consumed_by_exp_id": "488e4767",
-    "timestamp": "2026-05-16T14:52:12.507486+00:00"
-  },
-  {
     "id": "fd_0248",
     "title": "3. Build a Reflection Tactic Using `normalize_ca`",
     "description": "**Hypothesis:** The canonical form theorem can be used to build a proof-producing tactic that automatically proves AC-equivalences of tropical expressions by computation.\n\n**Proof Strategy:**\n- Define a decidable `TropExpr` type with computable comparison (using rational approximations or exact rational arithmetic instead of `ℝ`).\n- Implement a `reflect` function that maps Lean expressions to `TropExpr`.\n- Use `normalize_ca_complete` as the reflection theorem: if `normalize_ca (reflect e₁) = normalize_ca (reflect e₂)` (checked by `native_decide`), then `e₁ = e₂`.\n- Package as a Lean 4 tactic `tropical_ac`.\n\n**Cross-Domain Connections:** This mirrors the `ring` tactic architecture (Horner normal forms for polynomial equality) and the `omega` tactic (Presburger arithmetic). A `tropical_ac` t",
@@ -1557,24 +1526,6 @@
     "source_exp_id": "0d4e55a6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T14:52:12.526923+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "4. Define Certified Tropical Polynomial Normal Forms",
-    "description": "**Hypothesis:** Tropical polynomials `p(x₁,...,xₙ) = min(a₁ + c₁₁x₁ + ... + c₁ₙxₙ, ..., aₖ + cₖ₁x₁ + ... + cₖₙxₙ)` admit a canonical \"Newton polytope\" representation that extends the AC normal form.\n\n**Proof Strategy:**\n- Define a `TropPoly` type as a sorted list of (coefficient vector, constant) pairs.\n- Normalize by sorting lexicographically and removing dominated terms (those never achieving the minimum).\n- Prove soundness and completeness for the full tropical polynomial identity `∀ x, p(x) = q(x)`.\n- This requires the geometric insight that tropical polynomial identity is equivalent to Newton polytope equality.\n\n**Cross-Domain Connections:** Newton polytopes appear in algebraic geometry (toric varieties), optimization (linear programming duality), and phylogenetics (tree space geometr",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0d4e55a6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:52:12.548248+00:00"
   },
   {
     "id": "fd_0254",
@@ -1659,23 +1610,6 @@
     "source_exp_id": "73e6ebb7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T15:15:25.389766+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "4. Formalize Abstract Interpretation as an MDL Machine for Program States",
-    "description": "**Hypothesis**: Every Galois connection in abstract interpretation induces a closure-compression scheme on program states, where the abstract domain is the set of incompressible (fixed-point) states and the abstraction function is the compression operator.\n\n**Target Theorems**:\n- Given a Galois connection `(α, γ) : Abstract ⇄ Concrete`, show that `γ ∘ α` is an idempotent closure satisfying all hypotheses of `canonical_representative_shortest_in_closure_class`.\n- Define `programComplexity : ConcreteState → ℕ` as the number of distinct variables/heap cells needed to represent a state.\n- Prove that abstract interpretation computes the MDL within the abstraction-equivalence class.\n- Show that the fixed points of the abstraction closure are exactly the \"maximally abstract\" states — those carryi",
-    "domains": [
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "73e6ebb7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:15:25.406558+00:00"
   },
   {
     "id": "fd_0250",
@@ -1763,5 +1697,77 @@
     "source_exp_id": "69b261f0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T15:31:36.153629+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "1. Canonical Dominance Elimination via Polyhedral Comparison",
+    "description": "**Goal**: Extend the normal form from a list of affine forms to a *canonical* list where dominated terms are removed.\n\nAn affine form `a` is **dominated** by another `b` if `a.eval x ≥ b.eval x` for all `x`. In this case, `min(a.eval x, b.eval x) = b.eval x`, so `a` can be removed without changing the semantics.\n\n- Define a decidable dominance relation on affine forms (comparing constant and coefficient fields).\n- Add a filtering pass to `normalize` that removes dominated forms.\n- Sort the remaining forms lexicographically to obtain a canonical representative.\n- Prove `normalize_complete`: two expressions have the same normal form if and only if they are semantically equal.\n\n**Hypothesis**: For the natural-multiplicity fragment (coefficients in ℕ), dominance between affine forms is decidab",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "488e4767",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:31:39.002799+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "2. Extension to Integer and Rational Slopes",
+    "description": "**Goal**: Generalize from natural-number multiplicities (arising from syntactic addition of variables) to integer or rational coefficients.\n\n- Replace `coeff : Fin n → ℕ` with `coeff : Fin n → ℤ` (or `ℚ`).\n- Introduce a `sub` (tropical division) operation: `sub e₁ e₂` with semantics `eval e₁ x - eval e₂ x`.\n- Prove the extended normalization theorem: every expression with subtraction still normalizes to a minimum of affine forms with integer slopes.\n- This requires careful handling of the non-cancellative nature of tropical addition (the existing `tropical_add_not_cancellative` theorem constrains the approach).\n\n**Hypothesis**: The normalization procedure extends to the full tropical semifield (ℝ, min, +, −) with rational slopes, yielding a canonical \"tropical rational function\" normal for",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "488e4767",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:31:39.026052+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "3. Tropical Matrix Expression Normalization",
+    "description": "**Goal**: Lift the scalar normalization theorem to matrices over the tropical semiring.\n\n- Define `TropMatExpr (m n k : ℕ)` for tropical matrix expressions with min-plus multiplication.\n- A tropical matrix normal form would represent each entry as a minimum of affine forms.\n- Prove soundness: `normalize_mat_sound : TropMatExpr.eval M = TropMatNF.eval (normalize_mat M)`.\n- Connect to the Kleene star (tropical matrix closure) for shortest-path computations.\n\n**Hypothesis**: The entry-wise normalization extends to matrix products via the min-plus matrix multiplication identity, and the Kleene star has a normal form computable by tropical Gaussian elimination.\n\n**Cross-domain impact**: This directly enables certified shortest-path algorithms, tropical spectral theory (eigenvalue computation), ",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "488e4767",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:31:39.044999+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "5. Decidability of Tropical Expression Equivalence",
+    "description": "**Goal**: Prove the full decidability theorem:\n\n```\ntheorem tropical_expr_decidable_eq_semantics\n  {n : ℕ} (e₁ e₂ : TropExpr n) :\n  Decidable (TropExpr.eval e₁ = TropExpr.eval e₂)\n```\n\n- This requires canonical normal forms (Direction 1) plus a decidable equality on canonical representatives.\n- The key mathematical content is that two minima of affine forms are equal as functions if and only if they have the same set of \"non-dominated\" affine forms (up to permutation).\n- This is equivalent to decidability of the equational theory of the tropical semiring, which is known to be decidable but has not been formally verified.\n\n**Hypothesis**: The equational theory of the tropical semiring (ℝ, min, +) restricted to the natural-multiplicity fragment is decidable by canonical normal form compariso",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "488e4767",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:31:39.066814+00:00"
   }
 ]
