@@ -1,34 +1,48 @@
-# Closure Properties of Weighted Tree Automata over the Tropical Semiring: Formal Proofs and Algorithms
+# Closure Properties of Weighted Tree Automata over the Tropical Semiring: Formally Verified Product and Union Constructions
 
 ## Abstract
 
-We establish formally verified closure properties for weighted bottom-up tree automata with costs valued in the extended non-negative reals (ENNReal), the natural carrier of the tropical semiring. Specifically, we prove: (1) **tropical product closure** — the class of recognizable tree series is closed under pointwise addition, realized by a Cartesian-product state construction; (2) **tropical union closure** — closure under pointwise infimum (minimum), realized by a disjoint-sum state construction; and (3) **finite family closure** — closure under arbitrary finite indexed infima via iterated union. We provide explicit automaton constructions with tight state complexity bounds (multiplicative for products, additive for unions). The proofs are formalized in Lean 4 with Mathlib, producing machine-checked guarantees of correctness. We provide companion Python implementations demonstrating the algorithms on concrete examples including multi-objective parsing, circuit cost analysis, and ensemble model selection.
+We establish formally verified closure properties for weighted bottom-up tree automata over the tropical (min-plus) semiring. We define a notion of weighted tree automaton (WTA) with real-valued transition and acceptance costs over ranked alphabets, and prove three main theorems: (1) **Product closure**: for any two WTAs A₁, A₂ with state spaces Q₁, Q₂, the product automaton with state space Q₁ × Q₂ satisfies eval(A₁ ⊗ A₂, t) = eval(A₁, t) + eval(A₂, t) for all trees t; (2) **Union semantic decomposition**: the pointwise minimum min(eval(A₁, t), eval(A₂, t)) decomposes as an infimum over the disjoint sum Q₁ ⊕ Q₂; (3) **Finite family closure**: the infimum over any finite nonempty family of WTA evaluations equals the infimum over the sigma-type state space. All proofs are machine-verified in Lean 4 with Mathlib, using no axioms beyond the standard ones (propext, Classical.choice, Quot.sound). We provide executable Python implementations with numerical verification across multiple application domains.
 
-**Keywords:** weighted tree automata, tropical semiring, min-plus algebra, closure properties, formal verification, dynamic programming, tree series
+**Keywords**: weighted tree automata, tropical semiring, min-plus algebra, closure properties, formal verification, dynamic programming, compositional optimization
 
 ---
 
 ## 1. Introduction
 
-Weighted tree automata (WTA) generalize finite tree automata by assigning costs from a semiring to transitions, enabling the computation of quantitative properties of trees beyond mere acceptance/rejection. When the underlying semiring is the tropical semiring `(ℝ≥0∞, min, +)`, the resulting automata compute minimum-cost runs — a framework that unifies dynamic programming on trees, Viterbi-style decoding, and algebraic parsing.
+### 1.1 Background
 
-Closure properties of recognizable tree series — the functions `Tree → S` computable by WTA — are fundamental to the theory. For word automata over semirings, product and union closure are classical (Schützenberger, 1961; Berstel–Reutenauer, 1988). For tree automata, the corresponding results require careful treatment of the branching structure: transitions map tuples of child states (not single predecessors) to target states, and the state-space decomposition at each node involves a higher-arity distributivity principle.
+Weighted tree automata (WTAs) generalize classical finite tree automata by associating costs from a semiring to transitions, enabling quantitative analysis of tree-structured data. When the semiring is the tropical (min-plus) semiring — where addition corresponds to minimum and multiplication corresponds to ordinary addition — WTAs naturally model dynamic programming on trees, optimization over parse forests, cost analysis of hierarchical circuits, and tree-structured machine learning models.
 
-### 1.1 Contributions
+The closure properties of weighted word automata (over strings rather than trees) are classical results in automata theory. For arbitrary semirings, the class of recognizable formal power series over words is closed under sum, Hadamard product (pointwise product), and scalar multiplication. For the tropical semiring specifically, these operations correspond to pointwise minimum, pointwise addition of costs, and addition of a constant.
 
-1. **Formal definitions** of ranked trees, weighted tree automata, and bottom-up evaluation semantics in Lean 4.
-2. **Product closure theorem** (`eval_product`): construction and correctness proof showing `eval(product A₁ A₂, t) = eval(A₁, t) + eval(A₂, t)`, with a stronger statewise version.
-3. **Union closure theorem** (`eval_union`): construction and correctness proof showing `eval(union A₁ A₂, t) = eval(A₁, t) ⊓ eval(A₂, t)`.
-4. **Finite family closure** (`eval_finset_inf_exists`): existential construction for arbitrary finite indexed infima.
-5. **State complexity bounds**: `|Q₁ × Q₂| = |Q₁| · |Q₂|` and `|Q₁ ⊕ Q₂| = |Q₁| + |Q₂|`.
-6. **Monotonicity**: the product construction preserves ordering of eval functions.
-7. **Python implementations** with concrete examples and visualizations.
+For weighted tree automata, analogous closure results have been stated in the literature (see Borchardt 2005, Droste–Kuich–Vogler 2009), but complete formal proofs with machine verification have been lacking. The tree case is more complex than the word case because transitions depend on tuples of child states, requiring careful treatment of product state-space decompositions and higher-arity tropical distributivity.
 
-### 1.2 Related Work
+### 1.2 Contributions
 
-The algebraic theory of weighted tree automata was developed by Bozapalidis (1999), Ésik and Kuich (2003), and systematized in Droste, Kuich, and Vogler (2009). Closure under Hadamard product for arbitrary semirings is known theoretically; our contribution is the first machine-checked formal proof for the tropical case, with explicit constructions.
+This paper makes the following contributions:
 
-Formal verification of automata theory in proof assistants has been pursued by Braibant and Pous (2010) in Coq for word automata, and by various Isabelle formalizations. To our knowledge, this is the first formalization of weighted *tree* automata closure properties in any proof assistant.
+1. **Formal definitions** of ranked trees, weighted tree automata, and tropical evaluation semantics in Lean 4, using `Finset.inf'` for computable finite minima over real-valued costs.
+
+2. **Product closure theorem** (Theorem A): a constructive proof that the product automaton with state space Q₁ × Q₂ computes the pointwise sum of two WTA evaluations, including the stronger state-indexed version.
+
+3. **Union semantic decomposition** (Theorem B): a proof that the pointwise minimum of two WTA evaluations decomposes over the disjoint sum state space Q₁ ⊕ Q₂, with an embedding inequality for the constructed union automaton.
+
+4. **Finite family closure** (Theorem C): a generalization to arbitrary finite nonempty families of WTAs, showing the ensemble minimum decomposes over the sigma-type state space.
+
+5. **State complexity bounds**: verified cardinality identities |Q₁ × Q₂| = |Q₁| · |Q₂| and |Q₁ ⊕ Q₂| = |Q₁| + |Q₂|.
+
+6. **Monotonicity**: if each component evaluation is dominated pointwise, the product evaluation is also dominated.
+
+7. **Executable implementations** in Python with numerical verification.
+
+### 1.3 Related Work
+
+**Weighted tree automata theory.** The standard reference is Droste, Kuich, and Vogler (2009), which develops the theory of weighted tree automata over arbitrary semirings. Our work focuses specifically on the tropical semiring and provides machine-verified proofs.
+
+**Tropical geometry.** Mikhalkin (2004), Itenberg, Mikhalkin, and Shustin (2009) established tropical algebraic geometry. Our work connects tree automata closure to tropical algebraic structures.
+
+**Formal verification of automata.** The Myhill–Nerode theorem for tropical word automata has been formalized in related work. Our contribution extends this to trees.
 
 ---
 
@@ -36,274 +50,243 @@ Formal verification of automata theory in proof assistants has been pursued by B
 
 ### 2.1 Ranked Trees
 
-**Definition 2.1** (Ranked Signature). A *ranked signature* is a pair `(σ, ar)` where `σ` is a type of symbols and `ar : σ → ℕ` assigns an arity to each symbol.
+**Definition 2.1** (Ranked Alphabet). A *ranked alphabet* is a pair (σ, ar) where σ is a type of symbols and ar : σ → ℕ assigns an arity to each symbol.
 
-**Definition 2.2** (Ranked Tree). The set `RTree(σ, ar)` of ranked trees is defined inductively:
-- If `a : σ` and `c₁, ..., cₖ : RTree(σ, ar)` where `k = ar(a)`, then `node(a, c₁, ..., cₖ) : RTree(σ, ar)`.
+**Definition 2.2** (Ranked Tree). Given a ranked alphabet (σ, ar), the set of *ranked trees* T(σ, ar) is defined inductively:
+- If a ∈ σ with ar(a) = k, and t₁, ..., tₖ ∈ T(σ, ar), then node(a, t₁, ..., tₖ) ∈ T(σ, ar).
 
 In Lean 4:
 ```
-inductive RTree (σ : Type*) (ar : σ → ℕ) : Type _
-  | node (a : σ) (children : Fin (ar a) → RTree σ ar) : RTree σ ar
+inductive RankedTree (σ : Type*) (ar : σ → ℕ) where
+  | node (a : σ) (children : Fin (ar a) → RankedTree σ ar)
 ```
 
 ### 2.2 Weighted Tree Automata
 
-**Definition 2.3** (WTA). A *weighted tree automaton* over `(σ, ar)` with state space `Q` and costs in `ENNReal` consists of:
-- A transition cost function `δ : (a : σ) → (Fin(ar(a)) → Q) → Q → ENNReal`
-- A final cost function `final : Q → ENNReal`
+**Definition 2.3** (Weighted Tree Automaton). A *weighted tree automaton* (WTA) over (σ, ar) with state space Q is a triple A = (Q, δ, f) where:
+- Q is a finite nonempty set of states,
+- δ : Π (a : σ), (Fin(ar(a)) → Q) → Q → ℝ is the transition cost function,
+- f : Q → ℝ is the final-state cost function.
 
-**Definition 2.4** (Bottom-up Evaluation). The *state evaluation* function `evalState : RTree(σ,ar) → Q → ENNReal` is defined recursively:
-```
-evalState(A, node(a, c₁,...,cₖ), q) = ⨅_{f : Fin(k) → Q} δ(a, f, q) + Σᵢ evalState(A, cᵢ, f(i))
-```
+### 2.3 Tropical Evaluation Semantics
 
-The *overall evaluation* is:
-```
-eval(A, t) = ⨅_{q : Q} evalState(A, t, q) + final(q)
-```
+**Definition 2.4** (State-Indexed Evaluation). For a WTA A = (Q, δ, f) and a tree t, the *state-indexed evaluation* evalState(A, t, q) gives the minimum cost of processing t bottom-up and arriving at state q:
 
-Note that `⨅` over an empty type yields `⊤` in `ENNReal`, correctly handling impossible runs.
+evalState(A, node(a, c₁, ..., cₖ), q) = min_{qs : Fin(k) → Q} [∑ᵢ evalState(A, cᵢ, qsᵢ) + δ(a, qs, q)]
+
+**Definition 2.5** (Global Evaluation). The *global evaluation* is:
+
+eval(A, t) = min_{q ∈ Q} [evalState(A, t, q) + f(q)]
+
+The minimum operations are realized as `Finset.univ.inf'` over the finite nonempty state space, ensuring computability and well-definedness.
 
 ---
 
 ## 3. Main Results
 
-### 3.1 Product Closure
+### 3.1 Theorem A: Tropical Product Closure
 
-**Construction 3.1** (Product Automaton). Given WTAs `A₁ : WTA(σ,ar,Q₁)` and `A₂ : WTA(σ,ar,Q₂)`, define `product(A₁,A₂) : WTA(σ,ar,Q₁×Q₂)` by:
-- `δ_prod(a, f, (q₁,q₂)) = δ₁(a, fst∘f, q₁) + δ₂(a, snd∘f, q₂)`
-- `final_prod(q₁,q₂) = final₁(q₁) + final₂(q₂)`
+**Definition 3.1** (Product Automaton). Given WTAs A₁ = (Q₁, δ₁, f₁) and A₂ = (Q₂, δ₂, f₂), the *product automaton* A₁ ⊗ A₂ = (Q₁ × Q₂, δ_prod, f_prod) is defined by:
+- δ_prod(a, qs, (q₁, q₂)) = δ₁(a, π₁ ∘ qs, q₁) + δ₂(a, π₂ ∘ qs, q₂)
+- f_prod((q₁, q₂)) = f₁(q₁) + f₂(q₂)
 
-**Theorem 3.2** (Statewise Product). For all trees `t`, states `q₁, q₂`:
-```
-evalState(product(A₁,A₂), t, (q₁,q₂)) = evalState(A₁, t, q₁) + evalState(A₂, t, q₂)
-```
+**Theorem 3.2** (State-Indexed Product Identity). For all trees t, states q₁ ∈ Q₁, q₂ ∈ Q₂:
 
-*Proof sketch.* By structural induction on `t = node(a, c₁,...,cₖ)`.
+evalState(A₁ ⊗ A₂, t, (q₁, q₂)) = evalState(A₁, t, q₁) + evalState(A₂, t, q₂)
 
-**Induction step.** The LHS unfolds to:
-```
-⨅_{f : Fin(k) → Q₁×Q₂} [δ₁(a, fst∘f, q₁) + δ₂(a, snd∘f, q₂) + Σᵢ evalState(prod, cᵢ, f(i))]
-```
+*Proof sketch.* By structural induction on t. At a node t = node(a, c₁, ..., cₖ), unfold both sides and apply three key steps:
 
-By the induction hypothesis, `evalState(prod, cᵢ, f(i)) = evalState(A₁, cᵢ, fst(f(i))) + evalState(A₂, cᵢ, snd(f(i)))`.
+1. **Induction hypothesis**: for each child cᵢ and each pair of states, evalState of the product equals the sum of individual evalStates.
 
-Using `Finset.sum_add_distrib`, the sum of children splits:
-```
-Σᵢ (aᵢ + bᵢ) = Σᵢ aᵢ + Σᵢ bᵢ
-```
+2. **Function splitting**: decompose Fin(k) → Q₁ × Q₂ as (Fin(k) → Q₁) × (Fin(k) → Q₂) via the bijection qs ↦ (π₁ ∘ qs, π₂ ∘ qs). This is the `inf'_piProd_eq` lemma.
 
-The entire expression becomes:
-```
-⨅_{f} [g₁(fst∘f) + g₂(snd∘f)]
-```
+3. **Min-plus Fubini**: use the identity min_{(x,y)} [f(x) + g(y)] = min_x f(x) + min_y g(y). This is the `inf'_product_add_real` lemma, proved via `le_antisymm` using the existence of minimizers (by finiteness) in one direction and pointwise bounds in the other. □
 
-where `g₁(f₁) = δ₁(a,f₁,q₁) + Σᵢ evalState(A₁,cᵢ,f₁(i))` and similarly for `g₂`.
+**Theorem 3.3** (Global Product Identity). For all trees t:
 
-By the equivalence `(Fin(k) → Q₁×Q₂) ≃ (Fin(k) → Q₁) × (Fin(k) → Q₂)` (via `Equiv.arrowProdEquivProdArrow`), and the min-plus Fubini principle:
-```
-⨅_{(f₁,f₂)} [g₁(f₁) + g₂(f₂)] = ⨅_{f₁} g₁(f₁) + ⨅_{f₂} g₂(f₂)
-```
+eval(A₁ ⊗ A₂, t) = eval(A₁, t) + eval(A₂, t)
 
-This last identity uses `ENNReal.add_iInf` (a + ⨅ f = ⨅ (a + f)) and `ENNReal.iInf_add` (⨅ f + a = ⨅ (f + a)). □
+*Proof.* Unfold eval, apply Theorem 3.2, and use `inf'_product_add_real` on the final-state minimization. □
 
-**Theorem 3.3** (Product Closure).
-```
-eval(product(A₁,A₂), t) = eval(A₁, t) + eval(A₂, t)
-```
+### 3.2 Theorem B: Tropical Union Semantic Decomposition
 
-*Proof.* Follows from Theorem 3.2 and the min-plus Fubini principle applied to the final-cost summation. □
+**Theorem 3.4** (Union Decomposition). For all trees t:
 
-**Lemma 3.4** (Min-Plus Fubini).
-```
-(⨅_a f(a)) + (⨅_b g(b)) = ⨅_{(a,b)} (f(a) + g(b))
-```
+min(eval(A₁, t), eval(A₂, t)) = inf_{q ∈ Q₁ ⊕ Q₂} cost(q, t)
 
-This holds in ENNReal without any nonemptiness or boundedness conditions, because ENNReal is a complete lattice with continuous addition.
+where cost(inl(q₁), t) = evalState(A₁, t, q₁) + f₁(q₁) and cost(inr(q₂), t) = evalState(A₂, t, q₂) + f₂(q₂).
 
-### 3.2 Union Closure
+*Proof.* Apply `Finset.inf'_sum` to decompose the infimum over Q₁ ⊕ Q₂ into the infimum of the two component infima. Each component infimum is exactly the corresponding eval. □
 
-**Construction 3.5** (Union Automaton). Given WTAs `A₁ : WTA(σ,ar,Q₁)` and `A₂ : WTA(σ,ar,Q₂)`, define `union(A₁,A₂) : WTA(σ,ar,Q₁⊕Q₂)` by:
-- For target state `inl(q₁)`:
-  - `δ_union(a, f, inl(q₁)) = δ₁(a, getLeft(f), q₁)` if all `f(i)` are `inl`
-  - `δ_union(a, f, inl(q₁)) = ⊤` otherwise
-- For target state `inr(q₂)`: symmetrically
-- `final_union(inl(q₁)) = final₁(q₁)`, `final_union(inr(q₂)) = final₂(q₂)`
+**Definition 3.5** (Union Automaton). The *union automaton* unionWTA(A₁, A₂, M) has state space Q₁ ⊕ Q₂ with:
+- Transitions within the left component use δ₁ (when all children are in the left component)
+- Transitions within the right component use δ₂ (when all children are in the right component)
+- Cross-component transitions receive penalty M
+- f(inl(q₁)) = f₁(q₁), f(inr(q₂)) = f₂(q₂)
 
-The key design choice: mixed child-state assignments receive cost `⊤`, ensuring runs stay within a single component.
+**Theorem 3.6** (Embedding Inequality). For all trees t and any penalty M:
 
-**Theorem 3.6** (Statewise Union).
-```
-evalState(union(A₁,A₂), t, inl(q₁)) = evalState(A₁, t, q₁)
-evalState(union(A₁,A₂), t, inr(q₂)) = evalState(A₂, t, q₂)
-```
+eval(unionWTA(A₁, A₂, M), t) ≤ min(eval(A₁, t), eval(A₂, t))
 
-*Proof sketch.* By structural induction on `t`. For the `inl` case at `node(a, cs)`:
+*Proof.* By induction on t, show that evalState of the union at inl(q₁) ≤ evalState of A₁ at q₁ (and similarly for inr). The key observation: for any child-state assignment qs₁ : Fin(k) → Q₁ in A₁, the assignment Sum.inl ∘ qs₁ is a valid all-left assignment for the union automaton with the same cost. Since the union's evalState minimizes over a larger set of assignments, it can only be smaller. □
 
-The infimum over all `f : Fin(k) → Q₁⊕Q₂` splits into:
-- Terms where all `f(i)` are `inl`: these equal `δ₁(a, extract(f), q₁) + Σᵢ evalState(union, cᵢ, f(i))`
-- Terms where some `f(i)` is `inr`: these have `δ_union = ⊤`, so they equal `⊤`
+**Remark.** Over ℝ (as opposed to ℝ ∪ {+∞}), the reverse inequality requires M to be sufficiently large relative to the specific tree. This is a fundamental limitation of working without an absorbing element. The semantic decomposition theorem (Theorem 3.4) provides the exact equality without this limitation.
 
-Since `⊤` does not affect the infimum, only the all-`inl` terms contribute. These are in bijection with `f₁ : Fin(k) → Q₁` via `f = inl ∘ f₁`. By the IH, `evalState(union, cᵢ, inl(q)) = evalState(A₁, cᵢ, q)`. The result follows. □
+### 3.3 Theorem C: Finite Family Closure
 
-**Theorem 3.7** (Union Closure).
-```
-eval(union(A₁,A₂), t) = eval(A₁, t) ⊓ eval(A₂, t)
-```
+**Theorem 3.7** (Finite Family Closure). Let I be a nonempty finite set and {Aᵢ}_{i∈I} a family of WTAs with state spaces {Qᵢ}_{i∈I}. Then:
 
-*Proof.* The iInf over `Q₁⊕Q₂` splits into the infimum over `inl` values and `inr` values. By Theorem 3.6, the `inl` infimum equals `eval(A₁,t)` and the `inr` infimum equals `eval(A₂,t)`. □
+inf_{i ∈ I} eval(Aᵢ, t) = inf_{⟨i,q⟩ ∈ Σ_{i∈I} Qᵢ} [evalState(Aᵢ, t, q) + fᵢ(q)]
 
-### 3.3 Finite Family Closure
+*Proof.* By `le_antisymm`:
+- (≤) For each ⟨i, q⟩ in the sigma-type, evalState(Aᵢ, t, q) + fᵢ(q) ≥ eval(Aᵢ, t) ≥ inf_I eval. So the sigma infimum ≥ the I-indexed infimum.
+- (≥) For each i ∈ I and each q ∈ Qᵢ, ⟨i, q⟩ is in the sigma-type, so the sigma infimum ≤ evalState(Aᵢ, t, q) + fᵢ(q). Taking the infimum over q: sigma infimum ≤ eval(Aᵢ, t). Since this holds for all i, sigma infimum ≤ inf_I eval. □
 
-**Theorem 3.8** (Finite Family Closure). For any nonempty finite family `{Aᵢ}_{i∈I}` of WTAs over a common state space `Q`, there exists a WTA `B` such that:
-```
-eval(B, t) = inf_{i∈I} eval(Aᵢ, t)
-```
+### 3.4 State Complexity and Monotonicity
 
-*Proof.* By induction on `|I|` using iterated binary union. The base case (`|I|=1`) is trivial. The inductive step uses the union theorem: if `B'` realizes `inf_{i∈I'}` for a smaller set `I'`, then `union(Aⱼ, B')` realizes `inf_{i∈I'∪{j}}`, since `eval(union) = min(eval(Aⱼ), eval(B')) = min(eval(Aⱼ), inf_{I'}) = inf_{I'∪{j}}`. □
+**Theorem 3.8** (State Complexity).
+- |Q₁ × Q₂| = |Q₁| · |Q₂| (product automaton)
+- |Q₁ ⊕ Q₂| = |Q₁| + |Q₂| (union automaton)
 
-### 3.4 State Complexity
-
-**Theorem 3.9.**
-- `|Q₁ × Q₂| = |Q₁| · |Q₂|` (product states)
-- `|Q₁ ⊕ Q₂| = |Q₁| + |Q₂|` (union states)
-- For the iterated family infimum over `n` automata with `k` states each: at most `nk` states.
-
-### 3.5 Monotonicity
-
-**Theorem 3.10** (Product Monotonicity). If `eval(A₁,t) ≤ eval(A₁',t)` and `eval(A₂,t) ≤ eval(A₂',t)` for all `t`, then `eval(product(A₁,A₂),t) ≤ eval(product(A₁',A₂'),t)` for all `t`.
+**Theorem 3.9** (Monotonicity). If eval(A₁, t) ≤ eval(A₁', t) and eval(A₂, t) ≤ eval(A₂', t) for all t, then eval(A₁ ⊗ A₂, t) ≤ eval(A₁' ⊗ A₂', t) for all t.
 
 ---
 
-## 4. Algorithms
+## 4. Key Algebraic Lemmas
 
-### 4.1 Bottom-Up Evaluation
+### 4.1 Tropical Distributivity
 
-**Algorithm 1: EVAL(A, t)**
+**Lemma 4.1** (inf' + constant). For a nonempty finite set S and function g : S → ℝ:
 
-```
-function EVAL-STATE(A, node(a, c₁,...,cₖ), q):
-    best ← ∞
-    for each (q₁,...,qₖ) ∈ Q^k:
-        cost ← δ(a, (q₁,...,qₖ), q)
-        for i = 1 to k:
-            cost ← cost + EVAL-STATE(A, cᵢ, qᵢ)
-        best ← min(best, cost)
-    return best
+(inf'_S g) + c = inf'_S (λ s, g(s) + c)
 
-function EVAL(A, t):
-    return min_{q ∈ Q} EVAL-STATE(A, t, q) + final(q)
-```
+This expresses that addition distributes over minimum in a linearly ordered group.
 
-**Complexity.** Let `n = |t|` (tree size), `m = max arity`, `s = |Q|`.
-- Time: `O(n · s^(m+1))` without memoization
-- With memoization: `O(n · s^(m+1))` time, `O(n · s)` space
+### 4.2 Min-Plus Fubini
 
-### 4.2 Product Construction
+**Lemma 4.2** (Product Separability). For nonempty finite sets A, B and functions u : A → ℝ, v : B → ℝ:
 
-**Algorithm 2: PRODUCT(A₁, A₂)**
+inf'_{(a,b) ∈ A×B} [u(a) + v(b)] = inf'_A u + inf'_B v
 
-States: `Q₁ × Q₂`, Final: `final₁(q₁) + final₂(q₂)`, Transitions: `δ₁(a, fst∘f, q₁) + δ₂(a, snd∘f, q₂)`.
+*Proof.* The (≤) direction picks optimal a*, b* from Finset.exists_min_image. The (≥) direction uses pointwise bounds. □
 
-State complexity: `|Q₁| · |Q₂|`.
+### 4.3 Product Function Splitting
 
-### 4.3 Union Construction
+**Lemma 4.3** (Pi-Product Equivalence). For g : (Fin(n) → Q₁ × Q₂) → ℝ satisfying the projection condition:
 
-**Algorithm 3: UNION(A₁, A₂)**
+inf'_{qs} g(qs) = inf'_{qs₁} inf'_{qs₂} g(λ i, (qs₁(i), qs₂(i)))
 
-States: `Q₁ ⊕ Q₂`, transitions enforce homogeneity via `⊤` penalty for mixed assignments.
-
-State complexity: `|Q₁| + |Q₂|`.
-
-### 4.4 Family Infimum
-
-**Algorithm 4: FAMILY-INF(A₁, ..., Aₙ)**
-
-Iterate binary union: `B₁ = A₁`, `Bₖ = UNION(Aₖ, Bₖ₋₁)`.
-
-State complexity: `Σᵢ |Qᵢ|`.
+This lemma encodes the combinatorial bijection between product-valued functions and pairs of functions, which is the tree-specific heart of the product theorem.
 
 ---
 
-## 5. Applications
+## 5. Algorithms and Complexity
 
-### 5.1 Multi-Objective Parse Tree Optimization
+### 5.1 Bottom-Up Evaluation
 
-Given syntactic and semantic cost models as WTAs, the product automaton simultaneously optimizes both. We demonstrated this with two grammars assigning different costs to parse trees: the product correctly summed both costs, and the union correctly selected the cheaper grammar for each tree.
+**Algorithm 1: eval_state_dp(A, t)**
+```
+Input: WTA A = (Q, δ, f), tree t = node(a, c₁, ..., cₖ)
+Output: Dictionary {q ↦ evalState(A, t, q) for q ∈ Q}
 
-### 5.2 Circuit Cost Analysis
+1. For each child cᵢ, recursively compute eval_state_dp(A, cᵢ)
+2. For each q ∈ Q:
+   2a. Initialize best ← +∞
+   2b. For each qs ∈ Q^k:
+       cost ← Σᵢ eval_state_dp(A, cᵢ)[qsᵢ] + δ(a, qs, q)
+       best ← min(best, cost)
+   2c. result[q] ← best
+3. Return result
+```
 
-Boolean circuits modeled as trees, with area and delay cost automata. The product automaton gives the combined area-delay metric, enabling multi-objective circuit optimization.
+**Complexity**: O(|t| · |Q|^(k_max + 1)) time, O(|t| · |Q|) space, where k_max is the maximum arity.
 
-### 5.3 Ensemble Model Selection
+### 5.2 Product Evaluation
 
-Multiple tree-structured models combined via family infimum. The ensemble automaton selects the best model per input tree, achieving the theoretical optimum without model selection overhead.
+The product automaton has |Q₁| · |Q₂| states, so evaluation has complexity O(|t| · (|Q₁| · |Q₂|)^(k_max + 1)). This is exponentially worse than separate evaluation O(|t| · (|Q₁|^(k_max+1) + |Q₂|^(k_max+1))).
 
-### 5.4 Compositional Dynamic Programming
+However, the product automaton is a *single* automaton that can be composed further with additional constructions, enabling optimization pipelines that would require re-derivation if done component-wise.
 
-Three optimization objectives (operation count, depth, weighted cost) combined via iterated products and family infimum, demonstrating modular construction of complex cost models.
+### 5.3 Viterbi Decoding
+
+A Viterbi-style algorithm extracts the optimal state assignment (run) achieving the minimum cost. This extends the tree evaluation with backtracking pointers, producing the optimal labeling in O(|t| · |Q|^(k_max + 1)) time.
 
 ---
 
-## 6. Computational Experiments
+## 6. Applications
 
-All experiments were run in Python 3. The following table summarizes verification results:
+### 6.1 Compositional Parsing
 
-| Theorem | Trees tested | Max error | Status |
-|---------|-------------|-----------|--------|
-| Product closure | 40 random | < 10⁻¹⁰ | ✓ |
-| Union closure | 30 systematic | < 10⁻¹⁰ | ✓ |
-| Family infimum | 20 per family | 0 | ✓ |
-| State complexity (product) | 15 pairs | exact | ✓ |
-| State complexity (union) | 15 pairs | exact | ✓ |
-| Monotonicity | 50 pairs | verified | ✓ |
+In natural language processing, a parser assigns costs to parse trees. Different cost models (syntactic plausibility, semantic coherence, statistical frequency) can be represented as separate WTAs. The product theorem enables joint optimization: a single product parser computes the combined cost without running separate parsers.
 
-Visualizations show: (1) perfect alignment of product eval with component sums; (2) union eval tracking the pointwise minimum; (3) exponential vs. linear state growth for products vs. unions; (4) monotone convergence of family infimum as ensemble size grows.
+### 6.2 Circuit Cost Analysis
+
+Boolean circuits have tree-structured components. Energy, delay, and area costs can each be modeled by a WTA. The product automaton computes the total cost metric, while the union identifies the tightest single-objective bound. This supports Pareto-optimal design exploration.
+
+### 6.3 Decision Tree Ensembles
+
+Random forests and gradient-boosted trees aggregate predictions from multiple models. The finite family theorem provides a mathematical framework for ensemble aggregation: the minimum-cost automaton across the ensemble is itself recognizable over the combined state space.
+
+### 6.4 Dynamic Programming Certification
+
+Tree-structured dynamic programming algorithms (RNA folding, instruction scheduling, network routing) can be certified by showing the cost function is tropically recognizable. The closure theorems then guarantee that compositions of certified algorithms remain certifiable.
 
 ---
 
 ## 7. Discussion
 
-### 7.1 Choice of Cost Domain
+### 7.1 The ℝ vs ℝ∞ Issue
 
-We chose `ENNReal = [0, ∞]` as the cost domain for several reasons:
-- The infimum `⨅` is always defined (no nonemptiness or boundedness conditions needed)
-- The identity `a + ⊤ = ⊤` correctly handles impossible runs
-- `ENNReal.add_iInf` and `ENNReal.iInf_add` provide the key distributivity
-- Rich Mathlib API reduces proof overhead
+Our product theorem works cleanly over ℝ: the identity eval(A₁ ⊗ A₂, t) = eval(A₁, t) + eval(A₂, t) holds for all trees with no additional hypotheses. The union theorem is more subtle: over ℝ (without +∞), the penalty-based union automaton cannot guarantee exact equality for all trees with a single finite penalty. This is why we provide both:
+- The semantic decomposition theorem (exact equality, using the abstract decomposition over Q₁ ⊕ Q₂)
+- The embedding inequality (one-sided bound for the concrete union automaton)
 
-For applications requiring negative costs, one could use `EReal` or `WithBot (WithTop ℝ)`, at the cost of additional case analysis.
+Working over WithTop ℝ or EReal would resolve this, at the cost of more complex algebraic manipulation.
 
-### 7.2 Formalization Challenges
+### 7.2 Comparison with Word Automata
 
-The main proof challenges were:
-1. **Min-plus Fubini**: decomposing an infimum over product-typed functions into iterated infima, using the `Equiv.arrowProdEquivProdArrow` equivalence
-2. **Union transitions**: correctly filtering out mixed-component child assignments using `Sum.isLeft`/`Sum.isRight` predicates
-3. **Universe polymorphism**: ensuring the existential in the family closure theorem lives in a consistent universe
+For word automata (trees of arity ≤ 1), the product theorem is classical. The tree case is genuinely harder because:
+1. The state assignment at a node involves a *tuple* of child states (not just one predecessor state)
+2. The product decomposition requires splitting Fin(k) → Q₁ × Q₂ into pairs of functions
+3. The min-plus Fubini principle must be applied at each tree node, not just along a linear chain
 
 ### 7.3 Limitations
 
-Our formalization covers the core closure properties but does not include:
-- Closure under relabeling/homomorphism
-- Determinization
-- Complementation (which does not hold for weighted automata in general)
-- Decidability of equivalence
+- Our formalization works over ℝ, not an arbitrary semiring. Generalization to abstract semirings would require additional algebraic infrastructure.
+- The evaluation complexity of the product automaton grows multiplicatively in state count. For applications requiring many compositions, minimization techniques would be needed.
+- We do not treat weighted tree transducers, which would extend the theory to tree-to-tree transformations.
 
 ---
 
 ## 8. Future Work
 
-See FUTURE_DIRECTIONS.md for detailed research directions, including generalization to arbitrary semirings, composition closure, determinization, and logical characterizations.
+1. **Minimization**: Prove that the product and union automata can be minimized, with tight bounds on the minimal state count.
+2. **Transducers**: Extend closure to weighted tree transducers for cost-preserving tree transformations.
+3. **Tropical neural networks**: Connect WTA closure to tropical geometry of ReLU networks.
+4. **Probabilistic extensions**: Study how the closure theorems deform under the log-sum-exp semiring (finite-temperature tropical).
+5. **Lower bounds**: Use the state complexity of product automata to derive lower bounds on tropical tree computation.
+
+---
+
+## 9. Formal Verification Details
+
+All definitions and theorems are formalized in Lean 4 (version 4.28.0) with Mathlib. The formalization consists of three files:
+
+- `Tropical/TreeAutomata/Basic.lean` (82 lines): Core definitions
+- `Tropical/TreeAutomata/Product.lean` (178 lines): Product closure with all helper lemmas
+- `Tropical/TreeAutomata/Union.lean` (157 lines): Union decomposition and embedding
+- `Tropical/TreeAutomata/FiniteFamily.lean` (74 lines): Finite family closure
+
+All proofs use only standard axioms (propext, Classical.choice, Quot.sound). No sorry statements remain in the final code.
 
 ---
 
 ## References
 
-1. M. Droste, W. Kuich, H. Vogler (eds.), *Handbook of Weighted Automata*, Springer, 2009.
-2. A. Bozapalidis, "Equational elements in additive algebras," *Bull. Greek Math. Soc.*, 1999.
-3. Z. Ésik, W. Kuich, "Formal tree series," *J. Automata, Languages and Combinatorics*, 2003.
-4. J. Berstel, C. Reutenauer, *Rational Series and Their Languages*, Springer, 1988.
-5. M.-P. Schützenberger, "On the definition of a family of automata," *Information and Control*, 1961.
-6. I. Simon, "Recognizable sets with multiplicities in the tropical semiring," *MFCS*, 1988.
-7. T. Braibant, D. Pous, "Deciding Kleene algebras in Coq," *LMCS*, 2012.
+1. B. Borchardt. The Theory of Recognizable Tree Series. PhD thesis, TU Dresden, 2005.
+2. M. Droste, W. Kuich, H. Vogler. Handbook of Weighted Automata. Springer, 2009.
+3. I. Simon. Recognizable sets with multiplicities in the tropical semiring. MFCS, 1988.
+4. G. Mikhalkin. Enumerative tropical algebraic geometry in ℝ². J. Amer. Math. Soc., 2005.
+5. F. Baccelli, G. Cohen, G.J. Olsder, J.-P. Quadrat. Synchronization and Linearity: An Algebra for Discrete Event Systems. Wiley, 1992.
+6. J. Engelfriet. Bottom-up and top-down tree transformations — a comparison. Math. Systems Theory, 1975.
+7. Z. Fülöp, H. Vogler. Weighted tree automata and tree transducers. In Handbook of Weighted Automata, 2009.

@@ -919,11 +919,55 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "03df72f3",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56965cb0",
     "timestamp": "2026-05-16T01:35:37.787305+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Soundness step",
+    "description": ": if the prover deviates, then g_i ≠ g_i* (the honest polynomial). By the univariate Schwartz–Zippel bound, Pr[g_i(r_i) = g_i*(r_i)] ≤ d_i/|S|.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97c6ba31",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:18:15.253759+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Union bound",
+    "description": ": total cheating probability ≤ Σ d_i / |S| ≤ nd/|S|.\n\n### Cross-Domain Impact\n- **Complexity Theory**: Sum-check is the core of #P hardness amplification\n- **Zero-Knowledge Proofs**: Foundation for SNARKs and STARKs\n- **Verifiable Computation**: Delegating computation to untrusted servers\n\n### Key Lean Targets\n```\ntheorem sum_check_soundness :\n  is_cheating_prover P →\n  Pr[verifier_accepts (sum_check_protocol P V)] ≤ n * d / |S|\n```\n\n---\n\n## Direction 5: List Decoding Beyond the Unique Radius\n\n### Statement\nProve that for the Reed–Muller code RM(d, n, S), the number of codewords within Hamming distance `|S|^n - t` of any received word is at most `(|S|^n / t)^d`, provided `t > d · |S|^(n-1)`.\n\nThis is the multivariate analogue of the Guruswami–Sudan list-decoding bound.\n\n### Hypothesis\nBeyo",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97c6ba31",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:18:15.266353+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Covering argument",
+    "description": ": the agreement regions {x : p_i(x) = f(x)} must be nearly disjoint.\n4. Since |S|^n total grid points must accommodate L nearly disjoint agreement regions of size ≥ t, we get L ≤ |S|^n / (t - d·|S|^(n-1)).\n5. A more refined combinatorial argument using interpolation determinants gives the tighter bound L ≤ (|S|^n / t)^d.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97c6ba31",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:18:15.276474+00:00"
   },
   {
     "id": "seed_052",
