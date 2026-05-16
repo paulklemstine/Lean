@@ -559,23 +559,6 @@
     "timestamp": "2026-05-16T06:53:19.319691+00:00"
   },
   {
-    "id": "fd_0232",
-    "title": "Construct encoding family",
-    "description": "where `tropFactorRank (encode s) = s` using block-diagonal rank-1 decompositions\n\n### Key Lemmas Needed\n- `tropFactorRank_le_dim`: Factor rank is at most $n$ for $n \\times n$ matrices\n- `tropFactorRank_identity`: Factor rank of the tropical identity is $n$\n- `tropFactorRank_diagonal`: Factor rank of a diagonal matrix equals its number of finite entries (under certain conditions)\n- `tropFactorRank_tropical_sum`: Factor rank is subadditive under tropical sum\n\n### Estimated Difficulty\n**High.** The lower bounds are the hardest part. Shitov's NP-hardness result suggests that computing factor rank is intrinsically difficult, but constructing specific matrices with *provable* factor rank requires delicate combinatorial arguments.\n\n### Cross-Domain Impact\n- **Algebraic geometry**: Factor rank con",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "64a1fefb",
-    "timestamp": "2026-05-16T07:11:31.800180+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Prove that the hardness transfer extends",
     "description": "to the homomorphic setting\n\n### Estimated Difficulty\n**High.** Tropical homomorphic encryption is largely unexplored.\n\n### Cross-Domain Impact\n- **Secure computation**: Enable private shortest-path queries, private scheduling\n- **Cloud computing**: Outsource optimization problems without revealing data\n\n---\n\n## Direction 7: Experimental Cryptanalysis Benchmarks\n\n### Hypothesis\nThe hardness transfer theorem can guide the design of benchmark instances for tropical cryptanalysis.\n\n### Concrete Steps",
@@ -1628,10 +1611,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1a386325",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "edf517ad",
     "timestamp": "2026-05-16T09:16:46.845693+00:00"
   },
   {
@@ -1730,5 +1713,90 @@
     "source_exp_id": "c2ddc3a7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:29:02.795624+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Direction 1: Weighted Diagonal Factor Rank",
+    "description": "**Hypothesis:** For any diagonal tropical matrix $D$ with entries $d_0, \\ldots, d_{n-1}$ on the diagonal and $\\infty$ off-diagonal, the factor rank equals the number of finite diagonal entries:\n\n$$\\text{tropFactorRank}(D) = |\\{i : d_i \\neq \\infty\\}|$$\n\n**Proof strategy:** The support separation argument from our main theorem applies verbatim—it never uses the specific diagonal values, only the fact that off-diagonal entries are $\\infty$. The upper bound construction generalizes: the $t$-th rank-1 term uses $u_t(i) = d_i$ if $i = t$ (and $d_t \\neq \\infty$), else $\\infty$, and $v_t(j) = 0$ if $j = t$, else $\\infty$.\n\n**Impact:** This completes the characterization of factor rank for all diagonal matrices, not just the identity-like case. It provides a richer encoding family where the diagona",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "64a1fefb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:33:50.671282+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Direction 2: Block-Diagonal Additivity",
+    "description": "**Hypothesis:** For block-diagonal matrices $A \\oplus B$ (with $\\infty$ in cross-blocks), factor rank is additive:\n\n$$\\text{tropFactorRank}(A \\oplus B) = \\text{tropFactorRank}(A) + \\text{tropFactorRank}(B)$$\n\n**Proof strategy:**\n- **Upper bound** ($\\leq$): Concatenate factorizations of $A$ and $B$, embedding each into the larger index set with $\\infty$ padding. This is straightforward.\n- **Lower bound** ($\\geq$): Show that any rank-1 matrix in a factorization of $A \\oplus B$ whose support intersects both blocks forces finite cross-block entries, contradicting the $\\infty$ structure. Therefore each rank-1 term belongs to at most one block, and the terms partition into those serving $A$ and those serving $B$.\n\n**Impact:** This creates a reusable theorem schema for computing factor rank of st",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "64a1fefb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:33:50.685886+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Direction 3: Communication Complexity Lower Bounds via Factor Rank",
+    "description": "**Hypothesis:** Tropical factor rank provides a systematic source of communication complexity lower bounds via the rectangle covering interpretation.\n\n**Research plan:**\n1. Formalize the connection between tropical factor rank and rectangle covering number: for a tropical matrix $A$, define its *support* $\\text{supp}(A) = \\{(i,j) : A_{ij} \\neq \\infty\\}$, and show that the factor rank is at least the rectangle covering number of $\\text{supp}(A)$.\n2. For matrices where the support covering number equals the factor rank (e.g., diagonal matrices), this gives exact communication complexity results.\n3. Extend to *non-Boolean* tropical communication: define a tropical communication model where parties compute tropical matrix entries, and show that factor rank directly measures the communication c",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "64a1fefb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:33:50.700326+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Direction 4: Tropical Factor Rank in Machine Learning Architectures",
+    "description": "**Hypothesis:** The factor rank of a tropical weight matrix determines the minimum width of an equivalent min-plus neural network layer.\n\n**Research plan:**\n1. Formalize the equivalence between $k$-term tropical factorization and width-$k$ min-plus network layers.\n2. Use the encoding theorem to construct exact width benchmarks: the tropical identity requires width exactly $n$.\n3. Investigate how factor rank relates to the *tropical complexity* of piecewise-linear functions computed by ReLU networks.\n4. Prove lower bounds on network width for specific function classes using factor rank.\n\n**Impact:** Provides rigorous, certified lower bounds on neural network architecture requirements. The explicit encoding family serves as a benchmark suite for evaluating width-reduction algorithms.\n\n**Cros",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "64a1fefb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:33:50.714492+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Direction 5: Tropical Hardness Calibration for Post-Quantum Cryptography",
+    "description": "**Hypothesis:** The explicit family of matrices with known factor rank can be used to formally separate \"easy\" from \"hard\" instances of tropical matrix problems, providing calibration for cryptographic hardness assumptions.\n\n**Research plan:**\n1. Characterize the *easy* regime: diagonal and block-diagonal matrices where factor rank is efficiently computable (as shown in this work).\n2. Formalize the *hard* regime: generic tropical matrices where factor rank is NP-hard (following Shitov).\n3. Construct a formal *gap theorem*: there exist matrix families where factor rank transitions sharply from easy to hard as structure is perturbed.\n4. Use this gap to design tropical cryptographic primitives with certified hardness margins: keys are structured (easy to generate), while breaking the scheme r",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "64a1fefb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:33:50.727253+00:00"
   }
 ]
