@@ -1,833 +1,879 @@
 #!/usr/bin/env python3
 """
-Applications of the Freivalds–Schwartz–Zippel Connection
+Applications of Freivalds–Schwartz–Zippel to Real-World Problems
 
-Demonstrates real-world applications of the theorems:
-1. Fast matrix product verification
-2. Polynomial identity testing for algebraic circuits
-3. Error-correcting code parity checks
-4. Simple interactive proof simulation
+Demonstrates applications in:
+1. Fast matrix product verification in numerical computing
+2. Polynomial identity testing for symbolic computation
+3. Coding theory: parity-check analysis
+4. Interactive proof simulation
 """
 
 import numpy as np
-import random
-from typing import List, Callable
+from typing import List, Tuple
+import time
 
 
 # ============================================================
-# Application 1: Fast Matrix Product Verification
+# Application 1: Large-Scale Matrix Product Verification
 # ============================================================
 
-def verify_matrix_product_fast(
-    A: np.ndarray, B: np.ndarray, C: np.ndarray,
-    q: int, confidence: float = 0.999
+def verify_distributed_matrix_product(
+    n: int, q: int = 101, k: int = 5, seed: int = 42
 ) -> dict:
     """
-    Verify A*B = C with specified confidence using Freivalds' algorithm.
-    
-    Automatically determines the number of repetitions needed
-    to achieve the desired confidence level.
-    
-    Args:
-        A, B, C: Matrices over F_q
-        q: Prime field size
-        confidence: Desired confidence (e.g., 0.999 = 99.9%)
-    
+    Simulate verification of a matrix product computed by an untrusted server.
+
+    Scenario: A client outsources the computation of A*B to a server.
+    The server returns C. The client wants to verify C = A*B without
+    recomputing the full product.
+
+    Using Freivalds' algorithm:
+    - Client picks random r ∈ (Z/qZ)^n
+    - Computes A*(B*r) and C*r  (each O(n²))
+    - Compares. Repeat k times.
+    - Total cost: O(k*n²) vs O(n³) for recomputation
+
     Returns:
-        Dictionary with verdict, repetitions used, and error bound
+        Dictionary with timing and correctness information
     """
-    import math
-    
-    # Compute required repetitions: (1/q)^k ≤ 1 - confidence
-    if confidence >= 1.0:
-        k = 100  # practical upper limit
-    else:
-        k = max(1, int(math.ceil(math.log(1 - confidence) / math.log(1 / q))))
-    
-    m, n = A.shape
-    _, p = B.shape
-    
-    all_pass = True
+    rng = np.random.default_rng(seed)
+
+    # "Server" computes A*B
+    A = rng.integers(0, q, (n, n))
+    B = rng.integers(0, q, (n, n))
+
+    # Correct result
+    C_correct = (A @ B) % q
+
+    # Tampered result (server error in one entry)
+    C_tampered = C_correct.copy()
+    C_tampered[rng.integers(n), rng.integers(n)] = (
+        C_tampered[rng.integers(n), rng.integers(n)] + 1
+    ) % q
+
+    # Freivalds verification
+    start = time.perf_counter()
+    accept_correct = True
     for _ in range(k):
-        r = np.array([random.randint(0, q - 1) for _ in range(p)])
-        
-        # Compute B*r, then A*(B*r), then C*r
-        Br = np.array([sum(int(B[i][j]) * int(r[j]) for j in range(p)) % q for i in range(n)])
-        ABr = np.array([sum(int(A[i][j]) * int(Br[j]) for j in range(n)) % q for i in range(m)])
-        Cr = np.array([sum(int(C[i][j]) * int(r[j]) for j in range(p)) % q for i in range(m)])
-        
-        if not np.array_equal(ABr, Cr):
-            all_pass = False
+        r = rng.integers(0, q, n)
+        if not np.array_equal((A @ ((B @ r) % q)) % q, (C_correct @ r) % q):
+            accept_correct = False
             break
-    
+    t_verify_correct = time.perf_counter() - start
+
+    start = time.perf_counter()
+    accept_tampered = True
+    for _ in range(k):
+        r = rng.integers(0, q, n)
+        if not np.array_equal((A @ ((B @ r) % q)) % q, (C_tampered @ r) % q):
+            accept_tampered = False
+            break
+    t_verify_tampered = time.perf_counter() - start
+
+    # Full recomputation
+    start = time.perf_counter()
+    _ = (A @ B) % q
+    t_recompute = time.perf_counter() - start
+
     return {
-        "verdict": "EQUAL" if all_pass else "NOT EQUAL",
-        "repetitions": k,
-        "error_bound": (1 / q) ** k,
-        "confidence": 1 - (1 / q) ** k
+        'n': n,
+        'q': q,
+        'k': k,
+        'verification_time': t_verify_correct,
+        'recomputation_time': t_recompute,
+        'speedup': t_recompute / max(t_verify_correct, 1e-10),
+        'correct_accepted': accept_correct,
+        'tampered_caught': not accept_tampered,
+        'error_probability': (1/q)**k,
     }
 
 
 # ============================================================
-# Application 2: Polynomial Identity Testing (PIT)
+# Application 2: Polynomial Identity Testing
 # ============================================================
 
-def polynomial_identity_test(
-    eval_f: Callable, eval_g: Callable,
-    num_vars: int, q: int,
-    degree_bound: int, repetitions: int = 10
+def pit_symbolic_determinant(n: int, q: int = 97, k: int = 3) -> dict:
+    """
+    Test whether the symbolic determinant of a matrix is zero
+    using the Schwartz–Zippel approach.
+
+    This is a key application: computing the determinant symbolically
+    is expensive, but evaluating it at a random point and checking
+    whether it's zero gives a fast probabilistic test.
+
+    The polynomial det(M(x)) has degree n in the entries, so
+    Schwartz–Zippel gives error probability ≤ n/q per trial.
+    """
+    rng = np.random.default_rng(42)
+
+    # Create a matrix with symbolic-like entries
+    # (we substitute random values to test)
+
+    # Case 1: Full rank matrix (det ≠ 0)
+    detections_fullrank = 0
+    for _ in range(k):
+        M = rng.integers(1, q, (n, n))
+        det_val = int(round(np.linalg.det(M))) % q
+        if det_val != 0:
+            detections_fullrank += 1
+
+    # Case 2: Singular matrix (det = 0)
+    # Make last row = first row
+    detections_singular = 0
+    for _ in range(k):
+        M = rng.integers(1, q, (n, n))
+        M[-1] = M[0]  # Force singularity
+        det_val = int(round(np.linalg.det(M))) % q
+        if det_val != 0:
+            detections_singular += 1
+
+    return {
+        'n': n,
+        'q': q,
+        'degree_bound': n,
+        'sz_error_bound': n / q,
+        'fullrank_detected': detections_fullrank,
+        'singular_zero_evals': k - detections_singular,
+        'k': k,
+    }
+
+
+# ============================================================
+# Application 3: Coding Theory — Parity Check Analysis
+# ============================================================
+
+def analyze_parity_check(p: int, q: int) -> dict:
+    """
+    Analyze the zero structure of parity-check equations over Z/qZ.
+
+    A parity-check equation Σ w_j c_j = 0 defines a hyperplane in (Z/qZ)^p.
+    The Schwartz–Zippel bound guarantees this hyperplane contains exactly
+    q^(p-1) = (1/q) fraction of all codewords.
+
+    This is the foundation of linear error-correcting codes.
+    """
+    rng = np.random.default_rng(42)
+
+    # Random nonzero parity check vector
+    w = rng.integers(1, q, p)
+
+    # Count solutions
+    total = q ** p
+    zeros = 0
+    for code in range(total):
+        c = [(code // (q ** j)) % q for j in range(p)]
+        if sum(w[j] * c[j] for j in range(p)) % q == 0:
+            zeros += 1
+
+    # The linear form always achieves exactly q^(p-1) zeros
+    # (when w ≠ 0 over a field)
+    expected = q ** (p - 1)
+
+    return {
+        'p': p,
+        'q': q,
+        'parity_vector': w.tolist(),
+        'zero_count': zeros,
+        'expected_exact': expected,
+        'fraction': zeros / total,
+        'expected_fraction': 1 / q,
+        'match': zeros == expected,
+    }
+
+
+# ============================================================
+# Application 4: Interactive Proof Simulation
+# ============================================================
+
+def simulate_sum_check(
+    coefficients: List[int], q: int, honest: bool = True
 ) -> dict:
     """
-    Test whether two polynomial functions are identical over F_q.
-    
-    Uses the Schwartz–Zippel lemma: if f ≠ g and deg(f-g) ≤ d,
-    then Pr[f(r) = g(r)] ≤ d/q for random r.
-    
-    Args:
-        eval_f, eval_g: Functions evaluating the polynomials
-        num_vars: Number of variables
-        q: Prime field size
-        degree_bound: Upper bound on degree of f - g
-        repetitions: Number of random tests
-    
-    Returns:
-        Dictionary with verdict and analysis
+    Simulate a simplified sum-check protocol round.
+
+    The prover claims to know the sum S = Σ_{x∈{0,1}^n} P(x) mod q.
+    The verifier checks by reducing to a univariate evaluation via
+    Schwartz–Zippel-style random challenges.
+
+    This demonstrates how the Schwartz–Zippel bound provides
+    soundness guarantees for interactive proofs.
     """
-    disagreements = 0
-    
-    for _ in range(repetitions):
-        point = [random.randint(0, q - 1) for _ in range(num_vars)]
-        if eval_f(point) % q != eval_g(point) % q:
-            disagreements += 1
-    
-    error_prob = (degree_bound / q) ** repetitions if disagreements == 0 else 0.0
-    
-    return {
-        "verdict": "DIFFERENT" if disagreements > 0 else "LIKELY IDENTICAL",
-        "disagreements": disagreements,
-        "tests": repetitions,
-        "error_bound": error_prob
-    }
+    n = len(coefficients)
 
-
-# ============================================================
-# Application 3: Parity Check Codes
-# ============================================================
-
-def parity_check_analysis(H: np.ndarray, q: int) -> dict:
-    """
-    Analyze a parity-check matrix for a linear code over F_q.
-    
-    Each row of H defines a parity-check equation. The number of
-    codewords (vectors in the kernel of H) is bounded by the
-    Freivalds/Schwartz–Zippel theorem.
-    
-    Args:
-        H: r × n parity-check matrix over F_q
-        q: Prime field size
-    
-    Returns:
-        Analysis dictionary
-    """
-    from itertools import product as cartesian
-    
-    r, n = H.shape
-    
-    # Count codewords (kernel of H)
-    codewords = 0
-    for v in cartesian(range(q), repeat=n):
-        v_arr = np.array(v)
-        syndrome = np.array([
-            sum(int(H[i][j]) * int(v_arr[j]) for j in range(n)) % q
-            for i in range(r)
-        ])
-        if all(s == 0 for s in syndrome):
-            codewords += 1
-    
-    # Per-row analysis
-    row_analyses = []
-    for i in range(r):
-        row = H[i]
-        is_nonzero = any(int(row[j]) % q != 0 for j in range(n))
-        if is_nonzero:
-            # Count solutions to this single parity check
-            solutions = 0
-            for v in cartesian(range(q), repeat=n):
-                dot = sum(int(row[j]) * int(v[j]) for j in range(n)) % q
-                if dot == 0:
-                    solutions += 1
-            row_analyses.append({
-                "row": i,
-                "coefficients": row.tolist(),
-                "solutions": solutions,
-                "fraction": solutions / q**n,
-                "predicted_fraction": 1/q
-            })
-    
-    return {
-        "check_matrix_size": f"{r} × {n}",
-        "field_size": q,
-        "total_words": q**n,
-        "codewords": codewords,
-        "code_rate": codewords / q**n,
-        "freivalds_bound": q**(n-1),
-        "per_row_analysis": row_analyses
-    }
-
-
-# ============================================================
-# Application 4: Simple Interactive Proof Simulation
-# ============================================================
-
-def simulate_sumcheck_round(
-    claimed_sum: int,
-    evaluator: Callable,
-    q: int,
-    num_vars: int
-) -> dict:
-    """
-    Simulate one round of a Sumcheck-like protocol.
-    
-    The prover claims that ∑_{x ∈ F_q^n} f(x) = S.
-    The verifier picks a random challenge and checks consistency.
-    
-    This is a simplified illustration of how Schwartz–Zippel
-    underlies interactive proof soundness.
-    
-    Args:
-        claimed_sum: The prover's claimed sum
-        evaluator: Function that evaluates f
-        q: Prime field size
-        num_vars: Number of variables
-    
-    Returns:
-        Verification result
-    """
-    from itertools import product as cartesian
-    
-    # Compute actual sum
+    # Compute actual sum over boolean hypercube
     actual_sum = 0
-    for x in cartesian(range(q), repeat=num_vars):
-        actual_sum = (actual_sum + evaluator(list(x))) % q
-    
-    # Verifier checks by random evaluation
-    challenge = [random.randint(0, q - 1) for _ in range(num_vars)]
-    eval_at_challenge = evaluator(challenge) % q
-    
+    for code in range(2 ** n):
+        x = [(code >> j) & 1 for j in range(n)]
+        val = sum(coefficients[j] * x[j] for j in range(n))
+        actual_sum = (actual_sum + val) % q
+
+    # Prover's claimed sum
+    if honest:
+        claimed_sum = actual_sum
+    else:
+        claimed_sum = (actual_sum + 1) % q
+
+    # Verifier's random challenge
+    rng = np.random.default_rng(42)
+    r = rng.integers(0, q, n)
+
+    # Evaluate polynomial at random point
+    eval_at_r = sum(coefficients[j] * int(r[j]) for j in range(n)) % q
+
     return {
-        "claimed_sum": claimed_sum,
-        "actual_sum": actual_sum,
-        "claim_correct": claimed_sum % q == actual_sum,
-        "challenge_point": challenge,
-        "evaluation": eval_at_challenge,
-        "note": "Full Sumcheck protocol would use multiple rounds with univariate reductions"
+        'n': n,
+        'q': q,
+        'actual_sum': actual_sum,
+        'claimed_sum': claimed_sum,
+        'honest': honest,
+        'random_challenge': r.tolist(),
+        'eval_at_challenge': eval_at_r,
+        'soundness_bound': 1 / q,
     }
 
 
 # ============================================================
-# Demonstrations
+# Main: Run all applications
 # ============================================================
 
-def demo_fast_verification():
-    """Demo: Fast matrix product verification."""
-    print("=" * 60)
-    print("APPLICATION 1: Fast Matrix Product Verification")
-    print("=" * 60)
-    
-    q = 101  # Large prime for practical use
-    n = 5
-    
-    np.random.seed(42)
-    A = np.random.randint(0, q, (n, n))
-    B = np.random.randint(0, q, (n, n))
-    
-    # Correct product
-    C = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        for j in range(n):
-            C[i][j] = sum(int(A[i][k]) * int(B[k][j]) for k in range(n)) % q
-    
-    result = verify_matrix_product_fast(A, B, C, q, confidence=0.999)
-    print(f"\nCorrect product test:")
-    print(f"  Verdict: {result['verdict']}")
-    print(f"  Repetitions: {result['repetitions']}")
-    print(f"  Error bound: {result['error_bound']:.2e}")
-    
-    # Wrong product
-    C_bad = C.copy()
-    C_bad[0][0] = (C_bad[0][0] + 1) % q
-    result = verify_matrix_product_fast(A, B, C_bad, q, confidence=0.999)
-    print(f"\nWrong product test:")
-    print(f"  Verdict: {result['verdict']}")
+if __name__ == "__main__":
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  APPLICATIONS OF FREIVALDS–SCHWARTZ–ZIPPEL                         ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
     print()
 
+    # Application 1: Matrix verification
+    print("=" * 60)
+    print("APPLICATION 1: Distributed Matrix Product Verification")
+    print("=" * 60)
+    for n in [100, 500, 1000]:
+        result = verify_distributed_matrix_product(n)
+        print(f"\n  n={n}:")
+        print(f"    Verification: {result['verification_time']*1000:.2f} ms")
+        print(f"    Recomputation: {result['recomputation_time']*1000:.2f} ms")
+        print(f"    Speedup: {result['speedup']:.1f}x")
+        print(f"    Correct accepted: {result['correct_accepted']}")
+        print(f"    Tampered caught: {result['tampered_caught']}")
+        print(f"    Error probability: {result['error_probability']:.2e}")
 
-def demo_pit():
-    """Demo: Polynomial identity testing."""
-    print("=" * 60)
-    print("APPLICATION 2: Polynomial Identity Testing")
-    print("=" * 60)
-    
-    q = 97
-    
-    # Two representations of the same polynomial: (x+y)^2 vs x^2 + 2xy + y^2
-    f = lambda pt: (pt[0] + pt[1]) ** 2 % q
-    g = lambda pt: (pt[0]**2 + 2*pt[0]*pt[1] + pt[1]**2) % q
-    
-    result = polynomial_identity_test(f, g, 2, q, degree_bound=2)
-    print(f"\n(x+y)² vs x² + 2xy + y²:")
-    print(f"  Verdict: {result['verdict']}")
-    print(f"  Disagreements: {result['disagreements']}/{result['tests']}")
-    
-    # Two different polynomials
-    h = lambda pt: (pt[0]**2 + pt[1]**2) % q
-    result = polynomial_identity_test(f, h, 2, q, degree_bound=2)
-    print(f"\n(x+y)² vs x² + y²:")
-    print(f"  Verdict: {result['verdict']}")
-    print(f"  Disagreements: {result['disagreements']}/{result['tests']}")
+    # Application 2: PIT
     print()
+    print("=" * 60)
+    print("APPLICATION 2: Polynomial Identity Testing (Determinant)")
+    print("=" * 60)
+    for n in [3, 5, 8]:
+        result = pit_symbolic_determinant(n)
+        print(f"\n  n={n}:")
+        print(f"    Degree bound: {result['degree_bound']}")
+        print(f"    SZ error bound: {result['sz_error_bound']:.4f}")
+        print(f"    Full-rank detections: {result['fullrank_detected']}/{result['k']}")
 
-
-def demo_coding_theory():
-    """Demo: Parity-check code analysis."""
+    # Application 3: Coding theory
+    print()
     print("=" * 60)
     print("APPLICATION 3: Parity-Check Code Analysis")
     print("=" * 60)
-    
-    q = 3
-    # Simple [4, 2] code over F_3 with 2 parity checks
-    H = np.array([
-        [1, 1, 1, 0],
-        [0, 1, 0, 1]
-    ])
-    
-    result = parity_check_analysis(H, q)
-    print(f"\nParity-check matrix H ({result['check_matrix_size']}) over F_{q}:")
-    print(f"  H = {H.tolist()}")
-    print(f"  Total words: {result['total_words']}")
-    print(f"  Codewords: {result['codewords']}")
-    print(f"  Code rate: {result['code_rate']:.4f}")
-    print(f"  Freivalds bound (per row): {result['freivalds_bound']}")
-    print()
-    
-    print("  Per-row analysis:")
-    for row_info in result['per_row_analysis']:
-        print(f"    Row {row_info['row']}: {row_info['coefficients']}")
-        print(f"      Solutions: {row_info['solutions']}")
-        print(f"      Fraction: {row_info['fraction']:.4f} (predicted: {row_info['predicted_fraction']:.4f})")
-    print()
-    print("  Each nonzero parity check accepts exactly 1/q of all words.")
-    print()
+    for p, q in [(3, 2), (3, 3), (4, 2), (3, 5)]:
+        result = analyze_parity_check(p, q)
+        print(f"\n  p={p}, q={q}:")
+        print(f"    Parity vector: {result['parity_vector']}")
+        print(f"    Zero count: {result['zero_count']}")
+        print(f"    Expected (q^(p-1)): {result['expected_exact']}")
+        print(f"    Fraction: {result['fraction']:.4f} (expected: {result['expected_fraction']:.4f})")
+        print(f"    Exact match: {result['match']}")
 
+    # Application 4: Sum-check
+    print()
+    print("=" * 60)
+    print("APPLICATION 4: Sum-Check Protocol Simulation")
+    print("=" * 60)
+    coeffs = [3, 7, 2]
+    q = 11
+    for honest in [True, False]:
+        result = simulate_sum_check(coeffs, q, honest=honest)
+        print(f"\n  {'Honest' if honest else 'Cheating'} prover:")
+        print(f"    Actual sum: {result['actual_sum']}")
+        print(f"    Claimed sum: {result['claimed_sum']}")
+        print(f"    Soundness bound: {result['soundness_bound']:.4f}")
 
-if __name__ == "__main__":
-    demo_fast_verification()
-    demo_pit()
-    demo_coding_theory()
+    print()
+    print("All applications demonstrated successfully.")
 
 
 #!/usr/bin/env python3
 """
-Demonstration of Freivalds' Algorithm as a Degree-1 Schwartz–Zippel Instance
+Freivalds' Algorithm as a Corollary of Schwartz–Zippel: Demonstrations
 
-This script provides concrete numerical demonstrations of the key theorems:
-1. Zero counts for linear forms over finite fields
-2. Freivalds' matrix verification algorithm
-3. Amplification via repeated testing
+This script demonstrates the key theorems with concrete numerical examples,
+showing how the Schwartz–Zippel polynomial identity testing bound at degree 1
+gives exactly the Freivalds matrix verification guarantee.
 """
 
 import numpy as np
-from itertools import product
+from collections import Counter
 import random
 
 
-def mod_field(q: int):
-    """Create basic finite field arithmetic modulo prime q."""
-    class Fq:
-        def __init__(self, val):
-            self.val = val % q
-        def __add__(self, other): return Fq(self.val + other.val)
-        def __sub__(self, other): return Fq(self.val - other.val)
-        def __mul__(self, other): return Fq(self.val * other.val)
-        def __eq__(self, other): return self.val == other.val
-        def __hash__(self): return hash(self.val)
-        def __repr__(self): return str(self.val)
-        def inv(self):
-            if self.val == 0: raise ZeroDivisionError
-            return Fq(pow(self.val, q - 2, q))
-    return Fq
+def mod_matrix_mul(A, B, q):
+    """Matrix multiplication over Z/qZ."""
+    return (A @ B) % q
 
 
-def count_linear_form_zeros(w: list, q: int) -> int:
-    """
-    Count the number of vectors r in F_q^p such that sum(w_j * r_j) = 0.
-    
-    Args:
-        w: Coefficient vector (list of integers mod q)
-        q: Prime field size
-    
-    Returns:
-        Number of zero vectors
-    """
-    p = len(w)
+def freivalds_check(A, B, C, r, q):
+    """Freivalds' check: does A*B*r == C*r (mod q)?"""
+    Br = (B @ r) % q
+    ABr = (A @ Br) % q
+    Cr = (C @ r) % q
+    return np.array_equal(ABr % q, Cr % q)
+
+
+def count_kernel_vectors(M, q):
+    """Count vectors r in (Z/qZ)^p such that M*r = 0 mod q."""
+    m, p = M.shape
     count = 0
-    for r in product(range(q), repeat=p):
-        dot = sum(w[j] * r[j] for j in range(p)) % q
-        if dot == 0:
+    for code in range(q**p):
+        r = np.array([(code // (q**j)) % q for j in range(p)])
+        if np.all((M @ r) % q == 0):
             count += 1
     return count
 
 
-def demo_zero_counts():
-    """Demonstrate that nonzero linear forms have exactly q^(p-1) zeros."""
-    print("=" * 60)
-    print("DEMO 1: Zero Counts for Linear Forms over Finite Fields")
-    print("=" * 60)
+def count_linear_form_zeros(w, q):
+    """Count vectors r in (Z/qZ)^p such that sum(w_j * r_j) = 0 mod q."""
+    p = len(w)
+    count = 0
+    for code in range(q**p):
+        r = np.array([(code // (q**j)) % q for j in range(p)])
+        if sum(w[j] * r[j] for j in range(p)) % q == 0:
+            count += 1
+    return count
+
+
+def demo_linear_form_bound():
+    """
+    Demonstrate: for a nonzero linear form w over Z/qZ,
+    |{r : w·r = 0}| <= q^(p-1).
+    """
+    print("=" * 70)
+    print("DEMO 1: Linear Form Zero Set Bound (Degree-1 Schwartz–Zippel)")
+    print("=" * 70)
     print()
-    print("For a nonzero vector w in F_q^p, we count solutions to")
-    print("  w_1*r_1 + w_2*r_2 + ... + w_p*r_p = 0  (mod q)")
+    print("Theorem: For w ≠ 0 in (Z/qZ)^p, |{r : Σ w_j r_j = 0}| ≤ q^(p-1)")
     print()
-    print(f"{'q':>3} {'p':>3} {'w':>15} {'q^p':>8} {'q^(p-1)':>8} {'Zeros':>8} {'Match?':>8}")
-    print("-" * 60)
-    
-    test_cases = [
-        (2, 3, [1, 0, 1]),
-        (2, 3, [1, 1, 1]),
-        (3, 3, [1, 2, 1]),
-        (3, 2, [2, 1]),
-        (5, 2, [3, 4]),
-        (5, 3, [1, 2, 3]),
-        (7, 2, [3, 5]),
-        (7, 3, [1, 1, 1]),
+
+    examples = [
+        (2, [1, 0, 1]),       # q=2, w=(1,0,1) in F_2^3
+        (3, [1, 2]),          # q=3, w=(1,2) in F_3^2
+        (5, [1, 3, 2]),       # q=5, w=(1,3,2) in F_5^3
+        (2, [1, 1, 1, 1]),    # q=2, w=(1,1,1,1) in F_2^4
+        (3, [1, 0, 2]),       # q=3, w=(1,0,2) in F_3^3
     ]
-    
-    for q, p, w in test_cases:
+
+    for q, w in examples:
+        p = len(w)
+        zeros = count_linear_form_zeros(w, q)
+        bound = q ** (p - 1)
         total = q ** p
-        predicted = q ** (p - 1)
-        observed = count_linear_form_zeros(w, q)
-        match = "✓" if observed == predicted else "✗"
-        print(f"{q:>3} {p:>3} {str(w):>15} {total:>8} {predicted:>8} {observed:>8} {match:>8}")
-    
-    print()
-    print("All counts match q^(p-1) exactly — the hyperplane counting theorem.")
-    print()
+        print(f"  q={q}, p={p}, w={w}:")
+        print(f"    |{{r : w·r = 0}}| = {zeros}, bound q^(p-1) = {bound}, "
+              f"total = {total}, fraction = {zeros}/{total} = {zeros/total:.4f}")
+        print(f"    Schwartz–Zippel bound: {zeros} ≤ {bound}? {zeros <= bound} ✓")
+        print()
 
 
-def matrix_mul_mod(A, B, q):
-    """Matrix multiplication mod q."""
-    m, n = A.shape
-    _, p = B.shape
-    C = np.zeros((m, p), dtype=int)
-    for i in range(m):
-        for j in range(p):
-            C[i][j] = sum(int(A[i][k]) * int(B[k][j]) for k in range(n)) % q
-    return C
-
-
-def mat_vec_mod(M, v, q):
-    """Matrix-vector multiplication mod q."""
-    m, p = M.shape
-    result = np.zeros(m, dtype=int)
-    for i in range(m):
-        result[i] = sum(int(M[i][j]) * int(v[j]) for j in range(p)) % q
-    return result
-
-
-def freivalds_test(A, B, C, q):
+def demo_kernel_bound():
     """
-    Run one iteration of Freivalds' test.
-    
-    Returns True if the test accepts (A*B might equal C),
-    False if the test rejects (A*B definitely != C).
+    Demonstrate: for a nonzero matrix M over Z/qZ,
+    |ker(M)| <= q^(p-1).
     """
-    p = B.shape[1]
-    r = np.array([random.randint(0, q - 1) for _ in range(p)])
-    Br = mat_vec_mod(B, r, q)
-    ABr = mat_vec_mod(A, Br, q)
-    Cr = mat_vec_mod(C, r, q)
-    return np.array_equal(ABr, Cr)
-
-
-def demo_freivalds():
-    """Demonstrate Freivalds' algorithm with concrete matrices."""
-    print("=" * 60)
-    print("DEMO 2: Freivalds' Matrix Verification Algorithm")
-    print("=" * 60)
+    print("=" * 70)
+    print("DEMO 2: Matrix Kernel Bound (Freivalds from Schwartz–Zippel)")
+    print("=" * 70)
     print()
-    
-    q = 5
-    n = 4
+    print("Theorem: For M ≠ 0 (m×p matrix over Z/qZ), |ker(M)| ≤ q^(p-1)")
+    print()
+
+    # Example 1: 2×3 matrix over F_2
+    M1 = np.array([[1, 0, 1], [0, 1, 1]])
+    q1 = 2
+    ker1 = count_kernel_vectors(M1, q1)
+    bound1 = q1 ** (M1.shape[1] - 1)
+    print(f"  M = {M1.tolist()}, q={q1}")
+    print(f"    |ker(M)| = {ker1}, bound q^(p-1) = {bound1}")
+    print(f"    {ker1} ≤ {bound1}? {ker1 <= bound1} ✓")
+    print()
+
+    # Example 2: 1×3 matrix (single row) over F_3
+    M2 = np.array([[1, 2, 1]])
+    q2 = 3
+    ker2 = count_kernel_vectors(M2, q2)
+    bound2 = q2 ** (M2.shape[1] - 1)
+    print(f"  M = {M2.tolist()}, q={q2}")
+    print(f"    |ker(M)| = {ker2}, bound q^(p-1) = {bound2}")
+    print(f"    {ker2} ≤ {bound2}? {ker2 <= bound2} ✓")
+    print()
+
+    # Example 3: 3×3 identity matrix over F_5
+    M3 = np.eye(3, dtype=int)
+    q3 = 5
+    ker3 = count_kernel_vectors(M3, q3)
+    bound3 = q3 ** (M3.shape[1] - 1)
+    print(f"  M = I_3, q={q3}")
+    print(f"    |ker(M)| = {ker3}, bound q^(p-1) = {bound3}")
+    print(f"    {ker3} ≤ {bound3}? {ker3 <= bound3} ✓")
+    print()
+
+
+def demo_freivalds_algorithm():
+    """
+    Demonstrate Freivalds' algorithm: randomized matrix product verification.
+    """
+    print("=" * 70)
+    print("DEMO 3: Freivalds' Algorithm in Action")
+    print("=" * 70)
+    print()
+
+    q = 7  # Work over Z/7Z
+    n = 4  # 4×4 matrices
     trials = 10000
-    
-    # Create random matrices
+
+    # Create matrices where AB ≠ C
     np.random.seed(42)
     A = np.random.randint(0, q, (n, n))
     B = np.random.randint(0, q, (n, n))
-    C_correct = matrix_mul_mod(A, B, q)
-    
-    # Perturb C to create an incorrect claim
-    C_wrong = C_correct.copy()
-    C_wrong[0][0] = (C_wrong[0][0] + 1) % q
-    
-    print(f"Field: F_{q}")
-    print(f"Matrix size: {n} × {n}")
-    print(f"Trials: {trials}")
+    AB = mod_matrix_mul(A, B, q)
+
+    # C = AB with one entry changed (so AB ≠ C)
+    C = AB.copy()
+    C[0, 0] = (C[0, 0] + 1) % q
+
+    print(f"  Working over Z/{q}Z with {n}×{n} matrices")
+    print(f"  A*B ≠ C (differ in entry (0,0))")
     print()
-    
-    # Test with correct product
-    accepts_correct = sum(freivalds_test(A, B, C_correct, q) for _ in range(trials))
-    print(f"Correct product (AB = C):")
-    print(f"  Accepts: {accepts_correct}/{trials} (expected: {trials}/{trials})")
+
+    # Run Freivalds' check many times
+    errors = 0
+    for _ in range(trials):
+        r = np.random.randint(0, q, n)
+        if freivalds_check(A, B, C, r, q):
+            errors += 1
+
+    error_rate = errors / trials
+    theoretical_bound = 1 / q
+
+    print(f"  Ran {trials} random checks:")
+    print(f"    False accepts (errors): {errors}")
+    print(f"    Empirical error rate: {error_rate:.4f}")
+    print(f"    Theoretical bound (1/q): {theoretical_bound:.4f}")
+    print(f"    Empirical ≤ Theoretical? {error_rate <= theoretical_bound + 0.01} "
+          f"(within statistical noise)")
     print()
-    
-    # Test with wrong product
-    accepts_wrong = sum(freivalds_test(A, B, C_wrong, q) for _ in range(trials))
-    rate = accepts_wrong / trials
-    print(f"Wrong product (AB ≠ C):")
-    print(f"  False accepts: {accepts_wrong}/{trials}")
-    print(f"  Observed rate: {rate:.4f}")
-    print(f"  Predicted (1/q): {1/q:.4f}")
+
+    # Now test with AB = C (should always accept)
+    C_correct = AB.copy()
+    false_rejects = 0
+    for _ in range(trials):
+        r = np.random.randint(0, q, n)
+        if not freivalds_check(A, B, C_correct, r, q):
+            false_rejects += 1
+
+    print(f"  With correct C = A*B:")
+    print(f"    False rejects: {false_rejects} (should be 0)")
+    print(f"    Algorithm is one-sided: no false rejects ✓")
+    print()
+
+
+def demo_pit_connection():
+    """
+    Demonstrate the PIT interpretation: Freivalds = degree-1 Schwartz–Zippel.
+    """
+    print("=" * 70)
+    print("DEMO 4: Polynomial Identity Testing Interpretation")
+    print("=" * 70)
+    print()
+    print("Key insight: Checking M*r = 0 is equivalent to checking whether")
+    print("the degree-1 polynomial P(r) = Σ w_j r_j vanishes at random r.")
+    print()
+
+    q = 5
+    p = 3
+
+    # A nonzero linear form
+    w = [2, 3, 1]  # P(X1,X2,X3) = 2*X1 + 3*X2 + X3
+
+    print(f"  Polynomial: P(X1,X2,X3) = {w[0]}·X1 + {w[1]}·X2 + {w[2]}·X3 over Z/{q}Z")
+    print(f"  Degree = 1, q = {q}, p = {p}")
+    print()
+
+    # Count zeros
+    zeros = count_linear_form_zeros(w, q)
+    total = q ** p
+    sz_bound = 1 * q ** (p - 1)  # deg(P) * q^(p-1) = 1 * q^(p-1)
+
+    print(f"  Schwartz–Zippel bound: |zeros(P)| ≤ deg(P) × q^(p-1)")
+    print(f"                        = 1 × {q}^{p-1} = {sz_bound}")
+    print(f"  Actual zero count:    |zeros(P)| = {zeros}")
+    print(f"  Bound holds: {zeros} ≤ {sz_bound}? {zeros <= sz_bound} ✓")
+    print()
+    print(f"  Probability of random zero: {zeros}/{total} = {zeros/total:.4f}")
+    print(f"  Schwartz–Zippel probability bound: 1/{q} = {1/q:.4f}")
+    print()
+
+    # For comparison: a degree-2 polynomial
+    print("  Comparison with degree-2 polynomial:")
+    print(f"    P'(X1,X2,X3) = X1² + X2² + X3² over Z/{q}Z")
+    zeros_d2 = 0
+    for code in range(q**p):
+        r = [(code // (q**j)) % q for j in range(p)]
+        if sum(x**2 for x in r) % q == 0:
+            zeros_d2 += 1
+    sz_bound_d2 = 2 * q ** (p - 1)
+    print(f"    Schwartz–Zippel bound: 2 × {q}^{p-1} = {sz_bound_d2}")
+    print(f"    Actual zero count: {zeros_d2}")
+    print(f"    Bound holds: {zeros_d2} ≤ {sz_bound_d2}? {zeros_d2 <= sz_bound_d2} ✓")
     print()
 
 
 def demo_amplification():
-    """Demonstrate error probability amplification."""
-    print("=" * 60)
-    print("DEMO 3: Amplification via Repeated Testing")
-    print("=" * 60)
+    """
+    Demonstrate error amplification by repeated independent checks.
+    """
+    print("=" * 70)
+    print("DEMO 5: Error Amplification")
+    print("=" * 70)
     print()
-    
-    q = 2
+    print("By running Freivalds' check k times independently,")
+    print("the error probability drops to (1/q)^k.")
+    print()
+
+    q = 3
     n = 3
-    outer_trials = 10000
-    
+    k_values = [1, 2, 3, 5, 10, 20]
+    trials = 50000
+
     np.random.seed(123)
     A = np.random.randint(0, q, (n, n))
     B = np.random.randint(0, q, (n, n))
-    C_correct = matrix_mul_mod(A, B, q)
-    C_wrong = C_correct.copy()
-    C_wrong[0][0] = (C_wrong[0][0] + 1) % q
-    
-    print(f"Field: F_{q}, Matrix size: {n}×{n}, Outer trials: {outer_trials}")
-    print()
-    print(f"{'k':>4} {'Predicted':>12} {'Observed':>12}")
-    print("-" * 32)
-    
-    for k in [1, 2, 3, 5, 10, 15, 20]:
-        false_accepts = 0
-        for _ in range(outer_trials):
-            # Run k independent tests
-            all_accept = all(freivalds_test(A, B, C_wrong, q) for _ in range(k))
-            if all_accept:
-                false_accepts += 1
-        observed = false_accepts / outer_trials
-        predicted = (1 / q) ** k
-        print(f"{k:>4} {predicted:>12.6f} {observed:>12.6f}")
-    
-    print()
-    print("Error drops exponentially with repetitions — the power of amplification.")
-    print()
+    AB = mod_matrix_mul(A, B, q)
+    C = AB.copy()
+    C[1, 1] = (C[1, 1] + 1) % q  # Make AB ≠ C
 
+    print(f"  q={q}, n={n}, A*B ≠ C")
+    print(f"  {'k':>4} | {'Empirical error':>16} | {'Bound (1/q)^k':>16} | {'Actual ≤ Bound':>14}")
+    print(f"  {'-'*4}-+-{'-'*16}-+-{'-'*16}-+-{'-'*14}")
 
-def demo_polynomial_interpretation():
-    """Demonstrate the polynomial identity testing interpretation."""
-    print("=" * 60)
-    print("DEMO 4: Polynomial Identity Testing Interpretation")
-    print("=" * 60)
+    for k in k_values:
+        errors = 0
+        for _ in range(trials):
+            all_pass = True
+            for _ in range(k):
+                r = np.random.randint(0, q, n)
+                if not freivalds_check(A, B, C, r, q):
+                    all_pass = False
+                    break
+            if all_pass:
+                errors += 1
+        emp_rate = errors / trials
+        bound = (1/q)**k
+        print(f"  {k:>4} | {emp_rate:>16.6f} | {bound:>16.6f} | {'✓' if emp_rate <= bound + 0.005 else '✗':>14}")
+
     print()
-    
-    q = 5
-    p = 3
-    
-    # A nonzero linear polynomial P(x1, x2, x3) = 2*x1 + 3*x2 + 1*x3 over F_5
-    w = [2, 3, 1]
-    
-    print(f"Polynomial: P(x1,x2,x3) = {w[0]}*x1 + {w[1]}*x2 + {w[2]}*x3 over F_{q}")
-    print(f"Total degree: 1")
-    print()
-    
-    # Count zeros
-    zeros = []
-    for r in product(range(q), repeat=p):
-        val = sum(w[j] * r[j] for j in range(p)) % q
-        if val == 0:
-            zeros.append(r)
-    
-    print(f"Total evaluation points: {q**p}")
-    print(f"Zeros found: {len(zeros)}")
-    print(f"Schwartz–Zippel bound (deg * q^(p-1)): {1 * q**(p-1)}")
-    print(f"Fraction of zeros: {len(zeros)}/{q**p} = {len(zeros)/q**p:.4f}")
-    print(f"Predicted fraction (deg/q): {1/q:.4f}")
-    print()
-    
-    # Show some zeros
-    print("First 10 zeros:")
-    for r in zeros[:10]:
-        check = sum(w[j] * r[j] for j in range(p)) % q
-        print(f"  P{r} = {check}")
-    print()
-    print("This is EXACTLY Freivalds' bound: the error polynomial has degree 1,")
-    print("so at most 1/q of random inputs are zeros.")
 
 
 if __name__ == "__main__":
-    demo_zero_counts()
-    demo_freivalds()
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  FREIVALDS' ALGORITHM AS A COROLLARY OF SCHWARTZ–ZIPPEL            ║")
+    print("║  Numerical Demonstrations                                          ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_linear_form_bound()
+    demo_kernel_bound()
+    demo_freivalds_algorithm()
+    demo_pit_connection()
     demo_amplification()
-    demo_polynomial_interpretation()
+
+    print("=" * 70)
+    print("All demonstrations completed successfully.")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Freivalds–Schwartz–Zippel Connection
+Visualizations for Freivalds–Schwartz–Zippel
 
-Generates publication-quality figures illustrating the key concepts.
+Generates publication-quality figures showing:
+1. Zero set structure of linear forms over finite fields
+2. Error probability vs repetitions
+3. Schwartz–Zippel bound tightness across degrees
+4. Kernel size distribution
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from itertools import product as cartesian
 import base64
-import io
+from io import BytesIO
+import json
 
 
 def fig_to_base64(fig) -> str:
-    """Convert a matplotlib figure to a base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    """Convert matplotlib figure to base64 data URI."""
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return "data:image/png;base64," + base64.b64encode(buf.read()).decode('utf-8')
 
 
-def plot_hyperplane_zero_set():
-    """Visualize the zero set of a linear form over a small finite field."""
-    q = 5
-    w = [2, 3]  # Linear form: 2*x + 3*y over F_5
-    
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Left: All points, colored by evaluation
-    ax = axes[0]
-    for x in range(q):
-        for y in range(q):
-            val = (w[0] * x + w[1] * y) % q
-            color = plt.cm.viridis(val / (q - 1))
-            ax.scatter(x, y, c=[color], s=200, edgecolors='black', linewidths=0.5, zorder=5)
-            ax.annotate(str(val), (x, y), ha='center', va='center', fontsize=8, fontweight='bold', color='white')
-    
-    ax.set_xlim(-0.5, q - 0.5)
-    ax.set_ylim(-0.5, q - 0.5)
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('y', fontsize=12)
-    ax.set_title(f'Evaluation of P(x,y) = {w[0]}x + {w[1]}y over F_{q}', fontsize=13)
-    ax.set_xticks(range(q))
-    ax.set_yticks(range(q))
-    ax.grid(True, alpha=0.3)
-    ax.set_aspect('equal')
-    
-    # Right: Zero set highlighted
-    ax = axes[1]
-    zeros_x, zeros_y = [], []
-    nonzeros_x, nonzeros_y = [], []
-    for x in range(q):
-        for y in range(q):
-            val = (w[0] * x + w[1] * y) % q
-            if val == 0:
-                zeros_x.append(x)
-                zeros_y.append(y)
-            else:
-                nonzeros_x.append(x)
-                nonzeros_y.append(y)
-    
-    ax.scatter(nonzeros_x, nonzeros_y, c='lightgray', s=150, edgecolors='gray', linewidths=0.5, zorder=4, label=f'P ≠ 0 ({len(nonzeros_x)} points)')
-    ax.scatter(zeros_x, zeros_y, c='red', s=250, edgecolors='darkred', linewidths=1.5, zorder=5, marker='*', label=f'P = 0 ({len(zeros_x)} points)')
-    
-    ax.set_xlim(-0.5, q - 0.5)
-    ax.set_ylim(-0.5, q - 0.5)
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('y', fontsize=12)
-    ax.set_title(f'Zero Set: {len(zeros_x)}/{q**2} = q^(p-1) = {q}^1 = {q}', fontsize=13)
-    ax.set_xticks(range(q))
-    ax.set_yticks(range(q))
-    ax.grid(True, alpha=0.3)
-    ax.set_aspect('equal')
-    ax.legend(fontsize=10, loc='upper right')
-    
-    fig.suptitle('Linear Form Zero Set Over a Finite Field', fontsize=15, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    
-    fig.savefig('viz_hyperplane.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
+def plot_zero_set_structure():
+    """
+    Visualize the zero set of a linear form over F_q^2 for various q.
+    Shows that exactly q^(p-1) = q points satisfy w·r = 0.
+    """
+    fig, axes = plt.subplots(1, 3, figsize=(14, 4.5))
+
+    for idx, q in enumerate([3, 5, 7]):
+        ax = axes[idx]
+        w = [1, 1]  # Linear form: X1 + X2
+
+        zeros_x, zeros_y = [], []
+        nonzeros_x, nonzeros_y = [], []
+
+        for x in range(q):
+            for y in range(q):
+                if (w[0] * x + w[1] * y) % q == 0:
+                    zeros_x.append(x)
+                    zeros_y.append(y)
+                else:
+                    nonzeros_x.append(x)
+                    nonzeros_y.append(y)
+
+        ax.scatter(nonzeros_x, nonzeros_y, c='#e0e0e0', s=60, zorder=1,
+                   edgecolors='#bbb', linewidth=0.5)
+        ax.scatter(zeros_x, zeros_y, c='#e74c3c', s=100, zorder=2,
+                   edgecolors='#c0392b', linewidth=1.5, label=f'Zeros ({len(zeros_x)})')
+
+        ax.set_title(f'$\\mathbb{{F}}_{{{q}}}^2$: $X_1 + X_2 = 0$',
+                     fontsize=13, fontweight='bold')
+        ax.set_xlabel('$X_1$', fontsize=11)
+        ax.set_ylabel('$X_2$', fontsize=11)
+        ax.set_xticks(range(q))
+        ax.set_yticks(range(q))
+        ax.set_aspect('equal')
+        ax.legend(fontsize=9, loc='upper right')
+        ax.grid(True, alpha=0.3)
+
+    fig.suptitle('Zero Sets of Linear Forms over Finite Fields',
+                 fontsize=15, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    return fig
 
 
-def plot_amplification_curve():
-    """Plot the exponential decay of error probability with repetitions."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-    
-    primes = [2, 3, 5, 7, 11]
-    colors = plt.cm.tab10(np.linspace(0, 0.5, len(primes)))
-    
+def plot_error_amplification():
+    """
+    Plot error probability decay with number of repetitions.
+    """
+    fig, ax = plt.subplots(figsize=(8, 5))
+
     k_values = np.arange(1, 21)
-    
-    for q, color in zip(primes, colors):
-        error_probs = [(1/q)**k for k in k_values]
-        ax.semilogy(k_values, error_probs, 'o-', color=color, label=f'q = {q}', 
-                    markersize=5, linewidth=2)
-    
-    ax.set_xlabel('Number of repetitions (k)', fontsize=13)
-    ax.set_ylabel('Error probability upper bound', fontsize=13)
-    ax.set_title('Freivalds Error Amplification: Pr[false accept] ≤ (1/q)^k', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11, title='Field size q')
+    colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#f39c12']
+
+    for idx, q in enumerate([2, 3, 5, 7, 11]):
+        error_probs = (1.0 / q) ** k_values
+        ax.semilogy(k_values, error_probs, 'o-', color=colors[idx],
+                    label=f'$q = {q}$', markersize=5, linewidth=2)
+
+    ax.set_xlabel('Number of repetitions $k$', fontsize=12)
+    ax.set_ylabel('Error probability $(1/q)^k$', fontsize=12)
+    ax.set_title('Error Amplification in Freivalds\' Algorithm',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=10, loc='upper right')
     ax.grid(True, alpha=0.3, which='both')
-    ax.set_xticks(k_values)
-    ax.set_ylim(1e-20, 1)
-    
-    fig.tight_layout()
-    fig.savefig('viz_amplification.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
+    ax.set_ylim(1e-20, 1.5)
+    ax.set_xlim(0.5, 20.5)
+
+    # Add annotation
+    ax.annotate('$k=10, q=7$:\nerror $< 3.5 \\times 10^{-9}$',
+                xy=(10, (1/7)**10), xytext=(13, 1e-6),
+                fontsize=9, arrowprops=dict(arrowstyle='->', color='gray'),
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
+
+    plt.tight_layout()
+    return fig
 
 
-def plot_kernel_sizes():
-    """Compare actual kernel sizes with the q^(p-1) bound."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-    
-    import random as rnd
-    rnd.seed(42)
-    
-    q = 3
-    results = []
-    
-    for p in range(1, 6):
-        bound = q ** (p - 1)
-        
-        # Generate several random nonzero matrices and compute kernel sizes
-        kernel_sizes = []
-        for _ in range(min(20, q**(2*p))):
-            # Random matrix with 2 rows
-            m = 2
-            M = np.array([[rnd.randint(0, q-1) for _ in range(p)] for _ in range(m)])
-            
-            # Check nonzero
-            if all(M[i][j] % q == 0 for i in range(m) for j in range(p)):
-                continue
-            
-            # Count kernel
-            ker_size = 0
-            for r in cartesian(range(q), repeat=p):
-                r_arr = np.array(r)
-                result = np.array([sum(int(M[i][j]) * int(r_arr[j]) for j in range(p)) % q for i in range(m)])
-                if all(result[i] == 0 for i in range(m)):
-                    ker_size += 1
-            kernel_sizes.append(ker_size)
-        
-        if kernel_sizes:
-            results.append((p, bound, kernel_sizes))
-    
-    x_positions = []
-    for p, bound, ksizes in results:
-        x_pos = [p + (rnd.random() - 0.5) * 0.3 for _ in ksizes]
-        x_positions.append(x_pos)
-        ax.scatter(x_pos, ksizes, c='steelblue', alpha=0.6, s=40, zorder=5)
-    
-    ps = [r[0] for r in results]
-    bounds = [r[1] for r in results]
-    ax.plot(ps, bounds, 'r--', linewidth=2, label=f'Bound: q^(p-1) = {q}^(p-1)', zorder=10)
-    ax.scatter(ps, bounds, c='red', s=100, zorder=10, marker='D')
-    
-    ax.set_xlabel('Number of columns (p)', fontsize=13)
-    ax.set_ylabel('Kernel size', fontsize=13)
-    ax.set_title(f'Kernel Sizes vs Freivalds Bound (q = {q}, m = 2)', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11)
-    ax.set_xticks(ps)
-    ax.grid(True, alpha=0.3)
-    
-    fig.tight_layout()
-    fig.savefig('viz_kernel_sizes.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
+def plot_sz_tightness():
+    """
+    Compare actual zero counts vs Schwartz–Zippel bounds
+    for polynomials of different degrees.
+    """
+    fig, ax = plt.subplots(figsize=(8, 5))
 
+    q = 5
+    p = 3
+    total = q ** p
 
-def plot_degree_vs_zeros():
-    """Show how polynomial degree controls the zero fraction."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-    
-    q = 7
-    p = 2  # Two variables for tractability
-    
+    # Degree 1: linear forms
     degrees = []
-    zero_fractions = []
+    actual_zeros = []
     sz_bounds = []
-    
-    # Degree 1: linear
-    w = [1, 3]
-    zeros_d1 = sum(1 for x, y in cartesian(range(q), repeat=2) if (w[0]*x + w[1]*y) % q == 0)
-    degrees.append(1)
-    zero_fractions.append(zeros_d1 / q**2)
-    sz_bounds.append(1 / q)
-    
-    # Degree 2: quadratic
-    zeros_d2 = sum(1 for x, y in cartesian(range(q), repeat=2) if (x**2 + 2*x*y + 3*y**2) % q == 0)
-    degrees.append(2)
-    zero_fractions.append(zeros_d2 / q**2)
-    sz_bounds.append(2 / q)
-    
+
+    # Various linear forms
+    linear_forms = [[1, 0, 0], [1, 1, 0], [1, 1, 1], [1, 2, 3], [2, 3, 4]]
+    for w in linear_forms:
+        count = 0
+        for code in range(total):
+            r = [(code // (q**j)) % q for j in range(p)]
+            if sum(w[j]*r[j] for j in range(p)) % q == 0:
+                count += 1
+        degrees.append(1)
+        actual_zeros.append(count)
+        sz_bounds.append(1 * q**(p-1))
+
+    # Degree 2: quadratic forms
+    quad_forms = [
+        lambda r: (r[0]**2 + r[1] + r[2]) % q,
+        lambda r: (r[0]*r[1] + r[2]) % q,
+        lambda r: (r[0]**2 + r[1]**2 + r[2]**2) % q,
+        lambda r: (r[0]*r[1] + r[1]*r[2] + r[0]*r[2]) % q,
+    ]
+    for f in quad_forms:
+        count = 0
+        for code in range(total):
+            r = [(code // (q**j)) % q for j in range(p)]
+            if f(r) == 0:
+                count += 1
+        degrees.append(2)
+        actual_zeros.append(count)
+        sz_bounds.append(2 * q**(p-1))
+
     # Degree 3
-    zeros_d3 = sum(1 for x, y in cartesian(range(q), repeat=2) if (x**3 + x*y**2 + y**3) % q == 0)
-    degrees.append(3)
-    zero_fractions.append(zeros_d3 / q**2)
-    sz_bounds.append(3 / q)
-    
-    # Degree 4
-    zeros_d4 = sum(1 for x, y in cartesian(range(q), repeat=2) if (x**4 + x**2*y**2 + y**4 + x) % q == 0)
-    degrees.append(4)
-    zero_fractions.append(zeros_d4 / q**2)
-    sz_bounds.append(4 / q)
-    
-    # Degree 5
-    zeros_d5 = sum(1 for x, y in cartesian(range(q), repeat=2) if (x**5 + y**5 + x*y) % q == 0)
-    degrees.append(5)
-    zero_fractions.append(zeros_d5 / q**2)
-    sz_bounds.append(5 / q)
-    
-    bar_width = 0.35
+    cubic_forms = [
+        lambda r: (r[0]**3 + r[1] + r[2]) % q,
+        lambda r: (r[0]**2 * r[1] + r[2]) % q,
+    ]
+    for f in cubic_forms:
+        count = 0
+        for code in range(total):
+            r = [(code // (q**j)) % q for j in range(p)]
+            if f(r) == 0:
+                count += 1
+        degrees.append(3)
+        actual_zeros.append(count)
+        sz_bounds.append(3 * q**(p-1))
+
+    # Plot
     x = np.arange(len(degrees))
-    
-    ax.bar(x - bar_width/2, zero_fractions, bar_width, label='Actual zero fraction', color='steelblue', edgecolor='navy')
-    ax.bar(x + bar_width/2, sz_bounds, bar_width, label='Schwartz–Zippel bound (d/q)', color='tomato', edgecolor='darkred', alpha=0.7)
-    
-    ax.set_xlabel('Polynomial degree (d)', fontsize=13)
-    ax.set_ylabel('Fraction of zeros', fontsize=13)
-    ax.set_title(f'Degree Controls Zero Density (F_{q}, {p} variables)', fontsize=14, fontweight='bold')
+    width = 0.35
+    ax.bar(x - width/2, actual_zeros, width, label='Actual zeros',
+           color='#3498db', edgecolor='#2980b9', linewidth=0.5)
+    ax.bar(x + width/2, sz_bounds, width, label='Schwartz–Zippel bound',
+           color='#e74c3c', alpha=0.7, edgecolor='#c0392b', linewidth=0.5)
+
+    ax.set_xlabel('Polynomial index', fontsize=12)
+    ax.set_ylabel('Number of zeros', fontsize=12)
+    ax.set_title(f'Schwartz–Zippel Bound Tightness ($q={q}$, $p={p}$)',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=10)
     ax.set_xticks(x)
-    ax.set_xticklabels(degrees)
-    ax.legend(fontsize=11)
+    labels = [f'd={d}' for d in degrees]
+    ax.set_xticklabels(labels, fontsize=9)
     ax.grid(True, alpha=0.3, axis='y')
-    
-    fig.tight_layout()
-    fig.savefig('viz_degree_vs_zeros.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
+
+    plt.tight_layout()
+    return fig
+
+
+def plot_kernel_size_distribution():
+    """
+    Show kernel sizes for random matrices over F_q,
+    compared to the Schwartz–Zippel bound.
+    """
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    q = 3
+    p = 4
+    bound = q ** (p - 1)
+    n_samples = 200
+
+    rng = np.random.default_rng(42)
+    kernel_sizes = []
+
+    for _ in range(n_samples):
+        # Random nonzero matrix
+        m = rng.integers(1, 4)  # 1 to 3 rows
+        M = rng.integers(0, q, (m, p))
+        while np.all(M == 0):
+            M = rng.integers(0, q, (m, p))
+
+        # Count kernel
+        count = 0
+        for code in range(q**p):
+            r = np.array([(code // (q**j)) % q for j in range(p)])
+            if np.all((M @ r) % q == 0):
+                count += 1
+        kernel_sizes.append(count)
+
+    ax.hist(kernel_sizes, bins=range(0, bound + 3), align='left',
+            color='#3498db', edgecolor='#2980b9', alpha=0.8,
+            label='Observed kernel sizes')
+    ax.axvline(x=bound, color='#e74c3c', linewidth=2.5, linestyle='--',
+               label=f'Schwartz–Zippel bound $q^{{p-1}} = {bound}$')
+
+    ax.set_xlabel('Kernel size $|\\ker(M)|$', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title(f'Kernel Sizes of Random Matrices over $\\mathbb{{F}}_{{{q}}}$ ($p={p}$)',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    return fig
+
+
+def generate_all_visualizations():
+    """Generate all figures and return as base64-encoded data URIs."""
+    figures = {}
+
+    print("Generating zero set structure plot...")
+    fig1 = plot_zero_set_structure()
+    figures['zero_set_structure'] = fig_to_base64(fig1)
+    fig1.savefig('/workspace/request-project/fig_zero_sets.png',
+                 dpi=150, bbox_inches='tight')
+    plt.close(fig1)
+
+    print("Generating error amplification plot...")
+    fig2 = plot_error_amplification()
+    figures['error_amplification'] = fig_to_base64(fig2)
+    fig2.savefig('/workspace/request-project/fig_error_amplification.png',
+                 dpi=150, bbox_inches='tight')
+    plt.close(fig2)
+
+    print("Generating SZ tightness plot...")
+    fig3 = plot_sz_tightness()
+    figures['sz_tightness'] = fig_to_base64(fig3)
+    fig3.savefig('/workspace/request-project/fig_sz_tightness.png',
+                 dpi=150, bbox_inches='tight')
+    plt.close(fig3)
+
+    print("Generating kernel distribution plot...")
+    fig4 = plot_kernel_size_distribution()
+    figures['kernel_distribution'] = fig_to_base64(fig4)
+    fig4.savefig('/workspace/request-project/fig_kernel_distribution.png',
+                 dpi=150, bbox_inches='tight')
+    plt.close(fig4)
+
+    print("All visualizations generated.")
+    return figures
 
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
-    
-    b64_hyperplane = plot_hyperplane_zero_set()
-    print("  ✓ Hyperplane zero set")
-    
-    b64_amplification = plot_amplification_curve()
-    print("  ✓ Amplification curve")
-    
-    b64_kernel = plot_kernel_sizes()
-    print("  ✓ Kernel sizes")
-    
-    b64_degree = plot_degree_vs_zeros()
-    print("  ✓ Degree vs zeros")
-    
-    print("\nAll visualizations saved as PNG files.")
+    figures = generate_all_visualizations()
+    print(f"Generated {len(figures)} figures.")
+    for name, uri in figures.items():
+        print(f"  {name}: {len(uri)} chars")

@@ -485,20 +485,6 @@
     "timestamp": "2026-05-16T19:15:45.209708+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Complexity Theory Lead",
-    "description": ": Circuit lower bounds, expressivity characterizations.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7c012798",
-    "consumed_by_exp_id": "e5da3534",
-    "timestamp": "2026-05-16T20:47:30.939622+00:00"
-  },
-  {
     "id": "fd_0240",
     "title": "Formalize the dimension of bounded-degree polynomial spaces",
     "description": "The space of polynomials of total degree < d in n variables over K has dimension C(d+n-1, n). This is a combinatorial identity about the number of monomials, requiring careful formalization of `Finsupp.antidiagonal` or explicit bijection with weak compositions.",
@@ -568,34 +554,6 @@
     "source_exp_id": "1646adc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T21:01:29.710311+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Prove the eigen-equation",
-    "description": "by showing `T(v)_i = v_i + λ*` using path extension arguments.\n\n### Required New Definitions\n\n- `tropicalMatPower`: k-th tropical power of A (use `tropicalMatMul` iterated).\n- `cycleMean`: weight of a cycle divided by its length.\n- `maxCycleMean`: supremum of cycle means over all simple cycles.\n- `tropicalPotential`: longest-path potential vector.\n\n### Anticipated Blockers\n\n- Formalizing \"all simple cycles\" requires working with `Finset` over permutation-like structures. May need to use `List` with deduplication.\n- The eigenvector construction requires showing the potential is finite, which needs irreducibility.\n- Path-counting arguments may require significant combinatorial infrastructure.\n\n### Enabling Lemmas\n\n- `tropicalMatMap_comp` (composition = tropical multiplication) directly gives",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "477ce9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:09:47.891425+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "Define `MonotoneCircuit`",
-    "description": ": inductive type with AND (min) and OR (max) gates, no negation.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "477ce9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:09:48.012139+00:00"
   },
   {
     "id": "fd_0264",
@@ -716,34 +674,6 @@
     "source_exp_id": "3e135d69",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:05:47.424096+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Formalize definitions",
-    "description": "in Lean 4 with Mathlib, building on the `TropicalFano.lean` infrastructure.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "68af5bc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:19:00.567088+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "Iterate",
-    "description": ": if a proof strategy fails, decompose further or try an alternative approach.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "68af5bc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:19:00.647044+00:00"
   },
   {
     "id": "fd_0113",
@@ -1408,25 +1338,6 @@
     "timestamp": "2026-05-16T14:28:58.186572+00:00"
   },
   {
-    "id": "fd_0255",
-    "title": "1. Tropical Data-Processing Inequalities as Security Transport",
-    "description": "**Hypothesis**: The data-processing inequality (DPI) in information theory has a tropical analogue: if a channel map decreases tropical KL divergence, then security guarantees propagate through the channel. This would give a *functorial security pipeline* where any processing step that respects tropical contraction automatically preserves security bounds.\n\n**Proof Strategy**: \n- Formalize tropical channels as maps between tropical probability simplices.\n- Prove that tropical KL divergence is non-increasing under tropical-linear maps (tropical DPI).\n- Compose with `tropical_kl_security_bound` to obtain automatic security propagation.\n- The key technical challenge is defining the correct notion of \"tropical channel\" that admits a clean DPI.\n\n**Cross-domain Connections**: Links information ge",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2a24e1c8",
-    "consumed_by_exp_id": "9b1f62ec",
-    "timestamp": "2026-05-16T22:10:48.779531+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "2. Categorical Semantics of Hardness Reductions",
     "description": "**Hypothesis**: The `TheoryMorphism` framework is the object-level data of a category `HardnessTransport` whose objects are `TheorySpec`s and whose morphisms are `TheoryMorphism`s. This category admits:\n- A monoidal structure (tensor product of theories)\n- A functorial embedding of classical complexity-class reductions\n- A notion of \"hardness amplification\" as endomorphisms with c > 1\n\n**Proof Strategy**:\n- Prove that `TheoryMorphism.comp` is associative (up to equality of the map, c, a fields).\n- Construct identity morphisms (c = 1, a = 0, map = id).\n- Verify the category axioms and explore enrichment over the ordered monoid (ℝ, *, ≤).\n- Connect to the existing formalization of category theory in Mathlib.\n\n**Cross-domain Connections**: This would connect reduction theory from computationa",
@@ -1437,10 +1348,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2a24e1c8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b7383f62",
     "timestamp": "2026-05-16T22:10:48.796280+00:00"
   },
   {
@@ -1460,24 +1371,6 @@
     "source_exp_id": "2a24e1c8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:10:48.812835+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "4. Entropy/Height Dualities",
-    "description": "**Hypothesis**: There is a formal duality between arithmetic height of algebraic numbers and entropy of their Galois orbits. Specifically, the Weil height h(α) of an algebraic number α equals the entropy of the uniform distribution on conjugates of α, normalized by degree.\n\n**Proof Strategy**:\n- Formalize the connection between Mahler measure and entropy (this is the Lehmer-Smyth direction).\n- Show that `key_dimension_lower_bound_from_height` can be reinterpreted as an entropy lower bound.\n- Compose with tropical KL bounds to get: height ≥ H implies entropy ≥ H implies security ≥ f(H).\n\n**Cross-domain Connections**: Links algebraic number theory (heights, Lehmer's conjecture) to information theory (entropy) and cryptography (key generation from algebraic objects). Could yield new construct",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2a24e1c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:10:48.829121+00:00"
   },
   {
     "id": "fd_0254",
@@ -1537,21 +1430,6 @@
     "source_exp_id": "be71e654",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:13:17.468441+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Phase 2 (Months 4-6): Core Theory",
-    "description": "- Formalize Direction 1 (tropical Perron-Frobenius) for irreducible matrices\n- Complete Direction 3 and connect to linear logic\n- Prototype hybrid architectures (Direction 5)",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "be71e654",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:13:17.481827+00:00"
   },
   {
     "id": "fd_0253",
@@ -1646,21 +1524,6 @@
     "timestamp": "2026-05-16T22:25:54.821807+00:00"
   },
   {
-    "id": "fd_0258",
-    "title": "Lean Formalization Target",
-    "description": "```lean\ntheorem tropical_cheeger_inequality\n    (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (hrev : Reversible P π) :\n    cheegerConductance P π ^ 2 / 2 ≤ triangleCyc (tropicalCost P)\n```\n\n---",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "99efecb5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:52:54.286925+00:00"
-  },
-  {
     "id": "fd_0259",
     "title": "Phase 1 (Immediate, 1–2 months)",
     "description": "- **Direction 1**: Tropical Cheeger inequality (most directly builds on current work)\n- **Direction 5**: Spectral gap bound (uses existing Mathlib Perron–Frobenius infrastructure)",
@@ -1704,5 +1567,112 @@
     "source_exp_id": "99efecb5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:52:54.376362+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "1. Extended Tropical Residuation on `WithBot ℝ`",
+    "description": "**Objective:** Formalize tropical residuation over the complete tropical semiring `ℝ ∪ {−∞}`, modeled as `WithBot ℝ` in Lean/Mathlib.\n\n**Hypothesis:** The residuation theorems extend to `WithBot ℝ` with explicit handling of the `−∞` cases:\n- `sup(∅) = −∞` is naturally handled by `Finset.sup` with `OrderBot`.\n- The residual `c − a` when `c = −∞` should yield `−∞`.\n- When `a = −∞`, the translation `x + (−∞) = −∞` for all `x`, and the residual degenerates.\n\n**Proof Strategy:**\n1. Use `WithBot ℝ` which already has `OrderBot` and `SemilatticeSup` instances in Mathlib.\n2. Define tropical addition as `WithBot.map₂ (· + ·)` or via the existing `Tropical` type in Mathlib.\n3. Prove residuation with case analysis on `⊥` vs. `some x`.\n4. The matrix-level theorem should follow by the same pattern.\n\n**K",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b1f62ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:08:10.822263+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "2. Residuated Category of Tropical Layers",
+    "description": "**Objective:** Define a category whose objects are finite-dimensional real vector spaces (or types with a partial order) and whose morphisms are residuated monotone maps. Prove that this category is closed under composition, products, and coproducts.\n\n**Hypothesis:** The structure `ResiduatedMap α β` (a pair of forward/backward maps satisfying the Galois connection) forms a category:\n- Identity: `(id, id)` is residuated.\n- Composition: proven by `residual_comp`.\n- Products: `(f × g, f♯ × g♯)` is residuated when `f` and `g` are.\n\n**Proof Strategy:**\n1. Define `ResiduatedMap` as a structure with `toFun`, `residual`, and the `gc` proof.\n2. Define `ResiduatedMap.id` and `ResiduatedMap.comp`.\n3. Show this satisfies the category laws (use `CategoryStruct` from Mathlib).\n4. Prove the product and ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b1f62ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:08:10.845643+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "4. Certified Robustness for Max-Plus Neural Architectures",
+    "description": "**Objective:** Use the matrix residuation theorems to derive exact backward certificates for layered tropical (max-plus affine) neural networks, and compare with existing interval/abstract-interpretation methods.\n\n**Hypothesis:** For a max-plus network `F = F_{W_L} ∘ ... ∘ F_{W_1}`:\n- The backward bound `B_{W_1}(B_{W_2}(...B_{W_L}(z)...))` is the exact tightest input bound.\n- This is strictly tighter than interval arithmetic propagation.\n- The computation has complexity `O(L · m · n)` where `m, n` are layer dimensions.\n\n**Proof Strategy:**\n1. Instantiate `tropical_two_layer_composition_residuation` for `L` layers by induction.\n2. Prove that the compositional residual is strictly tighter than naive interval propagation.\n3. Implement and benchmark against existing abstract interpretation too",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b1f62ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:08:10.890447+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "5. Morphological Adjunction Equivalence",
+    "description": "**Objective:** Prove formally that the tropical aggregation residuation theorem, when instantiated for local neighborhoods on images, recovers the classical dilation-erosion adjunction of mathematical morphology.\n\n**Hypothesis:** For a structuring element `B` and weight function `w : B → ℝ`:\n- Dilation `δ_w(f)(x) = sup_{b ∈ B} (f(x-b) + w(b))` is tropical aggregation.\n- Erosion `ε_w(g)(x) = inf_{b ∈ B} (g(x+b) - w(b))` is the tropical residual.\n- `δ_w(f) ≤ g ↔ f ≤ ε_w(g)` is a direct instance of `tropical_finset_aggregation_residuation`.\n\n**Proof Strategy:**\n1. Define dilation and erosion for functions `ℤ → ℝ` (or `Fin n → ℝ`) with finite structuring elements.\n2. Show they are instances of `tropicalMatMul` and `tropicalBackward` for appropriate matrices.\n3. The Galois connection follows fr",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b1f62ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:08:10.910288+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "6. Tropical Galois Connections and Fixed-Point Theory",
+    "description": "**Objective:** Develop the fixed-point theory of tropical residuated maps. Prove tropical analogues of the Knaster-Tarski theorem and connect to iterative algorithms in dynamic programming.\n\n**Hypothesis:** If `f : ℝⁿ → ℝⁿ` is a tropical affine map (i.e., `f(x) = W ⊗ x` in max-plus notation), then:\n- `f` has a greatest fixed point computable as the infimum of the descending chain `f^k(⊤)`.\n- The residual `f♯` can accelerate convergence by providing tighter bounds.\n- The cycle time vector (tropical eigenvalue) is computable from the critical graph.\n\n**Proof Strategy:**\n1. Use Knaster-Tarski for complete lattices (available in Mathlib via `OrderHom.lfp`).\n2. Show tropical affine maps are order-preserving (from `tropicalMatMul_monotone`).\n3. Connect cycle time computation to strongly connecte",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b1f62ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:08:10.934945+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "7. Multi-Objective Tropical Optimization",
+    "description": "**Objective:** Extend tropical residuation to handle multiple output thresholds simultaneously, formalizing Pareto-optimal input bounds.\n\n**Hypothesis:** For a tropical network with output dimension `p`, the set of inputs satisfying `F(x) ≤ z` for a fixed `z` is a downward-closed set in `ℝᵐ`, and the backward residual gives its unique maximal element (componentwise).\n\n**Proof Strategy:**\n1. Prove that `{x | ∀ j, F(x)_j ≤ z_j}` is a principal downward ideal in `(ℝᵐ, ≤)`.\n2. The generator of this ideal is exactly `tropicalBackward W z`.\n3. For multi-layer networks, this extends by `tropical_two_layer_composition_residuation`.\n\n**Cross-Domain Impact:** Provides foundations for multi-objective robust optimization in tropical settings, with applications to multi-criteria scheduling and multi-ou",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9b1f62ec",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:08:10.960000+00:00"
   }
 ]
