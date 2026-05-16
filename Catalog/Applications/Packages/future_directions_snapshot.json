@@ -242,10 +242,10 @@
       "Speculative"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "68311f72",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d4efa6e",
     "timestamp": "2026-05-14T17:32:45.392105+00:00"
   },
   {
@@ -564,34 +564,6 @@
     "timestamp": "2026-05-16T10:49:05.580800+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Define",
-    "description": "the LDP property: a family of sets {μ_N} satisfies a LDP with rate function I and speed log(N+2) if:\n   - (Upper) For closed C: limsup log(μ_N(C))/log(N+2) ≤ −inf_C I\n   - (Lower) For open G: liminf log(μ_N(G))/log(N+2) ≥ −inf_G I",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.087673+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "Essential smoothness",
-    "description": ": formalize the steepness condition (|Λ'(θ)| → ∞ as θ approaches the boundary of the effective domain) and prove it implies the lower bound on all open sets.\n\n### Key Lemmas Needed\n- Convexity of Λ_N at each N (log-sum-exp convexity)\n- Pointwise convergence implies local uniform convergence on compact subsets (convex functions)\n- Continuity of Legendre transform under pointwise convergence\n\n### Impact\nThis would give the first complete, formalized large deviation principle for arithmetic dynamics, directly applicable to any stopping-time observable with convergent log-MGF.\n\n### Hypothesis\nIf the Collatz stopping-time free energy Λ(θ) can be shown to be essentially smooth on ℝ (e.g., via tail bounds on τ(n)), then the full LDP holds with the rate function I(x) = sup_θ(θx − Λ(θ)).\n\n---\n\n## D",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.125759+00:00"
-  },
-  {
     "id": "fd_0245",
     "title": "Characterize",
     "description": "the thermodynamic meaning: first-order transitions correspond to coexistence of two \"phases\" of stopping-time behavior; second-order transitions to critical slowing down.\n\n### Key Examples\n- The Syracuse map (a variant of Collatz) may exhibit a phase transition at θ ≈ 0 due to the parity-dependent branching.\n- Random multiplicative cascades with arithmetic structure show exactly second-order transitions.\n\n### Cross-Domain Connection\nIn statistical mechanics, the Yang-Lee theory characterizes phase transitions via zeros of the partition function in the complex θ-plane. An arithmetic analogue would study zeros of Z_N(θ) analytically continued to ℂ and their limiting distribution as N → ∞.\n\n---\n\n## Direction 3: Moderate Deviations and Central Limit Corrections\n\n### Objective\nFormalize second-",
@@ -620,23 +592,6 @@
     "source_exp_id": "0839f238",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T12:59:23.831940+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "Union bound",
-    "description": "over $n$ rounds gives total error $\\leq nd/q$.\n\n### Key Lean Targets\n```lean\nstructure SumCheckTranscript (K : Type*) [Field K] (n : ℕ) where\n  polynomial : MvPolynomial (Fin n) K\n  claimed_sum : K\n  challenges : Fin n → K\n  prover_messages : Fin n → Polynomial K\n\ntheorem sumcheck_soundness\n    {K : Type*} [Field K] [Fintype K] {n d : ℕ}\n    (f : MvPolynomial (Fin n) K) (hd : f.totalDegree ≤ d)\n    (H : K) (hH : H ≠ ∑ x ∈ Finset.univ, MvPolynomial.eval x f) :\n    -- probability of accepting false claim ≤ n*d/q\n    sorry\n```\n\n### Cross-Domain Impact\n- **Interactive proofs**: IP = PSPACE relies on the sum-check protocol.\n- **Zero-knowledge proofs**: Modern ZK-SNARKs (used in cryptocurrency) are built on sum-check.\n- **Delegation of computation**: Verifiable computing relies on sum-check soun",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0839f238",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:59:23.929004+00:00"
   },
   {
     "id": "fd_0260",
@@ -730,36 +685,6 @@
     "timestamp": "2026-05-16T13:37:24.014796+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Expected mass theorem",
-    "description": ": Prove that the expected total candidate mass after one propagation step is a decreasing function of k, using linearity of expectation over the random clue selection.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.053274+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "Concentration",
-    "description": ": Use Azuma-Hoeffding or McDiarmid's inequality (available in Mathlib) to show that residual ambiguity concentrates around its expectation.\n\n### Proof Strategy\nThe key insight is that each cell's candidate set after one round of propagation depends on a local neighborhood of the random clue selection. This local dependence structure makes concentration inequalities applicable.\n\n### Cross-Domain Impact\nA formal phase transition theorem would be the first machine-verified result connecting random CSP theory to tropical optimization, with implications for understanding algorithmic hardness in random satisfiability.\n\n---\n\n## Direction 3: Tropical Belief Propagation and Min-Sum Decoding\n\n### Hypothesis\nThe propagation operator defined here is a special case of min-sum message passing on the Sud",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.089181+00:00"
-  },
-  {
     "id": "fd_0245",
     "title": "Factor graph formalization",
     "description": ": Define the Sudoku factor graph with variable nodes (cells) and factor nodes (row/column/box constraints). Each factor node computes a min-plus penalty.",
@@ -772,51 +697,6 @@
     "source_exp_id": "3ebbb418",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:37:24.107831+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Message-passing equivalence",
-    "description": ": Prove that the naked-singles propagation operator is equivalent to one round of min-sum belief propagation on this factor graph with binary (0/1) messages.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.132346+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Convergence on trees",
-    "description": ": Prove that min-sum BP converges to the exact solution on tree-structured factor graphs (which correspond to under-constrained Sudoku-like puzzles).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.153003+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Loopy BP analysis",
-    "description": ": Characterize the fixed points of loopy BP on the Sudoku factor graph and relate them to propagation closure.\n\n### Proof Strategy\nUse Mathlib's graph theory infrastructure to define factor graphs as bipartite graphs. The message-passing equations can be expressed as fixpoint equations on functions over edges.\n\n### Cross-Domain Impact\nThis bridges formal combinatorics with coding theory and machine learning. Min-sum decoding is the foundation of LDPC codes (used in 5G, WiFi, etc.), and formalizing its connection to CSP propagation could yield verified decoding algorithms.\n\n---\n\n## Direction 4: Residual Ambiguity and Solution Uniqueness\n\n### Hypothesis\nZero residual ambiguity (every cell has exactly one candidate after propagation) implies that at most one valid solution exists. Moreover, i",
-    "domains": [
-      "EML",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.173627+00:00"
   },
   {
     "id": "fd_0252",
@@ -835,34 +715,6 @@
     "timestamp": "2026-05-16T13:37:24.253935+00:00"
   },
   {
-    "id": "fd_0255",
-    "title": "Asymptotic phase transition",
-    "description": ": Define the critical clue density as a function of n and establish bounds. Conjecture: the critical density scales as Θ(n² log n) (by analogy with Latin square results).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.311860+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Upper bound on tropical rank",
-    "description": ": Show that the Hamming distance matrix has tropical rank O(log n) by constructing O(log n) tropical minors that determine the matrix.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edf517ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:42:08.365183+00:00"
-  },
-  {
     "id": "fd_0243",
     "title": "Lower bound on factor rank",
     "description": ": Use the rectangle covering argument. The support of the Hamming distance matrix (entries ≤ threshold t) may require exponentially many rectangles.",
@@ -876,20 +728,6 @@
     "source_exp_id": "edf517ad",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:42:08.381149+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "Q1",
-    "description": ": Complete Directions 1 and 3 (rectangle covering equivalence, simple graph distance matrices)",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edf517ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:42:08.397523+00:00"
   },
   {
     "id": "fd_0245",
@@ -906,63 +744,143 @@
     "timestamp": "2026-05-16T13:42:08.412136+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "Q3-Q4",
-    "description": ": Direction 2 (polytope extension complexity), connect to Yannakakis theorem",
+    "id": "fd_0252",
+    "title": "Tropical formulation",
+    "description": ": Take $-\\log$ of reliability to convert products to sums. The problem becomes shortest-path in a modified tropical semiring where edge costs include a risk penalty.",
     "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edf517ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:42:08.426706+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Year 2",
-    "description": ": Direction 5 (polynomial vs exponential separation), connect to circuit complexity",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edf517ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:42:08.444441+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Standard axioms only",
-    "description": "(propext, Classical.choice, Quot.sound)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "70b752e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:56:21.510876+00:00"
-  },
-  {
-    "id": "seed_050",
-    "title": "Hyperbolic Crafting: Optimal Nether Portals via Tropical Shortest Paths",
-    "description": "Prove that optimal Nether portal placement in Minecraft's hyperbolic geometry reduces to a tropical shortest-path problem on the min-plus distance matrix between Overworld coordinates and their Nether counterparts. Show that the 1:8 ratio is exactly the tropical scaling factor, and that the optimal portal network is a tropical minimum spanning tree of the dual-world graph.",
-    "domains": [
-      "Speculative",
       "Tropical",
-      "Computation"
+      "Algebra"
     ],
-    "priority_score": 0.7,
-    "status": "in_progress",
+    "priority_score": 0.75,
+    "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "861617e9",
-    "timestamp": "2026-05-14T16:03:53.845232+00:00"
+    "source_exp_id": "861617e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:18:41.608395+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "MST base",
+    "description": ": Show that the reliability-optimal network contains the MST as a subgraph, with additional edges providing redundancy.\n\n### Cross-Domain Connections\n- **Network reliability**: Classical reliability polynomial of graphs\n- **Robust optimization**: Worst-case network design under uncertain failures\n- **Fault-tolerant distributed systems**: Quorum-based replication in distributed databases\n\n### Concrete Next Step\nDefine `ReliabilityNetwork` with edge failure probabilities and prove that the MST is optimal among trees even under stochastic costs (since expected cost of a tree path is a sum of expected edge costs, and MST minimizes total edge cost).\n\n---\n\n## Direction 3: Multi-Layer Dimension Networks and Product Semiring Routing\n\n### Hypothesis\nFor $L$ compression layers with factors $k_1 < k_",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "861617e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:18:41.637673+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Product closure",
+    "description": ": The multi-hop problem is tropical closure of $W^*$, which decomposes into layer-specific closures under certain separability conditions.\n\n### Cross-Domain Connections\n- **Hierarchical routing in the internet**: BGP's multi-tier AS hierarchy\n- **Multi-modal logistics**: Truck → rail → ship → air with increasing speed and access cost\n- **Memory hierarchy**: L1 → L2 → L3 → RAM → disk with increasing capacity and latency\n- **Biological vasculature**: Capillaries → venules → veins → vena cava\n\n### Concrete Next Step\nFormalize the two-layer case ($L = 2$) and prove the threshold characterization. Show that the all-pairs shortest path matrix has a block structure determined by the two threshold distances.\n\n---\n\n## Direction 4: Tropical Voronoi Regions for Portal Service Areas\n\n### Hypothesis\nTh",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "861617e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:18:41.699999+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Define tropical Voronoi cell",
+    "description": ": $V_i = \\{x \\in \\mathbb{Z}^2 : \\forall j \\neq i,\\ c + d_N(\\phi(x), \\phi(s_i)) + \\text{cost from } s_i \\leq c + d_N(\\phi(x), \\phi(s_j)) + \\text{cost from } s_j\\}$.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "861617e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:18:41.714360+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Convexity",
+    "description": ": Show that each cell is the intersection of half-spaces in the Manhattan metric (tropical half-spaces).",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "861617e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:18:41.727346+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Complexity",
+    "description": ": Bound the number of faces and the total complexity of the Voronoi diagram.\n\n### Cross-Domain Connections\n- **Facility location**: Optimal placement of service centers\n- **Tropical convexity**: Develin & Sturmfels' tropical convex geometry\n- **Computational geometry**: L1 Voronoi diagrams and their applications\n- **Coverage problems**: Sensor network deployment\n\n### Concrete Next Step\nImplement the tropical Voronoi diagram algorithm for a set of portals in 2D, visualize the resulting cells, and prove that cells are L1-convex polygons with at most $O(n)$ total vertices.\n\n---\n\n## Direction 5: Categorical Semantics of Scaled-World Transport\n\n### Hypothesis\nThe dual-world transport system has a natural formalization as a *weighted colimit* in the 2-category of metric spaces enriched over the ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "861617e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:18:41.755675+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Enriched category",
+    "description": ": Define a category $\\mathbf{Met}_\\mathcal{T}$ enriched over the tropical semiring, where objects are metric spaces and morphisms are 1-Lipschitz maps with tropical hom-sets.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "861617e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:18:41.770031+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Kan extension",
+    "description": ": The optimal routing from $x$ to $x'$ via the Nether is the coend $\\int^y P(x, y) \\otimes P^*(y, x') = \\min_y (P(x,y) + P^*(y, x'))$, which is the tropical matrix product.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "861617e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:18:41.798893+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Fixpoint as idempotent comonad",
+    "description": ": The tropical closure is an idempotent comonad on the category of cost matrices, and fixpoints are coalgebras.\n\n### Cross-Domain Connections\n- **Enriched category theory**: Lawvere's thesis that metric spaces are enriched categories\n- **Optimal transport**: Kantorovich duality as a tropical Kan extension\n- **String diagrams**: Graphical calculus for tropical routing\n- **Topos theory**: Sheaves on the site of metric spaces as \"continuous cost assignments\"\n\n### Concrete Next Step\nFormalize the enriched category $\\mathbf{Met}_\\mathcal{T}$ in Lean 4, define the compression profunctor, and prove that the tropical matrix product arises as a coend. This would establish the first formal connection between tropical routing and enriched category theory.\n\n---\n\n## Research Team Directive\n\nEach direct",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "861617e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:18:41.813617+00:00"
   },
   {
     "id": "fd_0113",
@@ -1576,24 +1494,6 @@
     "timestamp": "2026-05-16T09:33:50.685886+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Direction 4: Tropical Factor Rank in Machine Learning Architectures",
-    "description": "**Hypothesis:** The factor rank of a tropical weight matrix determines the minimum width of an equivalent min-plus neural network layer.\n\n**Research plan:**\n1. Formalize the equivalence between $k$-term tropical factorization and width-$k$ min-plus network layers.\n2. Use the encoding theorem to construct exact width benchmarks: the tropical identity requires width exactly $n$.\n3. Investigate how factor rank relates to the *tropical complexity* of piecewise-linear functions computed by ReLU networks.\n4. Prove lower bounds on network width for specific function classes using factor rank.\n\n**Impact:** Provides rigorous, certified lower bounds on neural network architecture requirements. The explicit encoding family serves as a benchmark suite for evaluating width-reduction algorithms.\n\n**Cros",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "64a1fefb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:33:50.714492+00:00"
-  },
-  {
     "id": "fd_0238",
     "title": "1. General Nonzero Linear Map Kernel-Density Theorem over Arbitrary Finite Field",
     "description": "**Status**: Partially achieved. We proved `nonzero_linear_map_kernel_density_le` for `ZMod q` with `q` prime. The natural generalization targets arbitrary finite fields `𝔽_q` where `q = p^k`.\n\n**Target theorem**:\n```lean\ntheorem nonzero_linear_map_kernel_density_general\n    {F : Type*} [Field F] [Fintype F]\n    (V W : Type*) [AddCommGroup V] [Module F V]\n    [AddCommGroup W] [Module F W]\n    [Fintype V] [Fintype W] [FiniteDimensional F V]\n    [FiniteDimensional F W]\n    (f : V →ₗ[F] W) (hf : f ≠ 0) :\n    Fintype.card f.ker * Fintype.card F ≤ Fintype.card V\n```\n\n**Proof strategy**: The proof in our `nonzero_linear_map_kernel_density_le` already works over any `DivisionRing` with `Fintype` — the argument uses `Module.card_eq_pow_finrank` and rank-nullity, both of which hold for arbitrary fin",
@@ -1640,21 +1540,6 @@
     "source_exp_id": "5e0e0def",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:47:38.651556+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "5. Streaming/Interactive Verification for Batched Matrix Products",
-    "description": "**Target theorem** (informal):\nGiven a sequence of matrix products `A₁ B₁ = C₁, ..., Aₖ Bₖ = Cₖ`, verify all claims simultaneously using a single random vector `r` via the combined check:\n```\n∑ᵢ αᵢ · (Aᵢ Bᵢ - Cᵢ).mulVec r = 0\n```\nwhere `α₁, ..., αₖ` are independent random field elements.\n\n**Formal target**:\n```lean\ntheorem batched_freivalds_soundness\n    {q m n p k : ℕ} [Fact q.Prime]\n    (As : Fin k → Matrix (Fin m) (Fin n) (ZMod q))\n    (Bs : Fin k → Matrix (Fin n) (Fin p) (ZMod q))\n    (Cs : Fin k → Matrix (Fin m) (Fin p) (ZMod q))\n    (hne : ∃ i, As i * Bs i ≠ Cs i) :\n    -- probability of accepting all claims with random (α, r) ≤ 1/q\n    sorry\n```\n\n**Proof strategy**: The combined matrix `∑ᵢ αᵢ · (Aᵢ Bᵢ - Cᵢ)` is nonzero with probability at least `1 - 1/q` over the `αᵢ` (by Schwartz–Z",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e0e0def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:47:38.684583+00:00"
   },
   {
     "id": "fd_0231",
@@ -1759,20 +1644,6 @@
     "source_exp_id": "41f0f930",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:12:11.751217+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Concrete Theorem Target",
-    "description": "```\ntheorem sidon_geometric_error_bound\n    (S : ℕ → ℕ)  -- Sidon index sequence\n    (err : ℕ → ℝ)\n    (ε₀ r : ℝ)\n    (hSidon : ∀ i j k l, S i * S j = S k * S l → (i = k ∧ j = l) ∨ (i = l ∧ j = k))\n    (hgeom : ∀ j, err (j + 1) ≤ r * err j)\n    ... :\n    ∀ T, cumulative_error S err T ≤ ε₀ / (1 - r)\n```",
-    "domains": [
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cb1f586",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:58:03.579150+00:00"
   },
   {
     "id": "fd_0252",
