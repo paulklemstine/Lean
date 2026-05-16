@@ -314,6 +314,20 @@
   },
   {
     "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "5e0e0def",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
+  },
+  {
+    "id": "fd_0197",
     "title": "Prove closure properties",
     "description": ": Product and union constructions for tree automata (analogous to the word case, using `tropical_add_distrib_inf` for the product).",
     "domains": [
@@ -372,20 +386,6 @@
     "source_exp_id": "1b970ad9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "Tactic engineer",
-    "description": ": Implements the syntax-to-semantics bridge and verified tactic (Direction 4).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "09f78c38",
-    "timestamp": "2026-05-15T03:03:37.382470+00:00"
   },
   {
     "id": "fd_0200",
@@ -752,6 +752,210 @@
     "source_exp_id": "816ac9ca",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:34:17.487712+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Define",
+    "description": "`ReedMullerCode (d n : ℕ) (q : ℕ) [Fact q.Prime]` as the image of the evaluation map from polynomials of total degree ≤ d to functions Fin n → 𝔽_q → 𝔽_q.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.371463+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Apply",
+    "description": "`schwartz_zippel_succ` to bound the weight of any nonzero codeword from below.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.389732+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Exhibit",
+    "description": "a codeword achieving the bound (product of d linear factors) for tightness.\n\n### Key Lemmas Needed\n- `eval_map_injective_of_degree_lt_card`: the evaluation map is injective when d < q.\n- `hamming_weight_ge_of_schwartz_zippel`: minimum Hamming weight ≥ (q − d) · q^{n−1}.\n- `reedMuller_minimum_distance`: exact minimum distance computation.\n\n### Cross-Domain Connections\n- Coding theory (error-correcting codes, list decoding bounds)\n- Complexity theory (algebraic proof complexity, low-degree testing)\n- Cryptography (secret sharing via Reed–Muller codes)\n\n---\n\n## Direction 2: PIT Soundness for Algebraic Circuits\n\n### Hypothesis\nFor an algebraic circuit C of size s computing a polynomial of degree d over 𝔽_q, random evaluation at a point in 𝔽_q^n detects nonzeroness with probability ≥ 1 − d/q. C",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.407815+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Connect",
+    "description": "`AlgCircuit.toMvPolynomial` from `AlgebraicCircuitComplexity.lean` to `schwartz_zippel_succ`.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.422171+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "State",
+    "description": "the PIT soundness theorem: if C.toMvPolynomial ≠ 0 and we sample r uniformly from 𝔽_q^n, then Pr[C.eval r = 0] ≤ d/q.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.437749+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Compose",
+    "description": "with `bounded_circuit_degree_bound` and `mulGates_lower_bound_from_degree` to get circuit-complexity-aware bounds.\n\n### Key Theorems\n```\ntheorem circuit_pit_soundness (C : AlgCircuit K n)\n    (hC : C.toMvPolynomial ≠ 0) :\n    Fintype.card {x : Fin n → K // C.eval x = 0}\n      ≤ C.toMvPolynomial.totalDegree * (Fintype.card K) ^ (n - 1)\n```\n\n### Impact\nThis creates the first formal bridge between **circuit complexity** (syntactic) and **polynomial identity testing** (semantic), enabling future formalization of the Kabanets–Impagliazzo connection between PIT derandomization and circuit lower bounds.\n\n---\n\n## Direction 3: Polynomial Fingerprinting and Streaming Verification\n\n### Hypothesis\nTwo strings s₁, s₂ ∈ {0,1}^n are equal if and only if their polynomial encodings p_{s₁}(x) = p_{s₂}(x) as",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.454171+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Show",
+    "description": "that distinct strings give distinct polynomials of degree ≤ n − 1.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.469777+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Derive",
+    "description": "communication complexity bounds for equality testing.\n\n### Applications\n- Randomized streaming algorithms (frequency moments, distinct elements)\n- Communication complexity (equality, set disjointness)\n- Database verification (fingerprinting of query results)\n\n---\n\n## Direction 4: Low-Degree Testing over Finite Grids\n\n### Hypothesis\nThe Schwartz–Zippel lemma implies that the set of low-degree polynomials over 𝔽_q has large distance from any function that is not low-degree. Specifically, any function f : 𝔽_q^n → 𝔽_q that is δ-far from every polynomial of degree ≤ d (in Hamming distance on evaluations over all of 𝔽_q^n) can be detected by sampling O(d/δ) random lines and checking agreement with a degree-d univariate polynomial.\n\n### Proof Strategy",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.487200+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Formalize",
+    "description": "the notion of δ-closeness to degree-d polynomials.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.500848+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Prove",
+    "description": "the Schwartz–Zippel-based distance bound: any nonzero polynomial of degree ≤ d agrees with the zero function on at most d · q^{n−1} points.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.514530+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Reduce",
+    "description": "to the Schwartz–Zippel bound over finite grids (not the full field, but subsets).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.534901+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Generalize",
+    "description": "`schwartz_zippel_succ` to evaluation over product sets S₁ × ⋯ × Sₙ rather than all of K^n.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.549760+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Validate",
+    "description": "each direction with computational experiments (Python demos).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.566574+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Update",
+    "description": "this document as each direction is completed, adding new sub-directions that become accessible.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "09f78c38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:05:20.583300+00:00"
   },
   {
     "id": "seed_052",
