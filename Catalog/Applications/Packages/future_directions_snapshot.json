@@ -144,22 +144,6 @@
     "timestamp": "2026-05-14T16:03:53.846179+00:00"
   },
   {
-    "id": "seed_003",
-    "title": "Collatz Convergence via Tropical Contracting Dynamics",
-    "description": "Prove that the Collatz iteration corresponds to a contracting tropical dynamical system on a min-plus lattice, and that convergence follows from tropical spectral radius bounds. Show that the 3n+1 map is a piecewise-tropical contraction with unique fixed point at 1, establishing global convergence through idempotent metric arguments.",
-    "domains": [
-      "Computation",
-      "Tropical",
-      "Speculative"
-    ],
-    "priority_score": 0.78,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "d4155669",
-    "timestamp": "2026-05-14T16:03:53.811195+00:00"
-  },
-  {
     "id": "seed_043",
     "title": "Tropical Rainfall: Nash Equilibria as Min-Plus Fixed Points",
     "description": "Prove that tropical semiring fixed points correspond to Nash equilibria in zero-sum games on idempotent payoff matrices, and show that the tropical value iteration converges in at most n steps for n-player games. Construct a tropical min-max theorem analogous to von Neumann's, proving that every finite tropical game has a unique idempotent equilibrium.",
@@ -768,25 +752,6 @@
     "timestamp": "2026-05-16T07:11:31.864563+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "Reduce from a known quantum-hard problem",
-    "description": "(e.g., certain lattice problems) to tropical key recovery\n\n### Key Questions\n- Does the tropical discrete logarithm problem have hidden subgroup structure that a quantum algorithm could exploit?\n- Can the Regev-Oded lattice-based techniques be adapted to the tropical setting?\n- What is the oracle complexity of tropical matrix power inversion?\n\n### Estimated Difficulty\n**Very high.** This requires deep integration of quantum complexity theory with tropical algebra. However, even partial results (e.g., ruling out specific quantum attack strategies) would be highly impactful.\n\n### Cross-Domain Impact\n- **Post-quantum cryptography**: New candidate hard problems for the NIST post-quantum standards\n- **Quantum computing**: Novel structural complexity results for idempotent algebras\n- **Physics**",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.878723+00:00"
-  },
-  {
     "id": "fd_0239",
     "title": "Define tropical circuits",
     "description": ": acyclic networks of min and + gates",
@@ -1071,20 +1036,6 @@
     "source_exp_id": "8d8b1150",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:30:22.914707+00:00"
-  },
-  {
-    "id": "fd_0238",
-    "title": "Validate computationally",
-    "description": "using Python implementations before formalizing.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8d8b1150",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:30:22.926225+00:00"
   },
   {
     "id": "fd_0239",
@@ -1703,24 +1654,6 @@
     "timestamp": "2026-05-16T06:31:54.549027+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "1. Semiring-Valued Dependency Propagation",
-    "description": "**Goal:** Generalize the level function from $\\mathbb{N}$ to an arbitrary (complete, idempotent) semiring, enabling weighted dependency metrics such as proof cost, trust scores, compilation time, and complexity bounds.\n\n**Hypothesis:** The locality theorem holds for any function $f : V \\to S$ defined by $f(v) = \\bigoplus_{u \\in \\text{pred}(v)} g(f(u))$ over a complete idempotent semiring $(S, \\oplus, \\otimes, \\mathbf{0}, \\mathbf{1})$, where $g$ is the \"edge weight\" operation. The key requirement is that $\\oplus$ and $g$ respect the well-founded structure.\n\n**Proof Strategy:** Replace `Finset.sup'` with a general `Finset.fold` over the semiring operation. The locality lemma generalizes directly: if the operands are unchanged, the fold result is unchanged. The well-founded induction argument",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14514045",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:34:26.462184+00:00"
-  },
-  {
     "id": "fd_0239",
     "title": "2. Certified Incremental Fixed-Point Theorem for Monotone Dataflow Frameworks",
     "description": "**Goal:** Prove that for monotone functions on finite lattices, the least fixed point is unchanged outside the forward cone of a local operator modification. This subsumes the DAG level theorem as a special case and connects to abstract interpretation.\n\n**Hypothesis:** Let $(L, \\sqsubseteq)$ be a finite lattice and $F : (V \\to L) \\to (V \\to L)$ a monotone operator with $F(x)(v)$ depending only on $\\{x(u) : u \\in \\text{pred}(v)\\}$. If $F$ is modified to $F'$ with $F(x)(v) = F'(x)(v)$ for all $v$ outside a set $C$ (closed under successor), then $\\text{lfp}(F)$ and $\\text{lfp}(F')$ agree on $V \\setminus C$.\n\n**Proof Strategy:** Use Kleene's fixed-point theorem on finite lattices. Show by induction on the Kleene iteration that each iterate agrees outside $C$. Since the lattice is finite, the i",
@@ -1781,5 +1714,118 @@
     "source_exp_id": "8e098d5e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:08:58.377086+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Direction 1: Tropical Spectral Certificates for Cycle Nonexistence",
+    "description": "**Hypothesis**: For the accelerated Collatz map, the discounted Bellman fixed point V* satisfies strict monotonicity along any hypothetical nontrivial cycle, yielding a contradiction. Specifically, if n₁ → n₂ → ··· → n_k → n₁ is a cycle with all nᵢ > 1, then the Bellman equation gives V*(nᵢ) = 1 + γ · V*(nᵢ₊₁) for each i, which sums to Σ V*(nᵢ) = k + γ · Σ V*(nᵢ), implying Σ V*(nᵢ) = k/(1-γ). This constrains the average value along cycles and, combined with arithmetic constraints on Collatz orbits, may rule out short cycles.\n\n**Proof Strategy**:\n1. Formalize the cycle equation: if collatzStep^[k](n) = n with all intermediate values > 1, then V*(n) = (1-γ^k)/(1-γ).\n2. Show that for Collatz, the arithmetic structure forces nᵢ to satisfy congruence conditions that conflict with the value func",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4155669",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:10.474613+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Direction 2: Stochastic Bellman Framework and Probabilistic Collatz",
+    "description": "**Hypothesis**: Replacing the deterministic Collatz step with a probabilistic model (each number is even or odd with probability 1/2, independently) yields a stochastic Bellman equation whose fixed point has expected value log₂(n) / (1 - 3/4 · γ). This provides a rigorous probabilistic baseline for the \"expected\" value function that can be compared with the actual deterministic fixed point.\n\n**Proof Strategy**:\n1. Define a stochastic Bellman operator on functions ℕ → ℝ using expected values.\n2. Prove contraction with the same discount mechanism.\n3. Compute the fixed point in closed form using the heuristic branching ratio.\n4. Compare with Tao's almost-all-orbits result to formalize probabilistic intuition.\n\n**Cross-Domain Connections**: Connects to the theory of random dynamical systems, m",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4155669",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:10.489058+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Direction 3: Thermodynamic Formalism for Arithmetic Orbits",
+    "description": "**Hypothesis**: The family of discounted value functions {V*_γ}_{γ ∈ [0,1)} defines a \"free energy\" function F(γ) = Σ_n V*_γ(n) · w(n) (for suitable weights w) that exhibits phase-transition-like behavior as γ → 1⁻. The critical exponent of divergence of F(γ) encodes information about the distribution of Collatz stopping times.\n\n**Proof Strategy**:\n1. Define the partition function Z(γ) = Σ_{n ≤ N} V*_γ(n) for finite truncations.\n2. Analyze the scaling of Z(γ) as γ → 1⁻ and N → ∞.\n3. Connect the divergence rate to the tail distribution of Collatz stopping times.\n4. Compare with the known heuristic that stopping times grow as C · log(n)^α.\n\n**Cross-Domain Connections**: Draws on the thermodynamic formalism of Ruelle and Sinai for dynamical systems. Connects to statistical mechanics of disord",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4155669",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:10.504272+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Direction 4: Verified Termination Analysis via Bellman Ranking Functions",
+    "description": "**Hypothesis**: The discounted Bellman fixed point V* can serve as a certified ranking function for program termination analysis. For arithmetic programs with piecewise-affine transitions (if-then-else with linear arithmetic), the Bellman contraction framework automatically produces a ranking function that decreases at each step by at least 1 - γ · V*(T(n)) / V*(n).\n\n**Proof Strategy**:\n1. Generalize the ArithmeticSystem structure to programs with multiple branches and guards.\n2. Prove that the Bellman fixed point is a valid ranking function (V*(n) > 0 for n ≠ target, and V*(T(n)) < V*(n) outside the target).\n3. Connect to existing termination analysis tools (e.g., AProVE, T2) by providing Lean-certified ranking functions.\n4. Develop automated Lean tactics that compute approximate ranking ",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4155669",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:10.525124+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Direction 5: Tropical Neural Networks for Arithmetic Dynamics",
+    "description": "**Hypothesis**: The Bellman value function V* can be approximated by tropical (piecewise-linear) neural networks with O(log n) layers and O(poly(log n)) parameters. Training such networks with the Bellman contraction as a self-supervised loss function produces learned representations of Collatz orbit structure that generalize to large n.\n\n**Proof Strategy**:\n1. Prove universal approximation of bounded functions ℕ → ℝ by tropical neural networks (piecewise-linear functions with min/max operations).\n2. Show that the Bellman contraction provides a stable training objective: the loss L(θ) = ‖B_γ(V_θ) - V_θ‖² has a unique minimum at the fixed point, and gradient descent converges due to the contraction property.\n3. Train networks on Collatz data for n ≤ 10^6 and test generalization to n ∈ [10^6",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4155669",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:10.542684+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Meta-Direction: Building a Lean Library for Idempotent Arithmetic Dynamics",
+    "description": "**Goal**: Create a reusable, well-documented Lean 4 library that provides:\n- General ArithmeticSystem framework with composition, products, and quotients\n- Automated Bellman contraction proofs for user-defined systems\n- Value iteration algorithms with formal convergence guarantees\n- Tropical spectral radius computation for finite-state truncations\n- Integration with Mathlib's metric space and dynamical systems infrastructure\n\nThis library would serve as the foundation for all five directions above and would constitute a new subfield of formalized mathematics: **certified arithmetic dynamics**.\n\n---",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4155669",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:10.556877+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Research Team Structure",
+    "description": "Each direction is designed to be pursued by a 2-3 person team with complementary expertise:\n- **Direction 1**: Number theorist + formal verification expert\n- **Direction 2**: Probabilist + dynamical systems theorist\n- **Direction 3**: Statistical physicist + ergodic theorist\n- **Direction 4**: Program verification researcher + formal methods expert\n- **Direction 5**: Machine learning researcher + tropical geometer\n\nCross-pollination between teams, especially through the shared Lean library (Meta-Direction), would be essential for breakthrough progress.",
+    "domains": [
+      "Tropical",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4155669",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:10.570979+00:00"
   }
 ]
