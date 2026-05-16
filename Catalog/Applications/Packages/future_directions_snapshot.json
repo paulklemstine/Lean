@@ -290,25 +290,11 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-14T23:59:16.109057+00:00"
-  },
-  {
-    "id": "fd_0197",
-    "title": "Eigenvector perturbation",
-    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "5e0e0def",
-    "timestamp": "2026-05-14T23:59:16.192013+00:00"
+    "consumed_by_exp_id": "04765070",
+    "timestamp": "2026-05-14T23:59:16.109057+00:00"
   },
   {
     "id": "fd_0197",
@@ -1711,5 +1697,111 @@
     "source_exp_id": "23a76967",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:39:33.674570+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "1. General Nonzero Linear Map Kernel-Density Theorem over Arbitrary Finite Field",
+    "description": "**Status**: Partially achieved. We proved `nonzero_linear_map_kernel_density_le` for `ZMod q` with `q` prime. The natural generalization targets arbitrary finite fields `𝔽_q` where `q = p^k`.\n\n**Target theorem**:\n```lean\ntheorem nonzero_linear_map_kernel_density_general\n    {F : Type*} [Field F] [Fintype F]\n    (V W : Type*) [AddCommGroup V] [Module F V]\n    [AddCommGroup W] [Module F W]\n    [Fintype V] [Fintype W] [FiniteDimensional F V]\n    [FiniteDimensional F W]\n    (f : V →ₗ[F] W) (hf : f ≠ 0) :\n    Fintype.card f.ker * Fintype.card F ≤ Fintype.card V\n```\n\n**Proof strategy**: The proof in our `nonzero_linear_map_kernel_density_le` already works over any `DivisionRing` with `Fintype` — the argument uses `Module.card_eq_pow_finrank` and rank-nullity, both of which hold for arbitrary fin",
+    "domains": [
+      "Cryptography",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e0e0def",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:47:38.621149+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "2. Repeated Freivalds Amplification Theorem",
+    "description": "**Target theorem**:\n```lean\ntheorem freivalds_t_fold_soundness\n    {q m n p : ℕ} [Fact q.Prime] (hp : 0 < p)\n    (A : Matrix (Fin m) (Fin n) (ZMod q))\n    (B : Matrix (Fin n) (Fin p) (ZMod q))\n    (K : Matrix (Fin m) (Fin p) (ZMod q))\n    (hne : K ≠ A * B)\n    (t : ℕ) :\n    ((Fintype.card {rs : Fin t → (Fin p → ZMod q) //\n        ∀ i, K.mulVec (rs i) = (A * B).mulVec (rs i)} : ℚ) /\n      (Fintype.card (Fin t → Fin p → ZMod q)))\n      ≤ (1 : ℚ) / q ^ t\n```\n\n**Proof strategy**: Model `t` independent trials as a product space `(Fin t → Fin p → ZMod q)`. The acceptance set is the product of `t` copies of the single-trial acceptance set. Use `Fintype.card_pi` and the single-trial bound `freivalds_soundness_card` to get `(q^(p-1))^t / (q^p)^t = q^{-t}`.\n\n**Impact**: This is the formal engine beh",
+    "domains": [
+      "EML",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e0e0def",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:47:38.636136+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "3. Freivalds as a Corollary of Schwartz–Zippel over Finite Fields",
+    "description": "**Target theorem**:\n```lean\ntheorem freivalds_from_schwartz_zippel\n    {q m p : ℕ} [Fact q.Prime]\n    (M : Matrix (Fin m) (Fin p) (ZMod q))\n    (hM : M ≠ 0) :\n    Fintype.card {r : Fin p → ZMod q // M.mulVec r = 0}\n      ≤ q ^ (p - 1)\n```\n\nbut proved by appeal to the Schwartz–Zippel lemma for degree-1 multivariate polynomials, showing that Freivalds is a special case of polynomial identity testing.\n\n**Proof strategy**: \n1. Extract a nonzero row `w = M i` from `M`.\n2. View `∑ j, w j * r j` as a degree-1 polynomial in `MvPolynomial (Fin p) (ZMod q)`.\n3. Apply the Schwartz–Zippel bound: a nonzero polynomial of total degree `d` over `ZMod q` vanishes on at most `d · q^(p-1)` points.\n4. With `d = 1`, this gives exactly the `q^(p-1)` bound.\n\n**Impact**: This unifies matrix verification with poly",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e0e0def",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:47:38.651556+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "4. Rank-Sensitive Exact Acceptance Probability Theorem",
+    "description": "**Target theorem**:\n```lean\ntheorem mulVec_eq_zero_card_exact\n    {q m p : ℕ} [Fact q.Prime]\n    (M : Matrix (Fin m) (Fin p) (ZMod q)) :\n    Fintype.card {r : Fin p → ZMod q // M.mulVec r = 0}\n      = q ^ (p - Matrix.rank M)\n```\n\nwhere `Matrix.rank` is the rank of `M` over `ZMod q`.\n\n**Proof strategy**: Interpret `M.mulVec` as a linear map. Its kernel has dimension `p - rank(M)` by rank-nullity. Over a finite field of size `q`, a `d`-dimensional subspace has exactly `q^d` elements. This gives the exact count.\n\n**Key dependencies**:\n- `Matrix.rank` or `LinearMap.rank` in Mathlib.\n- `Module.card_eq_pow_finrank` for converting dimension to cardinality.\n- Rank-nullity for `M.mulVec` as a linear map.\n\n**Impact**: This is strictly stronger than the `≤ q^(p-1)` bound and gives:\n- **Exact error pr",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e0e0def",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:47:38.667886+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "5. Streaming/Interactive Verification for Batched Matrix Products",
+    "description": "**Target theorem** (informal):\nGiven a sequence of matrix products `A₁ B₁ = C₁, ..., Aₖ Bₖ = Cₖ`, verify all claims simultaneously using a single random vector `r` via the combined check:\n```\n∑ᵢ αᵢ · (Aᵢ Bᵢ - Cᵢ).mulVec r = 0\n```\nwhere `α₁, ..., αₖ` are independent random field elements.\n\n**Formal target**:\n```lean\ntheorem batched_freivalds_soundness\n    {q m n p k : ℕ} [Fact q.Prime]\n    (As : Fin k → Matrix (Fin m) (Fin n) (ZMod q))\n    (Bs : Fin k → Matrix (Fin n) (Fin p) (ZMod q))\n    (Cs : Fin k → Matrix (Fin m) (Fin p) (ZMod q))\n    (hne : ∃ i, As i * Bs i ≠ Cs i) :\n    -- probability of accepting all claims with random (α, r) ≤ 1/q\n    sorry\n```\n\n**Proof strategy**: The combined matrix `∑ᵢ αᵢ · (Aᵢ Bᵢ - Cᵢ)` is nonzero with probability at least `1 - 1/q` over the `αᵢ` (by Schwartz–Z",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e0e0def",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:47:38.684583+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "A. Connections to Coding Theory",
+    "description": "The kernel of a nonzero linear functional is a linear code of codimension 1. Freivalds' bound says: a false claim is accepted only on codewords of this code. This opens formalized connections to:\n- Minimum distance bounds for linear codes.\n- Syndrome decoding as a verification procedure.\n- Reed-Solomon code proximity testing (the algebraic core of STARKs).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e0e0def",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:47:38.698983+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "C. Bayesian Verification Framework",
+    "description": "Combine `freivalds_soundness_prob` with Bayes' theorem to formalize:\n- How repeated successful Freivalds checks exponentially increase posterior confidence.\n- Optimal stopping criteria for randomized verification.\n- Connections to sequential hypothesis testing.",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e0e0def",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:47:38.713993+00:00"
   }
 ]
