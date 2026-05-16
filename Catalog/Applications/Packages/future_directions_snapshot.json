@@ -745,23 +745,6 @@
     "timestamp": "2026-05-16T03:21:48.736219+00:00"
   },
   {
-    "id": "fd_0244",
-    "title": "Extract inequalities",
-    "description": "The rank inequality between chain groups and homology groups gives the Morse inequalities.\n\n### Key Challenges\n- Defining \"gradient flow\" for piecewise-linear functions requires resolving ambiguities at the corner locus.\n- The polyhedral complex structure may not be a CW complex in the usual sense; a careful combinatorial topology formulation is needed.\n\n### Cross-Domain Connections\n- **Algebraic topology**: connects to persistent homology and topological data analysis\n- **Combinatorics**: relates to Stanley-Reisner ring theory for simplicial complexes\n- **Optimization**: provides topological lower bounds on optimization complexity\n\n### Actionable Steps\n1. Formalize the cellular chain complex for 1D and 2D polyhedral complexes in Lean.\n2. Prove the alternating sum formula $\\sum_k (-1)^k \\#",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "1e7db8da",
-    "timestamp": "2026-05-16T03:21:48.762170+00:00"
-  },
-  {
     "id": "fd_0249",
     "title": "Define the perturbation space",
     "description": "Parameterize the family of tropical max functions by bias vectors $b \\in \\mathbb{R}^m$.",
@@ -977,6 +960,78 @@
     "source_exp_id": "886e70ad",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T04:34:23.473456+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Forward (← direction):",
+    "description": "Under the coboundary condition, the unique projective eigenvector p attracts all orbits. Use the contraction mapping principle in the Hilbert projective metric.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "085cfca9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:34:45.427388+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Backward (→ direction):",
+    "description": "If cycle means differ, exhibit two initial vectors that converge to different limit cycles, preventing convergence.\n\n### Cross-Domain Impact\n- **Dynamical systems:** Complete characterization of mode-locking in tropical dynamics.\n- **Consensus algorithms:** Conditions for distributed agreement in max-plus networks.\n- **Scheduling:** Steady-state behavior of periodic production systems.\n\n### Formalization Target\n```\ntheorem trop_power_iteration_converges_iff (A : Fin n → Fin n → ℝ)\n  (hirr : StronglyConnected A) :\n  ConvergesProjectively (tropPowerIteration A) ↔ AllCycleMeansEqual A\n```\n\n---\n\n## Direction 3: Graph Cohomology Library for Finite Digraphs\n\n### Goal\nBuild a reusable Lean 4 library for **discrete cohomology on finite directed graphs**, applicable far beyond tropical algebra.\n\n##",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "085cfca9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:34:45.444806+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Cochain complex:",
+    "description": "Define the space of k-cochains on a finite digraph (vertex functions, edge functions, face functions).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "085cfca9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:34:45.459261+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Coboundary operator:",
+    "description": "δ₀ : C⁰ → C¹ maps vertex functions to edge functions via (δ₀f)(i→j) = f(j) − f(i).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "085cfca9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:34:45.470291+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Integration:",
+    "description": "Define the integral of a 1-cochain around a cycle and prove it equals zero iff the cochain is exact.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "085cfca9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:34:45.494319+00:00"
   },
   {
     "id": "seed_052",
@@ -1339,21 +1394,6 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
-  },
-  {
-    "id": "fd_0234",
-    "title": "Hypothesis",
-    "description": "Extend the lexical cost model from presence/absence to semantic distance: define $L(i)$ not as a scalar but as a point in a tropical module, representing the semantic position of lexical item $i$. Semantic drift is then a tropical translation in this module. The key conjecture:\n\n*Semantic change preserves tropical convexity: if a set of related meanings forms a tropically convex set in the ancestor language, its images under semantic drift remain tropically convex in descendant languages.*",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1cdf4e96",
-    "consumed_by_exp_id": "085cfca9",
-    "timestamp": "2026-05-15T20:09:21.809405+00:00"
   },
   {
     "id": "fd_0233",
