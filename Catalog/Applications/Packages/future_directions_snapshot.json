@@ -80,22 +80,6 @@
     "timestamp": "2026-05-14T16:03:53.858089+00:00"
   },
   {
-    "id": "seed_015",
-    "title": "Zero-Knowledge Proofs via Tropical Commitment Schemes",
-    "description": "Construct a zero-knowledge proof system where the commitment scheme is based on tropical matrix semiring operations, and prove that the tropical Pedersen commitment is computationally binding under the tropical shortest path assumption. Show that tropical ZK proofs achieve negligible soundness error with polynomial-round protocols, and that the idempotent structure enables efficient proof composition.",
-    "domains": [
-      "Cryptography",
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.86,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "cc933f99",
-    "timestamp": "2026-05-14T16:03:53.819185+00:00"
-  },
-  {
     "id": "seed_034",
     "title": "Quantum Speedup via Tropical Dequantization",
     "description": "Prove that the dequantization of quantum algorithms—replacing quantum amplitude with tropical weights—preserves the speedup structure while eliminating quantum hardware requirements. Show that tropical dequantized algorithms achieve the same asymptotic complexity as their quantum counterparts for search and sampling problems, and that the min-plus interference pattern captures the essential quantum parallelism.",
@@ -620,23 +604,6 @@
     "timestamp": "2026-05-16T03:21:48.725714+00:00"
   },
   {
-    "id": "fd_0252",
-    "title": "Construct the persistence diagram",
-    "description": "Define a barcode/persistence diagram tracking corner critical points as biases vary.\n\n### Key Challenges\n- Transversality arguments for piecewise-linear functions require combinatorial rather than differential techniques.\n- The interaction between different strata of the corner locus introduces combinatorial complexity.\n\n### Cross-Domain Connections\n- **Persistent homology**: provides a tropical analogue of persistence diagrams\n- **Bifurcation theory**: extends classical bifurcation theory to nonsmooth settings\n- **Network pruning**: perturbation of biases corresponds to neural network weight modification; persistence measures robustness\n\n### Actionable Steps\n1. Implement numerical continuation of corner critical points as biases vary.\n2. Compute persistence diagrams for small examples (2-",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:21:48.866824+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "Establish the level estimate",
     "description": "Show $c^* \\ge c$ using the sublevel set separation hypothesis.\n\n### Key Challenges\n- The deformation argument requires constructing explicit continuous deformations of paths in the tropical setting, which is complicated by the piecewise-linear structure.\n- The minimax principle needs compactness arguments that may require restricting to bounded domains.\n\n### Cross-Domain Connections\n- **Variational methods**: tropical analogue of the Ambrosetti-Rabinowitz theorem\n- **Optimization**: provides certified barriers for global optimization of piecewise-linear functions\n- **Statistical physics**: mountain passes correspond to transition states between metastable phases\n\n### Actionable Steps\n1. Formalize the minimax principle for continuous functions on compact sets in Lean.\n2. Prove the mountain ",
@@ -739,20 +706,6 @@
     "timestamp": "2026-05-16T03:49:39.024149+00:00"
   },
   {
-    "id": "fd_0232",
-    "title": "Month 2",
-    "description": ": Develop the tropical Shannon capacity formula and prove achievability for random codes.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d85be8c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:49:39.034440+00:00"
-  },
-  {
     "id": "fd_0241",
     "title": "Backward (→ direction):",
     "description": "If cycle means differ, exhibit two initial vectors that converge to different limit cycles, preventing convergence.\n\n### Cross-Domain Impact\n- **Dynamical systems:** Complete characterization of mode-locking in tropical dynamics.\n- **Consensus algorithms:** Conditions for distributed agreement in max-plus networks.\n- **Scheduling:** Steady-state behavior of periodic production systems.\n\n### Formalization Target\n```\ntheorem trop_power_iteration_converges_iff (A : Fin n → Fin n → ℝ)\n  (hirr : StronglyConnected A) :\n  ConvergesProjectively (tropPowerIteration A) ↔ AllCycleMeansEqual A\n```\n\n---\n\n## Direction 3: Graph Cohomology Library for Finite Digraphs\n\n### Goal\nBuild a reusable Lean 4 library for **discrete cohomology on finite directed graphs**, applicable far beyond tropical algebra.\n\n##",
@@ -813,20 +766,6 @@
     "timestamp": "2026-05-16T05:33:11.815310+00:00"
   },
   {
-    "id": "fd_0252",
-    "title": "Iteration",
-    "description": ": If a direction fails, analyze the failure and either decompose further or pivot to an alternative approach.\n\n### Priority Ordering",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1e7db8da",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:34.143216+00:00"
-  },
-  {
     "id": "fd_0254",
     "title": "Direction 2",
     "description": "(Discrete Morse collapse): Important for computational applications, moderate complexity",
@@ -853,48 +792,6 @@
     "source_exp_id": "2da16d8d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T05:33:56.130596+00:00"
-  },
-  {
-    "id": "fd_0232",
-    "title": "Extend",
-    "description": "(Schwartz–Zippel) → covers polynomial identity testing",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2da16d8d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:56.143882+00:00"
-  },
-  {
-    "id": "fd_0233",
-    "title": "Abstract",
-    "description": "(verifier library) → creates reusable infrastructure",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2da16d8d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:56.155873+00:00"
-  },
-  {
-    "id": "fd_0234",
-    "title": "Apply",
-    "description": "(streaming) → demonstrates practical impact",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2da16d8d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:56.167797+00:00"
   },
   {
     "id": "fd_0235",
@@ -939,48 +836,6 @@
     "source_exp_id": "c159c7e4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T05:34:19.549890+00:00"
-  },
-  {
-    "id": "fd_0238",
-    "title": "Iterates on decomposition",
-    "description": "— if a proof attempt fails, decompose into smaller lemmas rather than retrying.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c159c7e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:34:19.563972+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "Cross-references",
-    "description": "other directions: discoveries in one direction often unlock progress in others.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c159c7e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:34:19.576111+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Updates the knowledge base",
-    "description": "by adding new `TheorySpec` embeddings to the catalog registry.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c159c7e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:34:19.585667+00:00"
   },
   {
     "id": "seed_052",
@@ -1376,21 +1231,6 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0232",
-    "title": "Direction 1: Weighted Hodge Decomposition on Overlap Complexes with Certified Ro",
-    "description": "**Hypothesis:** Equipping the cochain complex with edge weights w(i,j) proportional to the overlap volume between activation regions i and j yields a weighted Hodge decomposition where the harmonic energy provides a formally certified lower bound on adversarial vulnerability.\n\n**Proof Strategy:**\n1. Define the weighted inner product ⟨ω, η⟩_w = Σ_{i,j} w(i,j) ω(i,j) η(i,j) and prove it satisfies the inner product axioms when w > 0.\n2. Compute the weighted adjoint operators d₀†_w and d₁†_w explicitly.\n3. Prove the weighted Hodge decomposition C¹ = im(d₀) ⊕_w im(d₁†_w) ⊕_w ker(Δ₁_w).\n4. Establish that the weighted harmonic energy ‖h‖²_w lower-bounds the minimum perturbation energy needed to change the network's prediction across region boundaries.\n\n**Cross-Domain Connections:** This connects ",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cb6bb980",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:30:41.646536+00:00"
-  },
-  {
     "id": "fd_0223",
     "title": "1. Enriched Invariant Semantics over Ordered Semirings",
     "description": "**Hypothesis:** Replacing `ℕ`-valued invariants with invariants valued in canonically ordered commutative semirings (e.g., `ℝ≥0`, tropical semirings, or lattice-valued invariants) would unify height bounds, security parameters, tropical valuations, and proof-complexity measures under a single transport calculus.\n\n**Proof Strategy:**\n- Generalize `TheorySpec` to `TheorySpecOrd β` for `[OrderedCommMonoid β]`.\n- Prove that transport, composition, and soundness theorems all hold at this generality.\n- Instantiate with `β = ℝ≥0` for real-valued invariants (Lipschitz constants, security levels).\n- Instantiate with `β = ℤ ∪ {-∞}` for tropical valuations.\n- Show that the ℕ specialization is a retract of the general theory.\n\n**Cross-Domain Connections:** This opens bridges between tropical geometry ",
@@ -1476,20 +1316,6 @@
     "source_exp_id": "67f5da38",
     "consumed_by_exp_id": "8e098d5e",
     "timestamp": "2026-05-16T02:14:30.291581+00:00"
-  },
-  {
-    "id": "fd_0232",
-    "title": "Lean Signature",
-    "description": "```lean\ntheorem exists_minimal_WTA\n  {σ : Type*} {ar : σ → ℕ} {Q : Type*}\n  [Fintype Q] [DecidableEq Q] [Nonempty Q]\n  (A : WTA σ ar Q) :\n  ∃ (Q' : Type*) (_ : Fintype Q') (_ : DecidableEq Q') (_ : Nonempty Q')\n    (A' : WTA σ ar Q'),\n    (∀ t, A'.eval t = A.eval t) ∧\n    Fintype.card Q' ≤ Fintype.card Q ∧\n    (∀ (Q'' : Type*) [Fintype Q''] [DecidableEq Q''] [Nonempty Q'']\n      (A'' : WTA σ ar Q''),\n      (∀ t, A''.eval t = A.eval t) →\n      Fintype.card Q' ≤ Fintype.card Q'')\n```",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a999e02b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:41:24.256398+00:00"
   },
   {
     "id": "fd_0218",
@@ -1756,29 +1582,11 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "746c4988",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "011ce99e",
     "timestamp": "2026-05-16T04:40:35.452499+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "4. Idempotent Information Theory: Tropical Entropy and Data Processing",
-    "description": "**Goal**: Develop an information-theoretic framework native to the tropical semiring, with tropical analogues of entropy, mutual information, and the data processing inequality.\n\n**Hypothesis**: Define tropical entropy H_trop(X) = min_x (-log P(x)) (the min-entropy, which is naturally \"tropical\" since min replaces sum). The data processing inequality for tropical channels — where channel matrices act via min-plus multiplication — should follow from the algebraic properties of tropical matrix multiplication (monotonicity and sub-multiplicativity of min-plus products).\n\n**Proof Strategy**:\n1. Define tropical channels as tropical matrices acting on probability vectors via min-plus multiplication.\n2. Define tropical mutual information using min-entropy.\n3. Prove the tropical data processing in",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "746c4988",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:40:35.478486+00:00"
   },
   {
     "id": "fd_0241",
@@ -1861,5 +1669,137 @@
     "source_exp_id": "f06689b7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:30:17.080367+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Direction 1: Computational Indistinguishability for Tropical Transcript Ensemble",
+    "description": "**Hypothesis:** There exists a polynomial-time reduction from distinguishing tropical Σ-protocol transcripts to solving the Tropical Shortest Path Decision Problem (TSPDP).\n\n**Theorem Target:**\n```\ntheorem tropical_computational_zk\n  (n : ℕ) (λ : ℕ) -- security parameter\n  (Proto : TropicalSigmaProtocol n)\n  (hhard : TropicalShortestPathHard λ) :\n  ComputationallyIndistinguishable\n    (realTranscriptEnsemble Proto λ)\n    (simulatedTranscriptEnsemble Proto λ)\n```\n\n**Strategy:**\n1. Define a family of tropical matrices parameterized by security parameter λ, where entries grow polynomially in λ.\n2. Show that any distinguisher for transcripts yields an oracle for TSPDP.\n3. The key insight: shift invariance gives *exact* algebraic indistinguishability (not statistical), so the reduction is tight",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc933f99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:31:54.458887+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Direction 2: Succinct Argument Systems from Tropical Normalization",
+    "description": "**Hypothesis:** Idempotent normalization of composed tropical proof transcripts yields a succinct argument system where proof size grows logarithmically in the number of composed statements.\n\n**Theorem Target:**\n```\ntheorem tropical_succinct_argument\n  (n k : ℕ) (stmts : Fin k → TropStatement n)\n  (proofs : Fin k → TropTranscript n 1) :\n  ∃ (compressed : TropTranscript n (log₂ k)),\n    Verifiable compressed (composeAll stmts) ∧\n    size compressed ≤ C * log₂ k * n\n```\n\n**Strategy:**\n1. Define a binary tree composition of tropical transcripts.\n2. Show that at each level, idempotent normalization eliminates redundant constraints (componentwise min absorbs dominated values).\n3. Prove that after O(log k) levels of composition + normalization, the transcript has O(n · log k) effective constrain",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc933f99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:31:54.474449+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Direction 3: Tropical Commitments and Weighted Automata Equivalence Hardness",
+    "description": "**Hypothesis:** Binding of tropical matrix commitments is equivalent to the weighted automata inequivalence problem, establishing a novel connection between cryptographic security and formal language theory.\n\n**Theorem Target:**\n```\ntheorem tropical_binding_automata_equiv\n  (A B : TropMat m n) :\n  (∀ x₁ x₂ r₁ r₂, tropCommit A B x₁ r₁ = tropCommit A B x₂ r₂ → x₁ = x₂) ↔\n  WeightedAutomataInequivalent (encodeAsAutomaton A) (encodeAsAutomaton B)\n```\n\n**Strategy:**\n1. Encode a tropical matrix A as a weighted finite automaton where transitions have tropical weights.\n2. Show that tropMatVecMul A x corresponds to the automaton's evaluation on input x.\n3. A collision in the commitment scheme corresponds to two distinct inputs producing the same weighted language value—exactly the weighted automata",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc933f99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:31:54.490610+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Direction 4: Tropical Fiat–Shamir in the Random Oracle Model",
+    "description": "**Hypothesis:** The Fiat–Shamir transform applied to tropical Σ-protocols yields a non-interactive zero-knowledge proof system secure in the random oracle model, with efficiency advantages from tropical shift invariance.\n\n**Theorem Target:**\n```\ntheorem tropical_fiat_shamir_security\n  (Proto : TropicalSigmaProtocol n c)\n  (hZK : HonestVerifierZeroKnowledge Proto)\n  (hBind : SpecialSoundness Proto)\n  (H : RandomOracle) :\n  NonInteractiveZeroKnowledge (FiatShamir Proto H)\n```\n\n**Strategy:**\n1. Define the Fiat–Shamir transform: replace the verifier's challenge with H(commitment).\n2. Show that shift invariance implies the simulated random oracle can be programmed consistently: for any shift s, H(com + s) can be set to any desired challenge.\n3. Prove extraction: from two accepting transcripts w",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc933f99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:31:54.508604+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Direction 5: Certified Privacy-Preserving Optimal Control via Tropical ZK",
+    "description": "**Hypothesis:** Tropical zero-knowledge protocols can certify optimality of discrete control policies without revealing the policy or the system dynamics.\n\n**Theorem Target:**\n```\ntheorem tropical_optimal_control_certification\n  (system : TropDynamicalSystem n)\n  (policy : ControlPolicy n T)\n  (hopt : IsOptimal system policy) :\n  ∃ (proof : TropTranscript n T),\n    VerifiesOptimality proof ∧\n    ZeroKnowledge proof  -- reveals nothing about system or policy\n```\n\n**Strategy:**\n1. Model discrete optimal control as tropical matrix iteration: the Bellman equation V(t) = A ⊗ V(t+1) + cost(t) is tropical-linear.\n2. The optimal value function is the tropical matrix power A^T ⊗ terminal_cost.\n3. A ZK proof of optimality commits to the value function at each time step using tropical matrix commitme",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc933f99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:31:54.524850+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Team Alpha: Foundations",
+    "description": "- Formalize computational indistinguishability (Direction 1)\n- Build asymptotic security definitions in Lean\n- Establish tropical hardness assumptions",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc933f99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:31:54.537380+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Team Beta: Proof Complexity",
+    "description": "- Develop succinct argument systems (Direction 2)\n- Prove normalization bounds\n- Connect to circuit complexity lower bounds",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc933f99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:31:54.549027+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Timeline",
+    "description": "| Quarter | Milestone |\n|---------|-----------|\n| Q1 | Formalize TSPDP, weighted automata encoding |\n| Q2 | Prove computational ZK reduction, succinct argument bounds |\n| Q3 | Fiat–Shamir transform, optimal control connection |\n| Q4 | Integration, practical implementations, paper submissions |",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc933f99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:31:54.587045+00:00"
   }
 ]
