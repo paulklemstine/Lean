@@ -828,6 +828,64 @@
     "timestamp": "2026-05-16T04:34:45.444806+00:00"
   },
   {
+    "id": "fd_0241",
+    "title": "Existence:",
+    "description": "Use iterated firing to reach a reduced form (termination by energy argument).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3c13f65f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:11.787500+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Uniqueness:",
+    "description": "If D₁ ~ D₂ are both q-reduced, show D₁ = D₂ by analyzing the principal divisor div(f) = D₂ - D₁ and using the reduced property to force f = const.\n\n### Algorithm: Dhar's Burning Test\n```\nfunction IsBurnable(G, q, S):\n    // S ⊆ V \\ {q}\n    fire ← {q}\n    while ∃ v ∈ V \\ fire with |{w ∈ fire : w ~ v}| > D(v):\n        fire ← fire ∪ {v}\n    return fire = V\n```\n\n### Cross-Domain Significance\n- **Algorithmic:** Dhar's algorithm is the key primitive for computing in Jac(G).\n- **Combinatorics:** Reduced divisors biject with G-parking functions.\n- **TCS:** Termination of chip-firing relates to lattice theory (Abelian sandpile lattice).\n\n---\n\n## Direction 3: Baker–Norine Riemann–Roch for Finite Graphs\n\n### Target Theorem\nDefine the **rank** of a divisor D on a graph G:\n```\nr(D) = max{k ≥ -1 : ∀ E e",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3c13f65f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:11.802488+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "States exact theorems",
+    "description": "in Lean before attempting proofs.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3c13f65f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:11.815310+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Builds on existing infrastructure",
+    "description": "(import the current DivisorTheory module).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3c13f65f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:11.827706+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
