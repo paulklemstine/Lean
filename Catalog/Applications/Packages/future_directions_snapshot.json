@@ -276,10 +276,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "20aee949",
     "timestamp": "2026-05-15T07:06:08.035548+00:00"
   },
   {
@@ -895,6 +895,106 @@
     "source_exp_id": "4ba38644",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T21:41:28.116740+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Round-by-round analysis",
+    "description": ": In each round, the verifier receives a univariate polynomial and checks it at a random point. By Schwartz–Zippel, each round catches a cheat with probability ≥ 1 − d/q.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3e135d69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:05:47.336361+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Union bound",
+    "description": ": Over n rounds, the total cheat probability is at most n·d/q.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3e135d69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:05:47.349627+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Formalization requires",
+    "description": ":\n   - A clean definition of the interactive protocol state\n   - Lemma: partial sums over remaining variables produce degree-bounded univariate polynomials\n   - Composition of single-round soundness via the union bound\n\n### Key Lemmas to Formalize\n- Partial summation preserves polynomial degree\n- Single-round soundness from univariate Schwartz–Zippel\n- Protocol correctness: honest prover always passes\n\n### Cross-Domain Impact\n- **Verifiable computation**: Sum-check is the core of GKR, Spartan, and other proof systems.\n- **Interactive proofs**: IP = PSPACE relies on sum-check.\n- **Blockchain**: Polynomial commitment schemes use sum-check variants.\n\n---\n\n## Direction 3: Formal Low-Degree Testing Soundness\n\n### Target Theorem\n```\ntheorem low_degree_test_soundness\n  (𝔽 : Type*) [Field 𝔽] [Fint",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3e135d69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:05:47.364615+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Evaluation codes as linear codes",
+    "description": ": Define the subspace structure of RM codes.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3e135d69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:05:47.380945+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Dual code construction",
+    "description": ": General framework for code duality.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3e135d69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:05:47.395679+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Interactive protocol formalization",
+    "description": ": State machines for verifier-prover interactions.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3e135d69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:05:47.410107+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Circuit complexity",
+    "description": ": Arithmetic circuits, depth, and size measures.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3e135d69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:05:47.424096+00:00"
   },
   {
     "id": "fd_0113",
