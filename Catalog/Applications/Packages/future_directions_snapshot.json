@@ -32,22 +32,6 @@
     "timestamp": "2026-05-14T16:03:53.833462+00:00"
   },
   {
-    "id": "seed_012",
-    "title": "Tropical RSA: Min-Plus Public Key Cryptosystem with Provable Security",
-    "description": "Construct a public-key cryptosystem based on the hardness of tropical matrix factorization, proving that recovering the private key from the public key reduces to the tropical shortest-path problem which is NP-hard in the min-plus semiring. Show that the min-plus analog of RSA has semantic security under a tropical decisional Diffie-Hellman assumption.",
-    "domains": [
-      "Cryptography",
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.89,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "746c4988",
-    "timestamp": "2026-05-14T16:03:53.817937+00:00"
-  },
-  {
     "id": "seed_016",
     "title": "Kolmogorov Complexity Closure and Idempotent Compression Duality",
     "description": "Prove that the idempotent closure of a semiring yields optimal lossless compression ratios, and establish a duality between Kolmogorov complexity and closure operators that gives computable upper bounds on minimal description length. Show that the tropical semiring's idempotent property induces a canonical compression scheme whose fixed points are exactly the Kolmogorov-random strings.",
@@ -1436,10 +1420,10 @@
       "Bridges"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e098d5e",
     "timestamp": "2026-05-16T02:14:30.291581+00:00"
   },
   {
@@ -1749,5 +1733,116 @@
     "source_exp_id": "62116f58",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T04:35:08.526724+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "1. Tropical ElGamal / KEM with IND-CPA from Tropical DDH",
+    "description": "**Goal**: Formalize a complete tropical ElGamal key encapsulation mechanism and prove IND-CPA security under the tropical DDH assumption.\n\n**Hypothesis**: The tropical DDH tuple (G, G^a, G^b, G^{ab}) is computationally indistinguishable from (G, G^a, G^b, R) where R is a random tropical matrix. Under this assumption, tropical ElGamal encryption — where ciphertexts are (G^r, M ⊗ G^{ar}) — is IND-CPA secure.\n\n**Proof Strategy**:\n1. Define a formal IND-CPA game as a function from adversaries to advantage bounds.\n2. Show that any IND-CPA adversary can be converted into a DDH distinguisher with the same advantage (standard hybrid argument).\n3. Formalize the hybrid step: replacing G^{ab} with R in the ciphertext makes the masked message statistically independent of M.\n\n**Cross-Domain Connection*",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "746c4988",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:40:35.438279+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "2. Tropical Matrix Factorization Hardness Transfer",
+    "description": "**Goal**: Prove a formal reduction from tropical matrix rank computation (known to be NP-hard in certain formulations) to tropical key recovery.\n\n**Hypothesis**: Computing the tropical rank of a matrix — the minimum number of rank-1 tropical matrices whose tropical sum equals the given matrix — is at least as hard as recovering the secret exponent from a tropical public key.\n\n**Proof Strategy**:\n1. Show that a tropical public key G^s encodes a matrix with tropical rank related to s.\n2. Prove that recovering s from G^s provides enough structural information to compute the tropical rank of an associated matrix.\n3. Leverage the known result (Shitov 2006, Kim & Roush 2005) that tropical rank computation is NP-hard in certain regimes.\n\n**Cross-Domain Connection**: This bridges tropical algebrai",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "746c4988",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:40:35.452499+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "3. Tropical Pseudorandom Generators from Min-Plus Walk Dynamics",
+    "description": "**Goal**: Construct pseudorandom generators from the dynamics of random walks on tropical matrix semigroups.\n\n**Hypothesis**: Iterating a random tropical matrix multiplication (choosing random matrices from a fixed set and composing them in the min-plus semiring) produces output that is computationally indistinguishable from random tropical matrices, assuming the tropical DDH problem is hard.\n\n**Proof Strategy**:\n1. Define a tropical pseudorandom generator: seed → sequence of tropical matrices via iterated tropical multiplication.\n2. Show that distinguishing the output from random requires solving a tropical discrete logarithm instance.\n3. Prove a Goldreich-Levin-style hardcore bit theorem for tropical exponentiation.\n\n**Cross-Domain Connection**: This connects dynamical systems on semirin",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "746c4988",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:40:35.465499+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "4. Idempotent Information Theory: Tropical Entropy and Data Processing",
+    "description": "**Goal**: Develop an information-theoretic framework native to the tropical semiring, with tropical analogues of entropy, mutual information, and the data processing inequality.\n\n**Hypothesis**: Define tropical entropy H_trop(X) = min_x (-log P(x)) (the min-entropy, which is naturally \"tropical\" since min replaces sum). The data processing inequality for tropical channels — where channel matrices act via min-plus multiplication — should follow from the algebraic properties of tropical matrix multiplication (monotonicity and sub-multiplicativity of min-plus products).\n\n**Proof Strategy**:\n1. Define tropical channels as tropical matrices acting on probability vectors via min-plus multiplication.\n2. Define tropical mutual information using min-entropy.\n3. Prove the tropical data processing in",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "746c4988",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:40:35.478486+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "5. Tropical Cryptosystems and Weighted Automata Hardness",
+    "description": "**Goal**: Establish formal connections between tropical cryptographic primitives and the algebraic theory of weighted automata over the tropical semiring.\n\n**Hypothesis**: The equivalence problem for weighted automata over the tropical semiring (given two automata, do they compute the same function?) is undecidable (Krob 1992). Tropical public keys can be viewed as compressed representations of weighted automata, and key recovery corresponds to automaton minimization or equivalence testing.\n\n**Proof Strategy**:\n1. Formalize tropical weighted automata as tuples (initial vector, transition matrices, final vector) over the min-plus semiring.\n2. Show that a tropical public key (G, G^s) encodes a weighted automaton whose language (accepted weight function) depends on the secret s.\n3. Prove that",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "746c4988",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:40:35.491410+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Research Program Summary",
+    "description": "These five directions collectively establish **cryptography over optimization semirings** as a coherent research program:\n\n| Direction | Core Innovation | Difficulty |\n|-----------|----------------|------------|\n| 1. Tropical ElGamal | Game-based security proofs for tropical PKE | Medium |\n| 2. Factorization Hardness | NP-hardness transfer to key recovery | Hard |\n| 3. Tropical PRGs | Pseudorandomness from semiring dynamics | Hard |\n| 4. Tropical Info Theory | Information theory native to min-plus | Medium |\n| 5. Automata Connection | Undecidability-based cryptographic hardness | Very Hard |\n\nEach direction is specific enough for a research team to pursue with clear hypotheses, proof strategies, and cross-domain connections. Together, they would establish tropical algebra as a new foundati",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "746c4988",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:40:35.503790+00:00"
   }
 ]
