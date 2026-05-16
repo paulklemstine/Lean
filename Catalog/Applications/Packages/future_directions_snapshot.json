@@ -128,22 +128,6 @@
     "timestamp": "2026-05-14T16:03:53.828694+00:00"
   },
   {
-    "id": "seed_017",
-    "title": "Tropical Arithmetic Coding: Shannon-Optimal Min-Plus Compression",
-    "description": "Prove that tropical arithmetic coding achieves Shannon entropy for min-plus sources, and construct provably optimal tropical Huffman codes with explicit efficiency bounds. Show that the min-plus convolution of source distributions yields the optimal code length function, establishing a constructive duality between tropical information theory and universal source coding.",
-    "domains": [
-      "Computation",
-      "Tropical",
-      "Cryptography"
-    ],
-    "priority_score": 0.81,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "78b212ab",
-    "timestamp": "2026-05-14T16:03:53.820235+00:00"
-  },
-  {
     "id": "seed_051",
     "title": "Alien Mathematics: What Theorems Would Non-Carbon Life Prove?",
     "description": "Construct a formal framework for alien mathematics by varying the underlying semiring from classical arithmetic to tropical, idempotent, and p-adic algebras. Prove that each semiring choice yields a distinct provability landscape, and that the theorems of idempotent alien civilizations are precisely the tropical shadow theorems of classical results. Show that the intersection of all semiring-provable statements is exactly the combinatorial core of mathematics.",
@@ -635,10 +619,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "63028e3e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51691e39",
     "timestamp": "2026-05-16T06:53:19.223183+00:00"
   },
   {
@@ -1002,6 +986,63 @@
     "source_exp_id": "19523f4c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:22:06.529211+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Target theorems",
+    "description": ":\n- Kraft inequality: `∑ q^(-ℓ(a)) ≤ 1` for q-ary prefix codes.\n- Shannon coding bound: `H_q(p) ≤ E[ℓ] < H_q(p) + 1` where `H_q` uses log base q.\n- Relaxed optimizer: `L⋆(a) = log_q(1/p(a))` achieves equality.\n\n**Strategy**: The existing proofs generalize cleanly by replacing 2 with q throughout. The key lemma `Real.rpow_logb` works for any base b > 0, b ≠ 1. The Gibbs inequality (log x ≤ x - 1) is base-independent.\n\n**Broader significance**: q-ary codes arise naturally in DNA storage (q=4), ternary computing, and multi-level cell flash memory. Formal verification of q-ary optimality enables certified codec design for these technologies.\n\n---\n\n## Direction 3: Tropical Data Processing Inequality\n\n**Goal**: Prove that processing data through a channel cannot increase the tropical coding pote",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78b212ab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:35:37.568657+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Define",
+    "description": "an encoding function `encode : List α → List Bool` and decoding function `decode : List Bool → List α`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78b212ab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:35:37.581327+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Prove",
+    "description": "`decode ∘ encode = id` (lossless compression).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78b212ab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:35:37.593533+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Extract",
+    "description": "executable code via Lean's code generation.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78b212ab",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:35:37.606186+00:00"
   },
   {
     "id": "seed_052",
