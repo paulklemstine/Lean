@@ -32,22 +32,6 @@
     "timestamp": "2026-05-14T16:03:53.818879+00:00"
   },
   {
-    "id": "seed_063",
-    "title": "Fermat's Last Theorem as Tropical Diophantine Constraint",
-    "description": "Prove that Fermat's Last Theorem admits a tropical formulation: the tropical Fermat equation x^n +_trop y^n = z^n has no primitive solutions in the min-plus semiring for n >= 3. Show that the tropical Fermat curve is a tropical hyperplane arrangement whose empty intersection with the tropical integer lattice proves the tropical case, and construct a transfer principle that recovers the classical result.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Tropical"
-    ],
-    "priority_score": 0.87,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "69b261f0",
-    "timestamp": "2026-05-14T16:03:53.858089+00:00"
-  },
-  {
     "id": "seed_034",
     "title": "Quantum Speedup via Tropical Dequantization",
     "description": "Prove that the dequantization of quantum algorithms—replacing quantum amplitude with tropical weights—preserves the speedup structure while eliminating quantum hardware requirements. Show that tropical dequantized algorithms achieve the same asymptotic complexity as their quantum counterparts for search and sampling problems, and that the min-plus interference pattern captures the essential quantum parallelism.",
@@ -404,38 +388,6 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
-    "id": "fd_0260",
-    "title": "Connect to training dynamics",
-    "description": "by showing that each grokking event corresponds to a corner critical crossing, and use the Morse inequality to lower-bound the number of such events.\n\n### Key Challenges\n- Computing the activation pattern complex of a realistic neural network is combinatorially explosive ($2^h$ possible patterns for $h$ hidden neurons).\n- The connection between topological invariants and actual training dynamics requires assumptions about the optimization algorithm.\n\n### Cross-Domain Connections\n- **Deep learning theory**: provides rigorous lower bounds on training complexity\n- **Computational topology**: applies persistent homology to neural network analysis\n- **Complexity theory**: connects the combinatorial complexity of activation patterns to computational hardness\n\n### Actionable Steps\n1. Implement ac",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:21:48.999090+00:00"
-  },
-  {
-    "id": "fd_0260",
-    "title": "Show PRG breaks naturalness:",
-    "description": "If a tropical PRG exists, then no constructive, large property can be useful — because the PRG output looks random (satisfying any large property) but is easy to compute (violating usefulness).",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63028e3e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:53:19.303662+00:00"
-  },
-  {
     "id": "fd_0232",
     "title": "Target theorems",
     "description": ":\n- Kraft inequality: `∑ q^(-ℓ(a)) ≤ 1` for q-ary prefix codes.\n- Shannon coding bound: `H_q(p) ≤ E[ℓ] < H_q(p) + 1` where `H_q` uses log base q.\n- Relaxed optimizer: `L⋆(a) = log_q(1/p(a))` achieves equality.\n\n**Strategy**: The existing proofs generalize cleanly by replacing 2 with q throughout. The key lemma `Real.rpow_logb` works for any base b > 0, b ≠ 1. The Gibbs inequality (log x ≤ x - 1) is base-independent.\n\n**Broader significance**: q-ary codes arise naturally in DNA storage (q=4), ternary computing, and multi-level cell flash memory. Formal verification of q-ary optimality enables certified codec design for these technologies.\n\n---\n\n## Direction 3: Tropical Data Processing Inequality\n\n**Goal**: Prove that processing data through a channel cannot increase the tropical coding pote",
@@ -477,10 +429,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ba38644",
     "timestamp": "2026-05-16T09:05:20.422171+00:00"
   },
   {
@@ -513,21 +465,6 @@
     "source_exp_id": "09f78c38",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:05:20.487200+00:00"
-  },
-  {
-    "id": "fd_0260",
-    "title": "Apply univariate root bound",
-    "description": ": at most $n-1$ roots, so collision probability $\\leq (n-1)/q$.\n\n### Key Lean Targets\n```lean\ndef polynomialFingerprint (a : Fin n → K) (r : K) : K :=\n  ∑ i, a i * r ^ (i : ℕ)\n\ntheorem fingerprint_collision_bound\n    {K : Type*} [Field K] [Fintype K] {n : ℕ}\n    (a b : Fin n → K) (hab : a ≠ b) :\n    Fintype.card {r : K // polynomialFingerprint a r = polynomialFingerprint b r}\n      ≤ n - 1\n```\n\n### Cross-Domain Impact\n- **Streaming algorithms**: Communication-efficient comparison of data streams.\n- **Database verification**: Checking consistency of distributed databases.\n- **Network security**: Tamper detection in transmitted data.\n\n### Estimated Effort\nLow. This is essentially the univariate Schwartz–Zippel bound applied to the difference polynomial.\n\n---\n\n## Direction 5: Finite-Field Inc",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0839f238",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:59:23.977345+00:00"
   },
   {
     "id": "fd_0263",
@@ -619,20 +556,6 @@
     "source_exp_id": "861617e9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T14:18:41.714360+00:00"
-  },
-  {
-    "id": "fd_0260",
-    "title": "Convexity",
-    "description": ": Show that each cell is the intersection of half-spaces in the Manhattan metric (tropical half-spaces).",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "861617e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:18:41.727346+00:00"
   },
   {
     "id": "fd_0262",
@@ -727,23 +650,6 @@
     "timestamp": "2026-05-16T14:39:14.329958+00:00"
   },
   {
-    "id": "fd_0251",
-    "title": "Karp's characterization",
-    "description": ": Express the limit as min_{1 ≤ m ≤ n} (A^m[i,i])/m using the observation that all cycle means are generated by simple cycles of length ≤ n.\n\n### Cross-Domain Significance\n\n- **Tropical ↔ Graph Theory**: This is the fundamental theorem connecting tropical spectral theory to graph-theoretic shortest-path problems.\n- **Tropical ↔ Control Theory**: The tropical eigenvalue governs the throughput of discrete-event systems (manufacturing lines, digital circuits).\n- **Tropical ↔ Transport**: Combined with our bridge theorem, it suggests that optimal transport costs on orbit spaces converge to tropical spectral invariants.\n\n---\n\n## Direction 4: Hungarian Algorithm Correctness\n\n### Theorem Statement\n\nThe Hungarian algorithm correctly solves the assignment problem: given an n×n cost matrix, it finds",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fc0fc4e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:39:14.359620+00:00"
-  },
-  {
     "id": "fd_0257",
     "title": "Triangle inequality",
     "description": ": For any ε > 0, pick near-optimal group elements g₁, g₂ for (μ,ν) and (ν,ρ). Then g₁·g₂ is a candidate for (μ,ρ), and the triangle inequality for W_c gives the bound.",
@@ -756,64 +662,6 @@
     "source_exp_id": "3fc0fc4e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T14:39:14.454757+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Forward inclusion",
-    "description": ": A function depending on coordinates `S` with `|S| ≤ k` lies in the span of homogeneous sectors of degree ≤ k. Prove by writing the function in the product basis and observing that each basis function has degree ≤ |S|.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b52cd807",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:56:55.933033+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Backward inclusion",
-    "description": ": A function in homogeneous degree `d ≤ k` depends on at most `d ≤ k` coordinates by definition.\n3. Key lemma: every function on `(Fin 3)^L` has a unique decomposition into homogeneous degree sectors.\n\n### Dependencies\n- `degreeLeSubmodule`, `homogeneousDegreeSubmodule` (present work)\n- Linear algebra: direct sum decomposition\n- Orthogonality of homogeneous sectors (new)\n\n---\n\n## 4. Thermodynamic Formalism Bridge\n\n### Theorem Statement (Target)\nFor the Berggren transfer operator `L_φ` with potential `φ` depending on the first `k` coordinates:\n```lean\ntheorem transfer_operator_spectral_factorization :\n    ∃ (T : BerggrenFn L →ₗ[ℝ] BerggrenFn L),\n      (∀ f, L_φ f = productNoise L ρ (T f)) ∧\n      T.eigenvalues ⊆ {eigenvalues depending only on φ|_{Fin k}}\n```\n\n### Why It Matters\nThe Ruelle–P",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "b52cd807",
-    "consumed_by_exp_id": "d032c89b",
-    "timestamp": "2026-05-16T14:56:55.954097+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Direction 2",
-    "description": "(Sum-Check) — highest impact, builds directly on existing infrastructure.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "889e6044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:28:07.508154+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Direction 1",
-    "description": "(General distance) — natural mathematical completion of current work.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "889e6044",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:28:07.526371+00:00"
   },
   {
     "id": "fd_0113",
@@ -1642,35 +1490,6 @@
     "timestamp": "2026-05-16T14:52:12.548248+00:00"
   },
   {
-    "id": "fd_0251",
-    "title": "1. Data Processing Inequality for Finite Uniform Entropy",
-    "description": "**Goal:** Formalize a real-valued or `Nat.log`-based version of the data processing inequality:\n\n```\nH(range(g ∘ f)) ≤ H(range(f))\n```\n\n**Status:** The combinatorial version `support_entropy_comp_monotone` is proved:\n`|range(g ∘ f)| ≤ |range(f)|`. The next step is to wrap this in a `Nat.log`-based entropy definition and derive the logarithmic inequality. A real-valued entropy `H(α) := Real.log (Fintype.card α)` would be more expressive and enable connections to Shannon entropy proper.\n\n**Strategy:**\n- Define `uniformEntropy (α : Type*) [Fintype α] : ℝ := Real.log (Fintype.card α)`.\n- Prove monotonicity: if `|S| ≤ |T|` then `Real.log |S| ≤ Real.log |T|` using `Real.log_le_log`.\n- Derive `uniformEntropy (Set.range (g ∘ f)) ≤ uniformEntropy (Set.range f)` from `support_entropy_comp_monotone`.",
-    "domains": [
-      "EML",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d4efa6e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:07:11.413008+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "2. Subadditivity Under Product Encodings — Strengthened Form",
-    "description": "**Goal:** Prove the full subadditivity with explicit injective encodings:\n\n```lean\ntheorem injective_prod_encoding\n    {α β : Type*} [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β] {k ℓ : ℕ}\n    (fα : α → Fin (2^k)) (fβ : β → Fin (2^ℓ))\n    (hα : Function.Injective fα) (hβ : Function.Injective fβ) :\n    ∃ f : α × β → Fin (2^(k + ℓ)), Function.Injective f\n```\n\n**Status:** `entropyBound_prod_of_entropyBound` proves the cardinality bound. The strengthened form would construct the explicit product encoding and prove its injectivity.\n\n**Strategy:** Define `f (a, b) := ⟨fα(a).val * 2^ℓ + fβ(b).val, ...⟩` and prove injectivity from the injectivity of the components. This requires careful arithmetic with `Fin` values.\n\n**Applications:** Enables formal analysis of joint coding schemes, prod",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d4efa6e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:07:11.436493+00:00"
-  },
-  {
     "id": "fd_0254",
     "title": "4. Oracle/Data Bottleneck Theorem",
     "description": "**Goal:** Formalize that deterministic oracle post-processing cannot increase support entropy. If an oracle computes `g : β → γ` and we have a deterministic query strategy `f : α → β`, then the information content of the composed output `g ∘ f` is bounded by that of the query output `f`.\n\n```lean\ntheorem oracle_bottleneck\n    {α β γ : Type*} [Fintype α] [Fintype β] [Fintype γ]\n    [DecidableEq β] [DecidableEq γ]\n    (query : α → β) (oracle : β → γ) :\n    Fintype.card (Set.range (oracle ∘ query)) ≤ Fintype.card (Set.range query)\n```\n\n**Status:** This is exactly `support_entropy_comp_monotone` applied to the oracle setting. The formalization is complete; what remains is to build the interpretive infrastructure connecting it to oracle complexity theory.\n\n**Next steps:**\n- Define an `OracleQue",
@@ -1787,5 +1606,75 @@
     "source_exp_id": "73e6ebb7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T15:15:25.424545+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "2. No-Go Theorems for Other Classical Diophantine Equations",
+    "description": "**Hypothesis:** The equal-degree collapse phenomenon generalizes beyond Fermat equations to any homogeneous Diophantine equation whose tropicalization is a standard tropical hypersurface.\n\n**Proof Strategy:**\n- Classify which homogeneous polynomials F(x₁,...,xₖ) have the property that their tropical zero set is exponent-invariant (i.e., TropZero(F_n) = TropZero(F_m) for all positive n, m).\n- Prove that all \"equal-degree\" polynomials — where every monomial has the same total degree — satisfy this collapse.\n- Show that mixed-degree tropical polynomials (e.g., x² + y³ = z⁵) can have genuinely n-dependent tropical zero sets, making them potentially more amenable to tropical transfer.\n- Apply to specific classical problems: sums of two cubes, Catalan's conjecture, ABC conjecture.\n\n**Key Formali",
+    "domains": [
+      "Tropical",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "69b261f0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:31:36.015827+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "3. Tropical Combinatorial Types as Abstract Interpretation Domains",
+    "description": "**Hypothesis:** The tropical type classification (which monomials achieve the minimum) defines an abstract interpretation domain, and our information-loss theorems correspond to precision bounds in program analysis.\n\n**Proof Strategy:**\n- Define a Galois connection between the concrete domain (integer triples with Diophantine constraints) and the abstract domain (tropical combinatorial types).\n- Prove that the abstraction function is not injective on any infinite concrete set (our Theorem C2).\n- Characterize the \"best abstract transformer\" for classical operations (addition, multiplication, exponentiation) in the tropical domain.\n- Show that the abstract transformer for exponentiation is the identity — formalizing why tropical methods cannot see the difference between x² + y² = z² and x^n ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "69b261f0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:31:36.082220+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "4. Counting Primitive Lattice Points on Tropical Hypersurfaces",
+    "description": "**Hypothesis:** The number of primitive lattice points on a tropical hypersurface in a box of side length L grows as Θ(L^{d-1}) where d is the ambient dimension, matching classical results in the geometry of numbers for hyperplane arrangements.\n\n**Proof Strategy:**\n- For the tropical Fermat hypersurface in ℤ³, count primitive points (a,a,b) with gcd(a,b) = 1 and 1 ≤ a ≤ b ≤ L. This count is Θ(L²/ζ(2)) = Θ(6L²/π²) by Euler's totient summation.\n- Formalize this asymptotic using Mathlib's analysis library and the prime number theorem or Mertens' theorem.\n- Generalize to arbitrary tropical hyperplane arrangements in ℤ^d.\n- Compare with the zero count for classical Fermat: the contrast between Θ(L²) tropical solutions and O(1) classical solutions (by FLT) quantifies the information loss.\n\n**Key",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "69b261f0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:31:36.134362+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "5. Tropical Scattering and Cryptographic Hardness",
+    "description": "**Hypothesis:** The collapse of tropical Fermat hypersurfaces implies that tropical encodings of Diophantine problems lose the computational hardness that makes classical number theory useful for cryptography. This establishes a formal barrier to tropical cryptographic protocols based on Diophantine-style hardness assumptions.\n\n**Proof Strategy:**\n- Define a \"tropical Diophantine oracle\" that, given a tropical combinatorial type, returns all integer points of that type.\n- Prove that this oracle runs in polynomial time (the tropical type determines a polyhedral cone, and lattice point enumeration in cones is polynomial in the output size).\n- Contrast with the conjectured superpolynomial hardness of finding classical Fermat solutions (which don't exist for n ≥ 3, but the search problem is NP",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "69b261f0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:31:36.153629+00:00"
   }
 ]
