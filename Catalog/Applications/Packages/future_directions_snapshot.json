@@ -874,20 +874,6 @@
     "timestamp": "2026-05-16T09:05:20.487200+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "Formalize",
-    "description": "the notion of δ-closeness to degree-d polynomials.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.500848+00:00"
-  },
-  {
     "id": "fd_0239",
     "title": "Prove",
     "description": "the Schwartz–Zippel-based distance bound: any nonzero polynomial of degree ≤ d agrees with the zero function on at most d · q^{n−1} points.",
@@ -928,20 +914,6 @@
     "source_exp_id": "09f78c38",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:05:20.549760+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Validate",
-    "description": "each direction with computational experiments (Python demos).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.566574+00:00"
   },
   {
     "id": "fd_0243",
@@ -1321,6 +1293,23 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
+    "id": "fd_0211",
+    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
+    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "d0d6476e",
+    "timestamp": "2026-05-15T09:19:36.848982+00:00"
+  },
+  {
     "id": "fd_0225",
     "title": "3. Adjunctions and Galois Connections Between Theories",
     "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
@@ -1579,21 +1568,6 @@
     "timestamp": "2026-05-16T08:33:10.489058+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Direction 3: Thermodynamic Formalism for Arithmetic Orbits",
-    "description": "**Hypothesis**: The family of discounted value functions {V*_γ}_{γ ∈ [0,1)} defines a \"free energy\" function F(γ) = Σ_n V*_γ(n) · w(n) (for suitable weights w) that exhibits phase-transition-like behavior as γ → 1⁻. The critical exponent of divergence of F(γ) encodes information about the distribution of Collatz stopping times.\n\n**Proof Strategy**:\n1. Define the partition function Z(γ) = Σ_{n ≤ N} V*_γ(n) for finite truncations.\n2. Analyze the scaling of Z(γ) as γ → 1⁻ and N → ∞.\n3. Connect the divergence rate to the tail distribution of Collatz stopping times.\n4. Compare with the known heuristic that stopping times grow as C · log(n)^α.\n\n**Cross-Domain Connections**: Draws on the thermodynamic formalism of Ruelle and Sinai for dynamical systems. Connects to statistical mechanics of disord",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d4155669",
-    "consumed_by_exp_id": "1a386325",
-    "timestamp": "2026-05-16T08:33:10.504272+00:00"
-  },
-  {
     "id": "fd_0243",
     "title": "Direction 4: Verified Termination Analysis via Bellman Ranking Functions",
     "description": "**Hypothesis**: The discounted Bellman fixed point V* can serve as a certified ranking function for program termination analysis. For arithmetic programs with piecewise-affine transitions (if-then-else with linear arithmetic), the Bellman contraction framework automatically produces a ranking function that decreases at each step by at least 1 - γ · V*(T(n)) / V*(n).\n\n**Proof Strategy**:\n1. Generalize the ArithmeticSystem structure to programs with multiple branches and guards.\n2. Prove that the Bellman fixed point is a valid ranking function (V*(n) > 0 for n ≠ target, and V*(T(n)) < V*(n) outside the target).\n3. Connect to existing termination analysis tools (e.g., AProVE, T2) by providing Lean-certified ranking functions.\n4. Develop automated Lean tactics that compute approximate ranking ",
@@ -1657,20 +1631,6 @@
     "source_exp_id": "d3c4fbdb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:33:53.813883+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Why It Matters",
-    "description": "The Fano plane is the canonical example of a matroid. The matroid exchange axiom (basis exchange) is the fundamental structural property. Proving it from tropical defect data would establish that tropical incidence configurations naturally give rise to matroids — opening the door to formal tropical matroid theory.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d3c4fbdb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:33:53.829620+00:00"
   },
   {
     "id": "fd_0243",
@@ -1776,5 +1736,97 @@
     "source_exp_id": "51691e39",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Direction 1: Transfer Operator Formalism for Arithmetic Maps",
+    "description": "**Hypothesis**: The Collatz map (and similar arithmetic maps like `ax + b` maps over the integers) admits a transfer operator `L_γ` whose spectral radius controls the free-energy growth rate, analogous to Ruelle–Perron–Frobenius theory for expanding maps.\n\n**Strategy**:\n1. Define the transfer operator on a suitable Banach space of functions on ℕ (e.g., weighted ℓ¹ or ℓ² spaces).\n2. Show that the partition function `F_N(γ)` can be written as a trace of iterates of `L_γ`.\n3. Prove that the leading eigenvalue of `L_γ` controls the exponential growth rate of `F_N(γ)` as N → ∞.\n4. Connect the spectral gap (if it exists) to mixing properties of the Collatz dynamics.\n\n**Cross-domain connections**: Ruelle transfer operators in thermodynamic formalism; Selberg zeta functions in hyperbolic geometry;",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a386325",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:16:46.779901+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Direction 2: Dirichlet Free Energy and Analytic Number Theory",
+    "description": "**Hypothesis**: The Dirichlet-weighted free energy\n\n$$F^{\\text{Dir}}(\\gamma, s) := \\sum_{n=1}^{\\infty} n^{-s} V_\\gamma(n)$$\n\nhas meromorphic continuation in both variables `(γ, s)`, and its polar structure encodes deep arithmetic information about stopping-time distributions.\n\n**Strategy**:\n1. Use the tail decomposition to write $F^{\\text{Dir}}(\\gamma, s) = \\sum_{m \\geq 0} \\gamma^m \\cdot T(s, m)$, where $T(s, m) = \\sum_{n: \\tau(n) > m} n^{-s}$.\n2. Study the Dirichlet series $T(s, m)$ for fixed m — these are \"tail Dirichlet series\" that count integers with large stopping times.\n3. Apply Tauberian theorems to extract asymptotic counting information from the singularity structure of $F^{\\text{Dir}}$.\n4. Investigate whether the abscissa of convergence of $T(s, m)$ varies with m, creating a \"ph",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a386325",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:16:46.796629+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Direction 3: Large Deviation Principles for Stopping-Time Distributions",
+    "description": "**Hypothesis**: The empirical distribution of normalized stopping times $\\tau(n)/\\log n$ (over $n \\leq N$) satisfies a large deviation principle whose rate function is the Legendre transform of the free-energy growth rate.\n\n**Strategy**:\n1. Define the moment generating function $\\Lambda(\\theta) = \\lim_{N \\to \\infty} \\frac{1}{N} \\log \\sum_{n=1}^{N} e^{\\theta \\tau(n)}$.\n2. Show that $\\Lambda(\\theta)$ is related to the free energy $F_N(\\gamma)$ via $\\gamma = e^{\\theta}$.\n3. Prove the existence of $\\Lambda$ using sub-additivity or concentration arguments.\n4. Apply the Gärtner–Ellis theorem to obtain the large deviation principle.\n5. Interpret the rate function in terms of the \"cost\" of having anomalously large or small stopping times.\n\n**Cross-domain connections**: Large deviations in statisti",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a386325",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:16:46.812655+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Direction 4: Universality Classes Across Arithmetic Systems",
+    "description": "**Hypothesis**: Different arithmetic dynamical systems (Collatz, Syracuse, Euclidean algorithm, continued fraction expansion, `ax + b` maps) exhibit the same free-energy critical exponents, grouping them into universality classes analogous to those in statistical mechanics.\n\n**Strategy**:\n1. Compute (numerically and, where possible, rigorously) the tail exponent β for each system.\n2. For the Euclidean algorithm (GCD computation), the stopping time is the number of division steps. Known results (Dixon, Knuth) give polynomial tails, predicting bounded free energy.\n3. For Collatz, numerical evidence suggests logarithmic stopping times with possible power-law corrections — determine the exact exponent.\n4. Compare with continued fraction systems where the Gauss–Kuzmin–Wirsing operator provides ",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a386325",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:16:46.828621+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Direction 5: Bellman Equations and Computational Complexity of Arithmetic Descen",
+    "description": "**Hypothesis**: The discounted value function $V_\\gamma(n)$ satisfies a Bellman-type fixed-point equation, and the computational complexity of evaluating $V_\\gamma$ is related to the arithmetic complexity of the underlying map.\n\n**Strategy**:\n1. Formalize the Bellman equation: $V_\\gamma(n) = 1 + \\gamma \\cdot V_\\gamma(T(n))$ for $n$ not at the target, and $V_\\gamma(n) = 0$ at the target.\n2. Prove existence and uniqueness of the solution via the Banach fixed-point theorem (the contraction factor is γ < 1).\n3. Relate the complexity of computing $V_\\gamma(n)$ to the stopping time $\\tau(n)$.\n4. Investigate whether the free energy $F_N(\\gamma )\\to \\infty$ as $\\gamma \\to 1^-$ can be used as a certificate of computational hardness — systems where many orbits have long stopping times should have di",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a386325",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:16:46.845693+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Implementation Notes",
+    "description": "Each direction above is designed to be pursued independently, building on the foundational decomposition and comparison theorems formalized in this project. The formalized theorems provide the essential infrastructure:\n\n- **Direction 1** extends the finitary sums to operator-theoretic objects.\n- **Direction 2** specializes the weight function to Dirichlet weights $w(n) = n^{-s}$.\n- **Direction 3** uses the free energy as a cumulant generating function.\n- **Direction 4** applies the comparison theorems across multiple systems.\n- **Direction 5** recasts the definitions in terms of fixed-point equations.\n\nThe most immediately tractable directions for further formalization are **Direction 4** (computational experiments) and **Direction 5** (the Bellman equation, which is a simple algebraic ide",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a386325",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:16:46.863154+00:00"
   }
 ]
