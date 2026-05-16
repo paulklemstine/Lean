@@ -758,61 +758,75 @@
                 ctx.setLineDash([]);
             });
 
-            // ─── Provenance edges ───
-            graphEdges.forEach(e => {
-                const a = nodeMap[e.source], b = nodeMap[e.target];
-                if (!a || !b) return;
-                if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
+            // ─── Provenance edges (visible only for currently pulsing cluster) ───
+            const edgePulseAge = time - lastEdgePulse;
+            const edgeFadeAlpha = edgePulseAge < EDGE_PULSE_DECAY
+                ? 1 - edgePulseAge / EDGE_PULSE_DECAY
+                : 0;
+            if (edgeFadeAlpha > 0 && edgePulseDomain) {
+                graphEdges.forEach(e => {
+                    const a = nodeMap[e.source], b = nodeMap[e.target];
+                    if (!a || !b) return;
+                    const aDomain = a.clusterDomain || a.primary_domain || 'Bridges';
+                    const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
+                    if (aDomain !== edgePulseDomain && bDomain !== edgePulseDomain) return;
+                    if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
 
-                const sa = worldToScreen(a.x, a.y), sb = worldToScreen(b.x, b.y);
-                const colA = nodeColor(a), colB = nodeColor(b);
-                const blendH = (colA.h + colB.h) / 2;
-                const strength = e.strength || 1.0;
-                const lineW = 1.5 + strength * 2.5;
-                const glowAlpha = 0.25 + 0.3 * strength;
-                const coreAlpha = 0.7 + 0.3 * strength;
+                    const sa = worldToScreen(a.x, a.y), sb = worldToScreen(b.x, b.y);
+                    const colA = nodeColor(a), colB = nodeColor(b);
+                    const blendH = (colA.h + colB.h) / 2;
+                    const strength = e.strength || 1.0;
+                    const lineW = 1.5 + strength * 2.5;
+                    const glowAlpha = (0.25 + 0.3 * strength) * edgeFadeAlpha;
+                    const coreAlpha = (0.7 + 0.3 * strength) * edgeFadeAlpha;
 
-                // Glow line (thick, semi-transparent)
-                ctx.beginPath();
-                ctx.moveTo(sa.x, sa.y);
-                ctx.lineTo(sb.x, sb.y);
-                ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${glowAlpha})`;
-                ctx.lineWidth = lineW * 5;
-                ctx.stroke();
+                    // Glow line
+                    ctx.beginPath();
+                    ctx.moveTo(sa.x, sa.y);
+                    ctx.lineTo(sb.x, sb.y);
+                    ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${glowAlpha})`;
+                    ctx.lineWidth = lineW * 5;
+                    ctx.stroke();
 
-                // Core line
-                ctx.beginPath();
-                ctx.moveTo(sa.x, sa.y);
-                ctx.lineTo(sb.x, sb.y);
-                const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
-                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
-                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
-                ctx.strokeStyle = edgeGrad;
-                ctx.lineWidth = lineW;
-                ctx.stroke();
-            });
+                    // Core line
+                    ctx.beginPath();
+                    ctx.moveTo(sa.x, sa.y);
+                    ctx.lineTo(sb.x, sb.y);
+                    const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
+                    edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
+                    edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
+                    ctx.strokeStyle = edgeGrad;
+                    ctx.lineWidth = lineW;
+                    ctx.stroke();
+                });
+            }
 
-            // Edge particles (provenance only)
-            edgeParticles.forEach(p => {
-                p.t += p.speed;
-                if (p.t > 1) p.t -= 1;
-                const a = nodeMap[p.edge.source], b = nodeMap[p.edge.target];
-                if (!a || !b) return;
-                if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
+            // Edge particles (only for visible edges)
+            if (edgeFadeAlpha > 0 && edgePulseDomain) {
+                edgeParticles.forEach(p => {
+                    p.t += p.speed;
+                    if (p.t > 1) p.t -= 1;
+                    const a = nodeMap[p.edge.source], b = nodeMap[p.edge.target];
+                    if (!a || !b) return;
+                    const aDomain = a.clusterDomain || a.primary_domain || 'Bridges';
+                    const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
+                    if (aDomain !== edgePulseDomain && bDomain !== edgePulseDomain) return;
+                    if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
 
-                const wx = a.x + (b.x - a.x) * p.t;
-                const wy = a.y + (b.y - a.y) * p.t;
-                const sp = worldToScreen(wx, wy);
-                const colA = nodeColor(a), colB = nodeColor(b);
-                const blendH = (colA.h + colB.h) / 2;
-                const alpha = 0.6 + 0.4 * Math.sin(p.t * Math.PI);
-                const pSize = p.size * 1.4;
+                    const wx = a.x + (b.x - a.x) * p.t;
+                    const wy = a.y + (b.y - a.y) * p.t;
+                    const sp = worldToScreen(wx, wy);
+                    const colA = nodeColor(a), colB = nodeColor(b);
+                    const blendH = (colA.h + colB.h) / 2;
+                    const alpha = (0.6 + 0.4 * Math.sin(p.t * Math.PI)) * edgeFadeAlpha;
+                    const pSize = p.size * 1.4;
 
-                ctx.beginPath();
-                ctx.arc(sp.x, sp.y, pSize * camera.zoom, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha})`;
-                ctx.fill();
-            });
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, pSize * camera.zoom, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha})`;
+                    ctx.fill();
+                });
+            }
 
             // Nodes
             graphNodes.forEach(node => {
