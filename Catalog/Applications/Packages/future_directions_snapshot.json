@@ -843,6 +843,78 @@
     "timestamp": "2026-05-16T20:36:35.029074+00:00"
   },
   {
+    "id": "fd_0250",
+    "title": "Kantorovich duality",
+    "description": "completes the primal-dual picture for transport.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2204ee24",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:43:29.926918+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Karp's theorem",
+    "description": "completes the spectral picture for tropical algebra.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2204ee24",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:43:29.945388+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Birkhoff-von Neumann",
+    "description": "bridges the polytope/convex geometry between the two.",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2204ee24",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:43:29.963957+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Wasserstein quotients",
+    "description": "extends the invariance theorem to full group-theoretic generality.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2204ee24",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:43:29.985505+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Hungarian algorithm",
+    "description": "grounds everything in verified computation.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2204ee24",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:43:30.009237+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -907,21 +979,6 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.844636+00:00"
-  },
-  {
-    "id": "fd_0180",
-    "title": "2. Hodge Decomposition for Adversarial Inconsistency Fields",
-    "description": "**Objective**: Prove a graph-theoretic Hodge decomposition theorem for the space of 1-cochains on the activation region overlap graph, decomposing any inconsistency field into a gradient (coboundary), a curl (cocycle), and a harmonic component.\n\n**Approach**: On the complete graph $K_\\iota$ with edge weights given by overlap volumes, define the combinatorial Laplacian $\\Delta = \\delta^* \\delta + \\delta \\delta^*$ where $\\delta$ is the coboundary operator. The Hodge decomposition gives:\n$$C^1(K_\\iota, \\mathbb{R}) = \\mathrm{im}(\\delta) \\oplus \\mathrm{im}(\\delta^*) \\oplus \\ker(\\Delta)$$\n\nThe gradient component is the \"fixable\" part of margin inconsistency; the harmonic component is the irreducible topological obstruction; the curl component detects local rotation in the margin field.\n\n**Key hy",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "2204ee24",
-    "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
     "id": "fd_0179",
@@ -1047,6 +1104,22 @@
     "source_exp_id": "d2a18598",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.336933+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Research Team Directive",
+    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "d2a18598",
+    "consumed_by_exp_id": "99efecb5",
+    "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
     "id": "fd_0200",
