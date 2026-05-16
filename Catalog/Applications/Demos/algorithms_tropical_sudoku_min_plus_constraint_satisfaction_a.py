@@ -1,380 +1,283 @@
 #!/usr/bin/env python3
 """
-Tropical Sudoku: Algorithms
+Algorithms for Tropical Sudoku CSP.
 
-Implements the core algorithms from the tropical Sudoku framework:
-  1. Tropical violation cost computation
-  2. Naked-single constraint propagation
-  3. Phase transition analysis
-  4. Propagation-based solver with backtracking
-
-All algorithms correspond to formally verified theorems in the Lean formalization.
+Implements:
+1. Tropical cost computation (O(n^2) per unit)
+2. Constraint propagation with convergence tracking
+3. Residual ambiguity analysis
+4. Phase transition scanning
 """
 
-from typing import Optional
-import itertools
+from typing import Dict, List, Tuple, Set, Optional
+import numpy as np
 
 
-# ─── Algorithm 1: Tropical Violation Cost ─────────────────────────────────────
+Cell = Tuple[int, int]
+Digit = int
+Assignment = Dict[Cell, Digit]
+Clue = Tuple[Cell, Digit]
+CandidateSet = Dict[Cell, Set[Digit]]
 
-def tropical_violation_cost(
-    n: int,
-    grid: list[list[int]],
-    assignment: list[list[int]]
-) -> dict[str, int]:
-    """
-    Compute the tropical violation cost of an assignment.
+ALL_CELLS: List[Cell] = [(r, c) for r in range(9) for c in range(9)]
+ALL_DIGITS: Set[Digit] = set(range(9))
 
-    The violation cost is the sum of four components:
-      - Row violations: pairs of distinct cells in the same row with the same digit
-      - Column violations: pairs of distinct cells in the same column with same digit
-      - Box violations: pairs of distinct cells in the same box with the same digit
-      - Given violations: cells where the assignment disagrees with a given clue
 
-    By Theorem A, the total cost is 0 if and only if the assignment is a
-    valid Sudoku solution.
+def get_neighbors(cell: Cell) -> List[Cell]:
+    """Return all cells sharing a row, column, or box with the given cell.
 
-    Parameters:
-        n: Box size (standard Sudoku has n=3)
-        grid: n²×n² grid with 0 for empty cells
-        assignment: n²×n² grid with all cells filled
+    Time complexity: O(1) (bounded by grid size)
+
+    Args:
+        cell: A (row, col) pair
 
     Returns:
-        Dictionary with 'row', 'col', 'box', 'given', 'total' violation counts
-
-    Complexity: O(n^8) worst case, O(n^6) with optimized pair counting
+        List of neighboring cells (excluding the cell itself)
     """
-    N = n * n
-    row_cost = 0
-    col_cost = 0
-    box_cost = 0
-    given_cost = 0
+    r, c = cell
+    nbrs = []
+    for r2 in range(9):
+        for c2 in range(9):
+            if (r2, c2) == (r, c):
+                continue
+            if r2 == r or c2 == c or (r2 // 3 == r // 3 and c2 // 3 == c // 3):
+                nbrs.append((r2, c2))
+    return nbrs
 
-    # Row violations (ordered pairs)
-    for r in range(N):
-        for c1 in range(N):
-            for c2 in range(N):
-                if c1 != c2 and assignment[r][c1] == assignment[r][c2]:
-                    row_cost += 1
-
-    # Column violations (ordered pairs)
-    for c in range(N):
-        for r1 in range(N):
-            for r2 in range(N):
-                if r1 != r2 and assignment[r1][c] == assignment[r2][c]:
-                    col_cost += 1
-
-    # Box violations (ordered pairs)
-    for r1 in range(N):
-        for c1 in range(N):
-            for r2 in range(N):
-                for c2 in range(N):
-                    if (r1, c1) != (r2, c2):
-                        if r1 // n == r2 // n and c1 // n == c2 // n:
-                            if assignment[r1][c1] == assignment[r2][c2]:
-                                box_cost += 1
-
-    # Given violations
-    for r in range(N):
-        for c in range(N):
-            if grid[r][c] != 0 and assignment[r][c] != grid[r][c]:
-                given_cost += 1
-
-    return {
-        'row': row_cost,
-        'col': col_cost,
-        'box': box_cost,
-        'given': given_cost,
-        'total': row_cost + col_cost + box_cost + given_cost
-    }
+# Precompute neighbor lists for efficiency
+NEIGHBOR_MAP: Dict[Cell, List[Cell]] = {c: get_neighbors(c) for c in ALL_CELLS}
 
 
-# ─── Algorithm 2: Constraint Propagation ─────────────────────────────────────
+class TropicalSudokuCSP:
+    """Tropical CSP encoding of Sudoku.
 
-class SudokuPropagator:
-    """
-    Constraint propagation engine for Sudoku.
+    The tropical cost of an assignment equals the number of constraint
+    violations. Zero cost ↔ valid solution (Exactness Theorem).
 
-    Implements naked-single elimination, the simplest form of constraint
-    propagation. Formally verified properties:
-      - Soundness: valid solutions are preserved (Theorem B1)
-      - Deflationary: candidates only decrease (Theorem B3)
-      - Termination: fixed point reached in ≤ n⁶ steps (Theorem B3)
-      - Contradiction detection: empty cells → unsatisfiable (Theorem C)
-
-    Pseudocode:
-        PROPAGATE(grid, state):
-          for each cell c:
-            if grid[c] has a given value v:
-              state[c] ← state[c] ∩ {v}
-            for each cell c' in same row/col/box as c:
-              if |state[c']| = 1 and c' ≠ c:
-                state[c] ← state[c] \ state[c']
-          return state
-
-    Complexity: O(n⁶) per step, O(n¹²) total for full closure
+    Attributes:
+        clues: Set of (cell, digit) constraints
     """
 
-    def __init__(self, n: int):
-        self.n = n
-        self.N = n * n
-        self.state: list[list[set[int]]] = []
-        self.history: list[int] = []
+    def __init__(self, clues: List[Clue]):
+        self.clues = clues
+        self._clue_map: Dict[Cell, Digit] = {c: d for c, d in clues}
 
-    def initialize(self, grid: list[list[int]]):
-        """Initialize with full candidate sets."""
-        N = self.N
-        self.state = [[set(range(1, N + 1)) for _ in range(N)] for _ in range(N)]
-        self.history = [self.volume()]
+    def clue_penalty(self, assignment: Assignment) -> int:
+        """Count clue violations.
 
-    def volume(self) -> int:
-        """Total candidate volume across all cells."""
-        return sum(len(s) for row in self.state for s in row)
-
-    def propagate_step(self, grid: list[list[int]]) -> bool:
+        Time: O(|clues|)
         """
-        One propagation step. Returns True if state changed.
+        return sum(1 for c, d in self.clues if assignment.get(c) != d)
 
-        This is the core algorithm: for each cell, restrict by givens
-        and eliminate singleton-determined digits from the same unit.
+    def unit_violation_count(self, assignment: Assignment) -> int:
+        """Count ordered pairs of same-unit cells with same digit.
+
+        Time: O(81 * 20) = O(1) [fixed grid]
         """
-        N = self.N
-        n = self.n
+        count = 0
+        for cell in ALL_CELLS:
+            for nbr in NEIGHBOR_MAP[cell]:
+                if assignment.get(cell) == assignment.get(nbr):
+                    count += 1
+        return count
+
+    def tropical_cost(self, assignment: Assignment) -> int:
+        """Total tropical Sudoku cost.
+
+        Time: O(|clues| + 81*20)
+        """
+        return self.clue_penalty(assignment) + self.unit_violation_count(assignment)
+
+    def is_valid(self, assignment: Assignment) -> bool:
+        """Check validity (equivalent to tropical_cost == 0 by Exactness Theorem).
+
+        Time: O(|clues| + 81*20)
+        """
+        return self.tropical_cost(assignment) == 0
+
+
+class ConstraintPropagator:
+    """Constraint propagation engine for Sudoku.
+
+    Implements naked-singles elimination as a monotone contracting
+    operator on candidate sets.
+
+    The operator satisfies:
+    - Soundness: valid solutions are preserved
+    - Antitonicity: candidate sets can only shrink
+    - Stabilization: fixed point reached in ≤ 729 steps
+
+    Attributes:
+        clues: Clue constraints
+        candidates: Current candidate sets
+        steps: Number of propagation steps performed
+        mass_history: Track total candidate mass over time
+    """
+
+    def __init__(self, clues: List[Clue]):
+        self.clues = clues
+        self._clue_map: Dict[Cell, Digit] = {c: d for c, d in clues}
+        self.candidates: CandidateSet = {}
+        self.steps: int = 0
+        self.mass_history: List[int] = []
+        self._initialize()
+
+    def _initialize(self):
+        """Set initial candidates: clue cells get singleton, others get all digits."""
+        self.candidates = {}
+        for cell in ALL_CELLS:
+            if cell in self._clue_map:
+                self.candidates[cell] = {self._clue_map[cell]}
+            else:
+                self.candidates[cell] = set(ALL_DIGITS)
+        self.mass_history = [self.total_mass()]
+
+    def total_mass(self) -> int:
+        """Total candidate mass = Σ |candidates(c)|.
+
+        Bounded by 81 * 9 = 729.
+        """
+        return sum(len(self.candidates[c]) for c in ALL_CELLS)
+
+    def residual_ambiguity(self) -> int:
+        """Residual ambiguity = total_mass - 81.
+
+        Zero residual ambiguity means every cell has exactly one candidate.
+        """
+        return self.total_mass() - 81
+
+    def propagate_step(self) -> bool:
+        """Execute one propagation step.
+
+        Algorithm:
+        1. For each cell, intersect candidates with clue restriction
+        2. Remove digits that are forced (singleton) in any neighbor
+
+        Returns:
+            True if candidates changed, False if fixed point reached
+
+        Time: O(81 * 20) per step
+        Space: O(81 * 9)
+        """
+        new_candidates: CandidateSet = {}
         changed = False
-        new_state = [[set(s) for s in row] for row in self.state]
 
-        for r in range(N):
-            for c in range(N):
-                old = new_state[r][c]
+        for cell in ALL_CELLS:
+            cands = set(self.candidates[cell])
 
-                # Given constraint
-                if grid[r][c] != 0:
-                    new_state[r][c] &= {grid[r][c]}
+            # Clue restriction
+            if cell in self._clue_map:
+                cands &= {self._clue_map[cell]}
 
-                # Singleton elimination — row
-                for c2 in range(N):
-                    if c2 != c and len(self.state[r][c2]) == 1:
-                        new_state[r][c] -= self.state[r][c2]
+            # Naked singles elimination
+            for nbr in NEIGHBOR_MAP[cell]:
+                if len(self.candidates[nbr]) == 1:
+                    cands -= self.candidates[nbr]
 
-                # Singleton elimination — column
-                for r2 in range(N):
-                    if r2 != r and len(self.state[r2][c]) == 1:
-                        new_state[r][c] -= self.state[r2][c]
+            new_candidates[cell] = cands
+            if cands != self.candidates[cell]:
+                changed = True
 
-                # Singleton elimination — box
-                br, bc = (r // n) * n, (c // n) * n
-                for dr in range(n):
-                    for dc in range(n):
-                        r2, c2 = br + dr, bc + dc
-                        if (r2, c2) != (r, c) and len(self.state[r2][c2]) == 1:
-                            new_state[r][c] -= self.state[r2][c2]
-
-                if new_state[r][c] != old:
-                    changed = True
-
-        self.state = new_state
-        self.history.append(self.volume())
+        self.candidates = new_candidates
+        self.steps += 1
+        self.mass_history.append(self.total_mass())
         return changed
 
-    def propagate_to_closure(self, grid: list[list[int]], max_steps: int = 10000) -> int:
-        """
-        Iterate propagation to fixed point. Returns number of steps.
+    def propagate_until_stable(self, max_steps: int = 729) -> int:
+        """Run propagation until fixed point.
 
-        By Theorem B3, this always terminates in at most n⁶ steps.
-        """
-        self.initialize(grid)
-        for step in range(1, max_steps + 1):
-            if not self.propagate_step(grid):
-                return step
-        return max_steps
+        Convergence guaranteed in ≤ 729 steps by the Stabilization Theorem:
+        each non-trivial step strictly decreases the total candidate mass,
+        which is bounded by 729.
 
-    def is_contradictory(self) -> bool:
-        """Check if any cell has empty candidate set."""
-        return any(len(s) == 0 for row in self.state for s in row)
+        Args:
+            max_steps: Maximum iterations (729 suffices by theorem)
+
+        Returns:
+            Number of steps to reach fixed point
+
+        Time: O(729 * 81 * 20) = O(1) [fixed grid]
+        """
+        for _ in range(max_steps):
+            if not self.propagate_step():
+                break
+        return self.steps
 
     def is_solved(self) -> bool:
-        """Check if all cells are determined (singleton candidates)."""
-        return all(len(s) == 1 for row in self.state for s in row)
+        """Check if propagation has determined all cells."""
+        return all(len(self.candidates[c]) == 1 for c in ALL_CELLS)
 
-    def get_solution(self) -> Optional[list[list[int]]]:
+    def has_contradiction(self) -> bool:
+        """Check if any cell has empty candidate set."""
+        return any(len(self.candidates[c]) == 0 for c in ALL_CELLS)
+
+    def get_solution(self) -> Optional[Assignment]:
         """Extract solution if fully determined."""
         if not self.is_solved():
             return None
-        return [[list(self.state[r][c])[0] for c in range(self.N)]
-                for r in range(self.N)]
-
-    def undecided_cells(self) -> list[tuple[int, int, set[int]]]:
-        """Return list of (row, col, candidates) for undecided cells."""
-        result = []
-        for r in range(self.N):
-            for c in range(self.N):
-                if len(self.state[r][c]) > 1:
-                    result.append((r, c, set(self.state[r][c])))
-        return result
+        return {c: next(iter(self.candidates[c])) for c in ALL_CELLS}
 
 
-# ─── Algorithm 3: Propagation-Based Solver with Backtracking ─────────────────
+def phase_transition_scan(
+    solution: List[List[int]],
+    n_trials: int = 50,
+    seed: int = 42
+) -> Dict[int, Dict[str, float]]:
+    """Scan residual ambiguity across clue densities.
 
-def solve_sudoku(n: int, grid: list[list[int]]) -> Optional[list[list[int]]]:
-    """
-    Solve a Sudoku puzzle using propagation + backtracking.
+    For each clue count k from 0 to 81, randomly select k cells
+    as clues (using the given solution), run propagation, and
+    record the residual ambiguity.
 
-    Strategy:
-      1. Propagate to closure (Theorem B1 guarantees soundness)
-      2. If contradictory → unsatisfiable (Theorem C)
-      3. If solved → return solution
-      4. Otherwise, pick cell with fewest candidates, branch
+    This demonstrates the phase transition: residual ambiguity
+    peaks at intermediate clue density, corresponding to the
+    tropical feasibility boundary.
 
-    This is a complete solver: it finds a solution if one exists.
-
-    Parameters:
-        n: Box size
-        grid: Puzzle grid (0 for empty)
+    Args:
+        solution: 9x9 grid of digits (1-9)
+        n_trials: Number of random trials per density
+        seed: Random seed
 
     Returns:
-        Solution grid, or None if unsatisfiable
+        Dictionary mapping clue count to statistics
+        {k: {"mean_residual": ..., "mean_steps": ..., "solved_frac": ...}}
+
+    Time: O(82 * n_trials * 729 * 81 * 20)
     """
-    N = n * n
-    prop = SudokuPropagator(n)
-    prop.propagate_to_closure(grid)
+    rng = np.random.RandomState(seed)
+    results = {}
 
-    if prop.is_contradictory():
-        return None
-
-    if prop.is_solved():
-        return prop.get_solution()
-
-    # Find cell with fewest candidates > 1 (MRV heuristic)
-    undecided = prop.undecided_cells()
-    undecided.sort(key=lambda x: len(x[2]))
-    r, c, candidates = undecided[0]
-
-    # Branch on each candidate
-    for d in sorted(candidates):
-        new_grid = [row[:] for row in grid]
-        new_grid[r][c] = d
-        result = solve_sudoku(n, new_grid)
-        if result is not None:
-            return result
-
-    return None
-
-
-# ─── Algorithm 4: Phase Transition Analysis ──────────────────────────────────
-
-def analyze_phase_transition(
-    n: int,
-    solution: list[list[int]],
-    num_trials: int = 50,
-    clue_counts: Optional[list[int]] = None
-) -> dict[str, list]:
-    """
-    Analyze the phase transition in propagation effectiveness as a function
-    of clue density.
-
-    For each clue count k, randomly select k cells to reveal from the given
-    solution, propagate to closure, and measure:
-      - Average residual volume (candidates remaining)
-      - Average number of undecided cells
-      - Proportion of instances fully solved by propagation
-      - Proportion of instances with contradiction detected
-
-    By Theorem D, residual volume is monotonically non-increasing in k.
-
-    Parameters:
-        n: Box size
-        solution: A complete valid Sudoku grid
-        num_trials: Number of random trials per clue count
-        clue_counts: List of clue counts to test
-
-    Returns:
-        Dictionary with arrays for each metric
-    """
-    import random
-
-    N = n * n
-    cells = [(r, c) for r in range(N) for c in range(N)]
-
-    if clue_counts is None:
-        clue_counts = list(range(0, N * N + 1, max(1, N * N // 30)))
-        if N * N not in clue_counts:
-            clue_counts.append(N * N)
-
-    results = {
-        'clue_counts': clue_counts,
-        'avg_volume': [],
-        'avg_undecided': [],
-        'solved_rate': [],
-        'steps_to_closure': [],
-    }
-
-    prop = SudokuPropagator(n)
-
-    for k in clue_counts:
-        total_vol = 0
-        total_und = 0
+    for n_clues in range(0, 82):
+        residuals = []
+        steps_list = []
         solved_count = 0
-        total_steps = 0
 
-        for trial in range(num_trials):
-            random.seed(trial * 10000 + k)
-            order = list(cells)
-            random.shuffle(order)
+        for _ in range(n_trials):
+            cells = list(ALL_CELLS)
+            rng.shuffle(cells)
+            clues = [(cells[i], solution[cells[i][0]][cells[i][1]] - 1)
+                     for i in range(n_clues)]
 
-            grid = [[0] * N for _ in range(N)]
-            for i in range(min(k, N * N)):
-                r, c = order[i]
-                grid[r][c] = solution[r][c]
+            prop = ConstraintPropagator(clues)
+            prop.propagate_until_stable()
 
-            steps = prop.propagate_to_closure(grid)
-            total_vol += prop.volume()
-            total_und += len(prop.undecided_cells())
-            total_steps += steps
+            residuals.append(prop.residual_ambiguity())
+            steps_list.append(prop.steps)
             if prop.is_solved():
                 solved_count += 1
 
-        results['avg_volume'].append(total_vol / num_trials)
-        results['avg_undecided'].append(total_und / num_trials)
-        results['solved_rate'].append(solved_count / num_trials)
-        results['steps_to_closure'].append(total_steps / num_trials)
+        results[n_clues] = {
+            "mean_residual": float(np.mean(residuals)),
+            "std_residual": float(np.std(residuals)),
+            "mean_steps": float(np.mean(steps_list)),
+            "solved_frac": solved_count / n_trials,
+        }
 
     return results
 
 
-# ─── Main ─────────────────────────────────────────────────────────────────────
-
 if __name__ == "__main__":
-    print("Tropical Sudoku — Algorithm Demonstrations\n")
-
-    # Demo 1: Solve a puzzle
-    puzzle = [
-        [5, 3, 0,  0, 7, 0,  0, 0, 0],
-        [6, 0, 0,  1, 9, 5,  0, 0, 0],
-        [0, 9, 8,  0, 0, 0,  0, 6, 0],
-        [8, 0, 0,  0, 6, 0,  0, 0, 3],
-        [4, 0, 0,  8, 0, 3,  0, 0, 1],
-        [7, 0, 0,  0, 2, 0,  0, 0, 6],
-        [0, 6, 0,  0, 0, 0,  2, 8, 0],
-        [0, 0, 0,  4, 1, 9,  0, 0, 5],
-        [0, 0, 0,  0, 8, 0,  0, 7, 9],
-    ]
-
-    print("Solving puzzle with propagation + backtracking...")
-    sol = solve_sudoku(3, puzzle)
-    if sol:
-        print("Solution found:")
-        for row in sol:
-            print("  ", row)
-
-        # Verify with tropical cost
-        cost = tropical_violation_cost(3, puzzle, sol)
-        print(f"\nTropical violation cost: {cost['total']}")
-        print(f"  (Theorem A: cost=0 confirms valid solution)")
-    else:
-        print("No solution exists.")
-
-    # Demo 2: Phase transition analysis
-    print("\n\nPhase Transition Analysis:")
+    # Quick validation
     solution = [
         [5, 3, 4, 6, 7, 8, 9, 1, 2],
         [6, 7, 2, 1, 9, 5, 3, 4, 8],
@@ -387,10 +290,17 @@ if __name__ == "__main__":
         [3, 4, 5, 2, 8, 6, 1, 7, 9],
     ]
 
-    results = analyze_phase_transition(3, solution, num_trials=20)
-    print(f"  {'Clues':>6} | {'Avg Vol':>10} | {'Undecided':>10} | {'Solved':>8}")
-    print("  " + "-" * 45)
-    for i, k in enumerate(results['clue_counts']):
-        print(f"  {k:>6} | {results['avg_volume'][i]:>10.1f} | "
-              f"{results['avg_undecided'][i]:>10.1f} | "
-              f"{results['solved_rate'][i]:>7.0%}")
+    # Test tropical cost
+    assignment = {(r, c): solution[r][c] - 1 for r in range(9) for c in range(9)}
+    csp = TropicalSudokuCSP([])
+    assert csp.tropical_cost(assignment) == 0, "Valid solution should have zero cost"
+    assert csp.is_valid(assignment), "Should be valid"
+
+    # Test propagation with many clues
+    many_clues = [(c, assignment[c]) for c in ALL_CELLS[:40]]
+    prop = ConstraintPropagator(many_clues)
+    prop.propagate_until_stable()
+    print(f"Propagation with 40 clues: mass={prop.total_mass()}, "
+          f"steps={prop.steps}, solved={prop.is_solved()}")
+
+    print("All algorithm tests passed.")

@@ -421,6 +421,20 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
+    "id": "fd_0219",
+    "title": "Finite-dimensional spectral theorem",
+    "description": ": Eigenvalue decomposition for real symmetric matrices on `Fin n`.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9093673a",
+    "consumed_by_exp_id": "9cb1f586",
+    "timestamp": "2026-05-15T20:42:44.426054+00:00"
+  },
+  {
     "id": "fd_0256",
     "title": "Establish the level estimate",
     "description": "Show $c^* \\ge c$ using the sublevel set separation hypothesis.\n\n### Key Challenges\n- The deformation argument requires constructing explicit continuous deformations of paths in the tropical setting, which is complicated by the piecewise-linear structure.\n- The minimax principle needs compactness arguments that may require restricting to bounded domains.\n\n### Cross-Domain Connections\n- **Variational methods**: tropical analogue of the Ambrosetti-Rabinowitz theorem\n- **Optimization**: provides certified barriers for global optimization of piecewise-linear functions\n- **Statistical physics**: mountain passes correspond to transition states between metastable phases\n\n### Actionable Steps\n1. Formalize the minimax principle for continuous functions on compact sets in Lean.\n2. Prove the mountain ",
@@ -1174,21 +1188,6 @@
     "timestamp": "2026-05-16T02:14:30.267025+00:00"
   },
   {
-    "id": "fd_0227",
-    "title": "5. Theorem Embeddings from Syntax: Automatic TheorySpec Extraction",
-    "description": "**Hypothesis:** Many theorem statements in the catalog have the implicit structure of a `TheorySpec` — they assert a lower bound on some quantity for all elements satisfying some predicate. A metaprogram could automatically extract `TheorySpec` instances from theorem signatures by pattern-matching on the syntactic form `∀ x, P x → n ≤ f x`.\n\n**Proof Strategy:**\n- Write a `MetaM` procedure that inspects a theorem's type.\n- Pattern-match on universal quantification, implication with a predicate, and inequality with a constant.\n- Extract `α`, `Witness`, `inv`, `lowerBound`, and wrap the theorem's proof as `sound`.\n- Automatically populate the bridge graph.\n\n**Cross-Domain Connections:** This is a form of mathematical information extraction, analogous to knowledge extraction from natural langu",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "41f0f930",
-    "timestamp": "2026-05-16T02:14:30.279911+00:00"
-  },
-  {
     "id": "fd_0218",
     "title": "1. Tropical Expanders and Extractor-Quality Orbit Families",
     "description": "**Hypothesis:** There exist explicit families of tropical matrices whose orbits satisfy the conditional extraction property with near-optimal parameters (ε ≈ 2^{-Ω(n)}).\n\n**Approach:**\n- Define a notion of *tropical expander*: a finite set S of n×n tropical matrices such that for any subset A ⊆ S with |A| ≥ δ|S|, the set {A·G : G ∈ S} has significantly more distinct elements than A.\n- Prove that tropical expansion implies bounded prefix fibers, which by our `conditional_minEntropy_from_fiber` theorem implies conditional extraction.\n- Construct explicit tropical expanders using Cayley graphs of matrix groups over the tropical semiring, analogous to classical expander constructions from SL(2, F_p).\n\n**Key Lemma to Formalize:**\n> If S is a (K, ε)-tropical expander, then `maxPrefixFiberCard S ",
@@ -1511,5 +1510,109 @@
     "source_exp_id": "5e0e0def",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:47:38.698983+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Direction 1: Envelope Canonicalization and Exact Minimization",
+    "description": "**Hypothesis:** The *envelope-canonical form* (monomials that achieve the pointwise minimum at some n ∈ ℕ) gives an exact characterization of minimal weighted automaton states.\n\n**Background:** Our formalized Pareto-canonical form (NatCanonical) preserves the language but may retain redundant monomials — those that never achieve the minimum but are not pointwise dominated by any single competitor. The envelope-canonical form removes exactly the semantically redundant monomials.\n\n**Proof Strategy:**\n1. Define `EnvelopeCanonical p = p.filter (fun m => ∃ n : ℕ, ∀ m' ∈ p, monoEval m n ≤ monoEval m' n)`.\n2. Show `EnvelopeCanonical p ⊆ NatCanonical p` (envelope-essential implies Pareto-optimal).\n3. Prove each envelope-canonical monomial is the *unique* minimizer at some n (use distinct slopes an",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41f0f930",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:12:11.670833+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Direction 2: Multivariate Generalization via Tropical Polyhedral Complexes",
+    "description": "**Hypothesis:** For multivariate tropical polynomials p(x₁,...,xₖ) = min_i(cᵢ + Σⱼ eᵢⱼ·xⱼ), the canonical monomials correspond to cells of the tropical hypersurface, and minimization of the associated k-letter weighted automaton corresponds to simplification of the polyhedral complex.\n\n**Proof Strategy:**\n1. Define multivariate tropical monomials as (exponent vector ∈ ℕᵏ, coefficient ∈ ℝ).\n2. Generalize NatDominates to componentwise domination of exponent vectors.\n3. Show canonical form preserves evaluation on ℕᵏ.\n4. For the automata connection, define k-letter tropical WFAs and show state minimization corresponds to lower-hull simplification.\n5. Connect to Newton polytope theory: canonical monomials = vertices of the Newton polytope in appropriate dual space.\n\n**Cross-Domain Connections:*",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41f0f930",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:12:11.685782+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Direction 3: Certified Algorithm Extraction with Complexity Bounds",
+    "description": "**Hypothesis:** The canonicalization procedure can be extracted as a verified O(n²) algorithm (where n = |p|), with formal guarantees of correctness and optimality.\n\n**Proof Strategy:**\n1. Implement a sorting-based canonicalization: sort monomials by exponent, then scan for Pareto-dominated elements.\n2. Formalize the O(n log n) sorting step and O(n) scanning step.\n3. Prove the extracted algorithm produces exactly `NatCanonical p`.\n4. For envelope canonicalization, formalize the O(n log n) convex-hull-based algorithm.\n5. Benchmark against naive O(n²) pairwise comparison.\n\n**Applications:**\n- **Compiler optimization:** Certified simplification of tropical expressions in shortest-path and scheduling compilers.\n- **Hardware verification:** Formally verified min-plus matrix operations in networ",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41f0f930",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:12:11.701908+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Direction 4: Extension to Idempotent Semifields and Max-Plus Algebra",
+    "description": "**Hypothesis:** All results extend to arbitrary idempotent semifields (R, ⊕, ⊗) where ⊕ is idempotent (a ⊕ a = a), including the max-plus algebra and the (min,max) semiring.\n\n**Proof Strategy:**\n1. Abstract the key properties: total order on the coefficient domain, idempotent addition (min or max), and distributivity.\n2. Reformulate dominance in terms of the semifield order.\n3. Show canonical form preservation holds generically for idempotent semifields.\n4. Instantiate for:\n   - Max-plus algebra (scheduling, timed automata)\n   - Min-max algebra (fuzzy logic, game theory)\n   - Tropical extensions of finite fields (coding theory)\n\n**Cross-Domain Connections:**\n- **Timed automata:** Max-plus canonical forms for timed system verification.\n- **Game theory:** Min-max tropical polynomials for zer",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41f0f930",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:12:11.717096+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Direction 5: Bridge to Tropical Neural Network Pruning and Interpretability",
+    "description": "**Hypothesis:** Tropical polynomial canonicalization provides a principled pruning strategy for tropical neural networks (ReLU networks in the tropical limit): canonical monomials correspond to essential decision templates, and removing non-canonical monomials provably preserves network behavior.\n\n**Proof Strategy:**\n1. Formalize the connection between ReLU networks and tropical polynomials (each neuron computes max/min of affine functions).\n2. Show that a trained ReLU network's decision function can be expressed as a tropical polynomial.\n3. Apply canonicalization to remove redundant \"neurons\" (dominated monomials).\n4. Prove the pruned network computes the same function on the training domain.\n5. Quantify the compression ratio: |NatCanonical| / |p| as a measure of network redundancy.\n\n**Ap",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41f0f930",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:12:11.734256+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Research Team Organization",
+    "description": "Each direction can be pursued independently by a small team (2–3 researchers). We recommend:\n\n- **Direction 1** as the immediate next step (builds directly on current formalization).\n- **Directions 3 and 4** as parallel efforts (algorithm extraction and algebraic generalization).\n- **Directions 2 and 5** as longer-term goals requiring more mathematical infrastructure.\n\nAll directions share the common infrastructure of tropical polynomial evaluation and dominance, which is now formally verified.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41f0f930",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:12:11.751217+00:00"
   }
 ]
