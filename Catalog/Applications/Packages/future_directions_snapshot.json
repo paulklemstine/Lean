@@ -16,22 +16,6 @@
     "timestamp": "2026-05-14T16:03:53.810233+00:00"
   },
   {
-    "id": "seed_016",
-    "title": "Kolmogorov Complexity Closure and Idempotent Compression Duality",
-    "description": "Prove that the idempotent closure of a semiring yields optimal lossless compression ratios, and establish a duality between Kolmogorov complexity and closure operators that gives computable upper bounds on minimal description length. Show that the tropical semiring's idempotent property induces a canonical compression scheme whose fixed points are exactly the Kolmogorov-random strings.",
-    "domains": [
-      "Computation",
-      "EML",
-      "Tropical"
-    ],
-    "priority_score": 0.88,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "73e6ebb7",
-    "timestamp": "2026-05-14T16:03:53.819748+00:00"
-  },
-  {
     "id": "seed_014",
     "title": "Homomorphic Encryption over Tropical Semirings",
     "description": "Construct a fully homomorphic encryption scheme over min-plus arithmetic where addition and multiplication of ciphertexts correspond to tropical operations on plaintexts. Prove correctness and security against chosen-plaintext attacks, showing that the idempotent property of tropical addition enables bootstrapping without the noise growth that plagues classical FHE.",
@@ -264,6 +248,20 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "04765070",
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "9e6bf625",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
     "id": "fd_0197",
@@ -1708,5 +1706,91 @@
     "source_exp_id": "7d4efa6e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T15:07:11.498731+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "1. Compare Closure-Incompressibility with Bounded Kolmogorov Complexity on Finit",
+    "description": "**Hypothesis**: On finite string spaces `{0,1}^n`, closure-incompressibility relative to a sufficiently rich family of closure operators approximates bounded Kolmogorov complexity `C_t(x)` for polynomial time bounds `t`.\n\n**Target Theorems**:\n- For every polynomial-time computable closure operator `cl` on `{0,1}^n`, show that `len(cl x) ≤ C_t(x) + O(1)` for an appropriate time bound `t`.\n- Conversely, construct a family of closure operators whose fixed-point density matches the density of `t`-incompressible strings.\n- Prove a finite analog: on `{0,1}^n`, the fraction of closure-incompressible strings converges to the fraction of Kolmogorov-random strings as the closure family becomes sufficiently expressive.\n\n**Candidate Definitions**:\n- `BoundedKolmogorov (t : ℕ → ℕ) (x : List Bool) : ℕ` ",
+    "domains": [
+      "EML",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "73e6ebb7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:15:25.355627+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "2. Categorical Theory of Compression Closures as Idempotent Monads",
+    "description": "**Hypothesis**: The closure-compression duality lifts to a categorical framework where compression closures are idempotent monads (equivalently, idempotent comonads via adjunction), and the MDL functional is a natural transformation.\n\n**Target Theorems**:\n- Define `CompressionMonad` as an idempotent monad on a category of typed data with length functionals.\n- Prove that the Kleisli category of a compression monad is equivalent to the category of closure-fixed objects (incompressible data).\n- Show that monad morphisms induce MDL inequalities: if `M₁ → M₂` is a monad map, then `mdl_M₂(x) ≤ mdl_M₁(x)`.\n- Prove that the tropical normalization monad is initial among translation-invariant compression monads on ℝⁿ.\n\n**Candidate Definitions**:\n- `CompressionMonad (C : Type* → Type*) extends Monad ",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "73e6ebb7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:15:25.372696+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "3. Connect Tropical Normalization to Rate-Distortion Theory and Entropy Projecti",
+    "description": "**Hypothesis**: Tropical normalization on probability simplices (after logarithmic transformation) corresponds to conditional entropy minimization, establishing a formal bridge between min-plus algebra and Shannon theory.\n\n**Target Theorems**:\n- Define `logTransform : Δⁿ → ℝⁿ` mapping probability vectors to negative log-probability vectors.\n- Show that tropical normalization of `logTransform(p)` corresponds to normalizing the conditional probability `p(·|A)` for the maximum-probability event.\n- Prove that the coordSum complexity surrogate, composed with logTransform, equals the Rényi entropy of order ∞ minus a correction term.\n- Establish that the fixed points of tropical normalization on the log-simplex are exactly the maximum-entropy distributions subject to the constraint that some coor",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "73e6ebb7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:15:25.389766+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "4. Formalize Abstract Interpretation as an MDL Machine for Program States",
+    "description": "**Hypothesis**: Every Galois connection in abstract interpretation induces a closure-compression scheme on program states, where the abstract domain is the set of incompressible (fixed-point) states and the abstraction function is the compression operator.\n\n**Target Theorems**:\n- Given a Galois connection `(α, γ) : Abstract ⇄ Concrete`, show that `γ ∘ α` is an idempotent closure satisfying all hypotheses of `canonical_representative_shortest_in_closure_class`.\n- Define `programComplexity : ConcreteState → ℕ` as the number of distinct variables/heap cells needed to represent a state.\n- Prove that abstract interpretation computes the MDL within the abstraction-equivalence class.\n- Show that the fixed points of the abstraction closure are exactly the \"maximally abstract\" states — those carryi",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "73e6ebb7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:15:25.406558+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "5. Closure Mutual Information and Closure Sufficient Statistics",
+    "description": "**Hypothesis**: Given two closure operators `cl₁` and `cl₂` on the same space, one can define a \"closure mutual information\" measuring how much compression by `cl₁` reveals about the closure class of `cl₂`, and prove it satisfies chain-rule-like identities.\n\n**Target Theorems**:\n- Define `closureMI (cl₁ cl₂ : α → α) (len : α → ℕ) : ℕ` measuring the reduction in `cl₂`-MDL achieved by first applying `cl₁`.\n- Prove subadditivity: `closureMI cl₁ cl₂ ≤ deficiency cl₁ + deficiency cl₂` where `deficiency cl x = len x - len (cl x)`.\n- Define `closureSufficient (cl₁ cl₂ : α → α) : Prop` as: `cl₁` is sufficient for `cl₂` if `cl₂` factors through `cl₁`'s fixed points.\n- Prove that closure sufficiency implies zero closure mutual information loss.\n- Show that the lattice of closure operators, ordered b",
+    "domains": [
+      "Cryptography",
+      "EML",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "73e6ebb7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:15:25.424545+00:00"
   }
 ]
