@@ -1,21 +1,5 @@
 [
   {
-    "id": "seed_069",
-    "title": "Research Depth Guarantees via Proof-Theoretic Ordinal Analysis",
-    "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research, and construct a Lean 4 formalization that computes the proof-theoretic ordinal of each Aether output. Show that results exceeding a threshold ordinal depth are guaranteed to be non-trivial, and prove that the ordinal depth of a research cycle bounds the conceptual innovation of its output. Establish that cycles with depth below the threshold can be automatically rejected or escalated for deeper investigation.",
-    "domains": [
-      "Meta",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.96,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "66470415",
-    "timestamp": "2026-05-14T16:03:53.865300+00:00"
-  },
-  {
     "id": "seed_001",
     "title": "P vs NP: Tropical Semiring Barrier",
     "description": "Prove that tropical semiring morphisms cannot polynomially simulate Boolean circuit satisfiability, establishing a structural barrier via min-plus idempotent completions that separates P from NP. Construct a family of Boolean formulas whose tropical evaluation requires super-polynomial min-plus circuit size, and prove that the idempotent closure of the tropical semiring yields a natural complexity class incomparable with P.",
@@ -469,6 +453,20 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "7998d3b1",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
     "id": "fd_0197",
@@ -954,6 +952,76 @@
     "source_exp_id": "97c6ba31",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T02:18:15.276474+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Week 1",
+    "description": ": Formalize definitions and state key lemmas with `sorry`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "66470415",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:46:33.699126+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Week 2",
+    "description": ": Prove helper lemmas and verify the skeleton compiles.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "66470415",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:46:33.712324+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Week 3",
+    "description": ": Complete main proofs; run computational experiments.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "66470415",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:46:33.728699+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Week 4",
+    "description": ": Write up results; identify new directions opened.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "66470415",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:46:33.741290+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Iterate",
+    "description": ": Feed new results back into the framework; update governance thresholds.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "66470415",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:46:33.755352+00:00"
   },
   {
     "id": "seed_052",
