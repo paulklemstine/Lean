@@ -564,21 +564,6 @@
     "timestamp": "2026-05-16T11:26:32.150524+00:00"
   },
   {
-    "id": "fd_0252",
-    "title": "Tightness",
-    "description": ": The polynomial $\\prod_{i=1}^{d} (x_1 - a_i)$ for distinct $a_i$ achieves exactly $d \\cdot q^{n-1}$ zeros.\n\n### Key Lean Targets\n```lean\ndef ReedMullerCode (d n : ℕ) (K : Type*) [Field K] [Fintype K] :=\n  Set.range (fun (f : {p : MvPolynomial (Fin n) K // p.totalDegree ≤ d}) =>\n    fun (x : Fin n → K) => MvPolynomial.eval x f.val)\n\ntheorem reed_muller_min_distance_lower_bound\n    {K : Type*} [Field K] [Fintype K] {d n : ℕ}\n    (hd : d < Fintype.card K) :\n    ∀ c ∈ ReedMullerCode d n K, c ≠ 0 →\n      Fintype.card {x : Fin n → K // c x ≠ 0} ≥ (Fintype.card K - d) * (Fintype.card K) ^ (n - 1)\n```\n\n### Cross-Domain Impact\n- **Coding theory**: Certified distance bounds for Reed–Muller codes used in 5G communications and flash memory.\n- **List decoding**: Foundation for Sudan–Guruswami list-dec",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0839f238",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:59:23.831940+00:00"
-  },
-  {
     "id": "fd_0260",
     "title": "Apply univariate root bound",
     "description": ": at most $n-1$ roots, so collision probability $\\leq (n-1)/q$.\n\n### Key Lean Targets\n```lean\ndef polynomialFingerprint (a : Fin n → K) (r : K) : K :=\n  ∑ i, a i * r ^ (i : ℕ)\n\ntheorem fingerprint_collision_bound\n    {K : Type*} [Field K] [Fintype K] {n : ℕ}\n    (a b : Fin n → K) (hab : a ≠ b) :\n    Fintype.card {r : K // polynomialFingerprint a r = polynomialFingerprint b r}\n      ≤ n - 1\n```\n\n### Cross-Domain Impact\n- **Streaming algorithms**: Communication-efficient comparison of data streams.\n- **Database verification**: Checking consistency of distributed databases.\n- **Network security**: Tamper detection in transmitted data.\n\n### Estimated Effort\nLow. This is essentially the univariate Schwartz–Zippel bound applied to the difference polynomial.\n\n---\n\n## Direction 5: Finite-Field Inc",
@@ -684,22 +669,6 @@
     "timestamp": "2026-05-16T13:37:24.107831+00:00"
   },
   {
-    "id": "fd_0252",
-    "title": "Connection to information-theoretic bounds",
-    "description": ": Relate the residual ambiguity to the logarithm of the number of valid completions (a tropical entropy).\n\n### Proof Strategy\nThe uniqueness direction follows from soundness: if propagation yields {d} for cell c, every valid solution A must have A(c) = d (by soundness). If all cells are determined, A is uniquely determined.\n\n### Cross-Domain Impact\nThis connects to the problem of minimal Sudoku clue sets (known to be 17 for 9×9) and more generally to the information content of partial observations in structured combinatorial systems.\n\n---\n\n## Direction 5: Parameterized Sudoku and Asymptotic Analysis\n\n### Hypothesis\nThe tropical framework extends naturally to n²×n² Sudoku grids, where the total candidate mass is n⁴ × n² = n⁶ and the stabilization bound becomes n⁶. The phase transition in cl",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.253935+00:00"
-  },
-  {
     "id": "fd_0243",
     "title": "Lower bound on factor rank",
     "description": ": Use the rectangle covering argument. The support of the Hamming distance matrix (entries ≤ threshold t) may require exponentially many rectangles.",
@@ -727,54 +696,6 @@
     "source_exp_id": "edf517ad",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:42:08.412136+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Tropical formulation",
-    "description": ": Take $-\\log$ of reliability to convert products to sums. The problem becomes shortest-path in a modified tropical semiring where edge costs include a risk penalty.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "861617e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:18:41.608395+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "MST base",
-    "description": ": Show that the reliability-optimal network contains the MST as a subgraph, with additional edges providing redundancy.\n\n### Cross-Domain Connections\n- **Network reliability**: Classical reliability polynomial of graphs\n- **Robust optimization**: Worst-case network design under uncertain failures\n- **Fault-tolerant distributed systems**: Quorum-based replication in distributed databases\n\n### Concrete Next Step\nDefine `ReliabilityNetwork` with edge failure probabilities and prove that the MST is optimal among trees even under stochastic costs (since expected cost of a tree path is a sum of expected edge costs, and MST minimizes total edge cost).\n\n---\n\n## Direction 3: Multi-Layer Dimension Networks and Product Semiring Routing\n\n### Hypothesis\nFor $L$ compression layers with factors $k_1 < k_",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "861617e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:18:41.637673+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Product closure",
-    "description": ": The multi-hop problem is tropical closure of $W^*$, which decomposes into layer-specific closures under certain separability conditions.\n\n### Cross-Domain Connections\n- **Hierarchical routing in the internet**: BGP's multi-tier AS hierarchy\n- **Multi-modal logistics**: Truck → rail → ship → air with increasing speed and access cost\n- **Memory hierarchy**: L1 → L2 → L3 → RAM → disk with increasing capacity and latency\n- **Biological vasculature**: Capillaries → venules → veins → vena cava\n\n### Concrete Next Step\nFormalize the two-layer case ($L = 2$) and prove the threshold characterization. Show that the all-pairs shortest path matrix has a block structure determined by the two threshold distances.\n\n---\n\n## Direction 4: Tropical Voronoi Regions for Portal Service Areas\n\n### Hypothesis\nTh",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "861617e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:18:41.699999+00:00"
   },
   {
     "id": "fd_0259",
@@ -868,6 +789,96 @@
     "timestamp": "2026-05-16T14:18:41.813617+00:00"
   },
   {
+    "id": "fd_0248",
+    "title": "Induct",
+    "description": ": Apply the decomposition to M', obtaining M = α · P_σ + (1-α) · M'.\n4. The base case is when M is itself a permutation matrix.\n\nKey prerequisite: Formalize Hall's marriage theorem for bipartite graphs, or use a direct argument about supports of doubly stochastic matrices.\n\n### Cross-Domain Significance\n\n- **Transport ↔ Combinatorics**: This theorem tells us that the Birkhoff polytope (set of doubly stochastic matrices) has permutation matrices as vertices. The minimum of a linear functional over this polytope is attained at a vertex, reducing transport to assignment.\n- **Transport ↔ Tropical**: Combined with our `permPlan_is_transportPlan` theorem, this shows every uniform transport plan is a weighted combination of objects naturally described by tropical optimization.\n- **Algorithmic**: ",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fc0fc4e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:39:14.314331+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "From subadditivity to convergence",
+    "description": ": Our `tropPow_diag_subadditive` theorem gives the sequence a_m = tropPow(A, m)(i,i) as subadditive. By Fekete's lemma (which may need to be formalized for this shifted indexing), lim a_m/(m+1) = inf a_m/(m+1) exists.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fc0fc4e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:39:14.329958+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Independence of vertex",
+    "description": ": For strongly connected A, any two vertices i, j can reach each other in bounded time. This bounds |a_m^{(i)} - a_m^{(j)}| by a constant, so after dividing by m, the limits agree.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fc0fc4e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:39:14.344128+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Karp's characterization",
+    "description": ": Express the limit as min_{1 ≤ m ≤ n} (A^m[i,i])/m using the observation that all cycle means are generated by simple cycles of length ≤ n.\n\n### Cross-Domain Significance\n\n- **Tropical ↔ Graph Theory**: This is the fundamental theorem connecting tropical spectral theory to graph-theoretic shortest-path problems.\n- **Tropical ↔ Control Theory**: The tropical eigenvalue governs the throughput of discrete-event systems (manufacturing lines, digital circuits).\n- **Tropical ↔ Transport**: Combined with our bridge theorem, it suggests that optimal transport costs on orbit spaces converge to tropical spectral invariants.\n\n---\n\n## Direction 4: Hungarian Algorithm Correctness\n\n### Theorem Statement\n\nThe Hungarian algorithm correctly solves the assignment problem: given an n×n cost matrix, it finds",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fc0fc4e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:39:14.359620+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Connection to transport",
+    "description": ": Use `permPlan_transportCost` and `permPlan_is_transportPlan` to relate the assignment optimum to the Wasserstein distance.\n\n### Cross-Domain Significance\n\n- **Combinatorics ↔ Transport**: A verified Hungarian algorithm would be the first formally verified optimal transport solver.\n- **Combinatorics ↔ Tropical**: The dual potentials in the Hungarian algorithm are tropical eigenfunction-like objects.\n- **Practical**: Verified algorithms for assignment/transport have applications in verified robotics, supply chain optimization, and certified ML pipelines.\n\n---\n\n## Direction 5: Wasserstein Quotient Under Finite Group Actions\n\n### Theorem Statement\n\nWhen a finite group G acts on Fin n by cost-preserving bijections, the Wasserstein distance descends to the quotient: define the equivalence rela",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fc0fc4e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:39:14.421193+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Triangle inequality",
+    "description": ": For any ε > 0, pick near-optimal group elements g₁, g₂ for (μ,ν) and (ν,ρ). Then g₁·g₂ is a candidate for (μ,ρ), and the triangle inequality for W_c gives the bound.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3fc0fc4e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T14:39:14.454757+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -932,21 +943,6 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.844636+00:00"
-  },
-  {
-    "id": "fd_0180",
-    "title": "2. Hodge Decomposition for Adversarial Inconsistency Fields",
-    "description": "**Objective**: Prove a graph-theoretic Hodge decomposition theorem for the space of 1-cochains on the activation region overlap graph, decomposing any inconsistency field into a gradient (coboundary), a curl (cocycle), and a harmonic component.\n\n**Approach**: On the complete graph $K_\\iota$ with edge weights given by overlap volumes, define the combinatorial Laplacian $\\Delta = \\delta^* \\delta + \\delta \\delta^*$ where $\\delta$ is the coboundary operator. The Hodge decomposition gives:\n$$C^1(K_\\iota, \\mathbb{R}) = \\mathrm{im}(\\delta) \\oplus \\mathrm{im}(\\delta^*) \\oplus \\ker(\\Delta)$$\n\nThe gradient component is the \"fixable\" part of margin inconsistency; the harmonic component is the irreducible topological obstruction; the curl component detects local rotation in the margin field.\n\n**Key hy",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "3fc0fc4e",
-    "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
     "id": "fd_0181",
@@ -1087,6 +1083,22 @@
     "source_exp_id": "d2a18598",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.336933+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Research Team Directive",
+    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "d2a18598",
+    "consumed_by_exp_id": "d39daf16",
+    "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
     "id": "fd_0200",
@@ -1629,23 +1641,6 @@
     "source_exp_id": "41f0f930",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:12:11.751217+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Summary of Dependencies",
-    "description": "```\nDirection 1 (Sidon Sets)\n    ↑ generalizes prime-power index sets\n    \nDirection 2 (Tropical SDPI)\n    ↑ information-theoretic consequence of decorrelation\n    \nDirection 3 (Spectral Gap)\n    ↑ provides mechanism for geometric decay hypothesis\n    ↗ feeds into Direction 4 via Hecke operator spectral theory\n    \nDirection 4 (GL_n Hecke)\n    ↑ higher-rank generalization\n    ↗ feeds into Direction 5 via Langlands-type bounds\n    \nDirection 5 (Derandomization)\n    ↑ complexity-theoretic application\n    ← depends on Directions 1-4 for PRG construction quality\n```\n\n---",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cb1f586",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:58:03.653565+00:00"
   },
   {
     "id": "fd_0241",
