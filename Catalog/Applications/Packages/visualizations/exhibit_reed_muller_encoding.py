@@ -1,331 +1,379 @@
 #!/usr/bin/env python3
 """
-Algorithms for Reed-Muller Codes and Polynomial Identity Testing
+Algorithms for Reed–Muller Codes and Polynomial Identity Testing
 
 Implements:
-1. Reed-Muller encoding (polynomial evaluation)
-2. Schwartz-Zippel PIT algorithm
+1. Reed–Muller encoding (evaluation code construction)
+2. Schwartz–Zippel PIT algorithm
 3. Minimum distance computation
-4. Witness polynomial construction
+4. Extremal witness construction
 """
 
-import numpy as np
-from itertools import product as cartesian_product
-from typing import List, Tuple, Dict, Optional
-from collections import defaultdict
+import itertools
+import random
+from typing import List, Tuple, Optional, Callable
+from dataclasses import dataclass
 
+
+# ============================================================
+# Finite Field Arithmetic (GF(p) for prime p)
+# ============================================================
 
 class GF:
-    """Simple prime field GF(q) arithmetic."""
-
-    def __init__(self, q: int):
-        """Initialize GF(q) for prime q.
-
-        Args:
-            q: A prime number defining the field size.
-
-        Raises:
-            ValueError: If q is not prime.
-        """
-        if q < 2 or any(q % i == 0 for i in range(2, int(q**0.5) + 1)):
-            raise ValueError(f"{q} is not prime")
-        self.q = q
+    """Simple finite field GF(p) for prime p."""
+    def __init__(self, p: int):
+        self.p = p
+        self.elements = list(range(p))
 
     def add(self, a: int, b: int) -> int:
-        return (a + b) % self.q
+        return (a + b) % self.p
 
     def mul(self, a: int, b: int) -> int:
-        return (a * b) % self.q
+        return (a * b) % self.p
 
     def sub(self, a: int, b: int) -> int:
-        return (a - b) % self.q
+        return (a - b) % self.p
 
     def neg(self, a: int) -> int:
-        return (-a) % self.q
+        return (-a) % self.p
 
     def inv(self, a: int) -> int:
         if a == 0:
-            raise ZeroDivisionError("Cannot invert 0")
-        return pow(a, self.q - 2, self.q)
+            raise ValueError("Cannot invert zero")
+        return pow(a, self.p - 2, self.p)
 
-    def pow(self, a: int, e: int) -> int:
-        return pow(a, e, self.q)
+    def div(self, a: int, b: int) -> int:
+        return self.mul(a, self.inv(b))
+
+    def pow(self, a: int, n: int) -> int:
+        return pow(a, n, self.p)
+
+
+# ============================================================
+# Multivariate Polynomial Representation
+# ============================================================
+
+@dataclass
+class Monomial:
+    """A monomial x₁^e₁ · x₂^e₂ · ... · xₙ^eₙ."""
+    exponents: Tuple[int, ...]
+
+    @property
+    def total_degree(self) -> int:
+        return sum(self.exponents)
+
+    @property
+    def n_vars(self) -> int:
+        return len(self.exponents)
 
 
 class MvPoly:
-    """Multivariate polynomial over GF(q).
-
-    Represented as a dictionary mapping exponent tuples to coefficients.
-    Example: x0^2 * x1 + 3 is {(2,1): 1, (0,0): 3}
     """
+    Multivariate polynomial over GF(p).
 
-    def __init__(self, n_vars: int, field: GF, terms: Optional[Dict[tuple, int]] = None):
-        """
-        Args:
-            n_vars: Number of variables.
-            field: The finite field.
-            terms: Dictionary mapping exponent tuples to coefficients.
-        """
-        self.n = n_vars
+    Represented as a dictionary from exponent tuples to coefficients.
+    """
+    def __init__(self, field: GF, n_vars: int):
         self.field = field
-        self.terms = {}
-        if terms:
-            for exp, coeff in terms.items():
-                c = coeff % field.q
-                if c != 0:
-                    self.terms[exp] = c
+        self.n_vars = n_vars
+        self.coeffs: dict = {}  # exponent tuple -> coefficient
 
-    def eval(self, x: tuple) -> int:
-        """Evaluate polynomial at point x in GF(q)^n.
+    def set_coeff(self, exponents: Tuple[int, ...], coeff: int):
+        if coeff % self.field.p != 0:
+            self.coeffs[exponents] = coeff % self.field.p
+        elif exponents in self.coeffs:
+            del self.coeffs[exponents]
 
-        Args:
-            x: Tuple of n field elements.
-
-        Returns:
-            The evaluation f(x) in GF(q).
-        """
+    def eval(self, point: Tuple[int, ...]) -> int:
         result = 0
-        for exp, coeff in self.terms.items():
-            val = coeff
-            for i, e in enumerate(exp):
-                val = self.field.mul(val, self.field.pow(x[i], e))
-            result = self.field.add(result, val)
+        for exps, coeff in self.coeffs.items():
+            term = coeff
+            for i, e in enumerate(exps):
+                term = self.field.mul(term, self.field.pow(point[i], e))
+            result = self.field.add(result, term)
         return result
 
+    @property
     def total_degree(self) -> int:
-        """Return the total degree of the polynomial."""
-        if not self.terms:
-            return -1  # zero polynomial
-        return max(sum(exp) for exp in self.terms)
+        if not self.coeffs:
+            return -1  # convention: zero polynomial has degree -1
+        return max(sum(exps) for exps in self.coeffs)
 
+    @property
     def is_zero(self) -> bool:
-        return len(self.terms) == 0
+        return len(self.coeffs) == 0
 
-    def __repr__(self):
-        if not self.terms:
-            return "0"
-        parts = []
-        for exp, coeff in sorted(self.terms.items()):
-            vars_str = ""
-            for i, e in enumerate(exp):
-                if e > 0:
-                    vars_str += f"x{i}" + (f"^{e}" if e > 1 else "")
-            if vars_str:
-                parts.append(f"{coeff}*{vars_str}" if coeff != 1 else vars_str)
-            else:
-                parts.append(str(coeff))
-        return " + ".join(parts)
+    @classmethod
+    def witness(cls, field: GF, n_vars: int, roots: List[int]) -> 'MvPoly':
+        """
+        Construct the witness polynomial ∏_{a ∈ roots} (X₀ - a).
+
+        This polynomial depends only on the first variable and has
+        total degree len(roots).
+        """
+        # Start with the constant 1
+        poly = cls(field, n_vars)
+        poly.set_coeff(tuple(0 for _ in range(n_vars)), 1)
+
+        for a in roots:
+            # Multiply by (X₀ - a)
+            new_coeffs = {}
+            for exps, coeff in poly.coeffs.items():
+                # coeff * X₀
+                new_exps = list(exps)
+                new_exps[0] += 1
+                new_exps_tuple = tuple(new_exps)
+                val = new_coeffs.get(new_exps_tuple, 0)
+                new_coeffs[new_exps_tuple] = field.add(val, coeff)
+
+                # coeff * (-a)
+                neg_a_coeff = field.mul(coeff, field.neg(a))
+                val2 = new_coeffs.get(exps, 0)
+                new_coeffs[exps] = field.add(val2, neg_a_coeff)
+
+            poly.coeffs = {k: v for k, v in new_coeffs.items() if v % field.p != 0}
+
+        return poly
 
 
-def witness_polynomial(field: GF, n_vars: int, roots: List[int]) -> MvPoly:
-    """Construct the extremal witness polynomial prod_{a in roots} (X_0 - a).
+# ============================================================
+# Algorithm 1: Reed–Muller Encoding
+# ============================================================
 
-    This polynomial achieves the exact minimum distance of the Reed-Muller code.
-
-    Args:
-        field: The finite field GF(q).
-        n_vars: Number of variables (must be >= 1).
-        roots: List of distinct field elements (the zeros in coordinate 0).
-
-    Returns:
-        The witness polynomial as an MvPoly.
-
-    Example:
-        >>> F = GF(5)
-        >>> p = witness_polynomial(F, 2, [1, 3])
-        >>> p.eval((1, 0))  # zero since x0=1 is a root
-        0
-        >>> p.eval((0, 0))  # nonzero since x0=0 is not a root
-        3
+def reed_muller_encode(field: GF, n_vars: int, max_degree: int,
+                       coefficients: dict) -> List[int]:
     """
-    q = field.q
+    Reed–Muller Encoding Algorithm
 
-    # Start with the constant polynomial 1
-    result_terms = {tuple(0 for _ in range(n_vars)): 1}
+    Input:
+        - field: GF(q)
+        - n_vars: number of variables n
+        - max_degree: maximum total degree d
+        - coefficients: dict mapping exponent tuples to field elements
 
-    for a in roots:
-        new_terms = defaultdict(int)
-        for exp, coeff in result_terms.items():
-            # Multiply by X_0: increase exponent of x0 by 1
-            new_exp = list(exp)
-            new_exp[0] += 1
-            new_terms[tuple(new_exp)] = field.add(
-                new_terms.get(tuple(new_exp), 0),
-                coeff
-            )
-            # Multiply by -a: negate and scale
-            new_terms[exp] = field.add(
-                new_terms.get(exp, 0),
-                field.mul(field.neg(a), coeff)
-            )
-        # Clean up zero coefficients
-        result_terms = {k: v % q for k, v in new_terms.items() if v % q != 0}
+    Output:
+        - Evaluation vector: [f(x) for x in GF(q)^n] (length q^n)
 
-    return MvPoly(n_vars, field, result_terms)
-
-
-def reed_muller_encode(poly: MvPoly, field: GF, n_vars: int) -> List[int]:
-    """Encode a polynomial as a Reed-Muller codeword (evaluation vector).
-
-    Args:
-        poly: The polynomial to encode.
-        field: The finite field.
-        n_vars: Number of variables.
-
-    Returns:
-        List of evaluations at all points of GF(q)^n.
+    Complexity: O(M · q^n) where M = number of monomials of degree ≤ d
     """
-    return [poly.eval(x) for x in cartesian_product(range(field.q), repeat=n_vars)]
+    poly = MvPoly(field, n_vars)
+    for exps, coeff in coefficients.items():
+        if sum(exps) <= max_degree:
+            poly.set_coeff(exps, coeff)
+
+    points = list(itertools.product(range(field.p), repeat=n_vars))
+    return [poly.eval(pt) for pt in points]
 
 
-def hamming_weight(codeword: List[int]) -> int:
-    """Compute the Hamming weight (number of nonzero entries).
+# ============================================================
+# Algorithm 2: Schwartz–Zippel PIT
+# ============================================================
 
-    Args:
-        codeword: A list of field elements.
-
-    Returns:
-        Number of nonzero entries.
+def schwartz_zippel_pit(eval_fn: Callable, field: GF, n_vars: int,
+                        degree_bound: int, num_trials: int = 100) -> dict:
     """
-    return sum(1 for c in codeword if c != 0)
+    Schwartz–Zippel Polynomial Identity Testing Algorithm
 
+    Input:
+        - eval_fn: black-box evaluation oracle for the polynomial
+        - field: GF(q)
+        - n_vars: number of variables
+        - degree_bound: upper bound d on total degree
+        - num_trials: number of random evaluations
 
-def hamming_distance(a: List[int], b: List[int]) -> int:
-    """Compute the Hamming distance between two codewords.
+    Output:
+        - Dictionary with:
+          - 'is_zero': bool (our conclusion)
+          - 'confidence': probability of correctness
+          - 'trials': number of evaluations performed
+          - 'nonzero_found': whether we found a nonzero evaluation
 
-    Args:
-        a, b: Lists of field elements of equal length.
+    Complexity: O(num_trials · T_eval) where T_eval is evaluation cost
 
-    Returns:
-        Number of positions where a and b differ.
+    Soundness guarantee:
+        If f ≠ 0, Pr[all trials give 0] ≤ (d/q)^num_trials
+
+    Pseudocode:
+        1. For i = 1, ..., num_trials:
+           a. Sample x uniformly from GF(q)^n
+           b. Evaluate f(x)
+           c. If f(x) ≠ 0, return "f is nonzero" (certain)
+        2. Return "f is likely zero" with confidence 1 - (d/q)^num_trials
     """
-    return sum(1 for x, y in zip(a, b) if x != y)
+    q = field.p
+    error_prob_per_trial = degree_bound / q
 
+    for trial in range(num_trials):
+        # Sample random point
+        x = tuple(random.randint(0, q - 1) for _ in range(n_vars))
+        val = eval_fn(x)
 
-def schwartz_zippel_pit(poly: MvPoly, field: GF, n_vars: int,
-                         num_trials: int = 100) -> Tuple[bool, float]:
-    """Schwartz-Zippel Polynomial Identity Testing.
+        if val != 0:
+            return {
+                'is_zero': False,
+                'confidence': 1.0,
+                'trials': trial + 1,
+                'nonzero_found': True,
+                'witness_point': x,
+                'witness_value': val
+            }
 
-    Tests whether a polynomial is identically zero by random evaluation.
-
-    Algorithm:
-        1. Repeat `num_trials` times:
-           a. Sample x uniformly from GF(q)^n.
-           b. If poly(x) != 0, return (True, "definitely nonzero").
-        2. If all evaluations are zero, return (False, "probably zero").
-
-    Soundness guarantee: If poly != 0 and deg(poly) <= d < q, then
-    the probability of all trials returning zero is at most (d/q)^num_trials.
-
-    Args:
-        poly: Polynomial to test.
-        field: Finite field GF(q).
-        n_vars: Number of variables.
-        num_trials: Number of random evaluations.
-
-    Returns:
-        (is_nonzero, confidence): Whether nonzeroness was detected,
-        and the confidence level (1 - error probability).
-
-    Complexity:
-        Time: O(num_trials * T_eval), where T_eval is polynomial evaluation time.
-        Space: O(n_vars) per evaluation.
-    """
-    rng = np.random.default_rng()
-    d = poly.total_degree()
-    if d < 0:
-        return False, 1.0  # zero polynomial
-
-    for _ in range(num_trials):
-        x = tuple(int(v) for v in rng.integers(0, field.q, size=n_vars))
-        if poly.eval(x) != 0:
-            return True, 1.0
-
-    # All trials returned zero
-    error_prob = (d / field.q) ** num_trials if d < field.q else 1.0
-    return False, 1.0 - error_prob
-
-
-def compute_minimum_distance(field: GF, n_vars: int, max_degree: int) -> int:
-    """Compute the minimum distance of RM_q(n, d) by exhaustive enumeration.
-
-    WARNING: Only feasible for very small parameters (q^n * q^(n choose d) is huge).
-
-    For practical use, just compute the formula: (q - d) * q^(n-1).
-
-    Args:
-        field: Finite field GF(q).
-        n_vars: Number of variables.
-        max_degree: Maximum total degree d.
-
-    Returns:
-        The minimum Hamming weight among all nonzero codewords of degree <= d.
-    """
-    q = field.q
-    # Formula-based (proven exact by our theorem):
-    return (q - max_degree) * q ** (n_vars - 1)
-
-
-def reed_muller_parameters(q: int, n: int, d: int) -> Dict:
-    """Compute all key parameters of the Reed-Muller code RM_q(n, d).
-
-    Args:
-        q: Field size (prime).
-        n: Number of variables.
-        d: Maximum degree.
-
-    Returns:
-        Dictionary with code parameters.
-    """
-    assert 0 <= d < q, f"Need 0 <= d < q, got d={d}, q={q}"
-    assert n >= 1, f"Need n >= 1, got n={n}"
-
-    code_length = q ** n
-    min_distance = (q - d) * q ** (n - 1)
-    max_zeros = d * q ** (n - 1)
-    pit_error = d / q
-    detection_prob = 1 - pit_error
-    error_detection = min_distance - 1
-    error_correction = (min_distance - 1) // 2
-
+    # All evaluations were zero
+    false_negative_prob = error_prob_per_trial ** num_trials
     return {
-        "field_size": q,
-        "num_variables": n,
-        "max_degree": d,
-        "code_length": code_length,
-        "minimum_distance": min_distance,
-        "max_zeros": max_zeros,
-        "pit_error_probability": pit_error,
-        "detection_probability": detection_prob,
-        "error_detection_capability": error_detection,
-        "error_correction_capability": error_correction,
+        'is_zero': True,
+        'confidence': 1.0 - false_negative_prob,
+        'trials': num_trials,
+        'nonzero_found': False,
+        'error_bound': false_negative_prob
     }
 
 
+# ============================================================
+# Algorithm 3: Minimum Distance Computation
+# ============================================================
+
+def compute_minimum_distance(field: GF, n_vars: int,
+                             max_degree: int) -> dict:
+    """
+    Compute the minimum distance of RM_q(n, d) by the exact formula.
+
+    Input:
+        - field: GF(q)
+        - n_vars: n (number of variables)
+        - max_degree: d (maximum total degree)
+
+    Output:
+        - Dictionary with minimum distance and witness info
+
+    The formula: min_dist = (q - d) · q^(n-1)
+    """
+    q = field.p
+    if max_degree >= q:
+        return {'error': f'd={max_degree} must be < q={q}'}
+
+    min_dist = (q - max_degree) * (q ** (n_vars - 1))
+
+    # Construct witness
+    roots = list(range(max_degree))
+    witness = MvPoly.witness(field, n_vars, roots)
+
+    # Verify
+    points = list(itertools.product(range(q), repeat=n_vars))
+    actual_weight = sum(1 for pt in points if witness.eval(pt) != 0)
+
+    return {
+        'q': q,
+        'n': n_vars,
+        'd': max_degree,
+        'minimum_distance': min_dist,
+        'formula': f'({q} - {max_degree}) × {q}^{n_vars - 1} = {min_dist}',
+        'witness_roots': roots,
+        'witness_degree': witness.total_degree,
+        'witness_weight': actual_weight,
+        'verified': actual_weight == min_dist
+    }
+
+
+# ============================================================
+# Algorithm 4: Extremal Witness Construction
+# ============================================================
+
+def construct_extremal_witness(field: GF, n_vars: int,
+                               degree: int) -> dict:
+    """
+    Construct the extremal witness polynomial for RM_q(n, d).
+
+    The witness is f(x) = ∏_{i=0}^{d-1} (x₁ - i), which achieves
+    the minimum Hamming weight of (q-d)·q^(n-1).
+
+    Input:
+        - field: GF(q)
+        - n_vars: n
+        - degree: d
+
+    Output:
+        - Polynomial representation and evaluation data
+
+    Complexity: O(d · q^n) for evaluation over all points
+    """
+    q = field.p
+    roots = list(range(degree))
+    witness = MvPoly.witness(field, n_vars, roots)
+
+    points = list(itertools.product(range(q), repeat=n_vars))
+    evaluations = [(pt, witness.eval(pt)) for pt in points]
+
+    zero_set = [pt for pt, val in evaluations if val == 0]
+    support = [pt for pt, val in evaluations if val != 0]
+
+    return {
+        'polynomial': f'∏_{{a ∈ {roots}}} (x₁ - a)',
+        'degree': witness.total_degree,
+        'roots': roots,
+        'total_points': len(points),
+        'zero_count': len(zero_set),
+        'hamming_weight': len(support),
+        'expected_zero_count': degree * (q ** (n_vars - 1)),
+        'expected_weight': (q - degree) * (q ** (n_vars - 1)),
+        'zero_set_sample': zero_set[:10],
+        'support_sample': support[:10]
+    }
+
+
+# ============================================================
+# Example Usage
+# ============================================================
+
 if __name__ == "__main__":
-    print("Reed-Muller Code Parameters")
-    print("=" * 50)
+    print("=" * 70)
+    print("Reed–Muller Code Algorithms — Examples")
+    print("=" * 70)
+    print()
 
-    for q, n, d in [(5, 2, 2), (7, 3, 3), (11, 2, 5), (3, 4, 1)]:
-        params = reed_muller_parameters(q, n, d)
-        print(f"\nRM_{q}({n}, {d}):")
-        for key, val in params.items():
-            print(f"  {key}: {val}")
+    # Example 1: Reed–Muller Encoding
+    print("--- Algorithm 1: Reed–Muller Encoding ---")
+    F = GF(5)
+    coeffs = {(1, 0): 1, (0, 1): 2, (0, 0): 3}  # f(x,y) = x + 2y + 3
+    codeword = reed_muller_encode(F, 2, 1, coeffs)
+    print(f"  f(x,y) = x + 2y + 3 over GF(5)")
+    print(f"  Codeword length: {len(codeword)}")
+    print(f"  Hamming weight: {sum(1 for v in codeword if v != 0)}")
+    print(f"  Predicted min weight for d=1: {(5-1)*5**(2-1)} = {4*5}")
+    print()
 
-    print("\n\nWitness Polynomial Example")
-    print("=" * 50)
-    F = GF(7)
-    wp = witness_polynomial(F, 3, [0, 1, 2])
-    print(f"  Field: GF(7), n=3, d=3")
-    print(f"  Witness: {wp}")
-    cw = reed_muller_encode(wp, F, 3)
-    print(f"  Hamming weight: {hamming_weight(cw)}")
-    print(f"  Expected: {(7-3) * 7**2} = {4 * 49}")
+    # Example 2: Schwartz–Zippel PIT
+    print("--- Algorithm 2: Schwartz–Zippel PIT ---")
+    random.seed(42)
 
-    print("\n\nPIT Test Example")
-    print("=" * 50)
-    # Test a nonzero polynomial
-    p = MvPoly(2, F, {(2, 0): 1, (0, 1): 3, (0, 0): 5})
-    print(f"  Polynomial: {p}")
-    is_nz, conf = schwartz_zippel_pit(p, F, 2, num_trials=50)
-    print(f"  PIT result: {'nonzero' if is_nz else 'probably zero'} (confidence: {conf:.6f})")
+    # Test with a nonzero polynomial
+    witness = MvPoly.witness(GF(7), 3, [0, 1, 2])
+    result = schwartz_zippel_pit(witness.eval, GF(7), 3, 3, num_trials=20)
+    print(f"  Testing nonzero poly (degree 3 over GF(7)^3):")
+    print(f"  Result: {'NONZERO' if not result['is_zero'] else 'ZERO'}")
+    print(f"  Trials needed: {result['trials']}")
+    print()
+
+    # Test with the zero polynomial
+    zero_poly = MvPoly(GF(7), 3)
+    result_zero = schwartz_zippel_pit(zero_poly.eval, GF(7), 3, 3, num_trials=20)
+    print(f"  Testing zero polynomial:")
+    print(f"  Result: {'NONZERO' if not result_zero['is_zero'] else 'ZERO'}")
+    print(f"  Confidence: {result_zero['confidence']:.10f}")
+    print()
+
+    # Example 3: Minimum Distance
+    print("--- Algorithm 3: Minimum Distance Computation ---")
+    for q, n, d in [(5, 2, 2), (7, 3, 3), (11, 2, 5)]:
+        info = compute_minimum_distance(GF(q), n, d)
+        print(f"  RM_{q}({n},{d}): min_dist = {info['minimum_distance']}, "
+              f"verified = {info['verified']}")
+    print()
+
+    # Example 4: Extremal Witness
+    print("--- Algorithm 4: Extremal Witness Construction ---")
+    wit_info = construct_extremal_witness(GF(7), 2, 3)
+    print(f"  Witness: {wit_info['polynomial']}")
+    print(f"  Degree: {wit_info['degree']}")
+    print(f"  Zero count: {wit_info['zero_count']} (expected {wit_info['expected_zero_count']})")
+    print(f"  Hamming weight: {wit_info['hamming_weight']} (expected {wit_info['expected_weight']})")

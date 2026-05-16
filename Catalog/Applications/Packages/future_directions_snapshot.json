@@ -389,7 +389,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "38f08fce",
+    "consumed_by_exp_id": "52b15fb5",
     "timestamp": "2026-05-16T07:11:31.800180+00:00"
   },
   {
@@ -504,20 +504,6 @@
     "timestamp": "2026-05-16T13:37:23.953786+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "Latin Square Instance",
-    "description": ": Define `latinSquareCSP(n)` as Sudoku without box constraints. This is a strict specialization and should inherit proofs from a generalized framework.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:23.977187+00:00"
-  },
-  {
     "id": "fd_0240",
     "title": "Reusable Propagation Theorems",
     "description": ": Prove generic soundness and stabilization for any TropicalCSP equipped with a monotone propagation operator, parameterized by domain size and number of variables.\n\n### Proof Strategy\n- Define a `TropicalCSP.WithPropagation` extension structure that bundles a propagation operator with soundness and antitonicity proofs.\n- Prove a generic stabilization theorem: if Var and Val are finite, propagation stabilizes in |Var| × |Val| steps.\n- Instantiate for each CSP family.\n\n### Cross-Domain Impact\nThis would create the first machine-verified library of tropical CSPs, directly applicable to operations research, AI planning, and combinatorial optimization.\n\n---\n\n## Direction 2: Quantitative Phase Transition Theorem\n\n### Hypothesis\nFor a random clue model where k cells are chosen uniformly at rando",
@@ -549,37 +535,6 @@
     "timestamp": "2026-05-16T13:42:08.381149+00:00"
   },
   {
-    "id": "fd_0259",
-    "title": "Define tropical Voronoi cell",
-    "description": ": $V_i = \\{x \\in \\mathbb{Z}^2 : \\forall j \\neq i,\\ c + d_N(\\phi(x), \\phi(s_i)) + \\text{cost from } s_i \\leq c + d_N(\\phi(x), \\phi(s_j)) + \\text{cost from } s_j\\}$.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "861617e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:18:41.714360+00:00"
-  },
-  {
-    "id": "fd_0262",
-    "title": "Complexity",
-    "description": ": Bound the number of faces and the total complexity of the Voronoi diagram.\n\n### Cross-Domain Connections\n- **Facility location**: Optimal placement of service centers\n- **Tropical convexity**: Develin & Sturmfels' tropical convex geometry\n- **Computational geometry**: L1 Voronoi diagrams and their applications\n- **Coverage problems**: Sensor network deployment\n\n### Concrete Next Step\nImplement the tropical Voronoi diagram algorithm for a set of portals in 2D, visualize the resulting cells, and prove that cells are L1-convex polygons with at most $O(n)$ total vertices.\n\n---\n\n## Direction 5: Categorical Semantics of Scaled-World Transport\n\n### Hypothesis\nThe dual-world transport system has a natural formalization as a *weighted colimit* in the 2-category of metric spaces enriched over the ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "861617e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:18:41.755675+00:00"
-  },
-  {
     "id": "fd_0263",
     "title": "Enriched category",
     "description": ": Define a category $\\mathbf{Met}_\\mathcal{T}$ enriched over the tropical semiring, where objects are metric spaces and morphisms are 1-Lipschitz maps with tropical hom-sets.",
@@ -609,64 +564,109 @@
     "timestamp": "2026-05-16T14:18:41.798893+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Fixpoint as idempotent comonad",
-    "description": ": The tropical closure is an idempotent comonad on the category of cost matrices, and fixpoints are coalgebras.\n\n### Cross-Domain Connections\n- **Enriched category theory**: Lawvere's thesis that metric spaces are enriched categories\n- **Optimal transport**: Kantorovich duality as a tropical Kan extension\n- **String diagrams**: Graphical calculus for tropical routing\n- **Topos theory**: Sheaves on the site of metric spaces as \"continuous cost assignments\"\n\n### Concrete Next Step\nFormalize the enriched category $\\mathbf{Met}_\\mathcal{T}$ in Lean 4, define the compression profunctor, and prove that the tropical matrix product arises as a coend. This would establish the first formal connection between tropical routing and enriched category theory.\n\n---\n\n## Research Team Directive\n\nEach direct",
+    "id": "fd_0254",
+    "title": "Strong duality",
+    "description": "(≤ direction): Use the finite-dimensional LP strong duality theorem. The transport problem is a linear program with the coupling matrix as variable, marginal constraints as equalities, and nonnegativity constraints. Its dual is exactly the Kantorovich dual.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a6c55e7c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:57:04.315060+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "LP formulation",
+    "description": ": Package the transport problem as `minimize c^T x subject to Ax = b, x ≥ 0` and apply finite LP duality (which may need to be formalized first as an auxiliary result).\n\n### Cross-Domain Significance\nKantorovich duality is the cornerstone of modern optimal transport theory. In tropical terms, it connects primal minimization (over couplings) to dual maximization (over potentials), mirroring the min-max structure of tropical algebra (`tropical_duality_min_to_max`). This would be the first formally verified instance of LP duality in a transport context, opening the door to verified algorithms for Wasserstein computation.\n\n---\n\n## Direction 2: Tropical Cycle-Mean Theorem (Karp's Theorem)\n\n### Theorem Statement\nFor a strongly connected weighted directed graph represented as a matrix `A ∈ ℝ^{n×n",
     "domains": [
       "Tropical",
-      "EML",
       "Bridges",
       "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "861617e9",
+    "source_exp_id": "a6c55e7c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:18:41.813617+00:00"
+    "timestamp": "2026-05-16T18:57:04.333495+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "Documentation",
-    "description": ": Add module-level docstrings explaining significance and cross-domain connections.",
+    "id": "fd_0258",
+    "title": "Convergence",
+    "description": ": Combine Fekete's lemma with the finite characterization to show convergence and identify the limit.\n\n### Cross-Domain Significance\nThis theorem is the tropical analogue of the Perron-Frobenius eigenvalue theorem. It connects:\n- **Graph theory**: minimum-weight cycles and shortest paths\n- **Dynamical systems**: asymptotic growth rates of iterated tropical maps\n- **Operations research**: cycle-time optimization in discrete event systems\n- **Formal verification**: a verified algorithm for computing tropical eigenvalues\n\nOur subadditivity theorem (`tropPow_diag_subadditive`) provides the key input.\n\n---\n\n## Direction 3: Birkhoff–von Neumann Decomposition\n\n### Theorem Statement\nEvery doubly stochastic matrix (nonneg entries with row and column sums equal to 1) is a convex combination of permu",
     "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a6c55e7c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:57:04.378420+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Termination",
+    "description": ": Since `Fin n → Fin n → ℝ` is finite-dimensional and each step increases the number of zeros, the process terminates in at most `n²-2n+2` steps.\n\n### Cross-Domain Significance\nThis theorem directly connects to our permutation coupling work: it shows that the Birkhoff polytope (set of doubly stochastic matrices) equals the convex hull of permutation matrices. Combined with our `permPlan_is_transportPlan`, this means:\n- Every transport plan between uniform measures is a convex combination of permutation plans\n- The Wasserstein distance for uniform measures can be computed as a minimum over permutation costs\n- This bridges optimal transport to combinatorial optimization (assignment problem)\n\n---\n\n## Direction 4: Hungarian Algorithm Correctness\n\n### Theorem Statement\nFormalize the Hungarian a",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a6c55e7c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:57:04.421460+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Algorithm correctness",
+    "description": ": Show the Hungarian algorithm produces such a complementary pair by maintaining dual feasibility and augmenting matchings.\n\n### Cross-Domain Significance\nThis connects to our assignment cost invariance theorem: the optimal assignment is invariant under simultaneous relabeling, which follows from our `assignment_cost_conjugation_invariant`. In tropical terms, the Hungarian algorithm computes the tropical determinant of the cost matrix, and the dual variables are tropical eigenvectors. This creates a verified computational bridge between optimal transport and tropical linear algebra.\n\n---\n\n## Direction 5: Wasserstein Quotient by Finite Group Actions\n\n### Theorem Statement\nWhen a finite group G acts on `Fin n` preserving the cost function, the Wasserstein distance descends to a well-defined ",
+    "domains": [
+      "Tropical",
       "Bridges",
       "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8d96d57a",
+    "source_exp_id": "a6c55e7c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:43:03.478518+00:00"
+    "timestamp": "2026-05-16T18:57:04.453362+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Forward",
-    "description": ": If $H_1 \\neq 0$, exhibit a nontrivial 1-cycle in the nerve. Show this cycle corresponds to a loop in input space around which the margin changes sign. By the intermediate value theorem, the margin is zero somewhere on the loop — an adversarial example.",
+    "id": "fd_0264",
+    "title": "Well-definedness",
+    "description": ": Use our `wasserstein1_invariant_under_equiv` to show that `W(g·μ, ν) = W(g·μ, ν)` under the group action. Then show the orbit infimum is invariant under further group action on μ.",
     "domains": [
-      "Bridges"
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "3ef884fe",
+    "source_exp_id": "a6c55e7c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:52:28.935176+00:00"
+    "timestamp": "2026-05-16T18:57:04.468119+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "Backward",
-    "description": ": If an adversarial example $x^*$ exists with $\\operatorname{margin}(x^*) = 0$, show it lies on the boundary of multiple activation regions. Construct a 1-cycle from the loop of regions around $x^*$ and show it is not a boundary.",
+    "id": "fd_0265",
+    "title": "Metric structure",
+    "description": ": Show symmetry (by inverting group elements) and definiteness (by assuming the cost is a metric).\n\n### Cross-Domain Significance\nThis is the formal foundation for equivariant optimal transport, with applications to:\n- **Shape analysis**: comparing shapes up to rotation/reflection\n- **Chemistry**: comparing molecular configurations up to symmetry\n- **Machine learning**: G-invariant Wasserstein GANs\n- **Physics**: transport on orbit spaces in gauge theory\n\nOur `wasserstein1_invariant_under_equiv` is the key ingredient, showing that the basic distance respects individual symmetries. The quotient construction extends this to the full group orbit.\n\n---\n\n## Implementation Priority",
     "domains": [
-      "Bridges"
+      "Bridges",
+      "Algebra",
+      "MachineLearning"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "3ef884fe",
+    "source_exp_id": "a6c55e7c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:52:28.952192+00:00"
+    "timestamp": "2026-05-16T18:57:04.485981+00:00"
   },
   {
     "id": "fd_0113",
@@ -733,21 +733,6 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.844636+00:00"
-  },
-  {
-    "id": "fd_0180",
-    "title": "2. Hodge Decomposition for Adversarial Inconsistency Fields",
-    "description": "**Objective**: Prove a graph-theoretic Hodge decomposition theorem for the space of 1-cochains on the activation region overlap graph, decomposing any inconsistency field into a gradient (coboundary), a curl (cocycle), and a harmonic component.\n\n**Approach**: On the complete graph $K_\\iota$ with edge weights given by overlap volumes, define the combinatorial Laplacian $\\Delta = \\delta^* \\delta + \\delta \\delta^*$ where $\\delta$ is the coboundary operator. The Hodge decomposition gives:\n$$C^1(K_\\iota, \\mathbb{R}) = \\mathrm{im}(\\delta) \\oplus \\mathrm{im}(\\delta^*) \\oplus \\ker(\\Delta)$$\n\nThe gradient component is the \"fixable\" part of margin inconsistency; the harmonic component is the irreducible topological obstruction; the curl component detects local rotation in the margin field.\n\n**Key hy",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5198167b",
-    "consumed_by_exp_id": "a6c55e7c",
-    "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
     "id": "fd_0181",
@@ -1229,23 +1214,6 @@
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "1. General Nonzero Linear Map Kernel-Density Theorem over Arbitrary Finite Field",
-    "description": "**Status**: Partially achieved. We proved `nonzero_linear_map_kernel_density_le` for `ZMod q` with `q` prime. The natural generalization targets arbitrary finite fields `𝔽_q` where `q = p^k`.\n\n**Target theorem**:\n```lean\ntheorem nonzero_linear_map_kernel_density_general\n    {F : Type*} [Field F] [Fintype F]\n    (V W : Type*) [AddCommGroup V] [Module F V]\n    [AddCommGroup W] [Module F W]\n    [Fintype V] [Fintype W] [FiniteDimensional F V]\n    [FiniteDimensional F W]\n    (f : V →ₗ[F] W) (hf : f ≠ 0) :\n    Fintype.card f.ker * Fintype.card F ≤ Fintype.card V\n```\n\n**Proof strategy**: The proof in our `nonzero_linear_map_kernel_density_le` already works over any `DivisionRing` with `Fintype` — the argument uses `Module.card_eq_pow_finrank` and rank-nullity, both of which hold for arbitrary fin",
-    "domains": [
-      "Cryptography",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e0e0def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:47:38.621149+00:00"
-  },
-  {
     "id": "fd_0240",
     "title": "3. Freivalds as a Corollary of Schwartz–Zippel over Finite Fields",
     "description": "**Target theorem**:\n```lean\ntheorem freivalds_from_schwartz_zippel\n    {q m p : ℕ} [Fact q.Prime]\n    (M : Matrix (Fin m) (Fin p) (ZMod q))\n    (hM : M ≠ 0) :\n    Fintype.card {r : Fin p → ZMod q // M.mulVec r = 0}\n      ≤ q ^ (p - 1)\n```\n\nbut proved by appeal to the Schwartz–Zippel lemma for degree-1 multivariate polynomials, showing that Freivalds is a special case of polynomial identity testing.\n\n**Proof strategy**: \n1. Extract a nonzero row `w = M i` from `M`.\n2. View `∑ j, w j * r j` as a degree-1 polynomial in `MvPolynomial (Fin p) (ZMod q)`.\n3. Apply the Schwartz–Zippel bound: a nonzero polynomial of total degree `d` over `ZMod q` vanishes on at most `d · q^(p-1)` points.\n4. With `d = 1`, this gives exactly the `q^(p-1)` bound.\n\n**Impact**: This unifies matrix verification with poly",
@@ -1366,20 +1334,6 @@
     "timestamp": "2026-05-16T13:12:11.751217+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Hypothesis",
-    "description": "If the thermodynamic limit f(θ) exists and is differentiable on an open interval, then the empirical distribution of stopping times satisfies a large deviation principle with rate function given by the Legendre transform of f:\n\n$$I(x) = \\sup_\\theta (\\theta x - f(\\theta))$$",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b829eb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:28:58.141131+00:00"
-  },
-  {
     "id": "fd_0243",
     "title": "Key Technical Challenge",
     "description": "The zeros of exponential polynomials ∑ a_k exp(α_k z) form a quasi-periodic set. The density of zeros per unit imaginary length is (α_max - α_min)/(2π) by a theorem of Langer. Formalizing this would be a significant contribution.",
@@ -1424,23 +1378,6 @@
     "timestamp": "2026-05-16T15:07:11.498731+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "5. Closure Mutual Information and Closure Sufficient Statistics",
-    "description": "**Hypothesis**: Given two closure operators `cl₁` and `cl₂` on the same space, one can define a \"closure mutual information\" measuring how much compression by `cl₁` reveals about the closure class of `cl₂`, and prove it satisfies chain-rule-like identities.\n\n**Target Theorems**:\n- Define `closureMI (cl₁ cl₂ : α → α) (len : α → ℕ) : ℕ` measuring the reduction in `cl₂`-MDL achieved by first applying `cl₁`.\n- Prove subadditivity: `closureMI cl₁ cl₂ ≤ deficiency cl₁ + deficiency cl₂` where `deficiency cl x = len x - len (cl x)`.\n- Define `closureSufficient (cl₁ cl₂ : α → α) : Prop` as: `cl₁` is sufficient for `cl₂` if `cl₂` factors through `cl₁`'s fixed points.\n- Prove that closure sufficiency implies zero closure mutual information loss.\n- Show that the lattice of closure operators, ordered b",
-    "domains": [
-      "Cryptography",
-      "EML",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "73e6ebb7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:15:25.424545+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "4. Counting Primitive Lattice Points on Tropical Hypersurfaces",
     "description": "**Hypothesis:** The number of primitive lattice points on a tropical hypersurface in a box of side length L grows as Θ(L^{d-1}) where d is the ambient dimension, matching classical results in the geometry of numbers for hyperplane arrangements.\n\n**Proof Strategy:**\n- For the tropical Fermat hypersurface in ℤ³, count primitive points (a,a,b) with gcd(a,b) = 1 and 1 ≤ a ≤ b ≤ L. This count is Θ(L²/ζ(2)) = Θ(6L²/π²) by Euler's totient summation.\n- Formalize this asymptotic using Mathlib's analysis library and the prime number theorem or Mertens' theorem.\n- Generalize to arbitrary tropical hyperplane arrangements in ℤ^d.\n- Compare with the zero count for classical Fermat: the contrast between Θ(L²) tropical solutions and O(1) classical solutions (by FLT) quantifies the information loss.\n\n**Key",
@@ -1458,26 +1395,6 @@
     "timestamp": "2026-05-16T15:31:36.134362+00:00"
   },
   {
-    "id": "fd_0256",
-    "title": "5. Tropical Scattering and Cryptographic Hardness",
-    "description": "**Hypothesis:** The collapse of tropical Fermat hypersurfaces implies that tropical encodings of Diophantine problems lose the computational hardness that makes classical number theory useful for cryptography. This establishes a formal barrier to tropical cryptographic protocols based on Diophantine-style hardness assumptions.\n\n**Proof Strategy:**\n- Define a \"tropical Diophantine oracle\" that, given a tropical combinatorial type, returns all integer points of that type.\n- Prove that this oracle runs in polynomial time (the tropical type determines a polyhedral cone, and lattice point enumeration in cones is polynomial in the output size).\n- Contrast with the conjectured superpolynomial hardness of finding classical Fermat solutions (which don't exist for n ≥ 3, but the search problem is NP",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "69b261f0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:31:36.153629+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "2. Mixed-Radix Encoding with Variable Bases",
     "description": "**Hypothesis:** The product encoding generalizes beyond uniform bases. Given types encoded into `Fin m` and `Fin n` (not necessarily powers of a common base), there exists an injective encoding of their product into `Fin (m * n)` via the mixed-radix map `(a, b) ↦ a * n + b`.\n\n**Proof Strategy:** This is actually simpler than the power-of-base version since it avoids the `pow_add` rewriting. The `mixed_radix_eq_iff` lemma already handles the core argument. The `fin_prod_injective_to_fin_mul` theorem we proved is the existential version; the explicit constructive version with the mixed-radix formula should be straightforward.\n\n**Formal Statement:**\n```lean\ndef finProdPack (p : Fin m × Fin n) : Fin (m * n) :=\n  ⟨p.1.val * n + p.2.val, ...⟩\n\ntheorem finProdPack_injective : Function.Injective (",
@@ -1491,38 +1408,6 @@
     "source_exp_id": "d032c89b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T16:34:16.188117+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "3. Prefix-Free Coding Infrastructure",
-    "description": "**Hypothesis:** The fixed-length encoding composition theorem extends to variable-length prefix-free codes. If two types admit prefix-free binary codes, their product admits a prefix-free binary code whose expected length is at most the sum of the individual expected lengths.\n\n**Proof Strategy:** Formalize prefix-free codes as injective maps `α → List Bool` satisfying the prefix-free property. Define concatenation of prefix-free codes. Prove that concatenation preserves the prefix-free property and injectivity. This requires formalizing the prefix relation on lists and proving that concatenation of prefix-free codewords is uniquely decodable.\n\n**Key Definitions Needed:**\n```lean\ndef PrefixFree (f : α → List Bool) : Prop :=\n  ∀ a b, a ≠ b → ¬(f a <+: f b)\n\ndef concatCode (f : α → List Bool)",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d032c89b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:34:16.218867+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "4. Encoding-Based Lower Bounds and Tightness",
-    "description": "**Hypothesis:** The additive code length bound `k + ℓ` is tight: there exist types for which no encoding into `Fin (2^(k+ℓ-1))` is injective, when both component encodings are surjective (i.e., `|α| = 2^k` and `|β| = 2^ℓ`).\n\n**Proof Strategy:** Take `α = Fin (2^k)` and `β = Fin (2^ℓ)`. Then `|α × β| = 2^k · 2^ℓ = 2^(k+ℓ)`. Any injection into `Fin (2^(k+ℓ-1))` would require `2^(k+ℓ) ≤ 2^(k+ℓ-1)`, a contradiction. This connects the constructive encoding theorem to information-theoretic lower bounds.\n\n**Formal Statement:**\n```lean\ntheorem encoding_length_tight (k ℓ : ℕ) (hk : 0 < k) (hℓ : 0 < ℓ) :\n    ¬∃ f : Fin (2^k) × Fin (2^ℓ) → Fin (2^(k + ℓ - 1)), Function.Injective f\n```\n\n**Cross-domain connections:** Counting arguments in complexity theory, pigeonhole-based lower bounds, and entropy as",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d032c89b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:34:16.235391+00:00"
   },
   {
     "id": "fd_0258",
@@ -1555,21 +1440,6 @@
     "timestamp": "2026-05-16T17:45:48.227667+00:00"
   },
   {
-    "id": "fd_0256",
-    "title": "Cross-Cutting Themes",
-    "description": "All five directions share a common mechanism: **the orbit-cost construction is functorial**. Given:\n- A category of \"cost spaces\" (objects with a cost function satisfying triangle inequality),\n- A group acting by cost-preserving maps,\n\nthe orbit cost is a functor to the category of \"quotient cost spaces.\" Future work should formalize this categorical perspective, potentially using Mathlib's category theory library.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "92317e70",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T17:45:48.267292+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "2. Ultimate Periodicity of Max-Plus Matrix Powers",
     "description": "**Theorem statement:**\nFor `A : Matrix (Fin n) (Fin n) ℝ` with tropical eigenvalue λ, there exist `T, p ≥ 1` such that for all `k ≥ T`:\n```\ntropPow A (k + p) i j = tropPow A k i j + p * λ\n```\nwhere `tropPow` is iterated tropical matrix multiplication.\n\n**Why it matters:** This is the max-plus cyclicity theorem—the tropical analogue of the Perron-Frobenius theorem on primitive matrix convergence. It says that max-plus linear dynamical systems are eventually periodic with linear drift. This is fundamental for:\n- Predicting long-run behavior of production systems\n- Computing steady-state schedules\n- Analyzing periodic orbits in discrete event systems\n\n**Proof strategy:**\n1. Prove that `tropPow A k i j - k * λ` is bounded (using the subeigenvector bound).\n2. Show this shifted sequence is event",
@@ -1586,38 +1456,6 @@
     "source_exp_id": "04765070",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T18:12:09.834827+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "3. Mean-Payoff Game Value Duality",
-    "description": "**Theorem statement:**\nFor a weighted directed graph encoded by `A : Matrix (Fin n) (Fin n) ℝ`, the value of the one-player mean-payoff game (where the player maximizes long-run average weight) equals `tropSpec A`:\n```\n∀ i, gameValue A i = tropSpec A\n```\nwhere `gameValue A i = lim_{k→∞} (tropPow A k i i) / (k + 1)`.\n\nFor the two-player version with matrices `A` (maximizer edges) and `B` (minimizer edges):\n```\n∃ v, ∀ i, maxₖ (A i k + v k) ≥ λ + v i ∧ minₖ (B i k + v k) ≤ λ + v i\n```\n\n**Why it matters:** Mean-payoff games are a central object in theoretical computer science with applications to:\n- Model checking (the μ-calculus model checking problem reduces to MPGs)\n- Synthesis of reactive systems\n- Algorithmic game theory\n\nOur eigenvector theorem provides the algebraic certificate for game",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "04765070",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:12:09.852617+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "4. Certified Karp Algorithm Correctness",
-    "description": "**Theorem statement:**\n```\ntheorem karp_algorithm_correct (hn : 0 < n) (A : Matrix (Fin n) (Fin n) ℝ) :\n    let dp := fun k i => bestWalk hn A i k\n    tropSpec hn A = Finset.sup' univ univ_nonempty\n      (fun i => Finset.inf' (Finset.range n) ⟨0, mem_range.mpr hn⟩\n        (fun k => (dp n i - dp k i) / (n - k)))\n```\n\n**Why it matters:** Karp's algorithm is the standard O(n³) method for computing cycle means. Certifying its correctness means:\n- Verified implementations for safety-critical scheduling systems\n- Trusted optimization primitives for certified compilers\n- A template for certifying other dynamic programming algorithms\n\n**Proof strategy:**\n1. Show `dp n i - dp k i ≤ (n - k) * tropSpec A` for all i, k (from subeigenvector existence).\n2. Show equality is achieved for the optimal cycle",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "04765070",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:12:09.870157+00:00"
   },
   {
     "id": "fd_0258",
@@ -1637,20 +1475,6 @@
     "source_exp_id": "04765070",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T18:12:09.887593+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Near-term (building on current results):",
-    "description": "- Formalize Karp's DP recurrence and prove equivalence with tropSpec\n- Prove cyclicity theorem for irreducible matrices\n- Implement certified tropical eigenvalue computation in Lean 4",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "04765070",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:12:09.902307+00:00"
   },
   {
     "id": "fd_0246",
@@ -1703,42 +1527,6 @@
     "source_exp_id": "795174d8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T18:54:14.919312+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "4. Certified Robustness and Generalization Bounds from Tropical Spectral Growth",
-    "description": "**Hypothesis**: The tropical spectral bound directly yields Lipschitz constants for tropical neural networks, which in turn give certified robustness radii and PAC-Bayes generalization bounds.\n\n**Proof Strategy**:\n1. Show that `tropMatVec A` is a nonexpansive map with respect to the tropical (L∞) metric up to an additive shift: `d∞(A⊗x, A⊗y) ≤ d∞(x, y)` (this is actually an equality — tropical maps are isometries of the Hilbert projective metric).\n2. Derive: for a k-layer tropical network with matrices `A₁, ..., A_k`, the Lipschitz constant in L∞ is exactly 1 (additive Lipschitz).\n3. Use this to prove certified robustness: if the input perturbation is ε in L∞, the output perturbation is at most ε.\n4. Combine with margin bounds to get generalization certificates.\n\n**Suggested theorem**:\n```",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "795174d8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:54:14.935768+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "5. Tropical Control-Theoretic Interpretation of Deep Architectures",
-    "description": "**Hypothesis**: A deep tropical neural network with k layers is equivalent to a k-step max-plus optimal control problem, where the weight matrices are the stage costs and the iterate bound gives the value function growth rate.\n\n**Proof Strategy**:\n1. Formalize the max-plus Bellman equation: `V_{k+1}(i) = max_j (A_ij + V_k(j))`, which is exactly `tropMatVec`.\n2. Show that `verticalIterate A k (fun _ => 0)` computes the k-step optimal value function.\n3. Prove the connection to shortest/longest path problems: the (i,j) entry of the k-th tropical matrix power gives the maximum-weight path of length k from j to i.\n4. Use the iterate bound to derive finite-horizon cost certificates.\n\n**Suggested theorem**:\n```lean\ntheorem tropical_bellman_optimality\n    {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ) (k",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "795174d8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:54:14.951651+00:00"
   },
   {
     "id": "fd_0251",
