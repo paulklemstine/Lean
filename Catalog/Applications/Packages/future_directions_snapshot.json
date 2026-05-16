@@ -565,10 +565,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e61522de",
     "timestamp": "2026-05-16T19:15:45.356314+00:00"
   },
   {
@@ -938,20 +938,6 @@
     "timestamp": "2026-05-16T21:01:29.624105+00:00"
   },
   {
-    "id": "fd_0252",
-    "title": "Months 3–6:",
-    "description": "Direction 4 (Nullstellensatz) — opens the widest range of applications.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.676904+00:00"
-  },
-  {
     "id": "fd_0253",
     "title": "Months 4–8:",
     "description": "Direction 2 (Nikodym) — deepens the geometric theory.",
@@ -978,6 +964,34 @@
     "source_exp_id": "1646adc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T21:01:29.710311+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Direction 1",
+    "description": "(Lax monads / rate-distortion) — Highest impact, most direct extension of current work.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f60e599f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:07:25.016491+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Direction 4",
+    "description": "(Program semantics) — Most practically applicable, connects to existing PL research.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f60e599f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:07:25.031223+00:00"
   },
   {
     "id": "fd_0113",

@@ -148,7 +148,7 @@ theorem prime_power_fiber_decorrelation_row_bound
       rw [ ← Finset.mul_sum _ _ _, ← tsum_geometric_of_lt_one hdecorr.2.2.2.1 hdecorr.2.2.2.2 ];
       exact mul_le_mul_of_nonneg_left ( Summable.sum_le_tsum ( Finset.range _ ) ( fun _ _ => pow_nonneg hdecorr.2.2.2.1 _ ) ( summable_geometric_of_lt_one hdecorr.2.2.2.1 hdecorr.2.2.2.2 ) ) hdecorr.2.2.2.1;
   simp_all +decide [ ← Finset.mul_sum _ _ _ ];
-  convert h_split_sum.trans ( mul_add C₀ _ _ ▸ mul_le_mul_of_nonneg_left h_geo_series hC₀ ) using 1 ; ring_nf;
+  convert h_split_sum.trans ( mul_add C₀ _ _ ▸ mul_le_mul_of_nonneg_left h_geo_series hC₀ ) using 1 ; ring;
   nlinarith [ inv_mul_cancel_left₀ ( show ( 1 - ρ ) ≠ 0 by linarith [ hdecorr.2.2.2 ] ) C₀ ]
 
 /-! ## §6. Tropical PRG Security from Prime-Power Decay -/
