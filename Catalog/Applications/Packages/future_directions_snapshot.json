@@ -476,10 +476,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fdd38e71",
     "timestamp": "2026-05-16T19:15:45.160819+00:00"
   },
   {
@@ -625,24 +625,6 @@
     "source_exp_id": "1646adc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T21:01:29.510304+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Combine",
-    "description": "|A| ≤ slice rank ≤ 3 · 2.756^n.\n\n### Infrastructure Needed\n- Tensor product spaces and slice rank definition\n- Polynomial method for bounding slice rank (the key innovation of CLP)\n- Dimension counting for \"degree ≤ d\" polynomial spaces\n- Multilinear algebra over finite fields\n\n### Cross-Domain Impact\nThe cap set method connects to:\n- Sunflower lemma improvements\n- Matrix multiplication complexity\n- Communication complexity lower bounds\n- Quantum information theory (entanglement)\n\n---\n\n## Research Team Structure\n\nEach direction should be pursued by a team combining:\n- **Formalization expertise:** Familiarity with Lean 4, Mathlib, and proof automation\n- **Mathematical depth:** Understanding of the polynomial method and its applications\n- **Cross-domain knowledge:** Connections to coding the",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.588451+00:00"
   },
   {
     "id": "fd_0254",
@@ -853,20 +835,6 @@
     "timestamp": "2026-05-16T22:05:47.336361+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Union bound",
-    "description": ": Over n rounds, the total cheat probability is at most n·d/q.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3e135d69",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:05:47.349627+00:00"
-  },
-  {
     "id": "fd_0250",
     "title": "Formalization requires",
     "description": ":\n   - A clean definition of the interactive protocol state\n   - Lemma: partial sums over remaining variables produce degree-bounded univariate polynomials\n   - Composition of single-round soundness via the union bound\n\n### Key Lemmas to Formalize\n- Partial summation preserves polynomial degree\n- Single-round soundness from univariate Schwartz–Zippel\n- Protocol correctness: honest prover always passes\n\n### Cross-Domain Impact\n- **Verifiable computation**: Sum-check is the core of GKR, Spartan, and other proof systems.\n- **Interactive proofs**: IP = PSPACE relies on sum-check.\n- **Blockchain**: Polynomial commitment schemes use sum-check variants.\n\n---\n\n## Direction 3: Formal Low-Degree Testing Soundness\n\n### Target Theorem\n```\ntheorem low_degree_test_soundness\n  (𝔽 : Type*) [Field 𝔽] [Fint",
@@ -881,20 +849,6 @@
     "source_exp_id": "3e135d69",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:05:47.364615+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Evaluation codes as linear codes",
-    "description": ": Define the subspace structure of RM codes.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3e135d69",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:05:47.380945+00:00"
   },
   {
     "id": "fd_0254",
@@ -1692,5 +1646,107 @@
     "source_exp_id": "2a24e1c8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:10:48.862155+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Key Lemmas to Formalize",
+    "description": "- Maximum cycle mean computation for directed weighted graphs\n- Tropical matrix powers and periodicity\n- Connection between eigenvalue and long-term average growth",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be71e654",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:13:17.408455+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Hypothesis",
+    "description": "The tropical semiring $(\\mathbb{R} \\cup \\{-\\infty\\}, \\max, +)$ with residual $a \\multimap c = c - a$ forms a residuated lattice, and tropical aggregation layers are residuated maps. The compositional stability theorem is then a statement about cut-elimination in a quantitative proof system.",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be71e654",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:13:17.427899+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Estimated Difficulty: Medium (theory) + High (implementation)",
+    "description": "The theoretical bounds are straightforward extensions; the practical architecture design and training are open engineering challenges.\n\n---",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be71e654",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:13:17.452185+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Phase 1 (Months 1-3): Foundations",
+    "description": "- Formalize Direction 2 (certified radii) as the most directly applicable extension\n- Begin Direction 3 (residuated lattice on `WithBot ℝ`)\n- Develop computational benchmarks for Direction 5",
+    "domains": [
+      "Cryptography"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be71e654",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:13:17.468441+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Phase 2 (Months 4-6): Core Theory",
+    "description": "- Formalize Direction 1 (tropical Perron-Frobenius) for irreducible matrices\n- Complete Direction 3 and connect to linear logic\n- Prototype hybrid architectures (Direction 5)",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be71e654",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:13:17.481827+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Phase 3 (Months 7-12): Synthesis",
+    "description": "- Formalize Direction 4 (categorical semantics) building on Directions 1-3\n- Benchmark hybrid architectures against certified robustness baselines\n- Publish comprehensive paper connecting all five directions",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be71e654",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:13:17.497497+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Iteration Protocol",
+    "description": "Each direction should maintain:\n1. A Lean formalization file with current progress\n2. A computational notebook with numerical experiments\n3. A list of open sub-problems suitable for subagent-assisted proving\n4. Cross-references to lemmas shared with other directions",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be71e654",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:13:17.512158+00:00"
   }
 ]

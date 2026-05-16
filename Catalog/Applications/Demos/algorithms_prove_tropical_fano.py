@@ -1,287 +1,309 @@
 #!/usr/bin/env python3
 """
-Tropical Fano Incidence Geometry — Algorithms
+Algorithms for Tropical Incidence Geometry
 
-Core algorithms for tropical incidence computation, defect analysis,
-and configuration rigidity testing.
+Implements the algorithms from the research paper:
+1. Tropical defect computation
+2. Incidence reconstruction from defect data
+3. Fano plane verification
+4. Defect matrix analysis
+5. Margin optimization
 """
 
 import numpy as np
-from typing import List, Tuple, Optional
-from itertools import combinations
+from typing import Tuple, List, Optional
+from dataclasses import dataclass
 
 
-class TropicalLine:
-    """A tropical line in the min-plus plane ℝ³.
-
-    A tropical line is defined by three coefficients (a, b, c).
-    A point (x, y, z) is incident to this line when the minimum
-    of {a+x, b+y, c+z} is attained at least twice.
-    """
-
-    def __init__(self, coeffs: np.ndarray):
-        """Initialize with 3 coefficients.
-
-        Args:
-            coeffs: Array of shape (3,) with real coefficients.
-        """
-        assert len(coeffs) == 3, "Tropical line needs exactly 3 coefficients"
-        self.coeffs = np.asarray(coeffs, dtype=float)
-
-    def evaluate(self, point: np.ndarray) -> np.ndarray:
-        """Evaluate the tropical functional at a point.
-
-        Args:
-            point: Array of shape (3,) with point coordinates.
-
-        Returns:
-            Array of shape (3,) with values ℓ_i + p_i.
-
-        Complexity: O(1) — three additions.
-        """
-        return self.coeffs + point
-
-    def is_incident(self, point: np.ndarray, tol: float = 1e-12) -> bool:
-        """Check if a point is tropically incident to this line.
-
-        A point lies on the tropical line when the minimum of the
-        evaluation is attained at least twice.
-
-        Args:
-            point: Array of shape (3,).
-            tol: Numerical tolerance for equality comparison.
-
-        Returns:
-            True if the point is incident.
-
-        Complexity: O(1) — constant-time computation on 3 values.
-        """
-        vals = self.evaluate(point)
-        m = vals.min()
-        return int(np.sum(np.abs(vals - m) < tol)) >= 2
-
-    def defect(self, point: np.ndarray) -> float:
-        """Compute the tropical defect of a point with respect to this line.
-
-        The defect is the gap between the second-smallest and smallest
-        evaluation values. Zero defect ↔ incidence.
-
-        Args:
-            point: Array of shape (3,).
-
-        Returns:
-            Non-negative real number. Zero iff the point is incident.
-
-        Complexity: O(1) — sorting 3 values.
-        """
-        vals = self.evaluate(point)
-        s = np.sort(vals)
-        return float(s[1] - s[0])
+@dataclass
+class TropicalConfig:
+    """A tropical incidence configuration."""
+    points: np.ndarray  # shape (n_points, 3)
+    lines: np.ndarray   # shape (n_lines, 3)
+    
+    @property
+    def n_points(self) -> int:
+        return self.points.shape[0]
+    
+    @property
+    def n_lines(self) -> int:
+        return self.lines.shape[0]
 
 
-class TropicalIncidenceConfig:
-    """A tropical incidence configuration over finite point and line sets.
-
-    Packages a collection of tropical points and lines with their
-    incidence relation determined by tropical evaluation.
-    """
-
-    def __init__(self, points: np.ndarray, lines: np.ndarray):
-        """Initialize from arrays of points and lines.
-
-        Args:
-            points: Array of shape (n_points, 3).
-            lines: Array of shape (n_lines, 3).
-        """
-        self.points = np.asarray(points, dtype=float)
-        self.lines = np.asarray(lines, dtype=float)
-        self.n_points = self.points.shape[0]
-        self.n_lines = self.lines.shape[0]
-        self._trop_lines = [TropicalLine(l) for l in self.lines]
-
-    def defect_matrix(self) -> np.ndarray:
-        """Compute the full defect matrix D[p, ℓ].
-
-        Returns:
-            Array of shape (n_points, n_lines) with defect values.
-
-        Complexity: O(n_points × n_lines) — one defect per pair.
-        """
-        D = np.zeros((self.n_points, self.n_lines))
-        for i in range(self.n_points):
-            for j in range(self.n_lines):
-                D[i, j] = self._trop_lines[j].defect(self.points[i])
-        return D
-
-    def incidence_matrix(self, tol: float = 1e-12) -> np.ndarray:
-        """Compute the incidence matrix from defect data.
-
-        Args:
-            tol: Tolerance for zero-defect comparison.
-
-        Returns:
-            Boolean array of shape (n_points, n_lines).
-
-        Complexity: O(n_points × n_lines).
-        """
-        D = self.defect_matrix()
-        return D < tol
-
-    def security_margin(self) -> float:
-        """Compute the certified security margin γ.
-
-        This is the minimum positive defect over all non-incident pairs.
-        Returns inf if all pairs are incident (degenerate case).
-
-        Returns:
-            Positive real number γ such that all non-incident pairs
-            have defect ≥ γ.
-
-        Complexity: O(n_points × n_lines).
-        """
-        D = self.defect_matrix()
-        positive = D[D > 1e-12]
-        if len(positive) == 0:
-            return float('inf')
-        return float(positive.min())
-
-    def verify_rigidity(self, other: 'TropicalIncidenceConfig',
-                        tol: float = 1e-12) -> bool:
-        """Verify that two configurations with the same defect profile
-        have the same incidence relation.
-
-        This is a computational check of the rigidity theorem.
-
-        Args:
-            other: Another configuration with same dimensions.
-            tol: Tolerance for defect comparison.
-
-        Returns:
-            True if defect profiles match and incidences match.
-
-        Complexity: O(n_points × n_lines).
-        """
-        D1 = self.defect_matrix()
-        D2 = other.defect_matrix()
-        if not np.allclose(D1, D2, atol=tol):
-            return True  # Defects don't match, theorem doesn't apply
-        I1 = D1 < tol
-        I2 = D2 < tol
-        return np.array_equal(I1, I2)
-
-
-def check_fano_axioms(inc: np.ndarray) -> dict:
-    """Check whether an incidence matrix satisfies Fano plane axioms.
-
+def trop_eval(line: np.ndarray, point: np.ndarray) -> np.ndarray:
+    """Evaluate the tropical affine functional.
+    
     Args:
-        inc: Boolean array of shape (7, 7).
-
+        line: coefficients in R^3
+        point: coordinates in R^3
+    
     Returns:
-        Dictionary with axiom verification results.
-
-    Complexity: O(n²) for pairwise checks on 7 elements.
+        v[i] = line[i] + point[i] for i = 0, 1, 2
+    
+    Complexity: O(d) where d = dimension (3 in our case)
     """
+    return line + point
+
+
+def trop_defect(line: np.ndarray, point: np.ndarray) -> float:
+    """Compute the tropical defect (Algorithm 6.1).
+    
+    The defect is the gap between the second-smallest and smallest
+    values of the evaluation vector. It equals:
+        median(v) - min(v) = (sum - min - max) - min
+    
+    Args:
+        line: coefficients in R^3
+        point: coordinates in R^3
+    
+    Returns:
+        Nonneg real number; 0 iff the point is incident to the line.
+    
+    Complexity: O(1) time, O(1) space
+    """
+    v = trop_eval(line, point)
+    s = v.min()
+    L = v.max()
+    median = v.sum() - s - L
+    return median - s
+
+
+def trop_incident(line: np.ndarray, point: np.ndarray) -> bool:
+    """Check tropical incidence.
+    
+    A point lies on a tropical line when the minimum of the evaluation
+    is attained at least twice.
+    
+    Args:
+        line: coefficients in R^3
+        point: coordinates in R^3
+    
+    Returns:
+        True iff the point is incident to the line.
+    
+    Complexity: O(1)
+    """
+    return np.isclose(trop_defect(line, point), 0.0)
+
+
+def defect_matrix(config: TropicalConfig) -> np.ndarray:
+    """Compute the full defect matrix of a configuration.
+    
+    Args:
+        config: tropical incidence configuration
+    
+    Returns:
+        D[p, l] = tropDefect(config.lines[l], config.points[p])
+        Shape: (n_points, n_lines)
+    
+    Complexity: O(n_points * n_lines)
+    """
+    D = np.zeros((config.n_points, config.n_lines))
+    for p in range(config.n_points):
+        for l in range(config.n_lines):
+            D[p, l] = trop_defect(config.lines[l], config.points[p])
+    return D
+
+
+def incidence_matrix(config: TropicalConfig) -> np.ndarray:
+    """Compute the incidence matrix of a configuration.
+    
+    Args:
+        config: tropical incidence configuration
+    
+    Returns:
+        I[p, l] = 1 if point p is incident to line l, 0 otherwise
+        Shape: (n_points, n_lines)
+    
+    Complexity: O(n_points * n_lines)
+    """
+    D = defect_matrix(config)
+    return (np.isclose(D, 0.0)).astype(int)
+
+
+def security_margin(config: TropicalConfig) -> float:
+    """Compute the security margin γ of a configuration.
+    
+    The security margin is the minimum defect among all non-incident pairs.
+    
+    Args:
+        config: tropical incidence configuration
+    
+    Returns:
+        γ ≥ 0; positive iff the configuration has certified separation
+    
+    Complexity: O(n_points * n_lines)
+    """
+    D = defect_matrix(config)
+    I = incidence_matrix(config)
+    non_incident_defects = D[I == 0]
+    if len(non_incident_defects) == 0:
+        return float('inf')
+    return non_incident_defects.min()
+
+
+def reconstruct_incidence(
+    D: np.ndarray, 
+    tolerance: float = 0.0
+) -> np.ndarray:
+    """Reconstruct incidence from defect data (Algorithm 6.2).
+    
+    Args:
+        D: defect matrix, shape (n_points, n_lines)
+        tolerance: threshold for zero (default 0, use > 0 for noisy data)
+    
+    Returns:
+        Binary incidence matrix
+    
+    Complexity: O(n_points * n_lines)
+    
+    Correctness: By Theorem 4.2, if the configuration has certified
+    separation with margin γ and noise < γ, setting tolerance between
+    the noise level and γ recovers the exact incidence relation.
+    """
+    return (D <= tolerance).astype(int)
+
+
+def verify_fano_axioms(I: np.ndarray) -> Tuple[bool, List[str]]:
+    """Verify Fano axioms on a 7×7 incidence matrix (Algorithm 6.3).
+    
+    Args:
+        I: binary incidence matrix, shape (7, 7)
+    
+    Returns:
+        (valid, violations): whether all axioms hold, and list of violations
+    
+    Complexity: O(1) (fixed 7×7 matrix)
+    """
+    violations = []
+    
+    if I.shape != (7, 7):
+        violations.append(f"Wrong shape: {I.shape}, expected (7, 7)")
+        return False, violations
+    
+    # Check 3 points per line
+    col_sums = I.sum(axis=0)
+    if not np.all(col_sums == 3):
+        violations.append(f"Points per line: {col_sums} (expected all 3)")
+    
+    # Check 3 lines per point
+    row_sums = I.sum(axis=1)
+    if not np.all(row_sums == 3):
+        violations.append(f"Lines per point: {row_sums} (expected all 3)")
+    
+    # Check unique line through two points
+    from itertools import combinations
+    for i, j in combinations(range(7), 2):
+        common = np.sum(I[i] & I[j])
+        if common != 1:
+            violations.append(f"Points {i},{j} share {common} lines (expected 1)")
+    
+    # Check unique point on two lines
+    for i, j in combinations(range(7), 2):
+        common = np.sum(I[:, i] & I[:, j])
+        if common != 1:
+            violations.append(f"Lines {i},{j} share {common} points (expected 1)")
+    
+    return len(violations) == 0, violations
+
+
+def tropical_perturbation_robustness(
+    config: TropicalConfig,
+    n_trials: int = 1000,
+    noise_levels: Optional[np.ndarray] = None
+) -> dict:
+    """Test robustness of incidence reconstruction under perturbation.
+    
+    Args:
+        config: base tropical configuration
+        n_trials: number of random perturbation trials per noise level
+        noise_levels: array of noise standard deviations to test
+    
+    Returns:
+        Dictionary mapping noise level to reconstruction accuracy
+    """
+    if noise_levels is None:
+        gamma = security_margin(config)
+        if gamma == float('inf') or gamma <= 0:
+            noise_levels = np.array([0.0, 0.01, 0.1, 1.0])
+        else:
+            noise_levels = np.array([0, gamma*0.1, gamma*0.3, gamma*0.5, 
+                                      gamma*0.9, gamma*1.0, gamma*1.5, gamma*2.0])
+    
+    I_exact = incidence_matrix(config)
     results = {}
-    n_pts, n_lines = inc.shape
-    results['card_points'] = (n_pts == 7)
-    results['card_lines'] = (n_lines == 7)
-
-    pts_per_line = inc.sum(axis=0)
-    lines_per_pt = inc.sum(axis=1)
-    results['three_points_per_line'] = bool(np.all(pts_per_line == 3))
-    results['three_lines_per_point'] = bool(np.all(lines_per_pt == 3))
-
-    # Unique line through two points
-    unique_line = True
-    for i, j in combinations(range(n_pts), 2):
-        common = np.sum(inc[i] & inc[j])
-        if common != 1:
-            unique_line = False
-            break
-    results['unique_line_through_two_points'] = unique_line
-
-    # Unique point on two lines
-    unique_point = True
-    for i, j in combinations(range(n_lines), 2):
-        common = np.sum(inc[:, i] & inc[:, j])
-        if common != 1:
-            unique_point = False
-            break
-    results['unique_point_on_two_lines'] = unique_point
-
-    results['is_fano'] = all(results.values())
+    
+    for sigma in noise_levels:
+        accuracies = []
+        for _ in range(n_trials):
+            # Perturb point and line coordinates
+            pts_noisy = config.points + np.random.randn(*config.points.shape) * sigma
+            lns_noisy = config.lines + np.random.randn(*config.lines.shape) * sigma
+            noisy_config = TropicalConfig(pts_noisy, lns_noisy)
+            I_noisy = incidence_matrix(noisy_config)
+            acc = np.mean(I_noisy == I_exact)
+            accuracies.append(acc)
+        results[float(sigma)] = {
+            'mean_accuracy': np.mean(accuracies),
+            'std_accuracy': np.std(accuracies),
+            'min_accuracy': np.min(accuracies),
+        }
+    
     return results
 
 
-def reconstruct_incidence_from_defect(D: np.ndarray, tol: float = 1e-12) -> np.ndarray:
-    """Reconstruct the incidence relation from the defect matrix.
-
-    Algorithm:
-        For each entry D[p, ℓ]:
-            - If D[p, ℓ] ≈ 0: point p is incident to line ℓ
-            - If D[p, ℓ] > 0: point p is not incident to line ℓ
-
-    This implements the reconstruction direction of the rigidity theorem.
-
-    Args:
-        D: Defect matrix of shape (n_points, n_lines).
-        tol: Tolerance for zero comparison.
-
-    Returns:
-        Boolean incidence matrix.
-
-    Complexity: O(n_points × n_lines) — one comparison per entry.
-    """
-    return D < tol
-
-
-def tropical_gauge_transform(config: TropicalIncidenceConfig,
-                              shift: float) -> TropicalIncidenceConfig:
-    """Apply a tropical gauge transformation that preserves defect.
-
-    A shift s applied as ℓ → ℓ + s, p → p - s preserves all
-    evaluation differences and hence all defects.
-
-    Args:
-        config: Original configuration.
-        shift: Scalar shift value.
-
-    Returns:
-        New configuration with same defect profile.
-
-    Complexity: O(n_points + n_lines).
-    """
-    new_lines = config.lines + shift
-    new_points = config.points - shift
-    return TropicalIncidenceConfig(new_points, new_lines)
-
+# ─── Example Usage ──────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    # Example usage
-    print("Tropical Incidence Algorithm Demo")
-    print("-" * 40)
-
-    # Create a small configuration
-    points = np.array([[0, 0, 0], [1, -1, 0], [0, -1, 1]], dtype=float)
-    lines = np.array([[0, 1, 3], [1, 0, 2], [2, 3, 0]], dtype=float)
-
-    config = TropicalIncidenceConfig(points, lines)
-
-    print("\nDefect matrix:")
-    D = config.defect_matrix()
-    print(D)
-
-    print("\nIncidence matrix:")
-    I = config.incidence_matrix()
-    print(I.astype(int))
-
-    print(f"\nSecurity margin: γ = {config.security_margin():.4f}")
-
-    # Test rigidity via gauge transform
-    config2 = tropical_gauge_transform(config, 7.0)
-    rigid = config.verify_rigidity(config2)
-    print(f"\nRigidity check (gauge transform): {rigid}")
-
-    # Reconstruct from defect
-    I_reconstructed = reconstruct_incidence_from_defect(D)
-    print(f"\nReconstruction matches: {np.array_equal(I, I_reconstructed)}")
+    print("Tropical Incidence Geometry: Algorithm Demonstrations")
+    print("=" * 60)
+    
+    # Create a simple configuration
+    np.random.seed(42)
+    config = TropicalConfig(
+        points=np.random.randn(5, 3),
+        lines=np.random.randn(5, 3)
+    )
+    
+    print("\n--- Defect Matrix ---")
+    D = defect_matrix(config)
+    print(np.round(D, 4))
+    
+    print("\n--- Incidence Matrix ---")
+    I = incidence_matrix(config)
+    print(I)
+    
+    print(f"\n--- Security Margin ---")
+    gamma = security_margin(config)
+    print(f"γ = {gamma:.6f}")
+    
+    print("\n--- Reconstruction from Noisy Data ---")
+    noise = 0.01
+    D_noisy = D + np.random.randn(*D.shape) * noise
+    D_noisy = np.maximum(D_noisy, 0)
+    I_recon = reconstruct_incidence(D_noisy, tolerance=noise * 3)
+    print(f"Noise level: {noise}")
+    print(f"Reconstructed incidence matches exact: {np.array_equal(I_recon, I)}")
+    
+    print("\n--- Fano Axiom Verification ---")
+    # Classical Fano plane
+    fano = np.array([
+        [1,1,0,1,0,0,0],
+        [1,0,1,0,1,0,0],
+        [0,1,1,0,0,1,0],
+        [1,0,0,0,0,1,1],
+        [0,1,0,0,1,0,1],
+        [0,0,1,1,0,0,1],
+        [0,0,0,1,1,1,0],
+    ])
+    valid, violations = verify_fano_axioms(fano)
+    print(f"Fano axioms satisfied: {valid}")
+    if violations:
+        for v in violations:
+            print(f"  Violation: {v}")
+    
+    print("\n--- Perturbation Robustness ---")
+    results = tropical_perturbation_robustness(config, n_trials=100)
+    for sigma, stats in results.items():
+        print(f"  σ={sigma:.4f}: accuracy={stats['mean_accuracy']*100:.1f}% "
+              f"± {stats['std_accuracy']*100:.1f}%")
