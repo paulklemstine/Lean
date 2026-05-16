@@ -96,22 +96,6 @@
     "timestamp": "2026-05-14T16:03:53.853831+00:00"
   },
   {
-    "id": "seed_030",
-    "title": "Reversible Computing via Tropical Isomorphisms",
-    "description": "Construct a reversible Turing machine model where each transition corresponds to a tropical semiring isomorphism, and prove that reversible tropical computation simulates classical computation with at most polynomial overhead. Show that the Landauer erasure cost in tropical entropy is exactly kT ln(2) per bit, formalizing thermodynamic computation bounds via min-plus algebra.",
-    "domains": [
-      "Computation",
-      "Tropical",
-      "Physics"
-    ],
-    "priority_score": 0.82,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "bd77de91",
-    "timestamp": "2026-05-14T16:03:53.828694+00:00"
-  },
-  {
     "id": "seed_051",
     "title": "Alien Mathematics: What Theorems Would Non-Carbon Life Prove?",
     "description": "Construct a formal framework for alien mathematics by varying the underlying semiring from classical arithmetic to tropical, idempotent, and p-adic algebras. Prove that each semiring choice yields a distinct provability landscape, and that the theorems of idempotent alien civilizations are precisely the tropical shadow theorems of classical results. Show that the intersection of all semiring-provable statements is exactly the combinatorial core of mathematics.",
@@ -697,21 +681,82 @@
     "timestamp": "2026-05-16T09:18:22.944252+00:00"
   },
   {
-    "id": "fd_0251",
-    "title": "Tightness",
-    "description": ": Construct examples achieving the bound using random queries/keys.\n\n### Cross-Domain Connections\n\n- **Low-rank transformers**: Factor rank provides a formal measure of attention \"compression\" — low factor rank means the attention pattern is representable with few separable templates, justifying low-rank approximation methods like Linformer and Performer.\n- **Interpretability**: Each rank-1 summand $u(i) + v(j)$ in the decomposition represents a \"pure attention template\" that independently ranks tokens. Factor rank counts the minimum number of such templates.\n\n---\n\n## 5. Extension Complexity and Communication Complexity\n\n### Conjecture\n\nThe tropical factor rank of a distance/cost matrix provides lower bounds on the extension complexity of the corresponding tropical polytope:\n\n$$\\text{ext}(",
+    "id": "fd_0245",
+    "title": "TropAut",
+    "description": ": Objects are tropical semimodules (α → ℝ), morphisms are tropical automorphisms (pullbacks along bijections).",
     "domains": [
       "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd77de91",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T10:49:05.580800+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "QUnit",
+    "description": ": Objects are finite-dimensional Hilbert spaces, morphisms are unitary operators.\n\n**Target Theorem (Functorial Bridge)**:\n```\nF_trop : FinBij → TropAut  (pullback functor)\nF_quant : FinBij → QUnit   (permutation matrix embedding)\n```\nBoth functors preserve composition, identity, and send bijections to invertible morphisms. Moreover, F_trop and F_quant are both faithful.\n\n**Why This Matters**: This shows that reversible classical computation embeds simultaneously into tropical cost dynamics and quantum unitary dynamics. The tropical side governs thermodynamic cost, the quantum side governs quantum simulation. A reversible circuit has both a tropical \"shadow\" (cost landscape) and a quantum \"lift\" (unitary evolution).\n\n**Proof Strategy**:\n1. Formalize FinBij as a category using Mathlib's `Ca",
+    "domains": [
+      "Tropical",
+      "Physics",
       "Bridges",
-      "MachineLearning",
+      "Logic",
       "Computation"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b18b8608",
+    "source_exp_id": "bd77de91",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:18:23.003359+00:00"
+    "timestamp": "2026-05-16T10:49:05.597463+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Direction 1",
+    "description": "(Unbounded Tapes): Requires significant Lean infrastructure for Turing machines but has the highest impact for complexity theory.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd77de91",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T10:49:05.626526+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Direction 4",
+    "description": "(Spectral Theory): Requires tropical linear algebra infrastructure; high novelty payoff.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd77de91",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T10:49:05.640865+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Connect to existing results",
+    "description": "by importing from `Computation.ReversibleTropicalThermodynamics`.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd77de91",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T10:49:05.697515+00:00"
   },
   {
     "id": "seed_052",
@@ -1264,10 +1309,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cc933f99",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6b086c3",
     "timestamp": "2026-05-16T06:31:54.490610+00:00"
   },
   {
@@ -1509,22 +1554,6 @@
     "timestamp": "2026-05-16T09:33:50.714492+00:00"
   },
   {
-    "id": "fd_0244",
-    "title": "Direction 1: Walk Decomposition and Exact Spectral Identification",
-    "description": "**Status**: High priority, high feasibility\n\n**Goal**: Close the gap between `tropRate` and `maxCycleMean` by proving the reverse inequality:\n\n```\ntropRate(W) ≤ maxCycleMean(W)\n```\n\nCombined with the already-proved `maxCycleMean(W) ≤ tropRate(W)`, this establishes exact equality.\n\n**Proof Strategy**:\n1. Formalize walks as functions `Fin(m+2) → Fin(n+1)` with boundary conditions.\n2. Prove `tropPow W m i j = max over all walks of walkWeight`.\n3. Prove the **Pigeonhole Cycle Extraction Lemma**: any walk of length > n on n+1 vertices contains a repeated vertex, hence a cycle of length ≤ n+1.\n4. Prove that any closed walk decomposes into simple cycles, each with mean ≤ maxCycleMean.\n5. Conclude: `tropPow W m i i ≤ (m+1) * maxCycleMean W`.\n\n**Key Lemma**:\n```\ntheorem walk_cycle_decomposition :\n ",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23a76967",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:39:33.525513+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Direction 3: Tropical Additive Eigenvectors (Bellman Eigenpairs)",
     "description": "**Status**: High priority, medium-high feasibility\n\n**Goal**: Prove existence of additive eigenpairs for the tropical Bellman operator.\n\n**Formal target**:\n```\ntheorem tropical_bellman_eigenpair\n    (W : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) :\n    ∃ (λ : ℝ) (v : Fin (n+1) → ℝ),\n      λ = tropRate W ∧\n      ∀ i, (Finset.univ.sup' Finset.univ_nonempty fun j => W i j + v j) = λ + v i\n```\n\n**Proof Strategy**:\n1. Define the Bellman operator T : (Fin(n+1) → ℝ) → (Fin(n+1) → ℝ) by (Tx)(i) = max_j(W(i,j) + x(j)).\n2. Show T is order-preserving and additively homogeneous: T(x + c) = Tx + c.\n3. Shift by the eigenvalue: define W' = W - μ with μ = tropRate(W).\n4. Show T' has eigenvalue 0; find v with T'v = v.\n5. Use the critical graph (subgraph of edges achieving equality) and a shortest-path construction.",
@@ -1540,34 +1569,6 @@
     "source_exp_id": "23a76967",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:39:33.570144+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Priority Ordering",
-    "description": "1. Walk decomposition (Direction 1) — completes the current work\n2. Karp's algorithm (Direction 2) — highest practical value\n3. Bellman eigenvectors (Direction 3) — richest mathematical content\n4. Eventual periodicity (Direction 4) — deepest structural result\n5. Mean-payoff games (Direction 5) — broadest application scope",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23a76967",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:39:33.646795+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Validation Protocol",
-    "description": "For each direction:\n1. State the main theorem precisely in Lean\n2. Write computational tests (Python) to validate on examples\n3. Identify the key lemmas and prove them bottom-up\n4. Use the subadditive/Fekete infrastructure established here as a foundation\n5. Document cross-domain applications with worked examples\n\n---",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23a76967",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:39:33.661157+00:00"
   },
   {
     "id": "fd_0253",
@@ -1677,20 +1678,6 @@
     "timestamp": "2026-05-16T09:47:38.698983+00:00"
   },
   {
-    "id": "fd_0244",
-    "title": "C. Bayesian Verification Framework",
-    "description": "Combine `freivalds_soundness_prob` with Bayes' theorem to formalize:\n- How repeated successful Freivalds checks exponentially increase posterior confidence.\n- Optimal stopping criteria for randomized verification.\n- Connections to sequential hypothesis testing.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e0e0def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:47:38.713993+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Hypothesis",
     "description": "The data processing inequality states that for a Markov chain X → Y → Z:\n    I(X; Z) ≤ I(X; Y)\nwhere I denotes mutual information. We conjecture a tropical analogue:\n\n    tropical_mutual_info(X, Z) ≤ tropical_mutual_info(X, Y)\n\nwhere tropical mutual information is defined via min-plus convolution of cost matrices.",
@@ -1705,20 +1692,6 @@
     "timestamp": "2026-05-16T10:43:08.701224+00:00"
   },
   {
-    "id": "fd_0247",
-    "title": "Key Formalization",
-    "description": "```\ndef tropical_mutual_info(P_XY : Matrix) : ℝ :=\n  triangleCyc(-log P_XY) - triangleCyc(-log marginal_X(P_XY))\n\ntheorem tropical_data_processing :\n  tropical_mutual_info(compose(P_XY, P_YZ)) ≤ tropical_mutual_info(P_XY)\n```",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0c823664",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:43:08.715203+00:00"
-  },
-  {
     "id": "fd_0249",
     "title": "Phase 2 (Medium-term, 3-6 months)",
     "description": "- Formalize Direction 1 (Tropical Conductance) — requires building graph theory infrastructure\n- Formalize Direction 4 (Data Processing) — requires information theory infrastructure\n- Develop continuous-time analogues",
@@ -1731,36 +1704,5 @@
     "source_exp_id": "0c823664",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T10:43:08.743553+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Phase 3 (Long-term, 6-12 months)",
-    "description": "- Direction 2 (Large Deviations) — deepest mathematical content\n- Direction 5 (Quantum) — requires quantum information formalization\n- Comprehensive library of tropical-probabilistic bridge theorems",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0c823664",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:43:08.760563+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Cross-Cutting Tasks",
-    "description": "- Build a formal library of tropical semiring properties\n- Formalize Karp's algorithm correctness\n- Develop computational backends for tropical matrix operations\n- Create a benchmark suite of Markov chains for testing tropical bounds",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0c823664",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:43:08.775747+00:00"
   }
 ]
