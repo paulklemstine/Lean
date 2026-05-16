@@ -380,21 +380,6 @@
     "timestamp": "2026-05-16T09:05:20.407815+00:00"
   },
   {
-    "id": "fd_0233",
-    "title": "Connect",
-    "description": "`AlgCircuit.toMvPolynomial` from `AlgebraicCircuitComplexity.lean` to `schwartz_zippel_succ`.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "4ba38644",
-    "timestamp": "2026-05-16T09:05:20.422171+00:00"
-  },
-  {
     "id": "fd_0235",
     "title": "Compose",
     "description": "with `bounded_circuit_degree_bound` and `mulGates_lower_bound_from_degree` to get circuit-complexity-aware bounds.\n\n### Key Theorems\n```\ntheorem circuit_pit_soundness (C : AlgCircuit K n)\n    (hC : C.toMvPolynomial ≠ 0) :\n    Fintype.card {x : Fin n → K // C.eval x = 0}\n      ≤ C.toMvPolynomial.totalDegree * (Fintype.card K) ^ (n - 1)\n```\n\n### Impact\nThis creates the first formal bridge between **circuit complexity** (syntactic) and **polynomial identity testing** (semantic), enabling future formalization of the Kabanets–Impagliazzo connection between PIT derandomization and circuit lower bounds.\n\n---\n\n## Direction 3: Polynomial Fingerprinting and Streaming Verification\n\n### Hypothesis\nTwo strings s₁, s₂ ∈ {0,1}^n are equal if and only if their polynomial encodings p_{s₁}(x) = p_{s₂}(x) as",
@@ -870,6 +855,48 @@
     "timestamp": "2026-05-16T21:34:33.969194+00:00"
   },
   {
+    "id": "fd_0245",
+    "title": "Direction 4",
+    "description": "(Decision procedure) — highest immediate impact, builds directly on current work.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4ba38644",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:41:28.086781+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Direction 1",
+    "description": "(O(n log n) bound) — natural extension, improves certified complexity.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4ba38644",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:41:28.102286+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Direction 2",
+    "description": "(Multivariate) — opens the most new territory.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4ba38644",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:41:28.116740+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -1199,6 +1226,23 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
+    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "68af5bc6",
+    "timestamp": "2026-05-15T09:19:36.848982+00:00"
   },
   {
     "id": "fd_0226",
