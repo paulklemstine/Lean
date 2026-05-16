@@ -20,6 +20,8 @@ algebra and weighted directed graph path optimization.
 * `tropMul_assoc` — associativity of tropical matrix multiplication
 * `tropBellman` — Bellman optimality recurrence for tropical powers
 * `tropPow_eq_sup_pathWeight` — tropical power = max weight over length-m walks
+* `reachable_iff_exists_walk` — Boolean reachability characterized by walk existence
+* `tropical_idempotence` — max a a = a, the foundation of tropical aggregation
 
 ## References
 
@@ -30,18 +32,6 @@ shortest/longest path problems in weighted directed graphs.
 open Finset Matrix
 
 noncomputable section
-
-/-! ## Distributivity lemmas -/
-
-/-- Left distributivity: `c + max a b = max (c + a) (c + b)`. -/
-theorem real_add_max_left (a b c : ℝ) :
-    c + max a b = max (c + a) (c + b) := by
-  grind +splitImp
-
-/-- Right distributivity: `max a b + c = max (a + c) (b + c)`. -/
-theorem real_max_add_right (a b c : ℝ) :
-    max a b + c = max (a + c) (b + c) := by
-  rw [max_add_add_right]
 
 /-! ## Tropical matrix multiplication -/
 
@@ -99,45 +89,51 @@ theorem tropBellman {n : ℕ}
 
 /-! ## Associativity of tropical matrix multiplication -/
 
-/-- Finset.sup' over a bivariate function can be computed in either order. -/
+/-
+`sup'` distributes over addition from the right.
+-/
+theorem sup'_add_right {n : ℕ}
+    (f : Fin n.succ → ℝ) (c : ℝ) :
+    Finset.univ.sup' Finset.univ_nonempty f + c =
+    Finset.univ.sup' Finset.univ_nonempty (fun k => f k + c) := by
+  grind +suggestions
+
+/-
+`sup'` distributes over addition from the left.
+-/
+theorem add_sup'_left' {n : ℕ}
+    (f : Fin n.succ → ℝ) (c : ℝ) :
+    c + Finset.univ.sup' Finset.univ_nonempty f =
+    Finset.univ.sup' Finset.univ_nonempty (fun k => c + f k) := by
+  refine' le_antisymm _ _ <;> simp_all +decide [Finset.le_sup'_iff];
+  · simpa using Finset.exists_max_image Finset.univ f ( Finset.univ_nonempty );
+  · grind
+
+/-
+Finset.sup' over a bivariate function can be computed in either order.
+-/
 theorem sup'_sup'_comm {n : ℕ}
     (f : Fin n.succ → Fin n.succ → ℝ) :
     Finset.univ.sup' Finset.univ_nonempty (fun k =>
       Finset.univ.sup' Finset.univ_nonempty (fun l => f k l)) =
     Finset.univ.sup' Finset.univ_nonempty (fun l =>
       Finset.univ.sup' Finset.univ_nonempty (fun k => f k l)) := by
-  refine' le_antisymm _ _ <;> simp +decide [Finset.sup'_le_iff]
-  · have := Finset.exists_max_image Finset.univ (fun p : Fin n.succ × Fin n.succ => f p.1 p.2)
-      ⟨⟨0, 0⟩, Finset.mem_univ _⟩; aesop
-  · have := Finset.exists_max_image Finset.univ (fun p : Fin (n + 1) × Fin (n + 1) => f p.2 p.1)
-      ⟨⟨0, 0⟩, Finset.mem_univ _⟩; aesop
+  exact Finset.sup'_comm univ_nonempty univ_nonempty fun b l => f b l
 
-/-- `sup'` distributes over addition from the right. -/
-theorem sup'_add_right {n : ℕ}
-    (f : Fin n.succ → ℝ) (c : ℝ) :
-    Finset.univ.sup' Finset.univ_nonempty f + c =
-    Finset.univ.sup' Finset.univ_nonempty (fun k => f k + c) := by
-  refine' le_antisymm _ _ <;> simp_all +decide [Finset.sup'_le_iff]
-  · simpa using Finset.exists_max_image Finset.univ f Finset.univ_nonempty
-  · exact fun i => ⟨i, le_rfl⟩
-
-/-- `sup'` distributes over addition from the left. -/
-theorem add_sup'_left {n : ℕ}
-    (f : Fin n.succ → ℝ) (c : ℝ) :
-    c + Finset.univ.sup' Finset.univ_nonempty f =
-    Finset.univ.sup' Finset.univ_nonempty (fun k => c + f k) := by
-  exact add_sup' univ f c univ_nonempty
-
-/-- **Tropical matrix multiplication is associative.** This is the algebraic engine
-    behind path concatenation. -/
+/-
+**Tropical matrix multiplication is associative.** This is the algebraic engine
+    behind path concatenation: composing optimal paths over two segments and then a
+    third is the same as composing over the first and then the last two.
+-/
 theorem tropMul_assoc {n : ℕ}
     (A B C : Matrix (Fin n.succ) (Fin n.succ) ℝ) :
     tropMul (tropMul A B) C = tropMul A (tropMul B C) := by
-  funext i j
-  unfold tropMul
-  convert sup'_sup'_comm _ using 2
-  convert sup'_add_right _ _
-  convert add_sup'_left _ _ using 2; ring
+  -- By definition of tropMul, we need to show that tropMul (tropMul A B) C = tropMul A (tropMul B C).
+  funext i j;
+  unfold tropMul;
+  convert sup'_sup'_comm _ using 2;
+  convert sup'_add_right _ _;
+  convert add_sup'_left' _ _ using 2 ; ring
 
 /-! ## Directed walks and walk weights -/
 
@@ -153,30 +149,13 @@ def seqWeight {n m : ℕ} (W : Matrix (Fin n) (Fin n) ℝ)
 
 /-! ### Nonemptiness of path finsets -/
 
-/-
-The path finset for length 1 is nonempty (the pair [i, j] is always valid).
--/
 theorem pathFinset_one_nonempty {n : ℕ} (i j : Fin n) :
     (pathFinset n 1 i j).Nonempty := by
-  -- The set of functions from Fin 2 to Fin n where the first element is i and the second is j is nonempty because it contains at least the function that maps 0 to i and 1 to j.
-  use fun k => if k = 0 then i else j;
-  exact Finset.mem_filter.mpr ⟨ Finset.mem_univ _, rfl, rfl ⟩
+  exact ⟨ fun k => if k = 0 then i else j, Finset.mem_filter.mpr ⟨ Finset.mem_univ _, rfl, rfl ⟩ ⟩
 
-/-
-The path finset for length m+2 is nonempty when n ≥ 1.
--/
-theorem pathFinset_succ_nonempty {n : ℕ} (m : ℕ) (i j : Fin n.succ) :
-    (pathFinset n.succ (m + 2) i j).Nonempty := by
-  -- Construct a witness function `f : Fin (m + 3) → Fin n.succ` with `f 0 = i`, `f ⟨m + 2,...⟩ = j`, and all other values arbitrary (e.g., 0).
-  use fun t => if t.val = 0 then i else if t.val = m + 2 then j else 0;
-  unfold pathFinset; aesop
-
-/-- Nonemptiness of pathFinset for any m+1. -/
 theorem pathFinset_pos_nonempty {n : ℕ} (m : ℕ) (i j : Fin n.succ) :
     (pathFinset n.succ (m + 1) i j).Nonempty := by
-  cases m with
-  | zero => exact pathFinset_one_nonempty i j
-  | succ m => exact pathFinset_succ_nonempty m i j
+  refine' ⟨ fun k => if k = 0 then i else if k = m + 1 then j else 0, _ ⟩ ; simp +decide [ pathFinset ]
 
 /-! ### Base case: length-1 walks -/
 
@@ -188,10 +167,13 @@ theorem sup_pathWeight_one {n : ℕ} (W : Matrix (Fin n.succ) (Fin n.succ) ℝ)
     (pathFinset n.succ 1 i j).sup' (pathFinset_one_nonempty i j)
       (fun f => seqWeight W f) = W i j := by
   refine' le_antisymm ( Finset.sup'_le _ _ _ ) _;
-  · simp +decide [ pathFinset, seqWeight ];
+  · unfold pathFinset seqWeight;
     aesop;
-  · simp +decide [ pathFinset, seqWeight ];
-    exact ⟨ fun k => if k = 0 then i else j, by simp +decide, by simp +decide ⟩
+  · refine' le_trans _ ( Finset.le_sup' _ _ );
+    rotate_left;
+    exact fun k => if k = 0 then i else j;
+    · exact Finset.mem_filter.mpr ⟨ Finset.mem_univ _, rfl, rfl ⟩;
+    · unfold seqWeight; aesop;
 
 /-! ### Inductive step: extending walks -/
 
@@ -204,7 +186,11 @@ theorem seqWeight_snoc {n m : ℕ} (W : Matrix (Fin n) (Fin n) ℝ)
     seqWeight (m := m + 2) W f =
       seqWeight (m := m + 1) W (fun t => f t.castSucc) +
         W (f ⟨m + 1, by omega⟩) (f ⟨m + 2, by omega⟩) := by
-  convert Fin.sum_univ_castSucc _ using 1
+  unfold seqWeight
+  simp [Fin.sum_univ_castSucc] at *;
+  rfl
+
+/-! ### Main theorem: tropical powers = max walk weight -/
 
 /-
 **Main Theorem**: Tropical matrix power equals the supremum of walk weights.
@@ -220,37 +206,34 @@ theorem tropPow_eq_sup_pathWeight {n : ℕ}
       tropPow W m i j =
         (pathFinset n.succ (m + 1) i j).sup' (pathFinset_pos_nonempty m i j)
           (fun f => seqWeight W f) := by
-  intro m
-  induction' m with m ih;
-  · intro i j;
-    convert sup_pathWeight_one W i j |> Eq.symm;
-  · -- By definition of tropPow, we have:
-    intro i j
-    have h_tropPow_succ : tropPow W (m + 1) i j =
-      Finset.univ.sup' Finset.univ_nonempty
-        (fun k => tropPow W m i k + W k j) := by
-          grind +suggestions;
-    refine' le_antisymm _ _ <;> simp_all +decide [ Finset.sup'_le_iff ];
-    · -- Let's choose any $k$ that maximizes the expression.
-      obtain ⟨k, hk⟩ : ∃ k : Fin (n + 1), ∀ k' : Fin (n + 1), ((pathFinset (n + 1) (m + 1) i k').sup' (pathFinset_pos_nonempty m i k') (fun x => seqWeight W x)) + W k' j ≤ ((pathFinset (n + 1) (m + 1) i k).sup' (pathFinset_pos_nonempty m i k) (fun x => seqWeight W x)) + W k j := by
-        simpa using Finset.exists_max_image Finset.univ ( fun k => ( ( pathFinset ( n + 1 ) ( m + 1 ) i k ).sup' ( pathFinset_pos_nonempty m i k ) fun x => seqWeight W x ) + W k j ) ⟨ i, Finset.mem_univ i ⟩;
-      -- Let's choose any $f$ that maximizes the expression.
-      obtain ⟨f, hf⟩ : ∃ f : Fin (m + 2) → Fin (n + 1), f 0 = i ∧ f ⟨m + 1, by omega⟩ = k ∧ seqWeight W f = ((pathFinset (n + 1) (m + 1) i k).sup' (pathFinset_pos_nonempty m i k) (fun x => seqWeight W x)) := by
-        have := Finset.exists_max_image ( pathFinset ( n + 1 ) ( m + 1 ) i k ) ( fun x => seqWeight W x ) ( pathFinset_pos_nonempty m i k );
-        obtain ⟨ f, hf₁, hf₂ ⟩ := this; use f; simp_all +decide [ pathFinset ] ;
-        exact le_antisymm ( Finset.le_sup' ( fun x => seqWeight W x ) ( by aesop ) ) ( Finset.sup'_le _ _ fun x hx => hf₂ x ( by aesop ) ( by aesop ) );
-      refine' ⟨ Fin.snoc f j, _, _ ⟩ <;> simp_all +decide [ pathFinset ];
-      · simp +decide [ Fin.snoc ];
-      · intro b; specialize hk b; simp_all +decide [ seqWeight_snoc ] ;
+  intro m i j;
+  induction' m with m ih generalizing i j <;> simp_all +decide [ tropPow ];
+  · convert sup_pathWeight_one W i j |> Eq.symm;
+  · refine' le_antisymm _ _;
+    · simp +decide [ tropMul, ih ];
+      -- By definition of pathFinset, there exists a walk of length m+2 from i to j.
+      obtain ⟨f, hf⟩ : ∃ f : Fin (m + 2 + 1) → Fin (n + 1), f 0 = i ∧ f ⟨m + 2, by omega⟩ = j ∧ ∀ k : Fin (n + 1), (pathFinset (n + 1) (m + 1) i k).sup' (pathFinset_pos_nonempty m i k) (fun x => seqWeight W x) + W k j ≤ seqWeight W (fun t => f t.castSucc) + W (f ⟨m + 1, by omega⟩) (f ⟨m + 2, by omega⟩) := by
+        -- By definition of supremum, there exists a vertex $k$ such that $(pathFinset (n + 1) (m + 1) i k).sup' (pathFinset_pos_nonempty m i k) (fun x => seqWeight W x) + W k j$ is maximal.
+        obtain ⟨k, hk⟩ : ∃ k : Fin (n + 1), ∀ l : Fin (n + 1), (pathFinset (n + 1) (m + 1) i l).sup' (pathFinset_pos_nonempty m i l) (fun x => seqWeight W x) + W l j ≤ (pathFinset (n + 1) (m + 1) i k).sup' (pathFinset_pos_nonempty m i k) (fun x => seqWeight W x) + W k j := by
+          simpa using Finset.exists_max_image Finset.univ ( fun l => ( pathFinset ( n + 1 ) ( m + 1 ) i l ).sup' ( pathFinset_pos_nonempty _ _ _ ) ( fun x => seqWeight W x ) + W l j ) ⟨ i, Finset.mem_univ i ⟩;
+        -- By definition of supremum, there exists a walk $f$ of length $m+1$ from $i$ to $k$ such that $seqWeight W f = (pathFinset (n + 1) (m + 1) i k).sup' (pathFinset_pos_nonempty m i k) (fun x => seqWeight W x)$.
+        obtain ⟨f, hf⟩ : ∃ f : Fin (m + 1 + 1) → Fin (n + 1), f 0 = i ∧ f ⟨m + 1, by omega⟩ = k ∧ seqWeight W f = (pathFinset (n + 1) (m + 1) i k).sup' (pathFinset_pos_nonempty m i k) (fun x => seqWeight W x) := by
+          have := Finset.exists_max_image ( pathFinset ( n + 1 ) ( m + 1 ) i k ) ( fun x => seqWeight W x ) ( pathFinset_pos_nonempty m i k );
+          obtain ⟨ f, hf₁, hf₂ ⟩ := this; use f; simp_all +decide [ pathFinset ] ;
+          exact le_antisymm ( Finset.le_sup' ( fun x => seqWeight W x ) ( by aesop ) ) ( Finset.sup'_le _ _ fun x hx => hf₂ x ( by aesop ) ( by aesop ) );
+        use Fin.snoc f j;
         simp_all +decide [ Fin.snoc ];
-    · obtain ⟨ k, hk ⟩ := Finset.exists_max_image ( pathFinset ( n + 1 ) ( m + 2 ) i j ) ( fun f => seqWeight W f ) ( pathFinset_pos_nonempty ( m + 1 ) i j );
-      use k ⟨ m + 1, by linarith ⟩;
-      intro x hx; specialize hk; have := hk.2 x hx; simp_all +decide [ seqWeight_snoc ] ;
-      refine' le_trans ( hk.2 x hx ) _;
-      refine' add_le_add _ _;
-      · refine' Finset.le_sup' _ _;
-        simp_all +decide [ pathFinset ];
-      · unfold pathFinset at hk; aesop;
+      use f; simp_all +decide [ pathFinset ] ;
+      intro k; specialize hf; have := hf.2.2 k; simp_all +decide [ seqWeight ] ;
+      rw [ Fin.sum_univ_castSucc ] ; aesop;
+    · refine' Finset.sup'_le _ _ _;
+      intro f hf;
+      -- By definition of `seqWeight`, we can split the sum into the sum of the first `m + 1` steps and the last step.
+      have h_split : seqWeight W f = seqWeight W (fun t => f t.castSucc) + W (f ⟨m + 1, by omega⟩) (f ⟨m + 2, by omega⟩) := by
+        convert seqWeight_snoc W f using 1;
+      refine' le_trans _ ( Finset.le_sup' _ <| show f ⟨ m + 1, by linarith ⟩ ∈ Finset.univ from Finset.mem_univ _ );
+      simp_all +decide [ pathFinset ];
+      exact ⟨ fun t => f t.castSucc, ⟨ hf.1, rfl ⟩, le_rfl ⟩
 
 /-! ## Boolean reachability -/
 
@@ -275,21 +258,27 @@ theorem reachable_iff_exists_walk {n : ℕ} (G : Fin n → Fin n → Bool)
     ∃ f : Fin (m + 1) → Fin n,
       f 0 = i ∧ f ⟨m, Nat.lt_succ_of_le le_rfl⟩ = j ∧
       ∀ t : Fin m, G (f t.castSucc) (f t.succ) = true := by
-  induction' m with m ih generalizing i j;
-  · simp [ReachableInExactly];
-    exact ⟨ fun h => ⟨ fun _ => i, rfl, h ▸ rfl ⟩, by rintro ⟨ f, rfl, rfl ⟩ ; rfl ⟩;
-  · constructor;
-    · rintro ⟨ k, hk₁, hk₂ ⟩;
-      obtain ⟨ f, hf₁, hf₂, hf₃ ⟩ := ih k j |>.1 hk₂;
-      refine' ⟨ Fin.cons i f, _, _, _ ⟩ <;> simp_all +decide [ Fin.forall_fin_succ ];
+  constructor;
+  · induction' m with m ih generalizing i j;
+    · intro h
+      use fun _ => i
+      aesop;
+    · intro h
+      obtain ⟨k, hk⟩ := h;
+      obtain ⟨ f, hf₁, hf₂, hf₃ ⟩ := ih k j hk.2;
+      use Fin.cons i f;
+      simp_all +decide [ Fin.forall_fin_succ ];
       exact hf₂;
-    · rintro ⟨ f, rfl, rfl, hf ⟩;
-      exact ⟨ f 1, hf 0, ih _ _ |>.2 ⟨ fun t => f ( Fin.succ t ), rfl, rfl, fun t => hf ( Fin.succ t ) ⟩ ⟩
+  · rintro ⟨ f, rfl, rfl, hf ⟩;
+    induction' m with m ihizing f;
+    · simp [ReachableInExactly]
+    · exact ⟨ f 1, hf 0, ihizing ( fun t => f t.succ ) fun t => hf t.succ ⟩
 
-/-! ## Tropical idempotence (from catalog) -/
+/-! ## Tropical idempotence (catalog connection) -/
 
 /-- Tropical idempotence: `max a a = a`. Foundation of tropical aggregation.
-    Connects to catalog theorem `tropical_mirror_theorem`. -/
+    This is the idempotence axiom underlying tropical semirings, connecting
+    to the catalog theorem `tropical_mirror_theorem`. -/
 theorem tropical_idempotence (a : ℝ) : max a a = a := max_self a
 
 end

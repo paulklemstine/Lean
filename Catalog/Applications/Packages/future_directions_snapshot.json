@@ -468,21 +468,6 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "Proof complexity researcher",
-    "description": ": Develops the hardness hierarchy and complexity-theoretic aspects (Direction 3).",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "2da16d8d",
-    "timestamp": "2026-05-15T03:03:37.375693+00:00"
-  },
-  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -868,6 +853,78 @@
     "source_exp_id": "1e7db8da",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T05:33:34.173680+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Generalize",
+    "description": "(linear maps) → provides the algebraic foundation",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2da16d8d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:56.130596+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Extend",
+    "description": "(Schwartz–Zippel) → covers polynomial identity testing",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2da16d8d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:56.143882+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Abstract",
+    "description": "(verifier library) → creates reusable infrastructure",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2da16d8d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:56.155873+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Apply",
+    "description": "(streaming) → demonstrates practical impact",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2da16d8d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:56.167797+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Bridge",
+    "description": "(interactive proofs) → connects to complexity theory",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2da16d8d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:56.179846+00:00"
   },
   {
     "id": "seed_052",
