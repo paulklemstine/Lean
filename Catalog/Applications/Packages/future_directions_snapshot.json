@@ -16,22 +16,6 @@
     "timestamp": "2026-05-14T16:03:53.810233+00:00"
   },
   {
-    "id": "seed_037",
-    "title": "Thermodynamic Computation via Tropical Landauer's Principle",
-    "description": "Formalize Landauer's principle in Lean: prove that any erasure operation on a semiring element costs at least kT ln 2 in tropical entropy, establishing tropical thermodynamics as a computational bound. Show that the min-plus free energy of a computation equals its tropical circuit depth, connecting physical and computational complexity through idempotent analysis.",
-    "domains": [
-      "Physics",
-      "Computation",
-      "Tropical"
-    ],
-    "priority_score": 0.91,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "e8932e8e",
-    "timestamp": "2026-05-14T16:03:53.833462+00:00"
-  },
-  {
     "id": "seed_016",
     "title": "Kolmogorov Complexity Closure and Idempotent Compression Duality",
     "description": "Prove that the idempotent closure of a semiring yields optimal lossless compression ratios, and establish a duality between Kolmogorov complexity and closure operators that gives computable upper bounds on minimal description length. Show that the tropical semiring's idempotent property induces a canonical compression scheme whose fixed points are exactly the Kolmogorov-random strings.",
@@ -950,6 +934,48 @@
     "timestamp": "2026-05-16T09:18:23.041869+00:00"
   },
   {
+    "id": "fd_0243",
+    "title": "Direction 2",
+    "description": "(reversible = zero cost) — Closest to the current codebase, requires only `entropyDefect` and injectivity characterization.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e8932e8e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:20:05.398841+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Direction 1",
+    "description": "(mutual information) — Builds directly on `tropicalEntropy` and `entropyDefect`, moderate infrastructure.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e8932e8e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:20:05.413507+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Direction 4",
+    "description": "(categorical semantics) — Most ambitious, requires category theory infrastructure, but yields the most general framework.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e8932e8e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:20:05.429726+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1365,6 +1391,21 @@
     "source_exp_id": "67f5da38",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T02:14:30.267025+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "5. Theorem Embeddings from Syntax: Automatic TheorySpec Extraction",
+    "description": "**Hypothesis:** Many theorem statements in the catalog have the implicit structure of a `TheorySpec` — they assert a lower bound on some quantity for all elements satisfying some predicate. A metaprogram could automatically extract `TheorySpec` instances from theorem signatures by pattern-matching on the syntactic form `∀ x, P x → n ≤ f x`.\n\n**Proof Strategy:**\n- Write a `MetaM` procedure that inspects a theorem's type.\n- Pattern-match on universal quantification, implication with a predicate, and inequality with a constant.\n- Extract `α`, `Witness`, `inv`, `lowerBound`, and wrap the theorem's proof as `sound`.\n- Automatically populate the bridge graph.\n\n**Cross-Domain Connections:** This is a form of mathematical information extraction, analogous to knowledge extraction from natural langu",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "41f0f930",
+    "timestamp": "2026-05-16T02:14:30.279911+00:00"
   },
   {
     "id": "fd_0218",
