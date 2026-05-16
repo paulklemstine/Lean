@@ -798,34 +798,6 @@
     "timestamp": "2026-05-16T03:49:39.034440+00:00"
   },
   {
-    "id": "fd_0233",
-    "title": "Month 3",
-    "description": ": Extend to temporal codes and compare spatial vs. spatiotemporal capacity for simulated auditory cortex data.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d85be8c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:49:39.045856+00:00"
-  },
-  {
-    "id": "fd_0238",
-    "title": "Direction 2",
-    "description": "(generic biases) proves that \"most\" parameters give non-degenerate geometry.",
-    "domains": [
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "886e70ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:34:23.459938+00:00"
-  },
-  {
     "id": "fd_0239",
     "title": "Direction 4",
     "description": "(Morse inequalities) connects geometry to topology.",
@@ -838,20 +810,6 @@
     "source_exp_id": "886e70ad",
     "consumed_by_exp_id": "f06689b7",
     "timestamp": "2026-05-16T04:34:23.473456+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Forward (← direction):",
-    "description": "Under the coboundary condition, the unique projective eigenvector p attracts all orbits. Use the contraction mapping principle in the Hilbert projective metric.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "085cfca9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:34:45.427388+00:00"
   },
   {
     "id": "fd_0241",
@@ -1232,23 +1190,6 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0233",
-    "title": "1. Tropical Factor-Rank-1 Equivalence via Min-Plus",
-    "description": "**Goal:** Formalize the min-plus (or max-plus) rank-1 factorization predicate and prove its equivalence with additive separability.\n\n**Mathematical Statement:**\nA matrix `A : Fin n → Fin m → ℝ` has *min-plus rank 1* if there exist vectors `p : Fin n → ℝ` and `q : Fin m → ℝ` such that `A i j = p i + q j` (where `+` is ordinary addition, viewed as multiplication in the min-plus semiring). This is exactly additive separability.\n\nMore generally, define *min-plus rank ≤ k* as:\n```\nA(i,j) = min_{t ∈ Fin k} (U(i,t) + V(t,j))\n```\nand prove that rank ≤ 1 in this sense is equivalent to the 2×2 minor condition.\n\n**Lean Signature:**\n```lean\ndef MinPlusFactorRankLE (k : ℕ) {n m : ℕ} (A : Fin n → Fin m → ℝ) : Prop :=\n  ∃ U : Fin n → Fin k → ℝ, ∃ V : Fin k → Fin m → ℝ,\n    ∀ i j, A i j = Finset.univ.inf'",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6fbf424c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:33:29.188763+00:00"
-  },
-  {
     "id": "fd_0232",
     "title": "Direction 1: Weighted Hodge Decomposition on Overlap Complexes with Certified Ro",
     "description": "**Hypothesis:** Equipping the cochain complex with edge weights w(i,j) proportional to the overlap volume between activation regions i and j yields a weighted Hodge decomposition where the harmonic energy provides a formally certified lower bound on adversarial vulnerability.\n\n**Proof Strategy:**\n1. Define the weighted inner product ⟨ω, η⟩_w = Σ_{i,j} w(i,j) ω(i,j) η(i,j) and prove it satisfies the inner product axioms when w > 0.\n2. Compute the weighted adjoint operators d₀†_w and d₁†_w explicitly.\n3. Prove the weighted Hodge decomposition C¹ = im(d₀) ⊕_w im(d₁†_w) ⊕_w ker(Δ₁_w).\n4. Establish that the weighted harmonic energy ‖h‖²_w lower-bounds the minimum perturbation energy needed to change the network's prediction across region boundaries.\n\n**Cross-Domain Connections:** This connects ",
@@ -1262,24 +1203,6 @@
     "source_exp_id": "cb6bb980",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:30:41.646536+00:00"
-  },
-  {
-    "id": "fd_0233",
-    "title": "Direction 2: Persistent Harmonic Inconsistency Across Overlap Thresholds",
-    "description": "**Hypothesis:** As the overlap threshold τ varies from 0 to ∞, the harmonic dimension dim ker(Δ₁(τ)) traces a piecewise-constant function with jumps at topological critical values. The birth/death pairs of harmonic modes define a \"harmonic persistence diagram\" that captures the multi-scale topological complexity of the decision geometry.\n\n**Proof Strategy:**\n1. Define the filtered simplicial complex K(τ) where edge (i,j) exists iff overlap(i,j) ≥ τ.\n2. For each τ, compute the Hodge Laplacian Δ₁(τ) and its harmonic space.\n3. Prove that dim ker Δ₁(τ) equals the first Betti number β₁(K(τ)).\n4. Apply standard persistence theory to obtain stability results: small perturbations of the overlap function produce small perturbations of the persistence diagram (in bottleneck distance).\n\n**Cross-Domai",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cb6bb980",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:30:41.658871+00:00"
   },
   {
     "id": "fd_0223",
@@ -1396,22 +1319,6 @@
     "source_exp_id": "a999e02b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T02:41:24.256398+00:00"
-  },
-  {
-    "id": "fd_0233",
-    "title": "Cross-Domain Significance",
-    "description": "- **Compiler optimization**: Minimized automata correspond to optimal dynamic programming tables.\n- **Model compression**: Minimizing the product automaton gives the smallest joint cost model.\n- **Tropical Myhill-Nerode**: Extends the word-level Myhill-Nerode theorem to trees.\n\n---",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a999e02b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:41:24.269211+00:00"
   },
   {
     "id": "fd_0218",
@@ -1729,24 +1636,6 @@
     "timestamp": "2026-05-16T04:40:35.452499+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "3. Tropical Pseudorandom Generators from Min-Plus Walk Dynamics",
-    "description": "**Goal**: Construct pseudorandom generators from the dynamics of random walks on tropical matrix semigroups.\n\n**Hypothesis**: Iterating a random tropical matrix multiplication (choosing random matrices from a fixed set and composing them in the min-plus semiring) produces output that is computationally indistinguishable from random tropical matrices, assuming the tropical DDH problem is hard.\n\n**Proof Strategy**:\n1. Define a tropical pseudorandom generator: seed → sequence of tropical matrices via iterated tropical multiplication.\n2. Show that distinguishing the output from random requires solving a tropical discrete logarithm instance.\n3. Prove a Goldreich-Levin-style hardcore bit theorem for tropical exponentiation.\n\n**Cross-Domain Connection**: This connects dynamical systems on semirin",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "746c4988",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:40:35.465499+00:00"
-  },
-  {
     "id": "fd_0239",
     "title": "4. Idempotent Information Theory: Tropical Entropy and Data Processing",
     "description": "**Goal**: Develop an information-theoretic framework native to the tropical semiring, with tropical analogues of entropy, mutual information, and the data processing inequality.\n\n**Hypothesis**: Define tropical entropy H_trop(X) = min_x (-log P(x)) (the min-entropy, which is naturally \"tropical\" since min replaces sum). The data processing inequality for tropical channels — where channel matrices act via min-plus multiplication — should follow from the algebraic properties of tropical matrix multiplication (monotonicity and sub-multiplicativity of min-plus products).\n\n**Proof Strategy**:\n1. Define tropical channels as tropical matrices acting on probability vectors via min-plus multiplication.\n2. Define tropical mutual information using min-entropy.\n3. Prove the tropical data processing in",
@@ -1763,25 +1652,6 @@
     "source_exp_id": "746c4988",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T04:40:35.478486+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "5. Tropical Cryptosystems and Weighted Automata Hardness",
-    "description": "**Goal**: Establish formal connections between tropical cryptographic primitives and the algebraic theory of weighted automata over the tropical semiring.\n\n**Hypothesis**: The equivalence problem for weighted automata over the tropical semiring (given two automata, do they compute the same function?) is undecidable (Krob 1992). Tropical public keys can be viewed as compressed representations of weighted automata, and key recovery corresponds to automaton minimization or equivalence testing.\n\n**Proof Strategy**:\n1. Formalize tropical weighted automata as tuples (initial vector, transition matrices, final vector) over the min-plus semiring.\n2. Show that a tropical public key (G, G^s) encodes a weighted automaton whose language (accepted weight function) depends on the secret s.\n3. Prove that",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "746c4988",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:40:35.491410+00:00"
   },
   {
     "id": "fd_0241",
@@ -1868,5 +1738,110 @@
     "source_exp_id": "9a668faa",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T05:30:16.523974+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "1. Decision Procedure via Polyhedral Active-Region Computation",
+    "description": "**Hypothesis**: The essentialization step can be made algorithmically effective by computing active regions (the set of points where each monomial achieves the minimum) via linear programming.\n\n**Proof Strategy**: For each monomial m in a collected support, the active region R_m = {x : evalMonom m x ≤ evalMonom m' x, ∀ m' ∈ S} is a polyhedron defined by linear inequalities. Checking R_m ≠ ∅ is a linear feasibility problem solvable in polynomial time. This gives a polynomial-time decision procedure for essentiality (given the expanded support).\n\n**Cross-Domain Connections**: Connects to computational geometry (vertex enumeration), linear programming (feasibility), and tropical convexity.\n\n**Concrete Next Steps**:\n- Implement LP-based essentiality checker\n- Prove soundness: LP feasibility ↔ ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8032c745",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:32:47.423881+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "2. Rational Tropical Expressions and Residuated Lattices",
+    "description": "**Hypothesis**: The normal form theorem extends to rational tropical expressions (quotients of tropical polynomials), yielding canonical forms for min-plus rational functions.\n\n**Proof Strategy**: A tropical rational function f/g (where f, g are tropical polynomials) corresponds to max(f) - min(g) in classical terms. The essential support generalizes to the \"balanced\" or \"reduced\" representation where numerator and denominator share no common factor. Prove uniqueness of the reduced form.\n\n**Cross-Domain Connections**: Residuated lattices, max-plus linear algebra, tropical geometry of rational curves.\n\n**Concrete Next Steps**:\n- Define TropRationalExpr with a division constructor\n- Formalize tropical GCD for monomial supports\n- Prove reduced rational forms are unique\n- Connect to Kleene sta",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8032c745",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:32:47.440723+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "3. Matrix-Valued Tropical Expressions and Weighted Automata",
+    "description": "**Hypothesis**: Canonical normal forms exist for matrix-valued tropical expressions, enabling equivalence checking for weighted automata and min-plus linear recurrences.\n\n**Proof Strategy**: A tropical matrix polynomial M(x) = min_k (C_k + W_k · x) defines a piecewise-affine matrix function. The normal form should retain only the \"Pareto-optimal\" matrix monomials. Use tropical eigenvalue theory to characterize the essential support.\n\n**Cross-Domain Connections**: Weighted automata theory, discrete event systems, tropical spectral theory, Myhill-Nerode theorem for weighted languages.\n\n**Concrete Next Steps**:\n- Formalize tropical matrix semiring in Lean\n- Define matrix-valued TropPolyNF\n- Prove soundness of matrix expansion\n- Investigate connection to weighted automaton minimization",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8032c745",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:32:47.456009+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "4. Tropical Fenchel Duality and Convex Conjugates",
+    "description": "**Hypothesis**: The normal form can be recovered from the Legendre-Fenchel transform (convex conjugate) of the tropical polynomial, giving a duality-based proof of completeness.\n\n**Proof Strategy**: A tropical polynomial f(x) = min_m (c_m + ⟨w_m, x⟩) is a concave polyhedral function. Its conjugate f*(y) encodes the same information. The essential monomials are exactly the exposed faces of the epigraph. Prove: f* determines the essential support uniquely.\n\n**Cross-Domain Connections**: Convex analysis, Fenchel duality, optimal transport, information geometry.\n\n**Concrete Next Steps**:\n- Formalize tropical convex conjugate in Lean\n- Prove f** = f for tropical polynomials (involution)\n- Show essential support ↔ exposed faces of conjugate\n- Connect to certified convex optimization",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8032c745",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:32:47.474194+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "5. Complexity Bounds on Normalized Support Size",
+    "description": "**Hypothesis**: The size of the essential support (after normalization) is bounded by combinatorial properties of the Newton polytope, giving circuit complexity lower bounds.\n\n**Proof Strategy**: The essential support is a subset of the vertices of the lower convex hull of the lifted Newton polytope {(w, c) : (c, w) ∈ S}. The number of vertices is bounded by O(n^{⌊d/2⌋}) for d-dimensional polytopes (Upper Bound Theorem). For tropical circuits of depth d, the expansion has at most 2^d monomials, so the essential support has at most 2^d terms.\n\n**Cross-Domain Connections**: Computational complexity, polytope theory, tropical circuit complexity, Newton polytope bounds.\n\n**Concrete Next Steps**:\n- Formalize Upper Bound Theorem connection\n- Prove essential support ≤ vertices of Newton polytope ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8032c745",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:32:47.488840+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "6. Tropical Proof-Carrying Code",
+    "description": "**Hypothesis**: The normal form certificate can serve as a proof-carrying code artifact, enabling certified compilation of optimization programs.\n\n**Proof Strategy**: Attach the essential support as a certificate to compiled min-plus programs. A verifier checks: (1) the certificate is a valid normal form, (2) it semantically matches the source program. By the completeness theorem, verification is sound and complete.\n\n**Cross-Domain Connections**: Proof-carrying code, certified compilation, program equivalence, abstract interpretation.\n\n**Concrete Next Steps**:\n- Design certificate format (normal form + expansion trace)\n- Implement verifier in Lean\n- Benchmark verification time vs. full normalization\n- Apply to certified dynamic programming solvers",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8032c745",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:32:47.502173+00:00"
   }
 ]
