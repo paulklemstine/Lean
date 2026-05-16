@@ -394,20 +394,6 @@
     "timestamp": "2026-05-14T16:24:30.140249+00:00"
   },
   {
-    "id": "fd_0146",
-    "title": "Boundary determines bulk distances",
-    "description": ": If two graphs with the same vertex set and boundary have identical boundary distance matrices, their interior tropical distances agree (under tree-like or uniqueness conditions).",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "1185fa15",
-    "timestamp": "2026-05-14T16:24:30.143125+00:00"
-  },
-  {
     "id": "fd_0147",
     "title": "Reconstruction algorithm",
     "description": ": Given a boundary distance matrix satisfying metric properties, construct a graph (tree or series-parallel graph) realizing those distances, with explicit complexity bounds.",
@@ -983,6 +969,62 @@
     "timestamp": "2026-05-16T00:01:36.121253+00:00"
   },
   {
+    "id": "fd_0238",
+    "title": "States precise conjectures",
+    "description": "as formal Lean theorem statements with `sorry`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1185fa15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:04:05.345336+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Tests computationally",
+    "description": "with Python implementations on concrete examples.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1185fa15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:04:05.356334+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Decomposes into lemmas",
+    "description": "following the median → boundary-interior → bulk pipeline established in this work.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1185fa15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:04:05.376079+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Iterates",
+    "description": "between formalization and informal proof discovery.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1185fa15",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:04:05.384135+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1531,21 +1573,6 @@
     "timestamp": "2026-05-15T22:33:29.237233+00:00"
   },
   {
-    "id": "fd_0240",
-    "title": "1. Graph Min-Cut Upgrade Theorem",
-    "description": "**Hypothesis:** For a finite directed graph with integer edge capacities, upgrading every edge of a certified minimum cut by one unit raises the max-flow lower bound by exactly one.\n\n**Proof Strategy:**\n- Formalize simple directed graphs as `α → α → ℕ` capacity functions over a `Fintype α`.\n- Define s-t cuts as sets of edges separating source from sink.\n- State the max-flow/min-cut theorem (or assume it as an axiom initially).\n- Apply `bottleneck_upgrade_strict_improvement` to the edge set of a minimum cut, viewing max-flow as the infimum over all cuts of the cut capacity.\n\n**Key Definitions Needed:**\n```\nstructure DirectedGraph (V : Type*) where\n  cap : V → V → ℕ\n\ndef cutCapacity (G : DirectedGraph V) (S : Finset V) : ℕ := ...\ndef minCut (G : DirectedGraph V) (s t : V) : ℕ := ...\n```\n\n**C",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "476ffddd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:00:36.549126+00:00"
-  },
-  {
     "id": "fd_0241",
     "title": "2. Tropical Production Network Generalization",
     "description": "**Hypothesis:** For assembly networks combining serial (min) and parallel (+) stages in min-plus algebra, targeted upgrades on the tropical critical path yield provable throughput gains.\n\n**Proof Strategy:**\n- Define min-plus semiring operations on `ℕ∞` (or `WithTop ℕ`).\n- Model production networks as min-plus polynomials: `throughput = ⊓ᵢ (⊔ⱼ cᵢⱼ)` where ⊓ is min and ⊔ is addition.\n- Identify the critical set as the \"tropical variety\" — the support where minima are attained.\n- Generalize `bottleneck_raiseOn_one_step` to min-plus expressions.\n\n**Key Insight:** Serial throughput (our current theorem) is the degree-one case. Assembly networks with convergent stages require min-plus polynomials of higher degree.\n\n**Lean Target:**\n```\ndef TropicalNetwork (α : Type*) := α → WithTop ℕ\ndef tropic",
@@ -1733,23 +1760,6 @@
     "source_exp_id": "94c243f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:09:09.422863+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Direction 6: Finite-Field Nullstellensatz and Incidence Geometry",
-    "description": "**Hypothesis**: The Schwartz–Zippel bound can be refined using the combinatorial Nullstellensatz (Alon 1999) to prove incidence geometry theorems over finite fields.\n\n**Proof Strategy**:\n1. Formalize the Combinatorial Nullstellensatz: if f has a monomial x₁^{d₁}···xₙ^{dₙ} with nonzero coefficient and |Sᵢ| > dᵢ, then f is nonzero on some point of S₁ × ··· × Sₙ.\n2. This strengthens Schwartz–Zippel for grid evaluations.\n3. Apply to prove the Chevalley–Warning theorem and finite-field Kakeya conjecture.\n\n**Key Theorem**:\n```\ntheorem combinatorial_nullstellensatz :\n    f.coeff (Finsupp.ofList vars degs) ≠ 0 →\n    (∀ i, (S i).card > degs i) →\n    ∃ x ∈ Fintype.piFinset S, eval x f ≠ 0\n```\n\n**Impact**: Extends the formalized polynomial method toolkit to additive combinatorics and incidence geomet",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.435105+00:00"
   },
   {
     "id": "fd_0241",
