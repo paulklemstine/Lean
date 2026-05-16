@@ -642,36 +642,6 @@
     "timestamp": "2026-05-15T21:34:31.361341+00:00"
   },
   {
-    "id": "fd_0235",
-    "title": "Does tropical factorization admit a worst-case-to-average-case reduction?",
-    "description": "This is the central question for moving from theoretical hardness to practical cryptography.",
-    "domains": [
-      "Tropical",
-      "Cryptography"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ed53a6b6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T21:34:31.373128+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "Can tropical factorization be used for homomorphic computation?",
-    "description": "The min-plus semiring has interesting algebraic properties (idempotent addition) that might support novel FHE constructions.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ed53a6b6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T21:34:31.393986+00:00"
-  },
-  {
     "id": "fd_0231",
     "title": "Proof theory",
     "description": "(automata, coding, compression)",
@@ -729,110 +699,6 @@
     "timestamp": "2026-05-15T23:22:05.177402+00:00"
   },
   {
-    "id": "fd_0237",
-    "title": "Cross-Domain Connections:",
-    "description": "Circuit complexity, decision tree complexity, quantum query complexity.",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "86db7d4d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:01:36.121253+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Long-term",
-    "description": "(3 months): Logical product semantics and full tropical thermodynamics",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fb63810b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:51:28.233976+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "Tropical smooth critical points",
-    "description": ": where ∇L = 0 within a cell (standard critical points of affine functions, hence only global min/max within the cell)",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "70170a66",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:33:06.143602+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "Direction 3 (Unification)",
-    "description": "— highest conceptual impact, builds directly on existing theorems, likely formalizable in current framework",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "70170a66",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:33:06.166935+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Log-sum inequality",
-    "description": ": I(μ, W_t) ≤ t·I(μ, W₁) + (1-t)·I(μ, W₂). This is the key step requiring formalization of the log-sum inequality.\n4. Combine: R(t·D₁+(1-t)·D₂) ≤ I(μ, W_t) ≤ t·I(μ,W₁) + (1-t)·I(μ,W₂).\n5. Take infimum to get ≤ t·R(D₁) + (1-t)·R(D₂).\n\n### Cross-Domain Connection\nConvexity of R(D) is equivalent to concavity of the Legendre-Fenchel dual, which connects to thermodynamic free energy. The log-sum inequality underlies the data processing inequality and is fundamental to statistical learning theory.\n\n---\n\n## Direction 3: Existence of Rate-Distortion Minimizers via Compactness\n\n### Precise Statement\n\nFor finite types α, β and a feasible distortion level D, the infimum in the rate-distortion function is attained: there exists a channel W* achieving I(μ, W*) = R(D).\n\n### Proposed Lean 4 Type Signatur",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "03df72f3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:35:37.683656+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Show mutual information is lower semicontinuous",
-    "description": ": On the compact feasible set, a lower semicontinuous function attains its infimum.\n4. This requires formalizing compactness of the probability simplex in Lean, which may need to build on Mathlib's `isCompact_Icc` and product topology results.\n\n### Cross-Domain Connection\nThe compactness argument connects to variational calculus, Prokhorov's theorem in probability, and Γ-convergence in the calculus of variations. In machine learning, existence of optimal codebooks underlies the theory of vector quantization.\n\n---\n\n## Direction 4: Categorical Adjunction Between Distortion Systems and Lawvere Spaces\n\n### Precise Statement\n\nDefine a category **FinDist** whose objects are finite distortion systems (Ω, d, μ) and morphisms are distortion-nonincreasing maps. Define a category **Law** of Lawvere m",
-    "domains": [
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "03df72f3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:35:37.715477+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Strong duality",
-    "description": ": Use the supporting hyperplane theorem for convex functions to show the supremum is attained. For finite alphabets, this reduces to a finite-dimensional convex optimization duality.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "03df72f3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:35:37.736184+00:00"
-  },
-  {
     "id": "fd_0249",
     "title": "Piecewise-linearity",
     "description": ": The Lagrangian dual L(s) is the infimum of affine functions in s (one for each channel), hence concave piecewise-linear. The Legendre transform of a piecewise-linear function is piecewise-linear.\n\n### Cross-Domain Connection\nTropical Legendre duality connects rate-distortion theory to:\n- **Tropical geometry**: R(D) as a tropical hypersurface\n- **Thermodynamics**: Free energy / entropy as Legendre duals\n- **Economics**: Supply-demand equilibrium via dual prices\n- **Optimal transport**: Kantorovich duality for the Wasserstein distance\n\n---\n\n## Team Directive\n\nCreate a team to pursue these directions with the following roles:",
@@ -847,20 +713,6 @@
     "source_exp_id": "03df72f3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T01:35:37.745545+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Soundness step",
-    "description": ": if the prover deviates, then g_i ≠ g_i* (the honest polynomial). By the univariate Schwartz–Zippel bound, Pr[g_i(r_i) = g_i*(r_i)] ≤ d_i/|S|.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97c6ba31",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:18:15.253759+00:00"
   },
   {
     "id": "fd_0230",
@@ -893,34 +745,6 @@
     "timestamp": "2026-05-16T02:18:15.276474+00:00"
   },
   {
-    "id": "fd_0235",
-    "title": "Week 1",
-    "description": ": Formalize definitions and state key lemmas with `sorry`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "66470415",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:46:33.699126+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "Week 3",
-    "description": ": Complete main proofs; run computational experiments.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "66470415",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:46:33.728699+00:00"
-  },
-  {
     "id": "fd_0241",
     "title": "Initial condition",
     "description": ": Q_t u → u as t → 0⁺\n\n### Lean Encoding\n```lean\nnoncomputable def hopfLax (u : ℝ → ℝ) (t : ℝ) (x : ℝ) : ℝ :=\n  sInf (Set.range fun y : ℝ => u y + (x - y)^2 / (2 * t))\n\n-- Monotonicity\ntheorem hopfLax_mono (u v : ℝ → ℝ) (t : ℝ) (ht : 0 < t)\n    (h : ∀ x, u x ≤ v x) (x : ℝ) :\n    hopfLax u t x ≤ hopfLax v t x := by sorry\n\n-- Contraction\ntheorem hopfLax_contraction (u v : ℝ → ℝ) (t : ℝ) (ht : 0 < t)\n    (C : ℝ) (hC : ∀ x, |u x - v x| ≤ C) (x : ℝ) :\n    |hopfLax u t x - hopfLax v t x| ≤ C := by sorry\n\n-- Semigroup (for quadratic initial data)\ntheorem hopfLax_semigroup_quadratic (s t : ℝ) (hs : 0 < s) (ht : 0 < t) (x : ℝ) :\n    hopfLax (hopfLax (fun y => y^2 / 2) t) s x =\n    hopfLax (fun y => y^2 / 2) (s + t) x := by sorry\n```\n\n### Proof Strategy",
@@ -936,133 +760,169 @@
     "timestamp": "2026-05-16T02:49:26.966352+00:00"
   },
   {
-    "id": "fd_0243",
-    "title": "Semigroup",
-    "description": ": for quadratic data, compute explicitly:\n   - Q_t(x²/2) = x²/(2(1+t)) by completing the square\n   - Q_s(Q_t(x²/2)) = x²/(2(1+s+t))\n   - Q_{s+t}(x²/2) = x²/(2(1+s+t))\n\n### Cross-Domain Significance\n- **Viscosity solutions**: the Hopf–Lax formula gives the unique viscosity solution\n- **Dynamic programming**: Q_t is the dynamic programming operator for optimal control\n- **Tropical convolution**: Q_t is inf-convolution with the quadratic cost kernel\n- **Image processing**: morphological operators are tropical semigroups\n\n### Difficulty: ★★★★★\n\n---\n\n## Research Roadmap\n\n### Phase 1 (Near-term): Generalize the Quadratic\n- Direction 1 (shifted quadratics) — extends the existing algebraic engine\n- Fenchel–Young for general p-norms (Young's inequality)\n\n### Phase 2 (Medium-term): Finite Tropical S",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56965cb0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:49:26.990135+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Build proof skeletons",
-    "description": ": Write Lean files with sorry'd lemmas",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56965cb0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:49:27.020146+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Prove bottom-up",
-    "description": ": Start with algebraic identities, build to supremum/infimum results",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56965cb0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:49:27.030229+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Cross-validate",
-    "description": ": Ensure classical and tropical formulations are equivalent",
+    "id": "fd_0241",
+    "title": "Define tropical chain complexes",
+    "description": "Formalize the cellular chain complex of the tropical polyhedral decomposition induced by $f$. Each cell is a maximal region where one affine piece dominates.",
     "domains": [
       "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "56965cb0",
+    "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:49:27.038788+00:00"
+    "timestamp": "2026-05-16T03:21:48.725714+00:00"
   },
   {
-    "id": "fd_0236",
-    "title": "Forward",
-    "description": ": Use `exists_orthogonal_diagonalization` to write $A = QDQ^T$. Since all eigenvalues are nonneg, $D = \\text{diag}(\\sqrt{\\lambda_i})^2$. Set $B = \\text{diag}(\\sqrt{\\lambda_i}) Q^T$.",
+    "id": "fd_0242",
+    "title": "Define the tropical Morse complex",
+    "description": "Build a chain complex whose generators are corner critical points, with boundary maps defined by \"gradient flow\" within the piecewise-linear structure (descending manifolds of the tropical function).",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Geometry"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "43a72392",
+    "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:10:49.673449+00:00"
+    "timestamp": "2026-05-16T03:21:48.736219+00:00"
   },
   {
-    "id": "fd_0237",
-    "title": "Backward",
-    "description": ": If $A = B^T B$, then $\\langle v, Av \\rangle = \\langle v, B^T B v \\rangle = \\|Bv\\|^2 \\geq 0$.",
+    "id": "fd_0244",
+    "title": "Extract inequalities",
+    "description": "The rank inequality between chain groups and homology groups gives the Morse inequalities.\n\n### Key Challenges\n- Defining \"gradient flow\" for piecewise-linear functions requires resolving ambiguities at the corner locus.\n- The polyhedral complex structure may not be a CW complex in the usual sense; a careful combinatorial topology formulation is needed.\n\n### Cross-Domain Connections\n- **Algebraic topology**: connects to persistent homology and topological data analysis\n- **Combinatorics**: relates to Stanley-Reisner ring theory for simplicial complexes\n- **Optimization**: provides topological lower bounds on optimization complexity\n\n### Actionable Steps\n1. Formalize the cellular chain complex for 1D and 2D polyhedral complexes in Lean.\n2. Prove the alternating sum formula $\\sum_k (-1)^k \\#",
     "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "43a72392",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:10:49.684933+00:00"
-  },
-  {
-    "id": "fd_0238",
-    "title": "Direction 1",
-    "description": "(binary codes) — immediate, builds directly on existing theorems",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7dc8bfbd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:19:16.113180+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "Direction 2",
-    "description": "(circuit separation) — foundational for complexity theory",
-    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
       "Computation"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "7dc8bfbd",
+    "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:19:16.127057+00:00"
+    "timestamp": "2026-05-16T03:21:48.762170+00:00"
   },
   {
-    "id": "fd_0240",
-    "title": "Direction 4",
-    "description": "(cryptographic entropy) — applied direction, connects to crypto catalog",
+    "id": "fd_0249",
+    "title": "Define the perturbation space",
+    "description": "Parameterize the family of tropical max functions by bias vectors $b \\in \\mathbb{R}^m$.",
     "domains": [
-      "Cryptography"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "7dc8bfbd",
+    "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:19:16.137823+00:00"
+    "timestamp": "2026-05-16T03:21:48.828411+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Prove transversality",
+    "description": "Show that for generic biases, the corner locus is a union of smooth submanifolds of the expected codimension, and corner critical points are isolated on each stratum.",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "ab93ccb9",
+    "consumed_by_exp_id": "886e70ad",
+    "timestamp": "2026-05-16T03:21:48.839471+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Construct the persistence diagram",
+    "description": "Define a barcode/persistence diagram tracking corner critical points as biases vary.\n\n### Key Challenges\n- Transversality arguments for piecewise-linear functions require combinatorial rather than differential techniques.\n- The interaction between different strata of the corner locus introduces combinatorial complexity.\n\n### Cross-Domain Connections\n- **Persistent homology**: provides a tropical analogue of persistence diagrams\n- **Bifurcation theory**: extends classical bifurcation theory to nonsmooth settings\n- **Network pruning**: perturbation of biases corresponds to neural network weight modification; persistence measures robustness\n\n### Actionable Steps\n1. Implement numerical continuation of corner critical points as biases vary.\n2. Compute persistence diagrams for small examples (2-",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ab93ccb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:21:48.866824+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Establish the level estimate",
+    "description": "Show $c^* \\ge c$ using the sublevel set separation hypothesis.\n\n### Key Challenges\n- The deformation argument requires constructing explicit continuous deformations of paths in the tropical setting, which is complicated by the piecewise-linear structure.\n- The minimax principle needs compactness arguments that may require restricting to bounded domains.\n\n### Cross-Domain Connections\n- **Variational methods**: tropical analogue of the Ambrosetti-Rabinowitz theorem\n- **Optimization**: provides certified barriers for global optimization of piecewise-linear functions\n- **Statistical physics**: mountain passes correspond to transition states between metastable phases\n\n### Actionable Steps\n1. Formalize the minimax principle for continuous functions on compact sets in Lean.\n2. Prove the mountain ",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ab93ccb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:21:48.915149+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Formalize the tropical cell complex",
+    "description": "of a ReLU network's loss landscape, where cells are activation pattern regions and walls are activation boundaries.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ab93ccb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:21:48.927551+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Connect to training dynamics",
+    "description": "by showing that each grokking event corresponds to a corner critical crossing, and use the Morse inequality to lower-bound the number of such events.\n\n### Key Challenges\n- Computing the activation pattern complex of a realistic neural network is combinatorially explosive ($2^h$ possible patterns for $h$ hidden neurons).\n- The connection between topological invariants and actual training dynamics requires assumptions about the optimization algorithm.\n\n### Cross-Domain Connections\n- **Deep learning theory**: provides rigorous lower bounds on training complexity\n- **Computational topology**: applies persistent homology to neural network analysis\n- **Complexity theory**: connects the combinatorial complexity of activation patterns to computational hardness\n\n### Actionable Steps\n1. Implement ac",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ab93ccb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:21:48.999090+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "H1",
+    "description": ": For a random 3-piece tropical function in $\\mathbb{R}^2$, the number of corner critical points on the corner locus equals $\\chi(\\text{corner complex}) + 1$.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ab93ccb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:21:49.049347+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "H3",
+    "description": ": The tropical Morse index at a grokking transition correlates with the magnitude of the generalization jump (Pearson $r > 0.5$).",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ab93ccb9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:21:49.075915+00:00"
   },
   {
     "id": "seed_052",
@@ -1442,42 +1302,6 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0235",
-    "title": "1. Gauge Classification by Cycle Holonomy",
-    "description": "**Conjecture.** Two charge fields `A₁, A₂ : V → V → ℝ` yield the same charged tropical distances (up to endpoint potentials) if and only if their difference `A₁ - A₂` has zero circulation on every cycle.\n\n**Proof Strategy.**\n- Define the *holonomy* of a charge field around a cycle as its circulation (already formalized as `circulation`).\n- Prove the forward direction: if `A₁ - A₂` is exact (i.e., equals `φ(j) - φ(i)` for some potential `φ`), then their charged distances differ only by endpoint terms (follows from current theorems).\n- Prove the reverse direction: if all cycle circulations of `A₁ - A₂` vanish, then `A₁ - A₂` is exact. This is the discrete Poincaré lemma for graphs and requires showing that vanishing holonomy implies existence of a global potential.\n- The key technical challe",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "169f3d7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:03:46.232289+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "3. Tropical Magnetic Bellman Theory",
-    "description": "**Target.** Extend the Bellman operator conjugation theorem (`tropicalBellman_pureGauge_conjugation`) to the full min-plus transfer semigroup and deduce invariance of dynamic programming value functions.\n\n**Proof Strategy.**\n- Show that the conjugation identity `T_{w+A} f = T_w(f + φ) - φ` extends to all iterates: `T_{w+A}^n f = T_w^n(f + φ) - φ`.\n- Deduce that fixed points of the charged Bellman operator are exactly shifts of fixed points of the uncharged operator.\n- Prove that the optimal value function in a charged shortest-path dynamic program equals the uncharged optimal value plus the boundary potential difference.\n- Establish convergence of charged value iteration from the uncharged convergence theory.\n\n**Cross-Domain Connections.** This connects tropical gauge theory to dynamic pro",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "169f3d7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:03:46.255885+00:00"
-  },
-  {
     "id": "fd_0233",
     "title": "1. Tropical Factor-Rank-1 Equivalence via Min-Plus",
     "description": "**Goal:** Formalize the min-plus (or max-plus) rank-1 factorization predicate and prove its equivalence with additive separability.\n\n**Mathematical Statement:**\nA matrix `A : Fin n → Fin m → ℝ` has *min-plus rank 1* if there exist vectors `p : Fin n → ℝ` and `q : Fin m → ℝ` such that `A i j = p i + q j` (where `+` is ordinary addition, viewed as multiplication in the min-plus semiring). This is exactly additive separability.\n\nMore generally, define *min-plus rank ≤ k* as:\n```\nA(i,j) = min_{t ∈ Fin k} (U(i,t) + V(t,j))\n```\nand prove that rank ≤ 1 in this sense is equivalent to the 2×2 minor condition.\n\n**Lean Signature:**\n```lean\ndef MinPlusFactorRankLE (k : ℕ) {n m : ℕ} (A : Fin n → Fin m → ℝ) : Prop :=\n  ∃ U : Fin n → Fin k → ℝ, ∃ V : Fin k → Fin m → ℝ,\n    ∀ i j, A i j = Finset.univ.inf'",
@@ -1510,133 +1334,6 @@
     "source_exp_id": "6fbf424c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T22:33:29.201196+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "3. Neural Separability Theorem",
-    "description": "**Goal:** Use the rank-1 factorization theorem to identify conditions under which a ReLU neural network layer admits a verified tropical rank-1 decomposition, implying feature-channel decoupling.\n\n**Mathematical Statement:**\nGiven a ReLU layer `f(x) = max(Wx + b, 0)` with weight matrix `W : Fin m → Fin d → ℝ`, if the *effective tropical weight matrix* (defined via the max-plus semiring) satisfies all 2×2 tropical minor equalities, then the layer's output features are additively separable in input and channel indices.\n\n**Lean Signature:**\n```lean\ntheorem relu_tropical_rank1_separable\n    {d m : ℕ} (hd : 0 < d) (hm : 0 < m)\n    (W : Fin m → Fin d → ℝ)\n    (hminor : ∀ i₁ i₂ : Fin m, ∀ j₁ j₂ : Fin d,\n      W i₁ j₁ + W i₂ j₂ = W i₁ j₂ + W i₂ j₁) :\n    ∃ u : Fin m → ℝ, ∃ v : Fin d → ℝ,\n      ∀ i",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6fbf424c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:33:29.213852+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "5. Representation-Theoretic Rigidity Bridge",
-    "description": "**Goal:** Connect local tropical minor constraints to global injectivity/rigidity phenomena, inspired by `gl3_tropical_satake_injective_of_edge_rank2_marginals` in the catalog.\n\n**Mathematical Statement:**\nConsider the tropicalization of the Satake transform for GL_n. The catalog theorem shows that edge rank-2 marginal constraints force injectivity for GL_3. The rank-1 factorization theorem provides the base case: if a tropicalized representation matrix has all 2×2 minors vanishing, then it is completely determined by boundary data (one row and one column potential).\n\nConcretely: define the *tropical Satake fiber* over a point as the set of matrices with prescribed row and column sums (marginals). For rank-1 matrices, the fiber is either empty or a single gauge orbit.\n\n**Lean Signature:**\n",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6fbf424c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:33:29.237233+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "4. Budget-Constrained Optimal Intervention (Multi-Round)",
-    "description": "**Hypothesis:** Given a total upgrade budget of `B` units and a system of `n` components, the greedy strategy of repeatedly upgrading all current bottleneck elements is optimal for maximizing minimum throughput after `B` rounds.\n\n**Proof Strategy:**\n- Define an iterated upgrade process: `iterate_upgrade s c k` applies `raiseOn (bottleneckSet ...)` for `k` rounds.\n- Prove monotonicity: each round strictly increases the minimum (under gap conditions).\n- Prove termination: after at most `max(c) - min(c)` rounds, all capacities are equal.\n- Prove optimality by exchange argument: any deviation from bottleneck-first ordering can be matched or beaten.\n\n**Lean Target:**\n```\ndef iterateUpgrade (s : Finset α) (c : α → ℕ) (hs : s.Nonempty) : ℕ → (α → ℕ)\n  | 0 => c\n  | k + 1 => raiseOn (bottleneckSet ",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "476ffddd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:00:36.595798+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "7. Parametric Capacity Sensitivity Analysis",
-    "description": "**Hypothesis:** The system throughput `s.inf' hs c` is a piecewise-linear function of a perturbation parameter `ε`, with breakpoints at values where the bottleneck set changes.\n\n**Proof Strategy:**\n- Define parameterized capacity: `c_ε(x) = c(x) + ε * d(x)` for direction `d`.\n- Show that for small ε, the bottleneck set is stable.\n- Prove that throughput is linear in ε within each stability interval.\n- Characterize breakpoints: ε values where `bottleneckSet` gains or loses elements.\n\n**Application:** Sensitivity analysis for infrastructure planning — understanding how robust a bottleneck upgrade is to uncertainty in capacity measurements.\n\n---",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "476ffddd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:00:36.637157+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "Direction 1: Reed–Muller Minimum Distance from Schwartz–Zippel",
-    "description": "**Hypothesis**: The minimum distance of the Reed–Muller code RM(d, n, q) equals q^n − d·q^{n−1}, and this follows directly from the Schwartz–Zippel bound.\n\n**Proof Strategy**:\n1. A codeword of RM(d, n, q) is the evaluation vector of a polynomial f of total degree ≤ d over F_q^n.\n2. The Hamming weight of a nonzero codeword = q^n − |Z(f)|.\n3. By `schwartz_zippel_succ`, |Z(f)| ≤ d · q^{n−1}.\n4. Therefore weight ≥ q^n − d · q^{n−1}.\n5. The bound is achieved by the product of d linear forms.\n\n**Key Lemma to Formalize**:\n```\ntheorem reed_muller_minimum_distance :\n    ∀ f : MvPolynomial (Fin n) (ZMod q), f ≠ 0 → f.totalDegree ≤ d →\n    q^n - Fintype.card {x | eval x f = 0} ≥ q^n - d * q^{n-1}\n```\n\n**Impact**: First certified coding-theoretic distance bound derived from algebraic geometry in any p",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.375173+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "Direction 3: Polynomial Fingerprinting and Streaming Verification",
-    "description": "**Hypothesis**: Polynomial fingerprinting provides communication-optimal equality testing for data streams, with error bounds certified via Schwartz–Zippel.\n\n**Proof Strategy**:\n1. Represent data as coefficients of a univariate polynomial.\n2. Random evaluation at a point r gives a fingerprint.\n3. By Schwartz–Zippel (univariate case), collision probability ≤ d/q.\n4. Formalize the communication protocol and its soundness.\n\n**Key Theorem**:\n```\ntheorem fingerprint_soundness (f g : Polynomial K) (hfg : f ≠ g) :\n    Fintype.card {r : K | f.eval r = g.eval r} ≤ max f.natDegree g.natDegree\n```\n\n**Impact**: First certified randomized communication protocol in a proof assistant. Template for formalizing interactive proofs, streaming algorithms, and property testing.\n\n**Cross-domain connections**: C",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.398477+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Phase 2 (Medium-term, 3–6 months)",
-    "description": "- Direction 1: Reed–Muller distance (requires Hamming weight formalization)\n- Direction 6: Combinatorial Nullstellensatz (independent but uses similar techniques)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.468128+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Research Team Structure",
-    "description": "**Core team**:\n- Algebraic complexity: extend circuit formalization, prove PIT variants\n- Coding theory: Reed–Muller bounds, list decoding connections\n- Randomized algorithms: streaming, fingerprinting, verification protocols\n\n**Validation protocol**:\n1. State conjecture as a Lean theorem with `sorry`\n2. Test with concrete examples via `#eval`\n3. Decompose into ≤ 5 helper lemmas\n4. Prove helpers bottom-up\n5. Build clean API for downstream use\n\n**Knowledge base updates**:\n- After each proved theorem, add to the catalog with cross-references\n- Maintain a dependency graph of formalized results\n- Track which folklore implications are now certified",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.499683+00:00"
   },
   {
     "id": "fd_0232",
@@ -1687,40 +1384,6 @@
     "source_exp_id": "cb6bb980",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:30:41.669258+00:00"
-  },
-  {
-    "id": "fd_0235",
-    "title": "Direction 4: Hodge-Theoretic Adversarial Certificates via Harmonic Projection Bo",
-    "description": "**Hypothesis:** The projection of a perturbation field onto the harmonic subspace provides a certified lower bound on the adversarial perturbation needed to change a network's prediction. Specifically, if the harmonic projection of the perturbation has norm less than the spectral gap λ₁ of the Hodge Laplacian, then no adversarial example exists within that perturbation budget.\n\n**Proof Strategy:**\n1. Define the perturbation field δω induced by an input perturbation δx, where δω(i,j) is the change in pairwise margin.\n2. Decompose δω = d₀(δf) + d₁†(δη) + δh.\n3. Prove: if ‖δh‖ < λ₁ · (margin gap), then the network's prediction is stable. This follows from the spectral gap bounding the inverse of Δ₁ on the complement of ker(Δ₁).\n4. Show that this certificate is tighter than Lipschitz-based cer",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cb6bb980",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:30:41.680443+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "4. Concrete Adjunction: VC Theory ⊣ Covering Number Theory",
-    "description": "**Hypothesis:** There exists a natural adjunction between a theory of VC dimension and a theory of covering numbers, where:\n- `F` maps a hypothesis class to its covering number spectrum\n- `G` maps a covering number bound to the \"richest\" hypothesis class compatible with that bound\n\n**Proof Strategy:**\n- Define `VCTheory : ResearchTheory` with carrier = finite hypothesis classes and Inv = VC dimension\n- Define `CoveringTheory : ResearchTheory` with carrier = covering number functions and Inv = log of covering number at scale 1\n- The Sauer-Shelah lemma provides the left adjoint's monotonicity: `VC(H) ≤ log₂(covering(H))`\n- The right adjoint is the maximal class with at most `n` covering number\n- Prove the Galois biconditional using classical results in learning theory\n\n**Cross-Domain Connect",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4f490452",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:33.382691+00:00"
   },
   {
     "id": "fd_0223",
