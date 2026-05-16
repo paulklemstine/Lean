@@ -563,20 +563,6 @@
   },
   {
     "id": "fd_0231",
-    "title": "Proof theory",
-    "description": "(automata, coding, compression)",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0db1bd89",
-    "consumed_by_exp_id": "9a668faa",
-    "timestamp": "2026-05-15T22:01:06.632160+00:00"
-  },
-  {
-    "id": "fd_0231",
     "title": "Document",
     "description": "with module-level docstrings and cross-references.",
     "domains": [
@@ -663,21 +649,6 @@
     "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:21:48.725714+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Define the tropical Morse complex",
-    "description": "Build a chain complex whose generators are corner critical points, with boundary maps defined by \"gradient flow\" within the piecewise-linear structure (descending manifolds of the tropical function).",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:21:48.736219+00:00"
   },
   {
     "id": "fd_0249",
@@ -897,20 +868,6 @@
     "source_exp_id": "085cfca9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T04:34:45.444806+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Cochain complex:",
-    "description": "Define the space of k-cochains on a finite digraph (vertex functions, edge functions, face functions).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "085cfca9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:34:45.459261+00:00"
   },
   {
     "id": "seed_052",
@@ -1521,10 +1478,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2b33dcea",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "63028e3e",
     "timestamp": "2026-05-16T03:24:38.341258+00:00"
   },
   {
@@ -1844,5 +1801,72 @@
     "source_exp_id": "746c4988",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T04:40:35.503790+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "2. Certified List-Decoding Radius for Reed–Solomon Codes",
+    "description": "**Theorem Target:** Define the Reed–Solomon evaluation code $\\mathcal{C}_d(S) = \\{(\\text{eval}_s(p))_{s \\in S} : \\deg p \\leq d\\}$. Prove that its minimum Hamming distance is $|S| - d$, and that the list size for decoding at agreement radius $t$ satisfies:\n\n- **Johnson bound:** If $t > \\sqrt{|S| \\cdot d}$, then $L \\leq |S| / (t - \\sqrt{|S| \\cdot d})$.\n- **Guruswami–Sudan bound:** If $t > \\sqrt{|S| \\cdot d}$, then $L \\leq |S|^2$.\n\n**Why it is hard:** The Johnson bound requires a non-trivial application of the Cauchy–Schwarz inequality to the multiplicity function, beyond the Bonferroni bound we proved. The Guruswami–Sudan bound requires formalizing bivariate polynomial interpolation and factorization. Both require significant algebraic infrastructure beyond what Mathlib currently provides fo",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9a668faa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:30:16.450926+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "3. Boolean Low-Degree Agreement Rigidity",
+    "description": "**Theorem Target:** For multilinear polynomials $p : \\{0,1\\}^n \\to \\mathbb{F}_2$ of degree at most $d$, and a target function $f : \\{0,1\\}^n \\to \\mathbb{F}_2$:\n\nIf $L$ distinct multilinear polynomials of degree $\\leq d$ each agree with $f$ on at least $t$ of the $2^n$ inputs, then $L$ satisfies a bound of the form:\n$$L \\leq \\binom{n}{\\leq d} \\cdot \\frac{2^n}{t}.$$\n\n**Why it is hard:** Over $\\mathbb{F}_2$, every polynomial is multilinear, so degree bounds behave differently. The zero set of a nonzero multilinear polynomial of degree $d$ has size exactly $2^{n-1}$ (by the Schwartz–Zippel specialization), not $d \\cdot 2^{n-1}$ as in the general case. The agreement structure is richer because the polynomial space has dimension $\\binom{n}{\\leq d}$. Formalizing multilinear polynomials and their ",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9a668faa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:30:16.497572+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "4. Tropical Agreement Geometry",
+    "description": "**Theorem Target:** Define tropical polynomials as $p(x) = \\max_{i}(a_i + i \\cdot x)$ for $a_i \\in \\mathbb{R} \\cup \\{-\\infty\\}$, and tropical agreement sets as $A(p, f) = \\{x \\in S : p(x) = f(x)\\}$. Prove that for distinct tropical polynomials of \"degree\" $\\leq d$:\n$$|A(p, f) \\cap A(q, f)| \\leq d$$\nwhere the bound comes from the number of \"breakpoints\" of $p - q$ (the tropical analogue of roots).\n\n**Why it is hard:** Tropical geometry replaces field operations with $(\\max, +)$, which breaks ring-theoretic arguments. The \"root bound\" for tropical polynomials is different: a tropical polynomial of degree $d$ has at most $d$ breakpoints, but the structure of agreement sets is non-algebraic. Formalizing tropical polynomials in Lean requires entirely new definitions, and the Lean/Mathlib suppor",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9a668faa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:30:16.511383+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "5. Rank/Interpolation Strengthening via Vandermonde Determinants",
+    "description": "**Theorem Target:** Improve the Bonferroni bound $2Lt \\leq 2|S| + L(L-1)d$ to an exponent-sensitive bound:\n$$L \\leq \\binom{|S|}{d+1}^{1/(d+1)}$$\nor similar, using the rank of the Vandermonde-type evaluation matrix.\n\n**Why it is hard:** The argument requires showing that the evaluation vectors of $L$ distinct degree-$\\leq d$ polynomials on $S$ are linearly independent when $L \\leq d + 1$ (by Vandermonde non-singularity), and then using this to derive tighter list-size bounds. Formalizing Vandermonde determinants and their non-vanishing requires substantial linear algebra infrastructure.\n\n**What infrastructure from this cycle enables it:** The polynomial evaluation framework (`Polynomial.eval`) and the agreement set definitions provide the starting point. The key new ingredient is the connec",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9a668faa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:30:16.523974+00:00"
   }
 ]
