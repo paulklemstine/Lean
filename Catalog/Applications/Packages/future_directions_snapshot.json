@@ -421,20 +421,6 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
-    "id": "fd_0219",
-    "title": "Finite-dimensional spectral theorem",
-    "description": ": Eigenvalue decomposition for real symmetric matrices on `Fin n`.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9093673a",
-    "consumed_by_exp_id": "9cb1f586",
-    "timestamp": "2026-05-15T20:42:44.426054+00:00"
-  },
-  {
     "id": "fd_0260",
     "title": "Connect to training dynamics",
     "description": "by showing that each grokking event corresponds to a corner critical crossing, and use the Morse inequality to lower-bound the number of such events.\n\n### Key Challenges\n- Computing the activation pattern complex of a realistic neural network is combinatorially explosive ($2^h$ possible patterns for $h$ hidden neurons).\n- The connection between topological invariants and actual training dynamics requires assumptions about the optimization algorithm.\n\n### Cross-Domain Connections\n- **Deep learning theory**: provides rigorous lower bounds on training complexity\n- **Computational topology**: applies persistent homology to neural network analysis\n- **Complexity theory**: connects the combinatorial complexity of activation patterns to computational hardness\n\n### Actionable Steps\n1. Implement ac",
@@ -465,6 +451,23 @@
     "source_exp_id": "63028e3e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:53:19.303662+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Construct encoding family",
+    "description": "where `tropFactorRank (encode s) = s` using block-diagonal rank-1 decompositions\n\n### Key Lemmas Needed\n- `tropFactorRank_le_dim`: Factor rank is at most $n$ for $n \\times n$ matrices\n- `tropFactorRank_identity`: Factor rank of the tropical identity is $n$\n- `tropFactorRank_diagonal`: Factor rank of a diagonal matrix equals its number of finite entries (under certain conditions)\n- `tropFactorRank_tropical_sum`: Factor rank is subadditive under tropical sum\n\n### Estimated Difficulty\n**High.** The lower bounds are the hardest part. Shitov's NP-hardness result suggests that computing factor rank is intrinsically difficult, but constructing specific matrices with *provable* factor rank requires delicate combinatorial arguments.\n\n### Cross-Domain Impact\n- **Algebraic geometry**: Factor rank con",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "889e6044",
+    "timestamp": "2026-05-16T07:11:31.800180+00:00"
   },
   {
     "id": "fd_0232",
@@ -816,20 +819,6 @@
     "timestamp": "2026-05-16T13:37:24.173627+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Uniqueness theorem",
-    "description": ": Prove that if propagation closure yields singleton candidate sets everywhere, and these singletons form a valid assignment, then this assignment is the unique solution.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.193980+00:00"
-  },
-  {
     "id": "fd_0252",
     "title": "Connection to information-theoretic bounds",
     "description": ": Relate the residual ambiguity to the logarithm of the number of valid completions (a tropical entropy).\n\n### Proof Strategy\nThe uniqueness direction follows from soundness: if propagation yields {d} for cell c, every valid solution A must have A(c) = d (by soundness). If all cells are determined, A is uniquely determined.\n\n### Cross-Domain Impact\nThis connects to the problem of minimal Sudoku clue sets (known to be 17 for 9×9) and more generally to the information content of partial observations in structured combinatorial systems.\n\n---\n\n## Direction 5: Parameterized Sudoku and Asymptotic Analysis\n\n### Hypothesis\nThe tropical framework extends naturally to n²×n² Sudoku grids, where the total candidate mass is n⁴ × n² = n⁶ and the stabilization bound becomes n⁶. The phase transition in cl",
@@ -958,34 +947,6 @@
     "source_exp_id": "70b752e4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:56:21.510876+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Binary specialization test:",
-    "description": "Every q-ary theorem recovers the binary case at q = 2",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "70b752e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:56:21.528359+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Application coverage:",
-    "description": "Each direction should have ≥ 1 concrete numerical example demonstrating the theorem",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "70b752e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:56:21.563486+00:00"
   },
   {
     "id": "seed_050",
@@ -1798,5 +1759,36 @@
     "source_exp_id": "41f0f930",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:12:11.751217+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Concrete Theorem Target",
+    "description": "```\ntheorem sidon_geometric_error_bound\n    (S : ℕ → ℕ)  -- Sidon index sequence\n    (err : ℕ → ℝ)\n    (ε₀ r : ℝ)\n    (hSidon : ∀ i j k l, S i * S j = S k * S l → (i = k ∧ j = l) ∨ (i = l ∧ j = k))\n    (hgeom : ∀ j, err (j + 1) ≤ r * err j)\n    ... :\n    ∀ T, cumulative_error S err T ≤ ε₀ / (1 - r)\n```",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cb1f586",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:58:03.579150+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Summary of Dependencies",
+    "description": "```\nDirection 1 (Sidon Sets)\n    ↑ generalizes prime-power index sets\n    \nDirection 2 (Tropical SDPI)\n    ↑ information-theoretic consequence of decorrelation\n    \nDirection 3 (Spectral Gap)\n    ↑ provides mechanism for geometric decay hypothesis\n    ↗ feeds into Direction 4 via Hecke operator spectral theory\n    \nDirection 4 (GL_n Hecke)\n    ↑ higher-rank generalization\n    ↗ feeds into Direction 5 via Langlands-type bounds\n    \nDirection 5 (Derandomization)\n    ↑ complexity-theoretic application\n    ← depends on Directions 1-4 for PRG construction quality\n```\n\n---",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cb1f586",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:58:03.653565+00:00"
   }
 ]

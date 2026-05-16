@@ -1,303 +1,239 @@
 #!/usr/bin/env python3
 """
-Tropical Portal Networks — Real-World Applications
+applications.py — Real-world applications of tropical metric compression
+and portal network optimization theory.
 
-Demonstrates how the tropical scaling theory applies to:
-1. Logistics network design (hub-and-spoke optimization)
-2. Internet backbone routing
-3. Multi-resolution spatial databases
-4. Transportation network planning
+Demonstrates how the mathematical framework applies to:
+1. Logistics and transportation network design
+2. Communication network overlay routing
+3. Multi-modal transit optimization
+4. Data center interconnection
 """
 
-import math
 import random
-from typing import List, Tuple
+from algorithms import (
+    l1_dist, nether_map, dual_world_cost, prim_mst,
+    floyd_warshall_tropical, PortalNetworkOptimizer
+)
 
-
-# ─────────────────────────────────────────────────────────────
-# Core functions (self-contained, no local imports)
-# ─────────────────────────────────────────────────────────────
-
-def l1_dist(p: Tuple[int, int], q: Tuple[int, int]) -> int:
-    return abs(p[0] - q[0]) + abs(p[1] - q[1])
-
-def nether_map_k(p: Tuple[int, int], k: int) -> Tuple[int, int]:
-    return (math.floor(p[0] / k), math.floor(p[1] / k))
-
-def dual_cost(c: int, k: int, p: Tuple[int, int], q: Tuple[int, int]) -> int:
-    overworld = l1_dist(p, q)
-    nether = 2 * c + l1_dist(nether_map_k(p, k), nether_map_k(q, k))
-    return min(overworld, nether)
-
-class UnionFind:
-    def __init__(self, n):
-        self.parent = list(range(n))
-        self.rank = [0] * n
-    def find(self, x):
-        if self.parent[x] != x:
-            self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
-    def union(self, x, y):
-        px, py = self.find(x), self.find(y)
-        if px == py: return False
-        if self.rank[px] < self.rank[py]: px, py = py, px
-        self.parent[py] = px
-        if self.rank[px] == self.rank[py]: self.rank[px] += 1
-        return True
-
-def kruskal_mst(n, weights):
-    edges = sorted((weights[i][j], i, j) for i in range(n) for j in range(i+1, n))
-    uf = UnionFind(n)
-    mst = []
-    total = 0
-    for w, i, j in edges:
-        if uf.union(i, j):
-            mst.append((i, j, w))
-            total += w
-    return mst, total
-
-
-# ─────────────────────────────────────────────────────────────
-# Application 1: Logistics Network Design
-# ─────────────────────────────────────────────────────────────
-
-def logistics_network():
+# ============================================================
+# Application 1: Logistics Hub Optimization
+# ============================================================
+def logistics_demo():
     """
-    Model: A company has warehouses in various cities.
-    - Local truck delivery: cost = distance (slow, no setup)
-    - Air freight: cost = distance/k + 2*airport_fee (fast, needs airports)
+    Model a logistics network where:
+    - Surface roads = Overworld (slow, cheap per km)
+    - Express highway/rail = Nether (8x faster, fixed access cost)
 
-    The tropical scaling theory tells us:
-    - Threshold for air freight: d > 2*fee*k/(k-1)
-    - Optimal backbone: MST in air-freight metric
+    The theory predicts that the optimal hub network follows the MST
+    of the compressed metric, and there's a crossover distance
+    beyond which the express network always dominates.
     """
     print("=" * 60)
-    print("APPLICATION 1: Logistics Network Design")
+    print("APPLICATION 1: Logistics Hub Network Design")
     print("=" * 60)
 
-    # Cities (approximate grid coordinates, in km)
-    cities = {
-        "NYC": (0, 0),
-        "Chicago": (-1200, 400),
-        "LA": (-3900, -300),
-        "Houston": (-2200, -1200),
-        "Phoenix": (-3400, -800),
-        "Philadelphia": (100, -100),
-        "Dallas": (-2300, -900),
-        "Atlanta": (-1200, -700),
-    }
-
-    airport_fee = 200  # cost units per airport entry/exit
-    k = 10  # air freight is 10x faster than trucking
-
-    names = list(cities.keys())
-    coords = [cities[n] for n in names]
-    n = len(coords)
-
-    # Compute dual-cost matrix
-    weights = [[0] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            weights[i][j] = dual_cost(airport_fee, k, coords[i], coords[j])
-
-    # MST in dual-world metric
-    mst_edges, total = kruskal_mst(n, weights)
-
-    threshold = 2 * airport_fee * k / (k - 1)
-    print(f"\n  Parameters: airport_fee={airport_fee}, speed_factor={k}x")
-    print(f"  Threshold distance: {threshold:.0f} km")
-    print(f"\n  Optimal logistics backbone:")
-    for i, j, w in mst_edges:
-        direct = l1_dist(coords[i], coords[j])
-        air = 2 * airport_fee + l1_dist(nether_map_k(coords[i], k), nether_map_k(coords[j], k))
-        mode = "✈ Air" if air < direct else "🚛 Truck"
-        print(f"    {names[i]:15s} ↔ {names[j]:15s}: cost={w:5d}  ({mode}, direct={direct})")
-
-    print(f"\n  Total backbone cost: {total}")
-
-    # Compare with complete graph
-    complete_cost = sum(weights[i][j] for i in range(n) for j in range(i+1, n))
-    print(f"  Complete graph cost: {complete_cost}")
-    print(f"  Savings: {(1 - total/complete_cost)*100:.1f}%")
-    print()
-
-
-# ─────────────────────────────────────────────────────────────
-# Application 2: Internet Backbone Routing
-# ─────────────────────────────────────────────────────────────
-
-def internet_backbone():
-    """
-    Model: Data centers connected by local links and backbone fiber.
-    - Local link: latency = distance (in ms)
-    - Backbone fiber: latency = distance/20 + 2*router_setup (20x faster)
-
-    The tropical closure gives optimal routing table.
-    """
-    print("=" * 60)
-    print("APPLICATION 2: Internet Backbone Routing")
-    print("=" * 60)
-
-    # Data centers
-    data_centers = [
-        ("US-East", (0, 0)),
-        ("US-West", (4000, 0)),
-        ("Europe", (6000, 3000)),
-        ("Asia", (10000, 1000)),
-        ("South-Am", (2000, -5000)),
+    # Warehouse locations (in km, scaled by 10)
+    warehouses = [
+        (0, 0),       # Main distribution center
+        (150, 0),     # Port facility
+        (0, 120),     # Northern warehouse
+        (150, 120),   # Airport cargo
+        (75, 60),     # Central sorting hub
+        (200, 200),   # Rural distribution point
     ]
+    names = ["Main DC", "Port", "North WH", "Airport", "Central Hub", "Rural DP"]
 
-    router_cost = 50  # ms setup per router hop
-    k = 20  # backbone is 20x faster
+    # Highway ramp cost = 30 units (fixed cost to enter/exit express network)
+    ramp_cost = 30
 
-    names = [d[0] for d in data_centers]
-    coords = [d[1] for d in data_centers]
-    n = len(coords)
+    opt = PortalNetworkOptimizer(warehouses, portal_cost=ramp_cost)
+    opt.compute_mst()
+    opt.compute_shortest_paths()
 
-    # Cost matrix
-    W = [[0] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            W[i][j] = dual_cost(router_cost, k, coords[i], coords[j])
+    print(f"\nWarehouse locations:")
+    for i, (name, loc) in enumerate(zip(names, warehouses)):
+        print(f"  [{i}] {name}: {loc}")
 
-    print(f"\n  Parameters: router_cost={router_cost}ms, backbone_speedup={k}x")
-    print(f"\n  Direct latency matrix (ms):")
-    print(f"  {'':>12s}", end="")
-    for name in names:
-        print(f"{name:>10s}", end="")
-    print()
-    for i in range(n):
-        print(f"  {names[i]:>12s}", end="")
-        for j in range(n):
-            print(f"{W[i][j]:10d}", end="")
-        print()
+    print(f"\nExpress network speed advantage: 8×")
+    print(f"Ramp access cost: {ramp_cost} units")
+    print(f"Crossover distance: {opt.threshold_distance():.0f} km")
 
-    # Tropical closure = optimal routing
-    dist = [row[:] for row in W]
-    for k_idx in range(n):
-        for i in range(n):
-            for j in range(n):
-                via = dist[i][k_idx] + dist[k_idx][j]
-                if via < dist[i][j]:
-                    dist[i][j] = via
+    print(f"\nOptimal backbone connections:")
+    for u, v in opt.mst_edges:
+        print(f"  {names[u]} ↔ {names[v]}  (cost: {opt.dual_cost_matrix[u][v]})")
 
-    print(f"\n  Optimal routing table after tropical closure (ms):")
-    print(f"  {'':>12s}", end="")
-    for name in names:
-        print(f"{name:>10s}", end="")
-    print()
-    for i in range(n):
-        print(f"  {names[i]:>12s}", end="")
-        for j in range(n):
-            improvement = W[i][j] - dist[i][j]
-            suffix = f"(-{improvement})" if improvement > 0 else ""
-            print(f"{dist[i][j]:>6d}{suffix:>4s}", end="")
-        print()
-    print()
+    savings = opt.savings_report()
+    print(f"\nMST total: {savings['mst_cost']}")
+    print(f"Best hub-spoke: {savings['best_star_cost']} (hub: {names[savings['best_star_hub']]})")
+    print(f"MST saves: {savings['savings_pct']:.1f}%")
 
 
-# ─────────────────────────────────────────────────────────────
-# Application 3: Transportation Phase Diagram
-# ─────────────────────────────────────────────────────────────
-
-def transportation_phases():
+# ============================================================
+# Application 2: CDN / Overlay Network Routing
+# ============================================================
+def cdn_demo():
     """
-    Compute and display the phase diagram showing when each
-    transportation mode (local vs express) is optimal.
+    Content Delivery Network model:
+    - Direct internet = Overworld (variable latency)
+    - Private backbone = Nether (low latency, peering cost)
+
+    The tropical closure gives optimal all-pairs routing through
+    the overlay network.
     """
-    print("=" * 60)
-    print("APPLICATION 3: Transportation Phase Diagram")
-    print("=" * 60)
-
-    print("\n  Phase diagram: Optimal transport mode")
-    print("  (L=Local, E=Express)")
-    print()
-    print(f"  {'Cost↓/Dist→':>12s}", end="")
-    for d in range(0, 1001, 100):
-        print(f"{d:>6d}", end="")
-    print()
-
-    for c in range(0, 201, 20):
-        threshold = 2 * c * 8 / 7 if c > 0 else 0
-        print(f"  c={c:>4d}     ", end="")
-        for d in range(0, 1001, 100):
-            if d == 0:
-                print(f"{'=':>6s}", end="")
-            elif d > threshold:
-                print(f"{'E':>6s}", end="")
-            else:
-                print(f"{'L':>6s}", end="")
-        print(f"  (threshold={threshold:.0f})")
-
-    print()
-
-
-# ─────────────────────────────────────────────────────────────
-# Application 4: Multi-Scale Network Comparison
-# ─────────────────────────────────────────────────────────────
-
-def multi_scale_comparison():
-    """
-    Compare network costs across different scaling factors.
-    Shows how the infrastructure saving varies with compression ratio.
-    """
-    print("=" * 60)
-    print("APPLICATION 4: Multi-Scale Network Comparison")
-    print("=" * 60)
-
-    random.seed(42)
-    n = 10
-    settlements = [(random.randint(-500, 500), random.randint(-500, 500)) for _ in range(n)]
-
-    print(f"\n  {n} random settlements, comparing scaling factors k=2,4,8,16,32")
-    print(f"  Portal cost c = 50")
-    c = 50
-
-    print(f"\n  {'k':>6s} {'MST Cost':>10s} {'Overworld':>12s} {'Saving':>10s} {'Threshold':>12s}")
-    print(f"  {'-'*6} {'-'*10} {'-'*12} {'-'*10} {'-'*12}")
-
-    # Overworld-only MST
-    ow = [[l1_dist(settlements[i], settlements[j]) for j in range(n)] for i in range(n)]
-    _, ow_total = kruskal_mst(n, ow)
-
-    for k in [2, 4, 8, 16, 32]:
-        weights = [[dual_cost(c, k, settlements[i], settlements[j])
-                     for j in range(n)] for i in range(n)]
-        _, total = kruskal_mst(n, weights)
-        threshold = 2 * c * k / (k - 1)
-        saving = (1 - total / ow_total) * 100
-        print(f"  {k:>6d} {total:>10d} {ow_total:>12d} {saving:>9.1f}% {threshold:>12.1f}")
-
-    print()
-
-
-# ─────────────────────────────────────────────────────────────
-# Main
-# ─────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
     print("\n" + "=" * 60)
-    print("  TROPICAL PORTAL NETWORKS — REAL-WORLD APPLICATIONS")
-    print("=" * 60 + "\n")
+    print("APPLICATION 2: CDN Overlay Network Routing")
+    print("=" * 60)
 
-    logistics_network()
-    internet_backbone()
-    transportation_phases()
-    multi_scale_comparison()
+    # Data centers (abstract coordinates representing network distance)
+    datacenters = [
+        (0, 0),       # US-East
+        (400, 0),     # US-West
+        (200, 300),   # EU-Central
+        (500, 400),   # Asia-Pacific
+        (100, 150),   # US-Central
+    ]
+    dc_names = ["US-East", "US-West", "EU-Central", "Asia-Pac", "US-Central"]
 
-    print("All applications complete.")
+    # Peering cost (ms equivalent)
+    peering_cost = 15
+
+    opt = PortalNetworkOptimizer(datacenters, portal_cost=peering_cost)
+    opt.compute_mst()
+    sp = opt.compute_shortest_paths()
+
+    print(f"\nData centers:")
+    for i, name in enumerate(dc_names):
+        print(f"  [{i}] {name}")
+
+    print(f"\nDirect internet latency matrix:")
+    for i in range(len(datacenters)):
+        row = [f"{opt.ow_dist_matrix[i][j]:>5}" for j in range(len(datacenters))]
+        print(f"  {dc_names[i]:>12}: " + " ".join(row))
+
+    print(f"\nOptimal overlay routing (via tropical closure):")
+    for i in range(len(datacenters)):
+        row = [f"{int(sp[i][j]):>5}" for j in range(len(datacenters))]
+        print(f"  {dc_names[i]:>12}: " + " ".join(row))
+
+    # Show improvement
+    print(f"\nLatency improvement (direct vs overlay):")
+    for i in range(len(datacenters)):
+        for j in range(i+1, len(datacenters)):
+            direct = opt.ow_dist_matrix[i][j]
+            overlay = int(sp[i][j])
+            if overlay < direct:
+                pct = 100 * (direct - overlay) / direct
+                print(f"  {dc_names[i]} → {dc_names[j]}: "
+                      f"{direct} → {overlay} ({pct:.0f}% faster)")
+
+
+# ============================================================
+# Application 3: Multi-Modal Transit
+# ============================================================
+def transit_demo():
+    """
+    Urban transit model:
+    - Walking/bus = Overworld (slow, ubiquitous)
+    - Subway = Nether (fast, station access cost)
+
+    Shows how the portal cost threshold determines which trips
+    benefit from subway access.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Multi-Modal Urban Transit")
+    print("=" * 60)
+
+    # Locations in city blocks
+    locations = [
+        (0, 0),       # Downtown
+        (40, 0),      # Business district
+        (0, 48),      # University
+        (40, 48),     # Hospital
+        (80, 24),     # Airport
+        (20, 24),     # Central park
+    ]
+    loc_names = ["Downtown", "Business", "University", "Hospital", "Airport", "Central Pk"]
+
+    # Station access time = 5 minutes walking
+    station_cost = 5
+
+    print(f"Station access time: {station_cost} min each way")
+    threshold = (16 * station_cost) / 7
+    print(f"Subway worthwhile for trips > {threshold:.0f} blocks")
+
+    print(f"\nTrip analysis:")
+    print(f"{'From':>12} → {'To':<12} {'Walk':>5} {'Subway':>7} {'Best':>5} {'Mode':<8}")
+    print("-" * 60)
+
+    for i in range(len(locations)):
+        for j in range(i+1, len(locations)):
+            walk = l1_dist(locations[i], locations[j])
+            subway = dual_world_cost(locations[i], locations[j], station_cost)
+            mode = "Subway" if subway < walk else "Walk"
+            best = min(walk, subway)
+            print(f"{loc_names[i]:>12} → {loc_names[j]:<12} {walk:>5} {subway:>7} {best:>5} {mode:<8}")
+
+
+# ============================================================
+# Application 4: Phase Transition Analysis
+# ============================================================
+def phase_transition_demo():
+    """
+    Analyze how the portal cost parameter creates a phase transition
+    in optimal network structure.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Portal Cost Phase Transition")
+    print("=" * 60)
+
+    settlements = [
+        (0, 0), (100, 0), (0, 100), (100, 100),
+        (50, 50), (150, 50), (50, 150), (200, 200),
+    ]
+    n = len(settlements)
+
+    print(f"\n{'Portal Cost':>12} {'MST Cost':>10} {'Star Cost':>10} {'Savings %':>10} {'Threshold':>10}")
+    print("-" * 55)
+
+    for c in [0, 5, 10, 20, 50, 100, 200, 500]:
+        opt = PortalNetworkOptimizer(settlements, portal_cost=c)
+        opt.compute_mst()
+        sr = opt.savings_report()
+        thresh = opt.threshold_distance()
+        print(f"{c:>12} {sr['mst_cost']:>10.0f} {sr['best_star_cost']:>10.0f} "
+              f"{sr['savings_pct']:>9.1f}% {thresh:>10.0f}")
+
+
+# ============================================================
+# Main
+# ============================================================
+if __name__ == "__main__":
+    logistics_demo()
+    cdn_demo()
+    transit_demo()
+    phase_transition_demo()
+
+    print("\n" + "=" * 60)
+    print("All applications completed successfully!")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Tropical Portal Networks — Demonstration Script
+demo.py — Concrete numerical demonstrations of the tropical scaling theorems
+for dual-world portal network optimization.
 
-Demonstrates the key theorems from the tropical scaling theory
-with concrete numerical examples.
+Demonstrates:
+1. Exact 1:8 scaling on the 8-lattice
+2. Rounding error bounds for arbitrary coordinates
+3. Portal cost threshold crossover
+4. Tropical matrix multiplication for route optimization
+5. MST vs star network cost comparison
 """
 
+import itertools
 import random
-import math
 
 def l1_dist(p, q):
     """Manhattan (L1) distance between two 2D integer points."""
@@ -308,509 +244,516 @@ def lift_over(p):
     return (8 * p[0], 8 * p[1])
 
 def nether_map(p):
-    """Map Overworld coordinates to Nether (integer division by 8)."""
-    # Python's // does floor division, matching Lean's Int.ediv
-    return (p[0] // 8 if p[0] >= 0 else -((-p[0]) // 8 + (1 if (-p[0]) % 8 != 0 else 0)),
-            p[1] // 8 if p[1] >= 0 else -((-p[1]) // 8 + (1 if (-p[1]) % 8 != 0 else 0)))
+    """Map Overworld coordinates to Nether (integer floor division by 8).
+    Matches Lean 4's Int.div which uses Euclidean (floor) division."""
+    return (p[0] // 8, p[1] // 8)
 
-def nether_map_simple(p):
-    """Simplified Nether map using Python's floor division."""
-    return (math.floor(p[0] / 8), math.floor(p[1] / 8))
-
-def dual_world_cost(c, p, q):
-    """Dual-world travel cost with portal penalty c."""
-    overworld = l1_dist(p, q)
-    nether = 2 * c + l1_dist(nether_map_simple(p), nether_map_simple(q))
-    return min(overworld, nether)
+def div_by_8_point(p):
+    """Check if a point lies on the 8-lattice."""
+    return p[0] % 8 == 0 and p[1] % 8 == 0
 
 
-def demo_exact_scaling():
-    """Demonstrate Theorem 1: exact tropical scaling on lifted coordinates."""
-    print("=" * 60)
-    print("THEOREM 1: Exact Tropical Scaling")
-    print("L1Dist(LiftOver(p), LiftOver(q)) = 8 * L1Dist(p, q)")
-    print("=" * 60)
+# ============================================================
+# Demo 1: Exact Scaling on the 8-Lattice
+# ============================================================
+print("=" * 60)
+print("DEMO 1: Exact Tropical Scaling (Theorem 1)")
+print("=" * 60)
+print()
+print("For points on the 8-lattice, Nether distance is exactly 1/8")
+print("of Overworld distance.")
+print()
 
-    test_cases = [
-        ((0, 0), (1, 1)),
-        ((3, -5), (7, 2)),
-        ((-10, 20), (15, -8)),
-        ((100, -200), (-50, 300)),
-    ]
+lattice_points = [(8*x, 8*z) for x in range(-5, 6) for z in range(-5, 6)]
+sample_pairs = random.sample(list(itertools.combinations(lattice_points, 2)), 10)
 
-    for p, q in test_cases:
-        lhs = l1_dist(lift_over(p), lift_over(q))
-        rhs = 8 * l1_dist(p, q)
-        status = "✓" if lhs == rhs else "✗"
-        print(f"  {status} p={p}, q={q}: LHS={lhs}, RHS={rhs}")
+print(f"{'Overworld A':>15} {'Overworld B':>15} {'OW Dist':>8} {'Nether A':>12} {'Nether B':>12} {'N Dist':>7} {'8×N':>5} {'Match':>6}")
+print("-" * 90)
 
-    # Random verification
-    failures = 0
-    N = 100000
-    for _ in range(N):
-        p = (random.randint(-1000, 1000), random.randint(-1000, 1000))
-        q = (random.randint(-1000, 1000), random.randint(-1000, 1000))
-        if l1_dist(lift_over(p), lift_over(q)) != 8 * l1_dist(p, q):
-            failures += 1
+all_match = True
+for a, b in sample_pairs:
+    ow_dist = l1_dist(a, b)
+    na, nb = nether_map(a), nether_map(b)
+    n_dist = l1_dist(na, nb)
+    match = (n_dist * 8 == ow_dist)
+    all_match = all_match and match
+    print(f"{str(a):>15} {str(b):>15} {ow_dist:>8} {str(na):>12} {str(nb):>12} {n_dist:>7} {8*n_dist:>5} {'✓' if match else '✗':>6}")
 
-    print(f"\n  Random verification: {N} trials, {failures} failures")
+print(f"\nAll pairs match exactly: {'YES ✓' if all_match else 'NO ✗'}")
+
+# Lift form
+print("\n--- Lift Form: L1(LiftOver(p), LiftOver(q)) = 8 × L1(p, q) ---")
+nether_pts = [(x, z) for x in range(-5, 6) for z in range(-5, 6)]
+sample_nether = random.sample(list(itertools.combinations(nether_pts, 2)), 8)
+
+for p, q in sample_nether:
+    lp, lq = lift_over(p), lift_over(q)
+    d_nether = l1_dist(p, q)
+    d_lifted = l1_dist(lp, lq)
+    assert d_lifted == 8 * d_nether, f"Scaling failed for {p}, {q}"
+    print(f"  Nether {p} → {q}: dist={d_nether}, Lifted dist={d_lifted}, 8×{d_nether}={8*d_nether} ✓")
+
+
+# ============================================================
+# Demo 2: Rounding Error Bounds
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 2: Rounding Error Bounds (Theorem: ±14)")
+print("=" * 60)
+print()
+
+max_err = -float('inf')
+min_err = float('inf')
+worst_upper = None
+worst_lower = None
+
+for x1 in range(-20, 21):
+    for z1 in range(-20, 21):
+        for x2 in range(-20, 21):
+            for z2 in range(-20, 21):
+                p, q = (x1, z1), (x2, z2)
+                ow = l1_dist(p, q)
+                nd = l1_dist(nether_map(p), nether_map(q))
+                err = ow - 8 * nd
+                if err > max_err:
+                    max_err = err
+                    worst_upper = (p, q)
+                if err < min_err:
+                    min_err = err
+                    worst_lower = (p, q)
+
+print(f"Searched all pairs with coordinates in [-20, 20]")
+print(f"Maximum error (upper): {max_err}  (bound: ≤ 14)  {'✓' if max_err <= 14 else '✗'}")
+print(f"  Worst case: {worst_upper}")
+print(f"Minimum error (lower): {min_err}  (bound: ≥ -14) {'✓' if min_err >= -14 else '✗'}")
+print(f"  Worst case: {worst_lower}")
+
+
+# ============================================================
+# Demo 3: Portal Cost Threshold
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 3: Portal Cost Threshold")
+print("=" * 60)
+print()
+print("With portal activation cost c each way, Nether travel (2c + d)")
+print("beats Overworld travel (8d) when 16c < 7d.")
+print()
+
+for c in [10, 50, 100, 500]:
+    threshold = (16 * c) / 7
+    print(f"  Portal cost c = {c}:")
+    print(f"    Threshold distance d > {threshold:.1f}")
+    d = int(threshold) + 1
+    nether_cost = 2 * c + d
+    overworld_cost = 8 * d
+    print(f"    At d = {d}: Nether = {nether_cost}, Overworld = {overworld_cost}, "
+          f"Savings = {overworld_cost - nether_cost} ({100*(overworld_cost-nether_cost)/overworld_cost:.1f}%)")
     print()
 
 
-def demo_lattice_scaling():
-    """Demonstrate Theorem 2: exact scaling on the 8-lattice."""
-    print("=" * 60)
-    print("THEOREM 2: Lattice Scaling (8-lattice)")
-    print("L1Dist(NetherMap(p), NetherMap(q)) * 8 = L1Dist(p, q)")
-    print("for p, q on the 8-lattice")
-    print("=" * 60)
+# ============================================================
+# Demo 4: Tropical Matrix Multiplication
+# ============================================================
+print("=" * 60)
+print("DEMO 4: Tropical (Min-Plus) Matrix Multiplication")
+print("=" * 60)
+print()
 
-    test_cases = [
-        ((0, 0), (8, 8)),
-        ((16, -24), (80, 40)),
-        ((-64, 128), (256, -192)),
-    ]
+# Example: 4 portal sites
+sites = [(0, 0), (80, 0), (0, 80), (80, 80)]
+n = len(sites)
 
-    for p, q in test_cases:
-        nether_dist = l1_dist(nether_map_simple(p), nether_map_simple(q))
-        over_dist = l1_dist(p, q)
-        status = "✓" if nether_dist * 8 == over_dist else "✗"
-        print(f"  {status} p={p}, q={q}: nether_dist*8={nether_dist * 8}, over_dist={over_dist}")
+print("Portal sites (Overworld):", sites)
+print()
 
-    print()
+# Weight matrix: dual-world cost with c=10
+c = 10
+W = [[0]*n for _ in range(n)]
+for i in range(n):
+    for j in range(n):
+        ow_cost = l1_dist(sites[i], sites[j])
+        n_cost = 2*c + l1_dist(nether_map(sites[i]), nether_map(sites[j]))
+        W[i][j] = min(ow_cost, n_cost) if i != j else 0
 
+print("Dual-world cost matrix W (c=10):")
+for row in W:
+    print("  ", row)
 
-def demo_rounding_error():
-    """Demonstrate Theorem 3: bounded rounding distortion ≤ 14."""
-    print("=" * 60)
-    print("THEOREM 3: Rounding Error Bound ≤ 14")
-    print("|L1Dist(p,q) - 8 * L1Dist(NetherMap(p), NetherMap(q))| ≤ 14")
-    print("=" * 60)
-
-    max_error = 0
-    error_counts = {}
-    N = 1000000
-
-    for _ in range(N):
-        p = (random.randint(-1000, 1000), random.randint(-1000, 1000))
-        q = (random.randint(-1000, 1000), random.randint(-1000, 1000))
-        over_dist = l1_dist(p, q)
-        nether_dist = l1_dist(nether_map_simple(p), nether_map_simple(q))
-        error = abs(over_dist - 8 * nether_dist)
-        max_error = max(max_error, error)
-        error_counts[error] = error_counts.get(error, 0) + 1
-
-    print(f"  {N} random trials:")
-    print(f"  Maximum error observed: {max_error}")
-    print(f"  Mean error: {sum(e * c for e, c in error_counts.items()) / N:.2f}")
-    print(f"  Error = 0: {error_counts.get(0, 0) / N * 100:.2f}%")
-    print(f"  Error = 14 (tight bound): {error_counts.get(14, 0)} occurrences")
-
-    # Show the tight example
-    p, q = (7, 7), (8, 8)
-    over_dist = l1_dist(p, q)
-    nether_dist = l1_dist(nether_map_simple(p), nether_map_simple(q))
-    error = abs(over_dist - 8 * nether_dist)
-    print(f"\n  Tight example: p={p}, q={q}")
-    print(f"    Overworld dist = {over_dist}")
-    print(f"    Nether dist = {nether_dist}")
-    print(f"    Error = |{over_dist} - 8*{nether_dist}| = {error}")
-    print()
-
-
-def demo_portal_threshold():
-    """Demonstrate Theorem 4: portal threshold."""
-    print("=" * 60)
-    print("THEOREM 4: Portal Threshold")
-    print("Nether wins when 2c + d < 8d, i.e., d > 16c/7")
-    print("=" * 60)
-
-    for c in [10, 50, 100, 500]:
-        threshold = 16 * c / 7
-        print(f"\n  Portal cost c = {c}:")
-        print(f"  Threshold distance: d > {threshold:.1f}")
-        for d in [int(threshold) - 10, int(threshold), int(threshold) + 10]:
-            if d <= 0:
-                continue
-            over_cost = d
-            nether_cost = 2 * c + d  # in Nether units (d/8 * 8 = d, but portal cost is added)
-            # Actually: Overworld cost = 8d (in Nether-unit scale), Nether cost = 2c + d
-            nether_actual = 2 * c + d // 8
-            winner = "Nether" if nether_actual < over_cost else "Overworld"
-            print(f"    d = {d}: Overworld = {over_cost}, Nether = {nether_actual} → {winner}")
-
-    print()
-
-
-def demo_tropical_closure():
-    """Demonstrate tropical matrix closure (Floyd-Warshall)."""
-    print("=" * 60)
-    print("THEOREM 5: Tropical Closure (Floyd-Warshall)")
-    print("Min-plus matrix powers converge to shortest paths")
-    print("=" * 60)
-
-    # Small example: 4 settlements
-    settlements = [(0, 0), (80, 0), (0, 80), (80, 80)]
-    n = len(settlements)
-
-    # Compute Nether distance matrix
-    W = [[0] * n for _ in range(n)]
+# Tropical matrix square
+def tropical_mul(A, B, n):
+    C = [[0]*n for _ in range(n)]
     for i in range(n):
-        for j in range(n):
-            W[i][j] = l1_dist(nether_map_simple(settlements[i]),
-                              nether_map_simple(settlements[j]))
+        for k in range(n):
+            C[i][k] = min(A[i][j] + B[j][k] for j in range(n))
+    return C
 
-    print("\n  Settlements (Overworld):", settlements)
-    print("  Nether distance matrix:")
-    for row in W:
-        print("   ", row)
+W2 = tropical_mul(W, W, n)
+print("\nTropical square W² (optimal 2-step routes):")
+for row in W2:
+    print("  ", row)
 
-    # Tropical closure
-    INF = float('inf')
-    dist = [row[:] for row in W]
-    for k in range(n):
-        for i in range(n):
-            for j in range(n):
-                if dist[i][k] + dist[k][j] < dist[i][j]:
-                    dist[i][j] = dist[i][k] + dist[k][j]
+# Tropical closure
+W_closed = [row[:] for row in W]
+for _ in range(n):
+    W_new = tropical_mul(W_closed, W, n)
+    W_closed = [[min(W_closed[i][j], W_new[i][j]) for j in range(n)] for i in range(n)]
 
-    print("\n  After tropical closure (shortest paths):")
-    for row in dist:
-        print("   ", row)
+print("\nTropical closure W* (all-pairs shortest paths):")
+for row in W_closed:
+    print("  ", row)
 
-    # Verify idempotence: closure of closure = closure
-    dist2 = [row[:] for row in dist]
-    for k in range(n):
-        for i in range(n):
-            for j in range(n):
-                if dist2[i][k] + dist2[k][j] < dist2[i][j]:
-                    dist2[i][j] = dist2[i][k] + dist2[k][j]
-
-    idempotent = all(dist[i][j] == dist2[i][j] for i in range(n) for j in range(n))
-    print(f"\n  Closure is idempotent: {idempotent}")
-    print()
+# Check fixpoint
+W_check = tropical_mul(W_closed, W_closed, n)
+is_fixpoint = all(W_closed[i][j] == min(W_closed[i][j], W_check[i][j])
+                   for i in range(n) for j in range(n))
+print(f"\nClosure is a fixpoint: {'YES ✓' if is_fixpoint else 'NO ✗'}")
 
 
-def demo_mst():
-    """Demonstrate MST optimality for portal networks."""
-    print("=" * 60)
-    print("THEOREM 6: MST Portal Backbone")
-    print("Optimal connected portal network is an MST")
-    print("=" * 60)
+# ============================================================
+# Demo 5: MST vs Star Network
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 5: MST vs Star Network Cost")
+print("=" * 60)
+print()
 
-    # Generate random settlements on 8-lattice
-    random.seed(42)
-    n = 8
-    settlements = [(random.randint(-50, 50) * 8, random.randint(-50, 50) * 8)
-                    for _ in range(n)]
-
-    print(f"\n  {n} settlements on 8-lattice:")
-    for i, s in enumerate(settlements):
-        print(f"    S{i}: {s} (Nether: {nether_map_simple(s)})")
-
-    # Compute all pairwise Nether distances
-    nether_coords = [nether_map_simple(s) for s in settlements]
+# Prim's MST algorithm
+def prim_mst(n, weight):
+    """Return MST edges and total cost using Prim's algorithm."""
+    in_tree = [False] * n
+    in_tree[0] = True
     edges = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            w = l1_dist(nether_coords[i], nether_coords[j])
-            edges.append((w, i, j))
-    edges.sort()
+    total = 0
+    for _ in range(n - 1):
+        best_edge = None
+        best_cost = float('inf')
+        for u in range(n):
+            if not in_tree[u]:
+                continue
+            for v in range(n):
+                if in_tree[v]:
+                    continue
+                if weight[u][v] < best_cost:
+                    best_cost = weight[u][v]
+                    best_edge = (u, v)
+        if best_edge:
+            edges.append(best_edge)
+            total += best_cost
+            in_tree[best_edge[1]] = True
+    return edges, total
 
-    # Kruskal's MST
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    def union(x, y):
-        px, py = find(x), find(y)
-        if px != py:
-            parent[px] = py
-            return True
-        return False
+# 6 settlements
+settlements = [(0, 0), (120, 0), (0, 120), (120, 120), (60, 60), (200, 80)]
+n_s = len(settlements)
 
-    mst_edges = []
-    mst_weight = 0
-    for w, i, j in edges:
-        if union(i, j):
-            mst_edges.append((i, j, w))
-            mst_weight += w
+# Nether-compressed weights
+nether_w = [[0]*n_s for _ in range(n_s)]
+for i in range(n_s):
+    for j in range(n_s):
+        nether_w[i][j] = l1_dist(nether_map(settlements[i]), nether_map(settlements[j]))
 
-    print(f"\n  MST edges (Nether distances):")
-    for i, j, w in mst_edges:
-        print(f"    S{i} -- S{j}: Nether dist = {w}, Overworld dist = {w * 8}")
+print("Settlements:", settlements)
+print("\nNether-compressed distance matrix:")
+for row in nether_w:
+    print("  ", row)
 
-    total_complete = sum(w for w, _, _ in edges)
-    print(f"\n  Total MST weight (Nether): {mst_weight}")
-    print(f"  Total MST weight (Overworld): {mst_weight * 8}")
-    print(f"  Complete graph total weight: {total_complete}")
-    print(f"  MST saves {(1 - mst_weight / total_complete) * 100:.1f}% vs complete graph")
-    print()
+mst_edges, mst_cost = prim_mst(n_s, nether_w)
+print(f"\nMST edges: {mst_edges}")
+print(f"MST total cost: {mst_cost}")
 
+# Star graph cost (hub at vertex 0)
+star_cost = sum(nether_w[0][j] for j in range(1, n_s))
+print(f"Star graph cost (hub=0): {star_cost}")
 
-if __name__ == "__main__":
-    print("\n" + "=" * 60)
-    print("  TROPICAL PORTAL NETWORKS — THEOREM DEMONSTRATIONS")
-    print("=" * 60 + "\n")
+# Star graph cost (hub at vertex 4 = center)
+star_cost_4 = sum(nether_w[4][j] for j in range(n_s) if j != 4)
+print(f"Star graph cost (hub=4): {star_cost_4}")
 
-    demo_exact_scaling()
-    demo_lattice_scaling()
-    demo_rounding_error()
-    demo_portal_threshold()
-    demo_tropical_closure()
-    demo_mst()
+print(f"\nMST saves {star_cost - mst_cost} over star(hub=0)")
+print(f"MST saves {star_cost_4 - mst_cost} over star(hub=4)")
 
-    print("All demonstrations complete.")
+print(f"\n✓ MST cost ≤ all star costs: {mst_cost <= star_cost and mst_cost <= star_cost_4}")
+
+print("\n" + "=" * 60)
+print("All demos completed successfully!")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Tropical Portal Networks — Visualizations
-
-Generates charts and diagrams illustrating the key mathematical results.
-Saves output as PNG files and returns base64-encoded data URIs.
+visualizations.py — Generate charts for the tropical portal network paper.
+Saves figures as PNG files and also produces base64-encoded versions.
 """
-
-import math
-import random
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
 import base64
 import io
-from typing import List, Tuple
 
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import matplotlib.patches as mpatches
-    HAS_MPL = True
-except ImportError:
-    HAS_MPL = False
-    print("matplotlib not available; generating text-based visualizations")
+from algorithms import (
+    l1_dist, nether_map, lift_over, prim_mst,
+    floyd_warshall_tropical, PortalNetworkOptimizer
+)
 
 
-# Core functions
-def l1_dist(p, q):
-    return abs(p[0] - q[0]) + abs(p[1] - q[1])
-
-def nether_map(p):
-    return (math.floor(p[0] / 8), math.floor(p[1] / 8))
-
-def lift_over(p):
-    return (8 * p[0], 8 * p[1])
-
-def dual_cost(c, p, q):
-    return min(l1_dist(p, q), 2*c + l1_dist(nether_map(p), nether_map(q)))
-
-
-def fig_to_base64(fig) -> str:
-    """Convert a matplotlib figure to a base64 data URI."""
+def fig_to_base64(fig):
+    """Convert matplotlib figure to base64 PNG data URI."""
     buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return "data:image/png;base64," + base64.b64encode(buf.read()).decode()
 
 
-def viz_rounding_error_distribution() -> str:
-    """Histogram of rounding errors across random point pairs."""
-    if not HAS_MPL:
-        return ""
+def plot_scaling_law():
+    """Fig 1: Exact 1:8 scaling on the lattice."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-    random.seed(42)
-    errors = []
-    for _ in range(500000):
-        p = (random.randint(-500, 500), random.randint(-500, 500))
-        q = (random.randint(-500, 500), random.randint(-500, 500))
-        od = l1_dist(p, q)
-        nd = l1_dist(nether_map(p), nether_map(q))
-        errors.append(abs(od - 8 * nd))
+    # Left: Overworld grid
+    pts_nether = [(x, z) for x in range(-3, 4) for z in range(-3, 4)]
+    pts_ow = [lift_over(p) for p in pts_nether]
 
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.hist(errors, bins=range(16), align='left', color='#2196F3', edgecolor='white',
-            alpha=0.85, density=True)
-    ax.axvline(x=14, color='red', linestyle='--', linewidth=2, label='Proven bound = 14')
-    ax.set_xlabel('Rounding Error |d_O - 8·d_N|', fontsize=14)
-    ax.set_ylabel('Probability Density', fontsize=14)
-    ax.set_title('Distribution of Nether Scaling Rounding Errors\n(500K random point pairs)',
-                 fontsize=16)
-    ax.legend(fontsize=12)
-    ax.set_xlim(-0.5, 15.5)
-    ax.grid(axis='y', alpha=0.3)
-
-    return fig_to_base64(fig)
-
-
-def viz_portal_threshold() -> str:
-    """Phase diagram showing when Nether travel dominates."""
-    if not HAS_MPL:
-        return ""
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    c_vals = range(0, 201)
-    d_vals = range(0, 1001)
-
-    # Phase boundary: d = 16c/7
-    c_line = list(range(0, 201))
-    d_line = [16 * c / 7 for c in c_line]
-
-    ax.fill_between(c_line, d_line, 1000, alpha=0.3, color='#4CAF50', label='Nether optimal')
-    ax.fill_between(c_line, 0, d_line, alpha=0.3, color='#FF9800', label='Overworld optimal')
-    ax.plot(c_line, d_line, 'k-', linewidth=2, label='Threshold: d = 16c/7')
-
-    ax.set_xlabel('Portal Cost (c)', fontsize=14)
-    ax.set_ylabel('Travel Distance (d)', fontsize=14)
-    ax.set_title('Transportation Mode Phase Diagram\nNether vs Overworld Optimal Regions', fontsize=16)
-    ax.legend(fontsize=12)
-    ax.set_xlim(0, 200)
-    ax.set_ylim(0, 1000)
-    ax.grid(alpha=0.3)
-
-    return fig_to_base64(fig)
-
-
-def viz_mst_network() -> str:
-    """Visualize MST portal backbone for random settlements."""
-    if not HAS_MPL:
-        return ""
-
-    random.seed(42)
-    n = 12
-    settlements = [(random.randint(-40, 40) * 8, random.randint(-40, 40) * 8) for _ in range(n)]
-
-    # Compute MST (Kruskal's)
-    nether_coords = [nether_map(s) for s in settlements]
-    edges = sorted((l1_dist(nether_coords[i], nether_coords[j]), i, j)
-                    for i in range(n) for j in range(i+1, n))
-
-    parent = list(range(n))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    mst = []
-    for w, i, j in edges:
-        pi, pj = find(i), find(j)
-        if pi != pj:
-            parent[pi] = pj
-            mst.append((i, j, w))
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7))
-
-    # Left: Complete graph (faded) + MST (bold)
-    for i in range(n):
-        for j in range(i+1, n):
-            ax1.plot([settlements[i][0], settlements[j][0]],
-                     [settlements[i][1], settlements[j][1]],
-                     'b-', alpha=0.05, linewidth=0.5)
-
-    for i, j, w in mst:
-        ax1.plot([settlements[i][0], settlements[j][0]],
-                 [settlements[i][1], settlements[j][1]],
-                 'r-', linewidth=2.5, alpha=0.8)
-        mid_x = (settlements[i][0] + settlements[j][0]) / 2
-        mid_y = (settlements[i][1] + settlements[j][1]) / 2
-        ax1.annotate(f'{w}', (mid_x, mid_y), fontsize=8, ha='center',
-                     bbox=dict(boxstyle='round,pad=0.2', facecolor='yellow', alpha=0.7))
-
-    for i, s in enumerate(settlements):
-        ax1.plot(s[0], s[1], 'ko', markersize=10)
-        ax1.annotate(f'S{i}', (s[0]+8, s[1]+8), fontsize=9, fontweight='bold')
-
-    ax1.set_title('Overworld: MST Portal Backbone\n(red = MST, blue = all connections)', fontsize=13)
-    ax1.set_xlabel('X coordinate')
-    ax1.set_ylabel('Z coordinate')
+    ax1.scatter([p[0] for p in pts_ow], [p[1] for p in pts_ow],
+               c='steelblue', s=30, zorder=3)
+    # Highlight a pair
+    a_ow, b_ow = lift_over((-2, 1)), lift_over((3, -1))
+    ax1.plot([a_ow[0], b_ow[0]], [a_ow[1], b_ow[1]], 'r-', lw=2, zorder=2)
+    ax1.scatter([a_ow[0], b_ow[0]], [a_ow[1], b_ow[1]], c='red', s=80, zorder=4)
+    d_ow = l1_dist(a_ow, b_ow)
+    ax1.set_title(f'Overworld (8ℤ lattice)\nL1 distance = {d_ow}', fontsize=13)
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('z')
+    ax1.grid(True, alpha=0.3)
     ax1.set_aspect('equal')
-    ax1.grid(alpha=0.3)
 
-    # Right: Nether view
-    for i, j, w in mst:
-        ni, nj = nether_coords[i], nether_coords[j]
-        ax2.plot([ni[0], nj[0]], [ni[1], nj[1]], 'r-', linewidth=2.5, alpha=0.8)
-        mid_x = (ni[0] + nj[0]) / 2
-        mid_y = (ni[1] + nj[1]) / 2
-        ax2.annotate(f'{w}', (mid_x, mid_y), fontsize=8, ha='center',
-                     bbox=dict(boxstyle='round,pad=0.2', facecolor='yellow', alpha=0.7))
-
-    for i, nc in enumerate(nether_coords):
-        ax2.plot(nc[0], nc[1], 'rs', markersize=10)
-        ax2.annotate(f'S{i}', (nc[0]+1, nc[1]+1), fontsize=9, fontweight='bold')
-
-    ax2.set_title('Nether: Compressed Portal Network\n(8× compressed coordinates)', fontsize=13)
-    ax2.set_xlabel('X coordinate (÷8)')
-    ax2.set_ylabel('Z coordinate (÷8)')
+    # Right: Nether grid
+    ax2.scatter([p[0] for p in pts_nether], [p[1] for p in pts_nether],
+               c='darkorange', s=30, zorder=3)
+    a_n, b_n = (-2, 1), (3, -1)
+    ax2.plot([a_n[0], b_n[0]], [a_n[1], b_n[1]], 'r-', lw=2, zorder=2)
+    ax2.scatter([a_n[0], b_n[0]], [a_n[1], b_n[1]], c='red', s=80, zorder=4)
+    d_n = l1_dist(a_n, b_n)
+    ax2.set_title(f'Nether (ℤ lattice)\nL1 distance = {d_n} = {d_ow}/8', fontsize=13)
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('z')
+    ax2.grid(True, alpha=0.3)
     ax2.set_aspect('equal')
-    ax2.grid(alpha=0.3)
+
+    fig.suptitle('Theorem 1: Exact Tropical Scaling (factor 8)', fontsize=15, fontweight='bold')
+    plt.tight_layout()
+    fig.savefig('fig_scaling_law.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
+
+
+def plot_rounding_error():
+    """Fig 2: Rounding error distribution."""
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    errors = []
+    coords = range(-30, 31)
+    for x1 in coords:
+        for x2 in coords:
+            a, b = (x1, 0), (x2, 0)
+            ow = l1_dist(a, b)
+            nd = l1_dist(nether_map(a), nether_map(b))
+            errors.append(ow - 8 * nd)
+
+    ax.hist(errors, bins=range(min(errors)-1, max(errors)+2), color='teal',
+            edgecolor='white', alpha=0.8)
+    ax.axvline(x=-7, color='red', ls='--', lw=2, label='Per-coord bound: ±7')
+    ax.axvline(x=7, color='red', ls='--', lw=2)
+    ax.set_xlabel('Rounding Error: L1(p,q) − 8·L1(φ(p),φ(q))', fontsize=12)
+    ax.set_ylabel('Count (1D pairs)', fontsize=12)
+    ax.set_title('Rounding Error Distribution (single coordinate)', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    return fig_to_base64(fig)
+    fig.savefig('fig_rounding_error.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
 
 
-def viz_scaling_verification() -> str:
-    """Scatter plot verifying exact scaling theorem."""
-    if not HAS_MPL:
-        return ""
+def plot_mst_network():
+    """Fig 3: MST portal backbone vs star network."""
+    settlements = [
+        (0, 0), (120, 0), (0, 120), (120, 120), (60, 60), (200, 80)
+    ]
+    names = ["Base", "East", "North", "NE", "Center", "Far"]
+    n = len(settlements)
 
-    random.seed(123)
-    nether_dists = []
-    overworld_dists = []
-    for _ in range(1000):
-        p = (random.randint(-100, 100), random.randint(-100, 100))
-        q = (random.randint(-100, 100), random.randint(-100, 100))
-        nd = l1_dist(p, q)
-        od = l1_dist(lift_over(p), lift_over(q))
-        nether_dists.append(nd)
-        overworld_dists.append(od)
+    opt = PortalNetworkOptimizer(settlements, portal_cost=0)
+    mst_edges, mst_cost = opt.compute_mst()
 
-    fig, ax = plt.subplots(figsize=(8, 8))
-    ax.scatter(nether_dists, overworld_dists, alpha=0.3, s=10, c='#2196F3')
-    max_val = max(max(nether_dists), max(overworld_dists) / 8)
-    ax.plot([0, max_val], [0, 8 * max_val], 'r-', linewidth=2,
-            label='y = 8x (exact scaling)')
-    ax.set_xlabel('Nether Distance d_N(p, q)', fontsize=14)
-    ax.set_ylabel('Overworld Distance d_O(Lift(p), Lift(q))', fontsize=14)
-    ax.set_title('Exact Tropical Scaling Verification\n1000 random point pairs', fontsize=16)
-    ax.legend(fontsize=12)
-    ax.set_aspect('equal')
-    ax.grid(alpha=0.3)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    return fig_to_base64(fig)
+    # Left: MST
+    for u, v in mst_edges:
+        ax1.plot([settlements[u][0], settlements[v][0]],
+                [settlements[u][1], settlements[v][1]],
+                'b-', lw=2.5, zorder=2)
+    for i, (x, z) in enumerate(settlements):
+        ax1.scatter(x, z, c='navy', s=120, zorder=3)
+        ax1.annotate(names[i], (x, z), textcoords="offset points",
+                    xytext=(8, 8), fontsize=10, fontweight='bold')
+    ax1.set_title(f'MST Backbone (total cost: {mst_cost})', fontsize=13, fontweight='bold')
+    ax1.set_xlabel('x (Overworld)')
+    ax1.set_ylabel('z (Overworld)')
+    ax1.grid(True, alpha=0.3)
+    ax1.set_aspect('equal')
+
+    # Right: Star (centered at best hub)
+    hub = min(range(n), key=lambda h: opt.star_cost(h))
+    star_cost = opt.star_cost(hub)
+    for j in range(n):
+        if j != hub:
+            ax2.plot([settlements[hub][0], settlements[j][0]],
+                    [settlements[hub][1], settlements[j][1]],
+                    'r-', lw=2, alpha=0.7, zorder=2)
+    for i, (x, z) in enumerate(settlements):
+        c = 'red' if i == hub else 'darkred'
+        s = 150 if i == hub else 100
+        ax2.scatter(x, z, c=c, s=s, zorder=3)
+        ax2.annotate(names[i], (x, z), textcoords="offset points",
+                    xytext=(8, 8), fontsize=10, fontweight='bold')
+    ax2.set_title(f'Star Network, hub={names[hub]} (total cost: {star_cost})',
+                  fontsize=13, fontweight='bold')
+    ax2.set_xlabel('x (Overworld)')
+    ax2.set_ylabel('z (Overworld)')
+    ax2.grid(True, alpha=0.3)
+    ax2.set_aspect('equal')
+
+    fig.suptitle('Theorem 3: MST Optimality for Portal Infrastructure', fontsize=15, fontweight='bold')
+    plt.tight_layout()
+    fig.savefig('fig_mst_network.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
 
 
-def generate_all_visualizations():
-    """Generate all visualizations and return as dict of base64 data URIs."""
-    results = {}
+def plot_phase_transition():
+    """Fig 4: Phase transition in network structure as portal cost varies."""
+    settlements = [
+        (0, 0), (100, 0), (0, 100), (100, 100),
+        (50, 50), (150, 50), (50, 150), (200, 200),
+    ]
 
-    print("Generating visualizations...")
+    costs = list(range(0, 201, 5))
+    mst_costs = []
+    star_costs = []
+    savings_pcts = []
 
-    print("  1/4: Rounding error distribution...")
-    results['rounding_error'] = viz_rounding_error_distribution()
+    for c in costs:
+        opt = PortalNetworkOptimizer(settlements, portal_cost=c)
+        opt.compute_mst()
+        sr = opt.savings_report()
+        mst_costs.append(sr['mst_cost'])
+        star_costs.append(sr['best_star_cost'])
+        savings_pcts.append(sr['savings_pct'])
 
-    print("  2/4: Portal threshold phase diagram...")
-    results['portal_threshold'] = viz_portal_threshold()
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
 
-    print("  3/4: MST network visualization...")
-    results['mst_network'] = viz_mst_network()
+    ax1.plot(costs, mst_costs, 'b-', lw=2, label='MST cost')
+    ax1.plot(costs, star_costs, 'r--', lw=2, label='Best star cost')
+    ax1.fill_between(costs, mst_costs, star_costs, alpha=0.15, color='green')
+    ax1.set_xlabel('Portal Activation Cost (c)', fontsize=12)
+    ax1.set_ylabel('Total Network Cost', fontsize=12)
+    ax1.set_title('Network Cost vs Portal Activation Cost', fontsize=14, fontweight='bold')
+    ax1.legend(fontsize=11)
+    ax1.grid(True, alpha=0.3)
 
-    print("  4/4: Scaling verification...")
-    results['scaling_verification'] = viz_scaling_verification()
+    ax2.plot(costs, savings_pcts, 'g-', lw=2)
+    ax2.fill_between(costs, savings_pcts, alpha=0.2, color='green')
+    ax2.set_xlabel('Portal Activation Cost (c)', fontsize=12)
+    ax2.set_ylabel('MST Savings over Star (%)', fontsize=12)
+    ax2.set_title('MST Advantage: Phase Behavior', fontsize=14, fontweight='bold')
+    ax2.grid(True, alpha=0.3)
 
-    print("Done!")
-    return results
+    plt.tight_layout()
+    fig.savefig('fig_phase_transition.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
+
+
+def plot_tropical_matrix():
+    """Fig 5: Tropical matrix closure visualization."""
+    sites = [(0, 0), (80, 0), (0, 80), (80, 80), (40, 40)]
+    n = len(sites)
+
+    # Build dual-world cost matrix
+    c = 10
+    W = [[0]*n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                ow = l1_dist(sites[i], sites[j])
+                nw = 2*c + l1_dist(nether_map(sites[i]), nether_map(sites[j]))
+                W[i][j] = min(ow, nw)
+
+    D = floyd_warshall_tropical([[float(x) for x in row] for row in W])
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+    labels = ['(0,0)', '(80,0)', '(0,80)', '(80,80)', '(40,40)']
+
+    im1 = ax1.imshow([[W[i][j] for j in range(n)] for i in range(n)],
+                     cmap='YlOrRd', aspect='equal')
+    ax1.set_xticks(range(n))
+    ax1.set_yticks(range(n))
+    ax1.set_xticklabels(labels, fontsize=8, rotation=45)
+    ax1.set_yticklabels(labels, fontsize=8)
+    for i in range(n):
+        for j in range(n):
+            ax1.text(j, i, str(W[i][j]), ha='center', va='center', fontsize=10)
+    ax1.set_title('Edge Cost Matrix W', fontsize=13, fontweight='bold')
+    plt.colorbar(im1, ax=ax1, shrink=0.8)
+
+    im2 = ax2.imshow([[int(D[i][j]) for j in range(n)] for i in range(n)],
+                     cmap='YlOrRd', aspect='equal')
+    ax2.set_xticks(range(n))
+    ax2.set_yticks(range(n))
+    ax2.set_xticklabels(labels, fontsize=8, rotation=45)
+    ax2.set_yticklabels(labels, fontsize=8)
+    for i in range(n):
+        for j in range(n):
+            ax2.text(j, i, str(int(D[i][j])), ha='center', va='center', fontsize=10)
+    ax2.set_title('Tropical Closure W* (shortest paths)', fontsize=13, fontweight='bold')
+    plt.colorbar(im2, ax=ax2, shrink=0.8)
+
+    fig.suptitle('Theorem 2: Tropical Matrix Closure = All-Pairs Shortest Paths',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    fig.savefig('fig_tropical_matrix.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    plt.close(fig)
+    return b64
 
 
 if __name__ == "__main__":
-    vizs = generate_all_visualizations()
+    print("Generating visualizations...")
+    b64_1 = plot_scaling_law()
+    print("  ✓ fig_scaling_law.png")
+    b64_2 = plot_rounding_error()
+    print("  ✓ fig_rounding_error.png")
+    b64_3 = plot_mst_network()
+    print("  ✓ fig_mst_network.png")
+    b64_4 = plot_phase_transition()
+    print("  ✓ fig_phase_transition.png")
+    b64_5 = plot_tropical_matrix()
+    print("  ✓ fig_tropical_matrix.png")
+    print("\nAll visualizations generated.")
 
-    # Save as individual PNG files
-    for name, data_uri in vizs.items():
-        if data_uri:
-            b64_data = data_uri.split(",")[1]
-            with open(f"{name}.png", "wb") as f:
-                f.write(base64.b64decode(b64_data))
-            print(f"Saved {name}.png")
+    # Return base64 data for JSON packaging
+    viz_data = {
+        "scaling_law": b64_1,
+        "rounding_error": b64_2,
+        "mst_network": b64_3,
+        "phase_transition": b64_4,
+        "tropical_matrix": b64_5,
+    }

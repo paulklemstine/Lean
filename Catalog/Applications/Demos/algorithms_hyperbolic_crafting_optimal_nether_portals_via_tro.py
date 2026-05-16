@@ -1,206 +1,253 @@
 #!/usr/bin/env python3
 """
-Tropical Portal Networks — Algorithms
+algorithms.py — Core algorithms for tropical portal network optimization.
 
-Implements the core algorithms from the tropical scaling theory:
-- Tropical matrix multiplication (min-plus)
-- Floyd-Warshall tropical closure
-- Dual-world MST computation (Kruskal's)
-- Portal threshold decision
-- Rounding error computation
+Implements:
+1. Tropical (min-plus) matrix multiplication and closure
+2. Prim's MST on compressed metric graphs
+3. Dual-world shortest path (Floyd-Warshall in tropical semiring)
+4. Portal placement optimizer
 """
 
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Dict, Optional
 import math
 
+# ============================================================
+# Core Types
+# ============================================================
+Point2D = Tuple[int, int]
+INF = float('inf')
 
-# ─────────────────────────────────────────────────────────────
-# Core Distance Functions
-# ─────────────────────────────────────────────────────────────
 
-def l1_dist(p: Tuple[int, int], q: Tuple[int, int]) -> int:
+# ============================================================
+# 1. Metric Operations
+# ============================================================
+
+def l1_dist(p: Point2D, q: Point2D) -> int:
     """Manhattan (L1) distance between two 2D integer points.
 
-    >>> l1_dist((0, 0), (3, 4))
-    7
-    >>> l1_dist((-1, 2), (3, -1))
-    7
+    Time: O(1), Space: O(1)
     """
     return abs(p[0] - q[0]) + abs(p[1] - q[1])
 
 
-def lift_over(p: Tuple[int, int]) -> Tuple[int, int]:
-    """Lift Nether coordinates to Overworld (scale by 8).
+def nether_map(p: Point2D) -> Point2D:
+    """Map Overworld coordinates to Nether via floor division by 8.
 
-    >>> lift_over((1, 2))
-    (8, 16)
+    Time: O(1), Space: O(1)
+    """
+    return (p[0] // 8, p[1] // 8)
+
+
+def lift_over(p: Point2D) -> Point2D:
+    """Lift Nether coordinates to Overworld by scaling by 8.
+
+    Time: O(1), Space: O(1)
     """
     return (8 * p[0], 8 * p[1])
 
 
-def nether_map(p: Tuple[int, int]) -> Tuple[int, int]:
-    """Map Overworld coordinates to Nether (floor division by 8).
+def nether_dist(p: Point2D, q: Point2D) -> int:
+    """Manhattan distance in Nether between two Overworld points.
 
-    >>> nether_map((17, -5))
-    (2, -1)
-    >>> nether_map((16, 24))
-    (2, 3)
+    Time: O(1), Space: O(1)
     """
-    return (math.floor(p[0] / 8), math.floor(p[1] / 8))
+    return l1_dist(nether_map(p), nether_map(q))
 
 
-def dual_world_cost(c: int, p: Tuple[int, int], q: Tuple[int, int]) -> int:
-    """Dual-world travel cost with portal entry cost c.
+def dual_world_cost(p: Point2D, q: Point2D, portal_cost: int = 0) -> int:
+    """Optimal single-hop cost between two points in the dual-world model.
 
-    Returns min(overworld_dist, 2*c + nether_dist).
+    Returns min(overworld_direct, 2*portal_cost + nether_travel).
 
-    >>> dual_world_cost(0, (0, 0), (80, 0))
-    10
-    >>> dual_world_cost(100, (0, 0), (80, 0))
-    80
+    Time: O(1), Space: O(1)
     """
-    overworld = l1_dist(p, q)
-    nether = 2 * c + l1_dist(nether_map(p), nether_map(q))
-    return min(overworld, nether)
+    ow = l1_dist(p, q)
+    nw = 2 * portal_cost + nether_dist(p, q)
+    return min(ow, nw)
 
 
-# ─────────────────────────────────────────────────────────────
-# Tropical (Min-Plus) Matrix Operations
-# ─────────────────────────────────────────────────────────────
+# ============================================================
+# 2. Tropical (Min-Plus) Matrix Operations
+# ============================================================
 
-def tropical_mat_mul(A: List[List[int]], B: List[List[int]]) -> List[List[int]]:
-    """Min-plus matrix multiplication.
+def tropical_mat_mul(A: List[List[float]], B: List[List[float]]) -> List[List[float]]:
+    """Min-plus matrix multiplication: C[i][k] = min_j(A[i][j] + B[j][k]).
 
-    (A ⊗ B)_{ik} = min_j (A_{ij} + B_{jk})
+    This is the tropical semiring analog of standard matrix multiplication,
+    replacing (×, +) with (+, min).
+
+    Time: O(n³), Space: O(n²)
 
     Args:
-        A: n×m matrix
-        B: m×p matrix
+        A: n×n matrix (list of lists)
+        B: n×n matrix (list of lists)
 
     Returns:
-        n×p tropical product matrix
-
-    >>> A = [[0, 3], [7, 0]]
-    >>> B = [[0, 1], [2, 0]]
-    >>> tropical_mat_mul(A, B)
-    [[0, 1], [2, 0]]
+        C: n×n tropical product matrix
     """
     n = len(A)
-    m = len(B)
-    p = len(B[0])
-    INF = float('inf')
-    C = [[INF] * p for _ in range(n)]
+    C = [[INF] * n for _ in range(n)]
     for i in range(n):
-        for k in range(p):
-            for j in range(m):
+        for k in range(n):
+            for j in range(n):
                 val = A[i][j] + B[j][k]
                 if val < C[i][k]:
                     C[i][k] = val
     return C
 
 
-def tropical_closure(W: List[List[int]]) -> List[List[int]]:
-    """Compute the tropical (min-plus) closure of a cost matrix.
+def tropical_closure(W: List[List[float]], max_iter: Optional[int] = None) -> List[List[float]]:
+    """Compute the tropical (min-plus) closure of a weight matrix.
 
-    This is equivalent to Floyd-Warshall all-pairs shortest paths.
-    The closure W* satisfies W* ⊗ W* = W* (tropical idempotence).
+    The closure W* satisfies W*[i][k] = shortest path cost from i to k.
+    This is equivalent to the Floyd-Warshall all-pairs shortest path,
+    expressed as iterated tropical matrix squaring.
+
+    Convergence: At most n iterations suffice for n vertices.
+
+    Time: O(n⁴) naive, O(n³ log n) with repeated squaring
+    Space: O(n²)
 
     Args:
-        W: n×n cost matrix with W[i][i] = 0
+        W: n×n weight matrix with W[i][i] = 0
+        max_iter: maximum iterations (default: n)
 
     Returns:
-        n×n all-pairs shortest path matrix
-
-    Time complexity: O(n³)
-    Space complexity: O(n²)
-
-    >>> W = [[0, 5, 100], [5, 0, 3], [100, 3, 0]]
-    >>> tropical_closure(W)
-    [[0, 5, 8], [5, 0, 3], [8, 3, 0]]
+        W*: tropical closure matrix
     """
     n = len(W)
-    dist = [row[:] for row in W]
+    if max_iter is None:
+        max_iter = n
+
+    D = [row[:] for row in W]  # copy
+
+    for _ in range(max_iter):
+        D_new = tropical_mat_mul(D, W)
+        # Take elementwise min with current
+        changed = False
+        for i in range(n):
+            for j in range(n):
+                new_val = min(D[i][j], D_new[i][j])
+                if new_val < D[i][j]:
+                    D[i][j] = new_val
+                    changed = True
+        if not changed:
+            break
+
+    return D
+
+
+def floyd_warshall_tropical(W: List[List[float]]) -> List[List[float]]:
+    """Floyd-Warshall as explicit tropical closure.
+
+    Equivalent to tropical_closure but uses the standard DP formulation.
+
+    Time: O(n³), Space: O(n²)
+
+    Args:
+        W: n×n weight matrix
+
+    Returns:
+        All-pairs shortest path matrix
+    """
+    n = len(W)
+    D = [row[:] for row in W]
+
     for k in range(n):
         for i in range(n):
             for j in range(n):
-                via_k = dist[i][k] + dist[k][j]
-                if via_k < dist[i][j]:
-                    dist[i][j] = via_k
-    return dist
+                if D[i][k] + D[k][j] < D[i][j]:
+                    D[i][j] = D[i][k] + D[k][j]
+
+    return D
 
 
-def tropical_step(W: List[List[int]]) -> List[List[int]]:
-    """One step of tropical closure: min(W, W ⊗ W).
+# ============================================================
+# 3. MST Algorithms
+# ============================================================
 
-    >>> W = [[0, 5, 100], [5, 0, 3], [100, 3, 0]]
-    >>> tropical_step(W)
-    [[0, 5, 8], [5, 0, 3], [8, 3, 0]]
-    """
-    W2 = tropical_mat_mul(W, W)
-    n = len(W)
-    return [[min(W[i][j], W2[i][j]) for j in range(n)] for i in range(n)]
+def prim_mst(n: int, weight: List[List[float]]) -> Tuple[List[Tuple[int, int]], float]:
+    """Prim's algorithm for minimum spanning tree.
 
-
-# ─────────────────────────────────────────────────────────────
-# Graph Algorithms
-# ─────────────────────────────────────────────────────────────
-
-class UnionFind:
-    """Disjoint set / union-find data structure for Kruskal's algorithm."""
-
-    def __init__(self, n: int):
-        self.parent = list(range(n))
-        self.rank = [0] * n
-
-    def find(self, x: int) -> int:
-        if self.parent[x] != x:
-            self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
-
-    def union(self, x: int, y: int) -> bool:
-        px, py = self.find(x), self.find(y)
-        if px == py:
-            return False
-        if self.rank[px] < self.rank[py]:
-            px, py = py, px
-        self.parent[py] = px
-        if self.rank[px] == self.rank[py]:
-            self.rank[px] += 1
-        return True
-
-
-def kruskal_mst(
-    n: int,
-    weights: List[List[int]]
-) -> Tuple[List[Tuple[int, int, int]], int]:
-    """Compute minimum spanning tree using Kruskal's algorithm.
+    Time: O(n²), Space: O(n)
 
     Args:
         n: number of vertices
-        weights: n×n symmetric weight matrix
+        weight: n×n symmetric weight matrix
 
     Returns:
-        (edges, total_weight) where edges is list of (i, j, weight)
-
-    Time complexity: O(n² log n)
-
-    >>> weights = [[0, 1, 3], [1, 0, 2], [3, 2, 0]]
-    >>> edges, total = kruskal_mst(3, weights)
-    >>> total
-    3
+        (edges, total_cost): list of MST edges and total weight
     """
+    in_tree = [False] * n
+    in_tree[0] = True
     edges = []
+    total = 0.0
+
+    for _ in range(n - 1):
+        best_cost = INF
+        best_edge = (-1, -1)
+        for u in range(n):
+            if not in_tree[u]:
+                continue
+            for v in range(n):
+                if in_tree[v]:
+                    continue
+                if weight[u][v] < best_cost:
+                    best_cost = weight[u][v]
+                    best_edge = (u, v)
+        if best_edge[0] >= 0:
+            edges.append(best_edge)
+            total += best_cost
+            in_tree[best_edge[1]] = True
+
+    return edges, total
+
+
+def kruskal_mst(n: int, weight: List[List[float]]) -> Tuple[List[Tuple[int, int]], float]:
+    """Kruskal's algorithm for minimum spanning tree using union-find.
+
+    Time: O(n² log n), Space: O(n)
+
+    Args:
+        n: number of vertices
+        weight: n×n symmetric weight matrix
+
+    Returns:
+        (edges, total_cost): list of MST edges and total weight
+    """
+    parent = list(range(n))
+    rank = [0] * n
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py:
+            return False
+        if rank[px] < rank[py]:
+            px, py = py, px
+        parent[py] = px
+        if rank[px] == rank[py]:
+            rank[px] += 1
+        return True
+
+    # Collect and sort all edges
+    all_edges = []
     for i in range(n):
         for j in range(i + 1, n):
-            edges.append((weights[i][j], i, j))
-    edges.sort()
+            all_edges.append((weight[i][j], i, j))
+    all_edges.sort()
 
-    uf = UnionFind(n)
     mst_edges = []
-    total = 0
-    for w, i, j in edges:
-        if uf.union(i, j):
-            mst_edges.append((i, j, w))
+    total = 0.0
+    for w, u, v in all_edges:
+        if union(u, v):
+            mst_edges.append((u, v))
             total += w
             if len(mst_edges) == n - 1:
                 break
@@ -208,132 +255,167 @@ def kruskal_mst(
     return mst_edges, total
 
 
-def dual_world_mst(
-    settlements: List[Tuple[int, int]],
-    portal_cost: int = 0
-) -> Tuple[List[Tuple[int, int, int]], int]:
-    """Compute MST of a settlement network in the dual-world metric.
+# ============================================================
+# 4. Portal Network Optimizer
+# ============================================================
 
-    Args:
-        settlements: list of (x, z) Overworld coordinates
-        portal_cost: fixed cost per portal entry/exit
+class PortalNetworkOptimizer:
+    """Optimizes portal network design for a set of settlements.
 
-    Returns:
-        (edges, total_weight) in dual-world cost
+    Given settlement locations in the Overworld, computes:
+    - The optimal MST backbone using Nether-compressed distances
+    - All-pairs shortest travel times via tropical closure
+    - Cost-benefit analysis of portal activation costs
 
-    >>> settlements = [(0, 0), (80, 0), (0, 80)]
-    >>> edges, total = dual_world_mst(settlements, portal_cost=0)
-    >>> total
-    20
+    Example:
+        >>> settlements = [(0,0), (80,0), (0,80), (80,80)]
+        >>> opt = PortalNetworkOptimizer(settlements, portal_cost=10)
+        >>> opt.compute_mst()
+        >>> opt.compute_shortest_paths()
+        >>> opt.report()
     """
-    n = len(settlements)
-    weights = [[0] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            weights[i][j] = dual_world_cost(portal_cost, settlements[i], settlements[j])
-    return kruskal_mst(n, weights)
+
+    def __init__(self, settlements: List[Point2D], portal_cost: int = 0):
+        self.settlements = settlements
+        self.portal_cost = portal_cost
+        self.n = len(settlements)
+        self.nether_coords = [nether_map(s) for s in settlements]
+
+        # Build weight matrices
+        self.ow_dist_matrix = self._build_ow_matrix()
+        self.nether_dist_matrix = self._build_nether_matrix()
+        self.dual_cost_matrix = self._build_dual_matrix()
+
+        self.mst_edges = None
+        self.mst_cost = None
+        self.shortest_paths = None
+
+    def _build_ow_matrix(self) -> List[List[int]]:
+        return [[l1_dist(self.settlements[i], self.settlements[j])
+                 for j in range(self.n)] for i in range(self.n)]
+
+    def _build_nether_matrix(self) -> List[List[int]]:
+        return [[l1_dist(self.nether_coords[i], self.nether_coords[j])
+                 for j in range(self.n)] for i in range(self.n)]
+
+    def _build_dual_matrix(self) -> List[List[int]]:
+        return [[dual_world_cost(self.settlements[i], self.settlements[j],
+                                 self.portal_cost) if i != j else 0
+                 for j in range(self.n)] for i in range(self.n)]
+
+    def compute_mst(self) -> Tuple[List[Tuple[int, int]], float]:
+        """Compute the MST of the Nether-compressed metric graph.
+
+        Returns:
+            (edges, total_cost)
+        """
+        self.mst_edges, self.mst_cost = prim_mst(self.n, self.dual_cost_matrix)
+        return self.mst_edges, self.mst_cost
+
+    def compute_shortest_paths(self) -> List[List[float]]:
+        """Compute all-pairs shortest paths via tropical closure.
+
+        Returns:
+            Shortest path distance matrix
+        """
+        float_matrix = [[float(x) for x in row] for row in self.dual_cost_matrix]
+        self.shortest_paths = floyd_warshall_tropical(float_matrix)
+        return self.shortest_paths
+
+    def star_cost(self, hub: int = 0) -> float:
+        """Total cost of a star network centered at the given hub."""
+        return sum(self.dual_cost_matrix[hub][j]
+                   for j in range(self.n) if j != hub)
+
+    def savings_report(self) -> Dict:
+        """Compute savings of MST over various star configurations."""
+        if self.mst_edges is None:
+            self.compute_mst()
+
+        best_star_hub = min(range(self.n), key=lambda h: self.star_cost(h))
+        best_star = self.star_cost(best_star_hub)
+
+        return {
+            "mst_cost": self.mst_cost,
+            "best_star_hub": best_star_hub,
+            "best_star_cost": best_star,
+            "savings_abs": best_star - self.mst_cost,
+            "savings_pct": 100 * (best_star - self.mst_cost) / best_star if best_star > 0 else 0,
+        }
+
+    def threshold_distance(self) -> float:
+        """Compute the crossover distance where Nether travel beats Overworld.
+
+        For portal cost c, Nether travel (2c + d/8) beats Overworld (d) when:
+            2c + d/8 < d  →  d > 16c/7
+        """
+        c = self.portal_cost
+        return (16 * c) / 7 if c > 0 else 0
+
+    def report(self) -> str:
+        """Generate a full optimization report."""
+        if self.mst_edges is None:
+            self.compute_mst()
+        if self.shortest_paths is None:
+            self.compute_shortest_paths()
+
+        lines = []
+        lines.append("=" * 60)
+        lines.append("PORTAL NETWORK OPTIMIZATION REPORT")
+        lines.append("=" * 60)
+        lines.append(f"\nSettlements: {self.n}")
+        for i, s in enumerate(self.settlements):
+            lines.append(f"  [{i}] OW: {s}  →  Nether: {self.nether_coords[i]}")
+
+        lines.append(f"\nPortal activation cost: {self.portal_cost}")
+        lines.append(f"Crossover distance: {self.threshold_distance():.1f}")
+
+        lines.append(f"\nMST backbone ({self.mst_cost} total):")
+        for u, v in self.mst_edges:
+            lines.append(f"  {u} ↔ {v}  (cost {self.dual_cost_matrix[u][v]})")
+
+        sr = self.savings_report()
+        lines.append(f"\nBest star hub: [{sr['best_star_hub']}] (cost {sr['best_star_cost']})")
+        lines.append(f"MST savings: {sr['savings_abs']} ({sr['savings_pct']:.1f}%)")
+
+        lines.append(f"\nAll-pairs shortest paths:")
+        for i in range(self.n):
+            row = [f"{int(self.shortest_paths[i][j]):>5}" for j in range(self.n)]
+            lines.append("  " + " ".join(row))
+
+        return "\n".join(lines)
 
 
-# ─────────────────────────────────────────────────────────────
-# Analysis Functions
-# ─────────────────────────────────────────────────────────────
-
-def rounding_error(p: Tuple[int, int], q: Tuple[int, int]) -> int:
-    """Compute the rounding error for the Nether scaling.
-
-    Returns |L1Dist(p,q) - 8 * L1Dist(NetherMap(p), NetherMap(q))|.
-
-    >>> rounding_error((7, 7), (8, 8))
-    14
-    >>> rounding_error((0, 0), (8, 8))
-    0
-    """
-    over = l1_dist(p, q)
-    nether = l1_dist(nether_map(p), nether_map(q))
-    return abs(over - 8 * nether)
-
-
-def portal_threshold(c: int, k: int = 8) -> float:
-    """Compute the distance threshold beyond which Nether travel dominates.
-
-    For scaling factor k and portal cost c, Nether wins when:
-    2c + d/k < d, i.e., d > 2ck/(k-1)
-
-    >>> portal_threshold(100)
-    228.57142857142858
-    >>> portal_threshold(50)
-    114.28571428571429
-    """
-    return 2 * c * k / (k - 1)
-
-
-def verify_scaling_exact(p: Tuple[int, int], q: Tuple[int, int]) -> bool:
-    """Verify the exact scaling theorem for a pair of points.
-
-    Returns True iff L1Dist(LiftOver(p), LiftOver(q)) == 8 * L1Dist(p, q).
-
-    >>> verify_scaling_exact((3, -5), (7, 2))
-    True
-    """
-    return l1_dist(lift_over(p), lift_over(q)) == 8 * l1_dist(p, q)
-
-
-def verify_lattice_scaling(p: Tuple[int, int], q: Tuple[int, int]) -> bool:
-    """Verify the lattice scaling theorem for 8-lattice points.
-
-    Returns True iff L1Dist(NetherMap(p), NetherMap(q)) * 8 == L1Dist(p, q).
-    Requires p, q on the 8-lattice.
-
-    >>> verify_lattice_scaling((16, 24), (80, -8))
-    True
-    """
-    assert p[0] % 8 == 0 and p[1] % 8 == 0, f"{p} not on 8-lattice"
-    assert q[0] % 8 == 0 and q[1] % 8 == 0, f"{q} not on 8-lattice"
-    return l1_dist(nether_map(p), nether_map(q)) * 8 == l1_dist(p, q)
-
-
-# ─────────────────────────────────────────────────────────────
-# Example Usage
-# ─────────────────────────────────────────────────────────────
-
+# ============================================================
+# Example usage
+# ============================================================
 if __name__ == "__main__":
-    print("Tropical Portal Networks — Algorithm Examples\n")
+    # Example: 6 settlements forming a varied geometry
+    settlements = [
+        (0, 0),       # Base camp
+        (200, 0),     # Eastern outpost
+        (0, 160),     # Northern fortress
+        (200, 160),   # Northeast village
+        (100, 80),    # Central hub
+        (320, 240),   # Far colony
+    ]
 
-    # Example 1: Tropical matrix closure
-    print("1. Tropical Closure (3 cities)")
-    W = [[0, 10, 100],
-         [10, 0, 5],
-         [100, 5, 0]]
-    print(f"   Input: {W}")
-    W_star = tropical_closure(W)
-    print(f"   Closure: {W_star}")
-    print(f"   Shortest 0→2: {W_star[0][2]} (via vertex 1: 10+5=15)")
+    print("=== Zero portal cost ===")
+    opt0 = PortalNetworkOptimizer(settlements, portal_cost=0)
+    opt0.compute_mst()
+    opt0.compute_shortest_paths()
+    print(opt0.report())
 
-    # Example 2: Dual-world MST
-    print("\n2. Dual-World MST (5 settlements)")
-    settlements = [(0, 0), (80, 0), (160, 0), (80, 80), (80, -80)]
-    edges, total = dual_world_mst(settlements, portal_cost=0)
-    print(f"   Settlements: {settlements}")
-    print(f"   MST edges: {edges}")
-    print(f"   Total MST weight: {total}")
+    print("\n\n=== Portal cost = 20 ===")
+    opt20 = PortalNetworkOptimizer(settlements, portal_cost=20)
+    opt20.compute_mst()
+    opt20.compute_shortest_paths()
+    print(opt20.report())
 
-    # Example 3: Portal threshold
-    print("\n3. Portal Threshold Analysis")
-    for c in [10, 50, 100]:
-        thresh = portal_threshold(c)
-        print(f"   Portal cost {c}: threshold = {thresh:.1f} blocks")
-
-    # Example 4: Rounding errors
-    print("\n4. Maximum Rounding Error Search")
-    max_err = 0
-    max_pair = None
-    import random
-    random.seed(123)
-    for _ in range(100000):
-        p = (random.randint(-100, 100), random.randint(-100, 100))
-        q = (random.randint(-100, 100), random.randint(-100, 100))
-        err = rounding_error(p, q)
-        if err > max_err:
-            max_err = err
-            max_pair = (p, q)
-    print(f"   Max error found: {max_err} at {max_pair}")
+    # Verify tropical closure is idempotent
+    print("\n\nVerifying tropical closure idempotence...")
+    D = opt20.shortest_paths
+    D2 = tropical_mat_mul(D, D)
+    is_fp = all(abs(D[i][j] - min(D[i][j], D2[i][j])) < 1e-9
+                for i in range(len(D)) for j in range(len(D)))
+    print(f"  Closure is fixpoint: {'YES ✓' if is_fp else 'NO ✗'}")
