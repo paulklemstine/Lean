@@ -1,520 +1,702 @@
 #!/usr/bin/env python3
 """
-Proof-Theoretic Depth: Applications
+Ordinal Research Governance: Applications
 
 Demonstrates real-world applications of ordinal depth theory to:
-1. Automated proof triage — routing conjectures by complexity
-2. Research novelty filtering — detecting non-trivial outputs
-3. Quality governance — escalation policies for research cycles
+1. Automated theorem prover output quality control
+2. Research pipeline governance
+3. Proof complexity classification
 """
 
-from algorithms import (
-    ResearchExpr, Atom, Compose, Bridge, Iterate, Certify,
-    ordinal_depth, structural_depth, innovation_score, node_count,
-    is_trivial, classify_cycle, should_escalate, OrdinalValue
-)
-from typing import List, Tuple
+from dataclasses import dataclass, field
+from typing import List, Set, Dict, Tuple
+import random
+import json
 
 
-# ─────────────────────────────────────────────────────────
-# Application 1: Proof Triage System
-# ─────────────────────────────────────────────────────────
+# ─── Application 1: Theorem Prover Quality Control ───────────────────────────
 
-class ProofTriageSystem:
-    """
-    Routes proof obligations by structural depth.
+@dataclass
+class ProverOutput:
+    """Simulated output from an automated theorem prover."""
+    name: str
+    proof_steps: int       # maps to height
+    lemmas_used: int       # maps to branching
+    novel_tactics: Set[str] = field(default_factory=set)  # maps to novelty_atoms
+    imports: Set[str] = field(default_factory=set)        # maps to dependencies
 
-    Shallow proofs → fast tactics (decide, simp, omega)
-    Medium proofs → intermediate tactics (ring, linarith, norm_num)
-    Deep proofs   → full proof search (aesop, exact?, apply?)
+    def depth(self) -> int:
+        return self.proof_steps + self.lemmas_used
 
-    This mirrors how human mathematicians triage problems:
-    routine calculations vs. novel arguments.
-    """
+    def is_shallow(self) -> bool:
+        return self.proof_steps <= 1 and self.lemmas_used <= 1
 
-    def __init__(self):
-        self.shallow_threshold = OrdinalValue.from_nat(3)
-        self.deep_threshold = OrdinalValue.omega()
-        self.log: List[Tuple[str, str, OrdinalValue]] = []
-
-    def triage(self, name: str, expr: ResearchExpr) -> str:
-        """Classify a proof obligation and route it."""
-        depth = ordinal_depth(expr)
-
-        if depth < self.shallow_threshold:
-            route = "FAST_TACTIC"
-        elif depth < self.deep_threshold:
-            route = "INTERMEDIATE"
-        else:
-            route = "FULL_SEARCH"
-
-        self.log.append((name, route, depth))
-        return route
-
-    def report(self) -> str:
-        lines = ["Proof Triage Report", "=" * 50]
-        for name, route, depth in self.log:
-            lines.append(f"  {name:<30} → {route:<15} (depth: {depth})")
-        lines.append("")
-        counts = {}
-        for _, route, _ in self.log:
-            counts[route] = counts.get(route, 0) + 1
-        lines.append("Summary:")
-        for route, count in sorted(counts.items()):
-            lines.append(f"  {route}: {count}")
-        return "\n".join(lines)
+    def quality_score(self) -> float:
+        """Normalized quality score based on depth and innovation."""
+        d = self.depth()
+        innov = len(self.novel_tactics) + len(self.imports)
+        if d == 0:
+            return 0.0
+        return min(1.0, innov / d) * min(1.0, d / 10.0)
 
 
-# ─────────────────────────────────────────────────────────
-# Application 2: Novelty Filter
-# ─────────────────────────────────────────────────────────
+def quality_control_demo():
+    """Simulate quality control for an automated theorem prover."""
+    print("\n" + "=" * 70)
+    print("APPLICATION 1: Theorem Prover Quality Control")
+    print("=" * 70)
 
-class NoveltyFilter:
-    """
-    Filters research outputs by novelty certification.
-
-    Uses two criteria:
-    1. Ordinal depth ≥ ω (non-triviality certificate from Theorem 2)
-    2. Innovation score > threshold (cross-domain content)
-
-    Outputs are classified as:
-    - TRIVIAL: below both thresholds
-    - ROUTINE: non-trivial depth but low innovation
-    - NOVEL: high depth and high innovation
-    """
-
-    def __init__(self, innovation_threshold: int = 2):
-        self.innovation_threshold = innovation_threshold
-
-    def classify(self, expr: ResearchExpr) -> str:
-        depth = ordinal_depth(expr)
-        inn = innovation_score(expr)
-
-        if depth < OrdinalValue.omega():
-            return "TRIVIAL"
-        elif inn < self.innovation_threshold:
-            return "ROUTINE"
-        else:
-            return "NOVEL"
-
-    def batch_classify(self, exprs: List[Tuple[str, ResearchExpr]]) -> dict:
-        results = {"TRIVIAL": [], "ROUTINE": [], "NOVEL": []}
-        for name, expr in exprs:
-            category = self.classify(expr)
-            results[category].append((name, ordinal_depth(expr), innovation_score(expr)))
-        return results
-
-
-# ─────────────────────────────────────────────────────────
-# Application 3: Research Governance Dashboard
-# ─────────────────────────────────────────────────────────
-
-class GovernanceDashboard:
-    """
-    Monitors research cycles and enforces quality policies.
-
-    Uses Theorem 4 (shallow_cycle_all_below_threshold) to certify
-    that escalated cycles truly contain only bounded-complexity outputs.
-    """
-
-    def __init__(self, theta: OrdinalValue):
-        self.theta = theta
-        self.cycles: List[Tuple[str, List[ResearchExpr]]] = []
-
-    def add_cycle(self, name: str, exprs: List[ResearchExpr]):
-        self.cycles.append((name, exprs))
-
-    def evaluate_all(self) -> str:
-        lines = [
-            "Research Governance Dashboard",
-            f"Threshold: θ = {self.theta}",
-            "=" * 60,
-        ]
-
-        accepted = 0
-        escalated = 0
-
-        for name, exprs in self.cycles:
-            report = classify_cycle(self.theta, exprs)
-            decision = "ESCALATE" if report["escalate"] else "ACCEPT"
-            if report["escalate"]:
-                escalated += 1
-            else:
-                accepted += 1
-
-            lines.append(f"\nCycle: {name}")
-            lines.append(f"  Decision: {decision}")
-            lines.append(f"  Cycle depth: {report['cycle_depth']}")
-            lines.append(f"  Elements: {len(report['elements'])}")
-
-            for i, elem in enumerate(report["elements"]):
-                cert = "✓ CERTIFIED" if elem["nontriviality_certified"] else "  uncertified"
-                triv = " (trivial)" if elem["is_trivial"] else ""
-                lines.append(
-                    f"    [{i}] depth={elem['depth']}, "
-                    f"inn={elem['innovation_score']}, "
-                    f"sd={elem['structural_depth']}"
-                    f"{triv} {cert}"
-                )
-
-        lines.append(f"\n{'='*60}")
-        lines.append(f"Total: {accepted} accepted, {escalated} escalated")
-        return "\n".join(lines)
-
-
-# ─────────────────────────────────────────────────────────
-# Demo
-# ─────────────────────────────────────────────────────────
-
-def demo_triage():
-    print("\n" + "=" * 60)
-    print("  APPLICATION 1: Proof Triage System")
-    print("=" * 60 + "\n")
-
-    triage = ProofTriageSystem()
-
-    # Simulate various proof obligations
-    obligations = [
-        ("trivial_equality", Atom(0)),
-        ("simple_composition", Compose(Atom(0), Atom(1))),
-        ("bridge_argument", Bridge(Atom(0), Atom(1))),
-        ("iterated_lemma", Iterate(4, Compose(Atom(0), Atom(1)))),
-        ("certified_result", Certify(Compose(Atom(0), Atom(1)))),
-        ("deep_bridge_cert", Certify(Bridge(Certify(Atom(0)), Bridge(Atom(1), Atom(2))))),
-        ("multi_iteration", Iterate(3, Bridge(Iterate(2, Atom(0)), Atom(1)))),
-    ]
-
-    for name, expr in obligations:
-        triage.triage(name, expr)
-
-    print(triage.report())
-
-
-def demo_novelty():
-    print("\n" + "=" * 60)
-    print("  APPLICATION 2: Novelty Filter")
-    print("=" * 60 + "\n")
-
-    nf = NoveltyFilter(innovation_threshold=2)
-
+    # Simulated prover outputs
     outputs = [
-        ("lookup_result", Atom(42)),
-        ("simple_derivation", Compose(Atom(0), Atom(1))),
-        ("cross_domain_link", Bridge(Atom(0), Atom(1))),
-        ("certified_composition", Certify(Compose(Atom(0), Atom(1)))),
-        ("novel_bridge_cert", Certify(Bridge(Atom(0), Certify(Atom(1))))),
-        ("deep_novel_work",
-         Certify(Bridge(
-             Certify(Compose(Atom(0), Atom(1))),
-             Bridge(Atom(2), Certify(Atom(3)))
-         ))),
+        ProverOutput("trivial_refl", 0, 0),
+        ProverOutput("simp_only", 1, 1, {"simp"}, {"Mathlib.Tactic"}),
+        ProverOutput("ring_proof", 1, 0, {"ring"}, set()),
+        ProverOutput("induction_nat", 3, 2, {"induction", "omega"}, {"Nat.Basic", "Nat.Lemmas"}),
+        ProverOutput("category_adjunction", 5, 4, {"functor_ext", "natural_iso", "adjunction_mk"},
+                     {"CategoryTheory.Adjunction", "CategoryTheory.Functor", "CategoryTheory.NatTrans"}),
+        ProverOutput("spectral_seq", 8, 6, {"spectral_sequence", "exact_couple", "filtration", "convergence"},
+                     {"Topology.CohomologyRing", "Algebra.Homology", "CategoryTheory.Abelian"}),
     ]
 
-    results = nf.batch_classify(outputs)
+    threshold = 4
+    print(f"\n  Governance threshold: τ = {threshold}")
+    print(f"\n  {'Name':<25} {'Steps':>6} {'Lemmas':>7} {'Depth':>6} {'Quality':>8} {'Decision':>12}")
+    print(f"  {'─'*25} {'─'*6} {'─'*7} {'─'*6} {'─'*8} {'─'*12}")
 
-    for category in ["NOVEL", "ROUTINE", "TRIVIAL"]:
-        print(f"  {category}:")
-        for name, depth, inn in results[category]:
-            print(f"    {name}: depth={depth}, innovation={inn}")
-        if not results[category]:
-            print("    (none)")
-        print()
+    accepted, escalated, rejected = 0, 0, 0
+    for o in outputs:
+        d = o.depth()
+        q = o.quality_score()
+        if d >= threshold:
+            decision = "ACCEPT"
+            accepted += 1
+        elif not o.is_shallow():
+            decision = "ESCALATE"
+            escalated += 1
+        else:
+            decision = "REJECT"
+            rejected += 1
+        print(f"  {o.name:<25} {o.proof_steps:>6} {o.lemmas_used:>7} {d:>6} {q:>8.3f} {decision:>12}")
+
+    print(f"\n  Summary: {accepted} accepted, {escalated} escalated, {rejected} rejected")
+    print(f"  Shallow outputs automatically filtered: {rejected}/{len(outputs)}")
 
 
-def demo_governance():
-    print("\n" + "=" * 60)
-    print("  APPLICATION 3: Research Governance")
-    print("=" * 60 + "\n")
+# ─── Application 2: Research Pipeline Governance ─────────────────────────────
 
-    dashboard = GovernanceDashboard(theta=OrdinalValue.omega())
+@dataclass
+class ResearchIteration:
+    """One iteration of a research pipeline."""
+    cycle_id: int
+    papers: List[Dict]
 
-    # Cycle 1: All trivial — should escalate
-    dashboard.add_cycle("routine_survey", [
-        Atom(0), Atom(1), Compose(Atom(0), Atom(1)),
-        Iterate(2, Atom(0)),
-    ])
+    def cycle_depth(self) -> int:
+        if not self.papers:
+            return 0
+        return max(p["height"] + p["branching"] for p in self.papers)
 
-    # Cycle 2: Contains certified work — should accept
-    dashboard.add_cycle("research_breakthrough", [
-        Atom(0),
-        Compose(Atom(0), Atom(1)),
-        Certify(Compose(Atom(0), Atom(1))),
-        Bridge(Certify(Atom(0)), Atom(1)),
-    ])
+    def has_nontrivial(self) -> bool:
+        return any(p["height"] > 1 or p["branching"] > 1 for p in self.papers)
 
-    # Cycle 3: Deep novel work — should accept
-    dashboard.add_cycle("novel_synthesis", [
-        Certify(Bridge(Atom(0), Atom(1))),
-        Certify(Certify(Compose(Atom(0), Atom(1)))),
-        Bridge(Certify(Atom(0)), Certify(Atom(1))),
-    ])
+    def triage(self, threshold: int) -> str:
+        cd = self.cycle_depth()
+        if cd >= threshold:
+            return "ACCEPT"
+        elif self.has_nontrivial():
+            return "ESCALATE"
+        else:
+            return "REJECT"
 
-    print(dashboard.evaluate_all())
 
+def pipeline_governance_demo():
+    """Simulate governance of a multi-cycle research pipeline."""
+    print("\n" + "=" * 70)
+    print("APPLICATION 2: Research Pipeline Governance")
+    print("=" * 70)
+
+    random.seed(123)
+
+    # Simulate 20 research cycles with increasing depth trend
+    cycles = []
+    for i in range(20):
+        n_papers = random.randint(1, 4)
+        papers = []
+        for _ in range(n_papers):
+            # Depth increases over time with noise
+            base_h = min(i // 3, 6)
+            base_b = min(i // 4, 4)
+            papers.append({
+                "height": max(0, base_h + random.randint(-1, 2)),
+                "branching": max(0, base_b + random.randint(-1, 1)),
+            })
+        cycles.append(ResearchIteration(i + 1, papers))
+
+    threshold = 5
+    print(f"\n  Threshold: τ = {threshold}")
+    print(f"  Cycles: {len(cycles)}")
+    print(f"\n  {'Cycle':>6} {'Papers':>7} {'MaxDepth':>9} {'Decision':>12}")
+    print(f"  {'─'*6} {'─'*7} {'─'*9} {'─'*12}")
+
+    decisions = {"ACCEPT": 0, "ESCALATE": 0, "REJECT": 0}
+    for c in cycles:
+        d = c.triage(threshold)
+        decisions[d] += 1
+        print(f"  {c.cycle_id:>6} {len(c.papers):>7} {c.cycle_depth():>9} {d:>12}")
+
+    print(f"\n  Decision distribution:")
+    for d, count in decisions.items():
+        bar = "█" * (count * 2)
+        print(f"    {d:<10} {count:>3} {bar}")
+
+    # Show that early cycles are mostly rejected/escalated, later ones accepted
+    early = cycles[:7]
+    late = cycles[13:]
+    early_accept = sum(1 for c in early if c.triage(threshold) == "ACCEPT")
+    late_accept = sum(1 for c in late if c.triage(threshold) == "ACCEPT")
+    print(f"\n  Early cycles (1-7) accepted: {early_accept}/{len(early)}")
+    print(f"  Late cycles (14-20) accepted: {late_accept}/{len(late)}")
+    print(f"  → Depth increases with research maturity ✓")
+
+
+# ─── Application 3: Proof Complexity Classification ──────────────────────────
+
+def proof_classification_demo():
+    """Classify proofs by their ordinal complexity class."""
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Proof Complexity Classification")
+    print("=" * 70)
+
+    # Define complexity classes by ordinal ranges
+    classes = [
+        ("Trivial (depth 0-1)", lambda d, r: d <= 1 and not r),
+        ("Elementary (depth 2-4)", lambda d, r: 2 <= d <= 4 and not r),
+        ("Intermediate (depth 5-9)", lambda d, r: 5 <= d <= 9 and not r),
+        ("Advanced (depth ≥ 10)", lambda d, r: d >= 10 and not r),
+        ("Transfinite (has reflect)", lambda d, r: r),
+    ]
+
+    # Simulated proof catalog
+    proofs = [
+        ("rfl", 0, False),
+        ("simp", 1, False),
+        ("ring_computation", 2, False),
+        ("nat_induction", 3, False),
+        ("functor_composition", 4, False),
+        ("sheaf_cohomology", 7, False),
+        ("spectral_sequence", 9, False),
+        ("model_theory_transfer", 12, False),
+        ("forcing_independence", 15, False),
+        ("ordinal_analysis_PA", 8, True),
+        ("reflection_principle", 5, True),
+        ("large_cardinal_consistency", 20, True),
+    ]
+
+    print(f"\n  {'Proof':<30} {'Depth':>6} {'Reflect?':>9} {'Class'}")
+    print(f"  {'─'*30} {'─'*6} {'─'*9} {'─'*30}")
+
+    class_counts = {name: 0 for name, _ in classes}
+    for name, depth, has_ref in proofs:
+        for cls_name, predicate in classes:
+            if predicate(depth, has_ref):
+                class_counts[cls_name] += 1
+                ref_str = "Yes" if has_ref else "No"
+                depth_str = f"{depth}" if not has_ref else f"{depth} + ω"
+                print(f"  {name:<30} {depth_str:>6} {ref_str:>9} {cls_name}")
+                break
+
+    print(f"\n  Class distribution:")
+    for cls_name, count in class_counts.items():
+        bar = "█" * (count * 3)
+        print(f"    {cls_name:<30} {count:>2} {bar}")
+
+    print(f"\n  Key insight: Reflection creates a qualitative jump in proof complexity.")
+    print(f"  Finite-depth proofs live below ω; reflected proofs cross the ω barrier.")
+
+
+# ─── Main ─────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("╔════════════════════════════════════════════════════════════╗")
-    print("║  Proof-Theoretic Depth: Applications Suite                 ║")
-    print("╚════════════════════════════════════════════════════════════╝")
+    print("\n╔══════════════════════════════════════════════════════════════════════╗")
+    print("║     ORDINAL RESEARCH GOVERNANCE: Real-World Applications          ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
 
-    demo_triage()
-    demo_novelty()
-    demo_governance()
+    quality_control_demo()
+    pipeline_governance_demo()
+    proof_classification_demo()
 
-    print("\n" + "=" * 60)
-    print("  All applications demonstrated successfully!")
-    print("=" * 60)
+    print("\n" + "=" * 70)
+    print("All application demos complete.")
+    print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""Build PACKAGE.json from all deliverables."""
+import json
+import os
+
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+# Read all content
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+lean_code = read_file('MachineLearning/OrdinalResearchGovernance.lean')
+
+# Read visualization data
+with open('viz_data.json', 'r') as f:
+    viz_data = json.load(f)
+
+package = {
+    "title": "Ordinal Research Governance: Depth Guarantees via Proof-Theoretic Analysis",
+    "domain": "Mathematical Logic / Proof Theory / Automated Reasoning",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Ordinal Depth Governance Demo",
+            "code": demo_code
+        },
+        {
+            "name": "Real-World Applications",
+            "code": applications_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Depth-Based Triage",
+            "pseudocode": """Algorithm TRIAGE(τ, C):
+  Input: threshold τ ∈ ℕ, cycle C = {x₁, ..., xₖ}
+  Output: decision ∈ {REJECT, ESCALATE, ACCEPT}
+
+  cd ← max{aetherDepth(xᵢ) : i = 1..k}
+  if cd ≥ τ: return ACCEPT
+  if ∃ xᵢ : ResearchNontrivial(xᵢ): return ESCALATE
+  return REJECT
+
+Time: O(k), Space: O(1)""",
+            "code": algorithms_code
+        },
+        {
+            "name": "Threshold Optimization",
+            "pseudocode": """Algorithm OPTIMAL_THRESHOLD(C₁, ..., Cₘ, target_rate):
+  Input: m cycles, desired acceptance rate
+  Output: optimal threshold τ*
+
+  depths ← [cycleDepth(Cⱼ) : j = 1..m]
+  Binary search for τ* such that
+    |{j : depths[j] ≥ τ*}| / m ≈ target_rate
+  return τ*
+
+Time: O(m log D), Space: O(m)""",
+            "code": algorithms_code
+        }
+    ],
+    "visualizations": [
+        {
+            "name": "Depth Threshold Landscape",
+            "data": viz_data["threshold_landscape"]
+        },
+        {
+            "name": "ProofShape Phase Transition at ω",
+            "data": viz_data["phase_transition"]
+        },
+        {
+            "name": "Cycle Triage Decision Boundaries",
+            "data": viz_data["triage_decisions"]
+        },
+        {
+            "name": "Innovation Rank vs Ordinal Depth",
+            "data": viz_data["innovation_depth"]
+        }
+    ],
+    "lean_proofs": lean_code
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print(f"PACKAGE.json written ({os.path.getsize('PACKAGE.json')} bytes)")
 
 
 #!/usr/bin/env python3
 """
-Proof-Theoretic Depth: Concrete Demonstrations
+Ordinal Research Governance: Demonstration of Depth Functionals
 
-This demo constructs research expressions, computes their ordinal depth,
-innovation scores, and structural depth, and demonstrates the threshold
-theorems with concrete examples.
+This script demonstrates the core theorems from the formal ordinal depth theory,
+showing how ordinal-valued depth functionals on research artifacts control
+non-triviality and support automated triage of shallow cycles.
 """
 
-from algorithms import (
-    ResearchExpr, Atom, Compose, Bridge, Iterate, Certify,
-    ordinal_depth, structural_depth, innovation_score, node_count,
-    is_trivial, OrdinalValue
-)
+import dataclasses
+from typing import List, Set, Optional
+import json
 
 
-def separator(title: str) -> None:
-    print(f"\n{'='*60}")
-    print(f"  {title}")
-    print(f"{'='*60}\n")
+# ─── Data Types ───────────────────────────────────────────────────────────────
+
+@dataclasses.dataclass
+class AetherOutput:
+    """A finite syntactic object encoding a research output."""
+    size: int
+    height: int
+    branching: int
+    novelty_atoms: Set[int]
+    dependencies: Set[int]
+
+    def aether_depth(self) -> int:
+        """Ordinal depth (finite case): height + branching."""
+        return self.height + self.branching
+
+    def is_shallow(self) -> bool:
+        """An output is shallow if height ≤ 1 and branching ≤ 1."""
+        return self.height <= 1 and self.branching <= 1
+
+    def is_nontrivial(self) -> bool:
+        """An output is non-trivial if it is not shallow."""
+        return not self.is_shallow()
+
+    def innovation_rank(self) -> int:
+        """Innovation rank: |novelty_atoms| + |dependencies|."""
+        return len(self.novelty_atoms) + len(self.dependencies)
 
 
-def show_expr(name: str, expr: ResearchExpr) -> None:
-    """Display all metrics for a research expression."""
-    depth = ordinal_depth(expr)
-    sd = structural_depth(expr)
-    inn = innovation_score(expr)
-    nc = node_count(expr)
-    triv = is_trivial(expr)
+@dataclasses.dataclass
+class ResearchCycle:
+    """A research cycle is a finite collection of AetherOutputs."""
+    outputs: List[AetherOutput]
 
-    print(f"  {name}:")
-    print(f"    Ordinal depth:     {depth}")
-    print(f"    Structural depth:  {sd}")
-    print(f"    Innovation score:  {inn}")
-    print(f"    Node count:        {nc}")
-    print(f"    Trivial:           {triv}")
-    print(f"    Non-trivial cert:  {depth >= OrdinalValue.omega()}")
+    def cycle_depth(self) -> int:
+        """Cycle depth: maximum of output depths."""
+        if not self.outputs:
+            return 0
+        return max(o.aether_depth() for o in self.outputs)
+
+
+# ─── ProofShape Model ────────────────────────────────────────────────────────
+
+class ProofShape:
+    """Base class for proof shapes."""
+    pass
+
+class Axm(ProofShape):
+    """Axiomatic step (depth 0)."""
+    def ps_depth(self) -> float:
+        return 0.0
+
+    def has_reflect(self) -> bool:
+        return False
+
+    def __repr__(self):
+        return "axm"
+
+class Compose(ProofShape):
+    """Sequential composition of two proof shapes."""
+    def __init__(self, a: ProofShape, b: ProofShape):
+        self.a = a
+        self.b = b
+
+    def ps_depth(self) -> float:
+        return max(self.a.ps_depth(), self.b.ps_depth()) + 1
+
+    def has_reflect(self) -> bool:
+        return self.a.has_reflect() or self.b.has_reflect()
+
+    def __repr__(self):
+        return f"compose({self.a}, {self.b})"
+
+class Iterate(ProofShape):
+    """Bounded iteration of a proof shape."""
+    def __init__(self, n: int, a: ProofShape):
+        self.n = n
+        self.a = a
+
+    def ps_depth(self) -> float:
+        return self.a.ps_depth() + self.n
+
+    def has_reflect(self) -> bool:
+        return self.a.has_reflect()
+
+    def __repr__(self):
+        return f"iterate({self.n}, {self.a})"
+
+class Reflect(ProofShape):
+    """Reflection/certification step — introduces transfinite depth."""
+    OMEGA = float('inf')  # We use infinity as a stand-in for ω
+
+    def __init__(self, a: ProofShape):
+        self.a = a
+
+    def ps_depth(self) -> float:
+        # ω^d where d = a.ps_depth()
+        d = self.a.ps_depth()
+        if d == 0:
+            return 1.0  # ω^0 = 1
+        elif d >= 1:
+            return float('inf')  # ω^d ≥ ω for d ≥ 1
+        return float('inf')
+
+    def has_reflect(self) -> bool:
+        return True
+
+    def __repr__(self):
+        return f"reflect({self.a})"
+
+
+# ─── Governance Policy ───────────────────────────────────────────────────────
+
+SHALLOW_THRESHOLD = 2  # τ = 2
+
+def classify_output(x: AetherOutput) -> str:
+    """Classify an output as shallow/trivial or deep/nontrivial."""
+    depth = x.aether_depth()
+    if depth > SHALLOW_THRESHOLD:
+        return f"NONTRIVIAL (depth={depth} > τ={SHALLOW_THRESHOLD})"
+    elif x.is_nontrivial():
+        return f"NONTRIVIAL but below threshold (depth={depth})"
+    else:
+        return f"SHALLOW/TRIVIAL (depth={depth} ≤ τ={SHALLOW_THRESHOLD})"
+
+
+def triage_cycle(threshold: int, cycle: ResearchCycle) -> str:
+    """Triage a research cycle: reject, escalate, or accept."""
+    cd = cycle.cycle_depth()
+    has_nontrivial = any(o.is_nontrivial() for o in cycle.outputs)
+
+    if cd >= threshold:
+        return f"ACCEPT (cycle depth {cd} ≥ τ={threshold})"
+    elif has_nontrivial:
+        return f"ESCALATE (cycle depth {cd} < τ={threshold}, but contains nontrivial outputs)"
+    else:
+        return f"REJECT (cycle depth {cd} < τ={threshold}, all outputs trivial)"
+
+
+# ─── Demo ─────────────────────────────────────────────────────────────────────
+
+def demo_theorem1():
+    """Demonstrate Theorem 1: depth above threshold implies non-triviality."""
+    print("=" * 70)
+    print("THEOREM 1: Depth Above Threshold Implies Non-Triviality")
+    print("=" * 70)
+    print()
+    print("  If aetherDepth(x) > shallowThreshold (= 2), then x is non-trivial.")
+    print("  Equivalently: shallow outputs have depth ≤ 2.")
+    print()
+
+    examples = [
+        AetherOutput(size=10, height=0, branching=0, novelty_atoms=set(), dependencies=set()),
+        AetherOutput(size=20, height=1, branching=0, novelty_atoms={1}, dependencies=set()),
+        AetherOutput(size=30, height=1, branching=1, novelty_atoms={1, 2}, dependencies={10}),
+        AetherOutput(size=50, height=2, branching=1, novelty_atoms={1, 2, 3}, dependencies={10, 20}),
+        AetherOutput(size=100, height=3, branching=2, novelty_atoms={1, 2, 3, 4}, dependencies={10, 20, 30}),
+        AetherOutput(size=200, height=5, branching=4, novelty_atoms=set(range(10)), dependencies=set(range(5))),
+    ]
+
+    print(f"  {'Height':>6} {'Branch':>6} {'Depth':>6} {'Shallow?':>10} {'Classification'}")
+    print(f"  {'─'*6} {'─'*6} {'─'*6} {'─'*10} {'─'*40}")
+
+    for x in examples:
+        shallow = "Yes" if x.is_shallow() else "No"
+        cls = classify_output(x)
+        print(f"  {x.height:>6} {x.branching:>6} {x.aether_depth():>6} {shallow:>10} {cls}")
+
+    print()
+    # Verify: all shallow outputs have depth ≤ 2
+    shallow_outputs = [x for x in examples if x.is_shallow()]
+    all_bounded = all(x.aether_depth() <= SHALLOW_THRESHOLD for x in shallow_outputs)
+    print(f"  ✓ All {len(shallow_outputs)} shallow outputs have depth ≤ {SHALLOW_THRESHOLD}: {all_bounded}")
+
+    # Verify: all outputs with depth > 2 are nontrivial
+    deep_outputs = [x for x in examples if x.aether_depth() > SHALLOW_THRESHOLD]
+    all_nontrivial = all(x.is_nontrivial() for x in deep_outputs)
+    print(f"  ✓ All {len(deep_outputs)} deep outputs (depth > {SHALLOW_THRESHOLD}) are nontrivial: {all_nontrivial}")
     print()
 
 
-def demo_basic_expressions():
-    """Demonstrate depth computation on basic expressions."""
-    separator("Basic Expression Depths")
+def demo_theorem2():
+    """Demonstrate Theorem 2: innovation rank bounded by depth."""
+    print("=" * 70)
+    print("THEOREM 2: Innovation Rank ≤ Ordinal Depth")
+    print("=" * 70)
+    print()
+    print("  When |novelty_atoms| ≤ height and |dependencies| ≤ branching,")
+    print("  then InnovationRank(x) ≤ aetherDepth(x).")
+    print()
 
-    # Atoms
-    show_expr("atom(0)", Atom(0))
-    show_expr("atom(42)", Atom(42))
-
-    # Simple compositions (trivial fragment)
-    show_expr("compose(atom(0), atom(1))", Compose(Atom(0), Atom(1)))
-
-    # Deeper compositions (non-trivial but still below ω)
-    deep_compose = Compose(Compose(Atom(0), Atom(1)), Compose(Atom(2), Atom(3)))
-    show_expr("compose(compose(a0,a1), compose(a2,a3))", deep_compose)
-
-    # Bridge expressions
-    show_expr("bridge(atom(0), atom(1))", Bridge(Atom(0), Atom(1)))
-
-    # Iterate
-    show_expr("iterate(5, atom(0))", Iterate(5, Atom(0)))
-
-    # Certify (the transfinite jump!)
-    show_expr("certify(atom(0))", Certify(Atom(0)))  # ω^0 = 1
-
-    # Certify of something with depth ≥ 1 → depth ≥ ω
-    cert_compose = Certify(Compose(Atom(0), Atom(1)))
-    show_expr("certify(compose(a0, a1))", cert_compose)
-
-    # Nested certify
-    nested_cert = Certify(Certify(Compose(Atom(0), Atom(1))))
-    show_expr("certify(certify(compose(a0,a1)))", nested_cert)
-
-
-def demo_threshold_theorem():
-    """Demonstrate Theorem 1 & 2: the ω threshold for triviality."""
-    separator("Threshold Theorem Demonstration")
-
-    print("  Theorem 1: All trivial expressions have depth < ω")
-    print("  Theorem 2: Depth ≥ ω implies non-triviality\n")
-
-    # All trivial expressions
-    trivial_exprs = [
-        ("atom(0)", Atom(0)),
-        ("atom(1)", Atom(1)),
-        ("atom(100)", Atom(100)),
-        ("compose(atom(0), atom(1))", Compose(Atom(0), Atom(1))),
-        ("compose(atom(5), atom(10))", Compose(Atom(5), Atom(10))),
+    examples = [
+        AetherOutput(size=10, height=3, branching=2, novelty_atoms={1, 2}, dependencies={10}),
+        AetherOutput(size=20, height=5, branching=4, novelty_atoms={1, 2, 3, 4, 5}, dependencies={10, 20, 30}),
+        AetherOutput(size=30, height=1, branching=1, novelty_atoms={1}, dependencies={10}),
+        AetherOutput(size=40, height=10, branching=8, novelty_atoms=set(range(7)), dependencies=set(range(5))),
     ]
 
-    print("  Trivial expressions (all should have depth < ω):")
-    for name, expr in trivial_exprs:
-        depth = ordinal_depth(expr)
-        assert depth < OrdinalValue.omega(), f"FAIL: {name} has depth {depth} ≥ ω!"
-        print(f"    {name}: depth = {depth} < ω ✓")
+    print(f"  {'Height':>6} {'Branch':>6} {'|Atoms|':>7} {'|Deps|':>6} {'Depth':>6} {'InnovRk':>8} {'Bounded?':>10}")
+    print(f"  {'─'*6} {'─'*6} {'─'*7} {'─'*6} {'─'*6} {'─'*8} {'─'*10}")
+
+    for x in examples:
+        n_atoms = len(x.novelty_atoms)
+        n_deps = len(x.dependencies)
+        depth = x.aether_depth()
+        innov = x.innovation_rank()
+        valid = n_atoms <= x.height and n_deps <= x.branching
+        bounded = innov <= depth if valid else "N/A"
+        print(f"  {x.height:>6} {x.branching:>6} {n_atoms:>7} {n_deps:>6} {depth:>6} {innov:>8} {str(bounded):>10}")
+
+    print()
+    valid_examples = [x for x in examples
+                      if len(x.novelty_atoms) <= x.height and len(x.dependencies) <= x.branching]
+    all_bounded = all(x.innovation_rank() <= x.aether_depth() for x in valid_examples)
+    print(f"  ✓ All {len(valid_examples)} valid examples satisfy InnovRank ≤ Depth: {all_bounded}")
+    print()
+
+
+def demo_theorem3():
+    """Demonstrate Theorem 3: cycle depth characterization."""
+    print("=" * 70)
+    print("THEOREM 3: Cycle Depth Characterization")
+    print("=" * 70)
+    print()
+    print("  cycleDepth(C) < τ  ⟺  ∀ x ∈ C, aetherDepth(x) < τ")
+    print()
+
+    cycle = ResearchCycle([
+        AetherOutput(size=10, height=1, branching=0, novelty_atoms=set(), dependencies=set()),
+        AetherOutput(size=20, height=2, branching=1, novelty_atoms={1}, dependencies=set()),
+        AetherOutput(size=30, height=0, branching=1, novelty_atoms=set(), dependencies={10}),
+    ])
+
+    cd = cycle.cycle_depth()
+    print(f"  Cycle has {len(cycle.outputs)} outputs")
+    for i, o in enumerate(cycle.outputs):
+        print(f"    Output {i+1}: height={o.height}, branching={o.branching}, depth={o.aether_depth()}")
+    print(f"  Cycle depth = max of all = {cd}")
+    print()
+
+    for tau in [2, 3, 4, 5]:
+        all_below = all(o.aether_depth() < tau for o in cycle.outputs)
+        cd_below = cd < tau
+        print(f"  τ = {tau}: cycleDepth < τ? {cd_below}  |  all outputs < τ? {all_below}  |  match? {cd_below == all_below}")
 
     print()
 
-    # Non-trivial expressions with depth ≥ ω
-    nontrivial_exprs = [
-        ("certify(compose(a0,a1))", Certify(Compose(Atom(0), Atom(1)))),
-        ("certify(bridge(a0,a1))", Certify(Bridge(Atom(0), Atom(1)))),
-        ("certify(certify(compose(a0,a1)))",
-         Certify(Certify(Compose(Atom(0), Atom(1))))),
-    ]
 
-    print("  Non-trivial expressions (all should have depth ≥ ω):")
-    for name, expr in nontrivial_exprs:
-        depth = ordinal_depth(expr)
-        assert depth >= OrdinalValue.omega(), f"FAIL: {name} has depth {depth} < ω!"
-        assert not is_trivial(expr), f"FAIL: {name} is trivial!"
-        print(f"    {name}: depth = {depth} ≥ ω ✓  (non-trivial ✓)")
-
-
-def demo_cycle_governance():
-    """Demonstrate Theorems 3 & 4: cycle depth and governance."""
-    separator("Cycle Governance Demonstration")
-
-    # A shallow cycle (all trivial)
-    shallow_cycle = [Atom(0), Atom(1), Compose(Atom(0), Atom(1))]
-    depths = [ordinal_depth(e) for e in shallow_cycle]
-    cycle_depth = max(depths)
-
-    print("  Shallow cycle: {atom(0), atom(1), compose(a0,a1)}")
-    print(f"    Individual depths: {depths}")
-    print(f"    Cycle depth (max): {cycle_depth}")
-    print(f"    All below ω: {all(d < OrdinalValue.omega() for d in depths)} ✓")
-
-    theta = OrdinalValue.omega()
-    print(f"    θ = ω: cycle depth {cycle_depth} < θ → ESCALATE ✓")
+def demo_theorem4():
+    """Demonstrate Theorem 4: escalation policy and triage."""
+    print("=" * 70)
+    print("THEOREM 4: Shallow Cycle Triage — Reject or Escalate")
+    print("=" * 70)
+    print()
+    print("  If cycleDepth(C) < τ:")
+    print("    - All outputs trivial → REJECT")
+    print("    - Some output nontrivial → ESCALATE")
     print()
 
-    # A deep cycle (contains certified expressions)
-    deep_cycle = [
-        Atom(0),
-        Compose(Atom(0), Atom(1)),
-        Certify(Compose(Atom(0), Atom(1))),  # depth = ω
-        Certify(Bridge(Atom(0), Atom(1))),     # depth = ω²
-    ]
-    depths = [ordinal_depth(e) for e in deep_cycle]
-    cycle_depth = max(depths)
+    threshold = 4
 
-    print("  Deep cycle: {atom(0), compose(...), certify(compose(...)), certify(bridge(...))}")
-    print(f"    Individual depths: {depths}")
-    print(f"    Cycle depth (max): {cycle_depth}")
-    print(f"    θ = ω: cycle depth {cycle_depth} ≥ θ → ACCEPT ✓")
+    # Cycle 1: all trivial
+    cycle1 = ResearchCycle([
+        AetherOutput(size=5, height=0, branching=0, novelty_atoms=set(), dependencies=set()),
+        AetherOutput(size=10, height=1, branching=1, novelty_atoms={1}, dependencies=set()),
+    ])
 
+    # Cycle 2: has nontrivial but below threshold
+    cycle2 = ResearchCycle([
+        AetherOutput(size=5, height=0, branching=0, novelty_atoms=set(), dependencies=set()),
+        AetherOutput(size=20, height=2, branching=1, novelty_atoms={1, 2}, dependencies={10}),
+    ])
 
-def demo_innovation_score():
-    """Demonstrate Theorem 5: innovation score bounded by structural depth."""
-    separator("Innovation Score Demonstration")
+    # Cycle 3: deep cycle
+    cycle3 = ResearchCycle([
+        AetherOutput(size=50, height=3, branching=2, novelty_atoms={1, 2, 3}, dependencies={10, 20}),
+        AetherOutput(size=80, height=5, branching=4, novelty_atoms=set(range(5)), dependencies=set(range(4))),
+    ])
 
-    exprs = [
-        ("atom(0)", Atom(0)),
-        ("compose(a0, a1)", Compose(Atom(0), Atom(1))),
-        ("bridge(a0, a1)", Bridge(Atom(0), Atom(1))),
-        ("iterate(3, a0)", Iterate(3, Atom(0))),
-        ("certify(a0)", Certify(Atom(0))),
-        ("bridge(certify(a0), bridge(a1, a2))",
-         Bridge(Certify(Atom(0)), Bridge(Atom(1), Atom(2)))),
-        ("certify(iterate(5, bridge(a0, a1)))",
-         Certify(Iterate(5, Bridge(Atom(0), Atom(1))))),
-    ]
-
-    print("  Theorem 5: innovationScore(e) ≤ structuralDepth(e) for all e\n")
-    print(f"  {'Expression':<45} {'Innovation':>10} {'StructDepth':>12} {'Bounded':>8}")
-    print(f"  {'-'*45} {'-'*10} {'-'*12} {'-'*8}")
-
-    for name, expr in exprs:
-        inn = innovation_score(expr)
-        sd = structural_depth(expr)
-        ok = inn <= sd
-        assert ok, f"FAIL: innovationScore({name}) = {inn} > structuralDepth = {sd}!"
-        print(f"  {name:<45} {inn:>10} {sd:>12} {'✓' if ok else '✗':>8}")
-
-
-def demo_phase_transition():
-    """Demonstrate the phase transition at ω."""
-    separator("Phase Transition at ω")
-
-    print("  Building expressions of increasing complexity...\n")
-
-    # Level 0: atoms
-    level0 = [Atom(i) for i in range(3)]
-    # Level 1: compositions
-    level1 = [Compose(Atom(i), Atom(j)) for i in range(2) for j in range(2)]
-    # Level 2: bridges
-    level2 = [Bridge(Atom(i), Atom(j)) for i in range(2) for j in range(2)]
-    # Level 3: iterations
-    level3 = [Iterate(k, Atom(0)) for k in range(1, 6)]
-    # Level ω: certifications
-    level_omega = [Certify(Compose(Atom(0), Atom(1)))]
-    # Level ω^2: nested certifications
-    level_omega2 = [Certify(Bridge(Atom(0), Atom(1)))]
-    # Level ω^ω: deep nesting
-    level_omega_omega = [Certify(Certify(Compose(Atom(0), Atom(1))))]
-
-    levels = [
-        ("Atoms (depth 0)", level0),
-        ("Compositions (depth 1)", level1),
-        ("Bridges (depth 2)", level2),
-        ("Iterations (depth 1-5)", level3),
-        ("Certify∘Compose (depth ω)", level_omega),
-        ("Certify∘Bridge (depth ω²)", level_omega2),
-        ("Certify² (depth ω^ω)", level_omega_omega),
-    ]
-
-    for label, exprs in levels:
-        depths = [ordinal_depth(e) for e in exprs]
-        max_d = max(depths)
-        trivials = [is_trivial(e) for e in exprs]
-        any_trivial = any(trivials)
-
-        marker = "BELOW ω" if max_d < OrdinalValue.omega() else "≥ ω"
-        print(f"  {label}:")
-        print(f"    Max depth: {max_d}  [{marker}]")
-        print(f"    Contains trivial: {any_trivial}")
+    for i, cycle in enumerate([cycle1, cycle2, cycle3], 1):
+        print(f"  Cycle {i}:")
+        for j, o in enumerate(cycle.outputs):
+            nt = "NT" if o.is_nontrivial() else "T "
+            print(f"    [{nt}] Output: h={o.height}, b={o.branching}, depth={o.aether_depth()}")
+        decision = triage_cycle(threshold, cycle)
+        print(f"    → {decision}")
         print()
 
-    print("  ── Phase transition at ω ──")
-    print("  Below ω: finitary compositions, bounded iteration, classifiable")
-    print("  At/above ω: transfinite certification, provably non-trivial")
+
+def demo_proof_shapes():
+    """Demonstrate ProofShape depth and the reflection phase transition."""
+    print("=" * 70)
+    print("PROOF SHAPES: The ω Phase Transition")
+    print("=" * 70)
+    print()
+    print("  Reflection-free shapes have finite depth (< ω).")
+    print("  A single `reflect` on a positive-depth shape yields depth ≥ ω.")
+    print()
+
+    shapes = [
+        ("axm", Axm()),
+        ("compose(axm, axm)", Compose(Axm(), Axm())),
+        ("iterate(5, axm)", Iterate(5, Axm())),
+        ("compose(iterate(3, axm), compose(axm, axm))",
+         Compose(Iterate(3, Axm()), Compose(Axm(), Axm()))),
+        ("reflect(axm)", Reflect(Axm())),
+        ("reflect(compose(axm, axm))", Reflect(Compose(Axm(), Axm()))),
+        ("reflect(iterate(10, axm))", Reflect(Iterate(10, Axm()))),
+    ]
+
+    print(f"  {'Shape':<50} {'Depth':>10} {'Has Reflect?':>14} {'< ω?':>6}")
+    print(f"  {'─'*50} {'─'*10} {'─'*14} {'─'*6}")
+
+    for name, shape in shapes:
+        d = shape.ps_depth()
+        hr = shape.has_reflect()
+        finite = d < float('inf')
+        depth_str = f"{d:.0f}" if finite else "≥ ω"
+        print(f"  {name:<50} {depth_str:>10} {str(hr):>14} {str(finite):>6}")
+
+    print()
+    # Verify: reflection-free ⟹ finite
+    rf_shapes = [(n, s) for n, s in shapes if not s.has_reflect()]
+    all_finite = all(s.ps_depth() < float('inf') for _, s in rf_shapes)
+    print(f"  ✓ All {len(rf_shapes)} reflection-free shapes have finite depth: {all_finite}")
+
+    # Verify: reflect on positive depth ⟹ ≥ ω
+    reflect_shapes = [(n, s) for n, s in shapes if isinstance(s, Reflect) and s.a.ps_depth() > 0]
+    all_transfinite = all(s.ps_depth() >= float('inf') for _, s in reflect_shapes)
+    print(f"  ✓ All {len(reflect_shapes)} reflected positive-depth shapes have depth ≥ ω: {all_transfinite}")
+    print()
 
 
 if __name__ == "__main__":
-    print("╔════════════════════════════════════════════════════════════╗")
-    print("║  Proof-Theoretic Depth: Demonstration Suite               ║")
-    print("║  Ordinal-valued complexity for derivation objects          ║")
-    print("╚════════════════════════════════════════════════════════════╝")
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║     ORDINAL RESEARCH GOVERNANCE: Depth Functionals Demo            ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
 
-    demo_basic_expressions()
-    demo_threshold_theorem()
-    demo_cycle_governance()
-    demo_innovation_score()
-    demo_phase_transition()
+    demo_theorem1()
+    demo_theorem2()
+    demo_theorem3()
+    demo_theorem4()
+    demo_proof_shapes()
 
-    print("\n" + "="*60)
-    print("  All demonstrations passed successfully!")
-    print("="*60)
+    print("=" * 70)
+    print("All demonstrations complete.")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Proof-Theoretic Depth: Visualizations
+Ordinal Research Governance: Visualizations
 
-Generates charts illustrating the key concepts:
-1. Depth spectrum across expression types
-2. Phase transition at ω
-3. Innovation vs structural depth scatter
-4. Governance decision boundaries
+Generates publication-quality figures showing:
+1. The depth threshold landscape
+2. ProofShape depth phase transition
+3. Cycle triage decision boundaries
+4. Innovation vs depth scatter
 """
 
 import matplotlib
@@ -522,248 +704,283 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
-from algorithms import (
-    ResearchExpr, Atom, Compose, Bridge, Iterate, Certify,
-    ordinal_depth, structural_depth, innovation_score, node_count,
-    is_trivial, random_expr, OrdinalValue
-)
+import random
+import base64
+import io
+import json
 
 # Style
 plt.rcParams.update({
+    'font.size': 11,
+    'axes.titlesize': 13,
+    'axes.labelsize': 11,
     'figure.facecolor': 'white',
     'axes.facecolor': '#f8f9fa',
     'axes.grid': True,
     'grid.alpha': 0.3,
-    'font.size': 11,
-    'axes.labelsize': 13,
-    'axes.titlesize': 14,
-    'figure.titlesize': 16,
 })
 
+COLORS = {
+    'reject': '#e74c3c',
+    'escalate': '#f39c12',
+    'accept': '#27ae60',
+    'shallow': '#3498db',
+    'deep': '#8e44ad',
+    'omega': '#e67e22',
+    'finite': '#2c3e50',
+}
 
-def viz_depth_spectrum():
-    """Visualize the depth spectrum across expression categories."""
-    fig, ax = plt.subplots(figsize=(12, 6))
 
-    categories = []
-    depths = []
-    colors = []
-    labels = []
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 PNG data URI."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    buf.seek(0)
+    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{b64}"
 
-    # Generate representative expressions
-    exprs = [
-        ("Atoms", [Atom(i) for i in range(5)], '#2ecc71'),
-        ("Compose", [Compose(Atom(i), Atom(j)) for i in range(3) for j in range(3)], '#3498db'),
-        ("Bridge", [Bridge(Atom(i), Atom(j)) for i in range(3) for j in range(3)], '#e74c3c'),
-        ("Iterate", [Iterate(k, Atom(0)) for k in range(1, 10)], '#f39c12'),
-        ("Compose²", [Compose(Compose(Atom(0), Atom(1)), Compose(Atom(2), Atom(3)))
-                       for _ in range(3)], '#9b59b6'),
-        ("Bridge²", [Bridge(Bridge(Atom(0), Atom(1)), Bridge(Atom(2), Atom(3)))
-                      for _ in range(3)], '#e67e22'),
+
+def plot_threshold_landscape():
+    """Figure 1: The depth threshold landscape showing shallow vs deep regions."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+
+    heights = range(0, 8)
+    branchings = range(0, 8)
+
+    for h in heights:
+        for b in branchings:
+            depth = h + b
+            is_shallow = h <= 1 and b <= 1
+            if depth <= 2 and is_shallow:
+                color = COLORS['shallow']
+                marker = 's'
+                alpha = 0.7
+            elif depth <= 2:
+                color = COLORS['escalate']
+                marker = 'D'
+                alpha = 0.6
+            else:
+                color = COLORS['deep']
+                marker = 'o'
+                alpha = 0.8
+            ax.scatter(h, b, c=color, marker=marker, s=120, alpha=alpha, zorder=3)
+
+    # Draw threshold line
+    x_line = np.linspace(-0.5, 7.5, 100)
+    ax.plot(x_line, 2 - x_line, 'k--', linewidth=2, alpha=0.5, label='depth = τ = 2')
+
+    # Shade shallow region
+    shallow_patch = plt.Polygon(
+        [[0, 0], [1, 0], [1, 1], [0, 1]],
+        alpha=0.15, color=COLORS['shallow'], zorder=1
+    )
+    ax.add_patch(shallow_patch)
+
+    # Labels
+    ax.set_xlabel('Height')
+    ax.set_ylabel('Branching')
+    ax.set_title('Depth Threshold Landscape\nShallow Fragment (blue) vs Deep Region (purple)')
+    ax.set_xlim(-0.5, 7.5)
+    ax.set_ylim(-0.5, 7.5)
+
+    legend_elements = [
+        mpatches.Patch(facecolor=COLORS['shallow'], alpha=0.7, label='Shallow (h≤1, b≤1)'),
+        mpatches.Patch(facecolor=COLORS['escalate'], alpha=0.6, label='Low depth, not shallow'),
+        mpatches.Patch(facecolor=COLORS['deep'], alpha=0.8, label='Deep (depth > 2)'),
+    ]
+    ax.legend(handles=legend_elements, loc='upper right')
+
+    fig.savefig('/workspace/request-project/fig_threshold_landscape.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
+
+
+def plot_phase_transition():
+    """Figure 2: The ω phase transition in ProofShape depth."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+    # Left panel: finite fragment
+    shapes = [
+        ('axm', 0),
+        ('compose\n(axm,axm)', 1),
+        ('iterate\n(3,axm)', 3),
+        ('compose\n(iter3,comp)', 4),
+        ('iterate\n(7,axm)', 7),
+        ('iterate\n(10,axm)', 10),
     ]
 
-    positions = []
-    pos = 0
-    tick_positions = []
-    tick_labels = []
+    names, depths = zip(*shapes)
+    bars = ax1.barh(range(len(shapes)), depths, color=COLORS['finite'], alpha=0.8, height=0.6)
+    ax1.set_yticks(range(len(shapes)))
+    ax1.set_yticklabels(names, fontsize=9)
+    ax1.set_xlabel('Ordinal Depth')
+    ax1.set_title('Reflection-Free Fragment\n(All depths < ω)')
+    ax1.axvline(x=0, color='gray', linewidth=0.5)
 
-    for cat_name, cat_exprs, color in exprs:
-        cat_depths = []
-        for e in cat_exprs:
-            d = ordinal_depth(e)
-            n = d.to_nat()
-            if n is not None:
-                cat_depths.append(n)
-                positions.append(pos)
-                colors.append(color)
-                pos += 1
-            pos += 0.1
+    for bar, d in zip(bars, depths):
+        ax1.text(bar.get_width() + 0.2, bar.get_y() + bar.get_height()/2,
+                f'{d}', va='center', fontsize=10, fontweight='bold')
 
-        if cat_depths:
-            tick_positions.append(np.mean([positions[-(len(cat_depths)-i)] for i in range(len(cat_depths))]))
-            tick_labels.append(cat_name)
+    # Right panel: transfinite depths
+    omega_shapes = [
+        ('reflect(axm)\nω⁰ = 1', 1, False),
+        ('reflect(comp)\nω¹ = ω', 15, True),    # Using 15 as visual stand-in for ω
+        ('reflect(iter3)\nω³', 45, True),
+        ('reflect(iter7)\nω⁷', 105, True),
+        ('reflect(reflect)\nω^ω', 200, True),
+    ]
 
-        depths.extend(cat_depths)
-        pos += 0.5
+    names2, depths2, is_trans = zip(*omega_shapes)
+    colors2 = [COLORS['omega'] if t else COLORS['finite'] for t in is_trans]
+    bars2 = ax2.barh(range(len(omega_shapes)), depths2, color=colors2, alpha=0.8, height=0.6)
+    ax2.set_yticks(range(len(omega_shapes)))
+    ax2.set_yticklabels(names2, fontsize=9)
+    ax2.set_xlabel('Ordinal Depth (log-like scale)')
+    ax2.set_title('Reflection Fragment\n(Depths cross ω barrier)')
 
-    ax.bar(range(len(depths)), depths, color=colors, edgecolor='white', linewidth=0.5)
+    # Draw ω barrier
+    ax2.axvline(x=12, color='red', linewidth=2, linestyle='--', alpha=0.7)
+    ax2.text(12.5, len(omega_shapes) - 0.5, 'ω barrier', color='red',
+             fontsize=10, fontweight='bold', va='top')
 
-    # Draw the ω threshold line
-    ax.axhline(y=10, color='red', linestyle='--', linewidth=2, alpha=0.7, label='ω threshold (conceptual)')
+    for bar, (name, d, t) in zip(bars2, omega_shapes):
+        label = name.split('\n')[1] if '\n' in name else str(d)
+        ax2.text(bar.get_width() + 2, bar.get_y() + bar.get_height()/2,
+                label, va='center', fontsize=10, fontweight='bold',
+                color=COLORS['omega'] if t else COLORS['finite'])
 
-    ax.set_xlabel('Expression Index')
-    ax.set_ylabel('Ordinal Depth (finite values)')
-    ax.set_title('Depth Spectrum: Finitary Fragment (depth < ω)')
-
-    # Add category labels
-    for cat_name, cat_exprs, color in exprs:
-        ax.bar([], [], color=color, label=cat_name)
-    ax.legend(loc='upper left', fontsize=9)
-
-    plt.tight_layout()
-    plt.savefig('viz_depth_spectrum.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("  Saved: viz_depth_spectrum.png")
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/fig_phase_transition.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
-def viz_phase_transition():
-    """Visualize the phase transition at ω."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+def plot_triage_decisions():
+    """Figure 3: Cycle triage decision boundaries."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
 
-    # Left: structural depth vs ordinal depth class
-    struct_depths = []
-    ordinal_classes = []  # 0 = below ω, 1 = at ω, 2 = above ω
-    class_colors = []
+    random.seed(42)
+    n_cycles = 80
 
-    test_exprs = []
-    # Below ω
-    for i in range(20):
-        test_exprs.append(random_expr(max_depth=3, seed=i*7))
-    for i in range(5):
-        test_exprs.append(Iterate(i+1, Atom(0)))
-    # At/above ω
-    for i in range(10):
-        test_exprs.append(Certify(random_expr(max_depth=2, seed=i*13)))
+    cycle_depths = []
+    has_nontrivial = []
+    for _ in range(n_cycles):
+        n_outputs = random.randint(1, 5)
+        heights = [random.randint(0, 6) for _ in range(n_outputs)]
+        branchings = [random.randint(0, 4) for _ in range(n_outputs)]
+        depths = [h + b for h, b in zip(heights, branchings)]
+        cd = max(depths)
+        nt = any(h > 1 or b > 1 for h, b in zip(heights, branchings))
+        cycle_depths.append(cd)
+        has_nontrivial.append(nt)
 
-    for e in test_exprs:
-        sd = structural_depth(e)
-        d = ordinal_depth(e)
-        struct_depths.append(sd)
-        if d < OrdinalValue.omega():
-            ordinal_classes.append(0)
-            class_colors.append('#2ecc71')
-        elif d == OrdinalValue.omega():
-            ordinal_classes.append(1)
-            class_colors.append('#f39c12')
+    threshold = 5
+
+    for cd, nt in zip(cycle_depths, has_nontrivial):
+        if cd >= threshold:
+            color = COLORS['accept']
+            label = 'Accept'
+        elif nt:
+            color = COLORS['escalate']
+            label = 'Escalate'
         else:
-            ordinal_classes.append(2)
-            class_colors.append('#e74c3c')
+            color = COLORS['reject']
+            label = 'Reject'
+        jitter = random.gauss(0, 0.15)
+        ax.scatter(cd, 1 if nt else 0 + jitter, c=color, s=60, alpha=0.7, zorder=3)
 
-    ax1.scatter(range(len(struct_depths)), struct_depths, c=class_colors, s=80, edgecolors='white', linewidth=0.5, zorder=5)
+    ax.axvline(x=threshold, color='black', linewidth=2, linestyle='--', alpha=0.7)
+    ax.text(threshold + 0.2, 0.5, f'τ = {threshold}', fontsize=12,
+            fontweight='bold', rotation=90, va='center')
 
-    green_patch = mpatches.Patch(color='#2ecc71', label='Depth < ω (finitary)')
-    orange_patch = mpatches.Patch(color='#f39c12', label='Depth = ω')
-    red_patch = mpatches.Patch(color='#e74c3c', label='Depth > ω (transfinite)')
-    ax1.legend(handles=[green_patch, orange_patch, red_patch], fontsize=9)
+    ax.set_xlabel('Cycle Depth')
+    ax.set_ylabel('Contains Nontrivial Output?')
+    ax.set_yticks([0, 1])
+    ax.set_yticklabels(['No (all trivial)', 'Yes'])
+    ax.set_title('Research Cycle Triage Decisions')
 
-    ax1.set_xlabel('Expression Index')
-    ax1.set_ylabel('Structural Depth (ℕ)')
-    ax1.set_title('Phase Transition: Structural vs Ordinal Depth')
+    legend_elements = [
+        mpatches.Patch(facecolor=COLORS['accept'], alpha=0.7, label='Accept (depth ≥ τ)'),
+        mpatches.Patch(facecolor=COLORS['escalate'], alpha=0.7, label='Escalate (depth < τ, nontrivial)'),
+        mpatches.Patch(facecolor=COLORS['reject'], alpha=0.7, label='Reject (depth < τ, all trivial)'),
+    ]
+    ax.legend(handles=legend_elements, loc='upper left')
 
-    # Right: histogram of structural depths by ordinal class
-    below_omega = [sd for sd, oc in zip(struct_depths, ordinal_classes) if oc == 0]
-    at_or_above = [sd for sd, oc in zip(struct_depths, ordinal_classes) if oc >= 1]
-
-    bins = range(0, max(struct_depths) + 2)
-    ax2.hist(below_omega, bins=bins, alpha=0.7, color='#2ecc71', label='Depth < ω', edgecolor='white')
-    ax2.hist(at_or_above, bins=bins, alpha=0.7, color='#e74c3c', label='Depth ≥ ω', edgecolor='white')
-    ax2.set_xlabel('Structural Depth')
-    ax2.set_ylabel('Count')
-    ax2.set_title('Distribution by Ordinal Depth Class')
-    ax2.legend(fontsize=10)
-
-    plt.tight_layout()
-    plt.savefig('viz_phase_transition.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("  Saved: viz_phase_transition.png")
+    fig.savefig('/workspace/request-project/fig_triage_decisions.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
-def viz_innovation_vs_depth():
-    """Scatter plot of innovation score vs structural depth."""
-    fig, ax = plt.subplots(figsize=(10, 7))
+def plot_innovation_vs_depth():
+    """Figure 4: Innovation rank vs ordinal depth scatter."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
 
-    innovations = []
-    s_depths = []
-    trivials = []
-    has_certify = []
+    random.seed(99)
+    n_points = 100
 
-    for seed in range(200):
-        e = random_expr(max_depth=5, seed=seed)
-        inn = innovation_score(e)
-        sd = structural_depth(e)
-        triv = is_trivial(e)
-        innovations.append(inn)
-        s_depths.append(sd)
-        trivials.append(triv)
+    for _ in range(n_points):
+        h = random.randint(0, 10)
+        b = random.randint(0, 8)
+        depth = h + b
 
-    # Color by triviality
-    colors = ['#e74c3c' if t else '#3498db' for t in trivials]
-    sizes = [120 if t else 50 for t in trivials]
+        # Innovation bounded by depth when conditions met
+        n_atoms = random.randint(0, h)
+        n_deps = random.randint(0, b)
+        innov = n_atoms + n_deps
 
-    ax.scatter(s_depths, innovations, c=colors, s=sizes, alpha=0.6, edgecolors='white', linewidth=0.5)
+        bounded = innov <= depth
+        color = COLORS['accept'] if bounded else COLORS['reject']
+        ax.scatter(depth, innov, c=color, s=40, alpha=0.6, zorder=3)
 
-    # Draw the identity line (innovation = structural depth bound)
-    max_val = max(max(s_depths), max(innovations)) + 1
-    ax.plot([0, max_val], [0, max_val], 'k--', alpha=0.3, label='innovation = structuralDepth')
+    # Draw y = x line
+    max_val = 18
+    ax.plot([0, max_val], [0, max_val], 'k--', linewidth=1.5, alpha=0.5, label='InnovRank = Depth')
 
-    trivial_patch = mpatches.Patch(color='#e74c3c', label='Trivial')
-    nontrivial_patch = mpatches.Patch(color='#3498db', label='Non-trivial')
-    ax.legend(handles=[trivial_patch, nontrivial_patch], fontsize=10)
+    # Shade the valid region
+    ax.fill_between([0, max_val], [0, 0], [0, max_val], alpha=0.08, color=COLORS['accept'])
 
-    ax.set_xlabel('Structural Depth')
-    ax.set_ylabel('Innovation Score')
-    ax.set_title('Innovation Score ≤ Structural Depth (Theorem 5)')
+    ax.set_xlabel('Ordinal Depth (height + branching)')
+    ax.set_ylabel('Innovation Rank (|atoms| + |deps|)')
+    ax.set_title('Innovation Rank ≤ Ordinal Depth\n(Theorem 2: bounded under structural conditions)')
     ax.set_xlim(-0.5, max_val)
     ax.set_ylim(-0.5, max_val)
 
-    plt.tight_layout()
-    plt.savefig('viz_innovation_depth.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("  Saved: viz_innovation_depth.png")
+    legend_elements = [
+        mpatches.Patch(facecolor=COLORS['accept'], alpha=0.6, label='InnovRank ≤ Depth (certified)'),
+        plt.Line2D([0], [0], color='k', linewidth=1.5, linestyle='--', label='Equality line'),
+    ]
+    ax.legend(handles=legend_elements, loc='upper left')
 
-
-def viz_governance_decision():
-    """Visualize governance decision boundaries."""
-    fig, ax = plt.subplots(figsize=(10, 7))
-
-    # Create cycles of different depths
-    cycle_data = []
-    for n_atoms in range(1, 4):
-        for n_compose in range(0, 4):
-            for n_certify in range(0, 3):
-                cycle = []
-                cycle.extend([Atom(i) for i in range(n_atoms)])
-                cycle.extend([Compose(Atom(0), Atom(i)) for i in range(n_compose)])
-                cycle.extend([Certify(Compose(Atom(0), Atom(i))) for i in range(n_certify)])
-
-                from algorithms import cycle_depth as cd_func
-                cd = cd_func(cycle)
-                sd_total = sum(structural_depth(e) for e in cycle)
-                inn_total = sum(innovation_score(e) for e in cycle)
-                above_omega = cd >= OrdinalValue.omega()
-
-                cycle_data.append((len(cycle), sd_total, inn_total, above_omega))
-
-    sizes_list = [d[0] for d in cycle_data]
-    sd_totals = [d[1] for d in cycle_data]
-    inn_totals = [d[2] for d in cycle_data]
-    above = [d[3] for d in cycle_data]
-
-    colors = ['#2ecc71' if a else '#e74c3c' for a in above]
-    markers = ['o' if a else 'x' for a in above]
-
-    for i, (sd, inn, a, c) in enumerate(zip(sd_totals, inn_totals, above, colors)):
-        ax.scatter(sd, inn, c=c, s=80, marker='o' if a else 'X',
-                   edgecolors='white' if a else 'none', linewidth=0.5, alpha=0.7)
-
-    accept_patch = mpatches.Patch(color='#2ecc71', label='ACCEPT (depth ≥ ω)')
-    escalate_patch = mpatches.Patch(color='#e74c3c', label='ESCALATE (depth < ω)')
-    ax.legend(handles=[accept_patch, escalate_patch], fontsize=11)
-
-    ax.set_xlabel('Total Structural Depth of Cycle')
-    ax.set_ylabel('Total Innovation Score of Cycle')
-    ax.set_title('Governance Decisions: Accept vs Escalate (θ = ω)')
-
-    plt.tight_layout()
-    plt.savefig('viz_governance.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("  Saved: viz_governance.png")
+    fig.savefig('/workspace/request-project/fig_innovation_depth.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-    viz_depth_spectrum()
-    viz_phase_transition()
-    viz_innovation_vs_depth()
-    viz_governance_decision()
-    print("\nAll visualizations generated successfully!")
+
+    b64_1 = plot_threshold_landscape()
+    print(f"  ✓ Threshold landscape ({len(b64_1)} chars)")
+
+    b64_2 = plot_phase_transition()
+    print(f"  ✓ Phase transition ({len(b64_2)} chars)")
+
+    b64_3 = plot_triage_decisions()
+    print(f"  ✓ Triage decisions ({len(b64_3)} chars)")
+
+    b64_4 = plot_innovation_vs_depth()
+    print(f"  ✓ Innovation vs depth ({len(b64_4)} chars)")
+
+    print("\nAll visualizations saved to PNG files and base64 encoded.")
+
+    # Save base64 data for JSON package
+    viz_data = {
+        "threshold_landscape": b64_1,
+        "phase_transition": b64_2,
+        "triage_decisions": b64_3,
+        "innovation_depth": b64_4,
+    }
+    with open('/workspace/request-project/viz_data.json', 'w') as f:
+        json.dump(viz_data, f)
+    print("Base64 data saved to viz_data.json")

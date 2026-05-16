@@ -1,461 +1,374 @@
 #!/usr/bin/env python3
 """
-Proof-Theoretic Depth: Core Algorithms
+Ordinal Research Governance: Algorithms
 
-Implements the ResearchExpr calculus, ordinal depth computation,
-innovation scoring, and governance policies.
-
-All algorithms mirror the formally verified definitions in
-the accompanying formalization.
+Implements the core algorithms for ordinal depth computation,
+research cycle triage, and proof shape analysis.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass
-from typing import List, Optional, Tuple
-from functools import total_ordering
+from dataclasses import dataclass, field
+from typing import List, Set, Tuple, Optional
+from enum import Enum
+import math
 
 
-# ─────────────────────────────────────────────────────────
-# Ordinal Value Representation
-# ─────────────────────────────────────────────────────────
+# ─── Core Data Types ──────────────────────────────────────────────────────────
 
-@total_ordering
-class OrdinalValue:
+@dataclass
+class AetherOutput:
     """
-    Represents ordinals in Cantor Normal Form (CNF):
-        ω^a₁·c₁ + ω^a₂·c₂ + ... + ω^aₙ·cₙ
-    where a₁ > a₂ > ... > aₙ and each cᵢ is a positive integer.
+    A finite syntactic object encoding a research output.
 
-    Stored as a list of (exponent, coefficient) pairs in decreasing
-    exponent order. The exponents are themselves OrdinalValues,
-    enabling representation of ordinals up to ε₀.
-
-    Examples:
-        0       → []
-        5       → [(0, 5)]
-        ω       → [(1, 1)]      where 1 means OrdinalValue for 1
-        ω·3     → [(1, 3)]
-        ω² + 1  → [(2, 1), (0, 1)]
-        ω^ω     → [(ω, 1)]
+    Attributes:
+        size: Total size of the output (e.g., proof term size)
+        height: Depth of the derivation tree
+        branching: Number of distinct derivation branches
+        novelty_atoms: Set of novel atomic concepts introduced
+        dependencies: Set of prior results used
     """
+    size: int
+    height: int
+    branching: int
+    novelty_atoms: Set[int] = field(default_factory=set)
+    dependencies: Set[int] = field(default_factory=set)
 
-    def __init__(self, terms: Optional[List[Tuple['OrdinalValue', int]]] = None):
-        """Initialize with CNF terms [(exponent, coefficient), ...] in decreasing order."""
-        self.terms: List[Tuple[OrdinalValue, int]] = terms or []
-        # Normalize: remove zero coefficients
-        self.terms = [(e, c) for e, c in self.terms if c > 0]
+    def aether_depth(self) -> int:
+        """
+        Compute ordinal depth (finite projection).
+        Time complexity: O(1)
+        """
+        return self.height + self.branching
 
-    @staticmethod
-    def zero() -> 'OrdinalValue':
-        return OrdinalValue([])
+    def is_shallow(self) -> bool:
+        """Check if output is in the shallow fragment. O(1)."""
+        return self.height <= 1 and self.branching <= 1
 
-    @staticmethod
-    def from_nat(n: int) -> 'OrdinalValue':
-        if n == 0:
-            return OrdinalValue.zero()
-        return OrdinalValue([(OrdinalValue.zero(), n)])
+    def is_nontrivial(self) -> bool:
+        """Check if output is non-trivial (outside shallow fragment). O(1)."""
+        return not self.is_shallow()
 
-    @staticmethod
-    def omega() -> 'OrdinalValue':
-        """Returns ω."""
-        return OrdinalValue([(OrdinalValue.from_nat(1), 1)])
+    def innovation_rank(self) -> int:
+        """
+        Compute innovation rank: |novelty_atoms| + |dependencies|.
+        Time complexity: O(1) (set cardinality is cached)
+        """
+        return len(self.novelty_atoms) + len(self.dependencies)
 
-    @staticmethod
-    def omega_power(exp: 'OrdinalValue') -> 'OrdinalValue':
-        """Returns ω^exp."""
-        if exp == OrdinalValue.zero():
-            return OrdinalValue.from_nat(1)
-        return OrdinalValue([(exp, 1)])
 
-    def is_zero(self) -> bool:
-        return len(self.terms) == 0
+class TriageDecision(Enum):
+    """Governance decision for a research cycle."""
+    REJECT = "REJECT"       # All outputs trivial, below threshold
+    ESCALATE = "ESCALATE"   # Below threshold but contains nontrivial work
+    ACCEPT = "ACCEPT"       # Meets or exceeds threshold
 
-    def is_finite(self) -> bool:
-        """Check if this ordinal is a natural number (< ω)."""
-        if self.is_zero():
-            return True
-        return len(self.terms) == 1 and self.terms[0][0].is_zero()
 
-    def to_nat(self) -> Optional[int]:
-        """Convert to natural number if finite, else None."""
-        if self.is_zero():
+@dataclass
+class ResearchCycle:
+    """A finite collection of AetherOutputs forming a research cycle."""
+    outputs: List[AetherOutput]
+
+    def cycle_depth(self) -> int:
+        """
+        Compute cycle depth as supremum (max) of output depths.
+        Time complexity: O(n) where n = |outputs|
+        """
+        if not self.outputs:
             return 0
-        if self.is_finite():
-            return self.terms[0][1]
-        return None
+        return max(o.aether_depth() for o in self.outputs)
 
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, OrdinalValue):
-            return NotImplemented
-        if len(self.terms) != len(other.terms):
-            return False
-        return all(e1 == e2 and c1 == c2
-                   for (e1, c1), (e2, c2) in zip(self.terms, other.terms))
+    def all_below(self, threshold: int) -> bool:
+        """
+        Check if all outputs are below threshold.
+        Time complexity: O(n)
 
-    def __lt__(self, other: 'OrdinalValue') -> bool:
-        """Lexicographic comparison on CNF terms."""
-        for i in range(max(len(self.terms), len(other.terms))):
-            if i >= len(self.terms):
-                return True  # self has fewer terms → self is smaller
-            if i >= len(other.terms):
-                return False
-            e1, c1 = self.terms[i]
-            e2, c2 = other.terms[i]
-            if e1 != e2:
-                return e1 < e2 if e1 < e2 else False  # noqa
-            if e1 < e2:
-                return True
-            if e2 < e1:
-                return False
-            if c1 != c2:
-                return c1 < c2
-        return False
-
-    def __hash__(self) -> int:
-        return hash(str(self))
-
-    def successor(self) -> 'OrdinalValue':
-        """Returns self + 1."""
-        return self + OrdinalValue.from_nat(1)
-
-    def __add__(self, other: 'OrdinalValue') -> 'OrdinalValue':
-        """Ordinal addition (not commutative!)."""
-        if self.is_zero():
-            return other
-        if other.is_zero():
-            return self
-
-        # Find where other's leading term fits in self's terms
-        other_lead_exp = other.terms[0][0]
-
-        # Keep terms of self whose exponent is strictly greater than other's leading exponent
-        kept = [(e, c) for e, c in self.terms if e > other_lead_exp]
-
-        # If self has a term with the same exponent as other's leading term,
-        # it gets absorbed (ordinal addition: ω^a · m + ω^a · n = ω^a · (m+n) only if a = leading)
-        self_same = [(e, c) for e, c in self.terms if e == other_lead_exp]
-        if self_same:
-            # Add coefficients for the matching exponent
-            new_coeff = self_same[0][1] + other.terms[0][1]
-            result_terms = kept + [(other_lead_exp, new_coeff)] + other.terms[1:]
-        else:
-            result_terms = kept + other.terms
-
-        return OrdinalValue(result_terms)
-
-    def __repr__(self) -> str:
-        if self.is_zero():
-            return "0"
-        parts = []
-        for exp, coeff in self.terms:
-            if exp.is_zero():
-                parts.append(str(coeff))
-            elif exp == OrdinalValue.from_nat(1):
-                if coeff == 1:
-                    parts.append("ω")
-                else:
-                    parts.append(f"ω·{coeff}")
-            else:
-                exp_str = str(exp)
-                if coeff == 1:
-                    parts.append(f"ω^{exp_str}")
-                else:
-                    parts.append(f"ω^{exp_str}·{coeff}")
-        return " + ".join(parts)
+        This implements the verified theorem:
+            cycleDepth(C) < τ  ⟺  ∀ x ∈ C, aetherDepth(x) < τ
+        """
+        return all(o.aether_depth() < threshold for o in self.outputs)
 
 
-# ─────────────────────────────────────────────────────────
-# Research Expression Syntax
-# ─────────────────────────────────────────────────────────
+# ─── Algorithm 1: Depth-Based Triage ─────────────────────────────────────────
 
-class ResearchExpr:
-    """Base class for research expressions."""
-    pass
-
-
-@dataclass
-class Atom(ResearchExpr):
-    """Atomic statement."""
-    n: int
-
-
-@dataclass
-class Compose(ResearchExpr):
-    """Sequential composition of two derivations."""
-    left: ResearchExpr
-    right: ResearchExpr
-
-
-@dataclass
-class Bridge(ResearchExpr):
-    """Cross-domain connection (higher complexity)."""
-    left: ResearchExpr
-    right: ResearchExpr
-
-
-@dataclass
-class Iterate(ResearchExpr):
-    """Bounded iteration."""
-    count: int
-    body: ResearchExpr
-
-
-@dataclass
-class Certify(ResearchExpr):
-    """Certification/abstraction step (transfinite jump)."""
-    body: ResearchExpr
-
-
-# ─────────────────────────────────────────────────────────
-# Core Algorithms
-# ─────────────────────────────────────────────────────────
-
-def ordinal_depth(expr: ResearchExpr) -> OrdinalValue:
+def triage(threshold: int, cycle: ResearchCycle) -> TriageDecision:
     """
-    Compute the ordinal depth of a research expression.
+    Automated triage of a research cycle.
 
-    Mirrors the formal definition:
-    - atom: 0
-    - compose(e₁, e₂): succ(max(depth(e₁), depth(e₂)))
-    - bridge(e₁, e₂): succ(succ(max(depth(e₁), depth(e₂))))
-    - iterate(n, e): depth(e) + n
-    - certify(e): ω ^ depth(e)
+    This implements the formally verified triage theorem:
+        If cycleDepth(C) < τ:
+            - All trivial → REJECT
+            - Some nontrivial → ESCALATE
+        If cycleDepth(C) ≥ τ:
+            → ACCEPT
 
-    Time complexity: O(|expr| · D) where D is the depth of ordinal arithmetic.
-    Space complexity: O(|expr|) for the recursion stack.
+    Time complexity: O(n) where n = |cycle.outputs|
+    Space complexity: O(1)
+
+    Args:
+        threshold: The ordinal threshold τ (finite projection)
+        cycle: The research cycle to triage
+
+    Returns:
+        TriageDecision indicating REJECT, ESCALATE, or ACCEPT
     """
-    if isinstance(expr, Atom):
-        return OrdinalValue.zero()
-    elif isinstance(expr, Compose):
-        d1 = ordinal_depth(expr.left)
-        d2 = ordinal_depth(expr.right)
-        return max(d1, d2).successor()
-    elif isinstance(expr, Bridge):
-        d1 = ordinal_depth(expr.left)
-        d2 = ordinal_depth(expr.right)
-        return max(d1, d2).successor().successor()
-    elif isinstance(expr, Iterate):
-        d = ordinal_depth(expr.body)
-        return d + OrdinalValue.from_nat(expr.count)
-    elif isinstance(expr, Certify):
-        d = ordinal_depth(expr.body)
-        return OrdinalValue.omega_power(d)
+    cd = cycle.cycle_depth()
+
+    if cd >= threshold:
+        return TriageDecision.ACCEPT
+
+    has_nontrivial = any(o.is_nontrivial() for o in cycle.outputs)
+    if has_nontrivial:
+        return TriageDecision.ESCALATE
     else:
-        raise TypeError(f"Unknown expression type: {type(expr)}")
+        return TriageDecision.REJECT
 
 
-def structural_depth(expr: ResearchExpr) -> int:
+# ─── Algorithm 2: Batch Cycle Screening ──────────────────────────────────────
+
+def batch_screen(threshold: int, cycles: List[ResearchCycle]) -> dict:
     """
-    Compute the natural-number structural depth.
+    Screen a batch of research cycles for governance decisions.
 
-    A computable proxy for ordinal depth that stays in ℕ.
+    Time complexity: O(N) where N = total outputs across all cycles
+    Space complexity: O(k) where k = number of cycles
 
-    Time complexity: O(|expr|)
-    Space complexity: O(height(expr)) for recursion stack.
+    Returns:
+        Dictionary mapping decision type to list of cycle indices
     """
-    if isinstance(expr, Atom):
-        return 0
-    elif isinstance(expr, Compose):
-        return 1 + max(structural_depth(expr.left), structural_depth(expr.right))
-    elif isinstance(expr, Bridge):
-        return 2 + max(structural_depth(expr.left), structural_depth(expr.right))
-    elif isinstance(expr, Iterate):
-        return structural_depth(expr.body) + expr.count
-    elif isinstance(expr, Certify):
-        return 1 + structural_depth(expr.body)
-    else:
-        raise TypeError(f"Unknown expression type: {type(expr)}")
+    result = {d: [] for d in TriageDecision}
+    for i, cycle in enumerate(cycles):
+        decision = triage(threshold, cycle)
+        result[decision].append(i)
+    return result
 
 
-def innovation_score(expr: ResearchExpr) -> int:
-    """
-    Compute the innovation score.
+# ─── Algorithm 3: ProofShape Depth Analysis ──────────────────────────────────
 
-    Counts bridge and certify constructors while ignoring pure composition.
-    This is a proxy for cross-domain and abstraction density.
+class ProofShape:
+    """Base class for proof shape constructors."""
+    def ps_depth_symbolic(self) -> str:
+        """Return symbolic ordinal depth representation."""
+        raise NotImplementedError
 
-    Time complexity: O(|expr|)
-    Space complexity: O(height(expr))
-    """
-    if isinstance(expr, Atom):
-        return 0
-    elif isinstance(expr, Compose):
-        return max(innovation_score(expr.left), innovation_score(expr.right))
-    elif isinstance(expr, Bridge):
-        return 1 + max(innovation_score(expr.left), innovation_score(expr.right))
-    elif isinstance(expr, Iterate):
-        return expr.count + innovation_score(expr.body)
-    elif isinstance(expr, Certify):
-        return 1 + innovation_score(expr.body)
-    else:
-        raise TypeError(f"Unknown expression type: {type(expr)}")
+    def ps_depth_finite(self) -> Optional[int]:
+        """Return finite depth if < ω, else None."""
+        raise NotImplementedError
+
+    def has_reflect(self) -> bool:
+        raise NotImplementedError
+
+    def constructor_count(self) -> dict:
+        """Count occurrences of each constructor type."""
+        raise NotImplementedError
 
 
-def node_count(expr: ResearchExpr) -> int:
-    """
-    Count total nodes in the syntax tree.
-
-    Time complexity: O(|expr|)
-    """
-    if isinstance(expr, Atom):
-        return 1
-    elif isinstance(expr, Compose):
-        return 1 + node_count(expr.left) + node_count(expr.right)
-    elif isinstance(expr, Bridge):
-        return 1 + node_count(expr.left) + node_count(expr.right)
-    elif isinstance(expr, Iterate):
-        return 1 + node_count(expr.body)
-    elif isinstance(expr, Certify):
-        return 1 + node_count(expr.body)
-    else:
-        raise TypeError(f"Unknown expression type: {type(expr)}")
+class Axm(ProofShape):
+    def ps_depth_symbolic(self): return "0"
+    def ps_depth_finite(self): return 0
+    def has_reflect(self): return False
+    def constructor_count(self): return {"axm": 1, "compose": 0, "iterate": 0, "reflect": 0}
 
 
-def is_trivial(expr: ResearchExpr) -> bool:
-    """
-    Check if an expression belongs to the trivial fragment.
+class Compose(ProofShape):
+    def __init__(self, a: ProofShape, b: ProofShape):
+        self.a, self.b = a, b
 
-    Trivial = atom OR compose of two atoms.
+    def ps_depth_symbolic(self):
+        return f"succ(max({self.a.ps_depth_symbolic()}, {self.b.ps_depth_symbolic()}))"
 
-    Time complexity: O(1)
-    """
-    if isinstance(expr, Atom):
+    def ps_depth_finite(self):
+        da, db = self.a.ps_depth_finite(), self.b.ps_depth_finite()
+        if da is None or db is None:
+            return None
+        return max(da, db) + 1
+
+    def has_reflect(self):
+        return self.a.has_reflect() or self.b.has_reflect()
+
+    def constructor_count(self):
+        ca, cb = self.a.constructor_count(), self.b.constructor_count()
+        return {k: ca.get(k, 0) + cb.get(k, 0) + (1 if k == "compose" else 0) for k in ca}
+
+
+class Iterate(ProofShape):
+    def __init__(self, n: int, a: ProofShape):
+        self.n, self.a = n, a
+
+    def ps_depth_symbolic(self):
+        return f"{self.a.ps_depth_symbolic()} + {self.n}"
+
+    def ps_depth_finite(self):
+        da = self.a.ps_depth_finite()
+        if da is None:
+            return None
+        return da + self.n
+
+    def has_reflect(self):
+        return self.a.has_reflect()
+
+    def constructor_count(self):
+        c = self.a.constructor_count()
+        c["iterate"] = c.get("iterate", 0) + 1
+        return c
+
+
+class Reflect(ProofShape):
+    def __init__(self, a: ProofShape):
+        self.a = a
+
+    def ps_depth_symbolic(self):
+        return f"ω^({self.a.ps_depth_symbolic()})"
+
+    def ps_depth_finite(self):
+        da = self.a.ps_depth_finite()
+        if da is not None and da == 0:
+            return 1  # ω^0 = 1
+        return None  # ≥ ω
+
+    def has_reflect(self):
         return True
-    if isinstance(expr, Compose):
-        return isinstance(expr.left, Atom) and isinstance(expr.right, Atom)
-    return False
+
+    def constructor_count(self):
+        c = self.a.constructor_count()
+        c["reflect"] = c.get("reflect", 0) + 1
+        return c
 
 
-def cycle_depth(exprs: List[ResearchExpr]) -> OrdinalValue:
+def analyze_proof_shape(shape: ProofShape) -> dict:
     """
-    Compute the depth of a research cycle (finite set of expressions).
+    Analyze a proof shape for depth classification.
 
-    Returns the maximum depth among all expressions.
+    Returns a dictionary with:
+    - symbolic_depth: symbolic ordinal representation
+    - finite_depth: integer depth if < ω, else None
+    - is_transfinite: True if depth ≥ ω
+    - has_reflect: whether shape contains reflect
+    - constructor_counts: counts of each constructor type
 
-    Time complexity: O(|exprs| · |expr_max|)
+    Time complexity: O(|shape|) where |shape| is the number of nodes
     """
-    if not exprs:
-        return OrdinalValue.zero()
-    return max(ordinal_depth(e) for e in exprs)
-
-
-def should_escalate(theta: OrdinalValue, exprs: List[ResearchExpr]) -> bool:
-    """
-    Determine if a cycle should be escalated based on threshold θ.
-
-    Returns True if cycleDepth(exprs) < θ, indicating insufficient depth.
-
-    Time complexity: O(|exprs| · |expr_max|)
-    """
-    return cycle_depth(exprs) < theta
-
-
-def classify_cycle(theta: OrdinalValue, exprs: List[ResearchExpr]) -> dict:
-    """
-    Classify a research cycle against a threshold.
-
-    Returns a detailed report including:
-    - Individual depths
-    - Cycle depth
-    - Escalation decision
-    - Non-triviality certificates
-
-    Time complexity: O(|exprs| · |expr_max|)
-    """
-    depths = [(e, ordinal_depth(e)) for e in exprs]
-    cd = cycle_depth(exprs)
-    escalate = cd < theta
-
+    fd = shape.ps_depth_finite()
     return {
-        "cycle_depth": cd,
-        "threshold": theta,
-        "escalate": escalate,
-        "elements": [
-            {
-                "depth": d,
-                "structural_depth": structural_depth(e),
-                "innovation_score": innovation_score(e),
-                "is_trivial": is_trivial(e),
-                "nontriviality_certified": d >= OrdinalValue.omega(),
-                "accepted": d >= theta,
-            }
-            for e, d in depths
-        ]
+        "symbolic_depth": shape.ps_depth_symbolic(),
+        "finite_depth": fd,
+        "is_transfinite": fd is None,
+        "has_reflect": shape.has_reflect(),
+        "constructor_counts": shape.constructor_count(),
     }
 
 
-# ─────────────────────────────────────────────────────────
-# Expression Generators (for experiments)
-# ─────────────────────────────────────────────────────────
+# ─── Algorithm 4: Innovation-Depth Certification ─────────────────────────────
 
-def random_expr(max_depth: int = 5, seed: int = 42) -> ResearchExpr:
-    """Generate a random research expression with bounded structural depth."""
-    import random
-    rng = random.Random(seed)
+def certify_innovation(output: AetherOutput) -> Tuple[bool, str]:
+    """
+    Certify that an output's innovation rank is bounded by its depth.
 
-    def gen(d: int) -> ResearchExpr:
-        if d <= 0:
-            return Atom(rng.randint(0, 100))
-        choice = rng.random()
-        if choice < 0.2:
-            return Atom(rng.randint(0, 100))
-        elif choice < 0.45:
-            return Compose(gen(d - 1), gen(d - 1))
-        elif choice < 0.65:
-            return Bridge(gen(d - 1), gen(d - 1))
-        elif choice < 0.85:
-            return Iterate(rng.randint(1, 5), gen(d - 1))
+    Checks the structural condition:
+        |novelty_atoms| ≤ height  AND  |dependencies| ≤ branching
+    If satisfied, guarantees InnovationRank ≤ aetherDepth.
+
+    Time complexity: O(1)
+
+    Returns:
+        (is_certified, explanation)
+    """
+    n_atoms = len(output.novelty_atoms)
+    n_deps = len(output.dependencies)
+
+    cond1 = n_atoms <= output.height
+    cond2 = n_deps <= output.branching
+
+    if cond1 and cond2:
+        return True, (
+            f"Certified: InnovRank={output.innovation_rank()} ≤ "
+            f"Depth={output.aether_depth()} "
+            f"(atoms={n_atoms}≤h={output.height}, deps={n_deps}≤b={output.branching})"
+        )
+    else:
+        violations = []
+        if not cond1:
+            violations.append(f"|atoms|={n_atoms} > height={output.height}")
+        if not cond2:
+            violations.append(f"|deps|={n_deps} > branching={output.branching}")
+        return False, f"Not certifiable: {', '.join(violations)}"
+
+
+# ─── Algorithm 5: Threshold Optimization ─────────────────────────────────────
+
+def optimal_threshold(cycles: List[ResearchCycle],
+                      target_accept_rate: float = 0.5) -> int:
+    """
+    Find the optimal governance threshold that achieves a target acceptance rate.
+
+    Performs binary search over possible thresholds to find the value
+    that accepts approximately `target_accept_rate` fraction of cycles.
+
+    Time complexity: O(k * n * log(D)) where k = cycles, n = max outputs, D = max depth
+    Space complexity: O(1)
+
+    Args:
+        cycles: List of research cycles to evaluate
+        target_accept_rate: Desired fraction of cycles to accept (0 to 1)
+
+    Returns:
+        Optimal threshold value
+    """
+    if not cycles:
+        return 0
+
+    depths = [c.cycle_depth() for c in cycles]
+    lo, hi = 0, max(depths) + 1
+
+    while lo < hi:
+        mid = (lo + hi) // 2
+        accept_rate = sum(1 for d in depths if d >= mid) / len(depths)
+        if accept_rate > target_accept_rate:
+            lo = mid + 1
         else:
-            return Certify(gen(d - 1))
+            hi = mid
 
-    return gen(max_depth)
+    return lo
 
 
-def depth_spectrum(n_samples: int = 100, max_depth: int = 6) -> List[Tuple[OrdinalValue, int, int, bool]]:
-    """
-    Generate a spectrum of expressions and their metrics.
-
-    Returns list of (ordinal_depth, structural_depth, innovation_score, is_trivial).
-    """
-    results = []
-    for seed in range(n_samples):
-        expr = random_expr(max_depth=max_depth, seed=seed)
-        results.append((
-            ordinal_depth(expr),
-            structural_depth(expr),
-            innovation_score(expr),
-            is_trivial(expr),
-        ))
-    return results
-
+# ─── Main ─────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    # Quick self-test
-    print("Running algorithm self-tests...")
+    print("Ordinal Research Governance: Algorithm Demonstrations")
+    print("=" * 60)
 
-    # Test ordinal arithmetic
-    assert OrdinalValue.zero() < OrdinalValue.from_nat(1)
-    assert OrdinalValue.from_nat(5) < OrdinalValue.omega()
-    assert OrdinalValue.omega() < OrdinalValue.omega_power(OrdinalValue.from_nat(2))
+    # Demo: Triage
+    cycle = ResearchCycle([
+        AetherOutput(size=10, height=2, branching=1, novelty_atoms={1, 2}, dependencies={10}),
+        AetherOutput(size=20, height=1, branching=0),
+    ])
+    decision = triage(threshold=4, cycle=cycle)
+    print(f"\nTriage decision for cycle (τ=4): {decision.value}")
 
-    # Test depth computation
-    a0 = Atom(0)
-    a1 = Atom(1)
-    assert ordinal_depth(a0) == OrdinalValue.zero()
-    assert ordinal_depth(Compose(a0, a1)) == OrdinalValue.from_nat(1)
-    assert ordinal_depth(Bridge(a0, a1)) == OrdinalValue.from_nat(2)
-    assert ordinal_depth(Certify(Compose(a0, a1))) == OrdinalValue.omega()
+    # Demo: Proof shape analysis
+    shape = Reflect(Compose(Iterate(3, Axm()), Axm()))
+    analysis = analyze_proof_shape(shape)
+    print(f"\nProof shape analysis:")
+    for k, v in analysis.items():
+        print(f"  {k}: {v}")
 
-    # Test innovation score ≤ structural depth
-    for seed in range(50):
-        expr = random_expr(max_depth=4, seed=seed)
-        assert innovation_score(expr) <= structural_depth(expr), \
-            f"Innovation score exceeds structural depth for seed {seed}"
+    # Demo: Innovation certification
+    output = AetherOutput(size=50, height=5, branching=3,
+                          novelty_atoms={1, 2, 3, 4}, dependencies={10, 20})
+    certified, explanation = certify_innovation(output)
+    print(f"\n{explanation}")
 
-    # Test trivial detection
-    assert is_trivial(Atom(0))
-    assert is_trivial(Compose(Atom(0), Atom(1)))
-    assert not is_trivial(Compose(Compose(Atom(0), Atom(1)), Atom(2)))
-    assert not is_trivial(Certify(Atom(0)))
-
-    print("All self-tests passed! ✓")
+    # Demo: Optimal threshold
+    import random
+    random.seed(42)
+    cycles = [
+        ResearchCycle([
+            AetherOutput(size=random.randint(1, 100),
+                         height=random.randint(0, 8),
+                         branching=random.randint(0, 5))
+            for _ in range(random.randint(1, 5))
+        ])
+        for _ in range(50)
+    ]
+    opt_tau = optimal_threshold(cycles, target_accept_rate=0.3)
+    print(f"\nOptimal threshold for 30% acceptance: τ = {opt_tau}")
+    actual_rate = sum(1 for c in cycles if c.cycle_depth() >= opt_tau) / len(cycles)
+    print(f"Actual acceptance rate: {actual_rate:.1%}")

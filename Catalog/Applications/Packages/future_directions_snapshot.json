@@ -73,10 +73,10 @@
       "Computation"
     ],
     "priority_score": 0.89,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "746c4988",
     "timestamp": "2026-05-14T16:03:53.817937+00:00"
   },
   {
@@ -469,20 +469,6 @@
     "source_exp_id": "9743e28c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.109057+00:00"
-  },
-  {
-    "id": "fd_0197",
-    "title": "Eigenvector perturbation",
-    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "a999e02b",
-    "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
     "id": "fd_0197",
@@ -1799,5 +1785,50 @@
     "source_exp_id": "67f5da38",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T02:14:30.291581+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Lean Signature",
+    "description": "```lean\ntheorem exists_minimal_WTA\n  {σ : Type*} {ar : σ → ℕ} {Q : Type*}\n  [Fintype Q] [DecidableEq Q] [Nonempty Q]\n  (A : WTA σ ar Q) :\n  ∃ (Q' : Type*) (_ : Fintype Q') (_ : DecidableEq Q') (_ : Nonempty Q')\n    (A' : WTA σ ar Q'),\n    (∀ t, A'.eval t = A.eval t) ∧\n    Fintype.card Q' ≤ Fintype.card Q ∧\n    (∀ (Q'' : Type*) [Fintype Q''] [DecidableEq Q''] [Nonempty Q'']\n      (A'' : WTA σ ar Q''),\n      (∀ t, A''.eval t = A.eval t) →\n      Fintype.card Q' ≤ Fintype.card Q'')\n```",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a999e02b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:41:24.256398+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Cross-Domain Significance",
+    "description": "- **Compiler optimization**: Minimized automata correspond to optimal dynamic programming tables.\n- **Model compression**: Minimizing the product automaton gives the smallest joint cost model.\n- **Tropical Myhill-Nerode**: Extends the word-level Myhill-Nerode theorem to trees.\n\n---",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a999e02b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:41:24.269211+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Implementation Priorities",
+    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Minimization | Medium | High | None (self-contained) |\n| 5. Lower bounds | Medium | High | Direction 1 |\n| 2. Transducers | High | Very High | Product theorem |\n| 3. Neural correspondence | High | Very High | Product + minimization |\n| 4. LSE deformation | Very High | Transformative | All above |\n\n**Recommended next step**: Direction 1 (Minimization), as it provides the foundation for Directions 3 and 5, and is the most self-contained extension of the current work.",
+    "domains": [
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a999e02b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:41:24.299758+00:00"
   }
 ]
