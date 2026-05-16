@@ -546,22 +546,6 @@
     "timestamp": "2026-05-16T03:21:49.049347+00:00"
   },
   {
-    "id": "fd_0242",
-    "title": "Uniqueness:",
-    "description": "If D₁ ~ D₂ are both q-reduced, show D₁ = D₂ by analyzing the principal divisor div(f) = D₂ - D₁ and using the reduced property to force f = const.\n\n### Algorithm: Dhar's Burning Test\n```\nfunction IsBurnable(G, q, S):\n    // S ⊆ V \\ {q}\n    fire ← {q}\n    while ∃ v ∈ V \\ fire with |{w ∈ fire : w ~ v}| > D(v):\n        fire ← fire ∪ {v}\n    return fire = V\n```\n\n### Cross-Domain Significance\n- **Algorithmic:** Dhar's algorithm is the key primitive for computing in Jac(G).\n- **Combinatorics:** Reduced divisors biject with G-parking functions.\n- **TCS:** Termination of chip-firing relates to lattice theory (Abelian sandpile lattice).\n\n---\n\n## Direction 3: Baker–Norine Riemann–Roch for Finite Graphs\n\n### Target Theorem\nDefine the **rank** of a divisor D on a graph G:\n```\nr(D) = max{k ≥ -1 : ∀ E e",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3c13f65f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:11.802488+00:00"
-  },
-  {
     "id": "fd_0235",
     "title": "Bridge",
     "description": "(interactive proofs) → connects to complexity theory",
@@ -576,21 +560,6 @@
     "source_exp_id": "2da16d8d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T05:33:56.179846+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Downward self-reducibility:",
-    "description": "Show that tropical matrix powering has a self-reduction structure: computing A^n on a specific input reduces to computing A^n on random inputs with related parameters.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63028e3e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:53:19.041641+00:00"
   },
   {
     "id": "fd_0246",
@@ -608,21 +577,6 @@
     "source_exp_id": "63028e3e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:53:19.059190+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Define tropical NC and tropical P:",
-    "description": "Based on polylog-depth and polynomial-size circuits respectively.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63028e3e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:53:19.092201+00:00"
   },
   {
     "id": "fd_0250",
@@ -765,48 +719,6 @@
     "timestamp": "2026-05-16T06:53:19.319691+00:00"
   },
   {
-    "id": "fd_0228",
-    "title": "Define tropical rank-1 matrices",
-    "description": "in Lean: `def IsRankOne (M : Matrix (Fin n) (Fin m) (WithTop ℤ)) : Prop := ∃ a b, ∀ i j, M i j = a i + b j`",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.751252+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "Define tropical factor rank",
-    "description": "as the minimum $r$: `def tropFactorRank (M) := sInf {r | ∃ decomposition of M into r rank-1 matrices}`",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.763789+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Prove rank-1 lower bounds",
-    "description": "using support arguments: if $M$ has certain combinatorial structure, it cannot be decomposed into fewer than $k$ rank-1 pieces",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.787313+00:00"
-  },
-  {
     "id": "fd_0232",
     "title": "Construct encoding family",
     "description": "where `tropFactorRank (encode s) = s` using block-diagonal rank-1 decompositions\n\n### Key Lemmas Needed\n- `tropFactorRank_le_dim`: Factor rank is at most $n$ for $n \\times n$ matrices\n- `tropFactorRank_identity`: Factor rank of the tropical identity is $n$\n- `tropFactorRank_diagonal`: Factor rank of a diagonal matrix equals its number of finite entries (under certain conditions)\n- `tropFactorRank_tropical_sum`: Factor rank is subadditive under tropical sum\n\n### Estimated Difficulty\n**High.** The lower bounds are the hardest part. Shitov's NP-hardness result suggests that computing factor rank is intrinsically difficult, but constructing specific matrices with *provable* factor rank requires delicate combinatorial arguments.\n\n### Cross-Domain Impact\n- **Algebraic geometry**: Factor rank con",
@@ -822,20 +734,6 @@
     "source_exp_id": "011ce99e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:11:31.800180+00:00"
-  },
-  {
-    "id": "fd_0233",
-    "title": "Define promise key recovery",
-    "description": ": `recoverSecret(pub(s)) = s` with probability $\\geq 1 - \\epsilon$ over some distribution on secrets",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.812192+00:00"
   },
   {
     "id": "fd_0235",
@@ -935,55 +833,6 @@
     "timestamp": "2026-05-16T07:11:31.903887+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Prove a transfer theorem",
-    "description": ": if a small circuit could invert tropPow, combined with the encoding, it would yield a small circuit for the factorization invariant",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.917254+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Derive contradictions",
-    "description": "from known or conjectured tropical circuit lower bounds\n\n### Connection to Existing Theory\n- The P vs NP question is equivalent to proving super-polynomial lower bounds on Boolean circuits\n- Tropical circuit complexity is a natural relaxation where progress may be more achievable\n- Valiant's algebraic complexity theory provides tools that adapt to the tropical setting\n\n### Estimated Difficulty\n**Very high.** Circuit lower bounds are notoriously difficult. However, the tropical setting may be more tractable due to structural restrictions.\n\n### Cross-Domain Impact\n- **Complexity theory**: New approaches to circuit lower bounds\n- **Deep learning theory**: Tropical circuits model ReLU networks; depth lower bounds = expressivity bounds\n\n---\n\n## Direction 5: Gauge-Equivariant Reductions\n\n### Hyp",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.930526+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Prove a gauge-equivariant reduction",
-    "description": ": key recovery modulo gauge symmetry still computes the invariant\n\n### Specific Formulation\n```\ntheorem gauge_equivariant_transfer\n    (s₁ s₂ : ℕ) (c : Fin n → WithTop ℤ)\n    (h_gauge : tropPow G s₁ = tropPow (gaugeShift G c) s₂) :\n    rankInv (encode s₁) = rankInv (encode s₂)\n```\n\n### Estimated Difficulty\n**Medium-high.** The gauge theory is well-understood mathematically but requires careful formalization.\n\n### Cross-Domain Impact\n- **Physics**: Gauge symmetry is fundamental in field theory; tropical gauge theory connects to tropical Yang-Mills\n- **Information theory**: Gauge orbits measure the information content of cryptographic keys\n\n---\n\n## Direction 6: Tropical Homomorphic Encryption\n\n### Hypothesis\nThe hardness transfer framework can be extended to support computation on encrypted ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.974326+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Prove that the hardness transfer extends",
     "description": "to the homomorphic setting\n\n### Estimated Difficulty\n**High.** Tropical homomorphic encryption is largely unexplored.\n\n### Cross-Domain Impact\n- **Secure computation**: Enable private shortest-path queries, private scheduling\n- **Cloud computing**: Outsource optimization problems without revealing data\n\n---\n\n## Direction 7: Experimental Cryptanalysis Benchmarks\n\n### Hypothesis\nThe hardness transfer theorem can guide the design of benchmark instances for tropical cryptanalysis.\n\n### Concrete Steps",
@@ -997,76 +846,6 @@
     "source_exp_id": "011ce99e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:11:31.988731+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Measure hardness empirically",
-    "description": ": time various algorithms (brute-force, lattice reduction, Gröbner basis) on these instances",
-    "domains": [
-      "Cryptography"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:32.013828+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Correlate with factor rank",
-    "description": ": test whether instances where the associated encoding has higher factor rank are empirically harder to break",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:32.025620+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Hypothesis",
-    "description": ": The precise conjecture to prove or disprove.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fbfb44da",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:13:50.186163+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Computational validation",
-    "description": ": Python/SageMath experiments to test the conjecture on examples before formalization.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fbfb44da",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:13:50.206810+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Formalization plan",
-    "description": ": A breakdown into 5-10 helper lemmas, each independently provable.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fbfb44da",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:13:50.222086+00:00"
   },
   {
     "id": "fd_0244",
@@ -1085,18 +864,144 @@
     "timestamp": "2026-05-16T07:13:50.237421+00:00"
   },
   {
-    "id": "fd_0245",
-    "title": "Iteration cycle",
-    "description": ": Weekly cycles of conjecture → experiment → formalize → review.",
+    "id": "fd_0246",
+    "title": "Lasota–Yorke inequality",
+    "description": ": Show that the transfer operator satisfies a Lasota–Yorke inequality on BV(ℝ), then extract the spectral gap from the essential spectral radius being strictly less than the spectral radius.",
     "domains": [
-      "Bridges"
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "fbfb44da",
+    "source_exp_id": "19523f4c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:13:50.251594+00:00"
+    "timestamp": "2026-05-16T07:22:06.383708+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Projective contraction",
+    "description": ": Map Berggren dynamics to the projective line via the ratio a/c. Show each generator is a strict contraction on a subinterval, forming an iterated function system (IFS) with contraction ratio < 1. The IFS theory directly gives exponential mixing.\n\n### Cross-Domain Connection\n\nThis connects to **thermodynamic formalism** in dynamical systems. The transfer operator is the Perron–Frobenius operator of the expanding map, and the spectral gap corresponds to exponential decay of correlations — the same structure that governs equilibrium statistical mechanics of lattice systems.\n\n---\n\n## Direction 2: Nonbacktracking Ramanujan Refinement\n\n### Theorem Target\n\nDefine the nonbacktracking walk on the Berggren tree (never immediately reverse the last generator) and prove a sharper spectral bound.\n\n###",
+    "domains": [
+      "Pythagorean",
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "19523f4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:22:06.399594+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Expander walk sampling",
+    "description": "(Ajtai–Komlós–Szemerédi): Use the spectral gap to derandomize the random walk. Replace random generator choices with a deterministic sequence (e.g., de Bruijn sequence or expander-based sampler) that achieves the same discrepancy bounds.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "19523f4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:22:06.442076+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Weyl sum approach",
+    "description": ": Bound character sums over Berggren orbits using the spectral gap, then apply the Erdős–Turán inequality to convert spectral bounds to discrepancy bounds.\n\n### Cross-Domain Connection\n\nThis connects to **derandomization** in complexity theory. The spectral gap of the Berggren walk plays the same role as the spectral gap in Reingold's log-space connectivity algorithm: it certifies that deterministic traversal is as good as random walking.\n\n---\n\n## Direction 4: Bridge to Automorphic and Thermodynamic Formalism\n\n### Theorem Target\n\nEstablish a formal connection between the Berggren spectral gap and the automorphic spectral theory of SL₂(ℤ) acting on the upper half-plane, via the parametrization of Pythagorean triples by Gaussian integers.\n\n### Proposed Lean Type Signature\n\n```lean\n/-- The Be",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "19523f4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:22:06.456040+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Gaussian parametrization",
+    "description": ": Every primitive Pythagorean triple (a,b,c) corresponds to a Gaussian integer z = a + bi with |z|² = c². The Berggren generators act as Möbius transformations on z/|z|, lifting to SL₂(ℤ[i]).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "19523f4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:22:06.468944+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Spectral comparison",
+    "description": ": Use the Jacquet–Langlands correspondence to relate the spectrum of the Berggren Hecke operator to automorphic forms for SL₂(ℤ[i]).\n\n### Cross-Domain Connection\n\nThis connects to the **Langlands program**, one of the deepest frameworks in modern mathematics. The Berggren spectral gap would become a special case of the general principle that arithmetic groups have spectral gaps controlled by automorphic representations.\n\n---\n\n## Direction 5: Complexity-Theoretic Derandomization Corollary\n\n### Theorem Target\n\nProve that the Berggren spectral gap implies an explicit pseudorandom generator (PRG) for bounded-degree polynomial tests on Pythagorean triples, giving a formal derandomization result.\n\n### Proposed Lean Type Signature\n\n```lean\n/-- A pseudorandom generator based on Berggren dynamics. ",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "19523f4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:22:06.485182+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Expander PRG construction",
+    "description": "(Impagliazzo–Nisan–Wigderson): The spectral gap ρ = 1/2 allows constructing an ε-PRG for space-s computation using O(s + log(1/ε)) random bits from a seed that walks the Berggren expander.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "19523f4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:22:06.499349+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Direct Fourier analysis",
+    "description": ": Analyze the bias of Berggren walks on product tests using the spectral decomposition. The eigenvalue bound (1/2)^k directly translates to a fooling bound for degree-k tests.\n\n### Cross-Domain Connection\n\nThis connects to the **P vs BPP question** in computational complexity. If every problem solvable by randomized polynomial-time algorithms is also solvable deterministically, then PRGs with the right parameters must exist. The Berggren walk provides a concrete, arithmetically natural candidate.\n\n---\n\n## Direction 6: Spectral Bounds for General Thin Semigroups\n\n### Theorem Target\n\nExtend the Berggren spectral framework to arbitrary finitely generated thin subgroups of O(p,q;ℤ), establishing spectral gaps from matrix growth bounds.\n\n### Proposed Lean Type Signature\n\n```lean\n/-- A thin arit",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "19523f4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:22:06.515218+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Bourgain–Gamburd machine",
+    "description": ": Adapt the Bourgain–Gamburd spectral gap theorem (originally for SL₂(𝔽_p)) to the integer orthogonal setting, using product theorems and escape from subvarieties.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "19523f4c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:22:06.529211+00:00"
   },
   {
     "id": "seed_052",
@@ -1195,6 +1100,21 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.844636+00:00"
+  },
+  {
+    "id": "fd_0180",
+    "title": "2. Hodge Decomposition for Adversarial Inconsistency Fields",
+    "description": "**Objective**: Prove a graph-theoretic Hodge decomposition theorem for the space of 1-cochains on the activation region overlap graph, decomposing any inconsistency field into a gradient (coboundary), a curl (cocycle), and a harmonic component.\n\n**Approach**: On the complete graph $K_\\iota$ with edge weights given by overlap volumes, define the combinatorial Laplacian $\\Delta = \\delta^* \\delta + \\delta \\delta^*$ where $\\delta$ is the coboundary operator. The Hodge decomposition gives:\n$$C^1(K_\\iota, \\mathbb{R}) = \\mathrm{im}(\\delta) \\oplus \\mathrm{im}(\\delta^*) \\oplus \\ker(\\Delta)$$\n\nThe gradient component is the \"fixable\" part of margin inconsistency; the harmonic component is the irreducible topological obstruction; the curl component detects local rotation in the margin field.\n\n**Key hy",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "816ac9ca",
+    "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
     "id": "fd_0181",
@@ -1369,21 +1289,6 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Summary: Research Roadmap",
-    "description": "| Priority | Direction | Key Theorem | Dependencies |\n|----------|-----------|-------------|--------------|\n| 1 | Finite Products | `finProd_universal` | Binary product (done) |\n| 2 | Termination | `product_reduction_terminates` | Product + well-founded induction |\n| 3 | Pressure Bounds | `pressure_product_bound` | Product + real analysis |\n| 4 | Automata Sync | `product_word_bound` | Product + combinatorics |\n| 5 | Security Comp | `composed_security_bound` | Dual (min) product |\n\nEach direction builds directly on the categorical product infrastructure established in this work. The key insight is that invariant-bearing systems form a category with enough structure (products, identity, composition, associativity) to support systematic compositional reasoning across thermodynamics, automata ",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a015a16c",
-    "consumed_by_exp_id": "19523f4c",
-    "timestamp": "2026-05-15T08:01:09.762727+00:00"
   },
   {
     "id": "fd_0193",
@@ -1668,43 +1573,6 @@
     "timestamp": "2026-05-16T03:39:37.937805+00:00"
   },
   {
-    "id": "fd_0228",
-    "title": "4. Certified Tropical Polynomial Normal Form",
-    "description": "**Hypothesis:** Tropical polynomials (finite min-plus expressions with integer/rational coefficients and monomial structure) admit a computable canonical form that decides equivalence.\n\n**Proof Strategy:**\n- Define tropical monomials as `(coefficient, exponent vector)` pairs under the tropical semiring.\n- A tropical polynomial is a finite min of monomials.\n- Canonical form: sorted list of monomials with dominated monomials removed.\n- Prove that two tropical polynomials are semantically equal iff their canonical forms are equal (this is the tropical analogue of the Fundamental Theorem of Algebra for polynomials).\n\n**Cross-Domain Connection:** Tropical polynomials define piecewise-linear functions, which are the building blocks of ReLU neural networks. Canonical forms for tropical polynomial",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2cbb4165",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:39:37.949780+00:00"
-  },
-  {
-    "id": "fd_0229",
-    "title": "5. Connect Canonical Tropical Syntax to Shortest-Path Circuit Extraction",
-    "description": "**Hypothesis:** The AC canonical form for tropical expressions directly corresponds to an optimized circuit representation for shortest-path computations, enabling certified common-subexpression elimination.\n\n**Proof Strategy:**\n- Model shortest-path computations as tropical matrix expressions.\n- Show that AC normalization identifies and merges redundant sub-computations.\n- Prove that the canonical form minimizes the number of distinct subexpressions (up to AC equivalence).\n- Connect to tropical circuit complexity lower bounds.\n\n**Cross-Domain Connection:** This bridges formal verification of algorithms with tropical algebra, potentially enabling certified optimizers for dynamic programming and network routing.\n\n**Estimated Difficulty:** Medium. The circuit extraction is conceptually strai",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2cbb4165",
-    "consumed_by_exp_id": "b18b8608",
-    "timestamp": "2026-05-16T03:39:37.961155+00:00"
-  },
-  {
     "id": "fd_0235",
     "title": "Theorem Statement",
     "description": "```\ntheorem tropical_perron_frobenius {n : ℕ}\n    (W : Matrix (Fin n.succ) (Fin n.succ) ℝ) :\n    ∃ λ : ℝ, ∀ ε > 0, ∃ N : ℕ, ∀ m ≥ N, ∀ i j : Fin n.succ,\n      |tropPow W m i j / (↑(m + 1)) - λ| < ε\n```\n\nThe tropical eigenvalue λ equals the maximum cycle mean: λ = max over all simple cycles C of (weight(C) / length(C)). This determines the asymptotic growth rate of tropical powers.",
@@ -1717,42 +1585,6 @@
     "source_exp_id": "7998d3b1",
     "consumed_by_exp_id": "23a76967",
     "timestamp": "2026-05-16T04:31:45.413489+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "Cross-Domain Connection",
-    "description": "This connects to existing catalog theorems `topology_low_freq_cutoff` and `dispersion_large_ell_bound`. The spectral cutoff in those theorems separates topologically meaningful eigenvalues (near zero) from high-frequency oscillations. Spectral Morse theory makes this separation precise: below the spectral gap, you see exactly β_n harmonic modes. The formal correspondence between \"number of low eigenvalues\" and \"number of critical cells\" would bridge spectral geometry and combinatorial topology.\n\n---",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f06689b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:30:17.044621+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Direction 2: Succinct Argument Systems from Tropical Normalization",
-    "description": "**Hypothesis:** Idempotent normalization of composed tropical proof transcripts yields a succinct argument system where proof size grows logarithmically in the number of composed statements.\n\n**Theorem Target:**\n```\ntheorem tropical_succinct_argument\n  (n k : ℕ) (stmts : Fin k → TropStatement n)\n  (proofs : Fin k → TropTranscript n 1) :\n  ∃ (compressed : TropTranscript n (log₂ k)),\n    Verifiable compressed (composeAll stmts) ∧\n    size compressed ≤ C * log₂ k * n\n```\n\n**Strategy:**\n1. Define a binary tree composition of tropical transcripts.\n2. Show that at each level, idempotent normalization eliminates redundant constraints (componentwise min absorbs dominated values).\n3. Prove that after O(log k) levels of composition + normalization, the transcript has O(n · log k) effective constrain",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc933f99",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:31:54.474449+00:00"
   },
   {
     "id": "fd_0246",
@@ -1772,22 +1604,6 @@
     "source_exp_id": "cc933f99",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:31:54.490610+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Direction 5: Certified Privacy-Preserving Optimal Control via Tropical ZK",
-    "description": "**Hypothesis:** Tropical zero-knowledge protocols can certify optimality of discrete control policies without revealing the policy or the system dynamics.\n\n**Theorem Target:**\n```\ntheorem tropical_optimal_control_certification\n  (system : TropDynamicalSystem n)\n  (policy : ControlPolicy n T)\n  (hopt : IsOptimal system policy) :\n  ∃ (proof : TropTranscript n T),\n    VerifiesOptimality proof ∧\n    ZeroKnowledge proof  -- reveals nothing about system or policy\n```\n\n**Strategy:**\n1. Model discrete optimal control as tropical matrix iteration: the Bellman equation V(t) = A ⊗ V(t+1) + cost(t) is tropical-linear.\n2. The optimal value function is the tropical matrix power A^T ⊗ terminal_cost.\n3. A ZK proof of optimality commits to the value function at each time step using tropical matrix commitme",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc933f99",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:31:54.524850+00:00"
   },
   {
     "id": "fd_0250",
@@ -1851,22 +1667,6 @@
     "source_exp_id": "14514045",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:34:26.492113+00:00"
-  },
-  {
-    "id": "fd_0242",
-    "title": "5. Causal Semantics of Dependency Systems via Alexandrov Topology",
-    "description": "**Goal:** Interpret the forward cone as the Alexandrov future in a finite causal poset, and prove that the locality theorem is an instance of a general \"causal support\" principle analogous to finite-domain causality in physics and concurrency theory.\n\n**Hypothesis:** The DAG $(V, \\text{Reaches})$ is a finite causal set (a finite poset). The Alexandrov topology has open sets that are exactly the upward-closed sets. The level function is \"causal\" in the sense that $\\ell(v)$ depends only on the causal past of $v$. The locality theorem becomes: perturbations localized to the causal future of $n$ do not affect the causal complement.\n\n**Proof Strategy:**\n- Define the Alexandrov topology on the Reaches poset\n- Show that the support of the perturbation (where pred changes) is an open set\n- Prove a",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14514045",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:34:26.519818+00:00"
   },
   {
     "id": "fd_0226",

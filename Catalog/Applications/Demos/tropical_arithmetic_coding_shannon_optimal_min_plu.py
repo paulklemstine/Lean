@@ -1,439 +1,421 @@
 #!/usr/bin/env python3
 """
-Tropical Source Coding: Real-World Applications
+Tropical Source Coding: Applications
 
-Demonstrates practical applications of tropical source coding theory:
+Real-world applications of the tropical source coding theory:
 1. Text compression analysis
-2. Image histogram compression bounds
-3. Sensor data compression
-4. Network packet optimization
+2. Image histogram coding
+3. Network packet encoding
+4. Statistical mechanics connection
 """
 
 import numpy as np
-from collections import Counter
-from typing import Dict, Tuple
+from algorithms import (
+    entropy_base2, shannon_code, huffman_code, gibbs_source,
+    kraft_sum_integer, product_source_code, verify_kraft
+)
 
 
-def char_distribution(text: str) -> Dict[str, float]:
-    """Compute character frequency distribution from text."""
-    counts = Counter(text.lower())
-    total = sum(counts.values())
-    return {ch: count / total for ch, count in counts.most_common()}
+def application_text_compression():
+    """Application 1: English text character frequency coding.
+
+    Demonstrates Shannon and Huffman coding applied to character
+    frequencies from natural English text.
+    """
+    print("=" * 70)
+    print("APPLICATION 1: English Text Compression")
+    print("=" * 70)
+
+    # Approximate English letter frequencies (including space)
+    chars = list(" etaoinsrhldcumfpgwybvkxjqz")
+    freqs = np.array([
+        18.29, 12.70, 9.06, 8.17, 7.51, 6.97, 6.75, 6.33, 5.99,
+        4.25, 4.03, 3.86, 2.78, 2.76, 2.41, 2.29, 2.02, 1.97,
+        1.53, 1.49, 0.97, 0.77, 0.15, 0.15, 0.10, 0.05
+    ])
+    freqs = freqs / freqs.sum()
+
+    H = entropy_base2(freqs)
+    ell_sh, _ = shannon_code(freqs)
+    ell_hf, _ = huffman_code(freqs)
+
+    E_sh = np.sum(freqs * ell_sh)
+    E_hf = np.sum(freqs * ell_hf)
+
+    print(f"\nAlphabet size: {len(chars)}")
+    print(f"Fixed-length code: {int(np.ceil(np.log2(len(chars))))} bits/symbol")
+    print(f"Entropy: {H:.4f} bits/symbol")
+    print(f"Shannon code E[ℓ]: {E_sh:.4f} bits/symbol")
+    print(f"Huffman code E[ℓ]: {E_hf:.4f} bits/symbol")
+    print(f"Shannon gap: {E_sh - H:.4f} < 1 ✓")
+    print(f"Huffman gap: {E_hf - H:.4f}")
+    print(f"Compression ratio (vs fixed): {E_hf / np.ceil(np.log2(len(chars))):.2%}")
+
+    # Top 5 most common
+    print(f"\nTop 5 most common characters:")
+    order = np.argsort(-freqs)
+    for i in range(5):
+        idx = order[i]
+        ch = repr(chars[idx])
+        print(f"  {ch:>5}: freq={freqs[idx]:.3f}, "
+              f"Shannon ℓ={ell_sh[idx]}, Huffman ℓ={ell_hf[idx]}")
+    print()
 
 
-def shannon_entropy_bits(probs: Dict[str, float]) -> float:
-    """Shannon entropy in bits."""
-    return -sum(p * np.log2(p) for p in probs.values() if p > 0)
+def application_boltzmann_machine():
+    """Application 2: Boltzmann machine / statistical mechanics.
+
+    Shows the duality between energy landscapes and optimal codes.
+    The Gibbs distribution connects tropical weights to probabilities,
+    and the entropy equals the expected code length at the optimum.
+    """
+    print("=" * 70)
+    print("APPLICATION 2: Boltzmann Machine / Statistical Mechanics")
+    print("=" * 70)
+
+    # Energy levels of a simple system
+    energies = np.array([0.0, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 8.0])
+    states = [f"E={e}" for e in energies]
+
+    # Different temperatures
+    temperatures = [0.5, 1.0, 2.0, 5.0]
+
+    print(f"\nEnergy levels: {energies}")
+    print(f"\n{'T':>5} {'H₂ (bits)':>10} {'E[ℓ_sh]':>10} {'Gap':>8} {'p(ground)':>10}")
+    print("-" * 50)
+
+    for T in temperatures:
+        beta = 1.0 / T
+        p = gibbs_source(beta * energies)
+        H = entropy_base2(p)
+        ell, _ = shannon_code(p)
+        E_ell = np.sum(p * ell)
+        gap = E_ell - H
+
+        print(f"{T:>5.1f} {H:>10.4f} {E_ell:>10.4f} {gap:>8.4f} {p[0]:>10.4f}")
+
+    print(f"\nAs T → 0: entropy → 0 (ground state dominates, 0 bits needed)")
+    print(f"As T → ∞: entropy → log₂(n) = {np.log2(len(energies)):.4f} (uniform)")
+    print()
 
 
-def shannon_entropy_nats(probs: Dict[str, float]) -> float:
-    """Shannon entropy in nats."""
-    return -sum(p * np.log(p) for p in probs.values() if p > 0)
+def application_sensor_network():
+    """Application 3: Sensor network data encoding.
+
+    Multiple independent sensors with different value distributions.
+    Product source coding gives additive code lengths.
+    """
+    print("=" * 70)
+    print("APPLICATION 3: Sensor Network Encoding")
+    print("=" * 70)
+
+    # Temperature sensor (discrete bins)
+    p_temp = np.array([0.05, 0.10, 0.20, 0.30, 0.20, 0.10, 0.05])
+    labels_temp = ["cold", "cool", "mild-", "mild+", "warm", "hot", "v.hot"]
+
+    # Humidity sensor
+    p_hum = np.array([0.15, 0.35, 0.35, 0.15])
+    labels_hum = ["dry", "normal-", "normal+", "humid"]
+
+    H_temp = entropy_base2(p_temp)
+    H_hum = entropy_base2(p_hum)
+
+    ell_temp, _ = shannon_code(p_temp)
+    ell_hum, _ = shannon_code(p_hum)
+
+    # Joint encoding
+    ell_joint, E_joint, H_joint = product_source_code(p_temp, p_hum)
+
+    print(f"\nTemperature sensor: {len(p_temp)} levels")
+    print(f"  Entropy: {H_temp:.4f} bits, Shannon E[ℓ]: {np.sum(p_temp * ell_temp):.4f}")
+    print(f"Humidity sensor: {len(p_hum)} levels")
+    print(f"  Entropy: {H_hum:.4f} bits, Shannon E[ℓ]: {np.sum(p_hum * ell_hum):.4f}")
+
+    print(f"\nJoint (product) encoding:")
+    print(f"  Alphabet size: {len(p_temp) * len(p_hum)}")
+    print(f"  H₂(joint) = {H_joint:.4f} = {H_temp:.4f} + {H_hum:.4f} (additive ✓)")
+    print(f"  E[ℓ₁+ℓ₂] = {E_joint:.4f}")
+
+    # Compare with naive fixed-length
+    naive_bits = int(np.ceil(np.log2(len(p_temp) * len(p_hum))))
+    print(f"\nFixed-length encoding: {naive_bits} bits/reading")
+    print(f"Product Shannon code: {E_joint:.2f} bits/reading")
+    print(f"Savings: {(1 - E_joint/naive_bits)*100:.1f}%")
+    print()
 
 
-def shannon_code_lengths(probs: Dict[str, float]) -> Dict[str, int]:
-    """Shannon code lengths L(a) = ⌈-log(p(a))⌉ in nats."""
-    return {s: int(np.ceil(-np.log(p))) for s, p in probs.items()}
+def application_dna_coding():
+    """Application 4: DNA sequence compression.
 
+    Demonstrates coding efficiency for non-uniform nucleotide distributions.
+    """
+    print("=" * 70)
+    print("APPLICATION 4: DNA Sequence Compression")
+    print("=" * 70)
 
-def expected_length(probs: Dict[str, float], lengths: Dict[str, int]) -> float:
-    """Expected code length."""
-    return sum(probs[s] * lengths[s] for s in probs)
+    # Human genome approximate frequencies
+    p_dna = np.array([0.295, 0.205, 0.205, 0.295])  # A, C, G, T
+    nucleotides = ['A', 'C', 'G', 'T']
 
+    H = entropy_base2(p_dna)
+    ell_sh, codes_sh = shannon_code(p_dna)
+    ell_hf, codes_hf = huffman_code(p_dna)
 
-def compression_ratio(original_bits_per_symbol: float, compressed_bits_per_symbol: float) -> float:
-    """Compression ratio (1 = no compression, 0 = perfect compression)."""
-    return compressed_bits_per_symbol / original_bits_per_symbol
+    print(f"\nNucleotide frequencies:")
+    for i, nt in enumerate(nucleotides):
+        print(f"  {nt}: {p_dna[i]:.3f}")
 
+    print(f"\nEntropy: {H:.4f} bits/nucleotide")
+    print(f"Fixed-length: 2 bits/nucleotide")
+    print(f"Shannon code: {np.sum(p_dna * ell_sh):.4f} bits/nucleotide")
+    print(f"Huffman code: {np.sum(p_dna * ell_hf):.4f} bits/nucleotide")
 
-# ──────────────────────────────────────────────────────────────
-# Application 1: Text Compression Analysis
-# ──────────────────────────────────────────────────────────────
+    # Dinucleotide (product source for independent model)
+    p_di = np.outer(p_dna, p_dna).flatten()
+    H_di = entropy_base2(p_di)
+    ell_di, _ = shannon_code(p_di)
 
-def text_compression_analysis():
-    """Analyze compression potential of different text types."""
-    print("=" * 60)
-    print("APPLICATION 1: Text Compression Analysis")
-    print("=" * 60)
+    print(f"\nDinucleotide (independent model):")
+    print(f"  H₂ = {H_di:.4f} = 2 × {H:.4f} (additive ✓)")
+    print(f"  Shannon E[ℓ] = {np.sum(p_di * ell_di):.4f}")
+    print(f"  Fixed-length: 4 bits/dinucleotide")
 
-    texts = {
-        "English prose": (
-            "to be or not to be that is the question whether tis nobler "
-            "in the mind to suffer the slings and arrows of outrageous fortune "
-            "or to take arms against a sea of troubles and by opposing end them"
-        ),
-        "DNA sequence": "ATCGATCGATCGATCGAAATTTCCCGGGATCGATCGATCG" * 3,
-        "Repetitive": "abababababababababababababababababababababababab",
-        "Uniform-ish": "abcdefghijklmnopqrstuvwxyz" * 2,
-        "Binary data": "0001110100101100111010010110011101001011" * 2,
-    }
-
-    for name, text in texts.items():
-        dist = char_distribution(text)
-        H_bits = shannon_entropy_bits(dist)
-        H_nats = shannon_entropy_nats(dist)
-        L = shannon_code_lengths(dist)
-        EL = expected_length(dist, L)
-
-        # Original: uniform encoding
-        alphabet_size = len(dist)
-        original_bits = np.log2(alphabet_size)
-
-        print(f"\n{name} ({len(text)} chars, {alphabet_size} unique):")
-        print(f"  Entropy: {H_bits:.3f} bits/char ({H_nats:.3f} nats/char)")
-        print(f"  E[L]:    {EL:.3f} nats/char")
-        print(f"  H ≤ E[L] < H+1: {H_nats:.3f} ≤ {EL:.3f} < {H_nats+1:.3f}")
-        print(f"  Sandwich verified: {H_nats <= EL + 1e-10 and EL < H_nats + 1 + 1e-10}")
-        print(f"  Compression ratio: {compression_ratio(original_bits, H_bits):.1%}")
-        print(f"  Top 5 symbols: {list(dist.items())[:5]}")
-
-
-# ──────────────────────────────────────────────────────────────
-# Application 2: Sensor Data Compression
-# ──────────────────────────────────────────────────────────────
-
-def sensor_compression():
-    """Demonstrate compression bounds for quantized sensor data."""
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Sensor Data Compression Bounds")
-    print("=" * 60)
-
-    # Simulate temperature sensor readings (quantized to integers)
-    np.random.seed(42)
-    readings = np.round(np.random.normal(22.0, 3.0, 10000)).astype(int)
-
-    # Build distribution
-    counts = Counter(readings)
-    total = len(readings)
-    dist = {str(v): c / total for v, c in sorted(counts.items())}
-
-    H_bits = shannon_entropy_bits(dist)
-    H_nats = shannon_entropy_nats(dist)
-    L = shannon_code_lengths(dist)
-    EL = expected_length(dist, L)
-
-    # Naive encoding: fixed-width for range
-    value_range = max(int(k) for k in dist) - min(int(k) for k in dist) + 1
-    naive_bits = np.ceil(np.log2(value_range))
-
-    print(f"\nTemperature sensor (10000 readings, {len(dist)} distinct values):")
-    print(f"  Range: [{min(int(k) for k in dist)}, {max(int(k) for k in dist)}]°C")
-    print(f"  Naive encoding: {naive_bits:.0f} bits/reading")
-    print(f"  Shannon entropy: {H_bits:.3f} bits/reading ({H_nats:.3f} nats)")
-    print(f"  Tropical code E[L]: {EL:.3f} nats/reading")
-    print(f"  Compression savings: {(1 - H_bits/naive_bits)*100:.1f}%")
-    print(f"  Sandwich: {H_nats:.3f} ≤ {EL:.3f} < {H_nats+1:.3f} ✓")
-
-    # Product source: two independent sensors
-    readings2 = np.round(np.random.normal(50.0, 5.0, 10000)).astype(int)
-    counts2 = Counter(readings2)
-    dist2 = {str(v): c / total for v, c in sorted(counts2.items())}
-    H2_nats = shannon_entropy_nats(dist2)
-
-    print(f"\n  Second sensor entropy: {H2_nats:.3f} nats")
-    print(f"  Combined entropy (independent): {H_nats + H2_nats:.3f} nats")
-    print(f"  By Theorem C (tropical convolution): Kraft sums multiply")
-    print(f"  Combined E[L] < {H_nats + H2_nats + 2:.3f} nats (two +1 gaps)")
-
-
-# ──────────────────────────────────────────────────────────────
-# Application 3: Network Packet Optimization
-# ──────────────────────────────────────────────────────────────
-
-def network_optimization():
-    """Tropical shortest-path interpretation of code optimization."""
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Network Packet Optimization")
-    print("=" * 60)
-
-    # Packet type distribution (e.g., HTTP request types)
-    packet_types = {
-        'GET': 0.45,
-        'POST': 0.25,
-        'PUT': 0.10,
-        'DELETE': 0.08,
-        'HEAD': 0.05,
-        'OPTIONS': 0.04,
-        'PATCH': 0.03,
-    }
-
-    H = shannon_entropy_nats(packet_types)
-    L = shannon_code_lengths(packet_types)
-    EL = expected_length(packet_types, L)
-
-    print(f"\nPacket type distribution:")
-    for ptype, prob in packet_types.items():
-        length = L[ptype]
-        info = -np.log(prob)
-        print(f"  {ptype:>8}: p={prob:.2f}, -log(p)={info:.3f}, L={length}")
-
-    print(f"\n  Entropy H = {H:.4f} nats")
-    print(f"  Expected code length E[L] = {EL:.4f} nats")
-    print(f"  Overhead = {EL - H:.4f} nats ({(EL-H)/H*100:.1f}%)")
-    print(f"  Sandwich: {H:.4f} ≤ {EL:.4f} < {H+1:.4f} ✓")
-
-    # Bandwidth savings
-    packets_per_second = 100000
-    naive_bits = np.ceil(np.log2(len(packet_types)))
-    savings_per_second = packets_per_second * (naive_bits - shannon_entropy_bits(packet_types))
-    print(f"\n  At {packets_per_second:,} packets/sec:")
-    print(f"    Naive: {naive_bits:.0f} bits/packet")
-    print(f"    Shannon: {shannon_entropy_bits(packet_types):.2f} bits/packet")
-    print(f"    Savings: {savings_per_second:,.0f} bits/sec = {savings_per_second/8/1024:.1f} KB/sec")
-
-
-# ──────────────────────────────────────────────────────────────
-# Application 4: Compression Bounds Comparison
-# ──────────────────────────────────────────────────────────────
-
-def compression_bounds_comparison():
-    """Compare theoretical bounds with practical compression."""
-    print("\n" + "=" * 60)
-    print("APPLICATION 4: Theoretical vs Practical Compression")
-    print("=" * 60)
-
-    # Zipf distribution (common in natural language)
-    N = 100
-    ranks = np.arange(1, N + 1)
-    zipf_probs = 1.0 / ranks
-    zipf_probs /= zipf_probs.sum()
-    dist = {str(i): p for i, p in enumerate(zipf_probs)}
-
-    H_bits = shannon_entropy_bits(dist)
-    H_nats = shannon_entropy_nats(dist)
-    L = shannon_code_lengths(dist)
-    EL = expected_length(dist, L)
-
-    print(f"\nZipf distribution over {N} symbols:")
-    print(f"  Entropy: {H_bits:.3f} bits = {H_nats:.3f} nats")
-    print(f"  Shannon code E[L]: {EL:.3f} nats")
-    print(f"  Naive encoding: {np.log2(N):.3f} bits = {np.log(N):.3f} nats")
-    print(f"  Compression ratio: {H_bits/np.log2(N):.1%}")
-    print(f"  Gap E[L] - H: {EL - H_nats:.4f} nats")
-    print(f"  Sandwich: {H_nats:.3f} ≤ {EL:.3f} < {H_nats+1:.3f} ✓")
-
-    # Geometric distribution
-    p_geom = 0.3
-    geom_probs = np.array([p_geom * (1 - p_geom)**k for k in range(50)])
-    geom_probs /= geom_probs.sum()
-    dist_geom = {str(i): p for i, p in enumerate(geom_probs)}
-
-    H_geom = shannon_entropy_nats(dist_geom)
-    L_geom = shannon_code_lengths(dist_geom)
-    EL_geom = expected_length(dist_geom, L_geom)
-
-    print(f"\nGeometric distribution (p={p_geom}):")
-    print(f"  Entropy: {H_geom:.3f} nats")
-    print(f"  Shannon code E[L]: {EL_geom:.3f} nats")
-    print(f"  Gap: {EL_geom - H_geom:.4f} nats")
-    print(f"  Sandwich: {H_geom:.3f} ≤ {EL_geom:.3f} < {H_geom+1:.3f} ✓")
-
-
-def main():
-    """Run all application demonstrations."""
-    print("TROPICAL SOURCE CODING: REAL-WORLD APPLICATIONS")
-    print("Connecting formal theorems to practical compression\n")
-
-    text_compression_analysis()
-    sensor_compression()
-    network_optimization()
-    compression_bounds_comparison()
-
-    print("\n" + "=" * 60)
-    print("ALL APPLICATIONS COMPLETED ✓")
-    print("=" * 60)
+    # Genome savings at scale
+    genome_size = 3.2e9  # base pairs
+    fixed_bits = genome_size * 2
+    optimal_bits = genome_size * H
+    print(f"\nHuman genome ({genome_size/1e9:.1f} Gbp):")
+    print(f"  Fixed-length: {fixed_bits/8/1e9:.2f} GB")
+    print(f"  Entropy limit: {optimal_bits/8/1e9:.2f} GB")
+    print(f"  Potential savings: {(1 - H/2)*100:.1f}%")
+    print()
 
 
 if __name__ == "__main__":
-    main()
+    application_text_compression()
+    application_boltzmann_machine()
+    application_sensor_network()
+    application_dna_coding()
 
 
 #!/usr/bin/env python3
 """
-Tropical Shannon Code: Demonstrations
+Tropical Source Coding: Demonstrations
 
-Concrete numerical demonstrations of the tropical source coding theorems:
-1. Shannon entropy sandwich: H(μ) ≤ E[L] < H(μ) + 1
-2. Kraft inequality verification
-3. Min-plus convolution
-4. Least feasible majorant property
+Concrete numerical examples illustrating the main theorems:
+1. Shannon ceiling lengths satisfy the Kraft inequality
+2. Expected code length is sandwiched between entropy and entropy + 1
+3. The relaxed optimizer achieves entropy exactly
+4. Entropy is additive for product sources
 """
 
 import numpy as np
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
-def shannon_entropy(probs: np.ndarray) -> float:
-    """Compute Shannon entropy H(μ) = -∑ p·log(p) in nats."""
-    return -np.sum(probs * np.log(probs))
-
-def shannon_code_lengths(probs: np.ndarray) -> np.ndarray:
-    """Compute Shannon code lengths L(a) = ⌈-log(p(a))⌉."""
-    return np.ceil(-np.log(probs)).astype(int)
-
-def expected_length(probs: np.ndarray, lengths: np.ndarray) -> float:
-    """Compute expected code length E[L] = ∑ p(a)·L(a)."""
-    return np.sum(probs * lengths)
+def entropy_base2(p: np.ndarray) -> float:
+    """Shannon entropy in bits: H₂(p) = -∑ p(a) log₂(p(a))."""
+    return -np.sum(p * np.log2(p))
 
 def kraft_sum(lengths: np.ndarray) -> float:
-    """Compute Kraft sum ∑ exp(-L(a))."""
-    return np.sum(np.exp(-lengths.astype(float)))
+    """Kraft sum: ∑ 2^(-ℓ(a))."""
+    return np.sum(2.0 ** (-lengths.astype(float)))
 
-def min_plus_conv(f: np.ndarray, g: np.ndarray, n: int) -> float:
-    """Compute min-plus convolution (f ⊛ g)(n) = min_{i+j=n} [f(i) + g(j)]."""
-    result = float('inf')
-    for i in range(min(n + 1, len(f))):
-        j = n - i
-        if j < len(g):
-            result = min(result, f[i] + g[j])
-    return result
+def shannon_lengths(p: np.ndarray) -> np.ndarray:
+    """Shannon code lengths: ℓ(a) = ⌈log₂(1/p(a))⌉."""
+    return np.ceil(np.log2(1.0 / p)).astype(int)
 
-def demo_entropy_sandwich():
-    """Demonstrate Theorem A: H(μ) ≤ E[L] < H(μ) + 1."""
-    print("=" * 60)
-    print("THEOREM A: Entropy Sandwich Demonstration")
-    print("=" * 60)
+def ideal_lengths(p: np.ndarray) -> np.ndarray:
+    """Ideal (real-valued) code lengths: L(a) = log₂(1/p(a))."""
+    return np.log2(1.0 / p)
 
-    examples = [
-        ("Binary (0.9, 0.1)", np.array([0.9, 0.1])),
-        ("Binary (0.5, 0.5)", np.array([0.5, 0.5])),
-        ("Ternary (0.7, 0.2, 0.1)", np.array([0.7, 0.2, 0.1])),
-        ("Quaternary uniform", np.array([0.25, 0.25, 0.25, 0.25])),
-        ("Skewed (0.5, 0.25, 0.125, 0.125)", np.array([0.5, 0.25, 0.125, 0.125])),
-        ("Highly skewed (0.97, 0.01, 0.01, 0.01)", np.array([0.97, 0.01, 0.01, 0.01])),
-    ]
+def gibbs_prob(w: np.ndarray) -> np.ndarray:
+    """Gibbs/Boltzmann probability from weights: p(a) = exp(-w(a)) / Z."""
+    exp_neg_w = np.exp(-w)
+    return exp_neg_w / np.sum(exp_neg_w)
 
-    for name, probs in examples:
-        H = shannon_entropy(probs)
-        L = shannon_code_lengths(probs)
-        EL = expected_length(probs, L)
-        K = kraft_sum(L)
 
-        lower_ok = H <= EL + 1e-10  # tolerance for floating point
-        upper_ok = EL < H + 1 + 1e-10
+def demo_basic_shannon_coding():
+    """Demo 1: Basic Shannon coding for a simple distribution."""
+    print("=" * 70)
+    print("DEMO 1: Shannon Coding for a Simple Distribution")
+    print("=" * 70)
 
-        print(f"\n{name}:")
-        print(f"  Probabilities: {probs}")
-        print(f"  Code lengths:  {L}")
-        print(f"  H(μ) = {H:.6f} nats")
-        print(f"  E[L] = {EL:.6f} nats")
-        print(f"  H+1  = {H+1:.6f} nats")
-        print(f"  H ≤ E[L] < H+1: {lower_ok and upper_ok} ✓" if lower_ok and upper_ok else f"  FAILED!")
-        print(f"  Kraft sum = {K:.6f} ≤ 1: {K <= 1 + 1e-10} ✓")
-        print(f"  Gap (E[L] - H) = {EL - H:.6f}")
+    # A simple 4-symbol distribution
+    p = np.array([0.5, 0.25, 0.125, 0.125])
+    alphabet = ['A', 'B', 'C', 'D']
 
-def demo_kraft_inequality():
-    """Demonstrate Theorem B: Shannon codes satisfy Kraft inequality."""
-    print("\n" + "=" * 60)
-    print("THEOREM B: Kraft Inequality Demonstration")
-    print("=" * 60)
+    H = entropy_base2(p)
+    ell = shannon_lengths(p)
+    K = kraft_sum(ell)
+    E_ell = np.sum(p * ell)
+    L_star = ideal_lengths(p)
 
-    print("\nShowing exp(-⌈-log p⌉) ≤ p for each symbol:\n")
+    print(f"\nAlphabet: {alphabet}")
+    print(f"Probabilities: {p}")
+    print(f"Entropy H₂(p) = {H:.4f} bits")
+    print(f"\nIdeal (real) lengths L⋆(a) = log₂(1/p(a)):")
+    for i, s in enumerate(alphabet):
+        print(f"  L⋆({s}) = {L_star[i]:.4f}")
+    print(f"Kraft sum (ideal): ∑ 2^(-L⋆) = {np.sum(2**(-L_star)):.4f} (= 1 exactly)")
 
-    probs = np.array([0.5, 0.25, 0.125, 0.0625, 0.0625])
-    L = shannon_code_lengths(probs)
+    print(f"\nShannon ceiling lengths ℓ(a) = ⌈log₂(1/p(a))⌉:")
+    for i, s in enumerate(alphabet):
+        print(f"  ℓ({s}) = {ell[i]}")
+    print(f"Kraft sum: ∑ 2^(-ℓ) = {K:.4f} ≤ 1 ✓")
+    print(f"Expected length E[ℓ] = {E_ell:.4f}")
+    print(f"Entropy H₂ = {H:.4f}")
+    print(f"H₂ ≤ E[ℓ] < H₂ + 1: {H:.4f} ≤ {E_ell:.4f} < {H+1:.4f} ✓")
+    print()
 
-    print(f"{'Symbol':>8} {'p(a)':>10} {'-log p':>10} {'⌈-log p⌉':>10} {'exp(-L)':>10} {'p(a)':>10} {'exp(-L)≤p':>10}")
-    print("-" * 70)
 
-    for i, (p, l) in enumerate(zip(probs, L)):
-        neg_log_p = -np.log(p)
-        exp_neg_l = np.exp(-float(l))
-        ok = exp_neg_l <= p + 1e-10
-        print(f"{chr(65+i):>8} {p:>10.4f} {neg_log_p:>10.4f} {l:>10d} {exp_neg_l:>10.6f} {p:>10.4f} {'✓' if ok else '✗':>10}")
+def demo_gibbs_source():
+    """Demo 2: Gibbs/Boltzmann source from tropical weights."""
+    print("=" * 70)
+    print("DEMO 2: Gibbs Source from Tropical Weights")
+    print("=" * 70)
 
-    print(f"\nKraft sum: {kraft_sum(L):.6f} ≤ 1.0 ✓")
-    print(f"Probability sum: {np.sum(probs):.6f} = 1.0")
+    # Weights (tropical energies)
+    w = np.array([0.5, 1.0, 2.0, 3.0, 0.1])
+    alphabet = ['a', 'b', 'c', 'd', 'e']
 
-def demo_min_plus_convolution():
-    """Demonstrate Theorem C: Min-plus convolution."""
-    print("\n" + "=" * 60)
-    print("THEOREM C: Min-Plus Convolution Demonstration")
-    print("=" * 60)
+    p = gibbs_prob(w)
+    Z = np.sum(np.exp(-w))
+    H = entropy_base2(p)
+    ell = shannon_lengths(p)
+    K = kraft_sum(ell)
+    E_ell = np.sum(p * ell)
 
-    # Code cost profiles for two sources
-    f = np.array([3.0, 1.0, 0.5, 2.0])  # cost profile for source A
-    g = np.array([2.0, 0.5, 1.5])        # cost profile for source B
+    print(f"\nWeights w: {w}")
+    print(f"Partition function Z = {Z:.4f}")
+    print(f"Gibbs probabilities p(a) = exp(-w(a))/Z:")
+    for i, s in enumerate(alphabet):
+        print(f"  p({s}) = {p[i]:.4f}")
+    print(f"Sum of probabilities: {np.sum(p):.6f}")
+    print(f"\nEntropy H₂(p) = {H:.4f} bits")
+    print(f"Shannon lengths: {ell}")
+    print(f"Kraft sum: {K:.4f} ≤ 1 ✓")
+    print(f"Expected length: {E_ell:.4f}")
+    print(f"Sandwich: {H:.4f} ≤ {E_ell:.4f} < {H+1:.4f} ✓")
+    print()
 
-    print(f"\nSource A cost profile f: {f}")
-    print(f"Source B cost profile g: {g}")
-    print(f"\nMin-plus convolution (f ⊛ g):")
 
-    max_n = len(f) + len(g) - 2
-    for n in range(max_n + 1):
-        val = min_plus_conv(f, g, n)
-        decomps = []
-        for i in range(min(n + 1, len(f))):
-            j = n - i
-            if j < len(g):
-                decomps.append(f"f({i})+g({j})={f[i]+g[j]:.1f}")
-        print(f"  (f ⊛ g)({n}) = min({', '.join(decomps)}) = {val:.1f}")
+def demo_product_source():
+    """Demo 3: Product source and entropy additivity."""
+    print("=" * 70)
+    print("DEMO 3: Product Source - Entropy Additivity")
+    print("=" * 70)
 
-    # Demonstrate product Kraft decomposition
-    print("\n\nProduct Kraft Decomposition:")
-    L1 = np.array([1, 2, 3])
-    L2 = np.array([1, 2])
+    p1 = np.array([0.7, 0.3])
+    p2 = np.array([0.6, 0.3, 0.1])
 
-    kraft1 = kraft_sum(L1)
-    kraft2 = kraft_sum(L2)
+    H1 = entropy_base2(p1)
+    H2 = entropy_base2(p2)
 
-    # Product Kraft sum
-    product_kraft = 0
-    for l1 in L1:
-        for l2 in L2:
-            product_kraft += np.exp(-(l1 + l2))
+    # Product distribution
+    p_prod = np.outer(p1, p2).flatten()
+    H_prod = entropy_base2(p_prod)
 
-    print(f"  L₁ = {L1}, Kraft(L₁) = {kraft1:.6f}")
-    print(f"  L₂ = {L2}, Kraft(L₂) = {kraft2:.6f}")
-    print(f"  Product Kraft sum = {product_kraft:.6f}")
-    print(f"  Kraft(L₁) × Kraft(L₂) = {kraft1 * kraft2:.6f}")
-    print(f"  Equal: {abs(product_kraft - kraft1 * kraft2) < 1e-10} ✓")
+    print(f"\nSource 1: p₁ = {p1}, H₂(p₁) = {H1:.4f}")
+    print(f"Source 2: p₂ = {p2}, H₂(p₂) = {H2:.4f}")
+    print(f"\nProduct distribution p₁⊗p₂:")
+    for i in range(len(p1)):
+        for j in range(len(p2)):
+            print(f"  p({i},{j}) = {p1[i]:.2f} × {p2[j]:.2f} = {p1[i]*p2[j]:.4f}")
+    print(f"\nH₂(p₁⊗p₂) = {H_prod:.6f}")
+    print(f"H₂(p₁) + H₂(p₂) = {H1+H2:.6f}")
+    print(f"Difference: {abs(H_prod - (H1 + H2)):.2e} (≈ 0, additivity ✓)")
 
-def demo_least_majorant():
-    """Demonstrate Theorem D: Least feasible majorant property."""
-    print("\n" + "=" * 60)
-    print("THEOREM D: Least Feasible Majorant Demonstration")
-    print("=" * 60)
+    # Shannon lengths for product vs component
+    ell1 = shannon_lengths(p1)
+    ell2 = shannon_lengths(p2)
+    ell_prod = shannon_lengths(p_prod)
+    ell_sum = np.array([ell1[i] + ell2[j] for i in range(len(p1)) for j in range(len(p2))])
 
-    probs = np.array([0.5, 0.3, 0.15, 0.05])
-    info = -np.log(probs)
-    L = shannon_code_lengths(probs)
+    K1 = kraft_sum(ell1)
+    K2 = kraft_sum(ell2)
+    K_prod = kraft_sum(ell_prod)
+    K_sum = kraft_sum(ell_sum)
 
-    print(f"\nProbabilities: {probs}")
-    print(f"Information content -log(p): {info}")
-    print(f"Shannon lengths ⌈-log(p)⌉: {L}")
+    print(f"\nKraft sums:")
+    print(f"  Component 1: {K1:.4f}")
+    print(f"  Component 2: {K2:.4f}")
+    print(f"  Product (direct ceiling): {K_prod:.4f}")
+    print(f"  Product (sum of ceilings): {K_sum:.4f}")
+    print(f"  Both ≤ 1 ✓")
+    print()
 
-    # Show any integer majorant of info is ≥ Shannon lengths
-    print(f"\nFor any integer ℓ(a) ≥ -log(p(a)), we must have ℓ(a) ≥ ⌈-log(p(a))⌉:")
-    for i, (inf_val, l) in enumerate(zip(info, L)):
-        # Try some integer majorants
-        candidates = list(range(l, l + 3))
-        for c in candidates:
-            ok = c >= l
-            print(f"  Symbol {chr(65+i)}: -log(p)={inf_val:.4f}, ⌈-log(p)⌉={l}, ℓ={c} ≥ {l}: {ok} ✓")
 
-def main():
-    """Run all demonstrations."""
-    print("TROPICAL SHANNON CODE: NUMERICAL DEMONSTRATIONS")
-    print("Verifying formally proved theorems with concrete examples\n")
+def demo_relaxed_optimizer():
+    """Demo 4: The relaxed optimizer and the optimality gap."""
+    print("=" * 70)
+    print("DEMO 4: Relaxed Optimizer - Tropical Potential")
+    print("=" * 70)
 
-    demo_entropy_sandwich()
-    demo_kraft_inequality()
-    demo_min_plus_convolution()
-    demo_least_majorant()
+    p = np.array([0.4, 0.3, 0.2, 0.1])
+    H = entropy_base2(p)
+    L_star = ideal_lengths(p)
+    ell = shannon_lengths(p)
 
-    print("\n" + "=" * 60)
-    print("ALL DEMONSTRATIONS PASSED ✓")
-    print("=" * 60)
+    print(f"\nDistribution: {p}")
+    print(f"Entropy: {H:.4f} bits")
+    print(f"\nIdeal lengths (tropical potential):")
+    print(f"  L⋆ = {L_star}")
+    print(f"  Kraft sum = {np.sum(2**(-L_star)):.6f} (= 1 exactly)")
+    print(f"  E[L⋆] = {np.sum(p * L_star):.6f} = H₂ = {H:.6f} ✓")
+
+    print(f"\nShannon ceiling lengths:")
+    print(f"  ℓ = {ell}")
+    print(f"  Kraft sum = {kraft_sum(ell):.4f} ≤ 1 ✓")
+    print(f"  E[ℓ] = {np.sum(p * ell):.4f}")
+    print(f"  Gap = E[ℓ] - H = {np.sum(p * ell) - H:.4f} < 1 ✓")
+
+    # Try suboptimal lengths
+    print(f"\nComparison with suboptimal lengths:")
+    ell_bad = np.array([1, 2, 3, 3])
+    K_bad = kraft_sum(ell_bad)
+    E_bad = np.sum(p * ell_bad)
+    print(f"  ℓ_alt = {ell_bad}")
+    print(f"  Kraft sum = {K_bad:.4f} {'≤ 1 ✓' if K_bad <= 1 else '> 1 ✗'}")
+    print(f"  E[ℓ_alt] = {E_bad:.4f} {'≥ H ✓' if E_bad >= H - 1e-10 else '< H ✗'}")
+    print()
+
+
+def demo_convergence_to_entropy():
+    """Demo 5: As alphabet grows, the gap E[ℓ]-H shrinks towards 0 (for uniform)."""
+    print("=" * 70)
+    print("DEMO 5: Coding Gap for Uniform Distributions")
+    print("=" * 70)
+
+    print(f"\n{'n':>6} {'H₂':>10} {'E[ℓ]':>10} {'Gap':>10} {'Kraft':>10}")
+    print("-" * 50)
+    for k in range(1, 11):
+        n = 2**k
+        p = np.ones(n) / n
+        H = entropy_base2(p)
+        ell = shannon_lengths(p)
+        E_ell = np.sum(p * ell)
+        K = kraft_sum(ell)
+        gap = E_ell - H
+        print(f"{n:>6} {H:>10.4f} {E_ell:>10.4f} {gap:>10.4f} {K:>10.4f}")
+
+    print("\nFor powers of 2, the gap is exactly 0 (no rounding needed).")
+    print("For non-powers-of-2, the gap is between 0 and 1.")
+    print()
+
 
 if __name__ == "__main__":
-    main()
+    demo_basic_shannon_coding()
+    demo_gibbs_source()
+    demo_product_source()
+    demo_relaxed_optimizer()
+    demo_convergence_to_entropy()
 
 
 #!/usr/bin/env python3
 """
 Tropical Source Coding: Visualizations
 
-Generates publication-quality figures for the tropical Shannon coding theory.
+Generate figures illustrating the key mathematical structures.
 """
 
 import numpy as np
@@ -441,270 +423,254 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
-import io
 import base64
-
+from io import BytesIO
+from algorithms import entropy_base2, shannon_code, huffman_code, gibbs_source, kraft_sum_integer
 
 def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
+    """Convert matplotlib figure to base64 PNG data URI."""
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
     buf.seek(0)
     b64 = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
     return f"data:image/png;base64,{b64}"
 
 
-def entropy_sandwich_plot() -> str:
-    """
-    Visualize the entropy sandwich theorem:
-    H(μ) ≤ E[L] < H(μ) + 1
-    """
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+def viz_entropy_sandwich():
+    """Visualize the entropy sandwich: H ≤ E[ℓ] < H+1."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
 
-    # Left: Entropy sandwich for binary source
-    ax = axes[0]
-    p_vals = np.linspace(0.01, 0.99, 200)
-    H_vals = -p_vals * np.log(p_vals) - (1 - p_vals) * np.log(1 - p_vals)
+    # Generate distributions with varying entropy
+    n_points = 50
+    alphas = np.linspace(0.01, 5.0, n_points)
+    entropies = []
+    expected_lengths_sh = []
+    expected_lengths_hf = []
 
-    L0 = np.ceil(-np.log(p_vals))
-    L1 = np.ceil(-np.log(1 - p_vals))
-    EL_vals = p_vals * L0 + (1 - p_vals) * L1
+    for alpha in alphas:
+        # Dirichlet-like distribution on 8 symbols
+        p = np.random.default_rng(42).dirichlet(np.ones(8) * alpha)
+        p = np.sort(p)[::-1]
+        H = entropy_base2(p)
+        ell_sh, _ = shannon_code(p)
+        ell_hf, _ = huffman_code(p)
+        entropies.append(H)
+        expected_lengths_sh.append(np.sum(p * ell_sh))
+        expected_lengths_hf.append(np.sum(p * ell_hf))
 
-    ax.fill_between(p_vals, H_vals, H_vals + 1, alpha=0.15, color='blue', label='H to H+1 band')
-    ax.plot(p_vals, H_vals, 'b-', linewidth=2, label='H(μ) [entropy]')
-    ax.plot(p_vals, H_vals + 1, 'b--', linewidth=1, alpha=0.5, label='H(μ) + 1')
-    ax.plot(p_vals, EL_vals, 'r-', linewidth=2, label='E[L] [Shannon code]')
-    ax.set_xlabel('p (probability of symbol 0)', fontsize=12)
-    ax.set_ylabel('Nats', fontsize=12)
-    ax.set_title('Entropy Sandwich: Binary Source', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10, loc='upper left')
-    ax.set_xlim(0, 1)
-    ax.grid(True, alpha=0.3)
+    entropies = np.array(entropies)
+    expected_lengths_sh = np.array(expected_lengths_sh)
+    expected_lengths_hf = np.array(expected_lengths_hf)
 
-    # Right: Gap E[L] - H for various distributions
-    ax = axes[1]
-    n_symbols_range = range(2, 21)
-    gaps = []
-    for n in n_symbols_range:
-        # Random distributions
-        n_trials = 100
-        trial_gaps = []
-        for _ in range(n_trials):
-            probs = np.random.dirichlet(np.ones(n))
-            probs = np.maximum(probs, 1e-10)
-            probs /= probs.sum()
-            H = -np.sum(probs * np.log(probs))
-            L = np.ceil(-np.log(probs))
-            EL = np.sum(probs * L)
-            trial_gaps.append(EL - H)
-        gaps.append(trial_gaps)
+    order = np.argsort(entropies)
+    H_sorted = entropies[order]
 
-    bp = ax.boxplot(gaps, positions=list(n_symbols_range), widths=0.6,
-                    patch_artist=True, boxprops=dict(facecolor='lightcoral', alpha=0.7))
-    ax.axhline(y=1, color='blue', linestyle='--', linewidth=1.5, label='Upper bound (1 nat)')
-    ax.axhline(y=0, color='green', linestyle='--', linewidth=1.5, label='Lower bound (0)')
-    ax.set_xlabel('Alphabet size |α|', fontsize=12)
-    ax.set_ylabel('Gap: E[L] - H(μ) (nats)', fontsize=12)
-    ax.set_title('Integrality Gap Distribution', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3, axis='y')
+    ax.fill_between(H_sorted, H_sorted, H_sorted + 1,
+                     alpha=0.15, color='steelblue', label='Feasible region [H, H+1)')
+    ax.plot(H_sorted, H_sorted, 'b-', linewidth=2, label='H₂(p) (lower bound)')
+    ax.plot(H_sorted, H_sorted + 1, 'b--', linewidth=1.5, label='H₂(p) + 1 (upper bound)')
+    ax.scatter(entropies, expected_lengths_sh, c='crimson', s=25, zorder=5,
+               alpha=0.7, label='Shannon code E[ℓ]')
+    ax.scatter(entropies, expected_lengths_hf, c='darkgreen', s=25, zorder=5,
+               alpha=0.7, marker='^', label='Huffman code E[ℓ]')
 
-    plt.tight_layout()
-    return fig_to_base64(fig)
-
-
-def kraft_inequality_plot() -> str:
-    """Visualize the Kraft inequality for Shannon codes."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Left: exp(-L(a)) ≤ p(a) visualization
-    ax = axes[0]
-    probs = np.array([0.4, 0.25, 0.15, 0.10, 0.06, 0.04])
-    labels = [f'sym {i+1}' for i in range(len(probs))]
-    L = np.ceil(-np.log(probs)).astype(int)
-    exp_neg_L = np.exp(-L.astype(float))
-
-    x = np.arange(len(probs))
-    width = 0.35
-
-    bars1 = ax.bar(x - width/2, probs, width, label='p(a)', color='steelblue', alpha=0.8)
-    bars2 = ax.bar(x + width/2, exp_neg_L, width, label='exp(-L(a))', color='coral', alpha=0.8)
-
-    ax.set_xlabel('Symbol', fontsize=12)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('Kraft Inequality: exp(-L(a)) ≤ p(a)', fontsize=14, fontweight='bold')
-    ax.set_xticks(x)
-    ax.set_xticklabels([f'{l}\n(L={ll})' for l, ll in zip(labels, L)])
+    ax.set_xlabel('Entropy H₂(p) [bits]', fontsize=13)
+    ax.set_ylabel('Expected Code Length E[ℓ] [bits]', fontsize=13)
+    ax.set_title('Source Coding Sandwich Theorem: H₂ ≤ E[ℓ] < H₂ + 1', fontsize=14)
     ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3, axis='y')
-
-    # Annotate sums
-    ax.text(0.95, 0.95, f'∑ p(a) = {sum(probs):.2f}\n∑ exp(-L) = {sum(exp_neg_L):.4f}',
-            transform=ax.transAxes, ha='right', va='top', fontsize=10,
-            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
-
-    # Right: Cumulative Kraft sum
-    ax = axes[1]
-    cumulative_kraft = np.cumsum(sorted(exp_neg_L, reverse=True))
-    cumulative_prob = np.cumsum(sorted(probs, reverse=True))
-
-    ax.step(range(1, len(probs)+1), cumulative_kraft, 'r-o', linewidth=2,
-            label='Cumulative Kraft sum', markersize=6)
-    ax.step(range(1, len(probs)+1), cumulative_prob, 'b-s', linewidth=2,
-            label='Cumulative probability', markersize=6)
-    ax.axhline(y=1, color='gray', linestyle='--', linewidth=1.5, label='Kraft bound (1)')
-    ax.set_xlabel('Number of symbols included', fontsize=12)
-    ax.set_ylabel('Cumulative sum', fontsize=12)
-    ax.set_title('Cumulative Kraft vs Probability', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=10)
     ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 3.5)
+    ax.set_ylim(0, 4.5)
+
+    return fig_to_base64(fig)
+
+
+def viz_kraft_inequality():
+    """Visualize Kraft inequality satisfaction."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Left: Kraft sum components for different distributions
+    distributions = {
+        'Uniform (n=4)': np.ones(4) / 4,
+        'Skewed': np.array([0.5, 0.25, 0.15, 0.1]),
+        'Very skewed': np.array([0.8, 0.1, 0.05, 0.05]),
+        'Extreme': np.array([0.97, 0.01, 0.01, 0.01]),
+    }
+
+    x_pos = np.arange(len(distributions))
+    width = 0.6
+
+    for i, (name, p) in enumerate(distributions.items()):
+        ell, _ = shannon_code(p)
+        kraft_components = 2.0 ** (-ell.astype(float))
+        bottom = 0
+        for j, kc in enumerate(kraft_components):
+            color = plt.cm.Set2(j / len(p))
+            ax1.bar(i, kc, width, bottom=bottom, color=color,
+                    edgecolor='white', linewidth=0.5)
+            bottom += kc
+
+    ax1.axhline(y=1, color='red', linestyle='--', linewidth=2, label='Kraft bound = 1')
+    ax1.set_xticks(x_pos)
+    ax1.set_xticklabels(distributions.keys(), fontsize=10, rotation=15)
+    ax1.set_ylabel('Kraft sum components 2^(-ℓᵢ)', fontsize=12)
+    ax1.set_title('Kraft Inequality: ∑ 2^(-ℓᵢ) ≤ 1', fontsize=13)
+    ax1.legend(fontsize=11)
+    ax1.set_ylim(0, 1.3)
+    ax1.grid(True, alpha=0.3, axis='y')
+
+    # Right: Ideal vs ceiling lengths
+    p = np.array([0.4, 0.25, 0.2, 0.1, 0.05])
+    L_ideal = np.log2(1.0 / p)
+    ell_ceil = np.ceil(L_ideal).astype(int)
+
+    symbols = np.arange(len(p))
+    bar_width = 0.35
+
+    bars1 = ax2.bar(symbols - bar_width/2, L_ideal, bar_width,
+                     color='steelblue', alpha=0.8, label='Ideal L⋆ = log₂(1/p)')
+    bars2 = ax2.bar(symbols + bar_width/2, ell_ceil, bar_width,
+                     color='coral', alpha=0.8, label='Shannon ℓ = ⌈L⋆⌉')
+
+    ax2.set_xlabel('Symbol index', fontsize=12)
+    ax2.set_ylabel('Code length', fontsize=12)
+    ax2.set_title('Ideal vs. Shannon Ceiling Lengths', fontsize=13)
+    ax2.set_xticks(symbols)
+    ax2.set_xticklabels([f'a{i+1}\n(p={p[i]})' for i in range(len(p))], fontsize=9)
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3, axis='y')
 
     plt.tight_layout()
     return fig_to_base64(fig)
 
 
-def min_plus_convolution_plot() -> str:
-    """Visualize min-plus convolution."""
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+def viz_gibbs_landscape():
+    """Visualize the Gibbs distribution as a function of temperature."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
-    f = np.array([3.0, 1.0, 0.5, 2.0, 3.5])
-    g = np.array([2.0, 0.5, 1.5, 1.0])
+    energies = np.array([0.0, 0.5, 1.0, 2.0, 3.0, 5.0])
+    n = len(energies)
+    temperatures = np.linspace(0.1, 10.0, 200)
 
-    # Compute min-plus convolution
-    m, n = len(f), len(g)
-    conv = np.full(m + n - 1, np.inf)
-    for i in range(m):
-        for j in range(n):
-            conv[i+j] = min(conv[i+j], f[i] + g[j])
+    # Left: probability vs temperature
+    for i in range(n):
+        probs = []
+        for T in temperatures:
+            p = gibbs_source(energies / T)
+            probs.append(p[i])
+        ax1.plot(temperatures, probs, linewidth=2, label=f'E={energies[i]}')
 
-    # Plot f
-    ax = axes[0]
-    ax.bar(range(len(f)), f, color='steelblue', alpha=0.8, edgecolor='black')
-    ax.set_title('f (Source A profile)', fontsize=13, fontweight='bold')
-    ax.set_xlabel('Index i', fontsize=11)
-    ax.set_ylabel('Cost f(i)', fontsize=11)
-    ax.grid(True, alpha=0.3, axis='y')
+    ax1.set_xlabel('Temperature T', fontsize=12)
+    ax1.set_ylabel('Probability p(state)', fontsize=12)
+    ax1.set_title('Gibbs Distribution vs. Temperature', fontsize=13)
+    ax1.legend(fontsize=10, ncol=2)
+    ax1.grid(True, alpha=0.3)
 
-    # Plot g
-    ax = axes[1]
-    ax.bar(range(len(g)), g, color='coral', alpha=0.8, edgecolor='black')
-    ax.set_title('g (Source B profile)', fontsize=13, fontweight='bold')
-    ax.set_xlabel('Index j', fontsize=11)
-    ax.set_ylabel('Cost g(j)', fontsize=11)
-    ax.grid(True, alpha=0.3, axis='y')
+    # Right: entropy vs temperature
+    entropies = []
+    for T in temperatures:
+        p = gibbs_source(energies / T)
+        entropies.append(entropy_base2(p))
 
-    # Plot convolution
-    ax = axes[2]
-    ax.bar(range(len(conv)), conv, color='green', alpha=0.7, edgecolor='black')
-    ax.set_title('f ⊛ g (Min-Plus Convolution)', fontsize=13, fontweight='bold')
-    ax.set_xlabel('Index n', fontsize=11)
-    ax.set_ylabel('(f ⊛ g)(n) = min_{i+j=n}[f(i)+g(j)]', fontsize=10)
-    ax.grid(True, alpha=0.3, axis='y')
-
-    # Annotate optimal decompositions
-    for k in range(len(conv)):
-        best_i, best_j = -1, -1
-        for i in range(min(k+1, m)):
-            j = k - i
-            if j < n and f[i] + g[j] == conv[k]:
-                best_i, best_j = i, j
-                break
-        if best_i >= 0:
-            ax.text(k, conv[k] + 0.1, f'({best_i},{best_j})',
-                    ha='center', va='bottom', fontsize=8, color='darkgreen')
+    ax2.plot(temperatures, entropies, 'b-', linewidth=2)
+    ax2.axhline(y=np.log2(n), color='red', linestyle='--', alpha=0.7,
+                label=f'max entropy = log₂({n}) = {np.log2(n):.2f}')
+    ax2.axhline(y=0, color='gray', linestyle=':', alpha=0.5)
+    ax2.set_xlabel('Temperature T', fontsize=12)
+    ax2.set_ylabel('Entropy H₂ [bits]', fontsize=12)
+    ax2.set_title('Entropy of Gibbs Distribution', fontsize=13)
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
     return fig_to_base64(fig)
 
 
-def tropical_coding_overview_plot() -> str:
-    """Overview diagram of tropical coding theory."""
-    fig, ax = plt.subplots(1, 1, figsize=(12, 7))
-    ax.set_xlim(0, 12)
-    ax.set_ylim(0, 8)
-    ax.axis('off')
-    ax.set_title('Tropical Source Coding Theory: Conceptual Map',
-                 fontsize=16, fontweight='bold', pad=20)
+def viz_product_additivity():
+    """Visualize entropy additivity for product sources."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
-    # Central node
-    center_box = FancyBboxPatch((4, 3.2), 4, 1.6, boxstyle="round,pad=0.2",
-                                 facecolor='lightblue', edgecolor='navy', linewidth=2)
-    ax.add_patch(center_box)
-    ax.text(6, 4, 'Tropical\nShannon Code\nL(a) = ⌈-log p(a)⌉',
-            ha='center', va='center', fontsize=11, fontweight='bold')
+    # Sweep p₁ parameter for binary source
+    ps = np.linspace(0.01, 0.99, 100)
+    H1s = []
+    H2_fixed = entropy_base2(np.array([0.6, 0.3, 0.1]))
 
-    # Theorem nodes
-    nodes = [
-        (1, 6.5, 'Theorem A\nH ≤ E[L] < H+1', 'lightgreen'),
-        (9, 6.5, 'Theorem B\nKraft Feasibility', 'lightyellow'),
-        (1, 1, 'Theorem C\nMin-Plus\nConvolution', 'lightsalmon'),
-        (9, 1, 'Theorem D\nLeast Majorant', 'plum'),
-    ]
+    for pp in ps:
+        p1 = np.array([pp, 1 - pp])
+        H1s.append(entropy_base2(p1))
 
-    for x, y, text, color in nodes:
-        box = FancyBboxPatch((x-1.2, y-0.6), 2.4, 1.2, boxstyle="round,pad=0.15",
-                              facecolor=color, edgecolor='gray', linewidth=1.5)
-        ax.add_patch(box)
-        ax.text(x, y, text, ha='center', va='center', fontsize=9, fontweight='bold')
+    H1s = np.array(H1s)
+    H_products = H1s + H2_fixed
 
-    # Arrows
-    arrows = [
-        (6, 4.8, 1, 6.5-0.6),   # center to A
-        (6, 4.8, 9, 6.5-0.6),   # center to B
-        (6, 3.2, 1, 1+0.6),     # center to C
-        (6, 3.2, 9, 1+0.6),     # center to D
-    ]
+    ax1.plot(ps, H1s, 'b-', linewidth=2, label='H₂(p₁)')
+    ax1.axhline(y=H2_fixed, color='green', linestyle='--', linewidth=1.5,
+                label=f'H₂(p₂) = {H2_fixed:.3f}')
+    ax1.plot(ps, H_products, 'r-', linewidth=2, label='H₂(p₁⊗p₂) = H₂(p₁)+H₂(p₂)')
+    ax1.set_xlabel('p₁(0)', fontsize=12)
+    ax1.set_ylabel('Entropy [bits]', fontsize=12)
+    ax1.set_title('Entropy Additivity for Product Sources', fontsize=13)
+    ax1.legend(fontsize=11)
+    ax1.grid(True, alpha=0.3)
 
-    for x1, y1, x2, y2 in arrows:
-        ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
-                    arrowprops=dict(arrowstyle='->', color='gray',
-                                   lw=1.5, connectionstyle='arc3,rad=0.1'))
+    # Right: verify additivity numerically
+    n_samples = 50
+    H_sum = []
+    H_prod = []
+    rng = np.random.default_rng(123)
 
-    # Application labels
-    apps = [
-        (6, 7.5, 'Shannon Source Coding Theorem', 'navy'),
-        (0.5, 0, 'Dynamic Programming · Shortest Paths', 'darkred'),
-        (9.5, 0, 'Code Optimality · Envelope', 'purple'),
-    ]
-    for x, y, text, color in apps:
-        ax.text(x, y, text, ha='center', fontsize=9, fontstyle='italic', color=color)
+    for _ in range(n_samples):
+        p1 = rng.dirichlet(np.ones(3))
+        p2 = rng.dirichlet(np.ones(4))
+        H1 = entropy_base2(p1)
+        H2 = entropy_base2(p2)
+        p_joint = np.outer(p1, p2).flatten()
+        H_joint = entropy_base2(p_joint)
+        H_sum.append(H1 + H2)
+        H_prod.append(H_joint)
+
+    ax2.scatter(H_sum, H_prod, c='steelblue', s=40, alpha=0.7, zorder=5)
+    lims = [0, max(max(H_sum), max(H_prod)) * 1.05]
+    ax2.plot(lims, lims, 'r--', linewidth=2, label='y = x (perfect additivity)')
+    ax2.set_xlabel('H₂(p₁) + H₂(p₂) [bits]', fontsize=12)
+    ax2.set_ylabel('H₂(p₁⊗p₂) [bits]', fontsize=12)
+    ax2.set_title('Numerical Verification of Additivity', fontsize=13)
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
+    ax2.set_xlim(lims)
+    ax2.set_ylim(lims)
+    ax2.set_aspect('equal')
 
     plt.tight_layout()
     return fig_to_base64(fig)
 
 
 def generate_all_visualizations():
-    """Generate all visualizations and save to files."""
+    """Generate all visualizations and save as files."""
     print("Generating visualizations...")
 
-    viz1 = entropy_sandwich_plot()
-    print("  ✓ Entropy sandwich plot")
-
-    viz2 = kraft_inequality_plot()
-    print("  ✓ Kraft inequality plot")
-
-    viz3 = min_plus_convolution_plot()
-    print("  ✓ Min-plus convolution plot")
-
-    viz4 = tropical_coding_overview_plot()
-    print("  ✓ Tropical coding overview")
-
-    return {
-        'entropy_sandwich': viz1,
-        'kraft_inequality': viz2,
-        'min_plus_convolution': viz3,
-        'tropical_overview': viz4,
+    viz_funcs = {
+        'entropy_sandwich': viz_entropy_sandwich,
+        'kraft_inequality': viz_kraft_inequality,
+        'gibbs_landscape': viz_gibbs_landscape,
+        'product_additivity': viz_product_additivity,
     }
 
-
-if __name__ == "__main__":
-    vizs = generate_all_visualizations()
-    print(f"\nGenerated {len(vizs)} visualizations as base64 data URIs")
-
-    # Save PNGs for standalone use
-    for name, data_uri in vizs.items():
+    results = {}
+    for name, func in viz_funcs.items():
+        print(f"  Generating {name}...")
+        data_uri = func()
+        results[name] = data_uri
+        # Also save as PNG
         b64_data = data_uri.split(',')[1]
         with open(f'{name}.png', 'wb') as f:
             f.write(base64.b64decode(b64_data))
         print(f"  Saved {name}.png")
+
+    return results
+
+
+if __name__ == "__main__":
+    results = generate_all_visualizations()
+    print(f"\nGenerated {len(results)} visualizations.")

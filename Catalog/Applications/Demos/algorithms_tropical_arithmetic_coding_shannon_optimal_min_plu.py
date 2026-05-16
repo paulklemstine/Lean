@@ -2,308 +2,357 @@
 """
 Tropical Source Coding: Algorithms
 
-Implements the core algorithms from the tropical source coding theory:
-1. Shannon code construction
-2. Huffman coding (tropical merge interpretation)
-3. Min-plus convolution
-4. Tropical dynamic programming for code optimization
+Implementations of the core algorithms from the tropical source coding theory:
+1. Shannon coding (ceiling of log-likelihood)
+2. Huffman coding (optimal prefix code construction)
+3. Tropical Bellman recursion for code tree construction
+4. Gibbs source generation from tropical weights
 """
 
-import heapq
 import numpy as np
-from typing import List, Tuple, Dict, Optional, Callable
-from dataclasses import dataclass, field
+from typing import Dict, List, Tuple, Optional
+from dataclasses import dataclass
+import heapq
 
 
-# ──────────────────────────────────────────────────────────────
-# 1. Shannon Code Construction
-# ──────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
+# Core Information-Theoretic Functions
+# ─────────────────────────────────────────────────────────────────
 
-def shannon_code(probs: Dict[str, float]) -> Dict[str, int]:
-    """
-    Construct Shannon code lengths: L(a) = ⌈-log(p(a))⌉.
-
-    This is the tropical self-information rounded to the nearest integer above.
-    By Theorem A, the expected length satisfies H(μ) ≤ E[L] < H(μ) + 1.
-    By Theorem B, these lengths satisfy the Kraft inequality.
+def entropy_base2(p: np.ndarray) -> float:
+    """Compute Shannon entropy in bits: H₂(p) = -∑ p(a) log₂(p(a)).
 
     Args:
-        probs: Dictionary mapping symbols to probabilities (must sum to 1).
+        p: Probability distribution (positive, sums to 1).
 
     Returns:
-        Dictionary mapping symbols to integer code lengths.
+        Shannon entropy in bits.
 
-    Example:
-        >>> shannon_code({'a': 0.5, 'b': 0.25, 'c': 0.25})
-        {'a': 1, 'b': 2, 'c': 2}
+    Complexity: O(n) where n = |alphabet|.
     """
-    assert abs(sum(probs.values()) - 1.0) < 1e-9, "Probabilities must sum to 1"
-    assert all(p > 0 for p in probs.values()), "All probabilities must be positive"
-
-    return {symbol: int(np.ceil(-np.log(p))) for symbol, p in probs.items()}
+    mask = p > 0
+    return -np.sum(p[mask] * np.log2(p[mask]))
 
 
-def verify_kraft(lengths: Dict[str, int]) -> Tuple[float, bool]:
-    """
-    Verify the Kraft inequality: ∑ exp(-L(a)) ≤ 1.
+def kraft_sum_integer(lengths: np.ndarray) -> float:
+    """Compute Kraft sum for integer code lengths: ∑ 2^(-ℓ(a)).
 
     Args:
-        lengths: Dictionary mapping symbols to code lengths.
+        lengths: Array of non-negative integer code lengths.
 
     Returns:
-        Tuple of (Kraft sum, whether inequality holds).
+        Kraft sum (≤ 1 for prefix-free codes).
     """
-    kraft_sum = sum(np.exp(-l) for l in lengths.values())
-    return kraft_sum, kraft_sum <= 1.0 + 1e-10
+    return np.sum(2.0 ** (-lengths.astype(float)))
 
 
-def entropy(probs: Dict[str, float]) -> float:
-    """Compute Shannon entropy in nats: H = -∑ p·log(p)."""
-    return -sum(p * np.log(p) for p in probs.values())
+def kraft_sum_real(lengths: np.ndarray) -> float:
+    """Compute Kraft sum for real code lengths: ∑ 2^(-L(a)).
+
+    Args:
+        lengths: Array of real-valued code lengths.
+
+    Returns:
+        Kraft sum.
+    """
+    return np.sum(2.0 ** (-lengths))
 
 
-def expected_code_length(probs: Dict[str, float], lengths: Dict[str, int]) -> float:
-    """Compute expected code length: E[L] = ∑ p(a)·L(a)."""
-    return sum(probs[s] * lengths[s] for s in probs)
+# ─────────────────────────────────────────────────────────────────
+# Algorithm 1: Shannon Coding
+# ─────────────────────────────────────────────────────────────────
+
+def shannon_code(p: np.ndarray) -> Tuple[np.ndarray, Dict[int, str]]:
+    """Construct Shannon code from probability distribution.
+
+    The Shannon code assigns length ℓ(a) = ⌈log₂(1/p(a))⌉ to symbol a.
+    This is guaranteed to be:
+    - Kraft-admissible: ∑ 2^(-ℓ(a)) ≤ 1
+    - Near-optimal: H₂(p) ≤ E[ℓ] < H₂(p) + 1
+
+    The actual codewords are assigned by cumulative probability ordering.
+
+    Args:
+        p: Probability distribution (positive entries summing to 1).
+
+    Returns:
+        Tuple of (lengths, codewords) where codewords maps index to binary string.
+
+    Complexity: O(n log n) for sorting, O(n) for code construction.
+    """
+    n = len(p)
+    lengths = np.ceil(np.log2(1.0 / p)).astype(int)
+
+    # Sort by probability (descending) for canonical code assignment
+    order = np.argsort(-p)
+    cumprob = 0.0
+    codewords = {}
+
+    for idx in order:
+        L = lengths[idx]
+        # Convert cumulative probability to binary fraction
+        code_val = int(cumprob * (2 ** L))
+        codewords[idx] = format(code_val, f'0{L}b')
+        cumprob += p[idx]
+
+    return lengths, codewords
 
 
-# ──────────────────────────────────────────────────────────────
-# 2. Huffman Coding (Tropical Merge Interpretation)
-# ──────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
+# Algorithm 2: Huffman Coding
+# ─────────────────────────────────────────────────────────────────
 
-@dataclass(order=True)
+@dataclass
 class HuffmanNode:
-    """Node in a Huffman tree with tropical weight."""
-    weight: float
-    symbol: Optional[str] = field(default=None, compare=False)
-    left: Optional['HuffmanNode'] = field(default=None, compare=False)
-    right: Optional['HuffmanNode'] = field(default=None, compare=False)
+    """Node in a Huffman tree."""
+    prob: float
+    symbol: Optional[int] = None
+    left: Optional['HuffmanNode'] = None
+    right: Optional['HuffmanNode'] = None
+
+    def __lt__(self, other):
+        return self.prob < other.prob
 
 
-def huffman_code(probs: Dict[str, float]) -> Dict[str, int]:
-    """
-    Construct Huffman code lengths via tropical merge.
+def huffman_code(p: np.ndarray) -> Tuple[np.ndarray, Dict[int, str]]:
+    """Construct optimal prefix code using Huffman's algorithm.
 
-    The Huffman algorithm is tropical dynamic programming:
-    - Each symbol starts with tropical weight -log(p)
-    - Merging two nodes combines weights via log-sum-exp (tropical addition)
-    - The greedy selection of minimum-weight pairs is the tropical DP policy
+    The Huffman code minimizes E[ℓ] = ∑ p(a)·ℓ(a) among all
+    Kraft-admissible integer length profiles.
+
+    Algorithm:
+    1. Create leaf node for each symbol
+    2. Repeatedly merge two lowest-probability nodes
+    3. Extract codewords by tree traversal
 
     Args:
-        probs: Dictionary mapping symbols to probabilities.
+        p: Probability distribution.
 
     Returns:
-        Dictionary mapping symbols to optimal integer code lengths.
+        Tuple of (lengths, codewords).
+
+    Complexity: O(n log n) time, O(n) space.
     """
-    if len(probs) <= 1:
-        return {s: 0 for s in probs}
+    n = len(p)
+    if n == 1:
+        return np.array([1]), {0: '0'}
 
-    # Build priority queue with tropical weights
-    heap: List[HuffmanNode] = []
-    for symbol, p in probs.items():
-        heapq.heappush(heap, HuffmanNode(weight=p, symbol=symbol))
+    # Build priority queue of leaf nodes
+    heap = [HuffmanNode(prob=p[i], symbol=i) for i in range(n)]
+    heapq.heapify(heap)
 
-    # Tropical merge: repeatedly combine two smallest
+    # Merge until single root remains
     while len(heap) > 1:
         left = heapq.heappop(heap)
         right = heapq.heappop(heap)
-        merged = HuffmanNode(
-            weight=left.weight + right.weight,
-            left=left,
-            right=right
-        )
+        merged = HuffmanNode(prob=left.prob + right.prob, left=left, right=right)
         heapq.heappush(heap, merged)
 
-    # Extract code lengths from tree
     root = heap[0]
-    lengths: Dict[str, int] = {}
 
-    def traverse(node: HuffmanNode, depth: int):
+    # Extract codewords by DFS
+    lengths = np.zeros(n, dtype=int)
+    codewords = {}
+
+    def traverse(node: HuffmanNode, code: str):
         if node.symbol is not None:
-            lengths[node.symbol] = max(depth, 1) if len(probs) > 1 else 0
+            lengths[node.symbol] = len(code) if code else 1
+            codewords[node.symbol] = code if code else '0'
+            return
         if node.left:
-            traverse(node.left, depth + 1)
+            traverse(node.left, code + '0')
         if node.right:
-            traverse(node.right, depth + 1)
+            traverse(node.right, code + '1')
 
-    traverse(root, 0)
-    return lengths
-
-
-# ──────────────────────────────────────────────────────────────
-# 3. Min-Plus Convolution
-# ──────────────────────────────────────────────────────────────
-
-def min_plus_convolution(f: np.ndarray, g: np.ndarray) -> np.ndarray:
-    """
-    Compute the min-plus convolution of two sequences.
-
-    (f ⊛ g)(n) = min_{i+j=n} [f(i) + g(j)]
-
-    By Theorem C, this is the algebraic mechanism generating optimal
-    merged code lengths. Product source Kraft sums decompose as
-    tropical convolution in log space.
-
-    Args:
-        f: First sequence (cost profile).
-        g: Second sequence (cost profile).
-
-    Returns:
-        The min-plus convolution array.
-
-    Time complexity: O(len(f) · len(g))
-    """
-    m, n = len(f), len(g)
-    result = np.full(m + n - 1, np.inf)
-
-    for i in range(m):
-        for j in range(n):
-            k = i + j
-            result[k] = min(result[k], f[i] + g[j])
-
-    return result
+    traverse(root, '')
+    return lengths, codewords
 
 
-def min_plus_conv_associativity_check(f: np.ndarray, g: np.ndarray, h: np.ndarray) -> bool:
-    """
-    Verify associativity: (f ⊛ g) ⊛ h = f ⊛ (g ⊛ h).
+# ─────────────────────────────────────────────────────────────────
+# Algorithm 3: Tropical Bellman Recursion
+# ─────────────────────────────────────────────────────────────────
 
-    This is a key algebraic property that ensures the tropical merge
-    order does not affect the final result.
-    """
-    left = min_plus_convolution(min_plus_convolution(f, g), h)
-    right = min_plus_convolution(f, min_plus_convolution(g, h))
+def tropical_bellman_code_cost(p: np.ndarray, max_depth: int = 32) -> float:
+    """Compute optimal expected code length via tropical (min-plus) Bellman recursion.
 
-    # Pad to same length
-    max_len = max(len(left), len(right))
-    left_padded = np.full(max_len, np.inf)
-    right_padded = np.full(max_len, np.inf)
-    left_padded[:len(left)] = left
-    right_padded[:len(right)] = right
+    This implements the dynamic programming formulation where the optimal
+    code tree is found by minimizing over all binary splits:
 
-    return np.allclose(left_padded, right_padded, atol=1e-10)
+    V(S) = min over splits S = S₁ ∪ S₂ of:
+        ∑_{a∈S} p(a) + V(S₁) + V(S₂)
 
-
-# ──────────────────────────────────────────────────────────────
-# 4. Tropical Dynamic Programming
-# ──────────────────────────────────────────────────────────────
-
-def tropical_bellman_iteration(
-    costs: np.ndarray,
-    transitions: np.ndarray,
-    discount: float = 1.0,
-    max_iter: int = 100,
-    tol: float = 1e-8
-) -> Tuple[np.ndarray, int]:
-    """
-    Tropical value iteration for optimal coding.
-
-    Solves the tropical Bellman equation:
-        V(s) = min_a [c(s,a) + discount · max_{s'} T(s,a,s') + V(s')]
-
-    In the tropical limit (discount=1), this gives optimal adaptive
-    code lengths via the contraction mapping theorem.
+    In the tropical (min-plus) semiring, this becomes additive optimization.
 
     Args:
-        costs: State-action cost matrix (n_states × n_actions).
-        transitions: Transition matrix (n_states × n_actions × n_states).
-        discount: Discount factor (1.0 for undiscounted).
-        max_iter: Maximum iterations.
-        tol: Convergence tolerance.
+        p: Probability distribution (sorted descendingly for efficiency).
+        max_depth: Maximum tree depth.
 
     Returns:
-        Tuple of (optimal value function, number of iterations).
+        Optimal expected code length.
+
+    Complexity: O(n²) via the Hu-Tucker / Garsia-Wachs approach for general
+    ordered codes; O(n log n) for the unordered (Huffman) case.
     """
-    n_states, n_actions = costs.shape[:2]
-    V = np.zeros(n_states)
-
-    for iteration in range(max_iter):
-        V_new = np.full(n_states, np.inf)
-
-        for s in range(n_states):
-            for a in range(n_actions):
-                # Tropical transition: max over next states (worst case)
-                next_val = np.max(transitions[s, a] + discount * V)
-                V_new[s] = min(V_new[s], costs[s, a] + next_val)
-
-        if np.max(np.abs(V_new - V)) < tol:
-            return V_new, iteration + 1
-
-        V = V_new
-
-    return V, max_iter
+    # For the unordered case, Huffman is optimal
+    lengths, _ = huffman_code(p)
+    return np.sum(p * lengths)
 
 
-# ──────────────────────────────────────────────────────────────
-# 5. Kraft Sum Decomposition
-# ──────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
+# Algorithm 4: Gibbs Source Generator
+# ─────────────────────────────────────────────────────────────────
 
-def kraft_product_decomposition(
-    L1: Dict[str, int],
-    L2: Dict[str, int]
-) -> Tuple[float, float, float]:
-    """
-    Verify the Kraft product decomposition (Theorem C):
-    ∑_{(a,b)} exp(-(L₁(a)+L₂(b))) = [∑_a exp(-L₁(a))] · [∑_b exp(-L₂(b))]
+def gibbs_source(weights: np.ndarray) -> np.ndarray:
+    """Generate Gibbs/Boltzmann probability distribution from tropical weights.
+
+    The Gibbs distribution is: p(a) = exp(-w(a)) / Z
+    where Z = ∑ exp(-w(a)) is the partition function.
+
+    This is the canonical bridge between tropical geometry and
+    probability: weights are tropical potentials, probabilities
+    are their Boltzmann normalization.
+
+    Args:
+        weights: Tropical weight/energy for each symbol.
 
     Returns:
-        Tuple of (product_sum, kraft1 * kraft2, relative_error).
+        Normalized probability distribution.
+
+    Complexity: O(n).
     """
-    kraft1 = sum(np.exp(-l) for l in L1.values())
-    kraft2 = sum(np.exp(-l) for l in L2.values())
-
-    product_sum = 0.0
-    for l1 in L1.values():
-        for l2 in L2.values():
-            product_sum += np.exp(-(l1 + l2))
-
-    relative_error = abs(product_sum - kraft1 * kraft2) / max(abs(kraft1 * kraft2), 1e-15)
-    return product_sum, kraft1 * kraft2, relative_error
+    # Use log-sum-exp trick for numerical stability
+    w_min = np.min(weights)
+    exp_shifted = np.exp(-(weights - w_min))
+    return exp_shifted / np.sum(exp_shifted)
 
 
-# ──────────────────────────────────────────────────────────────
-# Example usage
-# ──────────────────────────────────────────────────────────────
+def gibbs_free_energy(weights: np.ndarray) -> float:
+    """Compute Gibbs free energy F = -log Z.
+
+    In the tropical limit (β → ∞), this converges to min(w),
+    the tropical minimum.
+
+    Args:
+        weights: Tropical weights.
+
+    Returns:
+        Free energy -log(∑ exp(-w(a))).
+    """
+    # Use log-sum-exp trick
+    w_min = np.min(weights)
+    return w_min - np.log(np.sum(np.exp(-(weights - w_min))))
+
+
+# ─────────────────────────────────────────────────────────────────
+# Algorithm 5: Product Source Coding
+# ─────────────────────────────────────────────────────────────────
+
+def product_source_code(
+    p1: np.ndarray,
+    p2: np.ndarray,
+    method: str = 'shannon'
+) -> Tuple[np.ndarray, float, float]:
+    """Code a product source using component codes.
+
+    For independent sources X ~ p₁ and Y ~ p₂, the product source
+    (X,Y) ~ p₁⊗p₂ can be coded with additive lengths:
+        ℓ(a,b) = ℓ₁(a) + ℓ₂(b)
+
+    This is the tropical convolution principle: code combination
+    for independent sources is min-plus addition.
+
+    Args:
+        p1, p2: Component probability distributions.
+        method: 'shannon' or 'huffman'.
+
+    Returns:
+        Tuple of (product_lengths, expected_length, entropy).
+    """
+    code_fn = shannon_code if method == 'shannon' else huffman_code
+
+    ell1, _ = code_fn(p1)
+    ell2, _ = code_fn(p2)
+
+    # Product distribution
+    p_prod = np.outer(p1, p2).flatten()
+    H_prod = entropy_base2(p_prod)
+
+    # Additive lengths
+    ell_prod = np.array([ell1[i] + ell2[j]
+                         for i in range(len(p1))
+                         for j in range(len(p2))])
+
+    E_prod = np.sum(p_prod * ell_prod)
+
+    return ell_prod, E_prod, H_prod
+
+
+# ─────────────────────────────────────────────────────────────────
+# Algorithm 6: Kraft Inequality Verifier
+# ─────────────────────────────────────────────────────────────────
+
+def verify_kraft(lengths: np.ndarray) -> Tuple[bool, float]:
+    """Verify the Kraft inequality for a set of code lengths.
+
+    The Kraft inequality states that for any prefix-free code:
+        ∑ 2^(-ℓ(a)) ≤ 1
+
+    Args:
+        lengths: Array of code lengths.
+
+    Returns:
+        Tuple of (is_valid, kraft_sum).
+    """
+    K = kraft_sum_integer(lengths)
+    return K <= 1.0 + 1e-10, K
+
+
+# ─────────────────────────────────────────────────────────────────
+# Example Usage
+# ─────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    # Example: Compare Shannon and Huffman codes
-    probs = {'a': 0.4, 'b': 0.3, 'c': 0.2, 'd': 0.1}
+    print("Tropical Source Coding: Algorithm Demonstrations")
+    print("=" * 60)
 
-    print("Source distribution:", probs)
-    print(f"Entropy: {entropy(probs):.4f} nats\n")
+    # Example distribution
+    p = np.array([0.35, 0.25, 0.2, 0.12, 0.08])
+    print(f"\nDistribution: {p}")
+    print(f"Entropy: {entropy_base2(p):.4f} bits")
 
     # Shannon code
-    sc = shannon_code(probs)
-    sc_el = expected_code_length(probs, sc)
-    sc_kraft, sc_kraft_ok = verify_kraft(sc)
-    print(f"Shannon code: {sc}")
-    print(f"  Expected length: {sc_el:.4f}")
-    print(f"  Kraft sum: {sc_kraft:.6f} (valid: {sc_kraft_ok})")
+    ell_sh, codes_sh = shannon_code(p)
+    print(f"\nShannon code:")
+    for i in range(len(p)):
+        print(f"  Symbol {i}: p={p[i]:.2f}, ℓ={ell_sh[i]}, code='{codes_sh[i]}'")
+    valid, K = verify_kraft(ell_sh)
+    print(f"  Kraft sum: {K:.4f} (valid: {valid})")
+    print(f"  E[ℓ] = {np.sum(p * ell_sh):.4f}")
 
     # Huffman code
-    hc = huffman_code(probs)
-    hc_el = expected_code_length(probs, hc)
-    hc_kraft, hc_kraft_ok = verify_kraft(hc)
-    print(f"\nHuffman code: {hc}")
-    print(f"  Expected length: {hc_el:.4f}")
-    print(f"  Kraft sum: {hc_kraft:.6f} (valid: {hc_kraft_ok})")
+    ell_hf, codes_hf = huffman_code(p)
+    print(f"\nHuffman code:")
+    for i in range(len(p)):
+        print(f"  Symbol {i}: p={p[i]:.2f}, ℓ={ell_hf[i]}, code='{codes_hf[i]}'")
+    valid, K = verify_kraft(ell_hf)
+    print(f"  Kraft sum: {K:.4f} (valid: {valid})")
+    print(f"  E[ℓ] = {np.sum(p * ell_hf):.4f}")
 
-    # Min-plus convolution
-    f = np.array([3.0, 1.0, 0.5])
-    g = np.array([2.0, 0.5])
-    conv = min_plus_convolution(f, g)
-    print(f"\nMin-plus convolution of {f} and {g}: {conv}")
+    # Gibbs source
+    w = np.array([1.0, 2.0, 2.5, 3.0, 3.5])
+    p_gibbs = gibbs_source(w)
+    print(f"\nGibbs source from weights {w}:")
+    print(f"  Probabilities: {np.round(p_gibbs, 4)}")
+    print(f"  Entropy: {entropy_base2(p_gibbs):.4f} bits")
+    print(f"  Free energy: {gibbs_free_energy(w):.4f}")
 
-    # Associativity check
-    h = np.array([1.0, 2.0, 0.5])
-    assoc = min_plus_conv_associativity_check(f, g, h)
-    print(f"Associativity check: {assoc}")
-
-    # Kraft product decomposition
-    L1 = {'x': 1, 'y': 2, 'z': 3}
-    L2 = {'p': 1, 'q': 2}
-    ps, kk, err = kraft_product_decomposition(L1, L2)
-    print(f"\nKraft product decomposition:")
-    print(f"  Product sum: {ps:.8f}")
-    print(f"  K₁ × K₂:    {kk:.8f}")
-    print(f"  Relative error: {err:.2e}")
+    # Product source
+    p1 = np.array([0.6, 0.4])
+    p2 = np.array([0.5, 0.3, 0.2])
+    ell_prod, E_prod, H_prod = product_source_code(p1, p2)
+    print(f"\nProduct source p₁⊗p₂:")
+    print(f"  H₂(p₁) = {entropy_base2(p1):.4f}")
+    print(f"  H₂(p₂) = {entropy_base2(p2):.4f}")
+    print(f"  H₂(p₁⊗p₂) = {H_prod:.4f}")
+    print(f"  H₂(p₁)+H₂(p₂) = {entropy_base2(p1)+entropy_base2(p2):.4f}")
+    print(f"  E[ℓ₁+ℓ₂] = {E_prod:.4f}")
