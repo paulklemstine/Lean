@@ -169,10 +169,10 @@
       "Speculative"
     ],
     "priority_score": 0.78,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4155669",
     "timestamp": "2026-05-14T16:03:53.811195+00:00"
   },
   {
@@ -514,20 +514,6 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
-    "id": "fd_0231",
-    "title": "Document",
-    "description": "with module-level docstrings and cross-references.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cd76a6a7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:22:05.177402+00:00"
-  },
-  {
     "id": "fd_0230",
     "title": "Union bound",
     "description": ": total cheating probability ≤ Σ d_i / |S| ≤ nd/|S|.\n\n### Cross-Domain Impact\n- **Complexity Theory**: Sum-check is the core of #P hardness amplification\n- **Zero-Knowledge Proofs**: Foundation for SNARKs and STARKs\n- **Verifiable Computation**: Delegating computation to untrusted servers\n\n### Key Lean Targets\n```\ntheorem sum_check_soundness :\n  is_cheating_prover P →\n  Pr[verifier_accepts (sum_check_protocol P V)] ≤ n * d / |S|\n```\n\n---\n\n## Direction 5: List Decoding Beyond the Unique Radius\n\n### Statement\nProve that for the Reed–Muller code RM(d, n, S), the number of codewords within Hamming distance `|S|^n - t` of any received word is at most `(|S|^n / t)^d`, provided `t > d · |S|^(n-1)`.\n\nThis is the multivariate analogue of the Guruswami–Sudan list-decoding bound.\n\n### Hypothesis\nBeyo",
@@ -544,49 +530,6 @@
     "timestamp": "2026-05-16T02:18:15.266353+00:00"
   },
   {
-    "id": "fd_0231",
-    "title": "Covering argument",
-    "description": ": the agreement regions {x : p_i(x) = f(x)} must be nearly disjoint.\n4. Since |S|^n total grid points must accommodate L nearly disjoint agreement regions of size ≥ t, we get L ≤ |S|^n / (t - d·|S|^(n-1)).\n5. A more refined combinatorial argument using interpolation determinants gives the tighter bound L ≤ (|S|^n / t)^d.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97c6ba31",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:18:15.276474+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Initial condition",
-    "description": ": Q_t u → u as t → 0⁺\n\n### Lean Encoding\n```lean\nnoncomputable def hopfLax (u : ℝ → ℝ) (t : ℝ) (x : ℝ) : ℝ :=\n  sInf (Set.range fun y : ℝ => u y + (x - y)^2 / (2 * t))\n\n-- Monotonicity\ntheorem hopfLax_mono (u v : ℝ → ℝ) (t : ℝ) (ht : 0 < t)\n    (h : ∀ x, u x ≤ v x) (x : ℝ) :\n    hopfLax u t x ≤ hopfLax v t x := by sorry\n\n-- Contraction\ntheorem hopfLax_contraction (u v : ℝ → ℝ) (t : ℝ) (ht : 0 < t)\n    (C : ℝ) (hC : ∀ x, |u x - v x| ≤ C) (x : ℝ) :\n    |hopfLax u t x - hopfLax v t x| ≤ C := by sorry\n\n-- Semigroup (for quadratic initial data)\ntheorem hopfLax_semigroup_quadratic (s t : ℝ) (hs : 0 < s) (ht : 0 < t) (x : ℝ) :\n    hopfLax (hopfLax (fun y => y^2 / 2) t) s x =\n    hopfLax (fun y => y^2 / 2) (s + t) x := by sorry\n```\n\n### Proof Strategy",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56965cb0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:49:26.966352+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Define tropical chain complexes",
-    "description": "Formalize the cellular chain complex of the tropical polyhedral decomposition induced by $f$. Each cell is a maximal region where one affine piece dominates.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:21:48.725714+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "Establish the level estimate",
     "description": "Show $c^* \\ge c$ using the sublevel set separation hypothesis.\n\n### Key Challenges\n- The deformation argument requires constructing explicit continuous deformations of paths in the tropical setting, which is complicated by the piecewise-linear structure.\n- The minimax principle needs compactness arguments that may require restricting to bounded domains.\n\n### Cross-Domain Connections\n- **Variational methods**: tropical analogue of the Ambrosetti-Rabinowitz theorem\n- **Optimization**: provides certified barriers for global optimization of piecewise-linear functions\n- **Statistical physics**: mountain passes correspond to transition states between metastable phases\n\n### Actionable Steps\n1. Formalize the minimax principle for continuous functions on compact sets in Lean.\n2. Prove the mountain ",
@@ -600,20 +543,6 @@
     "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:21:48.915149+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "Formalize the tropical cell complex",
-    "description": "of a ReLU network's loss landscape, where cells are activation pattern regions and walls are activation boundaries.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:21:48.927551+00:00"
   },
   {
     "id": "fd_0260",
@@ -647,20 +576,6 @@
     "timestamp": "2026-05-16T03:21:49.049347+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "H3",
-    "description": ": The tropical Morse index at a grokking transition correlates with the magnitude of the generalization jump (Pearson $r > 0.5$).",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:21:49.075915+00:00"
-  },
-  {
     "id": "fd_0230",
     "title": "Week 1-2",
     "description": ": Formalize the tropical packing bound (Direction 1, key lemma) and the linear-to-tropical margin transfer (Direction 3, key theorem) in Lean 4.",
@@ -673,50 +588,6 @@
     "source_exp_id": "d85be8c8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:49:39.012877+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Week 3-4",
-    "description": ": Prove the tropical Carathéodory theorem (Direction 2) and apply it to produce a code compression algorithm with certified margin preservation.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d85be8c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:49:39.024149+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Backward (→ direction):",
-    "description": "If cycle means differ, exhibit two initial vectors that converge to different limit cycles, preventing convergence.\n\n### Cross-Domain Impact\n- **Dynamical systems:** Complete characterization of mode-locking in tropical dynamics.\n- **Consensus algorithms:** Conditions for distributed agreement in max-plus networks.\n- **Scheduling:** Steady-state behavior of periodic production systems.\n\n### Formalization Target\n```\ntheorem trop_power_iteration_converges_iff (A : Fin n → Fin n → ℝ)\n  (hirr : StronglyConnected A) :\n  ConvergesProjectively (tropPowerIteration A) ↔ AllCycleMeansEqual A\n```\n\n---\n\n## Direction 3: Graph Cohomology Library for Finite Digraphs\n\n### Goal\nBuild a reusable Lean 4 library for **discrete cohomology on finite directed graphs**, applicable far beyond tropical algebra.\n\n##",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "085cfca9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:34:45.444806+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Existence:",
-    "description": "Use iterated firing to reach a reduced form (termination by energy argument).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3c13f65f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:11.787500+00:00"
   },
   {
     "id": "fd_0242",
@@ -735,48 +606,6 @@
     "timestamp": "2026-05-16T05:33:11.802488+00:00"
   },
   {
-    "id": "fd_0243",
-    "title": "States exact theorems",
-    "description": "in Lean before attempting proofs.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3c13f65f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:11.815310+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "Direction 2",
-    "description": "(Discrete Morse collapse): Important for computational applications, moderate complexity",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1e7db8da",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:34.173680+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Generalize",
-    "description": "(linear maps) → provides the algebraic foundation",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2da16d8d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:56.130596+00:00"
-  },
-  {
     "id": "fd_0235",
     "title": "Bridge",
     "description": "(interactive proofs) → connects to complexity theory",
@@ -793,32 +622,206 @@
     "timestamp": "2026-05-16T05:33:56.179846+00:00"
   },
   {
-    "id": "fd_0236",
-    "title": "Builds proof skeletons",
-    "description": "with helper lemmas before attempting full proofs.",
+    "id": "fd_0245",
+    "title": "Downward self-reducibility:",
+    "description": "Show that tropical matrix powering has a self-reduction structure: computing A^n on a specific input reduces to computing A^n on random inputs with related parameters.",
     "domains": [
-      "Logic"
+      "Tropical",
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c159c7e4",
+    "source_exp_id": "63028e3e",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:34:19.536491+00:00"
+    "timestamp": "2026-05-16T06:53:19.041641+00:00"
   },
   {
-    "id": "fd_0237",
-    "title": "Validates computationally",
-    "description": "using `#eval` and Python prototypes before committing to formal proofs.",
+    "id": "fd_0246",
+    "title": "Combine with current NW theorem:",
+    "description": "Apply the tropical NW PRG to the amplified hard function.\n\n### Key Technical Challenges\n- The XOR lemma requires a Goldreich-Levin style argument adapted to tropical computation.\n- Self-reducibility for tropical matrix powering is not immediate; it requires understanding the algebraic structure of min-plus matrix evaluation.\n- The worst-case to average-case reduction must preserve tropical circuit complexity.\n\n### Cross-Domain Connections\n- Fine-grained complexity: connects to APSP hardness conjectures.\n- Algebraic complexity: relates to VP vs VNP in the tropical setting.\n- Coding theory: XOR lemma connects to list-decoding of tropical codes.\n\n### Estimated Difficulty: Very High\n### Impact: Transformative — would establish a complete tropical complexity theory.\n\n---\n\n## Direction 2: Concre",
     "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.059190+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Define tropical circuits:",
+    "description": "Gates compute min(x,y) or x+y, with integer constants on wires. Size = number of gates, depth = longest path.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.075495+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Define tropical NC and tropical P:",
+    "description": "Based on polylog-depth and polynomial-size circuits respectively.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.092201+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Completeness proof:",
+    "description": "Reduce arbitrary tropical circuit evaluation to tropical matrix powering via the connection between circuits and shortest paths in layered graphs.\n\n### Key Formalization Steps\n- `TropicalCircuit : ℕ → ℕ → Type` (input size, circuit size)\n- `TropicalCircuit.eval : TropicalCircuit n s → (Fin n → ℤ) → ℤ`\n- `tropicalMatPow_simulates_circuit : ∀ C : TropicalCircuit n s, ∃ A, ...`\n\n### Cross-Domain Connections\n- Boolean circuit complexity: tropical circuits are monotone circuits in disguise.\n- Algebraic geometry: tropical varieties encode circuit computation.\n- Graph algorithms: circuit-to-graph reductions are classical in algorithm design.\n\n### Estimated Difficulty: High\n### Impact: High — would define the landscape of tropical complexity theory.\n\n---\n\n## Direction 3: Tropical Extractors Indepe",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.128308+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Define tropical min-entropy:",
+    "description": "H_∞^{trop}(X) = -log max_x Pr[X = x], where probabilities are computed via tropical semiring weights.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.145220+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Construct extractor:",
+    "description": "Use tropical matrix multiplication as the extraction function: h(x) = threshold(A ⊗ x) where A is a carefully chosen tropical matrix and threshold converts to bits.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.162932+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Formalize the APSP connection:",
+    "description": "Show that any truly subcubic APSP algorithm yields a tropical circuit of size n^{3-ε} for tropical matrix multiplication.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.223183+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Connect to PRG:",
+    "description": "Such a circuit would break the tropical NW generator with specific parameters.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.237678+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Extend to min-plus convolution:",
+    "description": "The (min,+)-convolution problem has similar connections.\n\n### Key Formalization\n```\ntheorem apsp_subcubic_breaks_prg\n  (alg : ∀ n, APSP_algorithm n (n^(3-ε)))\n  : ¬ tropical_hard_family_exists\n```\n\n### Cross-Domain Connections\n- Fine-grained complexity: APSP and min-plus convolution are central problems.\n- Algorithm design: negative results guide where to focus algorithmic efforts.\n- Graph theory: shortest path algorithms are fundamental.\n\n### Estimated Difficulty: Medium-High\n### Impact: Very High — would connect tropical PRGs to major algorithmic questions.\n\n---\n\n## Direction 5: Tropical Razborov–Rudich Natural Proofs Barrier\n\n### Goal\nFormulate and investigate a tropical analogue of the Razborov–Rudich natural proofs barrier: determine whether natural proof techniques can prove tropical",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.270894+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Define \"tropical natural proofs\":",
+    "description": "A natural proof is a property Γ of Boolean functions that is (a) useful (separates easy from hard), (b) constructive (computable in poly time from the truth table), and (c) large (satisfied by a random function with high probability).",
+    "domains": [
+      "Tropical",
       "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c159c7e4",
+    "source_exp_id": "63028e3e",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:34:19.549890+00:00"
+    "timestamp": "2026-05-16T06:53:19.288039+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Show PRG breaks naturalness:",
+    "description": "If a tropical PRG exists, then no constructive, large property can be useful — because the PRG output looks random (satisfying any large property) but is easy to compute (violating usefulness).",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.303662+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Formalize in Lean:",
+    "description": "State the theorem as: `tropical_prg_secure → ¬tropical_natural_proof_useful`.",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63028e3e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T06:53:19.319691+00:00"
   },
   {
     "id": "seed_052",
@@ -1214,42 +1217,6 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0223",
-    "title": "1. Enriched Invariant Semantics over Ordered Semirings",
-    "description": "**Hypothesis:** Replacing `ℕ`-valued invariants with invariants valued in canonically ordered commutative semirings (e.g., `ℝ≥0`, tropical semirings, or lattice-valued invariants) would unify height bounds, security parameters, tropical valuations, and proof-complexity measures under a single transport calculus.\n\n**Proof Strategy:**\n- Generalize `TheorySpec` to `TheorySpecOrd β` for `[OrderedCommMonoid β]`.\n- Prove that transport, composition, and soundness theorems all hold at this generality.\n- Instantiate with `β = ℝ≥0` for real-valued invariants (Lipschitz constants, security levels).\n- Instantiate with `β = ℤ ∪ {-∞}` for tropical valuations.\n- Show that the ℕ specialization is a retract of the general theory.\n\n**Cross-Domain Connections:** This opens bridges between tropical geometry ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:14:30.232582+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "2. Graph Search over the Full Catalog",
-    "description": "**Hypothesis:** The collection of all `TheorySpec` instances in the catalog, together with all `TheoryHom` morphisms, forms a directed graph whose connected components reveal hidden mathematical analogies. Automated path search in this graph can discover indirect bridges that no human would anticipate.\n\n**Proof Strategy:**\n- Build a metaprogram that enumerates all `TheorySpec` definitions in the project.\n- For each pair, attempt to synthesize a `SearchCertificate` by trying identity maps, projections, and simple compositions with `omega`/`linarith`/`nlinarith` as proof backends.\n- Store successful certificates in a graph data structure.\n- Prove: if a path exists from A to B in the graph, then `A.lowerBound ≤ B.inv (path.map x)` for all A-witnesses x.\n\n**Cross-Domain Connections:** This is ",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:14:30.243331+00:00"
-  },
-  {
     "id": "fd_0225",
     "title": "3. Adjunctions and Galois Connections Between Theories",
     "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
@@ -1354,24 +1321,6 @@
     "timestamp": "2026-05-16T03:24:38.327603+00:00"
   },
   {
-    "id": "fd_0221",
-    "title": "4. Hardness-vs-Randomness in Min-Plus Algebra",
-    "description": "**Hypothesis:** If tropical matrix powering requires super-polynomial time, then BPP ⊆ DTIME(2^{n^{o(1)}}) — i.e., tropical hardness implies derandomization.\n\n**Approach:**\n- Formalize the Nisan-Wigderson generator framework in the tropical setting.\n- Prove that the orbit hash construction, when instantiated with a hard tropical function, produces a PRG that fools all polynomial-time tests.\n- The key ingredient is our `tropical_orbit_prg` theorem, which provides the information-theoretic foundation; the computational version requires additionally that the extraction error is negligible.\n- Develop a tropical analogue of the Impagliazzo-Wigderson theorem: if some problem in tropical E (exponential time with tropical operations) requires circuits of size 2^{Ω(n)}, then BPP = P.\n\n**Key Formali",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2b33dcea",
-    "consumed_by_exp_id": "63028e3e",
-    "timestamp": "2026-05-16T03:24:38.341258+00:00"
-  },
-  {
     "id": "fd_0222",
     "title": "5. Pseudorandom Symbolic Dynamics from Tropical Semigroup Actions",
     "description": "**Hypothesis:** The orbit trace (G^0, G^1, ..., G^T) of a tropical matrix, viewed as a symbolic dynamical system, produces pseudorandom trajectories after extraction — connecting ergodic theory to derandomization.\n\n**Approach:**\n- Model the tropical orbit as a symbolic dynamical system on a finite alphabet (after hashing): the shift map on the space of output sequences.\n- Prove that if the tropical matrix has *tropical spectral gap* (the second-largest tropical eigenvalue is strictly less than the largest), then the orbit satisfies mixing properties.\n- Show that mixing implies the conditional extraction property with exponentially decaying ε, yielding exponentially strong PRGs.\n- Formalize the equivalence: tropical spectral gap ⟺ rapid mixing ⟺ good extraction.\n\n**Key Theorem Target:**\n> I",
@@ -1387,34 +1336,6 @@
     "source_exp_id": "2b33dcea",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:24:38.355147+00:00"
-  },
-  {
-    "id": "fd_0223",
-    "title": "Formal Target",
-    "description": "```\ntheorem approx_rank_one_of_bounded_defect {n m : ℕ} [NeZero n] [NeZero m]\n    (A : Fin n → Fin m → ℝ) (ε : ℝ) (hε : 0 ≤ ε)\n    (hA : ∀ i i' j j', |delta₂ A i i' j j'| ≤ ε) :\n    ∃ p : Fin n → ℝ, ∃ q : Fin m → ℝ, ∀ i j, |A i j - p i - q j| ≤ ε\n```",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d7606a9d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:32:14.490781+00:00"
-  },
-  {
-    "id": "fd_0224",
-    "title": "Impact",
-    "description": "This would establish the foundations for a complete tropical matrix rank theory, analogous to the classical theory built on minors and determinants.\n\n---",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d7606a9d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:32:14.502815+00:00"
   },
   {
     "id": "fd_0225",
@@ -1520,108 +1441,6 @@
     "timestamp": "2026-05-16T04:31:45.413489+00:00"
   },
   {
-    "id": "fd_0236",
-    "title": "Summary of Dependencies",
-    "description": "```\n                    ┌─────────────────────┐\n                    │ tropPow_eq_sup_path  │\n                    │   Weight (DONE)      │\n                    └──────┬──────────────┘\n                           │\n          ┌────────────────┼────────────────┐\n          ▼                ▼                ▼\n   ┌──────────┐    ┌──────────────┐  ┌──────────────┐\n   │ Perron-  │    │ Kleene Star  │  │ Compression  │\n   │ Frobenius│    │ (Direction 2)│  │ (Direction 4)│\n   │(Dir. 1)  │    └──────┬───────┘  └──────────────┘\n   └──────────┘           │\n                          ▼\n                   ┌──────────────┐\n                   │ Viterbi /    │\n                   │ Message Pass │\n                   │ (Direction 3)│\n                   └──────────────┘\n\n   Independent:\n   ┌──────────────┐  ┌──────",
-    "domains": [
-      "Tropical",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7998d3b1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:31:45.457889+00:00"
-  },
-  {
-    "id": "fd_0236",
-    "title": "1. Tropical ElGamal / KEM with IND-CPA from Tropical DDH",
-    "description": "**Goal**: Formalize a complete tropical ElGamal key encapsulation mechanism and prove IND-CPA security under the tropical DDH assumption.\n\n**Hypothesis**: The tropical DDH tuple (G, G^a, G^b, G^{ab}) is computationally indistinguishable from (G, G^a, G^b, R) where R is a random tropical matrix. Under this assumption, tropical ElGamal encryption — where ciphertexts are (G^r, M ⊗ G^{ar}) — is IND-CPA secure.\n\n**Proof Strategy**:\n1. Define a formal IND-CPA game as a function from adversaries to advantage bounds.\n2. Show that any IND-CPA adversary can be converted into a DDH distinguisher with the same advantage (standard hybrid argument).\n3. Formalize the hybrid step: replacing G^{ab} with R in the ciphertext makes the masked message statistically independent of M.\n\n**Cross-Domain Connection*",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "746c4988",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:40:35.438279+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "2. Tropical Matrix Factorization Hardness Transfer",
-    "description": "**Goal**: Prove a formal reduction from tropical matrix rank computation (known to be NP-hard in certain formulations) to tropical key recovery.\n\n**Hypothesis**: Computing the tropical rank of a matrix — the minimum number of rank-1 tropical matrices whose tropical sum equals the given matrix — is at least as hard as recovering the secret exponent from a tropical public key.\n\n**Proof Strategy**:\n1. Show that a tropical public key G^s encodes a matrix with tropical rank related to s.\n2. Prove that recovering s from G^s provides enough structural information to compute the tropical rank of an associated matrix.\n3. Leverage the known result (Shitov 2006, Kim & Roush 2005) that tropical rank computation is NP-hard in certain regimes.\n\n**Cross-Domain Connection**: This bridges tropical algebrai",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "746c4988",
-    "consumed_by_exp_id": "011ce99e",
-    "timestamp": "2026-05-16T04:40:35.452499+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Research Program Summary",
-    "description": "These five directions collectively establish **cryptography over optimization semirings** as a coherent research program:\n\n| Direction | Core Innovation | Difficulty |\n|-----------|----------------|------------|\n| 1. Tropical ElGamal | Game-based security proofs for tropical PKE | Medium |\n| 2. Factorization Hardness | NP-hardness transfer to key recovery | Hard |\n| 3. Tropical PRGs | Pseudorandomness from semiring dynamics | Hard |\n| 4. Tropical Info Theory | Information theory native to min-plus | Medium |\n| 5. Automata Connection | Undecidability-based cryptographic hardness | Very Hard |\n\nEach direction is specific enough for a research team to pursue with clear hypotheses, proof strategies, and cross-domain connections. Together, they would establish tropical algebra as a new foundati",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "746c4988",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:40:35.503790+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "2. Certified List-Decoding Radius for Reed–Solomon Codes",
-    "description": "**Theorem Target:** Define the Reed–Solomon evaluation code $\\mathcal{C}_d(S) = \\{(\\text{eval}_s(p))_{s \\in S} : \\deg p \\leq d\\}$. Prove that its minimum Hamming distance is $|S| - d$, and that the list size for decoding at agreement radius $t$ satisfies:\n\n- **Johnson bound:** If $t > \\sqrt{|S| \\cdot d}$, then $L \\leq |S| / (t - \\sqrt{|S| \\cdot d})$.\n- **Guruswami–Sudan bound:** If $t > \\sqrt{|S| \\cdot d}$, then $L \\leq |S|^2$.\n\n**Why it is hard:** The Johnson bound requires a non-trivial application of the Cauchy–Schwarz inequality to the multiplicity function, beyond the Bonferroni bound we proved. The Guruswami–Sudan bound requires formalizing bivariate polynomial interpolation and factorization. Both require significant algebraic infrastructure beyond what Mathlib currently provides fo",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9a668faa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:30:16.450926+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Precise Theorem Statement",
-    "description": "For a finite weighted simplicial complex K with combinatorial Laplacian Δ_n acting on n-chains, and a discrete Morse function f on K with crit_n critical n-cells:\n\n> The number of eigenvalues of Δ_n below any threshold ε > 0 (in a suitable Witten-deformed Laplacian Δ_n^{(t)} = d_t^* d_t + d_t d_t^* where d_t is the twisted differential) converges to β_n as the deformation parameter t → ∞.\n\nAs a finite-dimensional formal target:\n```\ntheorem spectral_morse_bound\n  {K : Type*} [Field K] [DecidableEq K]\n  (C : FinChainComplex K)\n  (Δ : ∀ n, C.C n →ₗ[K] C.C n) -- combinatorial Laplacian\n  (hΔ : ∀ n, Δ n = (C.d n).adjoint.comp (C.d n) + (C.d (n-1)).comp (C.d (n-1)).adjoint) :\n  ∀ n, C.homologyFinrank n = finrank K (ker (Δ n))\n```",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f06689b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:30:17.030964+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "Cross-Domain Connection",
     "description": "This connects to existing catalog theorems `topology_low_freq_cutoff` and `dispersion_large_ell_bound`. The spectral cutoff in those theorems separates topologically meaningful eigenvalues (near zero) from high-frequency oscillations. Spectral Morse theory makes this separation precise: below the spectral gap, you see exactly β_n harmonic modes. The formal correspondence between \"number of low eigenvalues\" and \"number of critical cells\" would bridge spectral geometry and combinatorial topology.\n\n---",
@@ -1637,38 +1456,6 @@
     "source_exp_id": "f06689b7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:30:17.044621+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Summary and Priorities",
-    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Spectral Morse | Medium | High | Inner products on chain groups |\n| 2. Verified Morse Reduction | Medium-High | Very High | Simplicial complex formalization |\n| 3. Witten Deformation | High | High | Real analysis, spectral theory |\n| 4. Persistent Homology | High | Very High | Direction 2, filtration machinery |\n| 5. Arithmetic Morse | Medium | Medium | Order complex construction |\n\n**Recommended execution order:** Direction 2 → Direction 4 → Direction 1 → Direction 5 → Direction 3.\n\nDirection 2 (verified Morse reduction) is the highest priority because it provides the concrete algorithmic foundation on which all other directions build. Direction 4 (persistent homology) is the most impa",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f06689b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:30:17.080367+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "Direction 1: Computational Indistinguishability for Tropical Transcript Ensemble",
-    "description": "**Hypothesis:** There exists a polynomial-time reduction from distinguishing tropical Σ-protocol transcripts to solving the Tropical Shortest Path Decision Problem (TSPDP).\n\n**Theorem Target:**\n```\ntheorem tropical_computational_zk\n  (n : ℕ) (λ : ℕ) -- security parameter\n  (Proto : TropicalSigmaProtocol n)\n  (hhard : TropicalShortestPathHard λ) :\n  ComputationallyIndistinguishable\n    (realTranscriptEnsemble Proto λ)\n    (simulatedTranscriptEnsemble Proto λ)\n```\n\n**Strategy:**\n1. Define a family of tropical matrices parameterized by security parameter λ, where entries grow polynomially in λ.\n2. Show that any distinguisher for transcripts yields an oracle for TSPDP.\n3. The key insight: shift invariance gives *exact* algebraic indistinguishability (not statistical), so the reduction is tight",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc933f99",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:31:54.458887+00:00"
   },
   {
     "id": "fd_0245",
@@ -1743,20 +1530,6 @@
     "timestamp": "2026-05-16T06:31:54.524850+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Team Alpha: Foundations",
-    "description": "- Formalize computational indistinguishability (Direction 1)\n- Build asymptotic security definitions in Lean\n- Establish tropical hardness assumptions",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc933f99",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:31:54.537380+00:00"
-  },
-  {
     "id": "fd_0250",
     "title": "Team Beta: Proof Complexity",
     "description": "- Develop succinct argument systems (Direction 2)\n- Prove normalization bounds\n- Connect to circuit complexity lower bounds",
@@ -1770,20 +1543,6 @@
     "source_exp_id": "cc933f99",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:31:54.549027+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "Timeline",
-    "description": "| Quarter | Milestone |\n|---------|-----------|\n| Q1 | Formalize TSPDP, weighted automata encoding |\n| Q2 | Prove computational ZK reduction, succinct argument bounds |\n| Q3 | Fiat–Shamir transform, optimal control connection |\n| Q4 | Integration, practical implementations, paper submissions |",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc933f99",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:31:54.587045+00:00"
   },
   {
     "id": "fd_0238",
@@ -1832,20 +1591,6 @@
     "source_exp_id": "14514045",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:34:26.492113+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "4. Theorem-Dependency Observer Interface and Proof-Carrying Updates",
-    "description": "**Goal:** Build a formal framework connecting the locality result to proof-code representations, enabling a \"proof-carrying update\" protocol: when a theorem is added to a database, generate a certificate that downstream proofs remain valid.\n\n**Design:**\n- Define an `Observer` type: a function that extracts data from a dependency graph\n- Prove that observers restricted to the complement of the forward cone are invariant under localized updates\n- Connect to the Lawvere fixed-point / proof-coding perspective: theorem updates as code transformations that preserve observer outputs\n\n**Concrete Theorem Target:**\n```\ntheorem observer_invariant (obs : Observer V) (hsupp : obs.support ⊆ Cᶜ) :\n    obs.eval predOld = obs.eval predNew\n```\n\n**Applications:**\n- Incremental proof checking for large formal",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14514045",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:34:26.506444+00:00"
   },
   {
     "id": "fd_0242",
