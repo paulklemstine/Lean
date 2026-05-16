@@ -776,20 +776,6 @@
     "timestamp": "2026-05-16T03:21:48.828411+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "Prove transversality",
-    "description": "Show that for generic biases, the corner locus is a union of smooth submanifolds of the expected codimension, and corner critical points are isolated on each stratum.",
-    "domains": [
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "886e70ad",
-    "timestamp": "2026-05-16T03:21:48.839471+00:00"
-  },
-  {
     "id": "fd_0252",
     "title": "Construct the persistence diagram",
     "description": "Define a barcode/persistence diagram tracking corner critical points as biases vary.\n\n### Key Challenges\n- Transversality arguments for piecewise-linear functions require combinatorial rather than differential techniques.\n- The interaction between different strata of the corner locus introduces combinatorial complexity.\n\n### Cross-Domain Connections\n- **Persistent homology**: provides a tropical analogue of persistence diagrams\n- **Bifurcation theory**: extends classical bifurcation theory to nonsmooth settings\n- **Network pruning**: perturbation of biases corresponds to neural network weight modification; persistence measures robustness\n\n### Actionable Steps\n1. Implement numerical continuation of corner critical points as biases vary.\n2. Compute persistence diagrams for small examples (2-",
@@ -949,6 +935,48 @@
     "source_exp_id": "d85be8c8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:49:39.056926+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Direction 1",
+    "description": "(polyhedral strata) extends the affine theory to full polyhedral structure.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "886e70ad",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:34:23.444820+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Direction 2",
+    "description": "(generic biases) proves that \"most\" parameters give non-degenerate geometry.",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "886e70ad",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:34:23.459938+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Direction 4",
+    "description": "(Morse inequalities) connects geometry to topology.",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "886e70ad",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:34:23.473456+00:00"
   },
   {
     "id": "seed_052",
