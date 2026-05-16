@@ -1309,23 +1309,6 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0211",
-    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
-    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7b109bab",
-    "consumed_by_exp_id": "d3c4fbdb",
-    "timestamp": "2026-05-15T09:19:36.848982+00:00"
-  },
-  {
     "id": "fd_0225",
     "title": "3. Adjunctions and Galois Connections Between Theories",
     "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
@@ -1780,5 +1763,51 @@
     "source_exp_id": "9af9301e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:33:28.675465+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Target Theorem",
+    "description": "```\ntheorem tropical_matroid_exchange\n    {P L : Type*} [Fintype P] [Fintype L] [DecidableEq P]\n    (C : TropicalIncidenceConfig P L)\n    (hrank : ∀ S : Finset P, S.card ≤ 3 →\n      ∃ ℓ, ∀ p ∈ S, tropDefect (C.line ℓ) (C.point p) = 0)\n    (B₁ B₂ : Finset P)\n    (hB₁ : B₁.card = 3 ∧ ∀ p ∈ B₁, ∀ ℓ, tropDefect (C.line ℓ) (C.point p) = 0 → \n            ∃ q ∈ B₁, q ≠ p ∧ tropDefect (C.line ℓ) (C.point q) = 0)\n    (hB₂ : B₂.card = 3)\n    (x : P) (hx : x ∈ B₁ \\ B₂) :\n    ∃ y ∈ B₂ \\ B₁, ∃ ℓ, ∀ p ∈ (B₁.erase x).cons y sorry, \n      tropDefect (C.line ℓ) (C.point p) = 0\n```",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d3c4fbdb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:53.813883+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Why It Matters",
+    "description": "The Fano plane is the canonical example of a matroid. The matroid exchange axiom (basis exchange) is the fundamental structural property. Proving it from tropical defect data would establish that tropical incidence configurations naturally give rise to matroids — opening the door to formal tropical matroid theory.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d3c4fbdb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:53.829620+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Research Program Architecture",
+    "description": "These five directions form a coherent research program:\n\n```\nDirection 1 (Matroid Exchange)  ←→  Direction 3 (Spectral)\n         ↓                                  ↓\nDirection 5 (Helly)           ←→  Direction 4 (Coding)\n         ↓                                  ↓\n              Direction 2 (Stability)\n```\n\n- Directions 1 and 3 are algebraic/combinatorial (matroid + spectral)\n- Directions 4 and 5 are geometric/applied (codes + convexity)\n- Direction 2 is the numerical bridge connecting exact to approximate theory\n\nEach direction builds on the rigidity theorem and the defect framework established here. Together, they constitute a program for **tropical certified incidence geometry** — a new field at the intersection of tropical algebraic geometry, combinatorial optimization, coding theory,",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d3c4fbdb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T08:33:53.875177+00:00"
   }
 ]
