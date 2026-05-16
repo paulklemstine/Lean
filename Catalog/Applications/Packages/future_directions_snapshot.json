@@ -342,6 +342,20 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
+    "id": "fd_0195",
+    "title": "Tactic engineer",
+    "description": ": Implements the syntax-to-semantics bridge and verified tactic (Direction 4).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "465c3121",
+    "consumed_by_exp_id": "0839f238",
+    "timestamp": "2026-05-15T03:03:37.382470+00:00"
+  },
+  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -729,21 +743,6 @@
     "timestamp": "2026-05-16T10:49:05.626526+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Direction 4",
-    "description": "(Spectral Theory): Requires tropical linear algebra infrastructure; high novelty payoff.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd77de91",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:49:05.640865+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "Define",
     "description": "the LDP property: a family of sets {μ_N} satisfies a LDP with rate function I and speed log(N+2) if:\n   - (Upper) For closed C: limsup log(μ_N(C))/log(N+2) ≤ −inf_C I\n   - (Lower) For open G: liminf log(μ_N(G))/log(N+2) ≥ −inf_G I",
@@ -830,34 +829,6 @@
     "timestamp": "2026-05-16T11:26:32.196124+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Formalize",
-    "description": "the Pythagorean theorem: for the optimal tilt θ* achieving I(x), the relative entropy decomposes as D_KL(ν || μ) = D_KL(ν || ν_{θ*}) + D_KL(ν_{θ*} || μ), with the cross term vanishing.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.221863+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Phase transitions in P vs NP",
-    "description": ": If a problem exhibits a first-order transition in Λ at some θ_c, this indicates a structural change in the runtime distribution that may obstruct average-case to worst-case reductions.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.246169+00:00"
-  },
-  {
     "id": "fd_0251",
     "title": "Runtime certification",
     "description": ": The Chernoff bound gives provable guarantees on the probability of timeout: P(runtime > T·log(n)) ≤ exp(−log(n)·I(T)), providing formal timeout probabilities.\n\n### Concrete Examples\n- **SAT solvers**: The runtime τ(n) of DPLL on random k-SAT instances near the satisfiability threshold. The free energy should exhibit a phase transition at the threshold.\n- **Primality testing**: τ(n) = number of Miller-Rabin rounds needed. The rate function quantifies the probability of Carmichael-number-like inputs.\n- **Factoring**: τ(n) = runtime of the number field sieve. The free energy encodes the average-case/worst-case gap.\n\n### Speculative Hypothesis\nThere exists a hierarchy of complexity classes indexed by the growth rate of I(x) as x → ∞:\n- **Polynomial tails**: I(x) grows polynomially → benign t",
@@ -873,20 +844,6 @@
     "source_exp_id": "f6b086c3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T11:26:32.263279+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Immediate",
-    "description": "(next cycle): Direction 1 (full LDP) — extends existing Chernoff bound to topological statements",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.277814+00:00"
   },
   {
     "id": "fd_0247",
@@ -917,32 +874,33 @@
     "timestamp": "2026-05-16T12:09:09.254524+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Investigate",
-    "description": "the interlacing conjecture (Direction 1) via computational experiments",
+    "id": "fd_0251",
+    "title": "Max-plus matrix algebra",
+    "description": ": formal tropical matrix multiplication, powers, eigenvalues",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "d0d6476e",
+    "source_exp_id": "332fc03e",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:09:09.269770+00:00"
+    "timestamp": "2026-05-16T12:25:17.996958+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "Prototype",
-    "description": "the control synthesis algorithm (Direction 5) for discrete event systems",
+    "id": "fd_0255",
+    "title": "Birkhoff contraction",
+    "description": ": formal proof of the contraction coefficient formula",
     "domains": [
-      "Bridges"
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "d0d6476e",
+    "source_exp_id": "332fc03e",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:09:09.283758+00:00"
+    "timestamp": "2026-05-16T12:25:18.063942+00:00"
   },
   {
     "id": "seed_052",
@@ -1397,23 +1355,6 @@
     "timestamp": "2026-05-16T03:24:38.327603+00:00"
   },
   {
-    "id": "fd_0222",
-    "title": "5. Pseudorandom Symbolic Dynamics from Tropical Semigroup Actions",
-    "description": "**Hypothesis:** The orbit trace (G^0, G^1, ..., G^T) of a tropical matrix, viewed as a symbolic dynamical system, produces pseudorandom trajectories after extraction — connecting ergodic theory to derandomization.\n\n**Approach:**\n- Model the tropical orbit as a symbolic dynamical system on a finite alphabet (after hashing): the shift map on the space of output sequences.\n- Prove that if the tropical matrix has *tropical spectral gap* (the second-largest tropical eigenvalue is strictly less than the largest), then the orbit satisfies mixing properties.\n- Show that mixing implies the conditional extraction property with exponentially decaying ε, yielding exponentially strong PRGs.\n- Formalize the equivalence: tropical spectral gap ⟺ rapid mixing ⟺ good extraction.\n\n**Key Theorem Target:**\n> I",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2b33dcea",
-    "consumed_by_exp_id": "332fc03e",
-    "timestamp": "2026-05-16T03:24:38.355147+00:00"
-  },
-  {
     "id": "fd_0225",
     "title": "1. Extend Canonicalization from AC to ACI (Idempotence of min)",
     "description": "**Hypothesis:** The tropical min operation satisfies `min(a, a) = a`. Adding idempotence quotients to the AC normalizer produces a strictly more powerful decision procedure.\n\n**Proof Strategy:**\n- Extend `normalize_ca` to deduplicate sorted children after flattening (remove adjacent duplicates in the sorted list for `tmin` nodes).\n- The soundness proof extends directly since `min(a, a) = a`.\n- Completeness requires defining `ACIEquiv` with an additional `tmin_idem` constructor and showing the deduplication step respects it.\n- Idempotence follows from the same rebuild-sorted argument since deduplication of a deduplicated list is identity.\n\n**Cross-Domain Connection:** Idempotent semirings arise in shortest-path algorithms (Floyd-Warshall), lattice theory, and formal language theory (regular",
@@ -1812,19 +1753,5 @@
     "source_exp_id": "0c823664",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T10:43:08.701224+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Phase 2 (Medium-term, 3-6 months)",
-    "description": "- Formalize Direction 1 (Tropical Conductance) — requires building graph theory infrastructure\n- Formalize Direction 4 (Data Processing) — requires information theory infrastructure\n- Develop continuous-time analogues",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0c823664",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:43:08.743553+00:00"
   }
 ]
