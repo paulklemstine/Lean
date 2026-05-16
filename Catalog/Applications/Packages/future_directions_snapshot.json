@@ -389,6 +389,23 @@
   },
   {
     "id": "fd_0232",
+    "title": "Construct encoding family",
+    "description": "where `tropFactorRank (encode s) = s` using block-diagonal rank-1 decompositions\n\n### Key Lemmas Needed\n- `tropFactorRank_le_dim`: Factor rank is at most $n$ for $n \\times n$ matrices\n- `tropFactorRank_identity`: Factor rank of the tropical identity is $n$\n- `tropFactorRank_diagonal`: Factor rank of a diagonal matrix equals its number of finite entries (under certain conditions)\n- `tropFactorRank_tropical_sum`: Factor rank is subadditive under tropical sum\n\n### Estimated Difficulty\n**High.** The lower bounds are the hardest part. Shitov's NP-hardness result suggests that computing factor rank is intrinsically difficult, but constructing specific matrices with *provable* factor rank requires delicate combinatorial arguments.\n\n### Cross-Domain Impact\n- **Algebraic geometry**: Factor rank con",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "3e135d69",
+    "timestamp": "2026-05-16T07:11:31.800180+00:00"
+  },
+  {
+    "id": "fd_0232",
     "title": "Target theorems",
     "description": ":\n- Kraft inequality: `∑ q^(-ℓ(a)) ≤ 1` for q-ary prefix codes.\n- Shannon coding bound: `H_q(p) ≤ E[ℓ] < H_q(p) + 1` where `H_q` uses log base q.\n- Relaxed optimizer: `L⋆(a) = log_q(1/p(a))` achieves equality.\n\n**Strategy**: The existing proofs generalize cleanly by replacing 2 with q throughout. The key lemma `Real.rpow_logb` works for any base b > 0, b ≠ 1. The Gibbs inequality (log x ≤ x - 1) is base-independent.\n\n**Broader significance**: q-ary codes arise naturally in DNA storage (q=4), ternary computing, and multi-level cell flash memory. Formal verification of q-ary optimality enables certified codec design for these technologies.\n\n---\n\n## Direction 3: Tropical Data Processing Inequality\n\n**Goal**: Prove that processing data through a channel cannot increase the tropical coding pote",
     "domains": [
@@ -721,90 +738,6 @@
     "timestamp": "2026-05-16T15:43:03.478518+00:00"
   },
   {
-    "id": "fd_0251",
-    "title": "Computational validation",
-    "description": ": Test with `#eval` on concrete examples.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d39daf16",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:33:21.182437+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Decomposition",
-    "description": ": Break into 3-8 helper lemmas, each independently provable.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d39daf16",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:33:21.200249+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "Incremental verification",
-    "description": ": Prove lemmas bottom-up, building each time.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d39daf16",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:33:21.215808+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Validates computationally",
-    "description": "with Python experiments before attempting formalization.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9e6bf625",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:33:51.042798+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Decomposes into lemmas",
-    "description": "following the skeleton-first methodology.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9e6bf625",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:33:51.060680+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "Maintains cross-references",
-    "description": "to related directions — the directions are deeply interconnected.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9e6bf625",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:33:51.079289+00:00"
-  },
-  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -888,6 +821,21 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.844636+00:00"
+  },
+  {
+    "id": "fd_0180",
+    "title": "2. Hodge Decomposition for Adversarial Inconsistency Fields",
+    "description": "**Objective**: Prove a graph-theoretic Hodge decomposition theorem for the space of 1-cochains on the activation region overlap graph, decomposing any inconsistency field into a gradient (coboundary), a curl (cocycle), and a harmonic component.\n\n**Approach**: On the complete graph $K_\\iota$ with edge weights given by overlap volumes, define the combinatorial Laplacian $\\Delta = \\delta^* \\delta + \\delta \\delta^*$ where $\\delta$ is the coboundary operator. The Hodge decomposition gives:\n$$C^1(K_\\iota, \\mathbb{R}) = \\mathrm{im}(\\delta) \\oplus \\mathrm{im}(\\delta^*) \\oplus \\ker(\\Delta)$$\n\nThe gradient component is the \"fixable\" part of margin inconsistency; the harmonic component is the irreducible topological obstruction; the curl component detects local rotation in the margin field.\n\n**Key hy",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "a6c55e7c",
+    "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
     "id": "fd_0181",
@@ -1667,22 +1615,6 @@
     "timestamp": "2026-05-16T15:15:25.424545+00:00"
   },
   {
-    "id": "fd_0253",
-    "title": "2. No-Go Theorems for Other Classical Diophantine Equations",
-    "description": "**Hypothesis:** The equal-degree collapse phenomenon generalizes beyond Fermat equations to any homogeneous Diophantine equation whose tropicalization is a standard tropical hypersurface.\n\n**Proof Strategy:**\n- Classify which homogeneous polynomials F(x₁,...,xₖ) have the property that their tropical zero set is exponent-invariant (i.e., TropZero(F_n) = TropZero(F_m) for all positive n, m).\n- Prove that all \"equal-degree\" polynomials — where every monomial has the same total degree — satisfy this collapse.\n- Show that mixed-degree tropical polynomials (e.g., x² + y³ = z⁵) can have genuinely n-dependent tropical zero sets, making them potentially more amenable to tropical transfer.\n- Apply to specific classical problems: sums of two cubes, Catalan's conjecture, ABC conjecture.\n\n**Key Formali",
-    "domains": [
-      "Tropical",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "69b261f0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:31:36.015827+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "4. Counting Primitive Lattice Points on Tropical Hypersurfaces",
     "description": "**Hypothesis:** The number of primitive lattice points on a tropical hypersurface in a box of side length L grows as Θ(L^{d-1}) where d is the ambient dimension, matching classical results in the geometry of numbers for hyperplane arrangements.\n\n**Proof Strategy:**\n- For the tropical Fermat hypersurface in ℤ³, count primitive points (a,a,b) with gcd(a,b) = 1 and 1 ≤ a ≤ b ≤ L. This count is Θ(L²/ζ(2)) = Θ(6L²/π²) by Euler's totient summation.\n- Formalize this asymptotic using Mathlib's analysis library and the prime number theorem or Mertens' theorem.\n- Generalize to arbitrary tropical hyperplane arrangements in ℤ^d.\n- Compare with the zero count for classical Fermat: the contrast between Θ(L²) tropical solutions and O(1) classical solutions (by FLT) quantifies the information loss.\n\n**Key",
@@ -1720,56 +1652,83 @@
     "timestamp": "2026-05-16T15:31:36.153629+00:00"
   },
   {
-    "id": "fd_0251",
-    "title": "1. Canonical Dominance Elimination via Polyhedral Comparison",
-    "description": "**Goal**: Extend the normal form from a list of affine forms to a *canonical* list where dominated terms are removed.\n\nAn affine form `a` is **dominated** by another `b` if `a.eval x ≥ b.eval x` for all `x`. In this case, `min(a.eval x, b.eval x) = b.eval x`, so `a` can be removed without changing the semantics.\n\n- Define a decidable dominance relation on affine forms (comparing constant and coefficient fields).\n- Add a filtering pass to `normalize` that removes dominated forms.\n- Sort the remaining forms lexicographically to obtain a canonical representative.\n- Prove `normalize_complete`: two expressions have the same normal form if and only if they are semantically equal.\n\n**Hypothesis**: For the natural-multiplicity fragment (coefficients in ℕ), dominance between affine forms is decidab",
+    "id": "fd_0254",
+    "title": "1. N-ary Iterated Product Encoding",
+    "description": "**Hypothesis:** The binary product encoding theorem generalizes to arbitrary finite products. Given a family of types `κ i` indexed by a finite type `ι`, each with an injective encoding into `Fin (B^(bits i))`, there exists an injective encoding of the dependent product `(i : ι) → κ i` into `Fin (B^(∑ i, bits i))`.\n\n**Proof Strategy:** Induction on the cardinality of `ι`. The base case is trivial. For the inductive step, decompose the product as `κ i₀ × ((i : ι \\ {i₀}) → κ i)` and apply the binary product encoding theorem. The key technical challenge is managing the dependent type bookkeeping in Lean.\n\n**Formal Statement:**\n```lean\ntheorem injective_list_prod_encoding\n    {ι : Type*} [Fintype ι] [DecidableEq ι]\n    (κ : ι → Type*) [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]\n    {B : ℕ} (",
     "domains": [
-      "Tropical",
+      "Physics",
       "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "488e4767",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:31:39.002799+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "2. Extension to Integer and Rational Slopes",
-    "description": "**Goal**: Generalize from natural-number multiplicities (arising from syntactic addition of variables) to integer or rational coefficients.\n\n- Replace `coeff : Fin n → ℕ` with `coeff : Fin n → ℤ` (or `ℚ`).\n- Introduce a `sub` (tropical division) operation: `sub e₁ e₂` with semantics `eval e₁ x - eval e₂ x`.\n- Prove the extended normalization theorem: every expression with subtraction still normalizes to a minimum of affine forms with integer slopes.\n- This requires careful handling of the non-cancellative nature of tropical addition (the existing `tropical_add_not_cancellative` theorem constrains the approach).\n\n**Hypothesis**: The normalization procedure extends to the full tropical semifield (ℝ, min, +, −) with rational slopes, yielding a canonical \"tropical rational function\" normal for",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
       "MachineLearning",
-      "Geometry"
+      "Logic"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "488e4767",
+    "source_exp_id": "d032c89b",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:31:39.026052+00:00"
+    "timestamp": "2026-05-16T16:34:16.169507+00:00"
   },
   {
-    "id": "fd_0253",
-    "title": "3. Tropical Matrix Expression Normalization",
-    "description": "**Goal**: Lift the scalar normalization theorem to matrices over the tropical semiring.\n\n- Define `TropMatExpr (m n k : ℕ)` for tropical matrix expressions with min-plus multiplication.\n- A tropical matrix normal form would represent each entry as a minimum of affine forms.\n- Prove soundness: `normalize_mat_sound : TropMatExpr.eval M = TropMatNF.eval (normalize_mat M)`.\n- Connect to the Kleene star (tropical matrix closure) for shortest-path computations.\n\n**Hypothesis**: The entry-wise normalization extends to matrix products via the min-plus matrix multiplication identity, and the Kleene star has a normal form computable by tropical Gaussian elimination.\n\n**Cross-domain impact**: This directly enables certified shortest-path algorithms, tropical spectral theory (eigenvalue computation), ",
+    "id": "fd_0255",
+    "title": "2. Mixed-Radix Encoding with Variable Bases",
+    "description": "**Hypothesis:** The product encoding generalizes beyond uniform bases. Given types encoded into `Fin m` and `Fin n` (not necessarily powers of a common base), there exists an injective encoding of their product into `Fin (m * n)` via the mixed-radix map `(a, b) ↦ a * n + b`.\n\n**Proof Strategy:** This is actually simpler than the power-of-base version since it avoids the `pow_add` rewriting. The `mixed_radix_eq_iff` lemma already handles the core argument. The `fin_prod_injective_to_fin_mul` theorem we proved is the existential version; the explicit constructive version with the mixed-radix formula should be straightforward.\n\n**Formal Statement:**\n```lean\ndef finProdPack (p : Fin m × Fin n) : Fin (m * n) :=\n  ⟨p.1.val * n + p.2.val, ...⟩\n\ntheorem finProdPack_injective : Function.Injective (",
     "domains": [
-      "Tropical",
-      "EML",
       "Bridges",
-      "Algebra"
+      "Logic"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "488e4767",
+    "source_exp_id": "d032c89b",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:31:39.044999+00:00"
+    "timestamp": "2026-05-16T16:34:16.188117+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "3. Prefix-Free Coding Infrastructure",
+    "description": "**Hypothesis:** The fixed-length encoding composition theorem extends to variable-length prefix-free codes. If two types admit prefix-free binary codes, their product admits a prefix-free binary code whose expected length is at most the sum of the individual expected lengths.\n\n**Proof Strategy:** Formalize prefix-free codes as injective maps `α → List Bool` satisfying the prefix-free property. Define concatenation of prefix-free codes. Prove that concatenation preserves the prefix-free property and injectivity. This requires formalizing the prefix relation on lists and proving that concatenation of prefix-free codewords is uniquely decodable.\n\n**Key Definitions Needed:**\n```lean\ndef PrefixFree (f : α → List Bool) : Prop :=\n  ∀ a b, a ≠ b → ¬(f a <+: f b)\n\ndef concatCode (f : α → List Bool)",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d032c89b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:34:16.218867+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "4. Encoding-Based Lower Bounds and Tightness",
+    "description": "**Hypothesis:** The additive code length bound `k + ℓ` is tight: there exist types for which no encoding into `Fin (2^(k+ℓ-1))` is injective, when both component encodings are surjective (i.e., `|α| = 2^k` and `|β| = 2^ℓ`).\n\n**Proof Strategy:** Take `α = Fin (2^k)` and `β = Fin (2^ℓ)`. Then `|α × β| = 2^k · 2^ℓ = 2^(k+ℓ)`. Any injection into `Fin (2^(k+ℓ-1))` would require `2^(k+ℓ) ≤ 2^(k+ℓ-1)`, a contradiction. This connects the constructive encoding theorem to information-theoretic lower bounds.\n\n**Formal Statement:**\n```lean\ntheorem encoding_length_tight (k ℓ : ℕ) (hk : 0 < k) (hℓ : 0 < ℓ) :\n    ¬∃ f : Fin (2^k) × Fin (2^ℓ) → Fin (2^(k + ℓ - 1)), Function.Injective f\n```\n\n**Cross-domain connections:** Counting arguments in complexity theory, pigeonhole-based lower bounds, and entropy as",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d032c89b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:34:16.235391+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "5. Channel Product Encodings and Information Capacity",
+    "description": "**Hypothesis:** The product encoding theorem provides the combinatorial foundation for proving that the capacity of a product of discrete memoryless channels equals the sum of individual capacities. Specifically, if channel 1 has input alphabet of size `2^k` and channel 2 has input alphabet of size `2^ℓ`, then the product channel admits `2^(k+ℓ)` distinguishable input states.\n\n**Proof Strategy:** Define a discrete memoryless channel as a stochastic matrix. Define the product channel. Use the product encoding theorem to show that the input space of the product channel can be injectively encoded with additive bit-length. Connect this to mutual information and channel capacity via the data processing inequality (which already has combinatorial shadows in the existing `EntropyBridge.lean` infr",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d032c89b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T16:34:16.252979+00:00"
   }
 ]
