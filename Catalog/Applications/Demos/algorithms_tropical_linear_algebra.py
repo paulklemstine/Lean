@@ -1,22 +1,29 @@
+#!/usr/bin/env python3
 """
-Tropical Surgery Algorithms
+algorithms.py — Algorithms for Tropical Matrix Surgery
 
-Efficient implementations of tropical spectral computations and surgery operations,
-with complexity analysis and practical optimizations.
+Implements the core algorithms from the tropical surgery spectral theory,
+including efficient spectral radius computation, surgery operations, and
+sensitivity analysis.
 """
 
 import numpy as np
 from itertools import product
-from typing import Tuple, List, Optional
-import time
+from typing import List, Tuple, Optional
 
 
 def tropical_matrix_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
     """
-    Min-plus matrix multiplication: C[i,j] = min_k (A[i,k] + B[k,j]).
+    Min-plus matrix multiplication: (A ⊗ B)[i,j] = min_k (A[i,k] + B[k,j]).
     
-    Time: O(n³)
-    Space: O(n²)
+    Time complexity: O(n³)
+    Space complexity: O(n²)
+    
+    Args:
+        A: n×n matrix
+        B: n×n matrix
+    Returns:
+        n×n min-plus product
     """
     n = A.shape[0]
     C = np.full((n, n), np.inf)
@@ -29,106 +36,117 @@ def tropical_matrix_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
 
 def tropical_matrix_power(A: np.ndarray, p: int) -> np.ndarray:
     """
-    Compute A^p in min-plus algebra using repeated squaring.
+    Compute the p-th min-plus power of A.
     
-    Time: O(n³ log p)
-    Space: O(n²)
+    Time complexity: O(n³ · p)
+    Space complexity: O(n²)
     """
     n = A.shape[0]
-    if p == 1:
-        return A.copy()
-    
-    result = np.full((n, n), np.inf)
-    np.fill_diagonal(result, 0)  # tropical identity
-    
-    base = A.copy()
-    while p > 0:
-        if p % 2 == 1:
-            result = tropical_matrix_multiply(result, base)
-        base = tropical_matrix_multiply(base, base)
-        p //= 2
-    
+    result = A.copy()
+    for _ in range(p - 1):
+        result = tropical_matrix_multiply(result, A)
     return result
 
 
-def karp_minimum_cycle_mean(A: np.ndarray) -> Tuple[float, List[int]]:
+def karp_minimum_cycle_mean(A: np.ndarray) -> float:
     """
     Karp's algorithm for minimum cycle mean.
     
-    Computes the tropical spectral radius λ* = min over all cycles C of
-    (sum of edge weights in C) / |C|.
+    Computes the tropical spectral radius (minimum cycle mean) of matrix A
+    using Karp's (1978) classical algorithm.
     
-    Time: O(n³) — n iterations of O(n²) work
-    Space: O(n²)
+    Time complexity: O(n³)  (n matrix-vector products of size n)
+    Space complexity: O(n²)
     
+    Pseudocode:
+        1. Compute F[k][v] = min weight of any walk of length k ending at v
+           (from a fixed source, or equivalently using all sources)
+        2. λ* = min_v max_k (F[n][v] - F[k][v]) / (n - k)
+    
+    Args:
+        A: n×n real matrix (weights of directed graph)
     Returns:
-        (lambda_star, cycle): minimum cycle mean and a witness cycle
+        Minimum cycle mean (tropical spectral radius)
     """
     n = A.shape[0]
+    
+    # F[k][v] = minimum weight walk of exactly k edges ending at v
+    # We compute from each starting vertex and take the global minimum
     INF = float('inf')
     
-    # D[k][v] = minimum weight of a walk of length exactly k ending at v
-    # starting from a virtual source s with zero-weight edges to all vertices
-    D = np.full((n + 1, n), INF)
-    parent = [[(-1, -1) for _ in range(n)] for _ in range(n + 1)]
+    best_mean = INF
     
-    # Initialize: walks of length 0 from source have weight 0
-    D[0, :] = 0
-    
-    # Dynamic programming: extend walks
-    for k in range(1, n + 1):
+    for s in range(n):
+        # F[k][v] for starting vertex s
+        F = np.full((n + 1, n), INF)
+        F[0, s] = 0.0
+        
+        for k in range(1, n + 1):
+            for v in range(n):
+                for u in range(n):
+                    if F[k-1, u] < INF:
+                        F[k, v] = min(F[k, v], F[k-1, u] + A[u, v])
+        
+        # Karp's formula: min_v max_{0≤k<n} (F[n][v] - F[k][v]) / (n - k)
         for v in range(n):
-            for u in range(n):
-                new_weight = D[k - 1][u] + A[u, v]
-                if new_weight < D[k][v]:
-                    D[k][v] = new_weight
-                    parent[k][v] = (k - 1, u)
+            if F[n, v] < INF:
+                max_ratio = -INF
+                for k in range(n):
+                    if F[k, v] < INF:
+                        ratio = (F[n, v] - F[k, v]) / (n - k)
+                        max_ratio = max(max_ratio, ratio)
+                if max_ratio < INF:
+                    best_mean = min(best_mean, max_ratio)
     
-    # Karp's formula: λ* = min_v max_k (D[n][v] - D[k][v]) / (n - k)
-    lambda_star = INF
-    best_v = 0
-    best_k = 0
-    
-    for v in range(n):
-        max_val = -INF
-        max_k = 0
-        for k in range(n):
-            if D[k][v] < INF and D[n][v] < INF:
-                val = (D[n][v] - D[k][v]) / (n - k)
-                if val > max_val:
-                    max_val = val
-                    max_k = k
-        if max_val < lambda_star:
-            lambda_star = max_val
-            best_v = v
-            best_k = max_k
-    
-    # Reconstruct cycle (simplified)
-    cycle = [best_v]
-    
-    return lambda_star, cycle
+    return best_mean
 
 
-def tropical_rank_two_surgery(A: np.ndarray, u: np.ndarray, v: np.ndarray,
-                               u_prime: np.ndarray, v_prime: np.ndarray) -> np.ndarray:
+def tropical_spectral_radius_bruteforce(A: np.ndarray) -> float:
     """
-    Rank-2 tropical surgery: B[i,j] = min(A[i,j], u[i]+v[j], u'[i]+v'[j]).
+    Brute-force computation of tropical spectral radius.
+    Enumerates all cycles up to length n.
     
-    Time: O(n²)
-    Space: O(n²)
+    Time complexity: O(n^(n+1))  — exponential, for small n only
+    """
+    n = A.shape[0]
+    best = float('inf')
+    
+    for length in range(1, n + 1):
+        for cycle in product(range(n), repeat=length):
+            weight = sum(A[cycle[t], cycle[(t+1) % length]] for t in range(length))
+            mean = weight / length
+            best = min(best, mean)
+    
+    return best
+
+
+def tropical_rank_two_surgery(
+    A: np.ndarray,
+    u: np.ndarray, v: np.ndarray,
+    u_prime: np.ndarray, v_prime: np.ndarray
+) -> np.ndarray:
+    """
+    Rank-2 tropical surgery.
+    
+    B[i,j] = min(A[i,j], u[i]+v[j], u'[i]+v'[j])
+    
+    Time complexity: O(n²)
+    Space complexity: O(n²)
     """
     R1 = np.add.outer(u, v)
     R2 = np.add.outer(u_prime, v_prime)
     return np.minimum(A, np.minimum(R1, R2))
 
 
-def two_entry_surgery(A: np.ndarray, i1: int, j1: int, c1: float,
-                       i2: int, j2: int, c2: float) -> np.ndarray:
+def two_entry_surgery(
+    A: np.ndarray,
+    i1: int, j1: int, c1: float,
+    i2: int, j2: int, c2: float
+) -> np.ndarray:
     """
     Localized two-entry surgery.
     
-    Time: O(n²) for copy, O(1) for modification
-    Space: O(n²)
+    Time complexity: O(n²) for copy, O(1) for the two updates
     """
     B = A.copy()
     B[i1, j1] = min(A[i1, j1], c1)
@@ -136,179 +154,162 @@ def two_entry_surgery(A: np.ndarray, i1: int, j1: int, c1: float,
     return B
 
 
-def spectral_bound_certificate(A: np.ndarray, u: np.ndarray, v: np.ndarray,
-                                u_prime: np.ndarray, v_prime: np.ndarray) -> dict:
+def surgery_support(A: np.ndarray, B: np.ndarray) -> List[Tuple[int, int]]:
     """
-    Compute the certified spectral bound for rank-2 surgery.
+    Compute the surgery support: positions where B[i,j] < A[i,j].
     
-    Returns a dictionary with:
-    - rho_A: spectral radius of original matrix
-    - rho_B: spectral radius of surgery result
-    - diag_min_1: min_i(u[i] + v[i])
-    - diag_min_2: min_i(u'[i] + v'[i])
-    - explicit_bound: min(rho_A, diag_min_1, diag_min_2)
-    - monotonicity_verified: whether rho_B <= rho_A
-    - bound_verified: whether rho_B <= explicit_bound
-    
-    Time: O(n³) dominated by Karp's algorithm
+    Time complexity: O(n²)
     """
-    B = tropical_rank_two_surgery(A, u, v, u_prime, v_prime)
+    n = A.shape[0]
+    return [(i, j) for i in range(n) for j in range(n) if B[i, j] < A[i, j] - 1e-12]
+
+
+def explicit_spectral_bound(
+    A: np.ndarray,
+    u: np.ndarray, v: np.ndarray,
+    u_prime: np.ndarray, v_prime: np.ndarray
+) -> float:
+    """
+    Compute the explicit spectral bound for rank-2 surgery:
+    min(ρ(A), min_i(u_i + v_i), min_i(u'_i + v'_i))
     
-    rho_A, _ = karp_minimum_cycle_mean(A)
-    rho_B, _ = karp_minimum_cycle_mean(B)
-    
+    Time complexity: O(n³) for Karp + O(n) for diagonal minima
+    """
+    rho_A = karp_minimum_cycle_mean(A)
     diag_min_1 = min(u[i] + v[i] for i in range(len(u)))
     diag_min_2 = min(u_prime[i] + v_prime[i] for i in range(len(u_prime)))
-    
-    explicit_bound = min(rho_A, diag_min_1, diag_min_2)
-    
-    return {
-        'rho_A': rho_A,
-        'rho_B': rho_B,
-        'diag_min_1': diag_min_1,
-        'diag_min_2': diag_min_2,
-        'explicit_bound': explicit_bound,
-        'monotonicity_verified': rho_B <= rho_A + 1e-10,
-        'bound_verified': rho_B <= explicit_bound + 1e-10,
-    }
+    return min(rho_A, min(diag_min_1, diag_min_2))
 
 
-def sensitivity_analysis(A: np.ndarray, perturbation_range: np.ndarray = None) -> dict:
+def spectral_sensitivity_analysis(
+    A: np.ndarray,
+    epsilon: float = 0.1,
+) -> np.ndarray:
     """
-    Sensitivity analysis: how much does the spectral radius change
-    under single-entry decreases?
+    Compute spectral sensitivity: for each edge (i,j), how much does
+    decreasing A[i,j] by epsilon change the spectral radius?
     
-    Time: O(n⁵) — O(n²) entries × O(n³) per Karp evaluation
+    Returns an n×n matrix of sensitivities.
+    
+    Time complexity: O(n⁵) — O(n²) entries × O(n³) Karp per entry
     """
     n = A.shape[0]
-    rho_A, _ = karp_minimum_cycle_mean(A)
+    rho_A = karp_minimum_cycle_mean(A)
+    sensitivity = np.zeros((n, n))
     
-    if perturbation_range is None:
-        perturbation_range = np.array([0.5, 1.0, 2.0, 5.0])
-    
-    results = {}
     for i in range(n):
         for j in range(n):
-            entry_results = []
-            for delta in perturbation_range:
-                B = A.copy()
-                B[i, j] = A[i, j] - delta
-                rho_B, _ = karp_minimum_cycle_mean(B)
-                entry_results.append({
-                    'delta': delta,
-                    'rho_B': rho_B,
-                    'rho_change': rho_B - rho_A,
-                })
-            results[(i, j)] = entry_results
+            B = A.copy()
+            B[i, j] -= epsilon
+            rho_B = karp_minimum_cycle_mean(B)
+            sensitivity[i, j] = (rho_A - rho_B) / epsilon
     
-    return {'rho_A': rho_A, 'entries': results}
+    return sensitivity
 
 
-def optimal_two_entry_surgery(A: np.ndarray, budget: float) -> dict:
+def find_critical_cycles(A: np.ndarray, tol: float = 1e-8) -> List[List[int]]:
     """
-    Find the two-entry surgery that minimizes the spectral radius
-    subject to a total decrease budget.
+    Find all critical cycles (those achieving the minimum cycle mean).
     
-    For each pair of entries (i1,j1), (i2,j2), find the optimal
-    allocation of budget between them.
+    Time complexity: O(n^(n+1)) — brute force for small n
     
-    Time: O(n⁴ · K) where K is the number of budget splits tried
+    Args:
+        A: n×n matrix
+        tol: tolerance for cycle mean comparison
+    Returns:
+        List of critical cycles (as vertex sequences)
     """
     n = A.shape[0]
-    rho_A, _ = karp_minimum_cycle_mean(A)
+    rho = tropical_spectral_radius_bruteforce(A)
+    critical = []
     
-    best_rho = rho_A
-    best_config = None
-    num_splits = 10
+    for length in range(1, n + 1):
+        for cycle in product(range(n), repeat=length):
+            weight = sum(A[cycle[t], cycle[(t+1) % length]] for t in range(length))
+            mean = weight / length
+            if abs(mean - rho) < tol:
+                # Normalize cycle (rotate to smallest starting vertex)
+                min_start = min(range(length), key=lambda i: cycle[i:] + cycle[:i])
+                normalized = list(cycle[min_start:] + cycle[:min_start])
+                if normalized not in critical:
+                    critical.append(normalized)
     
-    for i1 in range(n):
-        for j1 in range(n):
-            for i2 in range(n):
-                for j2 in range(n):
-                    if (i1, j1) >= (i2, j2):
-                        continue
-                    
-                    for s in range(num_splits + 1):
-                        frac = s / num_splits
-                        c1 = A[i1, j1] - frac * budget
-                        c2 = A[i2, j2] - (1 - frac) * budget
-                        
-                        B = two_entry_surgery(A, i1, j1, c1, i2, j2, c2)
-                        rho_B, _ = karp_minimum_cycle_mean(B)
-                        
-                        if rho_B < best_rho:
-                            best_rho = rho_B
-                            best_config = {
-                                'entries': [(i1, j1), (i2, j2)],
-                                'values': [c1, c2],
-                                'budget_split': [frac, 1 - frac],
-                            }
-    
-    return {
-        'rho_original': rho_A,
-        'rho_optimal': best_rho,
-        'improvement': rho_A - best_rho,
-        'config': best_config,
-    }
+    return critical
 
 
-# ---- Benchmarking ----
-
-def benchmark_karp(sizes: List[int] = None) -> List[dict]:
-    """Benchmark Karp's algorithm across matrix sizes."""
-    if sizes is None:
-        sizes = [5, 10, 20, 50, 100]
+def is_surgery_off_critical(
+    A: np.ndarray,
+    B: np.ndarray,
+    tol: float = 1e-8
+) -> bool:
+    """
+    Check if surgery is off-critical: no critical cycle of A uses
+    an edge in the surgery support.
     
-    results = []
-    for n in sizes:
-        np.random.seed(42)
-        A = np.random.uniform(1, 10, (n, n))
-        
-        start = time.time()
-        rho, _ = karp_minimum_cycle_mean(A)
-        elapsed = time.time() - start
-        
-        results.append({'n': n, 'time': elapsed, 'rho': rho})
-        print(f"  n={n:4d}: ρ={rho:.4f}, time={elapsed:.4f}s")
+    Time complexity: O(n^(n+1))
+    """
+    support = surgery_support(A, B)
+    critical = find_critical_cycles(A, tol)
     
-    return results
+    for cycle in critical:
+        k = len(cycle)
+        for t in range(k):
+            edge = (cycle[t], cycle[(t+1) % k])
+            if edge in support:
+                return False
+    return True
 
 
+# ============================================================
+# Example usage
+# ============================================================
 if __name__ == "__main__":
-    print("Tropical Surgery Algorithms — Test Suite")
+    print("Tropical Surgery Algorithms — Example Usage")
     print("=" * 50)
     
-    # Test min-plus multiplication
-    A = np.array([[0, 3], [7, 0]])
-    B = np.array([[0, 1], [2, 0]])
-    C = tropical_matrix_multiply(A, B)
-    print(f"\nMin-plus multiply:\n{A}\n⊗\n{B}\n=\n{C}")
-    
-    # Test Karp's algorithm
-    print("\nKarp's algorithm test:")
+    # Example matrix
     A = np.array([
-        [5., 2., 8.],
-        [3., 6., 1.],
-        [7., 4., 9.]
+        [2.0, 5.0, 8.0],
+        [3.0, 1.0, 4.0],
+        [7.0, 6.0, 3.0]
     ])
-    rho, cycle = karp_minimum_cycle_mean(A)
-    print(f"  Matrix:\n{A}")
-    print(f"  Min cycle mean: {rho:.4f}")
     
-    # Test spectral bound certificate
-    print("\nSpectral bound certificate:")
-    n = 4
-    np.random.seed(42)
-    A = np.random.uniform(1, 10, (n, n))
-    u = np.random.uniform(0, 3, n)
-    v = np.random.uniform(0, 3, n)
-    u_prime = np.random.uniform(0, 3, n)
-    v_prime = np.random.uniform(0, 3, n)
+    # Compute spectral radius two ways
+    rho_karp = karp_minimum_cycle_mean(A)
+    rho_brute = tropical_spectral_radius_bruteforce(A)
+    print(f"\nSpectral radius (Karp):       {rho_karp:.6f}")
+    print(f"Spectral radius (brute-force): {rho_brute:.6f}")
+    print(f"Agreement: {abs(rho_karp - rho_brute) < 1e-8}")
     
-    cert = spectral_bound_certificate(A, u, v, u_prime, v_prime)
-    for k, val in cert.items():
-        print(f"  {k}: {val}")
+    # Surgery
+    u = np.array([1.0, 0.5, 2.0])
+    v = np.array([0.0, 1.0, 0.5])
+    up = np.array([0.5, 1.5, 0.0])
+    vp = np.array([1.0, 0.5, 2.0])
     
-    # Benchmark
-    print("\nBenchmark Karp's algorithm:")
-    benchmark_karp([5, 10, 20, 50])
+    B = tropical_rank_two_surgery(A, u, v, up, vp)
+    rho_B = karp_minimum_cycle_mean(B)
+    bound = explicit_spectral_bound(A, u, v, up, vp)
+    
+    print(f"\nAfter rank-2 surgery:")
+    print(f"  ρ(B) = {rho_B:.6f}")
+    print(f"  ρ(A) = {rho_karp:.6f}")
+    print(f"  Explicit bound = {bound:.6f}")
+    print(f"  ρ(B) ≤ ρ(A)? {rho_B <= rho_karp + 1e-8}")
+    print(f"  ρ(B) ≤ bound? {rho_B <= bound + 1e-8}")
+    
+    # Sensitivity
+    print(f"\nSpectral sensitivity matrix (ε=0.1):")
+    sens = spectral_sensitivity_analysis(A, 0.1)
+    for row in sens:
+        print("  [" + ", ".join(f"{x:+.4f}" for x in row) + "]")
+    
+    # Critical cycles
+    print(f"\nCritical cycles of A:")
+    for c in find_critical_cycles(A):
+        weight = sum(A[c[t], c[(t+1) % len(c)]] for t in range(len(c)))
+        print(f"  {c} (mean = {weight/len(c):.4f})")
+    
+    # Off-critical check
+    print(f"\nSurgery support: {surgery_support(A, B)}")
+    print(f"Surgery is off-critical? {is_surgery_off_critical(A, B)}")

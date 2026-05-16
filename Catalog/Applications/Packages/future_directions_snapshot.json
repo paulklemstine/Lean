@@ -729,33 +729,149 @@
     "timestamp": "2026-05-16T10:49:05.640865+00:00"
   },
   {
-    "id": "fd_0253",
-    "title": "Connect to existing results",
-    "description": "by importing from `Computation.ReversibleTropicalThermodynamics`.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd77de91",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:49:05.697515+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "Direction 2",
-    "description": "(SL₂ instantiation): Validates the full pipeline.",
+    "id": "fd_0242",
+    "title": "Define",
+    "description": "the LDP property: a family of sets {μ_N} satisfies a LDP with rate function I and speed log(N+2) if:\n   - (Upper) For closed C: limsup log(μ_N(C))/log(N+2) ≤ −inf_C I\n   - (Lower) For open G: liminf log(μ_N(G))/log(N+2) ≥ −inf_G I",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c3a206eb",
+    "source_exp_id": "f6b086c3",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:51:36.623346+00:00"
+    "timestamp": "2026-05-16T11:26:32.087673+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Prove",
+    "description": "the upper bound by extending the Chernoff counting bound (already formalized) to general closed sets via finite covering arguments and the regularity of I.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T11:26:32.104089+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Essential smoothness",
+    "description": ": formalize the steepness condition (|Λ'(θ)| → ∞ as θ approaches the boundary of the effective domain) and prove it implies the lower bound on all open sets.\n\n### Key Lemmas Needed\n- Convexity of Λ_N at each N (log-sum-exp convexity)\n- Pointwise convergence implies local uniform convergence on compact subsets (convex functions)\n- Continuity of Legendre transform under pointwise convergence\n\n### Impact\nThis would give the first complete, formalized large deviation principle for arithmetic dynamics, directly applicable to any stopping-time observable with convergent log-MGF.\n\n### Hypothesis\nIf the Collatz stopping-time free energy Λ(θ) can be shown to be essentially smooth on ℝ (e.g., via tail bounds on τ(n)), then the full LDP holds with the rate function I(x) = sup_θ(θx − Λ(θ)).\n\n---\n\n## D",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T11:26:32.125759+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Characterize",
+    "description": "the thermodynamic meaning: first-order transitions correspond to coexistence of two \"phases\" of stopping-time behavior; second-order transitions to critical slowing down.\n\n### Key Examples\n- The Syracuse map (a variant of Collatz) may exhibit a phase transition at θ ≈ 0 due to the parity-dependent branching.\n- Random multiplicative cascades with arithmetic structure show exactly second-order transitions.\n\n### Cross-Domain Connection\nIn statistical mechanics, the Yang-Lee theory characterizes phase transitions via zeros of the partition function in the complex θ-plane. An arithmetic analogue would study zeros of Z_N(θ) analytically continued to ℂ and their limiting distribution as N → ∞.\n\n---\n\n## Direction 3: Moderate Deviations and Central Limit Corrections\n\n### Objective\nFormalize second-",
+    "domains": [
+      "EML",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T11:26:32.150524+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "CLT",
+    "description": ": If Λ is twice differentiable at 0 with Λ''(0) = σ² > 0, prove that the empirical distribution of (τ(n)/log(n+2) − Λ'(0))/(σ/√log(n+2)) converges to a standard Gaussian.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T11:26:32.164360+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Edgeworth",
+    "description": ": Using the third cumulant Λ'''(0), compute the next-order correction involving skewness.\n\n### Formalization Strategy\n- State finite-N Berry-Esseen bounds using existing Mathlib probability infrastructure\n- Use Taylor expansion of Λ around 0 (requires differentiability lemmas for log-sum-exp)\n- The MDP follows from the LDP rate function's quadratic approximation I(x) ≈ (x−μ)²/(2σ²) near x = μ\n\n### Applications\n- Quantifying the \"width\" of the typical stopping-time distribution\n- Confidence intervals for algorithmic runtime predictions\n- Distinguishing random from structured arithmetic sequences via their fluctuation statistics\n\n---\n\n## Direction 4: Entropy Production and Information-Geometric Interpretation\n\n### Objective\nDevelop an information-theoretic interpretation of the rate function",
+    "domains": [
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T11:26:32.196124+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Formalize",
+    "description": "the Pythagorean theorem: for the optimal tilt θ* achieving I(x), the relative entropy decomposes as D_KL(ν || μ) = D_KL(ν || ν_{θ*}) + D_KL(ν_{θ*} || μ), with the cross term vanishing.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T11:26:32.221863+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Phase transitions in P vs NP",
+    "description": ": If a problem exhibits a first-order transition in Λ at some θ_c, this indicates a structural change in the runtime distribution that may obstruct average-case to worst-case reductions.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T11:26:32.246169+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Runtime certification",
+    "description": ": The Chernoff bound gives provable guarantees on the probability of timeout: P(runtime > T·log(n)) ≤ exp(−log(n)·I(T)), providing formal timeout probabilities.\n\n### Concrete Examples\n- **SAT solvers**: The runtime τ(n) of DPLL on random k-SAT instances near the satisfiability threshold. The free energy should exhibit a phase transition at the threshold.\n- **Primality testing**: τ(n) = number of Miller-Rabin rounds needed. The rate function quantifies the probability of Carmichael-number-like inputs.\n- **Factoring**: τ(n) = runtime of the number field sieve. The free energy encodes the average-case/worst-case gap.\n\n### Speculative Hypothesis\nThere exists a hierarchy of complexity classes indexed by the growth rate of I(x) as x → ∞:\n- **Polynomial tails**: I(x) grows polynomially → benign t",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T11:26:32.263279+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Immediate",
+    "description": "(next cycle): Direction 1 (full LDP) — extends existing Chernoff bound to topological statements",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T11:26:32.277814+00:00"
   },
   {
     "id": "seed_052",
@@ -1311,7 +1427,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cc933f99",
-    "consumed_by_exp_id": "f6b086c3",
+    "consumed_by_exp_id": "6b04f31f",
     "timestamp": "2026-05-16T06:31:54.490610+00:00"
   },
   {
@@ -1518,23 +1634,6 @@
     "timestamp": "2026-05-16T09:33:50.685886+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Direction 3: Communication Complexity Lower Bounds via Factor Rank",
-    "description": "**Hypothesis:** Tropical factor rank provides a systematic source of communication complexity lower bounds via the rectangle covering interpretation.\n\n**Research plan:**\n1. Formalize the connection between tropical factor rank and rectangle covering number: for a tropical matrix $A$, define its *support* $\\text{supp}(A) = \\{(i,j) : A_{ij} \\neq \\infty\\}$, and show that the factor rank is at least the rectangle covering number of $\\text{supp}(A)$.\n2. For matrices where the support covering number equals the factor rank (e.g., diagonal matrices), this gives exact communication complexity results.\n3. Extend to *non-Boolean* tropical communication: define a tropical communication model where parties compute tropical matrix entries, and show that factor rank directly measures the communication c",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "64a1fefb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:33:50.700326+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "Direction 4: Tropical Factor Rank in Machine Learning Architectures",
     "description": "**Hypothesis:** The factor rank of a tropical weight matrix determines the minimum width of an equivalent min-plus neural network layer.\n\n**Research plan:**\n1. Formalize the equivalence between $k$-term tropical factorization and width-$k$ min-plus network layers.\n2. Use the encoding theorem to construct exact width benchmarks: the tropical identity requires width exactly $n$.\n3. Investigate how factor rank relates to the *tropical complexity* of piecewise-linear functions computed by ReLU networks.\n4. Prove lower bounds on network width for specific function classes using factor rank.\n\n**Impact:** Provides rigorous, certified lower bounds on neural network architecture requirements. The explicit encoding family serves as a benchmark suite for evaluating width-reduction algorithms.\n\n**Cros",
@@ -1568,21 +1667,6 @@
     "source_exp_id": "23a76967",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:39:33.570144+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "Timeline Estimate",
-    "description": "| Direction | Estimated Effort | Dependencies |\n|-----------|-----------------|--------------|\n| 1. Walk decomposition | 2-4 weeks | None |\n| 2. Karp's algorithm | 2-3 weeks | Direction 1 |\n| 3. Bellman eigenvectors | 3-5 weeks | Direction 1 |\n| 4. Eventual periodicity | 4-8 weeks | Directions 1, 3 |\n| 5. Mean-payoff games | 6-10 weeks | Direction 3 |\n| 6. Full max-plus | 3-5 weeks | Direction 1 |\n| 7. Representation theory | 8+ weeks | Directions 1, 3 |\n\n---\n\n*This roadmap is designed so that each direction produces independently valuable formal mathematics while building toward a comprehensive tropical spectral theory.*",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23a76967",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:39:33.674570+00:00"
   },
   {
     "id": "fd_0238",
@@ -1631,21 +1715,6 @@
     "source_exp_id": "5e0e0def",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:47:38.651556+00:00"
-  },
-  {
-    "id": "fd_0241",
-    "title": "4. Rank-Sensitive Exact Acceptance Probability Theorem",
-    "description": "**Target theorem**:\n```lean\ntheorem mulVec_eq_zero_card_exact\n    {q m p : ℕ} [Fact q.Prime]\n    (M : Matrix (Fin m) (Fin p) (ZMod q)) :\n    Fintype.card {r : Fin p → ZMod q // M.mulVec r = 0}\n      = q ^ (p - Matrix.rank M)\n```\n\nwhere `Matrix.rank` is the rank of `M` over `ZMod q`.\n\n**Proof strategy**: Interpret `M.mulVec` as a linear map. Its kernel has dimension `p - rank(M)` by rank-nullity. Over a finite field of size `q`, a `d`-dimensional subspace has exactly `q^d` elements. This gives the exact count.\n\n**Key dependencies**:\n- `Matrix.rank` or `LinearMap.rank` in Mathlib.\n- `Module.card_eq_pow_finrank` for converting dimension to cardinality.\n- Rank-nullity for `M.mulVec` as a linear map.\n\n**Impact**: This is strictly stronger than the `≤ q^(p-1)` bound and gives:\n- **Exact error pr",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e0e0def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:47:38.667886+00:00"
   },
   {
     "id": "fd_0242",
