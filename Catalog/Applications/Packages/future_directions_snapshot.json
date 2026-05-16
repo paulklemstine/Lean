@@ -437,23 +437,6 @@
   },
   {
     "id": "fd_0232",
-    "title": "Construct encoding family",
-    "description": "where `tropFactorRank (encode s) = s` using block-diagonal rank-1 decompositions\n\n### Key Lemmas Needed\n- `tropFactorRank_le_dim`: Factor rank is at most $n$ for $n \\times n$ matrices\n- `tropFactorRank_identity`: Factor rank of the tropical identity is $n$\n- `tropFactorRank_diagonal`: Factor rank of a diagonal matrix equals its number of finite entries (under certain conditions)\n- `tropFactorRank_tropical_sum`: Factor rank is subadditive under tropical sum\n\n### Estimated Difficulty\n**High.** The lower bounds are the hardest part. Shitov's NP-hardness result suggests that computing factor rank is intrinsically difficult, but constructing specific matrices with *provable* factor rank requires delicate combinatorial arguments.\n\n### Cross-Domain Impact\n- **Algebraic geometry**: Factor rank con",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "889e6044",
-    "timestamp": "2026-05-16T07:11:31.800180+00:00"
-  },
-  {
-    "id": "fd_0232",
     "title": "Target theorems",
     "description": ":\n- Kraft inequality: `∑ q^(-ℓ(a)) ≤ 1` for q-ary prefix codes.\n- Shannon coding bound: `H_q(p) ≤ E[ℓ] < H_q(p) + 1` where `H_q` uses log base q.\n- Relaxed optimizer: `L⋆(a) = log_q(1/p(a))` achieves equality.\n\n**Strategy**: The existing proofs generalize cleanly by replacing 2 with q throughout. The key lemma `Real.rpow_logb` works for any base b > 0, b ≠ 1. The Gibbs inequality (log x ≤ x - 1) is base-independent.\n\n**Broader significance**: q-ary codes arise naturally in DNA storage (q=4), ternary computing, and multi-level cell flash memory. Formal verification of q-ary optimality enables certified codec design for these technologies.\n\n---\n\n## Direction 3: Tropical Data Processing Inequality\n\n**Goal**: Prove that processing data through a channel cannot increase the tropical coding pote",
     "domains": [
@@ -798,11 +781,39 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "b52cd807",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d032c89b",
     "timestamp": "2026-05-16T14:56:55.954097+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Direction 2",
+    "description": "(Sum-Check) — highest impact, builds directly on existing infrastructure.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "889e6044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:28:07.508154+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Direction 1",
+    "description": "(General distance) — natural mathematical completion of current work.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "889e6044",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T15:28:07.526371+00:00"
   },
   {
     "id": "fd_0113",
@@ -1658,22 +1669,6 @@
     "source_exp_id": "7d4efa6e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T15:07:11.436493+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "3. Compression Lower Bounds from Counting",
-    "description": "**Goal:** Formalize the contrapositive of the encoding bound: if `|α| > 2^k`, then no injective `k`-bit encoding exists.\n\n```lean\ntheorem compression_lower_bound_bitcode\n    {α : Type*} [Fintype α] [DecidableEq α] {k : ℕ}\n    (hcard : 2^k < Fintype.card α) :\n    ¬ ∃ f : α → (Fin k → Bool), Function.Injective f\n```\n\n**Status:** `no_injective_code_of_card_gt` proves this for `Fin (2^k)` codomain. The bitstring version `Fin k → Bool` follows from `fintype_card_fun_bool`.\n\n**Strategy:** Derive directly from `no_injective_code_of_card_gt` and the cardinality identity `|Fin k → Bool| = 2^k`.\n\n**Significance:** This is the formal foundation for proving that certain families are inherently incompressible — a cornerstone of complexity lower bounds.\n\n---",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d4efa6e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:07:11.456235+00:00"
   },
   {
     "id": "fd_0254",
