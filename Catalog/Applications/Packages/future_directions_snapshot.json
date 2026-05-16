@@ -576,22 +576,6 @@
     "timestamp": "2026-05-15T23:22:05.177402+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Piecewise-linearity",
-    "description": ": The Lagrangian dual L(s) is the infimum of affine functions in s (one for each channel), hence concave piecewise-linear. The Legendre transform of a piecewise-linear function is piecewise-linear.\n\n### Cross-Domain Connection\nTropical Legendre duality connects rate-distortion theory to:\n- **Tropical geometry**: R(D) as a tropical hypersurface\n- **Thermodynamics**: Free energy / entropy as Legendre duals\n- **Economics**: Supply-demand equilibrium via dual prices\n- **Optimal transport**: Kantorovich duality for the Wasserstein distance\n\n---\n\n## Team Directive\n\nCreate a team to pursue these directions with the following roles:",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "03df72f3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T01:35:37.745545+00:00"
-  },
-  {
     "id": "fd_0230",
     "title": "Union bound",
     "description": ": total cheating probability ≤ Σ d_i / |S| ≤ nd/|S|.\n\n### Cross-Domain Impact\n- **Complexity Theory**: Sum-check is the core of #P hardness amplification\n- **Zero-Knowledge Proofs**: Foundation for SNARKs and STARKs\n- **Verifiable Computation**: Delegating computation to untrusted servers\n\n### Key Lean Targets\n```\ntheorem sum_check_soundness :\n  is_cheating_prover P →\n  Pr[verifier_accepts (sum_check_protocol P V)] ≤ n * d / |S|\n```\n\n---\n\n## Direction 5: List Decoding Beyond the Unique Radius\n\n### Statement\nProve that for the Reed–Muller code RM(d, n, S), the number of codewords within Hamming distance `|S|^n - t` of any received word is at most `(|S|^n / t)^d`, provided `t > d · |S|^(n-1)`.\n\nThis is the multivariate analogue of the Guruswami–Sudan list-decoding bound.\n\n### Hypothesis\nBeyo",
@@ -649,20 +633,6 @@
     "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:21:48.725714+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Define the perturbation space",
-    "description": "Parameterize the family of tropical max functions by bias vectors $b \\in \\mathbb{R}^m$.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:21:48.828411+00:00"
   },
   {
     "id": "fd_0252",
@@ -872,18 +842,32 @@
     "timestamp": "2026-05-16T05:33:11.815310+00:00"
   },
   {
-    "id": "fd_0244",
-    "title": "Builds on existing infrastructure",
-    "description": "(import the current DivisorTheory module).",
+    "id": "fd_0252",
+    "title": "Iteration",
+    "description": ": If a direction fails, analyze the failure and either decompose further or pivot to an alternative approach.\n\n### Priority Ordering",
     "domains": [
       "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "3c13f65f",
+    "source_exp_id": "1e7db8da",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:33:11.827706+00:00"
+    "timestamp": "2026-05-16T05:33:34.143216+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Direction 2",
+    "description": "(Discrete Morse collapse): Important for computational applications, moderate complexity",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1e7db8da",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T05:33:34.173680+00:00"
   },
   {
     "id": "seed_052",
@@ -1613,50 +1597,6 @@
     "timestamp": "2026-05-16T04:31:45.457889+00:00"
   },
   {
-    "id": "fd_0244",
-    "title": "Conjectural Theorem Statement",
-    "description": "```\ntheorem berggren_orbit_complete (a b c : ℤ) (h : IsPrimPyth a b c) :\n    ∃! w : List BerggrenGen, evalWord w rootTriple = (a, b, c)\n```",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "62116f58",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:35:08.463911+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "What's Missing",
-    "description": "- The descent algorithm is defined (via `berggrenInv`) but the well-foundedness of descent needs formal proof. Specifically: for any primitive triple with c > 5, exactly one of the three inverse transforms produces a triple with all entries positive and strictly smaller hypotenuse.\n- Uniqueness of the descent path requires showing that the three inverse transforms produce distinct results and at most one yields a valid primitive triple.\n- The key lemma needed: a \"sigma classification\" that determines, from the signs and parities of a − b, a + b relative to c, which branch of the tree the triple belongs to.",
-    "domains": [
-      "Pythagorean",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "62116f58",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:35:08.501440+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "What It Builds On",
-    "description": "- `berggren_generates_SL2_F3` (the mod-3 generation theorem)\n- `applyGen_euclid` (the Berggren-Euclid correspondence)\n- `det_euclidMatA`, `det_euclidMatC` (determinant structure)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "62116f58",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:35:08.526724+00:00"
-  },
-  {
     "id": "fd_0236",
     "title": "1. Tropical ElGamal / KEM with IND-CPA from Tropical DDH",
     "description": "**Goal**: Formalize a complete tropical ElGamal key encapsulation mechanism and prove IND-CPA security under the tropical DDH assumption.\n\n**Hypothesis**: The tropical DDH tuple (G, G^a, G^b, G^{ab}) is computationally indistinguishable from (G, G^a, G^b, R) where R is a random tropical matrix. Under this assumption, tropical ElGamal encryption — where ciphertexts are (G^r, M ⊗ G^{ar}) — is IND-CPA secure.\n\n**Proof Strategy**:\n1. Define a formal IND-CPA game as a function from adversaries to advantage bounds.\n2. Show that any IND-CPA adversary can be converted into a DDH distinguisher with the same advantage (standard hybrid argument).\n3. Formalize the hybrid step: replacing G^{ab} with R in the ciphertext makes the masked message statistically independent of M.\n\n**Cross-Domain Connection*",
@@ -1745,161 +1685,5 @@
     "source_exp_id": "9a668faa",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T05:30:16.450926+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "3. Boolean Low-Degree Agreement Rigidity",
-    "description": "**Theorem Target:** For multilinear polynomials $p : \\{0,1\\}^n \\to \\mathbb{F}_2$ of degree at most $d$, and a target function $f : \\{0,1\\}^n \\to \\mathbb{F}_2$:\n\nIf $L$ distinct multilinear polynomials of degree $\\leq d$ each agree with $f$ on at least $t$ of the $2^n$ inputs, then $L$ satisfies a bound of the form:\n$$L \\leq \\binom{n}{\\leq d} \\cdot \\frac{2^n}{t}.$$\n\n**Why it is hard:** Over $\\mathbb{F}_2$, every polynomial is multilinear, so degree bounds behave differently. The zero set of a nonzero multilinear polynomial of degree $d$ has size exactly $2^{n-1}$ (by the Schwartz–Zippel specialization), not $d \\cdot 2^{n-1}$ as in the general case. The agreement structure is richer because the polynomial space has dimension $\\binom{n}{\\leq d}$. Formalizing multilinear polynomials and their ",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9a668faa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:30:16.497572+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "4. Tropical Agreement Geometry",
-    "description": "**Theorem Target:** Define tropical polynomials as $p(x) = \\max_{i}(a_i + i \\cdot x)$ for $a_i \\in \\mathbb{R} \\cup \\{-\\infty\\}$, and tropical agreement sets as $A(p, f) = \\{x \\in S : p(x) = f(x)\\}$. Prove that for distinct tropical polynomials of \"degree\" $\\leq d$:\n$$|A(p, f) \\cap A(q, f)| \\leq d$$\nwhere the bound comes from the number of \"breakpoints\" of $p - q$ (the tropical analogue of roots).\n\n**Why it is hard:** Tropical geometry replaces field operations with $(\\max, +)$, which breaks ring-theoretic arguments. The \"root bound\" for tropical polynomials is different: a tropical polynomial of degree $d$ has at most $d$ breakpoints, but the structure of agreement sets is non-algebraic. Formalizing tropical polynomials in Lean requires entirely new definitions, and the Lean/Mathlib suppor",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9a668faa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:30:16.511383+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "5. Rank/Interpolation Strengthening via Vandermonde Determinants",
-    "description": "**Theorem Target:** Improve the Bonferroni bound $2Lt \\leq 2|S| + L(L-1)d$ to an exponent-sensitive bound:\n$$L \\leq \\binom{|S|}{d+1}^{1/(d+1)}$$\nor similar, using the rank of the Vandermonde-type evaluation matrix.\n\n**Why it is hard:** The argument requires showing that the evaluation vectors of $L$ distinct degree-$\\leq d$ polynomials on $S$ are linearly independent when $L \\leq d + 1$ (by Vandermonde non-singularity), and then using this to derive tighter list-size bounds. Formalizing Vandermonde determinants and their non-vanishing requires substantial linear algebra infrastructure.\n\n**What infrastructure from this cycle enables it:** The polynomial evaluation framework (`Polynomial.eval`) and the agreement set definitions provide the starting point. The key new ingredient is the connec",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9a668faa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:30:16.523974+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "1. Decision Procedure via Polyhedral Active-Region Computation",
-    "description": "**Hypothesis**: The essentialization step can be made algorithmically effective by computing active regions (the set of points where each monomial achieves the minimum) via linear programming.\n\n**Proof Strategy**: For each monomial m in a collected support, the active region R_m = {x : evalMonom m x ≤ evalMonom m' x, ∀ m' ∈ S} is a polyhedron defined by linear inequalities. Checking R_m ≠ ∅ is a linear feasibility problem solvable in polynomial time. This gives a polynomial-time decision procedure for essentiality (given the expanded support).\n\n**Cross-Domain Connections**: Connects to computational geometry (vertex enumeration), linear programming (feasibility), and tropical convexity.\n\n**Concrete Next Steps**:\n- Implement LP-based essentiality checker\n- Prove soundness: LP feasibility ↔ ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8032c745",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:32:47.423881+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "2. Rational Tropical Expressions and Residuated Lattices",
-    "description": "**Hypothesis**: The normal form theorem extends to rational tropical expressions (quotients of tropical polynomials), yielding canonical forms for min-plus rational functions.\n\n**Proof Strategy**: A tropical rational function f/g (where f, g are tropical polynomials) corresponds to max(f) - min(g) in classical terms. The essential support generalizes to the \"balanced\" or \"reduced\" representation where numerator and denominator share no common factor. Prove uniqueness of the reduced form.\n\n**Cross-Domain Connections**: Residuated lattices, max-plus linear algebra, tropical geometry of rational curves.\n\n**Concrete Next Steps**:\n- Define TropRationalExpr with a division constructor\n- Formalize tropical GCD for monomial supports\n- Prove reduced rational forms are unique\n- Connect to Kleene sta",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8032c745",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:32:47.440723+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "3. Matrix-Valued Tropical Expressions and Weighted Automata",
-    "description": "**Hypothesis**: Canonical normal forms exist for matrix-valued tropical expressions, enabling equivalence checking for weighted automata and min-plus linear recurrences.\n\n**Proof Strategy**: A tropical matrix polynomial M(x) = min_k (C_k + W_k · x) defines a piecewise-affine matrix function. The normal form should retain only the \"Pareto-optimal\" matrix monomials. Use tropical eigenvalue theory to characterize the essential support.\n\n**Cross-Domain Connections**: Weighted automata theory, discrete event systems, tropical spectral theory, Myhill-Nerode theorem for weighted languages.\n\n**Concrete Next Steps**:\n- Formalize tropical matrix semiring in Lean\n- Define matrix-valued TropPolyNF\n- Prove soundness of matrix expansion\n- Investigate connection to weighted automaton minimization",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8032c745",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:32:47.456009+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "4. Tropical Fenchel Duality and Convex Conjugates",
-    "description": "**Hypothesis**: The normal form can be recovered from the Legendre-Fenchel transform (convex conjugate) of the tropical polynomial, giving a duality-based proof of completeness.\n\n**Proof Strategy**: A tropical polynomial f(x) = min_m (c_m + ⟨w_m, x⟩) is a concave polyhedral function. Its conjugate f*(y) encodes the same information. The essential monomials are exactly the exposed faces of the epigraph. Prove: f* determines the essential support uniquely.\n\n**Cross-Domain Connections**: Convex analysis, Fenchel duality, optimal transport, information geometry.\n\n**Concrete Next Steps**:\n- Formalize tropical convex conjugate in Lean\n- Prove f** = f for tropical polynomials (involution)\n- Show essential support ↔ exposed faces of conjugate\n- Connect to certified convex optimization",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8032c745",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:32:47.474194+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "5. Complexity Bounds on Normalized Support Size",
-    "description": "**Hypothesis**: The size of the essential support (after normalization) is bounded by combinatorial properties of the Newton polytope, giving circuit complexity lower bounds.\n\n**Proof Strategy**: The essential support is a subset of the vertices of the lower convex hull of the lifted Newton polytope {(w, c) : (c, w) ∈ S}. The number of vertices is bounded by O(n^{⌊d/2⌋}) for d-dimensional polytopes (Upper Bound Theorem). For tropical circuits of depth d, the expansion has at most 2^d monomials, so the essential support has at most 2^d terms.\n\n**Cross-Domain Connections**: Computational complexity, polytope theory, tropical circuit complexity, Newton polytope bounds.\n\n**Concrete Next Steps**:\n- Formalize Upper Bound Theorem connection\n- Prove essential support ≤ vertices of Newton polytope ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8032c745",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:32:47.488840+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "6. Tropical Proof-Carrying Code",
-    "description": "**Hypothesis**: The normal form certificate can serve as a proof-carrying code artifact, enabling certified compilation of optimization programs.\n\n**Proof Strategy**: Attach the essential support as a certificate to compiled min-plus programs. A verifier checks: (1) the certificate is a valid normal form, (2) it semantically matches the source program. By the completeness theorem, verification is sound and complete.\n\n**Cross-Domain Connections**: Proof-carrying code, certified compilation, program equivalence, abstract interpretation.\n\n**Concrete Next Steps**:\n- Design certificate format (normal form + expansion trace)\n- Implement verifier in Lean\n- Benchmark verification time vs. full normalization\n- Apply to certified dynamic programming solvers",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8032c745",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T05:32:47.502173+00:00"
   }
 ]
