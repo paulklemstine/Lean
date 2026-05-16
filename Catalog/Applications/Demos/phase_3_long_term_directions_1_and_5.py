@@ -2,242 +2,303 @@
 """
 Tropical Matrix Algebra — Real-World Applications
 
-Demonstrates practical applications of tropical path algebra:
-1. Critical path analysis in project scheduling
-2. Network routing (longest reliable path)
-3. Tropical neural network propagation
-4. Dynamic programming via matrix powers
+Demonstrates practical applications of the tropical path algebra framework:
+1. Project scheduling (Critical Path Method via tropical powers)
+2. Network routing (optimal bandwidth paths)
+3. Gene regulatory network analysis
+4. ReLU neural network propagation
 """
 
 import numpy as np
-from algorithms import tropical_multiply, tropical_power, find_optimal_walk
 
 
-# ──────────────────────────────────────────────────────────────────
-# Application 1: Critical Path Method (Project Scheduling)
-# ──────────────────────────────────────────────────────────────────
+def tropical_matmul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+    """Tropical (max-plus) matrix multiplication."""
+    return np.max(A[:, :, np.newaxis] + B[np.newaxis, :, :], axis=1)
 
-def critical_path_analysis():
+
+def tropical_power(W: np.ndarray, m: int) -> np.ndarray:
+    """Compute the m-th tropical power of W."""
+    result = W.copy()
+    for _ in range(m):
+        result = tropical_matmul(result, W)
+    return result
+
+
+# ─────────────────────────────────────────────────────────────────
+# Application 1: Project Scheduling (Critical Path Method)
+# ─────────────────────────────────────────────────────────────────
+
+def app_critical_path():
+    """Critical Path Method via tropical matrix powers.
+    
+    In project scheduling, tasks have dependencies and durations.
+    The critical path is the longest path through the dependency graph,
+    determining the minimum project completion time.
+    
+    Tropical matrix power W^{⊗m} computes the maximum total duration
+    of any m+1-edge chain of dependent tasks.
     """
-    Model project scheduling as tropical matrix power computation.
-
-    Tasks are vertices; edge weights are task durations.
-    The tropical power gives the longest (critical) path duration,
-    which determines the minimum project completion time.
-    """
-    print("=" * 60)
-    print("APPLICATION 1: Critical Path Analysis (Project Scheduling)")
-    print("=" * 60)
-
-    # 5 project milestones: Start(0), Design(1), Build(2), Test(3), Deploy(4)
-    # Edge weights = task durations (days)
-    INF = -1e18
-    W = np.array([
-        [INF, 5,   3,   INF, INF],  # Start → Design(5d), Start → Build(3d)
-        [INF, INF, 2,   7,   INF],  # Design → Build(2d), Design → Test(7d)
-        [INF, INF, INF, 4,   INF],  # Build → Test(4d)
-        [INF, INF, INF, INF, 3  ],  # Test → Deploy(3d)
-        [INF, INF, INF, INF, INF],  # Deploy (sink)
-    ], dtype=float)
-
-    labels = ["Start", "Design", "Build", "Test", "Deploy"]
-
-    print("\nProject dependency graph (edge = task, weight = duration in days):")
-    for i in range(5):
-        for j in range(5):
-            if W[i, j] > -1e10:
-                print(f"  {labels[i]} → {labels[j]}: {W[i,j]:.0f} days")
-
-    # Tropical powers reveal longest paths of each length
-    print("\nCritical path analysis via tropical powers:")
+    print("=" * 65)
+    print("APPLICATION 1: Project Scheduling (Critical Path)")
+    print("=" * 65)
+    
+    # Task dependency graph with durations (days)
+    # Tasks: Design(0), Prototype(1), Test(2), Manufacture(3), Ship(4)
+    NEG_INF = -np.inf
+    n = 5
+    tasks = ["Design", "Prototype", "Test", "Manufacture", "Ship"]
+    
+    # W[i][j] = duration of task j if task i must complete before task j
+    W = np.full((n, n), NEG_INF)
+    W[0, 1] = 5   # Design -> Prototype: 5 days
+    W[0, 2] = 3   # Design -> Test: 3 days
+    W[1, 2] = 4   # Prototype -> Test: 4 days
+    W[1, 3] = 7   # Prototype -> Manufacture: 7 days
+    W[2, 3] = 2   # Test -> Manufacture: 2 days
+    W[2, 4] = 6   # Test -> Ship: 6 days
+    W[3, 4] = 3   # Manufacture -> Ship: 3 days
+    np.fill_diagonal(W, 0)
+    
+    print(f"\nTask dependency graph:")
+    for i in range(n):
+        for j in range(n):
+            if W[i, j] > NEG_INF and i != j:
+                print(f"  {tasks[i]} -> {tasks[j]}: {W[i,j]:.0f} days")
+    
+    print(f"\nTropical powers reveal critical path lengths:")
+    for m in range(n - 1):
+        T = tropical_power(W, m)
+        length = m + 1
+        
+        # Find the maximum entry (longest chain of this length)
+        max_val = np.max(T[np.isfinite(T)]) if np.any(np.isfinite(T)) else NEG_INF
+        
+        # Find Design -> Ship path if it exists
+        ds = T[0, 4]
+        ds_str = f"{ds:.0f} days" if np.isfinite(ds) else "no path"
+        
+        print(f"  Length-{length} chains: max duration = {max_val:.0f} days, "
+              f"Design→Ship = {ds_str}")
+    
+    # Overall critical path
+    best = W.copy()
     current = W.copy()
-    for step in range(1, 5):
-        if current[0, 4] > -1e10:
-            print(f"  Length-{step+1} paths: Start→Deploy critical duration = "
-                  f"{current[0,4]:.0f} days")
-        current = tropical_multiply(current, W)
-
-    # Find the actual critical path
-    # The longest path from Start to Deploy determines min completion time
-    best_duration = -np.inf
-    best_path = None
-    for length in range(2, 6):
-        walk, weight = find_optimal_walk(W, length, 0, 4)
-        if weight > best_duration:
-            best_duration = weight
-            best_path = walk
-
-    if best_path:
-        path_names = " → ".join(labels[v] for v in best_path)
-        print(f"\n  Critical path: {path_names}")
-        print(f"  Minimum project duration: {best_duration:.0f} days")
+    for _ in range(1, n - 1):
+        current = tropical_matmul(current, W)
+        best = np.maximum(best, current)
+    
+    cp = best[0, 4]
+    print(f"\n  ★ Critical path (Design → Ship): {cp:.0f} days")
+    print(f"  This is the minimum possible project duration.")
 
 
-# ──────────────────────────────────────────────────────────────────
-# Application 2: Network Reliability (Max Bandwidth Path)
-# ──────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
+# Application 2: Network Bandwidth Routing
+# ─────────────────────────────────────────────────────────────────
 
-def network_routing():
+def app_network_routing():
+    """Optimal bandwidth routing via tropical (max-plus) algebra.
+    
+    In network routing, edge weights represent log-bandwidth.
+    The maximum-weight path gives the highest-bandwidth route.
+    Tropical matrix powers compute optimal multi-hop routes.
     """
-    Find maximum-bandwidth paths in a communication network.
+    print("\n" + "=" * 65)
+    print("APPLICATION 2: Network Bandwidth Routing")
+    print("=" * 65)
+    
+    NEG_INF = -np.inf
+    nodes = ["Server", "Router-A", "Router-B", "Router-C", "Client"]
+    n = len(nodes)
+    
+    # Log-bandwidth weights (higher = more bandwidth)
+    W = np.full((n, n), NEG_INF)
+    W[0, 1] = 10   # Server -> Router-A: 10 Gbps (log-scale)
+    W[0, 2] = 8    # Server -> Router-B
+    W[1, 2] = 5    # Router-A -> Router-B
+    W[1, 3] = 7    # Router-A -> Router-C
+    W[2, 3] = 9    # Router-B -> Router-C
+    W[2, 4] = 6    # Router-B -> Client
+    W[3, 4] = 8    # Router-C -> Client
+    np.fill_diagonal(W, 0)
+    
+    print(f"\nNetwork topology (log-bandwidth weights):")
+    for i in range(n):
+        for j in range(n):
+            if W[i, j] > NEG_INF and i != j:
+                print(f"  {nodes[i]} -> {nodes[j]}: {W[i,j]:.0f}")
+    
+    print(f"\nOptimal routes from Server to Client by hop count:")
+    for hops in range(1, n):
+        T = tropical_power(W, hops - 1)
+        bw = T[0, 4]
+        if np.isfinite(bw):
+            print(f"  {hops} hop(s): bandwidth score = {bw:.0f}")
+        else:
+            print(f"  {hops} hop(s): no route exists")
+    
+    # Best overall route
+    best = W.copy()
+    current = W.copy()
+    for _ in range(1, n - 1):
+        current = tropical_matmul(current, W)
+        best = np.maximum(best, current)
+    
+    print(f"\n  ★ Optimal Server→Client bandwidth score: {best[0,4]:.0f}")
 
-    Edge weights = log(bandwidth). Tropical max-plus finds the path
-    that maximizes total log-bandwidth = maximizes bandwidth product.
+
+# ─────────────────────────────────────────────────────────────────
+# Application 3: Gene Regulatory Networks
+# ─────────────────────────────────────────────────────────────────
+
+def app_gene_regulation():
+    """Gene regulatory network analysis via tropical semantics.
+    
+    Genes activate or inhibit each other with varying strengths.
+    Tropical matrix powers reveal the strongest regulatory cascades
+    of each length, identifying dominant signaling pathways.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Network Routing (Max Bandwidth Path)")
-    print("=" * 60)
+    print("\n" + "=" * 65)
+    print("APPLICATION 3: Gene Regulatory Cascade Analysis")
+    print("=" * 65)
+    
+    genes = ["TF-A", "Gene-B", "Gene-C", "Gene-D", "Output"]
+    n = len(genes)
+    NEG_INF = -np.inf
+    
+    # Regulation strengths (log fold-change)
+    W = np.full((n, n), NEG_INF)
+    W[0, 1] = 2.5   # TF-A activates Gene-B
+    W[0, 2] = 1.8   # TF-A activates Gene-C
+    W[1, 3] = 3.0   # Gene-B strongly activates Gene-D
+    W[2, 3] = 1.5   # Gene-C weakly activates Gene-D
+    W[2, 4] = 2.0   # Gene-C activates Output
+    W[3, 4] = 2.2   # Gene-D activates Output
+    np.fill_diagonal(W, 0)
+    
+    print(f"\nRegulatory network (activation strengths):")
+    for i in range(n):
+        for j in range(n):
+            if W[i, j] > NEG_INF and i != j:
+                print(f"  {genes[i]} → {genes[j]}: strength {W[i,j]:.1f}")
+    
+    print(f"\nStrongest regulatory cascades from TF-A to Output:")
+    for depth in range(1, n):
+        T = tropical_power(W, depth - 1)
+        signal = T[0, 4]
+        if np.isfinite(signal):
+            print(f"  Depth {depth}: cumulative strength = {signal:.1f}")
+        else:
+            print(f"  Depth {depth}: no cascade exists")
+    
+    # Best cascade
+    best = W.copy()
+    current = W.copy()
+    for _ in range(1, n - 1):
+        current = tropical_matmul(current, W)
+        best = np.maximum(best, current)
+    
+    print(f"\n  ★ Strongest TF-A→Output cascade: {best[0,4]:.1f}")
+    print(f"  This identifies the dominant signaling pathway.")
 
-    # 4 network nodes with bandwidth capacities on links
-    # Using log-bandwidth as weights
-    bandwidths = np.array([
-        [0, 100, 50, 0],
-        [100, 0, 80, 30],
-        [50, 80, 0, 90],
-        [0, 30, 90, 0]
-    ], dtype=float)
 
-    W = np.where(bandwidths > 0, np.log(bandwidths), -np.inf)
-    labels = ["Server A", "Server B", "Server C", "Server D"]
+# ─────────────────────────────────────────────────────────────────
+# Application 4: ReLU Neural Network as Tropical Computation
+# ─────────────────────────────────────────────────────────────────
 
-    print("\nNetwork topology (bandwidth in Mbps):")
-    for i in range(4):
-        for j in range(i + 1, 4):
-            if bandwidths[i, j] > 0:
-                print(f"  {labels[i]} ↔ {labels[j]}: {bandwidths[i,j]:.0f} Mbps")
-
-    # Multi-hop routing via tropical powers
-    print("\nMax-bandwidth paths (via tropical powers):")
-    for length in range(1, 4):
-        Wm = tropical_power(W, length - 1)
-        for i in range(4):
-            for j in range(i + 1, 4):
-                if Wm[i, j] > -1e10:
-                    bw = np.exp(Wm[i, j])
-                    print(f"  {labels[i]}→{labels[j]} ({length} hops): "
-                          f"bandwidth = {bw:.0f} Mbps")
-
-
-# ──────────────────────────────────────────────────────────────────
-# Application 3: Tropical Neural Network Layer
-# ──────────────────────────────────────────────────────────────────
-
-def tropical_neural_network():
+def app_relu_tropical():
+    """ReLU neural networks as tropical (max-plus) computations.
+    
+    A ReLU neuron computes max(0, w·x + b) = max(0, Σ w_i x_i + b).
+    When inputs are log-scale activations, this becomes tropical:
+    the output is the maximum over input contributions.
+    
+    Layer-by-layer propagation is tropical matrix multiplication.
     """
-    Demonstrate a tropical neural network layer.
-
-    In a tropical network, each layer computes:
-      output[j] = max_k (weight[j,k] + input[k])
-
-    This is exactly tropical matrix-vector multiplication.
-    Multi-layer propagation = tropical matrix power applied to input.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Tropical Neural Network Propagation")
-    print("=" * 60)
-
-    # 3-node network, 2 layers with same weights
-    W = np.array([
-        [1.0, -0.5, 2.0],
-        [0.5, 1.5, -1.0],
-        [-1.0, 3.0, 0.0]
+    print("\n" + "=" * 65)
+    print("APPLICATION 4: ReLU Network as Tropical Computation")
+    print("=" * 65)
+    
+    # 3-layer network: 4 inputs -> 3 hidden -> 3 hidden -> 2 outputs
+    np.random.seed(123)
+    
+    # Weight matrices (log-scale interpretation)
+    W1 = np.array([
+        [2.0, 1.5, 0.5, 3.0],
+        [1.0, 2.5, 1.0, 0.5],
+        [0.5, 0.5, 2.0, 1.0],
     ])
-
-    input_vec = np.array([1.0, 2.0, -1.0])
-
-    print(f"\nWeight matrix W:\n{W}")
-    print(f"Input: {input_vec}")
-
-    # Layer 1: tropical matrix-vector multiply
-    layer1 = np.array([max(W[j, k] + input_vec[k] for k in range(3)) for j in range(3)])
-    print(f"\nAfter layer 1 (max_k(W[j,k] + x[k])):")
-    print(f"  {layer1}")
-    for j in range(3):
-        terms = [f"({W[j,k]:.1f}+{input_vec[k]:.1f})" for k in range(3)]
-        vals = [W[j, k] + input_vec[k] for k in range(3)]
-        best_k = np.argmax(vals)
-        print(f"  node {j}: max({', '.join(terms)}) = {layer1[j]:.1f} (via input {best_k})")
-
+    
+    W2 = np.array([
+        [1.5, 2.0, 0.5],
+        [0.5, 1.0, 2.5],
+        [2.0, 0.5, 1.0],
+    ])
+    
+    W3 = np.array([
+        [1.0, 1.5, 2.0],
+        [2.0, 0.5, 1.0],
+    ])
+    
+    # Input activations (log-scale)
+    x = np.array([1.0, 2.0, 0.5, 1.5])
+    
+    print(f"\nInput activations: {x}")
+    
+    # Layer 1: tropical activation
+    h1 = np.array([max(W1[j, i] + x[i] for i in range(4)) for j in range(3)])
+    print(f"Hidden layer 1 (tropical): {h1}")
+    
     # Layer 2
-    layer2 = np.array([max(W[j, k] + layer1[k] for k in range(3)) for j in range(3)])
-    print(f"\nAfter layer 2:")
-    print(f"  {layer2}")
-
-    # Compare with tropical power
-    W2 = tropical_multiply(W, W)
-    direct = np.array([max(W2[j, k] + input_vec[k] for k in range(3)) for j in range(3)])
-    print(f"\nDirect via W² ⊗ x:")
-    print(f"  {direct}")
-    print(f"Match: {np.allclose(layer2, direct)} ✓")
-    print("\n→ Multi-layer tropical propagation = tropical power × input")
-
-
-# ──────────────────────────────────────────────────────────────────
-# Application 4: Dynamic Programming (Viterbi-style)
-# ──────────────────────────────────────────────────────────────────
-
-def viterbi_decoding():
-    """
-    Viterbi algorithm as tropical matrix power.
-
-    Hidden Markov Model with 3 states, finding the most likely
-    state sequence via tropical (max-plus) matrix multiplication.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 4: Viterbi Decoding via Tropical Algebra")
-    print("=" * 60)
-
-    # Transition log-probabilities
-    T = np.array([
-        [-0.5, -1.0, -2.0],
-        [-1.5, -0.3, -1.2],
-        [-2.0, -0.8, -0.4]
-    ])
-
-    states = ["Sunny", "Cloudy", "Rainy"]
-    print("\nTransition log-probabilities:")
-    for i in range(3):
-        for j in range(3):
-            print(f"  {states[i]} → {states[j]}: {T[i,j]:.1f}")
-
-    print("\nMost likely state sequences via tropical powers:")
-    for steps in range(1, 5):
-        Tm = tropical_power(T, steps - 1)
-        print(f"\n  {steps}-step transitions (log-probability of best path):")
-        for i in range(3):
-            best_j = np.argmax(Tm[i])
-            print(f"    {states[i]} → {states[best_j]}: {Tm[i, best_j]:.2f}")
+    h2 = np.array([max(W2[j, i] + h1[i] for i in range(3)) for j in range(3)])
+    print(f"Hidden layer 2 (tropical): {h2}")
+    
+    # Layer 3 (output)
+    out = np.array([max(W3[j, i] + h2[i] for i in range(3)) for j in range(2)])
+    print(f"Output (tropical): {out}")
+    
+    print(f"\n  Each layer performs tropical matrix-vector multiplication.")
+    print(f"  The full network computes the maximum-weight path")
+    print(f"  from each input neuron through the network to each output.")
+    print(f"  This is exactly what our tropPow theorem guarantees!")
 
 
-# ──────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    critical_path_analysis()
-    network_routing()
-    tropical_neural_network()
-    viterbi_decoding()
-    print("\n" + "=" * 60)
-    print("ALL APPLICATION DEMONSTRATIONS COMPLETE")
-    print("=" * 60)
+    app_critical_path()
+    app_network_routing()
+    app_gene_regulation()
+    app_relu_tropical()
+    
+    print("\n" + "=" * 65)
+    print("All applications demonstrated successfully.")
+    print("=" * 65)
 
 
 #!/usr/bin/env python3
 """
-Tropical Matrix Algebra and Graph Path Semantics — Demonstrations
+Tropical Matrix Algebra and Graph Path Semantics — Interactive Demo
 
-This script demonstrates the core theorems connecting tropical (max-plus)
-matrix algebra to weighted directed graph path optimization.
+Demonstrates the core theorems connecting tropical (max-plus) matrix
+multiplication to weighted directed graph path optimization.
 """
 
 import numpy as np
-from itertools import product as cartesian_product
+from itertools import product as cart_product
 
-# ──────────────────────────────────────────────────────────────────
-# Core Definitions
-# ──────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
+# 1. Tropical Matrix Multiplication
+# ─────────────────────────────────────────────────────────────────
 
 def trop_mul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
-    """Tropical matrix multiplication: (A ⊗ B)_{ij} = max_k (A_{ik} + B_{kj})."""
+    """Tropical (max-plus) matrix multiplication.
+    
+    (A ⊗ B)_{ij} = max_k (A_{ik} + B_{kj})
+    
+    Replaces conventional sum with max and product with addition.
+    """
     n = A.shape[0]
     C = np.full((n, n), -np.inf)
     for i in range(n):
@@ -247,207 +308,227 @@ def trop_mul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
 
 
 def trop_pow(W: np.ndarray, m: int) -> np.ndarray:
-    """Tropical matrix power: tropPow W m.
-    m=0 returns W itself (length-1 walks).
-    m=k returns the (k+1)-fold tropical product."""
+    """Tropical matrix power: W^{⊗m} via iterated tropical multiplication.
+    
+    - trop_pow(W, 0) = W  (length-1 walks)
+    - trop_pow(W, m+1) = trop_mul(trop_pow(W, m), W)
+    """
     if m == 0:
         return W.copy()
-    result = W.copy()
-    for _ in range(m):
-        result = trop_mul(result, W)
-    return result
+    return trop_mul(trop_pow(W, m - 1), W)
 
 
-def all_walks(n: int, length: int, i: int, j: int):
-    """Generate all walks of a given length from i to j.
-    A walk of length m visits m+1 vertices."""
+# ─────────────────────────────────────────────────────────────────
+# 2. Brute-force path enumeration for verification
+# ─────────────────────────────────────────────────────────────────
+
+def all_walks(n: int, length: int, start: int, end: int):
+    """Enumerate all walks of a given length from start to end.
+    
+    A walk of length m uses m edges and visits m+1 vertices.
+    Returns list of vertex tuples.
+    """
     if length == 1:
-        yield [i, j]
-        return
-    for intermediates in cartesian_product(range(n), repeat=length - 1):
-        walk = [i] + list(intermediates) + [j]
-        yield walk
+        return [(start, end)]
+    walks = []
+    # A walk of length `length` has `length + 1` vertices
+    # First vertex = start, last vertex = end
+    for intermediates in cart_product(range(n), repeat=length - 1):
+        path = (start,) + intermediates + (end,)
+        walks.append(path)
+    return walks
 
 
-def walk_weight(W: np.ndarray, walk: list) -> float:
-    """Total weight of a walk: sum of edge weights along the walk."""
+def walk_weight(W: np.ndarray, walk: tuple) -> float:
+    """Compute the weight of a walk: sum of edge weights along the path."""
     return sum(W[walk[t], walk[t + 1]] for t in range(len(walk) - 1))
 
 
-def max_walk_weight(W: np.ndarray, m: int, i: int, j: int) -> float:
-    """Maximum weight over all walks of length m from i to j."""
-    return max(walk_weight(W, w) for w in all_walks(W.shape[0], m, i, j))
+def max_walk_weight(W: np.ndarray, length: int, i: int, j: int) -> float:
+    """Maximum weight over all walks of a given length from i to j."""
+    n = W.shape[0]
+    walks = all_walks(n, length, i, j)
+    return max(walk_weight(W, w) for w in walks)
 
 
-# ──────────────────────────────────────────────────────────────────
-# Demo 1: Tropical Product = Max Path Weight (Length-2 Paths)
-# ──────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
+# 3. Demo: verify tropPow_eq_sup_pathWeight
+# ─────────────────────────────────────────────────────────────────
 
-print("=" * 70)
-print("DEMO 1: Tropical Product = Max Weight over Length-2 Paths")
-print("=" * 70)
+def demo_path_semantics():
+    """Verify that tropical matrix powers compute maximum walk weights."""
+    print("=" * 65)
+    print("DEMO 1: Tropical Powers = Max Walk Weights")
+    print("=" * 65)
+    
+    # 4-vertex weighted directed graph
+    W = np.array([
+        [ 0,  3, -1,  2],
+        [ 1,  0,  4, -2],
+        [ 5, -3,  0,  1],
+        [ 2,  3,  1,  0]
+    ], dtype=float)
+    
+    print("\nWeight matrix W (4-vertex directed graph):")
+    print(W)
+    
+    for m in range(4):  # m=0 means length-1 walks (single edges)
+        length = m + 1
+        T = trop_pow(W, m)
+        print(f"\n--- Length-{length} walks (tropPow W {m}) ---")
+        
+        all_match = True
+        for i in range(4):
+            for j in range(4):
+                brute = max_walk_weight(W, length, i, j)
+                if abs(T[i, j] - brute) > 1e-12:
+                    print(f"  MISMATCH at ({i},{j}): trop={T[i,j]}, brute={brute}")
+                    all_match = False
+        
+        if all_match:
+            print(f"  ✓ All entries match brute-force enumeration")
+        print(f"  Tropical power matrix:\n{T}")
 
-np.random.seed(42)
-n = 4
-A = np.random.randint(-5, 10, size=(n, n)).astype(float)
-B = np.random.randint(-5, 10, size=(n, n)).astype(float)
 
-print(f"\nMatrix A ({n}×{n}):")
-print(A)
-print(f"\nMatrix B ({n}×{n}):")
-print(B)
+# ─────────────────────────────────────────────────────────────────
+# 4. Demo: verify tropMul_assoc
+# ─────────────────────────────────────────────────────────────────
 
-C = trop_mul(A, B)
-print(f"\nTropical Product A ⊗ B:")
-print(C)
+def demo_associativity():
+    """Verify associativity of tropical matrix multiplication."""
+    print("\n" + "=" * 65)
+    print("DEMO 2: Associativity of Tropical Multiplication")
+    print("=" * 65)
+    
+    np.random.seed(42)
+    n = 5
+    A = np.random.randn(n, n) * 3
+    B = np.random.randn(n, n) * 3
+    C = np.random.randn(n, n) * 3
+    
+    LHS = trop_mul(trop_mul(A, B), C)
+    RHS = trop_mul(A, trop_mul(B, C))
+    
+    diff = np.max(np.abs(LHS - RHS))
+    print(f"\n  max |( A ⊗ B ) ⊗ C  -  A ⊗ ( B ⊗ C )| = {diff:.2e}")
+    print(f"  ✓ Associativity verified" if diff < 1e-12 else "  ✗ FAILED")
 
-print("\nVerification (entry-by-entry):")
-for i in range(n):
-    for j in range(n):
-        max_path = max(A[i, k] + B[k, j] for k in range(n))
-        best_k = max(range(n), key=lambda k: A[i, k] + B[k, j])
-        assert abs(C[i, j] - max_path) < 1e-10
-        print(f"  (A⊗B)[{i},{j}] = {C[i,j]:.0f}  "
-              f"= max_k(A[{i},k]+B[k,{j}])  "
-              f"(best via k={best_k}: {A[i,best_k]:.0f}+{B[best_k,j]:.0f}={max_path:.0f}) ✓")
 
-# ──────────────────────────────────────────────────────────────────
-# Demo 2: Associativity of Tropical Multiplication
-# ──────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
+# 5. Demo: Bellman recurrence
+# ─────────────────────────────────────────────────────────────────
 
-print("\n" + "=" * 70)
-print("DEMO 2: Associativity (A ⊗ B) ⊗ C = A ⊗ (B ⊗ C)")
-print("=" * 70)
+def demo_bellman():
+    """Verify the Bellman optimality recurrence."""
+    print("\n" + "=" * 65)
+    print("DEMO 3: Bellman Optimality Recurrence")
+    print("=" * 65)
+    
+    W = np.array([
+        [ 0,  2,  5],
+        [ 1,  0,  3],
+        [ 4, -1,  0]
+    ], dtype=float)
+    
+    print("\nWeight matrix W (3-vertex graph):")
+    print(W)
+    
+    for m in range(1, 5):
+        T_prev = trop_pow(W, m - 1)
+        T_curr = trop_pow(W, m)
+        
+        # Bellman: T_curr[i][j] = max_k (T_prev[i][k] + W[k][j])
+        bellman_ok = True
+        for i in range(3):
+            for j in range(3):
+                bellman_val = max(T_prev[i, k] + W[k, j] for k in range(3))
+                if abs(T_curr[i, j] - bellman_val) > 1e-12:
+                    bellman_ok = False
+        
+        status = "✓" if bellman_ok else "✗"
+        print(f"  {status} Bellman recurrence holds for m={m}")
 
-D = np.random.randint(-5, 10, size=(n, n)).astype(float)
-left = trop_mul(trop_mul(A, B), D)
-right = trop_mul(A, trop_mul(B, D))
-print(f"\n(A ⊗ B) ⊗ C:\n{left}")
-print(f"\nA ⊗ (B ⊗ C):\n{right}")
-print(f"\nAssociativity holds: {np.allclose(left, right)} ✓")
 
-# ──────────────────────────────────────────────────────────────────
-# Demo 3: Bellman Recurrence
-# ──────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
+# 6. Demo: Boolean reachability
+# ─────────────────────────────────────────────────────────────────
 
-print("\n" + "=" * 70)
-print("DEMO 3: Bellman Optimality Recurrence")
-print("=" * 70)
+def demo_boolean_reachability():
+    """Demonstrate Boolean reachability as a special case of tropical semantics."""
+    print("\n" + "=" * 65)
+    print("DEMO 4: Boolean Reachability via Tropical Semantics")
+    print("=" * 65)
+    
+    # Adjacency matrix (Boolean graph)
+    G = np.array([
+        [False, True,  False, False],
+        [False, False, True,  False],
+        [False, False, False, True ],
+        [True,  False, False, False],
+    ])
+    
+    print("\nAdjacency matrix G (4-vertex directed cycle):")
+    print(G.astype(int))
+    
+    # Encode: True -> 0, False -> -inf
+    NEG_INF = -1e18
+    W = np.where(G, 0.0, NEG_INF)
+    
+    for m in range(1, 6):
+        T = trop_pow(W, m - 1)  # length-m walks
+        print(f"\n  Length-{m} reachability (finite = reachable):")
+        reach = T > NEG_INF / 2
+        for i in range(4):
+            row = [("1" if reach[i, j] else "0") for j in range(4)]
+            print(f"    {i} -> {' '.join(row)}")
 
-W = np.array([
-    [0, 3, -1, 7],
-    [2, 0, 5, -2],
-    [4, 1, 0, 6],
-    [-3, 8, 2, 0]
-], dtype=float)
 
-print(f"\nWeight matrix W ({n}×{n}):")
-print(W)
+# ─────────────────────────────────────────────────────────────────
+# 7. Demo: tropical idempotence
+# ─────────────────────────────────────────────────────────────────
 
-for m in range(1, 5):
-    Wm = trop_pow(W, m - 1)  # tropPow W (m-1) gives length-m walks
-    print(f"\ntropPow W {m-1} (optimal length-{m} walk weights):")
-    print(Wm)
+def demo_idempotence():
+    """Demonstrate tropical idempotence: max(a, a) = a."""
+    print("\n" + "=" * 65)
+    print("DEMO 5: Tropical Idempotence (max a a = a)")
+    print("=" * 65)
+    
+    test_vals = [-3.14, 0, 1, 42, -1e10, 1e10]
+    all_ok = True
+    for a in test_vals:
+        result = max(a, a)
+        ok = (result == a)
+        if not ok:
+            all_ok = False
+        print(f"  max({a}, {a}) = {result}  {'✓' if ok else '✗'}")
+    
+    print(f"\n  {'✓ All passed' if all_ok else '✗ FAILED'}")
+    print("  This is the idempotence axiom of tropical semirings.")
+    print("  It means: taking the max of a value with itself changes nothing.")
+    print("  In graph terms: duplicate paths don't improve the optimal score.")
 
-    # Verify Bellman recurrence for m >= 2
-    if m >= 2:
-        Wm_prev = trop_pow(W, m - 2)
-        for i in range(n):
-            for j in range(n):
-                bellman_val = max(Wm_prev[i, k] + W[k, j] for k in range(n))
-                assert abs(Wm[i, j] - bellman_val) < 1e-10
-        print(f"  Bellman recurrence verified ✓")
 
-# ──────────────────────────────────────────────────────────────────
-# Demo 4: Tropical Powers = Max Walk Weights (Main Theorem)
-# ──────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────
+# Run all demos
+# ─────────────────────────────────────────────────────────────────
 
-print("\n" + "=" * 70)
-print("DEMO 4: tropPow W m = max walk weight (Main Theorem)")
-print("=" * 70)
-
-n_small = 3
-W_small = np.array([
-    [1, 3, -2],
-    [4, -1, 5],
-    [2, 0, 3]
-], dtype=float)
-print(f"\nWeight matrix ({n_small}×{n_small}):")
-print(W_small)
-
-for m in range(1, 5):
-    Wm = trop_pow(W_small, m - 1)
-    print(f"\nLength-{m} walks (tropPow W {m-1}):")
-    all_match = True
-    for i in range(n_small):
-        for j in range(n_small):
-            # Enumerate all walks of length m
-            walks = list(all_walks(n_small, m, i, j))
-            weights = [walk_weight(W_small, w) for w in walks]
-            max_w = max(weights)
-            best_walk = walks[weights.index(max_w)]
-            assert abs(Wm[i, j] - max_w) < 1e-10, \
-                f"Mismatch at ({i},{j}): tropPow={Wm[i,j]}, max_walk={max_w}"
-            if i == 0:
-                walk_str = " → ".join(map(str, best_walk))
-                print(f"  ({i},{j}): weight={max_w:.0f}, "
-                      f"best walk: {walk_str} ({len(walks)} walks checked)")
-    print(f"  All entries match ✓ ({n_small**m} walks per entry)")
-
-# ──────────────────────────────────────────────────────────────────
-# Demo 5: Boolean Reachability
-# ──────────────────────────────────────────────────────────────────
-
-print("\n" + "=" * 70)
-print("DEMO 5: Boolean Reachability as Tropical Semantics")
-print("=" * 70)
-
-# Adjacency matrix (True = edge exists)
-adj = np.array([
-    [False, True, False, False],
-    [False, False, True, False],
-    [False, False, False, True],
-    [True, False, False, False]
-], dtype=bool)
-
-print("\nAdjacency matrix (cycle 0→1→2→3→0):")
-print(adj.astype(int))
-
-# Encode: True→0, False→-inf
-NEG_INF = -1e18
-W_bool = np.where(adj, 0.0, NEG_INF)
-
-print("\nTropical encoding (0 = edge, -∞ = no edge):")
-print(np.where(W_bool > -1e10, W_bool, "  -∞"))
-
-for m in range(1, 6):
-    Wm = trop_pow(W_bool, m - 1)
-    print(f"\nLength-{m} reachability:")
-    for i in range(4):
-        reachable = [j for j in range(4) if Wm[i, j] > -1e10]
-        print(f"  From {i}: reachable = {reachable}")
-
-# ──────────────────────────────────────────────────────────────────
-# Demo 6: Tropical Idempotence (max a a = a)
-# ──────────────────────────────────────────────────────────────────
-
-print("\n" + "=" * 70)
-print("DEMO 6: Tropical Idempotence (Catalog Connection)")
-print("=" * 70)
-print("\nmax(a, a) = a  [tropical_mirror_theorem]")
-for a in [-3.7, 0, 2.5, 100]:
-    print(f"  max({a}, {a}) = {max(a, a)} ✓")
-
-print("\n" + "=" * 70)
-print("ALL DEMONSTRATIONS COMPLETED SUCCESSFULLY")
-print("=" * 70)
+if __name__ == "__main__":
+    demo_path_semantics()
+    demo_associativity()
+    demo_bellman()
+    demo_boolean_reachability()
+    demo_idempotence()
+    
+    print("\n" + "=" * 65)
+    print("All demos completed successfully.")
+    print("=" * 65)
 
 
 #!/usr/bin/env python3
 """
 Tropical Matrix Algebra — Visualizations
 
-Generates publication-quality figures illustrating tropical path algebra concepts.
+Generates figures illustrating key concepts of tropical path algebra.
 """
 
 import numpy as np
@@ -455,207 +536,221 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from algorithms import tropical_multiply, tropical_power, encode_boolean_graph
 import base64
 from io import BytesIO
 
 
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
+def tropical_matmul(A, B):
+    return np.max(A[:, :, np.newaxis] + B[np.newaxis, :, :], axis=1)
+
+
+def tropical_power(W, m):
+    result = W.copy()
+    for _ in range(m):
+        result = tropical_matmul(result, W)
+    return result
+
+
+def fig_to_base64(fig):
     buf = BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    data = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return f"data:image/png;base64,{data}"
 
 
-def viz_tropical_vs_standard():
-    """Compare standard and tropical matrix multiplication."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+# ─────────────────────────────────────────────────────────────────
+# Figure 1: Tropical Power Heatmaps
+# ─────────────────────────────────────────────────────────────────
 
-    A = np.array([[1, 3], [4, 2]], dtype=float)
-    B = np.array([[5, -1], [0, 7]], dtype=float)
-
-    # Standard product
-    C_std = A @ B
-    # Tropical product
-    C_trop = tropical_multiply(A, B)
-
-    for ax, mat, title in [
-        (axes[0], A, "Matrix A"),
-        (axes[1], B, "Matrix B"),
-        (axes[2], C_trop, "A ⊗ B (Tropical)")
-    ]:
-        im = ax.imshow(mat, cmap='RdYlGn', aspect='equal')
-        for i in range(mat.shape[0]):
-            for j in range(mat.shape[1]):
-                ax.text(j, i, f'{mat[i,j]:.0f}', ha='center', va='center',
-                       fontsize=20, fontweight='bold')
-        ax.set_title(title, fontsize=14, fontweight='bold')
-        ax.set_xticks(range(mat.shape[1]))
-        ax.set_yticks(range(mat.shape[0]))
-
-    fig.suptitle('Tropical Matrix Multiplication\n'
-                 '(A⊗B)ᵢⱼ = maxₖ(Aᵢₖ + Bₖⱼ)',
-                 fontsize=16, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_tropical_multiply.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def viz_path_weights():
-    """Visualize how tropical powers compute optimal walk weights."""
+def viz_tropical_powers():
     W = np.array([
-        [0, 3, -2],
-        [4, -1, 5],
-        [2, 0, 3]
+        [ 0,  3, -1,  2],
+        [ 1,  0,  4, -2],
+        [ 5, -3,  0,  1],
+        [ 2,  3,  1,  0]
     ], dtype=float)
-
-    fig, axes = plt.subplots(2, 3, figsize=(16, 10))
-
-    # Show the weight matrix and its tropical powers
-    matrices = [W] + [tropical_power(W, m) for m in range(1, 5)]
-    titles = ['W (length-1 walks)', 'W² (length-2)', 'W³ (length-3)',
-              'W⁴ (length-4)', 'W⁵ (length-5)']
-
-    for idx, (mat, title) in enumerate(zip(matrices, titles)):
-        ax = axes[idx // 3, idx % 3]
-        im = ax.imshow(mat, cmap='viridis', aspect='equal',
-                      vmin=min(m.min() for m in matrices),
-                      vmax=max(m.max() for m in matrices))
-        for i in range(3):
-            for j in range(3):
-                ax.text(j, i, f'{mat[i,j]:.0f}', ha='center', va='center',
-                       fontsize=14, fontweight='bold', color='white')
-        ax.set_title(title, fontsize=12, fontweight='bold')
-        ax.set_xticks(range(3))
-        ax.set_yticks(range(3))
-        ax.set_xlabel('Target vertex')
-        ax.set_ylabel('Source vertex')
-
-    axes[1, 2].axis('off')
-    axes[1, 2].text(0.5, 0.5,
-                    'Each entry equals the\nmaximum total weight\nover all directed walks\n'
-                    'of the given length\nfrom source to target.\n\n'
-                    'Proved formally:\ntropPow_eq_sup_pathWeight',
-                    ha='center', va='center', fontsize=12,
-                    bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
-
-    fig.suptitle('Tropical Powers = Optimal Walk Weights\n'
-                 '(Main Theorem: tropPow_eq_sup_pathWeight)',
-                 fontsize=16, fontweight='bold')
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_path_weights.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def viz_reachability():
-    """Visualize Boolean reachability via tropical encoding."""
-    # Directed cycle: 0→1→2→3→0
-    adj = np.array([
-        [False, True, False, False, False],
-        [False, False, True, False, False],
-        [False, False, False, True, False],
-        [False, False, False, False, True],
-        [True, False, False, False, False]
-    ])
-
-    n = 5
-    NEG_INF = -1e18
-    W = np.where(adj, 0.0, NEG_INF)
-
-    fig, axes = plt.subplots(1, 5, figsize=(20, 4))
-
-    for step in range(5):
-        ax = axes[step]
-        Wm = tropical_power(W, step)
-        reach = (Wm > -1e10).astype(int)
-
-        ax.imshow(reach, cmap='Greens', vmin=0, vmax=1, aspect='equal')
-        for i in range(n):
-            for j in range(n):
-                color = 'white' if reach[i, j] else 'gray'
-                symbol = '✓' if reach[i, j] else '✗'
-                ax.text(j, i, symbol, ha='center', va='center',
-                       fontsize=14, color=color, fontweight='bold')
-        ax.set_title(f'Length {step + 1}', fontsize=12, fontweight='bold')
-        ax.set_xticks(range(n))
-        ax.set_yticks(range(n))
-
-    fig.suptitle('Boolean Reachability on 5-Cycle (0→1→2→3→4→0)\n'
-                 'Green = reachable in exactly k steps',
-                 fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_reachability.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def viz_bellman_convergence():
-    """Visualize Bellman recurrence convergence for a specific (i,j) pair."""
-    W = np.array([
-        [0, 3, -1, 7],
-        [2, 0, 5, -2],
-        [4, 1, 0, 6],
-        [-3, 8, 2, 0]
-    ], dtype=float)
-
-    max_steps = 8
-    values = {(i, j): [] for i in range(4) for j in range(4)}
-
-    for m in range(max_steps):
-        Wm = tropical_power(W, m)
+    
+    fig, axes = plt.subplots(1, 4, figsize=(16, 4))
+    
+    for m, ax in enumerate(axes):
+        T = tropical_power(W, m)
+        im = ax.imshow(T, cmap='YlOrRd', aspect='equal')
+        ax.set_title(f'W$^{{⊗{m}}}$ (length-{m+1} walks)', fontsize=11)
+        ax.set_xlabel('Target vertex j')
+        ax.set_ylabel('Source vertex i')
+        ax.set_xticks(range(4))
+        ax.set_yticks(range(4))
+        
         for i in range(4):
             for j in range(4):
-                values[(i, j)].append(Wm[i, j])
-
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    pairs = [(0, 1), (0, 3), (1, 2), (2, 0)]
-    colors = ['#2196F3', '#4CAF50', '#FF9800', '#E91E63']
-
-    for idx, (i, j) in enumerate(pairs):
-        ax = axes[idx // 2, idx % 2]
-        steps = list(range(1, max_steps + 1))
-        vals = values[(i, j)]
-        ax.plot(steps, vals, 'o-', color=colors[idx], linewidth=2, markersize=8)
-        ax.set_xlabel('Walk length', fontsize=12)
-        ax.set_ylabel('Optimal walk weight', fontsize=12)
-        ax.set_title(f'Vertex {i} → Vertex {j}', fontsize=14, fontweight='bold')
-        ax.grid(True, alpha=0.3)
-        ax.set_xticks(steps)
-
-    fig.suptitle('Bellman Recurrence: Optimal Walk Weights vs Length\n'
-                 'Each point = max weight over all walks of that length',
-                 fontsize=16, fontweight='bold')
+                ax.text(j, i, f'{T[i,j]:.0f}', ha='center', va='center',
+                       fontsize=10, fontweight='bold',
+                       color='white' if T[i,j] > np.median(T) else 'black')
+        
+        plt.colorbar(im, ax=ax, shrink=0.8)
+    
+    fig.suptitle('Tropical Matrix Powers: Maximum Walk Weights', fontsize=14, fontweight='bold')
     plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_bellman.png', dpi=150, bbox_inches='tight')
+    fig.savefig('/workspace/request-project/tropical_powers.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
+
+
+# ─────────────────────────────────────────────────────────────────
+# Figure 2: Boolean Reachability Evolution
+# ─────────────────────────────────────────────────────────────────
+
+def viz_boolean_reachability():
+    G = np.array([
+        [False, True,  False, False, True],
+        [False, False, True,  False, False],
+        [True,  False, False, True,  False],
+        [False, False, False, False, True],
+        [False, False, False, False, False],
+    ])
+    
+    NEG_INF = -np.inf
+    W = np.where(G, 0.0, NEG_INF)
+    
+    fig, axes = plt.subplots(1, 5, figsize=(18, 3.5))
+    
+    for m, ax in enumerate(axes):
+        T = tropical_power(W, m)
+        R = np.isfinite(T).astype(float)
+        
+        ax.imshow(R, cmap='Greens', vmin=0, vmax=1, aspect='equal')
+        ax.set_title(f'Length {m+1}', fontsize=11)
+        ax.set_xlabel('j')
+        if m == 0:
+            ax.set_ylabel('i')
+        ax.set_xticks(range(5))
+        ax.set_yticks(range(5))
+        
+        for i in range(5):
+            for j in range(5):
+                ax.text(j, i, '✓' if R[i,j] > 0.5 else '✗',
+                       ha='center', va='center', fontsize=12,
+                       color='white' if R[i,j] > 0.5 else 'lightgray')
+    
+    fig.suptitle('Boolean Reachability via Tropical Encoding', fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    fig.savefig('/workspace/request-project/reachability.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
+
+
+# ─────────────────────────────────────────────────────────────────
+# Figure 3: Bellman Convergence
+# ─────────────────────────────────────────────────────────────────
+
+def viz_bellman_convergence():
+    W = np.array([
+        [ 0,  3, -1,  2],
+        [ 1,  0,  4, -2],
+        [ 5, -3,  0,  1],
+        [ 2,  3,  1,  0]
+    ], dtype=float)
+    
+    n = 4
+    source = 0
+    iterations = 8
+    
+    # Track Bellman values over iterations
+    history = np.zeros((iterations, n))
+    d = W[source].copy()
+    history[0] = d
+    
+    for it in range(1, iterations):
+        d_new = np.full(n, -np.inf)
+        for j in range(n):
+            d_new[j] = max(d[k] + W[k, j] for k in range(n))
+        d = d_new
+        history[it] = d
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3']
+    
+    for j in range(n):
+        ax.plot(range(1, iterations + 1), history[:, j],
+                'o-', color=colors[j], linewidth=2, markersize=6,
+                label=f'Vertex {j}')
+    
+    ax.set_xlabel('Iteration (walk length)', fontsize=12)
+    ax.set_ylabel('Maximum walk weight from source 0', fontsize=12)
+    ax.set_title('Bellman Iteration: Convergence of Tropical Powers', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks(range(1, iterations + 1))
+    
+    plt.tight_layout()
+    fig.savefig('/workspace/request-project/bellman_convergence.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
+
+
+# ─────────────────────────────────────────────────────────────────
+# Figure 4: Associativity Verification
+# ─────────────────────────────────────────────────────────────────
+
+def viz_associativity():
+    np.random.seed(42)
+    sizes = list(range(2, 12))
+    max_diffs = []
+    
+    for n in sizes:
+        A = np.random.randn(n, n) * 5
+        B = np.random.randn(n, n) * 5
+        C = np.random.randn(n, n) * 5
+        
+        LHS = tropical_matmul(tropical_matmul(A, B), C)
+        RHS = tropical_matmul(A, tropical_matmul(B, C))
+        
+        max_diffs.append(np.max(np.abs(LHS - RHS)))
+    
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.bar(sizes, max_diffs, color='steelblue', alpha=0.8)
+    ax.set_xlabel('Matrix size n', fontsize=12)
+    ax.set_ylabel('max |(A⊗B)⊗C - A⊗(B⊗C)|', fontsize=12)
+    ax.set_title('Tropical Associativity: Numerical Verification', fontsize=14, fontweight='bold')
+    ax.set_xticks(sizes)
+    ax.set_ylim(-1e-16, 1e-14)
+    ax.axhline(y=0, color='red', linestyle='--', alpha=0.5, label='Exact zero')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    fig.savefig('/workspace/request-project/associativity.png', dpi=150, bbox_inches='tight')
     b64 = fig_to_base64(fig)
     return b64
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-    b64_1 = viz_tropical_vs_standard()
-    print("  ✓ Tropical multiplication comparison")
-    b64_2 = viz_path_weights()
-    print("  ✓ Path weights heatmap")
-    b64_3 = viz_reachability()
-    print("  ✓ Boolean reachability")
-    b64_4 = viz_bellman_convergence()
-    print("  ✓ Bellman convergence")
-    print("\nAll visualizations saved as PNG files.")
-
-    # Save base64 data for PACKAGE.json
+    
+    b64_powers = viz_tropical_powers()
+    print(f"  ✓ Tropical powers heatmap ({len(b64_powers)} chars)")
+    
+    b64_reach = viz_boolean_reachability()
+    print(f"  ✓ Boolean reachability ({len(b64_reach)} chars)")
+    
+    b64_bellman = viz_bellman_convergence()
+    print(f"  ✓ Bellman convergence ({len(b64_bellman)} chars)")
+    
+    b64_assoc = viz_associativity()
+    print(f"  ✓ Associativity verification ({len(b64_assoc)} chars)")
+    
+    print("\nAll visualizations saved as PNG files and base64 encoded.")
+    
+    # Save base64 data for use in PACKAGE.json
     import json
-    viz_data = [
-        {"name": "Tropical Matrix Multiplication", "data": b64_1},
-        {"name": "Optimal Walk Weights (Main Theorem)", "data": b64_2},
-        {"name": "Boolean Reachability", "data": b64_3},
-        {"name": "Bellman Recurrence Convergence", "data": b64_4}
-    ]
+    viz_data = {
+        "tropical_powers": b64_powers,
+        "boolean_reachability": b64_reach,
+        "bellman_convergence": b64_bellman,
+        "associativity": b64_assoc,
+    }
     with open('/workspace/request-project/viz_data.json', 'w') as f:
         json.dump(viz_data, f)
-    print("Visualization data saved to viz_data.json")
+    print("Base64 data saved to viz_data.json")

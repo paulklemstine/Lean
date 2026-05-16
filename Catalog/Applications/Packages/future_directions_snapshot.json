@@ -160,22 +160,6 @@
     "timestamp": "2026-05-14T16:03:53.853831+00:00"
   },
   {
-    "id": "seed_066",
-    "title": "Tropical Neural Code Classification with Provable Margins",
-    "description": "Prove that tropical convex hulls of neural firing patterns classify stimulus identities with provable margin bounds, establishing tropical geometry as a formal framework for neural coding theory. Show that the tropical convex hull of a neural code's receptive fields determines its combinatorial classification capacity.",
-    "domains": [
-      "MachineLearning",
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.84,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "d85be8c8",
-    "timestamp": "2026-05-14T16:03:53.861507+00:00"
-  },
-  {
     "id": "seed_030",
     "title": "Reversible Computing via Tropical Isomorphisms",
     "description": "Construct a reversible Turing machine model where each transition corresponds to a tropical semiring isomorphism, and prove that reversible tropical computation simulates classical computation with at most polynomial overhead. Show that the Landauer erasure cost in tropical entropy is exactly kT ln(2) per bit, formalizing thermodynamic computation bounds via min-plus algebra.",
@@ -649,10 +633,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0db1bd89",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9a668faa",
     "timestamp": "2026-05-15T22:01:06.632160+00:00"
   },
   {
@@ -909,6 +893,76 @@
     "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:21:49.075915+00:00"
+  },
+  {
+    "id": "fd_0230",
+    "title": "Week 1-2",
+    "description": ": Formalize the tropical packing bound (Direction 1, key lemma) and the linear-to-tropical margin transfer (Direction 3, key theorem) in Lean 4.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d85be8c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:49:39.012877+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Week 3-4",
+    "description": ": Prove the tropical Carathéodory theorem (Direction 2) and apply it to produce a code compression algorithm with certified margin preservation.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d85be8c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:49:39.024149+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Month 2",
+    "description": ": Develop the tropical Shannon capacity formula and prove achievability for random codes.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d85be8c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:49:39.034440+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Month 3",
+    "description": ": Extend to temporal codes and compare spatial vs. spatiotemporal capacity for simulated auditory cortex data.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d85be8c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:49:39.045856+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Ongoing",
+    "description": ": Build the categorical capacity framework (Direction 5) as a long-term foundational project.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d85be8c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:49:39.056926+00:00"
   },
   {
     "id": "seed_052",
