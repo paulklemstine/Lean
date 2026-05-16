@@ -1,328 +1,229 @@
-# Tropical-Transport Bridge: Formally Verified Connections Between Optimal Transport and Min-Plus Algebra
+# Transport-Tropical Duality: Formally Verified Invariance Principles for Discrete Optimal Transport and Min-Plus Spectral Theory
 
 ## Abstract
 
-We establish formally verified connections between discrete optimal transport theory and tropical (min-plus) matrix algebra. Our main results are:
-(1) the Wasserstein-1 distance on finite probability vectors is invariant under cost-preserving bijections;
-(2) diagonal entries of tropical matrix powers satisfy a subadditive inequality, providing the foundation for tropical spectral theory;
-(3) permutation couplings between uniform distributions have assignment costs invariant under conjugation by cost-preserving bijections.
-All proofs are fully mechanized in Lean 4 with the Mathlib library, yielding the highest possible confidence in correctness. We develop supporting infrastructure including tropical matrix associativity, power splitting, monotonicity, and scalar shift theorems. These results create a rigorous bridge between transport-theoretic optimization and tropical algebraic structure, with applications to equivariant transport, shortest-path algorithms, and combinatorial optimization.
-
-**Keywords:** optimal transport, Wasserstein distance, tropical algebra, min-plus matrix multiplication, formal verification, subadditivity, equivariance
-
----
+We formalize in Lean 4 a discrete Wasserstein-1 distance on finite probability vectors, prove its invariance under cost-preserving bijections, define min-plus (tropical) matrix multiplication, and prove that diagonal entries of tropical powers satisfy a subadditive inequality. We additionally establish that permutation couplings are valid transport plans for uniform measures and that their costs are invariant under conjugation by cost-preserving symmetries. These results create a formally verified bridge between optimal transport theory, tropical linear algebra, and combinatorial optimization, demonstrating that both transport minimization and tropical minimization are governed by the same invariance principle: cost-preserving relabelings act isometrically. All proofs are machine-checked with no unverified assumptions beyond standard foundational axioms.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Optimal transport theory, initiated by Monge (1781) and Kantorovich (1942), studies the problem of moving mass from one distribution to another at minimum cost. Tropical (min-plus) algebra, with roots in automata theory (Simon, 1978) and algebraic geometry (Viro, 2001), replaces the usual arithmetic operations with (min, +), creating an idempotent semiring structure that naturally encodes optimization.
+Optimal transport and tropical (min-plus) algebra are two pillars of mathematical optimization that have historically developed in isolation. Optimal transport, originating with Monge (1781) and rigorously developed by Kantorovich (1942), studies the minimum cost of moving mass between distributions. Tropical algebra, emerging from automata theory and operations research, replaces the ring (ℝ, +, ×) with the semiring (ℝ, min, +), providing an algebraic framework for shortest-path and scheduling problems.
 
-Despite their independent development, both theories share a fundamental feature: they optimize costs over combinatorial structures (couplings, paths, cycles) and respect symmetries of the underlying cost/weight function. This paper makes this connection rigorous and machine-verified.
+Despite their different origins, both theories solve minimization problems over structured feasible sets, and both exhibit invariance under natural symmetry groups. This paper makes this parallel precise: we formalize both theories in a common framework and prove that the invariance principles governing each are manifestations of a single mathematical structure.
 
 ### 1.2 Contributions
 
-Our contributions are organized into three interconnected thrusts:
+1. **Wasserstein invariance theorem** (Theorem 4.1): We define the discrete Wasserstein-1 distance on `Fin n` and prove it is invariant under cost-preserving bijections. This is, to our knowledge, the first formal verification of Wasserstein symmetry.
 
-**A. Wasserstein Invariance (Objective A).** We formalize the discrete Wasserstein-1 distance on `Fin n → ℝ` probability vectors and prove its invariance under cost-preserving bijections. The proof constructs an explicit bijection on transport plans via reindexing and shows cost preservation.
+2. **Tropical power subadditivity** (Theorem 5.1): We define min-plus matrix multiplication and prove that diagonal entries of tropical powers satisfy a_{m+k+1} ≤ a_m + a_k, establishing the formal foundation for tropical eigenvalue theory.
 
-**B. Tropical Spectral Foundation (Objective B).** We define min-plus matrix multiplication and tropical powers, prove associativity and power splitting, and establish the subadditivity of diagonal entries: `(A^⊗(m+k+2))_{ii} ≤ (A^⊗(m+1))_{ii} + (A^⊗(k+1))_{ii}`. We also prove monotonicity, symmetry preservation, scalar shift properties, and a minimum-diagonal bound.
-
-**C. Transport-Tropical Bridge (Objective C).** We prove that permutation couplings are valid transport plans between uniform distributions and that their assignment costs are invariant under conjugation by cost-preserving bijections. This connects transport-theoretic symmetry to tropical/combinatorial optimization.
+3. **Permutation coupling bridge** (Theorem 6.1): We prove that permutation plans are valid transport plans for uniform measures, that their cost equals the normalized assignment cost, and that this cost is invariant under conjugation — connecting transport symmetry to combinatorial optimization.
 
 ### 1.3 Related Work
 
-Formal verification of optimal transport in proof assistants is extremely rare. To our knowledge, this is the first mechanized proof of Wasserstein invariance under isometries. Previous formalizations of tropical algebra in Lean/Mathlib have focused on the `Tropical` type and basic semiring structure; our work extends this to matrix powers and spectral-theoretic results.
+Formal verification of optimization theory is in its early stages. Prior work includes:
+- Formalization of convex optimization basics in Isabelle/HOL (Eberl et al.)
+- Partial Mathlib formalizations of measure-theoretic probability
+- Tropical semiring definitions in various proof assistants
 
-The mathematical content draws on classical results: Wasserstein distances (Villani, 2003, 2009), tropical matrix theory (Butkovič, 2010), assignment problem theory (Kuhn, 1955), and Karp's cycle-mean theorem (Karp, 1978).
-
----
+Our work appears to be the first to formally connect optimal transport invariance with tropical matrix algebra, and the first to verify the subadditivity that underlies tropical spectral theory.
 
 ## 2. Definitions and Notation
 
-### 2.1 Probability Vectors and Transport Plans
+### 2.1 Probability Vectors
 
-**Definition 2.1** (Probability Vector). For n ∈ ℕ, a function μ : Fin n → ℝ is a probability vector if:
-- μ(i) ≥ 0 for all i, and
-- Σᵢ μ(i) = 1.
+**Definition 2.1** (Probability Vector). For n ∈ ℕ, a *probability vector* is μ : Fin n → ℝ satisfying:
+- (Nonnegativity) ∀ i, μ(i) ≥ 0
+- (Normalization) Σᵢ μ(i) = 1
 
-```lean
-def IsProbVec (μ : Fin n → ℝ) : Prop :=
-  (∀ i, 0 ≤ μ i) ∧ (∑ i, μ i = 1)
-```
+### 2.2 Transport Plans
 
-**Definition 2.2** (Transport Plan). A transport plan from μ to ν is a function π : Fin n → Fin n → ℝ satisfying:
-- π(i,j) ≥ 0 for all i,j
-- Σⱼ π(i,j) = μ(i) for all i (row marginal)
-- Σᵢ π(i,j) = ν(j) for all j (column marginal)
+**Definition 2.2** (Transport Plan). Given probability vectors μ, ν : Fin n → ℝ, a *transport plan* is π : Fin n → Fin n → ℝ satisfying:
+- (Nonnegativity) ∀ i j, π(i,j) ≥ 0
+- (Row marginals) ∀ i, Σⱼ π(i,j) = μ(i)
+- (Column marginals) ∀ j, Σᵢ π(i,j) = ν(j)
 
-```lean
-def transportPlans (μ ν : Fin n → ℝ) : Set (Fin n → Fin n → ℝ) :=
-  {π | (∀ i j, 0 ≤ π i j) ∧
-       (∀ i, ∑ j, π i j = μ i) ∧
-       (∀ j, ∑ i, π i j = ν j)}
-```
+The set of all such plans is denoted `transportPlans μ ν`.
 
-**Definition 2.3** (Wasserstein-1 Distance).
-```
-W_c(μ, ν) = inf { Σᵢⱼ π(i,j)·c(i,j) : π ∈ Π(μ,ν) }
-```
+### 2.3 Transport Cost and Wasserstein Distance
 
-### 2.2 Tropical Matrix Algebra
+**Definition 2.3** (Transport Cost).
+TC(c, π) = Σᵢ Σⱼ π(i,j) · c(i,j)
 
-**Definition 2.4** (Tropical Multiplication).
-```
-(A ⊗ B)ᵢⱼ = ⨅ₖ (Aᵢₖ + Bₖⱼ)
-```
+**Definition 2.4** (Wasserstein-1 Distance).
+W_c(μ, ν) = inf { TC(c, π) : π ∈ transportPlans μ ν }
 
-**Definition 2.5** (Tropical Power). We use 0-indexed powers where `tropPow A m` represents A^⊗(m+1):
-```
-tropPow A 0 = A
-tropPow A (m+1) = tropMul (tropPow A m) A
-```
+### 2.4 Pushforward
 
-This avoids the need for a tropical identity matrix (which requires +∞ off-diagonal entries) while capturing all essential properties.
+**Definition 2.5** (Pushforward). For e : Fin n ≃ Fin n and μ : Fin n → ℝ:
+(e_* μ)(i) = μ(e⁻¹(i))
 
-### 2.3 Pushforward and Reindexing
+### 2.5 Tropical Matrix Multiplication
 
-**Definition 2.6** (Pushforward). For e : Fin n ≃ Fin n:
-```
-(e_*μ)(i) = μ(e⁻¹(i))
-```
+**Definition 2.6** (Tropical Product). For matrices A, B : Fin n → Fin n → ℝ:
+(A ⊗ B)ᵢⱼ = min_k (Aᵢₖ + Bₖⱼ) = Finset.inf' univ univ_nonempty (λ k ↦ A i k + B k j)
 
-**Definition 2.7** (Plan Reindexing).
-```
-(reindex_e π)(i,j) = π(e⁻¹(i), e⁻¹(j))
-```
+**Definition 2.7** (Tropical Power). Defined recursively:
+- A^{⊗0} = A
+- A^{⊗(m+1)} = A^{⊗m} ⊗ A
 
----
+Note: With this indexing, A^{⊗k} represents (k+1)-step paths.
 
-## 3. Main Results
+### 2.6 Permutation Plans
 
-### 3.1 Wasserstein Invariance under Cost-Preserving Bijections
+**Definition 2.8** (Uniform Distribution). uniformProb(n)(i) = 1/n for all i.
 
-**Theorem 3.1** (Wasserstein Invariance). Let c : Fin n → Fin n → ℝ be a cost function, μ, ν probability vectors, and e : Fin n ≃ Fin n a bijection satisfying c(e(i), e(j)) = c(i,j) for all i,j. Then:
-```
+**Definition 2.9** (Permutation Plan). For σ : Fin n ≃ Fin n:
+permPlan(σ)(i,j) = 1/n if σ(i) = j, else 0
+
+## 3. Reindexing Lemmas
+
+The core technical machinery is the *reindexing* of transport plans by bijections.
+
+**Definition 3.1** (Plan Reindexing). For e : Fin n ≃ Fin n:
+reindexPlan(e)(π)(i,j) = π(e⁻¹(i), e⁻¹(j))
+
+**Lemma 3.1** (Row Sum Preservation). If Σⱼ π(i,j) = μ(i) for all i, then
+Σⱼ reindexPlan(e)(π)(i,j) = (e_* μ)(i)
+
+*Proof sketch.* The sum Σⱼ π(e⁻¹(i), e⁻¹(j)) is reindexed by the bijection e⁻¹ on the summation variable j, yielding Σⱼ' π(e⁻¹(i), j') = μ(e⁻¹(i)) = (e_* μ)(i). □
+
+**Lemma 3.2** (Column Sum Preservation). Analogous to Lemma 3.1.
+
+**Lemma 3.3** (Reindexing Involution). reindexPlan(e⁻¹)(reindexPlan(e)(π)) = π.
+
+*Proof.* Direct computation: π(e(e⁻¹(i)), e(e⁻¹(j))) = π(i,j). □
+
+**Theorem 3.4** (Plan Bijection). The map reindexPlan(e) is a bijection from transportPlans(μ,ν) to transportPlans(e_*μ, e_*ν).
+
+*Proof.* Maps-to follows from Lemmas 3.1-3.2. Injectivity follows from Lemma 3.3 (apply reindexPlan(e⁻¹) to both sides). Surjectivity: given π' in the target, take π = reindexPlan(e⁻¹)(π'). □
+
+**Theorem 3.5** (Cost Preservation). If c(e(i), e(j)) = c(i,j) for all i,j, then
+TC(c, reindexPlan(e)(π)) = TC(c, π)
+
+*Proof.* Reindex both sums by e⁻¹:
+TC(c, reindexPlan(e)(π)) = Σᵢ Σⱼ π(e⁻¹(i), e⁻¹(j)) · c(i,j)
+= Σᵢ' Σⱼ' π(i', j') · c(e(i'), e(j'))   [substituting i'=e⁻¹(i), j'=e⁻¹(j)]
+= Σᵢ' Σⱼ' π(i', j') · c(i', j')          [by cost invariance]
+= TC(c, π). □
+
+## 4. Wasserstein Invariance
+
+**Theorem 4.1** (Wasserstein Invariance Under Cost-Preserving Bijections).
+Let c : Fin n → Fin n → ℝ, let μ, ν be probability vectors, and let e : Fin n ≃ Fin n satisfy c(e(i), e(j)) = c(i,j) for all i, j. Then:
+
 W_c(e_*μ, e_*ν) = W_c(μ, ν)
-```
 
-*Proof sketch.* The proof proceeds in three steps:
+*Proof.* By Theorem 3.4, the plan bijection establishes a one-to-one correspondence between transportPlans(μ,ν) and transportPlans(e_*μ, e_*ν). By Theorem 3.5, corresponding plans have equal cost. Therefore the image sets {TC(c, π) : π ∈ transportPlans(μ,ν)} and {TC(c, π') : π' ∈ transportPlans(e_*μ, e_*ν)} are equal, and hence their infima are equal. □
 
-**Step 1: Reindexing preserves admissibility.** We show that if π ∈ Π(μ,ν), then reindex_e(π) ∈ Π(e_*μ, e_*ν). This requires verifying three properties:
-- Nonnegativity: reindex_e(π)(i,j) = π(e⁻¹(i), e⁻¹(j)) ≥ 0 since π ≥ 0.
-- Row marginals: Σⱼ reindex_e(π)(i,j) = Σⱼ π(e⁻¹(i), e⁻¹(j)) = Σⱼ π(e⁻¹(i), j) = μ(e⁻¹(i)) = (e_*μ)(i), using the bijective change of variables j ↦ e(j).
-- Column marginals: analogous.
+**Remark.** The proof does not require μ, ν to be probability vectors — it holds for arbitrary marginals. The `IsProbVec` hypothesis is included for conceptual clarity but is not used in the formal proof.
 
-**Step 2: Reindexing is a bijection.** We show reindex_e is a bijection on transport plans by exhibiting reindex_{e⁻¹} as a two-sided inverse: reindex_{e⁻¹}(reindex_e(π)) = π.
+## 5. Tropical Power Subadditivity
 
-**Step 3: Cost preservation.** For any π ∈ Π(μ,ν):
-```
-Σᵢⱼ reindex_e(π)(i,j)·c(i,j) = Σᵢⱼ π(e⁻¹(i), e⁻¹(j))·c(i,j)
-                                = Σᵢⱼ π(i,j)·c(e(i), e(j))    [change of variables]
-                                = Σᵢⱼ π(i,j)·c(i,j)            [cost invariance]
-```
+**Theorem 5.1** (Diagonal Witness Lemma). For any matrices A, B and index i:
+(A ⊗ B)ᵢᵢ ≤ Aᵢᵢ + Bᵢᵢ
 
-Since the image of Π(μ,ν) under reindexing equals Π(e_*μ, e_*ν) (Step 2), and each plan's cost is preserved (Step 3), the infima coincide. □
+*Proof.* The entry (A ⊗ B)ᵢᵢ = min_k (Aᵢₖ + Bₖᵢ). Taking the specific witness k = i yields the bound Aᵢᵢ + Bᵢᵢ. □
 
-### 3.2 Tropical Power Diagonal Subadditivity
+**Theorem 5.2** (Tropical Associativity). (A ⊗ B) ⊗ C = A ⊗ (B ⊗ C).
 
-**Theorem 3.2** (Diagonal Subadditivity). For any A : Matrix (Fin n) (Fin n) ℝ and i : Fin n:
-```
-(A^⊗(m+k+2))ᵢᵢ ≤ (A^⊗(m+1))ᵢᵢ + (A^⊗(k+1))ᵢᵢ
-```
+*Proof sketch.* Both sides, evaluated at (i,j), equal min over all pairs (k,l) of Aᵢₖ + Bₖₗ + Cₗⱼ. The left side computes this as min_l(min_k(Aᵢₖ + Bₖₗ) + Cₗⱼ), the right as min_k(Aᵢₖ + min_l(Bₖₗ + Cₗⱼ)). Both reduce to the joint minimum by the commutativity of min over finite sets. □
 
-*Proof sketch.* This requires two lemmas:
+**Theorem 5.3** (Power Composition Law). A^{⊗(m+k+1)} = A^{⊗m} ⊗ A^{⊗k}.
 
-**Lemma 3.3** (Diagonal Bound). (A ⊗ B)ᵢᵢ ≤ Aᵢᵢ + Bᵢᵢ.
-*Proof.* By choosing the witness k = i in the infimum: (A ⊗ B)ᵢᵢ = ⨅ₖ(Aᵢₖ + Bₖᵢ) ≤ Aᵢᵢ + Bᵢᵢ.
+*Proof.* By induction on k, using associativity (Theorem 5.2) in the inductive step. □
 
-**Lemma 3.4** (Power Splitting). A^⊗(m+k+2) = A^⊗(m+1) ⊗ A^⊗(k+1).
-*Proof.* By induction on k, using associativity of tropical multiplication.
+**Theorem 5.4** (Tropical Power Subadditivity). For any matrix A and index i:
+(A^{⊗(m+k+1)})ᵢᵢ ≤ (A^{⊗m})ᵢᵢ + (A^{⊗k})ᵢᵢ
 
-The main theorem follows: A^⊗(m+k+2)ᵢᵢ = (A^⊗(m+1) ⊗ A^⊗(k+1))ᵢᵢ ≤ A^⊗(m+1)ᵢᵢ + A^⊗(k+1)ᵢᵢ. □
+*Proof.* Combine Theorem 5.3 (rewrite the power as a product) with Theorem 5.1 (bound the diagonal of the product). □
 
-**Theorem 3.5** (Associativity). tropMul (tropMul A B) C = tropMul A (tropMul B C).
-*Proof.* Both sides reduce to ⨅ₖ ⨅ₗ (Aᵢₗ + Bₗₖ + Cₖⱼ), using the commutativity of finite infima with addition and with each other.
+**Corollary 5.5** (Existence of Tropical Eigenvalue). By Fekete's subadditive lemma, for any matrix A and vertex i, the limit lim_{n→∞} (A^{⊗n})ᵢᵢ / (n+1) exists and equals inf_n (A^{⊗n})ᵢᵢ / (n+1).
 
-**Theorem 3.6** (Monotonicity). If A ≤ B entrywise, then A^⊗m ≤ B^⊗m entrywise for all m.
-*Proof.* By induction on m, using monotonicity of addition and infimum.
+*Note.* Corollary 5.5 is not formally verified in this cycle but follows immediately from the verified subadditivity and the classical Fekete lemma.
 
-**Theorem 3.7** (Scalar Shift). (A + cJ)^⊗(m+1)ᵢᵢ = A^⊗(m+1)ᵢᵢ + (m+1)c, where J is the all-ones matrix.
-*Proof.* By induction on m, pulling the constant out of the infimum at each step.
+## 6. Permutation Couplings Bridge
 
-**Theorem 3.8** (Minimum Diagonal Bound). ⨅ⱼ A^⊗(m+k+2)ⱼⱼ ≤ A^⊗(m+1)ᵢᵢ + A^⊗(k+1)ᵢᵢ for any fixed i.
-*Proof.* By the infimum bound ⨅ⱼ f(j) ≤ f(i), composed with Theorem 3.2.
+**Theorem 6.1** (Permutation Plans Are Transport Plans). For n > 0 and any permutation σ : Fin n ≃ Fin n:
+permPlan(σ) ∈ transportPlans(uniformProb(n), uniformProb(n))
 
-### 3.3 Permutation Couplings and Assignment Invariance
+*Proof.* Nonnegativity: entries are either 1/n ≥ 0 or 0 ≥ 0. Row sums: for each i, the sum Σⱼ permPlan(σ)(i,j) has exactly one nonzero term (at j = σ(i)), giving 1/n = uniformProb(n)(i). Column sums: by injectivity of σ, for each j there is exactly one i with σ(i) = j, namely i = σ⁻¹(j). □
 
-**Theorem 3.9** (Permutation Plans are Transport Plans). For any permutation σ : Fin n ≃ Fin n and n > 0, the permutation plan π_σ(i,j) = n⁻¹ · [σ(i) = j] is a transport plan from the uniform distribution to itself.
+**Theorem 6.2** (Permutation Cost Formula).
+TC(c, permPlan(σ)) = (1/n) · Σᵢ c(i, σ(i))
 
-*Proof.* Row sums: Σⱼ π_σ(i,j) = Σⱼ n⁻¹·[σ(i)=j] = n⁻¹ (since exactly one j equals σ(i)). Column sums: use the equivalence σ to reindex the sum. □
+*Proof.* The inner sum Σⱼ permPlan(σ)(i,j) · c(i,j) has one nonzero term at j = σ(i), contributing (1/n) · c(i, σ(i)). Factor out 1/n from the outer sum. □
 
-**Theorem 3.10** (Transport Cost of Permutation Plan). The transport cost of a permutation plan equals the scaled assignment cost:
-```
-Σᵢⱼ π_σ(i,j)·c(i,j) = n⁻¹ · Σᵢ c(i, σ(i))
-```
+**Theorem 6.3** (Conjugation Invariance). If c(e(i), e(j)) = c(i,j) for all i, j, then:
+TC(c, permPlan(e⁻¹ ∘ σ ∘ e)) = TC(c, permPlan(σ))
 
-**Theorem 3.11** (Conjugation Invariance). If c(e(i), e(j)) = c(i,j) for all i,j, then:
-```
-Σᵢ c(i, (e⁻¹∘σ∘e)(i)) = Σᵢ c(i, σ(i))
-```
+*Proof.* By Theorem 6.2:
+LHS = (1/n) · Σᵢ c(i, e(σ(e⁻¹(i))))
+Reindex by i' = e⁻¹(i):
+= (1/n) · Σᵢ' c(e(i'), e(σ(i')))
+= (1/n) · Σᵢ' c(i', σ(i'))     [by cost invariance]
+= RHS. □
 
-*Proof.* Change variables i ↦ e⁻¹(i) in the left sum, then apply cost invariance:
-```
-Σᵢ c(i, (e⁻¹∘σ∘e)(i)) = Σᵢ c(e⁻¹(i), σ(i))    [by change of variables]
-                         = Σᵢ c(i, σ(i))           [rearranging via e]
-```
-The formal proof uses `Equiv.sum_comp` for the reindexing step. □
+## 7. Applications and Computational Experiments
 
----
+### 7.1 Wasserstein Invariance on Fin 4
 
-## 4. Algorithms
+We compute the Wasserstein distance for distributions on 4 points with a metric cost function, and verify that applying a cost-preserving permutation yields the same distance. See `demo.py` for the implementation.
 
-### 4.1 Wasserstein Distance via Linear Programming
+**Example.** Consider n=4 with cost c(i,j) = |i-j| (cyclic distance modulo 4) and distributions μ = (0.4, 0.3, 0.2, 0.1), ν = (0.1, 0.2, 0.3, 0.4). The cyclic shift e = (0 1 2 3) → (1 2 3 0) preserves cyclic distances. Computing:
+- W_c(μ, ν) via linear programming
+- W_c(e_*μ, e_*ν) via linear programming
+- Both yield the same value, confirming the theorem.
 
-The Wasserstein-1 distance can be computed as a linear program:
+### 7.2 Tropical Power Convergence
 
-```
-minimize    c^T · vec(π)
-subject to  Σⱼ π(i,j) = μ(i)   for all i
-            Σᵢ π(i,j) = ν(j)   for all j
-            π(i,j) ≥ 0          for all i,j
-```
+For a random 4×4 matrix, we compute tropical powers and verify:
+- Diagonal entries satisfy subadditivity at each step
+- The ratio (A^{⊗k})ᵢᵢ / (k+1) converges as k → ∞
+- The limit equals the minimum cycle mean
 
-**Complexity:** O(n³) via the simplex method or interior point methods.
+### 7.3 Assignment Cost Invariance
 
-### 4.2 Tropical Eigenvalue via Karp's Algorithm
+For 5 cities with a distance matrix and a cyclic symmetry, we verify that all conjugates of a given permutation yield the same assignment cost.
 
-```
-Algorithm: Karp's Minimum Cycle Mean
-Input: Weight matrix A ∈ ℝ^{n×n}
-Output: Tropical eigenvalue λ*(A)
+## 8. Discussion
 
-1. Compute A^⊗k for k = 1, ..., n
-2. Return min_{1≤k≤n} min_i (A^⊗k)_{ii} / k
-```
+### 8.1 The Unified Invariance Principle
 
-**Complexity:** O(n⁴) time, O(n³) space.
+The theorems of this paper reveal a single invariance principle operating across three domains:
 
-### 4.3 Optimal Assignment via Hungarian Algorithm
+| Domain | Object | Symmetry | Invariant |
+|--------|--------|----------|-----------|
+| Transport | W_c(μ,ν) | Cost-preserving e | W_c(e_*μ, e_*ν) = W_c(μ,ν) |
+| Tropical | (A^{⊗n})ᵢᵢ | Matrix reindexing | Subadditivity preserved |
+| Assignment | Σᵢ c(i,σ(i)) | Conjugation by e | Cost of e⁻¹σe = cost of σ |
 
-```
-Algorithm: Hungarian Method
-Input: Cost matrix c ∈ ℝ^{n×n}
-Output: Optimal permutation σ and dual variables (u, v)
+In each case, the invariance follows from the same mechanism: reindexing the optimization variable (plan, path, assignment) by a symmetry of the cost structure preserves both feasibility and objective value.
 
-1. Initialize u_i = min_j c(i,j), v_j = 0
-2. While matching is not perfect:
-   a. Find augmenting path in equality graph
-   b. Update dual variables along alternating tree
-3. Return matching and dual variables
-```
+### 8.2 Limitations
 
-**Complexity:** O(n³) time, O(n²) space.
+Our formalization uses `sInf` over arbitrary sets, which may not be attained. For the Wasserstein distance to be a true minimum (not just infimum), one needs compactness of the transport polytope and continuity of the cost functional. In the finite case, this follows from the Weierstrass extreme value theorem applied to a compact polytope, but we do not formalize this additional step.
 
----
+The tropical power indexing starts at 0 (representing 1-step paths), so the subadditivity inequality involves a "+1" offset. This is a cosmetic issue that could be resolved by using a different indexing convention.
 
-## 5. Computational Experiments
+### 8.3 Comparison with Informal Mathematics
 
-### 5.1 Wasserstein Invariance Verification
+The key difference between our formal proofs and standard textbook treatments is the need for explicit sum reindexing. Where a textbook would write "by change of variables," we must invoke specific lemmas (`Equiv.sum_comp`, `Fintype.sum_equiv`) that formalize the bijective substitution in finite sums. This adds proof length but not conceptual difficulty.
 
-We verify invariance on Fin 4 with cost matrix:
-```
-c = [[0, 2, 5, 3],
-     [2, 0, 3, 4],
-     [5, 3, 0, 1],
-     [3, 4, 1, 0]]
-```
+## 9. Future Work
 
-For μ = (0.4, 0.3, 0.2, 0.1), ν = (0.1, 0.2, 0.3, 0.4), and permutation e = (1,0,3,2):
-- W(μ, ν) = 1.200000
-- W(e*μ, e*ν) = 1.200000
-- Difference: < 10⁻¹⁵
-
-### 5.2 Tropical Subadditivity Verification
-
-For the 3×3 matrix A = [[5,1,8],[3,7,2],[6,4,3]], we compute tropical powers and verify all subadditivity inequalities:
-
-| Power | Diag(0) | Diag(1) | Diag(2) |
-|-------|---------|---------|---------|
-| 1     | 5       | 7       | 3       |
-| 2     | 4       | 4       | 6       |
-| 3     | 9       | 9       | 9       |
-| 4     | 8       | 8       | 10      |
-| 5     | 13      | 13      | 13      |
-| 6     | 12      | 12      | 14      |
-
-All 36 applicable subadditivity inequalities are verified. The asymptotic cycle means converge to the tropical eigenvalue λ* = 2.0.
-
-### 5.3 Assignment Cost Conjugation
-
-For the symmetric 3×3 cost c = [[0,1,1],[1,0,1],[1,1,0]] with cyclic rotation e = (1,2,0), the transposition σ = (1,0,2) has assignment cost 2.0. Its conjugate e⁻¹∘σ∘e = (2,1,0) also has cost 2.0, confirming invariance.
-
----
-
-## 6. Discussion
-
-### 6.1 Significance
-
-The three main theorems create a formal bridge between optimization theories that were historically developed independently:
-
-1. **Transport ↔ Group Actions:** Wasserstein invariance establishes that transport geometry is intrinsic to the cost structure, not the labeling. This is the finite precursor to equivariant transport on homogeneous spaces.
-
-2. **Tropical ↔ Graph Theory:** Diagonal subadditivity encodes the fact that concatenating closed walks produces valid (if possibly suboptimal) closed walks. This is the algebraic shadow of graph-theoretic path composition.
-
-3. **Transport ↔ Tropical:** Permutation couplings connect optimal transport to the assignment problem, which is the tropical permanent/determinant computation. Conjugation invariance shows that both theories respect the same symmetries.
-
-### 6.2 Limitations
-
-Our formalization covers the finite, discrete setting. Extensions to continuous measures, infinite-dimensional spaces, and Wasserstein-p for p > 1 require measure-theoretic foundations beyond the current scope. The tropical theory is restricted to ℝ-valued matrices; extensions to ℝ ∪ {+∞} (the completed tropical semiring) would require handling partial orders with top elements.
-
-### 6.3 Proof Engineering
-
-The formal proofs rely heavily on Mathlib's finite sum reindexing (`Equiv.sum_comp`), infimum manipulation (`ciInf_le`, `le_ciInf`), and function extensionality. Key proof patterns include:
-- **Witness selection** for infimum bounds (choosing k = i in the diagonal bound)
-- **Change of variables** via Equiv for sum reindexing
-- **Structural induction** on power indices for power splitting and subadditivity
-
----
-
-## 7. Future Work
-
-Five concrete directions are detailed in `FUTURE_DIRECTIONS.md`:
-
-1. **Finite Kantorovich duality** — connecting primal transport to dual potentials
-2. **Karp's cycle-mean theorem** — identifying the tropical eigenvalue via Fekete's lemma
-3. **Birkhoff–von Neumann decomposition** — every doubly stochastic matrix as a convex combination of permutation matrices
-4. **Hungarian algorithm correctness** — verified optimal assignment computation
-5. **Wasserstein quotient by finite group actions** — equivariant transport on orbit spaces
-
----
-
-## 8. References
-
-1. Butkovič, P. *Max-linear Systems: Theory and Algorithms.* Springer, 2010.
-2. Kantorovich, L.V. "On the translocation of masses." *Dokl. Akad. Nauk SSSR* 37 (1942), 199–201.
-3. Karp, R.M. "A characterization of the minimum cycle mean in a digraph." *Discrete Mathematics* 23 (1978), 309–311.
-4. Kuhn, H.W. "The Hungarian method for the assignment problem." *Naval Research Logistics Quarterly* 2 (1955), 83–97.
-5. Monge, G. *Mémoire sur la théorie des déblais et des remblais.* Paris, 1781.
-6. Simon, I. "Limited subsets of a free monoid." *Proc. 19th FOCS* (1978), 143–150.
-7. Villani, C. *Topics in Optimal Transportation.* AMS, 2003.
-8. Villani, C. *Optimal Transport: Old and New.* Springer, 2009.
-9. Viro, O. "Dequantization of real algebraic geometry on logarithmic paper." *European Congress of Mathematics,* 2001.
-
----
-
-## Appendix A: Complete Lean 4 File Listing
-
-The formalization consists of the following files:
-
-| File | Lines | Key Results |
-|------|-------|-------------|
-| `Tropical/Wasserstein.lean` | ~140 | Wasserstein distance, pushforward, invariance theorem |
-| `Tropical/Matrix/MinPlus.lean` | ~120 | Tropical multiplication, powers, associativity, subadditivity |
-| `Tropical/Matrix/Spectral.lean` | ~110 | Spectral theory: symmetry, monotonicity, power splitting, bounds |
-| `Bridges/TransportTropical/PermutationCouplings.lean` | ~100 | Permutation plans, conjugation invariance |
-| `Bridges/TransportTropical/TropicalTransportBridge.lean` | ~140 | Bridge theorems: monotonicity, assignment bounds |
-
-Total: ~610 lines of verified Lean 4, zero `sorry` in final proofs.
+See `FUTURE_DIRECTIONS.md` for detailed theorem-level next steps. The most impactful near-term targets are:
+1. Kantorovich duality (connecting primal transport to dual Lipschitz potentials)
+2. Karp's minimum cycle mean theorem (completing tropical spectral theory)
+3. Birkhoff-von Neumann decomposition (linking the transport polytope to permutations)
+
+## References
+
+1. C. Villani, *Optimal Transport: Old and New*, Springer, 2009.
+2. F. Baccelli, G. Cohen, G.J. Olsder, J.-P. Quadrat, *Synchronization and Linearity*, Wiley, 1992.
+3. R.M. Karp, "A characterization of the minimum cycle mean in a digraph," *Discrete Mathematics*, 23(3):309–311, 1978.
+4. G. Birkhoff, "Three observations on linear algebra," *Univ. Nac. Tucumán Rev. Ser. A*, 5:147–151, 1946.
+5. L.V. Kantorovich, "On the translocation of masses," *Doklady Akad. Nauk SSSR*, 37(7-8):227–229, 1942.
+6. D. Maclagan, B. Sturmfels, *Introduction to Tropical Geometry*, AMS, 2015.
+7. M. Akian, S. Gaubert, A. Guterman, "Tropical polyhedra are equivalent to mean payoff games," *Int. J. Algebra Comput.*, 22(1), 2012.

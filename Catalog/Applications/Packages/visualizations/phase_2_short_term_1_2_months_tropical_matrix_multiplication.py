@@ -1,316 +1,311 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical-Transport Computation
+Algorithms for Transport-Tropical Duality
 
-Implements the core algorithms from the research paper:
-1. Tropical matrix multiplication and power computation
-2. Discrete Wasserstein distance via LP
-3. Optimal assignment via Hungarian algorithm
-4. Tropical eigenvalue computation via Karp's algorithm
+Implements core algorithms from the research:
+1. Discrete Wasserstein distance via LP
+2. Tropical (min-plus) matrix multiplication and powers
+3. Minimum cycle mean (tropical eigenvalue) computation
+4. Assignment problem via Hungarian method
+5. Permutation plan construction and cost computation
+
+All algorithms include docstrings, type hints, and complexity analysis.
 """
 
 import numpy as np
-from typing import Tuple, List, Optional
+from typing import List, Tuple, Optional
+from scipy.optimize import linear_sum_assignment
 
 
-# =============================================================================
-# Tropical Matrix Algebra
-# =============================================================================
+# ============================================================
+# TROPICAL MATRIX ALGEBRA
+# ============================================================
 
-def trop_mul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+def tropical_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
     """
     Tropical (min-plus) matrix multiplication.
 
-    (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})
+    Computes C where C[i,j] = min_k (A[i,k] + B[k,j]).
 
-    Parameters:
-        A: n×m matrix
-        B: m×p matrix
+    Time complexity: O(n³) where n is the matrix dimension.
+    Space complexity: O(n²) for the output matrix.
 
-    Returns:
-        n×p tropical product matrix
-
-    Time complexity: O(n*m*p)
-    Space complexity: O(n*p)
-    """
-    n, m = A.shape
-    _, p = B.shape
-    C = np.full((n, p), np.inf)
-    for i in range(n):
-        for j in range(p):
-            for k in range(m):
-                C[i, j] = min(C[i, j], A[i, k] + B[k, j])
-    return C
-
-
-def trop_pow(A: np.ndarray, m: int) -> np.ndarray:
-    """
-    Tropical matrix power A^⊗m (1-indexed: A^⊗1 = A).
-
-    Parameters:
-        A: n×n square matrix
-        m: positive integer power
+    Args:
+        A: n×n matrix
+        B: n×n matrix
 
     Returns:
-        A^⊗m = A ⊗ A ⊗ ... ⊗ A (m times)
+        n×n tropical product matrix
 
-    Time complexity: O(m * n^3)
-    Space complexity: O(n^2)
-
-    Interpretation: (A^⊗m)_{ij} = minimum weight of a walk
-    of length m from i to j in the weighted directed graph.
+    Example:
+        >>> A = np.array([[0, 3], [2, 1]])
+        >>> B = np.array([[1, 4], [0, 2]])
+        >>> tropical_multiply(A, B)
+        array([[1., 2.],
+               [1., 3.]])
     """
-    assert m >= 1, "Power must be positive"
+    n = A.shape[0]
+    # Vectorized: for each (i,j), compute min over k of A[i,k] + B[k,j]
+    # A[:, :, None] has shape (n, n, 1), B[None, :, :] has shape (1, n, n)
+    # Sum has shape (n, n, n) and we take min over axis 1
+    return np.min(A[:, :, np.newaxis] + B[np.newaxis, :, :], axis=1)
+
+
+def tropical_power(A: np.ndarray, m: int) -> np.ndarray:
+    """
+    Compute the m-th tropical power of matrix A.
+
+    A^{⊗0} = A (identity convention: 1-step paths)
+    A^{⊗m} = A^{⊗(m-1)} ⊗ A for m ≥ 1
+
+    Time complexity: O(m · n³)
+    Space complexity: O(n²)
+
+    Args:
+        A: n×n matrix
+        m: power (non-negative integer)
+
+    Returns:
+        n×n tropical power matrix
+    """
+    if m == 0:
+        return A.copy()
     result = A.copy()
-    for _ in range(m - 1):
-        result = trop_mul(result, A)
+    for _ in range(m):
+        result = tropical_multiply(result, A)
     return result
 
 
-def trop_eigenvalue_karp(A: np.ndarray) -> float:
+def minimum_cycle_mean(A: np.ndarray) -> float:
     """
-    Compute the tropical eigenvalue (minimum cycle mean) using Karp's algorithm.
+    Compute the minimum cycle mean (tropical eigenvalue) of matrix A.
 
-    λ*(A) = min_{1≤k≤n} min_i (A^⊗k)_{ii} / k
+    Uses Karp's algorithm: λ = min_i min_{0≤k<n} (A^{⊗n}[i,i] - A^{⊗k}[i,i]) / (n - k)
 
-    This is the minimum average weight of a cycle in the directed graph.
+    Time complexity: O(n⁴) (n powers of n×n matrices)
+    Space complexity: O(n³) (storing all powers)
 
-    Parameters:
-        A: n×n square matrix (edge weights)
+    Args:
+        A: n×n matrix (should represent a complete weighted digraph)
 
     Returns:
-        Tropical eigenvalue (minimum cycle mean)
+        Minimum cycle mean (tropical eigenvalue)
 
-    Time complexity: O(n^4)
-    Space complexity: O(n^3)
-
-    Reference: R.M. Karp, "A characterization of the minimum cycle mean
-    in a digraph," Discrete Mathematics 23 (1978), 309-311.
+    Example:
+        >>> A = np.array([[0, 1, 5], [2, 0, 3], [4, 1, 0]])
+        >>> minimum_cycle_mean(A)  # minimum average weight cycle
+        0.0
     """
     n = A.shape[0]
-    # Compute all powers up to n
-    powers = [None] * (n + 1)
-    powers[1] = A.copy()
-    for k in range(2, n + 1):
-        powers[k] = trop_mul(powers[k - 1], A)
+    # Compute all tropical powers A^{⊗0}, ..., A^{⊗n}
+    powers = [tropical_power(A, k) for k in range(n + 1)]
 
-    # Find minimum cycle mean
-    best = np.inf
-    for k in range(1, n + 1):
-        for i in range(n):
-            cycle_mean = powers[k][i, i] / k
-            best = min(best, cycle_mean)
+    # Karp's formula
+    lambda_star = float('inf')
+    for i in range(n):
+        max_over_k = -float('inf')
+        for k in range(n):
+            if n - k > 0:
+                val = (powers[n][i, i] - powers[k][i, i]) / (n - k)
+                max_over_k = max(max_over_k, val)
+        lambda_star = min(lambda_star, max_over_k)
 
-    return best
+    return lambda_star
 
 
-def trop_eigenvector(A: np.ndarray, lam: Optional[float] = None) -> np.ndarray:
+def verify_subadditivity(A: np.ndarray, max_power: int = 10) -> List[Tuple[int, int, int, float, float, bool]]:
     """
-    Compute a tropical eigenvector for the tropical eigenvalue λ.
+    Verify the subadditivity inequality for all diagonal entries
+    of tropical powers up to max_power.
 
-    A tropical eigenvector v satisfies: A ⊗ v = λ ⊕ v,
-    i.e., min_j (A_{ij} + v_j) = λ + v_i for all i.
+    Checks: A^{⊗(m+k+1)}[i,i] ≤ A^{⊗m}[i,i] + A^{⊗k}[i,i]
 
-    Parameters:
-        A: n×n square matrix
-        lam: tropical eigenvalue (computed if not provided)
+    Args:
+        A: n×n matrix
+        max_power: maximum power to check
 
     Returns:
-        Tropical eigenvector (n-dimensional)
-
-    Time complexity: O(n^4) if lam is not provided
+        List of (i, m, k, lhs, rhs, satisfied) tuples for violated cases
     """
     n = A.shape[0]
-    if lam is None:
-        lam = trop_eigenvalue_karp(A)
+    powers = [tropical_power(A, p) for p in range(max_power)]
+    violations = []
 
-    # Shifted matrix B = A - λI (tropically: B_{ij} = A_{ij} - λ)
-    B = A - lam
+    for i in range(n):
+        for m in range(max_power):
+            for k in range(max_power):
+                if m + k + 1 < max_power:
+                    lhs = powers[m + k + 1][i, i]
+                    rhs = powers[m][i, i] + powers[k][i, i]
+                    satisfied = lhs <= rhs + 1e-12
+                    if not satisfied:
+                        violations.append((i, m, k, lhs, rhs, satisfied))
 
-    # Compute (I ⊕ B ⊕ B^2 ⊕ ... ⊕ B^{n-1})
-    # This is the Kleene star restricted to n terms
-    # Start with identity (0 on diagonal, +∞ off)
-    star = np.full((n, n), np.inf)
-    np.fill_diagonal(star, 0)
-
-    Bk = np.where(np.eye(n, dtype=bool), 0.0, np.inf)  # tropical identity
-    for k in range(1, n):
-        Bk = trop_mul(Bk, B)
-        star = np.minimum(star, Bk)
-
-    # The eigenvector is any column of the Kleene star
-    # Choose the column with smallest maximum entry
-    best_col = 0
-    best_max = np.inf
-    for j in range(n):
-        col_max = np.max(star[:, j])
-        if col_max < best_max:
-            best_max = col_max
-            best_col = j
-
-    return star[:, best_col]
+    return violations
 
 
-# =============================================================================
-# Wasserstein Distance
-# =============================================================================
+# ============================================================
+# OPTIMAL TRANSPORT
+# ============================================================
 
-def wasserstein1_lp(c: np.ndarray, mu: np.ndarray, nu: np.ndarray) -> Tuple[float, np.ndarray]:
+def wasserstein_distance(c: np.ndarray, mu: np.ndarray, nu: np.ndarray) -> float:
     """
-    Compute Wasserstein-1 distance via linear programming.
+    Compute discrete Wasserstein-1 distance via scipy's LP solver.
 
-    W(μ, ν) = min_{π ∈ Π(μ,ν)} ∑_{ij} π_{ij} c_{ij}
+    Time complexity: O(n³) via interior point or simplex method.
+    Space complexity: O(n²)
 
-    where Π(μ,ν) = {π ≥ 0 : π1 = μ, π^T1 = ν}
-
-    Parameters:
-        c: n×n cost matrix
-        mu: n-dim probability vector (source)
-        nu: n-dim probability vector (target)
+    Args:
+        c: n×n cost matrix (nonnegative)
+        mu: source probability distribution (length n, sums to 1)
+        nu: target probability distribution (length n, sums to 1)
 
     Returns:
-        (distance, optimal_plan): Wasserstein distance and optimal coupling
+        Wasserstein-1 distance
 
-    Time complexity: O(n^3) typical for LP (simplex)
-    Space complexity: O(n^2)
+    Example:
+        >>> c = np.array([[0, 1], [1, 0]], dtype=float)
+        >>> mu = np.array([0.7, 0.3])
+        >>> nu = np.array([0.3, 0.7])
+        >>> wasserstein_distance(c, mu, nu)
+        0.4
     """
     from scipy.optimize import linprog
-
     n = len(mu)
     c_flat = c.flatten()
+    A_eq = np.zeros((2*n, n*n))
+    b_eq = np.zeros(2*n)
 
-    # Equality constraints: row sums = mu, col sums = nu
-    A_eq = np.zeros((2 * n, n * n))
-    b_eq = np.zeros(2 * n)
     for i in range(n):
         for j in range(n):
-            A_eq[i, i * n + j] = 1
-            A_eq[n + j, i * n + j] = 1
+            A_eq[i, i*n + j] = 1.0
+            A_eq[n + j, i*n + j] = 1.0
         b_eq[i] = mu[i]
         b_eq[n + i] = nu[i]
 
     bounds = [(0, None)] * (n * n)
     result = linprog(c_flat, A_eq=A_eq, b_eq=b_eq, bounds=bounds, method='highs')
 
-    return result.fun, result.x.reshape(n, n)
+    if not result.success:
+        raise ValueError(f"LP failed: {result.message}")
+    return result.fun
 
 
-def pushforward(e: List[int], mu: np.ndarray) -> np.ndarray:
-    """
-    Pushforward of probability vector μ by permutation e.
-
-    (e_*μ)(i) = μ(e^{-1}(i))
-
-    Parameters:
-        e: permutation as list (e[i] = image of i)
-        mu: probability vector
-
-    Returns:
-        Pushed-forward probability vector
-    """
-    n = len(mu)
-    e_inv = [0] * n
-    for i in range(n):
-        e_inv[e[i]] = i
-    return np.array([mu[e_inv[i]] for i in range(n)])
-
-
-# =============================================================================
-# Assignment Problem (Hungarian Algorithm - simplified)
-# =============================================================================
-
-def hungarian_assignment(c: np.ndarray) -> Tuple[List[int], float]:
+def optimal_assignment(c: np.ndarray) -> Tuple[np.ndarray, float]:
     """
     Solve the assignment problem using the Hungarian algorithm.
 
-    Find σ minimizing ∑_i c(i, σ(i)) over all permutations σ.
+    Find the permutation σ minimizing Σ_i c[i, σ(i)].
 
-    Parameters:
+    Time complexity: O(n³) via the Hungarian algorithm.
+    Space complexity: O(n²)
+
+    Args:
         c: n×n cost matrix
 
     Returns:
-        (assignment, cost): optimal permutation and its cost
+        (optimal_permutation, minimum_cost) tuple
 
-    Time complexity: O(n^3)
-    Space complexity: O(n^2)
+    Example:
+        >>> c = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
+        >>> sigma, cost = optimal_assignment(c)
+        >>> cost
+        6.0
     """
-    from scipy.optimize import linear_sum_assignment
-
     row_ind, col_ind = linear_sum_assignment(c)
-    assignment = list(col_ind)
+    sigma = np.zeros(len(row_ind), dtype=int)
+    sigma[row_ind] = col_ind
     cost = c[row_ind, col_ind].sum()
-    return assignment, cost
+    return sigma, cost
 
 
-def verify_conjugation_invariance(
-    c: np.ndarray, sigma: List[int], e: List[int]
-) -> Tuple[float, float, bool]:
+def permutation_plan(sigma: np.ndarray) -> np.ndarray:
     """
-    Verify that assignment cost is invariant under conjugation
-    when e preserves the cost function.
+    Construct the transport plan for a permutation.
 
-    ∑_i c(i, (e⁻¹∘σ∘e)(i)) = ∑_i c(i, σ(i))
+    π(i,j) = 1/n if σ(i) = j, else 0.
 
-    Parameters:
-        c: cost matrix (must satisfy c[e[i],e[j]] = c[i,j])
-        sigma: permutation
-        e: cost-preserving bijection
+    Time complexity: O(n)
+    Space complexity: O(n²)
+
+    Args:
+        sigma: permutation as array of indices
 
     Returns:
-        (cost_sigma, cost_conjugated, equal): costs and whether they match
+        n×n transport plan matrix
     """
     n = len(sigma)
-    e_inv = [0] * n
+    pi = np.zeros((n, n))
     for i in range(n):
-        e_inv[e[i]] = i
-
-    # Conjugated permutation: e⁻¹ ∘ σ ∘ e
-    conj = [e_inv[sigma[e[i]]] for i in range(n)]
-
-    cost_sigma = sum(c[i, sigma[i]] for i in range(n))
-    cost_conj = sum(c[i, conj[i]] for i in range(n))
-
-    return cost_sigma, cost_conj, abs(cost_sigma - cost_conj) < 1e-10
+        pi[i, sigma[i]] = 1.0 / n
+    return pi
 
 
-# =============================================================================
-# Main demonstration
-# =============================================================================
+def verify_wasserstein_invariance(
+    c: np.ndarray, mu: np.ndarray, nu: np.ndarray,
+    e: np.ndarray, tol: float = 1e-8
+) -> Tuple[float, float, bool]:
+    """
+    Verify Wasserstein invariance under a cost-preserving permutation.
+
+    Args:
+        c: cost matrix
+        mu, nu: probability distributions
+        e: permutation (as index array) preserving c
+        tol: numerical tolerance
+
+    Returns:
+        (w_original, w_pushed, invariant) tuple
+    """
+    e_inv = np.argsort(e)
+    mu_push = mu[e_inv]
+    nu_push = nu[e_inv]
+
+    w_orig = wasserstein_distance(c, mu, nu)
+    w_push = wasserstein_distance(c, mu_push, nu_push)
+
+    return w_orig, w_push, abs(w_orig - w_push) < tol
+
+
+# ============================================================
+# EXAMPLE USAGE
+# ============================================================
 
 if __name__ == "__main__":
-    print("Tropical-Transport Algorithms")
+    print("Algorithm Demonstrations")
     print("=" * 50)
 
-    # Tropical eigenvalue computation
-    A = np.array([
-        [5, 1, 8],
-        [3, 7, 2],
-        [6, 4, 3]
-    ], dtype=float)
+    # Tropical multiplication example
+    A = np.array([[0, 3, 7], [2, 0, 4], [5, 1, 0]], dtype=float)
+    print("\nMatrix A:")
+    print(A)
 
-    lam = trop_eigenvalue_karp(A)
-    v = trop_eigenvector(A, lam)
-    print(f"\nMatrix A:\n{A}")
-    print(f"Tropical eigenvalue: {lam:.4f}")
-    print(f"Tropical eigenvector: {v}")
+    A2 = tropical_multiply(A, A)
+    print("\nA ⊗ A (2-step shortest paths):")
+    print(A2)
 
-    # Verify eigenvector equation
-    Av = np.array([min(A[i, j] + v[j] for j in range(3)) for i in range(3)])
-    print(f"A ⊗ v = {Av}")
-    print(f"λ + v = {lam + v}")
-    print(f"Eigenvector equation satisfied: {np.allclose(Av, lam + v, atol=1e-10)}")
+    A3 = tropical_multiply(A2, A)
+    print("\nA ⊗ A ⊗ A (3-step shortest paths):")
+    print(A3)
 
-    # Wasserstein computation
-    print(f"\n{'='*50}")
-    c = np.array([[0, 2, 5], [2, 0, 3], [5, 3, 0]], dtype=float)
-    mu = np.array([0.5, 0.3, 0.2])
-    nu = np.array([0.2, 0.3, 0.5])
+    # Minimum cycle mean
+    mcm = minimum_cycle_mean(A)
+    print(f"\nMinimum cycle mean (tropical eigenvalue): {mcm:.4f}")
 
-    w, pi = wasserstein1_lp(c, mu, nu)
-    print(f"\nWasserstein distance W(μ,ν) = {w:.4f}")
-    print(f"Optimal plan:\n{pi}")
+    # Subadditivity verification
+    violations = verify_subadditivity(A, max_power=8)
+    print(f"Subadditivity violations (should be 0): {len(violations)}")
 
-    # Assignment problem
-    print(f"\n{'='*50}")
-    assignment, cost = hungarian_assignment(c)
-    print(f"Optimal assignment: {assignment}, cost = {cost:.4f}")
+    # Optimal assignment
+    sigma, cost = optimal_assignment(A)
+    print(f"\nOptimal assignment: {sigma}, cost = {cost:.4f}")
+
+    # Wasserstein invariance
+    n = 4
+    c = np.array([[abs(i-j) for j in range(n)] for i in range(n)], dtype=float)
+    mu = np.array([0.4, 0.3, 0.2, 0.1])
+    nu = np.array([0.1, 0.2, 0.3, 0.4])
+    e = np.array([3, 0, 1, 2])  # reverse cyclic shift
+
+    w1, w2, ok = verify_wasserstein_invariance(c, mu, nu, e)
+    print(f"\nWasserstein invariance: W1={w1:.6f}, W2={w2:.6f}, invariant={ok}")

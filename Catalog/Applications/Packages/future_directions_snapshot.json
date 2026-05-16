@@ -522,10 +522,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a6c55e7c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ba4956d",
     "timestamp": "2026-05-16T18:57:04.468119+00:00"
   },
   {
@@ -799,6 +799,48 @@
     "source_exp_id": "e1bdecc7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T20:05:47.298444+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Direction 1",
+    "description": "(hypercontractivity) — most impactful single result",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "22fbf57d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:36:34.996106+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Direction 2",
+    "description": "(KKL/influence) — deep consequences for understanding arithmetic complexity",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "22fbf57d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:36:35.014003+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Direction 4",
+    "description": "(thermodynamic bridge) — longest-term payoff, connects to broadest audience",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "22fbf57d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:36:35.029074+00:00"
   },
   {
     "id": "fd_0113",
@@ -1129,24 +1171,6 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "3. Adjunctions and Galois Connections Between Theories",
-    "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "22fbf57d",
-    "timestamp": "2026-05-16T02:14:30.254922+00:00"
   },
   {
     "id": "fd_0226",
