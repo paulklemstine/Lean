@@ -649,10 +649,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9093673a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43a72392",
     "timestamp": "2026-05-15T20:42:44.426054+00:00"
   },
   {
@@ -974,22 +974,6 @@
     "source_exp_id": "ea1c2257",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:17:39.939717+00:00"
-  },
-  {
-    "id": "fd_0117",
-    "title": "Direction 5: Automated Search for Bridge Morphisms Across the Catalog",
-    "description": "**Hypothesis:** Given a catalog of proven theorems, it is possible to *automatically* search for theory morphisms connecting them. The search algorithm would:\n1. Extract invariant functions from theorem statements (e.g., recognizing \"height ≤ dimension\" as a monotonicity witness).\n2. Attempt to construct `TheoryHom` instances by matching source/target types and proving monotonicity via `omega` or `nlinarith`.\n3. Compose discovered morphisms to find indirect bridges.\n\n**Proof Strategy:**\n1. Define a `TheorySpec` structure that records the carrier type, invariant function, and a list of known theorems (as `SatisfiesLowerBound` witnesses).\n2. Write a Lean metaprogram (tactic or `Decidable` instance) that attempts to construct `TheoryHom` between two `TheorySpec` objects.\n3. Prove soundness: a",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "67f5da38",
-    "timestamp": "2026-05-14T16:17:39.952876+00:00"
   },
   {
     "id": "fd_0126",
@@ -1669,5 +1653,107 @@
     "source_exp_id": "4f490452",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T00:04:33.382691+00:00"
+  },
+  {
+    "id": "fd_0223",
+    "title": "1. Enriched Invariant Semantics over Ordered Semirings",
+    "description": "**Hypothesis:** Replacing `ℕ`-valued invariants with invariants valued in canonically ordered commutative semirings (e.g., `ℝ≥0`, tropical semirings, or lattice-valued invariants) would unify height bounds, security parameters, tropical valuations, and proof-complexity measures under a single transport calculus.\n\n**Proof Strategy:**\n- Generalize `TheorySpec` to `TheorySpecOrd β` for `[OrderedCommMonoid β]`.\n- Prove that transport, composition, and soundness theorems all hold at this generality.\n- Instantiate with `β = ℝ≥0` for real-valued invariants (Lipschitz constants, security levels).\n- Instantiate with `β = ℤ ∪ {-∞}` for tropical valuations.\n- Show that the ℕ specialization is a retract of the general theory.\n\n**Cross-Domain Connections:** This opens bridges between tropical geometry ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:14:30.232582+00:00"
+  },
+  {
+    "id": "fd_0224",
+    "title": "2. Graph Search over the Full Catalog",
+    "description": "**Hypothesis:** The collection of all `TheorySpec` instances in the catalog, together with all `TheoryHom` morphisms, forms a directed graph whose connected components reveal hidden mathematical analogies. Automated path search in this graph can discover indirect bridges that no human would anticipate.\n\n**Proof Strategy:**\n- Build a metaprogram that enumerates all `TheorySpec` definitions in the project.\n- For each pair, attempt to synthesize a `SearchCertificate` by trying identity maps, projections, and simple compositions with `omega`/`linarith`/`nlinarith` as proof backends.\n- Store successful certificates in a graph data structure.\n- Prove: if a path exists from A to B in the graph, then `A.lowerBound ≤ B.inv (path.map x)` for all A-witnesses x.\n\n**Cross-Domain Connections:** This is ",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:14:30.243331+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "3. Adjunctions and Galois Connections Between Theories",
+    "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:14:30.254922+00:00"
+  },
+  {
+    "id": "fd_0226",
+    "title": "4. Cryptography ↔ Learning ↔ Tropical Triads via Composed Morphisms",
+    "description": "**Hypothesis:** The bridge graph Height → Dimension → Security already hints at a three-way connection between arithmetic learning theory (heights), tropical geometry (dimensions), and cryptographic security (security parameters). A full triad would show that hardness results in any one domain automatically imply hardness results in the other two.\n\n**Proof Strategy:**\n- Formalize the tropical valuation as a `TheorySpec` with `inv = tropical_degree`.\n- Build a morphism from tropical specs to security specs via dimension bounds.\n- Build a morphism from learning specs (Lipschitz/margin bounds) to height specs.\n- Compose to get a certified triad: Learning → Height → Dimension → Security.\n- Prove: any new lower bound in learning theory automatically yields a new lower bound in cryptographic sec",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:14:30.267025+00:00"
+  },
+  {
+    "id": "fd_0227",
+    "title": "5. Theorem Embeddings from Syntax: Automatic TheorySpec Extraction",
+    "description": "**Hypothesis:** Many theorem statements in the catalog have the implicit structure of a `TheorySpec` — they assert a lower bound on some quantity for all elements satisfying some predicate. A metaprogram could automatically extract `TheorySpec` instances from theorem signatures by pattern-matching on the syntactic form `∀ x, P x → n ≤ f x`.\n\n**Proof Strategy:**\n- Write a `MetaM` procedure that inspects a theorem's type.\n- Pattern-match on universal quantification, implication with a predicate, and inequality with a constant.\n- Extract `α`, `Witness`, `inv`, `lowerBound`, and wrap the theorem's proof as `sound`.\n- Automatically populate the bridge graph.\n\n**Cross-Domain Connections:** This is a form of mathematical information extraction, analogous to knowledge extraction from natural langu",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:14:30.279911+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Summary",
+    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Enriched invariants | Medium | High | None |\n| 2. Graph search | Medium | Very High | Direction 1 (optional) |\n| 3. Adjunctions | Hard | High | None |\n| 4. Triads | Medium | Very High | Direction 2 |\n| 5. Syntax extraction | Hard | Transformative | Direction 2 |\n\nThe recommended order is 1 → 2 → 4 → 3 → 5, with direction 5 as the long-term goal that would make the entire framework self-sustaining.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:14:30.291581+00:00"
   }
 ]
