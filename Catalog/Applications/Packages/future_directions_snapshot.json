@@ -141,21 +141,6 @@
     "timestamp": "2026-05-14T16:16:22.737665+00:00"
   },
   {
-    "id": "fd_0102",
-    "title": "Depth",
-    "description": "(Direction 1): Understand vertical composition through tropical spectral theory.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "adc29728",
-    "consumed_by_exp_id": "795174d8",
-    "timestamp": "2026-05-14T16:17:00.725031+00:00"
-  },
-  {
     "id": "fd_0107",
     "title": "Formalizes definitions and conjectures",
     "description": "in Lean 4, building on the existing `TropicalCurryHoward` module.",
@@ -404,7 +389,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "3e135d69",
+    "consumed_by_exp_id": "38f08fce",
     "timestamp": "2026-05-16T07:11:31.800180+00:00"
   },
   {
@@ -1666,5 +1651,131 @@
     "source_exp_id": "04765070",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T18:12:09.902307+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "1. Tropical Perron–Frobenius Exact Asymptotics for Vertical Composition",
+    "description": "**Hypothesis**: For irreducible tropical matrices (where the associated directed graph is strongly connected), the maximum cycle mean equals the tropical spectral radius, and vertical composition growth converges to exactly this rate.\n\n**Proof Strategy**:\n1. Formalize the notion of *irreducibility* for tropical matrices: the weighted digraph `G(A)` with edge weights `A_ij` is strongly connected.\n2. Define the *maximum cycle mean*: `μ(A) = max_{σ cycle} (∑_{(i,j)∈σ} A_ij) / |σ|`.\n3. Prove the tropical Perron–Frobenius theorem: for irreducible `A`, there exists a tropical eigenvector `v` with eigenvalue `μ(A)`, i.e., `A ⊗ v = μ(A) + v`.\n4. Use `tropical_eigenvector_iterate_exact` to deduce: `verticalIterate A k v = k * μ(A) + v`.\n5. Prove the *converse bound*: `supNorm(A^k ⊗ x) ≥ k * μ(A) + ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "795174d8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:54:14.881668+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "2. Subadditive Ergodic / Tropical Lyapunov Theory for Random Layer Composition",
+    "description": "**Hypothesis**: When layers are drawn i.i.d. from a distribution over tropical matrices, the growth rate of `supNorm(A_k ⊗ ··· ⊗ A_1 ⊗ x)` converges almost surely to a deterministic tropical Lyapunov exponent by the subadditive ergodic theorem.\n\n**Proof Strategy**:\n1. Formalize the product of tropical matrices: `(A ⊗ B)_{ij} = max_k (A_{ik} + B_{kj})`.\n2. Show that `f(k) = supNorm(A_k ⊗ ··· ⊗ A_1 ⊗ 0)` is subadditive: `f(m+n) ≤ f(m) + f(n)` (up to a constant).\n3. Apply Kingman's subadditive ergodic theorem (formalized in Mathlib) to obtain almost-sure convergence.\n4. Identify the limit as the max-plus analogue of the top Lyapunov exponent.\n\n**Suggested theorem**:\n```lean\ntheorem tropical_lyapunov_exponent_exists\n    {n : ℕ} (μ : MeasureTheory.Measure (Fin (n+1) → Fin (n+1) → ℝ))\n    [Measu",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "795174d8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:54:14.902094+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "3. Enriched Categorical Semantics of Tropical Depth",
+    "description": "**Hypothesis**: Tropical matrix composition defines an enrichment of the category of finite sets over the max-plus semiring, where morphism composition growth is controlled by the spectral radius functor.\n\n**Proof Strategy**:\n1. Define a category `TropMat` with objects `Fin n` and morphisms `Fin n → Fin m → ℝ` (tropical matrices).\n2. Define composition as tropical matrix multiplication.\n3. Show this forms a category enriched over `(ℝ ∪ {-∞}, max, +)`.\n4. Define a \"spectral radius functor\" `ρ : TropMat → ℝ` sending matrices to their maximum cycle mean.\n5. Prove that `ρ(A ∘ B) ≤ ρ(A) + ρ(B)` (subadditivity of spectral radius under composition).\n6. Use this to derive depth-composition bounds categorically.\n\n**Suggested theorem**:\n```lean\ntheorem tropical_enriched_composition_bound\n    {n m p ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "795174d8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:54:14.919312+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "4. Certified Robustness and Generalization Bounds from Tropical Spectral Growth",
+    "description": "**Hypothesis**: The tropical spectral bound directly yields Lipschitz constants for tropical neural networks, which in turn give certified robustness radii and PAC-Bayes generalization bounds.\n\n**Proof Strategy**:\n1. Show that `tropMatVec A` is a nonexpansive map with respect to the tropical (L∞) metric up to an additive shift: `d∞(A⊗x, A⊗y) ≤ d∞(x, y)` (this is actually an equality — tropical maps are isometries of the Hilbert projective metric).\n2. Derive: for a k-layer tropical network with matrices `A₁, ..., A_k`, the Lipschitz constant in L∞ is exactly 1 (additive Lipschitz).\n3. Use this to prove certified robustness: if the input perturbation is ε in L∞, the output perturbation is at most ε.\n4. Combine with margin bounds to get generalization certificates.\n\n**Suggested theorem**:\n```",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "795174d8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:54:14.935768+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "5. Tropical Control-Theoretic Interpretation of Deep Architectures",
+    "description": "**Hypothesis**: A deep tropical neural network with k layers is equivalent to a k-step max-plus optimal control problem, where the weight matrices are the stage costs and the iterate bound gives the value function growth rate.\n\n**Proof Strategy**:\n1. Formalize the max-plus Bellman equation: `V_{k+1}(i) = max_j (A_ij + V_k(j))`, which is exactly `tropMatVec`.\n2. Show that `verticalIterate A k (fun _ => 0)` computes the k-step optimal value function.\n3. Prove the connection to shortest/longest path problems: the (i,j) entry of the k-th tropical matrix power gives the maximum-weight path of length k from j to i.\n4. Use the iterate bound to derive finite-horizon cost certificates.\n\n**Suggested theorem**:\n```lean\ntheorem tropical_bellman_optimality\n    {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ) (k",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "795174d8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:54:14.951651+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "6. Tropical Circuit Complexity and Depth Separation",
+    "description": "**Hypothesis**: The tropical spectral radius provides lower bounds on the depth required to compute certain functions, giving tropical analogues of circuit complexity depth-separation results.\n\n**Proof Strategy**:\n1. Show that functions with large \"tropical oscillation\" (many changes in which monomial is dominant) require depth proportional to `log(oscillation) / log(width)`.\n2. Prove that depth-k tropical circuits with width w can represent at most `w^k` linear regions.\n3. Use the spectral bound to show that certain functions require the iterate bound to be tight, implying depth lower bounds.\n\n**Cross-domain significance**: This connects tropical geometry to computational complexity, potentially yielding new lower bounds on the expressivity of neural networks.\n\n---",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "795174d8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:54:14.966831+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "7. Tropical Transfer Learning via Spectral Alignment",
+    "description": "**Hypothesis**: Two tropical networks with similar spectral radii can be aligned via a tropical change of basis, enabling certified transfer of depth-stability guarantees.\n\n**Proof Strategy**:\n1. Define tropical similarity: `A ~ D⁻¹ ⊗ B ⊗ D` where `D` is a diagonal tropical matrix (scaling).\n2. Show that similar matrices have the same spectral radius (maximum cycle mean).\n3. Prove that the iterate bound transfers: if `A ~ B`, then depth-stability certificates for `A` apply to `B`.\n\n**Cross-domain significance**: This provides a mathematical framework for understanding when and how depth-stability guarantees transfer between architectures, a key question in practical deep learning.\n\n---",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "795174d8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:54:14.982988+00:00"
   }
 ]
