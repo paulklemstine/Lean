@@ -227,10 +227,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1bdecc7",
     "timestamp": "2026-05-14T16:24:30.145614+00:00"
   },
   {
@@ -829,23 +829,6 @@
     "timestamp": "2026-05-16T11:26:32.196124+00:00"
   },
   {
-    "id": "fd_0251",
-    "title": "Runtime certification",
-    "description": ": The Chernoff bound gives provable guarantees on the probability of timeout: P(runtime > T·log(n)) ≤ exp(−log(n)·I(T)), providing formal timeout probabilities.\n\n### Concrete Examples\n- **SAT solvers**: The runtime τ(n) of DPLL on random k-SAT instances near the satisfiability threshold. The free energy should exhibit a phase transition at the threshold.\n- **Primality testing**: τ(n) = number of Miller-Rabin rounds needed. The rate function quantifies the probability of Carmichael-number-like inputs.\n- **Factoring**: τ(n) = runtime of the number field sieve. The free energy encodes the average-case/worst-case gap.\n\n### Speculative Hypothesis\nThere exists a hierarchy of complexity classes indexed by the growth rate of I(x) as x → ∞:\n- **Polynomial tails**: I(x) grows polynomially → benign t",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Speculative"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.263279+00:00"
-  },
-  {
     "id": "fd_0247",
     "title": "Implement",
     "description": "the tropical Sherman-Morrison formula (Direction 3) and test on large matrices",
@@ -872,21 +855,6 @@
     "source_exp_id": "d0d6476e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T12:09:09.254524+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Max-plus matrix algebra",
-    "description": ": formal tropical matrix multiplication, powers, eigenvalues",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "332fc03e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:25:17.996958+00:00"
   },
   {
     "id": "fd_0255",
@@ -929,6 +897,48 @@
     "source_exp_id": "5887c940",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T12:26:56.375988+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Formalize hypotheses",
+    "description": "as Lean theorem statements with `by sorry`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6b04f31f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:47:40.745545+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Validate computationally",
+    "description": "using Python implementations on test cases.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6b04f31f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:47:40.758042+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Decompose into lemmas",
+    "description": "targeting individual proof steps.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6b04f31f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:47:40.770972+00:00"
   },
   {
     "id": "seed_052",
@@ -1433,25 +1443,6 @@
     "source_exp_id": "2cbb4165",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:39:37.937805+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Direction 3: Tropical Commitments and Weighted Automata Equivalence Hardness",
-    "description": "**Hypothesis:** Binding of tropical matrix commitments is equivalent to the weighted automata inequivalence problem, establishing a novel connection between cryptographic security and formal language theory.\n\n**Theorem Target:**\n```\ntheorem tropical_binding_automata_equiv\n  (A B : TropMat m n) :\n  (∀ x₁ x₂ r₁ r₂, tropCommit A B x₁ r₁ = tropCommit A B x₂ r₂ → x₁ = x₂) ↔\n  WeightedAutomataInequivalent (encodeAsAutomaton A) (encodeAsAutomaton B)\n```\n\n**Strategy:**\n1. Encode a tropical matrix A as a weighted finite automaton where transitions have tropical weights.\n2. Show that tropMatVecMul A x corresponds to the automaton's evaluation on input x.\n3. A collision in the commitment scheme corresponds to two distinct inputs producing the same weighted language value—exactly the weighted automata",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "cc933f99",
-    "consumed_by_exp_id": "6b04f31f",
-    "timestamp": "2026-05-16T06:31:54.490610+00:00"
   },
   {
     "id": "fd_0226",
