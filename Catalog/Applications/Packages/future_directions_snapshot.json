@@ -514,22 +514,6 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
-    "id": "fd_0230",
-    "title": "Union bound",
-    "description": ": total cheating probability ≤ Σ d_i / |S| ≤ nd/|S|.\n\n### Cross-Domain Impact\n- **Complexity Theory**: Sum-check is the core of #P hardness amplification\n- **Zero-Knowledge Proofs**: Foundation for SNARKs and STARKs\n- **Verifiable Computation**: Delegating computation to untrusted servers\n\n### Key Lean Targets\n```\ntheorem sum_check_soundness :\n  is_cheating_prover P →\n  Pr[verifier_accepts (sum_check_protocol P V)] ≤ n * d / |S|\n```\n\n---\n\n## Direction 5: List Decoding Beyond the Unique Radius\n\n### Statement\nProve that for the Reed–Muller code RM(d, n, S), the number of codewords within Hamming distance `|S|^n - t` of any received word is at most `(|S|^n / t)^d`, provided `t > d · |S|^(n-1)`.\n\nThis is the multivariate analogue of the Guruswami–Sudan list-decoding bound.\n\n### Hypothesis\nBeyo",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97c6ba31",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:18:15.266353+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "Establish the level estimate",
     "description": "Show $c^* \\ge c$ using the sublevel set separation hypothesis.\n\n### Key Challenges\n- The deformation argument requires constructing explicit continuous deformations of paths in the tropical setting, which is complicated by the piecewise-linear structure.\n- The minimax principle needs compactness arguments that may require restricting to bounded domains.\n\n### Cross-Domain Connections\n- **Variational methods**: tropical analogue of the Ambrosetti-Rabinowitz theorem\n- **Optimization**: provides certified barriers for global optimization of piecewise-linear functions\n- **Statistical physics**: mountain passes correspond to transition states between metastable phases\n\n### Actionable Steps\n1. Formalize the minimax principle for continuous functions on compact sets in Lean.\n2. Prove the mountain ",
@@ -574,20 +558,6 @@
     "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:21:49.049347+00:00"
-  },
-  {
-    "id": "fd_0230",
-    "title": "Week 1-2",
-    "description": ": Formalize the tropical packing bound (Direction 1, key lemma) and the linear-to-tropical margin transfer (Direction 3, key theorem) in Lean 4.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d85be8c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:49:39.012877+00:00"
   },
   {
     "id": "fd_0242",
@@ -652,21 +622,6 @@
     "source_exp_id": "63028e3e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:53:19.059190+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Define tropical circuits:",
-    "description": "Gates compute min(x,y) or x+y, with integer constants on wires. Size = number of gates, depth = longest path.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63028e3e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:53:19.075495+00:00"
   },
   {
     "id": "fd_0248",
@@ -822,6 +777,268 @@
     "source_exp_id": "63028e3e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:53:19.319691+00:00"
+  },
+  {
+    "id": "fd_0228",
+    "title": "Define tropical rank-1 matrices",
+    "description": "in Lean: `def IsRankOne (M : Matrix (Fin n) (Fin m) (WithTop ℤ)) : Prop := ∃ a b, ∀ i j, M i j = a i + b j`",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.751252+00:00"
+  },
+  {
+    "id": "fd_0229",
+    "title": "Define tropical factor rank",
+    "description": "as the minimum $r$: `def tropFactorRank (M) := sInf {r | ∃ decomposition of M into r rank-1 matrices}`",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.763789+00:00"
+  },
+  {
+    "id": "fd_0231",
+    "title": "Prove rank-1 lower bounds",
+    "description": "using support arguments: if $M$ has certain combinatorial structure, it cannot be decomposed into fewer than $k$ rank-1 pieces",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.787313+00:00"
+  },
+  {
+    "id": "fd_0232",
+    "title": "Construct encoding family",
+    "description": "where `tropFactorRank (encode s) = s` using block-diagonal rank-1 decompositions\n\n### Key Lemmas Needed\n- `tropFactorRank_le_dim`: Factor rank is at most $n$ for $n \\times n$ matrices\n- `tropFactorRank_identity`: Factor rank of the tropical identity is $n$\n- `tropFactorRank_diagonal`: Factor rank of a diagonal matrix equals its number of finite entries (under certain conditions)\n- `tropFactorRank_tropical_sum`: Factor rank is subadditive under tropical sum\n\n### Estimated Difficulty\n**High.** The lower bounds are the hardest part. Shitov's NP-hardness result suggests that computing factor rank is intrinsically difficult, but constructing specific matrices with *provable* factor rank requires delicate combinatorial arguments.\n\n### Cross-Domain Impact\n- **Algebraic geometry**: Factor rank con",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.800180+00:00"
+  },
+  {
+    "id": "fd_0233",
+    "title": "Define promise key recovery",
+    "description": ": `recoverSecret(pub(s)) = s` with probability $\\geq 1 - \\epsilon$ over some distribution on secrets",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.812192+00:00"
+  },
+  {
+    "id": "fd_0235",
+    "title": "Formalize in Lean",
+    "description": ": use `MeasureTheory` from Mathlib for probability\n\n### Specific Formulation\n```\ntheorem approximate_hardness_transfer\n    (ε : ℝ) (hε : 0 ≤ ε) (hε' : ε < 1)\n    (μ : Measure (Fin (n+1)))\n    (hrec : μ {s | recoverSecret (tropPow G s) = s} ≥ 1 - ε) :\n    μ {s | rankInv (encode (recoverSecret (tropPow G s))) = s} ≥ 1 - ε\n```\n\n### Estimated Difficulty\n**Medium.** The mathematical content is straightforward (the reduction preserves success probability exactly), but formalizing measure theory in Lean requires careful API work.\n\n### Cross-Domain Impact\n- **Cryptography**: Real-world attacks are probabilistic; this extension is essential for practical security analysis\n- **Learning theory**: Connects to PAC learning of tropical functions\n\n---\n\n## Direction 3: Quantum Resistance of Tropical Key R",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.839161+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Formalize quantum circuit model",
+    "description": "in Lean (or reference existing formalizations)",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.851330+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Show structural obstructions",
+    "description": ": the idempotency of tropical addition prevents the quantum Fourier transform from producing useful interference patterns",
+    "domains": [
+      "Tropical",
+      "Physics"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.864563+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Reduce from a known quantum-hard problem",
+    "description": "(e.g., certain lattice problems) to tropical key recovery\n\n### Key Questions\n- Does the tropical discrete logarithm problem have hidden subgroup structure that a quantum algorithm could exploit?\n- Can the Regev-Oded lattice-based techniques be adapted to the tropical setting?\n- What is the oracle complexity of tropical matrix power inversion?\n\n### Estimated Difficulty\n**Very high.** This requires deep integration of quantum complexity theory with tropical algebra. However, even partial results (e.g., ruling out specific quantum attack strategies) would be highly impactful.\n\n### Cross-Domain Impact\n- **Post-quantum cryptography**: New candidate hard problems for the NIST post-quantum standards\n- **Quantum computing**: Novel structural complexity results for idempotent algebras\n- **Physics**",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.878723+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Define tropical circuits",
+    "description": ": acyclic networks of min and + gates",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.890923+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Show that tropPow is computable",
+    "description": "by a polynomial-size tropical circuit",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.903887+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Prove a transfer theorem",
+    "description": ": if a small circuit could invert tropPow, combined with the encoding, it would yield a small circuit for the factorization invariant",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.917254+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Derive contradictions",
+    "description": "from known or conjectured tropical circuit lower bounds\n\n### Connection to Existing Theory\n- The P vs NP question is equivalent to proving super-polynomial lower bounds on Boolean circuits\n- Tropical circuit complexity is a natural relaxation where progress may be more achievable\n- Valiant's algebraic complexity theory provides tools that adapt to the tropical setting\n\n### Estimated Difficulty\n**Very high.** Circuit lower bounds are notoriously difficult. However, the tropical setting may be more tractable due to structural restrictions.\n\n### Cross-Domain Impact\n- **Complexity theory**: New approaches to circuit lower bounds\n- **Deep learning theory**: Tropical circuits model ReLU networks; depth lower bounds = expressivity bounds\n\n---\n\n## Direction 5: Gauge-Equivariant Reductions\n\n### Hyp",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.930526+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Prove a gauge-equivariant reduction",
+    "description": ": key recovery modulo gauge symmetry still computes the invariant\n\n### Specific Formulation\n```\ntheorem gauge_equivariant_transfer\n    (s₁ s₂ : ℕ) (c : Fin n → WithTop ℤ)\n    (h_gauge : tropPow G s₁ = tropPow (gaugeShift G c) s₂) :\n    rankInv (encode s₁) = rankInv (encode s₂)\n```\n\n### Estimated Difficulty\n**Medium-high.** The gauge theory is well-understood mathematically but requires careful formalization.\n\n### Cross-Domain Impact\n- **Physics**: Gauge symmetry is fundamental in field theory; tropical gauge theory connects to tropical Yang-Mills\n- **Information theory**: Gauge orbits measure the information content of cryptographic keys\n\n---\n\n## Direction 6: Tropical Homomorphic Encryption\n\n### Hypothesis\nThe hardness transfer framework can be extended to support computation on encrypted ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.974326+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Prove that the hardness transfer extends",
+    "description": "to the homomorphic setting\n\n### Estimated Difficulty\n**High.** Tropical homomorphic encryption is largely unexplored.\n\n### Cross-Domain Impact\n- **Secure computation**: Enable private shortest-path queries, private scheduling\n- **Cloud computing**: Outsource optimization problems without revealing data\n\n---\n\n## Direction 7: Experimental Cryptanalysis Benchmarks\n\n### Hypothesis\nThe hardness transfer theorem can guide the design of benchmark instances for tropical cryptanalysis.\n\n### Concrete Steps",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:31.988731+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Measure hardness empirically",
+    "description": ": time various algorithms (brute-force, lattice reduction, Gröbner basis) on these instances",
+    "domains": [
+      "Cryptography"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:32.013828+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Correlate with factor rank",
+    "description": ": test whether instances where the associated encoding has higher factor rank are empirically harder to break",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "011ce99e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:11:32.025620+00:00"
   },
   {
     "id": "seed_052",
@@ -1420,10 +1637,10 @@
       "Tropical"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7998d3b1",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23a76967",
     "timestamp": "2026-05-16T04:31:45.413489+00:00"
   },
   {
@@ -1480,24 +1697,6 @@
     "source_exp_id": "cc933f99",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:31:54.490610+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Direction 4: Tropical Fiat–Shamir in the Random Oracle Model",
-    "description": "**Hypothesis:** The Fiat–Shamir transform applied to tropical Σ-protocols yields a non-interactive zero-knowledge proof system secure in the random oracle model, with efficiency advantages from tropical shift invariance.\n\n**Theorem Target:**\n```\ntheorem tropical_fiat_shamir_security\n  (Proto : TropicalSigmaProtocol n c)\n  (hZK : HonestVerifierZeroKnowledge Proto)\n  (hBind : SpecialSoundness Proto)\n  (H : RandomOracle) :\n  NonInteractiveZeroKnowledge (FiatShamir Proto H)\n```\n\n**Strategy:**\n1. Define the Fiat–Shamir transform: replace the verifier's challenge with H(commitment).\n2. Show that shift invariance implies the simulated random oracle can be programmed consistently: for any shift s, H(com + s) can be set to any desired challenge.\n3. Prove extraction: from two accepting transcripts w",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc933f99",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:31:54.508604+00:00"
   },
   {
     "id": "fd_0248",
