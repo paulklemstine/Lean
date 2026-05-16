@@ -149,10 +149,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "adc29728",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "795174d8",
     "timestamp": "2026-05-14T16:17:00.725031+00:00"
   },
   {
@@ -218,20 +218,6 @@
     "source_exp_id": "e06c3817",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T17:33:00.498533+00:00"
-  },
-  {
-    "id": "fd_0184",
-    "title": "Existence",
-    "description": ": Use Karp's algorithm to compute μ. Construct the \"critical graph\" (subgraph of edges lying on minimum-mean cycles). Show that the tropical CSR (Cyclicity-Saturation-Reduction) decomposition yields an eigenvector.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "04765070",
-    "timestamp": "2026-05-14T23:59:16.109057+00:00"
   },
   {
     "id": "fd_0197",
@@ -653,77 +639,6 @@
     "source_exp_id": "861617e9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T14:18:41.813617+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Induct",
-    "description": ": Apply the decomposition to M', obtaining M = α · P_σ + (1-α) · M'.\n4. The base case is when M is itself a permutation matrix.\n\nKey prerequisite: Formalize Hall's marriage theorem for bipartite graphs, or use a direct argument about supports of doubly stochastic matrices.\n\n### Cross-Domain Significance\n\n- **Transport ↔ Combinatorics**: This theorem tells us that the Birkhoff polytope (set of doubly stochastic matrices) has permutation matrices as vertices. The minimum of a linear functional over this polytope is attained at a vertex, reducing transport to assignment.\n- **Transport ↔ Tropical**: Combined with our `permPlan_is_transportPlan` theorem, this shows every uniform transport plan is a weighted combination of objects naturally described by tropical optimization.\n- **Algorithmic**: ",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3fc0fc4e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:39:14.314331+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Hypothesis formulation",
-    "description": ": State the target theorem precisely in dependent type theory.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8d96d57a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:43:03.406999+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Mathlib audit",
-    "description": ": Check which prerequisite results exist and which must be built.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8d96d57a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:43:03.421578+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Skeleton construction",
-    "description": ": Build the proof skeleton with sorry'd helper lemmas.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8d96d57a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:43:03.436771+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Bottom-up proving",
-    "description": ": Prove helper lemmas from simplest to most complex.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8d96d57a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:43:03.451520+00:00"
   },
   {
     "id": "fd_0250",
@@ -1508,57 +1423,6 @@
     "timestamp": "2026-05-16T14:28:58.186572+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "1. Extend Canonicalization to ACI (AC + Idempotence of min)",
-    "description": "**Hypothesis:** The `min` operation is idempotent (`min a a = a`), creating semantic equalities not captured by AC alone. A canonicalization procedure that also quotients by idempotence would handle a strictly larger fragment.\n\n**Proof Strategy:**\n- Replace multiset-based children lists with *sets* (deduplicated sorted lists) for `tmin` nodes.\n- After flattening and sorting, remove duplicates from `tmin` children.\n- Prove that this extended normalizer is sound and complete for the ACI congruence.\n- The key difficulty: idempotence interacts nontrivially with nested `add` subterms.\n\n**Cross-Domain Connections:** ACI normalization connects to lattice theory (min as meet) and to BDD/ZDD construction in Boolean function manipulation, where idempotent operations are canonicalized via hash-consin",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0d4e55a6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:52:12.487513+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "2. Integrate Distributivity via Knuth–Bendix Completion",
-    "description": "**Hypothesis:** The full equational theory of `(ℝ, min, +)` includes distributivity `a + min(b, c) = min(a+b, a+c)`. A completion-based approach can extend the AC normalizer to handle this identity.\n\n**Proof Strategy:**\n- Define oriented rewrite rules for distributivity (e.g., always distribute `+` over `min`).\n- Prove termination using a suitable measure (e.g., number of `add`-above-`min` patterns).\n- Prove local confluence by analyzing critical pairs between AC rules and distributivity.\n- The canonical form after completion would be a \"sum of minima\" normal form, analogous to DNF in Boolean logic.\n\n**Cross-Domain Connections:** This connects to Gröbner basis theory for commutative algebra, where completion yields canonical polynomial representatives. In the tropical setting, the analogou",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0d4e55a6",
-    "consumed_by_exp_id": "f60e599f",
-    "timestamp": "2026-05-16T14:52:12.507486+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "3. Build a Reflection Tactic Using `normalize_ca`",
-    "description": "**Hypothesis:** The canonical form theorem can be used to build a proof-producing tactic that automatically proves AC-equivalences of tropical expressions by computation.\n\n**Proof Strategy:**\n- Define a decidable `TropExpr` type with computable comparison (using rational approximations or exact rational arithmetic instead of `ℝ`).\n- Implement a `reflect` function that maps Lean expressions to `TropExpr`.\n- Use `normalize_ca_complete` as the reflection theorem: if `normalize_ca (reflect e₁) = normalize_ca (reflect e₂)` (checked by `native_decide`), then `e₁ = e₂`.\n- Package as a Lean 4 tactic `tropical_ac`.\n\n**Cross-Domain Connections:** This mirrors the `ring` tactic architecture (Horner normal forms for polynomial equality) and the `omega` tactic (Presburger arithmetic). A `tropical_ac` t",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0d4e55a6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:52:12.526923+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "5. Kolmogorov-to-Shannon Bridge via Average Complexity",
     "description": "**Goal:** Use `compressor_gives_complexity_bound` to define a finite family complexity profile and compare its average bound to support entropy.\n\n```lean\ntheorem avg_complexity_bounds_entropy\n    (U : DescriptionMethod) (hU : IsUniversal U)\n    {α : Type*} [Fintype α] [DecidableEq α]\n    (embed : α → List Bool) (hembed : Function.Injective embed) :\n    ∃ c : ℕ, Nat.log 2 (Fintype.card α) ≤\n      (∑ a : α, (embed a).length) / Fintype.card α + c\n```\n\n**Strategy:**\n- Instantiate `compressor_gives_complexity_bound` with the identity compressor to get baseline bounds.\n- Use `complexity_bound_implies_finite_entropy_bound` to convert per-element complexity bounds into global cardinality bounds.\n- Average over all elements using `Finset.sum_div_pow_mul_pow_le_pow_mul` or similar combinatorial ineq",
@@ -1573,58 +1437,6 @@
     "source_exp_id": "7d4efa6e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T15:07:11.498731+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "1. Compare Closure-Incompressibility with Bounded Kolmogorov Complexity on Finit",
-    "description": "**Hypothesis**: On finite string spaces `{0,1}^n`, closure-incompressibility relative to a sufficiently rich family of closure operators approximates bounded Kolmogorov complexity `C_t(x)` for polynomial time bounds `t`.\n\n**Target Theorems**:\n- For every polynomial-time computable closure operator `cl` on `{0,1}^n`, show that `len(cl x) ≤ C_t(x) + O(1)` for an appropriate time bound `t`.\n- Conversely, construct a family of closure operators whose fixed-point density matches the density of `t`-incompressible strings.\n- Prove a finite analog: on `{0,1}^n`, the fraction of closure-incompressible strings converges to the fraction of Kolmogorov-random strings as the closure family becomes sufficiently expressive.\n\n**Candidate Definitions**:\n- `BoundedKolmogorov (t : ℕ → ℕ) (x : List Bool) : ℕ` ",
-    "domains": [
-      "EML",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "73e6ebb7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:15:25.355627+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "2. Categorical Theory of Compression Closures as Idempotent Monads",
-    "description": "**Hypothesis**: The closure-compression duality lifts to a categorical framework where compression closures are idempotent monads (equivalently, idempotent comonads via adjunction), and the MDL functional is a natural transformation.\n\n**Target Theorems**:\n- Define `CompressionMonad` as an idempotent monad on a category of typed data with length functionals.\n- Prove that the Kleisli category of a compression monad is equivalent to the category of closure-fixed objects (incompressible data).\n- Show that monad morphisms induce MDL inequalities: if `M₁ → M₂` is a monad map, then `mdl_M₂(x) ≤ mdl_M₁(x)`.\n- Prove that the tropical normalization monad is initial among translation-invariant compression monads on ℝⁿ.\n\n**Candidate Definitions**:\n- `CompressionMonad (C : Type* → Type*) extends Monad ",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "73e6ebb7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:15:25.372696+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "3. Connect Tropical Normalization to Rate-Distortion Theory and Entropy Projecti",
-    "description": "**Hypothesis**: Tropical normalization on probability simplices (after logarithmic transformation) corresponds to conditional entropy minimization, establishing a formal bridge between min-plus algebra and Shannon theory.\n\n**Target Theorems**:\n- Define `logTransform : Δⁿ → ℝⁿ` mapping probability vectors to negative log-probability vectors.\n- Show that tropical normalization of `logTransform(p)` corresponds to normalizing the conditional probability `p(·|A)` for the maximum-probability event.\n- Prove that the coordSum complexity surrogate, composed with logTransform, equals the Rényi entropy of order ∞ minus a correction term.\n- Establish that the fixed points of tropical normalization on the log-simplex are exactly the maximum-entropy distributions subject to the constraint that some coor",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "73e6ebb7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:15:25.389766+00:00"
   },
   {
     "id": "fd_0250",
@@ -1679,23 +1491,6 @@
     "source_exp_id": "69b261f0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T15:31:36.153629+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "1. N-ary Iterated Product Encoding",
-    "description": "**Hypothesis:** The binary product encoding theorem generalizes to arbitrary finite products. Given a family of types `κ i` indexed by a finite type `ι`, each with an injective encoding into `Fin (B^(bits i))`, there exists an injective encoding of the dependent product `(i : ι) → κ i` into `Fin (B^(∑ i, bits i))`.\n\n**Proof Strategy:** Induction on the cardinality of `ι`. The base case is trivial. For the inductive step, decompose the product as `κ i₀ × ((i : ι \\ {i₀}) → κ i)` and apply the binary product encoding theorem. The key technical challenge is managing the dependent type bookkeeping in Lean.\n\n**Formal Statement:**\n```lean\ntheorem injective_list_prod_encoding\n    {ι : Type*} [Fintype ι] [DecidableEq ι]\n    (κ : ι → Type*) [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]\n    {B : ℕ} (",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d032c89b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:34:16.169507+00:00"
   },
   {
     "id": "fd_0255",
@@ -1761,20 +1556,6 @@
     "timestamp": "2026-05-16T16:34:16.252979+00:00"
   },
   {
-    "id": "fd_0254",
-    "title": "Goal",
-    "description": "Prove that under reflexivity, symmetry, nonnegativity, and diagonal invariance, the orbit cost is a pseudometric on the orbit space `α / G`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "92317e70",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T17:45:48.210357+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "Theorem Signatures",
     "description": "```lean\n/-- Orbit cost is nonneg if the base cost is. -/\ntheorem orbitCost_nonneg\n    (G : Type*) {α : Type*} [Group G] [MulAction G α]\n    (Wc : α → α → ℝ)\n    (hnn : ∀ x y, 0 ≤ Wc x y)\n    (hbd : ∀ μ ν, BddBelow (Set.range fun g : G => Wc μ (g • ν))) :\n    ∀ μ ν, 0 ≤ orbitCost G Wc μ ν\n\n/-- Orbit cost is symmetric if Wc is symmetric and the action is bi-invariant. -/\ntheorem orbitCost_symm\n    (G : Type*) {α : Type*} [Group G] [MulAction G α]\n    (Wc : α → α → ℝ)\n    (hsymm : ∀ x y, Wc x y = Wc y x)\n    (hinv : ∀ x y g, Wc (g • x) (g • y) = Wc x y)\n    (hbd : ∀ μ ν, BddBelow (Set.range fun g : G => Wc μ (g • ν))) :\n    ∀ μ ν, orbitCost G Wc μ ν = orbitCost G Wc ν μ\n\n/-- Package: orbit cost as a PseudoMetricSpace on the quotient. -/\ninstance orbitCostPseudoMetric\n    (G : Type*) {α : Type",
@@ -1802,5 +1583,88 @@
     "source_exp_id": "92317e70",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T17:45:48.267292+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "2. Ultimate Periodicity of Max-Plus Matrix Powers",
+    "description": "**Theorem statement:**\nFor `A : Matrix (Fin n) (Fin n) ℝ` with tropical eigenvalue λ, there exist `T, p ≥ 1` such that for all `k ≥ T`:\n```\ntropPow A (k + p) i j = tropPow A k i j + p * λ\n```\nwhere `tropPow` is iterated tropical matrix multiplication.\n\n**Why it matters:** This is the max-plus cyclicity theorem—the tropical analogue of the Perron-Frobenius theorem on primitive matrix convergence. It says that max-plus linear dynamical systems are eventually periodic with linear drift. This is fundamental for:\n- Predicting long-run behavior of production systems\n- Computing steady-state schedules\n- Analyzing periodic orbits in discrete event systems\n\n**Proof strategy:**\n1. Prove that `tropPow A k i j - k * λ` is bounded (using the subeigenvector bound).\n2. Show this shifted sequence is event",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "04765070",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:12:09.834827+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "3. Mean-Payoff Game Value Duality",
+    "description": "**Theorem statement:**\nFor a weighted directed graph encoded by `A : Matrix (Fin n) (Fin n) ℝ`, the value of the one-player mean-payoff game (where the player maximizes long-run average weight) equals `tropSpec A`:\n```\n∀ i, gameValue A i = tropSpec A\n```\nwhere `gameValue A i = lim_{k→∞} (tropPow A k i i) / (k + 1)`.\n\nFor the two-player version with matrices `A` (maximizer edges) and `B` (minimizer edges):\n```\n∃ v, ∀ i, maxₖ (A i k + v k) ≥ λ + v i ∧ minₖ (B i k + v k) ≤ λ + v i\n```\n\n**Why it matters:** Mean-payoff games are a central object in theoretical computer science with applications to:\n- Model checking (the μ-calculus model checking problem reduces to MPGs)\n- Synthesis of reactive systems\n- Algorithmic game theory\n\nOur eigenvector theorem provides the algebraic certificate for game",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "04765070",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:12:09.852617+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "4. Certified Karp Algorithm Correctness",
+    "description": "**Theorem statement:**\n```\ntheorem karp_algorithm_correct (hn : 0 < n) (A : Matrix (Fin n) (Fin n) ℝ) :\n    let dp := fun k i => bestWalk hn A i k\n    tropSpec hn A = Finset.sup' univ univ_nonempty\n      (fun i => Finset.inf' (Finset.range n) ⟨0, mem_range.mpr hn⟩\n        (fun k => (dp n i - dp k i) / (n - k)))\n```\n\n**Why it matters:** Karp's algorithm is the standard O(n³) method for computing cycle means. Certifying its correctness means:\n- Verified implementations for safety-critical scheduling systems\n- Trusted optimization primitives for certified compilers\n- A template for certifying other dynamic programming algorithms\n\n**Proof strategy:**\n1. Show `dp n i - dp k i ≤ (n - k) * tropSpec A` for all i, k (from subeigenvector existence).\n2. Show equality is achieved for the optimal cycle",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "04765070",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:12:09.870157+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "5. Tropical Fixed-Point Certificates for Piecewise-Linear Systems",
+    "description": "**Theorem statement:**\nFor a max-affine operator `T : (Fin n → ℝ) → (Fin n → ℝ)` defined by\n```\nT(x)_i = max_j (A i j + x j + b i j)\n```\nif `A` has tropical eigenvalue `λ < 0`, then `T` has a unique fixed point, and the iteration `x_{k+1} = T(x_k)` converges to it at rate `|λ|`.\n\n**Why it matters:** ReLU neural networks compute piecewise-linear functions. Each layer is a max-affine map (after applying ReLU). The tropical eigenvalue controls:\n- Whether the network amplifies or attenuates signals\n- The rate of convergence of iterative inference\n- Robustness certificates (Lipschitz bounds from spectral analysis)\n\nA formal tropical fixed-point theorem would enable certified analysis of neural network properties without training or simulation.\n\n**Proof strategy:**\n1. Prove the max-affine operat",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "04765070",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:12:09.887593+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Near-term (building on current results):",
+    "description": "- Formalize Karp's DP recurrence and prove equivalence with tropSpec\n- Prove cyclicity theorem for irreducible matrices\n- Implement certified tropical eigenvalue computation in Lean 4",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "04765070",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T18:12:09.902307+00:00"
   }
 ]
