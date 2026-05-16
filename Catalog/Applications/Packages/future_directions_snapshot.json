@@ -435,21 +435,6 @@
     "timestamp": "2026-05-15T20:42:44.426054+00:00"
   },
   {
-    "id": "fd_0256",
-    "title": "Establish the level estimate",
-    "description": "Show $c^* \\ge c$ using the sublevel set separation hypothesis.\n\n### Key Challenges\n- The deformation argument requires constructing explicit continuous deformations of paths in the tropical setting, which is complicated by the piecewise-linear structure.\n- The minimax principle needs compactness arguments that may require restricting to bounded domains.\n\n### Cross-Domain Connections\n- **Variational methods**: tropical analogue of the Ambrosetti-Rabinowitz theorem\n- **Optimization**: provides certified barriers for global optimization of piecewise-linear functions\n- **Statistical physics**: mountain passes correspond to transition states between metastable phases\n\n### Actionable Steps\n1. Formalize the minimax principle for continuous functions on compact sets in Lean.\n2. Prove the mountain ",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "6779942a",
-    "timestamp": "2026-05-16T03:21:48.915149+00:00"
-  },
-  {
     "id": "fd_0260",
     "title": "Connect to training dynamics",
     "description": "by showing that each grokking event corresponds to a corner critical crossing, and use the Morse inequality to lower-bound the number of such events.\n\n### Key Challenges\n- Computing the activation pattern complex of a realistic neural network is combinatorially explosive ($2^h$ possible patterns for $h$ hidden neurons).\n- The connection between topological invariants and actual training dynamics requires assumptions about the optimization algorithm.\n\n### Cross-Domain Connections\n- **Deep learning theory**: provides rigorous lower bounds on training complexity\n- **Computational topology**: applies persistent homology to neural network analysis\n- **Complexity theory**: connects the combinatorial complexity of activation patterns to computational hardness\n\n### Actionable Steps\n1. Implement ac",
@@ -465,21 +450,6 @@
     "source_exp_id": "ab93ccb9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T03:21:48.999090+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "Connect to PRG:",
-    "description": "Such a circuit would break the tropical NW generator with specific parameters.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63028e3e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:53:19.237678+00:00"
   },
   {
     "id": "fd_0260",
@@ -514,20 +484,6 @@
     "timestamp": "2026-05-16T07:11:31.800180+00:00"
   },
   {
-    "id": "fd_0256",
-    "title": "Bourgain–Gamburd machine",
-    "description": ": Adapt the Bourgain–Gamburd spectral gap theorem (originally for SL₂(𝔽_p)) to the integer orthogonal setting, using product theorems and escape from subvarieties.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "19523f4c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:22:06.529211+00:00"
-  },
-  {
     "id": "fd_0232",
     "title": "Target theorems",
     "description": ":\n- Kraft inequality: `∑ q^(-ℓ(a)) ≤ 1` for q-ary prefix codes.\n- Shannon coding bound: `H_q(p) ≤ E[ℓ] < H_q(p) + 1` where `H_q` uses log base q.\n- Relaxed optimizer: `L⋆(a) = log_q(1/p(a))` achieves equality.\n\n**Strategy**: The existing proofs generalize cleanly by replacing 2 with q throughout. The key lemma `Real.rpow_logb` works for any base b > 0, b ≠ 1. The Gibbs inequality (log x ≤ x - 1) is base-independent.\n\n**Broader significance**: q-ary codes arise naturally in DNA storage (q=4), ternary computing, and multi-level cell flash memory. Formal verification of q-ary optimality enables certified codec design for these technologies.\n\n---\n\n## Direction 3: Tropical Data Processing Inequality\n\n**Goal**: Prove that processing data through a channel cannot increase the tropical coding pote",
@@ -541,22 +497,6 @@
     "source_exp_id": "78b212ab",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:35:37.568657+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "Connect to transport",
-    "description": ": by `permPlan_transportCost`, this gives an algorithm for Wasserstein-1 between uniform distributions.\n\n### Cross-Domain Significance\n\nThis would be the first formally verified assignment algorithm that simultaneously lives in the transport, tropical, and combinatorial optimization worlds. Combined with conjugation invariance (`assignment_cost_conjugation_invariant`), it would show that the algorithm is equivariant: relabeling the cost matrix by a symmetry merely permutes the output.\n\n---\n\n## Direction 5: Wasserstein Quotient by Finite Group Actions\n\n### Theorem Statement\n\nIf a finite group G acts on `Fin n` preserving the cost function c, then the Wasserstein distance descends to a well-defined metric on the space of orbits of probability measures under G.\n\n### Lean Type Signature\n\n```le",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "816ac9ca",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:34:17.487712+00:00"
   },
   {
     "id": "fd_0232",
@@ -631,10 +571,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "bd77de91",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8b829eb9",
     "timestamp": "2026-05-16T10:49:05.580800+00:00"
   },
   {
@@ -650,20 +590,6 @@
     "source_exp_id": "f6b086c3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T11:26:32.087673+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Prove",
-    "description": "the upper bound by extending the Chernoff counting bound (already formalized) to general closed sets via finite covering arguments and the regularity of I.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.104089+00:00"
   },
   {
     "id": "fd_0244",
@@ -708,50 +634,6 @@
     "source_exp_id": "0839f238",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T12:59:23.831940+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "Use `totalDegree_le_two_pow_depth`",
-    "description": "from `NullstellensatzPIT.lean` to bound the degree of a circuit's polynomial.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0839f238",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:59:23.849055+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "Combine",
-    "description": "to get: if circuit $C$ of depth $\\ell$ computes a nonzero polynomial, then $|Z(C)| \\leq 2^\\ell \\cdot q^{n-1}$.\n\n### Key Lean Targets\n```lean\ntheorem circuit_pit_soundness\n    {K : Type*} [Field K] [Fintype K] [Nontrivial K] {n : ℕ}\n    (C : AlgCircuit K n) (hC : C.toMvPolynomial ≠ 0) :\n    Fintype.card {x : Fin (n+1) → K // C.eval (x ∘ Fin.castSucc) = 0}\n      ≤ 2 ^ C.depth * (Fintype.card K) ^ n\n```\n\n### Cross-Domain Impact\n- **Algebraic complexity**: First certified bound connecting circuit structure to evaluation behavior.\n- **Derandomization**: If PIT can be derandomized for bounded-depth circuits, this proves circuit lower bounds (Kabanets–Impagliazzo).\n- **Formal verification of computation**: Certified soundness for probabilistic checking of algebraic computations.\n\n### Estimated Ef",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0839f238",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:59:23.866723+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "Prove round-by-round soundness",
-    "description": ": In each round $i$, the verifier checks that the prover's claimed univariate polynomial $g_i$ satisfies $g_i(0) + g_i(1) = $ previous claim. A cheating prover must produce a polynomial that agrees with the true one at random point $r_i$, which by the univariate root bound happens with probability $\\leq d/q$.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0839f238",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:59:23.904810+00:00"
   },
   {
     "id": "fd_0257",
@@ -804,20 +686,209 @@
     "timestamp": "2026-05-16T12:59:24.025803+00:00"
   },
   {
-    "id": "seed_052",
-    "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
-    "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
+    "id": "fd_0237",
+    "title": "Graph Coloring Instance",
+    "description": ": Define `graphColoringCSP(G, k)` for a finite graph G with k colors. Prove exactness: zero cost ↔ proper k-coloring. Define propagation (arc consistency) and prove soundness/stabilization.",
     "domains": [
-      "Computation",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:23.953786+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Latin Square Instance",
+    "description": ": Define `latinSquareCSP(n)` as Sudoku without box constraints. This is a strict specialization and should inherit proofs from a generalized framework.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:23.977187+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Exact Cover / Set Packing",
+    "description": ": Encode exact cover as a tropical CSP. This connects to the theory of NP-completeness via reduction.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:23.993854+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Reusable Propagation Theorems",
+    "description": ": Prove generic soundness and stabilization for any TropicalCSP equipped with a monotone propagation operator, parameterized by domain size and number of variables.\n\n### Proof Strategy\n- Define a `TropicalCSP.WithPropagation` extension structure that bundles a propagation operator with soundness and antitonicity proofs.\n- Prove a generic stabilization theorem: if Var and Val are finite, propagation stabilizes in |Var| × |Val| steps.\n- Instantiate for each CSP family.\n\n### Cross-Domain Impact\nThis would create the first machine-verified library of tropical CSPs, directly applicable to operations research, AI planning, and combinatorial optimization.\n\n---\n\n## Direction 2: Quantitative Phase Transition Theorem\n\n### Hypothesis\nFor a random clue model where k cells are chosen uniformly at rando",
+    "domains": [
       "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.014796+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Expected mass theorem",
+    "description": ": Prove that the expected total candidate mass after one propagation step is a decreasing function of k, using linearity of expectation over the random clue selection.",
+    "domains": [
       "Bridges"
     ],
-    "priority_score": 0.72,
-    "status": "in_progress",
+    "priority_score": 0.75,
+    "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "3ebbb418",
-    "timestamp": "2026-05-14T16:03:53.847068+00:00"
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.053274+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Concentration",
+    "description": ": Use Azuma-Hoeffding or McDiarmid's inequality (available in Mathlib) to show that residual ambiguity concentrates around its expectation.\n\n### Proof Strategy\nThe key insight is that each cell's candidate set after one round of propagation depends on a local neighborhood of the random clue selection. This local dependence structure makes concentration inequalities applicable.\n\n### Cross-Domain Impact\nA formal phase transition theorem would be the first machine-verified result connecting random CSP theory to tropical optimization, with implications for understanding algorithmic hardness in random satisfiability.\n\n---\n\n## Direction 3: Tropical Belief Propagation and Min-Sum Decoding\n\n### Hypothesis\nThe propagation operator defined here is a special case of min-sum message passing on the Sud",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.089181+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Factor graph formalization",
+    "description": ": Define the Sudoku factor graph with variable nodes (cells) and factor nodes (row/column/box constraints). Each factor node computes a min-plus penalty.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.107831+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Message-passing equivalence",
+    "description": ": Prove that the naked-singles propagation operator is equivalent to one round of min-sum belief propagation on this factor graph with binary (0/1) messages.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.132346+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Convergence on trees",
+    "description": ": Prove that min-sum BP converges to the exact solution on tree-structured factor graphs (which correspond to under-constrained Sudoku-like puzzles).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.153003+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Loopy BP analysis",
+    "description": ": Characterize the fixed points of loopy BP on the Sudoku factor graph and relate them to propagation closure.\n\n### Proof Strategy\nUse Mathlib's graph theory infrastructure to define factor graphs as bipartite graphs. The message-passing equations can be expressed as fixpoint equations on functions over edges.\n\n### Cross-Domain Impact\nThis bridges formal combinatorics with coding theory and machine learning. Min-sum decoding is the foundation of LDPC codes (used in 5G, WiFi, etc.), and formalizing its connection to CSP propagation could yield verified decoding algorithms.\n\n---\n\n## Direction 4: Residual Ambiguity and Solution Uniqueness\n\n### Hypothesis\nZero residual ambiguity (every cell has exactly one candidate after propagation) implies that at most one valid solution exists. Moreover, i",
+    "domains": [
+      "EML",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.173627+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Uniqueness theorem",
+    "description": ": Prove that if propagation closure yields singleton candidate sets everywhere, and these singletons form a valid assignment, then this assignment is the unique solution.",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.193980+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Non-uniqueness characterization",
+    "description": ": Prove that if residualAmbiguity > 0 and the puzzle is satisfiable, then either multiple solutions exist or the propagation strategy is too weak (there exist stronger strategies that could reduce ambiguity further).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.211238+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Connection to information-theoretic bounds",
+    "description": ": Relate the residual ambiguity to the logarithm of the number of valid completions (a tropical entropy).\n\n### Proof Strategy\nThe uniqueness direction follows from soundness: if propagation yields {d} for cell c, every valid solution A must have A(c) = d (by soundness). If all cells are determined, A is uniquely determined.\n\n### Cross-Domain Impact\nThis connects to the problem of minimal Sudoku clue sets (known to be 17 for 9×9) and more generally to the information content of partial observations in structured combinatorial systems.\n\n---\n\n## Direction 5: Parameterized Sudoku and Asymptotic Analysis\n\n### Hypothesis\nThe tropical framework extends naturally to n²×n² Sudoku grids, where the total candidate mass is n⁴ × n² = n⁶ and the stabilization bound becomes n⁶. The phase transition in cl",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.253935+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Asymptotic phase transition",
+    "description": ": Define the critical clue density as a function of n and establish bounds. Conjecture: the critical density scales as Θ(n² log n) (by analogy with Latin square results).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3ebbb418",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T13:37:24.311860+00:00"
   },
   {
     "id": "seed_050",
@@ -1496,20 +1567,6 @@
     "source_exp_id": "5e0e0def",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:47:38.684583+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "A. Connections to Coding Theory",
-    "description": "The kernel of a nonzero linear functional is a linear code of codimension 1. Freivalds' bound says: a false claim is accepted only on codewords of this code. This opens formalized connections to:\n- Minimum distance bounds for linear codes.\n- Syndrome decoding as a verification procedure.\n- Reed-Solomon code proximity testing (the algebraic core of STARKs).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e0e0def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:47:38.698983+00:00"
   },
   {
     "id": "fd_0231",
