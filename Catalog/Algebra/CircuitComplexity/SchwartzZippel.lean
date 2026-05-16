@@ -61,7 +61,7 @@ theorem natDegree_fiberPoly_le {n : ℕ}
     exact Polynomial.natDegree_map_le;
   refine' le_trans h_deg_fiber _;
   convert MvPolynomial.degreeOf_le_totalDegree f 0;
-  exact MvPolynomial.natDegree_finSuccEquiv f
+  exact?
 
 /-- The natDegree of the finSuccEquiv image equals degreeOf 0. -/
 theorem natDegree_finSuccEquiv_eq {n : ℕ}

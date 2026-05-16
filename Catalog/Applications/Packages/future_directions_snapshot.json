@@ -342,20 +342,6 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
-    "id": "fd_0195",
-    "title": "Tactic engineer",
-    "description": ": Implements the syntax-to-semantics bridge and verified tactic (Direction 4).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "0839f238",
-    "timestamp": "2026-05-15T03:03:37.382470+00:00"
-  },
-  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -467,23 +453,6 @@
     "timestamp": "2026-05-16T03:21:48.999090+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "Combine with current NW theorem:",
-    "description": "Apply the tropical NW PRG to the amplified hard function.\n\n### Key Technical Challenges\n- The XOR lemma requires a Goldreich-Levin style argument adapted to tropical computation.\n- Self-reducibility for tropical matrix powering is not immediate; it requires understanding the algebraic structure of min-plus matrix evaluation.\n- The worst-case to average-case reduction must preserve tropical circuit complexity.\n\n### Cross-Domain Connections\n- Fine-grained complexity: connects to APSP hardness conjectures.\n- Algebraic complexity: relates to VP vs VNP in the tropical setting.\n- Coding theory: XOR lemma connects to list-decoding of tropical codes.\n\n### Estimated Difficulty: Very High\n### Impact: Transformative — would establish a complete tropical complexity theory.\n\n---\n\n## Direction 2: Concre",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63028e3e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:53:19.059190+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "Connect to PRG:",
     "description": "Such a circuit would break the tropical NW generator with specific parameters.",
@@ -514,48 +483,21 @@
     "timestamp": "2026-05-16T06:53:19.303662+00:00"
   },
   {
-    "id": "fd_0261",
-    "title": "Formalize in Lean:",
-    "description": "State the theorem as: `tropical_prg_secure → ¬tropical_natural_proof_useful`.",
+    "id": "fd_0232",
+    "title": "Construct encoding family",
+    "description": "where `tropFactorRank (encode s) = s` using block-diagonal rank-1 decompositions\n\n### Key Lemmas Needed\n- `tropFactorRank_le_dim`: Factor rank is at most $n$ for $n \\times n$ matrices\n- `tropFactorRank_identity`: Factor rank of the tropical identity is $n$\n- `tropFactorRank_diagonal`: Factor rank of a diagonal matrix equals its number of finite entries (under certain conditions)\n- `tropFactorRank_tropical_sum`: Factor rank is subadditive under tropical sum\n\n### Estimated Difficulty\n**High.** The lower bounds are the hardest part. Shitov's NP-hardness result suggests that computing factor rank is intrinsically difficult, but constructing specific matrices with *provable* factor rank requires delicate combinatorial arguments.\n\n### Cross-Domain Impact\n- **Algebraic geometry**: Factor rank con",
     "domains": [
       "Tropical",
-      "Logic"
+      "Bridges",
+      "Algebra",
+      "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63028e3e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:53:19.319691+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Prove that the hardness transfer extends",
-    "description": "to the homomorphic setting\n\n### Estimated Difficulty\n**High.** Tropical homomorphic encryption is largely unexplored.\n\n### Cross-Domain Impact\n- **Secure computation**: Enable private shortest-path queries, private scheduling\n- **Cloud computing**: Outsource optimization problems without revealing data\n\n---\n\n## Direction 7: Experimental Cryptanalysis Benchmarks\n\n### Hypothesis\nThe hardness transfer theorem can guide the design of benchmark instances for tropical cryptanalysis.\n\n### Concrete Steps",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.988731+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Lasota–Yorke inequality",
-    "description": ": Show that the transfer operator satisfies a Lasota–Yorke inequality on BV(ℝ), then extract the spectral gap from the essential spectral radius being strictly less than the spectral radius.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "19523f4c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:22:06.383708+00:00"
+    "consumed_by_exp_id": "70b752e4",
+    "timestamp": "2026-05-16T07:11:31.800180+00:00"
   },
   {
     "id": "fd_0256",
@@ -585,20 +527,6 @@
     "source_exp_id": "78b212ab",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:35:37.568657+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Alternatively",
-    "description": ": Prove strong duality via the complementary slackness conditions for finite LPs.\n\n### Cross-Domain Significance\n\nKantorovich duality connects optimal transport to Lipschitz analysis (dual variables are 1-Lipschitz functions), convex optimization, and potential theory. Combined with the Wasserstein invariance theorem, it would show that dual optimal potentials transform covariantly under symmetries.\n\n---\n\n## Direction 2: Birkhoff–von Neumann Decomposition\n\n### Theorem Statement\n\nEvery doubly stochastic matrix (nonneg entries, row and column sums = 1) is a convex combination of permutation matrices. Equivalently, the Birkhoff polytope (set of doubly stochastic matrices) has permutation matrices as its vertices.\n\n### Lean Type Signature\n\n```lean\ndef IsDoublyStochastic {n : ℕ} (M : Matrix (Fi",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "816ac9ca",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:34:17.348881+00:00"
   },
   {
     "id": "fd_0256",
@@ -681,20 +609,6 @@
     "timestamp": "2026-05-16T09:05:20.487200+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "Define tropical rank",
-    "description": "as the minimum number of tropical rank-1 matrices whose tropical row span contains all rows of M. This is a weaker condition than decomposition (it only requires row containment, not entrywise equality).",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b18b8608",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:18:22.944252+00:00"
-  },
-  {
     "id": "fd_0245",
     "title": "TropAut",
     "description": ": Objects are tropical semimodules (α → ℝ), morphisms are tropical automorphisms (pullbacks along bijections).",
@@ -708,39 +622,6 @@
     "source_exp_id": "bd77de91",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T10:49:05.580800+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "QUnit",
-    "description": ": Objects are finite-dimensional Hilbert spaces, morphisms are unitary operators.\n\n**Target Theorem (Functorial Bridge)**:\n```\nF_trop : FinBij → TropAut  (pullback functor)\nF_quant : FinBij → QUnit   (permutation matrix embedding)\n```\nBoth functors preserve composition, identity, and send bijections to invertible morphisms. Moreover, F_trop and F_quant are both faithful.\n\n**Why This Matters**: This shows that reversible classical computation embeds simultaneously into tropical cost dynamics and quantum unitary dynamics. The tropical side governs thermodynamic cost, the quantum side governs quantum simulation. A reversible circuit has both a tropical \"shadow\" (cost landscape) and a quantum \"lift\" (unitary evolution).\n\n**Proof Strategy**:\n1. Formalize FinBij as a category using Mathlib's `Ca",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd77de91",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:49:05.597463+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Direction 1",
-    "description": "(Unbounded Tapes): Requires significant Lean infrastructure for Turing machines but has the highest impact for complexity theory.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd77de91",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:49:05.626526+00:00"
   },
   {
     "id": "fd_0242",
@@ -800,145 +681,113 @@
     "timestamp": "2026-05-16T11:26:32.150524+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "CLT",
-    "description": ": If Λ is twice differentiable at 0 with Λ''(0) = σ² > 0, prove that the empirical distribution of (τ(n)/log(n+2) − Λ'(0))/(σ/√log(n+2)) converges to a standard Gaussian.",
+    "id": "fd_0252",
+    "title": "Tightness",
+    "description": ": The polynomial $\\prod_{i=1}^{d} (x_1 - a_i)$ for distinct $a_i$ achieves exactly $d \\cdot q^{n-1}$ zeros.\n\n### Key Lean Targets\n```lean\ndef ReedMullerCode (d n : ℕ) (K : Type*) [Field K] [Fintype K] :=\n  Set.range (fun (f : {p : MvPolynomial (Fin n) K // p.totalDegree ≤ d}) =>\n    fun (x : Fin n → K) => MvPolynomial.eval x f.val)\n\ntheorem reed_muller_min_distance_lower_bound\n    {K : Type*} [Field K] [Fintype K] {d n : ℕ}\n    (hd : d < Fintype.card K) :\n    ∀ c ∈ ReedMullerCode d n K, c ≠ 0 →\n      Fintype.card {x : Fin n → K // c x ≠ 0} ≥ (Fintype.card K - d) * (Fintype.card K) ^ (n - 1)\n```\n\n### Cross-Domain Impact\n- **Coding theory**: Certified distance bounds for Reed–Muller codes used in 5G communications and flash memory.\n- **List decoding**: Foundation for Sudan–Guruswami list-dec",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0839f238",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:59:23.831940+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Use `totalDegree_le_two_pow_depth`",
+    "description": "from `NullstellensatzPIT.lean` to bound the degree of a circuit's polynomial.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0839f238",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:59:23.849055+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Combine",
+    "description": "to get: if circuit $C$ of depth $\\ell$ computes a nonzero polynomial, then $|Z(C)| \\leq 2^\\ell \\cdot q^{n-1}$.\n\n### Key Lean Targets\n```lean\ntheorem circuit_pit_soundness\n    {K : Type*} [Field K] [Fintype K] [Nontrivial K] {n : ℕ}\n    (C : AlgCircuit K n) (hC : C.toMvPolynomial ≠ 0) :\n    Fintype.card {x : Fin (n+1) → K // C.eval (x ∘ Fin.castSucc) = 0}\n      ≤ 2 ^ C.depth * (Fintype.card K) ^ n\n```\n\n### Cross-Domain Impact\n- **Algebraic complexity**: First certified bound connecting circuit structure to evaluation behavior.\n- **Derandomization**: If PIT can be derandomized for bounded-depth circuits, this proves circuit lower bounds (Kabanets–Impagliazzo).\n- **Formal verification of computation**: Certified soundness for probabilistic checking of algebraic computations.\n\n### Estimated Ef",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0839f238",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:59:23.866723+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Prove round-by-round soundness",
+    "description": ": In each round $i$, the verifier checks that the prover's claimed univariate polynomial $g_i$ satisfies $g_i(0) + g_i(1) = $ previous claim. A cheating prover must produce a polynomial that agrees with the true one at random point $r_i$, which by the univariate root bound happens with probability $\\leq d/q$.",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
+    "source_exp_id": "0839f238",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.164360+00:00"
+    "timestamp": "2026-05-16T12:59:23.904810+00:00"
   },
   {
-    "id": "fd_0248",
-    "title": "Edgeworth",
-    "description": ": Using the third cumulant Λ'''(0), compute the next-order correction involving skewness.\n\n### Formalization Strategy\n- State finite-N Berry-Esseen bounds using existing Mathlib probability infrastructure\n- Use Taylor expansion of Λ around 0 (requires differentiability lemmas for log-sum-exp)\n- The MDP follows from the LDP rate function's quadratic approximation I(x) ≈ (x−μ)²/(2σ²) near x = μ\n\n### Applications\n- Quantifying the \"width\" of the typical stopping-time distribution\n- Confidence intervals for algorithmic runtime predictions\n- Distinguishing random from structured arithmetic sequences via their fluctuation statistics\n\n---\n\n## Direction 4: Entropy Production and Information-Geometric Interpretation\n\n### Objective\nDevelop an information-theoretic interpretation of the rate function",
+    "id": "fd_0257",
+    "title": "Union bound",
+    "description": "over $n$ rounds gives total error $\\leq nd/q$.\n\n### Key Lean Targets\n```lean\nstructure SumCheckTranscript (K : Type*) [Field K] (n : ℕ) where\n  polynomial : MvPolynomial (Fin n) K\n  claimed_sum : K\n  challenges : Fin n → K\n  prover_messages : Fin n → Polynomial K\n\ntheorem sumcheck_soundness\n    {K : Type*} [Field K] [Fintype K] {n d : ℕ}\n    (f : MvPolynomial (Fin n) K) (hd : f.totalDegree ≤ d)\n    (H : K) (hH : H ≠ ∑ x ∈ Finset.univ, MvPolynomial.eval x f) :\n    -- probability of accepting false claim ≤ n*d/q\n    sorry\n```\n\n### Cross-Domain Impact\n- **Interactive proofs**: IP = PSPACE relies on the sum-check protocol.\n- **Zero-knowledge proofs**: Modern ZK-SNARKs (used in cryptocurrency) are built on sum-check.\n- **Delegation of computation**: Verifiable computing relies on sum-check soun",
     "domains": [
-      "MachineLearning",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0839f238",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:59:23.929004+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Apply univariate root bound",
+    "description": ": at most $n-1$ roots, so collision probability $\\leq (n-1)/q$.\n\n### Key Lean Targets\n```lean\ndef polynomialFingerprint (a : Fin n → K) (r : K) : K :=\n  ∑ i, a i * r ^ (i : ℕ)\n\ntheorem fingerprint_collision_bound\n    {K : Type*} [Field K] [Fintype K] {n : ℕ}\n    (a b : Fin n → K) (hab : a ≠ b) :\n    Fintype.card {r : K // polynomialFingerprint a r = polynomialFingerprint b r}\n      ≤ n - 1\n```\n\n### Cross-Domain Impact\n- **Streaming algorithms**: Communication-efficient comparison of data streams.\n- **Database verification**: Checking consistency of distributed databases.\n- **Network security**: Tamper detection in transmitted data.\n\n### Estimated Effort\nLow. This is essentially the univariate Schwartz–Zippel bound applied to the difference polynomial.\n\n---\n\n## Direction 5: Finite-Field Inc",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0839f238",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T12:59:23.977345+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Application",
+    "description": ": Derive the finite-field Kakeya conjecture (proved by Dvir 2009) as a consequence of the polynomial method + Schwartz–Zippel.\n\n### Key Lean Targets\n```lean\ntheorem point_hypersurface_incidence_bound\n    {K : Type*} [Field K] [Fintype K] {n : ℕ}\n    (f : MvPolynomial (Fin n) K) (hf : f ≠ 0)\n    (S : Finset (Fin n → K)) :\n    (S.filter (fun x => MvPolynomial.eval x f = 0)).card\n      ≤ min S.card (f.totalDegree * (Fintype.card K) ^ (n - 1))\n```\n\n### Cross-Domain Impact\n- **Combinatorics**: Sum-product estimates, Erdős distance problems.\n- **Number theory**: Character sum bounds, exponential sum estimates.\n- **Computer science**: Lower bounds for data structures and communication complexity.\n\n### Estimated Effort\nHigh. Requires developing the polynomial method framework and connecting to inc",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Computation",
       "Geometry"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f6b086c3",
+    "source_exp_id": "0839f238",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T11:26:32.196124+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Implement",
-    "description": "the tropical Sherman-Morrison formula (Direction 3) and test on large matrices",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d0d6476e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:09:09.240118+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Develop",
-    "description": "certified sensitivity algorithms (Direction 4) with executable code",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d0d6476e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:09:09.254524+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "Birkhoff contraction",
-    "description": ": formal proof of the contraction coefficient formula",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "332fc03e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:25:18.063942+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Direction 4",
-    "description": "(Information theory) — most novel cross-domain connection",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5887c940",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:26:56.362317+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Direction 2",
-    "description": "(Geodesic coding) — deepest mathematical significance, hardest",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5887c940",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:26:56.375988+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Formalize hypotheses",
-    "description": "as Lean theorem statements with `by sorry`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6b04f31f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:47:40.745545+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Validate computationally",
-    "description": "using Python implementations on test cases.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6b04f31f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:47:40.758042+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Decompose into lemmas",
-    "description": "targeting individual proof steps.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6b04f31f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T12:47:40.770972+00:00"
+    "timestamp": "2026-05-16T12:59:24.025803+00:00"
   },
   {
     "id": "seed_052",
@@ -1477,40 +1326,6 @@
     "timestamp": "2026-05-16T07:08:58.377086+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "Research Team Structure",
-    "description": "Each direction is designed to be pursued by a 2-3 person team with complementary expertise:\n- **Direction 1**: Number theorist + formal verification expert\n- **Direction 2**: Probabilist + dynamical systems theorist\n- **Direction 3**: Statistical physicist + ergodic theorist\n- **Direction 4**: Program verification researcher + formal methods expert\n- **Direction 5**: Machine learning researcher + tropical geometer\n\nCross-pollination between teams, especially through the shared Lean library (Meta-Direction), would be essential for breakthrough progress.",
-    "domains": [
-      "Tropical",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d4155669",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:33:10.570979+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "3. Stone-Style Representation for Finite Closed Proof States",
-    "description": "**Statement:** Prove a representation theorem: for a finite set of Boolean predicates over a finite type `α`, the lattice of fixed points of an idempotent closure operator `O` is isomorphic to the lattice of clopen sets of a finite Stone space (equivalently, a finite set with the discrete topology).\n\n**Proof Strategy:** (a) Use `kernel_fixedpoint_representation_pred` to establish the bijection between kernel classes and fixed points. (b) Show the fixed points form a finite Boolean algebra under pointwise operations (using `fixedpoints_closed_under_meet` and a dual result for join). (c) Apply Stone's representation theorem for finite Boolean algebras (which is elementary: every finite Boolean algebra is isomorphic to the powerset of its atoms).\n\n**Cross-Domain Significance:** This connects ",
-    "domains": [
-      "Cryptography",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9af9301e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:33:28.641269+00:00"
-  },
-  {
     "id": "fd_0225",
     "title": "Formalization Steps",
     "description": "- Define `BerggrenWordSpace L := Fin L → Fin 3`.\n- Define the product noise operator as a `LinearMap`.\n- Construct the degree-k submodule as the span of functions depending on ≤ k coordinates.\n- Prove the tensor product eigenvalue decomposition.\n- Instantiate `bias_bound_of_spectral_decay`.",
@@ -1570,36 +1385,6 @@
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "Direction 3: Large Deviation Principles for Stopping-Time Distributions",
-    "description": "**Hypothesis**: The empirical distribution of normalized stopping times $\\tau(n)/\\log n$ (over $n \\leq N$) satisfies a large deviation principle whose rate function is the Legendre transform of the free-energy growth rate.\n\n**Strategy**:\n1. Define the moment generating function $\\Lambda(\\theta) = \\lim_{N \\to \\infty} \\frac{1}{N} \\log \\sum_{n=1}^{N} e^{\\theta \\tau(n)}$.\n2. Show that $\\Lambda(\\theta)$ is related to the free energy $F_N(\\gamma)$ via $\\gamma = e^{\\theta}$.\n3. Prove the existence of $\\Lambda$ using sub-additivity or concentration arguments.\n4. Apply the Gärtner–Ellis theorem to obtain the large deviation principle.\n5. Interpret the rate function in terms of the \"cost\" of having anomalously large or small stopping times.\n\n**Cross-domain connections**: Large deviations in statisti",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a386325",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:16:46.812655+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Direction 1: Query-Optimal Lower Bounds for Cone-Local Recomputation",
-    "description": "**Hypothesis:** Any correct incremental recomputation algorithm for DAG levels must inspect at least every vertex in the affected cone and every edge entering it. The cone-linear upper bound is therefore *tight*.\n\n**Approach:**\n- Model the recomputation problem as an adaptive query process where each query reveals a predecessor set or a predecessor's level.\n- Construct an adversarial family of DAGs where any algorithm that skips a cone vertex or predecessor edge can be fooled into producing an incorrect level.\n- Formalize this as a certified lower bound theorem: `∀ algorithm, ∃ input, work(algorithm, input) ≥ |cone| + |E_cone|`.\n\n**Cross-domain connection:** This connects incremental computation to communication complexity and information-theoretic lower bounds. A formal gap between upper ",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c2ddc3a7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:29:02.728591+00:00"
-  },
-  {
     "id": "fd_0239",
     "title": "Direction 1: Weighted Diagonal Factor Rank",
     "description": "**Hypothesis:** For any diagonal tropical matrix $D$ with entries $d_0, \\ldots, d_{n-1}$ on the diagonal and $\\infty$ off-diagonal, the factor rank equals the number of finite diagonal entries:\n\n$$\\text{tropFactorRank}(D) = |\\{i : d_i \\neq \\infty\\}|$$\n\n**Proof strategy:** The support separation argument from our main theorem applies verbatim—it never uses the specific diagonal values, only the fact that off-diagonal entries are $\\infty$. The upper bound construction generalizes: the $t$-th rank-1 term uses $u_t(i) = d_i$ if $i = t$ (and $d_t \\neq \\infty$), else $\\infty$, and $v_t(j) = 0$ if $j = t$, else $\\infty$.\n\n**Impact:** This completes the characterization of factor rank for all diagonal matrices, not just the identity-like case. It provides a richer encoding family where the diagona",
@@ -1649,23 +1434,6 @@
     "source_exp_id": "64a1fefb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:33:50.714492+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Direction 3: Tropical Additive Eigenvectors (Bellman Eigenpairs)",
-    "description": "**Status**: High priority, medium-high feasibility\n\n**Goal**: Prove existence of additive eigenpairs for the tropical Bellman operator.\n\n**Formal target**:\n```\ntheorem tropical_bellman_eigenpair\n    (W : Matrix (Fin (n+1)) (Fin (n+1)) ℝ) :\n    ∃ (λ : ℝ) (v : Fin (n+1) → ℝ),\n      λ = tropRate W ∧\n      ∀ i, (Finset.univ.sup' Finset.univ_nonempty fun j => W i j + v j) = λ + v i\n```\n\n**Proof Strategy**:\n1. Define the Bellman operator T : (Fin(n+1) → ℝ) → (Fin(n+1) → ℝ) by (Tx)(i) = max_j(W(i,j) + x(j)).\n2. Show T is order-preserving and additively homogeneous: T(x + c) = Tx + c.\n3. Shift by the eigenvalue: define W' = W - μ with μ = tropRate(W).\n4. Show T' has eigenvalue 0; find v with T'v = v.\n5. Use the critical graph (subgraph of edges achieving equality) and a shortest-path construction.",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23a76967",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:39:33.570144+00:00"
   },
   {
     "id": "fd_0238",
@@ -1743,19 +1511,5 @@
     "source_exp_id": "5e0e0def",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:47:38.698983+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Hypothesis",
-    "description": "The data processing inequality states that for a Markov chain X → Y → Z:\n    I(X; Z) ≤ I(X; Y)\nwhere I denotes mutual information. We conjecture a tropical analogue:\n\n    tropical_mutual_info(X, Z) ≤ tropical_mutual_info(X, Y)\n\nwhere tropical mutual information is defined via min-plus convolution of cost matrices.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0c823664",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T10:43:08.701224+00:00"
   }
 ]
