@@ -1,717 +1,635 @@
 #!/usr/bin/env python3
 """
-Applications of Categorical Rate-Distortion Theory
+Applications of Finite Rate-Distortion Theory to Voice-Leading and Beyond
 
-1. Harmonic compression: optimal chord simplification
-2. Style classification via rate-distortion signatures
-3. Voice-leading graph analysis
-"""
-
-import numpy as np
-from algorithms import (
-    blahut_arimoto, compute_rd_curve, voice_leading_distance,
-    tropical_envelope, evaluate_tropical_envelope
-)
-from itertools import permutations
-
-
-# ============================================================================
-# Application 1: Harmonic Compression
-# ============================================================================
-
-def harmonic_compression():
-    """
-    Optimal harmonic compression: given a repertoire of chords with frequencies,
-    find the best simplified chord palette at each rate-distortion level.
-    """
-    print("=" * 60)
-    print("APPLICATION 1: HARMONIC COMPRESSION")
-    print("=" * 60)
-    
-    # Extended chord repertoire (12 common triads)
-    chords = {
-        'C':  [0, 4, 7],   'Cm': [0, 3, 7],
-        'D':  [2, 6, 9],   'Dm': [2, 5, 9],
-        'E':  [4, 8, 11],  'Em': [4, 7, 11],
-        'F':  [5, 9, 0],   'G':  [7, 11, 2],
-        'Am': [9, 0, 4],   'A':  [9, 1, 4],
-        'Bm': [11, 2, 6],  'B':  [11, 3, 6],
-    }
-    
-    chord_list = list(chords.values())
-    chord_names = list(chords.keys())
-    n = len(chord_list)
-    
-    # Source distribution (loosely based on pop music corpus)
-    p = np.array([0.20, 0.05, 0.08, 0.07, 0.03, 0.10,
-                  0.12, 0.15, 0.10, 0.03, 0.04, 0.03])
-    p = p / p.sum()
-    
-    # Distortion matrix
-    d = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            d[i, j], _ = voice_leading_distance(chord_list[i], chord_list[j])
-    
-    # Compute R(D) for different compression levels
-    print("\nCompression analysis:")
-    betas = [0.1, 0.5, 1.0, 2.0, 5.0, 20.0]
-    
-    for beta in betas:
-        channel, rate, dist = blahut_arimoto(p, d, beta, n_iter=500)
-        
-        # Find effective prototypes (columns with significant output mass)
-        q_y = p @ channel
-        active = q_y > 0.01
-        n_active = np.sum(active)
-        
-        # Find primary mapping for each chord
-        mapping = {}
-        for i, name in enumerate(chord_names):
-            j = np.argmax(channel[i])
-            mapping[name] = chord_names[j]
-        
-        print(f"\n  β = {beta:.1f}: R = {rate/np.log(2):.3f} bits, "
-              f"D = {dist:.2f} semitones, {n_active} prototypes")
-        for src, tgt in mapping.items():
-            if src != tgt:
-                print(f"    {src} → {tgt}")
-
-
-# ============================================================================
-# Application 2: Style Classification
-# ============================================================================
-
-def style_classification():
-    """
-    Different musical styles have different chord distributions,
-    leading to different R(D) curves. The shape of R(D) becomes
-    a style signature.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: STYLE CLASSIFICATION VIA R(D) SIGNATURES")
-    print("=" * 60)
-    
-    chords = [[0,4,7], [0,3,7], [2,5,9], [4,7,11], [5,9,0], [7,11,2], [9,0,4]]
-    n = len(chords)
-    
-    d = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            d[i, j], _ = voice_leading_distance(chords[i], chords[j])
-    
-    # Different "styles" as different source distributions
-    styles = {
-        'Classical (I-IV-V dominant)': np.array([0.35, 0.05, 0.05, 0.05, 0.20, 0.25, 0.05]),
-        'Jazz (ii-V-I progressions)': np.array([0.20, 0.10, 0.20, 0.05, 0.05, 0.25, 0.15]),
-        'Pop (I-vi-IV-V)':           np.array([0.30, 0.05, 0.05, 0.05, 0.25, 0.20, 0.10]),
-        'Romantic (chromatic)':       np.array([0.15, 0.15, 0.15, 0.15, 0.10, 0.15, 0.15]),
-    }
-    
-    print("\nR(D) at key distortion levels (bits):")
-    print(f"{'Style':<35} {'D=0':>8} {'D=1':>8} {'D=2':>8} {'D=3':>8}")
-    
-    for style_name, p in styles.items():
-        p = p / p.sum()
-        rates = []
-        for D_target in [0, 1, 2, 3]:
-            # Find appropriate beta
-            best_rate = None
-            for beta in np.logspace(-1, 3, 100):
-                _, rate, dist = blahut_arimoto(p, d, beta)
-                if dist <= D_target + 0.1:
-                    if best_rate is None or rate < best_rate:
-                        best_rate = rate
-            rates.append(best_rate if best_rate else float('nan'))
-        
-        print(f"  {style_name:<33} "
-              f"{'N/A' if np.isnan(rates[0]) else f'{rates[0]/np.log(2):.3f}':>8} "
-              f"{'N/A' if np.isnan(rates[1]) else f'{rates[1]/np.log(2):.3f}':>8} "
-              f"{'N/A' if np.isnan(rates[2]) else f'{rates[2]/np.log(2):.3f}':>8} "
-              f"{'N/A' if np.isnan(rates[3]) else f'{rates[3]/np.log(2):.3f}':>8}")
-
-
-# ============================================================================
-# Application 3: Voice-Leading Graph
-# ============================================================================
-
-def voice_leading_graph():
-    """
-    Construct the voice-leading graph: chords as nodes,
-    edges weighted by voice-leading distance.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: VOICE-LEADING GRAPH ANALYSIS")
-    print("=" * 60)
-    
-    chords = {
-        'C':  [0, 4, 7],
-        'Cm': [0, 3, 7],
-        'Em': [4, 7, 11],
-        'Am': [9, 0, 4],
-        'F':  [5, 9, 0],
-        'G':  [7, 11, 2],
-    }
-    
-    names = list(chords.keys())
-    n = len(names)
-    
-    # Distance matrix
-    dist = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            dist[i, j], _ = voice_leading_distance(
-                list(chords.values())[i],
-                list(chords.values())[j]
-            )
-    
-    print("\nDistance matrix:")
-    print(f"{'':>6}", end='')
-    for name in names:
-        print(f"{name:>6}", end='')
-    print()
-    for i, name in enumerate(names):
-        print(f"{name:>6}", end='')
-        for j in range(n):
-            print(f"{dist[i,j]:>6.0f}", end='')
-        print()
-    
-    # Find shortest paths (verify triangle inequality)
-    print("\nShortest paths vs direct distances (verifying triangle inequality):")
-    violations = 0
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                if dist[i,k] > dist[i,j] + dist[j,k]:
-                    violations += 1
-                    print(f"  VIOLATION: d({names[i]},{names[k]})={dist[i,k]} > "
-                          f"d({names[i]},{names[j]})+d({names[j]},{names[k]})="
-                          f"{dist[i,j]+dist[j,k]}")
-    
-    if violations == 0:
-        print("  ✓ No triangle inequality violations (confirmed Lawvere metric)")
-    
-    # Nearest neighbors
-    print("\nNearest neighbors (most efficient voice leadings):")
-    for i, name in enumerate(names):
-        neighbors = sorted([(dist[i,j], names[j]) for j in range(n) if j != i])
-        nn = neighbors[:2]
-        print(f"  {name}: {nn[0][1]} (d={nn[0][0]:.0f}), {nn[1][1]} (d={nn[1][0]:.0f})")
-
-
-if __name__ == "__main__":
-    harmonic_compression()
-    style_classification()
-    voice_leading_graph()
-
-
-#!/usr/bin/env python3
-"""
-Demonstration: Finite Rate-Distortion Theory and Voice-Leading Geometry
-
-This script demonstrates the key mathematical structures formalized in our
-Lean 4 proofs, including:
-- Finite rate-distortion computation for binary sources
-- Voice-leading distance computation for musical chords
-- The bridge between harmonic compression and information theory
+Demonstrates real-world applications of the bridge between information theory
+and musical geometry:
+1. Harmonic reduction: compressing a chord progression to fewer prototypes
+2. Style analysis: comparing the R(D) curves of different musical styles
+3. Optimal transcription: finding the best arrangement for fewer voices
 """
 
 import numpy as np
 from itertools import permutations
-import json
+from typing import List, Tuple
 
-# ============================================================================
-# Voice-Leading Distance Computation
-# ============================================================================
 
-def voice_leading_cost(v, w, perm):
-    """Cost of a voice leading with a given permutation assignment."""
-    return sum(abs(v[i] - w[perm[i]]) for i in range(len(v)))
+def voice_leading_cost(V: List[int], W: List[int], perm: Tuple[int, ...]) -> float:
+    return sum(abs(V[i] - W[perm[i]]) for i in range(len(V)))
 
-def voice_leading_distance(v, w):
-    """Minimum voice-leading distance over all permutation assignments."""
-    n = len(v)
-    assert len(w) == n
-    perms = list(permutations(range(n)))
-    return min(voice_leading_cost(v, w, p) for p in perms)
 
-def demonstrate_voice_leading():
-    """Demonstrate voice-leading distance computations for musical triads."""
-    print("=" * 60)
-    print("VOICE-LEADING DISTANCE BETWEEN MUSICAL TRIADS")
-    print("=" * 60)
-    
-    # Define triads (pitch classes mod 12)
-    chords = {
-        'C major':  [0, 4, 7],
-        'C minor':  [0, 3, 7],
-        'A minor':  [9, 0, 4],
-        'E minor':  [4, 7, 11],
-        'G major':  [7, 11, 2],
-        'F major':  [5, 9, 0],
-    }
-    
-    print("\nChord definitions (pitch classes):")
-    for name, pitches in chords.items():
-        print(f"  {name}: {pitches}")
-    
-    print("\nVoice-leading distances:")
-    names = list(chords.keys())
-    for i in range(len(names)):
-        for j in range(i+1, len(names)):
-            d = voice_leading_distance(chords[names[i]], chords[names[j]])
-            print(f"  d({names[i]}, {names[j]}) = {d}")
-    
-    # Verify triangle inequality
-    print("\nTriangle inequality verification:")
-    for a_name in names[:3]:
-        for b_name in names[1:4]:
-            for c_name in names[2:5]:
-                if a_name != b_name and b_name != c_name and a_name != c_name:
-                    dAC = voice_leading_distance(chords[a_name], chords[c_name])
-                    dAB = voice_leading_distance(chords[a_name], chords[b_name])
-                    dBC = voice_leading_distance(chords[b_name], chords[c_name])
-                    holds = dAC <= dAB + dBC
-                    print(f"  d({a_name},{c_name})={dAC} ≤ d({a_name},{b_name})+d({b_name},{c_name})={dAB}+{dBC}={dAB+dBC}: {holds}")
+def min_vl_distance(V: List[int], W: List[int]) -> float:
+    n = len(V)
+    return min(voice_leading_cost(V, W, perm) for perm in permutations(range(n)))
 
-# ============================================================================
-# Finite Rate-Distortion Computation
-# ============================================================================
 
-def mutual_information(p_x, p_y_given_x):
-    """Compute mutual information I(X;Y) for finite distributions."""
-    n_x, n_y = p_y_given_x.shape
-    p_xy = p_x[:, np.newaxis] * p_y_given_x
-    p_y = p_xy.sum(axis=0)
-    
-    mi = 0.0
-    for i in range(n_x):
-        for j in range(n_y):
-            if p_xy[i, j] > 1e-15 and p_x[i] > 1e-15 and p_y[j] > 1e-15:
-                mi += p_xy[i, j] * np.log(p_xy[i, j] / (p_x[i] * p_y[j]))
-            
-    return mi
-
-def expected_distortion(p_x, p_y_given_x, d):
-    """Compute expected distortion E[d(X,Y)]."""
-    p_xy = p_x[:, np.newaxis] * p_y_given_x
-    return np.sum(p_xy * d)
-
-def blahut_arimoto(p_x, d, beta, n_iter=200):
-    """
-    Blahut-Arimoto algorithm for computing R(D).
-    
-    Given source distribution p_x, distortion matrix d, and Lagrange
-    multiplier beta >= 0, finds the optimal channel minimizing
-    I(X;Y) + beta * E[d(X,Y)].
-    
-    Returns: (channel, mutual_info, distortion)
-    """
-    n_x = len(p_x)
-    n_y = d.shape[1]
-    
-    # Initialize channel uniformly
-    q = np.ones((n_x, n_y)) / n_y
-    
-    for _ in range(n_iter):
-        # Compute output distribution
-        p_y = p_x @ q
-        p_y = np.maximum(p_y, 1e-30)
-        
-        # Update channel
-        for j in range(n_y):
-            for i in range(n_x):
-                q[i, j] = p_y[j] * np.exp(-beta * d[i, j])
-        
-        # Normalize rows
-        row_sums = q.sum(axis=1, keepdims=True)
-        row_sums = np.maximum(row_sums, 1e-30)
-        q = q / row_sums
-    
-    mi = mutual_information(p_x, q)
-    dist = expected_distortion(p_x, q, d)
-    return q, mi, dist
-
-def compute_rd_curve(p_x, d, betas):
-    """Compute rate-distortion curve by sweeping Lagrange multiplier."""
+def blahut_arimoto_sweep(p_x, d, betas):
+    """Run Blahut-Arimoto for multiple beta values."""
     results = []
+    n_x, n_y = d.shape
     for beta in betas:
-        _, mi, dist = blahut_arimoto(p_x, d, beta)
-        results.append((dist, mi))
+        W = np.ones((n_x, n_y)) / n_y
+        for _ in range(300):
+            q_y = np.maximum(p_x @ W, 1e-300)
+            for x in range(n_x):
+                lw = np.log(q_y) - beta * d[x]
+                lw -= np.max(lw)
+                W[x] = np.exp(lw)
+                W[x] /= np.sum(W[x])
+        q_y = np.maximum(p_x @ W, 1e-300)
+        MI = sum(p_x[x] * W[x, y] * np.log(W[x, y] / q_y[y])
+                 for x in range(n_x) for y in range(n_y)
+                 if W[x, y] > 1e-300 and p_x[x] > 1e-300)
+        dist = np.sum(p_x[:, None] * W * d)
+        results.append((dist, max(0, MI), W.copy()))
     return results
 
-def demonstrate_rate_distortion():
-    """Demonstrate rate-distortion computation for various sources."""
-    print("\n" + "=" * 60)
-    print("FINITE RATE-DISTORTION CURVES")
+
+# ============================================================================
+# Application 1: Harmonic Reduction
+# ============================================================================
+
+def harmonic_reduction():
+    """
+    Compress a chord progression to fewer prototypes.
+    
+    Given a sequence of chords with frequencies, find the optimal set of
+    prototype chords and the optimal assignment of each chord to its prototype.
+    """
+    print("=" * 60)
+    print("APPLICATION 1: Harmonic Reduction")
     print("=" * 60)
     
-    # Binary symmetric source with Hamming distortion
-    print("\n--- Binary Symmetric Source (BSS) ---")
-    p_x = np.array([0.5, 0.5])
-    d = np.array([[0, 1], [1, 0]])  # Hamming distortion
+    # A typical pop progression repertoire
+    chord_names = ['C', 'Am', 'F', 'G', 'Dm', 'Em', 'Bdim']
+    chords = [
+        [0, 4, 7],     # C major
+        [0, 4, 9],     # A minor
+        [0, 5, 9],     # F major
+        [2, 7, 11],    # G major
+        [2, 5, 9],     # D minor
+        [4, 7, 11],    # E minor
+        [2, 5, 11],    # B diminished
+    ]
     
-    betas = np.logspace(-1, 3, 50)
-    rd_points = compute_rd_curve(p_x, d, betas)
+    # Frequency distribution (typical pop song)
+    freq = np.array([0.25, 0.15, 0.20, 0.20, 0.08, 0.07, 0.05])
+    freq /= freq.sum()
     
-    print(f"  Source: p = {p_x}")
-    print(f"  Distortion: Hamming")
-    print(f"  H(X) = {-sum(p * np.log2(p) for p in p_x if p > 0):.4f} bits")
-    print(f"\n  Selected R(D) points:")
-    for D, R in sorted(rd_points)[::10]:
-        print(f"    D = {D:.4f}, R = {R/np.log(2):.4f} bits")
+    # Prototypes: just I, IV, V
+    proto_names = ['C', 'F', 'G']
+    prototypes = [[0, 4, 7], [0, 5, 9], [2, 7, 11]]
     
-    # Asymmetric binary source
-    print("\n--- Asymmetric Binary Source ---")
-    p_x = np.array([0.9, 0.1])
-    rd_points_asym = compute_rd_curve(p_x, d, betas)
+    # Build distortion matrix
+    n_rep, n_proto = len(chords), len(prototypes)
+    d = np.zeros((n_rep, n_proto))
+    for i, V in enumerate(chords):
+        for j, W in enumerate(prototypes):
+            d[i, j] = min_vl_distance(V, W)
     
-    print(f"  Source: p = {p_x}")
-    print(f"  H(X) = {-sum(p * np.log2(p) for p in p_x if p > 0):.4f} bits")
-    print(f"\n  Selected R(D) points:")
-    for D, R in sorted(rd_points_asym)[::10]:
-        print(f"    D = {D:.4f}, R = {R/np.log(2):.4f} bits")
+    print("\nDistortion matrix (voice-leading semitones):")
+    print(f"{'':>10}", end="")
+    for name in proto_names:
+        print(f"{name:>8}", end="")
+    print()
+    for i, name in enumerate(chord_names):
+        print(f"{name:>10}", end="")
+        for j in range(n_proto):
+            print(f"{d[i, j]:>8.0f}", end="")
+        print()
     
-    # 3-symbol source with voice-leading distortion
-    print("\n--- Triad Source with Voice-Leading Distortion ---")
-    chords = [[0, 4, 7], [0, 3, 7], [4, 7, 11]]  # C maj, C min, E min
-    p_x = np.array([0.5, 0.3, 0.2])
-    n = len(chords)
-    d_vl = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            d_vl[i, j] = voice_leading_distance(chords[i], chords[j])
+    # Find optimal assignment at zero distortion tolerance
+    assignment = np.argmin(d, axis=1)
+    avg_dist = np.sum(freq * np.array([d[i, assignment[i]] for i in range(n_rep)]))
     
-    print(f"  Chords: C major, C minor, E minor")
-    print(f"  Source: p = {p_x}")
-    print(f"  Voice-leading distortion matrix:")
-    for i in range(n):
-        print(f"    {d_vl[i]}")
+    print(f"\nOptimal greedy assignment (min distance):")
+    for i, name in enumerate(chord_names):
+        print(f"  {name:>8} → {proto_names[assignment[i]]:>4} (distance = {d[i, assignment[i]]:.0f})")
+    print(f"  Average distortion: {avg_dist:.2f} semitones")
     
-    rd_points_vl = compute_rd_curve(p_x, d_vl, betas)
-    print(f"\n  Selected R(D) points:")
-    for D, R in sorted(rd_points_vl)[::10]:
-        print(f"    D = {D:.4f}, R = {R/np.log(2):.4f} bits")
+    # Compute R(D) curve
+    betas = np.logspace(-1, 2, 50)
+    results = blahut_arimoto_sweep(freq, d, betas)
     
-    return rd_points, rd_points_asym, rd_points_vl
+    # Find the rate at avg_dist
+    for dist, rate, _ in sorted(results, key=lambda x: x[0]):
+        if dist >= avg_dist - 0.5:
+            print(f"  Rate at D={avg_dist:.1f}: R ≈ {rate/np.log(2):.3f} bits")
+            break
+    
+    entropy = -np.sum(freq * np.log2(np.maximum(freq, 1e-300)))
+    print(f"  Source entropy: H(X) = {entropy:.3f} bits")
+    print(f"  Compression ratio: {1 - avg_dist/np.max(d):.1%}")
+
 
 # ============================================================================
-# Tropical Envelope Demonstration
+# Application 2: Style Comparison via R(D) Curves
 # ============================================================================
 
-def demonstrate_tropical_envelope():
-    """Show that R(D) is a supremum of affine functions (tropical envelope)."""
+def style_comparison():
+    """Compare the information-theoretic complexity of different musical styles."""
     print("\n" + "=" * 60)
-    print("TROPICAL / PIECEWISE-LINEAR STRUCTURE OF R(D)")
+    print("APPLICATION 2: Style Comparison via R(D)")
     print("=" * 60)
     
-    p_x = np.array([0.5, 0.5])
-    d = np.array([[0, 1], [1, 0]])
+    # Style 1: Simple pop (mostly I-IV-V-vi)
+    pop_chords = [[0, 4, 7], [0, 5, 9], [2, 7, 11], [0, 4, 9]]
+    pop_freq = np.array([0.3, 0.25, 0.25, 0.2])
     
-    # Compute tangent lines at various points
-    betas = [0.5, 1.0, 2.0, 5.0, 10.0, 20.0]
-    affine_funcs = []
+    # Style 2: Jazz (more diverse)
+    jazz_chords = [
+        [0, 4, 7, 11],    # Cmaj7
+        [2, 5, 9, 0],     # Dm7
+        [4, 7, 11, 2],    # Em7
+        [5, 9, 0, 4],     # Fmaj7
+        [7, 11, 2, 5],    # G7
+        [9, 0, 4, 7],     # Am7
+    ]
+    jazz_freq = np.array([0.2, 0.15, 0.1, 0.2, 0.2, 0.15])
     
-    print("\n  Lagrange multiplier → affine minorant of R(D):")
-    for beta in betas:
-        _, mi, dist = blahut_arimoto(p_x, d, beta)
-        # R(D) ≥ Φ(β) - β*D where Φ(β) = inf_K {I + β*E[d]}
-        phi = mi + beta * dist
-        slope = -beta
-        intercept = phi
-        affine_funcs.append((slope, intercept))
-        print(f"    β = {beta:5.1f}: R(D) ≥ {slope:.4f}·D + {intercept:.4f}")
+    # Common prototype space (triads)
+    proto_triads = [[0, 4, 7], [0, 5, 9], [2, 7, 11]]
     
-    # Verify envelope property
-    print("\n  Verification: tropical envelope vs actual R(D)")
-    test_betas = np.logspace(-0.5, 2, 20)
-    for tb in test_betas[::5]:
-        _, mi, dist = blahut_arimoto(p_x, d, tb)
-        envelope = max(s * dist + b for s, b in affine_funcs)
-        print(f"    D={dist:.4f}: R(D)={mi:.4f}, envelope={envelope:.4f}, "
-              f"gap={mi - envelope:.6f}")
+    # Build distortion matrices
+    d_pop = np.zeros((len(pop_chords), len(proto_triads)))
+    for i, V in enumerate(pop_chords):
+        for j, W in enumerate(proto_triads):
+            d_pop[i, j] = min_vl_distance(V[:3], W)
     
-    return affine_funcs
+    d_jazz = np.zeros((len(jazz_chords), len(proto_triads)))
+    for i, V in enumerate(jazz_chords):
+        for j, W in enumerate(proto_triads):
+            d_jazz[i, j] = min_vl_distance(V[:3], W)
+    
+    betas = np.logspace(-1, 2, 40)
+    pop_results = blahut_arimoto_sweep(pop_freq, d_pop, betas)
+    jazz_results = blahut_arimoto_sweep(jazz_freq, d_jazz, betas)
+    
+    pop_entropy = -np.sum(pop_freq * np.log2(np.maximum(pop_freq, 1e-300)))
+    jazz_entropy = -np.sum(jazz_freq * np.log2(np.maximum(jazz_freq, 1e-300)))
+    
+    print(f"\nPop style:")
+    print(f"  Number of chords: {len(pop_chords)}")
+    print(f"  Source entropy: {pop_entropy:.3f} bits")
+    print(f"  Min distortion: {min(r[0] for r in pop_results):.2f}")
+    
+    print(f"\nJazz style:")
+    print(f"  Number of chords: {len(jazz_chords)}")
+    print(f"  Source entropy: {jazz_entropy:.3f} bits")
+    print(f"  Min distortion: {min(r[0] for r in jazz_results):.2f}")
+    
+    print(f"\nInterpretation: Jazz requires {jazz_entropy - pop_entropy:.3f} more bits")
+    print("to specify the exact chord, reflecting greater harmonic complexity.")
+
 
 # ============================================================================
-# Main
+# Application 3: Optimal Transcription
 # ============================================================================
 
-if __name__ == "__main__":
-    demonstrate_voice_leading()
-    rd_bss, rd_asym, rd_vl = demonstrate_rate_distortion()
-    affine_funcs = demonstrate_tropical_envelope()
-    
+def optimal_transcription():
+    """Find the best arrangement of a chord for fewer voices."""
     print("\n" + "=" * 60)
-    print("SUMMARY")
+    print("APPLICATION 3: Optimal Voice Reduction")
     print("=" * 60)
-    print("""
-Key Results Demonstrated:
-1. Voice-leading distance satisfies triangle inequality (Lawvere metric)
-2. Rate-distortion curves computed for binary and triad sources
-3. R(D) exhibits piecewise-linear / tropical envelope structure
-4. Voice-leading distortion induces valid rate-distortion problems
+    
+    # Original: 4-voice chord (SATB)
+    original = [0, 4, 7, 12]  # C major with octave doubling
+    
+    # Target: 3-voice arrangements (all possible subsets)
+    from itertools import combinations
+    
+    targets = []
+    target_names = []
+    for combo in combinations(range(4), 3):
+        target = [original[i] for i in combo]
+        targets.append(target)
+        notes = ['C', 'E', 'G', 'C\'']
+        target_names.append('-'.join(notes[i] for i in combo))
+    
+    print(f"\nOriginal chord: {original} (C-E-G-C')")
+    print(f"\nPossible 3-voice reductions:")
+    
+    for target, name in zip(targets, target_names):
+        # Compute cost of dropping each voice
+        cost = sum(abs(original[i] - target[min(i, len(target)-1)]) 
+                   for i in range(len(original)))
+        print(f"  {name:>10}: {target} (naive cost: {cost})")
+    
+    print("\nThe rate-distortion framework tells us: the optimal reduction")
+    print("depends not just on a single chord but on the distribution of")
+    print("chords in the piece and the voice-leading costs between them.")
 
-All results are formally verified in Lean 4 with complete proofs.
-""")
+
+if __name__ == '__main__':
+    harmonic_reduction()
+    style_comparison()
+    optimal_transcription()
+    print("\n" + "=" * 60)
+    print("All applications complete!")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Generate visualizations for the rate-distortion / voice-leading bridge theory.
+Finite Rate-Distortion Theory & Voice-Leading Geometry: Demonstrations
+
+This script demonstrates the key mathematical structures formalized in our Lean 4 proofs:
+1. Computation of rate-distortion functions R(D) for finite alphabets
+2. Voice-leading cost and the Lawvere metric structure
+3. The bridge: voice-leading distortion as a rate-distortion problem
+
+All computations correspond to formally verified theorems.
 """
 
 import numpy as np
+from itertools import permutations
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from algorithms import (
-    blahut_arimoto, compute_rd_curve, voice_leading_distance,
-    tropical_envelope, evaluate_tropical_envelope
-)
-import base64
-import io
-import json
 
+# ============================================================================
+# 1. FINITE RATE-DISTORTION COMPUTATION
+# ============================================================================
 
-def fig_to_base64(fig):
-    """Convert matplotlib figure to base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{b64}"
-
-
-def plot_rd_curves():
-    """Plot rate-distortion curves for multiple sources."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+def blahut_arimoto(p_x, d, D_target, beta_init=1.0, max_iter=200, tol=1e-8):
+    """
+    Blahut-Arimoto algorithm for computing R(D) for finite alphabets.
     
-    # Binary symmetric source
-    p_bss = np.array([0.5, 0.5])
-    d_ham = np.array([[0, 1], [1, 0]])
-    rd_bss = compute_rd_curve(p_bss, d_ham, n_points=200)
-    D_bss = [r[0] for r in rd_bss]
-    R_bss = [r[1]/np.log(2) for r in rd_bss]
+    Args:
+        p_x: source distribution (array of length |X|)
+        d: distortion matrix d[x][y] (|X| x |Y|)
+        D_target: target distortion level
+        beta_init: initial Lagrange multiplier
+        max_iter: maximum iterations
+        tol: convergence tolerance
     
-    axes[0].plot(D_bss, R_bss, 'b-', linewidth=2)
-    axes[0].set_xlabel('Distortion D', fontsize=12)
-    axes[0].set_ylabel('Rate R(D) (bits)', fontsize=12)
-    axes[0].set_title('Binary Symmetric Source\n(Hamming Distortion)', fontsize=13)
-    axes[0].set_xlim(0, 0.55)
-    axes[0].set_ylim(0, 1.1)
-    axes[0].grid(True, alpha=0.3)
-    axes[0].fill_between(D_bss, R_bss, alpha=0.1, color='blue')
+    Returns:
+        R: rate (mutual information) at distortion D_target
+        W: optimal channel W[y|x]
+        D_achieved: achieved distortion
+    """
+    n_x, n_y = d.shape
     
-    # Asymmetric binary source
-    p_asym = np.array([0.9, 0.1])
-    rd_asym = compute_rd_curve(p_asym, d_ham, n_points=200)
-    D_asym = [r[0] for r in rd_asym]
-    R_asym = [r[1]/np.log(2) for r in rd_asym]
+    # Initialize channel uniformly
+    W = np.ones((n_x, n_y)) / n_y
     
-    axes[1].plot(D_asym, R_asym, 'r-', linewidth=2)
-    axes[1].set_xlabel('Distortion D', fontsize=12)
-    axes[1].set_ylabel('Rate R(D) (bits)', fontsize=12)
-    axes[1].set_title('Asymmetric Source (p=0.9)\n(Hamming Distortion)', fontsize=13)
-    axes[1].set_xlim(0, 0.15)
-    axes[1].grid(True, alpha=0.3)
-    axes[1].fill_between(D_asym, R_asym, alpha=0.1, color='red')
+    beta = beta_init
     
-    # Voice-leading distortion
-    chords = [[0,4,7], [0,3,7], [4,7,11], [7,11,2]]
-    n = len(chords)
-    p_vl = np.array([0.4, 0.2, 0.25, 0.15])
-    d_vl = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            d_vl[i,j], _ = voice_leading_distance(chords[i], chords[j])
-    
-    rd_vl = compute_rd_curve(p_vl, d_vl, n_points=200)
-    D_vl = [r[0] for r in rd_vl]
-    R_vl = [r[1]/np.log(2) for r in rd_vl]
-    
-    axes[2].plot(D_vl, R_vl, 'g-', linewidth=2)
-    axes[2].set_xlabel('Distortion D (semitones)', fontsize=12)
-    axes[2].set_ylabel('Rate R(D) (bits)', fontsize=12)
-    axes[2].set_title('Triad Repertoire\n(Voice-Leading Distortion)', fontsize=13)
-    axes[2].grid(True, alpha=0.3)
-    axes[2].fill_between(D_vl, R_vl, alpha=0.1, color='green')
-    
-    fig.suptitle('Rate-Distortion Curves: From Classical to Musical', 
-                 fontsize=15, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    return fig
-
-
-def plot_tropical_envelope():
-    """Plot R(D) with its tropical/affine envelope."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
-    
-    p_x = np.array([0.5, 0.5])
-    d = np.array([[0, 1], [1, 0]])
-    
-    # Actual R(D)
-    rd = compute_rd_curve(p_x, d, n_points=200)
-    D_vals = [r[0] for r in rd]
-    R_vals = [r[1]/np.log(2) for r in rd]
-    ax.plot(D_vals, R_vals, 'b-', linewidth=3, label='R(D)', zorder=5)
-    
-    # Tangent lines from Lagrangian dual
-    betas = [0.5, 1.0, 2.0, 5.0, 10.0, 30.0]
-    colors = plt.cm.Reds(np.linspace(0.3, 0.9, len(betas)))
-    
-    D_range = np.linspace(0, 0.55, 100)
-    for i, beta in enumerate(betas):
-        _, mi, dist = blahut_arimoto(p_x, d, beta)
-        phi = mi + beta * dist
-        slope = -beta / np.log(2)
-        intercept = phi / np.log(2)
+    for _ in range(max_iter):
+        # E-step: compute output distribution
+        q_y = p_x @ W
+        q_y = np.maximum(q_y, 1e-300)
         
-        tangent = slope * D_range + intercept
-        valid = tangent >= -0.05
-        ax.plot(D_range[valid], tangent[valid], '--', color=colors[i], 
-                alpha=0.6, linewidth=1.5, label=f'β={beta}')
+        # M-step: update channel
+        for x in range(n_x):
+            for y in range(n_y):
+                W[x, y] = q_y[y] * np.exp(-beta * d[x, y])
+            W[x] /= np.sum(W[x])
+        
+        # Compute distortion
+        D_achieved = np.sum(p_x[:, None] * W * d)
+        
+        # Adjust beta to match target distortion
+        if D_achieved > D_target + tol:
+            beta *= 1.1
+        elif D_achieved < D_target - tol:
+            beta *= 0.9
+        else:
+            break
     
-    ax.set_xlabel('Distortion D', fontsize=13)
-    ax.set_ylabel('Rate R(D) (bits)', fontsize=13)
-    ax.set_title('Tropical Envelope: R(D) as Supremum of Affine Functions', 
-                 fontsize=14, fontweight='bold')
-    ax.set_xlim(0, 0.55)
-    ax.set_ylim(-0.05, 1.1)
-    ax.legend(fontsize=10, loc='upper right')
+    # Compute mutual information
+    q_y = p_x @ W
+    q_y = np.maximum(q_y, 1e-300)
+    MI = 0.0
+    for x in range(n_x):
+        for y in range(n_y):
+            if W[x, y] > 1e-300 and p_x[x] > 1e-300:
+                joint = p_x[x] * W[x, y]
+                if joint > 1e-300:
+                    MI += joint * np.log2(joint / (p_x[x] * q_y[y]))
+    
+    return MI, W, D_achieved
+
+
+def compute_rd_curve(p_x, d, n_points=50):
+    """Compute the full R(D) curve."""
+    D_min = min(np.sum(p_x * d[:, y]) for y in range(d.shape[1]))
+    D_max = np.sum(p_x[:, None] * d) / d.shape[1]
+    
+    D_values = np.linspace(D_min * 0.99, D_max * 1.5, n_points)
+    R_values = []
+    
+    for D in D_values:
+        try:
+            R, _, _ = blahut_arimoto(p_x, d, D)
+            R_values.append(max(0, R))
+        except:
+            R_values.append(0)
+    
+    return D_values, np.array(R_values)
+
+
+# ============================================================================
+# 2. VOICE-LEADING COST COMPUTATION
+# ============================================================================
+
+def voice_leading_cost(V, W, perm):
+    """Cost of a voice-leading given a permutation assignment."""
+    return sum(abs(V[i] - W[perm[i]]) for i in range(len(V)))
+
+
+def min_voice_leading_distance(V, W):
+    """Minimum voice-leading distance (over all permutations)."""
+    n = len(V)
+    min_cost = float('inf')
+    best_perm = None
+    for perm in permutations(range(n)):
+        cost = voice_leading_cost(V, W, perm)
+        if cost < min_cost:
+            min_cost = cost
+            best_perm = perm
+    return min_cost, best_perm
+
+
+def verify_triangle_inequality(V, W, U):
+    """Verify the triangle inequality: d(V,U) ≤ d(V,W) + d(W,U)."""
+    d_VU, _ = min_voice_leading_distance(V, U)
+    d_VW, _ = min_voice_leading_distance(V, W)
+    d_WU, _ = min_voice_leading_distance(W, U)
+    return d_VU, d_VW, d_WU, d_VU <= d_VW + d_WU + 1e-10
+
+
+# ============================================================================
+# 3. BRIDGE: VOICE-LEADING RATE-DISTORTION
+# ============================================================================
+
+def voice_leading_rd(repertoire, prototypes, mu, n_points=30):
+    """
+    Compute the rate-distortion curve for voice-leading distortion.
+    
+    Args:
+        repertoire: list of voicings (source alphabet)
+        prototypes: list of prototype voicings (reproduction alphabet)
+        mu: probability distribution over repertoire
+        n_points: number of points on the R(D) curve
+    """
+    n_rep = len(repertoire)
+    n_proto = len(prototypes)
+    
+    # Build distortion matrix using voice-leading distance
+    d = np.zeros((n_rep, n_proto))
+    for i, V in enumerate(repertoire):
+        for j, W in enumerate(prototypes):
+            d[i, j], _ = min_voice_leading_distance(V, W)
+    
+    return compute_rd_curve(np.array(mu), d, n_points), d
+
+
+# ============================================================================
+# DEMONSTRATIONS
+# ============================================================================
+
+def demo_binary_source():
+    """Demo 1: Binary source with Hamming distortion."""
+    print("=" * 60)
+    print("DEMO 1: Binary Symmetric Source (Shannon's classic example)")
+    print("=" * 60)
+    
+    p = 0.3  # source probability P(X=1)
+    p_x = np.array([1 - p, p])
+    d = np.array([[0, 1], [1, 0]])  # Hamming distortion
+    
+    D_values, R_values = compute_rd_curve(p_x, d)
+    
+    # Shannon's formula: R(D) = H(p) - H(D) for 0 ≤ D ≤ min(p, 1-p)
+    H_p = -p * np.log2(p) - (1 - p) * np.log2(1 - p)
+    D_theory = np.linspace(0.001, min(p, 1 - p) - 0.001, 50)
+    R_theory = np.array([H_p + d_val * np.log2(d_val) + (1 - d_val) * np.log2(1 - d_val)
+                         for d_val in D_theory])
+    R_theory = np.maximum(R_theory, 0)
+    
+    print(f"Source entropy H(X) = {H_p:.4f} bits")
+    print(f"Maximum distortion for R>0: D* = {min(p, 1-p):.4f}")
+    print(f"R(0) = H(X) = {H_p:.4f} bits")
+    
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+    ax.plot(D_values, R_values, 'b-', linewidth=2, label='Computed R(D)')
+    ax.plot(D_theory, R_theory, 'r--', linewidth=2, label='Shannon formula')
+    ax.set_xlabel('Distortion D', fontsize=14)
+    ax.set_ylabel('Rate R (bits)', fontsize=14)
+    ax.set_title('Rate-Distortion: Binary Source with Hamming Distortion', fontsize=14)
+    ax.legend(fontsize=12)
+    ax.set_xlim(0, 0.5)
+    ax.set_ylim(0, 1.1)
     ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/rd_binary.png', dpi=150)
+    plt.close()
+    print("Saved: rd_binary.png")
+
+
+def demo_voice_leading():
+    """Demo 2: Voice-leading distances and triangle inequality."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Voice-Leading Geometry (Lawvere Metric)")
+    print("=" * 60)
     
-    plt.tight_layout()
-    return fig
-
-
-def plot_voice_leading_graph():
-    """Plot the voice-leading graph with distances."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+    # Define some triads (3-note chords)
+    C_major = [0, 4, 7]    # C-E-G
+    A_minor = [0, 4, 9]    # A-C-E (as [0,4,9])
+    F_major = [0, 5, 9]    # F-A-C (as [0,5,9])
+    G_major = [2, 7, 11]   # G-B-D
+    D_minor = [2, 5, 9]    # D-F-A
     
     chords = {
-        'C':  [0, 4, 7],
-        'Cm': [0, 3, 7],
-        'Em': [4, 7, 11],
-        'Am': [9, 0, 4],
-        'F':  [5, 9, 0],
-        'G':  [7, 11, 2],
+        'C major': C_major,
+        'A minor': A_minor,
+        'F major': F_major,
+        'G major': G_major,
+        'D minor': D_minor,
     }
     
     names = list(chords.keys())
-    n = len(names)
+    voicings = list(chords.values())
+    n = len(voicings)
     
-    # Position chords in a circle
-    angles = np.linspace(0, 2*np.pi, n, endpoint=False)
-    positions = {name: (np.cos(a), np.sin(a)) for name, a in zip(names, angles)}
-    
-    # Compute distances
+    # Compute distance matrix
     dist_matrix = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
-            dist_matrix[i,j], _ = voice_leading_distance(
-                list(chords.values())[i], list(chords.values())[j]
-            )
+            dist_matrix[i, j], _ = min_voice_leading_distance(voicings[i], voicings[j])
     
-    # Draw edges (only short ones)
-    for i in range(n):
-        for j in range(i+1, n):
-            d = dist_matrix[i, j]
-            if d <= 4:
-                x1, y1 = positions[names[i]]
-                x2, y2 = positions[names[j]]
-                alpha = max(0.15, 1.0 - d/6)
-                width = max(0.5, 3.0 - d/2)
-                ax.plot([x1, x2], [y1, y2], 'k-', alpha=alpha, linewidth=width)
-                mx, my = (x1+x2)/2, (y1+y2)/2
-                ax.text(mx, my, f'{int(d)}', fontsize=10, ha='center', va='center',
-                       bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-    
-    # Draw nodes
+    print("\nVoice-Leading Distance Matrix:")
+    print(f"{'':>12}", end="")
     for name in names:
-        x, y = positions[name]
-        color = '#4CAF50' if 'm' not in name else '#2196F3'
-        ax.scatter(x, y, s=800, c=color, edgecolors='black', linewidth=2, zorder=5)
-        ax.text(x, y, name, fontsize=14, fontweight='bold', ha='center', va='center',
-               zorder=6, color='white')
+        print(f"{name:>12}", end="")
+    print()
+    for i, name in enumerate(names):
+        print(f"{name:>12}", end="")
+        for j in range(n):
+            print(f"{dist_matrix[i, j]:>12.0f}", end="")
+        print()
     
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.set_title('Voice-Leading Graph\n(Lawvere Metric Space)', 
-                 fontsize=14, fontweight='bold')
-    ax.axis('off')
-    
-    plt.tight_layout()
-    return fig
-
-
-def plot_compression_analysis():
-    """Plot compression quality vs rate for triads."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
-    
-    chords = [[0,4,7], [0,3,7], [2,5,9], [4,7,11], [5,9,0], [7,11,2], [9,0,4]]
-    n = len(chords)
-    
-    d = np.zeros((n, n))
+    # Verify triangle inequality for all triples
+    print("\nTriangle Inequality Verification:")
+    violations = 0
+    tests = 0
     for i in range(n):
         for j in range(n):
-            d[i,j], _ = voice_leading_distance(chords[i], chords[j])
+            for k in range(n):
+                tests += 1
+                d_ik = dist_matrix[i, k]
+                d_ij = dist_matrix[i, j]
+                d_jk = dist_matrix[j, k]
+                if d_ik > d_ij + d_jk + 1e-10:
+                    violations += 1
+    print(f"  Tested {tests} triples, {violations} violations")
+    print(f"  Triangle inequality: {'VERIFIED ✓' if violations == 0 else 'FAILED ✗'}")
     
-    styles = {
-        'Classical (I-IV-V)': np.array([0.35, 0.05, 0.05, 0.05, 0.20, 0.25, 0.05]),
-        'Jazz (ii-V-I)':      np.array([0.20, 0.10, 0.20, 0.05, 0.05, 0.25, 0.15]),
-        'Pop (I-vi-IV-V)':    np.array([0.30, 0.05, 0.05, 0.05, 0.25, 0.20, 0.10]),
-        'Uniform':            np.ones(n) / n,
-    }
+    # Visualize
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+    im = ax.imshow(dist_matrix, cmap='YlOrRd')
+    ax.set_xticks(range(n))
+    ax.set_xticklabels(names, rotation=45, ha='right', fontsize=10)
+    ax.set_yticks(range(n))
+    ax.set_yticklabels(names, fontsize=10)
+    ax.set_title('Voice-Leading Distance Matrix (Lawvere Metric)', fontsize=14)
+    for i in range(n):
+        for j in range(n):
+            ax.text(j, i, f'{dist_matrix[i, j]:.0f}', ha='center', va='center', fontsize=12)
+    fig.colorbar(im, label='Semitone displacement')
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/vl_distances.png', dpi=150)
+    plt.close()
+    print("Saved: vl_distances.png")
+
+
+def demo_bridge():
+    """Demo 3: Voice-leading rate-distortion (the bridge theorem)."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Voice-Leading Rate-Distortion (Bridge Theorem)")
+    print("=" * 60)
     
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+    # Repertoire: common triads
+    repertoire = [
+        [0, 4, 7],    # C major
+        [0, 3, 7],    # C minor
+        [0, 5, 9],    # F major
+        [2, 5, 9],    # D minor
+        [2, 7, 11],   # G major
+        [4, 7, 11],   # E minor
+    ]
     
-    for (name, p), color in zip(styles.items(), colors):
-        p = p / p.sum()
-        rd = compute_rd_curve(p, d, n_points=150)
-        D_vals = [r[0] for r in rd]
-        R_vals = [r[1]/np.log(2) for r in rd]
-        ax.plot(D_vals, R_vals, '-', linewidth=2.5, color=color, label=name)
+    # Prototypes: reduced set (compression targets)
+    prototypes = [
+        [0, 4, 7],    # C major
+        [0, 5, 9],    # F major
+        [2, 7, 11],   # G major
+    ]
     
-    ax.set_xlabel('Distortion (semitones)', fontsize=13)
-    ax.set_ylabel('Rate R(D) (bits)', fontsize=13)
-    ax.set_title('Musical Style Signatures via Rate-Distortion', 
-                 fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11)
+    # Uniform distribution over repertoire
+    mu = [1.0 / len(repertoire)] * len(repertoire)
+    
+    (D_values, R_values), d_matrix = voice_leading_rd(repertoire, prototypes, mu)
+    
+    print("\nDistortion Matrix (voice-leading distance):")
+    chord_names = ['C', 'Cm', 'F', 'Dm', 'G', 'Em']
+    proto_names = ['C', 'F', 'G']
+    print(f"{'':>6}", end="")
+    for name in proto_names:
+        print(f"{name:>8}", end="")
+    print()
+    for i, name in enumerate(chord_names):
+        print(f"{name:>6}", end="")
+        for j in range(len(prototypes)):
+            print(f"{d_matrix[i, j]:>8.0f}", end="")
+        print()
+    
+    print(f"\nRate-Distortion curve computed with {len(D_values)} points")
+    print(f"R(D=0) ≈ {R_values[0]:.4f} bits")
+    
+    # Min-plus lower bound: R_min(D) = H_∞(μ) - D
+    H_inf = -np.log2(max(mu))
+    D_bound = np.linspace(0, H_inf, 50)
+    R_bound = np.maximum(H_inf - D_bound, 0)
+    
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+    ax.plot(D_values, R_values, 'b-', linewidth=2, label='R(D) computed')
+    ax.plot(D_bound, R_bound, 'r--', linewidth=2, label=f'Min-plus bound (H∞={H_inf:.2f})')
+    ax.set_xlabel('Distortion D (semitone displacement)', fontsize=14)
+    ax.set_ylabel('Rate R (bits)', fontsize=14)
+    ax.set_title('Voice-Leading Rate-Distortion Function', fontsize=14)
+    ax.legend(fontsize=12)
     ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    return fig
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/vl_rate_distortion.png', dpi=150)
+    plt.close()
+    print("Saved: vl_rate_distortion.png")
 
 
-if __name__ == "__main__":
-    # Generate all visualizations
-    figs = {}
+def demo_tropical_envelope():
+    """Demo 4: Tropical/piecewise-linear envelope structure of R(D)."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Tropical Envelope Structure")
+    print("=" * 60)
     
-    print("Generating rate-distortion curves...")
-    figs['rd_curves'] = plot_rd_curves()
+    # Binary source again
+    p = 0.3
+    p_x = np.array([1 - p, p])
+    d = np.array([[0, 1], [1, 0]])
     
-    print("Generating tropical envelope...")
-    figs['tropical'] = plot_tropical_envelope()
+    H_p = -p * np.log2(p) - (1 - p) * np.log2(1 - p)
     
-    print("Generating voice-leading graph...")
-    figs['vl_graph'] = plot_voice_leading_graph()
+    # Compute R(D) at many points
+    D_values = np.linspace(0.01, min(p, 1 - p) - 0.01, 100)
+    R_values = np.array([H_p + d_val * np.log2(d_val) + (1 - d_val) * np.log2(1 - d_val)
+                         for d_val in D_values])
+    R_values = np.maximum(R_values, 0)
     
-    print("Generating style classification...")
-    figs['styles'] = plot_compression_analysis()
+    # Compute supporting affine functionals (tangent lines)
+    # R'(D) = log2((1-D)/D) for binary source
+    slopes = []
+    intercepts = []
+    D_tangent_points = np.linspace(0.02, min(p, 1-p) - 0.02, 8)
+    for D0 in D_tangent_points:
+        slope = np.log2((1 - D0) / D0)
+        R0 = H_p + D0 * np.log2(D0) + (1 - D0) * np.log2(1 - D0)
+        intercept = R0 - slope * D0
+        slopes.append(slope)
+        intercepts.append(intercept)
     
-    # Save individual PNGs
-    for name, fig in figs.items():
-        fig.savefig(f'{name}.png', dpi=150, bbox_inches='tight')
-        print(f"Saved {name}.png")
+    fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+    ax.plot(D_values, R_values, 'b-', linewidth=3, label='R(D)', zorder=5)
     
-    # Generate base64 data for JSON
-    viz_data = {}
-    for name, fig in figs.items():
-        viz_data[name] = fig_to_base64(fig)
+    colors = plt.cm.Set2(np.linspace(0, 1, len(slopes)))
+    for i, (m, b) in enumerate(zip(slopes, intercepts)):
+        D_line = np.linspace(0, 0.35, 100)
+        R_line = m * D_line + b
+        ax.plot(D_line, R_line, '--', color=colors[i], alpha=0.6, linewidth=1.5,
+                label=f'Affine: slope={m:.2f}' if i < 3 else None)
     
-    with open('viz_data.json', 'w') as f:
-        json.dump(viz_data, f)
-    print("Saved viz_data.json")
+    ax.set_xlabel('Distortion D', fontsize=14)
+    ax.set_ylabel('Rate R (bits)', fontsize=14)
+    ax.set_title('R(D) as Supremum of Affine Functions\n(Tropical Envelope Structure)', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_xlim(0, 0.35)
+    ax.set_ylim(-0.1, 1.2)
+    ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/tropical_envelope.png', dpi=150)
+    plt.close()
+    print("Saved: tropical_envelope.png")
+    
+    print(f"\nNumber of supporting hyperplanes shown: {len(slopes)}")
+    print("R(D) = sup_s (Φ(s) - s·D) — the Lagrangian dual representation")
+    print("This is a tropical polynomial in the min-plus semiring")
+
+
+if __name__ == '__main__':
+    demo_binary_source()
+    demo_voice_leading()
+    demo_bridge()
+    demo_tropical_envelope()
+    print("\n" + "=" * 60)
+    print("All demonstrations complete!")
+    print("=" * 60)

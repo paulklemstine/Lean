@@ -173,20 +173,6 @@
     "timestamp": "2026-05-14T16:24:30.140249+00:00"
   },
   {
-    "id": "fd_0147",
-    "title": "Reconstruction algorithm",
-    "description": ": Given a boundary distance matrix satisfying metric properties, construct a graph (tree or series-parallel graph) realizing those distances, with explicit complexity bounds.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "e1bdecc7",
-    "timestamp": "2026-05-14T16:24:30.145614+00:00"
-  },
-  {
     "id": "fd_0166",
     "title": "Apply to specific problems",
     "description": ": Show that certain functions (e.g., element distinctness, graph connectivity) require super-linear tropical cost in bounded-width branching programs.\n\n### Proof Strategy\n- Generalize the layered system framework from `Obstruction.lean`.\n- Use the block cost lemma within each layer.\n- Combine with the existing `layered_no_shortcut` theorem.\n\n### Cross-domain Impact\n- Circuit complexity (lower bounds for restricted circuits)\n- Streaming algorithms (space-bounded computation)\n- VLSI design (area-time tradeoffs)\n\n---\n\n## Direction 3: Tropical Communication Complexity via Min-Plus Protocol Cost\n\n### Goal\nDefine communication complexity over the min-plus semiring and prove direct-sum lower bounds using the cycle-gap framework.\n\n### Background\nIn classical communication complexity, Alice and Bob",
@@ -455,24 +441,6 @@
     "timestamp": "2026-05-16T09:05:20.487200+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Application",
-    "description": ": Derive the finite-field Kakeya conjecture (proved by Dvir 2009) as a consequence of the polynomial method + Schwartz–Zippel.\n\n### Key Lean Targets\n```lean\ntheorem point_hypersurface_incidence_bound\n    {K : Type*} [Field K] [Fintype K] {n : ℕ}\n    (f : MvPolynomial (Fin n) K) (hf : f ≠ 0)\n    (S : Finset (Fin n → K)) :\n    (S.filter (fun x => MvPolynomial.eval x f = 0)).card\n      ≤ min S.card (f.totalDegree * (Fintype.card K) ^ (n - 1))\n```\n\n### Cross-Domain Impact\n- **Combinatorics**: Sum-product estimates, Erdős distance problems.\n- **Number theory**: Character sum bounds, exponential sum estimates.\n- **Computer science**: Lower bounds for data structures and communication complexity.\n\n### Estimated Effort\nHigh. Requires developing the polynomial method framework and connecting to inc",
-    "domains": [
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0839f238",
-    "consumed_by_exp_id": "1646adc6",
-    "timestamp": "2026-05-16T12:59:24.025803+00:00"
-  },
-  {
     "id": "fd_0237",
     "title": "Graph Coloring Instance",
     "description": ": Define `graphColoringCSP(G, k)` for a finite graph G with k colors. Prove exactness: zero cost ↔ proper k-coloring. Define propagation (arc consistency) and prove soundness/stabilization.",
@@ -518,49 +486,6 @@
     "timestamp": "2026-05-16T13:42:08.381149+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Enriched category",
-    "description": ": Define a category $\\mathbf{Met}_\\mathcal{T}$ enriched over the tropical semiring, where objects are metric spaces and morphisms are 1-Lipschitz maps with tropical hom-sets.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "861617e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:18:41.770031+00:00"
-  },
-  {
-    "id": "fd_0265",
-    "title": "Kan extension",
-    "description": ": The optimal routing from $x$ to $x'$ via the Nether is the coend $\\int^y P(x, y) \\otimes P^*(y, x') = \\min_y (P(x,y) + P^*(y, x'))$, which is the tropical matrix product.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "861617e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:18:41.798893+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "Strong duality",
-    "description": "(≤ direction): Use the finite-dimensional LP strong duality theorem. The transport problem is a linear program with the coupling matrix as variable, marginal constraints as equalities, and nonnegativity constraints. Its dual is exactly the Kantorovich dual.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a6c55e7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:57:04.315060+00:00"
-  },
-  {
     "id": "fd_0258",
     "title": "Convergence",
     "description": ": Combine Fekete's lemma with the finite characterization to show convergence and identify the limit.\n\n### Cross-Domain Significance\nThis theorem is the tropical analogue of the Perron-Frobenius eigenvalue theorem. It connects:\n- **Graph theory**: minimum-weight cycles and shortest paths\n- **Dynamical systems**: asymptotic growth rates of iterated tropical maps\n- **Operations research**: cycle-time optimization in discrete event systems\n- **Formal verification**: a verified algorithm for computing tropical eigenvalues\n\nOur subadditivity theorem (`tropPow_diag_subadditive`) provides the key input.\n\n---\n\n## Direction 3: Birkhoff–von Neumann Decomposition\n\n### Theorem Statement\nEvery doubly stochastic matrix (nonneg entries with row and column sums equal to 1) is a convex combination of permu",
@@ -590,22 +515,6 @@
     "timestamp": "2026-05-16T18:57:04.421460+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Algorithm correctness",
-    "description": ": Show the Hungarian algorithm produces such a complementary pair by maintaining dual feasibility and augmenting matchings.\n\n### Cross-Domain Significance\nThis connects to our assignment cost invariance theorem: the optimal assignment is invariant under simultaneous relabeling, which follows from our `assignment_cost_conjugation_invariant`. In tropical terms, the Hungarian algorithm computes the tropical determinant of the cost matrix, and the dual variables are tropical eigenvectors. This creates a verified computational bridge between optimal transport and tropical linear algebra.\n\n---\n\n## Direction 5: Wasserstein Quotient by Finite Group Actions\n\n### Theorem Statement\nWhen a finite group G acts on `Fin n` preserving the cost function, the Wasserstein distance descends to a well-defined ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a6c55e7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:57:04.453362+00:00"
-  },
-  {
     "id": "fd_0264",
     "title": "Well-definedness",
     "description": ": Use our `wasserstein1_invariant_under_equiv` to show that `W(g·μ, ν) = W(g·μ, ν)` under the group action. Then show the orbit infimum is invariant under further group action on μ.",
@@ -618,22 +527,6 @@
     "source_exp_id": "a6c55e7c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T18:57:04.468119+00:00"
-  },
-  {
-    "id": "fd_0265",
-    "title": "Metric structure",
-    "description": ": Show symmetry (by inverting group elements) and definiteness (by assuming the cost is a metric).\n\n### Cross-Domain Significance\nThis is the formal foundation for equivariant optimal transport, with applications to:\n- **Shape analysis**: comparing shapes up to rotation/reflection\n- **Chemistry**: comparing molecular configurations up to symmetry\n- **Machine learning**: G-invariant Wasserstein GANs\n- **Physics**: transport on orbit spaces in gauge theory\n\nOur `wasserstein1_invariant_under_equiv` is the key ingredient, showing that the basic distance respects individual symmetries. The quotient construction extends this to the full group orbit.\n\n---\n\n## Implementation Priority",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a6c55e7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:57:04.485981+00:00"
   },
   {
     "id": "fd_0240",
@@ -774,18 +667,138 @@
     "timestamp": "2026-05-16T19:15:45.356314+00:00"
   },
   {
-    "id": "fd_0254",
-    "title": "Rank-based analysis",
-    "description": ": Decompose ΣΠΣ circuits by the rank of their linear forms. Low-rank circuits have structured zero sets; high-rank circuits have few zeros by Schwartz–Zippel.",
+    "id": "fd_0245",
+    "title": "Define `cherryReduceMetric`",
+    "description": ": Map Fin(n-1) → Fin(n) by skipping index j. For the merged point (corresponding to i), set D'(i',k') = D(i,k) - pendantLength(D,i,j,k_ref).",
     "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e1bdecc7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:05:46.959018+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Prove distance preservation",
+    "description": ": Show that distances in the extended tree match D.\n\n### Dependencies\n\n- `IsCherryPair` definition (proved to exist)\n- `pendantLength` properties (proved)\n- `LBTree.dist` infrastructure (proved)\n- Index manipulation lemmas for Fin(n) → Fin(n-1)\n\n### Cross-Domain Connection\n\n**Phylogenetics**: The cherry reduction is exactly the neighbor-joining step used in computational evolutionary biology. Formalizing it creates a verified foundation for phylogenetic software.\n\n---\n\n## Direction 2: Uniqueness / Canonicity Theorem\n\n### Theorem Statement\n\n```lean\n/-- Two reduced tree realizations of the same metric are isomorphic\nas weighted leaf-labeled trees. -/\ntheorem tree_realization_unique\n    {n : ℕ} (D : Matrix (Fin n) (Fin n) ℝ)\n    (hm : IsFiniteMetric D) (h4 : FourPointCondition D)\n    (t₁ t₂ :",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e1bdecc7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:05:47.016451+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Prove by induction on n",
+    "description": ": For n ≤ 3, direct. For n ≥ 4, both trees must have the same cherry pairs (determinable from D). Remove the same cherry from both, apply IH.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e1bdecc7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:05:47.059494+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Key lemma",
+    "description": ": Cherry pairs are determined by D alone, not by the tree. Two different reduced trees must have the same set of cherries.\n\n### Dependencies\n\n- `exists_lbtree_realization` (general existence)\n- `cherry_pair_exists` (proved)\n- Tree isomorphism infrastructure\n\n### Cross-Domain Connection\n\n**Tropical geometry**: Uniqueness of reduced trees corresponds to the fact that points in the interior of maximal cones of the tropical Grassmannian have unique combinatorial types. This connects to the theory of tropical moduli spaces.\n\n---\n\n## Direction 3: Noisy Stability Theorem\n\n### Theorem Statement\n\n```lean\n/-- If D is within ε of a tree metric D₀, then there exists a tree\nwhose distances are within f(ε,n) of D. -/\ntheorem noisy_reconstruction_stability {n : ℕ}\n    (D D₀ : Matrix (Fin n) (Fin n) ℝ)\n  ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e1bdecc7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:05:47.074705+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Define SPCondition",
+    "description": ": The analogue of the four-point condition for series-parallel metrics. This involves constraints on sextets of distances (6-point conditions).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e1bdecc7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:05:47.194187+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Complexity",
+    "description": ": The reconstruction should be polynomial (likely O(n⁴)).\n\n### Dependencies\n\n- `IsFiniteMetric` (proved)\n- Tree reconstruction infrastructure (as a subcase)\n- Shortest-path algorithms for SP graphs\n\n### Cross-Domain Connection\n\n**Electrical networks**: Series-parallel circuits are the simplest non-tree networks. Resistance distances in SP circuits satisfy specific metric constraints. Formalizing their reconstruction connects to circuit analysis and reliability theory.\n\n---\n\n## Direction 5: Tropical Grassmannian Characterization\n\n### Theorem Statement\n\n```lean\n/-- Four-point metrics correspond to points in the tropical\nGrassmannian Gr(2,n), providing an algebraic characterization\nof tree realizability. -/\ntheorem four_point_iff_tropical_grassmannian {n : ℕ}\n    (D : Matrix (Fin n) (Fin n) ℝ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
       "Computation"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "38f08fce",
+    "source_exp_id": "e1bdecc7",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.374103+00:00"
+    "timestamp": "2026-05-16T20:05:47.232507+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Define the tropical Grassmannian",
+    "description": "Gr(2,n) as the set of distance matrices satisfying tropical Plücker relations.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e1bdecc7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:05:47.250050+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Show equivalence",
+    "description": ": The tropical Plücker relations for Gr(2,n) are exactly the four-point conditions when restricted to symmetric zero-diagonal matrices.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e1bdecc7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:05:47.265126+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Prove the reverse direction",
+    "description": ": Plücker relations plus metric axioms imply four-point (algebraic manipulation).\n\n### Dependencies\n\n- `FourPointCondition` (defined)\n- Tropical semiring definitions\n- Tropical Plücker coordinates\n\n### Cross-Domain Connection\n\n**Algebraic geometry**: The tropical Grassmannian is a fundamental object in tropical algebraic geometry. Connecting it to tree metrics creates a bridge between combinatorial optimization, algebraic geometry, and phylogenetics. This direction would also connect to the Dressian and the theory of valuated matroids.\n\n---\n\n## Implementation Priority",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e1bdecc7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T20:05:47.298444+00:00"
   },
   {
     "id": "fd_0113",
@@ -1594,34 +1607,6 @@
     "source_exp_id": "52b15fb5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T19:35:36.681776+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "Phase 1 (Immediate, 1-3 months)",
-    "description": "- **Team A**: Stochastic DPI (Direction 2) — requires 2-3 researchers\n- **Team B**: Huffman optimality (Direction 1) — 1-2 researchers\n- **Team C**: Robustness-coding bridge (Direction 4) — 1 researcher",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "52b15fb5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:35:36.702078+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "Validation Protocol",
-    "description": "1. Each theorem target should be stated in Lean 4 with `sorry` before beginning proof work.\n2. Helper lemmas should be validated computationally before formalization.\n3. Cross-team reviews ensure consistency of definitions and interfaces.\n4. Regular integration builds verify that new theorems compose with existing infrastructure.\n\n---",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "52b15fb5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:35:36.759268+00:00"
   },
   {
     "id": "fd_0258",
