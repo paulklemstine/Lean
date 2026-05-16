@@ -121,10 +121,10 @@
       "Physics"
     ],
     "priority_score": 0.82,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "d5a8adc3",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:03:53.828694+00:00"
   },
   {
@@ -235,20 +235,6 @@
     "source_exp_id": "3cb1c42c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:16:22.737665+00:00"
-  },
-  {
-    "id": "fd_0093",
-    "title": "Low-rank attack",
-    "description": ": If G has tropical rank r < n, then G can be written as a tropical product of an n×r and an r×n matrix. This decomposition reveals structural information about G^a, potentially allowing recovery of a.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "fbfb44da",
-    "timestamp": "2026-05-14T16:16:22.746644+00:00"
   },
   {
     "id": "fd_0102",
@@ -1041,6 +1027,78 @@
     "timestamp": "2026-05-16T07:11:32.025620+00:00"
   },
   {
+    "id": "fd_0241",
+    "title": "Hypothesis",
+    "description": ": The precise conjecture to prove or disprove.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fbfb44da",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:13:50.186163+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Computational validation",
+    "description": ": Python/SageMath experiments to test the conjecture on examples before formalization.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fbfb44da",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:13:50.206810+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Formalization plan",
+    "description": ": A breakdown into 5-10 helper lemmas, each independently provable.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fbfb44da",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:13:50.222086+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Cross-domain audit",
+    "description": ": At least two experts from different fields (e.g., one algebraist and one cryptographer) review each result.",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fbfb44da",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:13:50.237421+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Iteration cycle",
+    "description": ": Weekly cycles of conjecture → experiment → formalize → review.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fbfb44da",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T07:13:50.251594+00:00"
+  },
+  {
     "id": "seed_052",
     "title": "Tropical Sudoku: Min-Plus Constraint Satisfaction and Phase Transitions",
     "description": "Prove that Sudoku puzzles are tropical constraint satisfaction problems where the min-plus cost of a placement measures its constraint violations, and that the satisfiability threshold for random Sudoku instances is a tropical phase transition. Show that the hardest Sudokus are exactly those at the tropical phase boundary, and that tropical propagation solves all instances in polynomial time up to the critical density.",
@@ -1434,6 +1492,23 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
+    "id": "fd_0211",
+    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
+    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "d3c4fbdb",
+    "timestamp": "2026-05-15T09:19:36.848982+00:00"
+  },
+  {
     "id": "fd_0225",
     "title": "3. Adjunctions and Galois Connections Between Theories",
     "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
@@ -1623,10 +1698,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2cbb4165",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b18b8608",
     "timestamp": "2026-05-16T03:39:37.961155+00:00"
   },
   {
