@@ -549,10 +549,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ab00abc",
     "timestamp": "2026-05-16T21:01:29.710311+00:00"
   },
   {
@@ -1203,23 +1203,6 @@
   },
   {
     "id": "fd_0240",
-    "title": "Direction 2: Block-Diagonal Additivity",
-    "description": "**Hypothesis:** For block-diagonal matrices $A \\oplus B$ (with $\\infty$ in cross-blocks), factor rank is additive:\n\n$$\\text{tropFactorRank}(A \\oplus B) = \\text{tropFactorRank}(A) + \\text{tropFactorRank}(B)$$\n\n**Proof strategy:**\n- **Upper bound** ($\\leq$): Concatenate factorizations of $A$ and $B$, embedding each into the larger index set with $\\infty$ padding. This is straightforward.\n- **Lower bound** ($\\geq$): Show that any rank-1 matrix in a factorization of $A \\oplus B$ whose support intersects both blocks forces finite cross-block entries, contradicting the $\\infty$ structure. Therefore each rank-1 term belongs to at most one block, and the terms partition into those serving $A$ and those serving $B$.\n\n**Impact:** This creates a reusable theorem schema for computing factor rank of st",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "64a1fefb",
-    "consumed_by_exp_id": "7e846ce5",
-    "timestamp": "2026-05-16T09:33:50.685886+00:00"
-  },
-  {
-    "id": "fd_0240",
     "title": "3. Freivalds as a Corollary of Schwartz–Zippel over Finite Fields",
     "description": "**Target theorem**:\n```lean\ntheorem freivalds_from_schwartz_zippel\n    {q m p : ℕ} [Fact q.Prime]\n    (M : Matrix (Fin m) (Fin p) (ZMod q))\n    (hM : M ≠ 0) :\n    Fintype.card {r : Fin p → ZMod q // M.mulVec r = 0}\n      ≤ q ^ (p - 1)\n```\n\nbut proved by appeal to the Schwartz–Zippel lemma for degree-1 multivariate polynomials, showing that Freivalds is a special case of polynomial identity testing.\n\n**Proof strategy**: \n1. Extract a nonzero row `w = M i` from `M`.\n2. View `∑ j, w j * r j` as a degree-1 polynomial in `MvPolynomial (Fin p) (ZMod q)`.\n3. Apply the Schwartz–Zippel bound: a nonzero polynomial of total degree `d` over `ZMod q` vanishes on at most `d · q^(p-1)` points.\n4. With `d = 1`, this gives exactly the `q^(p-1)` bound.\n\n**Impact**: This unifies matrix verification with poly",
     "domains": [
@@ -1674,5 +1657,95 @@
     "source_exp_id": "9b1f62ec",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T23:08:10.960000+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "1. General Schwartz–Zippel over Finite Fields in Mathlib Style",
+    "description": "**Status**: The inductive proof for `Fin (n+1)` variables is formalized in `SchwartzZippel.lean`. The next step is to generalize to arbitrary finite index types.\n\n**Target theorem**:\n```lean\ntheorem card_zeros_le_totalDegree_mul\n    {F : Type*} [Field F] [Fintype F] {σ : Type*} [Fintype σ] [DecidableEq σ]\n    (P : MvPolynomial σ F) (hP : P ≠ 0) :\n    Fintype.card {x : σ → F // MvPolynomial.eval x P = 0}\n      ≤ P.totalDegree * (Fintype.card F) ^ (Fintype.card σ - 1)\n```\n\n**Proof strategy**: Transport the existing `Fin (n+1)` result via `Fintype.truncEquivFinOfCardEq` to obtain the bound for arbitrary finite `σ`. The key technical challenge is showing that `totalDegree` is preserved under the renaming equivalence `MvPolynomial.rename`.\n\n**Cross-domain impact**: A general Schwartz–Zippel the",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e846ce5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:10:48.631140+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "2. Freivalds for Matrix Product Verification via PIT",
+    "description": "**Target theorem**:\n```lean\ntheorem freivalds_product_verification\n    {q n : ℕ} [Fact q.Prime]\n    (A B C : Matrix (Fin n) (Fin n) (ZMod q))\n    (hneq : A * B ≠ C) :\n    Fintype.card {r : Fin n → ZMod q // (A * B).mulVec r = C.mulVec r}\n      ≤ q ^ (n - 1)\n```\n\n**Proof strategy**: Set `D = A * B - C`, observe `D ≠ 0`, and note that `D.mulVec r = 0 ↔ (A*B).mulVec r = C.mulVec r`. Apply `freivalds_from_schwartz_zippel` to `D`. This is already partially formalized in `Freivalds.lean` for square matrices; the rectangular generalization follows from the current work.\n\n**Application**: This formalizes the full Freivalds algorithm: given matrices A, B, C, pick a random vector r over ZMod q and check whether `A*(B*r) = C*r`. If `AB ≠ C`, the check catches the error with probability at least `1 - ",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e846ce5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:10:48.655625+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "3. Affine and Higher-Degree Variants",
+    "description": "**Target**: Generalize from homogeneous linear forms to:\n- **Affine forms**: `∑ w_j r_j + c = 0` for constant `c`\n- **Degree-d hypersurfaces**: arbitrary multivariate polynomials of bounded degree\n\n**Key theorem (degree-d specialization)**:\n```lean\ntheorem card_zeros_degree_d_le\n    {q : ℕ} [Fact q.Prime] {p : ℕ}\n    (f : MvPolynomial (Fin p) (ZMod q))\n    (hf : f ≠ 0) (hd : f.totalDegree ≤ d) :\n    Fintype.card {r : Fin p → ZMod q // MvPolynomial.eval r f = 0}\n      ≤ d * q ^ (p - 1)\n```\n\n**Significance**: This directly yields soundness bounds for low-degree testing protocols (e.g., the BLR linearity test, Rubinfeld–Sudan low-degree test), which are cornerstones of PCP theory.\n\n---",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e846ce5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:10:48.676639+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "4. Coding-Theoretic Reinterpretation",
+    "description": "**Target**: Formalize the connection between linear forms and parity-check equations in coding theory.\n\n**Key theorem**:\n```lean\ntheorem parity_check_fraction\n    {q p : ℕ} [Fact q.Prime] (hp : 0 < p)\n    (w : Fin p → ZMod q) (hw : w ≠ 0) :\n    (Fintype.card {r : Fin p → ZMod q // ∑ j, w j * r j = 0} : ℚ) /\n      (Fintype.card (Fin p → ZMod q) : ℚ) ≤ 1 / q\n```\n\n**Context**: A nonzero vector `w` defines a single parity-check equation. The theorem says exactly a `1/q` fraction of all words satisfy a nontrivial parity check. This is the foundation for:\n- Minimum distance bounds for linear codes\n- Reed–Muller code analysis (where parity checks are polynomial evaluations)\n- Low-density parity-check (LDPC) code analysis\n\n**Proof strategy**: Divide both sides of `card_solutions_linear_form_le` by",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e846ce5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:10:48.697719+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "5. Complexity/Soundness Bridge",
+    "description": "**Vision**: Combine zero-density bounds with algebraic circuit complexity lower bounds to formulate a certified statement connecting computational complexity and probabilistic soundness.\n\n**Conceptual theorem**:\n> If a polynomial `P` computable by a circuit of depth `d` and `s` multiplication gates satisfies the Schwartz–Zippel bound `|zeros(P)| ≤ deg(P) · |F|^{n-1}`, and the circuit complexity lower bounds give `deg(P) ≥ 2^{d-1}` and `deg(P) ≥ s`, then:\n> - The error probability of PIT on `P` is at most `deg(P)/|F|`\n> - Any circuit computing `P` needs depth `≥ log₂(deg(P)) + 1`\n> - Any circuit computing `P` needs `≥ deg(P)` multiplication gates\n\n**Formal target**: A unified theorem connecting `depth_lower_bound_from_degree`, `mulGates_lower_bound_from_degree`, and the Schwartz–Zippel zero",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e846ce5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:10:48.721853+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Research Roadmap",
+    "description": "| Priority | Direction | Estimated Effort | Dependencies |\n|----------|-----------|-----------------|--------------|\n| 1 | Product verification (§2) | Low | Current work |\n| 2 | Parity-check fraction (§4) | Low | Current work |\n| 3 | General Schwartz–Zippel (§1) | Medium | SchwartzZippel.lean |\n| 4 | Degree-d specialization (§3) | Medium | §1 |\n| 5 | Complexity bridge (§5) | High | §1, circuit formalization |\n\nEach direction should be pursued with:\n- **Concrete hypotheses** to test via `#eval` before formalizing\n- **Decomposition** into 3–8 helper lemmas per theorem\n- **Cross-referencing** with existing Mathlib infrastructure\n- **Documentation** connecting formal results to their algorithmic/complexity-theoretic significance",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e846ce5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:10:48.744317+00:00"
   }
 ]
