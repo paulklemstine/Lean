@@ -492,10 +492,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7c012798",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5da3534",
     "timestamp": "2026-05-16T20:47:30.939622+00:00"
   },
   {
@@ -554,20 +554,6 @@
     "source_exp_id": "1646adc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T21:01:29.489920+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Applications",
-    "description": "The Combinatorial Nullstellensatz immediately yields:\n   - Chevalley–Warning theorem\n   - Davenport–Halberstam bound\n   - Zero-sum theorems (Erdős–Ginzburg–Ziv)\n   - Permanent lower bounds\n   - Graph coloring bounds\n\n### Infrastructure Needed\n- Division of multivariate polynomials by products of linear factors (or reduction modulo ideal)\n- Coefficient extraction lemmas for MvPolynomial\n- The general product-set Schwartz–Zippel lemma\n\n---\n\n## Direction 5: Cap Set and Slice Rank Methods\n\n### Goal\nBuild toward a formalization of the Croot–Lev–Pach / Ellenberg–Gijswijt cap set bound:\n\n**Theorem (CLP/EG, 2016–2017).** The maximum size of a subset of GF(3)^n with no three-term arithmetic progression is at most O(2.756^n).\n\n### Approach\nThis requires developing the *slice rank* method, which is a",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.510304+00:00"
   },
   {
     "id": "fd_0254",
@@ -688,20 +674,6 @@
     "timestamp": "2026-05-16T21:34:33.969194+00:00"
   },
   {
-    "id": "fd_0245",
-    "title": "Direction 4",
-    "description": "(Decision procedure) — highest immediate impact, builds directly on current work.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4ba38644",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:41:28.086781+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Direction 1",
     "description": "(O(n log n) bound) — natural extension, improves certified complexity.",
@@ -714,20 +686,6 @@
     "source_exp_id": "4ba38644",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T21:41:28.102286+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Round-by-round analysis",
-    "description": ": In each round, the verifier receives a univariate polynomial and checks it at a random point. By Schwartz–Zippel, each round catches a cheat with probability ≥ 1 − d/q.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3e135d69",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:05:47.336361+00:00"
   },
   {
     "id": "fd_0250",
@@ -772,20 +730,6 @@
     "source_exp_id": "68af5bc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:19:00.567088+00:00"
-  },
-  {
-    "id": "fd_0260",
-    "title": "Compute examples",
-    "description": "using Python/NumPy to validate conjectures before attempting formal proofs.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "68af5bc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:19:00.597839+00:00"
   },
   {
     "id": "fd_0263",
@@ -1006,22 +950,6 @@
     "source_exp_id": "d2a18598",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.336933+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "Research Team Directive",
-    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "99efecb5",
-    "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
     "id": "fd_0200",
@@ -1552,20 +1480,6 @@
     "timestamp": "2026-05-16T22:10:48.829121+00:00"
   },
   {
-    "id": "fd_0260",
-    "title": "Implementation Priorities",
-    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|--------------|\n| 1. Tropical DPI | Medium | High | tropical_kl_security_bound |\n| 2. Categorical semantics | Low-Medium | Medium | TheoryMorphism.comp |\n| 3. Reverse transport | High | Very High | BiTheoryMorphism (new) |\n| 4. Entropy/height | High | High | Mahler measure in Mathlib |\n| 5. Tropical MI | Medium | Very High | Direction 1 |\n\n**Recommended order**: 2 → 1 → 5 → 4 → 3\n\nDirection 2 is foundational and relatively easy — it validates the categorical structure. Direction 1 unlocks Direction 5, which provides the universal framework. Directions 3 and 4 are the deepest mathematically and should build on the infrastructure from 1, 2, and 5.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2a24e1c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:10:48.862155+00:00"
-  },
-  {
     "id": "fd_0254",
     "title": "Key Lemmas to Formalize",
     "description": "- Maximum cycle mean computation for directed weighted graphs\n- Tropical matrix powers and periodicity\n- Connection between eigenvalue and long-term average growth",
@@ -1638,20 +1552,6 @@
     "source_exp_id": "be71e654",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:13:17.481827+00:00"
-  },
-  {
-    "id": "fd_0260",
-    "title": "Iteration Protocol",
-    "description": "Each direction should maintain:\n1. A Lean formalization file with current progress\n2. A computational notebook with numerical experiments\n3. A list of open sub-problems suitable for subagent-assisted proving\n4. Cross-references to lemmas shared with other directions",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "be71e654",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:13:17.512158+00:00"
   },
   {
     "id": "fd_0253",
@@ -1744,5 +1644,65 @@
     "source_exp_id": "5cfffd08",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:25:54.821807+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Lean Formalization Target",
+    "description": "```lean\ntheorem tropical_cheeger_inequality\n    (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (hrev : Reversible P π) :\n    cheegerConductance P π ^ 2 / 2 ≤ triangleCyc (tropicalCost P)\n```\n\n---",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "99efecb5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:52:54.286925+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Phase 1 (Immediate, 1–2 months)",
+    "description": "- **Direction 1**: Tropical Cheeger inequality (most directly builds on current work)\n- **Direction 5**: Spectral gap bound (uses existing Mathlib Perron–Frobenius infrastructure)",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "99efecb5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:52:54.320928+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Cross-cutting Infrastructure Needs",
+    "description": "- Formalized Perron–Frobenius theory for stochastic matrices in Lean/Mathlib\n- Tropical matrix powers and their convergence properties\n- Large-deviation principles for finite Markov chains\n- Cheeger conductance and spectral gap inequalities\n\n---",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "99efecb5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:52:54.358251+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Broader Vision",
+    "description": "These five directions collectively build toward a unified **tropical probability theory** where:\n1. Classical probabilistic inequalities have tropical counterparts\n2. Tropical spectral invariants acquire operational meaning as information-theoretic quantities\n3. Algorithmic certification of dynamical properties proceeds via tropical graph optimization\n4. The formal verification ecosystem provides machine-checked guarantees for all results\n\nThis program connects probability, combinatorial optimization, information theory, and formal mathematics into a single coherent framework.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "99efecb5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:52:54.376362+00:00"
   }
 ]
