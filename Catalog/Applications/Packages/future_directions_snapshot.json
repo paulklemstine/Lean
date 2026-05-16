@@ -999,6 +999,21 @@
     "timestamp": "2026-05-16T02:14:30.267025+00:00"
   },
   {
+    "id": "fd_0227",
+    "title": "5. Theorem Embeddings from Syntax: Automatic TheorySpec Extraction",
+    "description": "**Hypothesis:** Many theorem statements in the catalog have the implicit structure of a `TheorySpec` — they assert a lower bound on some quantity for all elements satisfying some predicate. A metaprogram could automatically extract `TheorySpec` instances from theorem signatures by pattern-matching on the syntactic form `∀ x, P x → n ≤ f x`.\n\n**Proof Strategy:**\n- Write a `MetaM` procedure that inspects a theorem's type.\n- Pattern-match on universal quantification, implication with a predicate, and inequality with a constant.\n- Extract `α`, `Witness`, `inv`, `lowerBound`, and wrap the theorem's proof as `sound`.\n- Automatically populate the bridge graph.\n\n**Cross-Domain Connections:** This is a form of mathematical information extraction, analogous to knowledge extraction from natural langu",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "72596401",
+    "timestamp": "2026-05-16T02:14:30.279911+00:00"
+  },
+  {
     "id": "fd_0218",
     "title": "1. Tropical Expanders and Extractor-Quality Orbit Families",
     "description": "**Hypothesis:** There exist explicit families of tropical matrices whose orbits satisfy the conditional extraction property with near-optimal parameters (ε ≈ 2^{-Ω(n)}).\n\n**Approach:**\n- Define a notion of *tropical expander*: a finite set S of n×n tropical matrices such that for any subset A ⊆ S with |A| ≥ δ|S|, the set {A·G : G ∈ S} has significantly more distinct elements than A.\n- Prove that tropical expansion implies bounded prefix fibers, which by our `conditional_minEntropy_from_fiber` theorem implies conditional extraction.\n- Construct explicit tropical expanders using Cayley graphs of matrix groups over the tropical semiring, analogous to classical expander constructions from SL(2, F_p).\n\n**Key Lemma to Formalize:**\n> If S is a (K, ε)-tropical expander, then `maxPrefixFiberCard S ",
@@ -1682,39 +1697,6 @@
     "timestamp": "2026-05-16T23:27:21.857820+00:00"
   },
   {
-    "id": "fd_0261",
-    "title": "4. Threshold Bridge to Monotone Boolean Complexity",
-    "description": "**Theorem Target:**\n```\ndef thresholdPred (c : MonotoneCircuit α n) (θ : α) : (Fin n → α) → Prop :=\n    fun x => θ ≤ eval c x\n\ntheorem thresholdPred_monotone (c : MonotoneCircuit α n) (θ : α) :\n    ∀ x y : Fin n → α, (∀ i, x i ≤ y i) → thresholdPred c θ x → thresholdPred c θ y\n```\n\n**Proof Strategy:**\n- Direct consequence of `eval_mono`: if `θ ≤ eval c x` and `x ≤ y` coordinatewise, then `θ ≤ eval c x ≤ eval c y`.\n- Extend to show that the Boolean function obtained by thresholding at any level is a monotone Boolean function.\n- Prove a converse: every monotone Boolean function `{0,1}^n → {0,1}` arises as a threshold of some `MonotoneCircuit ℕ n`.\n\n**Cross-Domain Significance:**\n- Creates a formal bridge between numerical monotone computation and classical monotone Boolean complexity.\n- Enab",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e5da3534",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:27:21.877044+00:00"
-  },
-  {
-    "id": "fd_0262",
-    "title": "5. Game-Theoretic / Dynamic Programming Semantics",
-    "description": "**Theorem Target:** Interpret monotone circuits as finite two-player min-max game trees and prove equivalence with the algebraic semantics.\n\n```\ninductive GameTree (α : Type*) where\n  | leaf : α → GameTree α\n  | minNode : GameTree α → GameTree α → GameTree α\n  | maxNode : GameTree α → GameTree α → GameTree α\n\ndef GameTree.value : GameTree α → α\n\ndef MonotoneCircuit.toGameTree (c : MonotoneCircuit α n) (x : Fin n → α) : GameTree α\n\ntheorem MonotoneCircuit.gameTree_value_eq_eval (c : MonotoneCircuit α n) (x : Fin n → α) :\n    (toGameTree c x).value = eval c x\n```\n\n**Proof Strategy:**\n- Define `toGameTree` by substituting input values at leaves and mapping `and`/`or` to min/max nodes.\n- Prove the value equivalence by structural induction — both sides satisfy the same recursive equations.\n- Ex",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e5da3534",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:27:21.896666+00:00"
-  },
-  {
     "id": "fd_0263",
     "title": "6. Depth-Independent Lipschitz Constant",
     "description": "**Theorem Target:** Prove that the 1-Lipschitz constant is tight and independent of circuit depth.\n\n```\n-- The constant 1 is tight: there exists a circuit achieving equality\ntheorem MonotoneCircuit.lipschitz_tight (n : ℕ) (hn : 0 < n) :\n    ∃ c : MonotoneCircuit ℝ n, ∃ x y : Fin n → ℝ,\n      (∀ i, |x i - y i| ≤ 1) ∧ |eval c x - eval c y| = 1\n\n-- Contrast with multiplicative circuits: depth d can amplify errors by 2^d\n```\n\n**Proof Strategy:**\n- For tightness, take `c = var 0` and `x = 0`, `y = 1`.\n- The deeper theorem is that NO circuit of ANY depth can exceed the bound, which is already proved by `eval_le_of_coordwise_le_add`.\n- Formalize the contrast with multiplicative circuits to highlight the structural advantage.\n\n**Cross-Domain Significance:**\n- This depth-independence property is un",
@@ -1749,5 +1731,50 @@
     "source_exp_id": "e5da3534",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T23:27:21.937720+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Theorem Statement",
+    "description": "```lean\ntheorem hilbert_series_mvPolynomial (n : ℕ) :\n    (∑ m in Finset.range N, (finrank K (homogeneousComponent' K (Fin n) m)) * X^m : PowerSeries K) \n    = ... -- truncation of 1/(1-X)^n\n```\n\nMore precisely, formalize that the Hilbert function H(m) = C(m+n-1, n-1) satisfies the generating function identity ∑ H(m) t^m = 1/(1-t)^n as formal power series.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bffc2558",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:41:10.612157+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Why It Matters",
+    "description": "The Hilbert series is the fundamental invariant of graded algebras. For polynomial rings it has the closed form 1/(1-t)^n, and for quotient rings by homogeneous ideals it becomes a rational function whose numerator encodes deep geometric information (the h-vector). Formalizing the polynomial ring case is the essential first step toward formalized Hilbert polynomial theory, which is the backbone of algebraic geometry's dimension theory.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bffc2558",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:41:10.634969+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Cross-Cutting Research Program",
+    "description": "These five directions form a coherent research program connecting:\n\n```\nDirection 1 (Hilbert Series)\n    ↓\nDirection 5 (Hilbert Polynomial) ← Direction 2 (Monomial Ideals)\n    ↓\nDirection 4 (Interpolation) ← Direction 3 (Reed-Muller)\n```\n\nThe bounded-degree dimension formula proved in this work is the foundation for all five directions. Directions 1 and 2 are natural next steps building directly on this infrastructure. Direction 3 connects to coding theory. Direction 4 connects to numerical analysis and cryptography. Direction 5 is the ultimate goal connecting to algebraic geometry.\n\n**Recommended execution order**: 1 → 2 → 3 → 4 → 5, with 3 and 4 partially parallelizable.",
+    "domains": [
+      "Cryptography",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bffc2558",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:41:10.722487+00:00"
   }
 ]
