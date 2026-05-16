@@ -16,22 +16,6 @@
     "timestamp": "2026-05-14T16:03:53.810233+00:00"
   },
   {
-    "id": "seed_044",
-    "title": "Quantum Pythagorean Teleportation: Berggren Orbits as Clifford Circuits",
-    "description": "Prove that Berggren groupoid orbits on SL(3,Z) encode quantum teleportation circuits via a categorical equivalence between Pythagorean lattices and stabilizer subgroups of the Clifford group. Show that primitive triple matrices form universal quantum gates under tropical composition, and that the Berggren tree structure yields an optimal teleportation protocol.",
-    "domains": [
-      "Pythagorean",
-      "Physics",
-      "Cryptography"
-    ],
-    "priority_score": 0.92,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "62116f58",
-    "timestamp": "2026-05-14T16:03:53.839617+00:00"
-  },
-  {
     "id": "seed_037",
     "title": "Thermodynamic Computation via Tropical Landauer's Principle",
     "description": "Formalize Landauer's principle in Lean: prove that any erasure operation on a semiring element costs at least kT ln 2 in tropical entropy, establishing tropical thermodynamics as a computational bound. Show that the min-plus free energy of a computation equals its tropical circuit depth, connecting physical and computational complexity through idempotent analysis.",
@@ -500,6 +484,21 @@
     "timestamp": "2026-05-15T02:25:22.040153+00:00"
   },
   {
+    "id": "fd_0194",
+    "title": "Proof complexity researcher",
+    "description": ": Develops the hardness hierarchy and complexity-theoretic aspects (Direction 3).",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "465c3121",
+    "consumed_by_exp_id": "2da16d8d",
+    "timestamp": "2026-05-15T03:03:37.375693+00:00"
+  },
+  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -579,39 +578,6 @@
     "timestamp": "2026-05-15T15:04:51.202237+00:00"
   },
   {
-    "id": "fd_0234",
-    "title": "Connect to width collapse",
-    "description": ": Show that the tropical eigenvector has width zero if and only if all cycle means are equal — the tropical analogue of a simple dominant eigenvalue.\n\n### Proof Strategy\n- Formalize directed graphs and cycle decompositions over Fin n.\n- Define irreducibility as strong connectivity of the associated graph.\n- Prove Karp's theorem: the minimum cycle mean equals lim_{k→∞} min_i (A^⊗k)_{ij}/k.\n- Use the Collatz–Wielandt characterization to establish bounds.\n\n### Cross-Domain Impact\n- **Optimization**: Tropical eigenvalues solve mean payoff games and scheduling problems.\n- **Dynamical systems**: Tropical eigenvectors are fixed points of the normalized tropical dynamics.\n- **RH connection**: The tropical eigenvalue could play the role of the \"spectral parameter\" in a tropical zeta function.\n\n### ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf94957b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T20:38:18.916506+00:00"
-  },
-  {
-    "id": "fd_0234",
-    "title": "Is tropical rank NP-hard to approximate within any constant factor?",
-    "description": "Known: exact computation is NP-hard. Unknown: approximation complexity.",
-    "domains": [
-      "Tropical",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ed53a6b6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T21:34:31.361341+00:00"
-  },
-  {
     "id": "fd_0231",
     "title": "Proof theory",
     "description": "(automata, coding, compression)",
@@ -624,21 +590,6 @@
     "source_exp_id": "0db1bd89",
     "consumed_by_exp_id": "9a668faa",
     "timestamp": "2026-05-15T22:01:06.632160+00:00"
-  },
-  {
-    "id": "fd_0234",
-    "title": "Computational complexity",
-    "description": "(circuit depth, Kolmogorov complexity)\n\nEach direction provides both theoretical insights and practical applications, with the formalized bridge theorems serving as the mathematical foundation for rigorous results across all five domains.\n\n### Recommended Priority Order",
-    "domains": [
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0db1bd89",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:01:06.662655+00:00"
   },
   {
     "id": "fd_0231",
@@ -906,34 +857,6 @@
     "timestamp": "2026-05-16T03:49:39.045856+00:00"
   },
   {
-    "id": "fd_0234",
-    "title": "Ongoing",
-    "description": ": Build the categorical capacity framework (Direction 5) as a long-term foundational project.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d85be8c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T03:49:39.056926+00:00"
-  },
-  {
-    "id": "fd_0237",
-    "title": "Direction 1",
-    "description": "(polyhedral strata) extends the affine theory to full polyhedral structure.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "886e70ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:34:23.444820+00:00"
-  },
-  {
     "id": "fd_0238",
     "title": "Direction 2",
     "description": "(generic biases) proves that \"most\" parameters give non-degenerate geometry.",
@@ -955,10 +878,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "886e70ad",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f06689b7",
     "timestamp": "2026-05-16T04:34:23.473456+00:00"
   },
   {
@@ -1004,34 +927,6 @@
     "source_exp_id": "085cfca9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T04:34:45.459261+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Coboundary operator:",
-    "description": "δ₀ : C⁰ → C¹ maps vertex functions to edge functions via (δ₀f)(i→j) = f(j) − f(i).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "085cfca9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:34:45.470291+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Integration:",
-    "description": "Define the integral of a 1-cochain around a cycle and prove it equals zero iff the cochain is exact.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "085cfca9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T04:34:45.494319+00:00"
   },
   {
     "id": "seed_052",
@@ -1413,23 +1308,6 @@
     "timestamp": "2026-05-15T22:33:29.188763+00:00"
   },
   {
-    "id": "fd_0234",
-    "title": "2. Tropical Rank-2 Decomposition Criteria",
-    "description": "**Goal:** Characterize matrices expressible as the min (or max) of two additively separable terms.\n\n**Mathematical Statement:**\n`A : Fin n → Fin m → ℝ` has min-plus rank ≤ 2 if and only if there exist `u₁, u₂ : Fin n → ℝ` and `v₁, v₂ : Fin m → ℝ` such that\n```\nA(i,j) = min(u₁(i) + v₁(j), u₂(i) + v₂(j)).\n```\n\nA necessary condition is the *tropical 3×3 minor condition*: for all 3×3 submatrices, the tropical determinant achieves its minimum at least twice among the six permutation terms.\n\n**Lean Signature:**\n```lean\ndef MinPlusRankLE2 {n m : ℕ} (A : Fin n → Fin m → ℝ) : Prop :=\n  ∃ u₁ u₂ : Fin n → ℝ, ∃ v₁ v₂ : Fin m → ℝ,\n    ∀ i j, A i j = min (u₁ i + v₁ j) (u₂ i + v₂ j)\n\ntheorem rank2_necessary_condition\n    {n m : ℕ} (A : Fin n → Fin m → ℝ) (h : MinPlusRankLE2 A) :\n    ∀ i₁ i₂ i₃ : Fin n, ∀",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6fbf424c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:33:29.201196+00:00"
-  },
-  {
     "id": "fd_0232",
     "title": "Direction 1: Weighted Hodge Decomposition on Overlap Complexes with Certified Ro",
     "description": "**Hypothesis:** Equipping the cochain complex with edge weights w(i,j) proportional to the overlap volume between activation regions i and j yields a weighted Hodge decomposition where the harmonic energy provides a formally certified lower bound on adversarial vulnerability.\n\n**Proof Strategy:**\n1. Define the weighted inner product ⟨ω, η⟩_w = Σ_{i,j} w(i,j) ω(i,j) η(i,j) and prove it satisfies the inner product axioms when w > 0.\n2. Compute the weighted adjoint operators d₀†_w and d₁†_w explicitly.\n3. Prove the weighted Hodge decomposition C¹ = im(d₀) ⊕_w im(d₁†_w) ⊕_w ker(Δ₁_w).\n4. Establish that the weighted harmonic energy ‖h‖²_w lower-bounds the minimum perturbation energy needed to change the network's prediction across region boundaries.\n\n**Cross-Domain Connections:** This connects ",
@@ -1461,23 +1339,6 @@
     "source_exp_id": "cb6bb980",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:30:41.658871+00:00"
-  },
-  {
-    "id": "fd_0234",
-    "title": "Direction 3: Discrete Helmholtz Decomposition for Gradient-Flow Training Dynamic",
-    "description": "**Hypothesis:** The gradient of the training loss, viewed as a vector field on the activation region complex, admits a Helmholtz decomposition into a potential component (driving convergence), a solenoidal component (causing oscillation), and a harmonic component (reflecting topological constraints on the loss landscape).\n\n**Proof Strategy:**\n1. Define the training dynamics as a flow ω(t) on the 1-cochain space, where ω(t)(i,j) represents the pairwise margin discrepancy at training step t.\n2. Decompose the time derivative dω/dt = d₀(φ) + d₁†(ψ) + h via the Hodge decomposition at each time step.\n3. Prove that the potential component d₀(φ) drives monotone decrease of a convex potential function (global convergence).\n4. Show that the solenoidal component d₁†(ψ) corresponds to cyclic oscillati",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cb6bb980",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:30:41.669258+00:00"
   },
   {
     "id": "fd_0223",
@@ -1561,10 +1422,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c159c7e4",
     "timestamp": "2026-05-16T02:14:30.279911+00:00"
   },
   {
@@ -1610,21 +1471,6 @@
     "source_exp_id": "a999e02b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T02:41:24.269211+00:00"
-  },
-  {
-    "id": "fd_0234",
-    "title": "Implementation Priorities",
-    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Minimization | Medium | High | None (self-contained) |\n| 5. Lower bounds | Medium | High | Direction 1 |\n| 2. Transducers | High | Very High | Product theorem |\n| 3. Neural correspondence | High | Very High | Product + minimization |\n| 4. LSE deformation | Very High | Transformative | All above |\n\n**Recommended next step**: Direction 1 (Minimization), as it provides the foundation for Directions 3 and 5, and is the most self-contained extension of the current work.",
-    "domains": [
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a999e02b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T02:41:24.299758+00:00"
   },
   {
     "id": "fd_0218",
@@ -1859,5 +1705,49 @@
     "source_exp_id": "7998d3b1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T04:31:45.457889+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Conjectural Theorem Statement",
+    "description": "```\ntheorem berggren_orbit_complete (a b c : ℤ) (h : IsPrimPyth a b c) :\n    ∃! w : List BerggrenGen, evalWord w rootTriple = (a, b, c)\n```",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "62116f58",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:35:08.463911+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "What's Missing",
+    "description": "- The descent algorithm is defined (via `berggrenInv`) but the well-foundedness of descent needs formal proof. Specifically: for any primitive triple with c > 5, exactly one of the three inverse transforms produces a triple with all entries positive and strictly smaller hypotenuse.\n- Uniqueness of the descent path requires showing that the three inverse transforms produce distinct results and at most one yields a valid primitive triple.\n- The key lemma needed: a \"sigma classification\" that determines, from the signs and parities of a − b, a + b relative to c, which branch of the tree the triple belongs to.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "62116f58",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:35:08.501440+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "What It Builds On",
+    "description": "- `berggren_generates_SL2_F3` (the mod-3 generation theorem)\n- `applyGen_euclid` (the Berggren-Euclid correspondence)\n- `det_euclidMatA`, `det_euclidMatC` (determinant structure)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "62116f58",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T04:35:08.526724+00:00"
   }
 ]

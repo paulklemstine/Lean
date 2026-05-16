@@ -1,379 +1,414 @@
 #!/usr/bin/env python3
 """
-Tropical RSA: Algorithms for Min-Plus Public Key Cryptography
+Tropical RSA Algorithms: Min-Plus Cryptographic Primitives
 
-Implements the core algorithms with full type hints, docstrings,
-and complexity analysis.
+Complete implementations of:
+1. Tropical matrix arithmetic (min-plus semiring)
+2. Tropical key generation, encryption, decryption
+3. Tropical Diffie-Hellman key exchange
+4. Tropical matrix factorization (brute-force search)
+5. Fast tropical matrix exponentiation (repeated squaring)
+
+All algorithms include docstrings, type hints, complexity analysis,
+and example usage.
 """
 
 import numpy as np
 from typing import Tuple, List, Optional
 from dataclasses import dataclass
+import time
 
 INF = float('inf')
 
 
-# ============================================================
-# Algorithm 1: Tropical Matrix Multiplication
-# Time: O(n³)   Space: O(n²)
-# ============================================================
+# =============================================================================
+# Core Tropical Arithmetic
+# =============================================================================
 
-def tropical_matrix_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+class TropicalMatrix:
     """
-    Tropical (min-plus) matrix multiplication.
-    
-    Computes C where C[i,j] = min_k (A[i,k] + B[k,j]).
-    
-    This is equivalent to composing shortest-path weights:
-    if A encodes 1-hop costs and B encodes 1-hop costs,
-    then C = A ⊗ B encodes the cheapest 2-hop paths.
-    
-    Time complexity: O(n³)
-    Space complexity: O(n²)
-    
-    Args:
-        A: n×n matrix with entries in ℝ ∪ {∞}
-        B: n×n matrix with entries in ℝ ∪ {∞}
-    
-    Returns:
-        C: n×n matrix where C[i,j] = min_k(A[i,k] + B[k,j])
-    
-    Example:
-        >>> A = np.array([[0, 3], [2, 0]], dtype=float)
-        >>> B = np.array([[0, 1], [4, 0]], dtype=float)
-        >>> tropical_matrix_multiply(A, B)
-        array([[0., 1.],
-               [2., 2.]])
-    """
-    n = A.shape[0]
-    assert A.shape == (n, n) and B.shape == (n, n), "Matrices must be square and same size"
-    
-    C = np.full((n, n), INF)
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                if A[i, k] != INF and B[k, j] != INF:
-                    C[i, j] = min(C[i, j], A[i, k] + B[k, j])
-    return C
+    An n×n matrix over the min-plus (tropical) semiring.
 
+    Operations:
+      - Tropical addition (⊕): entrywise min
+      - Tropical multiplication (⊗): (A⊗B)_{ij} = min_k(A_{ik} + B_{kj})
 
-# ============================================================
-# Algorithm 2: Tropical Matrix Power (Repeated Squaring)
-# Time: O(n³ log m)   Space: O(n²)
-# ============================================================
+    This is the algebraic structure underlying shortest-path computation
+    and tropical cryptography.
+    """
 
-def tropical_matrix_power(A: np.ndarray, m: int) -> np.ndarray:
-    """
-    Compute A^m in the tropical semiring using repeated squaring.
-    
-    Uses the binary representation of m to compute A^m in
-    O(log m) tropical matrix multiplications, each costing O(n³).
-    
-    Time complexity: O(n³ log m)
-    Space complexity: O(n²)
-    
-    Correctness: A^m[i,j] = weight of shortest m-edge path from i to j.
-    
-    Args:
-        A: n×n tropical matrix (adjacency weights)
-        m: non-negative integer exponent
-    
-    Returns:
-        A^m in the tropical semiring
-    """
-    n = A.shape[0]
-    assert m >= 0, "Exponent must be non-negative"
-    
-    # Identity: 0 on diagonal, inf elsewhere
-    result = np.full((n, n), INF)
-    np.fill_diagonal(result, 0)
-    
-    if m == 0:
+    def __init__(self, data: np.ndarray):
+        """Initialize from a numpy array. Use float('inf') for ∞."""
+        self.data = np.array(data, dtype=float)
+        self.n = self.data.shape[0]
+        assert self.data.shape == (self.n, self.n), "Matrix must be square"
+
+    @staticmethod
+    def identity(n: int) -> 'TropicalMatrix':
+        """
+        Tropical identity matrix: 0 on diagonal, ∞ off diagonal.
+
+        Time: O(n²), Space: O(n²)
+        """
+        I = np.full((n, n), INF)
+        np.fill_diagonal(I, 0)
+        return TropicalMatrix(I)
+
+    @staticmethod
+    def random(n: int, max_val: int = 100) -> 'TropicalMatrix':
+        """
+        Random tropical matrix with entries in {0, 1, ..., max_val}.
+
+        Time: O(n²), Space: O(n²)
+        """
+        return TropicalMatrix(np.random.randint(0, max_val + 1, (n, n)).astype(float))
+
+    def __matmul__(self, other: 'TropicalMatrix') -> 'TropicalMatrix':
+        """
+        Tropical matrix multiplication (⊗).
+
+        (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})
+
+        This computes shortest-path composition: the (i,j) entry is the
+        minimum cost of any 2-hop path from i to j through intermediate k.
+
+        Time: O(n³), Space: O(n²)
+        """
+        assert self.n == other.n
+        n = self.n
+        C = np.full((n, n), INF)
+        for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    val = self.data[i, k] + other.data[k, j]
+                    if val < C[i, j]:
+                        C[i, j] = val
+        return TropicalMatrix(C)
+
+    def power(self, k: int) -> 'TropicalMatrix':
+        """
+        Tropical matrix power via repeated multiplication.
+
+        A^k = A ⊗ A ⊗ ... ⊗ A (k times)
+
+        Key property: A^k[i][j] = cost of shortest k-hop path from i to j.
+
+        Time: O(k · n³), Space: O(n²)
+        """
+        result = TropicalMatrix.identity(self.n)
+        for _ in range(k):
+            result = self @ result
         return result
-    
-    base = A.copy()
-    while m > 0:
-        if m % 2 == 1:
-            result = tropical_matrix_multiply(result, base)
-        base = tropical_matrix_multiply(base, base)
-        m //= 2
-    
-    return result
+
+    def fast_power(self, k: int) -> 'TropicalMatrix':
+        """
+        Tropical matrix power via repeated squaring.
+
+        Uses the identity: A^(2m) = (A^m)^2, A^(2m+1) = A ⊗ (A^m)^2
+
+        Time: O(n³ · log k), Space: O(n²)
+
+        This is the efficient algorithm used in practice for tropical
+        cryptography, where exponents can be very large.
+        """
+        if k == 0:
+            return TropicalMatrix.identity(self.n)
+        if k == 1:
+            return TropicalMatrix(self.data.copy())
+
+        result = TropicalMatrix.identity(self.n)
+        base = TropicalMatrix(self.data.copy())
+        while k > 0:
+            if k % 2 == 1:
+                result = base @ result
+            base = base @ base
+            k //= 2
+        return result
+
+    def __eq__(self, other: 'TropicalMatrix') -> bool:
+        """Check equality of tropical matrices."""
+        return np.array_equal(self.data, other.data)
+
+    def __repr__(self) -> str:
+        rows = []
+        for i in range(self.n):
+            row = []
+            for j in range(self.n):
+                if self.data[i, j] == INF:
+                    row.append("  ∞")
+                else:
+                    row.append(f"{self.data[i, j]:3.0f}")
+            rows.append("[" + " ".join(row) + "]")
+        return "\n".join(rows)
 
 
-# ============================================================
-# Algorithm 3: Tropical Key Generation
-# Time: O(n³ log a)   Space: O(n²)
-# ============================================================
+# =============================================================================
+# Tropical Cryptographic Primitives
+# =============================================================================
 
 @dataclass
 class TropicalPublicKey:
-    """Public key for tropical cryptosystem."""
-    G: np.ndarray      # Generator matrix
-    pub: np.ndarray     # G^a (tropical power)
-    n: int              # Matrix dimension
+    """Public key: (G, G^a) where G is the generator and a is the secret exponent."""
+    generator: TropicalMatrix
+    public_value: TropicalMatrix
 
 
 @dataclass
 class TropicalPrivateKey:
-    """Private key for tropical cryptosystem."""
-    secret: int         # Secret exponent a
+    """Private key: the secret exponent a."""
+    exponent: int
+
+
+@dataclass
+class TropicalCiphertext:
+    """Ciphertext: (G^r, (G^a)^r ⊗ M) where r is random."""
+    ephemeral: TropicalMatrix
+    masked: TropicalMatrix
 
 
 @dataclass
 class TropicalKeyPair:
     """A complete key pair."""
-    public: TropicalPublicKey
-    private: TropicalPrivateKey
+    public_key: TropicalPublicKey
+    private_key: TropicalPrivateKey
 
 
-def tropical_keygen(n: int, bound: int = 255, seed: Optional[int] = None) -> TropicalKeyPair:
+def keygen(n: int, max_val: int = 100, max_exp: int = 20) -> TropicalKeyPair:
     """
     Generate a tropical key pair.
-    
-    1. Sample a random n×n generator matrix G with entries in {0, ..., bound}.
-    2. Sample a random secret exponent a.
-    3. Compute public key G^a using repeated squaring.
-    
-    Time complexity: O(n³ log a)
-    Space complexity: O(n²)
-    
+
+    Algorithm:
+    1. Generate a random n×n tropical matrix G (the generator).
+    2. Choose a random secret exponent a.
+    3. Compute the public value G^a using fast exponentiation.
+
     Args:
-        n: matrix dimension (security parameter)
-        bound: maximum entry value
-        seed: random seed for reproducibility
-    
+        n: Matrix dimension
+        max_val: Maximum entry value in the generator
+        max_exp: Maximum secret exponent
+
     Returns:
-        TropicalKeyPair with public and private components
+        TropicalKeyPair containing public and private keys
+
+    Time: O(n³ · log a), Space: O(n²)
     """
-    rng = np.random.RandomState(seed)
-    
-    G = rng.randint(0, bound + 1, (n, n)).astype(float)
-    a = rng.randint(2, 2**20)  # Secret exponent
-    
-    pub = tropical_matrix_power(G, a)
-    
-    return TropicalKeyPair(
-        public=TropicalPublicKey(G=G, pub=pub, n=n),
-        private=TropicalPrivateKey(secret=a)
-    )
+    G = TropicalMatrix.random(n, max_val)
+    a = np.random.randint(1, max_exp + 1)
+    G_a = G.fast_power(a)
+    pk = TropicalPublicKey(generator=G, public_value=G_a)
+    sk = TropicalPrivateKey(exponent=a)
+    return TropicalKeyPair(public_key=pk, private_key=sk)
 
 
-# ============================================================
-# Algorithm 4: Tropical Encryption
-# Time: O(n³ log r)   Space: O(n²)
-# ============================================================
-
-@dataclass
-class TropicalCiphertext:
-    """Ciphertext for tropical encryption."""
-    ephemeral: np.ndarray   # G^r
-    masked: np.ndarray      # (G^a)^r ⊗ M
-
-
-def tropical_encrypt(pk: TropicalPublicKey, message: np.ndarray,
-                      seed: Optional[int] = None) -> TropicalCiphertext:
+def encrypt(pk: TropicalPublicKey, message: TropicalMatrix,
+            randomness: Optional[int] = None) -> TropicalCiphertext:
     """
-    Encrypt a message matrix under a tropical public key.
-    
-    ElGamal-style encryption:
-    1. Sample random r
-    2. Compute ephemeral key G^r
-    3. Compute shared secret (G^a)^r
-    4. Mask message: ciphertext = shared_secret ⊗ M
-    
-    Time complexity: O(n³ log r)
-    Space complexity: O(n²)
-    
+    Encrypt a message matrix using tropical ElGamal.
+
+    Algorithm:
+    1. Choose random r (or use provided randomness).
+    2. Compute ephemeral = G^r.
+    3. Compute shared = (G^a)^r = G^(ar).
+    4. Compute masked = shared ⊗ M.
+
     Args:
-        pk: recipient's public key
-        message: n×n message matrix
-        seed: random seed
-    
+        pk: Recipient's public key (G, G^a)
+        message: Plaintext matrix M
+        randomness: Optional deterministic randomness r
+
     Returns:
-        TropicalCiphertext
+        TropicalCiphertext = (G^r, G^(ar) ⊗ M)
+
+    Time: O(n³ · log r), Space: O(n²)
     """
-    rng = np.random.RandomState(seed)
-    r = rng.randint(2, 2**20)
-    
-    ephemeral = tropical_matrix_power(pk.G, r)
-    shared = tropical_matrix_power(pk.pub, r)  # (G^a)^r
-    masked = tropical_matrix_multiply(shared, message)
-    
+    r = randomness if randomness is not None else np.random.randint(1, 20)
+    ephemeral = pk.generator.fast_power(r)
+    shared = pk.public_value.fast_power(r)  # (G^a)^r
+    masked = shared @ message
     return TropicalCiphertext(ephemeral=ephemeral, masked=masked)
 
 
-def tropical_compute_shared_secret(sk: TropicalPrivateKey,
-                                     ephemeral: np.ndarray) -> np.ndarray:
+def compute_shared_secret(sk: TropicalPrivateKey,
+                          ciphertext: TropicalCiphertext) -> TropicalMatrix:
     """
-    Compute the shared secret from the ephemeral key.
-    
-    The receiver computes (G^r)^a, which equals (G^a)^r = G^(ar)
-    by the power multiplication law.
-    
+    Compute the shared secret from the private key and ciphertext.
+
+    Algorithm:
+    1. Compute (G^r)^a = G^(ra) = G^(ar) = shared secret.
+
+    This matches the sender's (G^a)^r by commutativity of tropical powers.
+
     Args:
-        sk: receiver's private key
-        ephemeral: G^r from ciphertext
-    
+        sk: Recipient's private key (exponent a)
+        ciphertext: The ciphertext containing ephemeral = G^r
+
     Returns:
-        Shared secret matrix G^(ar)
+        The shared secret matrix G^(ar)
+
+    Time: O(n³ · log a), Space: O(n²)
     """
-    return tropical_matrix_power(ephemeral, sk.secret)
+    return ciphertext.ephemeral.fast_power(sk.exponent)
 
 
-# ============================================================
-# Algorithm 5: Tropical Factorization Attack (Brute Force)
-# Time: O(B^(2n²) · n³)   Space: O(n²)
-# ============================================================
+# =============================================================================
+# Tropical Diffie-Hellman Key Exchange
+# =============================================================================
 
-def tropical_brute_force_factor(K: np.ndarray, bound: int = 3) -> Optional[Tuple[np.ndarray, np.ndarray]]:
+def diffie_hellman_exchange(n: int, max_val: int = 50) -> Tuple[TropicalMatrix, TropicalMatrix]:
     """
-    Attempt to factor K = A ⊗ B by brute force.
-    
-    This is intentionally exponential to demonstrate the hardness
-    of the tropical factorization problem.
-    
-    Time complexity: O(bound^(2n²) · n³)  — EXPONENTIAL
-    Space complexity: O(n²)
-    
+    Simulate a tropical Diffie-Hellman key exchange.
+
+    Protocol:
+    1. Alice and Bob agree on public generator G.
+    2. Alice chooses secret a, publishes G^a.
+    3. Bob chooses secret b, publishes G^b.
+    4. Alice computes (G^b)^a = G^(ba).
+    5. Bob computes (G^a)^b = G^(ab).
+    6. G^(ab) = G^(ba) by commutativity of exponents.
+
+    Returns:
+        (alice_shared, bob_shared) — should be equal!
+
+    Time: O(n³ · (log a + log b)), Space: O(n²)
+    """
+    G = TropicalMatrix.random(n, max_val)
+    a = np.random.randint(2, 15)
+    b = np.random.randint(2, 15)
+
+    # Public values
+    G_a = G.fast_power(a)
+    G_b = G.fast_power(b)
+
+    # Shared secrets
+    alice_shared = G_b.fast_power(a)  # (G^b)^a = G^(ba)
+    bob_shared = G_a.fast_power(b)    # (G^a)^b = G^(ab)
+
+    return alice_shared, bob_shared
+
+
+# =============================================================================
+# Tropical Matrix Factorization (Attack Algorithm)
+# =============================================================================
+
+def brute_force_factorization(target: TropicalMatrix,
+                              generator: TropicalMatrix,
+                              max_exp: int = 50) -> Optional[int]:
+    """
+    Brute-force attack: recover secret exponent s from (G, G^s).
+
+    Algorithm:
+    For each candidate exponent k = 1, 2, ..., max_exp:
+        Compute G^k and check if G^k == target.
+
+    This is the naive attack that tropical cryptography must resist.
+    For large dimensions and exponents, this becomes infeasible.
+
     Args:
-        K: target matrix to factor
-        bound: search space for entries
-    
+        target: The public value G^s
+        generator: The generator matrix G
+        max_exp: Maximum exponent to try
+
     Returns:
-        (A, B) such that A ⊗ B = K, or None if not found
+        The recovered exponent, or None if not found
+
+    Time: O(max_exp · n³ · log max_exp), Space: O(n²)
     """
-    n = K.shape[0]
-    if n > 3 or bound > 4:
-        print(f"  [Skipping: search space too large ({bound}^{2*n*n})]")
-        return None
-    
-    from itertools import product as cartesian_product
-    
-    values = list(range(bound + 1))
-    count = 0
-    
-    # Enumerate all possible A matrices
-    for a_entries in cartesian_product(values, repeat=n*n):
-        A = np.array(a_entries, dtype=float).reshape(n, n)
-        for b_entries in cartesian_product(values, repeat=n*n):
-            B = np.array(b_entries, dtype=float).reshape(n, n)
-            count += 1
-            product = tropical_matrix_multiply(A, B)
-            if np.allclose(product, K):
-                return A, B
-    
+    for k in range(1, max_exp + 1):
+        if generator.fast_power(k) == target:
+            return k
     return None
 
 
-# ============================================================
-# Algorithm 6: Shortest Path via Tropical Powers
-# Time: O(n⁴) for all-pairs shortest paths
-# ============================================================
+# =============================================================================
+# Benchmarking
+# =============================================================================
 
-def tropical_all_pairs_shortest_paths(A: np.ndarray) -> np.ndarray:
+def benchmark_operations(sizes: List[int] = [2, 4, 8, 16, 32]) -> None:
     """
-    Compute all-pairs shortest paths using tropical matrix powers.
-    
-    The tropical closure A* = I ⊕ A ⊕ A² ⊕ A³ ⊕ ... ⊕ A^(n-1)
-    gives shortest-path distances. For an n-vertex graph,
-    any shortest path uses at most n-1 edges.
-    
-    Time complexity: O(n⁴) — O(n) matrix multiplications of O(n³)
-    Space complexity: O(n²)
-    
-    This is equivalent to the Floyd-Warshall algorithm.
-    
-    Args:
-        A: n×n adjacency matrix (edge weights, inf = no edge)
-    
-    Returns:
-        D: n×n distance matrix where D[i,j] = shortest path from i to j
+    Benchmark tropical matrix operations across different dimensions.
+
+    Measures:
+    - Matrix multiplication time
+    - Fast exponentiation time
+    - Key generation time
     """
-    n = A.shape[0]
-    
-    # Start with identity
-    result = np.full((n, n), INF)
-    np.fill_diagonal(result, 0)
-    
-    power = A.copy()
-    for _ in range(n - 1):
-        # result = result ⊕ power (entry-wise min)
-        result = np.minimum(result, power)
-        power = tropical_matrix_multiply(A, power)
-    
-    result = np.minimum(result, power)
-    return result
+    print(f"{'n':>4} {'Mul (ms)':>10} {'Pow-10 (ms)':>12} {'Pow-100 (ms)':>13}")
+    print("-" * 45)
+
+    for n in sizes:
+        A = TropicalMatrix.random(n, 100)
+        B = TropicalMatrix.random(n, 100)
+
+        # Multiplication
+        t0 = time.time()
+        for _ in range(10):
+            _ = A @ B
+        t_mul = (time.time() - t0) / 10 * 1000
+
+        # Power 10
+        t0 = time.time()
+        for _ in range(10):
+            _ = A.fast_power(10)
+        t_pow10 = (time.time() - t0) / 10 * 1000
+
+        # Power 100
+        t0 = time.time()
+        for _ in range(10):
+            _ = A.fast_power(100)
+        t_pow100 = (time.time() - t0) / 10 * 1000
+
+        print(f"{n:4d} {t_mul:10.2f} {t_pow10:12.2f} {t_pow100:13.2f}")
 
 
-# ============================================================
-# Algorithm 7: Key Space Size Computation
-# ============================================================
-
-def key_space_size(n: int, bound: int) -> int:
-    """
-    Compute the size of the tropical key space.
-    
-    For n×n matrices with entries in {0, ..., bound},
-    the key space has (bound+1)^(n²) elements.
-    
-    Args:
-        n: matrix dimension
-        bound: maximum entry value
-    
-    Returns:
-        (bound+1)^(n²)
-    """
-    return (bound + 1) ** (n * n)
-
-
-def security_bits(n: int, bound: int) -> float:
-    """
-    Compute the security level in bits.
-    
-    security = log₂((bound+1)^(n²)) = n² · log₂(bound+1)
-    
-    Args:
-        n: matrix dimension
-        bound: maximum entry value
-    
-    Returns:
-        Number of security bits
-    """
-    import math
-    return n * n * math.log2(bound + 1)
-
+# =============================================================================
+# Main: Run Examples
+# =============================================================================
 
 if __name__ == "__main__":
-    print("Tropical RSA Algorithms")
-    print("=" * 40)
-    
-    # Test key generation
-    kp = tropical_keygen(4, bound=9, seed=42)
-    print(f"\nGenerated key pair:")
-    print(f"  Dimension: {kp.public.n}")
-    print(f"  Secret exponent: {kp.private.secret}")
-    
-    # Test encryption
-    M = np.array([[1, 2, 3, 4],
-                   [5, 6, 7, 8],
-                   [9, 10, 11, 12],
-                   [13, 14, 15, 16]], dtype=float)
-    
-    ct = tropical_encrypt(kp.public, M, seed=123)
-    shared_receiver = tropical_compute_shared_secret(kp.private, ct.ephemeral)
-    shared_sender = tropical_matrix_power(kp.public.pub, 
-                                           # We need to know r, which is internal
-                                           # This demonstrates the agreement property
-                                           1)  # placeholder
-    
-    print(f"\n  Shared secret computed by receiver:")
-    print(f"    (First row): {shared_receiver[0]}")
-    
-    # Security analysis
-    print(f"\nSecurity Analysis:")
-    for n in [4, 8, 16, 32]:
-        bits = security_bits(n, 255)
-        print(f"  n={n:2d}, bound=255: {bits:.0f} bits of security")
-    
-    print("\nAll algorithms tested successfully!")
+    np.random.seed(42)
+
+    print("=" * 60)
+    print("TROPICAL CRYPTOGRAPHY: Algorithm Demonstrations")
+    print("=" * 60)
+    print()
+
+    # Key exchange
+    print("--- Diffie-Hellman Key Exchange ---")
+    alice_shared, bob_shared = diffie_hellman_exchange(4)
+    print(f"Shared secrets match: {alice_shared == bob_shared}")
+    print()
+
+    # Encryption
+    print("--- Encryption/Decryption ---")
+    kp = keygen(3, max_val=10, max_exp=8)
+    M = TropicalMatrix.random(3, 10)
+    ct = encrypt(kp.public_key, M, randomness=5)
+    shared = compute_shared_secret(kp.private_key, ct)
+    sender_shared = kp.public_key.public_value.fast_power(5)
+    print(f"Shared secrets match: {shared == sender_shared}")
+    print()
+
+    # Brute-force attack
+    print("--- Brute-Force Attack ---")
+    G = TropicalMatrix.random(3, 10)
+    secret = 7
+    target = G.fast_power(secret)
+    recovered = brute_force_factorization(target, G, max_exp=20)
+    print(f"True secret: {secret}, Recovered: {recovered}")
+    print()
+
+    # Benchmarks
+    print("--- Performance Benchmarks ---")
+    benchmark_operations([2, 4, 8, 16])
+    print()
+
+    # Fast vs naive power
+    print("--- Fast Exponentiation Verification ---")
+    G = TropicalMatrix.random(4, 20)
+    for k in [1, 5, 10, 20, 50]:
+        naive = G.power(k)
+        fast = G.fast_power(k)
+        print(f"  G^{k:2d}: naive == fast? {naive == fast}")
+    print()
+
+    print("All algorithm demonstrations complete!")
