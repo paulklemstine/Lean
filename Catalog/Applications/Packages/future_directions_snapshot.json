@@ -1181,21 +1181,6 @@
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
   },
   {
-    "id": "fd_0205",
-    "title": "Summary: Research Roadmap",
-    "description": "| Priority | Direction | Key Theorem | Dependencies |\n|----------|-----------|-------------|--------------|\n| 1 | Finite Products | `finProd_universal` | Binary product (done) |\n| 2 | Termination | `product_reduction_terminates` | Product + well-founded induction |\n| 3 | Pressure Bounds | `pressure_product_bound` | Product + real analysis |\n| 4 | Automata Sync | `product_word_bound` | Product + combinatorics |\n| 5 | Security Comp | `composed_security_bound` | Dual (min) product |\n\nEach direction builds directly on the categorical product infrastructure established in this work. The key insight is that invariant-bearing systems form a category with enough structure (products, identity, composition, associativity) to support systematic compositional reasoning across thermodynamics, automata ",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a015a16c",
-    "consumed_by_exp_id": "2b33dcea",
-    "timestamp": "2026-05-15T08:01:09.762727+00:00"
-  },
-  {
     "id": "fd_0193",
     "title": "1. Rank-Sensitive Exact Kernel Cardinality",
     "description": "**Goal**: Strengthen the bound `|ker(M)| ≤ q^(p-1)` to the exact formula `|ker(M)| = q^(p - rank(M))`.\n\n**Theorem statement**:\n```lean\ntheorem card_mulVec_kernel_exact\n    {q m p : ℕ} [Fact q.Prime]\n    (M : Matrix (Fin m) (Fin p) (ZMod q)) :\n    Fintype.card {r : Fin p → ZMod q // M.mulVec r = 0}\n      = q ^ (p - Module.finrank (ZMod q) (Matrix.mulVecLin M).range)\n```\n\n**Strategy**: Use `Matrix.mulVecLin` to interpret M as a linear map, apply rank-nullity to get `dim(ker) = p - dim(range)`, then use `Module.card_eq_pow_finrank` on the kernel submodule. The main technical challenge is establishing `Fintype` on the kernel of `mulVecLin` and connecting the subtype formulation to the Submodule.ker formulation.\n\n**Impact**: Gives exact acceptance probabilities for Freivalds depending on the ra",
@@ -1300,6 +1285,21 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
+  },
+  {
+    "id": "fd_0234",
+    "title": "Hypothesis",
+    "description": "Extend the lexical cost model from presence/absence to semantic distance: define $L(i)$ not as a scalar but as a point in a tropical module, representing the semantic position of lexical item $i$. Semantic drift is then a tropical translation in this module. The key conjecture:\n\n*Semantic change preserves tropical convexity: if a set of related meanings forms a tropically convex set in the ancestor language, its images under semantic drift remain tropically convex in descendant languages.*",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "1cdf4e96",
+    "consumed_by_exp_id": "085cfca9",
+    "timestamp": "2026-05-15T20:09:21.809405+00:00"
   },
   {
     "id": "fd_0233",
@@ -1531,5 +1531,93 @@
     "source_exp_id": "a999e02b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T02:41:24.299758+00:00"
+  },
+  {
+    "id": "fd_0218",
+    "title": "1. Tropical Expanders and Extractor-Quality Orbit Families",
+    "description": "**Hypothesis:** There exist explicit families of tropical matrices whose orbits satisfy the conditional extraction property with near-optimal parameters (ε ≈ 2^{-Ω(n)}).\n\n**Approach:**\n- Define a notion of *tropical expander*: a finite set S of n×n tropical matrices such that for any subset A ⊆ S with |A| ≥ δ|S|, the set {A·G : G ∈ S} has significantly more distinct elements than A.\n- Prove that tropical expansion implies bounded prefix fibers, which by our `conditional_minEntropy_from_fiber` theorem implies conditional extraction.\n- Construct explicit tropical expanders using Cayley graphs of matrix groups over the tropical semiring, analogous to classical expander constructions from SL(2, F_p).\n\n**Key Lemma to Formalize:**\n> If S is a (K, ε)-tropical expander, then `maxPrefixFiberCard S ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b33dcea",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:24:38.297946+00:00"
+  },
+  {
+    "id": "fd_0219",
+    "title": "2. Prime-Power Tropical PRGs and Arithmetic Sparsification",
+    "description": "**Hypothesis:** Restricting the orbit to prime-power indices {G^(p^j) : j = 0, 1, 2, ...} yields stronger extraction parameters than the full orbit, due to arithmetic independence properties.\n\n**Approach:**\n- Extend the existing `tropical_hash_prime_power_amplification` theorem to show that prime-power orbits have *decorrelated* prefix fibers.\n- Prove that for the subsequence G^1, G^p, G^{p²}, ..., the conditional extraction error decreases geometrically: ε_j ≤ ε₀ · r^j for some r < 1.\n- This would give a tropical PRG with output length p^T from seed length log|S|, exponentially better than the general orbit.\n\n**Key Theorem Target:**\n> For prime-power subsequences, the statistical distance bound improves from (T+1)ε to O(ε/(1-r)), independent of T.\n\n**Cross-Domain Connections:** Analytic n",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b33dcea",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:24:38.313535+00:00"
+  },
+  {
+    "id": "fd_0220",
+    "title": "3. Tropical One-Way Functions from Matrix Powering",
+    "description": "**Hypothesis:** The function f(G, k) = G^{⊗k} (tropical matrix k-th power) is computationally one-way under plausible complexity assumptions, even though the algebraic structure is different from classical number-theoretic one-way functions.\n\n**Approach:**\n- Define tropical one-wayness: given G^{⊗k}, it is hard to recover (G, k).\n- Prove that inverting tropical matrix powering is at least as hard as the tropical shortest path problem in a suitable sense.\n- Show that if tropical matrix powering is one-way, then the orbit hash construction yields a *cryptographically secure* PRG (not just information-theoretic).\n- Formalize the reduction: any efficient distinguisher for the orbit hash output implies an efficient inverter for tropical powering.\n\n**Proof Strategy:**\n> Use the hybrid argument f",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b33dcea",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:24:38.327603+00:00"
+  },
+  {
+    "id": "fd_0221",
+    "title": "4. Hardness-vs-Randomness in Min-Plus Algebra",
+    "description": "**Hypothesis:** If tropical matrix powering requires super-polynomial time, then BPP ⊆ DTIME(2^{n^{o(1)}}) — i.e., tropical hardness implies derandomization.\n\n**Approach:**\n- Formalize the Nisan-Wigderson generator framework in the tropical setting.\n- Prove that the orbit hash construction, when instantiated with a hard tropical function, produces a PRG that fools all polynomial-time tests.\n- The key ingredient is our `tropical_orbit_prg` theorem, which provides the information-theoretic foundation; the computational version requires additionally that the extraction error is negligible.\n- Develop a tropical analogue of the Impagliazzo-Wigderson theorem: if some problem in tropical E (exponential time with tropical operations) requires circuits of size 2^{Ω(n)}, then BPP = P.\n\n**Key Formali",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b33dcea",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:24:38.341258+00:00"
+  },
+  {
+    "id": "fd_0222",
+    "title": "5. Pseudorandom Symbolic Dynamics from Tropical Semigroup Actions",
+    "description": "**Hypothesis:** The orbit trace (G^0, G^1, ..., G^T) of a tropical matrix, viewed as a symbolic dynamical system, produces pseudorandom trajectories after extraction — connecting ergodic theory to derandomization.\n\n**Approach:**\n- Model the tropical orbit as a symbolic dynamical system on a finite alphabet (after hashing): the shift map on the space of output sequences.\n- Prove that if the tropical matrix has *tropical spectral gap* (the second-largest tropical eigenvalue is strictly less than the largest), then the orbit satisfies mixing properties.\n- Show that mixing implies the conditional extraction property with exponentially decaying ε, yielding exponentially strong PRGs.\n- Formalize the equivalence: tropical spectral gap ⟺ rapid mixing ⟺ good extraction.\n\n**Key Theorem Target:**\n> I",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b33dcea",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:24:38.355147+00:00"
   }
 ]
