@@ -213,10 +213,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "dc69d6dd",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5cfffd08",
     "timestamp": "2026-05-15T01:46:31.350359+00:00"
   },
   {
@@ -456,21 +456,6 @@
     "timestamp": "2026-05-16T13:37:24.014796+00:00"
   },
   {
-    "id": "fd_0243",
-    "title": "Lower bound on factor rank",
-    "description": ": Use the rectangle covering argument. The support of the Hamming distance matrix (entries ≤ threshold t) may require exponentially many rectangles.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edf517ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:42:08.381149+00:00"
-  },
-  {
     "id": "fd_0261",
     "title": "Termination",
     "description": ": Since `Fin n → Fin n → ℝ` is finite-dimensional and each step increases the number of zeros, the process terminates in at most `n²-2n+2` steps.\n\n### Cross-Domain Significance\nThis theorem directly connects to our permutation coupling work: it shows that the Birkhoff polytope (set of doubly stochastic matrices) equals the convex hull of permutation matrices. Combined with our `permPlan_is_transportPlan`, this means:\n- Every transport plan between uniform measures is a convex combination of permutation plans\n- The Wasserstein distance for uniform measures can be computed as a minimum over permutation costs\n- This bridges optimal transport to combinatorial optimization (assignment problem)\n\n---\n\n## Direction 4: Hungarian Algorithm Correctness\n\n### Theorem Statement\nFormalize the Hungarian a",
@@ -530,20 +515,6 @@
     "timestamp": "2026-05-16T19:15:45.179177+00:00"
   },
   {
-    "id": "fd_0243",
-    "title": "Round-by-round analysis",
-    "description": ": At each round i, the prover sends a univariate polynomial sᵢ(xᵢ) of degree ≤ d. The verifier checks sᵢ(0) + sᵢ(1) against the expected partial sum, then replaces xᵢ with a random rᵢ.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.194343+00:00"
-  },
-  {
     "id": "fd_0244",
     "title": "Inductive soundness",
     "description": ": If the prover cheats in round i, they must send a polynomial sᵢ that disagrees with the true partial sum polynomial. By Schwartz–Zippel (d=1 univariate case), the verifier catches this with probability at least 1 − d/q.",
@@ -588,23 +559,6 @@
     "timestamp": "2026-05-16T20:05:47.074705+00:00"
   },
   {
-    "id": "fd_0260",
-    "title": "Complexity",
-    "description": ": The reconstruction should be polynomial (likely O(n⁴)).\n\n### Dependencies\n\n- `IsFiniteMetric` (proved)\n- Tree reconstruction infrastructure (as a subcase)\n- Shortest-path algorithms for SP graphs\n\n### Cross-Domain Connection\n\n**Electrical networks**: Series-parallel circuits are the simplest non-tree networks. Resistance distances in SP circuits satisfy specific metric constraints. Formalizing their reconstruction connects to circuit analysis and reliability theory.\n\n---\n\n## Direction 5: Tropical Grassmannian Characterization\n\n### Theorem Statement\n\n```lean\n/-- Four-point metrics correspond to points in the tropical\nGrassmannian Gr(2,n), providing an algebraic characterization\nof tree realizability. -/\ntheorem four_point_iff_tropical_grassmannian {n : ℕ}\n    (D : Matrix (Fin n) (Fin n) ℝ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e1bdecc7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:05:47.232507+00:00"
-  },
-  {
     "id": "fd_0261",
     "title": "Define the tropical Grassmannian",
     "description": "Gr(2,n) as the set of distance matrices satisfying tropical Plücker relations.",
@@ -619,35 +573,6 @@
     "timestamp": "2026-05-16T20:05:47.250050+00:00"
   },
   {
-    "id": "fd_0248",
-    "title": "Direction 2",
-    "description": "(KKL/influence) — deep consequences for understanding arithmetic complexity",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "22fbf57d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:36:35.014003+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Karp's theorem",
-    "description": "completes the spectral picture for tropical algebra.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2204ee24",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:43:29.945388+00:00"
-  },
-  {
     "id": "fd_0253",
     "title": "Wasserstein quotients",
     "description": "extends the invariance theorem to full group-theoretic generality.",
@@ -660,81 +585,6 @@
     "source_exp_id": "2204ee24",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T20:43:29.985505+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "1-Lipschitz aggregation",
-    "description": "(`tropicalAgg_lipschitz_of_pointwise`): The tropical proof-combinator `T_w(x) = max_i(w_i + x_i)` is non-expansive in the sup norm.",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7c012798",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:47:30.797963+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "2-Lipschitz selection",
-    "description": "(`tropicalSelect_lipschitz`): Joint perturbation of scores and values in hard attention changes output by at most `2ε`.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7c012798",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:47:30.814557+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "ReLU stability",
-    "description": "(`tropicalReluAgg_lipschitz_of_pointwise`): Composing with ReLU threshold preserves the 1-Lipschitz bound.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7c012798",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:47:30.830420+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Compositional stability",
-    "description": "(`tropicalAgg_comp_lipschitz`): Layered tropical networks remain 1-Lipschitz at any depth.\n\n---\n\n## Direction 1: Tropical Residuation and Linear Logic\n\n### Statement\nExtend the residuation adjunction into a full **residuated lattice** structure on tropical proof terms, connecting to Girard's linear logic.\n\n### Key Theorem Target\n```lean\n/-- The tropical semiring (ℝ, max, +) forms a residuated lattice. -/\nstructure TropicalResiduatedLattice where\n  carrier : Type*\n  join : carrier → carrier → carrier   -- max\n  mult : carrier → carrier → carrier   -- +\n  resid : carrier → carrier → carrier  -- tropical implication\n  adjunction : ∀ a b c, mult a b ≤ c ↔ b ≤ resid a c\n\n/-- Associativity of tropical composition. -/\ntheorem tropicalAgg_assoc {n m p : ℕ}\n    (W₁ : Fin (n+1) → Fin (m+1) → ℝ)\n    ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7c012798",
-    "consumed_by_exp_id": "be71e654",
-    "timestamp": "2026-05-16T20:47:30.864971+00:00"
-  },
-  {
-    "id": "fd_0260",
-    "title": "Tropical Algebra Lead",
-    "description": ": Formalize max-plus semiring theory, connecting to Mathlib's `Tropical` type.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7c012798",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:47:30.882604+00:00"
   },
   {
     "id": "fd_0261",
@@ -808,20 +658,6 @@
     "timestamp": "2026-05-16T21:01:29.455234+00:00"
   },
   {
-    "id": "fd_0243",
-    "title": "Prove the general Schwartz–Zippel over product sets",
-    "description": "Extend our Schwartz–Zippel from K^n to arbitrary products S₁ × ... × Sₙ. This is the non-vanishing backbone.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.472573+00:00"
-  },
-  {
     "id": "fd_0244",
     "title": "Coefficient extraction",
     "description": "The Nullstellensatz is a *coefficient extraction* principle: the nonvanishing of a specific coefficient forces nonvanishing of the polynomial on the product set. This can be proved by induction on n, dividing f by ∏_{s ∈ S₁}(X₁ - s) and using the remainder.",
@@ -850,48 +686,6 @@
     "timestamp": "2026-05-16T21:01:29.510304+00:00"
   },
   {
-    "id": "fd_0246",
-    "title": "Formalize the slice rank",
-    "description": "For a tensor T : A × B × C → K, the slice rank is the minimum number of \"slices\" (rank-1 terms in one variable) needed to decompose T.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.528331+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "Upper bound on slice rank of the diagonal tensor",
-    "description": "The key lemma: the slice rank of the tensor δ(x, y, z) = [x + y + z = 0] over GF(3)^n is bounded above by 3 · C(2n/3, n/3) ≈ 3 · 2.756^n.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.547980+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Lower bound from cap set size",
-    "description": "If A is a cap set (no three-term AP), then the slice rank of δ restricted to A × A × A is at least |A|.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.567242+00:00"
-  },
-  {
     "id": "fd_0249",
     "title": "Combine",
     "description": "|A| ≤ slice rank ≤ 3 · 2.756^n.\n\n### Infrastructure Needed\n- Tensor product spaces and slice rank definition\n- Polynomial method for bounding slice rank (the key innovation of CLP)\n- Dimension counting for \"degree ≤ d\" polynomial spaces\n- Multilinear algebra over finite fields\n\n### Cross-Domain Impact\nThe cap set method connects to:\n- Sunflower lemma improvements\n- Matrix multiplication complexity\n- Communication complexity lower bounds\n- Quantum information theory (entanglement)\n\n---\n\n## Research Team Structure\n\nEach direction should be pursued by a team combining:\n- **Formalization expertise:** Familiarity with Lean 4, Mathlib, and proof automation\n- **Mathematical depth:** Understanding of the polynomial method and its applications\n- **Cross-domain knowledge:** Connections to coding the",
@@ -908,34 +702,6 @@
     "source_exp_id": "1646adc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T21:01:29.588451+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Months 1–3:",
-    "description": "Direction 1 (Quantitative Kakeya) — most incremental, validates the infrastructure.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.606439+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Months 2–5:",
-    "description": "Direction 3 (Reed–Muller) — high practical value, reuses existing lemmas directly.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.624105+00:00"
   },
   {
     "id": "fd_0253",
@@ -966,32 +732,127 @@
     "timestamp": "2026-05-16T21:01:29.710311+00:00"
   },
   {
-    "id": "fd_0255",
-    "title": "Direction 1",
-    "description": "(Lax monads / rate-distortion) — Highest impact, most direct extension of current work.",
+    "id": "fd_0258",
+    "title": "Prove the eigen-equation",
+    "description": "by showing `T(v)_i = v_i + λ*` using path extension arguments.\n\n### Required New Definitions\n\n- `tropicalMatPower`: k-th tropical power of A (use `tropicalMatMul` iterated).\n- `cycleMean`: weight of a cycle divided by its length.\n- `maxCycleMean`: supremum of cycle means over all simple cycles.\n- `tropicalPotential`: longest-path potential vector.\n\n### Anticipated Blockers\n\n- Formalizing \"all simple cycles\" requires working with `Finset` over permutation-like structures. May need to use `List` with deduplication.\n- The eigenvector construction requires showing the potential is finite, which needs irreducibility.\n- Path-counting arguments may require significant combinatorial infrastructure.\n\n### Enabling Lemmas\n\n- `tropicalMatMap_comp` (composition = tropical multiplication) directly gives",
     "domains": [
-      "Bridges"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f60e599f",
+    "source_exp_id": "477ce9c1",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:07:25.016491+00:00"
+    "timestamp": "2026-05-16T21:09:47.891425+00:00"
   },
   {
-    "id": "fd_0256",
-    "title": "Direction 4",
-    "description": "(Program semantics) — Most practically applicable, connects to existing PL research.",
+    "id": "fd_0261",
+    "title": "Identify minimal typeclasses",
+    "description": ": The proof of `tropicalMatMap_monotone` uses only:\n   - `add_le_add_left` (monotonicity of addition): `CovariantClass α α (· + ·) (· ≤ ·)`\n   - `Finset.sup'_le` and `Finset.le_sup'`: require `SemilatticeSup α`\n   - `LinearOrder` implies `SemilatticeSup`.",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Cryptography",
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f60e599f",
+    "source_exp_id": "477ce9c1",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:07:25.031223+00:00"
+    "timestamp": "2026-05-16T21:09:47.978698+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Port all 9 theorems",
+    "description": "to the general setting.\n\n### Required New Definitions\n\n- Generic `tropicalMatMapGen` over `α`.\n- Possibly a `TropicalSemiring` class bundling the right assumptions.\n\n### Anticipated Blockers\n\n- The `Finset.sup'_add` lemma (used in `tropicalMatMap_add_const`) requires `OrderedAddCommMonoid` or similar.\n- The nonexpansiveness theorem uses `|a - b|` which requires a notion of absolute value — may need `LinearOrderedAddCommGroup`.\n- Different typeclasses for different theorems: monotonicity needs less than nonexpansiveness.\n\n### Enabling Lemmas\n\n- All current proofs — the refactoring is a direct abstraction of the `ℝ`-specific proofs.\n\n### Cross-Domain Impact\n\n- **Valuation theory**: tropical algebra over non-archimedean fields.\n- **Abstract interpretation**: lattice-based program analysis.\n- ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "477ce9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:09:47.997432+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Define `MonotoneCircuit`",
+    "description": ": inductive type with AND (min) and OR (max) gates, no negation.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "477ce9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:09:48.012139+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Define `evalTropicalCircuit`",
+    "description": ": recursive evaluation where AND = min, OR = max.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "477ce9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:09:48.026668+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Extend to quantitative bounds",
+    "description": ": if inputs are in `[a, b]` instead of `{0, 1}`, bound the output range.\n\n### Required New Definitions\n\n- `MonotoneCircuit n m`: circuit with n inputs, m outputs, AND/OR gates.\n- `evalTropicalCircuit`: evaluation function.\n- `circuitDepth`: depth of the circuit.\n\n### Anticipated Blockers\n\n- Defining circuits with shared sub-expressions (DAGs vs trees) — trees are simpler but may not capture all circuits.\n- The extension to quantitative bounds requires interpolation between the Boolean and tropical regimes.\n\n### Enabling Lemmas\n\n- `tropicalMatMap_monotone` handles the matrix case; circuits generalize this.\n- The existing `bool_and_as_tropical_max` from the catalog provides gate-level correctness.\n- `tropical_and_bound` provides quantitative bounds per gate.\n\n### Cross-Domain Impact\n\n- **Cir",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "477ce9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:09:48.059246+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Define the discounted tropical operator",
+    "description": ": `T_γ(x)_i = max_j(A_{ij} + γ·x_j)`.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "477ce9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:09:48.074041+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "Extract convergence rate",
+    "description": "from the contraction constant.\n\n### Required New Definitions\n\n- `discountedTropicalMap`: `T_γ(x)_i = max_j(A_{ij} + γ·x_j)`.\n- Integration with Mathlib's metric space and contraction mapping infrastructure.\n\n### Anticipated Blockers\n\n- The map `T_γ` is γ-contracting but acts on `Fin n → ℝ` with `ℓ∞` norm — need to show this is a complete metric space (it is, as a product of complete spaces).\n- Connecting with Mathlib's `ContractingWith` may require some API work.\n\n### Enabling Lemmas\n\n- `tropicalMatMap_nonexpansive_coord` — the undiscounted version. The discounted version multiplies the bound by γ.\n- `tropicalMatMap_monotone` — monotonicity is inherited by the discounted operator.\n\n### Cross-Domain Impact\n\n- **Reinforcement learning**: certified value function bounds for MDPs.\n- **Robust c",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "477ce9c1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:09:48.122316+00:00"
   },
   {
     "id": "fd_0113",
@@ -1662,35 +1523,6 @@
     "timestamp": "2026-05-16T13:12:11.734256+00:00"
   },
   {
-    "id": "fd_0236",
-    "title": "Research Team Organization",
-    "description": "Each direction can be pursued independently by a small team (2–3 researchers). We recommend:\n\n- **Direction 1** as the immediate next step (builds directly on current formalization).\n- **Directions 3 and 4** as parallel efforts (algorithm extraction and algebraic generalization).\n- **Directions 2 and 5** as longer-term goals requiring more mathematical infrastructure.\n\nAll directions share the common infrastructure of tropical polynomial evaluation and dominance, which is now formally verified.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "41f0f930",
-    "consumed_by_exp_id": "477ce9c1",
-    "timestamp": "2026-05-16T13:12:11.751217+00:00"
-  },
-  {
-    "id": "fd_0243",
-    "title": "Key Technical Challenge",
-    "description": "The zeros of exponential polynomials ∑ a_k exp(α_k z) form a quasi-periodic set. The density of zeros per unit imaginary length is (α_max - α_min)/(2π) by a theorem of Langer. Formalizing this would be a significant contribution.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8b829eb9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T14:28:58.161141+00:00"
-  },
-  {
     "id": "fd_0244",
     "title": "Broader Impact",
     "description": "This direction connects arithmetic thermodynamics to:\n- Information theory: S(E) is the rate function for the entropy of integers at energy level E\n- Optimization: the Legendre transform is central to convex optimization and duality theory\n- Economics: analogues of Gibbs measures appear in discrete choice theory (logit models)",
@@ -1718,19 +1550,5 @@
     "source_exp_id": "52b15fb5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T19:35:36.681776+00:00"
-  },
-  {
-    "id": "fd_0246",
-    "title": "Proposed Lean Type Signature",
-    "description": "```lean\ntheorem blahut_arimoto_convergence\n    {α β : Type*} [Fintype α] [Fintype β]\n    (μ : FinProbDist α) (d : α → β → ℝ) (s : ℝ) (hs : 0 < s)\n    (W₀ : Channel α β) :\n    ∀ ε > 0, ∃ N : ℕ, ∀ n ≥ N,\n      |lagrangianObjective μ d s (blahutArimotoStep^[n] μ d s W₀) -\n       lagrangianDual μ d s| < ε\n```",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "473914a2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T20:06:14.612117+00:00"
   }
 ]

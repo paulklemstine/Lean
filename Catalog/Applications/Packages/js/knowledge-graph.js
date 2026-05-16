@@ -138,14 +138,18 @@
         // ─── Layout constants (gravitational solar-system feel) ───
         const CLUSTER_RADIUS = 280;      // Distance of cluster centroids from center
         const NODE_SPACING = 65;          // Spacing between nodes within a cluster
-        const K_SPRING = 0.004;          // Spring constant for provenance edges
+        const K_SPRING = 0;              // No continuous spring — edges are lazy
         const REST_LENGTH = 180;          // Rest length for provenance springs
-        const G_CONST = 0.3;             // Gravitational constant between nodes
-        const SOFTENING = 80;             // Softening distance to prevent singularities
-        const MIN_REPULSION_DIST = 55;    // Bumper collision radius
+        const G_INTRA = 0.25;            // Intra-cluster attraction (same domain nodes pull together)
+        const G_INTER = 0.08;            // Inter-cluster repulsion (different domains push apart)
+        const SOFTENING = 120;            // Softening distance (larger = gentler at close range)
+        const MIN_REPULSION_DIST = 60;    // Bumper collision radius
         const DAMPING = 0.992;            // Very low friction — floaty
         const NODE_RADIUS = 22;
         const GALAXY_ROTATION = 0.00012;  // Slow overall galaxy spin
+        const EDGE_PULSE_INTERVAL = 5.0;  // Seconds between edge contraction pulses
+        const EDGE_PULSE_STRENGTH = 0.5;  // Max impulse per pulse
+        const EDGE_PULSE_DECAY = 2.0;     // Seconds for pulse to fade out
         const ORBITAL_SPEED = 0.15;       // Initial tangential velocity factor
         const MAX_VELOCITY = 1.5;         // Cap speed to prevent ejections
 
@@ -228,7 +232,71 @@
             }
         });
 
+        // Track last pulse time for periodic edge contraction
+        let lastEdgePulse = -EDGE_PULSE_INTERVAL;  // fire immediately on first frame
+        let edgePulseDomain = null;  // which domain is currently pulsing
+        let edgePulseIndex = 0;     // cycle index through domains with edges
+        // Pre-compute which domains have edges
+        const domainsWithEdges = (() => {
+            const set = new Set();
+            graphEdges.forEach(e => {
+                const a = nodeMap[e.source], b = nodeMap[e.target];
+                if (a && b) {
+                    set.add(a.clusterDomain || a.primary_domain || 'Bridges');
+                    set.add(b.clusterDomain || b.primary_domain || 'Bridges');
+                }
+            });
+            return [...set];
+        })();
+        // Per-edge randomized contraction targets for current pulse
+        let edgePulseTargets = new Map();  // edge key → { strength, restLength }
+
         function simulate() {
+            // ─── Edge contraction pulse: cycle through clusters one at a time ───
+            const pulseAge = time - lastEdgePulse;
+            if (pulseAge >= EDGE_PULSE_INTERVAL) {
+                // Advance to next domain with edges
+                if (domainsWithEdges.length > 0) {
+                    edgePulseIndex = (edgePulseIndex + 1) % domainsWithEdges.length;
+                    edgePulseDomain = domainsWithEdges[edgePulseIndex];
+                }
+                lastEdgePulse = time;
+                edgePulseTargets.clear();
+                // Randomize per-edge contraction for edges touching this domain
+                graphEdges.forEach(e => {
+                    const a = nodeMap[e.source], b = nodeMap[e.target];
+                    if (!a || !b) return;
+                    const aDomain = a.clusterDomain || a.primary_domain || 'Bridges';
+                    const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
+                    if (aDomain !== edgePulseDomain && bDomain !== edgePulseDomain) return;
+                    const key = e.source + '→' + e.target;
+                    edgePulseTargets.set(key, {
+                        strength: (0.2 + Math.random() * 0.8) * EDGE_PULSE_STRENGTH,
+                        restLength: REST_LENGTH * (0.3 + Math.random() * 0.5),
+                    });
+                });
+            }
+            // Apply decaying pulse force to provenance edges in current domain
+            const pulseStrength = pulseAge < EDGE_PULSE_DECAY
+                ? (1 - pulseAge / EDGE_PULSE_DECAY)  // linear fade 1→0
+                : 0;
+            if (pulseStrength > 0) {
+                graphEdges.forEach(e => {
+                    const a = nodeMap[e.source], b = nodeMap[e.target];
+                    if (!a || !b) return;
+                    const key = e.source + '→' + e.target;
+                    const target = edgePulseTargets.get(key);
+                    if (!target) return;
+                    const dx = b.x - a.x, dy = b.y - a.y;
+                    const d = Math.sqrt(dx * dx + dy * dy) || 1;
+                    const f = target.strength * (d - target.restLength) / d;
+                    const fx = dx * f * pulseStrength;
+                    const fy = dy * f * pulseStrength;
+                    a.vx += fx; a.vy += fy;
+                    b.vx -= fx; b.vy -= fy;
+                });
+            }
+
             // ─── Galaxy rotation: slowly rotate entire scene ───
             const cosG = Math.cos(GALAXY_ROTATION), sinG = Math.sin(GALAXY_ROTATION);
             graphNodes.forEach(n => {
@@ -249,19 +317,7 @@
                 c.x = cx; c.y = cy;
             });
 
-            // ─── Provenance spring edges (gentle binding) ───
-            graphEdges.forEach(e => {
-                const a = nodeMap[e.source], b = nodeMap[e.target];
-                if (!a || !b) return;
-                const dx = b.x - a.x, dy = b.y - a.y;
-                const d = Math.sqrt(dx * dx + dy * dy) || 1;
-                const f = K_SPRING * (d - REST_LENGTH);
-                const fx = (dx / d) * f, fy = (dy / d) * f;
-                a.vx += fx; a.vy += fy;
-                b.vx -= fx; b.vy -= fy;
-            });
-
-            // ─── N-body gravitational attraction ───
+            // ─── N-body: intra-cluster attraction, inter-cluster repulsion ───
             for (let i = 0; i < graphNodes.length; i++) {
                 const a = graphNodes[i];
                 if (a === dragNode) continue;
@@ -277,25 +333,30 @@
                     const d2 = dx * dx + dy * dy;
                     const d = Math.sqrt(d2) || 1;
 
-                    // Gravitational attraction: F = G * m1 * m2 / (r² + softening²)
-                    // Softening prevents singularities at close range
-                    const force = G_CONST * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
-                    const fx = (dx / d) * force;
-                    const fy = (dy / d) * force;
-                    a.vx += fx; a.vy += fy;
-                    b.vx -= fx; b.vy -= fy;
+                    if (aDomain === bDomain) {
+                        // ── Same cluster: gravitational attraction ──
+                        const force = G_INTRA * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
+                        const fx = (dx / d) * force;
+                        const fy = (dy / d) * force;
+                        a.vx += fx; a.vy += fy;
+                        b.vx -= fx; b.vy -= fy;
+                    } else {
+                        // ── Different clusters: repulsion ──
+                        // Soft repulsion that falls off with distance
+                        const force = G_INTER * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
+                        const fx = (dx / d) * force;
+                        const fy = (dy / d) * force;
+                        a.vx -= fx; a.vy -= fy;
+                        b.vx += fx; b.vy += fy;
+                    }
 
                     // Pinball bumper collision: bounce with extra energy
                     if (d < MIN_REPULSION_DIST) {
-                        // Collision normal (a → b)
                         const nx = dx / d, ny = dy / d;
-                        // Relative velocity of a toward b along collision axis
                         const relVx = a.vx - b.vx, relVy = a.vy - b.vy;
-                        const relVn = relVx * nx + relVy * ny;  // positive = approaching
-                        // Only bounce if approaching
+                        const relVn = relVx * nx + relVy * ny;
                         if (relVn > 0) {
-                            // Elastic collision with restitution > 1 = bumper energy boost
-                            const BOUNCE = 1.6;  // pinball bumper factor (>1 = adds energy)
+                            const BOUNCE = 1.6;
                             const totalMass = a.mass + b.mass;
                             const impulseA = (1 + BOUNCE) * relVn * b.mass / totalMass;
                             const impulseB = (1 + BOUNCE) * relVn * a.mass / totalMass;
@@ -304,7 +365,6 @@
                             b.vx += impulseB * nx;
                             b.vy += impulseB * ny;
                         }
-                        // Always push apart to prevent overlap
                         const overlap = MIN_REPULSION_DIST - d;
                         if (overlap > 0) {
                             const pushForce = overlap * 0.5;
