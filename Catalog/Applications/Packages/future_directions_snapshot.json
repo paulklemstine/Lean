@@ -882,35 +882,6 @@
     "timestamp": "2026-05-15T22:12:11.220894+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "Direction 2",
-    "description": "(tropical coding regions) — novel mathematical connection; leverages existing tropical catalog.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "52442f6a",
-    "consumed_by_exp_id": "97c6ba31",
-    "timestamp": "2026-05-15T22:35:47.036763+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "Applications:",
-    "description": "- Parameter selection for tropical cryptographic schemes\n- Concrete security estimates for tropical hash functions\n- Comparison with lattice-based and code-based parameter sizes",
-    "domains": [
-      "Tropical",
-      "Cryptography"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "da61b560",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T22:45:18.154706+00:00"
-  },
-  {
     "id": "fd_0229",
     "title": "Verify examples",
     "description": "computationally with `#eval` or Python.",
@@ -923,20 +894,6 @@
     "source_exp_id": "cd76a6a7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:22:05.156916+00:00"
-  },
-  {
-    "id": "fd_0230",
-    "title": "Write applications",
-    "description": "that demonstrate the theorem's value.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cd76a6a7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:22:05.167977+00:00"
   },
   {
     "id": "fd_0231",
@@ -967,34 +924,6 @@
     "source_exp_id": "86db7d4d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T00:01:36.121253+00:00"
-  },
-  {
-    "id": "fd_0238",
-    "title": "States precise conjectures",
-    "description": "as formal Lean theorem statements with `sorry`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1185fa15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:05.345336+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "Tests computationally",
-    "description": "with Python implementations on concrete examples.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1185fa15",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T00:04:05.356334+00:00"
   },
   {
     "id": "fd_0241",
@@ -1073,22 +1002,6 @@
     "source_exp_id": "ea1c2257",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T16:17:39.939717+00:00"
-  },
-  {
-    "id": "fd_0114",
-    "title": "Direction 2: Adjunctions Between Research Theories",
-    "description": "**Hypothesis:** Certain pairs of research theories are connected by *adjoint* morphism pairs `(F, G)` where `F : T → U` and `G : U → T` satisfy a Galois-connection-like property: `F(x) ≤_U y ⟺ x ≤_T G(y)` in the invariant preorder. Such adjunctions would characterize *optimal* cross-domain translations.\n\n**Proof Strategy:**\n1. Define `TheoryAdjunction (F : TheoryHom T U) (G : TheoryHom U T)` encoding the Galois connection.\n2. Prove that adjunctions compose (from the standard proof for Galois connections).\n3. Show that if `(F, G)` is an adjunction, then `F` preserves *exact* lower bounds (not just existential ones): if `T.Inv x = n`, then `U.Inv (F x) ≥ n` with a tight characterization via `G`.\n4. Construct a concrete adjunction between `HeightTheory` and `CellTheory` if the invariant funct",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "4f490452",
-    "timestamp": "2026-05-14T16:17:39.942722+00:00"
   },
   {
     "id": "fd_0117",
@@ -1728,40 +1641,6 @@
     "timestamp": "2026-05-15T23:09:09.398477+00:00"
   },
   {
-    "id": "fd_0238",
-    "title": "Direction 4: Low-Degree Testing over Finite Grids",
-    "description": "**Hypothesis**: The Schwartz–Zippel bound implies that low-degree polynomials are \"locally testable\" — one can distinguish a true low-degree polynomial from a function that is far from low-degree by checking a few random points.\n\n**Proof Strategy**:\n1. If f agrees with a degree-d polynomial on > d/|S| fraction of a random subset S, then f IS that polynomial (by Schwartz–Zippel contrapositive).\n2. Formalize the self-corrector: given an oracle that agrees with a low-degree polynomial on most inputs, construct the correct polynomial.\n3. Connect to locally decodable codes and PCPs.\n\n**Key Theorem**:\n```\ntheorem low_degree_test_soundness :\n    ∀ f : Fin n → K → K, (∃ p : MvPolynomial (Fin n) K, p.totalDegree ≤ d ∧\n    Fintype.card {x | eval x p = f x} > (1 - d/|K|) * |K|^n) →\n    ∀ x, eval x p ",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.410388+00:00"
-  },
-  {
-    "id": "fd_0239",
-    "title": "Direction 5: Derandomization via Hitting Set Generators",
-    "description": "**Hypothesis**: If explicit hitting set generators for degree-d polynomials exist, then PIT ∈ P. Schwartz–Zippel quantifies exactly what a hitting set must hit.\n\n**Proof Strategy**:\n1. Define: a hitting set H ⊆ K^n is a set where every nonzero polynomial of degree ≤ d has a nonzero evaluation.\n2. By Schwartz–Zippel, any set of size > d · |K|^{n-1} hit by random sampling is a hitting set with high probability.\n3. Formalize the Kabanets–Impagliazzo connection: explicit hitting sets ↔ circuit lower bounds.\n4. State the formal derandomization hypothesis.\n\n**Key Definition and Theorem**:\n```\ndef IsHittingSet (H : Finset (Fin n → K)) (d : ℕ) : Prop :=\n    ∀ f : MvPolynomial (Fin n) K, f ≠ 0 → f.totalDegree ≤ d →\n    ∃ x ∈ H, eval x f ≠ 0\n\ntheorem random_hitting_set :\n    Fintype.card K > d → ∃ x",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "94c243f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-15T23:09:09.422863+00:00"
-  },
-  {
     "id": "fd_0241",
     "title": "Direction 7: Certified Randomized Linear Algebra",
     "description": "**Hypothesis**: Freivalds' algorithm generalizes to certified verification of other linear algebra operations: determinant, rank, matrix inverse, eigenvalues.\n\n**Proof Strategy**:\n1. Verify det(A) = d by checking A·adj(A) = d·I via Freivalds.\n2. Verify rank(A) = r by checking the kernel dimension via random projections.\n3. Verify A⁻¹ = B by checking A·B = I via Freivalds.\n4. Each reduces to matrix multiplication verification.\n\n**Key Theorem**:\n```\ntheorem verified_inverse (A B : Matrix (Fin n) (Fin n) K) (hAB : A * B ≠ 1) :\n    Fintype.card {r | (A * B).mulVec r = r} ≤ |K|^{n-1}\n```\n\n**Impact**: Complete certified randomized linear algebra toolkit. Applicable to verified numerical computation and certified symbolic algebra systems.\n\n**Cross-domain connections**: Numerical linear algebra, s",
@@ -1935,5 +1814,84 @@
     "source_exp_id": "cb6bb980",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T23:30:41.692385+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "1. Right Adjoint Existence Criterion",
+    "description": "**Hypothesis:** A theory morphism `F : T → U` admits a right adjoint if and only if the image of the invariant function `U.Inv ∘ F.toFun` satisfies a \"downward completeness\" condition: for every `y ∈ U.Carrier`, the set `{ T.Inv x | U.Inv(F(x)) ≤ U.Inv(y) }` has a maximum.\n\n**Proof Strategy:**\n- Formalize a `HasRightAdjoint` predicate\n- Show the condition is equivalent to the existence of a map `G` satisfying the Galois biconditional\n- Connect to Mathlib's `GaloisConnection.l_sup` and order-completeness results\n- Apply to characterize exactly when catalog morphisms (e.g., height → dimension) admit right adjoints\n\n**Cross-Domain Connection:** This parallels the Freyd adjoint functor theorem in category theory and the existence criterion for best abstract domains in abstract interpretation.",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4f490452",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:04:33.344420+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "2. Bicategory of Research Theories with Adjunctions as 2-Cells",
+    "description": "**Hypothesis:** Research theories, theory morphisms, and adjunctions form a locally thin bicategory where:\n- Objects = Research theories\n- 1-cells = Theory morphisms\n- 2-cells = Adjunctions (an adjunction `F ⊣ G` defines a 2-cell from `F` to `G`)\n\n**Proof Strategy:**\n- Extend `ResearchTheoryBicategory.lean` by adding adjunctions as a new 2-cell type\n- Prove the interchange law for adjunction composition\n- Show that the identity adjunction is the unit 2-cell\n- Formalize the connection to Mathlib's `CategoryTheory.Adjunction`\n\n**Why This Matters:** This would provide a systematic framework for comparing different translations between theories. Two morphisms related by a 2-cell (adjunction) means one is provably \"tighter\" than the other at preserving invariant information.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4f490452",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:04:33.358090+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "3. No-Go Criterion: Invariant Growth Rate Obstruction",
+    "description": "**Hypothesis:** If theory `T` has invariant growth rate `Θ(f(n))` (meaning the invariant achieves values proportional to `f(n)` on carrier elements of \"size\" `n`) and theory `U` has growth rate `Θ(g(n))`, then an adjunction `F ⊣ G` with `F : T → U` requires `f` and `g` to be asymptotically comparable. Specifically, if `g` grows superlinearly faster than `f`, no morphism `G : U → T` can satisfy both `G.monotone_inv` and the counit inequality.\n\n**Proof Strategy:**\n- Formalize invariant growth rate as a property of a theory restricted to elements below size `n`\n- Prove that the Height-Cell impossibility generalizes: any pair with `g(n)/f(n) → ∞` admits no adjunction\n- Construct restricted adjunctions on sub-theories where growth rates match\n- Apply to classify all adjunction-compatible pairs ",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4f490452",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:04:33.370635+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "4. Concrete Adjunction: VC Theory ⊣ Covering Number Theory",
+    "description": "**Hypothesis:** There exists a natural adjunction between a theory of VC dimension and a theory of covering numbers, where:\n- `F` maps a hypothesis class to its covering number spectrum\n- `G` maps a covering number bound to the \"richest\" hypothesis class compatible with that bound\n\n**Proof Strategy:**\n- Define `VCTheory : ResearchTheory` with carrier = finite hypothesis classes and Inv = VC dimension\n- Define `CoveringTheory : ResearchTheory` with carrier = covering number functions and Inv = log of covering number at scale 1\n- The Sauer-Shelah lemma provides the left adjoint's monotonicity: `VC(H) ≤ log₂(covering(H))`\n- The right adjoint is the maximal class with at most `n` covering number\n- Prove the Galois biconditional using classical results in learning theory\n\n**Cross-Domain Connect",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4f490452",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:04:33.382691+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "5. Monad/Comonad Structure from Adjunction Composition",
+    "description": "**Hypothesis:** The composition `G ∘ F` of an adjunction `F ⊣ G` defines a monad on the source theory, and `F ∘ G` defines a comonad on the target theory. The monad's multiplication `μ` corresponds to the idempotence of the round-trip (which we already proved: `Inv(G(F(G(F(x))))) = Inv(G(F(x)))`), and the comonad's comultiplication encodes \"refinement of approximation.\"\n\n**Proof Strategy:**\n- Define `TheoryMonad` as the triple `(G ∘ F, unit, μ)` where `μ` is given by the idempotence\n- Prove the monad laws using the unit/counit equations\n- Show that the Kleisli category of this monad describes \"theory elements enriched with translation certificates\"\n- Connect to iterative theory compression: applying the monad repeatedly stabilizes, corresponding to the fixed point of an abstract interpreta",
+    "domains": [
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4f490452",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T00:04:33.396922+00:00"
   }
 ]
