@@ -626,20 +626,6 @@
     "timestamp": "2026-05-15T20:38:18.916506+00:00"
   },
   {
-    "id": "fd_0219",
-    "title": "Finite-dimensional spectral theorem",
-    "description": ": Eigenvalue decomposition for real symmetric matrices on `Fin n`.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9093673a",
-    "consumed_by_exp_id": "43a72392",
-    "timestamp": "2026-05-15T20:42:44.426054+00:00"
-  },
-  {
     "id": "fd_0234",
     "title": "Is tropical rank NP-hard to approximate within any constant factor?",
     "description": "Known: exact computation is NP-hard. Unknown: approximation complexity.",
@@ -707,10 +693,10 @@
       "MachineLearning"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0db1bd89",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7606a9d",
     "timestamp": "2026-05-15T22:01:06.651798+00:00"
   },
   {
@@ -1007,6 +993,34 @@
     "source_exp_id": "56965cb0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T02:49:27.038788+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Forward",
+    "description": ": Use `exists_orthogonal_diagonalization` to write $A = QDQ^T$. Since all eigenvalues are nonneg, $D = \\text{diag}(\\sqrt{\\lambda_i})^2$. Set $B = \\text{diag}(\\sqrt{\\lambda_i}) Q^T$.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43a72392",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:10:49.673449+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Backward",
+    "description": ": If $A = B^T B$, then $\\langle v, Av \\rangle = \\langle v, B^T B v \\rangle = \\|Bv\\|^2 \\geq 0$.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43a72392",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T03:10:49.684933+00:00"
   },
   {
     "id": "seed_052",
