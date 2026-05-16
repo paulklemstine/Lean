@@ -765,6 +765,221 @@
     "timestamp": "2026-05-16T20:47:30.939622+00:00"
   },
   {
+    "id": "fd_0240",
+    "title": "Formalize the dimension of bounded-degree polynomial spaces",
+    "description": "The space of polynomials of total degree < d in n variables over K has dimension C(d+n-1, n). This is a combinatorial identity about the number of monomials, requiring careful formalization of `Finsupp.antidiagonal` or explicit bijection with weak compositions.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.416442+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Linear algebra over finite fields",
+    "description": "If |E| < dim(polynomials of degree < q), then the evaluation map has a nonzero kernel — giving a polynomial vanishing on E. This requires formalizing the rank-nullity theorem for finite-dimensional vector spaces over K applied to the evaluation map.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.434905+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Bridge to Dvir",
+    "description": "Apply `no_low_degree_polynomial_vanishing_on_kakeya` to get the contradiction, yielding the cardinality lower bound.\n\n### Impact\nThis makes the Kakeya bound *quantitative* and *explicit*, enabling computational lower bounds in randomness extraction and data structures.\n\n### Hypotheses to Validate\n- The dimension formula C(d+n-1, n) for degree < d polynomials in n variables should be derivable from Mathlib's finsupp combinatorics.\n- The evaluation map `MvPolynomial (Fin n) K →ₗ[K] (E → K)` should be constructible using MvPolynomial.leval or eval as a linear map.\n\n---\n\n## Direction 2: Finite-Field Nikodym Theorem\n\n### Goal\nProve the Nikodym analogue of Dvir's theorem:\n\n**Definition.** A *Nikodym set* E ⊆ K^n is a set such that for every point x ∈ K^n, there exists a line through x that lies ",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.455234+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Prove the general Schwartz–Zippel over product sets",
+    "description": "Extend our Schwartz–Zippel from K^n to arbitrary products S₁ × ... × Sₙ. This is the non-vanishing backbone.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.472573+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Coefficient extraction",
+    "description": "The Nullstellensatz is a *coefficient extraction* principle: the nonvanishing of a specific coefficient forces nonvanishing of the polynomial on the product set. This can be proved by induction on n, dividing f by ∏_{s ∈ S₁}(X₁ - s) and using the remainder.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.489920+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Applications",
+    "description": "The Combinatorial Nullstellensatz immediately yields:\n   - Chevalley–Warning theorem\n   - Davenport–Halberstam bound\n   - Zero-sum theorems (Erdős–Ginzburg–Ziv)\n   - Permanent lower bounds\n   - Graph coloring bounds\n\n### Infrastructure Needed\n- Division of multivariate polynomials by products of linear factors (or reduction modulo ideal)\n- Coefficient extraction lemmas for MvPolynomial\n- The general product-set Schwartz–Zippel lemma\n\n---\n\n## Direction 5: Cap Set and Slice Rank Methods\n\n### Goal\nBuild toward a formalization of the Croot–Lev–Pach / Ellenberg–Gijswijt cap set bound:\n\n**Theorem (CLP/EG, 2016–2017).** The maximum size of a subset of GF(3)^n with no three-term arithmetic progression is at most O(2.756^n).\n\n### Approach\nThis requires developing the *slice rank* method, which is a",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.510304+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Formalize the slice rank",
+    "description": "For a tensor T : A × B × C → K, the slice rank is the minimum number of \"slices\" (rank-1 terms in one variable) needed to decompose T.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.528331+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Upper bound on slice rank of the diagonal tensor",
+    "description": "The key lemma: the slice rank of the tensor δ(x, y, z) = [x + y + z = 0] over GF(3)^n is bounded above by 3 · C(2n/3, n/3) ≈ 3 · 2.756^n.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.547980+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Lower bound from cap set size",
+    "description": "If A is a cap set (no three-term AP), then the slice rank of δ restricted to A × A × A is at least |A|.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.567242+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Combine",
+    "description": "|A| ≤ slice rank ≤ 3 · 2.756^n.\n\n### Infrastructure Needed\n- Tensor product spaces and slice rank definition\n- Polynomial method for bounding slice rank (the key innovation of CLP)\n- Dimension counting for \"degree ≤ d\" polynomial spaces\n- Multilinear algebra over finite fields\n\n### Cross-Domain Impact\nThe cap set method connects to:\n- Sunflower lemma improvements\n- Matrix multiplication complexity\n- Communication complexity lower bounds\n- Quantum information theory (entanglement)\n\n---\n\n## Research Team Structure\n\nEach direction should be pursued by a team combining:\n- **Formalization expertise:** Familiarity with Lean 4, Mathlib, and proof automation\n- **Mathematical depth:** Understanding of the polynomial method and its applications\n- **Cross-domain knowledge:** Connections to coding the",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.588451+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Months 1–3:",
+    "description": "Direction 1 (Quantitative Kakeya) — most incremental, validates the infrastructure.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.606439+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Months 2–5:",
+    "description": "Direction 3 (Reed–Muller) — high practical value, reuses existing lemmas directly.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.624105+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Months 3–6:",
+    "description": "Direction 4 (Nullstellensatz) — opens the widest range of applications.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.676904+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Months 4–8:",
+    "description": "Direction 2 (Nikodym) — deepens the geometric theory.",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.694113+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Months 6–12:",
+    "description": "Direction 5 (Cap sets) — the most ambitious, requiring substantial new infrastructure.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1646adc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T21:01:29.710311+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -1309,6 +1524,23 @@
     "source_exp_id": "51691e39",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Direction 2: Block-Diagonal Additivity",
+    "description": "**Hypothesis:** For block-diagonal matrices $A \\oplus B$ (with $\\infty$ in cross-blocks), factor rank is additive:\n\n$$\\text{tropFactorRank}(A \\oplus B) = \\text{tropFactorRank}(A) + \\text{tropFactorRank}(B)$$\n\n**Proof strategy:**\n- **Upper bound** ($\\leq$): Concatenate factorizations of $A$ and $B$, embedding each into the larger index set with $\\infty$ padding. This is straightforward.\n- **Lower bound** ($\\geq$): Show that any rank-1 matrix in a factorization of $A \\oplus B$ whose support intersects both blocks forces finite cross-block entries, contradicting the $\\infty$ structure. Therefore each rank-1 term belongs to at most one block, and the terms partition into those serving $A$ and those serving $B$.\n\n**Impact:** This creates a reusable theorem schema for computing factor rank of st",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "64a1fefb",
+    "consumed_by_exp_id": "bffc2558",
+    "timestamp": "2026-05-16T09:33:50.685886+00:00"
   },
   {
     "id": "fd_0240",
