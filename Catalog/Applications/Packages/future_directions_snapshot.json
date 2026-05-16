@@ -459,10 +459,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ab93ccb9",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3a206eb",
     "timestamp": "2026-05-16T03:21:48.915149+00:00"
   },
   {
@@ -512,20 +512,6 @@
     "source_exp_id": "63028e3e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T06:53:19.059190+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Construct extractor:",
-    "description": "Use tropical matrix multiplication as the extraction function: h(x) = threshold(A ⊗ x) where A is a carefully chosen tropical matrix and threshold converts to bits.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63028e3e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T06:53:19.162932+00:00"
   },
   {
     "id": "fd_0256",
@@ -590,21 +576,6 @@
     "timestamp": "2026-05-16T07:11:31.800180+00:00"
   },
   {
-    "id": "fd_0240",
-    "title": "Show that tropPow is computable",
-    "description": "by a polynomial-size tropical circuit",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:11:31.903887+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Prove that the hardness transfer extends",
     "description": "to the homomorphic setting\n\n### Estimated Difficulty\n**High.** Tropical homomorphic encryption is largely unexplored.\n\n### Cross-Domain Impact\n- **Secure computation**: Enable private shortest-path queries, private scheduling\n- **Cloud computing**: Outsource optimization problems without revealing data\n\n---\n\n## Direction 7: Experimental Cryptanalysis Benchmarks\n\n### Hypothesis\nThe hardness transfer theorem can guide the design of benchmark instances for tropical cryptanalysis.\n\n### Concrete Steps",
@@ -632,20 +603,6 @@
     "source_exp_id": "19523f4c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:22:06.383708+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Gaussian parametrization",
-    "description": ": Every primitive Pythagorean triple (a,b,c) corresponds to a Gaussian integer z = a + bi with |z|² = c². The Berggren generators act as Möbius transformations on z/|z|, lifting to SL₂(ℤ[i]).",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "19523f4c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T07:22:06.468944+00:00"
   },
   {
     "id": "fd_0256",
@@ -704,22 +661,6 @@
     "source_exp_id": "816ac9ca",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:34:17.392110+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Show the infimum is achieved for k ≤ n",
-    "description": "by a pigeonhole argument on the vertices visited in an optimal walk.\n\n### Cross-Domain Significance\n\nThis connects tropical linear algebra to graph theory (shortest cycle means), dynamical systems (Lyapunov exponents of max-plus linear systems), and operations research (cycle time of discrete-event systems). The subadditivity theorem proved in this project is the formal kernel that makes this possible.\n\n---\n\n## Direction 4: Hungarian Algorithm Correctness\n\n### Theorem Statement\n\nThe Hungarian algorithm correctly solves the assignment problem in O(n³) time: given a cost matrix C, it finds a permutation σ minimizing ∑ᵢ C(i, σ(i)).\n\n### Lean Type Signature\n\n```lean\nnoncomputable def hungarianAlgorithm {n : ℕ} (C : Matrix (Fin n) (Fin n) ℝ) :\n    Fin n ≃ Fin n := by\n  sorry -- algorithmic defi",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "816ac9ca",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:34:17.433210+00:00"
   },
   {
     "id": "fd_0256",
@@ -800,20 +741,6 @@
     "source_exp_id": "09f78c38",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:05:20.487200+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Reduce",
-    "description": "to the Schwartz–Zippel bound over finite grids (not the full field, but subsets).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:05:20.534901+00:00"
   },
   {
     "id": "fd_0246",
@@ -906,20 +833,6 @@
     "timestamp": "2026-05-16T09:18:23.003359+00:00"
   },
   {
-    "id": "fd_0252",
-    "title": "Define tropical polytopes",
-    "description": "as the tropical convex hull of a set of points in $(\\text{WithTop}\\ \\mathbb{Z})^n$.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b18b8608",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:18:23.014527+00:00"
-  },
-  {
     "id": "fd_0254",
     "title": "Prove Yannakakis-type theorems",
     "description": ": the minimum number of facets in an extended formulation equals the nonneg rank, which for tropical polytopes equals the factor rank.",
@@ -946,34 +859,6 @@
     "source_exp_id": "e8932e8e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:20:05.398841+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "Direction 1",
-    "description": "(mutual information) — Builds directly on `tropicalEntropy` and `entropyDefect`, moderate infrastructure.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e8932e8e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:20:05.413507+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Direction 4",
-    "description": "(categorical semantics) — Most ambitious, requires category theory infrastructure, but yields the most general framework.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e8932e8e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:20:05.429726+00:00"
   },
   {
     "id": "seed_052",
@@ -1549,21 +1434,6 @@
     "timestamp": "2026-05-16T06:31:54.490610+00:00"
   },
   {
-    "id": "fd_0240",
-    "title": "3. Executable Recomputation Kernel with Verified Complexity Bounds",
-    "description": "**Goal:** Extract a verified executable function `incrementalRecompute` and prove that its time complexity is $O(|\\text{cone}| + |E_{\\text{cone}}|)$, i.e., proportional to the size of the affected region rather than the whole graph.\n\n**Concrete Deliverable:**\n```\ndef incrementalRecompute (oldLevels : V → ℕ) (pred' : PredFn V)\n    (new : V) (cone : Finset V) : V → ℕ\n```\nwith a proof that (1) the output matches global recomputation, and (2) the function inspects only vertices in `cone` and their predecessors.\n\n**Proof Strategy:**\n- Define the function by iteration over a topological sort of the cone\n- Prove termination using the finite cone size\n- Prove correctness by combining the locality theorem with the standard level computation correctness\n- Bound the work using `Finset.card` inequalit",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "14514045",
-    "consumed_by_exp_id": "c2ddc3a7",
-    "timestamp": "2026-05-16T06:34:26.492113+00:00"
-  },
-  {
     "id": "fd_0226",
     "title": "1. Certified Canonical Equivalence for ReLU Networks",
     "description": "**Goal:** Extend the univariate canonical form to tropical rational functions (differences of tropical polynomials) to provide a complete equivalence checker for piecewise-linear neural networks.\n- **Hypothesis:** Any continuous piecewise-linear function representable by a ReLU network has a unique minimal representation as a quotient of canonical tropical polynomials.\n- **Next Steps:** Formalize the algebra of tropical rational functions. Implement a simplification engine that reduces fraction equivalence $P/Q = R/S$ to tropical polynomial cross-multiplication $P \\otimes S = R \\otimes Q$, and verify it using the `canonicalize` algorithm.",
@@ -1594,23 +1464,6 @@
     "source_exp_id": "8e098d5e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T07:08:58.377086+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Direction 1: Tropical Spectral Certificates for Cycle Nonexistence",
-    "description": "**Hypothesis**: For the accelerated Collatz map, the discounted Bellman fixed point V* satisfies strict monotonicity along any hypothetical nontrivial cycle, yielding a contradiction. Specifically, if n₁ → n₂ → ··· → n_k → n₁ is a cycle with all nᵢ > 1, then the Bellman equation gives V*(nᵢ) = 1 + γ · V*(nᵢ₊₁) for each i, which sums to Σ V*(nᵢ) = k + γ · Σ V*(nᵢ), implying Σ V*(nᵢ) = k/(1-γ). This constrains the average value along cycles and, combined with arithmetic constraints on Collatz orbits, may rule out short cycles.\n\n**Proof Strategy**:\n1. Formalize the cycle equation: if collatzStep^[k](n) = n with all intermediate values > 1, then V*(n) = (1-γ^k)/(1-γ).\n2. Show that for Collatz, the arithmetic structure forces nᵢ to satisfy congruence conditions that conflict with the value func",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d4155669",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T08:33:10.474613+00:00"
   },
   {
     "id": "fd_0246",
@@ -1735,37 +1588,6 @@
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
   },
   {
-    "id": "fd_0244",
-    "title": "Direction 1: Transfer Operator Formalism for Arithmetic Maps",
-    "description": "**Hypothesis**: The Collatz map (and similar arithmetic maps like `ax + b` maps over the integers) admits a transfer operator `L_γ` whose spectral radius controls the free-energy growth rate, analogous to Ruelle–Perron–Frobenius theory for expanding maps.\n\n**Strategy**:\n1. Define the transfer operator on a suitable Banach space of functions on ℕ (e.g., weighted ℓ¹ or ℓ² spaces).\n2. Show that the partition function `F_N(γ)` can be written as a trace of iterates of `L_γ`.\n3. Prove that the leading eigenvalue of `L_γ` controls the exponential growth rate of `F_N(γ)` as N → ∞.\n4. Connect the spectral gap (if it exists) to mixing properties of the Collatz dynamics.\n\n**Cross-domain connections**: Ruelle transfer operators in thermodynamic formalism; Selberg zeta functions in hyperbolic geometry;",
-    "domains": [
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a386325",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:16:46.779901+00:00"
-  },
-  {
-    "id": "fd_0245",
-    "title": "Direction 2: Dirichlet Free Energy and Analytic Number Theory",
-    "description": "**Hypothesis**: The Dirichlet-weighted free energy\n\n$$F^{\\text{Dir}}(\\gamma, s) := \\sum_{n=1}^{\\infty} n^{-s} V_\\gamma(n)$$\n\nhas meromorphic continuation in both variables `(γ, s)`, and its polar structure encodes deep arithmetic information about stopping-time distributions.\n\n**Strategy**:\n1. Use the tail decomposition to write $F^{\\text{Dir}}(\\gamma, s) = \\sum_{m \\geq 0} \\gamma^m \\cdot T(s, m)$, where $T(s, m) = \\sum_{n: \\tau(n) > m} n^{-s}$.\n2. Study the Dirichlet series $T(s, m)$ for fixed m — these are \"tail Dirichlet series\" that count integers with large stopping times.\n3. Apply Tauberian theorems to extract asymptotic counting information from the singularity structure of $F^{\\text{Dir}}$.\n4. Investigate whether the abscissa of convergence of $T(s, m)$ varies with m, creating a \"ph",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a386325",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:16:46.796629+00:00"
-  },
-  {
     "id": "fd_0246",
     "title": "Direction 3: Large Deviation Principles for Stopping-Time Distributions",
     "description": "**Hypothesis**: The empirical distribution of normalized stopping times $\\tau(n)/\\log n$ (over $n \\leq N$) satisfies a large deviation principle whose rate function is the Legendre transform of the free-energy growth rate.\n\n**Strategy**:\n1. Define the moment generating function $\\Lambda(\\theta) = \\lim_{N \\to \\infty} \\frac{1}{N} \\log \\sum_{n=1}^{N} e^{\\theta \\tau(n)}$.\n2. Show that $\\Lambda(\\theta)$ is related to the free energy $F_N(\\gamma)$ via $\\gamma = e^{\\theta}$.\n3. Prove the existence of $\\Lambda$ using sub-additivity or concentration arguments.\n4. Apply the Gärtner–Ellis theorem to obtain the large deviation principle.\n5. Interpret the rate function in terms of the \"cost\" of having anomalously large or small stopping times.\n\n**Cross-domain connections**: Large deviations in statisti",
@@ -1825,5 +1647,88 @@
     "source_exp_id": "1a386325",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T09:16:46.863154+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Direction 1: Query-Optimal Lower Bounds for Cone-Local Recomputation",
+    "description": "**Hypothesis:** Any correct incremental recomputation algorithm for DAG levels must inspect at least every vertex in the affected cone and every edge entering it. The cone-linear upper bound is therefore *tight*.\n\n**Approach:**\n- Model the recomputation problem as an adaptive query process where each query reveals a predecessor set or a predecessor's level.\n- Construct an adversarial family of DAGs where any algorithm that skips a cone vertex or predecessor edge can be fooled into producing an incorrect level.\n- Formalize this as a certified lower bound theorem: `∀ algorithm, ∃ input, work(algorithm, input) ≥ |cone| + |E_cone|`.\n\n**Cross-domain connection:** This connects incremental computation to communication complexity and information-theoretic lower bounds. A formal gap between upper ",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c2ddc3a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:29:02.728591+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Direction 2: Monotone Semiring Valuations and Tropical Generalization",
+    "description": "**Hypothesis:** The level function `v ↦ 1 + sup(predecessors)` is a special case of a max-plus (tropical) linear recurrence. The incremental kernel generalizes to arbitrary monotone semiring valuations over acyclic dependency graphs.\n\n**Approach:**\n- Replace `ℕ` with an arbitrary ordered semiring `(S, ⊕, ⊗, ≤)` where `⊕` is the \"join\" and `⊗` is the \"combine\" operation.\n- Define `recomputeLevel` as `⊗(unit, ⊕{s(u) | u ∈ pred(v)})` for an appropriate unit.\n- Prove the same fold-correctness and complexity theorems in this abstract setting.\n- Instantiate to recover: DAG levels (max-plus over ℕ), shortest paths (min-plus over ℝ≥0 ∪ {∞}), widest paths (max-min), Boolean reachability (OR-AND).\n\n**Cross-domain connection:** This bridges to tropical geometry, where semiring valuations over graphs ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c2ddc3a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:29:02.744729+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Direction 3: Localized Fixpoint Maintenance for Temporal Logic",
+    "description": "**Hypothesis:** Model checking a temporal logic formula (CTL, μ-calculus) on a finite Kripke structure is a fixpoint computation on a dependency graph. When the Kripke structure is locally modified, the truth values can be incrementally maintained by recomputing only within the affected cone.\n\n**Approach:**\n- Formalize the connection between DAG level computation and monotone fixpoint iteration on finite lattices.\n- Show that the incremental fold is equivalent to one-pass fixpoint stabilization on the restricted cone operator.\n- Extend from DAG levels to nested fixpoints (alternation depth > 1) by layering cone computations.\n- Prove that incremental model checking of μ-calculus formulas on locally-modified Kripke structures has complexity proportional to the affected region, not the full s",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c2ddc3a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:29:02.760147+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Direction 4: Certified Self-Adjusting Computation Framework",
+    "description": "**Hypothesis:** The incremental fold pattern generalizes to a *self-adjusting computation* framework where arbitrary pure functions over DAG-structured inputs can be incrementally maintained under local input changes.\n\n**Approach:**\n- Define a `Computation` type that records the dependency graph of a pure functional computation.\n- Instrument computations with automatic dependency tracking (analogous to Acar's self-adjusting computation, but with machine-checked correctness).\n- Prove that the `incrementalFold` pattern, when applied to the recorded dependency graph, correctly updates the computation's output.\n- Prove complexity bounds showing that the update cost is proportional to the \"change propagation region\" — the set of intermediate values that actually change.\n\n**Cross-domain connecti",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c2ddc3a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:29:02.777861+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Direction 5: Sparse Neural Update Certificates",
+    "description": "**Hypothesis:** Message-passing neural networks (GNNs) compute vertex features by iterating a local aggregation rule over a graph — mathematically identical to iterated level computation. When the graph is locally modified, the network's output can be incrementally updated by recomputing only within the receptive field cone.\n\n**Approach:**\n- Formalize the connection between GNN message-passing rounds and iterated `recomputeLevel` with a general aggregation function.\n- Define the \"receptive field cone\" of depth `k` around a modified vertex as the set of vertices whose `k`-hop neighborhood intersects the modification.\n- Prove that the incremental kernel correctly updates GNN features with work proportional to the receptive field size.\n- Extend to attention-based aggregation (transformers on ",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c2ddc3a7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T09:29:02.795624+00:00"
   }
 ]
