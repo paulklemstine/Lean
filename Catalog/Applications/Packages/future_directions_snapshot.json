@@ -377,23 +377,6 @@
   },
   {
     "id": "fd_0232",
-    "title": "Construct encoding family",
-    "description": "where `tropFactorRank (encode s) = s` using block-diagonal rank-1 decompositions\n\n### Key Lemmas Needed\n- `tropFactorRank_le_dim`: Factor rank is at most $n$ for $n \\times n$ matrices\n- `tropFactorRank_identity`: Factor rank of the tropical identity is $n$\n- `tropFactorRank_diagonal`: Factor rank of a diagonal matrix equals its number of finite entries (under certain conditions)\n- `tropFactorRank_tropical_sum`: Factor rank is subadditive under tropical sum\n\n### Estimated Difficulty\n**High.** The lower bounds are the hardest part. Shitov's NP-hardness result suggests that computing factor rank is intrinsically difficult, but constructing specific matrices with *provable* factor rank requires delicate combinatorial arguments.\n\n### Cross-Domain Impact\n- **Algebraic geometry**: Factor rank con",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "011ce99e",
-    "consumed_by_exp_id": "52b15fb5",
-    "timestamp": "2026-05-16T07:11:31.800180+00:00"
-  },
-  {
-    "id": "fd_0232",
     "title": "Target theorems",
     "description": ":\n- Kraft inequality: `∑ q^(-ℓ(a)) ≤ 1` for q-ary prefix codes.\n- Shannon coding bound: `H_q(p) ≤ E[ℓ] < H_q(p) + 1` where `H_q` uses log base q.\n- Relaxed optimizer: `L⋆(a) = log_q(1/p(a))` achieves equality.\n\n**Strategy**: The existing proofs generalize cleanly by replacing 2 with q throughout. The key lemma `Real.rpow_logb` works for any base b > 0, b ≠ 1. The Gibbs inequality (log x ≤ x - 1) is base-independent.\n\n**Broader significance**: q-ary codes arise naturally in DNA storage (q=4), ternary computing, and multi-level cell flash memory. Formal verification of q-ary optimality enables certified codec design for these technologies.\n\n---\n\n## Direction 3: Tropical Data Processing Inequality\n\n**Goal**: Prove that processing data through a channel cannot increase the tropical coding pote",
     "domains": [
@@ -578,22 +561,6 @@
     "timestamp": "2026-05-16T18:57:04.315060+00:00"
   },
   {
-    "id": "fd_0255",
-    "title": "LP formulation",
-    "description": ": Package the transport problem as `minimize c^T x subject to Ax = b, x ≥ 0` and apply finite LP duality (which may need to be formalized first as an auxiliary result).\n\n### Cross-Domain Significance\nKantorovich duality is the cornerstone of modern optimal transport theory. In tropical terms, it connects primal minimization (over couplings) to dual maximization (over potentials), mirroring the min-max structure of tropical algebra (`tropical_duality_min_to_max`). This would be the first formally verified instance of LP duality in a transport context, opening the door to verified algorithms for Wasserstein computation.\n\n---\n\n## Direction 2: Tropical Cycle-Mean Theorem (Karp's Theorem)\n\n### Theorem Statement\nFor a strongly connected weighted directed graph represented as a matrix `A ∈ ℝ^{n×n",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a6c55e7c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:57:04.333495+00:00"
-  },
-  {
     "id": "fd_0258",
     "title": "Convergence",
     "description": ": Combine Fekete's lemma with the finite characterization to show convergence and identify the limit.\n\n### Cross-Domain Significance\nThis theorem is the tropical analogue of the Perron-Frobenius eigenvalue theorem. It connects:\n- **Graph theory**: minimum-weight cycles and shortest paths\n- **Dynamical systems**: asymptotic growth rates of iterated tropical maps\n- **Operations research**: cycle-time optimization in discrete event systems\n- **Formal verification**: a verified algorithm for computing tropical eigenvalues\n\nOur subadditivity theorem (`tropPow_diag_subadditive`) provides the key input.\n\n---\n\n## Direction 3: Birkhoff–von Neumann Decomposition\n\n### Theorem Statement\nEvery doubly stochastic matrix (nonneg entries with row and column sums equal to 1) is a convex combination of permu",
@@ -759,34 +726,6 @@
     "timestamp": "2026-05-16T19:15:45.227595+00:00"
   },
   {
-    "id": "fd_0247",
-    "title": "Agreement counting",
-    "description": ": If f agrees with some degree-≤d polynomial g on a random line with high probability, then f agrees with g on many points overall.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.257454+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "Self-correction",
-    "description": ": Use agreement on many lines to show f is globally close to a low-degree polynomial.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.272710+00:00"
-  },
-  {
     "id": "fd_0249",
     "title": "Distance amplification",
     "description": ": Use the Reed–Muller minimum distance to convert \"close to a codeword\" into \"is a codeword.\"\n\n### Formalization Target\n\n```lean\ntheorem lowDegreeTest_soundness\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d : ℕ) (f : (Fin n → 𝔽) → 𝔽)\n    (hδ : relativeDistance f (closestCodeword f n d) ≥ δ) :\n    rejectProbability (lowDegreeTest f n d) ≥ c * δ\n```\n\n### Cross-Domain Connections\n- **PCP theorem**: Low-degree testing is the algebraic core of probabilistically checkable proofs\n- **Property testing**: Paradigmatic example of local testability\n- **Coding theory**: Testing proximity to a Reed–Muller codeword\n\n### Difficulty: ★★★★★\n\n---\n\n## Direction 4: Dual Reed–Muller Structure and Secret-Sharing Thresholds\n\n### Target Theorem\n\nThe dual code of RM_q(n, d) is RM_q(n, n(q−1)−d−1). This duality re",
@@ -801,20 +740,6 @@
     "source_exp_id": "38f08fce",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T19:15:45.289863+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Dual code identification",
-    "description": ": Show the annihilator of RM_q(n, d) under the evaluation inner product is RM_q(n, n(q−1)−d−1).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.305527+00:00"
   },
   {
     "id": "fd_0252",
@@ -861,20 +786,6 @@
     "source_exp_id": "38f08fce",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T19:15:45.374103+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "Bootstrapping",
-    "description": ": Use the minimum distance theorem to show that polynomials with structured zero sets must have very specific forms, enabling deterministic enumeration.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.389051+00:00"
   },
   {
     "id": "fd_0113",
@@ -941,6 +852,21 @@
     "source_exp_id": "5198167b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T18:36:13.844636+00:00"
+  },
+  {
+    "id": "fd_0180",
+    "title": "2. Hodge Decomposition for Adversarial Inconsistency Fields",
+    "description": "**Objective**: Prove a graph-theoretic Hodge decomposition theorem for the space of 1-cochains on the activation region overlap graph, decomposing any inconsistency field into a gradient (coboundary), a curl (cocycle), and a harmonic component.\n\n**Approach**: On the complete graph $K_\\iota$ with edge weights given by overlap volumes, define the combinatorial Laplacian $\\Delta = \\delta^* \\delta + \\delta \\delta^*$ where $\\delta$ is the coboundary operator. The Hodge decomposition gives:\n$$C^1(K_\\iota, \\mathbb{R}) = \\mathrm{im}(\\delta) \\oplus \\mathrm{im}(\\delta^*) \\oplus \\ker(\\Delta)$$\n\nThe gradient component is the \"fixable\" part of margin inconsistency; the harmonic component is the irreducible topological obstruction; the curl component detects local rotation in the margin field.\n\n**Key hy",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "2204ee24",
+    "timestamp": "2026-05-14T18:36:13.850536+00:00"
   },
   {
     "id": "fd_0181",
@@ -1588,54 +1514,6 @@
     "timestamp": "2026-05-16T14:28:58.186572+00:00"
   },
   {
-    "id": "fd_0255",
-    "title": "5. Kolmogorov-to-Shannon Bridge via Average Complexity",
-    "description": "**Goal:** Use `compressor_gives_complexity_bound` to define a finite family complexity profile and compare its average bound to support entropy.\n\n```lean\ntheorem avg_complexity_bounds_entropy\n    (U : DescriptionMethod) (hU : IsUniversal U)\n    {α : Type*} [Fintype α] [DecidableEq α]\n    (embed : α → List Bool) (hembed : Function.Injective embed) :\n    ∃ c : ℕ, Nat.log 2 (Fintype.card α) ≤\n      (∑ a : α, (embed a).length) / Fintype.card α + c\n```\n\n**Strategy:**\n- Instantiate `compressor_gives_complexity_bound` with the identity compressor to get baseline bounds.\n- Use `complexity_bound_implies_finite_entropy_bound` to convert per-element complexity bounds into global cardinality bounds.\n- Average over all elements using `Finset.sum_div_pow_mul_pow_le_pow_mul` or similar combinatorial ineq",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d4efa6e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:07:11.498731+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "4. Counting Primitive Lattice Points on Tropical Hypersurfaces",
-    "description": "**Hypothesis:** The number of primitive lattice points on a tropical hypersurface in a box of side length L grows as Θ(L^{d-1}) where d is the ambient dimension, matching classical results in the geometry of numbers for hyperplane arrangements.\n\n**Proof Strategy:**\n- For the tropical Fermat hypersurface in ℤ³, count primitive points (a,a,b) with gcd(a,b) = 1 and 1 ≤ a ≤ b ≤ L. This count is Θ(L²/ζ(2)) = Θ(6L²/π²) by Euler's totient summation.\n- Formalize this asymptotic using Mathlib's analysis library and the prime number theorem or Mertens' theorem.\n- Generalize to arbitrary tropical hyperplane arrangements in ℤ^d.\n- Compare with the zero count for classical Fermat: the contrast between Θ(L²) tropical solutions and O(1) classical solutions (by FLT) quantifies the information loss.\n\n**Key",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "69b261f0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T15:31:36.134362+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "2. Mixed-Radix Encoding with Variable Bases",
-    "description": "**Hypothesis:** The product encoding generalizes beyond uniform bases. Given types encoded into `Fin m` and `Fin n` (not necessarily powers of a common base), there exists an injective encoding of their product into `Fin (m * n)` via the mixed-radix map `(a, b) ↦ a * n + b`.\n\n**Proof Strategy:** This is actually simpler than the power-of-base version since it avoids the `pow_add` rewriting. The `mixed_radix_eq_iff` lemma already handles the core argument. The `fin_prod_injective_to_fin_mul` theorem we proved is the existential version; the explicit constructive version with the mixed-radix formula should be straightforward.\n\n**Formal Statement:**\n```lean\ndef finProdPack (p : Fin m × Fin n) : Fin (m * n) :=\n  ⟨p.1.val * n + p.2.val, ...⟩\n\ntheorem finProdPack_injective : Function.Injective (",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d032c89b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T16:34:16.188117+00:00"
-  },
-  {
     "id": "fd_0258",
     "title": "5. Channel Product Encodings and Information Capacity",
     "description": "**Hypothesis:** The product encoding theorem provides the combinatorial foundation for proving that the capacity of a product of discrete memoryless channels equals the sum of individual capacities. Specifically, if channel 1 has input alphabet of size `2^k` and channel 2 has input alphabet of size `2^ℓ`, then the product channel admits `2^(k+ℓ)` distinguishable input states.\n\n**Proof Strategy:** Define a discrete memoryless channel as a stochastic matrix. Define the product channel. Use the product encoding theorem to show that the input space of the product channel can be injectively encoded with additive bit-length. Connect this to mutual information and channel capacity via the data processing inequality (which already has combinatorial shadows in the existing `EntropyBridge.lean` infr",
@@ -1650,38 +1528,6 @@
     "source_exp_id": "d032c89b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T16:34:16.252979+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "Theorem Signatures",
-    "description": "```lean\n/-- Orbit cost is nonneg if the base cost is. -/\ntheorem orbitCost_nonneg\n    (G : Type*) {α : Type*} [Group G] [MulAction G α]\n    (Wc : α → α → ℝ)\n    (hnn : ∀ x y, 0 ≤ Wc x y)\n    (hbd : ∀ μ ν, BddBelow (Set.range fun g : G => Wc μ (g • ν))) :\n    ∀ μ ν, 0 ≤ orbitCost G Wc μ ν\n\n/-- Orbit cost is symmetric if Wc is symmetric and the action is bi-invariant. -/\ntheorem orbitCost_symm\n    (G : Type*) {α : Type*} [Group G] [MulAction G α]\n    (Wc : α → α → ℝ)\n    (hsymm : ∀ x y, Wc x y = Wc y x)\n    (hinv : ∀ x y g, Wc (g • x) (g • y) = Wc x y)\n    (hbd : ∀ μ ν, BddBelow (Set.range fun g : G => Wc μ (g • ν))) :\n    ∀ μ ν, orbitCost G Wc μ ν = orbitCost G Wc ν μ\n\n/-- Package: orbit cost as a PseudoMetricSpace on the quotient. -/\ninstance orbitCostPseudoMetric\n    (G : Type*) {α : Type",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "92317e70",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T17:45:48.227667+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "2. Ultimate Periodicity of Max-Plus Matrix Powers",
-    "description": "**Theorem statement:**\nFor `A : Matrix (Fin n) (Fin n) ℝ` with tropical eigenvalue λ, there exist `T, p ≥ 1` such that for all `k ≥ T`:\n```\ntropPow A (k + p) i j = tropPow A k i j + p * λ\n```\nwhere `tropPow` is iterated tropical matrix multiplication.\n\n**Why it matters:** This is the max-plus cyclicity theorem—the tropical analogue of the Perron-Frobenius theorem on primitive matrix convergence. It says that max-plus linear dynamical systems are eventually periodic with linear drift. This is fundamental for:\n- Predicting long-run behavior of production systems\n- Computing steady-state schedules\n- Analyzing periodic orbits in discrete event systems\n\n**Proof strategy:**\n1. Prove that `tropPow A k i j - k * λ` is bounded (using the subeigenvector bound).\n2. Show this shifted sequence is event",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "04765070",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:12:09.834827+00:00"
   },
   {
     "id": "fd_0258",
@@ -1703,40 +1549,6 @@
     "timestamp": "2026-05-16T18:12:09.887593+00:00"
   },
   {
-    "id": "fd_0247",
-    "title": "2. Subadditive Ergodic / Tropical Lyapunov Theory for Random Layer Composition",
-    "description": "**Hypothesis**: When layers are drawn i.i.d. from a distribution over tropical matrices, the growth rate of `supNorm(A_k ⊗ ··· ⊗ A_1 ⊗ x)` converges almost surely to a deterministic tropical Lyapunov exponent by the subadditive ergodic theorem.\n\n**Proof Strategy**:\n1. Formalize the product of tropical matrices: `(A ⊗ B)_{ij} = max_k (A_{ik} + B_{kj})`.\n2. Show that `f(k) = supNorm(A_k ⊗ ··· ⊗ A_1 ⊗ 0)` is subadditive: `f(m+n) ≤ f(m) + f(n)` (up to a constant).\n3. Apply Kingman's subadditive ergodic theorem (formalized in Mathlib) to obtain almost-sure convergence.\n4. Identify the limit as the max-plus analogue of the top Lyapunov exponent.\n\n**Suggested theorem**:\n```lean\ntheorem tropical_lyapunov_exponent_exists\n    {n : ℕ} (μ : MeasureTheory.Measure (Fin (n+1) → Fin (n+1) → ℝ))\n    [Measu",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "795174d8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:54:14.902094+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "3. Enriched Categorical Semantics of Tropical Depth",
-    "description": "**Hypothesis**: Tropical matrix composition defines an enrichment of the category of finite sets over the max-plus semiring, where morphism composition growth is controlled by the spectral radius functor.\n\n**Proof Strategy**:\n1. Define a category `TropMat` with objects `Fin n` and morphisms `Fin n → Fin m → ℝ` (tropical matrices).\n2. Define composition as tropical matrix multiplication.\n3. Show this forms a category enriched over `(ℝ ∪ {-∞}, max, +)`.\n4. Define a \"spectral radius functor\" `ρ : TropMat → ℝ` sending matrices to their maximum cycle mean.\n5. Prove that `ρ(A ∘ B) ≤ ρ(A) + ρ(B)` (subadditivity of spectral radius under composition).\n6. Use this to derive depth-composition bounds categorically.\n\n**Suggested theorem**:\n```lean\ntheorem tropical_enriched_composition_bound\n    {n m p ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "795174d8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T18:54:14.919312+00:00"
-  },
-  {
     "id": "fd_0252",
     "title": "7. Tropical Transfer Learning via Spectral Alignment",
     "description": "**Hypothesis**: Two tropical networks with similar spectral radii can be aligned via a tropical change of basis, enabling certified transfer of depth-stability guarantees.\n\n**Proof Strategy**:\n1. Define tropical similarity: `A ~ D⁻¹ ⊗ B ⊗ D` where `D` is a diagonal tropical matrix (scaling).\n2. Show that similar matrices have the same spectral radius (maximum cycle mean).\n3. Prove that the iterate bound transfers: if `A ~ B`, then depth-stability certificates for `A` apply to `B`.\n\n**Cross-domain significance**: This provides a mathematical framework for understanding when and how depth-stability guarantees transfer between architectures, a key question in practical deep learning.\n\n---",
@@ -1753,5 +1565,77 @@
     "source_exp_id": "795174d8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T18:54:14.982988+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Theorem Target",
+    "description": "```\ntheorem qary_huffman_optimal\n    (q : ℕ) (hq : 2 ≤ q)\n    (p : α → ℝ) (hp_pos : ∀ a, 0 < p a) (hp_sum : ∑ a, p a = 1)\n    (ℓ_huffman : α → ℕ) (h_huffman : IsQaryHuffmanCode q p ℓ_huffman)\n    (ℓ_any : α → ℕ) (h_kraft : ∑ a, (q : ℝ) ^ (-(ℓ_any a : ℝ)) ≤ 1) :\n    ∑ a, p a * (ℓ_huffman a : ℝ) ≤ ∑ a, p a * (ℓ_any a : ℝ)\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52b15fb5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:35:36.646565+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Hypothesis",
+    "description": "The information bottleneck principle — that deep neural networks compress information about inputs while preserving information about outputs — can be formalized and certified using the q-ary tropical coding framework.",
+    "domains": [
+      "Tropical",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52b15fb5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:35:36.681776+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Phase 1 (Immediate, 1-3 months)",
+    "description": "- **Team A**: Stochastic DPI (Direction 2) — requires 2-3 researchers\n- **Team B**: Huffman optimality (Direction 1) — 1-2 researchers\n- **Team C**: Robustness-coding bridge (Direction 4) — 1 researcher",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52b15fb5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:35:36.702078+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Validation Protocol",
+    "description": "1. Each theorem target should be stated in Lean 4 with `sorry` before beginning proof work.\n2. Helper lemmas should be validated computationally before formalization.\n3. Cross-team reviews ensure consistency of definitions and interfaces.\n4. Regular integration builds verify that new theorems compose with existing infrastructure.\n\n---",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52b15fb5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:35:36.759268+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Impact Assessment",
+    "description": "| Direction | Mathematical Depth | Engineering Impact | Novelty | Feasibility |\n|-----------|-------------------|-------------------|---------|-------------|\n| Huffman | ★★★☆ | ★★★★ | ★★☆☆ | ★★★★ |\n| Stochastic DPI | ★★★★ | ★★★★★ | ★★★☆ | ★★★☆ |\n| Rate-Distortion | ★★★★★ | ★★★★ | ★★★★ | ★★☆☆ |\n| Robustness Bridge | ★★★☆ | ★★★★★ | ★★★★★ | ★★★★ |\n| Free Energy | ★★★★★ | ★★★☆ | ★★★★ | ★★★☆ |\n| Channel Coding | ★★★★★ | ★★★★★ | ★★★☆ | ★★☆☆ |\n| Info Bottleneck | ★★★★ | ★★★★★ | ★★★★★ | ★★★☆ |",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52b15fb5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T19:35:36.777527+00:00"
   }
 ]
