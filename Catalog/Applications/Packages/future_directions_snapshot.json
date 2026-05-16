@@ -205,21 +205,6 @@
     "timestamp": "2026-05-15T01:18:10.085978+00:00"
   },
   {
-    "id": "fd_0191",
-    "title": "Causal transitivity",
-    "description": ": The tropical causal ordering is transitive (follows from triangle inequality).",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "dc69d6dd",
-    "consumed_by_exp_id": "5cfffd08",
-    "timestamp": "2026-05-15T01:46:31.350359+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Charge-dependent surgery",
     "description": ": The surgery distance bound depends on the charge difference `|A u - A v|` at the wormhole endpoints.\n\n### Proof Strategy\n- Theorem 1 follows the same proof pattern as `tropicalDistance_bellman_le` with modified weights.\n- Gauge invariance is essentially definitional.\n- The charged surgery theorem extends `tropicalDistance_wormholeSurgery_le` with the modified weight matrix.\n\n### Cross-Domain Connections\n- **Electrical networks**: The gauge potential is an electric potential; charged distance models resistive flow.\n- **Optimal transport**: Charged distances relate to transport costs with source/sink terms.\n\n---\n\n## Direction 4: Categorical Functor from Graph Surgeries to Tropical Linear Operators\n\n### Motivation\nGraph surgeries (adding/removing/reweighting edges) form a category of transf",
@@ -276,10 +261,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "20aee949",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T07:06:08.035548+00:00"
   },
   {
@@ -883,6 +868,21 @@
     "timestamp": "2026-05-14T18:36:13.844636+00:00"
   },
   {
+    "id": "fd_0181",
+    "title": "3. Extension from $L_\\infty$ to $L_2$ Robustness via Sheaves of Quadratic Forms",
+    "description": "**Objective**: Extend the cohomological certification framework from $L_\\infty$ perturbation balls to $L_2$ (Euclidean) perturbation balls by replacing real-valued margin sections with sections valued in positive-definite quadratic forms.\n\n**Approach**: On each activation region $U_i$, the network is affine: $f(x) = W_i x + b_i$. The local $L_2$-robustness radius at $x \\in U_i$ is $\\|W_i^{-1}\\| \\cdot (\\text{margin at } x)$, which depends on the local Hessian structure. Define a sheaf $\\mathcal{Q}$ assigning to $U_i$ the quadratic form $Q_i(v) = v^T W_i^T W_i \\, v$ (the local metric tensor). The overlap compatibility condition becomes: on $U_i \\cap U_j$, $Q_i$ and $Q_j$ must be comparable (within a multiplicative factor).\n\n**Key hypotheses**:\n- The $L_2$ certified radius is controlled by th",
+    "domains": [
+      "EML",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "5198167b",
+    "consumed_by_exp_id": "de00b05b",
+    "timestamp": "2026-05-14T18:36:13.855472+00:00"
+  },
+  {
     "id": "fd_0179",
     "title": "Phase 1 (Immediate, 1-2 weeks)",
     "description": "- **Team A:** Four-voice generalization (Direction 1). Extend all definitions, re-run proofs, compute database.\n- **Team B:** Computational exploration. Enumerate all triad/seventh-chord transitions, visualize cost landscapes, identify patterns.",
@@ -1357,7 +1357,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "64a1fefb",
-    "consumed_by_exp_id": "bffc2558",
+    "consumed_by_exp_id": "7e846ce5",
     "timestamp": "2026-05-16T09:33:50.685886+00:00"
   },
   {
@@ -1652,5 +1652,97 @@
     "source_exp_id": "be71e654",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:13:17.512158+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "1. Tropical Lorentzian Geometry: Causal Cones and Light-Cone Structure",
+    "description": "**Theorem target**: Define tropical causal cones and prove that the one-sided displacement preorder on `Fin n → ℝ` admits a natural cone structure analogous to future light-cones in Lorentzian geometry.\n\n```\ndef TropicalCausalCone (x : Fin n → ℝ) (T : ℝ) : Set (Fin n → ℝ) :=\n  { y | TropicalCausal tropicalOneSidedDisplacement T x y }\n\ntheorem causal_cone_nested (x : Fin n → ℝ) {T₁ T₂ : ℝ} (h : T₁ ≤ T₂) :\n    TropicalCausalCone x T₁ ⊆ TropicalCausalCone x T₂\n\ntheorem causal_cone_convex (x : Fin n → ℝ) (T : ℝ) :\n    Convex ℝ (TropicalCausalCone x T)\n```\n\n**Lean definitions needed**: `TropicalCausalCone`, tropical convexity predicates, cone algebra operations.\n\n**Proof strategy**: The nested cone property follows from monotonicity of the budget parameter. Convexity requires showing that if `m",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cfffd08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:25:54.739410+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "2. Tropical Reachability Algebras: Floyd–Warshall as Causal Closure",
+    "description": "**Theorem target**: Prove that the tropical matrix power `A^⊗k` computes k-hop causal reachability, and that the Kleene star `A* = ⊕_{k=0}^{n-1} A^⊗k` gives the transitive closure of matrix causality.\n\n```\ndef tropMatPow (A : Matrix (Fin n) (Fin n) ℝ) : ℕ → Matrix (Fin n) (Fin n) ℝ\n  | 0 => tropId n 0\n  | k + 1 => tropMatMul A (tropMatPow A k)\n\ndef tropicalKleeneStar (A : Matrix (Fin n) (Fin n) ℝ) : Matrix (Fin n) (Fin n) ℝ :=\n  fun i j => Finset.univ.inf' ... (fun k => tropMatPow A k i j)\n\ntheorem kleene_star_is_causal_closure (A : Matrix (Fin n) (Fin n) ℝ) (i j : Fin n) :\n    (∃ T, MatrixCausal A T i j) ↔ tropicalKleeneStar A i j < ⊤\n```\n\n**Lean definitions needed**: `tropMatPow`, `tropicalKleeneStar`, connection lemmas between matrix powers and path costs.\n\n**Proof strategy**: By induct",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cfffd08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:25:54.759413+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "3. Tropical Neural Network Causal Certificates",
+    "description": "**Theorem target**: For a tropical (max-plus) neural network with layer maps `f₁, ..., f_L`, prove that if each layer is nonexpansive with Lipschitz constant `≤ 1`, then the entire network preserves the causal preorder, and adversarial perturbation budgets compose additively across layers.\n\n```\ndef TropicalNetwork (layers : List (Fin n → ℝ → Fin n → ℝ)) := ...\n\ntheorem network_causal_certificate\n    (net : TropicalNetwork layers)\n    (h_nonexp : ∀ l ∈ layers, TropicalNonexpansive τ τ l)\n    {x y : Fin n → ℝ} (hxy : TropicalFuture τ x y) :\n    TropicalFuture τ (net.eval x) (net.eval y)\n\ntheorem adversarial_budget_composition\n    (net : TropicalNetwork layers)\n    (budgets : List ℝ)\n    (h_layer_budgets : ∀ i x, TropicalCausal τ (budgets[i]) x (layers[i] x)) :\n    TropicalCausal τ (budgets.s",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cfffd08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:25:54.779176+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "4. Tropical Spectral Causality: Eigenpairs as Invariant Causal Directions",
+    "description": "**Theorem target**: Prove that a tropical eigenvector of a min-plus matrix defines a causal invariant ray — a direction along which the causal preorder is preserved by the matrix action.\n\n```\ntheorem eigenvector_causal_invariance\n    {n : ℕ} [NeZero n] (A : Matrix (Fin n) (Fin n) ℝ)\n    (d : ℝ) (v : Fin n → ℝ) (heig : IsTropicalEigenpair A d v) :\n    ∀ t : ℝ, 0 ≤ t →\n      TropicalCausal (fun x y => tropicalSupDisplacement (tropMatVecMul A x) (tropMatVecMul A y))\n        (t * |d|)\n        (fun i => v i) (fun i => v i + t)\n\ntheorem eigenpair_preserves_future\n    {n : ℕ} [NeZero n] (A : Matrix (Fin n) (Fin n) ℝ)\n    (d : ℝ) (v : Fin n → ℝ) (heig : IsTropicalEigenpair A d v) (hd : d ≤ 0) :\n    TropicalFuture (fun x y => tropicalOneSidedDisplacement (tropMatVecMul A x) (tropMatVecMul A y))\n   ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cfffd08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:25:54.802691+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "5. Tropical Entropy and Causal Information Flow",
+    "description": "**Theorem target**: Define a notion of causal information capacity using tropical entropy, and prove that nonexpansive maps cannot increase causal information flow.\n\n```\ndef tropicalCausalEntropy (τ : α → α → ℝ) (S : Finset α) (T : ℝ) : ℝ :=\n  Finset.log (S.filter (fun y => ∃ x ∈ S, TropicalCausal τ T x y)).card\n\ntheorem causal_entropy_nonincreasing\n    {α β : Type*} {τ₁ : α → α → ℝ} {τ₂ : β → β → ℝ} {f : α → β}\n    (hf : TropicalNonexpansive τ₁ τ₂ f)\n    (S : Finset α) (T : ℝ) :\n    tropicalCausalEntropy τ₂ (S.image f) T ≤ tropicalCausalEntropy τ₁ S T\n\ntheorem security_from_causal_entropy\n    (τ : α → α → ℝ) (S : Finset α) (T : ℝ) :\n    tropicalCausalEntropy τ S T ≤ Finset.log S.card\n```\n\n**Lean definitions needed**: `tropicalCausalEntropy`, connection to `tropicalEntropy` from the existi",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cfffd08",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T22:25:54.821807+00:00"
   }
 ]

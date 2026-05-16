@@ -88,7 +88,7 @@ When A = B = c (same cost matrix), the tropical square's diagonal entry
 theorem tropMulB_self_diag_le_roundtrip [Nonempty (Fin n)]
     (c : Matrix (Fin n) (Fin n) ℝ) (i k : Fin n) :
     tropMulB c c i i ≤ c i k + c k i := by
-  exact tropMulB_le_path c c i i k
+  exact?
 
 /-! ## Tropical powers and shortest paths -/
 

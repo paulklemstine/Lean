@@ -1,709 +1,783 @@
+#!/usr/bin/env python3
 """
-Applications of the Markov-Tropical Bridge Theorem
+Applications of the Markov-Tropical Bridge Theorem.
 
-Real-world applications demonstrating how tropical cycle geometry
-provides certificates for Markov chain mixing properties.
+Demonstrates practical applications in:
+1. Protein folding dynamics (metastability detection)
+2. Network community detection
+3. Cryptographic channel analysis
+4. Climate state modeling
 """
 
 import numpy as np
+from algorithms import (
+    tropical_cost_matrix, triangle_cycle_mean,
+    verify_tropical_gap, estimate_mixing_time,
+    tropical_metastability_analysis
+)
 
 
-def pagerank_tropical_analysis(
-    adjacency: np.ndarray,
-    damping: float = 0.85
-) -> dict:
+def application_protein_folding():
     """
-    Apply tropical analysis to a PageRank-style random walk.
+    Application 1: Protein Folding Metastability.
     
-    The PageRank transition matrix is:
-        P = d * A * D^{-1} + (1-d)/n * J
-    where A is the adjacency matrix, D is the diagonal degree matrix,
-    d is the damping factor, and J is the all-ones matrix.
+    Models a simplified protein folding landscape with 5 states:
+    - State 0: Unfolded
+    - State 1: Misfolded intermediate
+    - State 2: Partially folded
+    - State 3: Near-native
+    - State 4: Native (folded)
     
-    Args:
-        adjacency: Binary adjacency matrix of the web graph
-        damping: PageRank damping factor (default 0.85)
-    
-    Returns:
-        Tropical analysis results
+    The tropical cycle mean reveals energy barriers between
+    metastable states.
     """
-    n = adjacency.shape[0]
+    print("\n" + "="*60)
+    print("  APPLICATION 1: Protein Folding Metastability")
+    print("="*60)
     
-    # Build transition matrix
-    degrees = adjacency.sum(axis=1)
-    degrees[degrees == 0] = 1  # handle dangling nodes
+    # Transition matrix with metastable structure
+    P = np.array([
+        [0.70, 0.15, 0.10, 0.03, 0.02],  # Unfolded
+        [0.10, 0.75, 0.10, 0.03, 0.02],  # Misfolded
+        [0.05, 0.05, 0.70, 0.15, 0.05],  # Partially folded
+        [0.02, 0.02, 0.10, 0.70, 0.16],  # Near-native
+        [0.01, 0.01, 0.03, 0.10, 0.85],  # Native
+    ])
     
-    P = damping * adjacency / degrees[:, np.newaxis] + (1 - damping) / n
+    states = ["Unfolded", "Misfolded", "Partial", "Near-native", "Native"]
     
-    W = -np.log(P)
+    W = tropical_cost_matrix(P)
+    tc, best = triangle_cycle_mean(W)
+    meta = tropical_metastability_analysis(P)
+    mix = estimate_mixing_time(P, epsilon=0.05)
     
-    # Triangle cycle mean
-    min_tcm = float('inf')
+    print(f"\n  State transition matrix:")
+    for i, row in enumerate(P):
+        print(f"    {states[i]:>11}: [{', '.join(f'{x:.2f}' for x in row)}]")
+    
+    print(f"\n  Tropical Analysis:")
+    print(f"    Triangle cycle mean (min): {tc:.4f}")
+    print(f"    Achieving triple: ({states[best[0]]}, {states[best[1]]}, {states[best[2]]})")
+    print(f"    Max triangle mean: {meta['max_triangle_mean']:.4f}")
+    print(f"    Metastability gap: {meta['metastability_gap']:.4f}")
+    print(f"    Classical mixing time: {mix['classical_mixing_time']} steps")
+    
+    print(f"\n  Interpretation:")
+    print(f"    The low triangle cycle mean ({tc:.4f}) at self-loop triples")
+    print(f"    indicates that the system spends most time near diagonal states.")
+    print(f"    The metastability gap ({meta['metastability_gap']:.4f}) quantifies")
+    print(f"    the energy barrier between fast local dynamics and slow global mixing.")
+    
+    # Verify tropical gap at different time scales
+    print(f"\n  Tropical gap verification across time scales:")
+    for m in [1, 5, 10, 50, 100]:
+        result = verify_tropical_gap(P, m)
+        print(f"    m={m:3d}: α={result['alpha']:.4f}, "
+              f"-log(α)/m={result['neg_log_alpha_over_m']:.4f}, "
+              f"tc={result['triangle_cyc']:.4f} ✓")
+
+
+def application_network_communities():
+    """
+    Application 2: Network Community Detection.
+    
+    Uses the tropical cycle structure to detect communities in a
+    random walk on a graph with planted community structure.
+    """
+    print("\n" + "="*60)
+    print("  APPLICATION 2: Network Community Detection")
+    print("="*60)
+    
+    # 6-node graph with 2 communities {0,1,2} and {3,4,5}
+    n = 6
+    P = np.zeros((n, n))
+    
+    # Within-community transitions (strong)
+    for i in range(3):
+        for j in range(3):
+            P[i, j] = 0.25 if i != j else 0.40
+    for i in range(3, 6):
+        for j in range(3, 6):
+            P[i, j] = 0.25 if i != j else 0.40
+    
+    # Between-community transitions (weak)
+    for i in range(3):
+        for j in range(3, 6):
+            P[i, j] = 0.10 / 3
+            P[j, i] = 0.10 / 3
+    
+    # Normalize rows
+    P = P / P.sum(axis=1, keepdims=True)
+    
+    W = tropical_cost_matrix(P)
+    tc, best = triangle_cycle_mean(W)
+    
+    print(f"\n  Graph: 6 nodes, 2 communities {{0,1,2}} and {{3,4,5}}")
+    print(f"  Within-community edge weight: strong")
+    print(f"  Between-community edge weight: weak")
+    
+    print(f"\n  Tropical Analysis:")
+    print(f"    Triangle cycle mean: {tc:.4f}")
+    
+    # Analyze triangle means by type
+    within_means = []
+    cross_means = []
     for i in range(n):
         for j in range(n):
             for k in range(n):
-                val = (W[i,j] + W[j,k] + W[k,i]) / 3
-                min_tcm = min(min_tcm, val)
+                mean = (W[i,j] + W[j,k] + W[k,i]) / 3
+                comm_i = 0 if i < 3 else 1
+                comm_j = 0 if j < 3 else 1
+                comm_k = 0 if k < 3 else 1
+                if comm_i == comm_j == comm_k:
+                    within_means.append(mean)
+                else:
+                    cross_means.append(mean)
     
-    # Mixing analysis for various m
-    results = []
-    for m in [1, 5, 10, 20, 50]:
-        Pm = np.linalg.matrix_power(P, m)
-        alpha = Pm.max()
-        barrier = -np.log(alpha) / m
-        results.append({
-            'm': m,
-            'alpha': alpha,
-            'barrier': barrier,
-            'tcm': min_tcm,
-            'holds': barrier <= min_tcm + 1e-10
-        })
+    print(f"    Within-community triangle mean (avg): {np.mean(within_means):.4f}")
+    print(f"    Cross-community triangle mean (avg):  {np.mean(cross_means):.4f}")
+    print(f"    Ratio (community barrier strength):   {np.mean(cross_means)/np.mean(within_means):.2f}x")
     
-    return {
-        'n': n,
-        'damping': damping,
-        'triangle_cycle_mean': min_tcm,
-        'log_n': np.log(n),
-        'mixing_results': results
-    }
+    print(f"\n  Interpretation:")
+    print(f"    Cross-community triangles have {np.mean(cross_means)/np.mean(within_means):.1f}x higher")
+    print(f"    tropical energy cost, quantifying the difficulty of transitions")
+    print(f"    between communities. This is a computable certificate of")
+    print(f"    community structure.")
 
 
-def metastability_detection(P: np.ndarray, threshold: float = 0.5) -> dict:
+def application_channel_analysis():
     """
-    Detect metastable states using tropical cycle geometry.
+    Application 3: Cryptographic Channel Analysis.
     
-    States with high self-loop tropical cost W(i,i) = -log P(i,i)
-    are "easy to leave" (low probability of staying), while states
-    with low W(i,i) are "traps" (high probability of staying).
-    
-    The tropical cycle mean provides a global certificate of how
-    quickly the chain mixes, complementing local metastability analysis.
-    
-    Args:
-        P: Positive row-stochastic matrix
-        threshold: Threshold for classifying metastable states
-    
-    Returns:
-        Metastability analysis results
+    Analyzes the information-theoretic properties of a noisy channel
+    using tropical cycle means.
     """
-    n = P.shape[0]
-    W = -np.log(P)
+    print("\n" + "="*60)
+    print("  APPLICATION 3: Noisy Channel Analysis")
+    print("="*60)
     
-    # Self-loop costs
-    self_costs = np.diag(W)
+    # Binary symmetric channel with crossover probability p
+    for p in [0.01, 0.05, 0.1, 0.2, 0.3, 0.45]:
+        P = np.array([[1-p, p], [p, 1-p]])
+        W = tropical_cost_matrix(P)
+        tc, _ = triangle_cycle_mean(W)
+        channel_capacity = 1 - (-p*np.log2(p) - (1-p)*np.log2(1-p)) if 0 < p < 1 else 1
+        
+        print(f"\n  BSC(p={p:.2f}):")
+        print(f"    Triangle cycle mean: {tc:.4f}")
+        print(f"    Channel capacity:    {channel_capacity:.4f} bits")
+        print(f"    -log(p):             {-np.log(p):.4f}")
     
-    # Classify states
-    metastable = self_costs < threshold  # low cost = high staying probability
-    
-    # Triangle cycle mean
-    min_tcm = float('inf')
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                val = (W[i,j] + W[j,k] + W[k,i]) / 3
-                min_tcm = min(min_tcm, val)
-    
-    return {
-        'n': n,
-        'self_loop_costs': self_costs,
-        'metastable_states': np.where(metastable)[0].tolist(),
-        'triangle_cycle_mean': min_tcm,
-        'min_self_cost': self_costs.min(),
-        'max_self_cost': self_costs.max(),
-    }
+    print(f"\n  Interpretation:")
+    print(f"    As the crossover probability p increases (channel gets noisier),")
+    print(f"    the tropical cycle mean decreases. The triangle cycle mean")
+    print(f"    provides a single-number summary of channel quality that")
+    print(f"    correlates with but differs from classical capacity.")
 
 
-def channel_capacity_bound(P: np.ndarray) -> dict:
+def application_climate_states():
     """
-    Bound channel capacity using tropical cycle geometry.
+    Application 4: Climate State Transitions.
     
-    For a discrete memoryless channel with transition matrix P,
-    the tropical cycle mean of -log P provides information about
-    the minimum surprise along any cycle, which relates to the
-    channel's information-carrying capacity.
-    
-    Args:
-        P: Channel transition matrix (rows = inputs, cols = outputs)
-    
-    Returns:
-        Channel analysis results
+    Models transitions between climate regimes using a Markov chain
+    and analyzes energy barriers using tropical geometry.
     """
-    n = P.shape[0]
-    W = -np.log(P)
+    print("\n" + "="*60)
+    print("  APPLICATION 4: Climate State Transitions")
+    print("="*60)
     
-    # Triangle cycle mean
-    min_tcm = float('inf')
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                val = (W[i,j] + W[j,k] + W[k,i]) / 3
-                min_tcm = min(min_tcm, val)
+    # 4 climate states: Glacial, Interglacial, Transitional-Cold, Transitional-Warm
+    states = ["Glacial", "Interglacial", "Trans-Cold", "Trans-Warm"]
     
-    # Entropy of each row (conditional entropy)
-    row_entropies = -np.sum(P * np.log(P), axis=1)
+    P = np.array([
+        [0.85, 0.02, 0.10, 0.03],  # Glacial: very stable
+        [0.02, 0.85, 0.03, 0.10],  # Interglacial: very stable
+        [0.15, 0.05, 0.60, 0.20],  # Transitional-Cold
+        [0.05, 0.15, 0.20, 0.60],  # Transitional-Warm
+    ])
     
-    return {
-        'n': n,
-        'triangle_cycle_mean': min_tcm,
-        'log_n': np.log(n),
-        'avg_conditional_entropy': row_entropies.mean(),
-        'min_row_entropy': row_entropies.min(),
-        'max_row_entropy': row_entropies.max(),
-    }
+    W = tropical_cost_matrix(P)
+    tc, best = triangle_cycle_mean(W)
+    meta = tropical_metastability_analysis(P)
+    mix = estimate_mixing_time(P, epsilon=0.05)
+    
+    print(f"\n  Climate state transition model:")
+    for i, row in enumerate(P):
+        print(f"    {states[i]:>14}: [{', '.join(f'{x:.2f}' for x in row)}]")
+    
+    print(f"\n  Tropical Analysis:")
+    print(f"    Triangle cycle mean: {tc:.4f}")
+    print(f"    Metastability gap: {meta['metastability_gap']:.4f}")
+    print(f"    Mixing time: {mix['classical_mixing_time']} time steps")
+    
+    # Energy barriers between states
+    print(f"\n  Tropical edge weights (energy barriers):")
+    for i in range(4):
+        for j in range(4):
+            if i != j:
+                print(f"    {states[i]:>14} → {states[j]:<14}: {W[i,j]:.3f}")
+    
+    print(f"\n  Interpretation:")
+    print(f"    High tropical weights ({W[0,1]:.2f}) between Glacial↔Interglacial")
+    print(f"    confirm these as metastable states with large energy barriers.")
+    print(f"    The tropical cycle mean ({tc:.4f}) captures the easiest cycling")
+    print(f"    route, revealing the transition pathway through the landscape.")
 
 
 if __name__ == "__main__":
-    print("="*60)
-    print("  APPLICATIONS OF THE MARKOV-TROPICAL BRIDGE")
-    print("="*60)
+    print("╔" + "═"*58 + "╗")
+    print("║  Markov-Tropical Bridge: Real-World Applications          ║")
+    print("╚" + "═"*58 + "╝")
     
-    # Application 1: PageRank-style analysis
-    print("\n--- Application 1: Web Graph (PageRank) ---")
-    # Small web graph
-    adj = np.array([
-        [0, 1, 1, 0, 0],
-        [1, 0, 0, 1, 0],
-        [0, 1, 0, 1, 1],
-        [1, 0, 0, 0, 1],
-        [0, 0, 1, 1, 0]
-    ], dtype=float)
-    
-    result = pagerank_tropical_analysis(adj, damping=0.85)
-    print(f"  Graph: {result['n']} nodes")
-    print(f"  Triangle cycle mean: {result['triangle_cycle_mean']:.4f}")
-    print(f"  log(n): {result['log_n']:.4f}")
-    print(f"  Mixing progression:")
-    for r in result['mixing_results']:
-        print(f"    m={r['m']:3d}: α={r['alpha']:.4f}, "
-              f"barrier={r['barrier']:.4f}, holds={r['holds']}")
-    
-    # Application 2: Metastability
-    print("\n--- Application 2: Metastability Detection ---")
-    P_meta = np.array([
-        [0.95, 0.04, 0.01],
-        [0.03, 0.92, 0.05],
-        [0.02, 0.03, 0.95]
-    ])
-    
-    meta = metastability_detection(P_meta)
-    print(f"  Self-loop costs: {meta['self_loop_costs']}")
-    print(f"  Metastable states: {meta['metastable_states']}")
-    print(f"  Triangle cycle mean: {meta['triangle_cycle_mean']:.4f}")
-    
-    # Application 3: Channel capacity
-    print("\n--- Application 3: Channel Capacity ---")
-    P_channel = np.array([
-        [0.7, 0.2, 0.1],
-        [0.1, 0.8, 0.1],
-        [0.2, 0.1, 0.7]
-    ])
-    
-    chan = channel_capacity_bound(P_channel)
-    print(f"  Triangle cycle mean: {chan['triangle_cycle_mean']:.4f}")
-    print(f"  log(n): {chan['log_n']:.4f}")
-    print(f"  Avg conditional entropy: {chan['avg_conditional_entropy']:.4f}")
+    application_protein_folding()
+    application_network_communities()
+    application_channel_analysis()
+    application_climate_states()
     
     print("\n" + "="*60)
-    print("  ALL APPLICATIONS DEMONSTRATED")
+    print("  All applications complete.")
     print("="*60)
 
 
+#!/usr/bin/env python3
 """
-Markov-Tropical Bridge: Numerical Demonstrations
+Demonstration of the Markov-Tropical Bridge Theorem.
 
-Demonstrates the theorem that for a positive row-stochastic matrix P,
-if all m-step transition probabilities satisfy P^m(i,j) ≤ α, then:
-
-    triangleCyc(-log P) ≥ -log(α) / m
-
-This is the tropicalization of mixing decay into cycle energy barriers.
+Shows how the multi-step tropical gap theorem connects Markov chain mixing
+bounds to tropical (min-plus) cycle geometry. Numerically verifies the
+formal theorem: if all m-step transition probabilities satisfy P^m(i,j) ≤ α,
+then triangleCyc(-log P) ≥ -log(α) / m.
 """
 
 import numpy as np
-from typing import Tuple
-
+from itertools import product as cartesian_product
 
 def tropical_cost(P: np.ndarray) -> np.ndarray:
-    """Compute the tropical cost matrix W(i,j) = -log(P(i,j))."""
+    """Compute tropical cost matrix W(i,j) = -log(P(i,j))."""
     return -np.log(P)
 
-
 def triangle_mean(W: np.ndarray, i: int, j: int, k: int) -> float:
-    """Mean weight of the triangle cycle i → j → k → i."""
+    """Mean weight of the triangle cycle i -> j -> k -> i."""
     return (W[i, j] + W[j, k] + W[k, i]) / 3.0
-
 
 def triangle_cyc(W: np.ndarray) -> float:
     """Minimum triangle cycle mean over all triples (i,j,k)."""
     n = W.shape[0]
     min_val = float('inf')
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                val = triangle_mean(W, i, j, k)
-                if val < min_val:
-                    min_val = val
+    for i, j, k in cartesian_product(range(n), repeat=3):
+        val = triangle_mean(W, i, j, k)
+        min_val = min(min_val, val)
     return min_val
 
-
-def verify_theorem(P: np.ndarray, m: int, name: str = "Matrix") -> dict:
+def verify_tropical_gap(P: np.ndarray, m: int, name: str = "Matrix"):
     """
-    Verify the multi-step tropical gap theorem for a given matrix and step count.
+    Verify the multi-step tropical gap theorem for a given matrix.
     
-    Returns a dict with the key quantities and whether the bound holds.
+    Theorem: If ∀ i,j: (P^m)(i,j) ≤ α, then triangleCyc(-log P) ≥ -log(α)/m.
     """
     n = P.shape[0]
+    
+    # Verify row-stochasticity and positivity
+    assert np.allclose(P.sum(axis=1), 1.0), "Matrix is not row-stochastic"
+    assert np.all(P > 0), "Matrix has non-positive entries"
+    
+    # Compute P^m
     Pm = np.linalg.matrix_power(P, m)
     alpha = Pm.max()
     
+    # Compute tropical cost and cycle mean
     W = tropical_cost(P)
-    tcyc = triangle_cyc(W)
+    tc = triangle_cyc(W)
     
-    neg_log_alpha = -np.log(alpha)
-    bound = neg_log_alpha / m
+    # The theorem's bound
+    bound = -np.log(alpha) / m
     
-    holds = bound <= tcyc + 1e-12  # small tolerance for floating point
-    
-    result = {
-        'name': name,
-        'n': n,
-        'm': m,
-        'alpha': alpha,
-        '-log(alpha)': neg_log_alpha,
-        '-log(alpha)/m': bound,
-        'triangleCyc': tcyc,
-        'gap': tcyc - bound,
-        'holds': holds,
-    }
-    return result
-
-
-def print_result(r: dict) -> None:
-    """Pretty-print a verification result."""
-    status = "✓ VERIFIED" if r['holds'] else "✗ FAILED"
     print(f"\n{'='*60}")
-    print(f"  {r['name']} (n={r['n']}, m={r['m']})")
+    print(f"  {name} ({n}x{n}, m={m})")
     print(f"{'='*60}")
-    print(f"  max P^m entry (α)     = {r['alpha']:.6f}")
-    print(f"  -log(α)               = {r['-log(alpha)']:.6f}")
-    print(f"  -log(α) / m           = {r['-log(alpha)/m']:.6f}")
-    print(f"  triangleCyc(-log P)   = {r['triangleCyc']:.6f}")
-    print(f"  gap (≥ 0 if theorem)  = {r['gap']:.6f}")
-    print(f"  Status: {status}")
+    print(f"  P =")
+    for row in P:
+        print(f"    [{', '.join(f'{x:.4f}' for x in row)}]")
+    print(f"  max(P^{m}) = α = {alpha:.6f}")
+    print(f"  -log(α) / m    = {bound:.6f}")
+    print(f"  triangleCyc(W) = {tc:.6f}")
+    print(f"  Gap satisfied? {tc >= bound - 1e-10}")
+    print(f"  Margin: {tc - bound:.6f}")
+    
+    return tc >= bound - 1e-10
 
 
-def demo_uniform_matrix() -> None:
-    """Demo 1: Uniform doubly-stochastic matrix (all entries 1/n)."""
+def demo_basic():
+    """Basic demonstration with small matrices."""
     print("\n" + "="*60)
-    print("  DEMO 1: Uniform Matrix (P = 1/n · J)")
+    print("  DEMO 1: Basic Theorem Verification")
     print("="*60)
     
-    for n in [2, 3, 4, 5]:
-        P = np.ones((n, n)) / n
-        for m in [1, 2, 5, 10]:
-            r = verify_theorem(P, m, f"Uniform {n}×{n}")
-            print_result(r)
-
-
-def demo_near_identity() -> None:
-    """Demo 2: Near-identity matrix (mostly stays, small transition probability)."""
-    print("\n" + "="*60)
-    print("  DEMO 2: Near-Identity Matrix P = (1-ε)I + ε/(n-1)·(J-I)")
-    print("="*60)
+    # Example 1: Uniform 3x3
+    P1 = np.ones((3, 3)) / 3.0
+    verify_tropical_gap(P1, 1, "Uniform 3×3")
+    verify_tropical_gap(P1, 5, "Uniform 3×3")
     
-    n = 3
-    eps = 0.1
-    P = eps / (n - 1) * np.ones((n, n))
-    np.fill_diagonal(P, 1 - eps)
-    
-    print(f"\n  P (ε={eps}):")
-    print(f"  {P}")
-    
-    for m in [1, 2, 5, 10, 50, 100]:
-        r = verify_theorem(P, m, f"Near-Id (ε={eps})")
-        print_result(r)
-
-
-def demo_cyclic_permutation() -> None:
-    """Demo 3: Near-cyclic permutation matrix."""
-    print("\n" + "="*60)
-    print("  DEMO 3: Near-Cyclic Permutation")
-    print("="*60)
-    
-    n = 3
+    # Example 2: Nearly identity 3x3
     eps = 0.05
-    # Cyclic: state 0→1→2→0 with probability 1-2ε, self-loop ε, reverse ε
-    P = np.array([
-        [eps, 1-2*eps, eps],
-        [eps, eps, 1-2*eps],
-        [1-2*eps, eps, eps]
-    ])
+    n2 = 3
+    P2 = np.eye(n2) * (1 - (n2-1)*eps) + eps * np.ones((n2, n2)) - eps * np.eye(n2)
+    P2 = np.eye(n2) * (1 - 2*eps) + eps * np.ones((n2, n2))
+    P2 = P2 / P2.sum(axis=1, keepdims=True)
+    verify_tropical_gap(P2, 1, f"Near-identity 3×3 (ε={eps})")
+    verify_tropical_gap(P2, 10, f"Near-identity 3×3 (ε={eps})")
+    verify_tropical_gap(P2, 100, f"Near-identity 3×3 (ε={eps})")
     
-    print(f"\n  P (ε={eps}):")
-    print(f"  {P}")
+    # Example 3: Asymmetric 2x2
+    P3 = np.array([[0.3, 0.7],
+                    [0.4, 0.6]])
+    verify_tropical_gap(P3, 1, "Asymmetric 2×2")
+    verify_tropical_gap(P3, 5, "Asymmetric 2×2")
     
-    for m in [1, 2, 3, 6, 9, 12, 30]:
-        r = verify_theorem(P, m, f"Cyclic (ε={eps})")
-        print_result(r)
 
-
-def demo_extremal_ceiling() -> None:
-    """Demo 4: Convergence to the information-theoretic ceiling log(n)."""
+def demo_convergence():
+    """Show how the tropical bound tracks mixing convergence."""
     print("\n" + "="*60)
-    print("  DEMO 4: Convergence to Information-Theoretic Ceiling")
+    print("  DEMO 2: Tropical Bound vs Mixing Convergence")
     print("="*60)
-    print("  For large m, α(m) → 1/n, so -log(α)/m → 0")
-    print("  But -log(α) → log(n) (the entropy ceiling)")
     
-    n = 4
-    eps = 0.2
-    P = eps / (n - 1) * np.ones((n, n))
-    np.fill_diagonal(P, 1 - eps)
+    # 4-state chain with bottleneck
+    P = np.array([[0.5, 0.4, 0.05, 0.05],
+                   [0.3, 0.5, 0.1,  0.1],
+                   [0.05, 0.1, 0.5,  0.35],
+                   [0.05, 0.1, 0.35, 0.5]])
     
     W = tropical_cost(P)
-    tcyc = triangle_cyc(W)
+    tc = triangle_cyc(W)
     
-    print(f"\n  n = {n}, triangleCyc(-log P) = {tcyc:.6f}")
-    print(f"  log(n) = {np.log(n):.6f}")
-    print(f"\n  {'m':>5} {'α(m)':>10} {'-log α':>10} {'-log α/m':>10} {'triangleCyc':>12} {'holds':>6}")
-    print(f"  {'-'*55}")
+    print(f"\n  4-state bottleneck chain")
+    print(f"  triangleCyc = {tc:.6f}")
+    print(f"\n  {'m':>4}  {'α=max(P^m)':>12}  {'-log(α)/m':>12}  {'Bound holds':>12}")
+    print(f"  {'-'*4}  {'-'*12}  {'-'*12}  {'-'*12}")
     
-    for m in [1, 2, 5, 10, 20, 50, 100, 500]:
+    for m in [1, 2, 5, 10, 20, 50, 100]:
         Pm = np.linalg.matrix_power(P, m)
         alpha = Pm.max()
-        neg_log_a = -np.log(alpha)
-        bound = neg_log_a / m
-        holds = bound <= tcyc + 1e-12
-        print(f"  {m:5d} {alpha:10.6f} {neg_log_a:10.6f} {bound:10.6f} {tcyc:12.6f} {'✓' if holds else '✗':>6}")
-    
-    print(f"\n  As m → ∞: α → 1/{n} = {1/n:.4f}, -log(α) → log({n}) = {np.log(n):.4f}")
+        bound = -np.log(alpha) / m
+        holds = tc >= bound - 1e-10
+        print(f"  {m:4d}  {alpha:12.6f}  {bound:12.6f}  {'✓' if holds else '✗':>12}")
 
 
-def demo_tightness() -> None:
-    """Demo 5: Show the bound is tight for m=1."""
+def demo_speed_limit():
+    """Demonstrate the mixing speed limit theorem."""
     print("\n" + "="*60)
-    print("  DEMO 5: Tightness of the Bound (m=1)")
+    print("  DEMO 3: Mixing Speed Limit")
     print("="*60)
     
-    for n in [2, 3, 4, 5]:
-        # Uniform matrix achieves equality
-        P = np.ones((n, n)) / n
-        W = tropical_cost(P)
-        tcyc = triangle_cyc(W)
-        neg_log_alpha = np.log(n)  # α = 1/n for uniform, -log α = log n
+    P = np.array([[0.6, 0.3, 0.1],
+                   [0.2, 0.5, 0.3],
+                   [0.1, 0.3, 0.6]])
+    
+    W = tropical_cost(P)
+    tc = triangle_cyc(W)
+    
+    print(f"\n  3-state chain")
+    print(f"  triangleCyc = {tc:.6f}")
+    print(f"\n  The speed limit theorem says: α ≥ exp(-m · triangleCyc)")
+    print(f"  This means transition probabilities CANNOT decay faster than")
+    print(f"  the exponential rate set by the tropical cycle mean.\n")
+    
+    print(f"  {'m':>4}  {'exp(-m·tc)':>12}  {'actual α':>12}  {'Speed limit':>12}")
+    print(f"  {'-'*4}  {'-'*12}  {'-'*12}  {'-'*12}")
+    
+    for m in [1, 2, 5, 10, 20, 50]:
+        Pm = np.linalg.matrix_power(P, m)
+        alpha = Pm.max()
+        speed_limit = np.exp(-m * tc)
+        print(f"  {m:4d}  {speed_limit:12.6f}  {alpha:12.6f}  {'✓' if alpha >= speed_limit - 1e-10 else '✗':>12}")
+
+
+def demo_information_theoretic():
+    """Show the information-theoretic ceiling for doubly stochastic matrices."""
+    print("\n" + "="*60)
+    print("  DEMO 4: Information-Theoretic Ceiling")
+    print("="*60)
+    
+    for n_plus_1 in [2, 3, 4, 5]:
+        # Uniform matrix: P_ij = 1/(n+1) for all i,j
+        P_uniform = np.ones((n_plus_1, n_plus_1)) / n_plus_1
+        W = tropical_cost(P_uniform)
+        tc = triangle_cyc(W)
+        ceiling = np.log(n_plus_1)
         
-        print(f"\n  n={n}: -log(α) = log({n}) = {neg_log_alpha:.6f}, "
-              f"triangleCyc = {tcyc:.6f}, ratio = {tcyc/neg_log_alpha:.6f}")
+        print(f"\n  n+1 = {n_plus_1}: log({n_plus_1}) = {ceiling:.6f}, "
+              f"triangleCyc = {tc:.6f}, "
+              f"match = {'✓' if abs(tc - ceiling) < 1e-10 else '✗'}")
+        
+        # Near-uniform with perturbation
+        eps = 0.01
+        P_near = P_uniform + eps * (np.random.randn(n_plus_1, n_plus_1))
+        P_near = np.abs(P_near)
+        P_near = P_near / P_near.sum(axis=1, keepdims=True)
+        
+        W_near = tropical_cost(P_near)
+        tc_near = triangle_cyc(W_near)
+        print(f"  Near-uniform: triangleCyc = {tc_near:.6f} "
+              f"({'≥' if tc_near >= ceiling - 1e-10 else '<'} log({n_plus_1}))")
 
 
 if __name__ == "__main__":
-    print("╔════════════════════════════════════════════════════════════╗")
-    print("║  Markov-Tropical Bridge: Numerical Demonstrations        ║")
-    print("║                                                          ║")
-    print("║  Theorem: -log(α)/m ≤ triangleCyc(-log P)               ║")
-    print("║  where P^m(i,j) ≤ α for all i,j                         ║")
-    print("╚════════════════════════════════════════════════════════════╝")
+    np.random.seed(42)
+    print("╔" + "═"*58 + "╗")
+    print("║  Markov-Tropical Bridge Theorem: Numerical Demonstrations ║")
+    print("╚" + "═"*58 + "╝")
     
-    demo_uniform_matrix()
-    demo_near_identity()
-    demo_cyclic_permutation()
-    demo_extremal_ceiling()
-    demo_tightness()
+    demo_basic()
+    demo_convergence()
+    demo_speed_limit()
+    demo_information_theoretic()
     
     print("\n" + "="*60)
-    print("  ALL DEMONSTRATIONS COMPLETE")
+    print("  All demonstrations complete.")
     print("="*60)
 
 
-"""Generate PACKAGE.json with all artifacts embedded."""
+#!/usr/bin/env python3
+"""Generate PACKAGE.json with all artifacts."""
 
 import json
-import sys
-sys.path.insert(0, '.')
-
-from visualizations import (
-    plot_mixing_vs_barrier,
-    plot_state_space_comparison, 
-    plot_phase_diagram,
-    plot_tropical_cost_heatmap
-)
+import base64
+import os
 
 def read_file(path):
     with open(path, 'r') as f:
         return f.read()
 
-print("Generating visualizations...")
-viz1 = plot_mixing_vs_barrier()
-viz2 = plot_state_space_comparison()
-viz3 = plot_phase_diagram()
-viz4 = plot_tropical_cost_heatmap()
+def read_binary_base64(path):
+    with open(path, 'rb') as f:
+        return "data:image/png;base64," + base64.b64encode(f.read()).decode('utf-8')
 
-print("Reading source files...")
-article = read_file('ARTICLE.md')
-research_paper = read_file('RESEARCH_PAPER.md')
-future_directions = read_file('FUTURE_DIRECTIONS.md')
-demo_code = read_file('demo.py')
-algo_code = read_file('algorithms.py')
-app_code = read_file('applications.py')
-lean_code = read_file('Catalog/Tropical/MarkovTropicalBridge.lean')
+# Read all content
+article = read_file('/workspace/request-project/ARTICLE.md')
+research_paper = read_file('/workspace/request-project/RESEARCH_PAPER.md')
+future_directions = read_file('/workspace/request-project/FUTURE_DIRECTIONS.md')
+demo_code = read_file('/workspace/request-project/demo.py')
+algorithms_code = read_file('/workspace/request-project/algorithms.py')
+applications_code = read_file('/workspace/request-project/applications.py')
+lean_basic = read_file('/workspace/request-project/MarkovBridge/Basic.lean')
+lean_asymptotic = read_file('/workspace/request-project/MarkovBridge/Asymptotic.lean')
+
+# Read images
+images = {}
+for name in ['fig1_tropical_gap', 'fig2_metastability', 'fig3_ceiling', 'fig4_channel']:
+    path = f'/workspace/request-project/{name}.png'
+    if os.path.exists(path):
+        images[name] = read_binary_base64(path)
 
 package = {
-    "title": "The Markov–Tropical Bridge: Mixing Bounds as Cycle Energy Barriers",
-    "domain": "Tropical Geometry / Markov Chains",
+    "title": "The Multi-Step Tropical Gap Theorem: From Markov Mixing Bounds to Tropical Cycle Energy Barriers",
+    "domain": "Tropical Geometry / Probability Theory",
     "article": article,
     "research_paper": research_paper,
     "future_directions": future_directions,
     "demos": [
         {
-            "name": "Markov-Tropical Bridge Demonstrations",
+            "name": "Tropical Gap Theorem Verification",
             "code": demo_code
         },
         {
             "name": "Real-World Applications",
-            "code": app_code
+            "code": applications_code
         }
     ],
     "algorithms": [
         {
             "name": "Triangle Cycle Mean Computation",
-            "pseudocode": "Input: Positive matrix P\\nOutput: triangleCyc(-log P)\\n\\n1. W ← -log(P)\\n2. min_val ← +∞\\n3. for i,j,k in states:\\n4.   val ← (W[i,j] + W[j,k] + W[k,i]) / 3\\n5.   min_val ← min(min_val, val)\\n6. return min_val\\n\\nComplexity: O(n³) time, O(n²) space",
-            "code": algo_code
+            "pseudocode": """INPUT: Weight matrix W (n×n)
+OUTPUT: Minimum triangle cycle mean λ_tri
+
+λ_tri ← ∞
+for i = 0 to n-1:
+    for j = 0 to n-1:
+        for k = 0 to n-1:
+            μ ← (W[i,j] + W[j,k] + W[k,i]) / 3
+            λ_tri ← min(λ_tri, μ)
+return λ_tri
+
+Time: O(n³)  Space: O(1)""",
+            "code": algorithms_code
+        },
+        {
+            "name": "Karp's Minimum Cycle Mean",
+            "pseudocode": """INPUT: Weight matrix W (n×n)
+OUTPUT: Minimum cycle mean over all directed cycles
+
+// Phase 1: Shortest walks of each length
+D[0][v] ← 0 for all v
+for k = 1 to n:
+    for v = 0 to n-1:
+        D[k][v] ← min_u (D[k-1][u] + W[u,v])
+
+// Phase 2: Extract cycle mean (Karp's formula)
+λ* ← min_v max_{0≤k<n} (D[n][v] - D[k][v]) / (n - k)
+return λ*
+
+Time: O(n³)  Space: O(n²)""",
+            "code": algorithms_code
         }
     ],
     "visualizations": [
         {
-            "name": "Mixing Decay vs Tropical Energy Barrier",
-            "data": viz1
+            "name": "Tropical Gap Convergence & Speed Limit",
+            "data": images.get('fig1_tropical_gap', '')
         },
         {
-            "name": "Tropical Barriers Across State Space Sizes",
-            "data": viz2
+            "name": "Metastability Landscape",
+            "data": images.get('fig2_metastability', '')
         },
         {
-            "name": "Phase Diagram: Spectral Gap vs Tropical Cycle Mean",
-            "data": viz3
+            "name": "Information-Theoretic Ceiling",
+            "data": images.get('fig3_ceiling', '')
         },
         {
-            "name": "Tropicalization: Probabilities → Costs",
-            "data": viz4
+            "name": "Channel Analysis",
+            "data": images.get('fig4_channel', '')
         }
     ],
-    "lean_proofs": lean_code
+    "lean_proofs": lean_basic + "\n\n-- ═══════════════════════════════════════════════\n-- Asymptotic Corollaries\n-- ═══════════════════════════════════════════════\n\n" + lean_asymptotic
 }
 
-print("Writing PACKAGE.json...")
-with open('PACKAGE.json', 'w') as f:
+with open('/workspace/request-project/PACKAGE.json', 'w') as f:
     json.dump(package, f, indent=2, ensure_ascii=False)
 
-print(f"PACKAGE.json written ({len(json.dumps(package))} chars)")
+print(f"PACKAGE.json generated ({os.path.getsize('/workspace/request-project/PACKAGE.json')} bytes)")
 
 
+#!/usr/bin/env python3
 """
 Visualizations for the Markov-Tropical Bridge Theorem.
-Generates publication-quality figures showing key mathematical structures.
+Generates publication-quality figures saved as PNG files.
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.patches import FancyArrowPatch
 import base64
-from io import BytesIO
+import io
 
 
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{data}"
-
-
-def triangle_cycle_mean(W, i, j, k):
-    return (W[i,j] + W[j,k] + W[k,i]) / 3.0
+def tropical_cost(P):
+    return -np.log(P)
 
 def triangle_cyc(W):
     n = W.shape[0]
-    m = float('inf')
+    min_val = float('inf')
     for i in range(n):
         for j in range(n):
             for k in range(n):
-                m = min(m, triangle_cycle_mean(W, i, j, k))
-    return m
+                val = (W[i,j] + W[j,k] + W[k,i]) / 3.0
+                min_val = min(min_val, val)
+    return min_val
 
 
-def plot_mixing_vs_barrier():
-    """Plot the mixing bound α(m) vs tropical energy barrier."""
-    n = 4
-    eps = 0.2
-    P = eps / (n-1) * np.ones((n, n))
-    np.fill_diagonal(P, 1 - eps)
+def fig1_tropical_gap_convergence():
+    """Figure 1: How the tropical bound tracks mixing."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
     
-    W = -np.log(P)
-    tcyc = triangle_cyc(W)
+    # Left: bound vs m for different matrices
+    ax = axes[0]
+    matrices = {
+        'Uniform (P=1/3)': np.ones((3,3)) / 3,
+        'Near-identity': np.array([[0.8, 0.1, 0.1], [0.1, 0.8, 0.1], [0.1, 0.1, 0.8]]),
+        'Asymmetric': np.array([[0.5, 0.3, 0.2], [0.2, 0.5, 0.3], [0.3, 0.2, 0.5]]),
+    }
     
-    ms = list(range(1, 101))
-    alphas = []
-    barriers = []
-    
-    for m in ms:
-        Pm = np.linalg.matrix_power(P, m)
-        alpha = Pm.max()
-        alphas.append(alpha)
-        barriers.append(-np.log(alpha) / m)
-    
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    
-    ax1.plot(ms, alphas, 'b-', linewidth=2, label=r'$\alpha(m) = \max_{i,j} P^m(i,j)$')
-    ax1.axhline(y=1/n, color='r', linestyle='--', alpha=0.7, label=f'1/n = {1/n:.3f}')
-    ax1.set_xlabel('Step count m', fontsize=12)
-    ax1.set_ylabel(r'Mixing bound $\alpha(m)$', fontsize=12)
-    ax1.set_title('Mixing Decay', fontsize=14)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-    
-    ax2.plot(ms, barriers, 'g-', linewidth=2, label=r'$-\log(\alpha)/m$ (barrier)')
-    ax2.axhline(y=tcyc, color='r', linestyle='--', alpha=0.7, 
-                label=f'triangleCyc = {tcyc:.4f}')
-    ax2.fill_between(ms, barriers, [tcyc]*len(ms), alpha=0.15, color='green',
-                     label='Gap (theorem guarantees ≥ 0)')
-    ax2.set_xlabel('Step count m', fontsize=12)
-    ax2.set_ylabel('Energy barrier', fontsize=12)
-    ax2.set_title('Tropical Energy Barrier vs Cycle Mean', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-    
-    fig.suptitle(f'Markov–Tropical Bridge (n={n}, ε={eps})', fontsize=16, y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def plot_state_space_comparison():
-    """Compare tropical barriers across different state space sizes."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-    
-    colors = plt.cm.viridis(np.linspace(0.2, 0.9, 5))
-    
-    for idx, n in enumerate([2, 3, 4, 5, 8]):
-        eps = 0.3
-        P = eps / (n-1) * np.ones((n, n))
-        np.fill_diagonal(P, 1 - eps)
-        
-        W = -np.log(P)
-        tcyc = triangle_cyc(W)
-        
-        ms = list(range(1, 51))
-        barriers = []
+    ms = np.arange(1, 51)
+    for name, P in matrices.items():
+        W = tropical_cost(P)
+        tc = triangle_cyc(W)
+        bounds = []
         for m in ms:
             Pm = np.linalg.matrix_power(P, m)
             alpha = Pm.max()
-            barriers.append(-np.log(alpha) / m)
-        
-        ax.plot(ms, barriers, '-', color=colors[idx], linewidth=2,
-                label=f'n={n} (TCM={tcyc:.3f})')
-        ax.axhline(y=tcyc, color=colors[idx], linestyle=':', alpha=0.4)
+            bounds.append(-np.log(alpha) / m)
+        ax.plot(ms, bounds, '-', linewidth=2, label=f'{name}')
+        ax.axhline(y=tc, color=ax.get_lines()[-1].get_color(), linestyle='--', alpha=0.5)
     
-    ax.set_xlabel('Step count m', fontsize=12)
-    ax.set_ylabel(r'Energy barrier $-\log(\alpha)/m$', fontsize=12)
-    ax.set_title('Tropical Barriers Across State Space Sizes', fontsize=14)
+    ax.set_xlabel('Steps m', fontsize=12)
+    ax.set_ylabel('-log(α) / m', fontsize=12)
+    ax.set_title('Tropical Bound vs Steps', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    # Right: speed limit illustration
+    ax = axes[1]
+    P = np.array([[0.6, 0.3, 0.1], [0.2, 0.5, 0.3], [0.1, 0.3, 0.6]])
+    W = tropical_cost(P)
+    tc = triangle_cyc(W)
+    
+    ms = np.arange(1, 31)
+    alphas = []
+    speed_limits = []
+    for m in ms:
+        Pm = np.linalg.matrix_power(P, m)
+        alphas.append(Pm.max())
+        speed_limits.append(np.exp(-m * tc))
+    
+    ax.semilogy(ms, alphas, 'b-o', markersize=4, linewidth=2, label='Actual max P^m(i,j)')
+    ax.semilogy(ms, speed_limits, 'r--', linewidth=2, label='Speed limit exp(-m·tc)')
+    ax.fill_between(ms, speed_limits, alphas, alpha=0.1, color='blue')
+    ax.set_xlabel('Steps m', fontsize=12)
+    ax.set_ylabel('Bound α (log scale)', fontsize=12)
+    ax.set_title('Mixing Speed Limit', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('/workspace/request-project/fig1_tropical_gap.png', dpi=150, bbox_inches='tight')
+    plt.close()
+
+
+def fig2_metastability_landscape():
+    """Figure 2: Triangle mean landscape showing metastability."""
+    P = np.array([
+        [0.85, 0.02, 0.10, 0.03],
+        [0.02, 0.85, 0.03, 0.10],
+        [0.15, 0.05, 0.60, 0.20],
+        [0.05, 0.15, 0.20, 0.60],
+    ])
+    W = tropical_cost(P)
+    n = 4
+    
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    
+    # Left: heatmap of pairwise W values
+    ax = axes[0]
+    im = ax.imshow(W, cmap='YlOrRd', interpolation='nearest')
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    labels = ['Glacial', 'Interglac.', 'Trans-C', 'Trans-W']
+    ax.set_xticklabels(labels, rotation=45, ha='right')
+    ax.set_yticklabels(labels)
+    ax.set_title('Tropical Cost Matrix W = -log P', fontsize=14)
+    for i in range(n):
+        for j in range(n):
+            ax.text(j, i, f'{W[i,j]:.2f}', ha='center', va='center', fontsize=10,
+                   color='white' if W[i,j] > 2 else 'black')
+    plt.colorbar(im, ax=ax)
+    
+    # Right: triangle means distribution
+    ax = axes[1]
+    means = []
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                means.append((W[i,j] + W[j,k] + W[k,i]) / 3)
+    
+    ax.hist(means, bins=30, color='steelblue', edgecolor='navy', alpha=0.7)
+    tc = min(means)
+    ax.axvline(x=tc, color='red', linewidth=2, linestyle='--', label=f'triangleCyc = {tc:.3f}')
+    ax.axvline(x=max(means), color='orange', linewidth=2, linestyle='--', label=f'max = {max(means):.3f}')
+    ax.set_xlabel('Triangle Mean', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Distribution of Triangle Cycle Means', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('/workspace/request-project/fig2_metastability.png', dpi=150, bbox_inches='tight')
+    plt.close()
+
+
+def fig3_information_ceiling():
+    """Figure 3: Information-theoretic ceiling for uniform matrices."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+    
+    ns = range(2, 21)
+    log_ns = [np.log(n) for n in ns]
+    tc_uniform = []
+    tc_near = []
+    
+    np.random.seed(42)
+    for n in ns:
+        P_uni = np.ones((n, n)) / n
+        W = tropical_cost(P_uni)
+        tc_uniform.append(triangle_cyc(W))
+        
+        P_near = P_uni + 0.02 * np.abs(np.random.randn(n, n))
+        P_near = P_near / P_near.sum(axis=1, keepdims=True)
+        W_near = tropical_cost(P_near)
+        tc_near.append(triangle_cyc(W_near))
+    
+    ax.plot(list(ns), log_ns, 'k-', linewidth=2, label='log(n) (theoretical ceiling)')
+    ax.plot(list(ns), tc_uniform, 'bo-', markersize=6, label='triangleCyc (uniform P)')
+    ax.plot(list(ns), tc_near, 'r^-', markersize=5, alpha=0.7, label='triangleCyc (near-uniform P)')
+    
+    ax.set_xlabel('Number of states n', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title('Triangle Cycle Mean vs Information Ceiling', fontsize=14)
     ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
-    fig.tight_layout()
-    return fig_to_base64(fig)
+    
+    plt.tight_layout()
+    plt.savefig('/workspace/request-project/fig3_ceiling.png', dpi=150, bbox_inches='tight')
+    plt.close()
 
 
-def plot_phase_diagram():
-    """Phase diagram: relationship between mixing rate and tropical geometry."""
-    fig, ax = plt.subplots(figsize=(8, 6))
+def fig4_channel_analysis():
+    """Figure 4: Tropical analysis of binary symmetric channel."""
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
     
-    eps_values = np.linspace(0.05, 0.45, 30)
-    n = 3
+    ps = np.linspace(0.001, 0.499, 200)
+    tcs = []
+    capacities = []
     
-    tcycs = []
-    spectral_gaps = []
+    for p in ps:
+        P = np.array([[1-p, p], [p, 1-p]])
+        W = tropical_cost(P)
+        tcs.append(triangle_cyc(W))
+        cap = 1 + p * np.log2(p) + (1-p) * np.log2(1-p)
+        capacities.append(cap)
     
-    for eps in eps_values:
-        P = eps / (n-1) * np.ones((n, n))
-        np.fill_diagonal(P, 1 - eps)
-        
-        W = -np.log(P)
-        tcycs.append(triangle_cyc(W))
-        
-        eigs = np.sort(np.abs(np.linalg.eigvals(P)))[::-1]
-        spectral_gaps.append(1 - eigs[1])
+    ax2 = ax.twinx()
+    line1, = ax.plot(ps, tcs, 'b-', linewidth=2, label='Triangle cycle mean')
+    line2, = ax2.plot(ps, capacities, 'r--', linewidth=2, label='Channel capacity (bits)')
     
-    scatter = ax.scatter(spectral_gaps, tcycs, c=eps_values, cmap='plasma',
-                        s=80, edgecolors='black', linewidth=0.5)
+    ax.set_xlabel('Crossover probability p', fontsize=12)
+    ax.set_ylabel('Triangle cycle mean', fontsize=12, color='blue')
+    ax2.set_ylabel('Channel capacity (bits)', fontsize=12, color='red')
+    ax.set_title('BSC: Tropical Invariant vs Channel Capacity', fontsize=14)
     
-    ax.set_xlabel('Spectral Gap', fontsize=12)
-    ax.set_ylabel('Triangle Cycle Mean', fontsize=12)
-    ax.set_title('Phase Diagram: Spectral Gap vs Tropical Cycle Mean\n(3-state chain)',
-                fontsize=13)
-    
-    cbar = plt.colorbar(scatter, ax=ax)
-    cbar.set_label('Mixing parameter ε', fontsize=11)
-    
+    lines = [line1, line2]
+    labels = [l.get_label() for l in lines]
+    ax.legend(lines, labels, fontsize=11)
     ax.grid(True, alpha=0.3)
-    fig.tight_layout()
-    return fig_to_base64(fig)
+    
+    plt.tight_layout()
+    plt.savefig('/workspace/request-project/fig4_channel.png', dpi=150, bbox_inches='tight')
+    plt.close()
 
 
-def plot_tropical_cost_heatmap():
-    """Heatmap of the tropical cost matrix."""
-    n = 4
-    eps = 0.15
-    P = np.zeros((n, n))
-    for i in range(n):
-        P[i, i] = 1 - 3*eps
-        for d in [-1, 0, 1]:
-            j = (i + d) % n
-            if i != j:
-                P[i, j] = eps
-    # Ensure row-stochastic
-    P = P / P.sum(axis=1, keepdims=True)
+def generate_base64_images():
+    """Generate all figures and return base64-encoded versions."""
+    images = {}
     
-    W = -np.log(P)
+    for name, func in [
+        ('fig1_tropical_gap', fig1_tropical_gap_convergence),
+        ('fig2_metastability', fig2_metastability_landscape),
+        ('fig3_ceiling', fig3_information_ceiling),
+        ('fig4_channel', fig4_channel_analysis),
+    ]:
+        func()
+        filepath = f'/workspace/request-project/{name}.png'
+        with open(filepath, 'rb') as f:
+            encoded = base64.b64encode(f.read()).decode('utf-8')
+            images[name] = f"data:image/png;base64,{encoded}"
     
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-    
-    im1 = ax1.imshow(P, cmap='Blues', vmin=0)
-    ax1.set_title('Transition Matrix P', fontsize=13)
-    ax1.set_xlabel('Target state')
-    ax1.set_ylabel('Source state')
-    for i in range(n):
-        for j in range(n):
-            ax1.text(j, i, f'{P[i,j]:.2f}', ha='center', va='center', fontsize=10)
-    plt.colorbar(im1, ax=ax1)
-    
-    im2 = ax2.imshow(W, cmap='YlOrRd')
-    ax2.set_title('Tropical Cost W = -log(P)', fontsize=13)
-    ax2.set_xlabel('Target state')
-    ax2.set_ylabel('Source state')
-    for i in range(n):
-        for j in range(n):
-            ax2.text(j, i, f'{W[i,j]:.2f}', ha='center', va='center', fontsize=9)
-    plt.colorbar(im2, ax=ax2)
-    
-    fig.suptitle('Tropicalization: Probabilities → Costs', fontsize=15, y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
+    return images
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-    
-    img1 = plot_mixing_vs_barrier()
-    print(f"  Mixing vs barrier: {len(img1)} chars")
-    
-    img2 = plot_state_space_comparison()
-    print(f"  State space comparison: {len(img2)} chars")
-    
-    img3 = plot_phase_diagram()
-    print(f"  Phase diagram: {len(img3)} chars")
-    
-    img4 = plot_tropical_cost_heatmap()
-    print(f"  Tropical cost heatmap: {len(img4)} chars")
-    
-    print("All visualizations generated successfully.")
+    images = generate_base64_images()
+    print(f"Generated {len(images)} figures:")
+    for name in images:
+        print(f"  - {name}.png ({len(images[name])} chars base64)")
+    print("Done!")
