@@ -598,10 +598,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ea1c2257",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3508c229",
     "timestamp": "2026-05-14T16:17:39.939717+00:00"
   },
   {
@@ -1525,5 +1525,94 @@
     "source_exp_id": "8b09e852",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T10:38:02.130153+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Proposed Lean Type Signature",
+    "description": "```lean\nstructure MultiTerminalSPNet (k : ℕ) where\n  net : SPNetMulti k  -- inductive type for k-terminal SP networks\n  boundary : Fin k    -- boundary vertices are Fin k\n\nnoncomputable def boundaryDistMatrix {k : ℕ} (N : MultiTerminalSPNet k) :\n    Matrix (Fin k) (Fin k) ℝ := sorry\n\ntheorem multi_terminal_sp_boundary_rigid {k : ℕ}\n    (N₁ N₂ : MultiTerminalSPNet k)\n    (hSP₁ : IsSeriesParallel N₁) (hSP₂ : IsSeriesParallel N₂)\n    (h : boundaryDistMatrix N₁ = boundaryDistMatrix N₂) :\n    SPEquivMulti N₁ N₂ := sorry\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8f686496",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:48:24.771272+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Proof Strategies",
+    "description": "**Strategy A: Inductive decomposition with matrix invariants.** Define k-terminal SP networks inductively (series at a shared terminal, parallel between terminal pairs). Show the boundary distance matrix transforms predictably under each operation. Prove injectivity of the transformation on reduced normal forms.\n\n**Strategy B: Tropical Schur complement.** Encode the full network as a weighted adjacency matrix, define a tropical Schur complement that eliminates interior vertices, and show this complement equals the boundary distance matrix. Then prove that for SP networks, the Schur complement determines the network up to equivalence.",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8f686496",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:48:24.791068+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Cross-Domain Payoff",
+    "description": "**Control theory and scheduling**: The tropical eigenvalue determines the throughput of a discrete-event system (e.g., manufacturing line, processor pipeline). A certified Perron-Frobenius theorem would enable formally verified performance guarantees for real-time systems.\n\n---",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8f686496",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:48:24.827247+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Phase 1 (Months 1-2)",
+    "description": "- Implement multi-terminal SP networks (Direction 1)\n- Define treewidth and tree decompositions (Direction 2)\n- Prove tropical Schur complement basics (Direction 4)",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8f686496",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:48:24.864646+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Phase 2 (Months 2-4)",
+    "description": "- Prove multi-terminal boundary rigidity for k=3\n- Prove hyperbolicity bounds for series-parallel with depth\n- Implement tropical eigenvalue computation",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8f686496",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:48:24.882938+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Ongoing",
+    "description": "- Maintain and extend the certified tropical linear algebra library\n- Generate computational experiments validating conjectures\n- Write papers for each completed direction",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8f686496",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:48:24.901056+00:00"
   }
 ]
