@@ -1163,7 +1163,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "740c7329",
-    "consumed_by_exp_id": "5e6a583e",
+    "consumed_by_exp_id": "522714fd",
     "timestamp": "2026-05-17T08:20:23.440660+00:00"
   },
   {
@@ -1575,5 +1575,135 @@
     "source_exp_id": "2b3b0e7e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T14:26:22.965741+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Statement",
+    "description": "Generalize the footprint bound from the full grid GF(q)^n to arbitrary Cartesian products ∏ᵢ Sᵢ where Sᵢ ⊆ F are finite nonempty subsets.\n\n**Target Theorem**: For f ∈ F[X₁,...,Xₙ] reduced modulo the vanishing ideals ⟨∏_{a ∈ Sᵢ}(Xᵢ − a)⟩ and nonzero:\n```\n|{x ∈ ∏Sᵢ : f(x) ≠ 0}| ≥ ∏ᵢ (|Sᵢ| − eᵢ)\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8c5ff762",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:07:30.027859+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Prerequisites",
+    "description": "- Formal vanishing polynomial construction: `∏_{a ∈ S}(X − a)`\n- Proof that `∀ x ∈ S, eval x (vanishing S) = 0`\n- Unique reduced representative theorem relative to the product ideal",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8c5ff762",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:07:30.050712+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Applications to Formalize",
+    "description": "- **Chevalley–Warning theorem** as a corollary\n- **Davenport–Halberstam** type bounds\n- **Zero-sum problems** (Erdős–Ginzburg–Ziv theorem)\n- **Graph coloring** existence results",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8c5ff762",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:07:36.730040+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Target Theorem",
+    "description": "For a zero-dimensional ideal I = ⟨f₁,...,fₖ⟩ + ⟨Xᵢ^q − Xᵢ⟩ with reduced Gröbner basis G:\n```\n|V(I)| = |{x ∈ GF(q)^n : fⱼ(x) = 0 ∀j}| ≤ |Footprint(G)|\n```\nwhere Footprint(G) is the set of reduced monomials not divisible by any leading monomial of G.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8c5ff762",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:07:36.792920+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Phase 1 (Immediate, Weeks 1–2)",
+    "description": "- Direction 5a: Reduced basis theorem (leverages existing infrastructure directly)\n- Direction 1: Alon–Füredi extension (close generalization of current work)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8c5ff762",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:07:36.860885+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Phase 2 (Short-term, Weeks 3–6)",
+    "description": "- Direction 2: Combinatorial Nullstellensatz (builds on Phase 1)\n- Direction 3a: Reed–Muller minimum distance (direct application)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8c5ff762",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:07:36.974947+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Phase 3 (Medium-term, Weeks 7–12)",
+    "description": "- Direction 3b–3c: Affine Cartesian codes and decoding bounds\n- Direction 5b–5c: Interpolation algorithms and evaluation matrices",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8c5ff762",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:07:37.097445+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "Cross-Domain Research Connections",
+    "description": "| Direction | Algebra | Combinatorics | Coding Theory | CS Theory | Cryptography |\n|-----------|---------|---------------|---------------|-----------|--------------|\n| 1. Alon–Füredi | ✓ vanishing ideals | ✓ grid bounds | ✓ Cartesian codes | | |\n| 2. Nullstellensatz | ✓ coefficient extraction | ✓ existence proofs | | ✓ derandomization | |\n| 3. Decoding | | | ✓ error correction | ✓ list decoding | ✓ code-based crypto |\n| 4. Systems | ✓ Gröbner bases | ✓ variety counting | | ✓ SAT solving | ✓ algebraic attacks |\n| 5. Interpolation | ✓ function spaces | | ✓ encoding | ✓ complexity | ✓ secret sharing |\n\n---",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8c5ff762",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:07:37.218670+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Success Metrics",
+    "description": "Each direction is considered a breakthrough if:\n1. The main theorem compiles without `sorry` in Lean 4.\n2. At least one non-trivial application is formalized.\n3. The result is connected to the footprint bound infrastructure (imports and uses our definitions).\n4. A computational validation confirms the theorem on concrete examples.\n\nThe overall program succeeds if Directions 1, 2, and 5a are completed within 2 months, creating a **formal finite-grid algebraic combinatorics ecosystem** in Lean 4.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8c5ff762",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:07:37.337109+00:00"
   }
 ]
