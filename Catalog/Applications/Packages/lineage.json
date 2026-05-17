@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 90
+      "hue": 271
+    },
+    {
+      "id": "representation_theoretic_decomposition",
+      "title": "Spectral Decomposition of Berggren Dynamics on Finite Quadratic Shells",
+      "domain": "Arithmetic Dynamics / Spectral Graph Theory / Pythagorean Number Theory",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-17T21:05:27Z",
+      "hue": 112
     }
   ],
   "edges": [],
