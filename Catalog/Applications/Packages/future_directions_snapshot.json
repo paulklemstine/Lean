@@ -1240,6 +1240,20 @@
   },
   {
     "id": "fd_0262",
+    "title": "Background",
+    "description": "In many real-world deployments, data points are not static—they evolve over time. The question is: can we maintain certified radii as the dataset drifts, without recomputing from scratch?\n\nOur incremental persistence theorem (Theorem B) shows that inserting a new point costs O(md). For kinetic updates where existing points move by small increments, we conjecture that:\n- Certificate changes are Lipschitz in the point movement\n- A priority queue on \"certificate expiration times\" enables event-driven updates\n- The amortized cost is logarithmic in N",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "740c7329",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:20:23.440660+00:00"
+  },
+  {
+    "id": "fd_0262",
     "title": "Cross-Domain Connection",
     "description": "DAG circuits correspond directly to dynamic programming tables: each node computes a subproblem, `+` concatenates costs, and `min` selects optimal branches. This connection would formalize the equivalence between circuit evaluation and Bellman-equation solving.\n\n---",
     "domains": [
@@ -1428,7 +1442,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8c5ff762",
-    "consumed_by_exp_id": "529258a7",
+    "consumed_by_exp_id": "9f04b702",
     "timestamp": "2026-05-17T15:07:30.027859+00:00"
   },
   {
@@ -1641,5 +1655,109 @@
     "source_exp_id": "371a34c3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T17:10:25.514951+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "1. Exact Spectrum Equality with Multiplicities",
+    "description": "**Goal:** Upgrade from \"product eigenvalues exist\" to \"the multiset of eigenvalues of A ⊗ B is exactly the pairwise product multiset.\"\n\n**Theorem Target:**\n```\nspectrum_kron_eq :\n  eigenvalues(A ⊗ B) = { α_i * β_j | 1 ≤ i ≤ m, 1 ≤ j ≤ n }\n```\nas a multiset equality, where `eigenvalues(A)` is the multiset of roots of the characteristic polynomial.\n\n**Proof Strategy:**\n- Show `det(A ⊗ B - λI) = ∏_{i,j} (α_i β_j - λ)` using the identity `charPoly(A ⊗ B) = Res_μ(charPoly_A(μ) , μ^n · charPoly_B(λ/μ))` or by direct block-diagonal argument after simultaneous triangularization over the algebraic closure.\n- Requires Mathlib's `Matrix.charpoly` and resultant theory.\n\n**Cross-Domain Impact:**\n- In quantum information, this gives exact energy spectra of non-interacting composite systems.\n- In random ",
+    "domains": [
+      "Physics",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cf6f85f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:19:53.549572+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "2. Diagonalizability Preservation under Arithmetic Tensor Factorization",
+    "description": "**Goal:** If all prime-power operators T(p^a) are diagonalizable, then T(n) is diagonalizable.\n\n**Theorem Target:**\n```\ndiag_kron :\n  IsDiagonalizable(A) → IsDiagonalizable(B) → IsDiagonalizable(A ⊗ B)\n```\n\n**Proof Strategy:**\n- If A = P D_A P⁻¹ and B = Q D_B Q⁻¹, then A ⊗ B = (P ⊗ Q)(D_A ⊗ D_B)(P ⊗ Q)⁻¹.\n- The Kronecker product of invertible matrices is invertible, and the Kronecker product of diagonal matrices is diagonal.\n- Induct over the prime factorization support.\n\n**Cross-Domain Impact:**\n- In numerical linear algebra, Kronecker-structured matrices arise in PDEs on product domains; diagonalizability ensures efficient spectral solvers.\n- In dynamical systems, diagonalizability of transfer operators controls mixing rates.\n\n---",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cf6f85f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:19:53.570465+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "3. Hecke Algebra Model Formalization",
+    "description": "**Goal:** Instantiate the abstract spectral arithmetic theorem for a toy Hecke algebra acting on a finite-dimensional space of modular forms.\n\n**Theorem Target:**\n```\nhecke_spectral :\n  ∀ n, T(n) eigenvalue = ∏_p T(p^{v_p(n)}) eigenvalue\n```\nfor the classical Hecke operators on S_k(Γ₀(N)).\n\n**Proof Strategy:**\n- Define Hecke operators on a finite-dimensional space (e.g., S_12(SL₂(ℤ)) ≅ ℂ, where T(n) acts by τ(n)).\n- Verify the coprime multiplicativity axiom T(mn) = T(m)T(n) for gcd(m,n)=1.\n- Apply the general spectral arithmetic theorem.\n- Connect eigenvalues to Ramanujan's τ-function as a verification.\n\n**Cross-Domain Impact:**\n- This is the entry point to formalized Langlands-style mathematics.\n- Euler product factorization of L-functions becomes a corollary of spectral arithmetic.\n\n---",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cf6f85f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:19:53.590614+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "4. Tropical Spectral Transform",
+    "description": "**Goal:** Show that logarithms of absolute eigenvalues convert multiplicative spectral laws into additive polyhedral/tropical laws.\n\n**Theorem Target:**\n```\ntropical_spectral :\n  log|spectrum(A ⊗ B)| = log|spectrum(A)| + log|spectrum(B)|\n```\nwhere addition is Minkowski sum of sets.\n\n**Proof Strategy:**\n- Apply the exact spectrum equality (Direction 1) and the logarithm map.\n- Show log|α·β| = log|α| + log|β| converts product sets to Minkowski sums.\n- Connect to tropical semiring (ℝ, min, +) or (ℝ, max, +).\n\n**Cross-Domain Impact:**\n- In optimization, tropical spectral geometry connects to linear programming duality.\n- In algebraic geometry, this relates to tropicalization of spectral varieties.\n- Provides a bridge to idempotent analysis and max-plus algebra.\n\n---",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cf6f85f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:19:53.610960+00:00"
+  },
+  {
+    "id": "fd_0275",
+    "title": "5. Quantum Arithmetic Hamiltonians",
+    "description": "**Goal:** Formalize the spectral theorem for non-interacting composite quantum systems where arithmetic indexing controls tensor decomposition.\n\n**Theorem Target:**\n```\nquantum_arithmetic :\n  H_total = ∑_p H_p ⊗ I_{complement}\n  → spectrum(H_total) = { ∑_p E_p | E_p ∈ spectrum(H_p) }\n```\n\n**Proof Strategy:**\n- Define the additive version: if H = ∑ H_i ⊗ I (sum of local Hamiltonians tensored with identity on other factors), then eigenvalues are sums of local eigenvalues.\n- This follows from the multiplicative version via exponentiation: exp(H) has eigenvalues that are products of exp(H_i) eigenvalues.\n- Alternatively, prove directly using simultaneous diagonalization of commuting operators.\n\n**Cross-Domain Impact:**\n- In quantum computing, this gives exact resource counting for non-interact",
+    "domains": [
+      "Physics",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cf6f85f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:19:53.633067+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Overarching Vision",
+    "description": "These five directions converge toward a **unified formal language** where:\n- Prime factorization in ℕ,\n- Tensor factorization in linear algebra,\n- Spectral decomposition in operator theory,\n- Euler products in analytic number theory,\n- Tropical geometry in combinatorial optimization\n\nare all instances of the same structural principle, formalized once and reused across domains.\n\nThe spectral multiplicativity theorem proved here is the first formally verified step in this program.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5cf6f85f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:19:53.653922+00:00"
   }
 ]
