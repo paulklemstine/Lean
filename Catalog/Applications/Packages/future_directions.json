@@ -1529,8 +1529,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "3c12a044",
       "timestamp": "2026-05-17T20:40:43.009578+00:00"
     },
     {
@@ -1888,7 +1888,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "e237c583",
       "timestamp": "2026-05-17T21:05:45.339479+00:00"
     },
@@ -2628,6 +2628,78 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:07:45.944966+00:00"
+    },
+    {
+      "id": "fd_0143",
+      "title": "Algebraic geometry:",
+      "description": "Schemes over Spec(ℤ) are determined by their fibers over Spec(𝔽ₚ) (up to issues of bad reduction).",
+      "source_exp_id": "e237c583",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:23:46.440988+00:00"
+    },
+    {
+      "id": "fd_0144",
+      "title": "Number theory:",
+      "description": "The Chebotarev density theorem says that *every* conjugacy class in the Galois group appears as a Frobenius element for infinitely many primes. Finite reductions are not just shadows — they collectively determine the full arithmetic structure.",
+      "source_exp_id": "e237c583",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:23:46.444977+00:00"
+    },
+    {
+      "id": "fd_0145",
+      "title": "Complexity theory:",
+      "description": "Polynomial identity testing (Schwartz-Zippel lemma) says that evaluating a polynomial at random points — a finite reduction — determines whether it is identically zero, with high probability. Our irreducibility transfer is a *deterministic* version of this philosophy.",
+      "source_exp_id": "e237c583",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Probability",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:23:46.448325+00:00"
+    },
+    {
+      "id": "fd_0146",
+      "title": "Logic:",
+      "description": "Completeness theorems in model theory say that a first-order sentence is true in all models if and only if it has a finite proof. The transfer from \"irreducible in all characteristics\" to \"irreducible over ℤ\" is an algebraic echo of logical completeness.",
+      "source_exp_id": "e237c583",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:23:46.452021+00:00"
     }
   ],
   "pruned": []

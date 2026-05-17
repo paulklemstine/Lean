@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 100
+      "hue": 92
     },
     {
       "id": "sum_product_estimates",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 92
+      "hue": 292
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "binary_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T21:05:54Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hybrid_argument_with_computational_distinguishers",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "coupling_argument",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:04:18Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "line_restriction",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:07:44Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "irreducibility",
@@ -133,7 +133,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:23:43Z",
-      "hue": 90
+      "hue": 271
+    },
+    {
+      "id": "decomposition",
+      "title": "Directional Decomposition for Tropical Dragon Dynamics",
+      "domain": "Algebra / Tropical Dynamics / Symbolic Dynamics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-17T22:30:35Z",
+      "hue": 92
     }
   ],
   "edges": [
@@ -147,6 +156,13 @@
     {
       "source": "2_tropical_amplitude_amplification",
       "target": "coupling_argument",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "binary_search",
+      "target": "decomposition",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -175,6 +191,12 @@
   ],
   "domain_bridges": [
     {
+      "domain_a": "Algebra",
+      "domain_b": "Tropical",
+      "package_count": 2,
+      "strength": 0.7
+    },
+    {
       "domain_a": "Geometry",
       "domain_b": "Tropical",
       "package_count": 2,
@@ -182,12 +204,6 @@
     },
     {
       "domain_a": "Computation",
-      "domain_b": "Tropical",
-      "package_count": 1,
-      "strength": 0.5
-    },
-    {
-      "domain_a": "Algebra",
       "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5
