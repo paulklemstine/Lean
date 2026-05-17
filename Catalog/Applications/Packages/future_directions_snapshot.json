@@ -637,6 +637,63 @@
     "timestamp": "2026-05-17T16:32:07.263395+00:00"
   },
   {
+    "id": "fd_0270",
+    "title": "Sum-check + Block Structure",
+    "description": ": Compositional interactive proofs where each block has its own sum-check verifier. This would give formally verified *interactive* block verification.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "90a65a27",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:37:43.472463+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Tropical + Spectral",
+    "description": ": Combining tropical ℓ^∞ bounds with spectral ℓ² bounds would give a two-sided certificate: tropical bounds handle worst-case, spectral bounds handle average-case.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "90a65a27",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:37:43.494126+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Sheaf + Transformer",
+    "description": ": Viewing attention heads as sections of a verification sheaf would enable a categorical treatment of multi-head attention certification.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "90a65a27",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:37:43.513380+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Freivalds + Neural Verification",
+    "description": ": Running Freivalds-style probes on neural network layers as a fast pre-check before expensive formal verification. The soundness bound provides formal guarantees on the probe's reliability.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "90a65a27",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:37:43.534409+00:00"
+  },
+  {
     "id": "fd_0126",
     "title": "Specific Hypotheses",
     "description": "- **H1.1**: Bach chorale voice-leading can be characterized as shortest paths in a tropical hypergraph where nodes are 4-note chords and hyperedges encode simultaneous constraints (parallel fifths between any pair, voice spacing, voice crossing).\n- **H1.2**: The four-voice generalization of the zero-cost theorem holds: legal SATB counterpoint = zero locus of a 6-component penalty (one per voice pair).\n- **H1.3**: The exponential blowup in candidate space (P^4n vs P^n) can be managed via tropical tensor decomposition, factoring the 4-voice problem into coupled 2-voice subproblems.",
