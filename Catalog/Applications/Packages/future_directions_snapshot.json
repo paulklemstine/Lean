@@ -292,10 +292,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e054be3f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3563b500",
     "timestamp": "2026-05-17T12:52:39.507056+00:00"
   },
   {
@@ -1535,5 +1535,111 @@
     "source_exp_id": "41ac42f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:38:13.925482+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "1. Continuous Monoid Action of ℕ on Function Spaces",
+    "description": "**Theorem Statement:**\n```lean\n/-- The iteration map ℕ → C(α, α) is a monoid homomorphism from (ℕ, +) to (C(α, α), ∘),\nwhere C(α,α) carries the compact-open topology. When α is compact Hausdorff,\nthis map is continuous from the discrete topology on ℕ. -/\ntheorem continuous_iterate_monoidHom\n    {α : Type*} [TopologicalSpace α] [CompactSpace α] [T2Space α]\n    {f : α → α} (hf : Continuous f) :\n    Continuous (fun n : ℕ => (⟨f^[n], hf.iterate n⟩ : C(α, α)))\n```\n\n**Proof Strategy:**\nUse the fact that convergence in the compact-open topology is uniform convergence on compact sets. Since ℕ has discrete topology, we need only show each singleton is open in the preimage, which is trivially true. The deeper result would extend to a continuous action of ℝ₊ (semiflow), requiring interpolation of ite",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "371a34c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:10:25.404884+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "2. Eventual Periodicity Transfer via Semiconjugacy",
+    "description": "**Theorem Statement:**\n```lean\n/-- If f has an eventually periodic orbit at x, and h semiconjugates f to g,\nthen g has an eventually periodic orbit at h(x) with period dividing that of f. -/\ntheorem semiconj_eventually_periodic\n    {α β : Type*} {f : α → α} {g : β → β} {h : α → β}\n    (hsemi : Function.Semiconj h f g)\n    {x : α} {m n : ℕ} (hn : 0 < n)\n    (hev : f^[m + n] x = f^[m] x) :\n    g^[m + n] (h x) = g^[m] (h x)\n```\n\n**Proof Strategy:**\nApply `hsemi.iterate_right` to both sides of `hev`. From `h (f^[m+n] x) = g^[m+n] (h x)` and `h (f^[m] x) = g^[m] (h x)`, combined with `f^[m+n] x = f^[m] x`, we get the result directly.\n\n**Cross-Domain Significance:**\n- In coding theory, this says that if a source sequence is eventually periodic, any deterministic encoding preserves eventual perio",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "371a34c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:10:25.426544+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "3. Orbit Closure Under Commuting Symmetries",
+    "description": "**Theorem Statement:**\n```lean\n/-- If g commutes with f and both are continuous, then g maps the\nomega-limit set of f at x into itself. -/\ntheorem commute_maps_omegaLimit\n    {α : Type*} [TopologicalSpace α]\n    {f g : α → α} (hf : Continuous f) (hg : Continuous g)\n    (hcomm : Function.Commute f g) (x : α) :\n    MapsTo g (closure (range (fun n : ℕ => f^[n] x)))\n             (closure (range (fun n : ℕ => f^[n] x)))\n```\n\n**Proof Strategy:**\nShow `g` maps the orbit `{f^[n] x | n ∈ ℕ}` into itself using `commute_iterate_apply`, then extend to the closure using continuity of `g`. Specifically, `g (f^[n] x) = f^[n] (g x)`, but `g x` might not equal `f^[k] x` for any `k`. The correct approach: show `g '' orbit_f(x) ⊆ orbit_f(g x)`, then handle the case where orbits coincide (e.g., when `g x` is ",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "371a34c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:10:25.448633+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "4. Finite Orbit Vectors as Tropical/Combinatorial Encodings",
+    "description": "**Theorem Statement:**\n```lean\n/-- The orbit vector map composed with a continuous functional yields\na continuous real-valued feature. This is the bridge to tropical encodings:\nif φ is a max-plus linear functional, the composition gives a tropical feature. -/\ntheorem continuous_orbit_feature\n    {α : Type*} [TopologicalSpace α]\n    {N : ℕ} {f : α → α} (hf : Continuous f)\n    {φ : (Fin N → α) → ℝ} (hφ : Continuous φ) :\n    Continuous (φ ∘ fun x : α => (fun k : Fin N => f^[k.1] x))\n```\n\n**Proof Strategy:**\nDirect composition of `continuous_orbit_vector` with `hφ`. The mathematical content lies in choosing appropriate `φ`:\n- `φ = max` gives the \"orbit supremum\" feature\n- `φ = ∑` gives moment-based features\n- Tropical (max-plus) functionals give piecewise-linear features\n\n**Cross-Domain Signif",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "371a34c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:10:25.473118+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "5. Matrix Iterate Spectral Stability",
+    "description": "**Theorem Statement:**\n```lean\n/-- For a continuous linear map on a finite-dimensional space,\nthe orbit vector map is not only continuous but also bounded on\nbounded sets, with explicit bounds from the operator norm. -/\ntheorem norm_iterate_orbit_vector_bound\n    {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (N : ℕ) :\n    ∀ x : EuclideanSpace ℝ (Fin n),\n      ‖(fun k : Fin N => (A.mulVec)^[k.1] x)‖ ≤\n        N • ‖A‖ ^ N * ‖x‖\n```\n\n**Proof Strategy:**\nBound each iterate `‖A^k x‖ ≤ ‖A‖^k ‖x‖` using submultiplicativity of operator norms. The orbit vector norm in the product space is bounded by the sup of coordinate norms, giving the geometric series bound. This connects to spectral radius theory: the growth rate of iterates is controlled by the spectral radius.\n\n**Cross-Domain Significance:**\n- Stab",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "371a34c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:10:25.494585+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "Research Program Summary",
+    "description": "These five directions form a coherent research program:\n\n```\n                    Monoid Action (1)\n                    /              \\\n   Eventual Periodicity (2)    Orbit Closure (3)\n                    \\              /\n                Orbit Features (4)\n                       |\n              Spectral Stability (5)\n```\n\nThe progression moves from pure algebra (1-2) through topology (3) to analysis (4-5), with each level building on the continuous iteration infrastructure established in this work. The cross-domain applications—machine learning, cryptography, coding theory, physics—emerge naturally at each level.\n\n**Key principle:** Iteration is not just function composition repeated; it is a *continuous algebraic process* that transports structure. Making this precise and formal opens the",
+    "domains": [
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "371a34c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:10:25.514951+00:00"
   }
 ]

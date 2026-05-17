@@ -37,10 +37,14 @@ import yaml
 # Aether subsystems
 from pi_agent_client import PiAgentClient, ResearchConcept
 from prompt_engine import PromptEngine, ArtifactRequests, ResearchPrompt
+from prompt_dna import PromptDNA
+from quality_evaluator import QualityEvaluator, QualityScore
 from aristotle_sdk_client import AristotleSDKClient
 from lean_catalog_builder import LeanCatalogBuilder
 from smart_integrator import SmartIntegrator
 from telemetry import TelemetryLogger, ExperimentRecord
+
+import random
 
 from research_memory import ResearchMemory, ExperimentRecord as MemoryExperimentRecord
 
@@ -294,6 +298,16 @@ class CycleMaster:
         self.git = GitAutomator(self.catalog_root.parent)  # repo root
         self.integrator = SmartIntegrator(self.catalog_root, self.pi_agent, self.workspace)
         self.prompt_evolver = PromptEvolver(self.pi_agent, self.workspace)
+
+        # v3: Evolving prompt DNA + quality evaluator
+        self.prompt_dna = PromptDNA.load_or_create(self.workspace)
+        self.quality_evaluator = QualityEvaluator(
+            pi_agent=self.pi_agent,
+            catalog_root=self.catalog_root,
+        )
+
+        # Free exploration rate (10%)
+        self.free_exploration_rate = config.get("free_exploration_rate", 0.10)
 
         # Control
         self._shutdown_requested = False
@@ -916,8 +930,13 @@ class CycleMaster:
         self.state.cycle_count += 1
         cycle_n = self.state.cycle_count
         print(f"\n{'='*70}")
-        print(f"CYCLE MASTER — Cycle #{cycle_n}")
+        print(f"CYCLE MASTER — Cycle #{cycle_n} (Prompt DNA v{self.prompt_dna.version})")
         print(f"{'='*70}")
+
+        # Phase 0: Free exploration check (10% chance)
+        if forced_domain is None and random.random() < self.free_exploration_rate:
+            print(f"[Phase 0] 🔭 FREE EXPLORATION MODE — Aristotle chooses freely")
+            return await self._run_free_exploration(cycle_n, dry_run=dry_run)
 
         # Phase 1: Domain selection
         domain = self._select_domain() if forced_domain is None else next(
@@ -926,13 +945,8 @@ class CycleMaster:
         self.state.last_domain = domain["id"]
         print(f"[Phase 1] Domain: {domain['name']} ({domain['id']})")
 
-        # Phase 2: Prompt evolution (if we have history)
-        evolved_hints = {}
-        if self.pi_agent and cycle_n > 3:
-            print(f"[Phase 1b] Evolving prompt strategy for {domain['id']}...")
-            evolved_hints = self.prompt_evolver.evolve_prompt_for_domain(domain["id"])
-            if evolved_hints:
-                print(f"[Phase 1b] Evolved hints: {list(evolved_hints.keys())}")
+        # Phase 2: Prompt evolution — DNA mutates every cycle via the strange loop
+        # (The actual mutation happens AFTER results, in the feedback phase below)
 
         # Phase 3: Pi-Agent concept generation
         exp_id = str(uuid.uuid4())[:8]
@@ -953,8 +967,10 @@ class CycleMaster:
             )
         print(f"[Phase 2] Concept: {concept.title} (novelty={concept.novelty_estimate:.2f})")
 
-        # Phase 4: Build prompt
-        print(f"[Phase 3] Building Aristotle prompt...")
+        # Phase 4: Build prompt using evolving DNA
+        print(f"[Phase 3] Building Aristotle prompt (DNA v{self.prompt_dna.version})...")
+        memory_summary = self.memory.build_success_patterns() if self.memory else ""
+        presearch = self.pi_agent.gather_presearch({"id": domain["id"], **domain}) if self.pi_agent else ""
         prompt = self.prompt_engine.build_prompt(
             title=concept.title,
             domain=domain["id"],
@@ -969,6 +985,10 @@ class CycleMaster:
                 sciam_discussion=True,
                 lean_proof=True,
             ),
+            dna=self.prompt_dna,
+            cycle_n=cycle_n,
+            memory_summary=memory_summary,
+            presearch_context=presearch,
         )
         print(f"[Phase 3] Prompt: {len(prompt.prompt_text)} chars")
 
@@ -1145,9 +1165,163 @@ class CycleMaster:
         else:
             print(f"[Phase 6] No result tarball. Status: {result.status}")
 
+        # Phase 10: Strange Loop — Quality evaluation + DNA mutation
+        quality_score = None
+        if result.lean_source:
+            extract_dir_for_quality = project_dir / "result_extracted"
+            print(f"[Phase 10] 🔄 Strange Loop: evaluating quality...")
+            quality_score = self.quality_evaluator.evaluate(
+                lean_source=result.lean_source,
+                result_dir=extract_dir_for_quality if extract_dir_for_quality.exists() else None,
+                concept_title=concept.title,
+                concept_description=concept.concept_description,
+                existing_titles=self.memory.get_all_titles() if self.memory else None,
+            )
+            print(f"[Phase 10] {quality_score.breakdown_str()}")
+
+            # Mutate DNA based on quality feedback
+            feedback = quality_score.to_dict()
+            feedback.pop("composite", None)
+            feedback.pop("grade", None)
+            self.prompt_dna = self.prompt_dna.mutate(quality_score.composite, feedback)
+            print(f"[Phase 10] DNA mutated → v{self.prompt_dna.version} (best=v{self.prompt_dna.best_version}, drops={self.prompt_dna.consecutive_drops})")
+
+            # Checkpoint DNA to git
+            self.prompt_dna.checkpoint(self.workspace)
+            print(f"[Phase 10] DNA checkpointed.")
+
         # Save state
         self._save_state()
-        print(f"[Phase 9] Cycle #{cycle_n} complete. State saved.")
+        print(f"[Phase 11] Cycle #{cycle_n} complete. State saved.")
+        return result.lean_source is not None
+
+    async def _run_free_exploration(self, cycle_n: int, dry_run: bool = False) -> bool:
+        """Free exploration mode: Aristotle picks its own topic.
+
+        10% of cycles. No guardrails except all 5 deliverables.
+        Best results auto-convert to directed research arcs.
+        """
+        exp_id = str(uuid.uuid4())[:8]
+        print(f"[FREE] Experiment: {exp_id}")
+
+        # Build context
+        catalog_summary = ""
+        if self.pi_agent and self.pi_agent.catalog_analyzer:
+            self.pi_agent.catalog_analyzer.scan()
+            catalog_summary = self.pi_agent.catalog_analyzer.build_overview()
+
+        memory_summary = self.memory.build_success_patterns() if self.memory else ""
+
+        # Build frontier summary from seed directions
+        frontier_lines = []
+        try:
+            from seed_directions import get_seed_directions
+            for d in get_seed_directions()[:20]:
+                frontier_lines.append(f"- {d.title}: {d.description[:100]}...")
+        except Exception:
+            frontier_lines.append("- Explore the frontiers of mathematics freely.")
+        frontier_summary = "\n".join(frontier_lines)
+
+        # Build free exploration prompt via DNA
+        prompt_text = self.prompt_dna.assemble_free_exploration(
+            cycle_n=cycle_n,
+            catalog_summary=catalog_summary[:2000],
+            memory_summary=memory_summary[:1000],
+            frontier_summary=frontier_summary[:2000],
+        )
+        print(f"[FREE] Prompt: {len(prompt_text)} chars")
+
+        if dry_run:
+            print("[FREE] DRY RUN — stopping.")
+            return True
+
+        # Generate minimal Lean source
+        lean_source = textwrap.dedent(f"""\
+            import Mathlib
+
+            /-! # Free Exploration {exp_id}
+            Aristotle-chosen topic. Cycle #{cycle_n}.
+            Date: {datetime.now(timezone.utc).isoformat()}
+            -/
+
+            -- Aristotle: replace this with your chosen research direction.
+            theorem free_exploration_{exp_id} : True := by sorry
+        """)
+
+        # Build and dispatch
+        project_dir = self.output_dir / f"job_{exp_id}"
+        project_dir.mkdir(parents=True, exist_ok=True)
+        self.lean_builder.build_lean_project(
+            project_dir=project_dir, domain="Bridges", lean_source=lean_source,
+        )
+
+        print(f"[FREE] Dispatching to Aristotle...")
+        start_time = time.time()
+        result = await self.aristotle.submit_lean_project(
+            prompt=prompt_text, project_dir=project_dir,
+        )
+        elapsed = time.time() - start_time
+        print(f"[FREE] Aristotle: {result.status} ({elapsed:.1f}s)")
+
+        self.state.total_experiments += 1
+
+        # Process results
+        if result.result_path and result.result_path.exists():
+            extract_dir = project_dir / "result_extracted"
+            extract_dir.mkdir(exist_ok=True)
+            import tarfile
+            with tarfile.open(result.result_path, "r:gz") as tar:
+                tar.extractall(path=extract_dir)
+
+            # Quality evaluation
+            quality_score = self.quality_evaluator.evaluate(
+                lean_source=result.lean_source or lean_source,
+                result_dir=extract_dir,
+                concept_title=f"free_exploration_{exp_id}",
+                concept_description="Aristotle free exploration",
+                existing_titles=self.memory.get_all_titles() if self.memory else None,
+            )
+            print(f"[FREE] {quality_score.breakdown_str()}")
+
+            # If quality is good, auto-convert to research arcs
+            if quality_score.composite >= 0.6:
+                print(f"[FREE] ✨ High quality! Auto-converting to directed arcs...")
+                from research_memory import FutureDirectionsManager
+                fd_manager = FutureDirectionsManager(self.workspace)
+                for fd_file in extract_dir.rglob("FUTURE_DIRECTIONS.md"):
+                    content = fd_file.read_text(encoding="utf-8", errors="replace")
+                    if len(content) > 100:
+                        added = fd_manager.add_directions_from_text(
+                            content, exp_id, f"free_exploration:{exp_id}"
+                        )
+                        if added:
+                            print(f"[FREE] Added {added} new research directions from free exploration")
+
+            # Integrate if worth it
+            if self.quality_evaluator.is_worth_integrating(quality_score):
+                decisions = self.integrator.integrate_result_directory(
+                    result_dir=extract_dir, exp_id=exp_id, dry_run=False,
+                )
+                changed_count = len(decisions["placed"])
+                if changed_count > 0:
+                    self.git.create_commit_for_cycle(
+                        cycle_num=cycle_n, domain="FreeExploration",
+                        concept_title=f"free_exploration_{exp_id}",
+                        changed_files=[str(d.target_path.relative_to(self.catalog_root)) for d in decisions["placed"][:10]],
+                        artifacts=[],
+                    )
+                    self.git.push()
+                    self.state.successful_proofs += 1
+
+            # DNA mutation from free exploration
+            feedback = quality_score.to_dict()
+            feedback.pop("composite", None)
+            feedback.pop("grade", None)
+            self.prompt_dna = self.prompt_dna.mutate(quality_score.composite, feedback)
+            self.prompt_dna.checkpoint(self.workspace)
+
+        self._save_state()
+        print(f"[FREE] Free exploration cycle #{cycle_n} complete.")
         return result.lean_source is not None
 
     async def run_continuous(self, parallel: bool = False, max_jobs: int = 10) -> None:

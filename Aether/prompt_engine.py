@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 """PromptEngine: Advanced prompt optimization for Aristotle.
 
-Transforms raw research concepts into richly-structured Aristotle prompts
-engineered to maximize:
-- Inventiveness and creative proof strategies
-- Cross-domain insight
-- Artifact generation (reports, demos, SVGs)
-- Scientific American style exposition
+v3: Integrates with PromptDNA for evolving, modular prompts.
+Removed tropical-only boosters. Domain boosters are now general-purpose.
 """
 
 import textwrap
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any
+
+from prompt_dna import PromptDNA
 
 
 @dataclass
@@ -34,120 +32,104 @@ class ResearchPrompt:
 
 
 class PromptEngine:
-    """Optimizes prompts for Aristotle to maximize breakthrough potential."""
+    """Optimizes prompts for Aristotle to maximize breakthrough potential.
 
-    # Domain-specific creativity boosters
+    v3: Uses PromptDNA for evolving prompts. Domain boosters are diversified.
+    """
+
+    # Domain-specific creativity boosters — diversified, not tropical-only
     DOMAIN_BOOSTERS = {
-        "factoring": [
-            "The Berggren tree is a spectral decomposition of the factoring problem — each branch corresponds to an eigenvalue.",
-            "Can factoring be reduced to a tropical shortest-path problem on the Berggren graph?",
-            "What if semiprime factoring has a phase transition at some critical digit length?",
-            "Prove that Berggren tree descent finds a factor in O(n^{1/3}) steps for semiprimes with special structure.",
+        "numbertheory": [
+            "Can you connect this to the distribution of primes via analytic methods?",
+            "What does the p-adic perspective reveal? Non-Archimedean metrics often simplify.",
+            "Is there a modular forms connection? Modularity has resolved deep conjectures.",
+            "What does the circle method or sieve theory say about this problem?",
         ],
-        "compression": [
-            "Tropical matrix rank IS Kolmogorov complexity for tropical polynomials. Prove it.",
-            "The min-plus entropy of a language measures its incompressibility under tropical coding.",
-            "Sheaf cohomology measures information redundancy. Prove that H^1(X, F) bounds the compression ratio.",
-            "Can tropical coding theory achieve the Singleton bound for codes over the tropical semiring?",
-        ],
-        "AI": [
-            "Neural networks ARE tropical rational functions. What does backpropagation look like in the tropical world?",
-            "The universal approximation theorem is a tropical Stone-Weierstrass theorem. Prove the tropical version.",
-            "Can tropical geometry explain why overparametrized networks generalize?",
-            "Prove that adversarial examples correspond to tropical boundary crossings.",
-        ],
-        "neural nets": [
-            "Backpropagation is a cotangent functor. Prove functoriality and show gradient descent is a natural transformation.",
-            "ReLU activation is tropical max-plus. The entire ResNet architecture is a tropical polynomial composition.",
-            "Prove that dropout regularization is a tropical perturbation and certified robustness bounds the dropout radius.",
-            "Attention mechanisms are tropical weighted averages. Prove a tropical attention theorem connecting softmax to min-plus.",
-        ],
-        "quantum mechanics": [
-            "The Maslov dequantization parameter epsilon is a thermodynamic temperature. The tropical limit is a phase transition.",
-            "Tropical quantum mechanics: path integrals over the min-plus semiring select the classical path. Prove this is a contraction.",
-            "Can quantum entanglement be formalized as a tropical tensor network? Prove tropical entanglement monogamy.",
-            "Prove that the tropical Hamiltonian H_trop = min_i E_i has spectral gap equal to the Maslov gap.",
-        ],
-        "computation": [
-            "Tropical circuits compute min-plus polynomials. Prove a tropical circuit lower bound separating tropical P from tropical NP.",
-            "Reversible computing is a group action. Prove that reversible circuits are a group representation of the symmetric group.",
-            "P vs NP in the tropical world: prove that tropical 3-SAT is NP-complete but tropical 2-SAT is polynomial.",
-            "Prove that tropical Turing machines have strictly different complexity than classical Turing machines for certain problems.",
-        ],
-        "physics": [
-            "Gravitational lensing is a tropical projection: the shortest path through curved spacetime is a min-plus operation.",
-            "The AdS/CFT correspondence has a tropical limit where the bulk becomes a min-plus geodesic network on the boundary.",
-            "Prove that black hole entropy is the tropical entropy of the horizon microstates.",
-            "Cosmic microwave background fluctuations follow a tropical Gaussian distribution. Prove the tropical central limit theorem.",
-        ],
-        "tropical": [
-            "Tropical geometry IS algebraic geometry over the min-plus semiring. Every classical AG theorem has a tropical analogue.",
-            "The tropical Satake isomorphism connects representation theory to min-plus polynomial algebra. Extend from GL_2 to GL_n.",
-            "Prove the tropical Riemann-Roch: the tropical divisor class group satisfies Riemann-Roch over the tropical semiring.",
-            "Tropical Brill-Noether: prove that a tropical curve of genus g has a divisor of degree d and rank r iff rho >= 0.",
-        ],
-        "eml": [
-            "EML (Exponential-Multiplicative-Logarithmic) closures are the algebraic skeleton of universal approximation.",
-            "Prove that EML depth equals Kolmogorov complexity up to constants: the shortest EML network computing f has depth Theta(K(f)).",
-            "EML thermodynamics: the EML closure of a dataset satisfies a free energy inequality. Prove it.",
-            "Prove that EML networks can implement any finite automaton, making them computationally universal.",
-        ],
-        "pythagorean": [
-            "Pythagorean triples are the integer points on a quadric surface. The Berggren tree is a Cayley graph of the integer points.",
-            "Prove the Pythagorean zeta function has an Euler product over Pythagorean primes and satisfies a functional equation.",
-            "Berggren matrices form a group under matrix multiplication. Prove this group is a subgroup of SL(2,Z).",
-            "Pythagorean triples correspond to rational points on the unit circle. Prove the rational parametrization is a group homomorphism.",
-        ],
-        "cryptography": [
-            "Tropical one-way functions: tropical matrix multiplication is easy, tropical matrix inversion is hard. Prove it.",
-            "SPB operations on Pythagorean triples generate a group suitable for Diffie-Hellman. Prove discrete log hardness.",
-            "Prove that CRYSTALS-Dilithium security reduces to module-SIS in the tropical semiring.",
-            "Lattice-based cryptography over tropical semirings: prove that the tropical SVP is NP-hard.",
+        "algebra": [
+            "Look for a hidden group action or symmetry that simplifies the structure.",
+            "Reframe using representation theory — characters often reveal hidden structure.",
+            "Is there a Galois-theoretic perspective? Field extensions expose arithmetic.",
+            "Consider the problem over different base rings — what's the universal property?",
         ],
         "geometry": [
-            "Tropical varieties are piecewise-linear shadows of algebraic varieties. Prove that the tropicalization functor preserves intersection numbers.",
-            "Pythagorean triples form integer points on a quadric. Their tropicalization is a tropical curve with genus determined by prime factors.",
-            "Prove that tropical convexity satisfies a Helly-type theorem: if every n+1 intersect then all intersect.",
-            "The Berggren tree is a tropical rational curve. Prove its tropical genus equals the number of Pythagorean primes less than N.",
+            "What does the problem look like in the projective completion?",
+            "Is there an intersection-theoretic formulation with computable invariants?",
+            "Try tropicalization — the combinatorial shadow may reveal the essential structure.",
+            "What does deformation theory say? Moduli spaces encode all variations.",
+        ],
+        "analysis": [
+            "Consider the problem in function spaces — is there a fixed-point theorem?",
+            "What does the spectral theory say? Eigenvalues encode deep structure.",
+            "Is there a variational formulation? Minimizers often have regularity.",
+            "Try the probabilistic method — random constructions can prove existence.",
+        ],
+        "computation": [
+            "Is there a circuit complexity lower bound hiding here?",
+            "What's the communication complexity of the problem? Information-theoretic bounds?",
+            "Can you reduce to a known-hard problem to establish a barrier?",
+            "Is there an efficient algorithm, or can you prove conditional lower bounds?",
+        ],
+        "physics": [
+            "What's the Lagrangian? Symmetries yield conservation laws via Noether's theorem.",
+            "Is there a path integral formulation? The saddle point is often the classical solution.",
+            "Consider the thermodynamic limit — phase transitions reveal universal behavior.",
+            "What does renormalization group flow tell us about the problem's scale structure?",
         ],
         "logic": [
-            "Tropical logic: conjunction is min, disjunction is max, implication is subtraction. Prove soundness and completeness.",
-            "Prove that tropical propositional logic is decidable in polynomial time, unlike classical propositional logic.",
-            "Non-Archimedean probability: define probability measures over the tropical semiring and prove a tropical law of large numbers.",
-            "Constructive type theory over the tropical semiring: prove that tropical HoTT satisfies the univalence axiom.",
+            "What does this look like in constructive mathematics? Is excluded middle needed?",
+            "Is there a proof-theoretic ordinal that measures the strength of this statement?",
+            "Can you encode this as a type theory problem? Proofs as programs.",
+            "Consider the model-theoretic perspective — what structures satisfy this?",
         ],
-        "bridges": [
-            "The deepest results connect fields that seemed unrelated. Find the bridge no one expected.",
-            "Every bridge theorem creates a new field. Tropical geometry + machine learning = tropical robustness. What's next?",
-            "Prove that the EML closure is a bridge from analysis to algebra: it's both a subalgebra of C(K) and a tropical polynomial ring.",
-            "The Langlands program connects number theory and representation theory. What is the tropical Langlands program?",
+        "cryptography": [
+            "Is there a worst-case to average-case reduction?",
+            "What's the quantum complexity? Is this post-quantum secure?",
+            "Can you build a zero-knowledge proof from this hardness assumption?",
+            "What lattice problem does this reduce to?",
+        ],
+        "machinelearning": [
+            "What generalization bounds can you prove? PAC-Bayes? Compression?",
+            "Is there an information-theoretic lower bound on sample complexity?",
+            "What does the neural tangent kernel perspective reveal?",
+            "Can you prove an approximation theorem with explicit depth/width bounds?",
+        ],
+        "tropical": [
+            "Tropical geometry IS algebraic geometry over the min-plus semiring.",
+            "The tropicalization functor preserves many classical invariants — which ones?",
+            "Tropical convexity is different from classical convexity — exploit the difference.",
+            "Min-plus linear algebra has different rank theory — use it.",
+        ],
+        "combinatorics": [
+            "Is there a probabilistic proof? The Lovász Local Lemma is surprisingly powerful.",
+            "What does the algebraic method (polynomial method) reveal?",
+            "Is there a topological obstruction? Borsuk-Ulam type arguments?",
+            "Can you find the right extremal function? Turán-type results?",
+        ],
+        "topology": [
+            "What do the homotopy groups tell us? Higher homotopy is often tractable.",
+            "Is there a spectral sequence that computes the answer?",
+            "Consider the problem in the derived category — homological algebra may help.",
+            "What does surgery theory say? Can you reduce to algebra?",
         ],
     }
 
-    # Universal creativity heuristics
+    # Universal creativity heuristics — diversified
     UNIVERSAL_HEURISTICS = [
-        # Mathematical trick heuristics
         "If the obvious approach fails, take the Galois dual.",
         "Reframe the problem in the category of sheaves over a site.",
         "Look for a hidden group action or symmetry.",
         "Try to prove the contrapositive in a non-standard model.",
-        "Use tropicalization to degenerate the problem to a combinatorial one.",
-        "Consider the p-adic analogue — non-Archimedean metrics often simplify convergence.",
+        "Consider the p-adic analogue — non-Archimedean metrics simplify convergence.",
         "If analysis is hard, try algebra. If algebra is hard, try geometry.",
         "What would this theorem say in homotopy type theory?",
         "Can you encode the theorem as a type and the proof as a program?",
         "Look for an adjunction: left adjoints preserve colimits, right adjoints preserve limits.",
-        # Visionary heuristics
         "If this result is true, what entirely new field does it open? Prove that first.",
-        "Every deep theorem has a computational shadow. Find the algorithm that computes it.",
-        "What is the tropical limit? If you dequantize (epsilon -> 0), does the structure simplify or undergo a phase transition?",
-        "What does this look like in the min-plus world? Invert addition and multiplication and see if beauty emerges.",
-        "Connect to physics: if this were an energy landscape, what would the ground state be? The critical temperature?",
-        "What would a 22nd-century mathematician prove about this? Skip the incremental step and aim for the paradigm shift.",
-        "Every inequality has an equality case. What does equality imply? That's usually the deeper structure.",
-        "Replace the real numbers with the tropical semiring. If the theorem fails, the failure point reveals the real content.",
-        "If this is true for dimension n, what happens in dimension infinity? Compactness arguments often reveal hidden structure.",
-        "What would Shannon, Turing, or Wiles do? Shannon would find the information content. Turing would find the algorithm. Wiles would find the Galois representation.",
+        "Every deep theorem has a computational shadow. Find the algorithm.",
+        "What would a 22nd-century mathematician prove about this?",
+        "Every inequality has an equality case. The equality case reveals deeper structure.",
+        "If this is true for dimension n, what happens in dimension infinity?",
+        "What would Shannon, Turing, or Wiles do with this problem?",
     ]
 
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -163,81 +145,97 @@ class PromptEngine:
         lean_guess: str,
         difficulty: str = "phd",
         artifacts: Optional[ArtifactRequests] = None,
+        dna: Optional[PromptDNA] = None,
+        cycle_n: int = 0,
+        memory_summary: str = "",
+        presearch_context: str = "",
     ) -> ResearchPrompt:
-        """Assemble a full Aristotle prompt package (v2 system prompt)."""
+        """Assemble a full Aristotle prompt package.
 
+        If a PromptDNA is provided, uses the evolving modular system.
+        Otherwise falls back to a static prompt (backward compatible).
+        """
         if artifacts is None:
             artifacts = ArtifactRequests()
 
-        # 1. Inject domain-specific creativity boosters
-        boosters = self.DOMAIN_BOOSTERS.get(domain.lower(), [])
-        heuristic_sample = self.UNIVERSAL_HEURISTICS[:5]
+        if dna:
+            # v3: Use evolving DNA system
+            full_prompt = dna.assemble(
+                cycle_n=cycle_n,
+                domain=domain,
+                concept_description=concept_description,
+                mathematical_framing=mathematical_framing,
+                lean_guess=lean_guess,
+                title=title,
+                memory_summary=memory_summary,
+                presearch_context=presearch_context,
+            )
+        else:
+            # Fallback: static prompt (backward compatible)
+            boosters = self.DOMAIN_BOOSTERS.get(domain.lower(), [])
+            heuristic_sample = self.UNIVERSAL_HEURISTICS[:5]
 
-        creativity_injection = "\n".join(
-            [f"  - {b}" for b in boosters[:3]] +
-            [f"  - {h}" for h in heuristic_sample]
-        )
+            creativity_injection = "\n".join(
+                [f"  - {b}" for b in boosters[:3]] +
+                [f"  - {h}" for h in heuristic_sample]
+            )
 
-        # 2. v2.2 Research-Body Prompt — rich context, open-ended instructions
-        full_prompt = textwrap.dedent(f"""\
-            === SYSTEM ROLE ===
-            You are Aristotle, an inventive formal mathematician.
-            Your gift is synthesizing disparate ideas into genuinely new mathematics.
-            Trust your instincts. Follow the interesting connections.
-            Produce work that surprises even you.
+            full_prompt = textwrap.dedent(f"""\
+                === SYSTEM ROLE ===
+                You are Aristotle, an inventive formal mathematician.
+                Your gift is synthesizing disparate ideas into genuinely new mathematics.
+                Trust your instincts. Follow the interesting connections.
+                Produce work that surprises even you.
 
-            === CATALOG CONTEXT ===
-            You have access to the full CatalogBuild Lean 4 library
-            (~2,700 .lean files spanning Algebra, Geometry, Logic, Physics,
-            Computation, Cryptography, Pythagorean, Tropical, EML,
-            MachineLearning, Bridges, Speculative, and Shared).
+                === CATALOG CONTEXT ===
+                You have access to the full CatalogBuild Lean 4 library
+                (~2,700 .lean files spanning Algebra, Geometry, Logic, Physics,
+                Computation, Cryptography, Pythagorean, Tropical, EML,
+                MachineLearning, Bridges, Speculative, and Shared).
 
-            Reuse existing definitions and theorems. Build upward.
-            Cross-pollinate across domains. Find hidden symmetries.
+                Reuse existing definitions and theorems. Build upward.
+                Cross-pollinate across domains. Find hidden symmetries.
 
-            === RESEARCH BODY ===
-            DOMAIN: {domain}
-            TITLE: {title}
+                === RESEARCH BODY ===
+                DOMAIN: {domain}
+                TITLE: {title}
 
-            {concept_description}
+                {concept_description}
 
-            Mathematical Framework:
-            {mathematical_framing}
+                Mathematical Framework:
+                {mathematical_framing}
 
-            Formalization Sketch:
-            {lean_guess}
+                Formalization Sketch:
+                {lean_guess}
 
-            Creativity Directives (inspirational, not mandatory):
-            {creativity_injection}
+                Creativity Directives (inspirational, not mandatory):
+                {creativity_injection}
 
-            ---
+                ---
 
-            Given the research body above, your task is to explore this space deeply.
-            Create a team to research and explore. Answer as many important questions
-            as you can discover. Formulate new theorems. Brainstorm exciting new
-            applications using breakthroughs in this mathematics. Write a paper of
-            recommended future research directions to explore.
+                Given the research body above, explore this space deeply.
+                Answer as many important questions as you can discover.
+                Formulate new theorems. Brainstorm exciting new applications.
+                Write a paper of recommended future research directions.
 
-            Core guardrails (non-negotiable):
-            - Use concrete types (Nat, Real, Matrix, Finset, etc.). Avoid `True := by trivial`.
-            - Formalize genuine, substantive theorems in Lean 4 (mathlib4 v4.28.0).
-            - Minimize sorry. If a step is beyond zero-shot, isolate it as a clearly marked auxiliary lemma rather than using sorry.
-            - Build on existing catalog definitions. Do not re-invent.
+                Core guardrails (non-negotiable):
+                - Use concrete types (Nat, Real, Matrix, Finset, etc.).
+                - Formalize genuine, substantive theorems in Lean 4 (mathlib4 v4.28.0).
+                - Minimize sorry. Isolate hard steps as auxiliary lemmas.
+                - Build on existing catalog definitions. Do not re-invent.
 
-            Deliver whatever feels right for this body of work. You may produce:
-            - A Lean proof (theorem.lean)
-            - A research report (RESEARCH_REPORT.md)
-            - A Python demo (demo.py)
-            - An SVG diagram (diagram.svg)
-            - A public-facing article (DISCUSSION.md)
+                Deliver ALL of the following:
+                - Lean 4 formal proofs (theorem.lean)
+                - A research report (RESEARCH_REPORT.md)
+                - A Python demo (demo.py)
+                - An SVG diagram (diagram.svg)
+                - A public-facing article (DISCUSSION.md)
+                - A FUTURE_DIRECTIONS.md
 
-            Or any combination thereof. Structure and length are up to you.
-            Quality over quantity. Surprise us.
-        """)
+                Quality over quantity. Surprise us.
+            """)
 
-        # 3. Open-ended deliverables (suggestive, not prescriptive)
         expected = []
-
         if artifacts.lean_proof:
             expected.append("theorem.lean")
         if artifacts.research_report:
