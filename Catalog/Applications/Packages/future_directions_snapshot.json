@@ -16,22 +16,6 @@
     "timestamp": "2026-05-14T16:03:53.810233+00:00"
   },
   {
-    "id": "seed_034",
-    "title": "Quantum Speedup via Tropical Dequantization",
-    "description": "Prove that the dequantization of quantum algorithms—replacing quantum amplitude with tropical weights—preserves the speedup structure while eliminating quantum hardware requirements. Show that tropical dequantized algorithms achieve the same asymptotic complexity as their quantum counterparts for search and sampling problems, and that the min-plus interference pattern captures the essential quantum parallelism.",
-    "domains": [
-      "Computation",
-      "Physics",
-      "Tropical"
-    ],
-    "priority_score": 0.84,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "a33794dc",
-    "timestamp": "2026-05-14T16:03:53.831081+00:00"
-  },
-  {
     "id": "seed_059",
     "title": "Homotopy Type Theory via Tropical Higher Inductive Types",
     "description": "Prove that higher inductive types in homotopy type theory have tropical shadows where the path type becomes min-plus equidistance, and that the tropical univalence axiom is a decidable min-plus identity. Show that tropical HoTT captures the combinatorial skeleton of homotopy types while eliminating the topological complexity, yielding a computational interpretation of univalence.",
@@ -403,10 +387,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e054be3f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2b3b0e7e",
     "timestamp": "2026-05-17T12:52:39.263477+00:00"
   },
   {
@@ -1429,5 +1413,111 @@
     "source_exp_id": "b62b8fc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T13:33:11.092879+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "1. Phase-Sensitive Obstruction Theorem",
+    "description": "**Goal**: Characterize precisely which quantum algorithms *cannot* be tropicalized, because their speedup depends essentially on phase cancellation rather than path competition.",
+    "domains": [
+      "Tropical",
+      "Physics"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a33794dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:45:31.670672+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Concrete Next Steps",
+    "description": "- Formalize the definition of phase complexity for branching programs\n- Prove that period-finding has phase complexity Ω(n)\n- Connect to Razborov's flag algebra method for lower bounds\n- Formalize the separation in the proof assistant\n\n---",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a33794dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:45:31.693088+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "2. Tropical Amplitude Amplification",
+    "description": "**Goal**: Define and prove a min-plus analogue of Grover's amplitude amplification that achieves provable speedup on structured search problems.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a33794dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:45:31.711381+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "3. Tropical Walk Algorithms",
+    "description": "**Goal**: Formulate min-plus analogues of quantum walk search algorithms and prove graph-dependent complexity bounds.",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a33794dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:45:31.733870+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "4. Thermodynamic Refinement: Finite-β Theory",
+    "description": "**Goal**: Extend the zero-temperature limit theorem to a complete finite-temperature theory, connecting tropical optimization to concentration inequalities and large deviation principles.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a33794dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:45:31.755268+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Prioritization",
+    "description": "| Direction | Impact | Feasibility (1yr) | Dependencies |\n|-----------|--------|-------------------|--------------|\n| 1. Phase Obstruction | ★★★★★ | ★★★ | None |\n| 2. Tropical Amplification | ★★★★ | ★★★★ | Direction 1 (partial) |\n| 3. Tropical Walks | ★★★★ | ★★★★ | None |\n| 4. Thermodynamic Refinement | ★★★★★ | ★★★★★ | Current work |\n| 5. Verified Compilation | ★★★ | ★★★ | Directions 1-4 (partial) |\n\n**Recommended starting points**: Directions 4 (most immediately accessible, builds directly on softmin bounds) and 3 (independent, connects to well-studied graph algorithms).\n\n---",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a33794dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:45:31.781487+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Team Structure",
+    "description": "- **Theory team**: Directions 1, 2, 4 — algebraists and combinatorialists\n- **Implementation team**: Directions 3, 5 — systems researchers and formal methods experts\n- **Bridge team**: Connect tropical results to quantum information community, publish survey/tutorial\n\nEach team should maintain a shared repository of formalized results, with weekly cross-team seminars to identify unexpected connections.",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a33794dc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:45:31.800514+00:00"
   }
 ]
