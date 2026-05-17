@@ -410,36 +410,6 @@
     "timestamp": "2026-05-16T13:37:23.953786+00:00"
   },
   {
-    "id": "fd_0240",
-    "title": "Reusable Propagation Theorems",
-    "description": ": Prove generic soundness and stabilization for any TropicalCSP equipped with a monotone propagation operator, parameterized by domain size and number of variables.\n\n### Proof Strategy\n- Define a `TropicalCSP.WithPropagation` extension structure that bundles a propagation operator with soundness and antitonicity proofs.\n- Prove a generic stabilization theorem: if Var and Val are finite, propagation stabilizes in |Var| × |Val| steps.\n- Instantiate for each CSP family.\n\n### Cross-Domain Impact\nThis would create the first machine-verified library of tropical CSPs, directly applicable to operations research, AI planning, and combinatorial optimization.\n\n---\n\n## Direction 2: Quantitative Phase Transition Theorem\n\n### Hypothesis\nFor a random clue model where k cells are chosen uniformly at rando",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3ebbb418",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T13:37:24.014796+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Lower bound",
-    "description": ": Generalize Schwartz–Zippel using \"degree reduction\" — when d ≥ q−1, the polynomial x^q − x vanishes everywhere, so effective degree is controlled by the quotient-remainder decomposition.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T19:15:45.144476+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "Key challenge",
     "description": ": The fibers are no longer parallel hyperplanes in a single coordinate; the zero set has a tensor-product structure across multiple coordinates.\n\n### Formalization Target\n\n```lean\ntheorem generalized_reedMuller_min_distance\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d a b : ℕ)\n    (h_decomp : d = a * (Fintype.card 𝔽 - 1) + b)\n    (hb : b < Fintype.card 𝔽 - 1)\n    (ha : a < n) :\n    reedMullerMinWeight 𝔽 n d = (Fintype.card 𝔽 - b) * (Fintype.card 𝔽) ^ (n - 1 - a)\n```\n\n### Cross-Domain Connections\n- **Coding theory**: Completes the parameter analysis for all generalized Reed–Muller codes\n- **Algebraic geometry**: Classification of extremal hypersurfaces in finite affine space\n- **Complexity theory**: Tight soundness bounds for algebraic PCPs with arbitrary degree\n\n### Difficulty: ★★★★☆\n\n--",
@@ -469,20 +439,6 @@
     "source_exp_id": "38f08fce",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T19:15:45.209708+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Formalize the dimension of bounded-degree polynomial spaces",
-    "description": "The space of polynomials of total degree < d in n variables over K has dimension C(d+n-1, n). This is a combinatorial identity about the number of monomials, requiring careful formalization of `Finsupp.antidiagonal` or explicit bijection with weak compositions.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1646adc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:01:29.416442+00:00"
   },
   {
     "id": "fd_0241",
@@ -528,21 +484,6 @@
     "timestamp": "2026-05-16T21:01:29.489920+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Define `evalTropicalCircuit`",
-    "description": ": recursive evaluation where AND = min, OR = max.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "477ce9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:09:48.026668+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Extend to quantitative bounds",
     "description": ": if inputs are in `[a, b]` instead of `{0, 1}`, bound the output range.\n\n### Required New Definitions\n\n- `MonotoneCircuit n m`: circuit with n inputs, m outputs, AND/OR gates.\n- `evalTropicalCircuit`: evaluation function.\n- `circuitDepth`: depth of the circuit.\n\n### Anticipated Blockers\n\n- Defining circuits with shared sub-expressions (DAGs vs trees) — trees are simpler but may not capture all circuits.\n- The extension to quantitative bounds requires interpolation between the Boolean and tropical regimes.\n\n### Enabling Lemmas\n\n- `tropicalMatMap_monotone` handles the matrix case; circuits generalize this.\n- The existing `bool_and_as_tropical_max` from the catalog provides gate-level correctness.\n- `tropical_and_bound` provides quantitative bounds per gate.\n\n### Cross-Domain Impact\n\n- **Cir",
@@ -557,20 +498,6 @@
     "source_exp_id": "477ce9c1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T21:09:48.059246+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Define the discounted tropical operator",
-    "description": ": `T_γ(x)_i = max_j(A_{ij} + γ·x_j)`.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "477ce9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:09:48.074041+00:00"
   },
   {
     "id": "fd_0270",
@@ -663,20 +590,6 @@
     "source_exp_id": "2f4ddb26",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T23:54:56.601629+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "Direction 1",
-    "description": "(Freivalds soundness) — immediate application, directly composes our theorem with matrix multiplication.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2f4ddb26",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:54:56.628348+00:00"
   },
   {
     "id": "fd_0113",
@@ -1225,22 +1138,6 @@
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
   },
   {
-    "id": "fd_0240",
-    "title": "3. Freivalds as a Corollary of Schwartz–Zippel over Finite Fields",
-    "description": "**Target theorem**:\n```lean\ntheorem freivalds_from_schwartz_zippel\n    {q m p : ℕ} [Fact q.Prime]\n    (M : Matrix (Fin m) (Fin p) (ZMod q))\n    (hM : M ≠ 0) :\n    Fintype.card {r : Fin p → ZMod q // M.mulVec r = 0}\n      ≤ q ^ (p - 1)\n```\n\nbut proved by appeal to the Schwartz–Zippel lemma for degree-1 multivariate polynomials, showing that Freivalds is a special case of polynomial identity testing.\n\n**Proof strategy**: \n1. Extract a nonzero row `w = M i` from `M`.\n2. View `∑ j, w j * r j` as a degree-1 polynomial in `MvPolynomial (Fin p) (ZMod q)`.\n3. Apply the Schwartz–Zippel bound: a nonzero polynomial of total degree `d` over `ZMod q` vanishes on at most `d · q^(p-1)` points.\n4. With `d = 1`, this gives exactly the `q^(p-1)` bound.\n\n**Impact**: This unifies matrix verification with poly",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e0e0def",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T09:47:38.651556+00:00"
-  },
-  {
     "id": "fd_0231",
     "title": "Direction 1: Envelope Canonicalization and Exact Minimization",
     "description": "**Hypothesis:** The *envelope-canonical form* (monomials that achieve the pointwise minimum at some n ∈ ℕ) gives an exact characterization of minimal weighted automaton states.\n\n**Background:** Our formalized Pareto-canonical form (NatCanonical) preserves the language but may retain redundant monomials — those that never achieve the minimum but are not pointwise dominated by any single competitor. The envelope-canonical form removes exactly the semantically redundant monomials.\n\n**Proof Strategy:**\n1. Define `EnvelopeCanonical p = p.filter (fun m => ∃ n : ℕ, ∀ m' ∈ p, monoEval m n ≤ monoEval m' n)`.\n2. Show `EnvelopeCanonical p ⊆ NatCanonical p` (envelope-essential implies Pareto-optimal).\n3. Prove each envelope-canonical monomial is the *unique* minimizer at some n (use distinct slopes an",
@@ -1328,20 +1225,6 @@
     "source_exp_id": "41f0f930",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:12:11.734256+00:00"
-  },
-  {
-    "id": "fd_0244",
-    "title": "Broader Impact",
-    "description": "This direction connects arithmetic thermodynamics to:\n- Information theory: S(E) is the rate function for the entropy of integers at energy level E\n- Optimization: the Legendre transform is central to convex optimization and duality theory\n- Economics: analogues of Gibbs measures appear in discrete choice theory (logit models)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "8b829eb9",
-    "consumed_by_exp_id": "705965b8",
-    "timestamp": "2026-05-16T14:28:58.186572+00:00"
   },
   {
     "id": "fd_0256",
@@ -1729,25 +1612,6 @@
     "timestamp": "2026-05-16T23:27:21.917901+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "7. Tropical Polynomial Representation",
-    "description": "**Theorem Target:** Show that every circuit in DNF form corresponds to a tropical polynomial (max of affine-min terms) and characterize the representable functions.\n\n**Proof Strategy:**\n- After establishing `toDNF`, show that the normal form is a `max` of `min` terms, each being a `min` of variables and constants.\n- In the tropical semiring interpretation (with `⊕ = max`, `⊗ = min`), these are exactly tropical monomials combined by tropical addition.\n- Prove that over `ℝ`, these functions are exactly the piecewise-linear concave functions (intersection of half-spaces under max).\n\n**Cross-Domain Significance:**\n- Bridges monotone circuit theory to tropical algebraic geometry.\n- Connects to the Legendre-Fenchel transform and convex optimization.\n- Opens a path to formal tropical intersection",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e5da3534",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:27:21.937720+00:00"
-  },
-  {
     "id": "fd_0259",
     "title": "Theorem Statement",
     "description": "```lean\ntheorem hilbert_series_mvPolynomial (n : ℕ) :\n    (∑ m in Finset.range N, (finrank K (homogeneousComponent' K (Fin n) m)) * X^m : PowerSeries K) \n    = ... -- truncation of 1/(1-X)^n\n```\n\nMore precisely, formalize that the Hilbert function H(m) = C(m+n-1, n-1) satisfies the generating function identity ∑ H(m) t^m = 1/(1-t)^n as formal power series.",
@@ -1791,5 +1655,66 @@
     "source_exp_id": "bffc2558",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T23:41:10.722487+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Cross-Domain Payoff",
+    "description": "- **Additive combinatorics**: Opens the door to restricted sumset bounds (Erdős-Heilbronn, Davenport transform).\n- **Coding theory**: Sumset lower bounds are related to minimum distance bounds for algebraic codes.\n- **Number theory**: Connections to Freiman-Ruzsa theorem and inverse sumset problems.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "705965b8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:34:14.083570+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Conjecture Statement",
+    "description": "In the tropical semiring (ℝ ∪ {∞}, min, +), the \"support extraction\" principle states: if a tropical polynomial f has a monomial with coefficient strictly smaller (more extreme) than all other monomials at the exponent vector d, and if variable bounds are given by finite sets S_i, then there exists a point in the tropical Cartesian product where f achieves a value determined by the d-monomial.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "705965b8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:34:14.134551+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Lean Target (Conjectural)",
+    "description": "```lean\ntheorem tropical_support_extraction\n    {ι : Type*} [Fintype ι] [DecidableEq ι]\n    (coeffs : (ι →₀ ℕ) → WithTop ℝ)\n    (d : ι →₀ ℕ)\n    (S : ι → Finset ℝ)\n    (hmin : ∀ m ≠ d, coeffs d < coeffs m) :\n    ∃ x ∈ tropicalGrid S,\n      tropicalEval coeffs x = coeffs d + ∑ i, d i • tropicalMin (S i)\n```",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "705965b8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:34:14.156206+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "Implementation Priorities",
+    "description": "| Priority | Direction | Difficulty | Impact |\n|---|---|---|---|\n| 1 | Cauchy-Davenport (Dir. 1) | Medium | High — opens additive combinatorics |\n| 2 | Vanishing ideal (Dir. 2) | Hard | High — algebraic foundations |\n| 3 | Height bounds (Dir. 4) | Medium | Medium — quantitative methods |\n| 4 | Reed-Solomon (Dir. 5) | Medium-Hard | High — coding theory bridge |\n| 5 | Tropical (Dir. 3) | Exploratory | Visionary — new territory |\n\n---",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "705965b8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:34:14.213908+00:00"
   }
 ]
