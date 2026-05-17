@@ -439,20 +439,6 @@
     "timestamp": "2026-05-17T15:21:59.549951+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Identify the Berggren generators",
-    "description": "as explicit elements of PGL₂(𝔽_q) via the rational parametrization (m² - n² : 2mn : m² + n²) of the conic",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.769159+00:00"
-  },
-  {
     "id": "fd_0276",
     "title": "Information-theoretic",
     "description": ": Use Holevo bound to show k bits of classical information can produce at most 2^k deterministic strategies, each classical.\n\n### Cross-Domain Significance\n- **Communication complexity**: Lower bounds on shared randomness for correlation production\n- **Quantum information**: Quantifies the classical simulation cost of quantum correlations\n- **Cryptographic security**: Bounds on eavesdropper information from observed violations\n\n---\n\n## Direction 4: Coherence Stratification of Correlation Models\n\n### Goal\nDefine levels of coherence and prove monotonicity of attainable correlation strength across strata.\n\n### Precise Theorem Statement\n```\ndef correlationStratum (γ : ℝ) : Set ℝ :=\n  { s : ℝ | ∃ (n : ℕ) (L : LocalModel n) (H : ℝ) (hn : 0 < n),\n    CoherenceVal H n hn ≥ γ ∧\n    s = chshQuantity",
@@ -643,60 +629,204 @@
     "timestamp": "2026-05-17T18:03:30.204950+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Formalization skeleton",
-    "description": ": Write the Lean skeleton with sorry'd lemmas",
+    "id": "fd_0268",
+    "title": "Apollonian orthogonality",
+    "description": ": The four Apollonian generators S₁,...,S₄ acting on Descartes quadruples preserve the Descartes form Q(a,b,c,d) = 2(a²+b²+c²+d²) − (a+b+c+d)² of signature (3,1). *Hypothesis*: After a suitable change of basis, the generators satisfy approximate Lorentz-orthogonality, enabling spectral gap bounds.",
     "domains": [
-      "Bridges"
+      "Analysis",
+      "Physics"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f09dcb6a",
+    "source_exp_id": "570b15b9",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T18:03:30.226264+00:00"
+    "timestamp": "2026-05-17T18:03:56.657506+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Bottom-up proving",
-    "description": ": Prove helper lemmas from simplest to hardest",
+    "id": "fd_0269",
+    "title": "Markoff dynamics",
+    "description": ": The Vieta involutions on x² + y² + z² = 3xyz preserve a form of signature (2,1). *Hypothesis*: The spectral gap on the mean-zero subspace is at least 1 − 1/√3 ≈ 0.42.\n\n### Proof Strategy\n- Diagonalize the Descartes form and express generators as Lorentz reflections in the new coordinates\n- Verify Lorentz-orthogonality computationally for the transformed generators\n- Apply the reduction theorem (Theorem 4.5) and contraction bound (Theorem 3.2)\n- For approximate orthogonality, develop perturbation bounds (see Direction 4)\n\n### Cross-Domain Connections\n- **Number theory**: Spectral gap implies equidistribution of Apollonian curvatures modulo primes (Kontorovich-Oh)\n- **Combinatorics**: Expansion of Cayley graphs of thin groups\n- **Physics**: Apollonian packings model sphere packings in disc",
     "domains": [
-      "Bridges"
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f09dcb6a",
+    "source_exp_id": "570b15b9",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T18:03:30.242794+00:00"
+    "timestamp": "2026-05-17T18:03:56.677314+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Integration",
-    "description": ": Combine into the main theorem",
+    "id": "fd_0270",
+    "title": "Hyperbolic code construction",
+    "description": ": Let Γ = ⟨g₁,...,gₖ⟩ be a semigroup of Lorentz isometries with spectral gap γ. The orbit Γ·x₀ on the hyperboloid (timelike unit vectors) forms a code with minimum angular distance d_min ≥ f(γ) for an explicit function f.",
     "domains": [
-      "Bridges"
+      "Analysis",
+      "Physics",
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f09dcb6a",
+    "source_exp_id": "570b15b9",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T18:03:30.259230+00:00"
+    "timestamp": "2026-05-17T18:03:56.696410+00:00"
   },
   {
-    "id": "fd_0267",
-    "title": "Cross-validation",
-    "description": ": Verify that instances specialize correctly",
+    "id": "fd_0271",
+    "title": "Quantum codes from hyperbolic tilings",
+    "description": ": The homological codes on regular hyperbolic tilings have parameters controlled by the spectral gap of the tiling symmetry group.\n\n### Proof Strategy\n- Define codewords as orbit points on the hyperboloid model of hyperbolic space\n- Use the contraction bound to show that T^n x₀ converges to the average, with convergence rate γ\n- Show that expansion implies minimum separation: if two orbit points are too close, the averaging operator would not contract at rate γ\n- Formalize the resulting code parameters (rate, distance) as functions of k, n, and γ\n\n### Cross-Domain Connections\n- **Quantum error correction**: Hyperbolic surface codes achieve constant rate with growing distance, a key advantage over planar codes\n- **Lattice cryptography**: Well-separated orbits in hyperbolic space provide can",
+    "domains": [
+      "Analysis",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "570b15b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:03:56.715289+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "L² spectral gap",
+    "description": ": For a semigroup Γ acting on a compact quotient X = Γ\\H^n, the averaging operator T = (1/k)Σ ρ(gᵢ) on L²(X) has spectral gap at least 1 − 1/√k on the mean-zero subspace, when the generators are Lorentz-orthogonal.",
+    "domains": [
+      "Analysis",
+      "Physics",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "570b15b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:03:56.733724+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Decay of matrix coefficients",
+    "description": ": Orthogonality of generators implies rapid decay of matrix coefficients ⟨ρ(g)f, h⟩ for f, h in the mean-zero subspace.\n\n### Proof Strategy\n- Define the L² space as a Hilbert space of functions on the finite quotient\n- Represent T as a bounded operator on L²\n- Use the Pythagorean identity (Theorem 3.1) to bound ‖Tf‖² for mean-zero f\n- The key step is showing that the images ρ(gᵢ)f are approximately orthogonal in L² when the generators are Lorentz-orthogonal — this requires a new argument connecting geometric orthogonality to function-space orthogonality\n\n### Cross-Domain Connections\n- **Ergodic theory**: Rate of mixing for geodesic flows on hyperbolic manifolds\n- **Harmonic analysis**: Decay of matrix coefficients for representations of SO(n,1)\n- **Statistical mechanics**: Mixing time for ",
+    "domains": [
+      "Analysis",
+      "Topology",
+      "Probability",
+      "Physics",
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "570b15b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:03:56.753030+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Perturbation bound",
+    "description": ": If |⟨vᵢ, vⱼ⟩| ≤ ε for all i ≠ j and ‖vᵢ‖ ≤ 1, then ‖(1/k)Σ vᵢ‖ ≤ 1/√k + O(ε√k).",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f09dcb6a",
+    "source_exp_id": "570b15b9",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T18:03:30.282968+00:00"
+    "timestamp": "2026-05-17T18:03:56.769947+00:00"
+  },
+  {
+    "id": "fd_0275",
+    "title": "Robust spectral gap",
+    "description": ": gap(T) ≥ 1 − 1/√k − O(ε k) for nearly orthogonal generators.",
+    "domains": [
+      "Analysis"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "570b15b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:03:56.786789+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Phase transition",
+    "description": ": There exists a critical ε*(k) such that for ε < ε*(k), the spectral gap is positive, and for ε > ε*(k), it may vanish.\n\n### Proof Strategy\n- Expand ‖Σ vᵢ‖² = Σ ‖vᵢ‖² + Σ_{i≠j} ⟨vᵢ, vⱼ⟩\n- Bound the cross terms: |Σ_{i≠j} ⟨vᵢ, vⱼ⟩| ≤ k(k−1)ε\n- Derive ‖(1/k)Σ vᵢ‖² ≤ 1/k + (k−1)ε/k\n- Take square roots and simplify\n- For the phase transition, find the ε where the bound exceeds 1\n\n### Cross-Domain Connections\n- **Compressed sensing**: Near-orthogonal families (RIP condition) are central to compressed sensing; our framework provides a new angle on RIP-based expansion\n- **Expander robustness**: Understanding how spectral gaps degrade under perturbation is crucial for fault-tolerant applications\n- **Random matrix theory**: Random nearly-orthogonal families arise in Johnson-Lindenstrauss embeddings",
+    "domains": [
+      "Analysis",
+      "Probability",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "570b15b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:03:56.805374+00:00"
+  },
+  {
+    "id": "fd_0277",
+    "title": "Multi-signature generalization",
+    "description": ": For a quadratic form of signature (p,q), families of reflections in pairwise-orthogonal spacelike directions produce averaging operators with spectral gap at least 1 − 1/√k on the spacelike subspace.",
+    "domains": [
+      "Analysis",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "570b15b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:03:56.822993+00:00"
+  },
+  {
+    "id": "fd_0278",
+    "title": "SL_n expansion",
+    "description": ": For generators of thin subgroups of SL_n(ℤ), the orthogonality condition can be formulated using the Killing form, and spectral gap bounds follow from the same mechanism.",
+    "domains": [
+      "Analysis",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "570b15b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:03:56.840033+00:00"
+  },
+  {
+    "id": "fd_0279",
+    "title": "Zariski density criterion",
+    "description": ": If the generators generate a Zariski-dense subgroup, approximate orthogonality in a suitable sense is automatic after a bounded number of products.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "570b15b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:03:56.856183+00:00"
   },
   {
     "id": "fd_0179",
@@ -1353,40 +1483,6 @@
     "source_exp_id": "41ac42f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:38:13.881378+00:00"
-  },
-  {
-    "id": "fd_0265",
-    "title": "1. Continuous Monoid Action of ℕ on Function Spaces",
-    "description": "**Theorem Statement:**\n```lean\n/-- The iteration map ℕ → C(α, α) is a monoid homomorphism from (ℕ, +) to (C(α, α), ∘),\nwhere C(α,α) carries the compact-open topology. When α is compact Hausdorff,\nthis map is continuous from the discrete topology on ℕ. -/\ntheorem continuous_iterate_monoidHom\n    {α : Type*} [TopologicalSpace α] [CompactSpace α] [T2Space α]\n    {f : α → α} (hf : Continuous f) :\n    Continuous (fun n : ℕ => (⟨f^[n], hf.iterate n⟩ : C(α, α)))\n```\n\n**Proof Strategy:**\nUse the fact that convergence in the compact-open topology is uniform convergence on compact sets. Since ℕ has discrete topology, we need only show each singleton is open in the preimage, which is trivially true. The deeper result would extend to a continuous action of ℝ₊ (semiflow), requiring interpolation of ite",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "371a34c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:10:25.404884+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "2. Eventual Periodicity Transfer via Semiconjugacy",
-    "description": "**Theorem Statement:**\n```lean\n/-- If f has an eventually periodic orbit at x, and h semiconjugates f to g,\nthen g has an eventually periodic orbit at h(x) with period dividing that of f. -/\ntheorem semiconj_eventually_periodic\n    {α β : Type*} {f : α → α} {g : β → β} {h : α → β}\n    (hsemi : Function.Semiconj h f g)\n    {x : α} {m n : ℕ} (hn : 0 < n)\n    (hev : f^[m + n] x = f^[m] x) :\n    g^[m + n] (h x) = g^[m] (h x)\n```\n\n**Proof Strategy:**\nApply `hsemi.iterate_right` to both sides of `hev`. From `h (f^[m+n] x) = g^[m+n] (h x)` and `h (f^[m] x) = g^[m] (h x)`, combined with `f^[m+n] x = f^[m] x`, we get the result directly.\n\n**Cross-Domain Significance:**\n- In coding theory, this says that if a source sequence is eventually periodic, any deterministic encoding preserves eventual perio",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "371a34c3",
-    "consumed_by_exp_id": "2882da3c",
-    "timestamp": "2026-05-17T17:10:25.426544+00:00"
   },
   {
     "id": "fd_0269",
