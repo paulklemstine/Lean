@@ -319,10 +319,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "aa9f66df",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40fc847b",
     "timestamp": "2026-05-17T03:03:33.148216+00:00"
   },
   {
@@ -1362,24 +1362,6 @@
     "timestamp": "2026-05-17T06:38:03.464075+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Direction 2: Max-Plus Dualization",
-    "description": "**Hypothesis:** The entire tactic infrastructure can be systematically dualized from min-plus to max-plus algebra by a functorial transformation, yielding a parallel `tropical_max` tactic with zero additional proof effort.\n\n**Proof Strategy:**\n1. Define a `dual : CTropExpr → CTropExpr` map that swaps `tmin` for `tmax` (a new constructor).\n2. Prove `eval_max σ (dual e) = -eval_min (fun i => -σ i) e`, exploiting `max a b = -min(-a)(-b)`.\n3. Transfer all soundness theorems through this duality: `normalize_ca_sound` for max follows from the min version by negation.\n4. Alternatively, parameterize the entire development over a `TropicalSemiring` typeclass that abstracts over the choice of `min` vs `max`.\n\n**Impact:** Max-plus algebra is the native language of scheduling theory, discrete event sy",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "df23c5f9",
-    "consumed_by_exp_id": "5ffd606c",
-    "timestamp": "2026-05-17T07:35:53.275696+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Direction 3: Certified Tropical Matrix Algebra",
     "description": "**Hypothesis:** The scalar-level reflection tactic can be lifted to matrix expressions over the tropical semiring, enabling automated proofs of tropical matrix identities and spectral properties.\n\n**Proof Strategy:**\n1. Define `TropMatExpr` as matrices of `CTropExpr` entries.\n2. Implement tropical matrix multiplication: `(A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})`.\n3. Lift `normalize_ca` entry-wise and prove that normalized matrix equality implies semantic equality.\n4. For spectral properties: formalize the tropical eigenvalue as the minimum cycle mean in the associated weighted digraph. Prove that `tr(A^n)/n → λ(A)` tropically.\n5. Connect to the existing `MinPlusSpectral.lean` infrastructure.\n\n**Impact:** Tropical matrix algebra is the computational engine behind:\n- Shortest-path algorithms (",
@@ -1673,5 +1655,65 @@
     "source_exp_id": "6244d0ef",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T09:56:16.837800+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Lean Type Signature Sketch",
+    "description": "```lean\ntheorem tropical_markov_contraction\n    {n m : ℕ} (hn : 0 < n) (hm : 0 < m)\n    (π : Fin n → Fin m) (hπ : Function.Surjective π)\n    (σ : Fin m → Fin n)  -- a \"spread-back\" section\n    (hσ : ∀ j, π (σ j) = j)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hmix : ∀ x : Fin n → ℝ,\n      tropSpread hm (coarseGrainMax hn hm π hπ x) ≤\n      α * tropSpread hn x) :\n    ∀ (x : Fin n → ℝ) (k : ℕ),\n      -- k-fold iterated coarse-graining contracts spread by α^k\n      iteratedSpread k π σ x ≤ α ^ k * tropSpread hn x := by\n  sorry\n```",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5ffd606c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:05:21.768975+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "`tropical_spectral_bound` → Direction 2",
+    "description": "The spectral bound controls growth in matrix-driven dynamics, enabling long-horizon kinetic certification.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5ffd606c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:05:21.824735+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "`tropical_fundamental_theorem_of_arithmetic` → Direction 4",
+    "description": "Unique factorization in tropical semirings provides algebraic tools for decomposing tropical polytopes into irreducible facets.\n\n---",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5ffd606c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:05:21.849797+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Research Priorities",
+    "description": "**Immediate (Month 7-8)**: Direction 1 (Markov contraction) — extends data processing directly.\n**Medium-term (Month 9-10)**: Direction 2 (matrix-driven certification) — highest application impact.\n**Ambitious (Month 11-12)**: Direction 3 (channel capacity) — most theoretically novel.\n**Long-term**: Directions 4-5 — require more mathematical infrastructure.\n\nThe overarching goal: make the Lean library the authoritative formal reference for **tropical certified information dynamics** — a new subfield bridging tropical geometry, information theory, and verified computation.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5ffd606c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:05:21.875681+00:00"
   }
 ]
