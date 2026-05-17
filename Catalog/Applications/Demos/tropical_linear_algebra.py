@@ -1,717 +1,683 @@
 #!/usr/bin/env python3
 """
-applications.py — Real-World Applications of Tropical Surgery
+Applications of Tropical Surgery Theory
 
-Demonstrates how tropical matrix surgery applies to:
-1. Shortest-path sensitivity in transportation networks
-2. Manufacturing scheduling (discrete event systems)
-3. Network robustness under edge-weight changes
+Demonstrates real-world applications of the spectral monotonicity theorem:
+  1. Shortest-path sensitivity in transportation networks
+  2. Manufacturing system throughput optimization
+  3. Weighted automata and asymptotic word cost
 """
-
 import numpy as np
-from algorithms import (
-    karp_minimum_cycle_mean,
-    tropical_rank_two_surgery,
-    two_entry_surgery,
-    spectral_sensitivity_analysis,
-    find_critical_cycles,
-    surgery_support,
-)
+
+# ──────────────────────────────────────────────────────────────────────────
+# Utility functions (self-contained)
+# ──────────────────────────────────────────────────────────────────────────
+
+def min_cycle_mean_brute(A):
+    """Brute-force minimum cycle mean for small matrices."""
+    from itertools import product as cprod
+    n = A.shape[0]
+    best = float('inf')
+    best_walk = (0,)
+    for length in range(1, n + 1):
+        for walk in cprod(range(n), repeat=length):
+            w = sum(A[walk[i], walk[(i+1) % length]] for i in range(length))
+            m = w / length
+            if m < best:
+                best = m
+                best_walk = walk
+    return best, best_walk
 
 
-def application_1_shortest_path_sensitivity():
+# ──────────────────────────────────────────────────────────────────────────
+# Application 1: Transportation Network Sensitivity
+# ──────────────────────────────────────────────────────────────────────────
+
+def app_transportation():
     """
-    Application: Transportation Network Edge Upgrade
-    
-    A city has a road network modeled as a weighted digraph.
-    Edge weights represent travel times. The city wants to upgrade
-    two roads (decrease their travel times). Our theorem guarantees
-    that this cannot increase the minimum cycle mean (worst-case
-    average delay per step in any cyclic route).
+    A city has 4 zones connected by roads. Edge weights = travel times (minutes).
+    The minimum cycle mean represents the best average travel time per leg
+    for a delivery truck cycling through the network.
+
+    Surgery = upgrading two road segments (reducing their travel times).
+    The theorem guarantees: upgrades never worsen the optimal cycle time.
     """
-    print("=" * 60)
-    print("APPLICATION 1: Transportation Network — Road Upgrade")
-    print("=" * 60)
-    
-    # 4-node transportation network
-    # Nodes: Downtown(0), Airport(1), Suburb(2), Industrial(3)
-    INF = 100.0  # large value = no direct road
+    print("=" * 70)
+    print("APPLICATION 1: Transportation Network Optimization")
+    print("=" * 70)
+    print()
+
+    # Travel time matrix (minutes)
+    zones = ["Downtown", "Airport", "Industrial", "Suburbs"]
     A = np.array([
-        [5.0,  3.0,  8.0, INF],    # Downtown
-        [4.0,  6.0, INF,  2.0],    # Airport  
-        [7.0, INF,  4.0,  5.0],    # Suburb
-        [INF,  3.0,  6.0,  7.0],   # Industrial
-    ])
-    
-    labels = ["Downtown", "Airport", "Suburb", "Industrial"]
-    
-    rho_before = karp_minimum_cycle_mean(A)
-    print(f"\nNetwork travel time matrix (minutes per segment):")
-    for i, row in enumerate(A):
-        print(f"  {labels[i]:12s}: [{', '.join(f'{x:5.1f}' for x in row)}]")
-    print(f"\nMinimum cycle mean (before upgrade): {rho_before:.2f} min/segment")
-    
-    # Upgrade: reduce Downtown→Airport from 3 to 1, Industrial→Airport from 3 to 1.5
-    B = two_entry_surgery(A, 0, 1, 1.0, 3, 1, 1.5)
-    rho_after = karp_minimum_cycle_mean(B)
-    
-    print(f"\nUpgrade: Downtown→Airport: 3→1 min, Industrial→Airport: 3→1.5 min")
-    print(f"Minimum cycle mean (after upgrade): {rho_after:.2f} min/segment")
-    print(f"Improvement: {rho_before - rho_after:.2f} min/segment")
-    print(f"Monotonicity guaranteed: ρ(B) ≤ ρ(A) ✓")
-    
-    # Sensitivity analysis
-    sens = spectral_sensitivity_analysis(A, 0.5)
-    print(f"\nEdge sensitivity (which upgrades help most?):")
-    edges = []
-    for i in range(4):
-        for j in range(4):
-            if A[i, j] < INF - 1:
-                edges.append((sens[i, j], labels[i], labels[j]))
-    edges.sort(reverse=True)
-    for s, src, dst in edges[:5]:
-        print(f"  {src:12s} → {dst:12s}: sensitivity = {s:+.4f}")
+        [0,  12, 25, 18],   # From Downtown
+        [15,  0,  8, 20],   # From Airport
+        [30, 10,  0,  5],   # From Industrial
+        [22, 28,  7,  0],   # From Suburbs
+    ], dtype=float)
+
+    rho_A, walk_A = min_cycle_mean_brute(A)
+    print(f"Current network (travel times in minutes):")
+    for i, z in enumerate(zones):
+        print(f"  {z}: {A[i]}")
+    print(f"\nOptimal delivery cycle: {' → '.join(zones[w] for w in walk_A)} → {zones[walk_A[0]]}")
+    print(f"Average time per leg: {rho_A:.1f} minutes")
+
+    # Upgrade: build express lane Downtown→Airport and Industrial→Suburbs
+    print(f"\nProposed upgrades:")
+    print(f"  1. Express lane Downtown→Airport: 12 min → 5 min")
+    print(f"  2. Highway Industrial→Suburbs: 5 min → 2 min")
+
+    B = A.copy()
+    B[0, 1] = min(A[0, 1], 5)
+    B[2, 3] = min(A[2, 3], 2)
+
+    rho_B, walk_B = min_cycle_mean_brute(B)
+    print(f"\nAfter upgrades:")
+    print(f"  Optimal cycle: {' → '.join(zones[w] for w in walk_B)} → {zones[walk_B[0]]}")
+    print(f"  Average time per leg: {rho_B:.1f} minutes")
+    print(f"\n  THEOREM GUARANTEE: {rho_B:.1f} ≤ {rho_A:.1f} (upgrades cannot hurt) ✓")
+
+    # Check if upgrade was on critical cycle
+    crit_edges = set()
+    for i in range(len(walk_A)):
+        crit_edges.add((walk_A[i], walk_A[(i+1) % len(walk_A)]))
+
+    if (0, 1) not in crit_edges and (2, 3) not in crit_edges:
+        print(f"  Note: upgrades were OFF the critical cycle → ρ unchanged ({rho_A:.1f} = {rho_B:.1f})")
+    else:
+        improved_edges = [(0,1), (2,3)]
+        on_critical = [e for e in improved_edges if e in crit_edges]
+        print(f"  Edges on critical cycle: {on_critical} → strict improvement possible")
+    print()
 
 
-def application_2_manufacturing_schedule():
+# ──────────────────────────────────────────────────────────────────────────
+# Application 2: Manufacturing System (Discrete Event)
+# ──────────────────────────────────────────────────────────────────────────
+
+def app_manufacturing():
     """
-    Application: Manufacturing Line Optimization
-    
-    A factory has machines arranged in a cyclic workflow.
-    Matrix entries represent processing + transfer times.
-    Upgrading two machines (decreasing their processing times)
-    is a two-entry surgery. Our theorem guarantees the cycle
-    time (throughput) can only improve or stay the same.
+    A factory has 3 stations in a cyclic production line.
+    Edge weights = processing + transfer times.
+    Min cycle mean = inverse of maximum throughput (cycle time per part).
+
+    Surgery = installing faster equipment at two transfer points.
+    Theorem: faster transfers never decrease throughput.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Manufacturing — Machine Upgrade")
-    print("=" * 60)
-    
-    # 5-machine manufacturing line
-    # A[i,j] = time from completion of machine i to completion of machine j
-    machines = ["Cutter", "Welder", "Painter", "Inspector", "Packager"]
+    print("=" * 70)
+    print("APPLICATION 2: Manufacturing Throughput Optimization")
+    print("=" * 70)
+    print()
+
+    stations = ["Assembly", "Testing", "Packaging"]
+    # A[i,j] = time to process at station i then transfer to station j
     A = np.array([
-        [10.0,  4.0, 15.0, 20.0, 25.0],
-        [12.0,  8.0,  3.0, 18.0, 22.0],
-        [20.0, 16.0, 12.0,  5.0, 15.0],
-        [25.0, 20.0, 18.0,  7.0,  4.0],
-        [ 6.0, 10.0, 14.0, 20.0, 15.0],
-    ])
-    
-    rho_before = karp_minimum_cycle_mean(A)
-    print(f"\nProcessing time matrix (hours):")
-    for i, row in enumerate(A):
-        print(f"  {machines[i]:10s}: [{', '.join(f'{x:5.1f}' for x in row)}]")
-    print(f"\nCurrent cycle time: {rho_before:.2f} hours/step")
-    print(f"(Throughput: {1/rho_before:.4f} units/hour)")
-    
-    # Upgrade: faster Welder→Painter (3→1.5) and Inspector→Packager (4→2)
-    B = two_entry_surgery(A, 1, 2, 1.5, 3, 4, 2.0)
-    rho_after = karp_minimum_cycle_mean(B)
-    
-    print(f"\nUpgrade: Welder→Painter: 3→1.5h, Inspector→Packager: 4→2h")
-    print(f"New cycle time: {rho_after:.2f} hours/step")
-    print(f"(New throughput: {1/rho_after:.4f} units/hour)")
-    print(f"Improvement: {(1/rho_after - 1/rho_before)/( 1/rho_before)*100:.1f}%")
-    print(f"Monotonicity guaranteed: cycle time can only decrease ✓")
+        [10, 15, 20],   # Assembly
+        [12,  8, 10],   # Testing
+        [18, 14,  6],   # Packaging
+    ], dtype=float)
+
+    rho_A, walk_A = min_cycle_mean_brute(A)
+    print(f"Production line timing (processing + transfer, minutes):")
+    for i, s in enumerate(stations):
+        print(f"  {s}: {A[i]}")
+    print(f"\nBottleneck cycle: {' → '.join(stations[w] for w in walk_A)}")
+    print(f"Cycle time per part: {rho_A:.1f} minutes")
+    print(f"Maximum throughput: {60/rho_A:.2f} parts/hour")
+
+    # Upgrade: faster conveyor Assembly→Testing and faster QC Testing→Packaging
+    print(f"\nUpgrades:")
+    print(f"  1. Fast conveyor Assembly→Testing: 15 → 9 min")
+    print(f"  2. Quick QC Testing→Packaging: 10 → 6 min")
+
+    B = A.copy()
+    B[0, 1] = min(A[0, 1], 9)
+    B[1, 2] = min(A[1, 2], 6)
+
+    rho_B, walk_B = min_cycle_mean_brute(B)
+    print(f"\nAfter upgrades:")
+    print(f"  Bottleneck cycle: {' → '.join(stations[w] for w in walk_B)}")
+    print(f"  Cycle time per part: {rho_B:.1f} minutes")
+    print(f"  Maximum throughput: {60/rho_B:.2f} parts/hour")
+    print(f"\n  THEOREM GUARANTEE: cycle time {rho_B:.1f} ≤ {rho_A:.1f} ✓")
+    print(f"  Throughput improved by {((rho_A/rho_B - 1) * 100):.1f}%")
+    print()
 
 
-def application_3_network_robustness():
+# ──────────────────────────────────────────────────────────────────────────
+# Application 3: Weighted Automaton — Asymptotic Word Cost
+# ──────────────────────────────────────────────────────────────────────────
+
+def app_weighted_automaton():
     """
-    Application: Network Robustness Analysis
-    
-    Analyze how robust a communication network's cycle performance
-    is under rank-2 perturbations (two new faster links added).
+    A weighted automaton over a single-letter alphabet (a min-plus matrix).
+    The asymptotic average cost per symbol = tropical spectral radius.
+
+    Surgery = reducing transition costs at two positions.
+    Theorem: reducing costs cannot increase asymptotic average.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Communication Network — New Links")
-    print("=" * 60)
-    
-    # 4-node network
-    nodes = ["Server A", "Server B", "Server C", "Gateway"]
+    print("=" * 70)
+    print("APPLICATION 3: Weighted Automaton Cost Optimization")
+    print("=" * 70)
+    print()
+
+    states = ["q0", "q1", "q2", "q3"]
+    n = len(states)
+    # Transition costs
     A = np.array([
-        [2.0, 5.0, 9.0, 4.0],
-        [6.0, 3.0, 4.0, 7.0],
-        [8.0, 5.0, 2.0, 3.0],
-        [3.0, 8.0, 6.0, 5.0],
-    ])
-    
-    rho_A = karp_minimum_cycle_mean(A)
-    print(f"\nLatency matrix (ms):")
-    for i, row in enumerate(A):
-        print(f"  {nodes[i]:10s}: [{', '.join(f'{x:4.1f}' for x in row)}]")
-    print(f"\nMin cycle mean latency: {rho_A:.2f} ms/hop")
-    
-    # Add two fast direct links as rank-2 surgery
-    u = np.array([1.0, 0.5, 2.0, 1.5])
-    v = np.array([0.5, 1.0, 0.5, 2.0])
-    up = np.array([2.0, 1.0, 0.5, 1.0])
-    vp = np.array([1.0, 2.0, 1.0, 0.5])
-    
-    B = tropical_rank_two_surgery(A, u, v, up, vp)
-    rho_B = karp_minimum_cycle_mean(B)
-    
-    print(f"\nAfter adding two rank-1 link templates:")
-    print(f"  Template 1: u⊕v outer product")
-    print(f"  Template 2: u'⊕v' outer product")
-    print(f"\nNew min cycle mean: {rho_B:.2f} ms/hop")
-    print(f"Change: {rho_B - rho_A:+.2f} ms/hop")
-    
-    support = surgery_support(A, B)
-    print(f"\nEdges affected by surgery: {len(support)} out of {A.shape[0]**2}")
-    
-    # Check which edges are critical
-    critical = find_critical_cycles(A)
-    print(f"\nCritical cycles of original network:")
-    for c in critical:
-        k = len(c)
-        edges = [(c[t], c[(t+1) % k]) for t in range(k)]
-        edge_names = [f"{nodes[e[0]][:3]}→{nodes[e[1]][:3]}" for e in edges]
-        weight = sum(A[e[0], e[1]] for e in edges)
-        print(f"  {' → '.join(edge_names)} (mean={weight/k:.2f})")
-    
-    # Check if surgery hits critical edges
-    critical_edges = set()
-    for c in critical:
-        k = len(c)
-        for t in range(k):
-            critical_edges.add((c[t], c[(t+1) % k]))
-    
-    surgery_hits_critical = any(e in critical_edges for e in support)
-    print(f"\nSurgery hits critical edges? {surgery_hits_critical}")
-    if not surgery_hits_critical:
-        print("→ Off-critical surgery: spectral radius might be preserved")
+        [3, 7, 5, 9],
+        [8, 2, 4, 6],
+        [6, 5, 1, 3],
+        [4, 8, 7, 2],
+    ], dtype=float)
+
+    rho_A, walk_A = min_cycle_mean_brute(A)
+    print(f"Automaton transition costs:")
+    for i in range(n):
+        for j in range(n):
+            print(f"  {states[i]} → {states[j]}: cost {A[i,j]:.0f}")
+    print(f"\nAsymptotic average cost per symbol: {rho_A:.2f}")
+    print(f"Optimal state cycle: {' → '.join(states[w] for w in walk_A)}")
+
+    # Optimize two transitions
+    print(f"\nOptimize transitions:")
+    print(f"  q2 → q3: cost 3 → 0 (direct link)")
+    print(f"  q3 → q0: cost 4 → 1 (shortcut)")
+
+    B = A.copy()
+    B[2, 3] = min(A[2, 3], 0)
+    B[3, 0] = min(A[3, 0], 1)
+
+    rho_B, walk_B = min_cycle_mean_brute(B)
+    print(f"\nAfter optimization:")
+    print(f"  Asymptotic average cost: {rho_B:.2f}")
+    print(f"  Optimal state cycle: {' → '.join(states[w] for w in walk_B)}")
+    print(f"\n  THEOREM GUARANTEE: {rho_B:.2f} ≤ {rho_A:.2f} ✓")
+    print()
 
 
 if __name__ == "__main__":
-    application_1_shortest_path_sensitivity()
-    application_2_manufacturing_schedule()
-    application_3_network_robustness()
-    print("\n" + "=" * 60)
-    print("All applications demonstrated successfully!")
-    print("=" * 60)
+    app_transportation()
+    app_manufacturing()
+    app_weighted_automaton()
+    print("All applications completed successfully.")
 
 
 #!/usr/bin/env python3
 """
-demo.py — Tropical Surgery: Rank-2 Min-Plus Matrix Updates
+Tropical Surgery Demo: Rank-2 Min-Plus Matrix Updates and Spectral Monotonicity
 
-Demonstrates the key theorems about tropical matrix surgery with
-concrete numerical examples.
+Demonstrates the core theorems about tropical matrix surgery with concrete
+numerical examples, showing how entrywise matrix decreases affect the
+tropical spectral radius (minimum cycle mean).
 """
-
 import numpy as np
+from itertools import product as cart_product
+
+# ──────────────────────────────────────────────────────────────────────────
+# Core definitions
+# ──────────────────────────────────────────────────────────────────────────
 
 def tropical_rank_one_update(u, v):
-    """Rank-one tropical outer product: M[i,j] = u[i] + v[j]."""
-    n = len(u)
+    """Rank-one outer product in min-plus: M[i,j] = u[i] + v[j]."""
     return np.add.outer(u, v)
 
-def tropical_rank_two_surgery(A, u, v, u_prime, v_prime):
-    """Rank-2 tropical surgery: B[i,j] = min(A[i,j], u[i]+v[j], u'[i]+v'[j])."""
+def tropical_rank_two_surgery(A, u, v, up, vp):
+    """
+    Rank-2 tropical surgery:
+      B[i,j] = min(A[i,j], u[i]+v[j], u'[i]+v'[j])
+    """
     R1 = tropical_rank_one_update(u, v)
-    R2 = tropical_rank_one_update(u_prime, v_prime)
+    R2 = tropical_rank_one_update(up, vp)
     return np.minimum(A, np.minimum(R1, R2))
 
 def two_entry_surgery(A, i1, j1, c1, i2, j2, c2):
-    """Localized two-entry surgery."""
+    """
+    Localized two-entry surgery: decrease at most two entries.
+    """
     B = A.copy()
     B[i1, j1] = min(A[i1, j1], c1)
     B[i2, j2] = min(A[i2, j2], c2)
     return B
 
-def closed_walk_weight(A, sigma):
-    """Weight of closed walk sigma in matrix A."""
-    k = len(sigma)
-    return sum(A[sigma[t], sigma[(t+1) % k]] for t in range(k))
+def closed_walk_weight(A, walk):
+    """Weight of a closed walk: sum of edge weights along the cycle."""
+    n = len(walk)
+    return sum(A[walk[i], walk[(i + 1) % n]] for i in range(n))
 
-def cycle_mean(A, sigma):
-    """Average edge weight of a closed walk."""
-    return closed_walk_weight(A, sigma) / len(sigma)
-
-def all_walks(n, max_length):
-    """Generate all closed walks of length 1..max_length on n vertices."""
-    from itertools import product
-    walks = []
-    for k in range(1, max_length + 1):
-        for sigma in product(range(n), repeat=k):
-            walks.append(list(sigma))
-    return walks
+def cycle_mean(A, walk):
+    """Mean edge weight of a closed walk."""
+    return closed_walk_weight(A, walk) / len(walk)
 
 def tropical_spectral_radius(A):
-    """Minimum cycle mean over all closed walks up to length n."""
+    """
+    Minimum cycle mean over all closed walks of length 1..n.
+    This is the tropical eigenvalue (min-plus spectral radius).
+    """
     n = A.shape[0]
-    walks = all_walks(n, n)
-    return min(cycle_mean(A, w) for w in walks)
+    best = float('inf')
+    # Enumerate all closed walks of length 1..n
+    for length in range(1, n + 1):
+        for walk in cart_product(range(n), repeat=length):
+            cm = cycle_mean(A, walk)
+            if cm < best:
+                best = cm
+                best_walk = walk
+    return best, best_walk
 
-def print_matrix(name, M):
-    """Pretty-print a matrix."""
-    print(f"\n{name}:")
-    for row in M:
-        print("  [" + ", ".join(f"{x:7.2f}" for x in row) + "]")
+def surgery_support(A, B):
+    """Positions where B[i,j] < A[i,j]."""
+    return list(zip(*np.where(B < A)))
 
-# ============================================================
-# DEMO 1: Rank-2 Surgery Spectral Monotonicity
-# ============================================================
-print("=" * 60)
-print("DEMO 1: Rank-2 Tropical Surgery — Spectral Monotonicity")
-print("=" * 60)
+def walk_uses_edge(walk, edge):
+    """Check if a closed walk uses a specific edge."""
+    n = len(walk)
+    for i in range(n):
+        if (walk[i], walk[(i + 1) % n]) == edge:
+            return True
+    return False
 
-n = 3
-A = np.array([
-    [2.0, 5.0, 8.0],
-    [3.0, 1.0, 4.0],
-    [7.0, 6.0, 3.0]
-])
+# ──────────────────────────────────────────────────────────────────────────
+# Demo 1: Spectral Monotonicity under Rank-2 Surgery
+# ──────────────────────────────────────────────────────────────────────────
 
-u = np.array([1.0, 2.0, 3.0])
-v = np.array([0.5, 1.5, 2.5])
-u_prime = np.array([0.0, 1.0, 2.0])
-v_prime = np.array([1.0, 0.0, 1.0])
+def demo_spectral_monotonicity():
+    print("=" * 70)
+    print("DEMO 1: Spectral Monotonicity under Rank-2 Surgery")
+    print("=" * 70)
+    print()
 
-B = tropical_rank_two_surgery(A, u, v, u_prime, v_prime)
+    # A 3x3 tropical matrix (weighted digraph)
+    A = np.array([
+        [5.0, 2.0, 8.0],
+        [3.0, 6.0, 1.0],
+        [7.0, 4.0, 3.0]
+    ])
 
-rho_A = tropical_spectral_radius(A)
-rho_B = tropical_spectral_radius(B)
+    u  = np.array([1.0, 0.0, 2.0])
+    v  = np.array([0.0, 1.0, -1.0])
+    up = np.array([0.0, 3.0, 1.0])
+    vp = np.array([2.0, 0.0, 1.0])
 
-print_matrix("Original matrix A", A)
-print_matrix("Surgery result B = min(A, u⊕v, u'⊕v')", B)
-print(f"\nTropical spectral radius ρ(A) = {rho_A:.4f}")
-print(f"Tropical spectral radius ρ(B) = {rho_B:.4f}")
-print(f"ρ(B) ≤ ρ(A)? {rho_B <= rho_A + 1e-10}  ✓" if rho_B <= rho_A + 1e-10 else "FAILED!")
+    B = tropical_rank_two_surgery(A, u, v, up, vp)
 
-# Check entrywise inequality
-assert np.all(B <= A + 1e-10), "Entrywise inequality B ≤ A violated!"
-print("B ≤ A entrywise? True  ✓")
+    rho_A, walk_A = tropical_spectral_radius(A)
+    rho_B, walk_B = tropical_spectral_radius(B)
 
-# Explicit bound
-diag_min_uv = min(u[i] + v[i] for i in range(n))
-diag_min_uv_prime = min(u_prime[i] + v_prime[i] for i in range(n))
-explicit_bound = min(rho_A, min(diag_min_uv, diag_min_uv_prime))
-print(f"\nExplicit bound: min(ρ(A), min_i(u_i+v_i), min_i(u'_i+v'_i)) = {explicit_bound:.4f}")
-print(f"ρ(B) ≤ explicit bound? {rho_B <= explicit_bound + 1e-10}  ✓")
+    print("Original matrix A:")
+    print(A)
+    print()
+    print("Rank-one template u⊕v:")
+    print(tropical_rank_one_update(u, v))
+    print()
+    print("Rank-one template u'⊕v':")
+    print(tropical_rank_one_update(up, vp))
+    print()
+    print("Surgery result B = min(A, u⊕v, u'⊕v'):")
+    print(B)
+    print()
+    print(f"Entrywise B ≤ A? {np.all(B <= A)}")
+    print()
+    print(f"Spectral radius of A (min cycle mean): {rho_A:.4f}")
+    print(f"  Achieved by walk: {walk_A}")
+    print(f"Spectral radius of B (min cycle mean): {rho_B:.4f}")
+    print(f"  Achieved by walk: {walk_B}")
+    print()
+    print(f"THEOREM VERIFIED: ρ(B) = {rho_B:.4f} ≤ {rho_A:.4f} = ρ(A)  ✓" if rho_B <= rho_A + 1e-10 else "FAILED!")
+    print()
 
-# ============================================================
-# DEMO 2: Two-Entry Surgery
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 2: Two-Entry Surgery — Localized Spectral Control")
-print("=" * 60)
+    # Explicit bound
+    diag_min_1 = min(u[i] + v[i] for i in range(len(u)))
+    diag_min_2 = min(up[i] + vp[i] for i in range(len(up)))
+    explicit_bound = min(rho_A, min(diag_min_1, diag_min_2))
+    print(f"Explicit bound: min(ρ(A), min_i(u_i+v_i), min_i(u'_i+v'_i))")
+    print(f"  = min({rho_A:.4f}, {diag_min_1:.4f}, {diag_min_2:.4f}) = {explicit_bound:.4f}")
+    print(f"  ρ(B) = {rho_B:.4f} ≤ {explicit_bound:.4f}  ✓" if rho_B <= explicit_bound + 1e-10 else "  FAILED!")
+    print()
 
-A2 = np.array([
-    [1.0, 4.0, 7.0],
-    [2.0, 3.0, 5.0],
-    [6.0, 8.0, 2.0]
-])
+# ──────────────────────────────────────────────────────────────────────────
+# Demo 2: Off-Critical Surgery Preserves Spectral Radius
+# ──────────────────────────────────────────────────────────────────────────
 
-B2 = two_entry_surgery(A2, 0, 1, -1.0, 2, 0, 0.5)
+def demo_off_critical_surgery():
+    print("=" * 70)
+    print("DEMO 2: Off-Critical Surgery Preserves Spectral Radius")
+    print("=" * 70)
+    print()
 
-rho_A2 = tropical_spectral_radius(A2)
-rho_B2 = tropical_spectral_radius(B2)
+    # Design a matrix where the optimal cycle is known
+    # Optimal cycle: 0 → 1 → 0 with mean (A[0,1] + A[1,0]) / 2
+    A = np.array([
+        [10.0, 1.0, 8.0],
+        [1.0, 10.0, 8.0],
+        [8.0, 8.0, 10.0]
+    ])
 
-print_matrix("Original A", A2)
-print_matrix("Two-entry surgery B (decreased A[0,1] and A[2,0])", B2)
-print(f"\nρ(A) = {rho_A2:.4f}")
-print(f"ρ(B) = {rho_B2:.4f}")
-print(f"ρ(B) ≤ ρ(A)? {rho_B2 <= rho_A2 + 1e-10}  ✓")
+    rho_A, walk_A = tropical_spectral_radius(A)
+    print(f"Original matrix A:")
+    print(A)
+    print(f"Spectral radius of A: {rho_A:.4f}, walk: {walk_A}")
+    print()
 
-# ============================================================
-# DEMO 3: Off-Critical Surgery Preservation
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 3: Off-Critical Surgery — Spectral Preservation")
-print("=" * 60)
+    # Surgery on edge (0,2) and (2,0) — away from the critical cycle 0→1→0
+    B = two_entry_surgery(A, 0, 2, 3.0, 2, 0, 3.0)
+    rho_B, walk_B = tropical_spectral_radius(B)
 
-# Construct a matrix where the optimal cycle is the self-loop at vertex 0
-A3 = np.array([
-    [1.0, 10.0, 10.0],
-    [10.0, 5.0, 10.0],
-    [10.0, 10.0, 8.0]
-])
+    support = surgery_support(A, B)
+    critical_edges = [(walk_A[i], walk_A[(i + 1) % len(walk_A)]) for i in range(len(walk_A))]
+    overlap = [e for e in support if e in critical_edges]
 
-# Surgery only affects entry (1,2), which is not on the optimal self-loop
-B3 = two_entry_surgery(A3, 1, 2, 3.0, 1, 2, 3.0)  # only one entry
+    print(f"Surgery: decrease A[0,2] and A[2,0] to 3.0")
+    print(f"Surgery support: {support}")
+    print(f"Critical cycle edges: {critical_edges}")
+    print(f"Overlap with critical cycle: {overlap}")
+    print()
+    print(f"Spectral radius of B: {rho_B:.4f}, walk: {walk_B}")
+    print(f"OFF-CRITICAL INVARIANCE: ρ(B) = ρ(A) = {rho_A:.4f}  ✓" if abs(rho_B - rho_A) < 1e-10 else f"Changed: ρ(B) = {rho_B:.4f}")
+    print()
 
-rho_A3 = tropical_spectral_radius(A3)
-rho_B3 = tropical_spectral_radius(B3)
+    # Now surgery ON the critical cycle
+    C = two_entry_surgery(A, 0, 1, -2.0, 1, 0, -2.0)
+    rho_C, walk_C = tropical_spectral_radius(C)
+    support_C = surgery_support(A, C)
 
-print_matrix("Original A (optimal cycle: self-loop at vertex 0, mean=1.0)", A3)
-print_matrix("Surgery B (decreased A[1,2] from 10 to 3)", B3)
-print(f"\nρ(A) = {rho_A3:.4f}")
-print(f"ρ(B) = {rho_B3:.4f}")
-print(f"Spectral radius preserved? {abs(rho_A3 - rho_B3) < 1e-10}")
-print("Note: Surgery at (1,2) does NOT affect the optimal self-loop at vertex 0")
+    print(f"Surgery ON critical cycle: decrease A[0,1] and A[1,0] to -2.0")
+    print(f"Surgery support: {support_C}")
+    print(f"Spectral radius of C: {rho_C:.4f}, walk: {walk_C}")
+    print(f"ON-CRITICAL: ρ(C) = {rho_C:.4f} < {rho_A:.4f} = ρ(A)  (strict decrease!)")
+    print()
 
-# ============================================================
-# DEMO 4: Surgery Idempotence
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 4: Surgery Idempotence")
-print("=" * 60)
+# ──────────────────────────────────────────────────────────────────────────
+# Demo 3: Two-Entry Surgery and Shortest Path Sensitivity
+# ──────────────────────────────────────────────────────────────────────────
 
-B4 = tropical_rank_two_surgery(A, u, v, u_prime, v_prime)
-B4_idem = tropical_rank_two_surgery(B4, u, v, u_prime, v_prime)
+def demo_two_entry_surgery():
+    print("=" * 70)
+    print("DEMO 3: Two-Entry Surgery as Shortest-Path Sensitivity")
+    print("=" * 70)
+    print()
 
-print("surgery(surgery(A)) == surgery(A)?", np.allclose(B4, B4_idem), " ✓")
+    # Interpret matrix as a weighted digraph
+    A = np.array([
+        [0.0, 5.0, 3.0, 9.0],
+        [7.0, 0.0, 2.0, 4.0],
+        [6.0, 8.0, 0.0, 1.0],
+        [3.0, 6.0, 5.0, 0.0]
+    ])
 
-# ============================================================
-# DEMO 5: Dimension scaling
-# ============================================================
-print("\n" + "=" * 60)
-print("DEMO 5: Scaling Behavior (dimensions 2-8)")
-print("=" * 60)
+    rho_A, walk_A = tropical_spectral_radius(A)
+    print(f"Weighted digraph (adjacency matrix A):")
+    print(A)
+    print(f"Minimum cycle mean: {rho_A:.4f}, optimal cycle: {walk_A}")
+    print()
 
-np.random.seed(42)
-for dim in [2, 3, 4, 5]:
-    A_rand = np.random.randn(dim, dim) * 3
-    u_rand = np.random.randn(dim)
-    v_rand = np.random.randn(dim)
-    up_rand = np.random.randn(dim)
-    vp_rand = np.random.randn(dim)
-    
-    B_rand = tropical_rank_two_surgery(A_rand, u_rand, v_rand, up_rand, vp_rand)
-    rA = tropical_spectral_radius(A_rand)
-    rB = tropical_spectral_radius(B_rand)
-    
-    status = "✓" if rB <= rA + 1e-10 else "✗"
-    print(f"  n={dim}: ρ(A)={rA:+.4f}, ρ(B)={rB:+.4f}, ρ(B)≤ρ(A)? {status}")
+    # Decrease two edge weights (making two edges cheaper)
+    for (i1, j1, c1, i2, j2, c2) in [(1, 2, -1.0, 3, 0, 0.0), (0, 3, 2.0, 2, 1, 1.0)]:
+        B = two_entry_surgery(A, i1, j1, c1, i2, j2, c2)
+        rho_B, walk_B = tropical_spectral_radius(B)
+        print(f"  Decrease edge ({i1},{j1}) to {c1}, edge ({i2},{j2}) to {c2}")
+        print(f"  New min cycle mean: {rho_B:.4f} ≤ {rho_A:.4f} = ρ(A)  ✓" if rho_B <= rho_A + 1e-10 else "  FAILED!")
+        print(f"  Optimal cycle: {walk_B}")
+        print()
 
-print("\nAll demonstrations completed successfully!")
+# ──────────────────────────────────────────────────────────────────────────
+# Demo 4: Surgery Idempotency and Composition
+# ──────────────────────────────────────────────────────────────────────────
 
+def demo_surgery_properties():
+    print("=" * 70)
+    print("DEMO 4: Surgery Properties (Idempotency, Identity)")
+    print("=" * 70)
+    print()
 
-#!/usr/bin/env python3
-"""Generate PACKAGE.json from all deliverables."""
+    n = 3
+    A = np.random.default_rng(42).uniform(0, 10, (n, n))
+    u, v = np.random.default_rng(43).uniform(0, 5, n), np.random.default_rng(44).uniform(0, 5, n)
+    up, vp = np.random.default_rng(45).uniform(0, 5, n), np.random.default_rng(46).uniform(0, 5, n)
 
-import json
-import base64
+    B = tropical_rank_two_surgery(A, u, v, up, vp)
+    BB = tropical_rank_two_surgery(B, u, v, up, vp)
 
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
+    print(f"Idempotency: surgery(surgery(A)) = surgery(A)?  {np.allclose(B, BB)}  ✓")
 
-def read_binary(path):
-    with open(path, 'rb') as f:
-        return f.read()
+    # Large outer products → identity
+    big_u = A.max() * np.ones(n) + 100
+    big_v = np.zeros(n)
+    C = tropical_rank_two_surgery(A, big_u, big_v, big_u, big_v)
+    print(f"Large outer products → identity: surgery(A) = A?  {np.allclose(A, C)}  ✓")
+    print()
 
-def png_to_data_uri(path):
-    data = read_binary(path)
-    b64 = base64.b64encode(data).decode('utf-8')
-    return f"data:image/png;base64,{b64}"
+# ──────────────────────────────────────────────────────────────────────────
+# Demo 5: Scaling with Matrix Size
+# ──────────────────────────────────────────────────────────────────────────
 
-# Read all content
-article = read_file('ARTICLE.md')
-research_paper = read_file('RESEARCH_PAPER.md')
-future_directions = read_file('FUTURE_DIRECTIONS.md')
-demo_code = read_file('demo.py')
-algorithms_code = read_file('algorithms.py')
-applications_code = read_file('applications.py')
-lean_defs = read_file('Tropical/Surgery/Defs.lean')
-lean_mono = read_file('Tropical/Surgery/Monotonicity.lean')
+def demo_scaling():
+    print("=" * 70)
+    print("DEMO 5: Spectral Monotonicity Verified Across Dimensions")
+    print("=" * 70)
+    print()
 
-# Read visualizations
-viz1 = png_to_data_uri('spectral_monotonicity.png')
-viz2 = png_to_data_uri('sensitivity_heatmap.png')
-viz3 = png_to_data_uri('surgery_comparison.png')
+    rng = np.random.default_rng(123)
+    for n in [2, 3, 4, 5]:
+        A = rng.uniform(-5, 10, (n, n))
+        u, v = rng.uniform(-2, 5, n), rng.uniform(-2, 5, n)
+        up, vp = rng.uniform(-2, 5, n), rng.uniform(-2, 5, n)
+        B = tropical_rank_two_surgery(A, u, v, up, vp)
 
-package = {
-    "title": "Tropical Surgery: Rank-2 Min-Plus Matrix Updates and Spectral Monotonicity",
-    "domain": "Tropical Algebra / Spectral Theory",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "Tropical Surgery Demonstrations",
-            "code": demo_code
-        },
-        {
-            "name": "Real-World Applications",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Karp's Minimum Cycle Mean",
-            "pseudocode": """Algorithm: Karp's Minimum Cycle Mean
-Input:  A ∈ ℝ^{n×n}
-Output: λ* = min cycle mean
+        rho_A, _ = tropical_spectral_radius(A)
+        rho_B, _ = tropical_spectral_radius(B)
 
-1. For each source s ∈ {0,...,n-1}:
-   a. F[0][s] ← 0; F[0][v] ← +∞ for v ≠ s
-   b. For k = 1 to n:
-      F[k][v] ← min_u (F[k-1][u] + A[u][v])
-   c. For each v with F[n][v] < ∞:
-      ratio[v] ← max_{0≤k<n} (F[n][v] - F[k][v]) / (n-k)
-2. Return min over all s,v of ratio[v]
+        status = "✓" if rho_B <= rho_A + 1e-10 else "✗"
+        print(f"  n={n}: ρ(A) = {rho_A:+.4f}, ρ(B) = {rho_B:+.4f}, "
+              f"ρ(B) ≤ ρ(A)? {status}")
+    print()
 
-Time: O(n³)  Space: O(n²)""",
-            "code": algorithms_code
-        },
-        {
-            "name": "Rank-2 Tropical Surgery",
-            "pseudocode": """Algorithm: Rank-2 Surgery with Spectral Bound
-Input:  A ∈ ℝ^{n×n}, vectors u, v, u', v'
-Output: B (surgery matrix), upper bound on ρ(B)
-
-1. B[i][j] ← min(A[i][j], u[i]+v[j], u'[i]+v'[j])    // O(n²)
-2. ρ_A ← Karp(A)                                        // O(n³)
-3. d1 ← min_i (u[i] + v[i])                             // O(n)
-4. d2 ← min_i (u'[i] + v'[i])                           // O(n)
-5. bound ← min(ρ_A, d1, d2)
-6. Return B, bound
-
-Total time: O(n³)""",
-            "code": algorithms_code
-        }
-    ],
-    "visualizations": [
-        {
-            "name": "Spectral Radius Under Rank-2 Surgery",
-            "data": viz1
-        },
-        {
-            "name": "Edge Sensitivity Heatmap",
-            "data": viz2
-        },
-        {
-            "name": "Surgery Type Comparison",
-            "data": viz3
-        }
-    ],
-    "lean_proofs": lean_defs + "\n\n" + lean_mono
-}
-
-with open('PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2, ensure_ascii=False)
-
-print(f"PACKAGE.json generated ({len(json.dumps(package))} bytes)")
+if __name__ == "__main__":
+    demo_spectral_monotonicity()
+    demo_off_critical_surgery()
+    demo_two_entry_surgery()
+    demo_surgery_properties()
+    demo_scaling()
+    print("All demos completed successfully.")
 
 
 #!/usr/bin/env python3
 """
-visualizations.py — Visualizations for Tropical Surgery Theory
+Visualizations for Tropical Surgery Theory
 
-Generates publication-quality figures showing:
-1. Spectral radius under surgery (heatmap)
-2. Surgery support and critical cycles
-3. Sensitivity landscape
+Generates publication-quality figures demonstrating:
+  1. Spectral radius sensitivity landscape
+  2. Critical vs non-critical surgery comparison
+  3. Surgery effect heatmap
 """
-
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
+from itertools import product as cprod
 import base64
 from io import BytesIO
-from itertools import product
 
 
-def tropical_spectral_radius_bf(A):
-    """Brute-force tropical spectral radius for small matrices."""
+def min_cycle_mean(A):
     n = A.shape[0]
     best = float('inf')
     for length in range(1, n + 1):
-        for cycle in product(range(n), repeat=length):
-            weight = sum(A[cycle[t], cycle[(t+1) % length]] for t in range(length))
-            mean = weight / length
-            best = min(best, mean)
+        for walk in cprod(range(n), repeat=length):
+            w = sum(A[walk[i], walk[(i+1) % length]] for i in range(length))
+            m = w / length
+            if m < best:
+                best = m
     return best
 
 
 def fig_to_base64(fig):
-    """Convert matplotlib figure to base64 data URI."""
     buf = BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{data}"
+    return f"data:image/png;base64,{encoded}"
 
 
-def visualization_1_spectral_monotonicity():
+def viz_spectral_sensitivity():
     """
-    Heatmap showing how rank-2 surgery affects spectral radius
-    as we scale the surgery vectors.
-    """
-    n = 3
-    A = np.array([
-        [2.0, 5.0, 8.0],
-        [3.0, 1.0, 4.0],
-        [7.0, 6.0, 3.0]
-    ])
-    
-    u0 = np.array([1.0, 2.0, 3.0])
-    v0 = np.array([0.5, 1.5, 2.5])
-    up0 = np.array([0.0, 1.0, 2.0])
-    vp0 = np.array([1.0, 0.0, 1.0])
-    
-    rho_A = tropical_spectral_radius_bf(A)
-    
-    # Vary scaling factors for both rank-1 components
-    scales = np.linspace(-2, 4, 25)
-    rho_grid = np.zeros((len(scales), len(scales)))
-    
-    for i, s1 in enumerate(scales):
-        for j, s2 in enumerate(scales):
-            u = u0 + s1
-            v = v0 + s1
-            up = up0 + s2
-            vp = vp0 + s2
-            R1 = np.add.outer(u, v)
-            R2 = np.add.outer(up, vp)
-            B = np.minimum(A, np.minimum(R1, R2))
-            rho_grid[i, j] = tropical_spectral_radius_bf(B)
-    
-    fig, ax = plt.subplots(figsize=(8, 6))
-    im = ax.imshow(rho_grid, extent=[scales[0], scales[-1], scales[0], scales[-1]],
-                   origin='lower', cmap='RdYlBu_r', aspect='auto')
-    ax.axhline(y=0, color='white', linewidth=0.5, linestyle='--', alpha=0.5)
-    ax.axvline(x=0, color='white', linewidth=0.5, linestyle='--', alpha=0.5)
-    
-    # Mark ρ(A) contour
-    cs = ax.contour(scales, scales, rho_grid, levels=[rho_A], colors='black',
-                    linewidths=2, linestyles='--')
-    ax.clabel(cs, fmt=f'ρ(A)={rho_A:.1f}', fontsize=10)
-    
-    cbar = plt.colorbar(im, ax=ax, label='Tropical Spectral Radius ρ(B)')
-    ax.set_xlabel('Scale factor for component 1 (u, v)', fontsize=12)
-    ax.set_ylabel('Scale factor for component 2 (u\', v\')', fontsize=12)
-    ax.set_title('Spectral Radius After Rank-2 Surgery\n(Always ≤ ρ(A) by Monotonicity Theorem)', fontsize=13)
-    
-    return fig_to_base64(fig)
-
-
-def visualization_2_sensitivity_heatmap():
-    """
-    Sensitivity heatmap: which edges are most spectrally sensitive?
+    Plot spectral radius as a function of surgery magnitude
+    for on-critical and off-critical edges.
     """
     A = np.array([
-        [2.0, 5.0, 8.0, 4.0],
-        [3.0, 1.0, 4.0, 7.0],
-        [7.0, 6.0, 3.0, 2.0],
-        [5.0, 3.0, 6.0, 4.0],
+        [10.0, 1.0, 8.0],
+        [1.0, 10.0, 8.0],
+        [8.0, 8.0, 10.0]
     ])
-    
-    n = 4
-    eps = 0.3
-    rho_A = tropical_spectral_radius_bf(A)
-    sens = np.zeros((n, n))
-    
+
+    deltas = np.linspace(0, 10, 30)
+
+    # On-critical: perturb edge (0,1) which is on the optimal cycle 0→1→0
+    rho_on = []
+    for d in deltas:
+        B = A.copy()
+        B[0, 1] = A[0, 1] - d
+        rho_on.append(min_cycle_mean(B))
+
+    # Off-critical: perturb edge (0,2) which is NOT on the optimal cycle
+    rho_off = []
+    for d in deltas:
+        B = A.copy()
+        B[0, 2] = A[0, 2] - d
+        rho_off.append(min_cycle_mean(B))
+
+    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+    ax.plot(deltas, rho_on, 'r-o', label='On-critical surgery (edge 0→1)', markersize=4, linewidth=2)
+    ax.plot(deltas, rho_off, 'b-s', label='Off-critical surgery (edge 0→2)', markersize=4, linewidth=2)
+    ax.axhline(y=min_cycle_mean(A), color='gray', linestyle='--', alpha=0.7, label=f'ρ(A) = {min_cycle_mean(A):.1f}')
+    ax.set_xlabel('Surgery magnitude δ (weight decrease)', fontsize=12)
+    ax.set_ylabel('Tropical spectral radius ρ(B)', fontsize=12)
+    ax.set_title('Spectral Sensitivity: On-Critical vs Off-Critical Surgery', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    fig.savefig('/workspace/request-project/viz_spectral_sensitivity.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
+
+
+def viz_surgery_heatmap():
+    """
+    Heatmap showing the spectral radius change for every possible
+    single-entry surgery position.
+    """
+    A = np.array([
+        [5.0, 2.0, 8.0, 6.0],
+        [3.0, 6.0, 1.0, 7.0],
+        [7.0, 4.0, 3.0, 2.0],
+        [4.0, 5.0, 6.0, 4.0]
+    ])
+
+    n = A.shape[0]
+    rho_A = min_cycle_mean(A)
+    delta = 5.0  # surgery magnitude
+
+    change_map = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
             B = A.copy()
-            B[i, j] -= eps
-            rho_B = tropical_spectral_radius_bf(B)
-            sens[i, j] = (rho_A - rho_B) / eps
-    
-    fig, ax = plt.subplots(figsize=(7, 6))
-    im = ax.imshow(sens, cmap='YlOrRd', interpolation='nearest')
-    
-    # Annotate cells
+            B[i, j] = A[i, j] - delta
+            rho_B = min_cycle_mean(B)
+            change_map[i, j] = rho_A - rho_B  # positive = improvement
+
+    fig, ax = plt.subplots(1, 1, figsize=(7, 6))
+    im = ax.imshow(change_map, cmap='RdYlGn', aspect='equal')
+    ax.set_xlabel('Target column j', fontsize=12)
+    ax.set_ylabel('Source row i', fontsize=12)
+    ax.set_title(f'Spectral Impact of Single-Entry Surgery (δ={delta})\n'
+                 f'Green = large improvement, Red = no change', fontsize=13)
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+
     for i in range(n):
         for j in range(n):
-            color = 'white' if sens[i, j] > 0.5 * sens.max() else 'black'
-            ax.text(j, i, f'{sens[i, j]:.3f}', ha='center', va='center',
-                    fontsize=11, color=color, fontweight='bold')
-    
-    labels = [f'v{i}' for i in range(n)]
-    ax.set_xticks(range(n))
-    ax.set_xticklabels(labels, fontsize=11)
-    ax.set_yticks(range(n))
-    ax.set_yticklabels(labels, fontsize=11)
-    ax.set_xlabel('Target vertex', fontsize=12)
-    ax.set_ylabel('Source vertex', fontsize=12)
-    ax.set_title('Spectral Sensitivity: Δρ / Δweight per Edge\n(Higher = more impact on spectral radius)', fontsize=13)
-    plt.colorbar(im, ax=ax, label='Sensitivity')
-    
-    return fig_to_base64(fig)
+            ax.text(j, i, f'{change_map[i,j]:.2f}', ha='center', va='center',
+                    fontsize=11, color='black' if abs(change_map[i,j]) < 1.5 else 'white')
+
+    plt.colorbar(im, ax=ax, label='ρ(A) - ρ(B)')
+    fig.savefig('/workspace/request-project/viz_surgery_heatmap.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
-def visualization_3_surgery_comparison():
+def viz_rank2_bound():
     """
-    Bar chart comparing spectral radii before/after different surgery types.
+    Compare actual spectral radius after rank-2 surgery with the
+    explicit upper bound (min of ρ(A) and diagonal minima).
     """
-    A = np.array([
-        [3.0, 5.0, 9.0],
-        [4.0, 2.0, 6.0],
-        [8.0, 7.0, 4.0]
-    ])
-    
-    rho_A = tropical_spectral_radius_bf(A)
-    
-    # Different surgery operations
-    surgeries = []
-    
-    # 1. Rank-1 surgery
-    u1 = np.array([1.0, 2.0, 3.0])
-    v1 = np.array([0.5, 1.5, 2.5])
-    B1 = np.minimum(A, np.add.outer(u1, v1))
-    surgeries.append(('Rank-1\n(u⊕v)', tropical_spectral_radius_bf(B1)))
-    
-    # 2. Rank-2 surgery  
-    u2, v2 = np.array([0.0, 1.0, 2.0]), np.array([1.0, 0.0, 1.0])
-    B2 = np.minimum(B1, np.add.outer(u2, v2))
-    surgeries.append(('Rank-2\n(u⊕v, u\'⊕v\')', tropical_spectral_radius_bf(B2)))
-    
-    # 3. Single entry surgery
-    B3 = A.copy(); B3[0, 0] = min(A[0, 0], 1.0)
-    surgeries.append(('1-entry\n(A[0,0]↓)', tropical_spectral_radius_bf(B3)))
-    
-    # 4. Two-entry surgery
-    B4 = A.copy(); B4[0, 0] = min(A[0, 0], 1.0); B4[1, 1] = min(A[1, 1], 0.5)
-    surgeries.append(('2-entry\n(A[0,0],A[1,1]↓)', tropical_spectral_radius_bf(B4)))
-    
-    # 5. Aggressive surgery
-    B5 = np.minimum(A, np.add.outer(np.array([-1, -1, -1]), np.array([-1, -1, -1])))
-    surgeries.append(('Aggressive\n(all entries↓)', tropical_spectral_radius_bf(B5)))
-    
-    fig, ax = plt.subplots(figsize=(10, 5))
-    names = [s[0] for s in surgeries]
-    values = [s[1] for s in surgeries]
-    
-    colors = ['#2196F3', '#4CAF50', '#FF9800', '#F44336', '#9C27B0']
-    bars = ax.bar(range(len(surgeries)), values, color=colors, alpha=0.85, edgecolor='black')
-    ax.axhline(y=rho_A, color='red', linestyle='--', linewidth=2, label=f'ρ(A) = {rho_A:.2f}')
-    
-    for bar, val in zip(bars, values):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.05,
-                f'{val:.2f}', ha='center', va='bottom', fontsize=11, fontweight='bold')
-    
-    ax.set_xticks(range(len(surgeries)))
-    ax.set_xticklabels(names, fontsize=10)
-    ax.set_ylabel('Tropical Spectral Radius', fontsize=12)
-    ax.set_title('Spectral Radius Comparison: Original vs. Surgery\n(All bars ≤ dashed line by Monotonicity Theorem)', fontsize=13)
-    ax.legend(fontsize=11)
-    ax.set_ylim(min(values) - 0.5, rho_A + 0.5)
-    
-    return fig_to_base64(fig)
+    rng = np.random.default_rng(42)
+    ns = list(range(2, 7))
+    actual_ratios = []
+    bound_ratios = []
+
+    results = []
+    for n in ns:
+        trials = 20
+        for _ in range(trials):
+            A = rng.uniform(0, 10, (n, n))
+            u, v = rng.uniform(-2, 5, n), rng.uniform(-2, 5, n)
+            up, vp = rng.uniform(-2, 5, n), rng.uniform(-2, 5, n)
+
+            R1 = np.add.outer(u, v)
+            R2 = np.add.outer(up, vp)
+            B = np.minimum(A, np.minimum(R1, R2))
+
+            rho_A = min_cycle_mean(A)
+            rho_B = min_cycle_mean(B)
+
+            diag1 = min(u[i] + v[i] for i in range(n))
+            diag2 = min(up[i] + vp[i] for i in range(n))
+            explicit_bound = min(rho_A, min(diag1, diag2))
+
+            results.append((n, rho_A, rho_B, explicit_bound))
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Left: ρ(B) vs ρ(A)
+    for n in ns:
+        data = [(r[1], r[2]) for r in results if r[0] == n]
+        ax1.scatter([d[0] for d in data], [d[1] for d in data],
+                   alpha=0.6, s=30, label=f'n={n}')
+    lim = [min(r[1] for r in results) - 1, max(r[1] for r in results) + 1]
+    ax1.plot(lim, lim, 'k--', alpha=0.5, label='ρ(B) = ρ(A)')
+    ax1.set_xlabel('ρ(A)', fontsize=12)
+    ax1.set_ylabel('ρ(B)', fontsize=12)
+    ax1.set_title('Spectral Monotonicity: ρ(B) ≤ ρ(A)', fontsize=13)
+    ax1.legend(fontsize=9)
+    ax1.grid(True, alpha=0.3)
+
+    # Right: ρ(B) vs explicit bound
+    for n in ns:
+        data = [(r[3], r[2]) for r in results if r[0] == n]
+        ax2.scatter([d[0] for d in data], [d[1] for d in data],
+                   alpha=0.6, s=30, label=f'n={n}')
+    lim2 = [min(r[3] for r in results) - 1, max(r[2] for r in results) + 1]
+    ax2.plot(lim2, lim2, 'k--', alpha=0.5, label='ρ(B) = bound')
+    ax2.set_xlabel('Explicit bound', fontsize=12)
+    ax2.set_ylabel('ρ(B)', fontsize=12)
+    ax2.set_title('Explicit Bound: ρ(B) ≤ min(ρ(A), diag bounds)', fontsize=13)
+    ax2.legend(fontsize=9)
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    fig.savefig('/workspace/request-project/viz_rank2_bound.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-    
-    print("  1/3: Spectral monotonicity heatmap...")
-    data1 = visualization_1_spectral_monotonicity()
-    print(f"       Generated ({len(data1)} bytes)")
-    
-    print("  2/3: Sensitivity heatmap...")
-    data2 = visualization_2_sensitivity_heatmap()
-    print(f"       Generated ({len(data2)} bytes)")
-    
-    print("  3/3: Surgery comparison...")
-    data3 = visualization_3_surgery_comparison()
-    print(f"       Generated ({len(data3)} bytes)")
-    
-    # Save PNGs for standalone use
-    for i, (name, data) in enumerate([
-        ("spectral_monotonicity", data1),
-        ("sensitivity_heatmap", data2),
-        ("surgery_comparison", data3),
-    ]):
-        png_data = base64.b64decode(data.split(",")[1])
-        with open(f"{name}.png", "wb") as f:
-            f.write(png_data)
-        print(f"  Saved {name}.png")
-    
-    print("All visualizations generated successfully!")
+    b64_1 = viz_spectral_sensitivity()
+    print(f"  Spectral sensitivity: saved (base64 length: {len(b64_1)})")
+    b64_2 = viz_surgery_heatmap()
+    print(f"  Surgery heatmap: saved (base64 length: {len(b64_2)})")
+    b64_3 = viz_rank2_bound()
+    print(f"  Rank-2 bound: saved (base64 length: {len(b64_3)})")
+    print("All visualizations generated.")

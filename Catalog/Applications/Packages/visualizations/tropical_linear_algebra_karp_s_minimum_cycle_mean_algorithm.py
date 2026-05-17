@@ -1,134 +1,137 @@
+#!/usr/bin/env python3
 """
-Tropical Surgery Algorithms
+Algorithms for Tropical Surgery and Spectral Analysis
 
-Efficient implementations of tropical spectral computations and surgery operations,
-with complexity analysis and practical optimizations.
+Implements efficient algorithms for:
+  1. Tropical spectral radius computation (Karp's algorithm)
+  2. Rank-2 tropical surgery
+  3. Critical cycle detection
+  4. Spectral sensitivity analysis
+
+All algorithms include docstrings, type hints, and complexity analysis.
 """
-
 import numpy as np
-from itertools import product
-from typing import Tuple, List, Optional
-import time
-
-
-def tropical_matrix_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
-    """
-    Min-plus matrix multiplication: C[i,j] = min_k (A[i,k] + B[k,j]).
-    
-    Time: O(n³)
-    Space: O(n²)
-    """
-    n = A.shape[0]
-    C = np.full((n, n), np.inf)
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                C[i, j] = min(C[i, j], A[i, k] + B[k, j])
-    return C
-
-
-def tropical_matrix_power(A: np.ndarray, p: int) -> np.ndarray:
-    """
-    Compute A^p in min-plus algebra using repeated squaring.
-    
-    Time: O(n³ log p)
-    Space: O(n²)
-    """
-    n = A.shape[0]
-    if p == 1:
-        return A.copy()
-    
-    result = np.full((n, n), np.inf)
-    np.fill_diagonal(result, 0)  # tropical identity
-    
-    base = A.copy()
-    while p > 0:
-        if p % 2 == 1:
-            result = tropical_matrix_multiply(result, base)
-        base = tropical_matrix_multiply(base, base)
-        p //= 2
-    
-    return result
+from typing import Tuple, List, Optional, Set
 
 
 def karp_minimum_cycle_mean(A: np.ndarray) -> Tuple[float, List[int]]:
     """
-    Karp's algorithm for minimum cycle mean.
-    
-    Computes the tropical spectral radius λ* = min over all cycles C of
-    (sum of edge weights in C) / |C|.
-    
-    Time: O(n³) — n iterations of O(n²) work
+    Karp's algorithm for the minimum cycle mean of a weighted digraph.
+
+    Given an n×n weight matrix A, computes:
+        λ* = min over all cycles C of (sum of edge weights in C / |C|)
+
+    This is the tropical spectral radius (min-plus eigenvalue).
+
+    Time:  O(n³)
     Space: O(n²)
-    
+
+    Args:
+        A: n×n weight matrix (entry A[i,j] = weight of edge i→j).
+
     Returns:
-        (lambda_star, cycle): minimum cycle mean and a witness cycle
+        (lambda_star, cycle): minimum cycle mean and a witnessing cycle.
+
+    Reference:
+        R.M. Karp, "A characterization of the minimum cycle mean in a digraph,"
+        Discrete Mathematics 23 (1978), 309–311.
     """
     n = A.shape[0]
     INF = float('inf')
-    
-    # D[k][v] = minimum weight of a walk of length exactly k ending at v
-    # starting from a virtual source s with zero-weight edges to all vertices
+
+    # D[k][j] = min weight of a walk of length k from source 0 to j
+    # We use a fixed source vertex 0; the result is source-independent
+    # for strongly connected graphs.
     D = np.full((n + 1, n), INF)
-    parent = [[(-1, -1) for _ in range(n)] for _ in range(n + 1)]
-    
-    # Initialize: walks of length 0 from source have weight 0
-    D[0, :] = 0
-    
-    # Dynamic programming: extend walks
+    D[0, 0] = 0.0  # source vertex
+
+    parent = [[(-1, -1)] * n for _ in range(n + 1)]
+
     for k in range(1, n + 1):
-        for v in range(n):
-            for u in range(n):
-                new_weight = D[k - 1][u] + A[u, v]
-                if new_weight < D[k][v]:
-                    D[k][v] = new_weight
-                    parent[k][v] = (k - 1, u)
-    
-    # Karp's formula: λ* = min_v max_k (D[n][v] - D[k][v]) / (n - k)
-    lambda_star = INF
-    best_v = 0
-    best_k = 0
-    
-    for v in range(n):
-        max_val = -INF
-        max_k = 0
+        for j in range(n):
+            for i in range(n):
+                val = D[k - 1][i] + A[i, j]
+                if val < D[k][j]:
+                    D[k][j] = val
+                    parent[k][j] = (k - 1, i)
+
+    # Karp's formula: λ* = min_j max_k (D[n][j] - D[k][j]) / (n - k)
+    best_mean = INF
+    best_j = 0
+
+    for j in range(n):
+        worst_over_k = -INF
         for k in range(n):
-            if D[k][v] < INF and D[n][v] < INF:
-                val = (D[n][v] - D[k][v]) / (n - k)
-                if val > max_val:
-                    max_val = val
-                    max_k = k
-        if max_val < lambda_star:
-            lambda_star = max_val
-            best_v = v
-            best_k = max_k
-    
-    # Reconstruct cycle (simplified)
-    cycle = [best_v]
-    
-    return lambda_star, cycle
+            if D[k][j] < INF and D[n][j] < INF:
+                val = (D[n][j] - D[k][j]) / (n - k)
+                worst_over_k = max(worst_over_k, val)
+        if worst_over_k < best_mean:
+            best_mean = worst_over_k
+            best_j = j
+
+    # Reconstruct cycle (simplified — trace back from best_j)
+    cycle = _reconstruct_cycle(A, best_mean, n)
+
+    return best_mean, cycle
 
 
-def tropical_rank_two_surgery(A: np.ndarray, u: np.ndarray, v: np.ndarray,
-                               u_prime: np.ndarray, v_prime: np.ndarray) -> np.ndarray:
+def _reconstruct_cycle(A: np.ndarray, target_mean: float, n: int) -> List[int]:
+    """Reconstruct a cycle achieving (approximately) the target mean."""
+    # Brute-force for small n; for production use Howard's algorithm
+    from itertools import product as cprod
+    best_diff = float('inf')
+    best_cycle = [0]
+    for length in range(1, n + 1):
+        for walk in cprod(range(n), repeat=length):
+            w = sum(A[walk[i], walk[(i + 1) % length]] for i in range(length))
+            mean = w / length
+            if abs(mean - target_mean) < best_diff:
+                best_diff = abs(mean - target_mean)
+                best_cycle = list(walk)
+    return best_cycle
+
+
+def tropical_rank_two_surgery(
+    A: np.ndarray,
+    u: np.ndarray, v: np.ndarray,
+    up: np.ndarray, vp: np.ndarray
+) -> np.ndarray:
     """
     Rank-2 tropical surgery: B[i,j] = min(A[i,j], u[i]+v[j], u'[i]+v'[j]).
-    
-    Time: O(n²)
+
+    Time:  O(n²)
     Space: O(n²)
+
+    Args:
+        A:  n×n matrix.
+        u, v: vectors defining first rank-one template.
+        up, vp: vectors defining second rank-one template.
+
+    Returns:
+        B: the surgery result matrix.
     """
     R1 = np.add.outer(u, v)
-    R2 = np.add.outer(u_prime, v_prime)
+    R2 = np.add.outer(up, vp)
     return np.minimum(A, np.minimum(R1, R2))
 
 
-def two_entry_surgery(A: np.ndarray, i1: int, j1: int, c1: float,
-                       i2: int, j2: int, c2: float) -> np.ndarray:
+def two_entry_surgery(
+    A: np.ndarray,
+    i1: int, j1: int, c1: float,
+    i2: int, j2: int, c2: float
+) -> np.ndarray:
     """
     Localized two-entry surgery.
-    
-    Time: O(n²) for copy, O(1) for modification
+
+    Time:  O(n²) for copy, O(1) for modification.
     Space: O(n²)
+
+    Args:
+        A: n×n matrix.
+        (i1,j1,c1), (i2,j2,c2): entries to decrease.
+
+    Returns:
+        B: A with B[i1,j1] = min(A[i1,j1], c1), B[i2,j2] = min(A[i2,j2], c2).
     """
     B = A.copy()
     B[i1, j1] = min(A[i1, j1], c1)
@@ -136,179 +139,161 @@ def two_entry_surgery(A: np.ndarray, i1: int, j1: int, c1: float,
     return B
 
 
-def spectral_bound_certificate(A: np.ndarray, u: np.ndarray, v: np.ndarray,
-                                u_prime: np.ndarray, v_prime: np.ndarray) -> dict:
+def critical_graph(A: np.ndarray, tol: float = 1e-10) -> Set[Tuple[int, int]]:
     """
-    Compute the certified spectral bound for rank-2 surgery.
-    
-    Returns a dictionary with:
-    - rho_A: spectral radius of original matrix
-    - rho_B: spectral radius of surgery result
-    - diag_min_1: min_i(u[i] + v[i])
-    - diag_min_2: min_i(u'[i] + v'[i])
-    - explicit_bound: min(rho_A, diag_min_1, diag_min_2)
-    - monotonicity_verified: whether rho_B <= rho_A
-    - bound_verified: whether rho_B <= explicit_bound
-    
-    Time: O(n³) dominated by Karp's algorithm
-    """
-    B = tropical_rank_two_surgery(A, u, v, u_prime, v_prime)
-    
-    rho_A, _ = karp_minimum_cycle_mean(A)
-    rho_B, _ = karp_minimum_cycle_mean(B)
-    
-    diag_min_1 = min(u[i] + v[i] for i in range(len(u)))
-    diag_min_2 = min(u_prime[i] + v_prime[i] for i in range(len(u_prime)))
-    
-    explicit_bound = min(rho_A, diag_min_1, diag_min_2)
-    
-    return {
-        'rho_A': rho_A,
-        'rho_B': rho_B,
-        'diag_min_1': diag_min_1,
-        'diag_min_2': diag_min_2,
-        'explicit_bound': explicit_bound,
-        'monotonicity_verified': rho_B <= rho_A + 1e-10,
-        'bound_verified': rho_B <= explicit_bound + 1e-10,
-    }
+    Compute the critical graph of A: the set of edges belonging to
+    cycles that achieve the minimum cycle mean.
 
+    Time:  O(n³) for spectral radius + O(n^k) for cycle enumeration (small n)
+    Space: O(n²)
 
-def sensitivity_analysis(A: np.ndarray, perturbation_range: np.ndarray = None) -> dict:
-    """
-    Sensitivity analysis: how much does the spectral radius change
-    under single-entry decreases?
-    
-    Time: O(n⁵) — O(n²) entries × O(n³) per Karp evaluation
+    Args:
+        A: n×n weight matrix.
+        tol: numerical tolerance.
+
+    Returns:
+        Set of (i,j) edge pairs in the critical graph.
     """
     n = A.shape[0]
-    rho_A, _ = karp_minimum_cycle_mean(A)
-    
-    if perturbation_range is None:
-        perturbation_range = np.array([0.5, 1.0, 2.0, 5.0])
-    
-    results = {}
-    for i in range(n):
-        for j in range(n):
-            entry_results = []
-            for delta in perturbation_range:
-                B = A.copy()
-                B[i, j] = A[i, j] - delta
-                rho_B, _ = karp_minimum_cycle_mean(B)
-                entry_results.append({
-                    'delta': delta,
-                    'rho_B': rho_B,
-                    'rho_change': rho_B - rho_A,
-                })
-            results[(i, j)] = entry_results
-    
-    return {'rho_A': rho_A, 'entries': results}
+    lam, _ = karp_minimum_cycle_mean(A)
+
+    # Subtract λ from all edges and find zero-weight cycles
+    A_shifted = A - lam
+
+    critical_edges = set()
+    from itertools import product as cprod
+    for length in range(1, n + 1):
+        for walk in cprod(range(n), repeat=length):
+            w = sum(A_shifted[walk[i], walk[(i + 1) % length]] for i in range(length))
+            if abs(w) < tol:
+                for i in range(length):
+                    critical_edges.add((walk[i], walk[(i + 1) % length]))
+
+    return critical_edges
 
 
-def optimal_two_entry_surgery(A: np.ndarray, budget: float) -> dict:
+def spectral_sensitivity_analysis(
+    A: np.ndarray,
+    edges: List[Tuple[int, int]],
+    delta_range: np.ndarray
+) -> np.ndarray:
     """
-    Find the two-entry surgery that minimizes the spectral radius
-    subject to a total decrease budget.
-    
-    For each pair of entries (i1,j1), (i2,j2), find the optimal
-    allocation of budget between them.
-    
-    Time: O(n⁴ · K) where K is the number of budget splits tried
+    Analyze how the spectral radius changes as edge weights are perturbed.
+
+    For each delta value, decrease the specified edges by delta and
+    compute the new spectral radius.
+
+    Time:  O(|delta_range| × n³)
+    Space: O(n²)
+
+    Args:
+        A: n×n weight matrix.
+        edges: list of (i,j) edges to perturb.
+        delta_range: array of perturbation magnitudes.
+
+    Returns:
+        Array of spectral radii, one per delta value.
     """
-    n = A.shape[0]
-    rho_A, _ = karp_minimum_cycle_mean(A)
-    
-    best_rho = rho_A
-    best_config = None
-    num_splits = 10
-    
-    for i1 in range(n):
-        for j1 in range(n):
-            for i2 in range(n):
-                for j2 in range(n):
-                    if (i1, j1) >= (i2, j2):
-                        continue
-                    
-                    for s in range(num_splits + 1):
-                        frac = s / num_splits
-                        c1 = A[i1, j1] - frac * budget
-                        c2 = A[i2, j2] - (1 - frac) * budget
-                        
-                        B = two_entry_surgery(A, i1, j1, c1, i2, j2, c2)
-                        rho_B, _ = karp_minimum_cycle_mean(B)
-                        
-                        if rho_B < best_rho:
-                            best_rho = rho_B
-                            best_config = {
-                                'entries': [(i1, j1), (i2, j2)],
-                                'values': [c1, c2],
-                                'budget_split': [frac, 1 - frac],
-                            }
-    
-    return {
-        'rho_original': rho_A,
-        'rho_optimal': best_rho,
-        'improvement': rho_A - best_rho,
-        'config': best_config,
-    }
-
-
-# ---- Benchmarking ----
-
-def benchmark_karp(sizes: List[int] = None) -> List[dict]:
-    """Benchmark Karp's algorithm across matrix sizes."""
-    if sizes is None:
-        sizes = [5, 10, 20, 50, 100]
-    
-    results = []
-    for n in sizes:
-        np.random.seed(42)
-        A = np.random.uniform(1, 10, (n, n))
-        
-        start = time.time()
-        rho, _ = karp_minimum_cycle_mean(A)
-        elapsed = time.time() - start
-        
-        results.append({'n': n, 'time': elapsed, 'rho': rho})
-        print(f"  n={n:4d}: ρ={rho:.4f}, time={elapsed:.4f}s")
-    
+    results = np.zeros(len(delta_range))
+    for idx, delta in enumerate(delta_range):
+        B = A.copy()
+        for (i, j) in edges:
+            B[i, j] = A[i, j] - abs(delta)
+        lam, _ = karp_minimum_cycle_mean(B)
+        results[idx] = lam
     return results
 
 
+def howard_policy_iteration(A: np.ndarray, max_iter: int = 1000) -> Tuple[float, np.ndarray]:
+    """
+    Howard's policy iteration for the minimum cycle mean.
+
+    This is often faster than Karp's algorithm in practice, with
+    superpolynomial convergence guarantees.
+
+    Time:  O(n³) per iteration, typically O(n) iterations.
+    Space: O(n)
+
+    Args:
+        A: n×n weight matrix.
+        max_iter: maximum number of iterations.
+
+    Returns:
+        (lambda_star, policy): minimum cycle mean and optimal policy.
+
+    Reference:
+        R.A. Howard, "Dynamic Programming and Markov Processes," 1960.
+    """
+    n = A.shape[0]
+
+    # Initialize policy: each node chooses the minimum-weight outgoing edge
+    policy = np.argmin(A, axis=1)
+
+    for _ in range(max_iter):
+        # Compute cycle mean of the current policy graph
+        # The policy graph has exactly one outgoing edge per node
+        visited = np.full(n, -1)
+        lam = float('inf')
+
+        for start in range(n):
+            if visited[start] >= 0:
+                continue
+            path = []
+            node = start
+            while visited[node] < 0:
+                visited[node] = len(path)
+                path.append(node)
+                node = policy[node]
+
+            if visited[node] >= 0 and node in path:
+                # Found a cycle
+                cycle_start = path.index(node)
+                cycle = path[cycle_start:]
+                weight = sum(A[cycle[i], policy[cycle[i]]] for i in range(len(cycle)))
+                mean = weight / len(cycle)
+                lam = min(lam, mean)
+
+        # Compute bias vector: solve v[i] + λ = A[i, π(i)] + v[π(i)]
+        # Using iterative approximation
+        v = np.zeros(n)
+        for _ in range(n):
+            v_new = np.array([A[i, policy[i]] + v[policy[i]] - lam for i in range(n)])
+            v = v_new
+
+        # Policy improvement
+        new_policy = np.array([np.argmin([A[i, j] + v[j] for j in range(n)]) for i in range(n)])
+
+        if np.array_equal(new_policy, policy):
+            break
+        policy = new_policy
+
+    return lam, policy
+
+
 if __name__ == "__main__":
-    print("Tropical Surgery Algorithms — Test Suite")
-    print("=" * 50)
-    
-    # Test min-plus multiplication
-    A = np.array([[0, 3], [7, 0]])
-    B = np.array([[0, 1], [2, 0]])
-    C = tropical_matrix_multiply(A, B)
-    print(f"\nMin-plus multiply:\n{A}\n⊗\n{B}\n=\n{C}")
-    
-    # Test Karp's algorithm
-    print("\nKarp's algorithm test:")
+    print("Testing Karp's algorithm:")
     A = np.array([
-        [5., 2., 8.],
-        [3., 6., 1.],
-        [7., 4., 9.]
+        [5.0, 2.0, 8.0],
+        [3.0, 6.0, 1.0],
+        [7.0, 4.0, 3.0]
     ])
-    rho, cycle = karp_minimum_cycle_mean(A)
-    print(f"  Matrix:\n{A}")
-    print(f"  Min cycle mean: {rho:.4f}")
-    
-    # Test spectral bound certificate
-    print("\nSpectral bound certificate:")
-    n = 4
-    np.random.seed(42)
-    A = np.random.uniform(1, 10, (n, n))
-    u = np.random.uniform(0, 3, n)
-    v = np.random.uniform(0, 3, n)
-    u_prime = np.random.uniform(0, 3, n)
-    v_prime = np.random.uniform(0, 3, n)
-    
-    cert = spectral_bound_certificate(A, u, v, u_prime, v_prime)
-    for k, val in cert.items():
-        print(f"  {k}: {val}")
-    
-    # Benchmark
-    print("\nBenchmark Karp's algorithm:")
-    benchmark_karp([5, 10, 20, 50])
+    lam, cycle = karp_minimum_cycle_mean(A)
+    print(f"  Min cycle mean: {lam:.4f}, cycle: {cycle}")
+
+    print("\nTesting Howard's policy iteration:")
+    lam2, policy = howard_policy_iteration(A)
+    print(f"  Min cycle mean: {lam2:.4f}, policy: {policy}")
+
+    print("\nTesting critical graph:")
+    cg = critical_graph(A)
+    print(f"  Critical edges: {cg}")
+
+    print("\nTesting rank-2 surgery:")
+    u = np.array([1.0, 0.0, 2.0])
+    v = np.array([0.0, 1.0, -1.0])
+    up = np.array([0.0, 3.0, 1.0])
+    vp = np.array([2.0, 0.0, 1.0])
+    B = tropical_rank_two_surgery(A, u, v, up, vp)
+    lam_B, _ = karp_minimum_cycle_mean(B)
+    print(f"  ρ(A) = {lam:.4f}, ρ(B) = {lam_B:.4f}")
+    print(f"  Monotonicity: ρ(B) ≤ ρ(A)? {lam_B <= lam + 1e-10}")
