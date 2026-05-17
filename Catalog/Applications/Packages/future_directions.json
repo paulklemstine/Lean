@@ -226,8 +226,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "d5a4b677",
       "timestamp": "2026-05-17T18:48:26.949055+00:00"
     },
     {
@@ -887,7 +887,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.91,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "e2bd21c1",
       "timestamp": "2026-05-17T18:48:26.949121+00:00"
     },
@@ -2301,6 +2301,121 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:29:22.496354+00:00"
+    },
+    {
+      "id": "fd_0125",
+      "title": "Precise Theorem Targets",
+      "description": "```lean\n/-- The finite adèle ring of ℚ as a restricted product. -/\ndef FiniteAdeleRat : Type :=\n  { f : (p : Nat.Primes) → ℚ_[p] // ∀ᶠ p, f p ∈ ℤ_[p] }\n\ninstance : CommRing FiniteAdeleRat := sorry\n\n/-- The idèle class group C_ℚ = 𝕀_ℚ / ℚˣ. -/\ndef IdeleClassGroup : Type :=\n  FiniteIdeleRat ⧸ (ratUnitsDiagonalToFiniteIdele.range)\n\n/-- The fundamental exact sequence of class field theory. -/\ntheorem idele_class_exact_sequence :\n  Function.Exact ratDiagonalToFiniteIdele ideleClassProjection := sorry\n```",
+      "source_exp_id": "e2bd21c1",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:01:35.056236+00:00"
+    },
+    {
+      "id": "fd_0126",
+      "title": "Cross-Domain Significance",
+      "description": "- **Harmonic analysis**: Enables Fourier analysis on locally compact abelian groups, opening a path to Tate's thesis.\n- **Algebraic geometry**: Adèle rings are the function rings of ad schemes; this connects to motivic cohomology.\n- **Physics**: Adèlic path integrals and p-adic string theory use exactly this restricted product structure.\n\n---",
+      "source_exp_id": "e2bd21c1",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Topology",
+        "Physics",
+        "Bridges",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:01:35.060457+00:00"
+    },
+    {
+      "id": "fd_0127",
+      "title": "Goal",
+      "description": "Formalize Tate's proof of the functional equation and meromorphic continuation of Hecke L-functions via harmonic analysis on the idèle class group.",
+      "source_exp_id": "e2bd21c1",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:01:35.063332+00:00"
+    },
+    {
+      "id": "fd_0128",
+      "title": "Team 1: Infrastructure",
+      "description": "- Build topological restricted products\n- Formalize locally compact group theory\n- Implement Haar measure on 𝕀_ℚ/ℚˣ",
+      "source_exp_id": "e2bd21c1",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Topology",
+        "Probability",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:01:35.077420+00:00"
+    },
+    {
+      "id": "fd_0129",
+      "title": "Iteration Protocol",
+      "description": "1. Each team maintains a `sorry`-free build at all times.\n2. Weekly synchronization on shared API design (character types, L-functions, Galois actions).\n3. Cross-team validation: every new direction must connect to at least one existing theorem in the catalog.\n4. Automated benchmarking: track `sorry` count, compilation time, and theorem count per module.\n\n---",
+      "source_exp_id": "e2bd21c1",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:01:35.080726+00:00"
+    },
+    {
+      "id": "fd_0130",
+      "title": "Timeline Estimate",
+      "description": "| Direction | Effort | Dependencies | Priority |\n|-----------|--------|-------------|----------|\n| 1. Topological adèles | 3-4 cycles | Current work | High |\n| 2. Tate's thesis | 5-6 cycles | Direction 1 | High |\n| 3. Local CFT | 4-5 cycles | Direction 1 | Medium |\n| 4. GL(2) Langlands | 8-10 cycles | Directions 1-3 | Medium |\n| 5. QR from Langlands | 1-2 cycles | Current work | High |\n\nDirection 5 is the quickest win and should be pursued immediately. Direction 1 is the most important infrastructure investment. Directions 2 and 3 can proceed in parallel once Direction 1 is complete.",
+      "source_exp_id": "e2bd21c1",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Topology",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:01:35.084743+00:00"
     }
   ],
   "pruned": []

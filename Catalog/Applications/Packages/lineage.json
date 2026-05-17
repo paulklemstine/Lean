@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "binary_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T21:05:54Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "hybrid_argument_with_computational_distinguishers",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "coupling_argument",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -97,7 +97,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 271
+      "hue": 270
+    },
+    {
+      "id": "quantum_mechanics_spectral_theory_of_hydrogen",
+      "title": "Machine-Verified Spectral Theory of the Hydrogen Atom",
+      "domain": "Mathematical Physics / Quantum Mechanics",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-17T22:04:04Z",
+      "hue": 91
     }
   ],
   "edges": [
