@@ -1,22 +1,22 @@
 {
   "nodes": [
     {
-      "id": "sum_product_estimates",
-      "title": "Product Growth and the Bourgain-Gamburd Machine for Berggren Dynamics",
-      "domain": "Additive Combinatorics / Spectral Graph Theory / Pythagorean Triple Dynamics",
-      "primary_domain": "Pythagorean",
-      "shape": "triangular_prism",
-      "date": "2026-05-17T19:57:05Z",
-      "hue": 90
-    },
-    {
       "id": "2_eventual_periodicity_transfer_via_semiconjugacy",
       "title": "Eventual Periodicity Transfer via Semiconjugacy",
       "domain": "Cryptography / Discrete Dynamical Systems",
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 270
+      "hue": 90
+    },
+    {
+      "id": "sum_product_estimates",
+      "title": "Product Growth and L² Flattening for the Berggren Semigroup",
+      "domain": "Pythagorean / Additive Combinatorics / Spectral Graph Theory",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-17T19:57:40Z",
+      "hue": 91
     }
   ],
   "edges": [],

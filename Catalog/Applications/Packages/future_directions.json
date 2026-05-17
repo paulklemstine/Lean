@@ -1044,6 +1044,109 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:07.433698+00:00"
+    },
+    {
+      "id": "fd_0057",
+      "title": "Overview",
+      "description": "The theorems `semiconj_iterate_eq`, `semiconj_eventually_periodic`, and `semiconj_eventually_periodic_of_fintype` establish the foundational infrastructure for transporting orbit structure through deterministic maps between dynamical systems. This document outlines five concrete next steps at breakthrough level, each building on the catalog of existing results.\n\n---",
+      "source_exp_id": "2882da3c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:27.070763+00:00"
+    },
+    {
+      "id": "fd_0058",
+      "title": "Proposed Theorem Statement",
+      "description": "```lean\ntheorem semiconj_minimalPeriod_dvd\n    {α β : Type*} {f : α → α} {g : β → β} {h : α → β}\n    (hsemi : Function.Semiconj h f g)\n    {x : α} (hx : Function.IsPeriodicPt f n x) :\n    Function.minimalPeriod g (h x) ∣ Function.minimalPeriod f x\n```",
+      "source_exp_id": "2882da3c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:27.072085+00:00"
+    },
+    {
+      "id": "fd_0059",
+      "title": "Why It Matters",
+      "description": "The current `isPeriodicPt_image` theorem tells us that if `x` is periodic with period `n`, then `h x` is periodic with period `n`. But it says nothing about the *minimal* period. In symbolic dynamics and automata theory, the minimal period is the fundamental invariant — it determines the cycle structure of the observed system. This theorem would show that the minimal period can only *decrease* (by divisibility) under semiconjugacy, never increase. This is the formal content of the intuition that \"observation can only lose information, not create it.\"",
+      "source_exp_id": "2882da3c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:27.073398+00:00"
+    },
+    {
+      "id": "fd_0060",
+      "title": "Proof Strategy",
+      "description": "From `semiconj_eventually_periodic_of_fintype`, obtain `m, n` with `g^[m+n] (h x) = g^[m] (h x)`. Then prove by induction on `k` that `g^[m+n+k] (h x) = g^[m+k] (h x)`, using the periodicity and the iterate structure.",
+      "source_exp_id": "2882da3c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:27.075655+00:00"
+    },
+    {
+      "id": "fd_0061",
+      "title": "Builds On",
+      "description": "- `semiconj_minimalPeriod_dvd` (Direction 1)\n- `Function.Semiconj` inverse construction from bijectivity\n\n---",
+      "source_exp_id": "2882da3c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:27.079657+00:00"
+    },
+    {
+      "id": "fd_0062",
+      "title": "Cross-Cutting Theme",
+      "description": "All five directions share a common architecture: they take the raw orbit-collision transfer principle (`semiconj_iterate_eq`) and specialize it to increasingly refined invariants — minimal period, lasso shape, word periodicity, exact conjugacy, orbit counting. Together they form a **transfer calculus** that allows any certified recurrence theorem on a source system to be systematically pushed forward to every semiconjugate observation of that system.\n\nThe long-term vision is that this calculus becomes standard infrastructure in the Mathlib dynamics library, so that future theorems about finite dynamical systems, symbolic dynamics, and cryptographic state machines automatically inherit orbit-transport properties without re-proof.",
+      "source_exp_id": "2882da3c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Cryptography",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:27.082233+00:00"
     }
   ],
   "pruned": []
