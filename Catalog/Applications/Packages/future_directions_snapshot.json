@@ -447,10 +447,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a36e8f9",
     "timestamp": "2026-05-17T11:33:52.736089+00:00"
   },
   {
@@ -1583,5 +1583,62 @@
     "source_exp_id": "6d2f8cf4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T11:31:09.830914+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Theorem Statement",
+    "description": "```\ntheorem karp_minimum_cycle_mean [NeZero n]\n    (A : Fin n → Fin n → ℝ) :\n    tropicalEigenvalue A =\n    Finset.inf' Finset.univ Finset.univ_nonempty (fun i =>\n      Finset.sup' (Finset.range n) (by simp) (fun k =>\n        (tropMatPow A n i i - tropMatPow A k i i) / (n - k)))\n```",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97483b17",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:47:36.021332+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Prerequisites",
+    "description": "- Formalize the cycle decomposition lemma: every walk of length $> n$ contains a simple cycle.\n- Prove that the minimum cycle mean is attained by a simple cycle.\n- Connect `tropMatPow A k i j` with the weight of minimum-weight walks.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97483b17",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:47:38.866499+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Cross-Domain Bridge",
+    "description": "The `bool_and_as_tropical_max` theorem in the catalog provides the seed: Boolean reachability is a special case of tropical acceptance where all weights are 0 or $+\\infty$.",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97483b17",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:47:39.141850+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Research Roadmap",
+    "description": "```\nDirection 2 (Kleene Star)  ──→  Direction 1 (Karp's Theorem)\n         ↓                              ↓\nDirection 3 (Automata)     ──→  Direction 5 (Mean-Payoff Games)\n                                        ↓\n                           Direction 4 (Cayley-Hamilton)\n```\n\n**Recommended execution order:**\n1. Direction 2 (Kleene Star) — builds directly on power stabilization\n2. Direction 3 (Weighted Automata) — uses associativity and distributivity\n3. Direction 1 (Karp's Theorem) — requires cycle decomposition infrastructure\n4. Direction 5 (Mean-Payoff Games) — requires eigenvalue characterization from Direction 1\n5. Direction 4 (Cayley-Hamilton) — deepest, requires optimal assignment theory\n\nEach direction can seed an independent research cycle with clear hypotheses, proof strategies, and",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97483b17",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:47:39.417377+00:00"
   }
 ]

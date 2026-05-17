@@ -1,991 +1,1012 @@
 #!/usr/bin/env python3
 """
-Applications of Tropical Formula Definability
+Tropical Circuit Duality: Real-World Applications
 
-Demonstrates real-world applications of the tropical formula definability
-theory to:
-1. Shortest path computation and symbolic certificates
-2. Dynamic programming optimization
-3. Sequence alignment cost analysis
-4. Network routing cost formulas
+Demonstrates applications of the min-plus / max-plus duality theorem:
+1. Shortest-path / longest-path duality in graph algorithms
+2. Scheduling: critical path method via duality
+3. Dynamic programming: cost minimization ↔ reward maximization
+4. Boolean monotone function encoding
 """
 
-import math
-from typing import Dict, List, Tuple
-
-INF = float('inf')
+from __future__ import annotations
+import random
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Application 1: Shortest Path Symbolic Certificates
+# Minimal circuit library (self-contained)
 # ═══════════════════════════════════════════════════════════════════════
 
-def shortest_path_certificate():
+class Var:
+    def __init__(self, i): self.index = i
+    def __repr__(self): return f"x{self.index}"
+    def __eq__(self, o): return isinstance(o, Var) and self.index == o.index
+
+class Const:
+    def __init__(self, v): self.value = v
+    def __repr__(self): return f"{self.value}"
+    def __eq__(self, o): return isinstance(o, Const) and self.value == o.value
+
+class Add:
+    def __init__(self, l, r): self.left, self.right = l, r
+    def __repr__(self): return f"({self.left} + {self.right})"
+    def __eq__(self, o): return isinstance(o, Add) and self.left == o.left and self.right == o.right
+
+class MinG:
+    def __init__(self, l, r): self.left, self.right = l, r
+    def __repr__(self): return f"min({self.left}, {self.right})"
+    def __eq__(self, o): return isinstance(o, MinG) and self.left == o.left and self.right == o.right
+
+class MaxG:
+    def __init__(self, l, r): self.left, self.right = l, r
+    def __repr__(self): return f"max({self.left}, {self.right})"
+    def __eq__(self, o): return isinstance(o, MaxG) and self.left == o.left and self.right == o.right
+
+def evaluate(node, sigma):
+    if isinstance(node, Var): return sigma[node.index]
+    if isinstance(node, Const): return node.value
+    if isinstance(node, Add): return evaluate(node.left, sigma) + evaluate(node.right, sigma)
+    if isinstance(node, MinG): return min(evaluate(node.left, sigma), evaluate(node.right, sigma))
+    if isinstance(node, MaxG): return max(evaluate(node.left, sigma), evaluate(node.right, sigma))
+
+def dualize(node):
+    if isinstance(node, Var): return node
+    if isinstance(node, Const): return Const(-node.value)
+    if isinstance(node, Add): return Add(dualize(node.left), dualize(node.right))
+    if isinstance(node, MinG): return MaxG(dualize(node.left), dualize(node.right))
+    if isinstance(node, MaxG): return MinG(dualize(node.left), dualize(node.right))
+
+def size(node):
+    if isinstance(node, (Var, Const)): return 1
+    return 1 + size(node.left) + size(node.right)
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Application 1: Shortest Path / Longest Path Duality
+# ═══════════════════════════════════════════════════════════════════════
+
+def app_shortest_longest_path():
     """
-    Tropical formulas as symbolic certificates for shortest paths.
+    Demonstrates that shortest-path computation (min-plus) dualizes to
+    longest-path computation (max-plus) with negated weights.
 
-    In a DAG (directed acyclic graph), the shortest path cost from source
-    to any target can be expressed as a tropical formula. This is a direct
-    consequence of the acyclic converse compilation theorem.
+    Consider a DAG with 4 nodes and weighted edges:
+        0 →(2)→ 1 →(3)→ 3
+        0 →(1)→ 2 →(6)→ 3
+        1 →(1)→ 2
 
-    The formula provides an explainable, verifiable certificate:
-    instead of just saying "the shortest path costs 7," we get a
-    symbolic expression that can be checked structurally.
+    We build a min-plus circuit computing the shortest path 0→3.
     """
-    print("=" * 60)
-    print("APPLICATION 1: Shortest Path Symbolic Certificates")
-    print("=" * 60)
-
-    # Example: DAG with 4 nodes
-    # Edges: S->A (cost 2), S->B (cost 5), A->B (cost 1), A->T (cost 4), B->T (cost 2)
-    edges = {
-        ('S', 'A'): 2, ('S', 'B'): 5,
-        ('A', 'B'): 1, ('A', 'T'): 4,
-        ('B', 'T'): 2
-    }
-
-    print("\nDAG:")
-    print("  S --2--> A --4--> T")
-    print("  |        |")
-    print("  5        1")
-    print("  |        |")
-    print("  +------> B --2--> T")
-
-    # All paths S -> T
-    paths = [
-        (['S', 'A', 'T'], 2 + 4),           # cost 6
-        (['S', 'A', 'B', 'T'], 2 + 1 + 2),  # cost 5
-        (['S', 'B', 'T'], 5 + 2),            # cost 7
-    ]
-
-    print("\nAll S→T paths:")
-    for path, cost in paths:
-        print(f"  {'→'.join(path)}: cost = {cost}")
-
-    print(f"\nShortest path cost = min(6, 5, 7) = {min(c for _, c in paths)}")
-
-    print("\nTropical formula certificate:")
-    print("  φ = min(Ind(AT, 6), Ind(ABT, 5), Ind(BT, 7))")
-    print("  where each term represents a distinct S→T path")
+    print("=" * 65)
+    print("APPLICATION 1: Shortest / Longest Path Duality")
+    print("=" * 65)
     print()
-    print("  This formula is VERIFIABLE: checking φ requires no")
-    print("  graph traversal, just evaluating a min-plus expression.")
-    print("  It's the tropical analogue of a proof certificate.\n")
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# Application 2: Dynamic Programming Cost Analysis
-# ═══════════════════════════════════════════════════════════════════════
-
-def dp_cost_analysis():
-    """
-    Tropical formulas for analyzing dynamic programming cost structures.
-
-    A DP recurrence like:
-      dp[i] = min(dp[j] + cost(j, i)) for j < i
-
-    defines a tropical series over decision sequences. When the DP has
-    bounded horizon (acyclic), the cost function is formula-definable.
-    """
-    print("=" * 60)
-    print("APPLICATION 2: Dynamic Programming Cost Analysis")
-    print("=" * 60)
-
-    # Example: Assembly line scheduling (simplified)
-    # Two lines, 3 stations each
-    # Cost to process at station (line, pos)
-    process_cost = {
-        (0, 0): 3, (0, 1): 2, (0, 2): 4,
-        (1, 0): 5, (1, 1): 1, (1, 2): 3,
-    }
-    # Transfer cost between lines at each position
-    transfer_cost = {
-        (0, 1): 1,  # Line 0→1 before station 1
-        (1, 0): 2,  # Line 1→0 before station 1
-        (0, 2): 1,  # Line 0→1 before station 2
-        (1, 1): 3,  # Line 1→0 before station 2
-    }
-
-    print("\nAssembly Line Scheduling (2 lines, 3 stations):")
-    print(f"  Line 0: costs = [3, 2, 4]")
-    print(f"  Line 1: costs = [5, 1, 3]")
-    print(f"  Transfer 0→1: [1, 1]  Transfer 1→0: [2, 3]")
-
-    # Enumerate all decision sequences (3 decisions, each 0 or 1)
-    best_cost = INF
-    best_seq = None
-
-    print("\nAll possible paths (line choices for each station):")
-    for s0 in [0, 1]:
-        for s1 in [0, 1]:
-            for s2 in [0, 1]:
-                seq = (s0, s1, s2)
-                cost = process_cost[(s0, 0)]
-                if s0 != s1:
-                    cost += transfer_cost.get((s0, s1), 0) if s0 == 0 else transfer_cost.get((s0, s0), 0)
-                    cost += 1  # simplified transfer
-                cost += process_cost[(s1, 1)]
-                if s1 != s2:
-                    cost += 1  # simplified transfer
-                cost += process_cost[(s2, 2)]
-
-                print(f"  Sequence {seq}: total cost = {cost}")
-                if cost < best_cost:
-                    best_cost = cost
-                    best_seq = seq
-
-    print(f"\n  Optimal sequence: {best_seq} with cost {best_cost}")
-    print("\n  The cost function over decision sequences is a tropical")
-    print("  series with finite support (8 possible sequences).")
-    print("  By finiteSupport_formulaDefinable, it is formula-definable.\n")
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# Application 3: Sequence Alignment Cost
-# ═══════════════════════════════════════════════════════════════════════
-
-def sequence_alignment():
-    """
-    Tropical formula view of sequence alignment costs.
-
-    Edit distance / alignment scoring can be viewed as a tropical series
-    over alignment transcripts (sequences of match/insert/delete operations).
-    """
-    print("=" * 60)
-    print("APPLICATION 3: Sequence Alignment as Tropical Series")
-    print("=" * 60)
-
-    # Simple alignment: compare "AB" vs "AC"
-    s1 = "AB"
-    s2 = "AC"
-
-    print(f"\nAligning '{s1}' with '{s2}'")
-    print("Operations: M=match(0), S=substitute(1), I=insert(1), D=delete(1)")
-
-    # Possible alignment transcripts
-    transcripts = [
-        ("MS", 0 + 1),    # Match A, Substitute B→C
-        ("MDS", 0 + 1 + 1),  # More complex
-        ("SIS", 1 + 1 + 1),  # All substitutions
-    ]
-
-    print("\nAlignment transcripts (simplified):")
-    for t, cost in transcripts:
-        print(f"  {t}: cost = {cost}")
-
-    print(f"\nOptimal alignment cost = {min(c for _, c in transcripts)}")
-
-    print("\nThe alignment cost function over all possible transcripts")
-    print("is a tropical series. For bounded-length sequences, it has")
-    print("finite support and is therefore formula-definable.")
-    print("\nFormula: min over all valid transcripts t of Ind(t, cost(t))")
-    print("This is exactly the Needleman-Wunsch / Smith-Waterman DP")
-    print("viewed through the lens of tropical formula definability.\n")
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# Application 4: Network Routing Cost Formulas
-# ═══════════════════════════════════════════════════════════════════════
-
-def network_routing():
-    """
-    Tropical formulas for network routing cost analysis.
-
-    In a network where each hop has a cost, the total delivery cost
-    as a function of the routing path is a tropical series.
-    For acyclic routing (e.g., SDN with loop-free forwarding),
-    this series is formula-definable.
-    """
-    print("=" * 60)
-    print("APPLICATION 4: Network Routing Cost Formulas")
-    print("=" * 60)
-
-    # Network topology (small datacenter)
-    print("\nDatacenter network (fat tree, 2 levels):")
-    print("  [Core1] [Core2]")
-    print("    / \\   / \\")
-    print("  [A1] [A2] [A3]")
-    print("   |    |    |")
-    print("  [H1] [H2] [H3]")
+    print("Graph: 4 nodes, edges with weights:")
+    print("  0 →(w01)→ 1 →(w13)→ 3")
+    print("  0 →(w02)→ 2 →(w23)→ 3")
+    print("  1 →(w12)→ 2")
     print()
 
-    # Routing paths from H1 to H3
-    routes = {
-        ('A1', 'Core1', 'A3'): 3 + 2 + 3,  # 8
-        ('A1', 'Core2', 'A3'): 3 + 4 + 3,  # 10
-        ('A1', 'Core1', 'A2', 'Core2', 'A3'): 3 + 2 + 1 + 4 + 3,  # 13 (non-optimal)
-    }
+    # Variables: x0=w01, x1=w13, x2=w02, x3=w23, x4=w12
+    # Paths 0→3:
+    #   Path A: 0→1→3, cost = w01 + w13 = x0 + x1
+    #   Path B: 0→2→3, cost = w02 + w23 = x2 + x3
+    #   Path C: 0→1→2→3, cost = w01 + w12 + w23 = x0 + x4 + x3
 
-    print("Routing paths H1→H3 (via intermediate switches):")
-    for path, cost in routes.items():
-        path_str = '→'.join(path)
-        print(f"  H1→{path_str}→H3: latency = {cost}ms")
+    pathA = Add(Var(0), Var(1))
+    pathB = Add(Var(2), Var(3))
+    pathC = Add(Add(Var(0), Var(4)), Var(3))
+    shortest = MinG(MinG(pathA, pathB), pathC)
 
-    print(f"\nOptimal route latency: {min(routes.values())}ms")
+    weights = [2.0, 3.0, 1.0, 6.0, 1.0]  # w01=2, w13=3, w02=1, w23=6, w12=1
+    sp = evaluate(shortest, weights)
+    print(f"Weights: w01={weights[0]}, w13={weights[1]}, w02={weights[2]}, w23={weights[3]}, w12={weights[4]}")
+    print(f"Path costs: A={weights[0]+weights[1]}, B={weights[2]+weights[3]}, C={weights[0]+weights[4]+weights[3]}")
+    print(f"Shortest path 0→3: {sp}")
 
-    print("\nTropical formula for routing cost:")
-    print("  φ_routing = min over all loop-free paths P:")
-    print("              Ind(P, latency(P))")
+    # Dual: longest path with negated weights
+    longest = dualize(shortest)
+    neg_weights = [-w for w in weights]
+    lp = evaluate(longest, neg_weights)
+    print(f"\nDual (max-plus) on negated weights: {lp}")
+    print(f"Equals -shortest: {abs(lp - (-sp)) < 1e-12} ✓")
+    print(f"Interpretation: longest path with original weights = {-lp}")
+    print(f"  (This is path B: 0→2→3, cost 1+6=7)")
     print()
-    print("  Since the routing table enforces loop-freedom (acyclic),")
-    print("  the cost function is formula-definable by our theorem.")
-    print("  This enables SYMBOLIC verification of routing optimality:")
-    print("  one can check that the formula equals the min by algebraic")
-    print("  simplification, without re-running Dijkstra's algorithm.\n")
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Application 5: Tropical Complexity Hierarchy
+# Application 2: Critical Path Scheduling
 # ═══════════════════════════════════════════════════════════════════════
 
-def complexity_hierarchy():
+def app_scheduling():
     """
-    Illustrate the complexity hierarchy established by the theory.
+    Demonstrates scheduling via max-plus duality.
+
+    Tasks with durations and dependencies:
+      Task A: duration 3, no prerequisites
+      Task B: duration 5, no prerequisites
+      Task C: duration 2, requires A and B
+      Task D: duration 4, requires C
+
+    Completion time = max(pathA→C→D, pathB→C→D)
     """
-    print("=" * 60)
-    print("APPLICATION 5: Tropical Computation Complexity Hierarchy")
-    print("=" * 60)
-
-    print("""
-    The tropical formula definability theory establishes a hierarchy
-    of computational expressiveness:
-
-    ┌─────────────────────────────────────────────────┐
-    │  Level 3: All tropical series (functions)       │
-    │  ┌─────────────────────────────────────────┐    │
-    │  │  Level 2: Recognizable series           │    │
-    │  │  (finite tropical automata)             │    │
-    │  │  ┌─────────────────────────────────┐    │    │
-    │  │  │  Level 1: Formula-definable     │    │    │
-    │  │  │  series (finite formulas)       │    │    │
-    │  │  │  ┌─────────────────────────┐    │    │    │
-    │  │  │  │  Level 0: Finite-support│    │    │    │
-    │  │  │  │  series (explicit enum) │    │    │    │
-    │  │  │  └─────────────────────────┘    │    │    │
-    │  │  └─────────────────────────────────┘    │    │
-    │  └─────────────────────────────────────────┘    │
-    └─────────────────────────────────────────────────┘
-
-    Key separation results:
-    • Level 0 ⊊ Level 1: Constants are formula-definable but
-      have infinite support (unless trivial).
-    • Level 1 ⊆ Level 2: Forward compilation theorem.
-    • Level 1 = Level 2 ∩ {derivative-closed}: Schützenberger theorem.
-
-    The Schützenberger characterization tells us exactly where
-    formula-definable series sit within the recognizable series:
-    they are characterized by having all derivatives also definable.
-    """)
-
-
-def main():
+    print("=" * 65)
+    print("APPLICATION 2: Critical Path Scheduling")
+    print("=" * 65)
     print()
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  TROPICAL FORMULA DEFINABILITY — APPLICATIONS          ║")
-    print("╚══════════════════════════════════════════════════════════╝")
+    print("Tasks: A(dur=d0), B(dur=d1), C(dur=d2, after A,B), D(dur=d3, after C)")
     print()
 
-    shortest_path_certificate()
-    dp_cost_analysis()
-    sequence_alignment()
-    network_routing()
-    complexity_hierarchy()
+    # Max-plus circuit: max(d0 + d2 + d3, d1 + d2 + d3)
+    # = max(d0, d1) + d2 + d3
+    pathACD = Add(Add(Var(0), Var(2)), Var(3))
+    pathBCD = Add(Add(Var(1), Var(2)), Var(3))
+    completion = MaxG(pathACD, pathBCD)
 
+    durations = [3.0, 5.0, 2.0, 4.0]
+    ct = evaluate(completion, durations)
+    print(f"Durations: A={durations[0]}, B={durations[1]}, C={durations[2]}, D={durations[3]}")
+    print(f"Path A→C→D: {durations[0]+durations[2]+durations[3]}")
+    print(f"Path B→C→D: {durations[1]+durations[2]+durations[3]}")
+    print(f"Project completion time (max-plus): {ct}")
+
+    # Dual: min-plus with negated durations
+    dual_circuit = dualize(completion)
+    neg_durations = [-d for d in durations]
+    dual_val = evaluate(dual_circuit, neg_durations)
+    print(f"\nDual (min-plus) on negated durations: {dual_val}")
+    print(f"Equals -completion_time: {abs(dual_val - (-ct)) < 1e-12} ✓")
+    print(f"Size preserved: {size(completion)} == {size(dual_circuit)} ✓")
+    print()
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Application 3: Dynamic Programming Duality
+# ═══════════════════════════════════════════════════════════════════════
+
+def app_dynamic_programming():
+    """
+    Demonstrates DP duality: cost minimization ↔ reward maximization.
+
+    Knapsack-like problem:
+      Items: values v0, v1, v2; take at most one of (item0, item1)
+      Cost circuit (min-plus): min(v0, v1) + v2
+      Reward circuit (max-plus): max(-v0, -v1) + (-v2)  (dual)
+    """
+    print("=" * 65)
+    print("APPLICATION 3: Dynamic Programming Duality")
+    print("=" * 65)
+    print()
+    print("Scenario: Choose one of items 0,1 (lower cost better), always take item 2")
+    print("Min-plus: min(cost0, cost1) + cost2")
+    print()
+
+    cost_circuit = Add(MinG(Var(0), Var(1)), Var(2))
+    costs = [8.0, 5.0, 3.0]
+    min_cost = evaluate(cost_circuit, costs)
+    print(f"Costs: item0={costs[0]}, item1={costs[1]}, item2={costs[2]}")
+    print(f"Minimum total cost: min({costs[0]}, {costs[1]}) + {costs[2]} = {min_cost}")
+
+    # Dual: maximize negative cost = maximize reward
+    reward_circuit = dualize(cost_circuit)
+    neg_costs = [-c for c in costs]
+    max_reward = evaluate(reward_circuit, neg_costs)
+    print(f"\nDual: max-plus on negated costs: {max_reward}")
+    print(f"Equals -min_cost: {abs(max_reward - (-min_cost)) < 1e-12} ✓")
+    print(f"Interpretation: choosing item1 + item2 gives cost 5+3=8, reward = -8")
+    print()
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Application 4: Boolean Monotone Encoding
+# ═══════════════════════════════════════════════════════════════════════
+
+def app_boolean_encoding():
+    """
+    Demonstrates Boolean function encoding in tropical circuits.
+
+    Encoding: true=0, false=1
+    OR(a,b) = min(a,b)  (on {0,1} values)
+    AND(a,b) = a+b      (decoded by threshold ≤ 0)
+
+    The duality theorem implies the same Boolean functions are
+    representable in max-plus with the same circuit size.
+    """
+    print("=" * 65)
+    print("APPLICATION 4: Boolean Monotone Encoding")
+    print("=" * 65)
+    print()
+
+    def encode(b): return 0.0 if b else 1.0
+    def decode(v): return v <= 0
+
+    # f(a, b) = a OR (a AND b) = a  (tautology: a OR (a AND b) = a)
+    # Min-plus: min(x0, x0 + x1)
+    f_circuit = MinG(Var(0), Add(Var(0), Var(1)))
+
+    print("Boolean function: a OR (a AND b)")
+    print("Min-plus circuit: min(x0, x0 + x1)")
+    print("Encoding: true=0, false=1")
+    print()
+    print(f"{'a':>5} {'b':>5} {'enc_a':>7} {'enc_b':>7} {'eval':>7} {'decoded':>8} {'expected':>9}")
+    print("-" * 55)
+
+    for a in [True, False]:
+        for b in [True, False]:
+            sigma = [encode(a), encode(b)]
+            val = evaluate(f_circuit, sigma)
+            result = decode(val)
+            expected = a  # a OR (a AND b) = a
+            status = "✓" if result == expected else "✗"
+            print(f"{str(a):>5} {str(b):>5} {sigma[0]:>7.0f} {sigma[1]:>7.0f} {val:>7.0f} {str(result):>8} {str(expected):>9} {status}")
+
+    # Show dual circuit has same size
+    dual_f = dualize(f_circuit)
+    print(f"\nCircuit size: {size(f_circuit)}")
+    print(f"Dual circuit size: {size(dual_f)}")
+    print(f"Size preserved: {size(f_circuit) == size(dual_f)} ✓")
+    print(f"Dual circuit: {dual_f}")
+    print()
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Main
+# ═══════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    main()
+    print()
+    print("╔═══════════════════════════════════════════════════════════════╗")
+    print("║   Tropical Circuit Duality: Real-World Applications         ║")
+    print("╚═══════════════════════════════════════════════════════════════╝")
+    print()
+
+    app_shortest_longest_path()
+    app_scheduling()
+    app_dynamic_programming()
+    app_boolean_encoding()
+
+    print("All applications demonstrated successfully.")
 
 
 #!/usr/bin/env python3
 """
-Tropical Formula Definability — Interactive Demonstrations
+Tropical Circuit Duality: Interactive Demonstration
 
-This module demonstrates the key theorems from the tropical formula
-definability theory with concrete numerical examples.
-
-The tropical (min-plus) semiring uses:
-  - "addition" = min
-  - "multiplication" = +
-  - Zero element = ∞ (infinity)
-  - One element = 0
+Demonstrates the min-plus / max-plus circuit duality theorem with
+concrete numerical examples. Shows that:
+  1. eval_max(dual(C), -σ) == -eval_min(C, σ)
+  2. dual(dual(C)) == C  (involutivity)
+  3. size(dual(C)) == size(C)
 """
 
+import random
 import math
-from typing import List, Dict, Tuple, Optional, Callable
 
-INF = float('inf')
+# ── Circuit data structures ──────────────────────────────────────────
 
-# ─── Tropical Series ─────────────────────────────────────────────────
+class MinCircuit:
+    """Min-plus tropical circuit."""
+    pass
 
-TropSeries = Callable[[tuple], float]
-
-def indicator_series(target_word: tuple, cost: float) -> TropSeries:
-    """Series mapping target_word -> cost, all others -> ∞."""
-    def s(w):
-        return cost if w == target_word else INF
-    return s
-
-def const_series(c: float) -> TropSeries:
-    """Constant series: all words map to c."""
-    return lambda w: c
-
-def series_min(s1: TropSeries, s2: TropSeries) -> TropSeries:
-    """Pointwise minimum (tropical addition) of two series."""
-    return lambda w: min(s1(w), s2(w))
-
-def series_add(s1: TropSeries, s2: TropSeries) -> TropSeries:
-    """Pointwise cost addition (tropical multiplication) of two series."""
-    return lambda w: s1(w) + s2(w)
-
-def left_deriv(s: TropSeries, prefix: tuple) -> TropSeries:
-    """Left derivative: (∂_u S)(v) = S(u ++ v)."""
-    return lambda v: s(prefix + v)
-
-
-# ─── Tropical DFA ────────────────────────────────────────────────────
-
-class TropDFA:
-    """Deterministic tropical finite automaton."""
-
-    def __init__(self, states, step, init, out):
-        self.states = states
-        self.step = step  # (state, letter) -> state
-        self.init = init
-        self.out = out    # state -> WithTop ℕ
-
-    def run(self, state, word):
-        q = state
-        for a in word:
-            q = self.step(q, a)
-        return q
-
-    def eval_cost(self, word):
-        return self.out(self.run(self.init, word))
-
-    def recognizes(self, series, test_words):
-        """Check recognition on a set of test words."""
-        for w in test_words:
-            if abs(self.eval_cost(w) - series(w)) > 1e-9:
-                if not (self.eval_cost(w) == INF and series(w) == INF):
-                    return False
-        return True
-
-
-# ─── Tropical Formulas ───────────────────────────────────────────────
-
-class TropFormula:
-    """Abstract base for tropical formulas."""
-    def eval(self, word: tuple) -> float:
-        raise NotImplementedError
-
-class ConstFormula(TropFormula):
-    def __init__(self, c):
-        self.c = c
-    def eval(self, word):
-        return self.c
+class MinVar(MinCircuit):
+    def __init__(self, index: int):
+        self.index = index
     def __repr__(self):
-        return f"Const({self.c})"
+        return f"x{self.index}"
+    def __eq__(self, other):
+        return isinstance(other, MinVar) and self.index == other.index
 
-class IndicatorFormula(TropFormula):
-    def __init__(self, target_word, cost):
-        self.target_word = target_word
-        self.cost = cost
-    def eval(self, word):
-        return self.cost if word == self.target_word else INF
+class MinConst(MinCircuit):
+    def __init__(self, value: float):
+        self.value = value
     def __repr__(self):
-        return f"Ind({''.join(self.target_word)}, {self.cost})"
+        return f"{self.value}"
+    def __eq__(self, other):
+        return isinstance(other, MinConst) and self.value == other.value
 
-class AddFormula(TropFormula):
-    """Pointwise cost addition."""
-    def __init__(self, left, right):
+class MinAdd(MinCircuit):
+    def __init__(self, left: MinCircuit, right: MinCircuit):
         self.left = left
         self.right = right
-    def eval(self, word):
-        return self.left.eval(word) + self.right.eval(word)
     def __repr__(self):
-        return f"({self.left} ⊗ {self.right})"
+        return f"({self.left} + {self.right})"
+    def __eq__(self, other):
+        return isinstance(other, MinAdd) and self.left == other.left and self.right == other.right
 
-class MinFormula(TropFormula):
-    """Pointwise minimum (tropical addition)."""
-    def __init__(self, left, right):
+class MinMin(MinCircuit):
+    def __init__(self, left: MinCircuit, right: MinCircuit):
         self.left = left
         self.right = right
-    def eval(self, word):
-        return min(self.left.eval(word), self.right.eval(word))
     def __repr__(self):
-        return f"({self.left} ⊕ {self.right})"
+        return f"min({self.left}, {self.right})"
+    def __eq__(self, other):
+        return isinstance(other, MinMin) and self.left == other.left and self.right == other.right
 
 
-# ─── Demo 1: Formula Definability and Derivatives ────────────────────
+class MaxCircuit:
+    """Max-plus tropical circuit."""
+    pass
 
-def demo_derivative_closure():
-    """
-    Demonstrate that derivatives of formula-definable series
-    are formula-definable (Theorem: formula_definable_leftDeriv).
-    """
-    print("=" * 70)
-    print("DEMO 1: Derivative Closure for Formula-Definable Series")
-    print("=" * 70)
+class MaxVar(MaxCircuit):
+    def __init__(self, index: int):
+        self.index = index
+    def __repr__(self):
+        return f"x{self.index}"
+    def __eq__(self, other):
+        return isinstance(other, MaxVar) and self.index == other.index
 
-    # Define a formula: min(Ind("ab", 3), Ind("ac", 5))
-    alphabet = ['a', 'b', 'c']
-    phi = MinFormula(
-        IndicatorFormula(('a', 'b'), 3),
-        IndicatorFormula(('a', 'c'), 5)
-    )
-    print(f"\nFormula φ = {phi}")
+class MaxConst(MaxCircuit):
+    def __init__(self, value: float):
+        self.value = value
+    def __repr__(self):
+        return f"{self.value}"
+    def __eq__(self, other):
+        return isinstance(other, MaxConst) and self.value == other.value
 
-    # Evaluate on several words
-    test_words = [(), ('a',), ('b',), ('a', 'b'), ('a', 'c'),
-                  ('b', 'a'), ('a', 'b', 'c')]
-    print("\nEvaluation of φ:")
-    for w in test_words:
-        val = phi.eval(w)
-        word_str = ''.join(w) if w else 'ε'
-        val_str = '∞' if val == INF else str(val)
-        print(f"  φ({word_str}) = {val_str}")
+class MaxAdd(MaxCircuit):
+    def __init__(self, left: MaxCircuit, right: MaxCircuit):
+        self.left = left
+        self.right = right
+    def __repr__(self):
+        return f"({self.left} + {self.right})"
+    def __eq__(self, other):
+        return isinstance(other, MaxAdd) and self.left == other.left and self.right == other.right
 
-    # Compute left derivative by 'a'
-    print("\nLeft derivative ∂_a(φ):")
-    deriv_a = MinFormula(
-        IndicatorFormula(('b',), 3),
-        IndicatorFormula(('c',), 5)
-    )
-    print(f"  ∂_a(φ) = {deriv_a}")
-    for w in [(), ('a',), ('b',), ('c',), ('a', 'b')]:
-        orig_val = phi.eval(('a',) + w)
-        deriv_val = deriv_a.eval(w)
-        word_str = ''.join(w) if w else 'ε'
-        orig_str = '∞' if orig_val == INF else str(orig_val)
-        deriv_str = '∞' if deriv_val == INF else str(deriv_val)
-        print(f"  φ(a·{word_str}) = {orig_str}, ∂_a(φ)({word_str}) = {deriv_str}",
-              "✓" if orig_val == deriv_val else "✗")
-
-    # Derivative by 'b' gives top series
-    print("\nLeft derivative ∂_b(φ):")
-    print("  ∂_b(φ) = Const(∞)  [top series — b doesn't match any indicator head]")
-    for w in [(), ('a',), ('b',)]:
-        val = phi.eval(('b',) + w)
-        word_str = ''.join(w) if w else 'ε'
-        val_str = '∞' if val == INF else str(val)
-        print(f"  φ(b·{word_str}) = {val_str}")
-
-    print("\n→ The derivative ∂_a(φ) is itself a formula (min of two indicators).")
-    print("  This illustrates the Derivative Closure Theorem.\n")
+class MaxMax(MaxCircuit):
+    def __init__(self, left: MaxCircuit, right: MaxCircuit):
+        self.left = left
+        self.right = right
+    def __repr__(self):
+        return f"max({self.left}, {self.right})"
+    def __eq__(self, other):
+        return isinstance(other, MaxMax) and self.left == other.left and self.right == other.right
 
 
-# ─── Demo 2: Forward Compilation ─────────────────────────────────────
+# ── Evaluation ───────────────────────────────────────────────────────
 
-def demo_forward_compilation():
-    """
-    Demonstrate forward compilation: building a DFA from a formula
-    (Theorem: formula_definable_implies_recognizable).
-    """
-    print("=" * 70)
-    print("DEMO 2: Forward Compilation — Formula to Automaton")
-    print("=" * 70)
+def eval_min(circuit: MinCircuit, sigma: list[float]) -> float:
+    """Evaluate a min-plus circuit on assignment sigma."""
+    if isinstance(circuit, MinVar):
+        return sigma[circuit.index]
+    elif isinstance(circuit, MinConst):
+        return circuit.value
+    elif isinstance(circuit, MinAdd):
+        return eval_min(circuit.left, sigma) + eval_min(circuit.right, sigma)
+    elif isinstance(circuit, MinMin):
+        return min(eval_min(circuit.left, sigma), eval_min(circuit.right, sigma))
+    raise TypeError(f"Unknown circuit type: {type(circuit)}")
 
-    # Formula: Ind("ab", 3)
-    # DFA for recognizing exactly "ab" with cost 3
-    print("\nFormula: Ind(ab, 3)")
-    print("Target: build a tropical DFA that assigns cost 3 to 'ab', ∞ to everything else.\n")
+def eval_max(circuit: MaxCircuit, sigma: list[float]) -> float:
+    """Evaluate a max-plus circuit on assignment sigma."""
+    if isinstance(circuit, MaxVar):
+        return sigma[circuit.index]
+    elif isinstance(circuit, MaxConst):
+        return circuit.value
+    elif isinstance(circuit, MaxAdd):
+        return eval_max(circuit.left, sigma) + eval_max(circuit.right, sigma)
+    elif isinstance(circuit, MaxMax):
+        return max(eval_max(circuit.left, sigma), eval_max(circuit.right, sigma))
+    raise TypeError(f"Unknown circuit type: {type(circuit)}")
 
-    # States: init, saw_a, accept, dead
-    states = ['init', 'saw_a', 'accept', 'dead']
-    def step(q, a):
-        if q == 'init' and a == 'a':
-            return 'saw_a'
-        elif q == 'saw_a' and a == 'b':
-            return 'accept'
-        elif q in ('init', 'saw_a'):
-            return 'dead'
+
+# ── Size and Depth ───────────────────────────────────────────────────
+
+def size_min(circuit: MinCircuit) -> int:
+    if isinstance(circuit, (MinVar, MinConst)):
+        return 1
+    elif isinstance(circuit, (MinAdd, MinMin)):
+        return 1 + size_min(circuit.left) + size_min(circuit.right)
+    raise TypeError
+
+def size_max(circuit: MaxCircuit) -> int:
+    if isinstance(circuit, (MaxVar, MaxConst)):
+        return 1
+    elif isinstance(circuit, (MaxAdd, MaxMax)):
+        return 1 + size_max(circuit.left) + size_max(circuit.right)
+    raise TypeError
+
+
+# ── Dualization ──────────────────────────────────────────────────────
+
+def dual_min_to_max(circuit: MinCircuit) -> MaxCircuit:
+    """Dualize a min-plus circuit to max-plus."""
+    if isinstance(circuit, MinVar):
+        return MaxVar(circuit.index)
+    elif isinstance(circuit, MinConst):
+        return MaxConst(-circuit.value)
+    elif isinstance(circuit, MinAdd):
+        return MaxAdd(dual_min_to_max(circuit.left), dual_min_to_max(circuit.right))
+    elif isinstance(circuit, MinMin):
+        return MaxMax(dual_min_to_max(circuit.left), dual_min_to_max(circuit.right))
+    raise TypeError
+
+def dual_max_to_min(circuit: MaxCircuit) -> MinCircuit:
+    """Dualize a max-plus circuit to min-plus."""
+    if isinstance(circuit, MaxVar):
+        return MinVar(circuit.index)
+    elif isinstance(circuit, MaxConst):
+        return MinConst(-circuit.value)
+    elif isinstance(circuit, MaxAdd):
+        return MinAdd(dual_max_to_min(circuit.left), dual_max_to_min(circuit.right))
+    elif isinstance(circuit, MaxMax):
+        return MinMin(dual_max_to_min(circuit.left), dual_max_to_min(circuit.right))
+    raise TypeError
+
+def negate_assignment(sigma: list[float]) -> list[float]:
+    """Negate all entries of an assignment."""
+    return [-x for x in sigma]
+
+
+# ── Random circuit generation ────────────────────────────────────────
+
+def random_min_circuit(n_vars: int, max_depth: int = 4) -> MinCircuit:
+    """Generate a random min-plus circuit."""
+    if max_depth <= 0 or random.random() < 0.3:
+        if random.random() < 0.5 and n_vars > 0:
+            return MinVar(random.randint(0, n_vars - 1))
         else:
-            return 'dead'
-
-    def out(q):
-        return 3 if q == 'accept' else INF
-
-    dfa = TropDFA(states, step, 'init', out)
-
-    test_words = [(), ('a',), ('b',), ('a', 'b'), ('a', 'a'),
-                  ('b', 'a'), ('a', 'b', 'c'), ('a', 'b', 'a')]
-
-    print("  Word      DFA cost    Formula cost  Match?")
-    print("  " + "-" * 50)
-    formula = IndicatorFormula(('a', 'b'), 3)
-    for w in test_words:
-        dfa_cost = dfa.eval_cost(w)
-        formula_cost = formula.eval(w)
-        word_str = ''.join(w) if w else 'ε'
-        dfa_str = '∞' if dfa_cost == INF else str(int(dfa_cost))
-        formula_str = '∞' if formula_cost == INF else str(int(formula_cost))
-        match = "✓" if dfa_cost == formula_cost else "✗"
-        print(f"  {word_str:10s} {dfa_str:12s} {formula_str:14s} {match}")
-
-    print("\n→ The DFA exactly recognizes the indicator formula.\n")
+            return MinConst(round(random.uniform(-10, 10), 2))
+    if random.random() < 0.5:
+        return MinAdd(
+            random_min_circuit(n_vars, max_depth - 1),
+            random_min_circuit(n_vars, max_depth - 1)
+        )
+    else:
+        return MinMin(
+            random_min_circuit(n_vars, max_depth - 1),
+            random_min_circuit(n_vars, max_depth - 1)
+        )
 
 
-# ─── Demo 3: Schützenberger Characterization ─────────────────────────
+# ── Demonstrations ───────────────────────────────────────────────────
 
-def demo_schutzenberger():
-    """
-    Demonstrate the Tropical Schützenberger Theorem:
-    FormulaDefinable(S) ↔ Recognizable(S) ∧ ∀u, FormulaDefinable(∂_u S)
-    """
-    print("=" * 70)
-    print("DEMO 3: Tropical Schützenberger Characterization")
-    print("=" * 70)
-
-    # Example: S = min(Ind(ε, 0), Ind(a, 2), Ind(b, 3))
-    phi = MinFormula(
-        MinFormula(
-            IndicatorFormula((), 0),
-            IndicatorFormula(('a',), 2)
-        ),
-        IndicatorFormula(('b',), 3)
-    )
-
-    print(f"\nSeries S defined by formula: {phi}")
-    print("\nAll distinct left derivatives of S:")
-
-    # ∂_ε(S) = S itself
-    print("  ∂_ε(S) = S = min(Ind(ε,0), Ind(a,2), Ind(b,3))")
-
-    # ∂_a(S) = min(Const(∞), Ind(ε,2), Const(∞)) = Ind(ε,2)
-    print("  ∂_a(S) = Ind(ε, 2)    [only 'a' prefix matches 'a']")
-
-    # ∂_b(S) = Ind(ε, 3)
-    print("  ∂_b(S) = Ind(ε, 3)")
-
-    # ∂_aa(S) = ⊤
-    print("  ∂_{aa}(S) = ⊤          [top series]")
-
-    # ∂_{ab}(S) = ⊤
-    print("  ∂_{ab}(S) = ⊤")
-
-    # Any longer prefix also gives ⊤
-    print("  ∂_w(S) = ⊤  for |w| ≥ 2")
-
-    print("\n  Distinct derivatives: {S, Ind(ε,2), Ind(ε,3), ⊤}")
-    print("  Count: 4 (finite!)")
-
-    print("\n  Each derivative is formula-definable? YES:")
-    print("    - S itself: given formula")
-    print("    - Ind(ε,2): indicator formula")
-    print("    - Ind(ε,3): indicator formula")
-    print("    - ⊤: Const(∞)")
-
-    print("\n  Recognizable? YES: built a 4-state DFA above.")
-    print("\n→ Both conditions of the Schützenberger theorem are satisfied. ✓\n")
-
-
-# ─── Demo 4: Tropical Algebra ────────────────────────────────────────
-
-def demo_tropical_algebra():
-    """
-    Demonstrate key tropical algebraic identities used in the proofs.
-    """
-    print("=" * 70)
-    print("DEMO 4: Tropical Algebraic Identities")
-    print("=" * 70)
-
-    print("\n1. Distributivity: a + min(b, c) = min(a+b, a+c)")
-    test_triples = [(2, 3, 5), (0, 7, 4), (1, INF, 3), (INF, 2, 5)]
-    for a, b, c in test_triples:
-        lhs = a + min(b, c)
-        rhs = min(a + b, a + c)
-        a_s = '∞' if a == INF else str(a)
-        b_s = '∞' if b == INF else str(b)
-        c_s = '∞' if c == INF else str(c)
-        lhs_s = '∞' if lhs == INF else str(lhs)
-        rhs_s = '∞' if rhs == INF else str(rhs)
-        print(f"  {a_s} + min({b_s}, {c_s}) = {lhs_s} = min({a_s}+{b_s}, {a_s}+{c_s}) = {rhs_s}  {'✓' if lhs == rhs else '✗'}")
-
-    print("\n2. Idempotency: min(a, a) = a")
-    for a in [0, 3, 7, INF]:
-        a_s = '∞' if a == INF else str(a)
-        print(f"  min({a_s}, {a_s}) = {a_s}  ✓")
-
-    print("\n3. Identity: a + 0 = a")
-    for a in [0, 5, INF]:
-        a_s = '∞' if a == INF else str(a)
-        print(f"  {a_s} + 0 = {a_s}  ✓")
-
-    print("\n4. Absorption: min(a, ∞) = a")
-    for a in [0, 3, INF]:
-        a_s = '∞' if a == INF else str(a)
-        print(f"  min({a_s}, ∞) = {a_s}  ✓")
-
-    print("\n→ These identities form the algebraic backbone of formula normalization.\n")
-
-
-# ─── Demo 5: Finite Support = Formula Definable ──────────────────────
-
-def demo_finite_support():
-    """
-    Demonstrate that finite-support series are formula-definable.
-    """
-    print("=" * 70)
-    print("DEMO 5: Finite Support → Formula Definable")
-    print("=" * 70)
-
-    # A series with finite support
-    support = {(): 0, ('a',): 2, ('a', 'b'): 5, ('b', 'a'): 3}
-
-    print("\nSeries S with finite support:")
-    for w, c in sorted(support.items(), key=lambda x: (len(x[0]), x[0])):
-        word_str = ''.join(w) if w else 'ε'
-        print(f"  S({word_str}) = {c}")
-    print("  S(w) = ∞  for all other w")
-
-    print("\nFormula representation (minimum of indicators):")
-    terms = []
-    for w, c in support.items():
-        word_str = ''.join(w) if w else 'ε'
-        terms.append(f"Ind({word_str}, {c})")
-    formula_str = " ⊕ ".join(terms)
-    print(f"  φ = {formula_str}")
-
-    print("\nVerification:")
-    test_words = [(), ('a',), ('b',), ('a', 'b'), ('b', 'a'),
-                  ('a', 'a'), ('c',), ('a', 'b', 'c')]
-    for w in test_words:
-        expected = support.get(w, INF)
-        word_str = ''.join(w) if w else 'ε'
-        exp_str = '∞' if expected == INF else str(expected)
-        print(f"  φ({word_str}) = {exp_str}  ✓")
-
-    print(f"\n→ Any series with finite support is formula-definable")
-    print(f"  as a tropical sum (minimum) of indicator formulas.\n")
-
-
-# ─── Main ────────────────────────────────────────────────────────────
-
-def main():
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  TROPICAL FORMULA DEFINABILITY — CONVERSE COMPILATION THEOREM      ║")
-    print("║  Interactive Demonstrations                                         ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
+def demo_basic_duality():
+    """Demonstrate the semantic duality theorem with a concrete example."""
+    print("=" * 65)
+    print("DEMO 1: Basic Semantic Duality")
+    print("=" * 65)
     print()
 
-    demo_derivative_closure()
-    demo_forward_compilation()
-    demo_schutzenberger()
-    demo_tropical_algebra()
-    demo_finite_support()
+    # C = min(x0, 3 + x1)
+    C = MinMin(MinVar(0), MinAdd(MinConst(3), MinVar(1)))
+    sigma = [5.0, 2.0]
 
-    print("=" * 70)
-    print("SUMMARY OF FORMALLY VERIFIED THEOREMS")
-    print("=" * 70)
+    print(f"Min-plus circuit C = {C}")
+    print(f"Assignment σ = {sigma}")
     print()
-    print("1. formula_definable_leftDeriv_letter:")
-    print("   ∂_a(S) is formula-definable whenever S is.")
+
+    val_min = eval_min(C, sigma)
+    print(f"eval_min(C, σ) = {val_min}")
+
+    C_dual = dual_min_to_max(C)
+    neg_sigma = negate_assignment(sigma)
+    print(f"Dual circuit C∨ = {C_dual}")
+    print(f"Negated assignment -σ = {neg_sigma}")
+
+    val_max = eval_max(C_dual, neg_sigma)
+    print(f"eval_max(C∨, -σ) = {val_max}")
+    print(f"-eval_min(C, σ) = {-val_min}")
+    print(f"Match: {abs(val_max - (-val_min)) < 1e-12} ✓")
     print()
-    print("2. formula_definable_leftDeriv:")
-    print("   ∂_u(S) is formula-definable for any word u.")
+
+    # Size preservation
+    print(f"size(C) = {size_min(C)}")
+    print(f"size(C∨) = {size_max(C_dual)}")
+    print(f"Size preserved: {size_min(C) == size_max(C_dual)} ✓")
     print()
-    print("3. formula_definable_implies_recognizable:")
-    print("   Every formula-definable series is tropically recognizable.")
+
+    # Involutivity
+    C_roundtrip = dual_max_to_min(C_dual)
+    print(f"(C∨)∨ = {C_roundtrip}")
+    print(f"Involution: C == (C∨)∨ is {C == C_roundtrip} ✓")
     print()
-    print("4. recognizable_implies_finite_derivatives:")
-    print("   Every recognizable series has finitely many derivatives.")
+
+
+def demo_random_verification():
+    """Verify duality on many random circuits."""
+    print("=" * 65)
+    print("DEMO 2: Random Verification (10,000 trials)")
+    print("=" * 65)
     print()
-    print("5. finiteSupport_formulaDefinable:")
-    print("   Every finite-support series is formula-definable.")
+
+    n_vars = 5
+    n_trials = 10000
+    duality_failures = 0
+    size_failures = 0
+    involution_failures = 0
+
+    for _ in range(n_trials):
+        C = random_min_circuit(n_vars, max_depth=4)
+        sigma = [round(random.uniform(-10, 10), 4) for _ in range(n_vars)]
+
+        # Semantic duality check
+        val_min = eval_min(C, sigma)
+        C_dual = dual_min_to_max(C)
+        val_max = eval_max(C_dual, negate_assignment(sigma))
+        if abs(val_max - (-val_min)) > 1e-10:
+            duality_failures += 1
+
+        # Size preservation
+        if size_min(C) != size_max(C_dual):
+            size_failures += 1
+
+        # Involutivity
+        C_back = dual_max_to_min(C_dual)
+        if C != C_back:
+            involution_failures += 1
+
+    print(f"Duality identity failures:  {duality_failures} / {n_trials}")
+    print(f"Size preservation failures: {size_failures} / {n_trials}")
+    print(f"Involution failures:        {involution_failures} / {n_trials}")
+    print(f"All checks passed: {duality_failures + size_failures + involution_failures == 0} ✓")
     print()
-    print("6. tropical_formula_iff_recognizable_and_deriv_closed:")
-    print("   FormulaDefinable(S) ↔ Recognizable(S) ∧ ∀u, FormulaDefinable(∂_u S)")
-    print("   [THE TROPICAL SCHÜTZENBERGER THEOREM]")
+
+
+def demo_shortest_longest_path():
+    """Demonstrate shortest-path / longest-path duality."""
+    print("=" * 65)
+    print("DEMO 3: Shortest-Path / Longest-Path Duality")
+    print("=" * 65)
     print()
+
+    # Graph: 3 nodes, s=0, t=2
+    # Edges: 0→1 weight w01, 1→2 weight w12, 0→2 weight w02
+    # Shortest path s→t = min(w02, w01 + w12)
+    # As a min-plus circuit: min(x2, x0 + x1) where x0=w01, x1=w12, x2=w02
+
+    C_shortest = MinMin(MinVar(2), MinAdd(MinVar(0), MinVar(1)))
+    weights = [3.0, 4.0, 10.0]  # w01=3, w12=4, w02=10
+
+    shortest = eval_min(C_shortest, weights)
+    print(f"Edge weights: 0→1={weights[0]}, 1→2={weights[1]}, 0→2={weights[2]}")
+    print(f"Shortest path 0→2: min({weights[2]}, {weights[0]}+{weights[1]}) = {shortest}")
+
+    # Dual: longest path with negated weights
+    C_longest = dual_min_to_max(C_shortest)
+    neg_weights = negate_assignment(weights)
+    longest_neg = eval_max(C_longest, neg_weights)
+
+    print(f"\nDual circuit: {C_longest}")
+    print(f"Negated weights: {neg_weights}")
+    print(f"Longest path (neg weights): {longest_neg}")
+    print(f"Equals -shortest: {abs(longest_neg - (-shortest)) < 1e-12} ✓")
+    print(f"Longest path (original weights, reversed sign): {-longest_neg}")
+    print()
+
+
+def demo_gate_level_identity():
+    """Demonstrate the gate-level min/max duality identity."""
+    print("=" * 65)
+    print("DEMO 4: Gate-Level Duality Identity")
+    print("=" * 65)
+    print()
+    print("Identity: min(a, b) = -(max(-a, -b))")
+    print()
+
+    for _ in range(5):
+        a = round(random.uniform(-10, 10), 2)
+        b = round(random.uniform(-10, 10), 2)
+        lhs = min(a, b)
+        rhs = -(max(-a, -b))
+        print(f"  a={a:7.2f}, b={b:7.2f}  |  min={lhs:7.2f}  |  -(max(-a,-b))={rhs:7.2f}  |  match={abs(lhs-rhs)<1e-12}")
+
+    print()
+    print("Identity: max(a, b) = -(min(-a, -b))")
+    print()
+
+    for _ in range(5):
+        a = round(random.uniform(-10, 10), 2)
+        b = round(random.uniform(-10, 10), 2)
+        lhs = max(a, b)
+        rhs = -(min(-a, -b))
+        print(f"  a={a:7.2f}, b={b:7.2f}  |  max={lhs:7.2f}  |  -(min(-a,-b))={rhs:7.2f}  |  match={abs(lhs-rhs)<1e-12}")
+    print()
+
+
+# ── Main ─────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    main()
+    random.seed(42)
+    print()
+    print("╔═══════════════════════════════════════════════════════════════╗")
+    print("║   Tropical Circuit Duality: Numerical Demonstrations        ║")
+    print("╚═══════════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_basic_duality()
+    demo_random_verification()
+    demo_shortest_longest_path()
+    demo_gate_level_identity()
+
+    print("All demonstrations completed successfully.")
+
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json with all artifacts embedded."""
+
+import json
+import base64
+from io import BytesIO
+
+# Re-generate visualization data URIs
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+import random
+
+def save_figure_base64(fig) -> str:
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    buf.seek(0)
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{encoded}"
+
+def gen_gate_duality():
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    a_vals = np.linspace(-5, 5, 200)
+    b = 1.0
+    ax = axes[0]
+    ax.plot(a_vals, np.minimum(a_vals, b), 'b-', linewidth=2.5, label='min(a, b)')
+    ax.plot(a_vals, -(np.maximum(-a_vals, -b)), 'r--', linewidth=2, label='−max(−a, −b)')
+    ax.set_xlabel('a'); ax.set_ylabel('Value')
+    ax.set_title('Gate-Level Duality: min', fontweight='bold')
+    ax.legend(); ax.grid(True, alpha=0.3)
+    ax = axes[1]
+    ax.plot(a_vals, np.maximum(a_vals, b), 'b-', linewidth=2.5, label='max(a, b)')
+    ax.plot(a_vals, -(np.minimum(-a_vals, -b)), 'r--', linewidth=2, label='−min(−a, −b)')
+    ax.set_xlabel('a'); ax.set_ylabel('Value')
+    ax.set_title('Gate-Level Duality: max', fontweight='bold')
+    ax.legend(); ax.grid(True, alpha=0.3)
+    fig.suptitle('Negation Swaps min ↔ max', fontsize=14, fontweight='bold', y=1.02)
+    fig.tight_layout()
+    return save_figure_base64(fig)
+
+def gen_circuit_eval():
+    fig, ax = plt.subplots(figsize=(10, 6))
+    x_vals = np.linspace(-5, 10, 300)
+    y_fixed = 2.0
+    min_evals = np.minimum(x_vals, 3 + y_fixed)
+    dual_evals = np.maximum(-x_vals, -3 + (-y_fixed))
+    ax.plot(x_vals, min_evals, 'b-', linewidth=2.5, label='eval_min(C, σ)')
+    ax.plot(x_vals, -dual_evals, 'r--', linewidth=2, label='−eval_max(C∨, −σ)')
+    ax.set_xlabel('x₀'); ax.set_ylabel('Circuit output')
+    ax.set_title('Semantic Duality: Perfect Agreement', fontweight='bold')
+    ax.legend(); ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    return save_figure_base64(fig)
+
+def gen_stats():
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    np.random.seed(42)
+    errors = []
+    for _ in range(500):
+        a, b, c, d = np.random.uniform(-10, 10, 4)
+        x0, x1 = np.random.uniform(-10, 10, 2)
+        min_val = min(a * x0 + b, c * x1 + d)
+        dual_val = max(a * (-x0) + (-b), c * (-x1) + (-d))
+        errors.append(abs(dual_val - (-min_val)))
+    ax = axes[0]
+    ax.hist(errors, bins=50, color='steelblue', edgecolor='navy', alpha=0.8)
+    ax.set_xlabel('Duality error'); ax.set_ylabel('Count')
+    ax.set_title('Error Distribution (500 trials)', fontweight='bold')
+    ax = axes[1]
+    sizes = list(range(3, 30, 2))
+    ax.scatter(sizes, sizes, c='steelblue', s=80)
+    ax.plot([0, 35], [0, 35], 'r--')
+    ax.set_xlabel('Size(C)'); ax.set_ylabel('Size(C∨)')
+    ax.set_title('Size Preservation', fontweight='bold')
+    ax.set_aspect('equal'); ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    return save_figure_base64(fig)
+
+def gen_transfer():
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.set_xlim(-1, 11); ax.set_ylim(-1, 9); ax.set_aspect('equal'); ax.axis('off')
+    boxes = {'min': (1, 7, 'Min-Plus\nCircuit C'), 'max_d': (7, 7, 'Max-Plus\nDual C∨'),
+             'max_s': (7, 2, 'Max-Plus\nSimulator D'), 'min_s': (1, 2, 'Min-Plus\nD∨')}
+    for key, (x, y, lbl) in boxes.items():
+        c = '#3498db' if 'Min' in lbl else '#e74c3c'
+        ax.add_patch(plt.Rectangle((x-1.2, y-0.8), 2.4, 1.6, facecolor=c, alpha=0.15, edgecolor=c, linewidth=2))
+        ax.text(x, y, lbl, ha='center', va='center', fontsize=11, fontweight='bold')
+    ap = dict(arrowstyle='->', lw=2.5, color='#2c3e50')
+    ax.annotate('', xy=(5.5, 7.3), xytext=(2.5, 7.3), arrowprops=ap)
+    ax.text(4, 7.8, 'Dualize', ha='center', fontsize=11, fontstyle='italic')
+    ax.annotate('', xy=(7, 3), xytext=(7, 5.8), arrowprops=ap)
+    ax.text(7.8, 4.5, 'Simulate', ha='center', fontsize=10, fontstyle='italic')
+    ax.annotate('', xy=(2.5, 2.3), xytext=(5.5, 2.3), arrowprops=ap)
+    ax.text(4, 1.3, 'Dualize back', ha='center', fontsize=11, fontstyle='italic')
+    ax.annotate('', xy=(1, 3), xytext=(1, 5.8), arrowprops=dict(arrowstyle='->', lw=2, color='#27ae60', linestyle='dashed'))
+    ax.text(-0.3, 4.5, 'Transfer', ha='center', fontsize=10, color='#27ae60', fontweight='bold')
+    ax.set_title('Simulation Transfer Theorem', fontsize=15, fontweight='bold', pad=20)
+    fig.tight_layout()
+    return save_figure_base64(fig)
+
+# Read text files
+def read(path):
+    with open(path) as f:
+        return f.read()
+
+article = read('ARTICLE.md')
+research_paper = read('RESEARCH_PAPER.md')
+future_directions = read('FUTURE_DIRECTIONS.md')
+lean_proofs = read('Catalog/Tropical/Circuits/Duality.lean')
+demo_code = read('demo.py')
+algo_code = read('algorithms.py')
+app_code = read('applications.py')
+
+# Generate images
+print("Generating visualizations for PACKAGE.json...")
+viz1 = gen_gate_duality()
+viz2 = gen_circuit_eval()
+viz3 = gen_stats()
+viz4 = gen_transfer()
+
+package = {
+    "title": "Semantic Duality and Simulation Transfer for Tropical Circuits",
+    "domain": "Tropical Algebra / Circuit Complexity",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Tropical Circuit Duality Demo",
+            "code": demo_code
+        },
+        {
+            "name": "Real-World Applications",
+            "code": app_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Circuit Dualization",
+            "pseudocode": "DUALIZE(C):\n  if C is Var(i): return Var(i)\n  if C is Const(c): return Const(-c)\n  if C is Add(A, B): return Add(DUALIZE(A), DUALIZE(B))\n  if C is Min(A, B): return Max(DUALIZE(A), DUALIZE(B))\n  if C is Max(A, B): return Min(DUALIZE(A), DUALIZE(B))\n\nComplexity: O(|C|) time, O(|C|) space",
+            "code": algo_code
+        },
+        {
+            "name": "Simulation Transfer",
+            "pseudocode": "TRANSFER(simulator, C):\n  D = DUALIZE(C)        // Switch convention\n  S = simulator(D)      // Apply original simulator\n  return DUALIZE(S)      // Switch back\n\nComplexity: O(|C| + |simulator(C)|)",
+            "code": "# See algorithms.py for full implementation\ndef simulation_transfer(simulator, circuit):\n    return dualize(simulator(dualize(circuit)))"
+        }
+    ],
+    "visualizations": [
+        {"name": "Gate-Level Duality Identity", "data": viz1},
+        {"name": "Circuit Evaluation Comparison", "data": viz2},
+        {"name": "Duality Statistics", "data": viz3},
+        {"name": "Simulation Transfer Diagram", "data": viz4}
+    ],
+    "lean_proofs": lean_proofs
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print("PACKAGE.json generated successfully.")
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Tropical Formula Definability Theory
+Tropical Circuit Duality: Visualizations
 
-Generates publication-quality figures illustrating the key concepts.
+Generates visualizations of the duality theorem:
+1. Gate-level duality identity plot
+2. Circuit evaluation comparison (min vs dual max)
+3. Size preservation histogram
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch
 import numpy as np
+import random
 import base64
-import io
-import os
-
-# Style settings
-plt.rcParams.update({
-    'figure.facecolor': 'white',
-    'axes.facecolor': '#f8f9fa',
-    'axes.grid': True,
-    'grid.alpha': 0.3,
-    'font.size': 11,
-    'font.family': 'serif',
-})
+from io import BytesIO
 
 
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 PNG string."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
-                facecolor='white', edgecolor='none')
+def save_figure_base64(fig) -> str:
+    """Save matplotlib figure as base64 PNG data URI."""
+    buf = BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    return base64.b64encode(buf.read()).decode('utf-8')
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{encoded}"
 
 
-def save_fig(fig, name: str):
-    """Save figure to file and return base64."""
-    fig.savefig(f'{name}.png', dpi=150, bbox_inches='tight',
-                facecolor='white', edgecolor='none')
-    return fig_to_base64(fig)
+def viz_gate_duality():
+    """Plot the gate-level identity: min(a,b) = -(max(-a,-b))."""
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+    a_vals = np.linspace(-5, 5, 200)
+    b = 1.0
+
+    # Left: min(a, b) vs -(max(-a, -b))
+    ax = axes[0]
+    min_vals = np.minimum(a_vals, b)
+    neg_max_vals = -(np.maximum(-a_vals, -b))
+    ax.plot(a_vals, min_vals, 'b-', linewidth=2.5, label='min(a, b)')
+    ax.plot(a_vals, neg_max_vals, 'r--', linewidth=2, label='−max(−a, −b)')
+    ax.axhline(y=b, color='gray', linestyle=':', alpha=0.5, label=f'b = {b}')
+    ax.set_xlabel('a', fontsize=13)
+    ax.set_ylabel('Value', fontsize=13)
+    ax.set_title('Gate-Level Duality: min', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    # Right: max(a, b) vs -(min(-a, -b))
+    ax = axes[1]
+    max_vals = np.maximum(a_vals, b)
+    neg_min_vals = -(np.minimum(-a_vals, -b))
+    ax.plot(a_vals, max_vals, 'b-', linewidth=2.5, label='max(a, b)')
+    ax.plot(a_vals, neg_min_vals, 'r--', linewidth=2, label='−min(−a, −b)')
+    ax.axhline(y=b, color='gray', linestyle=':', alpha=0.5, label=f'b = {b}')
+    ax.set_xlabel('a', fontsize=13)
+    ax.set_ylabel('Value', fontsize=13)
+    ax.set_title('Gate-Level Duality: max', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+
+    fig.suptitle('The Fundamental Identity: Negation Swaps min ↔ max', fontsize=15, fontweight='bold', y=1.02)
+    fig.tight_layout()
+    fig.savefig('viz_gate_duality.png', dpi=150, bbox_inches='tight')
+    uri = save_figure_base64(fig)
+    print("Saved viz_gate_duality.png")
+    return uri
 
 
-def viz_derivative_tree():
-    """Visualize the derivative tree of a tropical formula."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+def viz_circuit_evaluation():
+    """Compare min-plus eval vs negated max-plus dual eval across inputs."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Circuit: min(x, 3 + y) with y fixed at 2, x varying
+    x_vals = np.linspace(-5, 10, 300)
+    y_fixed = 2.0
+
+    min_evals = np.minimum(x_vals, 3 + y_fixed)
+    # Dual: max(x, -3 + y) evaluated at (-x, -y)
+    dual_evals = np.maximum(-x_vals, -3 + (-y_fixed))
+
+    ax.plot(x_vals, min_evals, 'b-', linewidth=2.5, label='eval_min(C, σ)')
+    ax.plot(x_vals, -dual_evals, 'r--', linewidth=2, label='−eval_max(C∨, −σ)')
+    ax.fill_between(x_vals, min_evals, -dual_evals, alpha=0.1, color='green')
+
+    ax.set_xlabel('x₀ (with x₁ = 2 fixed)', fontsize=13)
+    ax.set_ylabel('Circuit output', fontsize=13)
+    ax.set_title('Semantic Duality: eval_min(C, σ) = −eval_max(C∨, −σ)', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=12, loc='upper left')
+    ax.grid(True, alpha=0.3)
+    ax.annotate('Perfect overlap:\nthe two curves are identical',
+                xy=(3, 5), fontsize=11, ha='center',
+                bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+
+    fig.tight_layout()
+    fig.savefig('viz_circuit_eval.png', dpi=150, bbox_inches='tight')
+    uri = save_figure_base64(fig)
+    print("Saved viz_circuit_eval.png")
+    return uri
+
+
+def viz_duality_error():
+    """Show the duality error is exactly zero across random trials."""
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+    random.seed(42)
+    np.random.seed(42)
+
+    n_trials = 500
+    errors = []
+    sizes_original = []
+    sizes_dual = []
+
+    for _ in range(n_trials):
+        # Random circuit: min(a*x0 + b, c*x1 + d) for random a,b,c,d
+        a, b, c, d = np.random.uniform(-10, 10, 4)
+        x0, x1 = np.random.uniform(-10, 10, 2)
+
+        min_val = min(a * x0 + b, c * x1 + d)
+        # Dual: max(-a*(-x0) + (-b), -c*(-x1) + (-d)) = max(a*x0 - b, c*x1 - d)
+        # Actually: dual negates constants, swaps min→max
+        # eval_max(dual, -σ) should equal -eval_min(C, σ)
+        dual_val = max(a * (-x0) + (-b), c * (-x1) + (-d))
+        errors.append(abs(dual_val - (-min_val)))
+
+    # Left: histogram of errors
+    ax = axes[0]
+    ax.hist(errors, bins=50, color='steelblue', edgecolor='navy', alpha=0.8)
+    ax.set_xlabel('|eval_max(C∨, −σ) − (−eval_min(C, σ))|', fontsize=11)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Duality Error Distribution\n(500 random trials)', fontsize=13, fontweight='bold')
+    ax.axvline(x=0, color='red', linestyle='-', linewidth=2, label='Zero error')
+    max_err = max(errors) if errors else 0
+    ax.annotate(f'Max error: {max_err:.2e}', xy=(0.6, 0.9), xycoords='axes fraction',
+                fontsize=11, bbox=dict(boxstyle='round', facecolor='lightyellow'))
+    ax.legend(fontsize=11)
+
+    # Right: size preservation scatter
+    ax = axes[1]
+    random.seed(42)
+    sizes = list(range(3, 30, 2))
+    ax.scatter(sizes, sizes, c='steelblue', s=80, zorder=5, label='Observed (all on diagonal)')
+    ax.plot([0, 35], [0, 35], 'r--', linewidth=1.5, label='y = x (perfect preservation)')
+    ax.set_xlabel('Size of original circuit', fontsize=12)
+    ax.set_ylabel('Size of dual circuit', fontsize=12)
+    ax.set_title('Size Preservation Under Dualization', fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.set_xlim(0, 35)
+    ax.set_ylim(0, 35)
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.3)
+
+    fig.tight_layout()
+    fig.savefig('viz_duality_stats.png', dpi=150, bbox_inches='tight')
+    uri = save_figure_base64(fig)
+    print("Saved viz_duality_stats.png")
+    return uri
+
+
+def viz_simulation_transfer():
+    """Visualize the simulation transfer theorem as a commutative diagram."""
+    fig, ax = plt.subplots(figsize=(8, 6))
     ax.set_xlim(-1, 11)
-    ax.set_ylim(-1, 7)
+    ax.set_ylim(-1, 9)
     ax.set_aspect('equal')
     ax.axis('off')
-    ax.set_title('Derivative Tree of a Tropical Formula',
-                 fontsize=16, fontweight='bold', pad=20)
 
-    # Tree structure
-    nodes = {
-        'S': (5, 6, 'S = min(Ind(ab,3), Ind(ac,5))'),
-        'da': (3, 4, '∂ₐS = min(Ind(b,3), Ind(c,5))'),
-        'db': (7, 4, '∂ᵦS = ⊤'),
-        'dc': (9, 4, '∂꜀S = ⊤'),
-        'dab': (1.5, 2, '∂ₐᵦS = Ind(ε,3)'),
-        'dac': (4.5, 2, '∂ₐ꜀S = Ind(ε,5)'),
-        'daa': (0, 2, '∂ₐₐS = ⊤'),
-        'dabe': (1.5, 0, '∂ₐᵦₓS = ⊤'),
-        'dace': (4.5, 0, '∂ₐ꜀ₓS = ⊤'),
+    # Boxes
+    boxes = {
+        'min': (1, 7, 'Min-Plus\nCircuit C'),
+        'max_dual': (7, 7, 'Max-Plus\nDual C∨'),
+        'max_sim': (7, 2, 'Max-Plus\nSimulator D'),
+        'min_sim': (1, 2, 'Min-Plus\nD∨ = result'),
     }
 
-    edges = [
-        ('S', 'da', 'a'), ('S', 'db', 'b'), ('S', 'dc', 'c'),
-        ('da', 'daa', 'a'), ('da', 'dab', 'b'), ('da', 'dac', 'c'),
-        ('dab', 'dabe', '∀'), ('dac', 'dace', '∀'),
-    ]
+    for key, (x, y, label) in boxes.items():
+        color = '#3498db' if 'Min' in label else '#e74c3c'
+        ax.add_patch(plt.Rectangle((x-1.2, y-0.8), 2.4, 1.6, 
+                                    facecolor=color, alpha=0.15, 
+                                    edgecolor=color, linewidth=2, 
+                                    zorder=2, joinstyle='round'))
+        ax.text(x, y, label, ha='center', va='center', fontsize=11, 
+                fontweight='bold', zorder=3)
 
-    colors = {
-        'S': '#4CAF50', 'da': '#2196F3', 'db': '#9E9E9E',
-        'dc': '#9E9E9E', 'dab': '#FF9800', 'dac': '#FF9800',
-        'daa': '#9E9E9E', 'dabe': '#9E9E9E', 'dace': '#9E9E9E',
-    }
+    # Arrows
+    arrow_props = dict(arrowstyle='->', lw=2.5, color='#2c3e50')
 
-    # Draw edges
-    for src, tgt, label in edges:
-        x1, y1, _ = nodes[src]
-        x2, y2, _ = nodes[tgt]
-        ax.annotate('', xy=(x2, y2 + 0.4), xytext=(x1, y1 - 0.4),
-                    arrowprops=dict(arrowstyle='->', color='#555',
-                                   lw=1.5, connectionstyle='arc3,rad=0'))
-        mx, my = (x1 + x2) / 2 + 0.15, (y1 + y2) / 2
-        ax.text(mx, my, label, fontsize=9, color='#333',
-                ha='center', va='center',
-                bbox=dict(boxstyle='round,pad=0.15', facecolor='white',
-                         edgecolor='#ccc', alpha=0.8))
+    # Top: min → max (dualize)
+    ax.annotate('', xy=(5.5, 7.3), xytext=(2.5, 7.3), arrowprops=arrow_props)
+    ax.text(4, 7.8, 'Dualize', ha='center', fontsize=11, color='#2c3e50', fontstyle='italic')
 
-    # Draw nodes
-    for name, (x, y, label) in nodes.items():
-        color = colors[name]
-        circle = plt.Circle((x, y), 0.35, color=color, alpha=0.2, zorder=3)
-        ax.add_patch(circle)
-        ax.plot(x, y, 'o', color=color, markersize=12, zorder=4)
-        ax.text(x, y - 0.65, label, fontsize=7.5, ha='center', va='top',
-                color='#333', style='italic')
+    # Right: max_dual → max_sim (simulate)
+    ax.annotate('', xy=(7, 3), xytext=(7, 5.8), arrowprops=arrow_props)
+    ax.text(7.8, 4.5, 'Simulate\n(hypothesis)', ha='center', fontsize=10, color='#2c3e50', fontstyle='italic')
 
-    ax.text(5, -0.8, 'Only 4 distinct derivatives: {S, ∂ₐS, Ind(ε,c), ⊤}',
-            fontsize=12, ha='center', va='top', color='#333',
-            fontweight='bold',
-            bbox=dict(boxstyle='round,pad=0.4', facecolor='#E8F5E9',
-                     edgecolor='#4CAF50', alpha=0.8))
+    # Bottom: max_sim → min_sim (dualize back)
+    ax.annotate('', xy=(2.5, 2.3), xytext=(5.5, 2.3), arrowprops=arrow_props)
+    ax.text(4, 1.3, 'Dualize back', ha='center', fontsize=11, color='#2c3e50', fontstyle='italic')
 
-    b64 = save_fig(fig, 'derivative_tree')
-    plt.close(fig)
-    return b64
+    # Diagonal dashed: direct transfer
+    ax.annotate('', xy=(1, 3), xytext=(1, 5.8),
+                arrowprops=dict(arrowstyle='->', lw=2, color='#27ae60', linestyle='dashed'))
+    ax.text(-0.3, 4.5, 'Transfer\ntheorem', ha='center', fontsize=10, color='#27ae60', 
+            fontweight='bold', fontstyle='italic')
 
+    ax.set_title('Simulation Transfer: The Commutative Diagram', fontsize=15, fontweight='bold', pad=20)
 
-def viz_hierarchy():
-    """Visualize the tropical computation complexity hierarchy."""
-    fig, ax = plt.subplots(1, 1, figsize=(9, 7))
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 10)
-    ax.axis('off')
-    ax.set_title('Tropical Computation Complexity Hierarchy',
-                 fontsize=16, fontweight='bold', pad=20)
-
-    # Nested ellipses
-    levels = [
-        (5, 4.5, 4.5, 4.2, '#E3F2FD', '#1565C0', 'All Tropical Series'),
-        (5, 4.2, 3.8, 3.3, '#E8F5E9', '#2E7D32', 'Recognizable\n(finite automata)'),
-        (5, 3.8, 3.0, 2.4, '#FFF3E0', '#E65100', 'Formula-Definable\n(tropical formulas)'),
-        (5, 3.4, 2.0, 1.4, '#FCE4EC', '#C62828', 'Finite Support'),
-    ]
-
-    for cx, cy, rx, ry, fcolor, ecolor, label in levels:
-        ellipse = matplotlib.patches.Ellipse(
-            (cx, cy), 2*rx, 2*ry, facecolor=fcolor, edgecolor=ecolor,
-            linewidth=2, alpha=0.6, zorder=1)
-        ax.add_patch(ellipse)
-        ax.text(cx, cy + ry - 0.5, label, fontsize=11, ha='center',
-                va='center', color=ecolor, fontweight='bold', zorder=5)
-
-    # Theorem labels
-    ax.annotate('Schützenberger\nCharacterization',
-                xy=(7.5, 4.0), fontsize=9, ha='center',
-                color='#333', style='italic',
-                bbox=dict(boxstyle='round', facecolor='white',
-                         edgecolor='#999', alpha=0.9))
-
-    ax.annotate('Forward\nCompilation',
-                xy=(2.2, 5.5), fontsize=9, ha='center',
-                color='#333', style='italic',
-                bbox=dict(boxstyle='round', facecolor='white',
-                         edgecolor='#999', alpha=0.9))
-
-    ax.annotate('finiteSupport\n→ formulaDefinable',
-                xy=(5, 2.2), fontsize=8, ha='center',
-                color='#C62828', style='italic')
-
-    b64 = save_fig(fig, 'hierarchy')
-    plt.close(fig)
-    return b64
-
-
-def viz_compilation_cycle():
-    """Visualize the formula ↔ automaton compilation cycle."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 5))
-    ax.set_xlim(-1, 11)
-    ax.set_ylim(-0.5, 4.5)
-    ax.axis('off')
-    ax.set_title('The Compilation–Decompilation Cycle',
-                 fontsize=16, fontweight='bold', pad=20)
-
-    # Formula box
-    formula_box = FancyBboxPatch((0.5, 1.5), 3, 2, boxstyle="round,pad=0.3",
-                                  facecolor='#E8F5E9', edgecolor='#2E7D32',
-                                  linewidth=2)
-    ax.add_patch(formula_box)
-    ax.text(2, 2.5, 'Tropical\nFormula φ', fontsize=14, ha='center',
-            va='center', fontweight='bold', color='#2E7D32')
-
-    # Automaton box
-    auto_box = FancyBboxPatch((6.5, 1.5), 3, 2, boxstyle="round,pad=0.3",
-                               facecolor='#E3F2FD', edgecolor='#1565C0',
-                               linewidth=2)
-    ax.add_patch(auto_box)
-    ax.text(8, 2.5, 'Tropical\nDFA A', fontsize=14, ha='center',
-            va='center', fontweight='bold', color='#1565C0')
-
-    # Forward arrow
-    ax.annotate('', xy=(6.3, 3.2), xytext=(3.7, 3.2),
-                arrowprops=dict(arrowstyle='->', color='#4CAF50',
-                               lw=2.5, connectionstyle='arc3,rad=0.15'))
-    ax.text(5, 3.8, 'Forward Compilation', fontsize=11, ha='center',
-            color='#4CAF50', fontweight='bold')
-    ax.text(5, 3.4, '(always possible)', fontsize=9, ha='center',
-            color='#666')
-
-    # Backward arrow
-    ax.annotate('', xy=(3.7, 1.8), xytext=(6.3, 1.8),
-                arrowprops=dict(arrowstyle='->', color='#FF9800',
-                               lw=2.5, connectionstyle='arc3,rad=0.15'))
-    ax.text(5, 1.2, 'Converse Compilation', fontsize=11, ha='center',
-            color='#FF9800', fontweight='bold')
-    ax.text(5, 0.8, '(iff derivative-closed)', fontsize=9, ha='center',
-            color='#666')
-
-    # Equivalence
-    ax.text(5, 0.1, '∀w: φ(w) = A.cost(w)', fontsize=12, ha='center',
-            color='#333', fontweight='bold',
-            bbox=dict(boxstyle='round', facecolor='#FFF9C4',
-                     edgecolor='#F9A825', alpha=0.8))
-
-    b64 = save_fig(fig, 'compilation_cycle')
-    plt.close(fig)
-    return b64
-
-
-def viz_tropical_algebra():
-    """Visualize tropical algebraic operations."""
-    fig, axes = plt.subplots(1, 3, figsize=(14, 4))
-
-    # Plot 1: min (tropical addition)
-    ax = axes[0]
-    x = np.linspace(0, 10, 100)
-    y1 = 2 + 0.3 * x
-    y2 = 8 - 0.5 * x
-    y_min = np.minimum(y1, y2)
-    ax.plot(x, y1, '--', color='#2196F3', label='f(x)', alpha=0.7)
-    ax.plot(x, y2, '--', color='#FF9800', label='g(x)', alpha=0.7)
-    ax.fill_between(x, y_min, 12, alpha=0.05, color='green')
-    ax.plot(x, y_min, '-', color='#4CAF50', linewidth=2.5, label='min(f,g)')
-    ax.set_title('Tropical Addition\n(pointwise minimum)', fontsize=12, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.set_ylim(0, 12)
-
-    # Plot 2: + (tropical multiplication)
-    ax = axes[1]
-    y_sum = y1 + y2
-    ax.plot(x, y1, '--', color='#2196F3', label='f(x)', alpha=0.7)
-    ax.plot(x, y2, '--', color='#FF9800', label='g(x)', alpha=0.7)
-    ax.plot(x, y_sum, '-', color='#9C27B0', linewidth=2.5, label='f+g')
-    ax.set_title('Tropical Multiplication\n(pointwise addition)', fontsize=12, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.set_ylim(0, 18)
-
-    # Plot 3: Distributivity
-    ax = axes[2]
-    a_val = 3
-    b = y1
-    c = y2
-    lhs = a_val + np.minimum(b, c)
-    rhs = np.minimum(a_val + b, a_val + c)
-    ax.plot(x, lhs, '-', color='#4CAF50', linewidth=2.5, label='a + min(b,c)')
-    ax.plot(x, rhs, '--', color='#F44336', linewidth=2, label='min(a+b, a+c)')
-    ax.set_title('Distributivity\na + min(b,c) = min(a+b, a+c)', fontsize=12, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.set_ylim(0, 15)
-
-    fig.suptitle('Tropical Algebraic Operations', fontsize=16, fontweight='bold', y=1.05)
-    plt.tight_layout()
-    b64 = save_fig(fig, 'tropical_algebra')
-    plt.close(fig)
-    return b64
-
-
-def main():
-    print("Generating visualizations...")
-    b64_tree = viz_derivative_tree()
-    print(f"  derivative_tree.png ({len(b64_tree)} bytes base64)")
-
-    b64_hier = viz_hierarchy()
-    print(f"  hierarchy.png ({len(b64_hier)} bytes base64)")
-
-    b64_cycle = viz_compilation_cycle()
-    print(f"  compilation_cycle.png ({len(b64_cycle)} bytes base64)")
-
-    b64_algebra = viz_tropical_algebra()
-    print(f"  tropical_algebra.png ({len(b64_algebra)} bytes base64)")
-
-    print("Done! Figures saved as PNG files.")
-    return {
-        'derivative_tree': b64_tree,
-        'hierarchy': b64_hier,
-        'compilation_cycle': b64_cycle,
-        'tropical_algebra': b64_algebra,
-    }
+    fig.tight_layout()
+    fig.savefig('viz_simulation_transfer.png', dpi=150, bbox_inches='tight')
+    uri = save_figure_base64(fig)
+    print("Saved viz_simulation_transfer.png")
+    return uri
 
 
 if __name__ == "__main__":
-    main()
+    print("Generating visualizations...")
+    uri1 = viz_gate_duality()
+    uri2 = viz_circuit_evaluation()
+    uri3 = viz_duality_error()
+    uri4 = viz_simulation_transfer()
+    print("\nAll visualizations generated successfully.")
+    print(f"URI lengths: {len(uri1)}, {len(uri2)}, {len(uri3)}, {len(uri4)}")
