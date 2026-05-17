@@ -1,279 +1,256 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Perturbation Amplification.
+Algorithms for Tropical Perturbation Amplification
 
-Implements the core mathematical objects and algorithms from the formal development,
-with full type hints, docstrings, and complexity analysis.
+Implements the core algorithms from the tropical amplification calculus,
+including tropical max evaluation, perturbation bound computation,
+product decomposition, and weight recovery.
 """
 
-from typing import Dict, List, Tuple, Callable, TypeVar, Generic, Optional
-import math
-import itertools
-
-T = TypeVar('T')
-U = TypeVar('U')
+import numpy as np
+from typing import List, Tuple, Optional, Callable
 
 
-class TropicalMaxFunctional(Generic[T]):
-    """A tropical max functional on a finite support.
-
-    Computes F(f) = max_{s in S} (f(s) + w(s)) for a finite support S
-    and weight function w.
-
-    Time complexity: O(|S|) per evaluation.
-    Space complexity: O(|S|) for storing weights.
+def tropical_max(
+    weights: np.ndarray,
+    f: np.ndarray
+) -> float:
     """
+    Evaluate the tropical max functional.
 
-    def __init__(self, support: List[T], weights: Dict[T, float]):
-        """Initialize with support and weights.
-
-        Args:
-            support: The finite support set S.
-            weights: Weight function w : S -> R.
-        """
-        if not support:
-            raise ValueError("Support must be nonempty")
-        self.support = list(support)
-        self.weights = dict(weights)
-
-    def evaluate(self, f: Callable[[T], float]) -> float:
-        """Evaluate F(f) = max_{s in S} (f(s) + w(s)).
-
-        Time complexity: O(|S|)
-
-        Args:
-            f: Input function f : S -> R.
-
-        Returns:
-            The tropical max value.
-        """
-        return max(f(s) + self.weights[s] for s in self.support)
-
-    def perturbation_bound(self) -> float:
-        """Compute the tropical perturbation bound log(|S|).
-
-        Time complexity: O(1)
-
-        Returns:
-            log(|S|), the log-cardinality complexity measure.
-        """
-        return math.log(len(self.support))
-
-    @staticmethod
-    def product(
-        func1: 'TropicalMaxFunctional[T]',
-        func2: 'TropicalMaxFunctional[U]'
-    ) -> 'TropicalMaxFunctional[Tuple[T, U]]':
-        """Construct the product functional on S × T.
-
-        Uses separable weights: w(s,t) = w1(s) + w2(t).
-
-        Time complexity: O(|S| · |T|)
-        Space complexity: O(|S| · |T|)
-
-        Returns:
-            Product functional with separable weights.
-        """
-        product_support = list(itertools.product(func1.support, func2.support))
-        product_weights = {
-            (s, t): func1.weights[s] + func2.weights[t]
-            for s in func1.support
-            for t in func2.support
-        }
-        return TropicalMaxFunctional(product_support, product_weights)
-
-    def verify_separability(
-        self,
-        other: 'TropicalMaxFunctional[T]',
-        f1: Callable[[T], float],
-        f2: Callable[[T], float]
-    ) -> Tuple[float, float, float]:
-        """Verify the separability theorem numerically.
-
-        For product functionals with separable inputs, checks that
-        F(f1 ⊕ f2) = F1(f1) + F2(f2).
-
-        Returns:
-            Tuple of (product_value, sum_value, difference).
-        """
-        raise NotImplementedError("Use product_separability_check instead")
-
-
-def product_separability_check(
-    S: List, T: List,
-    w1: Dict, w2: Dict,
-    f1: Callable, f2: Callable
-) -> Tuple[float, float, float]:
-    """Check separability: tropMax(S×T, w1⊕w2, f1⊕f2) = tropMax(S,w1,f1) + tropMax(T,w2,f2).
-
-    Time complexity: O(|S|·|T| + |S| + |T|) = O(|S|·|T|)
+    F(f) = max_{s in S} (f(s) + w(s))
 
     Args:
-        S, T: Support sets.
-        w1, w2: Weight functions on S, T.
-        f1, f2: Input functions on S, T.
+        weights: Weight vector w of length |S|.
+        f: Input function vector of length |S|.
 
     Returns:
-        (product_value, factor_sum, difference)
-    """
-    # Product computation
-    product_val = max(
-        f1(s) + f2(t) + w1[s] + w2[t]
-        for s in S for t in T
-    )
+        The tropical max value.
 
-    # Factor computation
-    val_s = max(f1(s) + w1[s] for s in S)
-    val_t = max(f2(t) + w2[t] for t in T)
-
-    return product_val, val_s + val_t, abs(product_val - (val_s + val_t))
-
-
-def perturbation_bound(support_size: int) -> float:
-    """Compute the tropical perturbation bound.
-
-    Algorithm: Simply compute log(|S|).
-    Time complexity: O(1)
+    Time complexity: O(|S|)
     Space complexity: O(1)
 
-    Args:
-        support_size: Cardinality of the support set.
-
-    Returns:
-        log(support_size), the tropical perturbation bound.
+    >>> tropical_max(np.array([1.0, 2.0, 3.0]), np.array([0.0, 0.0, 0.0]))
+    3.0
     """
-    if support_size <= 0:
-        raise ValueError("Support size must be positive")
-    return math.log(support_size)
+    return float(np.max(f + weights))
 
 
-def verify_tensorization(card_s: int, card_t: int) -> Tuple[float, float, float]:
-    """Verify the tensorization law: log(|S×T|) = log(|S|) + log(|T|).
-
-    Algorithm: Direct computation and comparison.
-    Time complexity: O(1)
+def tropical_perturbation_bound(card: int) -> float:
+    """
+    Compute the tropical perturbation bound Φ(S) = log|S|.
 
     Args:
-        card_s, card_t: Cardinalities of factor supports.
+        card: Cardinality of the support set.
 
     Returns:
-        (product_bound, factor_sum, difference)
-    """
-    product_bound = perturbation_bound(card_s * card_t)
-    factor_sum = perturbation_bound(card_s) + perturbation_bound(card_t)
-    return product_bound, factor_sum, abs(product_bound - factor_sum)
+        log(card), or -inf if card <= 0.
 
-
-def n_fold_bound(card_s: int, n: int) -> float:
-    """Compute the n-fold amplification bound.
-
-    Algorithm: n * log(|S|)
     Time complexity: O(1)
+
+    >>> abs(tropical_perturbation_bound(1)) < 1e-15
+    True
+    >>> abs(tropical_perturbation_bound(10) - np.log(10)) < 1e-15
+    True
+    """
+    if card <= 0:
+        return float('-inf')
+    return float(np.log(card))
+
+
+def tropical_bit_complexity(card: int) -> float:
+    """
+    Compute the tropical bit complexity = Φ(S) / log(2) = log₂|S|.
+
+    This is the base-2 version of the perturbation bound.
 
     Args:
-        card_s: Base support cardinality.
-        n: Number of copies.
+        card: Cardinality of the support set.
 
     Returns:
-        n * log(card_s), the n-fold amplification bound.
-    """
-    return n * perturbation_bound(card_s)
+        log₂(card).
 
-
-def perturbation_error_bound(eps1: float, eps2: float) -> float:
-    """Compute the compositional perturbation error bound.
-
-    For factor perturbations bounded by ε₁ and ε₂, the product
-    functional perturbation is bounded by ε₁ + ε₂.
-
-    Algorithm: Simple addition.
     Time complexity: O(1)
+    """
+    if card <= 0:
+        return float('-inf')
+    return float(np.log2(card))
+
+
+def verify_tensorization(
+    card_S: int,
+    card_T: int,
+    tol: float = 1e-14
+) -> Tuple[float, float, bool]:
+    """
+    Verify the tensorization law Φ(S×T) = Φ(S) + Φ(T).
+
+    Args:
+        card_S: Cardinality of S.
+        card_T: Cardinality of T.
+        tol: Tolerance for floating-point comparison.
 
     Returns:
-        eps1 + eps2
+        Tuple of (lhs, rhs, verified).
+
+    Time complexity: O(1)
     """
-    return eps1 + eps2
+    lhs = tropical_perturbation_bound(card_S * card_T)
+    rhs = (tropical_perturbation_bound(card_S)
+           + tropical_perturbation_bound(card_T))
+    return lhs, rhs, abs(lhs - rhs) < tol
+
+
+def product_tropical_max(
+    w1: np.ndarray,
+    w2: np.ndarray,
+    f1: np.ndarray,
+    f2: np.ndarray
+) -> Tuple[float, float, float]:
+    """
+    Compute tropical max on a product with separable weights and inputs.
+
+    Verifies the separable decomposition theorem:
+    tropMax(S×T, w1⊕w2, f1⊕f2) = tropMax(S, w1, f1) + tropMax(T, w2, f2)
+
+    Args:
+        w1: Weights for factor S.
+        w2: Weights for factor T.
+        f1: Input for factor S.
+        f2: Input for factor T.
+
+    Returns:
+        Tuple of (product_max, sum_of_factor_maxes, error).
+
+    Time complexity: O(|S| · |T|) for the product, O(|S| + |T|) for factors.
+    """
+    # Factor maxima (efficient)
+    max_S = tropical_max(w1, f1)
+    max_T = tropical_max(w2, f2)
+    sum_maxes = max_S + max_T
+
+    # Product maximum (brute force for verification)
+    n_S, n_T = len(w1), len(w2)
+    product_max = float('-inf')
+    for i in range(n_S):
+        for j in range(n_T):
+            val = (f1[i] + f2[j]) + (w1[i] + w2[j])
+            product_max = max(product_max, val)
+
+    return product_max, sum_maxes, abs(product_max - sum_maxes)
 
 
 def weight_recovery(
-    support: List[T],
-    functional: Callable[[Callable[[T], float]], float],
-    M: float = 1000.0
-) -> Dict[T, float]:
-    """Recover weights from a tropical max functional by probing.
+    weights: np.ndarray,
+    target_index: int
+) -> float:
+    """
+    Recover the weight at a specific index using the isolation method.
 
-    Algorithm:
-    For each s in S, define the isolation function
-    f_s(x) = M if x == s else -M, where M is large.
-    Then F(f_s) ≈ w(s) + M for large M.
-
-    Time complexity: O(|S|²) (|S| probes, each O(|S|))
-    Space complexity: O(|S|)
+    Uses the test function f(a) = 0 if a = target, -M otherwise,
+    where M is large enough to isolate the target.
 
     Args:
-        support: The support set S.
-        functional: The functional F to probe.
-        M: Large constant for isolation.
+        weights: Weight vector.
+        target_index: Index to recover.
 
     Returns:
-        Recovered weights dictionary.
+        The recovered weight value.
+
+    Time complexity: O(|S|)
     """
-    weights = {}
-    for s in support:
-        f_s = lambda x, target=s: M if x == target else -M
-        weights[s] = functional(f_s) - M
-    return weights
+    M = np.max(np.abs(weights)) + 1
+    f = np.full_like(weights, -M)
+    f[target_index] = 0
+    return tropical_max(weights, f)
 
 
-# ============================================================
-# Example usage
-# ============================================================
+def perturbation_error_bound(
+    w1: np.ndarray,
+    w2: np.ndarray,
+    w1_pert: np.ndarray,
+    w2_pert: np.ndarray
+) -> Tuple[float, float, float]:
+    """
+    Compute the product perturbation error and its bound.
+
+    Verifies: max_{(s,t)} |Δw_product(s,t)| ≤ max_s |Δw1(s)| + max_t |Δw2(t)|
+
+    Args:
+        w1, w2: Original factor weights.
+        w1_pert, w2_pert: Perturbed factor weights.
+
+    Returns:
+        Tuple of (actual_max_error, bound, is_within_bound).
+
+    Time complexity: O(|S| · |T|)
+    """
+    eps1 = np.max(np.abs(w1 - w1_pert))
+    eps2 = np.max(np.abs(w2 - w2_pert))
+    bound = eps1 + eps2
+
+    max_error = 0.0
+    for i in range(len(w1)):
+        for j in range(len(w2)):
+            prod_orig = w1[i] + w2[j]
+            prod_pert = w1_pert[i] + w2_pert[j]
+            max_error = max(max_error, abs(prod_orig - prod_pert))
+
+    return max_error, bound, max_error <= bound + 1e-15
+
+
+def n_fold_amplification_table(
+    card_S: int,
+    max_n: int = 20
+) -> List[Tuple[int, int, float, float]]:
+    """
+    Generate the n-fold amplification table.
+
+    For each n, computes |S^n|, Φ(S^n), and n·Φ(S).
+
+    Args:
+        card_S: Base support size.
+        max_n: Maximum number of folds.
+
+    Returns:
+        List of (n, |S^n|, Φ(S^n), n·Φ(S)) tuples.
+
+    Time complexity: O(max_n)
+    """
+    phi_S = tropical_perturbation_bound(card_S)
+    result = []
+    for n in range(1, max_n + 1):
+        card_n = card_S ** n
+        phi_n = tropical_perturbation_bound(card_n)
+        expected = n * phi_S
+        result.append((n, card_n, phi_n, expected))
+    return result
+
 
 if __name__ == "__main__":
-    print("Tropical Perturbation Amplification — Algorithm Demonstrations")
-    print("=" * 60)
+    # Quick self-test
+    print("Testing tropical_max...")
+    assert abs(tropical_max(np.array([1., 2., 3.]), np.array([0., 0., 0.])) - 3.0) < 1e-15
 
-    # Create two factor functionals
-    S = [1, 2, 3, 4, 5]
-    T = ['a', 'b', 'c']
-    w1 = {s: 0.1 * s for s in S}
-    w2 = {'a': 0.3, 'b': -0.1, 'c': 0.5}
+    print("Testing tensorization...")
+    for s in range(1, 20):
+        for t in range(1, 20):
+            _, _, ok = verify_tensorization(s, t)
+            assert ok, f"Tensorization failed for |S|={s}, |T|={t}"
 
-    F1 = TropicalMaxFunctional(S, w1)
-    F2 = TropicalMaxFunctional(T, w2)
+    print("Testing weight recovery...")
+    w = np.array([1.5, -0.3, 2.7, 0.1])
+    for i in range(len(w)):
+        recovered = weight_recovery(w, i)
+        assert abs(recovered - w[i]) < 1e-10, f"Recovery failed at index {i}"
 
-    print(f"\nFactor 1: S = {S}, bound = {F1.perturbation_bound():.4f}")
-    print(f"Factor 2: T = {T}, bound = {F2.perturbation_bound():.4f}")
+    print("Testing separable decomposition...")
+    np.random.seed(42)
+    w1 = np.random.randn(5)
+    w2 = np.random.randn(7)
+    f1 = np.random.randn(5)
+    f2 = np.random.randn(7)
+    _, _, err = product_tropical_max(w1, w2, f1, f2)
+    assert err < 1e-14, f"Separable decomposition error: {err}"
 
-    # Product
-    F_prod = TropicalMaxFunctional.product(F1, F2)
-    print(f"Product: |S×T| = {len(F_prod.support)}, bound = {F_prod.perturbation_bound():.4f}")
-    print(f"Sum of bounds: {F1.perturbation_bound() + F2.perturbation_bound():.4f}")
-
-    # Tensorization verification
-    print(f"\nTensorization check:")
-    pb, fs, diff = verify_tensorization(len(S), len(T))
-    print(f"  log(|S×T|) = {pb:.6f}")
-    print(f"  log(|S|) + log(|T|) = {fs:.6f}")
-    print(f"  Difference: {diff:.2e}")
-
-    # Separability check
-    f1 = lambda x: x ** 2
-    f2 = lambda t: {'a': 1, 'b': 2, 'c': 3}[t]
-    pv, fsum, d = product_separability_check(S, T, w1, w2, f1, f2)
-    print(f"\nSeparability check:")
-    print(f"  Product eval: {pv:.6f}")
-    print(f"  Factor sum:   {fsum:.6f}")
-    print(f"  Difference:   {d:.2e}")
-
-    # N-fold amplification
-    print(f"\nN-fold amplification for |S| = {len(S)}:")
-    for n in range(1, 6):
-        print(f"  n={n}: bound = {n_fold_bound(len(S), n):.4f}")
-
-    # Weight recovery
-    print(f"\nWeight recovery:")
-    recovered = weight_recovery(S, F1.evaluate)
-    for s in S:
-        print(f"  s={s}: true w={w1[s]:.3f}, recovered w={recovered[s]:.3f}, "
-              f"diff={abs(w1[s] - recovered[s]):.2e}")
+    print("All tests passed!")

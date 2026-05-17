@@ -516,10 +516,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a54a94dd",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c322112",
     "timestamp": "2026-05-17T03:06:58.931363+00:00"
   },
   {
@@ -551,20 +551,6 @@
     "timestamp": "2026-05-17T05:33:20.192387+00:00"
   },
   {
-    "id": "fd_0271",
-    "title": "Key equation",
-    "description": ": If $p$ is the transmitted polynomial and $E$ is the error-locator polynomial (vanishing at corrupted positions), then $r(x) \\cdot E(x) = p(x) \\cdot E(x)$ at all evaluation points. This yields a *linear* system in the unknowns (coefficients of $p \\cdot E$ and $E$).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b3838861",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:33:20.309903+00:00"
-  },
-  {
     "id": "fd_0275",
     "title": "Tropical direction",
     "description": ": Exhibit two distinct tropical polynomials (e.g., $\\max(x, 0)$ and $\\max(x, 0, x + (-\\infty))$) that have identical evaluations at all integer points. This shows evaluation is not injective, precluding a left inverse.",
@@ -594,22 +580,6 @@
     "timestamp": "2026-05-17T05:40:37.246012+00:00"
   },
   {
-    "id": "fd_0261",
-    "title": "Prove the generalized monomial count bound",
-    "description": ": |A| ≤ p · D_{(p-1)n/p} where monomials have individual degrees ≤ p−1.\n\n### Hypothesis\nThe generalization is mostly straightforward once the F₃ case is fully formalized. The main challenge is making `decide` tactics work for general primes (they won't — need to use algebraic proofs instead of finite case analysis).\n\n### Cross-Domain Impact\n- **Coding theory**: Bounds on codes avoiding arithmetic progressions over F_p.\n- **Additive combinatorics**: Formal bounds on Roth-type problems in finite fields.\n- **Number theory**: Connections to Szemerédi-type results.\n\n---\n\n## Direction 3: Formal Slice-Rank Theory\n\n### Status\nThe current development deliberately avoids tensors and slice rank. However, the matrix-rank approach we use is a shadow of the full slice-rank formalism.\n\n### Concrete Next ",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.325211+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Derive the cap set bound as a corollary",
     "description": ".\n\n### Hypothesis\nA general slice-rank theory in Lean would be a major contribution to formal mathematics, enabling a whole family of polynomial method results (sunflower lemma, partition regularity, etc.).\n\n### Cross-Domain Impact\n- **Algebraic complexity**: Slice rank directly connects to tensor rank and matrix multiplication barriers.\n- **Communication complexity**: Multiparty communication lower bounds via tensor methods.\n- **Quantum information**: Entanglement rank and stabilizer formalism connections.\n\n---\n\n## Direction 4: Finite-Field Function Algebra Infrastructure\n\n### Status\nThe current development uses `deltaIndicator` as a concrete function, not as an element of a formal polynomial algebra.\n\n### Concrete Next Steps",
@@ -627,24 +597,6 @@
     "timestamp": "2026-05-17T05:40:37.418850+00:00"
   },
   {
-    "id": "fd_0271",
-    "title": "Connect evaluation to polynomial representation",
-    "description": ": The evaluation map MvPolynomial → R_n is surjective with explicitly described kernel.\n\n### Hypothesis\nThis infrastructure is the most impactful single investment. It would make ALL polynomial method arguments over finite fields dramatically easier to formalize.\n\n### Cross-Domain Impact\n- **Finite geometry**: Counting arguments in AG(n,q) and PG(n,q).\n- **Coding theory**: Weight distribution bounds via polynomial methods.\n- **Cryptography**: Formal analysis of algebraic attacks on symmetric ciphers.\n\n---\n\n## Direction 5: Computational Verification and Asymptotic Analysis\n\n### Status\nWe have computed numLowDegMonomials for small n. The asymptotic behavior (showing the exponential base is strictly less than 3) has not been formalized.\n\n### Concrete Next Steps",
-    "domains": [
-      "Cryptography",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.508831+00:00"
-  },
-  {
     "id": "fd_0275",
     "title": "Connect to cap set density",
     "description": ": |A|/3^n ≤ C · (2.756/3)^n → 0 exponentially.\n\n### Hypothesis\nThe asymptotic analysis requires real analysis infrastructure (saddle-point method or Stirling bounds). The generating function identity is purely combinatorial and should be formalizable now.\n\n### Cross-Domain Impact\n- **Analytic combinatorics**: Formal saddle-point methods for coefficient extraction.\n- **Information theory**: Entropy-based capacity arguments for constrained codes.\n\n---\n\n## Cross-Domain Bridge Theorems\n\n### Bridge to Communication Complexity\nThe kernel matrix M(a,b) = δ_{a,b} on a cap set has a natural interpretation as a communication matrix. The monomial decomposition bounds the communication complexity of the equality function restricted to cap sets. Formalizing this connection would create a bridge between",
@@ -659,20 +611,6 @@
     "source_exp_id": "b0c11eac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:40:37.588315+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Forward inclusion",
-    "description": "(`degreeLeSubmodule L k ≤ ⨆ ...`): If `f` depends on at most `k` coordinates (say on set `S` with `|S| ≤ k`), decompose `f` into its homogeneous Fourier components. Each component has degree ≤ `|S|` ≤ `k`. This requires constructing the explicit orthogonal projection onto each homogeneous sector using the mean-zero decomposition at each coordinate.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d4991975",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:59:43.598073+00:00"
   },
   {
     "id": "fd_0265",
@@ -735,24 +673,6 @@
     "timestamp": "2026-05-17T06:13:19.028976+00:00"
   },
   {
-    "id": "fd_0271",
-    "title": "Expander Chernoff bound",
-    "description": ": Apply the expander Chernoff bound (Healy 2008) to the Berggren walk, obtaining exponential concentration for averages along the walk.\n\n### Cross-Domain Connection\nThis directly addresses the **P vs. BPP** question in complexity theory: deterministic simulation of randomized algorithms. The Berggren expander provides a concrete arithmetic construction for the pseudorandom generators needed in derandomization.\n\n---\n\n## Direction 4: Automorphic and Thermodynamic Bridge\n\n### Hypothesis\nThe Berggren spectral gap is an instance of a broader automorphic phenomenon: the eigenvalues of the Berggren generators, viewed as elements of SO(2,1)(ℤ), are controlled by automorphic forms on the associated locally symmetric space.\n\n### Exact Theorem Statement\nLet Γ be the semigroup generated by B₁, B₂, B₃ ",
-    "domains": [
-      "Pythagorean",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63e8a2bf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:13:19.055027+00:00"
-  },
-  {
     "id": "fd_0272",
     "title": "Thermodynamic formalism",
     "description": ": Define the Berggren pressure function P(s) = lim (1/n) log Σ_{|w|=n} ‖B_w(3,4,5)‖^s and show P has an analytic continuation with a gap between the leading and subleading singularities.",
@@ -798,62 +718,6 @@
     "source_exp_id": "63e8a2bf",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T06:13:19.139807+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "States the exact theorem",
-    "description": "in Lean 4 with all hypotheses explicit.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96833c6b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:36:25.036318+00:00"
-  },
-  {
-    "id": "fd_0262",
-    "title": "Builds a proof skeleton",
-    "description": "with helper lemmas marked `sorry`.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96833c6b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:36:25.054224+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "Identifies the critical lemma",
-    "description": "(the one that requires the deepest mathematical insight).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96833c6b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:36:25.072598+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Iterates",
-    "description": ": if the critical lemma fails, restructure the proof approach.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96833c6b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:36:25.095305+00:00"
   },
   {
     "id": "fd_0113",
@@ -1495,24 +1359,6 @@
     "timestamp": "2026-05-17T02:00:26.770253+00:00"
   },
   {
-    "id": "fd_0251",
-    "title": "5. Piecewise-Linear Neural Network Verification via Tropical Geometry",
-    "description": "**Hypothesis:** ReLU neural networks are tropical rational maps, and the tropical normalization tactic can be extended to verify properties of piecewise-linear functions arising from neural network computation.\n\n**Strategy:**\n- Formalize the correspondence: a ReLU neuron `max(0, w·x + b)` is a tropical polynomial.\n- A feedforward ReLU network is a composition of tropical polynomial maps.\n- Develop a tactic that can normalize the tropical polynomial representation of a small network and verify input-output properties.\n- Connect to existing work on *certified robustness* and *adversarial example detection*.\n\n**Key Theorem Target:**\n```\ntheorem relu_network_tropical_form (W : List (Matrix m n ℝ)) (b : List (Vector m ℝ)) :\n    ∃ p : TropPoly, ∀ x : Vector n ℝ, network_eval W b x = trop_eval p ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "72596401",
-    "consumed_by_exp_id": "29a487a8",
-    "timestamp": "2026-05-17T02:00:26.854609+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "3. Stability Theorem: Quantitative Honeycomb Rigidity",
     "description": "**Goal**: Prove that sets with near-minimal boundary are close to hex patches in symmetric-difference distance.\n\n**Precise Conjecture**: For any connected S ⊂ hex lattice with |S| = 3r²+3r+1 and ∂S ≤ 12r + 6 + δ, there exists a translate T of hexPatch(r) such that |S △ T| ≤ C·δ for a universal constant C.\n\n**Proof Strategy**: \n1. Show that boundary deficit δ controls the number of \"non-convex\" fibers after compression\n2. Use the compression trajectory to bound symmetric difference\n3. Derive the optimal constant C by analyzing worst-case fiber deviations\n\n**Applications**: Stability estimates are crucial for statistical mechanics (controlling fluctuations around equilibrium shapes) and for algorithmic applications (certifying that a region is \"nearly optimal\").\n\n---",
@@ -1526,24 +1372,6 @@
     "source_exp_id": "c0fc49e2",
     "consumed_by_exp_id": "f9d525d9",
     "timestamp": "2026-05-17T04:47:06.140680+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "3. Generalization to Polynomial Identity Testing (PIT)",
-    "description": "**Hypothesis:** The kernel-counting lemma generalizes from linear forms to multivariate polynomials: for a nonzero polynomial `f ∈ F_q[x_1,...,x_p]` of total degree `d`, the set `{r ∈ F_q^p | f(r) = 0}` has cardinality at most `d · q^{p-1}`.\n\n**Proof Strategy:**\n- The univariate case is already formalized (`card_roots_le_natDegree_filter`).\n- For the multivariate case, use induction on the number of variables:\n  - Fix all but one variable; the resulting univariate polynomial has degree ≤ `d`.\n  - Apply the univariate bound and sum over assignments to the other variables.\n- This is the full Schwartz-Zippel lemma.\n\n**Cross-Domain Connections:**\n- Algebraic circuit complexity: PIT is equivalent to circuit lower bounds (Kabanets-Impagliazzo).\n- Derandomization: deterministic PIT would imply `B",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "30c5294d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:24:21.675823+00:00"
   },
   {
     "id": "fd_0249",
@@ -1661,44 +1489,6 @@
     "timestamp": "2026-05-17T05:47:24.712042+00:00"
   },
   {
-    "id": "fd_0261",
-    "title": "3. Tropical Certificates for Total Variation and KL-Based Distinguishers",
-    "description": "**Target Theorem**: Instantiate the generic `distinguisher_radius_separation` theorem with concrete distinguisher scores based on total variation distance, KL divergence, and Rényi divergence. Show that tropical separation certificates (e.g., from tropical determinant computations) yield explicit Lipschitz constants for these divergence-based distinguishers.\n\n**Formal Statement Sketch**:\n```\ntheorem tv_distinguisher_lipschitz\n    (d : FDist α → FDist α → ℝ := totalVariation)\n    (D : FDist α → ℝ := fun μ => totalVariation μ Q) :\n    ∀ μ ν, |D μ - D ν| ≤ 1 * d μ ν\n\ntheorem kl_distinguisher_lipschitz_local\n    (Q : FDist α) (δ : ℝ) (hδ : ∀ x, Q.pmf x ≥ δ) :\n    ∀ μ ν (hμ hν : support-bounded),\n      |KL μ Q - KL ν Q| ≤ (log(1/δ) + 1) * d μ ν\n```\n\n**Proof Strategy**: For total variation, the ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "53e2f8f2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:47:24.741686+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "5. Categorical Formulation of Certified Information Contraction",
-    "description": "**Target Theorem**: Define a category `CertChannel` of channels equipped with Lipschitz certificates, where morphisms are contraction-preserving post-processing maps. Prove that this category is closed under composition and that the certified radius is functorial (i.e., composition of certified channels yields certified channels with explicit radius bounds).\n\n**Formal Statement Sketch**:\n```\nstructure CertChannel (α β : Type*) where\n  channel : Channel α β\n  lipschitz_const : ℝ\n  cert : ∀ μ ν, |MI μ channel - MI ν channel| ≤ lipschitz_const * d μ ν\n\ninstance : Category CertChannel where\n  Hom := contraction_preserving_maps\n  comp := fun f g => ⟨g.channel ∘ f.channel, f.K * g.K, ...⟩\n\ntheorem certified_radius_functorial\n    (f : CertChannel α β) (g : CertChannel β γ) :\n    (g ∘ f).certified",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "53e2f8f2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:47:24.792010+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "1. Matrix-Kernel Existence of Key-Equation Solutions over Finite Fields",
     "description": "**Theorem Statement:**\nGiven n evaluation points, a received word r, and parameters k, t with n > k + 2t, there exists a nonzero pair (Q, E) with deg Q < k+t, deg E ≤ t, E ≠ 0, satisfying the key equation Q(aᵢ) = r(i)·E(aᵢ) for all i.\n\n**Proof Strategy:**\nEncode the coefficients of Q (k+t coefficients) and E (t+1 coefficients) as a vector in F^{k+2t+1}. The key equation at each evaluation point gives one linear constraint, yielding an n × (k+2t+1) matrix. Since n < k+2t+1 (or more precisely, the system is underdetermined when n ≤ k+2t), rank-nullity guarantees a nonzero kernel element. The main challenge is showing that the E-component of this kernel vector is nonzero; this requires either a careful argument about the matrix structure or an assumption that the error pattern is consistent.\n",
@@ -1781,5 +1571,124 @@
     "source_exp_id": "febdbe21",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T06:19:45.043032+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Direction 1: Tropical Data Processing Inequality",
+    "description": "**Hypothesis:** There exists a tropical analogue of Shannon's data processing inequality, where \"mutual information\" is replaced by a tropical potential function that measures the classifier's discriminative capacity across layers.\n\n**Formal Target:**\n\nDefine *tropical mutual information* between input *X* and class label *Y* through a tropical classifier as:\n\n$$I_{\\text{trop}}(X; Y) = \\sup_{\\sigma} \\inf_{d \\neq c_0} \\mathbb{E}_x[\\text{affineEval}(a_{c_0, \\sigma(c_0)}, b_{c_0, \\sigma(c_0)}, x) - \\text{affineEval}(a_{d, \\sigma(d)}, b_{d, \\sigma(d)}, x)]$$\n\n**Proof Strategy:**\n1. Show that composing two tropical affine maps (modeling two network layers) does not increase the infimum margin (data processing).\n2. The key lemma: the margin after composition ≤ margin before composition × contrac",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "29a487a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:38:03.396545+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Direction 2: Tropical Minimax Security",
+    "description": "**Hypothesis:** Adversarial robustness against an optimal attacker can be formulated as a tropical minimax game, where the attacker chooses a perturbation to minimize the margin and the defender chooses parameters to maximize it.\n\n**Formal Target:**\n\n```\ntheorem tropical_minimax_security\n  (score : ι → (Fin n → ℝ) → ℝ)\n  (htrop : ∀ c, TropicalAffineForm score c)\n  (c₀ : ι) :\n  ∃ (v : ℝ), ∀ x ε,\n    (∀ y, ‖y - x‖ ≤ ε → margin c₀ y ≥ v) ↔\n    margin c₀ x ≥ v + L * ε\n```\n\n**Proof Strategy:**\n1. The minimax value is the margin minus L·ε (by the Lipschitz bound).\n2. The \"game\" has a saddle point because the margin is concave in the defender's parameters and convex (via tropical structure) in the attacker's perturbation direction.\n3. Use chamber-wise linearity to show the minimax reduces to a fi",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "29a487a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:38:03.421612+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Direction 3: Persistent Chamber Stability",
+    "description": "**Hypothesis:** The topological structure of the chamber complex (as measured by persistent homology barcodes) is stable under bounded perturbations of the tropical affine form parameters.\n\n**Formal Target:**\n\nDefine the *chamber complex filtration* by margin level:\n\n$$\\mathcal{C}(m) = \\{\\sigma \\mid C_\\sigma \\cap \\text{PairwiseMarginRegion}(c_0, m) \\neq \\emptyset\\}$$\n\n**Proof Strategy:**\n1. Show that the chamber complex is a polyhedral complex (using Theorem A).\n2. The filtration by margin level is a sublevel set filtration of a piecewise-linear function.\n3. Apply the stability theorem for persistent homology: if the score functions are perturbed by ε, the bottleneck distance between the persistence diagrams is at most the Lipschitz constant times ε.\n4. The key lemma: the margin function i",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "29a487a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:38:03.444175+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "Direction 4: Certified Security Scaling Laws",
+    "description": "**Hypothesis:** For tropical classifiers/cryptosystems with dimension-dependent parameters, the certified perturbation radius admits explicit asymptotic bounds as a function of dimension.\n\n**Formal Target:**\n\n```\ntheorem certified_radius_scaling\n  (n : ℕ) (K C : ℕ)\n  (score : Fin C → TropicalAffineForm (Fin n))\n  (hK : ∀ c, (score c).numTerms = K)\n  (hnorm : ∀ c k, ‖(score c).slopes k‖₁ ≤ α * √n) :\n  certifiedRadius score c₀ x ≥ margin / (2 * α * √n)\n```\n\n**Proof Strategy:**\n1. The Lipschitz constant of each score is bounded by α·√n (by hypothesis on slope norms).\n2. The certified radius is margin/(2L) ≥ margin/(2α√n).\n3. For random classifiers, the margin concentrates around a dimension-independent constant (by central limit theorem arguments on the max of independent linear forms).\n4. Th",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "29a487a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:38:03.464075+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Direction 5: Tropical SAT/SMT Verification",
+    "description": "**Hypothesis:** The margin certification problem \"Is x certified with radius r?\" reduces to tropical polyhedral feasibility, and this reduction is both sound and complete.\n\n**Formal Target:**\n\n```\ntheorem tropical_certification_decidable\n  (score : Fin C → TropicalAffineForm (Fin n))\n  (c₀ : Fin C) (x : Fin n → ℝ) (r : ℝ) :\n  Decidable (∀ y, ‖y - x‖ ≤ r → predict score y = c₀)\n```\n\n**Proof Strategy:**\n1. The set {y : ‖y - x‖ ≤ r ∧ predict(y) ≠ c₀} is a finite union of polyhedra (by Theorem A applied to each non-c₀ class).\n2. Checking emptiness of a union of polyhedra is decidable (linear programming).\n3. Construct an explicit LP for each chamber: minimize the margin subject to chamber constraints and ‖y - x‖ ≤ r.\n4. The certification holds iff all LPs have non-negative optimal values.\n\n**B",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "29a487a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:38:03.485917+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "Team Structure",
+    "description": "- **Theory team:** Formalize persistent homology stability and tropical information inequalities\n- **Algorithms team:** Implement chamber enumeration, LP-based certification, and SMT integration\n- **Applications team:** Apply framework to real ReLU networks and lattice cryptosystems\n- **Verification team:** Maintain and extend the Lean formalization",
+    "domains": [
+      "Tropical",
+      "Cryptography"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "29a487a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:38:03.503544+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Validation Milestones",
+    "description": "- **Month 1-3:** Prove dimension scaling bounds (Direction 4) in Lean\n- **Month 3-6:** Implement LP-based certification solver (Direction 5) with soundness proof\n- **Month 6-12:** Formalize tropical minimax theorem (Direction 2)\n- **Year 2:** Persistent homology stability (Direction 3) and data processing inequality (Direction 1)",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "29a487a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:38:03.538706+00:00"
   }
 ]
