@@ -283,22 +283,6 @@
     "timestamp": "2026-05-17T12:02:39.033653+00:00"
   },
   {
-    "id": "fd_0287",
-    "title": "Compositional analysis",
-    "description": "Prove that series and parallel composition of event graphs corresponds to tropical matrix operations, enabling modular throughput certification.\n\n### Cross-Domain Connections\n- **VLSI design**: Certified throughput for hardware pipelines\n- **Signal processing**: Verified streaming computation rates\n- **Embedded systems**: Formal timing analysis for safety-critical software\n- **Railway signaling**: Certified timetable feasibility\n\n### Estimated Difficulty\nHigh. The SDF/timed automata formalization is substantial, but the reduction to tropical matrices is well-established in the literature. A starting point would be to formalize the event graph → tropical matrix reduction for a concrete class of systems.\n\n---\n\n## Priority Ordering",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e054be3f",
-    "consumed_by_exp_id": "3563b500",
-    "timestamp": "2026-05-17T12:52:39.507056+00:00"
-  },
-  {
     "id": "fd_0250",
     "title": "Tropical channel theory",
     "description": "(Directions 3, 5) provides the algebraic framework for information processing in max-plus algebra.",
@@ -615,20 +599,6 @@
     "timestamp": "2026-05-17T18:03:30.187532+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Computational validation",
-    "description": ": Test with Python implementations on concrete examples",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f09dcb6a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T18:03:30.204950+00:00"
-  },
-  {
     "id": "fd_0268",
     "title": "Apollonian orthogonality",
     "description": ": The four Apollonian generators S₁,...,S₄ acting on Descartes quadruples preserve the Descartes form Q(a,b,c,d) = 2(a²+b²+c²+d²) − (a+b+c+d)² of signature (3,1). *Hypothesis*: After a suitable change of basis, the generators satisfy approximate Lorentz-orthogonality, enabling spectral gap bounds.",
@@ -738,34 +708,6 @@
     "timestamp": "2026-05-17T18:03:56.753030+00:00"
   },
   {
-    "id": "fd_0274",
-    "title": "Perturbation bound",
-    "description": ": If |⟨vᵢ, vⱼ⟩| ≤ ε for all i ≠ j and ‖vᵢ‖ ≤ 1, then ‖(1/k)Σ vᵢ‖ ≤ 1/√k + O(ε√k).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "570b15b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T18:03:56.769947+00:00"
-  },
-  {
-    "id": "fd_0275",
-    "title": "Robust spectral gap",
-    "description": ": gap(T) ≥ 1 − 1/√k − O(ε k) for nearly orthogonal generators.",
-    "domains": [
-      "Analysis"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "570b15b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T18:03:56.786789+00:00"
-  },
-  {
     "id": "fd_0276",
     "title": "Phase transition",
     "description": ": There exists a critical ε*(k) such that for ε < ε*(k), the spectral gap is positive, and for ε > ε*(k), it may vanish.\n\n### Proof Strategy\n- Expand ‖Σ vᵢ‖² = Σ ‖vᵢ‖² + Σ_{i≠j} ⟨vᵢ, vⱼ⟩\n- Bound the cross terms: |Σ_{i≠j} ⟨vᵢ, vⱼ⟩| ≤ k(k−1)ε\n- Derive ‖(1/k)Σ vᵢ‖² ≤ 1/k + (k−1)ε/k\n- Take square roots and simplify\n- For the phase transition, find the ε where the bound exceeds 1\n\n### Cross-Domain Connections\n- **Compressed sensing**: Near-orthogonal families (RIP condition) are central to compressed sensing; our framework provides a new angle on RIP-based expansion\n- **Expander robustness**: Understanding how spectral gaps degrade under perturbation is crucial for fault-tolerant applications\n- **Random matrix theory**: Random nearly-orthogonal families arise in Johnson-Lindenstrauss embeddings",
@@ -800,21 +742,6 @@
     "timestamp": "2026-05-17T18:03:56.822993+00:00"
   },
   {
-    "id": "fd_0278",
-    "title": "SL_n expansion",
-    "description": ": For generators of thin subgroups of SL_n(ℤ), the orthogonality condition can be formulated using the Killing form, and spectral gap bounds follow from the same mechanism.",
-    "domains": [
-      "Analysis",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "570b15b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T18:03:56.840033+00:00"
-  },
-  {
     "id": "fd_0279",
     "title": "Zariski density criterion",
     "description": ": If the generators generate a Zariski-dense subgroup, approximate orthogonality in a suitable sense is automatic after a bounded number of products.",
@@ -827,6 +754,48 @@
     "source_exp_id": "570b15b9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T18:03:56.856183+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Hypothesis",
+    "description": ": Formulate precise mathematical conjecture",
+    "domains": [
+      "NumberTheory"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3563b500",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:04:26.363756+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Proof",
+    "description": ": Fill in proofs, decomposing as needed",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3563b500",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:04:26.413846+00:00"
+  },
+  {
+    "id": "fd_0277",
+    "title": "Validation",
+    "description": ": Build, check axioms, test examples",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3563b500",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T18:04:26.430055+00:00"
   },
   {
     "id": "fd_0179",
@@ -984,6 +953,24 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "3. Adjunctions and Galois Connections Between Theories",
+    "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T02:14:30.254922+00:00"
   },
   {
     "id": "fd_0218",
@@ -1554,25 +1541,6 @@
     "source_exp_id": "5cf6f85f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T17:19:53.590614+00:00"
-  },
-  {
-    "id": "fd_0275",
-    "title": "5. Quantum Arithmetic Hamiltonians",
-    "description": "**Goal:** Formalize the spectral theorem for non-interacting composite quantum systems where arithmetic indexing controls tensor decomposition.\n\n**Theorem Target:**\n```\nquantum_arithmetic :\n  H_total = ∑_p H_p ⊗ I_{complement}\n  → spectrum(H_total) = { ∑_p E_p | E_p ∈ spectrum(H_p) }\n```\n\n**Proof Strategy:**\n- Define the additive version: if H = ∑ H_i ⊗ I (sum of local Hamiltonians tensored with identity on other factors), then eigenvalues are sums of local eigenvalues.\n- This follows from the multiplicative version via exponentiation: exp(H) has eigenvalues that are products of exp(H_i) eigenvalues.\n- Alternatively, prove directly using simultaneous diagonalization of commuting operators.\n\n**Cross-Domain Impact:**\n- In quantum computing, this gives exact resource counting for non-interact",
-    "domains": [
-      "Physics",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cf6f85f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:19:53.633067+00:00"
   },
   {
     "id": "fd_0276",
