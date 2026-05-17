@@ -1640,5 +1640,36 @@
     "source_exp_id": "97483b17",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T12:47:39.417377+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Why It Matters",
+    "description": "Our min-plus/max-plus duality is a special case: negation defines a semiring isomorphism `(ℝ, min, +) ≅ (ℝ, max, +)`. Generalizing to arbitrary semiring isomorphisms would yield a single meta-theorem covering tropical duality, Boolean duality (De Morgan), and algebraic circuit equivalences simultaneously.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a00f01af",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:51:54.551303+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Meta-Direction: Building a Formal Tropical Complexity Theory",
+    "description": "The five directions above converge on a single program: **building a machine-verified tropical complexity theory** where:\n\n- Circuit models are defined once and specialized to conventions via isomorphism.\n- Lower bounds transfer automatically across conventions.\n- Algorithms dualize formally, producing verified dual algorithms.\n- Connections to Boolean complexity, automata theory, and convex analysis are proved, not assumed.\n\nThis program has the potential to become the first complete formal complexity theory for a non-Boolean computational model, establishing a template for formalizing complexity theory more broadly.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a00f01af",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:51:54.594622+00:00"
   }
 ]
