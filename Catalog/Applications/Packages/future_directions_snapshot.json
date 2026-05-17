@@ -392,20 +392,6 @@
     "timestamp": "2026-05-17T06:57:09.789412+00:00"
   },
   {
-    "id": "fd_0274",
-    "title": "Encode system identification as power inversion",
-    "description": ": A discrete event system with transition matrix G produces outputs G^k · x₀ for initial state x₀. Recovering G from {G^k · x₀ : k = 1, ..., T} is a special case of power inversion where only certain projections of the powers are observed.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "8f686496",
-    "timestamp": "2026-05-17T06:57:09.906179+00:00"
-  },
-  {
     "id": "fd_0277",
     "title": "Define Tropical-P",
     "description": ": Problems computable by polynomial-size tropical circuits (using min and +).",
@@ -454,20 +440,6 @@
     "timestamp": "2026-05-17T07:17:01.375346+00:00"
   },
   {
-    "id": "fd_0260",
-    "title": "Barrier formulation",
-    "description": "Define the tropical log-barrier: $\\Phi(W, a, x_0) = -\\sum_{j \\neq i} \\log(\\Delta_{i,j}(x_0) / \\|w_{i,j}\\|)$. Minimizing this over the training data encourages large Chebyshev radii.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.394926+00:00"
-  },
-  {
     "id": "fd_0268",
     "title": "Define tropical rank",
     "description": "as the minimum number of tropical rank-1 matrices (outer products in the min-plus semiring) needed to represent a given matrix.",
@@ -495,43 +467,6 @@
     "source_exp_id": "493b32c8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T07:39:39.339028+00:00"
-  },
-  {
-    "id": "fd_0271",
-    "title": "Relate tropical rank to Barvinok rank",
-    "description": "and Kapranov rank from tropical geometry.\n\n### Proof Strategy\n- Use the no-collapse theorem (Theorem D) as the algebraic foundation: tropical rank cannot decrease under matrix composition.\n- Adapt the classical fooling-set method to the min-plus setting.\n- Connect to the existing tropical geometry literature on matrix factorization.\n\n### Cross-Domain Connections\n- **Tropical geometry**: Kapranov rank, tropical determinants, tropical Grassmannians\n- **Optimization**: rank of distance matrices in metric spaces\n- **Machine learning**: low-rank approximation of cost matrices in optimal transport\n\n### Expected Impact\nA tropical rank theory would provide a uniform lower-bound method for communication complexity that directly transfers to streaming, routing, and DP compression barriers via the br",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.389073+00:00"
-  },
-  {
-    "id": "fd_0274",
-    "title": "Extend to multi-pass streaming",
-    "description": ": model $p$ passes as $p$-fold layered composition.\n\n### Proof Strategy\n- Layer the computation by input position: layer $i$ corresponds to reading element $i$.\n- At each layer, the pigeonhole lemma guarantees $\\lfloor n/s \\rfloor$ collisions.\n- Each collision forces cost $\\geq 1$ in subsequent layers (information recovery).\n- Sum over layers to get the global bound.\n\n### Cross-Domain Connections\n- **Streaming algorithms**: tight bounds for sketching, sampling, and approximate counting\n- **Database systems**: buffer management and external sorting lower bounds\n- **Network monitoring**: limits of flow counting with bounded TCAM\n\n### Expected Impact\nThis would provide the first *certified* streaming lower bounds in the tropical framework, directly applicable to algorithm design and system ar",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.457472+00:00"
   },
   {
     "id": "fd_0275",
@@ -679,20 +614,6 @@
     "timestamp": "2026-05-17T08:59:36.640293+00:00"
   },
   {
-    "id": "fd_0260",
-    "title": "Ihara zeta function:",
-    "description": "Use the Ihara determinant formula to relate the spectrum of the nonbacktracking operator to the spectrum of the adjacency matrix and the edge matrix.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1ba249c5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:59:36.659969+00:00"
-  },
-  {
     "id": "fd_0261",
     "title": "Trace method:",
     "description": "Compute tr(NB^(2k)) via counting closed nonbacktracking walks and use moment bounds to control the second eigenvalue.\n\n### Cross-Domain Connection\nThis connects to the **Ramanujan graph** program of Lubotzky-Phillips-Sarnak and to Friedman's theorem on random regular graphs. A Ramanujan bound for the nonbacktracking Berggren operator would place the Berggren tree alongside LPS graphs as a natural arithmetic expander.\n\n---\n\n## Direction 3: Deterministic Sampling Theorem for Primitive Triples\n\n### Goal\nUse the spectral gap to construct a deterministic algorithm that generates a collection of N primitive Pythagorean triples whose empirical distribution approximates the uniform distribution on depth-n triples, with explicit error bounds.\n\n### Theorem Statement\nThere exists a deterministic poly",
@@ -801,6 +722,39 @@
     "source_exp_id": "1ba249c5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T08:59:36.803181+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "Square lattice:",
+    "description": "Define directional compressions along the two principal axes. The proof is simpler because there are only 2 directions (vs. 3 for hex), but the optimal shapes have a different symmetry group.",
+    "domains": [
+      "Cryptography",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f9d525d9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T09:12:55.125719+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Triangular lattice:",
+    "description": "Define compressions along 3 directions. The combinatorics are similar to the hex case but with different fiber structures.\n3. Develop a unified framework that parameterizes the lattice geometry and derives stability from abstract compression properties.\n\n### Cross-Domain Connections\n- **Tropical geometry:** Wulff shapes on lattices correspond to Newton polytopes of tropical polynomials. Stability of Wulff shapes translates to stability of tropical varieties.\n- **Discrete optimal transport:** The symmetric-difference bound is a zeroth-order transport bound. Upgrading to a first-order bound (actual transport distance) would connect to discrete Monge-Kantorovich theory.\n\n### Estimated Difficulty: Medium-Hard\nThe square lattice case should be easier than the hex case. The triangular case requi",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f9d525d9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T09:12:55.159680+00:00"
   },
   {
     "id": "fd_0113",
@@ -1437,10 +1391,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "df23c5f9",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5ffd606c",
     "timestamp": "2026-05-17T07:35:53.275696+00:00"
   },
   {
@@ -1588,21 +1542,6 @@
     "timestamp": "2026-05-17T08:12:18.312033+00:00"
   },
   {
-    "id": "fd_0260",
-    "title": "7. Formal Complexity Class Characterizations",
-    "description": "**Goal:** Use the simulation theorem to formally characterize complexity classes defined by branching program width.\n\n**Specific targets:**\n- Formalize that width-5 polynomial-size BPs = NC¹ (Barrington's theorem)\n- Formalize that polynomial-width polynomial-size BPs = L (logspace)\n- Use the simulation to show NC¹ ⊆ circuits of size O(n^{10}) (explicit bound from width-5, polynomial-depth BPs)\n\n**Strategy:** These are deep results requiring substantial additional infrastructure (complexity classes, polynomial bounds, uniformity conditions). The simulation theorem provides the \"easy direction\" of such characterizations; the hard direction (showing the class is not larger) requires separate arguments.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0db29d83",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:12:18.330884+00:00"
-  },
-  {
     "id": "fd_0261",
     "title": "Key Lean Targets",
     "description": "- Generalize `facetDist` with a `NormedSpace` parameter and dual norm.\n- Prove `facetDist_certifies_robustness` for the general case using the abstract Hahn–Banach inequality in Mathlib.\n- Instantiate for L1, L2, L∞ with explicit dual norm computations.",
@@ -1706,91 +1645,5 @@
     "source_exp_id": "9cd4e7fb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T08:21:58.047847+00:00"
-  },
-  {
-    "id": "fd_0270",
-    "title": "Direction 3: Tropical Curvature from Boundary Distance Defects",
-    "description": "**Hypothesis**: Define a \"tropical curvature\" of a network as the defect in the four-point condition (the failure of the metric to be tree-like). This curvature is computable from the boundary distance matrix and quantifies the network's topological complexity.\n\n**Proof Strategy**:\n1. Define Gromov hyperbolicity δ via the four-point condition: d(x,z) + d(y,w) ≤ max(d(x,y)+d(z,w), d(x,w)+d(y,z)) + 2δ.\n2. Show that δ is computable from the boundary distance matrix when the boundary is sufficiently dense.\n3. Prove that δ = 0 characterizes tree-like metrics (recovering the tree boundary rigidity theorem).\n4. Establish upper bounds on δ for series-parallel and planar networks.\n\n**Cross-Domain Connections**: Gromov hyperbolicity in geometric group theory; negative curvature in Riemannian geometr",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cd4e7fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:21:58.069475+00:00"
-  },
-  {
-    "id": "fd_0271",
-    "title": "Direction 4: Tropical Resolvent and Green's Function",
-    "description": "**Hypothesis**: The tropical analogue of the resolvent (I - λW)⁻¹ provides a parameterized family of distance-like matrices that interpolates between the identity and the full shortest-path closure, with poles at tropical eigenvalues.\n\n**Proof Strategy**:\n1. Define the tropical resolvent R(λ) = ⨅_{k≥0} (λ^k ⊗ W^⊗k) for λ ∈ [0,∞).\n2. Prove convergence using the tropical power stabilization theorem: R(λ) stabilizes for each λ.\n3. Identify the critical values of λ where the resolvent structure changes (tropical eigenvalues).\n4. Prove that the tropical eigenvalues equal the cycle means min_{cycle C} (weight(C)/length(C)).\n\n**Cross-Domain Connections**: Spectral graph theory; resolvent methods in functional analysis; transfer matrices in statistical mechanics; Green's functions in quantum field",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cd4e7fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:21:58.091858+00:00"
-  },
-  {
-    "id": "fd_0272",
-    "title": "Direction 5: Idempotent Renormalization via Transfer-Matrix Composition",
-    "description": "**Hypothesis**: The tropical stabilization theorem provides a finite renormalization group for transfer matrices: composing transfer matrices for network segments and then applying tropical closure gives the same result as direct computation on the full network.\n\n**Proof Strategy**:\n1. Define transfer matrices T_{AB} for network segments connecting boundary sets A and B.\n2. Prove the composition law: T_{AC} = T_{AB} ⊗ T_{BC} (tropical matrix product of transfer matrices).\n3. Show that the tropical closure commutes with composition: (T₁ ⊗ T₂)* = T₁* ⊗ T₂* under appropriate conditions.\n4. Prove that this gives an exact renormalization group for shortest-path computations.\n\n**Cross-Domain Connections**: Renormalization group in physics; compositional semantics in programming languages (operad",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cd4e7fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:21:58.112396+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "Phase 1 (Immediate: 1-3 months)",
-    "description": "- Complete the cycle removal lemma (`chainW_ge_tropPow_of_long`) to eliminate the remaining sorry\n- Formalize tropical Schur complements and prove the reduction theorem\n- Implement incremental shortest-path updates for single-edge modifications",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cd4e7fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:21:58.131890+00:00"
-  },
-  {
-    "id": "fd_0274",
-    "title": "Phase 2 (Medium-term: 3-6 months)",
-    "description": "- Prove boundary rigidity for series-parallel networks\n- Formalize Gromov hyperbolicity in the tropical framework\n- Develop a certified tropical linear algebra library",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cd4e7fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:21:58.149231+00:00"
   }
 ]
