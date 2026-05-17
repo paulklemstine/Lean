@@ -377,21 +377,6 @@
     "timestamp": "2026-05-17T14:15:43.370363+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Community",
-    "description": ": Public Lean library for tropical type theory, integrated with Mathlib.",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b6df6c6b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T14:15:43.389731+00:00"
-  },
-  {
     "id": "fd_0258",
     "title": "Proof Skeleton",
     "description": ": Write Lean 4 definitions and sorry'd lemma statements capturing the proof architecture.",
@@ -496,34 +481,6 @@
     "timestamp": "2026-05-17T15:21:59.549951+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "L² → L¹ bridge",
-    "description": ": Use Cauchy–Schwarz to convert L² bounds to total variation distance bounds, with the appropriate dependence on the state space size.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1de6f3ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:21:59.575744+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Seed construction",
-    "description": ": Use the Berggren tree structure itself as the seed: different tree paths (encoded as sequences in {1,2,3}^t) provide the seed randomness.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1de6f3ad",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:21:59.604368+00:00"
-  },
-  {
     "id": "fd_0271",
     "title": "Subadditivity attempt",
     "description": ": I∞(X; Y₁, ..., Yₙ) ≤ ∑ᵢ I∞(X; Yᵢ) — this would follow from a superadditivity of conditional min-entropy: H∞(X|Y₁,...,Yₙ) ≥ ∑ᵢ H∞(X|Yᵢ) − (n−1)H∞(X). However, this is unlikely to hold in full generality for min-entropy.",
@@ -553,20 +510,6 @@
     "timestamp": "2026-05-17T15:38:27.261721+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "States precise conjectures",
-    "description": "as formal Lean theorem statements with `sorry`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4c33555c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:31:56.967409+00:00"
-  },
-  {
     "id": "fd_0265",
     "title": "Tests computationally",
     "description": "using `#eval` with concrete examples before attempting proofs.",
@@ -579,20 +522,6 @@
     "source_exp_id": "4c33555c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:31:56.986130+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Decomposes aggressively",
-    "description": "into 3-10 helper lemmas per main theorem.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4c33555c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:32:03.409193+00:00"
   },
   {
     "id": "fd_0267",
@@ -621,20 +550,6 @@
     "source_exp_id": "4c33555c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:32:07.086950+00:00"
-  },
-  {
-    "id": "fd_0269",
-    "title": "Iterates continuously",
-    "description": "— each proved theorem should suggest the next conjecture.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4c33555c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:32:07.263395+00:00"
   },
   {
     "id": "fd_0270",
@@ -692,22 +607,6 @@
     "source_exp_id": "90a65a27",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:37:43.534409+00:00"
-  },
-  {
-    "id": "fd_0126",
-    "title": "Specific Hypotheses",
-    "description": "- **H1.1**: Bach chorale voice-leading can be characterized as shortest paths in a tropical hypergraph where nodes are 4-note chords and hyperedges encode simultaneous constraints (parallel fifths between any pair, voice spacing, voice crossing).\n- **H1.2**: The four-voice generalization of the zero-cost theorem holds: legal SATB counterpoint = zero locus of a 6-component penalty (one per voice pair).\n- **H1.3**: The exponential blowup in candidate space (P^4n vs P^n) can be managed via tropical tensor decomposition, factoring the 4-voice problem into coupled 2-voice subproblems.",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "41ac42f5",
-    "timestamp": "2026-05-14T16:24:05.738126+00:00"
   },
   {
     "id": "fd_0179",
@@ -1228,21 +1127,6 @@
     "timestamp": "2026-05-17T12:47:36.021332+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Cross-Domain Bridge",
-    "description": "The `bool_and_as_tropical_max` theorem in the catalog provides the seed: Boolean reachability is a special case of tropical acceptance where all weights are 0 or $+\\infty$.",
-    "domains": [
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "97483b17",
-    "consumed_by_exp_id": "1c1883b3",
-    "timestamp": "2026-05-17T12:47:39.141850+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "Direction 1: Full Lower Bound via Hyperplane Restriction Induction",
     "description": "**Status**: The upper bound (extremal polynomial construction) is fully formalized. The lower bound requires additional infrastructure.\n\n**Concrete next step**: Formalize the polynomial factoring lemma for `MvPolynomial`:\n\n```\nIf f ∈ MvPolynomial(Fin (n+1)) 𝔽 vanishes identically on the hyperplane x₀ = c,\nthen (X₀ - C c) ∣ f and totalDegree(f / (X₀ - C c)) ≤ totalDegree(f) - 1.\n```\n\n**Required infrastructure**:\n- Connect `MvPolynomial.finSuccEquiv` with `fiberRestrict` to show that fiber vanishing implies polynomial divisibility\n- Formalize the factor theorem for polynomials over integral domains (`Polynomial.dvd_iff_isRoot`)\n- Track total degree through the `finSuccEquiv` equivalence\n- Prove the numerical optimization: for all valid t, `(q-t) * minWt(n-1, d-t) ≥ (q-b) * q^(n-1-a)`\n\n**Proo",
@@ -1271,21 +1155,6 @@
     "source_exp_id": "b62b8fc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T13:33:11.056740+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Keywords",
-    "description": "generalized Reed–Muller code, minimum distance, finite-field hypersurface, sharp zero-count theorem, affine fiber decomposition, tensor-product vanishing, low-degree testing, algebraic PCP, finite Nullstellensatz, Gröbner footprint bound, extremal support, finite affine geometry, weight hierarchy, projective Reed–Muller code, polynomial identity testing",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b62b8fc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T13:33:11.092879+00:00"
   },
   {
     "id": "fd_0250",
@@ -1377,24 +1246,6 @@
     "timestamp": "2026-05-17T13:45:31.781487+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "1. Formalize Explicit Berggren Spectral Gap on Finite Quotients",
-    "description": "**Hypothesis**: The Berggren semigroup acting on orbits of Pythagorean triples mod q has spectral radius ρ = 1/√3 ≈ 0.577 for all primes q ≥ 3 not dividing a specific discriminant.\n\n**Proof Strategy**: \n- The computational evidence strongly suggests ρ = 1/√3 is universal for \"good\" primes.\n- This likely follows from the representation theory of the Berggren group (which is a subgroup of O(2,1,ℤ)).\n- The orbit structure modulo q is governed by the quadratic form x² + y² - z², so the spectral analysis reduces to character sums over the light cone.\n- Formally verify the eigenvalue computation for small primes (q = 3, 5, 7) as base cases, then prove the general bound using automorphic methods.\n\n**Cross-domain Connections**: Automorphic forms on O(2,1), Selberg's eigenvalue conjecture for arith",
-    "domains": [
-      "Pythagorean",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b3b0e7e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T14:26:22.861807+00:00"
-  },
-  {
     "id": "fd_0268",
     "title": "5. Derive Extractor and Hitting-Set Constructions from Arithmetic Walks",
     "description": "**Hypothesis**: Arithmetic walks on expanding orbits yield deterministic extractors and hitting sets for structured polynomial sources.\n\n**Proof Strategy**:\n- An extractor maps a \"weakly random\" source to a \"nearly uniform\" output. The arithmetic walk theorem says: if the input distribution is supported on the orbit with min-entropy k, then n = O((log(orbit_size) - k) / log(1/ρ)) steps of the walk produce a distribution that is ε-close to uniform.\n- For hitting sets: if a polynomial p is nonzero on a fraction δ of the orbit, then a walk of length n = O(log(1/δε)/log(1/ρ)) starting from any point hits a nonzero of p with probability ≥ 1-ε.\n- Formalize the extractor property using the Leftover Hash Lemma adapted to expander walks.\n\n**Cross-domain Connections**: Randomness extractors (Trevisa",
@@ -1408,25 +1259,6 @@
     "source_exp_id": "2b3b0e7e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T14:26:22.944758+00:00"
-  },
-  {
-    "id": "fd_0269",
-    "title": "6. Markov Surface Dynamics mod q",
-    "description": "**Hypothesis**: The Markov group (generated by Vieta involutions on the surface x² + y² + z² = 3xyz) acting on solutions mod q produces expanders for most primes.\n\n**Proof Strategy**:\n- The Markov surface is an affine cubic with remarkable dynamical properties.\n- Recent work of Bourgain-Gamburd-Sarnak (2016) establishes strong approximation for the Markov group.\n- Formalize the three Vieta involutions as generators and compute orbits mod q.\n- Verify spectral gaps computationally, then formalize.\n\n**Cross-domain Connections**: Cluster algebras, Teichmüller theory, trace-free character varieties, quantum topology.\n\n**Impact**: Would demonstrate the framework on a surface of fundamental importance across multiple mathematical disciplines.\n\n---",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2b3b0e7e",
-    "consumed_by_exp_id": "371a34c3",
-    "timestamp": "2026-05-17T14:26:22.965741+00:00"
   },
   {
     "id": "fd_0261",
@@ -1457,34 +1289,6 @@
     "timestamp": "2026-05-17T15:07:30.050712+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Applications to Formalize",
-    "description": "- **Chevalley–Warning theorem** as a corollary\n- **Davenport–Halberstam** type bounds\n- **Zero-sum problems** (Erdős–Ginzburg–Ziv theorem)\n- **Graph coloring** existence results",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8c5ff762",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:07:36.730040+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Target Theorem",
-    "description": "For a zero-dimensional ideal I = ⟨f₁,...,fₖ⟩ + ⟨Xᵢ^q − Xᵢ⟩ with reduced Gröbner basis G:\n```\n|V(I)| = |{x ∈ GF(q)^n : fⱼ(x) = 0 ∀j}| ≤ |Footprint(G)|\n```\nwhere Footprint(G) is the set of reduced monomials not divisible by any leading monomial of G.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8c5ff762",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:07:36.792920+00:00"
-  },
-  {
     "id": "fd_0268",
     "title": "Cross-Domain Research Connections",
     "description": "| Direction | Algebra | Combinatorics | Coding Theory | CS Theory | Cryptography |\n|-----------|---------|---------------|---------------|-----------|--------------|\n| 1. Alon–Füredi | ✓ vanishing ideals | ✓ grid bounds | ✓ Cartesian codes | | |\n| 2. Nullstellensatz | ✓ coefficient extraction | ✓ existence proofs | | ✓ derandomization | |\n| 3. Decoding | | | ✓ error correction | ✓ list decoding | ✓ code-based crypto |\n| 4. Systems | ✓ Gröbner bases | ✓ variety counting | | ✓ SAT solving | ✓ algebraic attacks |\n| 5. Interpolation | ✓ function spaces | | ✓ encoding | ✓ complexity | ✓ secret sharing |\n\n---",
@@ -1501,40 +1305,6 @@
     "source_exp_id": "8c5ff762",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T15:07:37.218670+00:00"
-  },
-  {
-    "id": "fd_0269",
-    "title": "Success Metrics",
-    "description": "Each direction is considered a breakthrough if:\n1. The main theorem compiles without `sorry` in Lean 4.\n2. At least one non-trivial application is formalized.\n3. The result is connected to the footprint bound infrastructure (imports and uses our definitions).\n4. A computational validation confirms the theorem on concrete examples.\n\nThe overall program succeeds if Directions 1, 2, and 5a are completed within 2 months, creating a **formal finite-grid algebraic combinatorics ecosystem** in Lean 4.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8c5ff762",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:07:37.337109+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "1. Extending to Full Tropical Semiring Normalization (Distributivity)",
-    "description": "**Hypothesis:** The AC normalizer can be extended to handle the full tropical semiring identity `a + min(b, c) = min(a+b, a+c)` (distributivity of + over min), producing a decision procedure for a strictly larger fragment of tropical algebra.\n\n**Proof Strategy:**\n- Define a \"tropical polynomial normal form\" where every expression is rewritten as `min(t₁, t₂, ..., tₖ)` where each `tᵢ` is a sum of variables and constants (no nested `min` inside `+`)\n- Implement distributive expansion: push all `+` outside `min` using `a + min(b,c) → min(a+b, a+c)`\n- After expansion, each summand is a pure sum term; apply AC normalization to each, then ACI normalization to the outer `min`\n- Prove soundness of the expansion step: `eval σ (distribute e) = eval σ e`\n- The full normalizer is `cnormalize_ca ∘ dist",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bc9ede85",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:23:44.093457+00:00"
   },
   {
     "id": "fd_0267",
@@ -1568,23 +1338,6 @@
     "source_exp_id": "bc9ede85",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T15:23:44.143824+00:00"
-  },
-  {
-    "id": "fd_0269",
-    "title": "4. Tropical Gröbner-Style Simplification",
-    "description": "**Hypothesis:** A tropical analogue of Buchberger's algorithm can be implemented to decide equality of tropical rational functions (quotients of tropical polynomials), extending the normalizer beyond the polynomial fragment.\n\n**Proof Strategy:**\n- Implement tropical polynomial division using the \"bend-and-break\" approach\n- Define tropical S-polynomials and a tropical Buchberger criterion\n- Prove termination using a tropical analogue of the monomial ordering argument\n- The resulting \"tropical Gröbner basis\" gives a canonical representative for each equivalence class of tropical rational functions\n- Soundness follows from the confluence of the rewriting system\n\n**Technical challenges:**\n- Tropical polynomial division is not unique in the same way as classical division\n- The \"tropical basis\" ",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bc9ede85",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:23:44.168093+00:00"
   },
   {
     "id": "fd_0273",
@@ -1652,20 +1405,6 @@
     "timestamp": "2026-05-17T16:31:26.128856+00:00"
   },
   {
-    "id": "fd_0277",
-    "title": "6. Certified Centrality Pipeline for Network Analysis",
-    "description": "**Application target**: Formalize a complete pipeline:\n1. Compute node scores from an adjacency matrix (e.g., row sums or min-plus row potentials).\n2. Show that different normalization conventions produce tropically equivalent score vectors.\n3. Apply `tropical_equiv_scores_preserve_ranking` to certify ranking invariance.\n\n```\n-- Row-sum centrality\nnoncomputable def rowSumScore (A : Matrix (Fin n) (Fin n) ℝ) : Fin n → ℝ :=\n  fun i => ∑ j, A i j\n\n-- Normalized row-sum centrality (subtract global mean)\nnoncomputable def normalizedRowSumScore (A : Matrix (Fin n) (Fin n) ℝ) : Fin n → ℝ :=\n  fun i => rowSumScore A i - (∑ i, rowSumScore A i) / n\n\ntheorem normalized_row_sum_tropequiv (A : Matrix (Fin n) (Fin n) ℝ) :\n    TropEquiv (normalizedRowSumScore A) (rowSumScore A)\n```\n\n**Impact**: Directly ",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "522714fd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:31:26.148593+00:00"
-  },
-  {
     "id": "fd_0278",
     "title": "7. Tropical Hecke Symmetry Interpretation",
     "description": "**Connection to catalog**: `tropical_hecke_shift_one` shows that additive shift appears as a Hecke operator in the tropical Langlands program.\n\n**Hypothesis**: The ranking-invariance theorem can be reinterpreted as invariance under a tropical Hecke operator, connecting applied data analysis to representation theory.\n\n**Formal target**: Show that the Hecke shift operator on tropical functions preserves the ranking filtration.\n\n**Impact**: Provides unexpected algebraic depth to what appears to be an elementary observation. The Hecke interpretation suggests that tropical invariance is part of a larger symmetry group acting on data representations, potentially leading to new invariants beyond ranking.\n\n---",
@@ -1694,5 +1433,82 @@
     "source_exp_id": "522714fd",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:31:26.200285+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Complexity Analysis",
+    "description": "- Brute-force over `|P|^4` chords × `n` steps: O(n · |P|^8).\n- Factor-graph elimination with treewidth 2: O(n · |P|^4) — exponential compression in voice count.\n- Formal theorem target: prove the treewidth bound on the SATB factor graph.",
+    "domains": [
+      "EML",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41ac42f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:13.829702+00:00"
+  },
+  {
+    "id": "fd_0275",
+    "title": "Mathematical Significance",
+    "description": "This would be the first instance of a musical constraint system identified as a tropical algebraic variety, opening connections to:\n- Tropical intersection theory\n- Berkovich analytic spaces\n- Non-Archimedean amoebas\n- Algebraic complexity theory\n\n---",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41ac42f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:13.850305+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Key Formalization Targets",
+    "description": "- `satb_automaton_accepts_legal`: Formal automaton-language equivalence.\n- `automaton_product_decomposition`: Factored state space theorem.\n- `myhill_nerode_bound`: Upper bound on the number of equivalence classes.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41ac42f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:13.881378+00:00"
+  },
+  {
+    "id": "fd_0278",
+    "title": "Phase 3 (Long-term, 6-12 months)",
+    "description": "- Direction 3: Tropical variety computation\n- Direction 2: Statistical learning of tropical energies\n- Direction 7: Multi-agent safety applications",
+    "domains": [
+      "Tropical",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41ac42f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:13.925482+00:00"
+  },
+  {
+    "id": "fd_0279",
+    "title": "Validation Strategy",
+    "description": "Each direction should be validated by:\n1. Computational experiments (Python implementations demonstrating the theorems)\n2. Formal proofs in Lean 4 (extending the existing `TropicalHypergraphCounterpoint.lean`)\n3. At least one concrete worked example (specific chord progressions, specific agent configurations)\n4. Complexity analysis comparing the tropical approach to brute-force alternatives",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "41ac42f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:13.946532+00:00"
   }
 ]
