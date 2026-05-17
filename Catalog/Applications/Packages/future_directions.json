@@ -1075,8 +1075,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "27cf77e6",
       "timestamp": "2026-05-17T19:57:27.072085+00:00"
     },
     {
@@ -1442,8 +1442,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "5c40cde4",
       "timestamp": "2026-05-17T20:28:09.924569+00:00"
     },
     {
@@ -1529,7 +1529,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "3c12a044",
       "timestamp": "2026-05-17T20:40:43.009578+00:00"
     },
@@ -2298,8 +2298,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "effd781e",
       "timestamp": "2026-05-17T21:29:22.496354+00:00"
     },
     {
@@ -2920,6 +2920,25 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:03:47.826958+00:00"
+    },
+    {
+      "id": "fd_0159",
+      "title": "Cross-Domain Connection",
+      "description": "**Information theory ↔ Tropical dynamics.** This is the non-archimedean analogue of entropy production in random matrix products. The fact that fiber sizes are triangular (not flat) implies strict entropy increase at each composition step — a discrete version of the Furstenberg–Kesten theorem.\n\n---",
+      "source_exp_id": "3c12a044",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Probability",
+        "Tropical",
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:04:00.074288+00:00"
     }
   ],
   "pruned": []

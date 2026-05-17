@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "binary_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T21:05:54Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "hybrid_argument_with_computational_distinguishers",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -106,7 +106,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-17T22:04:04Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "proof_strategy",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:04:18Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "line_restriction",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:07:44Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "irreducibility",
@@ -133,7 +133,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:23:43Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "decomposition",
@@ -142,7 +142,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:30:35Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -151,7 +151,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-17T23:03:26Z",
-      "hue": 112
+      "hue": 271
     },
     {
       "id": "overview",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:03:44Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "random_matrix_counting",
@@ -170,9 +170,25 @@
       "shape": "hexagonal_prism",
       "date": "2026-05-17T23:03:58Z",
       "hue": 270
+    },
+    {
+      "id": "2_factored_bellman_residual_tensorization_for_stru",
+      "title": "Factored Bellman Residual Tensorization for Structured MDPs",
+      "domain": "Dynamic Programming / Reinforcement Learning / Compositional Mathematics",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-17T23:07:53Z",
+      "hue": 270
     }
   ],
   "edges": [
+    {
+      "source": "coupling_argument",
+      "target": "2_factored_bellman_residual_tensorization_for_stru",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
     {
       "source": "2_tropical_amplitude_amplification",
       "target": "binary_search",
