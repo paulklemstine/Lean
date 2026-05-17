@@ -467,20 +467,6 @@
     "timestamp": "2026-05-17T02:47:00.339606+00:00"
   },
   {
-    "id": "fd_0261",
-    "title": "Partition rank variant",
-    "description": ": Use the simpler notion of partition rank (Naslund 2020) which avoids some tensor formalism. Define a function F : A × A × A → 𝔽₃ that is \"diagonal\" (nonzero only when x = y = z) and show it has low partition rank.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0ab00abc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:47:00.358439+00:00"
-  },
-  {
     "id": "fd_0267",
     "title": "Direct construction",
     "description": ": Build the linear equivalence using `interpolationPoly` as the inverse of evaluation. The main work is showing linearity of interpolation (which follows from linearity of the sum construction) and the left/right inverses (which follow from evaluation correctness and injectivity).",
@@ -677,20 +663,6 @@
     "timestamp": "2026-05-17T03:06:58.810934+00:00"
   },
   {
-    "id": "fd_0248",
-    "title": "Data processing inequality route:",
-    "description": "Use the data processing inequality to bound `I(X'; W(X'))` in terms of `I(X; W(X))` plus a Lipschitz correction, then apply `certifiedRadius_margin_ineq`.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a54a94dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:06:58.829295+00:00"
-  },
-  {
     "id": "fd_0249",
     "title": "Direct Lipschitz chain:",
     "description": "Bound `|I(X; W) - I(X'; W)|` by `K · d(X, X')` using the Lipschitz property of mutual information, then use `d(X, X') ≤ r ≤ m/K` to get the margin bound.\n\n### Cross-Domain Connection\n**Differential privacy:** The Lipschitz condition on a channel is equivalent to differential privacy with parameter `ε = K`. Entropy contraction certified by radii gives a new perspective on the privacy-utility tradeoff: the certified radius measures the maximum data perturbation that preserves utility bounds.\n\n---\n\n## Direction 4: Cryptographic Distinguishability Certificates via Tropical Separation\n\n### Theorem Statement\nFor two distributions `P, Q` on a finite type, if their statistical distance satisfies `Δ(P, Q) ≥ m` and a tropical determinant certificate gives a Lipschitz bound `K` on the distinguisher, ",
@@ -814,46 +786,77 @@
     "timestamp": "2026-05-17T03:35:21.994121+00:00"
   },
   {
-    "id": "fd_0261",
-    "title": "Decomposes into helper lemmas",
-    "description": "of ≤10 lines each for the proof assistant",
+    "id": "fd_0265",
+    "title": "Arithmetic structure",
+    "description": ": Prime-power indices, spectral gaps, and tropical eigenvalues all point to deep arithmetic content in tropical pseudorandomness.",
     "domains": [
-      "Logic"
+      "Tropical",
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "0cb1656b",
+    "source_exp_id": "8e87fa71",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:35:22.019528+00:00"
+    "timestamp": "2026-05-17T05:23:55.595098+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Produces both formal proofs and working implementations",
-    "description": "so that theoretical results are immediately usable\n\n### Priority Order",
+    "id": "fd_0266",
+    "title": "Unconditional results",
+    "description": ": Unlike classical hardness-based PRGs, tropical PRGs may admit unconditional constructions (no unproven assumptions), making this a promising avenue for P vs BPP.",
     "domains": [
-      "Logic"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "0cb1656b",
+    "source_exp_id": "8e87fa71",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:35:22.084547+00:00"
+    "timestamp": "2026-05-17T05:23:55.616038+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Direction 6",
-    "description": "(complexity) — theoretical completeness",
+    "id": "fd_0267",
+    "title": "Lightweight computation",
+    "description": ": Tropical operations are the simplest possible arithmetic. Any PRG theory built on tropical algebra automatically yields efficient implementations.",
     "domains": [
-      "Computation"
+      "Tropical",
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "dc51a80a",
+    "source_exp_id": "8e87fa71",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:38:03.195594+00:00"
+    "timestamp": "2026-05-17T05:23:55.642068+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "Formal verification",
+    "description": ": Machine-verified foundations ensure that the theoretical framework is sound, enabling confident exploration of more speculative directions.\n\n---\n\n## Recommended Priority Ordering",
+    "domains": [
+      "Algebra",
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8e87fa71",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:23:55.662659+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Direction 4",
+    "description": "(Prime-Power Amplification) — Already partially formalized; geometric decay is the key phenomenon to exploit.",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8e87fa71",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:23:55.684502+00:00"
   },
   {
     "id": "fd_0113",
@@ -1048,21 +1051,6 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Summary: Research Roadmap",
-    "description": "| Priority | Direction | Key Theorem | Dependencies |\n|----------|-----------|-------------|--------------|\n| 1 | Finite Products | `finProd_universal` | Binary product (done) |\n| 2 | Termination | `product_reduction_terminates` | Product + well-founded induction |\n| 3 | Pressure Bounds | `pressure_product_bound` | Product + real analysis |\n| 4 | Automata Sync | `product_word_bound` | Product + combinatorics |\n| 5 | Security Comp | `composed_security_bound` | Dual (min) product |\n\nEach direction builds directly on the categorical product infrastructure established in this work. The key insight is that invariant-bearing systems form a category with enough structure (products, identity, composition, associativity) to support systematic compositional reasoning across thermodynamics, automata ",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a015a16c",
-    "consumed_by_exp_id": "8e87fa71",
-    "timestamp": "2026-05-15T08:01:09.762727+00:00"
   },
   {
     "id": "fd_0194",
@@ -1494,25 +1482,6 @@
     "timestamp": "2026-05-17T02:00:26.770253+00:00"
   },
   {
-    "id": "fd_0248",
-    "title": "2. Dualizing to Max-Plus Algebra",
-    "description": "**Hypothesis:** The entire normalization-reflection pipeline can be mechanically dualized from min-plus to max-plus algebra by replacing `min` with `max` and `⊓` with `⊔`.\n\n**Strategy:**\n- Define `MaxPlusTropExpr` with `tmax` replacing `tmin`.\n- Port all definitions (flatten, sort, dedup, normalize, eval) by substituting `max` for `min`.\n- Port all proofs using a systematic substitution of `min_comm` → `max_comm`, `min_assoc` → `max_assoc`, `min_self` → `max_self`.\n- Alternatively, define an abstract framework parameterized by a lattice operation (any idempotent commutative monoid) and instantiate for both min and max.\n\n**Key Innovation:** A *generic idempotent-commutative normalizer* parameterized by a type class:\n```\nclass TropicalLike (α : Type) where\n  op : α → α → α\n  op_comm : ∀ a b,",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "72596401",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:00:26.797898+00:00"
-  },
-  {
     "id": "fd_0249",
     "title": "3. Certified Shortest-Path and Dynamic Programming Verification",
     "description": "**Hypothesis:** The tropical normalization tactic can serve as the algebraic backend for *certified shortest-path algorithms* and *dynamic programming correctness proofs*.\n\n**Strategy:**\n- Formalize min-plus matrix multiplication as a concrete instantiation of tropical algebra.\n- Express the Floyd-Warshall/Bellman-Ford recurrences as tropical polynomial identities.\n- Use the normalization tactic to verify algebraic steps in correctness proofs (e.g., that the Bellman operator is well-defined up to ACI equivalence).\n- Connect to existing Mathlib formalization of graph theory and matrix algebra.\n\n**Concrete Target Theorems:**\n```\ntheorem bellman_step_ACI (W V : Matrix n n ℝ) :\n    tropical_min_plus_mul W (tropical_min_plus_mul W V)\n    = tropical_min_plus_mul (tropical_min_plus_mul W W) V\n```",
@@ -1562,53 +1531,6 @@
     "source_exp_id": "beabd842",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T04:30:23.859867+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "3. Categorical Formulation via Idempotent Semiring Objects",
-    "description": "**Hypothesis:** Tropical homomorphic encryption is an instance of a general categorical construction: a *homomorphic functor* between categories enriched over idempotent semirings, and this abstraction yields free theorems for any idempotent semiring (not just min-plus over ℕ).\n\n**Approach:**\n- Define `IdempotentSemiringCat` as a category whose objects are idempotent semirings and whose morphisms are semiring homomorphisms.\n- A tropical encryption scheme is a diagram: `encode` as a section of `decode` in a suitable fiber category.\n- Compositional correctness becomes the universal property of free algebras (term evaluation).\n- Generalize from (ℕ, min, +) to (ℝ≥0, min, +), (Bool, ∨, ∧), tropical matrices, etc.\n\n**Key theorem target:**\n```\ntheorem generic_idempotent_homomorphic_correctness\n  ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "beabd842",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:30:23.881705+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Summary Prioritization",
-    "description": "| Direction | Impact | Feasibility | Timeline |\n|-----------|--------|-------------|----------|\n| 1. Randomized IND-CPA | Very High | Medium | 3-6 months |\n| 2. Bellman-Ford/Viterbi | High | High | 1-3 months |\n| 3. Categorical formulation | Medium | Medium | 3-6 months |\n| 4. Tropical information theory | Very High | Low-Medium | 6-12 months |\n| 5. Tropical neural inference | Transformative | Low | 12+ months |\n\n**Recommended next step:** Direction 2 (Bellman-Ford/Viterbi) for immediate impact and publishability, in parallel with Direction 1 (randomized security) for theoretical depth.",
-    "domains": [
-      "Tropical",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "beabd842",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:30:23.944166+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "1. Exact Edge-Isoperimetric Profile of the Triangular Lattice",
-    "description": "**Goal**: Prove the exact edge-isoperimetric inequality for finite subsets of the triangular lattice (A₂ root lattice with nearest-neighbor edges).\n\n**Hypothesis**: The minimizers are hexagonal patches in the dual representation, connected to hex lattice results via planar duality. The triangular lattice is the 1-skeleton of the hexagonal tiling, so boundary minimization on one lattice corresponds to a dual problem on the other.\n\n**Proof Strategy**: Transfer the compression arguments from the hex lattice via the duality map. Each hex cell corresponds to a triangular lattice vertex, and hex edges correspond to triangular faces. The edge boundary of a hex cell set maps to the vertex boundary in the triangular lattice under appropriate definitions.\n\n**Cross-Domain Impact**: Triangular lattice",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c0fc49e2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:47:06.099865+00:00"
   },
   {
     "id": "fd_0265",
@@ -1704,21 +1626,6 @@
     "source_exp_id": "75c7e5d3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T04:49:34.919121+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "3. Build a Certified Non-Realizability Library",
-    "description": "**Status**: The Fano matroid is proved non-representable over ℝ. Other non-representable matroids exist.\n\n**Strategy**: Formalize additional non-representability results:\n- The non-Fano matroid (dual of Fano): representable only over characteristic ≠ 2\n- The Vámos matroid: not representable over ANY field\n- MacLane's matroid, Pappus matroid, and other classical examples\n- Each provides a point in the Dressian minus the tropical Grassmannian\n\n**Impact**: A certified library of non-realizability obstructions, useful for:\n- Algorithmic matroid theory\n- Combinatorial optimization (matroid intersection, partition)\n- Tropical moduli theory (understanding boundary strata)",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "75c7e5d3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:49:34.946394+00:00"
   },
   {
     "id": "fd_0262",
