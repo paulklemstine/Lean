@@ -103,7 +103,7 @@ def update_index():
     # Find the Catalog root (grandparent of Packages dir) for git commands
     catalog_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
 
-    json_files = [f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json")]
+    json_files = [f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json")]
 
     viz_dir = os.path.join(script_dir, "visualizations")
     os.makedirs(viz_dir, exist_ok=True)
@@ -118,6 +118,11 @@ def update_index():
                 data = json.load(file)
         except Exception as e:
             print(f"Error processing {f}: {e}")
+            continue
+
+        # Skip non-package JSON files (e.g. lists, primitives)
+        if not isinstance(data, dict):
+            print(f"Skipping {f}: not a package object (got {type(data).__name__})")
             continue
 
         # Use date from JSON package (populated during AETHER integration)
