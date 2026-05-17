@@ -1058,8 +1058,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "23e23dbc",
       "timestamp": "2026-05-17T19:57:27.070763+00:00"
     },
     {
@@ -1851,7 +1851,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "1147b8c8",
       "timestamp": "2026-05-17T21:05:29.612613+00:00"
     },
@@ -2029,8 +2029,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "fcad70f2",
       "timestamp": "2026-05-17T21:05:56.334018+00:00"
     },
     {
@@ -2519,6 +2519,79 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:04:06.952653+00:00"
+    },
+    {
+      "id": "fd_0137",
+      "title": "Identify the image of the Berggren generators in PGL₂(𝔽_p)",
+      "description": ". Since the isotropic conic is isomorphic to P¹(𝔽_p), the orthogonal group O(2,1;𝔽_p) maps into PGL₂(𝔽_p). Compute the explicit images of A, B, C as Möbius transformations.",
+      "source_exp_id": "1147b8c8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:20.751655+00:00"
+    },
+    {
+      "id": "fd_0138",
+      "title": "Decompose the permutation representation",
+      "description": ". The permutation module ℝ[P¹(𝔽_p)] decomposes as 1 ⊕ St, where St is the p-dimensional Steinberg representation. Compute the eigenvalue of T = (π_A + π_B + π_C)/3 on St.",
+      "source_exp_id": "1147b8c8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:20.754891+00:00"
+    },
+    {
+      "id": "fd_0139",
+      "title": "Use character theory",
+      "description": ". The eigenvalue on St is (χ_St(A) + χ_St(B) + χ_St(C))/(3·dim(St)). For permutation characters, χ_St(M) = (number of fixed points of M on P¹) − 1.",
+      "source_exp_id": "1147b8c8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:20.757530+00:00"
+    },
+    {
+      "id": "fd_0140",
+      "title": "Compute fixed points",
+      "description": ". For each generator M, count the fixed points on P¹(𝔽_p). This reduces to counting solutions of a quadratic equation over 𝔽_p, which depends on whether the discriminant is a quadratic residue — hence the dependence on p mod 8.\n\n### Key Lemma to Formalize\nThe number of fixed points of each Berggren generator on the projective conic equals:\n- 0 if the generator's eigenvalues over 𝔽_p are all distinct and non-isotropic\n- 1 if there is a unique isotropic fixed line\n- 2 if the generator fixes an isotropic pair\n\n### Cross-Domain Impact\nConnects Berggren dynamics to the Ramanujan-Petersson conjecture for automorphic forms on orthogonal groups.\n\n### Estimated Difficulty: Hard (6-12 months for full formalization)\n\n---\n\n## Direction 2: Extension to Prime Powers and Adelic Berggren Operators\n\n### Hy",
+      "source_exp_id": "1147b8c8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Pythagorean",
+        "Bridges",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:20.761086+00:00"
     }
   ],
   "pruned": []
