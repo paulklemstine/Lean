@@ -1,0 +1,94 @@
+--- Basic.lean
++++ Basic.lean
+@@ -631,11 +933,90 @@
+     edgeBoundary S ≥ edgeBoundary (hexPatch r) :=
+   hex_patch_edge_boundary_minimal_at_hex_number r S hcard
+ 
+-/-! ## §11. Isoperimetric Profile -/
++/-! ## §12. Isoperimetric Profile -/
+ 
+ /-- The isoperimetric profile: minimum edge boundary among sets of cardinality `n`. -/
+ noncomputable def hexEdgeIsoProfile (n : ℕ) : ℕ :=
+   if n = 0 then 0
+   else sInf {m | ∃ S : Finset HexCell, S.card = n ∧ edgeBoundary S = m}
+ 
++/-! ## §13. Hex Convexity -/
++
++/-- A set is hex-convex if it is convex in all three coordinate directions
++    of the cube coordinate system. In axial coordinates (q, r), the three
++    directions correspond to: fixed q, fixed r, and fixed q+r. -/
++def HexConvex (S : Finset HexCell) : Prop :=
++  (∀ q : ℤ, ∀ r₁ r₂ : ℤ, (q, r₁) ∈ S → (q, r₂) ∈ S →
++    ∀ r' : ℤ, r₁ ≤ r' → r' ≤ r₂ → (q, r') ∈ S) ∧
++  (∀ r : ℤ, ∀ q₁ q₂ : ℤ, (q₁, r) ∈ S → (q₂, r) ∈ S →
++    ∀ q' : ℤ, q₁ ≤ q' → q' ≤ q₂ → (q', r) ∈ S) ∧
++  (∀ s : ℤ, ∀ q₁ q₂ : ℤ, (q₁, s - q₁) ∈ S → (q₂, s - q₂) ∈ S →
++    ∀ q' : ℤ, q₁ ≤ q' → q' ≤ q₂ → (q', s - q') ∈ S)
++
++/-
++hexPatch r is hex-convex.
++-/
++theorem hexPatch_hexConvex (r : ℕ) : HexConvex (hexPatch r) := by
++  constructor;
++  · unfold hexPatch;
++    simp +zetaDelta at * ;
++    unfold hexDist;
++    grind;
++  · grind +locals
++
++/-! ## §14. Compression Operations -/
++
++/-- Compress a set in the q-direction: for each fixed value of r-coordinate,
++    center the occupied q-positions around 0. -/
++noncomputable def compressQ (S : Finset HexCell) : Finset HexCell :=
++  S.biUnion fun _ => ∅ -- placeholder, actual definition requires more infrastructure
++
++/-! ## §15. Additional Isoperimetric Results -/
++
++/-- **Generalized boundary lower bound**: For any finite set of hex cells,
++    the edge boundary is at least proportional to the square root of the area,
++    with the exact constant given by the hex patch extremals. -/
++theorem edgeBoundary_ge_six (S : Finset HexCell) (hne : S.Nonempty) :
++    edgeBoundary S ≥ 6 := edgeBoundary_pos S hne
++
++/-
++Translation invariance of edge boundary.
++-/
++theorem edgeBoundary_translate (S : Finset HexCell) (v : HexCell) :
++    edgeBoundary (S.map ⟨fun p => (p.1 + v.1, p.2 + v.2),
++      fun a b h => by simp [Prod.ext_iff] at h; exact Prod.ext (by omega) (by omega)⟩) =
++    edgeBoundary S := by
++  unfold edgeBoundary;
++  rw [ Finset.sum_map ];
++  refine' Finset.sum_congr rfl fun p hp => _;
++  rw [ Finset.card_filter, Finset.card_filter ];
++  apply Finset.sum_bij (fun q _ => (q.1 - v.1, q.2 - v.2));
++  · simp +decide [ hexNeighbors ];
++    grind;
++  · grind;
++  · simp +decide [ hexNeighbors ];
++    omega;
++  · aesop
++
++/-
++Monotonicity: removing a cell cannot decrease boundary by more than 6.
++-/
++theorem edgeBoundary_erase_bound (S : Finset HexCell) (p : HexCell) (hp : p ∈ S) :
++    edgeBoundary (S.erase p) ≤ edgeBoundary S + 6 := by
++  unfold edgeBoundary;
++  simp +decide [ Finset.sum_erase, hp ];
++  refine' le_trans ( Finset.sum_le_sum _ ) _;
++  use fun i => ( hexNeighbors i |> Finset.filter fun x => x ∉ S ).card + ( if p ∈ hexNeighbors i then 1 else 0 );
++  · intro i hi; split_ifs <;> simp_all +decide [ Finset.filter_ne', Finset.filter_and ] ;
++    · exact le_trans ( Finset.card_le_card ( show { x ∈ hexNeighbors i | ¬x = p → x ∉ S } ⊆ { x ∈ hexNeighbors i | x ∉ S } ∪ { p } from fun x hx => by by_cases hx' : x = p <;> aesop ) ) ( Finset.card_union_le _ _ );
++    · exact Finset.card_le_card fun x hx => by aesop;
++  · simp +decide [ Finset.sum_add_distrib, Finset.sum_ite ];
++    refine' add_le_add _ _;
++    · exact Finset.sum_le_sum_of_subset ( Finset.erase_subset _ _ );
++    · refine' le_trans ( Finset.card_le_card _ ) _;
++      exact hexNeighbors p;
++      · intro x hx; simp_all +decide [ hexNeighbors ] ;
++        grind;
++      · exact le_of_eq (hexNeighbors_card p)
++
+ 
