@@ -1,4 +1,15 @@
 {
-  "nodes": [],
-  "edges": []
+  "nodes": [
+    {
+      "id": "sum_product_estimates",
+      "title": "Product Growth and the Bourgain-Gamburd Machine for Berggren Dynamics",
+      "domain": "Additive Combinatorics / Spectral Graph Theory / Pythagorean Triple Dynamics",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-17T19:57:05Z",
+      "hue": 90
+    }
+  ],
+  "edges": [],
+  "domain_bridges": []
 }
