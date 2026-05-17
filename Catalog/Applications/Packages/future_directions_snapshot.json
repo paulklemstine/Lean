@@ -351,22 +351,6 @@
     "timestamp": "2026-05-16T09:05:20.407815+00:00"
   },
   {
-    "id": "fd_0235",
-    "title": "Compose",
-    "description": "with `bounded_circuit_degree_bound` and `mulGates_lower_bound_from_degree` to get circuit-complexity-aware bounds.\n\n### Key Theorems\n```\ntheorem circuit_pit_soundness (C : AlgCircuit K n)\n    (hC : C.toMvPolynomial ≠ 0) :\n    Fintype.card {x : Fin n → K // C.eval x = 0}\n      ≤ C.toMvPolynomial.totalDegree * (Fintype.card K) ^ (n - 1)\n```\n\n### Impact\nThis creates the first formal bridge between **circuit complexity** (syntactic) and **polynomial identity testing** (semantic), enabling future formalization of the Kabanets–Impagliazzo connection between PIT derandomization and circuit lower bounds.\n\n---\n\n## Direction 3: Polynomial Fingerprinting and Streaming Verification\n\n### Hypothesis\nTwo strings s₁, s₂ ∈ {0,1}^n are equal if and only if their polynomial encodings p_{s₁}(x) = p_{s₂}(x) as",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "0cb1656b",
-    "timestamp": "2026-05-16T09:05:20.454171+00:00"
-  },
-  {
     "id": "fd_0237",
     "title": "Derive",
     "description": "communication complexity bounds for equality testing.\n\n### Applications\n- Randomized streaming algorithms (frequency moments, distinct elements)\n- Communication complexity (equality, set disjointness)\n- Database verification (fingerprinting of query results)\n\n---\n\n## Direction 4: Low-Degree Testing over Finite Grids\n\n### Hypothesis\nThe Schwartz–Zippel lemma implies that the set of low-degree polynomials over 𝔽_q has large distance from any function that is not low-degree. Specifically, any function f : 𝔽_q^n → 𝔽_q that is δ-far from every polynomial of degree ≤ d (in Hamming distance on evaluations over all of 𝔽_q^n) can be detected by sampling O(d/δ) random lines and checking agreement with a degree-d univariate polynomial.\n\n### Proof Strategy",
@@ -470,22 +454,6 @@
     "timestamp": "2026-05-16T21:01:29.489920+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Extend to quantitative bounds",
-    "description": ": if inputs are in `[a, b]` instead of `{0, 1}`, bound the output range.\n\n### Required New Definitions\n\n- `MonotoneCircuit n m`: circuit with n inputs, m outputs, AND/OR gates.\n- `evalTropicalCircuit`: evaluation function.\n- `circuitDepth`: depth of the circuit.\n\n### Anticipated Blockers\n\n- Defining circuits with shared sub-expressions (DAGs vs trees) — trees are simpler but may not capture all circuits.\n- The extension to quantitative bounds requires interpolation between the Boolean and tropical regimes.\n\n### Enabling Lemmas\n\n- `tropicalMatMap_monotone` handles the matrix case; circuits generalize this.\n- The existing `bool_and_as_tropical_max` from the catalog provides gate-level correctness.\n- `tropical_and_bound` provides quantitative bounds per gate.\n\n### Cross-Domain Impact\n\n- **Cir",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "477ce9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:09:48.059246+00:00"
-  },
-  {
     "id": "fd_0244",
     "title": "Proof strategy:",
     "description": "- Define Dr(r,n) as the set of vectors satisfying all 3-term tropical Plücker relations.\n- Define Trop(Gr(r,n)) via initial ideals or valuated realizability.\n- For r=2: prove equality using the tree-metric characterization (both sides equal\n  the space of tree metrics).\n- For r=3: exhibit an explicit counterexample (the Fano matroid provides one for n=7).",
@@ -515,23 +483,6 @@
     "source_exp_id": "3e135d69",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T22:05:47.364615+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Direct bijection",
-    "description": ": Establish a bijection between permutations and deterministic couplings, preserving cost.\n\n### Cross-Domain Connection\nThis connects voice-leading to the rich theory of optimal transport, including Kantorovich duality, Sinkhorn algorithms, and geodesics in Wasserstein space. It would enable treating chord progressions as curves in Wasserstein space.\n\n---\n\n## Direction 5: Semantic Compression Theorem for Finite Symbolic Dynamical Systems\n\n### Theorem Statement\nFor a finite-state symbolic dynamical system (Markov chain) on state space S with transition matrix P and a semantic distortion measure d_sem (capturing meaning-preserving vs. meaning-distorting simplifications), the rate-distortion function R_sem(D) characterizes the fundamental limits of semantic compression: how much can you simpl",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de00b05b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:05:51.891615+00:00"
   },
   {
     "id": "fd_0260",
@@ -591,20 +542,6 @@
     "source_exp_id": "0ab00abc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T02:47:00.395305+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Subtype approach",
-    "description": ": Define the subtype of reduced polynomials, equip it with the submodule structure from `restrictDegree`, and show the evaluation map is bijective using `exists_reduced_poly_rep` and `reduced_poly_eval_injective`.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0ab00abc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:47:00.451905+00:00"
   },
   {
     "id": "fd_0267",
@@ -696,20 +633,6 @@
     "source_exp_id": "0ab00abc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T02:47:00.601952+00:00"
-  },
-  {
-    "id": "fd_0240",
-    "title": "Parallel pursuit",
-    "description": ": Directions 1, 3, and 4 are relatively independent and can be pursued concurrently.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "aa9f66df",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:03:33.084163+00:00"
   },
   {
     "id": "fd_0241",
@@ -939,20 +862,6 @@
     "timestamp": "2026-05-17T03:06:58.971530+00:00"
   },
   {
-    "id": "fd_0256",
-    "title": "Formalize",
-    "description": "Schwartz-Zippel and box-degree variants (Directions 2-3), validating the inductive structure.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e59ef4a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:31:40.244027+00:00"
-  },
-  {
     "id": "fd_0257",
     "title": "Bridge",
     "description": "to coding theory by proving Reed-Muller distance bounds (Direction 1), connecting to existing code distance literature.",
@@ -994,6 +903,78 @@
     "source_exp_id": "7e59ef4a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T03:31:40.325688+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Formulates precise theorem statements",
+    "description": "in Lean 4 before attempting proofs",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0cb1656b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:35:21.994121+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Decomposes into helper lemmas",
+    "description": "of ≤10 lines each for the proof assistant",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0cb1656b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:35:22.019528+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Validates cross-domain connections",
+    "description": "by consulting both tropical geometry and ML/verification literature",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0cb1656b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:35:22.039593+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Iterates on definitions",
+    "description": "when theorems fail, documenting the mathematical reasons for design choices (as we did with strict vs. weak domination)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0cb1656b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:35:22.059940+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Produces both formal proofs and working implementations",
+    "description": "so that theoretical results are immediately usable\n\n### Priority Order",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0cb1656b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:35:22.084547+00:00"
   },
   {
     "id": "fd_0113",
@@ -1038,10 +1019,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dc51a80a",
     "timestamp": "2026-05-14T16:24:05.740910+00:00"
   },
   {
@@ -1339,10 +1320,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "6f8b6d11",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T02:14:30.279911+00:00"
   },
   {
@@ -1392,10 +1373,10 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2b33dcea",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60bd27bc",
     "timestamp": "2026-05-16T03:24:38.327603+00:00"
   },
   {
@@ -1629,21 +1610,6 @@
     "source_exp_id": "41f0f930",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:12:11.734256+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Lean Target (Conjectural)",
-    "description": "```lean\ntheorem tropical_support_extraction\n    {ι : Type*} [Fintype ι] [DecidableEq ι]\n    (coeffs : (ι →₀ ℕ) → WithTop ℝ)\n    (d : ι →₀ ℕ)\n    (S : ι → Finset ℝ)\n    (hmin : ∀ m ≠ d, coeffs d < coeffs m) :\n    ∃ x ∈ tropicalGrid S,\n      tropicalEval coeffs x = coeffs d + ∑ i, d i • tropicalMin (S i)\n```",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "705965b8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T00:34:14.156206+00:00"
   },
   {
     "id": "fd_0247",

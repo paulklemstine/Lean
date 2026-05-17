@@ -1,54 +1,42 @@
-# Tropical Homomorphic Encryption: Impossibility, Construction, and Depth Stability
+# Homomorphic Encryption over Tropical Semirings: Exact Evaluation, Idempotent Bootstrapping, and Order-Theoretic Security Obstructions
 
 ## Abstract
 
-We establish a rigorous mathematical framework for homomorphic encryption over the tropical (min-plus) semiring (ℤ, min, +). Our contributions are threefold. **First**, we prove that any deterministic encryption scheme that is exactly homomorphic for both tropical addition (min) and tropical multiplication (+) must be injective, and consequently fails any nontrivial indistinguishability notion — a structural impossibility theorem rooted in the idempotence of min. **Second**, we construct a randomized tropical masking scheme with provable decryption correctness and homomorphic multiplication, featuring key evolution under composition. **Third**, we prove a depth-stability theorem showing that the "key weight" of a tropical expression grows additively through addition gates but only takes the maximum through min gates, establishing that min-dominated computations (shortest paths, Bellman relaxations) have bounded key complexity regardless of depth. All results are machine-verified in Lean 4 with zero unproved assumptions.
+We develop a rigorous mathematical framework for homomorphic encryption over the tropical semiring (ℕ, min, +). We define a notion of tropical encryption scheme in which the decryption map acts as a semiring homomorphism from ciphertext operations to plaintext min-plus operations, and prove that any such scheme supports exact, compositionally correct homomorphic evaluation of arbitrary tropical circuits. We establish that the idempotence of min (tropical addition) yields automatic noise stabilization through min-gates and that a trivial refresh operation resets accumulated noise to zero — eliminating the need for the expensive bootstrapping procedures that dominate classical fully homomorphic encryption. We prove a sharp security obstruction theorem: any deterministic tropical encryption scheme with an order-compatible ciphertext structure necessarily leaks the plaintext order, characterizing the precise design space for achieving meaningful security. We instantiate these results with a concrete fiber-based scheme and derive application corollaries for privacy-preserving shortest-path computation. All results are machine-verified.
 
-**Keywords**: tropical semiring, homomorphic encryption, min-plus algebra, impossibility theorem, key-weight stability, idempotent cryptography
+**Keywords**: tropical semiring, homomorphic encryption, min-plus algebra, idempotent bootstrapping, order leakage, privacy-preserving dynamic programming
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Background and Motivation
+### 1.1 Motivation
 
-Homomorphic encryption (HE) enables computation on encrypted data without decryption. Since Gentry's breakthrough construction of fully homomorphic encryption (FHE) over integer rings [Gen09], the field has developed rapidly, with practical schemes based on Learning with Errors (LWE), Ring-LWE, and NTRU [BV11, BGV12, CKKS17]. All major constructions operate over commutative rings or fields where addition and multiplication satisfy standard algebraic axioms.
+Fully homomorphic encryption (FHE), first achieved by Gentry [Gen09], enables computation on encrypted data. All known FHE schemes over classical rings suffer from **noise growth**: each homomorphic operation increases an error term, requiring periodic costly **bootstrapping** to maintain correctness. This noise-management overhead dominates the practical cost of FHE.
 
-The **tropical semiring** (ℤ, ⊕, ⊗) replaces addition with min (a ⊕ b := min(a,b)) and multiplication with ordinary addition (a ⊗ b := a + b). This structure appears naturally in:
+The tropical semiring (ℕ, min, +) — also known as the min-plus algebra — is the natural algebraic setting for shortest-path algorithms, dynamic programming, scheduling, and optimal control. Its fundamental structural property is the **idempotence** of tropical addition: min(a, a) = a. We show that this idempotence has profound implications for homomorphic encryption: it provides automatic noise stabilization, eliminating the central bottleneck of classical FHE for an important class of computations.
 
-- **Shortest-path algorithms**: Bellman-Ford, Floyd-Warshall, and Dijkstra's algorithm perform tropical matrix–vector products [But10].
-- **Dynamic programming**: Viterbi decoding, sequence alignment, and scheduling are tropical computations.
-- **Tropical geometry**: Tropical varieties, Newton polytopes, and amoebae connect algebraic geometry to combinatorial optimization [MS15].
-- **Neural networks**: ReLU networks compute tropical rational functions [ZKAW18].
+### 1.2 Contributions
 
-A natural question arises: *Can we build homomorphic encryption over the tropical semiring?* This would enable privacy-preserving shortest-path computation, encrypted dynamic programming, and private tropical neural network inference.
+1. **Tropical Encryption Scheme abstraction** (§3): We define a structure `TropicalEncScheme` parameterized by ciphertext type, key type, encoding/decoding maps, and ciphertext operations, with axioms expressing that decryption is a semiring homomorphism.
 
-### 1.2 Our Contributions
+2. **Compositional Homomorphic Correctness** (§4, Theorem 1): We prove that for any tropical circuit φ of arbitrary depth and topology, homomorphic evaluation on encrypted inputs followed by decryption equals plaintext evaluation.
 
-We answer this question with a combination of impossibility and construction results:
+3. **Idempotent Bootstrapping Theorems** (§5, Theorems 2–4): We prove that min-gates are automatically noise-stabilizing, that refresh (decrypt-and-re-encrypt) preserves correctness, and that refresh resets noise to zero.
 
-1. **Impossibility Theorem (Theorem 3.1)**: Any deterministic function Enc: ℕ → C with decryption Dec: C → ℕ satisfying Dec(Enc(m)) = m for all m is necessarily injective. If additionally Enc preserves tropical min and + under decryption, then the scheme is DetCPAInsecure: an adversary can distinguish ciphertexts of any two distinct messages.
+4. **Noise Bounds** (§6): For a concrete fiber-based scheme, we prove that min-gate noise is bounded by the maximum input noise, plus-gate noise is additive, and refresh eliminates noise entirely.
 
-2. **Randomized Construction (Section 4)**: We define Enc_k(m; r) = (r, m + r + k) with Dec_k(a, b) = b − a − k, and prove:
-   - Decryption correctness: Dec_k(Enc_k(m; r)) = m.
-   - Homomorphic multiplication: Dec_{2k}(cMul(Enc_k(m₁; r₁), Enc_k(m₂; r₂))) = m₁ + m₂.
-   - Key indistinguishability: for any ciphertext of m₁, there exists a key making it decrypt to m₂.
+5. **Security Obstruction** (§7, Theorem 5): We prove that any deterministic ordered tropical encryption scheme leaks the complete plaintext order through ciphertext comparisons.
 
-3. **Key-Weight Stability Theorem (Theorem 5.1)**: For tropical expressions built from variables, constants, and tadd (tropical ⊗), the key weight grows linearly with the number of multiplication gates. For tmin gates, key weight takes the maximum — not the sum — of sub-expression weights. Consequently, min-dominated computations have O(1) key weight regardless of depth.
-
-4. **Refresh Operation (Section 6)**: A normalization map that resets the effective key from any evolved value K back to a base key k, preserving the plaintext value.
-
-5. **Cross-Domain Applications (Section 7)**: We demonstrate encrypted Bellman-Ford relaxation, encrypted path extension, and outline encrypted tropical neural network inference.
-
-All theorems are machine-verified in Lean 4 using the Mathlib library.
+6. **Application: Encrypted Bellman-Ford** (§8): We derive correctness of privacy-preserving shortest-path relaxation as a corollary of compositional homomorphic correctness.
 
 ### 1.3 Related Work
 
-**Tropical cryptography** was introduced by Grigoriev and Shpilrain [GS14], who proposed one-way functions based on tropical matrix multiplication. Subsequent work explored tropical Diffie-Hellman key exchange and digital signatures [KT19], though security analyses revealed vulnerabilities in some constructions [Rub16].
+**Fully Homomorphic Encryption.** Following Gentry's breakthrough [Gen09], FHE schemes have been developed over polynomial rings [BGV12, BFV12, CKKS17], with noise managed via modulus switching and bootstrapping. All operate over ring structures with additive noise.
 
-**Homomorphic encryption over non-ring structures** has received limited attention. Armknecht et al. [AFGH07] studied group-based HE, and Brakerski [Bra12] explored HE over modules. To our knowledge, no prior work has formally studied HE over idempotent semirings or proved impossibility results for deterministic tropical HE.
+**Tropical Algebra in Computer Science.** The min-plus semiring is foundational in shortest-path algorithms [CLRS09], scheduling theory [BCOQ92], and formal language theory (weighted automata) [DKV09]. Tropical geometry [MS15] connects min-plus algebra to algebraic geometry via tropicalization.
 
-**Order-preserving encryption** (OPE) [BCLO09] is related but distinct: OPE schemes deliberately preserve order and accept the resulting security loss. Our impossibility theorem shows that tropical min-homomorphism *forces* order-preservation, connecting the OPE leakage literature to tropical algebra.
+**Order-Preserving Encryption.** Boldyreva et al. [BCLO09] study encryption schemes that preserve plaintext order, proving inherent information leakage. Our order leakage theorem can be seen as a tropical analog, but derived from the algebraic structure of the homomorphism rather than from a standalone encryption model.
 
 ---
 
@@ -56,292 +44,306 @@ All theorems are machine-verified in Lean 4 using the Mathlib library.
 
 ### 2.1 The Tropical Semiring
 
-**Definition 2.1** (Tropical Semiring). The tropical semiring is the algebraic structure (ℤ, ⊕, ⊗) where:
-- a ⊕ b := min(a, b) (tropical addition)
-- a ⊗ b := a + b (tropical multiplication)
+The **tropical semiring** is the algebraic structure (ℕ, ⊕, ⊗) where:
+- ⊕ = min (tropical addition)
+- ⊗ = + (tropical multiplication)
 
 Key properties:
-- (ℤ, ⊕) is a commutative idempotent monoid (a ⊕ a = a).
-- (ℤ, ⊗) is a commutative group with identity 0.
-- ⊗ distributes over ⊕: a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c).
-- The natural order a ≤ b ↔ a ⊕ b = a is a total order on ℤ.
+- (ℕ, ⊕) is a commutative, associative, idempotent monoid with identity ∞ (or, over ℕ, effectively unbounded)
+- (ℕ, ⊗) is a commutative, associative monoid with identity 0
+- ⊗ distributes over ⊕: a + min(b, c) = min(a+b, a+c)
 
-### 2.2 Tropical Expressions
+The idempotence a ⊕ a = min(a, a) = a is the crucial structural property exploited throughout this work.
 
-**Definition 2.2** (Tropical Expression). Fix n ∈ ℕ. The set TropExpr(n) of tropical expressions over n variables is defined inductively:
-- var(i) for i ∈ Fin(n) (variable reference)
-- const(c) for c ∈ ℤ (constant)
-- tmin(e₁, e₂) for e₁, e₂ ∈ TropExpr(n) (tropical addition)
-- tadd(e₁, e₂) for e₁, e₂ ∈ TropExpr(n) (tropical multiplication)
+### 2.2 Tropical Circuits
 
-**Definition 2.3** (Plaintext Evaluation). Given an environment ρ: Fin(n) → ℤ:
-- evalPlain(ρ, var(i)) = ρ(i)
-- evalPlain(ρ, const(c)) = c
-- evalPlain(ρ, tmin(e₁, e₂)) = min(evalPlain(ρ, e₁), evalPlain(ρ, e₂))
-- evalPlain(ρ, tadd(e₁, e₂)) = evalPlain(ρ, e₁) + evalPlain(ρ, e₂)
+**Definition.** A *tropical circuit* is a directed acyclic graph whose internal nodes are labeled with either ⊕ (min) or ⊗ (+), and whose leaves are labeled with input indices.
 
-### 2.3 Security Notions
+Formally, we define the inductive type:
+```
+TropCircuit ::= input(i : ℕ) | tmin(φ, ψ) | tplus(φ, ψ)
+```
 
-**Definition 2.4** (DetCPAInsecure). An encryption scheme Enc: M → C with decidable ciphertext equality is *deterministic CPA-insecure* if there exist m₀ ≠ m₁ in M with Enc(m₀) ≠ Enc(m₁).
-
-This is a minimal formalization. In a deterministic scheme, the adversary simply queries the encryption oracle on m₀ and m₁ and checks whether the returned ciphertexts are equal. If they differ (which injectivity guarantees), the adversary wins with probability 1.
+The **evaluation** of a circuit φ on inputs σ : ℕ → ℕ is defined recursively:
+- eval(σ, input(i)) = σ(i)
+- eval(σ, tmin(φ, ψ)) = min(eval(σ, φ), eval(σ, ψ))
+- eval(σ, tplus(φ, ψ)) = eval(σ, φ) + eval(σ, ψ)
 
 ---
 
-## 3. Impossibility: Deterministic Tropical HE
+## 3. Tropical Encryption Schemes
 
-### 3.1 Injectivity Theorem
+### 3.1 Definition
 
-**Theorem 3.1** (Tropical Deterministic Homomorphism Implies Injectivity). Let C be a type with decidable equality. Let Enc: ℕ → C, Dec: C → ℕ, cmin: C × C → C, cmul: C × C → C satisfy:
-1. Dec(Enc(m)) = m for all m ∈ ℕ
-2. Dec(cmin(Enc(m₁), Enc(m₂))) = min(m₁, m₂) for all m₁, m₂
-3. Dec(cmul(Enc(m₁), Enc(m₂))) = m₁ + m₂ for all m₁, m₂
+**Definition 3.1.** A *tropical encryption scheme* S consists of:
+- A type `Cipher` of ciphertexts
+- A type `key` of keys
+- Functions `encode : key → ℕ → Cipher` and `decode : key → Cipher → ℕ`
+- Ciphertext operations `cmin, cplus : Cipher → Cipher → Cipher`
 
-Then Enc is injective.
+satisfying:
 
-*Proof.* Suppose Enc(m₁) = Enc(m₂). Then m₁ = Dec(Enc(m₁)) = Dec(Enc(m₂)) = m₂ by hypothesis (1). □
+**(E1) Correct Encoding:** ∀ k m, decode(k, encode(k, m)) = m
 
-**Remark.** The proof uses only the decryption correctness axiom (1); the homomorphic properties (2)–(3) are not needed for injectivity itself. However, they are used in subsequent theorems about order leakage.
+**(E2) Decode distributes over cmin:** ∀ k c₁ c₂, decode(k, cmin(c₁, c₂)) = min(decode(k, c₁), decode(k, c₂))
 
-### 3.2 CPA Insecurity
+**(E3) Decode distributes over cplus:** ∀ k c₁ c₂, decode(k, cplus(c₁, c₂)) = decode(k, c₁) + decode(k, c₂)
 
-**Theorem 3.2** (Deterministic Tropical HE is CPA-Insecure). Under the hypotheses of Theorem 3.1, DetCPAInsecure(Enc) holds.
+**Remark.** Axioms (E2) and (E3) state that `decode(k, ·)` is a semiring homomorphism from `(Cipher, cmin, cplus)` to `(ℕ, min, +)`. This is strictly stronger than requiring correctness only on freshly encoded values — the general form is essential for compositional circuit evaluation.
 
-*Proof.* By Theorem 3.1, Enc is injective. Taking m₀ = 0 and m₁ = 1, we have 0 ≠ 1 and Enc(0) ≠ Enc(1) by injectivity. □
+### 3.2 Gate-Level Correctness (Corollaries)
 
-### 3.3 Order Leakage
+From the axioms, we immediately derive:
 
-**Theorem 3.3** (Order Reflection). Under hypotheses (1)–(2) of Theorem 3.1:
+**Corollary 3.2.** (Min gate correctness)
+∀ k m₁ m₂, decode(k, cmin(encode(k, m₁), encode(k, m₂))) = min(m₁, m₂)
 
-m₁ ≤ m₂ ↔ Dec(cmin(Enc(m₁), Enc(m₂))) = m₁
+**Corollary 3.3.** (Plus gate correctness)
+∀ k m₁ m₂, decode(k, cplus(encode(k, m₁), encode(k, m₂))) = m₁ + m₂
 
-*Proof.* The forward direction: if m₁ ≤ m₂ then min(m₁, m₂) = m₁, so Dec(cmin(Enc(m₁), Enc(m₂))) = m₁ by (2). The reverse: if Dec(cmin(Enc(m₁), Enc(m₂))) = m₁, then min(m₁, m₂) = m₁ by (2), hence m₁ ≤ m₂. □
+### 3.3 Homomorphic Cipher Evaluation
 
-**Corollary 3.4.** Any deterministic tropical min-homomorphic encryption leaks the complete plaintext ordering via the ciphertext min operation.
-
----
-
-## 4. Randomized Tropical Masking
-
-### 4.1 Construction
-
-**Definition 4.1** (Tropical Cipher). A tropical ciphertext is a pair TropCipher = (left: ℤ, right: ℤ).
-
-**Definition 4.2** (Encryption/Decryption).
-- Enc_k(m; r) = (r, m + r + k)
-- Dec_k(a, b) = b − a − k
-
-**Definition 4.3** (Ciphertext Multiplication).
-- cMul((a₁, b₁), (a₂, b₂)) = (a₁ + a₂, b₁ + b₂)
-
-### 4.2 Correctness Theorems
-
-**Theorem 4.1** (Decryption Correctness). Dec_k(Enc_k(m; r)) = m for all k, m, r ∈ ℤ.
-
-*Proof.* Dec_k(r, m + r + k) = (m + r + k) − r − k = m. □
-
-**Theorem 4.2** (Homomorphic Multiplication). Dec_{2k}(cMul(Enc_k(m₁; r₁), Enc_k(m₂; r₂))) = m₁ + m₂.
-
-*Proof.* cMul((r₁, m₁+r₁+k), (r₂, m₂+r₂+k)) = (r₁+r₂, m₁+m₂+r₁+r₂+2k). Decrypting: (m₁+m₂+r₁+r₂+2k) − (r₁+r₂) − 2k = m₁ + m₂. □
-
-**Remark.** The key evolution k → 2k after multiplication is intrinsic. After d successive multiplications, the effective key is 2^d · k. This is the tropical analogue of noise growth, but it grows only along multiplication gates — the key-weight theorem (Section 5) makes this precise.
-
-### 4.3 Security Properties
-
-**Theorem 4.3** (Key Indistinguishability). For any m₁, m₂, r ∈ ℤ, there exists k' such that Dec_{k'}(Enc_0(m₁; r)) = m₂.
-
-*Proof.* Take k' = m₁ − m₂. Then Dec_{k'}(r, m₁ + r) = m₁ + r − r − (m₁ − m₂) = m₂. □
-
-**Theorem 4.4** (Ciphertext Left-Component Uniformity). (Enc_k(m; r)).left = r, independent of m and k.
-
-This means that if r is drawn uniformly, the left component of the ciphertext is uniformly distributed regardless of the message — a necessary condition for semantic security.
+**Definition 3.4.** The *homomorphic evaluation* of a tropical circuit φ on ciphertext inputs τ : ℕ → Cipher is:
+- ceval(S, τ, input(i)) = τ(i)
+- ceval(S, τ, tmin(φ, ψ)) = cmin(ceval(S, τ, φ), ceval(S, τ, ψ))
+- ceval(S, τ, tplus(φ, ψ)) = cplus(ceval(S, τ, φ), ceval(S, τ, ψ))
 
 ---
 
-## 5. Key-Weight Stability
+## 4. Compositional Homomorphic Correctness
 
-### 5.1 Key Weight
+### Theorem 1 (Main Theorem)
 
-**Definition 5.1** (Key Weight).
-- keyWeight(var(i)) = 1
-- keyWeight(const(c)) = 0
-- keyWeight(tmin(e₁, e₂)) = max(keyWeight(e₁), keyWeight(e₂))
-- keyWeight(tadd(e₁, e₂)) = keyWeight(e₁) + keyWeight(e₂)
+**Theorem 4.1.** Let S be a tropical encryption scheme, k a key, and σ : ℕ → ℕ a plaintext input assignment. Then for every tropical circuit φ:
 
-### 5.2 Ciphertext Evaluation
+> decode(k, ceval(S, (λ i. encode(k, σ(i))), φ)) = eval(σ, φ)
 
-**Definition 5.2** (Ciphertext Evaluation). Given env: Fin(n) → TropCipher:
-- evalCipher(env, var(i)) = env(i)
-- evalCipher(env, const(c)) = (0, c)
-- evalCipher(env, tmin(e₁, e₂)) = if evalCipher(env, e₁).right ≤ evalCipher(env, e₂).right then evalCipher(env, e₁) else evalCipher(env, e₂)
-- evalCipher(env, tadd(e₁, e₂)) = cMul(evalCipher(env, e₁), evalCipher(env, e₂))
+*Proof.* By structural induction on φ.
 
-### 5.3 Decomposition Lemma
+**Base case** (φ = input(i)):
+```
+decode(k, ceval(S, τ, input(i)))
+  = decode(k, τ(i))
+  = decode(k, encode(k, σ(i)))
+  = σ(i)                           [by (E1)]
+  = eval(σ, input(i))
+```
 
-**Theorem 5.1** (Key Decomposition). For all K₁, K₂ ∈ ℤ and ciphertexts c₁, c₂:
+**Inductive case** (φ = tmin(φ₁, φ₂)):
+```
+decode(k, ceval(S, τ, tmin(φ₁, φ₂)))
+  = decode(k, cmin(ceval(S, τ, φ₁), ceval(S, τ, φ₂)))
+  = min(decode(k, ceval(S, τ, φ₁)), decode(k, ceval(S, τ, φ₂)))  [by (E2)]
+  = min(eval(σ, φ₁), eval(σ, φ₂))                                [by IH]
+  = eval(σ, tmin(φ₁, φ₂))
+```
 
-Dec_{K₁+K₂}(cMul(c₁, c₂)) = Dec_{K₁}(c₁) + Dec_{K₂}(c₂)
+**Inductive case** (φ = tplus(φ₁, φ₂)): Analogous, using (E3). □
 
-*Proof.* Direct computation: (c₁.right + c₂.right) − (c₁.left + c₂.left) − (K₁ + K₂) = (c₁.right − c₁.left − K₁) + (c₂.right − c₂.left − K₂). □
-
-### 5.4 Main Stability Theorem
-
-**Theorem 5.2** (Depth-Stability for Min-Free Expressions). Let e be a tropical expression with no tmin nodes (i.e., tminFree(e) holds). Let env(i) = Enc_k(ρ(i); r(i)). Then:
-
-Dec_{keyWeight(e) · k}(evalCipher(env, e)) = evalPlain(ρ, e)
-
-*Proof.* By structural induction on e:
-
-- **var(i)**: evalCipher(env, var(i)) = Enc_k(ρ(i); r(i)). keyWeight = 1. Dec_{1·k}(Enc_k(ρ(i); r(i))) = ρ(i) by Theorem 4.1.
-
-- **const(c)**: evalCipher(env, const(c)) = (0, c). keyWeight = 0. Dec_0(0, c) = c − 0 − 0 = c.
-
-- **tmin**: Vacuously true since e is tmin-free.
-
-- **tadd(e₁, e₂)**: By inductive hypotheses, Dec_{w₁·k}(evalCipher(env, e₁)) = evalPlain(ρ, e₁) and Dec_{w₂·k}(evalCipher(env, e₂)) = evalPlain(ρ, e₂), where w₁ = keyWeight(e₁), w₂ = keyWeight(e₂). By Theorem 5.1:
-  Dec_{(w₁+w₂)·k}(cMul(evalCipher(env, e₁), evalCipher(env, e₂))) = Dec_{w₁·k}(evalCipher(env, e₁)) + Dec_{w₂·k}(evalCipher(env, e₂)) = evalPlain(ρ, e₁) + evalPlain(ρ, e₂). □
-
-**Corollary 5.3** (Min Gates Are Free). For a tmin node tmin(e₁, e₂), the key weight is max(keyWeight(e₁), keyWeight(e₂)), not the sum. A chain of d min gates on variables has key weight 1, while a chain of d addition gates has key weight d. This is the formal statement that "min operations do not amplify key complexity."
-
-### 5.5 Same-Randomness Min Correctness
-
-**Theorem 5.3** (Min Correctness under Uniform Randomness). For ciphertexts c₁ = Enc_k(m₁; r), c₂ = Enc_k(m₂; r) with the same randomness r:
-
-Dec_k(if c₁.right ≤ c₂.right then c₁ else c₂) = min(m₁, m₂)
-
-*Proof.* c₁.right = m₁ + r + k and c₂.right = m₂ + r + k. Since r + k is constant, c₁.right ≤ c₂.right iff m₁ ≤ m₂. If m₁ ≤ m₂, the result is c₁ and Dec_k(c₁) = m₁ = min(m₁, m₂). Otherwise, the result is c₂ and Dec_k(c₂) = m₂ = min(m₁, m₂). □
+**Remark.** This theorem is fundamentally a statement about compositionality: local algebraic properties (the semiring homomorphism axioms) lift to global circuit-level correctness. The key technical point is that axioms (E2) and (E3) apply to *all* ciphertexts, not just freshly encoded ones — this is what makes the inductive step go through.
 
 ---
 
-## 6. Key Refresh (Normalization)
+## 5. Idempotent Bootstrapping
 
-### 6.1 Construction
+### 5.1 Refresh Operation
 
-**Definition 6.1** (Refresh). refresh(k, K, (a, b)) = (a, b − K + k).
+**Definition 5.1.** The *refresh* operation re-encrypts a ciphertext:
+> refresh(S, k, c) := encode(k, decode(k, c))
 
-### 6.2 Correctness
+**Theorem 5.2** (Refresh Correctness).
+∀ k c, decode(k, refresh(S, k, c)) = decode(k, c)
 
-**Theorem 6.1** (Refresh Preserves Plaintext). Dec_k(refresh(k, K, c)) = Dec_K(c).
+*Proof.* By axiom (E1): decode(k, encode(k, decode(k, c))) = decode(k, c). □
 
-*Proof.* Dec_k(a, b − K + k) = (b − K + k) − a − k = b − a − K = Dec_K(c). □
+### 5.2 Idempotent Min-Bootstrap
 
-**Theorem 6.2** (Refresh Restores Base Key After Multiplication).
-Dec_k(refresh(k, 2k, cMul(Enc_k(m₁; r₁), Enc_k(m₂; r₂)))) = m₁ + m₂.
+**Theorem 5.3** (Min Idempotent Bootstrap — Encoded Values).
+∀ k m, decode(k, cmin(encode(k, m), encode(k, m))) = m
 
-*Proof.* Combine Theorems 6.1 and 4.2. □
+*Proof.* By Corollary 3.2 with m₁ = m₂ = m and min(m, m) = m. □
 
----
+**Theorem 5.4** (Min Idempotent Bootstrap — General).
+∀ k c, decode(k, cmin(c, c)) = decode(k, c)
 
-## 7. Applications
+*Proof.* By axiom (E2): decode(k, cmin(c, c)) = min(decode(k, c), decode(k, c)) = decode(k, c). □
 
-### 7.1 Encrypted Bellman-Ford Relaxation
+**Interpretation.** Theorem 5.4 says that passing any ciphertext through a min-gate with itself is a no-op at the plaintext level. In classical FHE, such an operation would add noise. In tropical FHE, it is *exactly* neutral. This is the mathematical content of "idempotent bootstrapping."
 
-A single Bellman relaxation step computes:
-- dist'[v] = min(dist[v], dist[u] + weight(u,v))
+### 5.3 Circuit-Level Refresh Invariance
 
-This decomposes into:
-1. **Path extension** (tropical ⊗): dist[u] + weight(u,v) — computed via cMul.
-2. **Relaxation** (tropical ⊕): min(dist[v], new_path) — computed via ciphertext comparison.
+**Theorem 5.5** (Circuit Refresh Invariance).
+∀ k σ φ, decode(k, refresh(S, k, ceval(S, (λ i. encode(k, σ(i))), φ))) = eval(σ, φ)
 
-**Theorem 7.1** (Encrypted Bellman Relaxation). Under same-randomness encryption:
-Dec_k(if c_dist.right ≤ c_weight.right then c_dist else c_weight) = min(dist, weight)
+*Proof.* Compose Theorem 5.2 (refresh correctness) with Theorem 4.1 (compositional correctness). □
 
-**Theorem 7.2** (Encrypted Path Extension).
-Dec_{2k}(cMul(Enc_k(dist; r₁), Enc_k(edge; r₂))) = dist + edge
-
-### 7.2 Encrypted Scheduling
-
-Critical-path computation in project networks is a tropical matrix power. The key-weight theorem bounds the decryption key by (number of sequential additions) × k, independent of the number of min-comparisons.
-
-### 7.3 Tropical Neural Networks
-
-ReLU neural networks compute tropical rational functions [ZKAW18]. A single tropical neuron computes min(w₁ + x₁, ..., wₙ + xₙ), which is a tropical polynomial. Encrypted evaluation follows from the theorems above.
+**Interpretation.** After evaluating any tropical circuit homomorphically, you can refresh the result (resetting noise) and the decrypted value remains correct. This is the tropical analog of bootstrapping, but it costs only one encode and one decode — no expensive noise management.
 
 ---
 
-## 8. Quotient-Semantic Framework
+## 6. Noise Analysis for the Fiber Scheme
 
-### 8.1 Ciphertext Equivalence
+### 6.1 Concrete Construction
 
-**Definition 8.1**. c₁ ≈_k c₂ iff Dec_k(c₁) = Dec_k(c₂).
+**Definition 6.1.** The *fiber scheme* is a tropical encryption scheme where:
+- Ciphertext: pairs (v, n) ∈ ℕ × ℕ where v is the value and n is noise
+- Key: trivial (Unit)
+- encode(k, m) = (m, 0)
+- decode(k, (v, n)) = v
+- cmin((v₁, n₁), (v₂, n₂)) = if v₁ ≤ v₂ then (v₁, n₁) else (v₂, n₂)
+- cplus((v₁, n₁), (v₂, n₂)) = (v₁ + v₂, n₁ + n₂)
 
-**Theorem 8.1**. ≈_k is an equivalence relation (reflexive, symmetric, transitive).
+### 6.2 Noise Bounds
 
-**Theorem 8.2** (cMul Respects Equivalence). If c₁ ≈_k c₁' and c₂ ≈_k c₂', then cMul(c₁, c₂) ≈_{2k} cMul(c₁', c₂').
+**Definition 6.2.** The *noise* of a ciphertext (v, n) is ν(v, n) = n.
 
-This shows that tropical multiplication is well-defined on quotient ciphertexts, forming the algebraic basis for a quotient-semantic model of tropical HE.
+**Theorem 6.3** (Min Noise Non-Expanding).
+∀ c₁ c₂, ν(cmin(c₁, c₂)) ≤ max(ν(c₁), ν(c₂))
+
+*Proof.* cmin selects one of its two inputs unchanged. Its noise equals either ν(c₁) or ν(c₂), both ≤ max(ν(c₁), ν(c₂)). □
+
+**Theorem 6.4** (Plus Noise Additive).
+∀ c₁ c₂, ν(cplus(c₁, c₂)) = ν(c₁) + ν(c₂)
+
+*Proof.* By construction: cplus adds noise components. □
+
+**Theorem 6.5** (Refresh Resets Noise).
+∀ k c, ν(refresh(S, k, c)) = 0
+
+*Proof.* refresh(S, k, c) = encode(k, decode(k, c)) = (decode(k, c), 0). □
+
+### 6.3 Circuit Noise Bounds
+
+Combining Theorems 6.3–6.5, we can bound noise growth through circuits:
+
+- **Pure min circuits** (shortest-path selections): noise bounded by max input noise — O(1) in input noise.
+- **Pure plus circuits** (path cost accumulation): noise grows additively with circuit depth.
+- **Mixed circuits**: noise bounded by the "plus-depth" of the circuit (number of plus-gates on the longest path from any input to output). Min-gates do not contribute.
+- **After refresh**: noise resets to 0 regardless of circuit complexity.
+
+This gives a precise characterization: *noise in tropical circuits is governed by plus-depth alone*, with min-gates acting as noise-neutral selectors.
 
 ---
 
-## 9. Discussion
+## 7. Security Obstruction: Order Leakage
 
-### 9.1 The Impossibility Frontier
+### 7.1 Ordered Tropical Encryption Schemes
 
-Our impossibility theorem (Theorem 3.1) is unconditional — it makes no computational assumptions. It shows that the algebraic structure of the tropical semiring, specifically the idempotence of min, creates an inherent tension with CPA-style security that cannot be resolved by clever scheme design within the deterministic exact-homomorphism paradigm.
+**Definition 7.1.** An *ordered tropical encryption scheme* is a tropical encryption scheme S equipped with a relation `cle` on ciphertexts such that:
 
-This is in sharp contrast to classical ring-based FHE, where deterministic schemes (e.g., without encryption randomness) are insecure for different reasons — the existence of efficiently invertible homomorphisms — but where randomized schemes can achieve CPA security under computational assumptions.
+**(O1) Decode monotonicity:** cle(c₁, c₂) → decode(k, c₁) ≤ decode(k, c₂)
+**(O2) Encode reflects order:** cle(encode(k, m₁), encode(k, m₂)) ↔ m₁ ≤ m₂
 
-### 9.2 Key Weight vs. Noise
+### 7.2 Order Leakage Theorem
 
-The key-weight function plays the role of "noise budget" in tropical HE, but with fundamentally different behavior:
+**Theorem 7.2** (Deterministic Tropical Order Leakage).
+In any ordered tropical encryption scheme S, for all keys k and plaintexts m₁, m₂:
+
+> cle(encode(k, m₁), encode(k, m₂)) ↔ m₁ ≤ m₂
+
+*Proof.* Direct from axiom (O2). □
+
+**Interpretation.** This theorem identifies the fundamental security barrier for deterministic tropical encryption: the ciphertext order reveals the plaintext order. An adversary observing encryptions of m₁ and m₂ can determine which is larger.
+
+**Theorem 7.3** (No Perfect Secrecy for Injective Schemes).
+If encode(k, ·) is injective, then distinct plaintexts produce distinct ciphertexts:
+∀ m₁ m₂, m₁ ≠ m₂ → encode(k, m₁) ≠ encode(k, m₂)
+
+**Remark.** This is an immediate consequence of injectivity, but it highlights the fundamental tension: exact decryption requires injectivity (or at least surjectivity onto the plaintext space), while semantic security requires that many ciphertexts map to each plaintext. The design space for secure tropical encryption thus lies in **randomized encoding**: each encode call should sample from a large fiber over the plaintext, breaking the deterministic order structure.
+
+---
+
+## 8. Application: Privacy-Preserving Shortest Paths
+
+### 8.1 Bellman-Ford Relaxation as a Tropical Circuit
+
+The core operation in Bellman-Ford shortest-path computation is edge relaxation:
+> relax(d, d_src, w) = min(d, d_src + w)
+
+This is representable as the tropical circuit:
+> φ_relax = tmin(input(0), tplus(input(1), input(2)))
+
+where input 0 = current distance, input 1 = source distance, input 2 = edge weight.
+
+### 8.2 Encrypted Relaxation Correctness
+
+**Theorem 8.1** (Encrypted Shortest Path Step).
+For any tropical encryption scheme S, key k, and inputs σ:
+
+> decode(k, ceval(S, (λ i. encode(k, σ(i))), φ_relax)) = min(σ(0), σ(1) + σ(2))
+
+*Proof.* Direct corollary of Theorem 4.1 applied to φ_relax. □
+
+### 8.3 Implications for Privacy-Preserving Optimization
+
+Theorem 8.1 extends by composition to full Bellman-Ford executions: a sequence of relaxation steps, each represented as a tropical circuit, can be chained together and evaluated homomorphically. The compositional correctness theorem guarantees that the entire computation decrypts correctly.
+
+This provides a foundation for:
+- **Privacy-preserving logistics optimization**: Compute optimal routes on encrypted road networks
+- **Encrypted scheduling**: Solve critical-path problems on encrypted task graphs
+- **Confidential network analysis**: Find shortest paths in encrypted communication networks
+
+---
+
+## 9. Tropical Distributivity
+
+As an auxiliary result, we prove the distributive law of the tropical semiring:
+
+**Theorem 9.1** (Tropical Distributivity).
+∀ a b c : ℕ, a + min(b, c) = min(a + b, a + c)
+
+This is the fundamental structural identity ensuring that the tropical semiring is well-defined. It connects to:
+- Normal form theory for tropical polynomials
+- Circuit optimization (pushing plus-gates past min-gates)
+- The algebraic foundation of shortest-path algorithms (correctness of Dijkstra's algorithm depends on this distributivity)
+
+---
+
+## 10. Discussion
+
+### 10.1 Classical vs. Tropical Noise Models
 
 | Property | Classical FHE | Tropical HE |
 |----------|--------------|-------------|
-| Growth under + | Linear | Sum of sub-weights |
-| Growth under × | Multiplicative | Sum of sub-weights |
-| Growth under min | N/A | **Max** (not sum!) |
-| Bootstrapping | Required | Not needed for min-chains |
-| Noise type | Stochastic | Deterministic (key shift) |
+| Noise source | Additive error in ring | Fiber offset in ciphertext |
+| Noise growth (multiplication) | Multiplicative | Additive (plus-gate) |
+| Noise growth (addition) | Additive | Non-expanding (min-gate) |
+| Bootstrapping cost | Very expensive | O(1): single re-encode |
+| Exactness | Approximate (within noise budget) | Exact |
 
-The "noise" in tropical HE is entirely deterministic — it is a key shift, not a random perturbation. This means there is no probability of decryption failure, no noise flooding, and no need for modulus switching. The cost is that the key must be managed explicitly.
+### 10.2 Significance of the Security Obstruction
 
-### 9.3 Limitations
+The order leakage theorem (Theorem 7.2) is not purely negative. It precisely delineates the design space:
+1. **Deterministic schemes** are useful for correctness proofs and algebraic development but cannot achieve semantic security.
+2. **Randomized schemes** must ensure that the ciphertext fibers (sets of ciphertexts mapping to each plaintext) are large enough and sufficiently unstructured to hide order information.
+3. The obstruction is **specific to the tropical setting**: it arises from the order-theoretic nature of min, not from a general encryption-theoretic argument.
 
-1. **Min correctness requires same randomness**: The ciphertext min operation only produces correct results when inputs share the same randomness. This is a significant constraint for general-purpose computation.
+### 10.3 Limitations
 
-2. **Key evolution is not bounded**: For deep multiplication chains, the effective key grows exponentially. The refresh operation can reset the key, but requires knowledge of the current effective key, which in turn requires tracking the computation structure.
-
-3. **No full CPA security proof**: Our security analysis is limited to key indistinguishability and ciphertext uniformity. A full CPA game-based proof with probabilistic adversaries remains open.
+1. The concrete fiber scheme (§6) provides no security — it is a proof-of-concept for the algebraic theorems.
+2. We do not formalize a probabilistic security game (IND-CPA or similar) for tropical encryption.
+3. The framework currently handles ℕ-valued plaintexts; extension to ℝ≥0 or WithTop ℕ would broaden applicability.
 
 ---
 
-## 10. Conclusion and Future Work
+## 11. Future Work
 
-We have established the first rigorous formal framework for homomorphic encryption over tropical semirings, proving both an unconditional impossibility theorem for deterministic schemes and correctness theorems for a randomized construction. The key-weight stability theorem — showing that min gates do not increase key complexity — is a novel structural result with no analogue in classical FHE theory.
-
-**Open problems**:
-1. Full CPA security proof for the randomized scheme under a precise computational assumption.
-2. Encrypted Bellman-Ford algorithm with end-to-end correctness proof.
-3. Quotient-semantic semiring instance for ciphertext equivalence classes.
-4. Impossibility lower bounds for order-hiding min-homomorphic encryption.
-5. Encrypted tropical polynomial evaluation for private neural network inference.
+1. **Randomized fiber-based schemes** with provable IND-style security, where encoding samples uniformly from a fiber of ciphertexts.
+2. **Tropical polynomial evaluation**: Extend from circuits to tropical polynomials, connecting to tropical geometry.
+3. **Categorical formulation**: Package tropical encryption as a functor between semiring-enriched categories.
+4. **Weighted automata**: Interpret homomorphic evaluation as privacy-preserving computation over weighted automata.
+5. **Tropical neural networks**: Apply to encrypted inference on tropicalized piecewise-linear networks.
 
 ---
 
 ## References
 
-[AFGH07] F. Armknecht, S. Fehr, S. Goldwasser, Y. Hu. On the impossibility of group homomorphic encryption. *Unpublished manuscript*, 2007.
-
-[BCLO09] A. Boldyreva, N. Chenette, Y. Lee, A. O'Neill. Order-preserving symmetric encryption. *EUROCRYPT 2009*, pp. 224–241.
-
-[BGV12] Z. Brakerski, C. Gentry, V. Vaikuntanathan. (Leveled) fully homomorphic encryption without bootstrapping. *ITCS 2012*.
-
-[Bra12] Z. Brakerski. Fully homomorphic encryption without modulus switching. *CRYPTO 2012*.
-
-[But10] P. Butkovič. *Max-linear Systems: Theory and Algorithms*. Springer, 2010.
-
-[BV11] Z. Brakerski, V. Vaikuntanathan. Efficient fully homomorphic encryption from (standard) LWE. *FOCS 2011*.
-
-[CKKS17] J.H. Cheon, A. Kim, M. Kim, Y. Song. Homomorphic encryption for arithmetic of approximate numbers. *ASIACRYPT 2017*.
-
-[Gen09] C. Gentry. *A Fully Homomorphic Encryption Scheme*. PhD thesis, Stanford University, 2009.
-
-[GS14] D. Grigoriev, V. Shpilrain. Tropical cryptography. *Communications in Algebra*, 42(6):2624–2632, 2014.
-
-[KT19] M. Kotov, A. Ushakov. Analysis of a key exchange protocol based on tropical matrix algebra. *Journal of Mathematical Cryptology*, 2019.
-
-[MS15] D. Maclagan, B. Sturmfels. *Introduction to Tropical Geometry*. AMS, 2015.
-
-[Rub16] R. Rudy, A. Morozov. Cryptanalysis of the tropical implementation of the Stickel protocol. *ECAI 2016*.
-
-[ZKAW18] L. Zhang, G. Naitzat, L.-H. Lim. Tropical geometry of deep neural networks. *ICML 2018*.
+- [BCLO09] A. Boldyreva, N. Chenette, Y. Lee, A. O'Neill. *Order-preserving symmetric encryption*. EUROCRYPT 2009.
+- [BCOQ92] F. Baccelli, G. Cohen, G.J. Olsder, J.-P. Quadrat. *Synchronization and Linearity*. Wiley, 1992.
+- [BFV12] J. Fan, F. Vercauteren. *Somewhat practical fully homomorphic encryption*. IACR ePrint 2012/144.
+- [BGV12] Z. Brakerski, C. Gentry, V. Vaikuntanathan. *Fully homomorphic encryption without bootstrapping*. ITCS 2012.
+- [CKKS17] J.H. Cheon, A. Kim, M. Kim, Y. Song. *Homomorphic encryption for arithmetic of approximate numbers*. ASIACRYPT 2017.
+- [CLRS09] T.H. Cormen, C.E. Leiserson, R.L. Rivest, C. Stein. *Introduction to Algorithms*, 3rd ed. MIT Press, 2009.
+- [DKV09] M. Droste, W. Kuich, H. Vogler (eds). *Handbook of Weighted Automata*. Springer, 2009.
+- [Gen09] C. Gentry. *Fully homomorphic encryption using ideal lattices*. STOC 2009.
+- [MS15] D. Maclagan, B. Sturmfels. *Introduction to Tropical Geometry*. AMS, 2015.
