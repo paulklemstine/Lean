@@ -520,24 +520,6 @@
     "timestamp": "2026-05-17T07:17:01.244679+00:00"
   },
   {
-    "id": "fd_0255",
-    "title": "Batch certification",
-    "description": "For certifying a dataset, precompute the normal vectors once and use SIMD/GPU parallelism for the distance computations.\n\n### Cross-Domain Connections\n- **Computational geometry:** Dynamic nearest-facet problems\n- **Database algorithms:** Priority queues, kinetic data structures\n- **Real-time ML:** Online robustness monitoring\n\n### Deliverables\n- Amortized complexity analysis for incremental certification\n- GPU-parallel implementation\n- Benchmarks on standard ML datasets\n\n---\n\n## Direction 4: Extension to Piecewise-Tropical ReLU Regions\n\n### Hypothesis\nFor a deep ReLU network with $L$ layers, each linear region has a local Chebyshev radius computable by our formula. The global Chebyshev radius is the minimum of the local radius and the distance to the nearest region boundary, both of which",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "740c7329",
-    "timestamp": "2026-05-17T07:17:01.286479+00:00"
-  },
-  {
     "id": "fd_0259",
     "title": "Compositional bound",
     "description": "Prove that $r_{\\text{global}} \\geq \\min(r_{\\text{local}}, r_{\\text{region}})$ and characterize when equality holds.\n\n### Cross-Domain Connections\n- **Tropical geometry:** Tropical rational maps, Newton polytopes\n- **Deep learning theory:** Linear region counting, expressivity\n- **Verification:** MILP-based robustness verification\n\n### Deliverables\n- Formal theorem on local-global radius relationship\n- Algorithm for computing local radii in each linear region\n- Comparison with existing deep network certification methods\n\n---\n\n## Direction 5: Tropical Barrier Functions and Interior-Point Certified Training\n\n### Hypothesis\nA log-barrier function based on the margin distances $-\\sum_{j \\neq i} \\log \\Delta_{i,j}(x_0)$ provides a smooth, strongly convex surrogate for robust training that converg",
@@ -993,6 +975,22 @@
     "source_exp_id": "d2a18598",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.336933+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Research Team Directive",
+    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "d2a18598",
+    "consumed_by_exp_id": "4388f83a",
+    "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
     "id": "fd_0200",
@@ -1702,5 +1700,103 @@
     "source_exp_id": "0db29d83",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T08:12:18.330884+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Key Lean Targets",
+    "description": "- Generalize `facetDist` with a `NormedSpace` parameter and dual norm.\n- Prove `facetDist_certifies_robustness` for the general case using the abstract Hahn–Banach inequality in Mathlib.\n- Instantiate for L1, L2, L∞ with explicit dual norm computations.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "740c7329",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:20:23.421417+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Background",
+    "description": "In many real-world deployments, data points are not static—they evolve over time. The question is: can we maintain certified radii as the dataset drifts, without recomputing from scratch?\n\nOur incremental persistence theorem (Theorem B) shows that inserting a new point costs O(md). For kinetic updates where existing points move by small increments, we conjecture that:\n- Certificate changes are Lipschitz in the point movement\n- A priority queue on \"certificate expiration times\" enables event-driven updates\n- The amortized cost is logarithmic in N",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "740c7329",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:20:23.440660+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Impact",
+    "description": "Would establish that certified robustness is not merely a geometric quantity but an information-theoretic one, opening connections to privacy, compression, and coding theory.\n\n---",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "740c7329",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:20:23.468915+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Phase 1 (Months 1-3): Foundation",
+    "description": "- Complete dual-norm generalization (Direction 1)\n- Prove Lipschitz continuity of pointCert (prerequisite for Direction 2)\n- Explore arrangement combinatorics (Direction 3)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "740c7329",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:20:23.496683+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Phase 2 (Months 3-6): Core Development",
+    "description": "- Build kinetic certification framework (Direction 2)\n- Formalize tropical information-theoretic connections (Direction 4)\n- Prototype nearest-facet compilation (Direction 5)",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "740c7329",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:20:23.574805+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Phase 3 (Months 6-12): Integration and Publication",
+    "description": "- Unify Directions 1-5 into a comprehensive framework\n- Implement GPU-accelerated certification library\n- Produce benchmarks on standard robustness datasets (MNIST, CIFAR-10)\n- Submit to top venues (ICML, NeurIPS, FOCS/STOC for theoretical contributions)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "740c7329",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:20:23.598132+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Validation Strategy",
+    "description": "- Each direction should produce at least one formally verified theorem\n- Computational experiments should demonstrate wall-clock speedups\n- Cross-validate with existing certification tools (CROWN, α-CROWN, DeepPoly)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "740c7329",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:20:23.618338+00:00"
   }
 ]
