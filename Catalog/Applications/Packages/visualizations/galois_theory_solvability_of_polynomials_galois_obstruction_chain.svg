@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <style>
+    text { font-family: 'Helvetica Neue', Arial, sans-serif; }
+    .title { font-size: 18px; font-weight: bold; fill: #333; }
+    .box-text { font-size: 13px; fill: #333; }
+    .box-title { font-size: 14px; font-weight: bold; fill: #222; }
+    .arrow { stroke: #2c3e50; stroke-width: 2.5; fill: none; marker-end: url(#arrow2); }
+    .box { rx: 8; ry: 8; stroke: #2c3e50; stroke-width: 2; }
+    .group-box { fill: #ebf5fb; }
+    .galois-box { fill: #fef9e7; }
+    .result-box { fill: #fdedec; }
+    .connect-label { font-size: 11px; fill: #7f8c8d; font-style: italic; }
+  </style>
+  <defs>
+    <marker id="arrow2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" class="title">The Galois Obstruction Chain</text>
+
+  <!-- Box 1: S5 not solvable -->
+  <rect x="50" y="60" width="300" height="70" class="box group-box"/>
+  <text x="200" y="85" text-anchor="middle" class="box-title">Theorem: S₅ is not solvable</text>
+  <text x="200" y="105" text-anchor="middle" class="box-text">Derived series: 120 → 60 → 60 → ...</text>
+  <text x="200" y="120" text-anchor="middle" class="box-text">(A₅ is simple non-abelian)</text>
+
+  <!-- Arrow down -->
+  <line x1="200" y1="130" x2="200" y2="170" class="arrow"/>
+  <text x="215" y="155" class="connect-label">transfer via ≃*</text>
+
+  <!-- Box 2: Gal(f) not solvable -->
+  <rect x="50" y="170" width="300" height="70" class="box galois-box"/>
+  <text x="200" y="195" text-anchor="middle" class="box-title">Gal(f) ≅ S₅ ⟹ Gal(f) not solvable</text>
+  <text x="200" y="215" text-anchor="middle" class="box-text">Non-solvability transfers through</text>
+  <text x="200" y="230" text-anchor="middle" class="box-text">group isomorphisms</text>
+
+  <!-- Arrow down -->
+  <line x1="200" y1="240" x2="200" y2="280" class="arrow"/>
+  <text x="215" y="265" class="connect-label">contrapositive of Abel-Ruffini</text>
+
+  <!-- Box 3: Not solvable by radicals -->
+  <rect x="50" y="280" width="300" height="70" class="box result-box"/>
+  <text x="200" y="305" text-anchor="middle" class="box-title">f is not solvable by radicals</text>
+  <text x="200" y="325" text-anchor="middle" class="box-text">No root of f can be expressed</text>
+  <text x="200" y="340" text-anchor="middle" class="box-text">using +, −, ×, ÷, and ⁿ√</text>
+
+  <!-- Right side: Galois Correspondence -->
+  <rect x="430" y="60" width="330" height="130" class="box galois-box"/>
+  <text x="595" y="85" text-anchor="middle" class="box-title">Galois Correspondence</text>
+  <text x="595" y="110" text-anchor="middle" class="box-text">IntermediateField K L</text>
+  <text x="595" y="130" text-anchor="middle" class="box-text">≃ₒ</text>
+  <text x="595" y="150" text-anchor="middle" class="box-text">(Subgroup Gal(L/K))ᵒᵈ</text>
+  <text x="595" y="175" text-anchor="middle" class="box-text">Order anti-isomorphism</text>
+
+  <!-- Right side: Derived Series -->
+  <rect x="430" y="220" width="330" height="130" class="box group-box"/>
+  <text x="595" y="245" text-anchor="middle" class="box-title">Solvability Criterion</text>
+  <text x="595" y="270" text-anchor="middle" class="box-text">IsSolvable G</text>
+  <text x="595" y="290" text-anchor="middle" class="box-text">⟺</text>
+  <text x="595" y="310" text-anchor="middle" class="box-text">∃ n, derivedSeries G n = ⊥</text>
+  <text x="595" y="335" text-anchor="middle" class="box-text">The onion can be fully peeled</text>
+
+  <!-- Bottom: concrete example -->
+  <rect x="150" y="390" width="500" height="80" class="box" style="fill: #eafaf1; stroke: #27ae60;"/>
+  <text x="400" y="415" text-anchor="middle" class="box-title" style="fill: #27ae60;">Concrete Example: X⁵ − X − 1</text>
+  <text x="400" y="440" text-anchor="middle" class="box-text">Irreducible over ℚ · Discriminant 2869 (not a square)</text>
+  <text x="400" y="460" text-anchor="middle" class="box-text">Gal = S₅ · NOT solvable by radicals — formally verified</text>
+
+  <line x1="200" y1="350" x2="300" y2="390" class="arrow"/>
+</svg>

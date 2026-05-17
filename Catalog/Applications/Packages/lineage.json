@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -52,7 +52,16 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 112
+      "hue": 271
+    },
+    {
+      "id": "galois_theory_solvability_of_polynomials",
+      "title": "Formal Galois Solvability Theory: Machine-Verified Impossibility for Polynomial Equations",
+      "domain": "Algebra — Galois Theory, Group Theory, Field Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-17T21:05:42Z",
+      "hue": 90
     }
   ],
   "edges": [],

@@ -1834,6 +1834,46 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.050241+00:00"
+    },
+    {
+      "id": "fd_0100",
+      "title": "Proof Strategy:",
+      "description": "Our computational evidence shows λ₂ = 1/√3 exactly for all tested primes p ≢ 1 (mod 8). The proof should:\n1. Show each orbit is a (3,2)-bipartite graph with explicit structure from the Berggren action.\n2. Compute the adjacency spectrum using the representation theory of O(2,1; 𝔽_p).\n3. Use the character table of O(2,1; 𝔽_p) to identify irreducible decomposition and eigenvalues.\n4. Show the maximum nontrivial eigenvalue of T_p on each irreducible component is ≤ 1/√3.",
+      "source_exp_id": "daea38ab",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Pythagorean",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:29.612613+00:00"
+    },
+    {
+      "id": "fd_0101",
+      "title": "Cross-Domain Significance:",
+      "description": "- Establishes the Berggren graph as an explicit family of Ramanujan-type expanders.\n- Gives quantitative equidistribution for Pythagorean triples modulo p.\n- Provides a concrete test case for the Sarnak–Xue density hypothesis on arithmetic quotients.",
+      "source_exp_id": "daea38ab",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Pythagorean",
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:29.615130+00:00"
     }
   ],
   "pruned": []
