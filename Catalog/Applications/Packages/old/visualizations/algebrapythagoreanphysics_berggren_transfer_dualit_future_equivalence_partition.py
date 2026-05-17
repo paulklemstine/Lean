@@ -1,1 +1,0 @@
-# See algorithms.py: compute_future_equivalence()
