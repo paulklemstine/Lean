@@ -527,36 +527,6 @@
     "timestamp": "2026-05-17T03:06:58.931363+00:00"
   },
   {
-    "id": "fd_0255",
-    "title": "Directions 2 and 5",
-    "description": "(tropical geometry) require additional Mathlib infrastructure for polyhedral geometry and may need new API development.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a54a94dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:06:58.971530+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Experiment",
-    "description": "with algebraic complexity applications (Direction 5), using computational experiments to identify the sharpest circuit lower bounds achievable from the evaluation framework.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e59ef4a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:31:40.300235+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Unconditional results",
     "description": ": Unlike classical hardness-based PRGs, tropical PRGs may admit unconditional constructions (no unproven assumptions), making this a promising avenue for P vs BPP.",
@@ -571,21 +541,6 @@
     "timestamp": "2026-05-17T05:23:55.616038+00:00"
   },
   {
-    "id": "fd_0267",
-    "title": "Lightweight computation",
-    "description": ": Tropical operations are the simplest possible arithmetic. Any PRG theory built on tropical algebra automatically yields efficient implementations.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8e87fa71",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:23:55.642068+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Achievability",
     "description": ": Construct two polynomials differing in exactly $n - k + 1$ positions (one is $q = 0$, the other is a polynomial of degree $k - 1$ that vanishes at exactly $k - 1$ of the $n$ points).",
@@ -598,23 +553,6 @@
     "source_exp_id": "b3838861",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:33:20.192387+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Use",
-    "description": "`evalOnNodesLinearEquiv` to transport the distance computation between coefficient and evaluation representations.\n\n### Cross-Domain Impact\n\n- **Coding theory**: Foundational parameter for decoder design and performance guarantees.\n- **Cryptography**: Underpins security proofs for polynomial-based commitment schemes.\n- **Information theory**: Provides the Singleton bound with equality (MDS codes).\n\n---\n\n## 2. Multivariate Tensor-Product Interpolation\n\n### Theorem Statement\n\n```\nnoncomputable def multivariateEvalEquiv\n    (K : Type*) [Field K] (m : ℕ)\n    (ns : Fin m → ℕ) (vs : (i : Fin m) → Fin (ns i + 1) → K)\n    (hvs : ∀ i, Function.Injective (vs i)) :\n    (⨂[K] i : Fin m, Polynomial.degreeLT K (ns i + 1)) ≃ₗ[K]\n    ((i : Fin m) → Fin (ns i + 1)) → K\n```\n\nA linear equivalence between ten",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b3838861",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:33:20.219612+00:00"
   },
   {
     "id": "fd_0271",
@@ -645,50 +583,6 @@
     "timestamp": "2026-05-17T05:33:20.391278+00:00"
   },
   {
-    "id": "fd_0276",
-    "title": "Structural analysis",
-    "description": ": Identify the precise algebraic axiom (polynomial root bound) that holds classically but fails tropically.\n\n### Cross-Domain Impact\n\n- **Algebraic combinatorics**: Clarifies the boundary between invertible and non-invertible evaluation problems.\n- **Optimization**: Tropical algebra underlies linear programming duality; understanding its structural limits informs algorithm design.\n- **Mathematical foundations**: A rare example of a formally verified comparison theorem across algebraic structures.\n\n---\n\n## Team Directive\n\nEach direction above is specified with sufficient precision for an independent research team to pursue:",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b3838861",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:33:20.409154+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "Prove the three-variable degree classification",
-    "description": ": Each monomial x^α·y^β·z^γ in the expansion satisfies |α|+|β|+|γ| ≤ 2n, and by the (already formalized) degree splitting lemma, min(|α|,|β|,|γ|) ≤ ⌊2n/3⌋.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.205319+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "Formalize the matrix rank bound",
-    "description": ": If M = Σ_{j=1}^r v_j · w_j^T, then rank(M) ≤ r. This is basic linear algebra but needs a clean Lean statement for matrices over ZMod 3.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.223402+00:00"
-  },
-  {
     "id": "fd_0257",
     "title": "Connect the pieces",
     "description": ": The kernel matrix equals the identity (rank = |A|), and it decomposes into ≤ 3·D₀ rank-1 pieces, giving |A| ≤ 3·D₀.\n\n### Hypothesis\nThe bottleneck is step 1 (polynomial expansion), not the linear algebra. A dedicated effort on multivariate polynomial manipulation over finite fields would break through.\n\n### Cross-Domain Impact\nThis infrastructure would immediately enable formal slice-rank arguments, which are the foundation of the entire polynomial method in combinatorics.\n\n---\n\n## Direction 2: Extension from F₃ⁿ to F_pⁿ\n\n### Status\nThe current development is specific to F₃. The Croot–Lev–Pach method generalizes to F_p for any prime p, with the indicator polynomial Δ(v) = ∏_i(1 − v_i^{p-1}).\n\n### Concrete Next Steps",
@@ -702,20 +596,6 @@
     "source_exp_id": "b0c11eac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:40:37.246012+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Generalize `deltaIndicator` to `ZMod p`",
-    "description": ": Replace the exponent 2 with p−1. The key identity becomes: over F_p, x^{p-1} = 0 iff x = 0, and x^{p-1} = 1 iff x ≠ 0 (Fermat's little theorem).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.267478+00:00"
   },
   {
     "id": "fd_0261",
@@ -734,20 +614,6 @@
     "timestamp": "2026-05-17T05:40:37.325211+00:00"
   },
   {
-    "id": "fd_0262",
-    "title": "Define tensors over finite fields",
-    "description": ": Formalize k-tensors T : (F_q^n)^k → F_q as multilinear functions.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.342900+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Derive the cap set bound as a corollary",
     "description": ".\n\n### Hypothesis\nA general slice-rank theory in Lean would be a major contribution to formal mathematics, enabling a whole family of polynomial method results (sunflower lemma, partition regularity, etc.).\n\n### Cross-Domain Impact\n- **Algebraic complexity**: Slice rank directly connects to tensor rank and matrix multiplication barriers.\n- **Communication complexity**: Multiparty communication lower bounds via tensor methods.\n- **Quantum information**: Entanglement rank and stabilizer formalism connections.\n\n---\n\n## Direction 4: Finite-Field Function Algebra Infrastructure\n\n### Status\nThe current development uses `deltaIndicator` as a concrete function, not as an element of a formal polynomial algebra.\n\n### Concrete Next Steps",
@@ -763,20 +629,6 @@
     "source_exp_id": "b0c11eac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:40:37.418850+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Formalize the quotient ring R_n = F_q[x_1,...,x_n]/(x_i^q − x_i)",
-    "description": ": Show this is isomorphic to the ring of all functions (F_q)^n → F_q.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.436478+00:00"
   },
   {
     "id": "fd_0271",
@@ -797,20 +649,6 @@
     "timestamp": "2026-05-17T05:40:37.508831+00:00"
   },
   {
-    "id": "fd_0274",
-    "title": "Formalize the exponential bound",
-    "description": ": 3 · D_{2n/3} ≤ C · (2.756)^n for some explicit constant C.",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.568064+00:00"
-  },
-  {
     "id": "fd_0275",
     "title": "Connect to cap set density",
     "description": ": |A|/3^n ≤ C · (2.756/3)^n → 0 exponentially.\n\n### Hypothesis\nThe asymptotic analysis requires real analysis infrastructure (saddle-point method or Stirling bounds). The generating function identity is purely combinatorial and should be formalizable now.\n\n### Cross-Domain Impact\n- **Analytic combinatorics**: Formal saddle-point methods for coefficient extraction.\n- **Information theory**: Entropy-based capacity arguments for constrained codes.\n\n---\n\n## Cross-Domain Bridge Theorems\n\n### Bridge to Communication Complexity\nThe kernel matrix M(a,b) = δ_{a,b} on a cap set has a natural interpretation as a communication matrix. The monomial decomposition bounds the communication complexity of the equality function restricted to cap sets. Formalizing this connection would create a bridge between",
@@ -825,20 +663,6 @@
     "source_exp_id": "b0c11eac",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:40:37.588315+00:00"
-  },
-  {
-    "id": "fd_0276",
-    "title": "Direction 4",
-    "description": "(Function algebra) — Highest long-term impact, enables everything else",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.606137+00:00"
   },
   {
     "id": "fd_0264",
@@ -867,6 +691,117 @@
     "source_exp_id": "d4991975",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:59:43.618569+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Product decomposition",
+    "description": ": Factor A_n as a product of independent sibling operators and parent-child operators. Use the known sibling gap (ρ_sib = 1/2) and bound the parent-child contribution via Berggren entry growth bounds.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63e8a2bf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:13:18.953441+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Hashimoto matrix method",
+    "description": ": Construct the 2|E| × 2|E| Hashimoto matrix explicitly and use its block structure (inherited from the ternary tree) to compute eigenvalues.\n\n### Cross-Domain Connection\nNonbacktracking operators are central to **community detection** in network science and **belief propagation** in statistical physics. Sharp bounds for the Berggren nonbacktracking operator would provide new tools for analyzing arithmetic networks.\n\n---\n\n## Direction 3: Deterministic Sampling Theorem for Primitive Triples\n\n### Hypothesis\nThe Berggren spectral gap enables construction of an explicit ε-biased sample space for arithmetic functions on primitive Pythagorean triples, with sample complexity polynomial in log(1/ε).\n\n### Exact Theorem Statement\nFor any family F of bounded arithmetic test functions on primitive tri",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63e8a2bf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:13:19.011196+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "Expander walk sampling",
+    "description": "[Gillman 1998]: Use the spectral gap to show that a single walk of length O(log(1/ε)) on the Berggren tree gives an ε-approximate sample. This converts the spectral bound directly into a derandomization result.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63e8a2bf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:13:19.028976+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Expander Chernoff bound",
+    "description": ": Apply the expander Chernoff bound (Healy 2008) to the Berggren walk, obtaining exponential concentration for averages along the walk.\n\n### Cross-Domain Connection\nThis directly addresses the **P vs. BPP** question in complexity theory: deterministic simulation of randomized algorithms. The Berggren expander provides a concrete arithmetic construction for the pseudorandom generators needed in derandomization.\n\n---\n\n## Direction 4: Automorphic and Thermodynamic Bridge\n\n### Hypothesis\nThe Berggren spectral gap is an instance of a broader automorphic phenomenon: the eigenvalues of the Berggren generators, viewed as elements of SO(2,1)(ℤ), are controlled by automorphic forms on the associated locally symmetric space.\n\n### Exact Theorem Statement\nLet Γ be the semigroup generated by B₁, B₂, B₃ ",
+    "domains": [
+      "Pythagorean",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63e8a2bf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:13:19.055027+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Thermodynamic formalism",
+    "description": ": Define the Berggren pressure function P(s) = lim (1/n) log Σ_{|w|=n} ‖B_w(3,4,5)‖^s and show P has an analytic continuation with a gap between the leading and subleading singularities.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63e8a2bf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:13:19.075404+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Selberg zeta function",
+    "description": ": Construct the Selberg-type zeta function for the Berggren semigroup and relate its zeros to the spectrum of the Laplacian on Γ\\H², where H² is the hyperbolic plane.\n\n### Cross-Domain Connection\nThis connects to the **Langlands program** — specifically, to automorphic representations of SO(2,1) and their L-functions. A spectral gap in this setting would be a thin-group analog of Selberg's 1/4 conjecture.\n\n---\n\n## Direction 5: Complexity-Theoretic Derandomization via Arithmetic Expanders\n\n### Hypothesis\nBerggren walks can replace truly random bits in BPP algorithms for problems with arithmetic structure, achieving deterministic polynomial-time solutions.\n\n### Exact Theorem Statement\nLet L be a language decidable by a randomized algorithm A using r random bits and achieving error probabilit",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63e8a2bf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:13:19.099980+00:00"
+  },
+  {
+    "id": "fd_0275",
+    "title": "Impagliazzo-Wigderson reduction",
+    "description": ": If the Berggren spectral gap can be shown to be computationally hard to break (i.e., no efficient algorithm can distinguish Berggren walks from random), then apply the IW derandomization theorem.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63e8a2bf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:13:19.139807+00:00"
   },
   {
     "id": "fd_0113",
@@ -1046,6 +981,22 @@
   },
   {
     "id": "fd_0200",
+    "title": "Research Team Directive",
+    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "d2a18598",
+    "consumed_by_exp_id": "2466d1aa",
+    "timestamp": "2026-05-15T03:04:56.387897+00:00"
+  },
+  {
+    "id": "fd_0200",
     "title": "1. Confluence and Canonical Forms for Commutative-Associative Tropical Syntax",
     "description": "**Precise statement:** Extend `TropExpr` with associativity and commutativity normalization rules for `tmin` and `add`. Define `normalize_ca : TropExpr → TropExpr` that flattens nested `tmin`/`add` nodes into sorted lists of children (using a total order on `TropExpr`). Prove:\n\n```\n∀ e, eval σ (normalize_ca e) = eval σ e\n∀ e, normalize_ca (normalize_ca e) = normalize_ca e\n∀ e₁ e₂, (∀ σ, eval σ e₁ = eval σ e₂) → normalize_ca e₁ = normalize_ca e₂  -- on the AC fragment\n```\n\n**Proof strategy:** Define a canonical flattened representation (sorted lists of summands/minands). Show the flattening+sorting procedure preserves eval by commutativity and associativity of `min` and `+` over `ℝ`. Idempotence follows from the determinism of sorting. Completeness on the AC fragment requires showing that a",
     "domains": [
@@ -1061,21 +1012,6 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Summary: Research Roadmap",
-    "description": "| Priority | Direction | Key Theorem | Dependencies |\n|----------|-----------|-------------|--------------|\n| 1 | Finite Products | `finProd_universal` | Binary product (done) |\n| 2 | Termination | `product_reduction_terminates` | Product + well-founded induction |\n| 3 | Pressure Bounds | `pressure_product_bound` | Product + real analysis |\n| 4 | Automata Sync | `product_word_bound` | Product + combinatorics |\n| 5 | Security Comp | `composed_security_bound` | Dual (min) product |\n\nEach direction builds directly on the categorical product infrastructure established in this work. The key insight is that invariant-bearing systems form a category with enough structure (products, identity, composition, associativity) to support systematic compositional reasoning across thermodynamics, automata ",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a015a16c",
-    "consumed_by_exp_id": "63e8a2bf",
-    "timestamp": "2026-05-15T08:01:09.762727+00:00"
   },
   {
     "id": "fd_0194",
@@ -1557,39 +1493,6 @@
     "timestamp": "2026-05-17T04:47:06.140680+00:00"
   },
   {
-    "id": "fd_0267",
-    "title": "4. Anisotropic Variant: Weighted Edge Boundary Minimization",
-    "description": "**Goal**: For direction-dependent edge weights w(d) on the 6 hex directions, identify the exact minimizers of the weighted boundary ∑ w(d) · (boundary edges in direction d).\n\n**Hypothesis**: Minimizers are distorted hexagonal patches — the Wulff shapes of the anisotropic metric defined by the weights. When weights break the 6-fold symmetry, the optimal shape becomes a non-regular hexagon.\n\n**Proof Strategy**:\n1. Define anisotropic compression that respects the weight structure\n2. Prove monotonicity of weighted boundary under weighted compression\n3. Classify fixed points of anisotropic compression\n4. Compute exact weighted boundary of distorted hex patches\n\n**Physical Motivation**: Crystal surfaces in real materials have direction-dependent surface energies. This variant directly models ani",
-    "domains": [
-      "Cryptography",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c0fc49e2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:47:06.161738+00:00"
-  },
-  {
-    "id": "fd_0262",
-    "title": "4. Define Tropical Grassmannians via Initial Ideals",
-    "description": "**Status**: Our InTropicalGrassmannian3 uses a simplified \"initial matroid\" characterization. The full definition uses tropical varieties and initial ideals.\n\n**Strategy**: Formalize:\n- Non-archimedean valued fields (Mathlib has some infrastructure)\n- Tropicalization of polynomial ideals\n- The Plücker ideal and its tropicalization\n- Prove that Trop(Gr(r,n)) = tropicalization of the Plücker ideal\n\n**Cross-domain connections**:\n- Initial ideal theory connects to Gröbner bases and computational algebra\n- Tropical varieties connect to Newton polytopes and toric geometry\n- The secondary fan structure of the Dressian connects to regular subdivisions",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "75c7e5d3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:49:34.970752+00:00"
-  },
-  {
     "id": "fd_0261",
     "title": "3. Generalization to Polynomial Identity Testing (PIT)",
     "description": "**Hypothesis:** The kernel-counting lemma generalizes from linear forms to multivariate polynomials: for a nonzero polynomial `f ∈ F_q[x_1,...,x_p]` of total degree `d`, the set `{r ∈ F_q^p | f(r) = 0}` has cardinality at most `d · q^{p-1}`.\n\n**Proof Strategy:**\n- The univariate case is already formalized (`card_roots_le_natDegree_filter`).\n- For the multivariate case, use induction on the number of variables:\n  - Fix all but one variable; the resulting univariate polynomial has degree ≤ `d`.\n  - Apply the univariate bound and sum over assignments to the other variables.\n- This is the full Schwartz-Zippel lemma.\n\n**Cross-Domain Connections:**\n- Algebraic circuit complexity: PIT is equivalent to circuit lower bounds (Kabanets-Impagliazzo).\n- Derandomization: deterministic PIT would imply `B",
@@ -1606,23 +1509,6 @@
     "source_exp_id": "30c5294d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:24:21.675823+00:00"
-  },
-  {
-    "id": "fd_0262",
-    "title": "4. Streaming Fingerprinting for Equality and Frequency Moments",
-    "description": "**Hypothesis:** The streaming verifier architecture extends to fingerprinting: given a stream of elements, maintain a compressed fingerprint such that two streams have equal fingerprints iff they represent the same multiset, with error probability ≤ `1/q`.\n\n**Proof Strategy:**\n- Define a stream fingerprint as `∑_i a_i · r^i mod q` for a random `r ∈ ZMod q`.\n- The equality test reduces to polynomial identity testing: two streams differ iff the difference polynomial is nonzero.\n- Apply the univariate root bound to get soundness.\n- For frequency moments (`F_k = ∑ f_i^k`), formalize AMS sketches using the same kernel-counting infrastructure.\n\n**Cross-Domain Connections:**\n- Database verification: fingerprinting enables sublinear-space database comparison.\n- Network monitoring: streaming algori",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "30c5294d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:24:21.699036+00:00"
   },
   {
     "id": "fd_0249",
@@ -1756,23 +1642,6 @@
     "source_exp_id": "53e2f8f2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:47:24.741686+00:00"
-  },
-  {
-    "id": "fd_0262",
-    "title": "4. Extractor Robustness Under Bounded Source Drift",
-    "description": "**Target Theorem**: If a randomness extractor `Ext` has output close to uniform when the source has min-entropy at least `k`, and the min-entropy functional is `K`-Lipschitz with respect to statistical distance on sources, then the extractor remains secure under bounded source drift: any perturbation of the source within radius `r ≤ ε/(2K)` preserves `ε/2`-closeness to uniform.\n\n**Formal Statement Sketch**:\n```\ntheorem extractor_robustness_source_drift\n    (Ext : Source → Output)\n    (K ε r : ℝ)\n    (X X' : Source)\n    (hExt : sd(Ext(X), Uniform) ≤ ε)\n    (hLip : ∀ μ ν, |sd(Ext(μ), Uniform) - sd(Ext(ν), Uniform)| ≤ K * sd(μ, ν))\n    (hclose : sd(X, X') ≤ r) (hr : r ≤ ε / (2 * K)) :\n    sd(Ext(X'), Uniform) ≤ 3ε/2\n```\n\n**Proof Strategy**: Apply `lipschitz_chain_bound` with `f = fun μ => sd(",
-    "domains": [
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "53e2f8f2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:47:24.766623+00:00"
   },
   {
     "id": "fd_0263",
