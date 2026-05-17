@@ -521,7 +521,7 @@ class CycleMaster:
                 artifact_requests=ArtifactRequests(
                     research_report=True,
                     python_demo=True,
-                    svg_demo=True,
+                    svg_demo=False,
                     sciam_discussion=True,
                     lean_proof=True,
                 ),
@@ -538,7 +538,7 @@ class CycleMaster:
                 artifacts=ArtifactRequests(
                     research_report=True,
                     python_demo=True,
-                    svg_demo=True,
+                    svg_demo=False,
                     sciam_discussion=True,
                     lean_proof=True,
                 ),
@@ -981,7 +981,7 @@ class CycleMaster:
             artifacts=ArtifactRequests(
                 research_report=True,
                 python_demo=True,
-                svg_demo=True,
+                svg_demo=False,
                 sciam_discussion=True,
                 lean_proof=True,
             ),

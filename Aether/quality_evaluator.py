@@ -299,10 +299,9 @@ class QualityEvaluator:
             return 0.1
 
         expected_artifacts = {
-            "RESEARCH_REPORT.md": 0.25,
-            "demo.py": 0.20,
-            "diagram.svg": 0.15,
-            "DISCUSSION.md": 0.15,
+            "RESEARCH_REPORT.md": 0.30,
+            "demo.py": 0.25,
+            "DISCUSSION.md": 0.20,
             "FUTURE_DIRECTIONS.md": 0.25,
         }
 

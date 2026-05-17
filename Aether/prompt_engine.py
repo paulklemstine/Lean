@@ -17,7 +17,7 @@ class ArtifactRequests:
     """Flags for what artifacts Aristotle should produce."""
     research_report: bool = True
     python_demo: bool = True
-    svg_demo: bool = True
+    svg_demo: bool = False
     sciam_discussion: bool = True
     lean_proof: bool = True
 
@@ -228,7 +228,6 @@ class PromptEngine:
                 - Lean 4 formal proofs (theorem.lean)
                 - A research report (RESEARCH_REPORT.md)
                 - A Python demo (demo.py)
-                - An SVG diagram (diagram.svg)
                 - A public-facing article (DISCUSSION.md)
                 - A FUTURE_DIRECTIONS.md
 

@@ -163,7 +163,6 @@ class PromptDNA:
             - Lean 4 formal proofs (theorem.lean)
             - A research report (RESEARCH_REPORT.md)
             - A Python demo (demo.py)
-            - An SVG diagram (diagram.svg)
             - A public-facing article (DISCUSSION.md)
             - A FUTURE_DIRECTIONS.md with 3-5 specific breakthrough-level next steps
 
@@ -207,7 +206,6 @@ class PromptDNA:
             2. RESEARCH_REPORT.md
             3. FUTURE_DIRECTIONS.md with 3-5 specific next steps
             4. demo.py with concrete numerical examples
-            5. diagram.svg visualization
 
             The mathematics comes FIRST. Excellent proofs trump everything.
             But excellent proofs that OPEN NEW FIELDS trump everything.
