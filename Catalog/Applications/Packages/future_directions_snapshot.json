@@ -147,20 +147,6 @@
   },
   {
     "id": "fd_0197",
-    "title": "Eigenvector perturbation",
-    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "30c5294d",
-    "timestamp": "2026-05-14T23:59:16.192013+00:00"
-  },
-  {
-    "id": "fd_0197",
     "title": "Prove closure properties",
     "description": ": Product and union constructions for tree automata (analogous to the word case, using `tropical_add_distrib_inf` for the product).",
     "domains": [
@@ -1145,6 +1131,24 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
+    "id": "fd_0225",
+    "title": "3. Adjunctions and Galois Connections Between Theories",
+    "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "d4991975",
+    "timestamp": "2026-05-16T02:14:30.254922+00:00"
+  },
+  {
     "id": "fd_0226",
     "title": "4. Cryptography ↔ Learning ↔ Tropical Triads via Composed Morphisms",
     "description": "**Hypothesis:** The bridge graph Height → Dimension → Security already hints at a three-way connection between arithmetic learning theory (heights), tropical geometry (dimensions), and cryptographic security (security parameters). A full triad would show that hardness results in any one domain automatically imply hardness results in the other two.\n\n**Proof Strategy:**\n- Formalize the tropical valuation as a `TheorySpec` with `inv = tropical_degree`.\n- Build a morphism from tropical specs to security specs via dimension bounds.\n- Build a morphism from learning specs (Lipschitz/margin bounds) to height specs.\n- Compose to get a certified triad: Learning → Height → Dimension → Security.\n- Prove: any new lower bound in learning theory automatically yields a new lower bound in cryptographic sec",
@@ -1492,10 +1496,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "72596401",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53e2f8f2",
     "timestamp": "2026-05-17T02:00:26.816383+00:00"
   },
   {
@@ -1660,5 +1664,106 @@
     "source_exp_id": "75c7e5d3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T04:49:34.993924+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "1. Exact Acceptance Probability for Rank-Deficient Discrepancies",
+    "description": "**Hypothesis:** When the discrepancy matrix `D = K - A*B` has rank `r`, the acceptance set `{v | D.mulVec v = 0}` has cardinality exactly `q^(p - r)`, giving acceptance probability `q^{-r}`.\n\n**Proof Strategy:**\n- Formalize the rank-nullity theorem for finite-dimensional vector spaces over `ZMod q`.\n- Show `ker(D.mulVec)` is a subspace of dimension `p - r`.\n- Use `Module.card_eq_pow_finrank` (already used in FreivaldsBridge) to compute the kernel cardinality.\n- The rank-1 case (single discrepant row) already gives the `1/q` bound; the general case refines to `q^{-r}`.\n\n**Cross-Domain Connections:**\n- Error-correcting codes: the kernel structure mirrors the dual code of the row space.\n- Quantum error correction: syndrome measurement is analogous to mulVec evaluation.\n\n**Actionable Next Step",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "30c5294d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:24:21.626064+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "2. Verified Sum-Check Protocol over `ZMod q`",
+    "description": "**Hypothesis:** The sum-check protocol for verifying `∑_{x ∈ {0,1}^n} f(x) = v` can be formalized as an interactive protocol with `n` rounds, each reducing to a univariate polynomial evaluation, with soundness error at most `n·d/q` where `d` is the individual degree.\n\n**Proof Strategy:**\n- Define a `SumCheckRound` structure analogous to `StreamingVerifier`.\n- Formalize the round reduction: prover sends a univariate polynomial `g_i`, verifier checks `g_i(0) + g_i(1) = claimed_sum`, then replaces the claimed sum with `g_i(r_i)` for a random challenge `r_i`.\n- Use the Schwartz-Zippel lemma (already formalized in `RootBound.lean`) for each round's soundness.\n- Apply a union bound over `n` rounds.\n\n**Cross-Domain Connections:**\n- Interactive proofs: sum-check is the engine of IP = PSPACE.\n- SNA",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "30c5294d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:24:21.652849+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "3. Generalization to Polynomial Identity Testing (PIT)",
+    "description": "**Hypothesis:** The kernel-counting lemma generalizes from linear forms to multivariate polynomials: for a nonzero polynomial `f ∈ F_q[x_1,...,x_p]` of total degree `d`, the set `{r ∈ F_q^p | f(r) = 0}` has cardinality at most `d · q^{p-1}`.\n\n**Proof Strategy:**\n- The univariate case is already formalized (`card_roots_le_natDegree_filter`).\n- For the multivariate case, use induction on the number of variables:\n  - Fix all but one variable; the resulting univariate polynomial has degree ≤ `d`.\n  - Apply the univariate bound and sum over assignments to the other variables.\n- This is the full Schwartz-Zippel lemma.\n\n**Cross-Domain Connections:**\n- Algebraic circuit complexity: PIT is equivalent to circuit lower bounds (Kabanets-Impagliazzo).\n- Derandomization: deterministic PIT would imply `B",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "30c5294d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:24:21.675823+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "4. Streaming Fingerprinting for Equality and Frequency Moments",
+    "description": "**Hypothesis:** The streaming verifier architecture extends to fingerprinting: given a stream of elements, maintain a compressed fingerprint such that two streams have equal fingerprints iff they represent the same multiset, with error probability ≤ `1/q`.\n\n**Proof Strategy:**\n- Define a stream fingerprint as `∑_i a_i · r^i mod q` for a random `r ∈ ZMod q`.\n- The equality test reduces to polynomial identity testing: two streams differ iff the difference polynomial is nonzero.\n- Apply the univariate root bound to get soundness.\n- For frequency moments (`F_k = ∑ f_i^k`), formalize AMS sketches using the same kernel-counting infrastructure.\n\n**Cross-Domain Connections:**\n- Database verification: fingerprinting enables sublinear-space database comparison.\n- Network monitoring: streaming algori",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "30c5294d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:24:21.699036+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "5. Finite Affine Geometry and Hyperplane Counting",
+    "description": "**Hypothesis:** The acceptance set `{r | dotProduct v r = 0}` for a nonzero `v` is an affine hyperplane in `F_q^p`, and the soundness bound is a statement about the fraction of points on a hyperplane in a finite affine space.\n\n**Proof Strategy:**\n- Formalize affine hyperplanes in `F_q^p` as cosets of codimension-1 subspaces.\n- Show the zero set of a nonzero linear functional is a hyperplane.\n- Prove the hyperplane has exactly `q^{p-1}` points (already done via `card_ker_dotLin`).\n- Generalize to affine subspaces of arbitrary codimension.\n\n**Cross-Domain Connections:**\n- Finite geometry: incidence bounds (Szemerédi-Trotter over finite fields).\n- Coding theory: Reed-Solomon codes are evaluations on affine lines.\n- Combinatorics: Kakeya-type problems over finite fields (Dvir's theorem).\n\n**Ac",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "30c5294d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:24:21.721036+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Summary Priority Matrix",
+    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Exact probability | Medium | High | rank-nullity for matrices |\n| 2. Sum-check protocol | Hard | Very High | multivariate polynomial eval |\n| 3. Schwartz-Zippel | Medium-Hard | Very High | MvPolynomial infrastructure |\n| 4. Stream fingerprinting | Medium | High | univariate root bound |\n| 5. Finite geometry | Medium | Medium | linear algebra over ZMod |\n\n**Recommended order:** 4 → 1 → 3 → 5 → 2 (increasing difficulty, each building on the previous).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "30c5294d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:24:21.740924+00:00"
   }
 ]
