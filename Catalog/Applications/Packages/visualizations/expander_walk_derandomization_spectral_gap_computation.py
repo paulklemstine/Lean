@@ -1,1 +1,0 @@
-# See algorithms.py spectral_gap() function

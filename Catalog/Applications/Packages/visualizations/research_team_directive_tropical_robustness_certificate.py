@@ -1,1 +1,0 @@
-# See algorithms.py tropical_certificate()

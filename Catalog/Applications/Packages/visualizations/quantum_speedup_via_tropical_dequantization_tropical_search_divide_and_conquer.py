@@ -1,1 +1,0 @@
-# See algorithms.py tropical_search_divide_conquer() function

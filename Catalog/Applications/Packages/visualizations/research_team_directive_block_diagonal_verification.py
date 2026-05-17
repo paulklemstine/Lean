@@ -1,1 +1,0 @@
-# See algorithms.py block_diagonal_verify()

@@ -1,1 +1,0 @@
-# See algorithms.py compute_affected_cone function

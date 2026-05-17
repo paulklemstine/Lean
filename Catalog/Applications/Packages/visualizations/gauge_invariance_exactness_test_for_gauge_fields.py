@@ -1,1 +1,0 @@
-# See algorithms.py: is_exact_gauge()

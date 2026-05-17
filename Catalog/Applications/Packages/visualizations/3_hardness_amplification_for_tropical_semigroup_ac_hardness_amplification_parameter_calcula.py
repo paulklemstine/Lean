@@ -1,1 +1,0 @@
-# See algorithms.py hardness_amplification_params()
