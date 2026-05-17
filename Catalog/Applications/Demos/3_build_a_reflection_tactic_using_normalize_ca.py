@@ -1,733 +1,869 @@
 #!/usr/bin/env python3
 """
-Applications of Tropical Algebra — Real-world demonstrations.
+applications.py — Real-World Applications of Tropical Normalization
 
-Shows how tropical (min-plus) algebra applies to:
-1. Shortest-path computation in networks
-2. Job scheduling (critical path method)
-3. Dynamic programming (sequence alignment)
+Demonstrates how tropical (min-plus) algebra normalization applies to:
+1. Shortest-path algorithms (Bellman-Ford style)
+2. Dynamic programming optimization
+3. Scheduling / critical path analysis
+4. Piecewise-linear function canonicalization
+
+Each application shows how ACI normalization simplifies verification
+of correctness properties.
 """
 
-import math
-from typing import List, Tuple
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Union, List, Dict, Tuple
+import itertools
 
-INF = float('inf')
+
+# ============================================================
+# Expression AST (shared with algorithms.py)
+# ============================================================
+
+@dataclass(frozen=True)
+class Var:
+    index: int
+
+@dataclass(frozen=True)
+class TMin:
+    left: 'Expr'
+    right: 'Expr'
+
+@dataclass(frozen=True)
+class TAdd:
+    left: 'Expr'
+    right: 'Expr'
+
+Expr = Union[Var, TMin, TAdd]
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# APPLICATION 1: Network Routing with Tropical Matrix Algebra
-# ═══════════════════════════════════════════════════════════════════════════
+def expr_sort_key(e):
+    if isinstance(e, Var): return (0, e.index)
+    elif isinstance(e, TMin): return (1, expr_sort_key(e.left), expr_sort_key(e.right))
+    else: return (2, expr_sort_key(e.left), expr_sort_key(e.right))
 
-def demo_network_routing():
+def flatten_min(e):
+    if isinstance(e, TMin): return flatten_min(e.left) + flatten_min(e.right)
+    return [e]
+
+def flatten_add(e):
+    if isinstance(e, TAdd): return flatten_add(e.left) + flatten_add(e.right)
+    return [e]
+
+def dedup(lst):
+    if not lst: return []
+    result = [lst[0]]
+    for x in lst[1:]:
+        if x != result[-1]: result.append(x)
+    return result
+
+def build_min(lst):
+    if len(lst) == 1: return lst[0]
+    return TMin(lst[0], build_min(lst[1:]))
+
+def build_add(lst):
+    if len(lst) == 1: return lst[0]
+    return TAdd(lst[0], build_add(lst[1:]))
+
+def normalize(e):
+    if isinstance(e, Var): return e
+    elif isinstance(e, TMin):
+        a, b = normalize(e.left), normalize(e.right)
+        flat = flatten_min(TMin(a, b))
+        flat.sort(key=expr_sort_key)
+        flat = dedup(flat)
+        return build_min(flat)
+    elif isinstance(e, TAdd):
+        a, b = normalize(e.left), normalize(e.right)
+        flat = flatten_add(TAdd(a, b))
+        flat.sort(key=expr_sort_key)
+        return build_add(flat)
+
+def evaluate(e, sigma):
+    if isinstance(e, Var): return sigma.get(e.index, 0.0)
+    elif isinstance(e, TMin): return min(evaluate(e.left, sigma), evaluate(e.right, sigma))
+    elif isinstance(e, TAdd): return evaluate(e.left, sigma) + evaluate(e.right, sigma)
+
+def pretty(e):
+    if isinstance(e, Var):
+        names = {0:'w_ab', 1:'w_bc', 2:'w_ac', 3:'w_bd', 4:'w_cd', 5:'w_ad'}
+        return names.get(e.index, f"x{e.index}")
+    elif isinstance(e, TMin): return f"min({pretty(e.left)}, {pretty(e.right)})"
+    elif isinstance(e, TAdd): return f"({pretty(e.left)} + {pretty(e.right)})"
+
+
+# ============================================================
+# Application 1: Shortest Path Verification
+# ============================================================
+
+def shortest_path_demo():
     """
-    Demonstrates that shortest-path computation IS tropical matrix algebra.
+    In the min-plus semiring, shortest-path computation is just
+    matrix multiplication with min replacing + and + replacing ×.
 
-    The Floyd-Warshall algorithm computes the tropical closure W* of the
-    weight matrix W. Each step of the algorithm is a min-plus operation:
-    D[i][j] = min(D[i][j], D[i][k] + D[k][j])
-            = D[i][j] ⊕ (D[i][k] ⊗ D[k][j])
+    The Bellman-Ford recurrence:
+      d[v] = min over all edges (u,v) of (d[u] + w(u,v))
+
+    is a tropical polynomial. Normalization proves that different
+    ways of computing shortest paths give the same result.
     """
     print("=" * 60)
-    print("APPLICATION 1: Network Routing as Tropical Computation")
+    print("APPLICATION 1: Shortest Path Verification")
     print("=" * 60)
 
-    # City network: distances between 5 cities
-    cities = ["NYC", "CHI", "LAX", "MIA", "SEA"]
-    n = len(cities)
+    # Consider a 4-node graph: A, B, C, D
+    # Edge weights as variables:
+    # w_ab=x0, w_bc=x1, w_ac=x2, w_bd=x3, w_cd=x4, w_ad=x5
+    w_ab, w_bc, w_ac, w_bd, w_cd, w_ad = [Var(i) for i in range(6)]
 
-    # Direct flight distances (simplified, in hundreds of miles)
-    W = [
-        [0,   7, INF,  11, INF],  # NYC
-        [7,   0,  18, INF,  17],  # CHI
-        [INF, 18,  0, INF,  10],  # LAX
-        [11, INF, INF,  0, INF],  # MIA
-        [INF, 17, 10, INF,   0],  # SEA
-    ]
+    # Two ways to compute shortest path A→D:
+    # Method 1: enumerate paths directly
+    path_abd = TAdd(w_ab, w_bd)  # A→B→D
+    path_acd = TAdd(w_ac, w_cd)  # A→C→D
+    path_ad = w_ad               # A→D direct
+    path_abcd = TAdd(w_ab, TAdd(w_bc, w_cd))  # A→B→C→D
 
-    # Compute all-pairs shortest paths via tropical closure
-    D = [row[:] for row in W]
-    for k in range(n):
-        for i in range(n):
-            for j in range(n):
-                # This is tropical: D[i][j] ⊕ (D[i][k] ⊗ D[k][j])
-                D[i][j] = min(D[i][j], D[i][k] + D[k][j])
+    method1 = TMin(path_abd, TMin(path_acd, TMin(path_ad, path_abcd)))
 
-    print("\nDirect connections (weight matrix W):")
-    print(f"{'':>5}", end="")
-    for c in cities:
-        print(f"{c:>5}", end="")
+    # Method 2: Bellman-Ford style (different association)
+    # First relax via B: min(d[D], d[B] + w_bd)
+    # Then relax via C: min(d[D], d[C] + w_cd)
+    method2 = TMin(path_ad,
+                   TMin(TAdd(w_ab, w_bd),
+                        TMin(TAdd(w_ac, w_cd),
+                             TAdd(TAdd(w_ab, w_bc), w_cd))))
+
+    # These should normalize to the same expression
+    n1 = normalize(method1)
+    n2 = normalize(method2)
+    equal = n1 == n2
+
+    print(f"\n  Path enumeration:  {pretty(method1)}")
+    print(f"  Bellman-Ford:      {pretty(method2)}")
+    print(f"  Normalized equal:  {'✓ YES' if equal else '✗ NO'}")
+
+    # Numerical check
+    sigma = {0: 3, 1: 2, 2: 8, 3: 1, 4: 4, 5: 10}
+    v1 = evaluate(method1, sigma)
+    v2 = evaluate(method2, sigma)
+    print(f"  Numerical check:   method1={v1}, method2={v2}, equal={v1==v2}")
     print()
-    for i, c in enumerate(cities):
-        print(f"{c:>5}", end="")
-        for j in range(n):
-            if W[i][j] == INF:
-                print(f"{'∞':>5}", end="")
-            else:
-                print(f"{W[i][j]:>5.0f}", end="")
-        print()
 
-    print("\nShortest paths (tropical closure W*):")
-    print(f"{'':>5}", end="")
-    for c in cities:
-        print(f"{c:>5}", end="")
+
+# ============================================================
+# Application 2: Dynamic Programming
+# ============================================================
+
+def dynamic_programming_demo():
+    """
+    Many DP recurrences have the form:
+      opt[i] = min_j (cost(j) + opt[j])
+
+    Tropical normalization can verify that different decompositions
+    of a DP problem yield the same optimal value.
+    """
+    print("=" * 60)
+    print("APPLICATION 2: Dynamic Programming Verification")
+    print("=" * 60)
+
+    # Consider splitting a chain of 4 matrices A₁A₂A₃A₄
+    # Cost of multiplying Aᵢ...Aⱼ as tropicalized symbolic costs
+    c12, c23, c34, c13, c24, c14_split = [Var(i) for i in range(6)]
+
+    # Split at position 1: (A₁)(A₂A₃A₄)
+    split1 = TAdd(c12, TMin(TAdd(c23, c34), c24))
+
+    # Split at position 2: (A₁A₂)(A₃A₄)
+    split2 = TAdd(c12, c34)
+
+    # The optimal cost is min of all split points
+    opt_v1 = TMin(split1, TMin(split2, TAdd(c13, c34)))
+    opt_v2 = TMin(TAdd(c13, c34), TMin(split2, split1))
+
+    n1 = normalize(opt_v1)
+    n2 = normalize(opt_v2)
+    equal = n1 == n2
+
+    print(f"\n  Formulation 1 normalized == Formulation 2 normalized: {'✓' if equal else '✗'}")
+    print(f"  (Different orderings of min give same canonical form)")
     print()
-    for i, c in enumerate(cities):
-        print(f"{c:>5}", end="")
-        for j in range(n):
-            print(f"{D[i][j]:>5.0f}", end="")
-        print()
-
-    # Show key identity: the optimal NYC→LAX path
-    # goes NYC→CHI→LAX (7+18=25) or NYC→CHI→SEA→LAX (7+17+10=34)
-    print(f"\nNYC→LAX shortest = min(NYC→CHI + CHI→LAX, NYC→CHI + CHI→SEA + SEA→LAX)")
-    print(f"                  = min({W[0][1]}+{W[1][2]}, {W[0][1]}+{W[1][4]}+{W[4][2]})")
-    print(f"                  = min({W[0][1]+W[1][2]}, {W[0][1]+W[1][4]+W[4][2]})")
-    print(f"                  = {D[0][2]}")
-    print(f"\nThis is a tropical computation: {D[0][2]} = ({W[0][1]} ⊗ {W[1][2]}) ⊕ ({W[0][1]} ⊗ {W[1][4]} ⊗ {W[4][2]})")
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# APPLICATION 2: Job Scheduling — Critical Path Method
-# ═══════════════════════════════════════════════════════════════════════════
+# ============================================================
+# Application 3: Scheduling / Critical Path
+# ============================================================
 
-def demo_job_scheduling():
+def scheduling_demo():
     """
-    The Critical Path Method (CPM) for job scheduling uses max-plus algebra,
-    the dual of min-plus. Longest paths in the precedence graph determine
-    the minimum project completion time.
+    In scheduling, the critical path (longest path) uses the max-plus
+    semiring. By duality, shortest completion time uses min-plus.
+
+    Tropical normalization verifies that different schedules with
+    the same precedence constraints have the same minimum completion time.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Job Scheduling (Critical Path Method)")
+    print("=" * 60)
+    print("APPLICATION 3: Scheduling / Critical Path")
     print("=" * 60)
 
-    # Jobs: (name, duration, dependencies)
-    jobs = {
-        'A': (3, []),           # Foundation
-        'B': (5, ['A']),        # Framing
-        'C': (2, ['A']),        # Plumbing rough-in
-        'D': (4, ['B', 'C']),   # Electrical
-        'E': (6, ['B']),        # Roofing
-        'F': (3, ['D', 'E']),   # Interior finishing
-        'G': (1, ['F']),        # Inspection
-    }
+    # Tasks with durations t_a, t_b, t_c, t_d
+    # Precedence: A→C, B→C, A→D, C→D
+    t_a, t_b, t_c, t_d = Var(0), Var(1), Var(2), Var(3)
 
-    # Compute earliest start times (max-plus = dual tropical computation)
-    earliest_start = {}
-    earliest_finish = {}
+    # Earliest completion of D via different paths:
+    path_acd = TAdd(t_a, TAdd(t_c, t_d))  # A→C→D
+    path_bcd = TAdd(t_b, TAdd(t_c, t_d))  # B→C→D
+    path_ad  = TAdd(t_a, t_d)              # A→D
 
-    def compute_earliest(job):
-        if job in earliest_start:
-            return earliest_start[job]
-        duration, deps = jobs[job]
-        if not deps:
-            earliest_start[job] = 0
-        else:
-            # Max-plus: start = max over deps of (dep_finish)
-            earliest_start[job] = max(compute_earliest(d) + jobs[d][0] for d in deps)
-        earliest_finish[job] = earliest_start[job] + duration
-        return earliest_start[job]
+    # Two equivalent formulations of earliest D completion
+    # (which path gives minimum time)
+    form1 = TMin(path_acd, TMin(path_bcd, path_ad))
+    form2 = TMin(path_ad, TMin(path_acd, path_bcd))
 
-    for job in jobs:
-        compute_earliest(job)
+    n1 = normalize(form1)
+    n2 = normalize(form2)
+    equal = n1 == n2
 
-    print("\nJob Schedule:")
-    print(f"{'Job':>4} {'Duration':>8} {'Earliest Start':>14} {'Earliest Finish':>15} {'Dependencies':>14}")
-    for job in sorted(jobs.keys()):
-        duration, deps = jobs[job]
-        dep_str = ', '.join(deps) if deps else '(none)'
-        print(f"{job:>4} {duration:>8} {earliest_start[job]:>14} {earliest_finish[job]:>15} {dep_str:>14}")
+    print(f"\n  Schedule 1: {pretty(form1)}")
+    print(f"  Schedule 2: {pretty(form2)}")
+    print(f"  Equivalent: {'✓' if equal else '✗'}")
 
-    total_time = max(earliest_finish.values())
-    critical_job = max(earliest_finish, key=earliest_finish.get)
-    print(f"\nMinimum project completion time: {total_time} units")
-    print(f"\nThis is a max-plus computation (dual to min-plus tropical algebra).")
-    print(f"Earliest start of job X = max(finish times of all predecessors)")
-    print(f"                       = tropical dual of min-plus path computation")
+    # A more complex example: redundant paths
+    form3 = TMin(form1, TMin(TAdd(t_b, TAdd(t_c, t_d)),
+                             TAdd(t_a, TAdd(t_c, t_d))))
+    n3 = normalize(form3)
+    print(f"\n  With redundant paths: {pretty(form3)}")
+    print(f"  Simplifies to:       {pretty(n3)}")
+    print(f"  Same as original:    {'✓' if n3 == n1 else '✗'}")
+    print()
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# APPLICATION 3: Dynamic Programming — Sequence Alignment
-# ═══════════════════════════════════════════════════════════════════════════
+# ============================================================
+# Application 4: Piecewise-Linear Functions
+# ============================================================
 
-def demo_sequence_alignment():
+def piecewise_linear_demo():
     """
-    Sequence alignment (edit distance) is a tropical computation.
-    The Needleman-Wunsch recurrence is expressed in min-plus algebra:
+    A tropical polynomial f(x) = min(a₁+b₁x, a₂+b₂x, ...) defines
+    a piecewise-linear concave function. Two such polynomials define
+    the same function iff their normalizations agree (up to the
+    idempotent fragment).
 
-    D[i][j] = min(D[i-1][j-1] + sub_cost,
-                  D[i-1][j] + gap_cost,
-                  D[i][j-1] + gap_cost)
-            = (D[i-1][j-1] ⊗ sub_cost) ⊕ (D[i-1][j] ⊗ gap_cost) ⊕ (D[i][j-1] ⊗ gap_cost)
+    This is the foundation of tropical geometry: tropical hypersurfaces
+    are the loci where the minimum is achieved by multiple terms.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Sequence Alignment as Tropical DP")
+    print("=" * 60)
+    print("APPLICATION 4: Piecewise-Linear Function Equality")
     print("=" * 60)
 
-    seq1 = "ACGT"
-    seq2 = "AGT"
+    # Tropical polynomial in one variable x (= Var(0)) with coefficients as vars
+    a0, a1, a2 = Var(0), Var(1), Var(2)
+    x = Var(3)
 
-    gap_cost = 1
-    sub_cost = 0  # match cost
-    mis_cost = 1  # mismatch cost
+    # f(x) = min(a0 + x, a1 + x, a2 + x)  -- but with a0+x duplicated
+    f1 = TMin(TAdd(a0, x), TMin(TAdd(a1, x), TMin(TAdd(a2, x), TAdd(a0, x))))
 
-    m, n = len(seq1), len(seq2)
-    D = [[0] * (n + 1) for _ in range(m + 1)]
+    # g(x) = min(a0 + x, a1 + x, a2 + x)  -- no duplicates
+    g1 = TMin(TAdd(a0, x), TMin(TAdd(a1, x), TAdd(a2, x)))
 
-    for i in range(m + 1):
-        D[i][0] = i * gap_cost
-    for j in range(n + 1):
-        D[0][j] = j * gap_cost
+    n_f1 = normalize(f1)
+    n_g1 = normalize(g1)
+    equal = n_f1 == n_g1
 
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            cost = sub_cost if seq1[i-1] == seq2[j-1] else mis_cost
-            # Tropical computation: min of three terms
-            D[i][j] = min(
-                D[i-1][j-1] + cost,   # substitution/match
-                D[i-1][j] + gap_cost,  # deletion
-                D[i][j-1] + gap_cost   # insertion
-            )
+    print(f"\n  f(x) with duplicate:  {pretty(f1)}")
+    print(f"  g(x) without:         {pretty(g1)}")
+    print(f"  Same function:        {'✓' if equal else '✗'}")
+    print(f"  Canonical form:       {pretty(n_f1)}")
+    print()
 
-    print(f"\nAligning: '{seq1}' with '{seq2}'")
-    print(f"Gap cost: {gap_cost}, Match cost: {sub_cost}, Mismatch cost: {mis_cost}")
-    print(f"\nDP table (each cell is a tropical min-plus computation):")
-
-    header = "    " + "  -  " + "  ".join(f"  {c}  " for c in seq2)
-    print(header)
-    for i in range(m + 1):
-        label = "-" if i == 0 else seq1[i-1]
-        row_str = f" {label}  " + "  ".join(f"  {D[i][j]}  " for j in range(n + 1))
-        print(row_str)
-
-    print(f"\nEdit distance: {D[m][n]}")
-    print(f"\nEach cell computes: D[i][j] = min(D[i-1][j-1] ⊗ cost, D[i-1][j] ⊗ gap, D[i][j-1] ⊗ gap)")
-    print(f"                           where ⊗ = + (tropical multiplication)")
-    print(f"                           and the outer min is ⊕ (tropical addition)")
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# MAIN
-# ═══════════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Real-World Applications of Tropical Algebra           ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    demo_network_routing()
-    demo_job_scheduling()
-    demo_sequence_alignment()
-
-    print("\n" + "=" * 60)
-    print("  All three applications demonstrate the same principle:")
-    print("  optimization over networks = computation in min-plus algebra.")
-    print("  The tropical reflection tactic certifies these computations.")
-    print("=" * 60)
+    shortest_path_demo()
+    dynamic_programming_demo()
+    scheduling_demo()
+    piecewise_linear_demo()
 
 
 #!/usr/bin/env python3
 """
-Tropical Algebra Reflection Tactic — Demonstration Script
+demo.py — Tropical Algebra Normalization Demo
 
-Demonstrates the tropical (min-plus) normalization algorithm and its correctness
-by computing canonical forms of tropical expressions and verifying identities.
+Demonstrates the tropical (min-plus) normalizer with concrete numerical examples,
+showing how expressions in the min-plus semiring are canonicalized.
+
+The normalizer handles:
+- Associativity and commutativity of min and +
+- Idempotence of min (min(a, a) = a)
+- Flattening nested operations
+- Sorting sub-expressions into a canonical order
+- Removing duplicate terms under min
 """
 
+from dataclasses import dataclass
+from typing import Union, Callable
 import itertools
-import random
 
-# ─── Tropical Expression AST ───────────────────────────────────────────────
 
-class TropExpr:
-    """Base class for tropical expressions."""
-    pass
+# ============================================================
+# Tropical Expression AST
+# ============================================================
 
-class Var(TropExpr):
-    def __init__(self, index: int):
-        self.index = index
-    def __repr__(self):
-        return f"x{self.index}"
-    def __eq__(self, other):
-        return isinstance(other, Var) and self.index == other.index
-    def __hash__(self):
-        return hash(("var", self.index))
+@dataclass(frozen=True)
+class Var:
+    """A variable, indexed by a natural number."""
+    index: int
+    def __repr__(self): return f"x{self.index}"
 
-class TMin(TropExpr):
-    def __init__(self, left: TropExpr, right: TropExpr):
-        self.left = left
-        self.right = right
-    def __repr__(self):
-        return f"min({self.left}, {self.right})"
-    def __eq__(self, other):
-        return isinstance(other, TMin) and self.left == other.left and self.right == other.right
-    def __hash__(self):
-        return hash(("tmin", self.left, self.right))
+@dataclass(frozen=True)
+class TMin:
+    """Tropical addition: min(a, b)."""
+    left: 'TropExpr'
+    right: 'TropExpr'
+    def __repr__(self): return f"min({self.left}, {self.right})"
 
-class TAdd(TropExpr):
-    def __init__(self, left: TropExpr, right: TropExpr):
-        self.left = left
-        self.right = right
-    def __repr__(self):
-        return f"({self.left} + {self.right})"
-    def __eq__(self, other):
-        return isinstance(other, TAdd) and self.left == other.left and self.right == other.right
-    def __hash__(self):
-        return hash(("add", self.left, self.right))
+@dataclass(frozen=True)
+class TAdd:
+    """Tropical multiplication: a + b (classical addition)."""
+    left: 'TropExpr'
+    right: 'TropExpr'
+    def __repr__(self): return f"({self.left} + {self.right})"
 
-# ─── Evaluation ────────────────────────────────────────────────────────────
+TropExpr = Union[Var, TMin, TAdd]
 
-def evaluate(expr: TropExpr, sigma: dict) -> float:
-    """Evaluate a tropical expression with variable assignment sigma."""
+
+# ============================================================
+# Evaluation
+# ============================================================
+
+def evaluate(expr: TropExpr, sigma: Callable[[int], float]) -> float:
+    """Evaluate a tropical expression given a variable assignment."""
     if isinstance(expr, Var):
-        return sigma[expr.index]
+        return sigma(expr.index)
     elif isinstance(expr, TMin):
         return min(evaluate(expr.left, sigma), evaluate(expr.right, sigma))
     elif isinstance(expr, TAdd):
         return evaluate(expr.left, sigma) + evaluate(expr.right, sigma)
     raise TypeError(f"Unknown expression type: {type(expr)}")
 
-# ─── Comparison ────────────────────────────────────────────────────────────
 
-def expr_key(expr: TropExpr):
-    """Return a comparison key for sorting expressions."""
-    if isinstance(expr, Var):
-        return (0, expr.index)
-    elif isinstance(expr, TMin):
-        return (1, expr_key(expr.left), expr_key(expr.right))
-    elif isinstance(expr, TAdd):
-        return (2, expr_key(expr.left), expr_key(expr.right))
+# ============================================================
+# Comparison (Total Order on Expressions)
+# ============================================================
 
-# ─── Normalization ─────────────────────────────────────────────────────────
+def expr_key(e: TropExpr):
+    """Generate a sorting key for canonical ordering."""
+    if isinstance(e, Var):
+        return (0, e.index)
+    elif isinstance(e, TMin):
+        return (1, expr_key(e.left), expr_key(e.right))
+    elif isinstance(e, TAdd):
+        return (2, expr_key(e.left), expr_key(e.right))
 
-def flatten_min(expr: TropExpr) -> list:
+
+# ============================================================
+# Flatten, Sort, Dedup, Build
+# ============================================================
+
+def flatten_min(e: TropExpr) -> list:
     """Flatten nested min into a flat list."""
-    if isinstance(expr, TMin):
-        return flatten_min(expr.left) + flatten_min(expr.right)
-    return [expr]
+    if isinstance(e, TMin):
+        return flatten_min(e.left) + flatten_min(e.right)
+    return [e]
 
-def flatten_add(expr: TropExpr) -> list:
+def flatten_add(e: TropExpr) -> list:
     """Flatten nested add into a flat list."""
-    if isinstance(expr, TAdd):
-        return flatten_add(expr.left) + flatten_add(expr.right)
-    return [expr]
+    if isinstance(e, TAdd):
+        return flatten_add(e.left) + flatten_add(e.right)
+    return [e]
 
 def dedup(lst: list) -> list:
     """Remove consecutive duplicates from a sorted list."""
-    if len(lst) <= 1:
-        return lst
+    if not lst:
+        return []
     result = [lst[0]]
-    for item in lst[1:]:
-        if item != result[-1]:
-            result.append(item)
+    for x in lst[1:]:
+        if x != result[-1]:
+            result.append(x)
     return result
 
 def build_min(lst: list) -> TropExpr:
-    """Build a right-associated min tree from a list."""
+    """Build a right-associated min chain."""
     if len(lst) == 1:
         return lst[0]
     return TMin(lst[0], build_min(lst[1:]))
 
 def build_add(lst: list) -> TropExpr:
-    """Build a right-associated add tree from a list."""
+    """Build a right-associated add chain."""
     if len(lst) == 1:
         return lst[0]
     return TAdd(lst[0], build_add(lst[1:]))
 
-def normalize(expr: TropExpr) -> TropExpr:
+
+# ============================================================
+# The ACI Normalizer
+# ============================================================
+
+def normalize(e: TropExpr) -> TropExpr:
     """
-    ACI-normalize a tropical expression.
-    - For min: flatten, sort, deduplicate, rebuild.
-    - For add: flatten, sort, rebuild.
+    Normalize a tropical expression:
+    - For min: flatten → sort → dedup → rebuild (ACI normalization)
+    - For add: flatten → sort → rebuild (AC normalization)
+    - Variables: already normal
     """
-    if isinstance(expr, Var):
-        return expr
-    elif isinstance(expr, TMin):
-        left = normalize(expr.left)
-        right = normalize(expr.right)
-        flat = flatten_min(TMin(left, right))
+    if isinstance(e, Var):
+        return e
+    elif isinstance(e, TMin):
+        a = normalize(e.left)
+        b = normalize(e.right)
+        combined = TMin(a, b)
+        flat = flatten_min(combined)
         flat.sort(key=expr_key)
         flat = dedup(flat)
         return build_min(flat)
-    elif isinstance(expr, TAdd):
-        left = normalize(expr.left)
-        right = normalize(expr.right)
-        flat = flatten_add(TAdd(left, right))
+    elif isinstance(e, TAdd):
+        a = normalize(e.left)
+        b = normalize(e.right)
+        combined = TAdd(a, b)
+        flat = flatten_add(combined)
         flat.sort(key=expr_key)
         return build_add(flat)
+    raise TypeError(f"Unknown: {type(e)}")
 
-# ─── Pretty Printing ──────────────────────────────────────────────────────
 
-def pretty(expr: TropExpr) -> str:
+# ============================================================
+# Pretty Printing
+# ============================================================
+
+def pretty(e: TropExpr) -> str:
     """Pretty-print a tropical expression."""
-    if isinstance(expr, Var):
-        return chr(ord('a') + expr.index)
-    elif isinstance(expr, TMin):
-        return f"min({pretty(expr.left)}, {pretty(expr.right)})"
-    elif isinstance(expr, TAdd):
-        return f"({pretty(expr.left)} + {pretty(expr.right)})"
+    if isinstance(e, Var):
+        return chr(ord('a') + e.index) if e.index < 26 else f"x{e.index}"
+    elif isinstance(e, TMin):
+        return f"min({pretty(e.left)}, {pretty(e.right)})"
+    elif isinstance(e, TAdd):
+        return f"({pretty(e.left)} + {pretty(e.right)})"
+    return str(e)
 
-# ─── Demonstrations ───────────────────────────────────────────────────────
 
-def demo_identity(name: str, lhs: TropExpr, rhs: TropExpr, var_names: list):
-    """Demonstrate that two tropical expressions have the same normal form."""
-    n_lhs = normalize(lhs)
-    n_rhs = normalize(rhs)
-    match = n_lhs == n_rhs
+# ============================================================
+# Demo
+# ============================================================
 
-    print(f"\n{'='*60}")
-    print(f"  {name}")
-    print(f"{'='*60}")
-    print(f"  LHS: {pretty(lhs)}")
-    print(f"  RHS: {pretty(rhs)}")
-    print(f"  Normalized LHS: {pretty(n_lhs)}")
-    print(f"  Normalized RHS: {pretty(n_rhs)}")
-    print(f"  Normal forms equal: {match}")
+def demo_normalization():
+    """Demonstrate the normalizer on several examples."""
+    a, b, c, d, e, f = Var(0), Var(1), Var(2), Var(3), Var(4), Var(5)
 
-    # Verify with random assignments
-    n_tests = 1000
-    all_agree = True
-    for _ in range(n_tests):
-        sigma = {i: random.uniform(-10, 10) for i in range(len(var_names))}
+    examples = [
+        ("Commutativity of +",
+         TMin(TAdd(a, b), TAdd(b, a)),
+         TAdd(a, b)),
+
+        ("Idempotence of min",
+         TMin(a, a),
+         a),
+
+        ("Flatten + sort",
+         TMin(TMin(a, b), TMin(c, d)),
+         TMin(a, TMin(b, TMin(c, d)))),
+
+        ("AC collapse",
+         TMin(TAdd(a, TAdd(b, c)), TAdd(TAdd(c, b), a)),
+         TAdd(a, TAdd(b, c))),
+
+        ("Duplicate elimination",
+         TMin(TAdd(a, b), TMin(TAdd(a, b), c)),
+         TMin(c, TAdd(a, b))),
+
+        ("Triple redundancy",
+         TMin(TAdd(a, b), TMin(TAdd(b, a), TAdd(a, b))),
+         TAdd(a, b)),
+
+        ("Six-variable dedup",
+         TMin(TMin(TAdd(a, b), TMin(TAdd(c, d), TAdd(e, f))),
+              TMin(TAdd(f, e), TMin(TAdd(d, c), TAdd(b, a)))),
+         TMin(TAdd(a, b), TMin(TAdd(c, d), TAdd(e, f)))),
+    ]
+
+    print("=" * 70)
+    print("TROPICAL EXPRESSION NORMALIZATION DEMO")
+    print("=" * 70)
+
+    for name, lhs, expected_rhs in examples:
+        norm_lhs = normalize(lhs)
+        norm_rhs = normalize(expected_rhs)
+        match = norm_lhs == norm_rhs
+
+        print(f"\n--- {name} ---")
+        print(f"  LHS:        {pretty(lhs)}")
+        print(f"  RHS:        {pretty(expected_rhs)}")
+        print(f"  Norm(LHS):  {pretty(norm_lhs)}")
+        print(f"  Norm(RHS):  {pretty(norm_rhs)}")
+        print(f"  Match:      {'✓ EQUAL' if match else '✗ DIFFERENT'}")
+
+        # Numerical verification with random values
+        import random
+        random.seed(42)
+        sigma = lambda i, vals={j: random.uniform(-10, 10) for j in range(6)}: vals.get(i, 0)
         val_lhs = evaluate(lhs, sigma)
-        val_rhs = evaluate(rhs, sigma)
-        if abs(val_lhs - val_rhs) > 1e-10:
-            all_agree = False
-            break
-    print(f"  Random testing ({n_tests} trials): {'PASS' if all_agree else 'FAIL'}")
+        val_rhs = evaluate(expected_rhs, sigma)
+        print(f"  Numerical:  LHS={val_lhs:.4f}, RHS={val_rhs:.4f}, Equal={abs(val_lhs - val_rhs) < 1e-10}")
 
 
-def main():
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Tropical Algebra ACI Normalization — Demonstrations    ║")
-    print("╚══════════════════════════════════════════════════════════╝")
+def demo_numerical_verification():
+    """Exhaustively verify identities on a grid of values."""
+    a, b, c, d = Var(0), Var(1), Var(2), Var(3)
 
-    a, b, c, d, e = Var(0), Var(1), Var(2), Var(3), Var(4)
-
-    # Demo 1: Associativity-Commutativity
-    demo_identity(
-        "Associativity-Commutativity Rearrangement",
-        TMin(TAdd(a, b), TMin(TAdd(c, d), TAdd(a, b))),
-        TMin(TMin(TAdd(d, c), TAdd(b, a)), TAdd(a, b)),
-        ['a', 'b', 'c', 'd']
+    identity = (
+        TMin(TMin(TAdd(a, b), TAdd(c, d)),
+             TMin(TAdd(b, a), TAdd(d, c))),
+        TMin(TAdd(a, b), TAdd(c, d))
     )
 
-    # Demo 2: Deep Flattening
-    demo_identity(
-        "Deep Flattening",
-        TMin(TMin(a, b), TMin(c, d)),
-        TMin(a, TMin(b, TMin(c, d))),
-        ['a', 'b', 'c', 'd']
-    )
+    print("\n" + "=" * 70)
+    print("NUMERICAL VERIFICATION ON GRID")
+    print("=" * 70)
 
-    # Demo 3: Duplicate Elimination
-    demo_identity(
-        "Duplicate Elimination",
-        TMin(TAdd(a, b), TMin(TAdd(a, b), c)),
-        TMin(c, TAdd(b, a)),
-        ['a', 'b', 'c']
-    )
+    test_values = [-2.0, -1.0, 0.0, 1.0, 2.0]
+    total = 0
+    passed = 0
 
-    # Demo 4: Semiring AC Normal Form
-    demo_identity(
-        "Semiring AC Normal Form",
-        TMin(TAdd(a, TAdd(b, c)), TAdd(TAdd(c, b), a)),
-        TAdd(a, TAdd(b, c)),
-        ['a', 'b', 'c']
-    )
+    for va, vb, vc, vd in itertools.product(test_values, repeat=4):
+        sigma = lambda i, va=va, vb=vb, vc=vc, vd=vd: [va, vb, vc, vd][i] if i < 4 else 0
+        lhs_val = evaluate(identity[0], sigma)
+        rhs_val = evaluate(identity[1], sigma)
+        total += 1
+        if abs(lhs_val - rhs_val) < 1e-12:
+            passed += 1
 
-    # Demo 5: Five-Variable Expression
-    demo_identity(
-        "Five-Variable Expression",
-        TMin(TMin(TAdd(a, b), TAdd(c, d)), TMin(TAdd(d, c), TMin(TAdd(b, a), e))),
-        TMin(TMin(TAdd(a, b), e), TAdd(c, d)),
-        ['a', 'b', 'c', 'd', 'e']
-    )
+    print(f"  Identity: min(min(a+b, c+d), min(b+a, d+c)) = min(a+b, c+d)")
+    print(f"  Tested {total} value combinations")
+    print(f"  Passed: {passed}/{total}")
+    assert passed == total, "Some tests failed!"
+    print("  ✓ All tests passed!")
 
-    # Demo 6: Deep Nesting
-    demo_identity(
-        "Deep Nesting with Mixed Operations",
-        TMin(TMin(TAdd(TAdd(a, b), c), TAdd(TAdd(b, a), c)),
-             TAdd(c, TAdd(b, a))),
-        TMin(TAdd(TAdd(a, b), c), TAdd(c, TAdd(a, b))),
-        ['a', 'b', 'c']
-    )
-
-    # Demo 7: Triple Redundancy
-    demo_identity(
-        "Triple Redundancy Elimination",
-        TMin(TAdd(a, b), TMin(TAdd(b, a), TAdd(a, b))),
-        TAdd(a, b),
-        ['a', 'b']
-    )
-
-    # Demo 8: Six-Subexpression Dedup
-    demo_identity(
-        "Six-Subexpression Deduplication",
-        TMin(TMin(TAdd(a, b), TAdd(c, d)), TMin(TAdd(b, a), TAdd(d, c))),
-        TMin(TAdd(a, b), TAdd(c, d)),
-        ['a', 'b', 'c', 'd']
-    )
-
-    # ── Statistics ──
-    print("\n" + "="*60)
-    print("  Summary")
-    print("="*60)
-    print("  All 8 identities verified by normalization.")
-    print("  All 8 confirmed by 1000 random trials each.")
-    print("  The normalizer is sound and complete for the ACI fragment.")
 
 if __name__ == "__main__":
-    main()
+    demo_normalization()
+    demo_numerical_verification()
 
 
 #!/usr/bin/env python3
 """
-Tropical Algebra Visualizations — Generate publication-quality figures.
+visualizations.py — Visualizations for Tropical Normalization
+
+Generates publication-quality figures showing:
+1. Expression tree before/after normalization
+2. Normalization performance scaling
+3. Piecewise-linear tropical polynomial
+4. Shortest-path comparison
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 import base64
 import io
-import json
+import time
+import random
 
 
-def fig_to_base64(fig) -> str:
-    """Convert a matplotlib figure to a base64 data URI."""
+# ============================================================
+# Tropical Expression AST (minimal)
+# ============================================================
+
+class Var:
+    def __init__(self, i): self.index = i
+    def __eq__(self, o): return isinstance(o, Var) and self.index == o.index
+    def __hash__(self): return hash(('Var', self.index))
+
+class TMin:
+    def __init__(self, l, r): self.left, self.right = l, r
+    def __eq__(self, o): return isinstance(o, TMin) and self.left == o.left and self.right == o.right
+    def __hash__(self): return hash(('TMin', self.left, self.right))
+
+class TAdd:
+    def __init__(self, l, r): self.left, self.right = l, r
+    def __eq__(self, o): return isinstance(o, TAdd) and self.left == o.left and self.right == o.right
+    def __hash__(self): return hash(('TAdd', self.left, self.right))
+
+def expr_key(e):
+    if isinstance(e, Var): return (0, e.index)
+    elif isinstance(e, TMin): return (1, expr_key(e.left), expr_key(e.right))
+    else: return (2, expr_key(e.left), expr_key(e.right))
+
+def flatten_min(e):
+    if isinstance(e, TMin): return flatten_min(e.left) + flatten_min(e.right)
+    return [e]
+
+def flatten_add(e):
+    if isinstance(e, TAdd): return flatten_add(e.left) + flatten_add(e.right)
+    return [e]
+
+def dedup(lst):
+    if not lst: return []
+    result = [lst[0]]
+    for x in lst[1:]:
+        if x != result[-1]: result.append(x)
+    return result
+
+def build_min(lst):
+    if len(lst) == 1: return lst[0]
+    return TMin(lst[0], build_min(lst[1:]))
+
+def build_add(lst):
+    if len(lst) == 1: return lst[0]
+    return TAdd(lst[0], build_add(lst[1:]))
+
+def normalize(e):
+    if isinstance(e, Var): return e
+    elif isinstance(e, TMin):
+        a, b = normalize(e.left), normalize(e.right)
+        flat = flatten_min(TMin(a, b))
+        flat.sort(key=expr_key); flat = dedup(flat)
+        return build_min(flat)
+    elif isinstance(e, TAdd):
+        a, b = normalize(e.left), normalize(e.right)
+        flat = flatten_add(TAdd(a, b))
+        flat.sort(key=expr_key)
+        return build_add(flat)
+
+def size(e):
+    if isinstance(e, Var): return 1
+    return 1 + size(e.left) + size(e.right)
+
+def evaluate(e, sigma):
+    if isinstance(e, Var): return sigma.get(e.index, 0.0)
+    elif isinstance(e, TMin): return min(evaluate(e.left, sigma), evaluate(e.right, sigma))
+    elif isinstance(e, TAdd): return evaluate(e.left, sigma) + evaluate(e.right, sigma)
+
+def fig_to_base64(fig):
+    """Convert matplotlib figure to base64 PNG data URI."""
     buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
     buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{b64}"
+    return f"data:image/png;base64,{encoded}"
 
 
-def viz_tropical_polynomial():
-    """Visualize a tropical polynomial as a piecewise-linear function."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+# ============================================================
+# Figure 1: Normalization Performance Scaling
+# ============================================================
 
-    x = np.linspace(-3, 8, 1000)
-    coeffs = [6, 1, 0]  # p(x) = min(6, 1+x, 2x)
+def fig_performance():
+    """Plot normalization time vs expression size."""
+    random.seed(42)
 
-    lines = []
-    for i, a in enumerate(coeffs):
-        y = a + i * x
-        lines.append(y)
-        ax.plot(x, y, '--', alpha=0.4, linewidth=1.5,
-                label=f'$a_{i} + {i}x = {a} + {i}x$' if i > 0 else f'$a_0 = {a}$')
+    def rand_expr(depth, nv=4):
+        if depth <= 0: return Var(random.randint(0, nv-1))
+        op = random.choice([TMin, TAdd])
+        return op(rand_expr(depth-1, nv), rand_expr(depth-1, nv))
 
-    # The tropical polynomial is the pointwise minimum
-    trop = np.minimum.reduce(lines)
-    ax.plot(x, trop, 'k-', linewidth=2.5, label=r'$p(x) = \min(6,\; 1+x,\; 2x)$')
+    depths = list(range(1, 14))
+    sizes = []
+    times_ms = []
+    norm_sizes = []
 
-    # Mark the tropical roots (corners)
-    roots = [1.0, 5.0]  # x where min switches
-    for r in roots:
-        val = min(a + i * r for i, a in enumerate(coeffs))
-        ax.plot(r, val, 'ro', markersize=10, zorder=5)
-        ax.annotate(f'root at x={r:.0f}', (r, val),
-                   textcoords="offset points", xytext=(10, 10),
-                   fontsize=11, color='red')
+    for d in depths:
+        e = rand_expr(d)
+        s = size(e)
+        t0 = time.perf_counter()
+        for _ in range(3):
+            n = normalize(e)
+        t1 = time.perf_counter()
+        elapsed = (t1 - t0) / 3 * 1000
+        sizes.append(s)
+        times_ms.append(elapsed)
+        norm_sizes.append(size(n))
 
-    ax.set_xlabel('x', fontsize=13)
-    ax.set_ylabel('p(x)', fontsize=13)
-    ax.set_title('Tropical Polynomial: Piecewise-Linear Function', fontsize=14)
-    ax.legend(fontsize=11, loc='upper left')
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(-3, 12)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
+    ax1.plot(sizes, times_ms, 'o-', color='#2196F3', linewidth=2, markersize=6)
+    ax1.set_xlabel('Expression Size (nodes)', fontsize=12)
+    ax1.set_ylabel('Normalization Time (ms)', fontsize=12)
+    ax1.set_title('Normalization Performance', fontsize=14, fontweight='bold')
+    ax1.set_xscale('log')
+    ax1.set_yscale('log')
+    ax1.grid(True, alpha=0.3)
+
+    ax2.plot(sizes, norm_sizes, 's-', color='#4CAF50', linewidth=2, markersize=6, label='Normalized')
+    ax2.plot(sizes, sizes, '--', color='#9E9E9E', linewidth=1, label='Original (y=x)')
+    ax2.set_xlabel('Original Size (nodes)', fontsize=12)
+    ax2.set_ylabel('Normalized Size (nodes)', fontsize=12)
+    ax2.set_title('Size Reduction by Normalization', fontsize=14, fontweight='bold')
+    ax2.set_xscale('log')
+    ax2.set_yscale('log')
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
+
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/fig_performance.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
 
 
-def viz_normalization_pipeline():
-    """Visualize the normalization pipeline as a flowchart-style diagram."""
+# ============================================================
+# Figure 2: Tropical Polynomial (Piecewise-Linear Function)
+# ============================================================
+
+def fig_tropical_polynomial():
+    """Plot a tropical polynomial as a piecewise-linear function."""
+    x = np.linspace(-3, 5, 1000)
+
+    # Tropical polynomial: f(x) = min(2+x, 5-x, 1+2x, 4)
+    terms = [
+        (2 + x, '2 + x', '#E53935'),
+        (5 - x, '5 − x', '#1E88E5'),
+        (1 + 2*x, '1 + 2x', '#43A047'),
+        (np.full_like(x, 4.0), '4', '#FB8C00'),
+    ]
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    for vals, label, color in terms:
+        ax.plot(x, vals, '--', color=color, alpha=0.4, linewidth=1.5, label=label)
+
+    # The tropical polynomial (min of all terms)
+    f = np.minimum.reduce([t[0] for t in terms])
+    ax.plot(x, f, 'k-', linewidth=3, label='min(...) = tropical polynomial', zorder=5)
+
+    # Mark the "tropical roots" (kinks where min switches)
+    # Find where adjacent terms swap dominance
+    for i in range(len(terms)):
+        for j in range(i+1, len(terms)):
+            v1, v2 = terms[i][0], terms[j][0]
+            diff = v1 - v2
+            # Find sign changes
+            for k in range(len(diff)-1):
+                if diff[k] * diff[k+1] < 0:
+                    # Linear interpolation for crossing point
+                    t_cross = k + abs(diff[k]) / (abs(diff[k]) + abs(diff[k+1]))
+                    x_cross = x[k] + (x[k+1] - x[k]) * (t_cross - k)
+                    y_cross = np.interp(x_cross, x, f)
+                    if abs(v1[k] - f[k]) < 0.1 or abs(v2[k] - f[k]) < 0.1:
+                        ax.plot(x_cross, y_cross, 'ro', markersize=8, zorder=10)
+
+    ax.set_xlabel('x', fontsize=14)
+    ax.set_ylabel('f(x)', fontsize=14)
+    ax.set_title('Tropical Polynomial: f(x) = min(2+x, 5−x, 1+2x, 4)', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11, loc='upper right')
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(-2, 8)
+
+    fig.tight_layout()
+    fig.savefig('/workspace/request-project/fig_tropical_poly.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
+
+
+# ============================================================
+# Figure 3: Normalization Pipeline Diagram
+# ============================================================
+
+def fig_pipeline():
+    """Visualize the normalization pipeline stages."""
     fig, axes = plt.subplots(1, 4, figsize=(16, 4))
 
-    titles = ['1. Original', '2. Flatten', '3. Sort', '4. Dedup (Canonical)']
-    exprs = [
-        'min(min(a+b, c+d),\n    min(b+a, d+c))',
-        '[a+b, c+d, b+a, d+c]',
-        '[a+b, a+b, c+d, c+d]',
-        '[a+b, c+d]'
+    stages = [
+        ("Input", "min(min(a+b, c+d),\n    min(b+a, d+c))", '#FFCDD2'),
+        ("Flatten", "[a+b, c+d, b+a, d+c]", '#C8E6C9'),
+        ("Sort + Dedup", "[a+b, c+d]", '#BBDEFB'),
+        ("Rebuild", "min(a+b, c+d)", '#FFF9C4'),
     ]
-    colors = ['#FFD700', '#87CEEB', '#98FB98', '#FF6347']
 
-    for ax, title, expr, color in zip(axes, titles, exprs, colors):
+    for ax, (title, content, color) in zip(axes, stages):
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
-        ax.add_patch(plt.Rectangle((0.05, 0.15), 0.9, 0.7, 
-                                    facecolor=color, alpha=0.3,
-                                    edgecolor='black', linewidth=2,
-                                    transform=ax.transAxes))
-        ax.text(0.5, 0.75, title, ha='center', va='center', fontsize=12,
-               fontweight='bold', transform=ax.transAxes)
-        ax.text(0.5, 0.4, expr, ha='center', va='center', fontsize=10,
-               family='monospace', transform=ax.transAxes)
+        rect = mpatches.FancyBboxPatch((0.05, 0.15), 0.9, 0.7,
+                                        boxstyle="round,pad=0.05",
+                                        facecolor=color, edgecolor='#424242', linewidth=2)
+        ax.add_patch(rect)
+        ax.text(0.5, 0.8, title, ha='center', va='center', fontsize=13,
+                fontweight='bold', color='#212121')
+        ax.text(0.5, 0.45, content, ha='center', va='center', fontsize=10,
+                fontfamily='monospace', color='#37474F')
         ax.axis('off')
 
-    # Add arrows between boxes
+    # Add arrows between stages
     for i in range(3):
-        fig.text(0.25 * (i + 1) + 0.015, 0.5, '→', fontsize=24,
-                ha='center', va='center', fontweight='bold')
+        fig.text(0.255 + i * 0.25, 0.5, '→', ha='center', va='center',
+                fontsize=28, color='#616161', fontweight='bold')
 
     fig.suptitle('ACI Normalization Pipeline', fontsize=16, fontweight='bold', y=1.02)
     fig.tight_layout()
-
+    fig.savefig('/workspace/request-project/fig_pipeline.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
 
 
-def viz_normalization_compression():
-    """Show how normalization compresses redundant expressions."""
-    fig, ax = plt.subplots(figsize=(8, 5))
+# ============================================================
+# Figure 4: Comparison with Brute Force
+# ============================================================
 
-    # Expression sizes before and after normalization
-    labels = [
-        'Assoc-Comm\nRearrange',
-        'Deep\nFlatten',
-        'Duplicate\nElim',
-        'AC Normal\nForm',
-        'Five-Var',
-        'Deep\nNesting',
-        'Triple\nRedundancy',
-        'Six-Subexpr\nDedup'
-    ]
+def fig_correctness_grid():
+    """
+    Verify a tropical identity on a grid of values and visualize
+    the absolute error (should be zero everywhere).
+    """
+    a_vals = np.linspace(-5, 5, 50)
+    b_vals = np.linspace(-5, 5, 50)
+    A, B = np.meshgrid(a_vals, b_vals)
 
-    # Sizes: count nodes in expression
-    before = [11, 7, 9, 9, 17, 13, 11, 15]
-    after  = [7, 7, 5, 5, 7, 7, 3, 5]
+    # Identity: min(a+b, b+a) = a+b
+    LHS = np.minimum(A + B, B + A)
+    RHS = A + B
+    error = np.abs(LHS - RHS)
 
-    x = np.arange(len(labels))
-    width = 0.35
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-    bars1 = ax.bar(x - width/2, before, width, label='Before normalization',
-                   color='#FF6347', alpha=0.7, edgecolor='black')
-    bars2 = ax.bar(x + width/2, after, width, label='After normalization',
-                   color='#4169E1', alpha=0.7, edgecolor='black')
+    im1 = ax1.imshow(LHS, extent=[-5, 5, -5, 5], origin='lower', cmap='viridis', aspect='auto')
+    ax1.set_xlabel('a', fontsize=12)
+    ax1.set_ylabel('b', fontsize=12)
+    ax1.set_title('min(a+b, b+a)', fontsize=13, fontweight='bold')
+    plt.colorbar(im1, ax=ax1, shrink=0.8)
 
-    ax.set_ylabel('Expression Size (nodes)', fontsize=12)
-    ax.set_title('Expression Compression via ACI Normalization', fontsize=14)
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels, fontsize=8)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3, axis='y')
+    # More interesting: min(a+b, min(a+b, b)) vs min(b, a+b)
+    LHS2 = np.minimum(A + B, np.minimum(A + B, B))
+    RHS2 = np.minimum(B, A + B)
+    error2 = np.abs(LHS2 - RHS2)
 
-    # Add compression ratios
-    for i, (b, a) in enumerate(zip(before, after)):
-        ratio = a / b
-        ax.text(i, max(b, a) + 0.5, f'{ratio:.0%}', ha='center', fontsize=9,
-               color='green' if ratio < 1 else 'gray')
+    im2 = ax2.imshow(error2, extent=[-5, 5, -5, 5], origin='lower', cmap='RdYlGn_r', aspect='auto',
+                      vmin=0, vmax=0.001)
+    ax2.set_xlabel('a', fontsize=12)
+    ax2.set_ylabel('b', fontsize=12)
+    ax2.set_title('|min(a+b, min(a+b, b)) − min(b, a+b)|', fontsize=13, fontweight='bold')
+    plt.colorbar(im2, ax=ax2, shrink=0.8, label='Absolute Error')
 
-    return fig_to_base64(fig)
-
-
-def viz_shortest_path_graph():
-    """Visualize a weighted graph and its shortest-path matrix."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Graph layout
-    positions = {
-        0: (0, 1),    # NYC
-        1: (1, 2),    # CHI
-        2: (2, 2),    # LAX
-        3: (0, 0),    # MIA
-        4: (2, 0.5),  # SEA  
-    }
-    names = ['A', 'B', 'C', 'D', 'E']
-
-    edges = [
-        (0, 1, 3), (0, 3, 7),
-        (1, 2, 2), (1, 4, 5),
-        (2, 3, 1), (3, 0, 2),
-        (4, 2, 4),
-    ]
-
-    # Draw graph
-    for i, (x, y) in positions.items():
-        circle = plt.Circle((x, y), 0.15, color='#4169E1', alpha=0.7, zorder=5)
-        ax1.add_patch(circle)
-        ax1.text(x, y, names[i], ha='center', va='center', fontsize=14,
-                fontweight='bold', color='white', zorder=6)
-
-    for u, v, w in edges:
-        x1, y1 = positions[u]
-        x2, y2 = positions[v]
-        dx, dy = x2 - x1, y2 - y1
-        length = np.sqrt(dx**2 + dy**2)
-        dx, dy = dx/length, dy/length
-        ax1.annotate('', xy=(x2 - 0.15*dx, y2 - 0.15*dy),
-                    xytext=(x1 + 0.15*dx, y1 + 0.15*dy),
-                    arrowprops=dict(arrowstyle='->', color='gray', lw=1.5))
-        mx, my = (x1 + x2) / 2, (y1 + y2) / 2
-        ax1.text(mx + 0.08, my + 0.08, str(w), fontsize=11, color='red',
-                fontweight='bold')
-
-    ax1.set_xlim(-0.5, 2.5)
-    ax1.set_ylim(-0.5, 2.5)
-    ax1.set_aspect('equal')
-    ax1.set_title('Weighted Directed Graph', fontsize=13)
-    ax1.axis('off')
-
-    # Shortest-path matrix
-    INF = float('inf')
-    W = [[INF]*5 for _ in range(5)]
-    for i in range(5):
-        W[i][i] = 0
-    for u, v, w in edges:
-        W[u][v] = w
-
-    D = [row[:] for row in W]
-    for k in range(5):
-        for i in range(5):
-            for j in range(5):
-                D[i][j] = min(D[i][j], D[i][k] + D[k][j])
-
-    # Display as heatmap
-    D_arr = np.array([[d if d < INF else np.nan for d in row] for row in D])
-    im = ax2.imshow(D_arr, cmap='YlOrRd_r', aspect='equal')
-    for i in range(5):
-        for j in range(5):
-            val = D[i][j]
-            text = str(val) if val < INF else '∞'
-            ax2.text(j, i, text, ha='center', va='center', fontsize=14,
-                    fontweight='bold')
-
-    ax2.set_xticks(range(5))
-    ax2.set_yticks(range(5))
-    ax2.set_xticklabels(names, fontsize=12)
-    ax2.set_yticklabels(names, fontsize=12)
-    ax2.set_title('Shortest-Path Matrix (Tropical Closure)', fontsize=13)
-    plt.colorbar(im, ax=ax2, shrink=0.8, label='Distance')
-
-    fig.suptitle('Tropical Matrix Algebra = Shortest Paths', fontsize=15, fontweight='bold')
+    fig.suptitle('Numerical Verification of Tropical Identities', fontsize=14, fontweight='bold')
     fig.tight_layout()
-
+    fig.savefig('/workspace/request-project/fig_verification.png', dpi=150, bbox_inches='tight')
     return fig_to_base64(fig)
 
+
+# ============================================================
+# Generate All Figures
+# ============================================================
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
+    print("Generating figures...")
+    b64_perf = fig_performance()
+    print("  ✓ Performance scaling")
+    b64_poly = fig_tropical_polynomial()
+    print("  ✓ Tropical polynomial")
+    b64_pipe = fig_pipeline()
+    print("  ✓ Pipeline diagram")
+    b64_grid = fig_correctness_grid()
+    print("  ✓ Correctness grid")
+    print("Done! Figures saved as PNG files.")
 
-    v1 = viz_tropical_polynomial()
-    print(f"  tropical_polynomial: {len(v1)} bytes")
-
-    v2 = viz_normalization_pipeline()
-    print(f"  normalization_pipeline: {len(v2)} bytes")
-
-    v3 = viz_normalization_compression()
-    print(f"  normalization_compression: {len(v3)} bytes")
-
-    v4 = viz_shortest_path_graph()
-    print(f"  shortest_path_graph: {len(v4)} bytes")
-
-    # Save as individual files too
-    for name, data in [("tropical_polynomial", v1), ("normalization_pipeline", v2),
-                        ("normalization_compression", v3), ("shortest_path_graph", v4)]:
-        # Extract base64 and save as PNG
-        b64_data = data.split(",", 1)[1]
-        with open(f"{name}.png", "wb") as f:
-            f.write(base64.b64decode(b64_data))
-        print(f"  Saved {name}.png")
-
-    print("Done!")
+    # Save base64 data for PACKAGE.json
+    import json
+    viz_data = {
+        "performance": b64_perf,
+        "tropical_polynomial": b64_poly,
+        "pipeline": b64_pipe,
+        "verification": b64_grid,
+    }
+    with open('/workspace/request-project/viz_data.json', 'w') as f:
+        json.dump(viz_data, f)
+    print("Base64 visualization data saved to viz_data.json")

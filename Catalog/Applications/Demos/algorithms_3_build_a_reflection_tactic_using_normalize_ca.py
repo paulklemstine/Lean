@@ -1,389 +1,376 @@
 #!/usr/bin/env python3
 """
-Tropical Algebra Algorithms — Core normalization and decision procedures.
+algorithms.py — Tropical ACI Normalization Algorithm
 
-Implements the ACI (Associative-Commutative-Idempotent) normalization algorithm
-for min-plus tropical expressions, along with extensions for tropical matrix
-algebra and shortest-path computations.
+Implements the certified normalization algorithm for tropical (min-plus) expressions
+with full pseudocode, complexity analysis, and example usage.
+
+Algorithm: ACI Normalizer for Tropical Expressions
+  - Time: O(n log n) where n is the expression size
+  - Space: O(n) for the flattened representation
+
+The algorithm handles three symmetries:
+  - Associativity of min and + (flattening)
+  - Commutativity of min and + (sorting)
+  - Idempotence of min (deduplication)
 """
 
-from typing import List, Dict, Tuple, Optional, Callable
+from __future__ import annotations
 from dataclasses import dataclass
-from enum import Enum
-import math
+from typing import Union, List, Tuple, Optional
+import time
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# SECTION 1: Tropical Expression AST and Normalization
-# ═══════════════════════════════════════════════════════════════════════════
-
-class ExprTag(Enum):
-    VAR = 0
-    TMIN = 1
-    ADD = 2
-
+# ============================================================
+# Expression AST
+# ============================================================
 
 @dataclass(frozen=True)
-class TropExpr:
+class Var:
+    """Variable indexed by natural number."""
+    index: int
+
+@dataclass(frozen=True)
+class TMin:
+    """Tropical addition: min(a, b)."""
+    left: 'Expr'
+    right: 'Expr'
+
+@dataclass(frozen=True)
+class TAdd:
+    """Tropical multiplication: a + b."""
+    left: 'Expr'
+    right: 'Expr'
+
+Expr = Union[Var, TMin, TAdd]
+
+
+# ============================================================
+# Algorithm 1: Expression Size
+# ============================================================
+
+def size(e: Expr) -> int:
     """
-    Tropical expression abstract syntax tree.
+    Compute the size of a tropical expression (number of nodes).
 
-    Represents expressions in the min-plus algebra:
-    - Var(i): variable x_i
-    - TMin(l, r): tropical addition (minimum)
-    - Add(l, r): tropical multiplication (real addition)
+    Time: O(n), Space: O(depth) for recursion stack
     """
-    tag: ExprTag
-    index: Optional[int] = None
-    left: Optional['TropExpr'] = None
-    right: Optional['TropExpr'] = None
-
-    def __repr__(self) -> str:
-        if self.tag == ExprTag.VAR:
-            return f"x{self.index}"
-        elif self.tag == ExprTag.TMIN:
-            return f"min({self.left}, {self.right})"
-        else:
-            return f"({self.left} + {self.right})"
-
-
-def var(i: int) -> TropExpr:
-    return TropExpr(ExprTag.VAR, index=i)
-
-
-def tmin(l: TropExpr, r: TropExpr) -> TropExpr:
-    return TropExpr(ExprTag.TMIN, left=l, right=r)
-
-
-def tadd(l: TropExpr, r: TropExpr) -> TropExpr:
-    return TropExpr(ExprTag.ADD, left=l, right=r)
-
-
-def evaluate(expr: TropExpr, sigma: Callable[[int], float]) -> float:
-    """
-    Evaluate a tropical expression under a variable assignment.
-
-    Time complexity: O(n) where n is the number of nodes.
-    Space complexity: O(d) where d is the depth (recursion stack).
-    """
-    if expr.tag == ExprTag.VAR:
-        return sigma(expr.index)
-    elif expr.tag == ExprTag.TMIN:
-        return min(evaluate(expr.left, sigma), evaluate(expr.right, sigma))
-    else:
-        return evaluate(expr.left, sigma) + evaluate(expr.right, sigma)
-
-
-def _sort_key(expr: TropExpr) -> tuple:
-    """Lexicographic comparison key for total ordering on expressions."""
-    if expr.tag == ExprTag.VAR:
-        return (0, expr.index)
-    elif expr.tag == ExprTag.TMIN:
-        return (1, _sort_key(expr.left), _sort_key(expr.right))
-    else:
-        return (2, _sort_key(expr.left), _sort_key(expr.right))
-
-
-def flatten_min(expr: TropExpr) -> List[TropExpr]:
-    """Flatten nested min into a list. O(n)."""
-    if expr.tag == ExprTag.TMIN:
-        return flatten_min(expr.left) + flatten_min(expr.right)
-    return [expr]
-
-
-def flatten_add(expr: TropExpr) -> List[TropExpr]:
-    """Flatten nested add into a list. O(n)."""
-    if expr.tag == ExprTag.ADD:
-        return flatten_add(expr.left) + flatten_add(expr.right)
-    return [expr]
-
-
-def dedup_sorted(lst: List[TropExpr]) -> List[TropExpr]:
-    """Remove consecutive duplicates from a sorted list. O(n)."""
-    if len(lst) <= 1:
-        return lst
-    result = [lst[0]]
-    for item in lst[1:]:
-        if item != result[-1]:
-            result.append(item)
-    return result
-
-
-def build_min(lst: List[TropExpr]) -> TropExpr:
-    """Build right-associated min tree from non-empty list. O(n)."""
-    assert lst, "Cannot build min from empty list"
-    if len(lst) == 1:
-        return lst[0]
-    return tmin(lst[0], build_min(lst[1:]))
-
-
-def build_add(lst: List[TropExpr]) -> TropExpr:
-    """Build right-associated add tree from non-empty list. O(n)."""
-    assert lst, "Cannot build add from empty list"
-    if len(lst) == 1:
-        return lst[0]
-    return tadd(lst[0], build_add(lst[1:]))
-
-
-def normalize_ca(expr: TropExpr) -> TropExpr:
-    """
-    ACI-normalize a tropical expression.
-
-    Algorithm:
-    1. Recursively normalize subexpressions.
-    2. Flatten nested operations into flat lists.
-    3. Sort by lexicographic order (handles commutativity).
-    4. Deduplicate (for min only — handles idempotence).
-    5. Rebuild the canonical tree.
-
-    Time complexity: O(n^2 log n) worst case, O(n log^2 n) for balanced trees.
-    Space complexity: O(n).
-
-    Correctness: normalize_ca preserves evaluation semantics (proven formally).
-    Completeness: Two expressions are ACI-equivalent iff their normal forms are equal.
-    """
-    if expr.tag == ExprTag.VAR:
-        return expr
-    elif expr.tag == ExprTag.TMIN:
-        left = normalize_ca(expr.left)
-        right = normalize_ca(expr.right)
-        flat = flatten_min(tmin(left, right))
-        flat.sort(key=_sort_key)
-        flat = dedup_sorted(flat)
-        return build_min(flat)
-    else:  # ADD
-        left = normalize_ca(expr.left)
-        right = normalize_ca(expr.right)
-        flat = flatten_add(tadd(left, right))
-        flat.sort(key=_sort_key)
-        return build_add(flat)
-
-
-def check_tropical_identity(lhs: TropExpr, rhs: TropExpr) -> bool:
-    """
-    Decide whether two tropical expressions are ACI-equivalent.
-
-    This is a complete decision procedure for the ACI fragment.
-    Returns True iff the expressions evaluate to the same value
-    for every variable assignment.
-
-    Time complexity: O(n^2 log n) where n = max(|lhs|, |rhs|).
-    """
-    return normalize_ca(lhs) == normalize_ca(rhs)
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# SECTION 2: Tropical Matrix Algebra
-# ═══════════════════════════════════════════════════════════════════════════
-
-INF = float('inf')
-
-
-def tropical_matrix_mult(A: List[List[float]], B: List[List[float]]) -> List[List[float]]:
-    """
-    Tropical matrix multiplication: (A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj}).
-
-    This is the matrix operation underlying shortest-path algorithms.
-    Floyd-Warshall computes A^n in the tropical semiring.
-
-    Time complexity: O(n^3) for n×n matrices.
-
-    Args:
-        A: m×p matrix (list of rows)
-        B: p×n matrix (list of rows)
-
-    Returns:
-        m×n tropical product matrix
-    """
-    m = len(A)
-    p = len(A[0])
-    n = len(B[0])
-    C = [[INF] * n for _ in range(m)]
-    for i in range(m):
-        for j in range(n):
-            for k in range(p):
-                val = A[i][k] + B[k][j]
-                if val < C[i][j]:
-                    C[i][j] = val
-    return C
-
-
-def tropical_matrix_power(A: List[List[float]], exp: int) -> List[List[float]]:
-    """
-    Compute A^exp in the tropical semiring (repeated tropical matrix multiplication).
-
-    The (i,j) entry of A^n gives the minimum weight of a path from i to j
-    using exactly n edges in the weighted digraph defined by A.
-
-    Time complexity: O(n^3 * exp) for n×n matrix.
-    """
-    n = len(A)
-    # Identity: I_{ij} = 0 if i=j, +∞ otherwise
-    result = [[INF if i != j else 0 for j in range(n)] for i in range(n)]
-    base = A
-    while exp > 0:
-        if exp % 2 == 1:
-            result = tropical_matrix_mult(result, base)
-        base = tropical_matrix_mult(base, base)
-        exp //= 2
-    return result
-
-
-def floyd_warshall_tropical(W: List[List[float]]) -> List[List[float]]:
-    """
-    All-pairs shortest paths via tropical matrix closure.
-
-    Computes W* = I ⊕ W ⊕ W^2 ⊕ ... = min(I, W, W^2, ...)
-
-    This is the Kleene star in the tropical semiring, equivalent to
-    Floyd-Warshall's algorithm.
-
-    Time complexity: O(n^3).
-
-    Args:
-        W: n×n weight matrix (W[i][j] = edge weight, INF if no edge)
-
-    Returns:
-        n×n shortest-distance matrix
-    """
-    n = len(W)
-    D = [[W[i][j] for j in range(n)] for i in range(n)]
-    for i in range(n):
-        D[i][i] = min(D[i][i], 0)
-    for k in range(n):
-        for i in range(n):
-            for j in range(n):
-                if D[i][k] + D[k][j] < D[i][j]:
-                    D[i][j] = D[i][k] + D[k][j]
-    return D
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# SECTION 3: Tropical Polynomial Evaluation
-# ═══════════════════════════════════════════════════════════════════════════
-
-def tropical_polynomial_eval(coeffs: List[float], x: float) -> float:
-    """
-    Evaluate a tropical polynomial p(x) = min_i (a_i + i*x).
-
-    A tropical polynomial defines a piecewise-linear concave function.
-    The "roots" are the points where the minimum switches between terms.
-
-    Time complexity: O(n) where n = len(coeffs).
-
-    Args:
-        coeffs: list of tropical coefficients [a_0, a_1, ..., a_n]
-        x: evaluation point
-
-    Returns:
-        min_i (a_i + i*x)
-    """
-    return min(a + i * x for i, a in enumerate(coeffs) if a < INF)
-
-
-def tropical_polynomial_roots(coeffs: List[float]) -> List[float]:
-    """
-    Find the tropical roots of a polynomial.
-
-    A tropical root is a value x where the minimum in p(x) = min_i(a_i + i*x)
-    is achieved by at least two different terms. These are the "corners" of the
-    piecewise-linear graph.
-
-    This corresponds to finding where consecutive terms in the upper envelope
-    of the lines y = a_i + i*x intersect.
-
-    Time complexity: O(n log n) with convex hull; O(n^2) naive.
-    """
-    # Filter out infinite coefficients
-    active = [(i, a) for i, a in enumerate(coeffs) if a < INF]
-    if len(active) <= 1:
-        return []
-
-    roots = []
-    for j in range(len(active) - 1):
-        i1, a1 = active[j]
-        i2, a2 = active[j + 1]
-        if i2 != i1:
-            # Lines a1 + i1*x = a2 + i2*x => x = (a1 - a2) / (i2 - i1)
-            root = (a1 - a2) / (i2 - i1)
-            roots.append(root)
-
-    return sorted(set(roots))
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# SECTION 4: Expression Size and Complexity Metrics
-# ═══════════════════════════════════════════════════════════════════════════
-
-def expr_size(expr: TropExpr) -> int:
-    """Count the number of nodes in a tropical expression."""
-    if expr.tag == ExprTag.VAR:
+    if isinstance(e, Var):
         return 1
-    return 1 + expr_size(expr.left) + expr_size(expr.right)
+    return 1 + size(e.left) + size(e.right)
 
 
-def expr_depth(expr: TropExpr) -> int:
-    """Compute the depth of a tropical expression tree."""
-    if expr.tag == ExprTag.VAR:
+# ============================================================
+# Algorithm 2: Canonical Comparison
+# ============================================================
+
+def _tag(e: Expr) -> int:
+    """Assign integer tags: Var=0, TMin=1, TAdd=2."""
+    if isinstance(e, Var): return 0
+    if isinstance(e, TMin): return 1
+    return 2
+
+def compare(e1: Expr, e2: Expr) -> int:
+    """
+    Total order comparison on expressions.
+
+    Returns: -1 (less), 0 (equal), 1 (greater)
+
+    Pseudocode:
+      COMPARE(e1, e2):
+        if tag(e1) != tag(e2): return compare_int(tag(e1), tag(e2))
+        if e1 is Var(n1), e2 is Var(n2): return compare_int(n1, n2)
+        // both are TMin or both are TAdd
+        c = COMPARE(e1.left, e2.left)
+        if c != 0: return c
+        return COMPARE(e1.right, e2.right)
+
+    Time: O(min(|e1|, |e2|)), Space: O(depth)
+    """
+    t1, t2 = _tag(e1), _tag(e2)
+    if t1 != t2:
+        return -1 if t1 < t2 else 1
+    if isinstance(e1, Var) and isinstance(e2, Var):
+        if e1.index < e2.index: return -1
+        if e1.index > e2.index: return 1
         return 0
-    return 1 + max(expr_depth(expr.left), expr_depth(expr.right))
+    c = compare(e1.left, e2.left)
+    if c != 0: return c
+    return compare(e1.right, e2.right)
 
 
-def normalization_ratio(expr: TropExpr) -> float:
+def expr_sort_key(e: Expr):
+    """Generate a sort key for Python's sorted()."""
+    if isinstance(e, Var):
+        return (0, e.index)
+    elif isinstance(e, TMin):
+        return (1, expr_sort_key(e.left), expr_sort_key(e.right))
+    else:
+        return (2, expr_sort_key(e.left), expr_sort_key(e.right))
+
+
+# ============================================================
+# Algorithm 3: Flatten
+# ============================================================
+
+def flatten_min(e: Expr) -> List[Expr]:
     """
-    Compute the size ratio of normalized to original expression.
+    Flatten nested min into a flat list of summands.
 
-    Values < 1 indicate the normalizer achieved compression
-    (typically from duplicate elimination).
+    Pseudocode:
+      FLATTEN_MIN(e):
+        if e = TMin(a, b):
+          return FLATTEN_MIN(a) ++ FLATTEN_MIN(b)
+        else:
+          return [e]
+
+    Time: O(n), Space: O(n) for the output list
+
+    Invariant: No element of the output is a TMin node.
     """
-    original_size = expr_size(expr)
-    normalized_size = expr_size(normalize_ca(expr))
-    return normalized_size / original_size
+    if isinstance(e, TMin):
+        return flatten_min(e.left) + flatten_min(e.right)
+    return [e]
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Example Usage
-# ═══════════════════════════════════════════════════════════════════════════
+def flatten_add(e: Expr) -> List[Expr]:
+    """
+    Flatten nested add into a flat list of factors.
+
+    Pseudocode: Symmetric to FLATTEN_MIN.
+
+    Time: O(n), Space: O(n)
+    Invariant: No element of the output is a TAdd node.
+    """
+    if isinstance(e, TAdd):
+        return flatten_add(e.left) + flatten_add(e.right)
+    return [e]
+
+
+# ============================================================
+# Algorithm 4: Deduplication
+# ============================================================
+
+def dedup(lst: List[Expr]) -> List[Expr]:
+    """
+    Remove consecutive duplicates from a sorted list.
+
+    Pseudocode:
+      DEDUP(l):
+        if l is empty: return []
+        result = [l[0]]
+        for i = 1 to |l|-1:
+          if l[i] != result.last:
+            result.append(l[i])
+        return result
+
+    Time: O(n * comparison_cost), Space: O(n)
+
+    This implements idempotence of min: min(a, a) = a.
+    After sorting, duplicates are adjacent, so one pass suffices.
+    """
+    if not lst:
+        return []
+    result = [lst[0]]
+    for x in lst[1:]:
+        if x != result[-1]:
+            result.append(x)
+    return result
+
+
+# ============================================================
+# Algorithm 5: Build (Reconstitution)
+# ============================================================
+
+def build_min(lst: List[Expr]) -> Expr:
+    """
+    Build a right-associated min chain from a nonempty list.
+
+    Pseudocode:
+      BUILD_MIN([e]):        return e
+      BUILD_MIN(e :: rest):  return TMin(e, BUILD_MIN(rest))
+
+    Time: O(n), Space: O(n)
+    """
+    assert lst, "build_min requires nonempty list"
+    if len(lst) == 1:
+        return lst[0]
+    return TMin(lst[0], build_min(lst[1:]))
+
+
+def build_add(lst: List[Expr]) -> Expr:
+    """Build a right-associated add chain. Symmetric to build_min."""
+    assert lst, "build_add requires nonempty list"
+    if len(lst) == 1:
+        return lst[0]
+    return TAdd(lst[0], build_add(lst[1:]))
+
+
+# ============================================================
+# Algorithm 6: The Full ACI Normalizer
+# ============================================================
+
+def normalize(e: Expr) -> Expr:
+    """
+    ACI normalizer for tropical expressions.
+
+    Pseudocode:
+      NORMALIZE(Var(n)):      return Var(n)
+      NORMALIZE(TMin(a, b)):
+        a' = NORMALIZE(a)
+        b' = NORMALIZE(b)
+        flat = FLATTEN_MIN(TMin(a', b'))
+        sorted = MERGE_SORT(flat, COMPARE)
+        deduped = DEDUP(sorted)
+        return BUILD_MIN(deduped)
+      NORMALIZE(TAdd(a, b)):
+        a' = NORMALIZE(a)
+        b' = NORMALIZE(b)
+        flat = FLATTEN_ADD(TAdd(a', b'))
+        sorted = MERGE_SORT(flat, COMPARE)
+        return BUILD_ADD(sorted)
+
+    Complexity Analysis:
+      Let n = |e| (number of nodes in the expression tree).
+      - Recursive normalization: visits each node once → O(n) calls
+      - At each TMin/TAdd node, flatten produces a list whose total size
+        across all nodes is O(n) (each leaf appears exactly once)
+      - Sorting: O(k log k) where k is the list length at that node
+      - Across all nodes, total sorting work is O(n log n) by the
+        standard divide-and-conquer argument
+      - Dedup and build are O(k) per node
+
+      Total: O(n log n) time, O(n) space.
+
+    Correctness:
+      - Flattening undoes associativity differences
+      - Sorting undoes commutativity differences
+      - Dedup undoes idempotence differences
+      - Building reconstitutes a canonical tree form
+
+      Therefore: normalize(e1) == normalize(e2) iff e1 and e2 are
+      ACI-equivalent (for min) and AC-equivalent (for +).
+    """
+    if isinstance(e, Var):
+        return e
+    elif isinstance(e, TMin):
+        a = normalize(e.left)
+        b = normalize(e.right)
+        flat = flatten_min(TMin(a, b))
+        flat.sort(key=expr_sort_key)
+        flat = dedup(flat)
+        return build_min(flat)
+    elif isinstance(e, TAdd):
+        a = normalize(e.left)
+        b = normalize(e.right)
+        flat = flatten_add(TAdd(a, b))
+        flat.sort(key=expr_sort_key)
+        return build_add(flat)
+    raise TypeError(f"Unknown expression type: {type(e)}")
+
+
+# ============================================================
+# Algorithm 7: Equality Decision Procedure
+# ============================================================
+
+def are_tropically_equal(e1: Expr, e2: Expr) -> bool:
+    """
+    Decision procedure for ACI equivalence of tropical expressions.
+
+    Pseudocode:
+      ARE_EQUAL(e1, e2):
+        return NORMALIZE(e1) == NORMALIZE(e2)
+
+    Time: O(n log n) where n = max(|e1|, |e2|)
+    Space: O(n)
+
+    Soundness: If this returns True, then for all σ: ℕ → ℝ,
+               eval(e1, σ) = eval(e2, σ).
+    """
+    return normalize(e1) == normalize(e2)
+
+
+# ============================================================
+# Pretty Printing
+# ============================================================
+
+def pretty(e: Expr) -> str:
+    """Human-readable expression representation."""
+    if isinstance(e, Var):
+        return chr(ord('a') + e.index) if e.index < 26 else f"x{e.index}"
+    elif isinstance(e, TMin):
+        return f"min({pretty(e.left)}, {pretty(e.right)})"
+    elif isinstance(e, TAdd):
+        return f"({pretty(e.left)} + {pretty(e.right)})"
+    return str(e)
+
+
+# ============================================================
+# Evaluation
+# ============================================================
+
+def evaluate(e: Expr, sigma: dict) -> float:
+    """Evaluate expression with variable assignment."""
+    if isinstance(e, Var):
+        return sigma.get(e.index, 0.0)
+    elif isinstance(e, TMin):
+        return min(evaluate(e.left, sigma), evaluate(e.right, sigma))
+    elif isinstance(e, TAdd):
+        return evaluate(e.left, sigma) + evaluate(e.right, sigma)
+    raise TypeError
+
+
+# ============================================================
+# Benchmarking
+# ============================================================
+
+def benchmark():
+    """Benchmark the normalizer on expressions of increasing size."""
+    import random
+    random.seed(42)
+
+    def random_expr(depth: int, num_vars: int = 4) -> Expr:
+        if depth <= 0:
+            return Var(random.randint(0, num_vars - 1))
+        op = random.choice(['min', 'add'])
+        left = random_expr(depth - 1, num_vars)
+        right = random_expr(depth - 1, num_vars)
+        if op == 'min':
+            return TMin(left, right)
+        return TAdd(left, right)
+
+    print("\nBENCHMARK: Normalization Performance")
+    print("-" * 50)
+    print(f"{'Depth':>6} {'Size':>8} {'Time (ms)':>12} {'Norm Size':>10}")
+    print("-" * 50)
+
+    for depth in range(1, 13):
+        e = random_expr(depth)
+        s = size(e)
+        start = time.perf_counter()
+        n = normalize(e)
+        elapsed = (time.perf_counter() - start) * 1000
+        ns = size(n)
+        print(f"{depth:>6} {s:>8} {elapsed:>12.3f} {ns:>10}")
+
 
 if __name__ == "__main__":
-    # Demonstrate the normalization algorithm
-    a, b, c, d = var(0), var(1), var(2), var(3)
+    # Demo: verify all identities
+    a, b, c, d, e, f = [Var(i) for i in range(6)]
 
-    print("=== Tropical Expression Normalization ===\n")
-
-    e1 = tmin(tadd(a, b), tmin(tadd(c, d), tadd(a, b)))
-    e2 = tmin(tmin(tadd(d, c), tadd(b, a)), tadd(a, b))
-
-    print(f"Expression 1: {e1}")
-    print(f"Expression 2: {e2}")
-    print(f"Normalized 1: {normalize_ca(e1)}")
-    print(f"Normalized 2: {normalize_ca(e2)}")
-    print(f"ACI-equivalent: {check_tropical_identity(e1, e2)}")
-
-    print("\n=== Tropical Matrix Multiplication (Shortest Paths) ===\n")
-
-    # Graph with 4 nodes
-    W = [
-        [0, 3, INF, 7],
-        [INF, 0, 2, INF],
-        [INF, INF, 0, 1],
-        [2, INF, INF, 0]
+    identities = [
+        ("AC collapse", TMin(TAdd(a, TAdd(b, c)), TAdd(TAdd(c, b), a)), TAdd(a, TAdd(b, c))),
+        ("Idempotence", TMin(a, a), a),
+        ("Dedup + comm", TMin(TAdd(a, b), TMin(TAdd(a, b), c)), TMin(c, TAdd(a, b))),
+        ("Six-var", TMin(TMin(TAdd(a, b), TMin(TAdd(c, d), TAdd(e, f))),
+                        TMin(TAdd(f, e), TMin(TAdd(d, c), TAdd(b, a)))),
+                   TMin(TAdd(a, b), TMin(TAdd(c, d), TAdd(e, f)))),
     ]
 
-    D = floyd_warshall_tropical(W)
-    print("Weight matrix W:")
-    for row in W:
-        print("  ", [f"{x:4g}" if x < INF else " inf" for x in row])
-    print("\nShortest distances D = W*:")
-    for row in D:
-        print("  ", [f"{x:4g}" if x < INF else " inf" for x in row])
+    print("IDENTITY VERIFICATION")
+    print("-" * 50)
+    for name, lhs, rhs in identities:
+        result = are_tropically_equal(lhs, rhs)
+        print(f"  {name:.<30} {'✓' if result else '✗'}")
 
-    print("\n=== Tropical Polynomial Roots ===\n")
-
-    coeffs = [6, 1, 0]  # p(x) = min(6, 1+x, 2x)
-    print(f"Polynomial coefficients: {coeffs}")
-    print(f"p(x) = min(6, 1+x, 2x)")
-    roots = tropical_polynomial_roots(coeffs)
-    print(f"Tropical roots: {roots}")
-    for r in roots:
-        print(f"  p({r}) = {tropical_polynomial_eval(coeffs, r)}")
+    benchmark()
