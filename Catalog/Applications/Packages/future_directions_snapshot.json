@@ -95,6 +95,20 @@
   },
   {
     "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "4feb8159",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
+  },
+  {
+    "id": "fd_0197",
     "title": "Prove closure properties",
     "description": ": Product and union constructions for tree automata (analogous to the word case, using `tropical_add_distrib_inf` for the product).",
     "domains": [
@@ -347,36 +361,6 @@
     "timestamp": "2026-05-17T03:06:58.810934+00:00"
   },
   {
-    "id": "fd_0277",
-    "title": "Define Tropical-P",
-    "description": ": Problems computable by polynomial-size tropical circuits (using min and +).",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:57:09.963432+00:00"
-  },
-  {
-    "id": "fd_0277",
-    "title": "Prove exponential lower bounds",
-    "description": "for the tropical permanent (= shortest path in a weighted bipartite graph).",
-    "domains": [
-      "Tropical",
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.526079+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Expander walk derandomization:",
     "description": "Apply the standard ε-bias construction: take a single seed and use the spectral gap to generate pseudorandom bits via the expander walk. The number of seeds needed is O(log(3^n)/gap) = O(n).",
@@ -436,22 +420,6 @@
     "source_exp_id": "1d4c4fc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T10:32:08.642917+00:00"
-  },
-  {
-    "id": "fd_0277",
-    "title": "Global section:",
-    "description": "a global certified radius is a global section of F.\n\n**Key insight:** H¹(X, F) ≠ 0 indicates that local certificates cannot be glued into a global one—there are topological obstructions to robustness. These correspond to \"adversarial cycles\": paths through the polyhedral complex that gradually reduce the margin.\n\n**Concrete next step:**\n1. Compute the polyhedral complex for small networks (2D input, 2–4 neurons).\n2. Construct the robustness sheaf explicitly.\n3. Compute H⁰ and H¹ and interpret in terms of adversarial vulnerability.\n\n**Expected impact:** A topological invariant of neural network robustness, connecting to persistent homology and TDA.\n\n---\n\n## Cross-Cutting Themes\n\n### Computational Complexity\nAll five directions share the question: what is the complexity of computing the exac",
-    "domains": [
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1d4c4fc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:32:08.719383+00:00"
   },
   {
     "id": "fd_0262",
@@ -547,21 +515,6 @@
     "source_exp_id": "262182fb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T11:33:52.819878+00:00"
-  },
-  {
-    "id": "fd_0277",
-    "title": "Maslov dequantization",
-    "description": ": The log-sum-exp semiring is a deformation of the tropical semiring parametrized by T (the \"Planck constant\"). Prove convergence using Maslov's dequantization theorem.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:33:52.839296+00:00"
   },
   {
     "id": "fd_0278",
@@ -681,48 +634,6 @@
     "timestamp": "2026-05-17T11:34:18.282246+00:00"
   },
   {
-    "id": "fd_0259",
-    "title": "Direction 2",
-    "description": "(Galois connections) — elegant but requires category theory depth.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3508c229",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:34:18.301160+00:00"
-  },
-  {
-    "id": "fd_0260",
-    "title": "Hypothesis formulation",
-    "description": ": State the precise mathematical conjecture.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "737aae9f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:02:38.996306+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "Computational validation",
-    "description": ": Test with concrete numerical examples (Python demos).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "737aae9f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:02:39.015501+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Proof decomposition",
     "description": ": Break into 3–8 helper lemmas, each capturing one logical step.",
@@ -737,34 +648,6 @@
     "source_exp_id": "737aae9f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T12:02:39.033653+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "Incremental formalization",
-    "description": ": Prove helper lemmas bottom-up, validating each.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "737aae9f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:02:39.051935+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Integration",
-    "description": ": Assemble the main theorem from proven components.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "737aae9f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:02:39.070320+00:00"
   },
   {
     "id": "fd_0265",
@@ -782,18 +665,165 @@
     "timestamp": "2026-05-17T12:02:39.089096+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Documentation",
-    "description": ": Write accessible explanations connecting to the broader theory.",
+    "id": "fd_0267",
+    "title": "Lasota–Yorke inequality",
+    "description": ": Prove a cone contraction estimate using the explicit distortion bounds from `M₂_hypotenuse_ratio_bounds`. The three Berggren inverse branches are contractions on the projective interval, and their derivatives are uniformly bounded away from 0 and ∞.",
     "domains": [
-      "Bridges"
+      "Pythagorean"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "737aae9f",
+    "source_exp_id": "f4ee71e9",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:02:39.112393+00:00"
+    "timestamp": "2026-05-17T12:14:15.250280+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "Operator renewal theory",
+    "description": ": Use the tree structure to decompose the transfer operator into a sum of composition operators, each associated with a branch. Apply Ionescu-Tulcea–Marinescu theory to deduce quasi-compactness from the Lasota–Yorke inequality.\n\n### Cross-Domain Connection\nThis connects directly to **thermodynamic formalism** and the theory of dynamical zeta functions. The spectral gap of the transfer operator would imply exponential decay of correlations for the natural invariant measure on the limit set of the Berggren semigroup, analogous to Gauss measure for continued fractions.\n\n---\n\n## Direction 2: Nonbacktracking Ramanujan Refinement\n\n### Exact Theorem Statement\nDefine the nonbacktracking operator B on the edge set of the depth-n Berggren graph (where edges represent parent→child transitions). Prove",
+    "domains": [
+      "Pythagorean",
+      "EML",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4ee71e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:14:15.271578+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "Hashimoto matrix decomposition",
+    "description": ": Decompose the nonbacktracking matrix into a product involving the adjacency and degree matrices, then transfer the spectral bound from the already-proved sibling contraction.\n\n### Cross-Domain Connection\nThis connects to the **Friedman theorem** on random regular graphs and to the broader Ramanujan graph conjecture. If realized, it would place Berggren trees in the same spectral class as optimal arithmetic expanders (Lubotzky–Phillips–Sarnak, Margulis).\n\n---\n\n## Direction 3: Deterministic Sampling Theorem for Primitive Triples\n\n### Exact Theorem Statement\nGiven a bounded test function φ : ℤ³ → ℝ and ε > 0, construct a deterministic algorithm that outputs a set S of N primitive Pythagorean triples such that |N⁻¹ Σ_{t∈S} φ(t) - μ(φ)| < ε, where μ is the natural (Berggren) probability measu",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4ee71e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:14:15.309581+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Expander walk derandomization (Ajtai–Komlós–Szemerédi)",
+    "description": ": Use the spectral gap to show that a single Berggren walk of length O(log(1/ε)) produces an ε-pseudorandom sample. The mixing time is O(log(1/ε) / log(4)) by our bound.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4ee71e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:14:15.328160+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Nisan–Wigderson generator with Berggren seed",
+    "description": ": Construct an explicit pseudorandom generator whose seed is a short Berggren walk. Use the Ramanujan bound to prove fooling for bounded-degree polynomial tests.\n\n### Cross-Domain Connection\nThis directly addresses **complexity-theoretic derandomization** (BPP vs P question). It would provide a concrete number-theoretic construction for ε-biased sets in the spirit of Naor–Naor, but using the arithmetic structure of Pythagorean triples rather than algebraic geometry.\n\n---\n\n## Direction 4: Bridge to Automorphic / Thermodynamic Formalism\n\n### Exact Theorem Statement\nIdentify the Berggren semigroup Γ = ⟨B₁, B₂, B₃⟩ with a thin subgroup of SO(2,1; ℤ). Prove that the representation-theoretic spectral gap for the regular representation of Γ on L²(SO(2,1; ℝ)/Γ) implies the combinatorial spectral g",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4ee71e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:14:15.349484+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Bourgain–Gamburd method",
+    "description": ": Apply the Bourgain–Gamburd expansion machine, which converts a spectral gap for a group representation into a combinatorial spectral gap for the associated Cayley graph. The key input is a product theorem in SO(2,1).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4ee71e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:14:15.368815+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Selberg's 3/16 theorem analogue",
+    "description": ": Adapt Selberg's bound on the first eigenvalue of the Laplacian on arithmetic surfaces to the Berggren setting. Use the Lorentz form Q to identify the associated symmetric space.\n\n### Cross-Domain Connection\nThis connects to the **Selberg eigenvalue conjecture** and to Sarnak's program on thin groups. It would provide a formal bridge between the combinatorial spectral theory of this project and the deep automorphic theory of arithmetic lattices.\n\n---\n\n## Direction 5: Complexity-Theoretic Derandomization Corollary\n\n### Exact Theorem Statement\nProve that any randomized algorithm A that uses O(n) random bits and runs in polynomial time can be simulated by a deterministic algorithm A' that uses the Berggren expander as a source of pseudorandom bits, with only polynomial overhead in running ti",
+    "domains": [
+      "Physics",
+      "Pythagorean",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4ee71e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:14:15.395546+00:00"
+  },
+  {
+    "id": "fd_0275",
+    "title": "Impagliazzo–Wigderson framework",
+    "description": ": Use the Berggren spectral gap to construct an explicit hitting set generator, then apply the Impagliazzo–Wigderson reduction from average-case hardness to derandomization.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4ee71e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:14:15.424114+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Direct expander walk simulation (Reingold–Vadhan–Wigderson)",
+    "description": ": Use the explicit spectral bound ρ = 1/4 to show that O(n/log(4)) Berggren walk steps suffice to simulate n random bits for any polynomial-time bounded test.\n\n### Cross-Domain Connection\nThis directly addresses the **P vs BPP** problem. While a full resolution of P = BPP would require much more, a formal Berggren-based derandomization for specific algorithm classes (e.g., polynomial identity testing, random sampling on lattices) would be a significant step and a proof of concept for arithmetic-expander-based derandomization.\n\n---\n\n## Research Team Directive\n\nEach direction above is specified with enough precision for a research team to begin work immediately. The recommended approach:",
+    "domains": [
+      "Pythagorean",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4ee71e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:14:15.448492+00:00"
+  },
+  {
+    "id": "fd_0278",
+    "title": "Formalize definitions and lemma skeletons",
+    "description": "in Lean 4, building on the existing `BerggrenExpanderDynamics.lean` infrastructure.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4ee71e9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:14:15.495159+00:00"
   },
   {
     "id": "fd_0126",
@@ -986,21 +1016,6 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
-  },
-  {
-    "id": "fd_0205",
-    "title": "Summary: Research Roadmap",
-    "description": "| Priority | Direction | Key Theorem | Dependencies |\n|----------|-----------|-------------|--------------|\n| 1 | Finite Products | `finProd_universal` | Binary product (done) |\n| 2 | Termination | `product_reduction_terminates` | Product + well-founded induction |\n| 3 | Pressure Bounds | `pressure_product_bound` | Product + real analysis |\n| 4 | Automata Sync | `product_word_bound` | Product + combinatorics |\n| 5 | Security Comp | `composed_security_bound` | Dual (min) product |\n\nEach direction builds directly on the categorical product infrastructure established in this work. The key insight is that invariant-bearing systems form a category with enough structure (products, identity, composition, associativity) to support systematic compositional reasoning across thermodynamics, automata ",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a015a16c",
-    "consumed_by_exp_id": "f4ee71e9",
-    "timestamp": "2026-05-15T08:01:09.762727+00:00"
   },
   {
     "id": "fd_0194",
@@ -1459,22 +1474,6 @@
     "timestamp": "2026-05-17T08:20:23.574805+00:00"
   },
   {
-    "id": "fd_0260",
-    "title": "Theorem Statement",
-    "description": "Define a DAG-backed representation `TropDAG n` with explicit acyclicity certification (via topological ordering). Prove that for every formula-like `TropCircuit n`, there exists an equivalent `TropDAG n` with evaluation agreement, and conversely that every `TropDAG n` can be unfolded into a `TropCircuit n` preserving semantics.\n\n```\ntheorem dag_circuit_equiv (D : TropDAG n) (x : Fin n → ℝ) :\n    TropDAG.eval D x = TropCircuit.eval (unfold D) x\n```",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6244d0ef",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T09:56:16.798525+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Cross-Domain Connection",
     "description": "DAG circuits correspond directly to dynamic programming tables: each node computes a subproblem, `+` concatenates costs, and `min` selects optimal branches. This connection would formalize the equivalence between circuit evaluation and Bellman-equation solving.\n\n---",
@@ -1619,21 +1618,6 @@
     "source_exp_id": "8f686496",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T10:48:24.827247+00:00"
-  },
-  {
-    "id": "fd_0260",
-    "title": "Ongoing",
-    "description": "- Maintain and extend the certified tropical linear algebra library\n- Generate computational experiments validating conjectures\n- Write papers for each completed direction",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8f686496",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:48:24.901056+00:00"
   },
   {
     "id": "fd_0265",

@@ -137,13 +137,13 @@ theorem evalMinList_append (σ : ℕ → ℝ) (l₁ l₂ : List CTropExpr)
     evalMinList σ (l₁ ++ l₂) = min (evalMinList σ l₁) (evalMinList σ l₂) := by
   induction' l₁ with a t₁ ih generalizing l₂ <;> cases l₂ <;> simp_all +decide [ evalMinList_cons_cons ];
   cases t₁ <;> simp_all +decide [ evalMinList_cons_cons ];
-  · exact Real.ext_cauchy rfl;
+  · exact?;
   · rw [ min_assoc ]
 
 theorem evalAddList_append (σ : ℕ → ℝ) (l₁ l₂ : List CTropExpr)
     (h₁ : l₁ ≠ []) (h₂ : l₂ ≠ []) :
     evalAddList σ (l₁ ++ l₂) = evalAddList σ l₁ + evalAddList σ l₂ := by
-  induction' l₁ with a l₁ ih generalizing l₂ <;> simp_all +decide;
+  induction' l₁ with a l₁ ih generalizing l₂ <;> simp_all +decide [ List.append_assoc ];
   cases l₁ <;> cases l₂ <;> simp_all +decide [ evalAddList_cons_cons ];
   · rfl;
   · ring
