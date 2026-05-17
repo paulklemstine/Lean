@@ -447,22 +447,6 @@
     "timestamp": "2026-05-17T03:06:58.887479+00:00"
   },
   {
-    "id": "fd_0253",
-    "title": "Tropical halfspace decomposition:",
-    "description": "Express the margin cell as an intersection of tropical halfspaces `{x | aᵢ + ⟨wᵢ, x⟩ - aⱼ - ⟨wⱼ, x⟩ ≥ 0}`, compute the distance to each halfspace boundary, and take the minimum.\n\n### Cross-Domain Connection\n**Optimization and convex geometry:** The Chebyshev radius of a convex body is a fundamental quantity in convex optimization (related to the John ellipsoid). Identifying it with a certified radius connects robustness certification to the theory of convex body geometry and interior-point methods.\n\n---\n\n## Implementation Priorities",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a54a94dd",
-    "consumed_by_exp_id": "6c322112",
-    "timestamp": "2026-05-17T03:06:58.931363+00:00"
-  },
-  {
     "id": "fd_0257",
     "title": "Connect the pieces",
     "description": ": The kernel matrix equals the identity (rank = |A|), and it decomposes into ≤ 3·D₀ rank-1 pieces, giving |A| ≤ 3·D₀.\n\n### Hypothesis\nThe bottleneck is step 1 (polynomial expansion), not the linear algebra. A dedicated effort on multivariate polynomial manipulation over finite fields would break through.\n\n### Cross-Domain Impact\nThis infrastructure would immediately enable formal slice-rank arguments, which are the foundation of the entire polynomial method in combinatorics.\n\n---\n\n## Direction 2: Extension from F₃ⁿ to F_pⁿ\n\n### Status\nThe current development is specific to F₃. The Croot–Lev–Pach method generalizes to F_p for any prime p, with the indicator polynomial Δ(v) = ∏_i(1 − v_i^{p-1}).\n\n### Concrete Next Steps",
@@ -703,6 +687,244 @@
     "source_exp_id": "60bd27bc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T06:57:10.094710+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "LP formulation",
+    "description": "The Chebyshev center problem is: $\\max_{x, \\rho} \\rho$ subject to $\\Delta_{i,j}(x) \\geq \\rho \\|w_{i,j}\\|$ for all $j \\neq i$. This is a standard LP in $n + 1$ variables and $m - 1$ constraints.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.147555+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Dual characterization",
+    "description": "The LP dual identifies the active constraints (facets) that determine the center. Prove that the Chebyshev center lies on the intersection of at most $n + 1$ active facets (by LP theory).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.167830+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Formalization",
+    "description": "Formalize the LP reduction and its correctness, connecting to Mathlib's convex optimization infrastructure.\n\n### Cross-Domain Connections\n- **Convex optimization:** LP duality, active set methods\n- **Computational geometry:** Voronoi diagrams of hyperplane arrangements\n- **Robust ML:** Optimal classification points for maximum robustness\n\n### Deliverables\n- Formal proof that Chebyshev center = LP solution\n- Algorithm with $O(\\text{poly}(m, n))$ complexity\n- Characterization of when the center is unique\n\n---\n\n## Direction 2: John Ellipsoid Analogues for Tropical Margin Cells\n\n### Hypothesis\nThe John ellipsoid (maximum-volume inscribed ellipsoid) of a tropical margin cell provides direction-dependent robustness certificates that are tighter than the isotropic Chebyshev ball by a factor of up",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.187974+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Semidefinite programming",
+    "description": "The John ellipsoid of a polyhedron defined by linear inequalities $A x \\leq b$ can be computed via SDP: $\\max \\log \\det B$ subject to $\\|B a_j\\| + a_j^T c \\leq b_j$ for all constraints.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.207985+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Directional certificates",
+    "description": "For each direction $d$, the robustness in direction $d$ is the distance from $x_0$ to the boundary of the ellipsoid along $d$, which is $\\sqrt{d^T B^{-2} d}^{-1}$ times the margin-related quantity.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.225479+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Tropical specialization",
+    "description": "For tropical margin cells, the constraints have the specific form $(W_i - W_j)^T x \\geq a_j - a_i$, which may admit simpler SDP formulations.\n\n### Cross-Domain Connections\n- **Convex geometry:** John's theorem, Löwner-John ellipsoid\n- **Robust optimization:** Ellipsoidal uncertainty sets\n- **Adversarial ML:** Direction-dependent perturbation budgets\n\n### Deliverables\n- SDP formulation for tropical John ellipsoid\n- Proof that John ellipsoid robustness dominates Chebyshev ball\n- Comparison with $\\ell_\\infty$ robustness certificates\n\n---\n\n## Direction 3: Algorithmic Robust Certification via Active Facets\n\n### Hypothesis\nFor points deep in the interior of a margin cell, only a small number of \"active facets\" (nearest boundaries) determine the Chebyshev radius. An incremental algorithm can main",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.244679+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Active facet identification",
+    "description": "Define the $k$-active set as the $k$ competitors $j$ with smallest boundary distance. Prove that for generic classifiers, the number of approximately-active facets is $O(1)$ in expectation.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.261797+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Batch certification",
+    "description": "For certifying a dataset, precompute the normal vectors once and use SIMD/GPU parallelism for the distance computations.\n\n### Cross-Domain Connections\n- **Computational geometry:** Dynamic nearest-facet problems\n- **Database algorithms:** Priority queues, kinetic data structures\n- **Real-time ML:** Online robustness monitoring\n\n### Deliverables\n- Amortized complexity analysis for incremental certification\n- GPU-parallel implementation\n- Benchmarks on standard ML datasets\n\n---\n\n## Direction 4: Extension to Piecewise-Tropical ReLU Regions\n\n### Hypothesis\nFor a deep ReLU network with $L$ layers, each linear region has a local Chebyshev radius computable by our formula. The global Chebyshev radius is the minimum of the local radius and the distance to the nearest region boundary, both of which",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.286479+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Polyhedral partition",
+    "description": "A deep ReLU network with $L$ layers and widths $n_1, \\ldots, n_L$ partitions the input space into at most $\\prod_{l} \\binom{n_l}{\\leq n_0}$ linear regions. Within each region, the network is affine.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.307401+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Local radius",
+    "description": "Within a linear region, the Chebyshev radius equals $\\min_j \\Delta_{i,j}(x_0) / \\|w_{i,j}^{\\text{local}}\\|$ where $w_{i,j}^{\\text{local}}$ involves the composed weight matrices.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.328475+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Region boundary distance",
+    "description": "The distance to the nearest ReLU activation boundary provides an additional constraint on the global radius.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.352493+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Compositional bound",
+    "description": "Prove that $r_{\\text{global}} \\geq \\min(r_{\\text{local}}, r_{\\text{region}})$ and characterize when equality holds.\n\n### Cross-Domain Connections\n- **Tropical geometry:** Tropical rational maps, Newton polytopes\n- **Deep learning theory:** Linear region counting, expressivity\n- **Verification:** MILP-based robustness verification\n\n### Deliverables\n- Formal theorem on local-global radius relationship\n- Algorithm for computing local radii in each linear region\n- Comparison with existing deep network certification methods\n\n---\n\n## Direction 5: Tropical Barrier Functions and Interior-Point Certified Training\n\n### Hypothesis\nA log-barrier function based on the margin distances $-\\sum_{j \\neq i} \\log \\Delta_{i,j}(x_0)$ provides a smooth, strongly convex surrogate for robust training that converg",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.375346+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Barrier formulation",
+    "description": "Define the tropical log-barrier: $\\Phi(W, a, x_0) = -\\sum_{j \\neq i} \\log(\\Delta_{i,j}(x_0) / \\|w_{i,j}\\|)$. Minimizing this over the training data encourages large Chebyshev radii.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.394926+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Central path",
+    "description": "Prove that as the barrier parameter $\\mu \\to 0$, the minimizer of $\\text{loss}(W, a) + \\mu \\Phi(W, a)$ converges to the maximum-margin classifier.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.414258+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Gradient computation",
+    "description": "The gradient of $\\Phi$ with respect to $W$ and $a$ involves $\\nabla_W (\\Delta_{i,j} / \\|w_{i,j}\\|)$, which is explicit for affine classifiers.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.432703+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Convergence analysis",
+    "description": "Establish $O(1/\\sqrt{\\mu})$ convergence rate using self-concordance of the log-barrier.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6c322112",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:17:01.452179+00:00"
   },
   {
     "id": "fd_0113",
@@ -1036,10 +1258,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df23c5f9",
     "timestamp": "2026-05-16T02:14:30.279911+00:00"
   },
   {
