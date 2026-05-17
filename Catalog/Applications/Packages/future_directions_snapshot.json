@@ -117,10 +117,10 @@
       "Tropical"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bf67dda8",
     "timestamp": "2026-05-14T16:16:22.730452+00:00"
   },
   {
@@ -1691,5 +1691,66 @@
     "source_exp_id": "233830c5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T00:58:25.498578+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Target Theorem",
+    "description": "```\ntheorem reduced_realization_same_topology\n    (D : Matrix (Fin n) (Fin n) ℝ)\n    (hm : IsFiniteMetric D) (h4 : FourPointCondition D)\n    (T₁ T₂ : LBTree) (hred₁ : T₁.Reduced) (hred₂ : T₂.Reduced)\n    (hreal₁ : T₁.Realizes D) (hreal₂ : T₂.Realizes D)\n    (hlabels₁ : T₁.labels = ...) (hlabels₂ : T₂.labels = ...) :\n    T₁.SameTopology T₂\n```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e61522de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T01:39:05.197219+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Feasibility",
+    "description": "Medium. The individual perturbation bounds are proved. The main challenge is tracking error propagation through recursive reconstruction. The constant C(n) needs to be made explicit.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e61522de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T01:39:05.260767+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Cross-Domain Significance",
+    "description": "This is the \"Rosetta Stone\" theorem connecting:\n- Finite metric geometry (four-point condition)\n- Algebraic geometry (Grassmannian)\n- Tropical geometry (tropicalization)\n- Phylogenetics (tree reconstruction)\n\nA formal proof would be a landmark result connecting these four domains.\n\n---",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e61522de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T01:39:05.291495+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Summary of Dependencies",
+    "description": "```\n                    [5. Tropical Plücker]\n                           ↑\n                    [2. Cone Interior]\n                           ↑\n              [1. Full Tree Uniqueness]  ←→  [4. Certified Algorithm]\n                     ↑           ↑\n         [cherry_pair_metric_invariant]\n                     ↑\n    [cherry_dist_diff_eq_rootDist_diff]\n         [same_topology_cherry_iff]\n              [noisy stability]\n                     ↑\n           [3. Full Stability]\n```\n\nEach direction builds on the current development and opens new formal research territory at the intersection of tropical geometry, metric rigidity, and algorithmic phylogenetics.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e61522de",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T01:39:05.313392+00:00"
   }
 ]
