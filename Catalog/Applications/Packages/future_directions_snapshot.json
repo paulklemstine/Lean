@@ -744,7 +744,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "90a65a27",
+    "consumed_by_exp_id": "4c33555c",
     "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
@@ -860,21 +860,6 @@
     "source_exp_id": "67f5da38",
     "consumed_by_exp_id": "eaecf225",
     "timestamp": "2026-05-16T02:14:30.254922+00:00"
-  },
-  {
-    "id": "fd_0227",
-    "title": "5. Theorem Embeddings from Syntax: Automatic TheorySpec Extraction",
-    "description": "**Hypothesis:** Many theorem statements in the catalog have the implicit structure of a `TheorySpec` — they assert a lower bound on some quantity for all elements satisfying some predicate. A metaprogram could automatically extract `TheorySpec` instances from theorem signatures by pattern-matching on the syntactic form `∀ x, P x → n ≤ f x`.\n\n**Proof Strategy:**\n- Write a `MetaM` procedure that inspects a theorem's type.\n- Pattern-match on universal quantification, implication with a predicate, and inequality with a constant.\n- Extract `α`, `Witness`, `inv`, `lowerBound`, and wrap the theorem's proof as `sound`.\n- Automatically populate the bridge graph.\n\n**Cross-Domain Connections:** This is a form of mathematical information extraction, analogous to knowledge extraction from natural langu",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "bc9ede85",
-    "timestamp": "2026-05-16T02:14:30.279911+00:00"
   },
   {
     "id": "fd_0218",
@@ -1635,5 +1620,94 @@
     "source_exp_id": "8c5ff762",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T15:07:37.337109+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "1. Extending to Full Tropical Semiring Normalization (Distributivity)",
+    "description": "**Hypothesis:** The AC normalizer can be extended to handle the full tropical semiring identity `a + min(b, c) = min(a+b, a+c)` (distributivity of + over min), producing a decision procedure for a strictly larger fragment of tropical algebra.\n\n**Proof Strategy:**\n- Define a \"tropical polynomial normal form\" where every expression is rewritten as `min(t₁, t₂, ..., tₖ)` where each `tᵢ` is a sum of variables and constants (no nested `min` inside `+`)\n- Implement distributive expansion: push all `+` outside `min` using `a + min(b,c) → min(a+b, a+c)`\n- After expansion, each summand is a pure sum term; apply AC normalization to each, then ACI normalization to the outer `min`\n- Prove soundness of the expansion step: `eval σ (distribute e) = eval σ e`\n- The full normalizer is `cnormalize_ca ∘ dist",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bc9ede85",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:23:44.093457+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "2. Dualizing to Max-Plus Algebra",
+    "description": "**Hypothesis:** The entire infrastructure (AST, normalizer, reflection theorem, tactic) can be systematically dualized from min-plus to max-plus by a single semantic dictionary swap, yielding a `tropical_max` tactic with zero new proof effort.\n\n**Proof Strategy:**\n- Define `CTropExprMax` with `tmax` replacing `tmin`, evaluating as `max` instead of `min`\n- Prove a meta-theorem: for any `ACEquiv`-closed proof in min-plus, there exists a corresponding proof in max-plus, by the order-reversing isomorphism `x ↦ -x`\n- Alternatively, implement a direct syntactic translation `dual : CTropExpr → CTropExprMax` and prove `eval_max σ (dual e) = -(eval_min (fun i => -(σ i)) e)`\n- The max-plus normalizer is then `dual ∘ cnormalize_ca ∘ undual`\n\n**Applications:**\n- Critical path method (CPM) in project s",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bc9ede85",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:23:44.120929+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "3. Certified Shortest-Path and Dynamic Programming Verification",
+    "description": "**Hypothesis:** The tropical reflection tactic can serve as a certified backend for verifying the correctness of dynamic programming recurrences and shortest-path algorithms expressed as tropical matrix equations.\n\n**Proof Strategy:**\n- Formalize tropical matrix multiplication: `(A ⊕ B)ᵢⱼ = min_k(Aᵢₖ + Bₖⱼ)`\n- Express the Bellman-Ford recurrence as iterated tropical matrix-vector multiplication\n- Use the `tropical` tactic to verify algebraic properties of the recurrence (associativity of tropical matrix multiplication, fixed-point equations)\n- Formalize the correspondence: `shortest_path G s t = (W^n)_{s,t}` where `W` is the weight matrix and `^n` is tropical matrix power\n- Verify small instances (3-5 node graphs) automatically via the tactic\n\n**Concrete deliverables:**\n- A formalized trop",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bc9ede85",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:23:44.143824+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "4. Tropical Gröbner-Style Simplification",
+    "description": "**Hypothesis:** A tropical analogue of Buchberger's algorithm can be implemented to decide equality of tropical rational functions (quotients of tropical polynomials), extending the normalizer beyond the polynomial fragment.\n\n**Proof Strategy:**\n- Implement tropical polynomial division using the \"bend-and-break\" approach\n- Define tropical S-polynomials and a tropical Buchberger criterion\n- Prove termination using a tropical analogue of the monomial ordering argument\n- The resulting \"tropical Gröbner basis\" gives a canonical representative for each equivalence class of tropical rational functions\n- Soundness follows from the confluence of the rewriting system\n\n**Technical challenges:**\n- Tropical polynomial division is not unique in the same way as classical division\n- The \"tropical basis\" ",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bc9ede85",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:23:44.168093+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "5. Piecewise-Linear Neural Network Verification via Tropical Geometry",
+    "description": "**Hypothesis:** ReLU neural networks define piecewise-linear functions that are tropical rational functions. The tropical normalizer can be extended to provide certified bounds on the output of ReLU networks, connecting tropical algebra to neural network verification.\n\n**Proof Strategy:**\n- Formalize the correspondence: `ReLU(x) = max(0, x) = -min(0, -x)`, so compositions of affine maps and ReLU are tropical rational functions\n- For a single-hidden-layer network `f(x) = Σᵢ wᵢ · max(0, aᵢ · x + bᵢ)`, express `f` as a max-plus (dual tropical) polynomial\n- Use the tropical normalizer to compute the canonical form of `f`, which reveals the linear regions explicitly\n- Prove certified Lipschitz bounds from the canonical form: the Lipschitz constant equals the maximum slope of any linear piece\n- ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bc9ede85",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:23:44.189486+00:00"
   }
 ]

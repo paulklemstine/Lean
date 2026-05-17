@@ -1,801 +1,850 @@
 #!/usr/bin/env python3
 """
-Tropical Mutual Information — Applications
+Tropical Mutual Information — Real-World Applications
 
-Real-world applications of tropical mutual information theory
-to cryptography, privacy, and machine learning.
+Demonstrates how tropical MI and the DPI apply to:
+1. Cryptographic key exchange leakage analysis
+2. Privacy amplification through hashing
+3. Neural network information bottleneck
+4. Tropical orbit compression in post-quantum protocols
 """
 
 import numpy as np
-from typing import Dict, List
+from typing import List, Tuple
 
 
-def tropical_key_exchange_security(
-    n_keys: int,
-    n_observables: int,
-    pXY: np.ndarray
-) -> Dict:
-    """Analyze security of a tropical key exchange protocol.
-    
-    Models a key exchange where:
-    - X = secret key (one of n_keys possibilities)
-    - Y = publicly observable data (orbit, transcript, etc.)
-    
-    The tropical mutual information I_trop(X;Y) bounds the
-    adversary's advantage in guessing the key.
-    
-    Args:
-        n_keys: Number of possible secret keys
-        n_observables: Number of distinct observables
-        pXY: Joint distribution (n_keys × n_observables)
-    Returns:
-        Security analysis dictionary
-    """
+# ─── Core functions (self-contained) ─────────────────────────────
+
+def tropical_mi(pXY: np.ndarray) -> float:
     pX = pXY.sum(axis=1)
     v_x = float(np.max(pX))
     v_xy = float(np.sum(np.max(pXY, axis=0)))
-    
-    h_inf_x = -np.log2(v_x)
-    h_inf_xy = -np.log2(v_xy)
-    mi = h_inf_x - h_inf_xy
-    
-    # Security bits: related to entropy gap
-    # Higher min-entropy = more security
-    security_bits = h_inf_xy  # conditional min-entropy
-    
-    return {
-        'n_keys': n_keys,
-        'n_observables': n_observables,
-        'guessing_prob_prior': v_x,
-        'guessing_prob_posterior': v_xy,
-        'min_entropy_key': h_inf_x,
-        'cond_min_entropy': h_inf_xy,
-        'leakage_bits': mi,
-        'remaining_security_bits': security_bits,
-        'advantage_ratio': v_xy / v_x,
-    }
-
-
-def orbit_compression_analysis(
-    pXY: np.ndarray,
-    compression_maps: List[Dict]
-) -> List[Dict]:
-    """Analyze security through successive orbit compressions.
-    
-    In tropical cryptography, public transcripts are often compressed
-    through canonical form computation, orbit projection, etc.
-    The DPI guarantees each step is safe.
-    
-    Args:
-        pXY: Original joint distribution
-        compression_maps: List of {name, map} dicts
-    Returns:
-        Analysis at each compression stage
-    """
-    results = []
-    current = pXY
-    
-    pX = current.sum(axis=1)
-    v_x = float(np.max(pX))
-    v_xy = float(np.sum(np.max(current, axis=0)))
-    mi = np.log2(v_xy / v_x) if v_x > 0 and v_xy > 0 else 0
-    
-    results.append({
-        'stage': 'Original',
-        'shape': current.shape,
-        'leakage': mi,
-        'cond_vuln': v_xy,
-        'vuln': v_x,
-    })
-    
-    for comp in compression_maps:
-        name = comp['name']
-        f_map = comp['map']  # dict: old_col -> new_col
-        
-        n_new = max(f_map.values()) + 1
-        new_dist = np.zeros((current.shape[0], n_new))
-        for old_col, new_col in f_map.items():
-            if old_col < current.shape[1]:
-                new_dist[:, new_col] += current[:, old_col]
-        
-        current = new_dist
-        v_xy_new = float(np.sum(np.max(current, axis=0)))
-        mi_new = np.log2(v_xy_new / v_x) if v_x > 0 and v_xy_new > 0 else 0
-        
-        results.append({
-            'stage': name,
-            'shape': current.shape,
-            'leakage': mi_new,
-            'cond_vuln': v_xy_new,
-            'vuln': v_x,
-        })
-    
-    return results
-
-
-def privacy_amplification_bound(
-    pXY: np.ndarray,
-    hash_output_bits: int
-) -> Dict:
-    """Compute privacy amplification bounds using tropical MI.
-    
-    When the adversary has side information Y about secret X,
-    applying a universal hash function h: X → {0,1}^k
-    produces a nearly uniform key if k < H_∞(X|Y).
-    
-    Args:
-        pXY: Joint distribution (secret × side info)
-        hash_output_bits: Number of output bits k
-    Returns:
-        Privacy amplification analysis
-    """
-    v_xy = float(np.sum(np.max(pXY, axis=0)))
-    h_cond = -np.log2(v_xy) if v_xy > 0 else float('inf')
-    
-    # Leftover hash lemma: statistical distance ≤ 2^(-(H_∞(X|Y) - k)/2)
-    if h_cond > hash_output_bits:
-        slack = h_cond - hash_output_bits
-        stat_dist_bound = 2 ** (-slack / 2)
-        secure = True
-    else:
-        slack = 0
-        stat_dist_bound = 1.0
-        secure = False
-    
-    return {
-        'cond_min_entropy': h_cond,
-        'hash_output_bits': hash_output_bits,
-        'entropy_slack': slack,
-        'stat_dist_bound': stat_dist_bound,
-        'is_secure': secure,
-    }
-
-
-if __name__ == "__main__":
-    print("=" * 60)
-    print("  TROPICAL MUTUAL INFORMATION — APPLICATIONS")
-    print("=" * 60)
-    
-    # Application 1: Tropical Key Exchange
-    print("\n--- Application 1: Tropical Key Exchange Security ---")
-    np.random.seed(2025)
-    n_keys, n_obs = 8, 16
-    # Simulate a mildly leaky protocol
-    pXY = np.random.dirichlet(np.ones(n_keys * n_obs) * 0.5).reshape(n_keys, n_obs)
-    
-    result = tropical_key_exchange_security(n_keys, n_obs, pXY)
-    print(f"  Keys: {result['n_keys']}, Observables: {result['n_observables']}")
-    print(f"  Prior guessing prob: {result['guessing_prob_prior']:.4f}")
-    print(f"  Posterior guessing prob: {result['guessing_prob_posterior']:.4f}")
-    print(f"  Leakage: {result['leakage_bits']:.4f} bits")
-    print(f"  Remaining security: {result['remaining_security_bits']:.4f} bits")
-    print(f"  Advantage ratio: {result['advantage_ratio']:.4f}x")
-    
-    # Application 2: Orbit Compression
-    print("\n--- Application 2: Orbit Compression Safety ---")
-    compressions = [
-        {'name': 'Canonical form', 'map': {i: i // 2 for i in range(n_obs)}},
-        {'name': 'Coset reduction', 'map': {i: i // 2 for i in range(n_obs // 2)}},
-        {'name': 'Binary classifier', 'map': {i: i // (n_obs // 4) for i in range(n_obs // 4)}},
-    ]
-    
-    stages = orbit_compression_analysis(pXY, compressions)
-    for s in stages:
-        print(f"  {s['stage']:20s}: shape={str(s['shape']):8s}  "
-              f"leakage={s['leakage']:.4f} bits  V(X|Y)={s['cond_vuln']:.4f}")
-    print("  → Leakage decreases monotonically ✓")
-    
-    # Application 3: Privacy Amplification
-    print("\n--- Application 3: Privacy Amplification ---")
-    for k in [1, 2, 3, 4]:
-        pa = privacy_amplification_bound(pXY, k)
-        status = "✓ SECURE" if pa['is_secure'] else "✗ INSECURE"
-        print(f"  k={k} bits: H_∞(X|Y)={pa['cond_min_entropy']:.2f}, "
-              f"slack={pa['entropy_slack']:.2f}, "
-              f"dist≤{pa['stat_dist_bound']:.4f}  {status}")
-    
-    print("\nAll applications completed.")
-
-
-#!/usr/bin/env python3
-"""
-Tropical Mutual Information — Concrete Numerical Demonstrations
-
-This module demonstrates the key theorems of tropical mutual information theory
-with concrete numerical examples, validating the formally verified results.
-"""
-
-import numpy as np
-from itertools import product as cartesian_product
-
-
-def vulnerability(pX: np.ndarray) -> float:
-    """V(X) = max_x p(x), the guessing probability."""
-    return float(np.max(pX))
-
+    return -np.log2(v_x) + np.log2(v_xy)
 
 def cond_vulnerability(pXY: np.ndarray) -> float:
-    """V(X|Y) = sum_y max_x p(x,y), the conditional guessing probability."""
     return float(np.sum(np.max(pXY, axis=0)))
 
-
-def min_entropy(pX: np.ndarray) -> float:
-    """H_inf(X) = -log2(max_x p(x))."""
-    return -np.log2(np.max(pX))
-
-
-def cond_min_entropy(pXY: np.ndarray) -> float:
-    """H_inf(X|Y) = -log2(V(X|Y)) = -log2(sum_y max_x p(x,y))."""
-    return -np.log2(cond_vulnerability(pXY))
-
-
-def trop_mutual_info(pXY: np.ndarray) -> float:
-    """I_trop(X;Y) = H_inf(X) - H_inf(X|Y)."""
-    pX = pXY.sum(axis=1)  # marginal on X
-    return min_entropy(pX) - cond_min_entropy(pXY)
-
-
-def pushforward_snd(pXY: np.ndarray, f_map: dict) -> np.ndarray:
-    """Pushforward on the second coordinate under deterministic map f.
-    
-    f_map: dict mapping column indices to new indices.
-    Returns a new joint distribution over (X, f(Y)).
-    """
-    n_alpha = pXY.shape[0]
-    new_vals = sorted(set(f_map.values()))
-    val_to_idx = {v: i for i, v in enumerate(new_vals)}
-    n_gamma = len(new_vals)
-    
-    result = np.zeros((n_alpha, n_gamma))
-    for b, c in f_map.items():
-        result[:, val_to_idx[c]] += pXY[:, b]
+def pushforward_snd(pXY, f, n_out):
+    n_x, n_y = pXY.shape
+    result = np.zeros((n_x, n_out))
+    for y in range(n_y):
+        result[:, f(y)] += pXY[:, y]
     return result
 
 
-def demo_nonnegativity():
-    """Demonstrate: 0 ≤ I_trop(X;Y) for various distributions."""
+# ═══════════════════════════════════════════════════════════════════
+# Application 1: Tropical Key Exchange Leakage Analysis
+# ═══════════════════════════════════════════════════════════════════
+
+def app_key_exchange():
+    """
+    Simulate a tropical key exchange and analyze information leakage.
+    
+    Model:
+    - Secret key X ∈ {0,...,7}: 8 possible keys (3 bits)
+    - Public transcript Y ∈ {0,...,15}: 16 possible messages
+    - The joint distribution reflects that Y is correlated with X
+      but does not uniquely determine it.
+    
+    Post-processings:
+    - Canonical form: reduce Y to 8 canonical representatives
+    - Hash: reduce Y to 4-bit hash
+    - Truncation: keep only top 2 bits of Y
+    """
     print("=" * 60)
-    print("THEOREM: Nonnegativity of Tropical Mutual Information")
-    print("  0 ≤ I_trop(X;Y) for all joint distributions p(x,y)")
+    print("APPLICATION 1: Tropical Key Exchange Leakage")
     print("=" * 60)
     
-    examples = {
-        "Uniform 2×2": np.array([[0.25, 0.25], [0.25, 0.25]]),
-        "Perfectly correlated": np.array([[0.5, 0.0], [0.0, 0.5]]),
-        "Skewed": np.array([[0.4, 0.1], [0.1, 0.4]]),
-        "One-sided": np.array([[0.9, 0.0], [0.1, 0.0]]),
-        "Independent (0.7,0.3)×(0.6,0.4)": np.outer([0.7, 0.3], [0.6, 0.4]),
-        "3×3 random": None,
-    }
+    rng = np.random.default_rng(42)
+    n_secret, n_transcript = 8, 16
     
-    np.random.seed(42)
-    rand = np.random.dirichlet(np.ones(9)).reshape(3, 3)
-    examples["3×3 random"] = rand
+    # Generate a realistic key exchange distribution
+    # Each key produces a few transcripts with high probability
+    pXY = np.zeros((n_secret, n_transcript))
+    for x in range(n_secret):
+        # Each key maps to ~3 likely transcripts
+        likely = [(2*x) % n_transcript, (2*x+1) % n_transcript, (3*x+5) % n_transcript]
+        for y in likely:
+            pXY[x, y] += rng.exponential(0.5)
+        # Small noise on all transcripts
+        pXY[x, :] += rng.exponential(0.01, size=n_transcript)
+    pXY /= pXY.sum()
     
-    for name, pXY in examples.items():
-        mi = trop_mutual_info(pXY)
-        vx = vulnerability(pXY.sum(axis=1))
-        vxy = cond_vulnerability(pXY)
-        print(f"\n  {name}:")
-        print(f"    V(X) = {vx:.6f},  V(X|Y) = {vxy:.6f}")
-        print(f"    H_∞(X) = {min_entropy(pXY.sum(axis=1)):.6f}")
-        print(f"    H_∞(X|Y) = {cond_min_entropy(pXY):.6f}")
-        print(f"    I_trop(X;Y) = {mi:.6f}  ≥ 0  ✓" if mi >= -1e-12 
-              else f"    I_trop(X;Y) = {mi:.6f}  VIOLATION!")
+    mi_original = tropical_mi(pXY)
+    vuln = cond_vulnerability(pXY)
+    
+    print(f"Secret: {n_secret} keys ({np.log2(n_secret):.0f} bits)")
+    print(f"Transcript: {n_transcript} messages")
+    print(f"Leakage I∞(Key; Transcript) = {mi_original:.4f} bits")
+    print(f"Adversary success prob V(Key|Transcript) = {vuln:.4f}")
+    print()
+    
+    # Post-processings
+    processings = [
+        ("Canonical form (mod 8)", lambda y: y % 8, 8),
+        ("4-bit hash (mod 4)", lambda y: y % 4, 4),
+        ("Top 2 bits (// 4)", lambda y: y // 4, 4),
+        ("Parity (mod 2)", lambda y: y % 2, 2),
+        ("Constant (erase)", lambda y: 0, 1),
+    ]
+    
+    print("Post-processing analysis (DPI guarantees I∞ can only decrease):")
+    for name, f, n_out in processings:
+        pXfY = pushforward_snd(pXY, f, n_out)
+        mi = tropical_mi(pXfY)
+        loss_pct = (mi_original - mi) / mi_original * 100 if mi_original > 0 else 0
+        print(f"  {name:30s}: I∞ = {mi:.4f} bits (loss: {loss_pct:.1f}%)")
     print()
 
 
-def demo_data_processing():
-    """Demonstrate: I_trop(X; f(Y)) ≤ I_trop(X; Y)."""
+# ═══════════════════════════════════════════════════════════════════
+# Application 2: Privacy Amplification via Hashing
+# ═══════════════════════════════════════════════════════════════════
+
+def app_privacy_amplification():
+    """
+    Show how hashing reduces leakage (privacy amplification).
+    
+    A user's data X has partial leakage through an observation Y.
+    We apply a sequence of increasingly coarse hash functions to Y,
+    measuring how leakage decreases at each step.
+    """
     print("=" * 60)
-    print("THEOREM: Data-Processing Inequality")
-    print("  I_trop(X; f(Y)) ≤ I_trop(X; Y)")
+    print("APPLICATION 2: Privacy Amplification via Hashing")
     print("=" * 60)
     
-    # Example 1: 2×3 distribution, coarsening Y
-    pXY = np.array([[0.15, 0.20, 0.05],
-                     [0.10, 0.05, 0.45]])
+    rng = np.random.default_rng(123)
+    n_data, n_obs = 6, 12
     
-    # f merges first two columns
-    f_map = {0: 0, 1: 0, 2: 1}
-    pXfY = pushforward_snd(pXY, f_map)
+    # Create a joint distribution with moderate leakage
+    pXY = np.zeros((n_data, n_obs))
+    for x in range(n_data):
+        for y in range(n_obs):
+            if y % n_data == x:
+                pXY[x, y] = 0.12
+            else:
+                pXY[x, y] = 0.02
+    pXY += rng.exponential(0.005, size=(n_data, n_obs))
+    pXY /= pXY.sum()
     
-    mi_orig = trop_mutual_info(pXY)
-    mi_post = trop_mutual_info(pXfY)
+    print(f"Data space: {n_data} values")
+    print(f"Observation space: {n_obs} values")
+    print(f"Original leakage: I∞ = {tropical_mi(pXY):.4f} bits")
+    print()
     
-    print(f"\n  Original p(x,y) [2×3]:")
-    print(f"    I_trop(X;Y) = {mi_orig:.6f}")
-    print(f"  After f merges columns 0,1:")
-    print(f"    I_trop(X;f(Y)) = {mi_post:.6f}")
-    print(f"    DPI: {mi_post:.6f} ≤ {mi_orig:.6f}  ✓" if mi_post <= mi_orig + 1e-12
-          else f"    DPI VIOLATED!")
+    # Apply hash functions of decreasing output size
+    print("Hashing sequence (each step applies DPI):")
+    current = pXY
+    current_size = n_obs
     
-    # Example 2: 3×4 distribution, constant map
-    np.random.seed(123)
-    pXY2 = np.random.dirichlet(np.ones(12)).reshape(3, 4)
-    f_const = {0: 0, 1: 0, 2: 0, 3: 0}  # constant map
-    pXfY2 = pushforward_snd(pXY2, f_const)
-    
-    mi_orig2 = trop_mutual_info(pXY2)
-    mi_post2 = trop_mutual_info(pXfY2)
-    
-    print(f"\n  Random 3×4 distribution, constant map f:")
-    print(f"    I_trop(X;Y) = {mi_orig2:.6f}")
-    print(f"    I_trop(X;f(Y)) = {mi_post2:.6f}")
-    print(f"    DPI: {mi_post2:.6f} ≤ {mi_orig2:.6f}  ✓" if mi_post2 <= mi_orig2 + 1e-12
-          else f"    DPI VIOLATED!")
-    print(f"    (Constant map makes f(Y) trivial, so I_trop(X;f(Y)) = 0)")
-    
-    # Example 3: Chain of post-processings
-    np.random.seed(456)
-    pXY3 = np.random.dirichlet(np.ones(20)).reshape(4, 5)
-    f1 = {0: 0, 1: 0, 2: 1, 3: 1, 4: 2}
-    f2 = {0: 0, 1: 0, 2: 0}
-    
-    pXfY3 = pushforward_snd(pXY3, f1)
-    pXgfY3 = pushforward_snd(pXfY3, f2)
-    
-    mi0 = trop_mutual_info(pXY3)
-    mi1 = trop_mutual_info(pXfY3)
-    mi2 = trop_mutual_info(pXgfY3)
-    
-    print(f"\n  Chain: Y → f(Y) → g(f(Y)) [4×5 → 4×3 → 4×1]:")
-    print(f"    I_trop(X;Y)      = {mi0:.6f}")
-    print(f"    I_trop(X;f(Y))   = {mi1:.6f}")
-    print(f"    I_trop(X;g(f(Y)))= {mi2:.6f}")
-    print(f"    Chain: {mi2:.6f} ≤ {mi1:.6f} ≤ {mi0:.6f}  ✓")
+    for target in [8, 6, 4, 3, 2, 1]:
+        if target >= current_size:
+            continue
+        f = lambda y, t=target, c=current_size: y % t
+        new = pushforward_snd(current, f, target)
+        mi = tropical_mi(new)
+        vuln = cond_vulnerability(new)
+        print(f"  Hash to {target:2d} bins: I∞ = {mi:.4f} bits, "
+              f"V(X|hash) = {vuln:.4f}")
+        current = new
+        current_size = target
     print()
 
 
-def demo_chain_rule():
-    """Demonstrate: H_∞(X,Y) ≥ H_∞(X|Y)."""
+# ═══════════════════════════════════════════════════════════════════
+# Application 3: Neural Network Information Bottleneck
+# ═══════════════════════════════════════════════════════════════════
+
+def app_neural_network():
+    """
+    Model information flow through neural network layers.
+    
+    Each layer applies a deterministic function (ReLU + linear),
+    and the DPI guarantees monotonic information decay.
+    """
     print("=" * 60)
-    print("THEOREM: Chain Rule Inequality")
-    print("  H_∞(X,Y) ≥ H_∞(X|Y)")
-    print("  Equivalently: max p(x,y) ≤ V(X|Y)")
+    print("APPLICATION 3: Neural Network Information Bottleneck")
     print("=" * 60)
     
-    examples = {
-        "Uniform 3×3": np.ones((3, 3)) / 9,
-        "Concentrated": np.array([[0.9, 0.05], [0.03, 0.02]]),
-        "Anti-diagonal": np.array([[0.0, 0.5], [0.5, 0.0]]),
-    }
+    rng = np.random.default_rng(456)
+    n_input = 5  # input classes
+    n_features = 16  # feature dimensions
     
-    np.random.seed(789)
-    examples["Random 4×3"] = np.random.dirichlet(np.ones(12)).reshape(4, 3)
+    # Joint distribution: input class X, feature representation Y
+    pXY = np.zeros((n_input, n_features))
+    for x in range(n_input):
+        center = (x * n_features // n_input) + n_features // (2 * n_input)
+        for y in range(n_features):
+            dist = min(abs(y - center), n_features - abs(y - center))
+            pXY[x, y] = np.exp(-dist * 0.5)
+    pXY += rng.exponential(0.01, size=pXY.shape)
+    pXY /= pXY.sum()
     
-    for name, pXY in examples.items():
-        joint_h = -np.log2(np.max(pXY))
-        cond_h = cond_min_entropy(pXY)
-        max_p = np.max(pXY)
-        v_xy = cond_vulnerability(pXY)
+    print(f"Input classes: {n_input}")
+    print(f"Initial features: {n_features}")
+    
+    # Simulate layers as deterministic feature reductions
+    layers = [
+        ("Layer 1 (16→8)", lambda y: y // 2, 8),
+        ("Layer 2 (8→4)", lambda y: y // 2, 4),
+        ("Layer 3 (4→2)", lambda y: y // 2, 2),
+    ]
+    
+    current = pXY
+    mi = tropical_mi(current)
+    print(f"  Input layer:  I∞ = {mi:.4f} bits")
+    
+    for name, f, n_out in layers:
+        current = pushforward_snd(current, f, n_out)
+        mi = tropical_mi(current)
+        print(f"  {name}: I∞ = {mi:.4f} bits")
+    
+    print()
+    print("The DPI guarantees I∞ decreases monotonically through layers.")
+    print("Information about the input class can only be lost, never created.")
+    print()
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Application 4: Tropical Orbit Compression
+# ═══════════════════════════════════════════════════════════════════
+
+def app_orbit_compression():
+    """
+    Model tropical orbit compression in a post-quantum protocol.
+    
+    Secret: tropical matrix invariant (e.g., eigenvalue signature)
+    Public: orbit representative
+    Compression: extract canonical invariants (traces, determinants)
+    """
+    print("=" * 60)
+    print("APPLICATION 4: Tropical Orbit Compression")
+    print("=" * 60)
+    
+    rng = np.random.default_rng(789)
+    n_secrets = 10
+    n_orbits = 20
+    
+    # Joint distribution: secret invariant × orbit representative
+    pXY = np.zeros((n_secrets, n_orbits))
+    for x in range(n_secrets):
+        # Each secret maps to ~3 orbit representatives
+        reps = rng.choice(n_orbits, size=3, replace=False)
+        for r in reps:
+            pXY[x, r] = rng.exponential(1.0)
+        pXY[x, :] += rng.exponential(0.02, size=n_orbits)
+    pXY /= pXY.sum()
+    
+    mi_full = tropical_mi(pXY)
+    vuln_full = cond_vulnerability(pXY)
+    
+    print(f"Secret space: {n_secrets} invariants")
+    print(f"Orbit space: {n_orbits} representatives")
+    print(f"Full leakage: I∞ = {mi_full:.4f} bits")
+    print(f"Adversary success: V = {vuln_full:.4f}")
+    print()
+    
+    compressions = [
+        ("Trace extraction (mod 10)", lambda y: y % 10, 10),
+        ("Det extraction (mod 5)", lambda y: y % 5, 5),
+        ("Rank extraction (mod 3)", lambda y: y % 3, 3),
+    ]
+    
+    print("Compression analysis:")
+    for name, f, n_out in compressions:
+        pXfY = pushforward_snd(pXY, f, n_out)
+        mi = tropical_mi(pXfY)
+        vuln = cond_vulnerability(pXfY)
+        print(f"  {name:30s}: I∞ = {mi:.4f} bits, V = {vuln:.4f}")
+    
+    print()
+    print("By the DPI, ALL compressions preserve the security guarantee.")
+    print("The adversary's success probability can only decrease under compression.")
+    print()
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Application 5: Multi-Round Protocol Analysis
+# ═══════════════════════════════════════════════════════════════════
+
+def app_multi_round():
+    """
+    Analyze leakage accumulation in a multi-round protocol.
+    
+    In each round, a new observation Y_i is generated and possibly
+    compressed. The DPI guarantees each compression step is safe.
+    """
+    print("=" * 60)
+    print("APPLICATION 5: Multi-Round Protocol Analysis")
+    print("=" * 60)
+    
+    rng = np.random.default_rng(101)
+    n_secret = 4
+    n_obs = 8
+    n_rounds = 5
+    
+    print(f"Protocol: {n_rounds} rounds")
+    print(f"Secret space: {n_secret} values")
+    print(f"Observation per round: {n_obs} values")
+    print()
+    
+    for round_num in range(1, n_rounds + 1):
+        # Generate round-specific joint distribution
+        pXY = np.zeros((n_secret, n_obs))
+        for x in range(n_secret):
+            center = (x * n_obs // n_secret + round_num) % n_obs
+            for y in range(n_obs):
+                dist = abs(y - center)
+                pXY[x, y] = np.exp(-dist * 0.3)
+        pXY += rng.exponential(0.05, size=pXY.shape)
+        pXY /= pXY.sum()
         
-        print(f"\n  {name}:")
-        print(f"    max p(x,y) = {max_p:.6f}")
-        print(f"    V(X|Y)     = {v_xy:.6f}")
-        print(f"    H_∞(X,Y)   = {joint_h:.6f}")
-        print(f"    H_∞(X|Y)   = {cond_h:.6f}")
-        print(f"    {joint_h:.4f} ≥ {cond_h:.4f}  ✓" if joint_h >= cond_h - 1e-12
-              else f"    VIOLATED!")
-    print()
-
-
-def demo_security_application():
-    """Demonstrate security applications: orbit compression preserves bounds."""
-    print("=" * 60)
-    print("APPLICATION: Tropical Protocol Security")
-    print("  Orbit compression / canonicalization cannot increase leakage")
-    print("=" * 60)
-    
-    # Simulate a tropical key exchange scenario
-    # Secret X ∈ {key_1, key_2, key_3}
-    # Observable Y ∈ {obs_1, ..., obs_6} (raw tropical orbit data)
-    np.random.seed(2025)
-    pXY = np.random.dirichlet(np.ones(18)).reshape(3, 6)
-    
-    # Orbit compression: merge observables into canonical forms
-    orbit_compress = {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2}
-    pXZ = pushforward_snd(pXY, orbit_compress)
-    
-    # Further compression to binary distinguisher
-    binary_compress = {0: 0, 1: 0, 2: 1}
-    pXW = pushforward_snd(pXZ, binary_compress)
-    
-    mi_raw = trop_mutual_info(pXY)
-    mi_orbit = trop_mutual_info(pXZ)
-    mi_binary = trop_mutual_info(pXW)
-    
-    print(f"\n  Secret key X ∈ {{1,2,3}}, Raw observable Y ∈ {{1,...,6}}")
-    print(f"  Leakage from raw data:      I_trop = {mi_raw:.6f} bits")
-    print(f"  After orbit compression:     I_trop = {mi_orbit:.6f} bits")
-    print(f"  After binary reduction:      I_trop = {mi_binary:.6f} bits")
-    print(f"\n  Security guarantee: each compression step can only")
-    print(f"  REDUCE leakage (or leave it unchanged).")
-    print(f"  {mi_binary:.4f} ≤ {mi_orbit:.4f} ≤ {mi_raw:.4f}  ✓")
-    
-    security_bound = mi_raw
-    print(f"\n  If security analysis certifies leakage ≤ {security_bound:.4f} bits,")
-    print(f"  then ALL post-processings automatically satisfy this bound.")
-    print()
-
-
-def demo_vulnerability_space():
-    """Demonstrate vulnerability-space inequalities directly."""
-    print("=" * 60)
-    print("VULNERABILITY SPACE: The Engine Behind the Theorems")
-    print("=" * 60)
-    
-    np.random.seed(314)
-    for trial in range(5):
-        n, m = np.random.randint(2, 6), np.random.randint(2, 6)
-        pXY = np.random.dirichlet(np.ones(n * m)).reshape(n, m)
+        mi_raw = tropical_mi(pXY)
         
-        vx = vulnerability(pXY.sum(axis=1))
-        vxy = cond_vulnerability(pXY)
-        max_p = np.max(pXY)
+        # Compress to 4 bins
+        f_compress = lambda y: y % 4
+        pXfY = pushforward_snd(pXY, f_compress, 4)
+        mi_compressed = tropical_mi(pXfY)
         
-        print(f"\n  Trial {trial+1} ({n}×{m}):")
-        print(f"    V(X)   = max_x Σ_y p(x,y) = {vx:.6f}")
-        print(f"    V(X|Y) = Σ_y max_x p(x,y) = {vxy:.6f}")
-        print(f"    max p  = max_{'{x,y}'} p(x,y) = {max_p:.6f}")
-        print(f"    Chain: max_p ≤ V(X|Y):  {max_p:.4f} ≤ {vxy:.4f}  ✓")
-        print(f"    Nonneg: V(X) ≤ V(X|Y):  {vx:.4f} ≤ {vxy:.4f}  ✓")
+        print(f"  Round {round_num}: I∞(raw) = {mi_raw:.4f}, "
+              f"I∞(compressed) = {mi_compressed:.4f}, "
+              f"DPI: {'✓' if mi_compressed <= mi_raw + 1e-10 else '✗'}")
+    
+    print()
+    print("Each round independently satisfies the DPI.")
+    print("Compression never increases the adversary's information.")
     print()
 
 
 if __name__ == "__main__":
-    print("\n" + "=" * 60)
-    print("  TROPICAL MUTUAL INFORMATION — NUMERICAL DEMONSTRATIONS")
-    print("=" * 60 + "\n")
+    app_key_exchange()
+    app_privacy_amplification()
+    app_neural_network()
+    app_orbit_compression()
+    app_multi_round()
     
-    demo_nonnegativity()
-    demo_data_processing()
-    demo_chain_rule()
-    demo_vulnerability_space()
-    demo_security_application()
-    
-    print("All demonstrations completed successfully.")
+    print("=" * 60)
+    print("All applications completed successfully!")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
-"""Generate PACKAGE.json with all artifacts."""
+"""
+Tropical Mutual Information — Demonstrations
 
-import json
-import base64
-import os
+Concrete numerical examples verifying the main theorems:
+1. Nonnegativity: I∞(X;Y) ≥ 0
+2. Data-Processing Inequality: I∞(X;f(Y)) ≤ I∞(X;Y)
+3. Independence: I∞(X;Y) = 0 for product distributions
+4. Chain-rule inequality: H∞(X,Y) ≥ H∞(X|Y)
+"""
 
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
+import numpy as np
+from typing import Callable
 
-def read_binary_base64(path):
-    with open(path, 'rb') as f:
-        return "data:image/png;base64," + base64.b64encode(f.read()).decode('utf-8')
+# ─── Core Definitions ───────────────────────────────────────────────
 
-def main():
-    base = '/workspace/request-project'
-    
-    # Read all content
-    article = read_file(os.path.join(base, 'ARTICLE.md'))
-    research_paper = read_file(os.path.join(base, 'RESEARCH_PAPER.md'))
-    future_directions = read_file(os.path.join(base, 'FUTURE_DIRECTIONS.md'))
-    lean_code = read_file(os.path.join(base, 'Catalog/Shared/TropicalEntropy/MutualInformation.lean'))
-    demo_code = read_file(os.path.join(base, 'demo.py'))
-    algorithms_code = read_file(os.path.join(base, 'algorithms.py'))
-    applications_code = read_file(os.path.join(base, 'applications.py'))
-    
-    # Read visualizations
-    viz_files = {
-        'dpi_chain': 'viz_dpi_chain.png',
-        'vulnerability_landscape': 'viz_vulnerability_landscape.png',
-        'chain_rule': 'viz_chain_rule.png',
-        'security_cascade': 'viz_security_cascade.png',
-    }
-    
-    visualizations = []
-    for name, filename in viz_files.items():
-        path = os.path.join(base, filename)
-        if os.path.exists(path):
-            visualizations.append({
-                'name': name,
-                'data': read_binary_base64(path)
-            })
-    
-    package = {
-        'title': 'Tropical Mutual Information and Data-Processing Inequalities',
-        'domain': 'Tropical Information Theory / Cryptography',
-        'article': article,
-        'research_paper': research_paper,
-        'future_directions': future_directions,
-        'demos': [
-            {
-                'name': 'Tropical Mutual Information Demonstrations',
-                'code': demo_code
-            }
-        ],
-        'algorithms': [
-            {
-                'name': 'Tropical Mutual Information Computation',
-                'pseudocode': (
-                    'Algorithm: Compute I_trop(X; Y)\n'
-                    'Input: Joint distribution p(x,y)\n'
-                    'Output: Tropical mutual information\n\n'
-                    '1. Compute marginal p_X(x) = sum_y p(x,y)\n'
-                    '2. Compute V(X) = max_x p_X(x)\n'
-                    '3. Compute V(X|Y) = sum_y max_x p(x,y)\n'
-                    '4. Return log2(V(X|Y) / V(X))\n\n'
-                    'Time: O(|X| * |Y|), Space: O(|X| + |Y|)'
-                ),
-                'code': algorithms_code
-            },
-            {
-                'name': 'Security Applications',
-                'pseudocode': (
-                    'Algorithm: Verify DPI and analyze security\n'
-                    'Input: Joint distribution p(x,y), function f\n'
-                    'Output: Security analysis\n\n'
-                    '1. Compute I_trop(X; Y)\n'
-                    '2. Compute pushforward p_f(x, c) = sum_{f(b)=c} p(x,b)\n'
-                    '3. Compute I_trop(X; f(Y))\n'
-                    '4. Verify I_trop(X; f(Y)) <= I_trop(X; Y)\n'
-                    '5. Report security bounds'
-                ),
-                'code': applications_code
-            }
-        ],
-        'visualizations': visualizations,
-        'lean_proofs': lean_code
-    }
-    
-    with open(os.path.join(base, 'PACKAGE.json'), 'w') as f:
-        json.dump(package, f, indent=2, ensure_ascii=False)
-    
-    print(f"Generated PACKAGE.json ({os.path.getsize(os.path.join(base, 'PACKAGE.json'))} bytes)")
-    print(f"  Visualizations: {len(visualizations)}")
+def max_mass(p: np.ndarray) -> float:
+    """V(X) = max_x p(x). Vulnerability / guessing probability."""
+    return float(np.max(p))
 
-if __name__ == '__main__':
-    main()
+def min_entropy(p: np.ndarray) -> float:
+    """H∞(X) = -log2(max_x p(x)). Min-entropy in bits."""
+    return -np.log2(max_mass(p))
+
+def marginal_fst(pXY: np.ndarray) -> np.ndarray:
+    """p_X(x) = ∑_y p(x,y). First marginal."""
+    return pXY.sum(axis=1)
+
+def marginal_snd(pXY: np.ndarray) -> np.ndarray:
+    """p_Y(y) = ∑_x p(x,y). Second marginal."""
+    return pXY.sum(axis=0)
+
+def cond_vulnerability(pXY: np.ndarray) -> float:
+    """V(X|Y) = ∑_y max_x p(x,y). Adversarial guess mass."""
+    return float(np.sum(np.max(pXY, axis=0)))
+
+def cond_min_entropy(pXY: np.ndarray) -> float:
+    """H∞(X|Y) = -log2(V(X|Y)). Conditional min-entropy."""
+    v = cond_vulnerability(pXY)
+    if v <= 0:
+        return float('inf')
+    return -np.log2(v)
+
+def tropical_mi(pXY: np.ndarray) -> float:
+    """I∞(X;Y) = H∞(X) - H∞(X|Y). Tropical mutual information."""
+    pX = marginal_fst(pXY)
+    return min_entropy(pX) - cond_min_entropy(pXY)
+
+def pushforward_snd(pXY: np.ndarray, f: Callable[[int], int], n_out: int) -> np.ndarray:
+    """Pushforward on the second coordinate: p'(x,c) = ∑_{y:f(y)=c} p(x,y)."""
+    n_x, n_y = pXY.shape
+    result = np.zeros((n_x, n_out))
+    for y in range(n_y):
+        result[:, f(y)] += pXY[:, y]
+    return result
+
+# ─── Random distribution generators ─────────────────────────────────
+
+def random_joint(n_x: int, n_y: int, rng=None) -> np.ndarray:
+    """Generate a random joint distribution on {0,...,n_x-1} × {0,...,n_y-1}."""
+    if rng is None:
+        rng = np.random.default_rng()
+    raw = rng.exponential(size=(n_x, n_y))
+    return raw / raw.sum()
+
+def random_product(n_x: int, n_y: int, rng=None) -> np.ndarray:
+    """Generate a random product (independent) distribution."""
+    if rng is None:
+        rng = np.random.default_rng()
+    px = rng.exponential(size=n_x)
+    px /= px.sum()
+    py = rng.exponential(size=n_y)
+    py /= py.sum()
+    return np.outer(px, py)
+
+def random_function(n_in: int, n_out: int, rng=None) -> Callable[[int], int]:
+    """Generate a random deterministic function {0,...,n_in-1} → {0,...,n_out-1}."""
+    if rng is None:
+        rng = np.random.default_rng()
+    mapping = rng.integers(0, n_out, size=n_in)
+    return lambda y: int(mapping[y])
+
+
+# ─── Demonstrations ─────────────────────────────────────────────────
+
+def demo_basic_example():
+    """A concrete small example showing all quantities."""
+    print("=" * 60)
+    print("DEMO 1: Concrete Example")
+    print("=" * 60)
+    
+    # Joint distribution on {0,1,2} × {0,1}
+    pXY = np.array([
+        [0.30, 0.05],
+        [0.10, 0.25],
+        [0.15, 0.15]
+    ])
+    
+    print(f"Joint distribution p(x,y):")
+    print(pXY)
+    print()
+    
+    pX = marginal_fst(pXY)
+    pY = marginal_snd(pXY)
+    
+    print(f"Marginal p_X: {pX}")
+    print(f"Marginal p_Y: {pY}")
+    print(f"V(X) = max p_X(x) = {max_mass(pX):.4f}")
+    print(f"H∞(X) = {min_entropy(pX):.4f} bits")
+    print(f"V(X|Y) = Σ_y max_x p(x,y) = {cond_vulnerability(pXY):.4f}")
+    print(f"H∞(X|Y) = {cond_min_entropy(pXY):.4f} bits")
+    print(f"I∞(X;Y) = {tropical_mi(pXY):.4f} bits")
+    print()
+    
+    # Apply a deterministic function f: {0,1} → {0}  (constant)
+    f_const = lambda y: 0
+    pXfY = pushforward_snd(pXY, f_const, 1)
+    print(f"After constant function f(y)=0:")
+    print(f"  I∞(X;f(Y)) = {tropical_mi(pXfY):.4f} bits")
+    print(f"  DPI check: {tropical_mi(pXfY):.4f} ≤ {tropical_mi(pXY):.4f}? {tropical_mi(pXfY) <= tropical_mi(pXY) + 1e-10}")
+    print()
+
+def demo_dpi_statistical():
+    """Statistical verification of the DPI over many random distributions."""
+    print("=" * 60)
+    print("DEMO 2: Data-Processing Inequality (Statistical)")
+    print("=" * 60)
+    
+    rng = np.random.default_rng(42)
+    n_trials = 10000
+    n_x, n_y, n_z = 3, 4, 2
+    
+    violations = 0
+    info_losses = []
+    
+    for _ in range(n_trials):
+        pXY = random_joint(n_x, n_y, rng)
+        f = random_function(n_y, n_z, rng)
+        
+        mi_original = tropical_mi(pXY)
+        pXfY = pushforward_snd(pXY, f, n_z)
+        mi_processed = tropical_mi(pXfY)
+        
+        if mi_processed > mi_original + 1e-10:
+            violations += 1
+        
+        if mi_original > 1e-10:
+            info_losses.append((mi_original - mi_processed) / mi_original)
+    
+    print(f"Trials: {n_trials}")
+    print(f"DPI violations: {violations}")
+    print(f"Average relative information loss: {np.mean(info_losses):.2%}")
+    print(f"Max relative information loss: {np.max(info_losses):.2%}")
+    print(f"Min relative information loss: {np.min(info_losses):.2%}")
+    print()
+
+def demo_nonnegativity():
+    """Verify nonnegativity over many random distributions."""
+    print("=" * 60)
+    print("DEMO 3: Nonnegativity I∞(X;Y) ≥ 0")
+    print("=" * 60)
+    
+    rng = np.random.default_rng(123)
+    n_trials = 10000
+    min_mi = float('inf')
+    
+    for _ in range(n_trials):
+        n_x = rng.integers(2, 6)
+        n_y = rng.integers(2, 6)
+        pXY = random_joint(n_x, n_y, rng)
+        mi = tropical_mi(pXY)
+        min_mi = min(min_mi, mi)
+    
+    print(f"Trials: {n_trials}")
+    print(f"Minimum I∞(X;Y) found: {min_mi:.6f}")
+    print(f"Nonnegativity holds: {min_mi >= -1e-10}")
+    print()
+
+def demo_independence():
+    """Verify I∞ = 0 for product distributions."""
+    print("=" * 60)
+    print("DEMO 4: Independence → I∞ = 0")
+    print("=" * 60)
+    
+    rng = np.random.default_rng(456)
+    n_trials = 1000
+    max_mi = 0.0
+    
+    for _ in range(n_trials):
+        n_x = rng.integers(2, 6)
+        n_y = rng.integers(2, 6)
+        pXY = random_product(n_x, n_y, rng)
+        mi = tropical_mi(pXY)
+        max_mi = max(max_mi, abs(mi))
+    
+    print(f"Trials: {n_trials}")
+    print(f"Max |I∞| for product distributions: {max_mi:.2e}")
+    print(f"Effectively zero: {max_mi < 1e-10}")
+    print()
+
+def demo_chain_rule():
+    """Verify chain rule inequality H∞(X,Y) ≥ H∞(X|Y)."""
+    print("=" * 60)
+    print("DEMO 5: Chain Rule Inequality")
+    print("=" * 60)
+    
+    rng = np.random.default_rng(789)
+    n_trials = 10000
+    violations = 0
+    
+    for _ in range(n_trials):
+        n_x = rng.integers(2, 5)
+        n_y = rng.integers(2, 5)
+        pXY = random_joint(n_x, n_y, rng)
+        
+        h_joint = min_entropy(pXY.ravel())
+        h_cond = cond_min_entropy(pXY)
+        
+        if h_joint < h_cond - 1e-10:
+            violations += 1
+    
+    print(f"Trials: {n_trials}")
+    print(f"Chain rule violations (H∞(X,Y) < H∞(X|Y)): {violations}")
+    print()
+
+def demo_vulnerability_ordering():
+    """Show the key vulnerability ordering: V(X,Y) ≤ V(X) ≤ V(X|Y)."""
+    print("=" * 60)
+    print("DEMO 6: Vulnerability Ordering")
+    print("=" * 60)
+    
+    rng = np.random.default_rng(101)
+    
+    for trial in range(5):
+        n_x, n_y = 3, 4
+        pXY = random_joint(n_x, n_y, rng)
+        
+        v_joint = max_mass(pXY.ravel())
+        v_marginal = max_mass(marginal_fst(pXY))
+        v_cond = cond_vulnerability(pXY)
+        
+        print(f"Trial {trial+1}:")
+        print(f"  V(X,Y) = {v_joint:.4f} ≤ V(X) = {v_marginal:.4f} ≤ V(X|Y) = {v_cond:.4f}")
+        assert v_joint <= v_marginal + 1e-10
+        assert v_marginal <= v_cond + 1e-10
+    print()
+
+
+if __name__ == "__main__":
+    demo_basic_example()
+    demo_dpi_statistical()
+    demo_nonnegativity()
+    demo_independence()
+    demo_chain_rule()
+    demo_vulnerability_ordering()
+    
+    print("=" * 60)
+    print("All demonstrations completed successfully!")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
 Tropical Mutual Information — Visualizations
 
-Generate publication-quality figures illustrating the key theorems.
+Generate publication-quality charts showing:
+1. DPI verification scatter plot
+2. Vulnerability ordering diagram
+3. Information flow through processing pipeline
+4. Leakage profile comparison
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import base64
-from io import BytesIO
+import matplotlib.patches as mpatches
 
+# ─── Core functions ──────────────────────────────────────────────
 
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    data = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{data}"
-
-
-def compute_mi(pXY):
+def tropical_mi(pXY):
     pX = pXY.sum(axis=1)
-    v_x = np.max(pX)
-    v_xy = np.sum(np.max(pXY, axis=0))
+    v_x = float(np.max(pX))
+    v_xy = float(np.sum(np.max(pXY, axis=0)))
     if v_x <= 0 or v_xy <= 0:
         return 0.0
-    return np.log2(v_xy / v_x)
+    return -np.log2(v_x) + np.log2(v_xy)
+
+def cond_vulnerability(pXY):
+    return float(np.sum(np.max(pXY, axis=0)))
+
+def min_entropy(p):
+    return -np.log2(np.max(p))
+
+def pushforward_snd(pXY, f, n_out):
+    n_x, n_y = pXY.shape
+    result = np.zeros((n_x, n_out))
+    for y in range(n_y):
+        result[:, f(y)] += pXY[:, y]
+    return result
+
+def random_joint(n_x, n_y, rng):
+    raw = rng.exponential(size=(n_x, n_y))
+    return raw / raw.sum()
 
 
-def viz_dpi_chain():
-    """Visualize data-processing inequality through successive coarsenings."""
+# ═══════════════════════════════════════════════════════════════════
+# Figure 1: DPI Scatter Plot
+# ═══════════════════════════════════════════════════════════════════
+
+def fig_dpi_scatter():
+    """Scatter plot of I∞(X;f(Y)) vs I∞(X;Y) showing DPI holds."""
+    rng = np.random.default_rng(42)
+    n_trials = 2000
+    
+    mi_orig = []
+    mi_proc = []
+    
+    for _ in range(n_trials):
+        n_x = rng.integers(2, 6)
+        n_y = rng.integers(3, 8)
+        n_z = rng.integers(2, n_y)
+        
+        pXY = random_joint(n_x, n_y, rng)
+        mapping = rng.integers(0, n_z, size=n_y)
+        f = lambda y, m=mapping: int(m[y])
+        
+        mi_o = tropical_mi(pXY)
+        pXfY = pushforward_snd(pXY, f, n_z)
+        mi_p = tropical_mi(pXfY)
+        
+        mi_orig.append(mi_o)
+        mi_proc.append(mi_p)
+    
+    fig, ax = plt.subplots(1, 1, figsize=(8, 7))
+    
+    max_val = max(max(mi_orig), max(mi_proc)) * 1.1
+    ax.plot([0, max_val], [0, max_val], 'r--', linewidth=2, label='I∞(X;f(Y)) = I∞(X;Y)', zorder=5)
+    ax.scatter(mi_orig, mi_proc, alpha=0.3, s=15, c='#2196F3', edgecolors='none', zorder=4)
+    
+    ax.fill_between([0, max_val], [0, max_val], [max_val, max_val],
+                     alpha=0.08, color='red', label='DPI violation zone')
+    
+    ax.set_xlabel('I∞(X; Y)  [original, bits]', fontsize=13)
+    ax.set_ylabel('I∞(X; f(Y))  [post-processed, bits]', fontsize=13)
+    ax.set_title('Data-Processing Inequality: I∞(X; f(Y)) ≤ I∞(X; Y)', fontsize=15, fontweight='bold')
+    ax.legend(fontsize=11, loc='upper left')
+    ax.set_xlim(0, max_val)
+    ax.set_ylim(0, max_val)
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.3)
+    
+    # Add annotation
+    ax.annotate('All points below\nthe diagonal line\n(DPI satisfied)',
+                xy=(max_val*0.6, max_val*0.3), fontsize=11,
+                ha='center', style='italic', color='#1565C0')
+    
+    plt.tight_layout()
+    plt.savefig('fig_dpi_scatter.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: fig_dpi_scatter.png")
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Figure 2: Vulnerability Ordering
+# ═══════════════════════════════════════════════════════════════════
+
+def fig_vulnerability_ordering():
+    """Bar chart showing V(X,Y) ≤ V(X) ≤ V(X|Y) across distributions."""
+    rng = np.random.default_rng(123)
+    n_samples = 12
+    
+    v_joint = []
+    v_marg = []
+    v_cond = []
+    
+    for _ in range(n_samples):
+        n_x = rng.integers(2, 5)
+        n_y = rng.integers(2, 5)
+        pXY = random_joint(n_x, n_y, rng)
+        
+        v_joint.append(float(np.max(pXY)))
+        v_marg.append(float(np.max(pXY.sum(axis=1))))
+        v_cond.append(cond_vulnerability(pXY))
+    
     fig, ax = plt.subplots(1, 1, figsize=(10, 5))
     
-    np.random.seed(2025)
-    n_alpha = 4
-    sizes = [20, 10, 5, 3, 2, 1]
+    x = np.arange(n_samples)
+    width = 0.25
     
-    for trial in range(5):
-        pXY = np.random.dirichlet(np.ones(n_alpha * sizes[0])).reshape(n_alpha, sizes[0])
-        mis = [compute_mi(pXY)]
-        
-        current = pXY
-        for i in range(1, len(sizes)):
-            # Random coarsening
-            new_size = sizes[i]
-            new_dist = np.zeros((n_alpha, new_size))
-            mapping = np.random.randint(0, new_size, size=current.shape[1])
-            for b in range(current.shape[1]):
-                new_dist[:, mapping[b]] += current[:, b]
-            current = new_dist
-            mis.append(compute_mi(current))
-        
-        ax.plot(range(len(sizes)), mis, 'o-', alpha=0.6, linewidth=2,
-                label=f'Trial {trial+1}')
+    bars1 = ax.bar(x - width, v_joint, width, label='V(X,Y)', color='#4CAF50', alpha=0.85)
+    bars2 = ax.bar(x, v_marg, width, label='V(X)', color='#FF9800', alpha=0.85)
+    bars3 = ax.bar(x + width, v_cond, width, label='V(X|Y)', color='#F44336', alpha=0.85)
     
-    ax.set_xlabel('Post-processing steps', fontsize=14)
-    ax.set_ylabel('I_trop(X; f(Y))  [bits]', fontsize=14)
-    ax.set_title('Data-Processing Inequality: Leakage Decreases Under Post-Processing',
-                 fontsize=14)
-    ax.set_xticks(range(len(sizes)))
-    ax.set_xticklabels([f'|Y|={s}' for s in sizes])
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(bottom=-0.05)
-    
-    return fig
-
-
-def viz_vulnerability_landscape():
-    """Visualize the vulnerability landscape for 2×2 distributions."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
-    
-    # Parameterize 2×2 distributions by (a, b) where p = [[a, b], [c, d]]
-    # with a+b+c+d = 1
-    n = 50
-    results_vx = np.zeros((n, n))
-    results_vxy = np.zeros((n, n))
-    results_mi = np.zeros((n, n))
-    
-    a_vals = np.linspace(0.01, 0.49, n)
-    d_vals = np.linspace(0.01, 0.49, n)
-    
-    for i, a in enumerate(a_vals):
-        for j, d in enumerate(d_vals):
-            if a + d > 0.99:
-                results_vx[i, j] = np.nan
-                results_vxy[i, j] = np.nan
-                results_mi[i, j] = np.nan
-                continue
-            b = (1 - a - d) / 2
-            c = (1 - a - d) / 2
-            pXY = np.array([[a, b], [c, d]])
-            
-            pX = pXY.sum(axis=1)
-            results_vx[i, j] = np.max(pX)
-            results_vxy[i, j] = np.sum(np.max(pXY, axis=0))
-            results_mi[i, j] = compute_mi(pXY)
-    
-    for ax, data, title, cmap in [
-        (axes[0], results_vx, 'V(X) = max_x p_X(x)', 'Blues'),
-        (axes[1], results_vxy, 'V(X|Y) = Σ_y max_x p(x,y)', 'Oranges'),
-        (axes[2], results_mi, 'I_trop(X;Y) [bits]', 'RdYlGn_r'),
-    ]:
-        im = ax.imshow(data.T, origin='lower', aspect='auto',
-                       extent=[a_vals[0], a_vals[-1], d_vals[0], d_vals[-1]],
-                       cmap=cmap)
-        ax.set_xlabel('p(1,1) = a', fontsize=12)
-        ax.set_ylabel('p(2,2) = d', fontsize=12)
-        ax.set_title(title, fontsize=12)
-        plt.colorbar(im, ax=ax, shrink=0.8)
-    
-    fig.suptitle('Vulnerability Landscape for 2×2 Distributions\n'
-                 'p = [[a, (1-a-d)/2], [(1-a-d)/2, d]]', fontsize=14)
-    fig.tight_layout()
-    return fig
-
-
-def viz_chain_rule():
-    """Visualize the chain rule inequality: max p ≤ V(X|Y)."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
-    
-    np.random.seed(42)
-    max_ps = []
-    v_xys = []
-    
-    for _ in range(500):
-        n = np.random.randint(2, 8)
-        m = np.random.randint(2, 8)
-        pXY = np.random.dirichlet(np.ones(n * m)).reshape(n, m)
-        max_ps.append(np.max(pXY))
-        v_xys.append(np.sum(np.max(pXY, axis=0)))
-    
-    max_ps = np.array(max_ps)
-    v_xys = np.array(v_xys)
-    
-    ax.scatter(v_xys, max_ps, alpha=0.4, s=20, c='steelblue', edgecolors='none')
-    
-    # Plot the boundary max_p = V(X|Y)
-    x_line = np.linspace(0, 1, 100)
-    ax.plot(x_line, x_line, 'r--', linewidth=2, label='max p = V(X|Y)')
-    ax.fill_between(x_line, 0, x_line, alpha=0.1, color='green',
-                     label='Valid region: max p ≤ V(X|Y)')
-    
-    ax.set_xlabel('V(X|Y) = Σ_y max_x p(x,y)', fontsize=13)
-    ax.set_ylabel('max_{x,y} p(x,y)', fontsize=13)
-    ax.set_title('Chain Rule Inequality: All Points Lie Below the Diagonal', fontsize=14)
+    ax.set_xlabel('Distribution index', fontsize=12)
+    ax.set_ylabel('Vulnerability', fontsize=12)
+    ax.set_title('Vulnerability Ordering: V(X,Y) ≤ V(X) ≤ V(X|Y)', fontsize=14, fontweight='bold')
     ax.legend(fontsize=11)
-    ax.set_xlim(0, 1.02)
-    ax.set_ylim(0, 1.02)
-    ax.grid(True, alpha=0.3)
-    ax.set_aspect('equal')
+    ax.set_xticks(x)
+    ax.grid(True, axis='y', alpha=0.3)
     
-    return fig
+    plt.tight_layout()
+    plt.savefig('fig_vulnerability_ordering.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: fig_vulnerability_ordering.png")
 
 
-def viz_security_cascade():
-    """Visualize security through successive compressions."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+# ═══════════════════════════════════════════════════════════════════
+# Figure 3: Information Flow Pipeline
+# ═══════════════════════════════════════════════════════════════════
+
+def fig_info_pipeline():
+    """Show monotonic decrease of I∞ through a processing pipeline."""
+    rng = np.random.default_rng(456)
     
-    np.random.seed(314)
-    n_alpha = 5
-    initial_sizes = [30, 25, 20, 15]
+    n_x = 4
+    sizes = [16, 8, 4, 2, 1]
     
-    for trial, init_size in enumerate(initial_sizes):
-        pXY = np.random.dirichlet(np.ones(n_alpha * init_size) * 0.3).reshape(n_alpha, init_size)
+    # Generate initial distribution
+    pXY = random_joint(n_x, sizes[0], rng)
+    
+    mis = [tropical_mi(pXY)]
+    vulns = [cond_vulnerability(pXY)]
+    current = pXY
+    
+    for i in range(1, len(sizes)):
+        n_out = sizes[i]
+        n_in = sizes[i-1]
+        f = lambda y, n=n_out, m=n_in: y * n // m
+        current = pushforward_snd(current, f, n_out)
+        mis.append(tropical_mi(current))
+        vulns.append(cond_vulnerability(current))
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    
+    # Left: MI decreasing
+    ax1.plot(range(len(sizes)), mis, 'o-', color='#2196F3', linewidth=2.5, markersize=10)
+    ax1.fill_between(range(len(sizes)), mis, alpha=0.15, color='#2196F3')
+    for i, (s, m) in enumerate(zip(sizes, mis)):
+        ax1.annotate(f'|Y|={s}\nI∞={m:.3f}', (i, m), textcoords="offset points",
+                     xytext=(0, 15), ha='center', fontsize=9)
+    ax1.set_xlabel('Processing stage', fontsize=12)
+    ax1.set_ylabel('I∞(X; processed Y) [bits]', fontsize=12)
+    ax1.set_title('Tropical MI Through Pipeline', fontsize=14, fontweight='bold')
+    ax1.set_xticks(range(len(sizes)))
+    ax1.set_xticklabels([f'Stage {i}' for i in range(len(sizes))])
+    ax1.grid(True, alpha=0.3)
+    
+    # Right: Vulnerability increasing (inverted security)
+    ax2.plot(range(len(sizes)), vulns, 's-', color='#F44336', linewidth=2.5, markersize=10)
+    ax2.fill_between(range(len(sizes)), vulns, alpha=0.15, color='#F44336')
+    for i, (s, v) in enumerate(zip(sizes, vulns)):
+        ax2.annotate(f'V={v:.3f}', (i, v), textcoords="offset points",
+                     xytext=(0, 12), ha='center', fontsize=9)
+    ax2.set_xlabel('Processing stage', fontsize=12)
+    ax2.set_ylabel('V(X | processed Y)', fontsize=12)
+    ax2.set_title('Vulnerability Decreasing (Security Improves)', fontsize=14, fontweight='bold')
+    ax2.set_xticks(range(len(sizes)))
+    ax2.set_xticklabels([f'Stage {i}' for i in range(len(sizes))])
+    ax2.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('fig_info_pipeline.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: fig_info_pipeline.png")
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Figure 4: DPI Information Loss Distribution
+# ═══════════════════════════════════════════════════════════════════
+
+def fig_info_loss_histogram():
+    """Histogram of relative information loss under random post-processing."""
+    rng = np.random.default_rng(789)
+    n_trials = 5000
+    
+    losses = []
+    for _ in range(n_trials):
+        n_x = rng.integers(2, 5)
+        n_y = rng.integers(3, 8)
+        n_z = rng.integers(2, n_y)
         
-        sizes = [init_size]
-        mis = [compute_mi(pXY)]
-        vulns = [np.sum(np.max(pXY, axis=0))]
+        pXY = random_joint(n_x, n_y, rng)
+        mapping = rng.integers(0, n_z, size=n_y)
+        f = lambda y, m=mapping: int(m[y])
         
-        current = pXY
-        while current.shape[1] > 1:
-            new_size = max(1, current.shape[1] // 2)
-            new_dist = np.zeros((n_alpha, new_size))
-            for b in range(current.shape[1]):
-                new_dist[:, b % new_size] += current[:, b]
-            current = new_dist
-            sizes.append(new_size)
-            mis.append(compute_mi(current))
-            vulns.append(np.sum(np.max(current, axis=0)))
+        mi_o = tropical_mi(pXY)
+        pXfY = pushforward_snd(pXY, f, n_z)
+        mi_p = tropical_mi(pXfY)
         
-        axes[0].plot(range(len(mis)), mis, 'o-', linewidth=2, alpha=0.7,
-                     label=f'|Y|={init_size}')
-        axes[1].plot(range(len(vulns)), vulns, 's-', linewidth=2, alpha=0.7,
-                     label=f'|Y|={init_size}')
+        if mi_o > 0.01:
+            losses.append((mi_o - mi_p) / mi_o * 100)
     
-    axes[0].set_xlabel('Compression step', fontsize=13)
-    axes[0].set_ylabel('I_trop(X; f(Y))  [bits]', fontsize=13)
-    axes[0].set_title('Mutual Information Cascade', fontsize=14)
-    axes[0].legend(fontsize=10)
-    axes[0].grid(True, alpha=0.3)
-    axes[0].set_ylim(bottom=-0.05)
+    fig, ax = plt.subplots(1, 1, figsize=(9, 5))
     
-    axes[1].set_xlabel('Compression step', fontsize=13)
-    axes[1].set_ylabel('V(X|Y)', fontsize=13)
-    axes[1].set_title('Conditional Vulnerability Cascade', fontsize=14)
-    axes[1].legend(fontsize=10)
-    axes[1].grid(True, alpha=0.3)
+    ax.hist(losses, bins=50, color='#4CAF50', alpha=0.8, edgecolor='white', linewidth=0.5)
+    ax.axvline(np.mean(losses), color='#F44336', linewidth=2, linestyle='--',
+               label=f'Mean loss: {np.mean(losses):.1f}%')
+    ax.axvline(np.median(losses), color='#FF9800', linewidth=2, linestyle=':',
+               label=f'Median loss: {np.median(losses):.1f}%')
     
-    fig.suptitle('Security Through Successive Orbit Compressions', fontsize=15)
-    fig.tight_layout()
-    return fig
-
-
-def generate_all_visualizations():
-    """Generate all visualizations and save as files + return base64."""
-    results = {}
+    ax.set_xlabel('Relative information loss (%)', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title('Distribution of Information Loss Under Random Post-Processing',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3, axis='y')
     
-    print("Generating DPI chain visualization...")
-    fig1 = viz_dpi_chain()
-    fig1.savefig('/workspace/request-project/viz_dpi_chain.png', dpi=150, bbox_inches='tight')
-    results['dpi_chain'] = fig_to_base64(fig1)
-    
-    print("Generating vulnerability landscape...")
-    fig2 = viz_vulnerability_landscape()
-    fig2.savefig('/workspace/request-project/viz_vulnerability_landscape.png', dpi=150, bbox_inches='tight')
-    results['vulnerability_landscape'] = fig_to_base64(fig2)
-    
-    print("Generating chain rule visualization...")
-    fig3 = viz_chain_rule()
-    fig3.savefig('/workspace/request-project/viz_chain_rule.png', dpi=150, bbox_inches='tight')
-    results['chain_rule'] = fig_to_base64(fig3)
-    
-    print("Generating security cascade...")
-    fig4 = viz_security_cascade()
-    fig4.savefig('/workspace/request-project/viz_security_cascade.png', dpi=150, bbox_inches='tight')
-    results['security_cascade'] = fig_to_base64(fig4)
-    
-    print("All visualizations generated.")
-    return results
+    plt.tight_layout()
+    plt.savefig('fig_info_loss_hist.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: fig_info_loss_hist.png")
 
 
 if __name__ == "__main__":
-    viz_data = generate_all_visualizations()
-    print(f"Generated {len(viz_data)} visualizations.")
-    for name, data in viz_data.items():
-        print(f"  {name}: {len(data)} chars")
+    fig_dpi_scatter()
+    fig_vulnerability_ordering()
+    fig_info_pipeline()
+    fig_info_loss_histogram()
+    print("\nAll visualizations generated!")
