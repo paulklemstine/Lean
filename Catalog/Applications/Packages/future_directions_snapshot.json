@@ -128,24 +128,6 @@
     "timestamp": "2026-05-14T16:24:30.140249+00:00"
   },
   {
-    "id": "fd_0166",
-    "title": "Apply to specific problems",
-    "description": ": Show that certain functions (e.g., element distinctness, graph connectivity) require super-linear tropical cost in bounded-width branching programs.\n\n### Proof Strategy\n- Generalize the layered system framework from `Obstruction.lean`.\n- Use the block cost lemma within each layer.\n- Combine with the existing `layered_no_shortcut` theorem.\n\n### Cross-domain Impact\n- Circuit complexity (lower bounds for restricted circuits)\n- Streaming algorithms (space-bounded computation)\n- VLSI design (area-time tradeoffs)\n\n---\n\n## Direction 3: Tropical Communication Complexity via Min-Plus Protocol Cost\n\n### Goal\nDefine communication complexity over the min-plus semiring and prove direct-sum lower bounds using the cycle-gap framework.\n\n### Background\nIn classical communication complexity, Alice and Bob",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e06c3817",
-    "consumed_by_exp_id": "493b32c8",
-    "timestamp": "2026-05-14T17:33:00.498533+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Eigenvector perturbation",
     "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
@@ -413,88 +395,6 @@
     "timestamp": "2026-05-17T03:06:58.810934+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "Direct Lipschitz chain:",
-    "description": "Bound `|I(X; W) - I(X'; W)|` by `K · d(X, X')` using the Lipschitz property of mutual information, then use `d(X, X') ≤ r ≤ m/K` to get the margin bound.\n\n### Cross-Domain Connection\n**Differential privacy:** The Lipschitz condition on a channel is equivalent to differential privacy with parameter `ε = K`. Entropy contraction certified by radii gives a new perspective on the privacy-utility tradeoff: the certified radius measures the maximum data perturbation that preserves utility bounds.\n\n---\n\n## Direction 4: Cryptographic Distinguishability Certificates via Tropical Separation\n\n### Theorem Statement\nFor two distributions `P, Q` on a finite type, if their statistical distance satisfies `Δ(P, Q) ≥ m` and a tropical determinant certificate gives a Lipschitz bound `K` on the distinguisher, ",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a54a94dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:06:58.849542+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Dual tropical certificate:",
-    "description": "Express the distinguishing advantage as a difference of tropical linear forms, then use `tropical_lattice_det_bound` to derive the Lipschitz constant from the tropical determinant.\n\n### Cross-Domain Connection\n**Post-quantum security proofs:** Tropical one-way functions (formalized in `TropicalOneWayFoundations.lean`) have hardness parameterized by dimension. The certified radius framework could formalize security reductions where the distinguishing advantage is preserved under bounded perturbation of cryptographic parameters.\n\n---\n\n## Direction 5: Formal Equivalence Between Margin Certificates and Tropical Chamber Stability\n\n### Theorem Statement\nFor a tropical polynomial classifier, the set of inputs where the classifier has margin ≥ m is exactly a tropical polyhedral cell (intersection ",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a54a94dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:06:58.887479+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "Connect the pieces",
-    "description": ": The kernel matrix equals the identity (rank = |A|), and it decomposes into ≤ 3·D₀ rank-1 pieces, giving |A| ≤ 3·D₀.\n\n### Hypothesis\nThe bottleneck is step 1 (polynomial expansion), not the linear algebra. A dedicated effort on multivariate polynomial manipulation over finite fields would break through.\n\n### Cross-Domain Impact\nThis infrastructure would immediately enable formal slice-rank arguments, which are the foundation of the entire polynomial method in combinatorics.\n\n---\n\n## Direction 2: Extension from F₃ⁿ to F_pⁿ\n\n### Status\nThe current development is specific to F₃. The Croot–Lev–Pach method generalizes to F_p for any prime p, with the indicator polynomial Δ(v) = ∏_i(1 − v_i^{p-1}).\n\n### Concrete Next Steps",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0c11eac",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:40:37.246012+00:00"
-  },
-  {
-    "id": "fd_0270",
-    "title": "Expander walk sampling",
-    "description": "[Gillman 1998]: Use the spectral gap to show that a single walk of length O(log(1/ε)) on the Berggren tree gives an ε-approximate sample. This converts the spectral bound directly into a derandomization result.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63e8a2bf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:13:19.028976+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "Selberg zeta function",
-    "description": ": Construct the Selberg-type zeta function for the Berggren semigroup and relate its zeros to the spectrum of the Laplacian on Γ\\H², where H² is the hyperbolic plane.\n\n### Cross-Domain Connection\nThis connects to the **Langlands program** — specifically, to automorphic representations of SO(2,1) and their L-functions. A spectral gap in this setting would be a thin-group analog of Selberg's 1/4 conjecture.\n\n---\n\n## Direction 5: Complexity-Theoretic Derandomization via Arithmetic Expanders\n\n### Hypothesis\nBerggren walks can replace truly random bits in BPP algorithms for problems with arithmetic structure, achieving deterministic polynomial-time solutions.\n\n### Exact Theorem Statement\nLet L be a language decidable by a randomized algorithm A using r random bits and achieving error probabilit",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "63e8a2bf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:13:19.099980+00:00"
-  },
-  {
     "id": "fd_0264",
     "title": "Formula complexity",
     "description": "gives the proof-theoretic content.",
@@ -540,39 +440,6 @@
     "timestamp": "2026-05-17T06:57:09.789412+00:00"
   },
   {
-    "id": "fd_0270",
-    "title": "Protocol construction",
-    "description": ": Build a public-key encryption scheme where:\n   - Key generation: Choose L, R, compute G = L ⊗ R and publish G²\n   - Encryption: Use orbit hash with random exponents\n   - Decryption: Use knowledge of L, R to invert\n\n### Cross-Domain Connections\n- Lattice trapdoor functions (Ajtai, Micciancio-Peikert)\n- Tropical factorization theory\n- Graph decomposition algorithms\n\n### Concrete Next Step\nFormalize the definition of tropical matrix factorization G = L ⊗ R and prove basic properties (existence, non-uniqueness, relationship to graph structure). Test whether factorization-aware inversion is polynomial-time for structured instances.\n\n---\n\n## Direction 3: Min-Plus PRG Constructions from Orbit Iteration\n\n### Hypothesis\nThe orbit hash construction G, G², G⁴, G⁸, ... (repeated squaring orbit) is a",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:57:09.832451+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "Compression argument",
-    "description": ": Show that if the orbit were compressible, it would yield an inverter for one of the intermediate powers.\n\n### Cross-Domain Connections\n- Goldreich-Levin theorem and hardcore predicates\n- Blum-Micali PRG construction\n- Tropical entropy and information theory\n\n### Concrete Next Step\nImplement the orbit hash PRG and conduct statistical tests (NIST test suite) on its output. Compare randomness quality with different matrix sizes and entry ranges. Formalize the one-step chain rule (already partially done in the codebase as `tropical_orbit_prg`).\n\n---\n\n## Direction 4: Reductions from Tropical Factorization to Control-System Identification\n\n### Hypothesis\nInverting tropical matrix powering is at least as hard as the tropical system identification problem: given the input-output behavior of a di",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:57:09.886406+00:00"
-  },
-  {
     "id": "fd_0274",
     "title": "Encode system identification as power inversion",
     "description": ": A discrete event system with transition matrix G produces outputs G^k · x₀ for initial state x₀. Recovering G from {G^k · x₀ : k = 1, ..., T} is a special case of power inversion where only certain projections of the powers are observed.",
@@ -597,10 +464,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0db29d83",
     "timestamp": "2026-05-17T06:57:09.945380+00:00"
   },
   {
@@ -619,60 +486,6 @@
     "timestamp": "2026-05-17T06:57:09.963432+00:00"
   },
   {
-    "id": "fd_0280",
-    "title": "Separation evidence",
-    "description": ": Connect to existing results on min-plus circuit complexity and matrix multiplication lower bounds.\n\n### Cross-Domain Connections\n- Algebraic complexity theory (Valiant's VP vs VNP)\n- Min-plus circuit complexity (Jukna-Sergeev)\n- Tropical geometry and effective computation\n- Descriptive complexity for semiring logics\n\n### Concrete Next Step\nDefine Tropical-P formally and prove basic closure properties (under composition, tropical matrix multiplication). Show that shortest-path and all-pairs-shortest-path are in Tropical-P. Investigate whether the APSP conjecture (no truly subcubic algorithm) implies hardness of tropical power inversion.\n\n---\n\n## Cross-Cutting Theme: Idempotent Cryptography\n\nAll five directions contribute to founding a new branch of cryptography — **idempotent cryptography",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:57:10.020129+00:00"
-  },
-  {
-    "id": "fd_0282",
-    "title": "Geometric hardness",
-    "description": ": The tropical convex hull, tropical linear algebra, and tropical algebraic geometry provide natural \"hard problems\" distinct from lattice or number-theoretic ones.",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:57:10.056188+00:00"
-  },
-  {
-    "id": "fd_0283",
-    "title": "Natural connections to optimization",
-    "description": ": Unlike classical cryptographic problems, tropical hard problems arise directly from real-world optimization, scheduling, and routing — creating a bridge between security and operations research.",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:57:10.073644+00:00"
-  },
-  {
     "id": "fd_0284",
     "title": "Potential quantum resistance",
     "description": ": Since tropical operations don't involve group structure, Shor's algorithm and its variants may not apply, offering a genuinely new post-quantum direction.",
@@ -687,34 +500,6 @@
     "source_exp_id": "60bd27bc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T06:57:10.094710+00:00"
-  },
-  {
-    "id": "fd_0248",
-    "title": "LP formulation",
-    "description": "The Chebyshev center problem is: $\\max_{x, \\rho} \\rho$ subject to $\\Delta_{i,j}(x) \\geq \\rho \\|w_{i,j}\\|$ for all $j \\neq i$. This is a standard LP in $n + 1$ variables and $m - 1$ constraints.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.147555+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "Dual characterization",
-    "description": "The LP dual identifies the active constraints (facets) that determine the center. Prove that the Chebyshev center lies on the intersection of at most $n + 1$ active facets (by LP theory).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.167830+00:00"
   },
   {
     "id": "fd_0250",
@@ -735,34 +520,6 @@
     "timestamp": "2026-05-17T07:17:01.187974+00:00"
   },
   {
-    "id": "fd_0251",
-    "title": "Semidefinite programming",
-    "description": "The John ellipsoid of a polyhedron defined by linear inequalities $A x \\leq b$ can be computed via SDP: $\\max \\log \\det B$ subject to $\\|B a_j\\| + a_j^T c \\leq b_j$ for all constraints.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.207985+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Directional certificates",
-    "description": "For each direction $d$, the robustness in direction $d$ is the distance from $x_0$ to the boundary of the ellipsoid along $d$, which is $\\sqrt{d^T B^{-2} d}^{-1}$ times the margin-related quantity.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.225479+00:00"
-  },
-  {
     "id": "fd_0253",
     "title": "Tropical specialization",
     "description": "For tropical margin cells, the constraints have the specific form $(W_i - W_j)^T x \\geq a_j - a_i$, which may admit simpler SDP formulations.\n\n### Cross-Domain Connections\n- **Convex geometry:** John's theorem, Löwner-John ellipsoid\n- **Robust optimization:** Ellipsoidal uncertainty sets\n- **Adversarial ML:** Direction-dependent perturbation budgets\n\n### Deliverables\n- SDP formulation for tropical John ellipsoid\n- Proof that John ellipsoid robustness dominates Chebyshev ball\n- Comparison with $\\ell_\\infty$ robustness certificates\n\n---\n\n## Direction 3: Algorithmic Robust Certification via Active Facets\n\n### Hypothesis\nFor points deep in the interior of a margin cell, only a small number of \"active facets\" (nearest boundaries) determine the Chebyshev radius. An incremental algorithm can main",
@@ -778,20 +535,6 @@
     "source_exp_id": "6c322112",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T07:17:01.244679+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "Active facet identification",
-    "description": "Define the $k$-active set as the $k$ competitors $j$ with smallest boundary distance. Prove that for generic classifiers, the number of approximately-active facets is $O(1)$ in expectation.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.261797+00:00"
   },
   {
     "id": "fd_0255",
@@ -810,48 +553,6 @@
     "source_exp_id": "6c322112",
     "consumed_by_exp_id": "740c7329",
     "timestamp": "2026-05-17T07:17:01.286479+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "Polyhedral partition",
-    "description": "A deep ReLU network with $L$ layers and widths $n_1, \\ldots, n_L$ partitions the input space into at most $\\prod_{l} \\binom{n_l}{\\leq n_0}$ linear regions. Within each region, the network is affine.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.307401+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "Local radius",
-    "description": "Within a linear region, the Chebyshev radius equals $\\min_j \\Delta_{i,j}(x_0) / \\|w_{i,j}^{\\text{local}}\\|$ where $w_{i,j}^{\\text{local}}$ involves the composed weight matrices.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.328475+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Region boundary distance",
-    "description": "The distance to the nearest ReLU activation boundary provides an additional constraint on the global radius.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.352493+00:00"
   },
   {
     "id": "fd_0259",
@@ -885,32 +586,184 @@
     "timestamp": "2026-05-17T07:17:01.394926+00:00"
   },
   {
-    "id": "fd_0261",
-    "title": "Central path",
-    "description": "Prove that as the barrier parameter $\\mu \\to 0$, the minimizer of $\\text{loss}(W, a) + \\mu \\Phi(W, a)$ converges to the maximum-margin classifier.",
+    "id": "fd_0268",
+    "title": "Define tropical rank",
+    "description": "as the minimum number of tropical rank-1 matrices (outer products in the min-plus semiring) needed to represent a given matrix.",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "6c322112",
+    "source_exp_id": "493b32c8",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.414258+00:00"
+    "timestamp": "2026-05-17T07:39:39.321305+00:00"
   },
   {
-    "id": "fd_0262",
-    "title": "Gradient computation",
-    "description": "The gradient of $\\Phi$ with respect to $W$ and $a$ involves $\\nabla_W (\\Delta_{i,j} / \\|w_{i,j}\\|)$, which is explicit for affine classifiers.",
+    "id": "fd_0269",
+    "title": "Prove a tropical analogue of the rank lower bound",
+    "description": ": if the tropical rank of the communication matrix is $r$, then any protocol requires cost at least $\\log r$.",
     "domains": [
-      "Bridges"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "6c322112",
+    "source_exp_id": "493b32c8",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.432703+00:00"
+    "timestamp": "2026-05-17T07:39:39.339028+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Relate tropical rank to Barvinok rank",
+    "description": "and Kapranov rank from tropical geometry.\n\n### Proof Strategy\n- Use the no-collapse theorem (Theorem D) as the algebraic foundation: tropical rank cannot decrease under matrix composition.\n- Adapt the classical fooling-set method to the min-plus setting.\n- Connect to the existing tropical geometry literature on matrix factorization.\n\n### Cross-Domain Connections\n- **Tropical geometry**: Kapranov rank, tropical determinants, tropical Grassmannians\n- **Optimization**: rank of distance matrices in metric spaces\n- **Machine learning**: low-rank approximation of cost matrices in optimal transport\n\n### Expected Impact\nA tropical rank theory would provide a uniform lower-bound method for communication complexity that directly transfers to streaming, routing, and DP compression barriers via the br",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "493b32c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:39:39.389073+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Extend to multi-pass streaming",
+    "description": ": model $p$ passes as $p$-fold layered composition.\n\n### Proof Strategy\n- Layer the computation by input position: layer $i$ corresponds to reading element $i$.\n- At each layer, the pigeonhole lemma guarantees $\\lfloor n/s \\rfloor$ collisions.\n- Each collision forces cost $\\geq 1$ in subsequent layers (information recovery).\n- Sum over layers to get the global bound.\n\n### Cross-Domain Connections\n- **Streaming algorithms**: tight bounds for sketching, sampling, and approximate counting\n- **Database systems**: buffer management and external sorting lower bounds\n- **Network monitoring**: limits of flow counting with bounded TCAM\n\n### Expected Impact\nThis would provide the first *certified* streaming lower bounds in the tropical framework, directly applicable to algorithm design and system ar",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "493b32c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:39:39.457472+00:00"
+  },
+  {
+    "id": "fd_0275",
+    "title": "Define tropical monotone circuits",
+    "description": "formally as DAGs with min and + gates.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "493b32c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:39:39.479995+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Relate to tropical BPs",
+    "description": ": show that width-$w$, depth-$d$ BPs are equivalent to circuits of size $O(w^2 \\cdot d)$.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "493b32c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:39:39.503889+00:00"
+  },
+  {
+    "id": "fd_0277",
+    "title": "Prove exponential lower bounds",
+    "description": "for the tropical permanent (= shortest path in a weighted bipartite graph).",
+    "domains": [
+      "Tropical",
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "493b32c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:39:39.526079+00:00"
+  },
+  {
+    "id": "fd_0278",
+    "title": "Connect to Valiant's permanent-determinant conjecture",
+    "description": "via tropical geometry.\n\n### Proof Strategy\n- Use the obstruction certificate framework, but extended to circuits.\n- The tropical permanent has exponentially many \"contributing terms\" (perfect matchings).\n- Any monotone circuit computing it must \"separately handle\" each matching, requiring exponential size.\n- Formalize using the weight-function counting argument of Jerrum-Snir.\n\n### Cross-Domain Connections\n- **Algebraic complexity**: Valiant's VP vs VNP\n- **Combinatorial optimization**: matching algorithms, assignment problems\n- **Tropical geometry**: tropical Grassmannians and resultants\n\n### Expected Impact\nA formal tropical monotone circuit lower bound would be a major result in algebraic complexity theory, connecting the tropical framework to the deepest open problems in the field.\n\n--",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "493b32c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:39:39.556367+00:00"
+  },
+  {
+    "id": "fd_0281",
+    "title": "Connect to the Thompson-Brent area-time framework",
+    "description": "via tropical translation.\n\n### Proof Strategy\n- Use the existing width-depth tradeoff theorem as the starting point.\n- Width = bisection bandwidth = $O(\\sqrt{A})$ for 2D layouts.\n- Obstruction cost for sorting = $\\Omega(n \\log n)$ (information-theoretic).\n- Combine: $\\sqrt{A} \\cdot T \\geq n \\log n$, giving $AT^2 \\geq n^2 \\log^2 n$.\n\n### Cross-Domain Connections\n- **VLSI design**: chip layout optimization, wire congestion\n- **Parallel computing**: communication volume lower bounds\n- **Network-on-chip**: routing and congestion for multi-core systems\n\n### Expected Impact\nTropical VLSI lower bounds would provide physically meaningful cost measures that align with actual chip design constraints, going beyond purely combinatorial models.\n\n---\n\n## Direction 5: Tropical Information Complexity and ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "493b32c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:39:39.625723+00:00"
+  },
+  {
+    "id": "fd_0284",
+    "title": "Define tropical mutual information",
+    "description": "and prove it lower-bounds tropical communication complexity.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "493b32c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:39:39.690111+00:00"
+  },
+  {
+    "id": "fd_0285",
+    "title": "Prove a tropical Fano inequality",
+    "description": "bounding error probability in terms of tropical entropy.\n\n### Proof Strategy\n- Use Maslov's dequantization framework to derive tropical information measures as limits of classical ones.\n- The data-processing inequality should follow from the monotonicity of tropical matrix composition.\n- Connect to existing work on idempotent probability and min-plus measure theory.\n\n### Cross-Domain Connections\n- **Information theory**: channel capacity, rate-distortion\n- **Statistical physics**: free energy, Gibbs measures\n- **Optimal transport**: Kantorovich duality, Wasserstein distances\n- **Machine learning**: information bottleneck method\n\n### Expected Impact\nA tropical information theory would provide a fundamentally new way to reason about optimization and decision-making under constraints, with ap",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "493b32c8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T07:39:39.747782+00:00"
   },
   {
     "id": "fd_0113",
@@ -1519,23 +1372,6 @@
     "timestamp": "2026-05-17T02:00:26.770253+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "1. Tropical Chamber Inradius Theorem",
-    "description": "**Hypothesis.** When score functions are max-plus affine (i.e., `s_i(x) = max_k (a_{ik} · x + b_{ik})`), the margin cell `marginCell s i` is a tropically convex polyhedron. Its Chebyshev radius admits a purely combinatorial lower bound in terms of coefficient gaps.\n\n**Proof strategy.**\n- Formalize max-plus affine maps and show that pairwise differences of such maps are piecewise-affine and hence Lipschitz.\n- Prove that the margin cell is an intersection of tropical halfspaces.\n- Derive an explicit formula for the inscribed ball radius from the vertex enumeration of the tropical polyhedron.\n\n**Cross-domain connection.** This bridges certified deep learning (ReLU networks produce piecewise-affine scores) with tropical convexity and combinatorial optimization.\n\n**Lean formalization target.** ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc205d47",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:38:17.350281+00:00"
-  },
-  {
     "id": "fd_0250",
     "title": "2. Robust Nerve Theorem for Decision Regions",
     "description": "**Hypothesis.** Given a collection of margin cells with certified pairwise inscribed-ball overlaps, the nerve complex of the collection is stable under bounded score perturbations. That is, if all Lipschitz certified radii exceed a threshold, the homotopy type of the nerve is preserved.\n\n**Proof strategy.**\n- Use the ball-inclusion theorem to guarantee that certified intersections of margin cells are nonempty.\n- Apply a nerve lemma (good-cover theorem) to conclude that the nerve captures the topology of the union.\n- Show that bounded perturbations of scores preserve the nonemptiness of intersections when the certified radii are large enough.\n\n**Cross-domain connection.** This connects adversarial robustness certification to topological data analysis and persistent homology of classifiers.\n",
@@ -1549,39 +1385,6 @@
     "source_exp_id": "cc205d47",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:38:17.375942+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "3. Continuous-Depth Certification via Grönwall Estimates",
-    "description": "**Hypothesis.** For score functions generated by ODE flows `ds/dt = F(s, t)` with a Lipschitz vector field, the margin gap satisfies a Grönwall-type differential inequality. The ball-inclusion theorem then extends to continuous-depth networks (neural ODEs) with Lipschitz constants determined by the flow time and the Lipschitz constant of F.\n\n**Proof strategy.**\n- Prove a Grönwall lemma for the pairwise gap function `g_j(t) = s_i(x, t) - s_j(x, t)`.\n- Show that if `g_j(0) ≥ γ` and the vector field is `L`-Lipschitz, then `g_j(T) ≥ γ · e^{-LT}`.\n- Apply `ball_subset_marginCell_of_pairwise_lipschitz` with `K = e^{LT}` times the spatial Lipschitz constant.\n\n**Cross-domain connection.** This bridges neural ODEs, dynamical systems stability, and Hamilton–Jacobi theory with certified robustness.\n\n",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc205d47",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:38:17.394752+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "4. Infinite-Class Kernel and Nearest-Neighbor Certification",
-    "description": "**Hypothesis.** For kernel classifiers with an infinite hypothesis family (e.g., Gaussian process classifiers with continuous label spaces), the infimum-gap formulation of the margin provides a certified radius via our theorem, provided the gap function has a uniform Lipschitz bound.\n\n**Proof strategy.**\n- Define the uniform margin as `uniformMargin s i x = sInf ((fun j => s i x - s j x) '' {j | j ≠ i})`.\n- Prove that if `uniformMargin > 0` and all pairwise gaps are `K`-Lipschitz, then `ball x (uniformMargin / K) ⊆ marginCell s i`.\n- Instantiate for Gaussian process classifiers with Matérn kernels, where Lipschitz constants can be bounded from kernel smoothness.\n\n**Cross-domain connection.** This extends certified robustness from finite-class neural networks to infinite-dimensional hypothe",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc205d47",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:38:17.413931+00:00"
   },
   {
     "id": "fd_0253",
@@ -1600,57 +1403,6 @@
     "source_exp_id": "cc205d47",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:38:17.437810+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "1. Matrix-Kernel Existence of Key-Equation Solutions over Finite Fields",
-    "description": "**Theorem Statement:**\nGiven n evaluation points, a received word r, and parameters k, t with n > k + 2t, there exists a nonzero pair (Q, E) with deg Q < k+t, deg E ≤ t, E ≠ 0, satisfying the key equation Q(aᵢ) = r(i)·E(aᵢ) for all i.\n\n**Proof Strategy:**\nEncode the coefficients of Q (k+t coefficients) and E (t+1 coefficients) as a vector in F^{k+2t+1}. The key equation at each evaluation point gives one linear constraint, yielding an n × (k+2t+1) matrix. Since n < k+2t+1 (or more precisely, the system is underdetermined when n ≤ k+2t), rank-nullity guarantees a nonzero kernel element. The main challenge is showing that the E-component of this kernel vector is nonzero; this requires either a careful argument about the matrix structure or an assumption that the error pattern is consistent.\n",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "febdbe21",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:19:34.908739+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "2. Monic Normalization and Executable Decoder Extraction",
-    "description": "**Theorem Statement:**\nGiven a nonzero key-equation solution (Q, E) with E ≠ 0, normalizing E to be monic yields a canonical factorization Q = p · E where p is the unique transmitted polynomial. Moreover, p(aᵢ) = r(i) for all non-error positions i.\n\n**Proof Strategy:**\nDivide E by its leading coefficient to obtain a monic Ē. Set Q̄ = Q / lc(E). The key equation is preserved under this scaling. Then use polynomial division: since Q̄(aᵢ) = r(i)·Ē(aᵢ) at all points and Ē is monic with known roots, Ē | Q̄ in F[X]. The quotient p = Q̄ / Ē satisfies deg p < k by the degree bounds.\n\n**Cross-Domain Significance:**\n- Enables extraction of a verified executable decoder (code generation from proofs).\n- Bridges to certified cryptographic implementations (e.g., Shamir secret sharing recovery).\n- Founda",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "febdbe21",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:19:34.931034+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "3. List-Decoding Generalization via Multiplicity Constraints (Sudan/Guruswami–Su",
-    "description": "**Theorem Statement:**\nFor parameters (n, k, t) with t > (n-k)/2 (beyond the unique decoding radius), there exists a polynomial Q(X, Y) of controlled (weighted) degree such that Q(aᵢ, r(i)) = 0 for all i, with multiplicity ≥ m at each point. Any polynomial p with deg p < k satisfying p(aᵢ) = r(i) on sufficiently many positions must satisfy Q(X, p(X)) ≡ 0, reducing list decoding to root-finding of a bivariate polynomial.\n\n**Proof Strategy:**\n1. Formalize weighted degree for bivariate polynomials F[X,Y].\n2. Prove dimension counting: the space of Q(X,Y) with weighted degree ≤ D has dimension growing as D², while the multiplicity constraints impose ≤ m(m+1)/2 · n conditions.\n3. For D large enough relative to mn, a nonzero Q exists.\n4. Prove the \"key lemma\": if p(aᵢ) = r(i) for enough i, then (",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "febdbe21",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:19:43.631171+00:00"
   },
   {
     "id": "fd_0267",
@@ -1686,21 +1438,6 @@
     "source_exp_id": "29a487a8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T06:38:03.464075+00:00"
-  },
-  {
-    "id": "fd_0270",
-    "title": "Team Structure",
-    "description": "- **Theory team:** Formalize persistent homology stability and tropical information inequalities\n- **Algorithms team:** Implement chamber enumeration, LP-based certification, and SMT integration\n- **Applications team:** Apply framework to real ReLU networks and lattice cryptosystems\n- **Verification team:** Maintain and extend the Lean formalization",
-    "domains": [
-      "Tropical",
-      "Cryptography"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "29a487a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:38:03.503544+00:00"
   },
   {
     "id": "fd_0264",
