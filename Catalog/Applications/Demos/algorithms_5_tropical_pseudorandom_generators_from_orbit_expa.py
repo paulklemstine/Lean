@@ -1,402 +1,595 @@
 #!/usr/bin/env python3
 """
-Tropical Orbit PRG — Algorithm Implementations
+algorithms.py — Algorithms for Tropical Orbit PRG Theory
 
-This module implements the core algorithms from the research paper:
-1. Tropical matrix arithmetic (min-plus semiring)
-2. Tropical orbit PRG construction
-3. Conditional extraction verification
-4. Statistical distance computation
-5. Prefix fiber analysis
+Implements the core algorithms from the research:
+1. Tropical matrix powering (min-plus semiring)
+2. Orbit hash sequence generation
+3. Statistical distance computation
+4. Prefix fiber analysis
+5. Conditional extraction quality estimation
+6. Prime-power thinning
+7. Hybrid argument bound computation
 """
 
 import numpy as np
-from typing import List, Tuple, Dict, Optional, Callable
-from itertools import product as cart_product
+from collections import Counter
+from typing import List, Tuple, Dict, Callable, Optional
+from dataclasses import dataclass
 
+# ─────────────────────────────────────────────────────────────────────
+# §1. Tropical Semiring Operations
+# ─────────────────────────────────────────────────────────────────────
 
-# ============================================================
-# 1. Tropical Matrix Arithmetic
-# ============================================================
+INF = float('inf')
 
-def tropical_add(a: float, b: float) -> float:
-    """Tropical addition: min(a, b)."""
+def trop_add(a: float, b: float) -> float:
+    """Tropical addition: min(a, b).
+    
+    In the min-plus tropical semiring, addition is defined as the
+    minimum operation. The identity element is +∞.
+    
+    Time: O(1)
+    """
     return min(a, b)
 
-def tropical_mul_scalar(a: float, b: float) -> float:
-    """Tropical multiplication: a + b (classical addition)."""
-    if a == np.inf or b == np.inf:
-        return np.inf
+def trop_mul(a: float, b: float) -> float:
+    """Tropical multiplication: a + b (standard addition).
+    
+    In the min-plus tropical semiring, multiplication is defined as
+    standard addition. The identity element is 0. The absorbing
+    element is +∞.
+    
+    Time: O(1)
+    """
+    if a == INF or b == INF:
+        return INF
     return a + b
 
-def tropical_mat_mul(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+def trop_matmul(A: List[List[float]], B: List[List[float]]) -> List[List[float]]:
+    """Tropical matrix multiplication.
+    
+    C[i,j] = min_k (A[i,k] + B[k,j])
+    
+    This is the standard matrix product in the min-plus semiring,
+    used extensively in shortest-path algorithms (Floyd-Warshall),
+    scheduling theory, and discrete event systems.
+    
+    Time: O(n³) where n is the matrix dimension.
+    Space: O(n²)
+    
+    >>> A = [[0, 1], [2, 0]]
+    >>> B = [[1, 0], [0, 1]]
+    >>> trop_matmul(A, B)
+    [[1, 0], [2, 1]]  # min(0+1,1+0)=1, min(0+0,1+1)=0, etc.
     """
-    Tropical matrix multiplication: (A ⊗ B)_{ij} = min_k(A_{ik} + B_{kj}).
-    
-    This computes shortest-path weights: if A encodes i-step distances and
-    B encodes j-step distances, A ⊗ B encodes (i+j)-step distances.
-    
-    Time complexity: O(n³) for n×n matrices.
-    
-    Args:
-        A: n×n tropical matrix
-        B: n×n tropical matrix
-    
-    Returns:
-        n×n tropical product matrix
-    """
-    n = A.shape[0]
-    assert A.shape == B.shape == (n, n), "Matrices must be square and same size"
-    
-    C = np.full((n, n), np.inf)
+    n = len(A)
+    C = [[INF]*n for _ in range(n)]
     for i in range(n):
         for j in range(n):
             for k in range(n):
-                val = tropical_mul_scalar(A[i, k], B[k, j])
-                C[i, j] = tropical_add(C[i, j], val)
+                C[i][j] = trop_add(C[i][j], trop_mul(A[i][k], B[k][j]))
     return C
 
-def tropical_mat_pow(G: np.ndarray, k: int) -> np.ndarray:
-    """
-    Compute G^{⊗k} (k-th tropical power).
+def trop_matpow(A: List[List[float]], p: int) -> List[List[float]]:
+    """Compute A^p in the tropical semiring via repeated squaring.
     
-    Uses repeated squaring for efficiency when k is large.
+    Uses binary exponentiation for efficiency. The tropical identity
+    matrix has 0 on the diagonal and +∞ elsewhere.
     
-    Time complexity: O(n³ · log k) for n×n matrices.
+    Time: O(n³ log p)
+    Space: O(n²)
     
     Args:
-        G: n×n tropical matrix
-        k: power (non-negative integer)
+        A: n×n tropical matrix
+        p: non-negative integer exponent
     
     Returns:
-        G^{⊗k}
+        A^p in the min-plus semiring
     """
-    n = G.shape[0]
-    
-    if k == 0:
-        # Tropical identity: 0 on diagonal, ∞ elsewhere
-        result = np.full((n, n), np.inf)
-        np.fill_diagonal(result, 0.0)
-        return result
-    
-    if k == 1:
-        return G.copy()
-    
-    # Repeated squaring
-    if k % 2 == 0:
-        half = tropical_mat_pow(G, k // 2)
-        return tropical_mat_mul(half, half)
-    else:
-        return tropical_mat_mul(tropical_mat_pow(G, k - 1), G)
-
-def tropical_identity(n: int) -> np.ndarray:
-    """Tropical identity matrix: 0 on diagonal, ∞ elsewhere."""
-    I = np.full((n, n), np.inf)
-    np.fill_diagonal(I, 0.0)
-    return I
-
-
-# ============================================================
-# 2. Hash Functions for Tropical Matrices
-# ============================================================
-
-def trace_hash(M: np.ndarray, q: int) -> int:
-    """
-    Hash a tropical matrix using the trace (sum of diagonal).
-    
-    h(M) = (⌊M[0,0]⌋ + ⌊M[1,1]⌋ + ...) mod q
-    
-    Entries that are ∞ are treated as 0 for hashing purposes.
-    """
-    n = M.shape[0]
-    diag_sum = sum(int(M[i, i]) for i in range(n) if np.isfinite(M[i, i]))
-    return diag_sum % q
-
-def entry_hash(M: np.ndarray, q: int, i: int = 0, j: int = 0) -> int:
-    """Hash using a single matrix entry."""
-    val = M[i, j]
-    if not np.isfinite(val):
-        return 0
-    return int(val) % q
-
-def mixed_hash(M: np.ndarray, q: int) -> int:
-    """Hash using a linear combination of entries."""
-    n = M.shape[0]
-    total = 0
+    n = len(A)
+    # Tropical identity matrix
+    result = [[INF]*n for _ in range(n)]
     for i in range(n):
-        for j in range(n):
-            if np.isfinite(M[i, j]):
-                total += (i + 1) * (j + 1) * int(M[i, j])
-    return total % q
+        result[i][i] = 0
+    base = [row[:] for row in A]
+    while p > 0:
+        if p % 2 == 1:
+            result = trop_matmul(result, base)
+        base = trop_matmul(base, base)
+        p //= 2
+    return result
 
+# ─────────────────────────────────────────────────────────────────────
+# §2. Hash / Extractor Functions
+# ─────────────────────────────────────────────────────────────────────
 
-# ============================================================
-# 3. Tropical Orbit PRG
-# ============================================================
-
-class TropicalOrbitPRG:
+def hash_sum_mod(M: List[List[float]], modulus: int = 8) -> int:
+    """Simple additive hash: sum of finite entries mod modulus.
+    
+    This is a basic extractor mapping tropical matrices to a finite
+    alphabet. For theoretical guarantees, one would use a
+    two-universal hash family.
+    
+    Time: O(n²)
     """
-    Pseudorandom generator based on tropical matrix orbits.
+    total = 0
+    for row in M:
+        for x in row:
+            if x != INF:
+                total += int(x)
+    return total % modulus
+
+def hash_trace_mod(M: List[List[float]], modulus: int = 8) -> int:
+    """Trace hash: tropical trace (min of diagonal) mod modulus.
     
-    Given a seed matrix G, produces a sequence of pseudorandom values
-    by hashing successive tropical powers: h(G^0), h(G^1), ..., h(G^T).
-    
-    The main theorem guarantees that if the conditional extraction property
-    holds with error ε, the output is (T+1)·ε-close to uniform.
+    Time: O(n)
     """
-    
-    def __init__(self, hash_func: Callable = trace_hash, q: int = 8):
-        """
-        Initialize the PRG.
-        
-        Args:
-            hash_func: Hash function mapping matrices to {0, ..., q-1}
-            q: Output alphabet size
-        """
-        self.hash_func = hash_func
-        self.q = q
-    
-    def generate(self, seed: np.ndarray, T: int) -> List[int]:
-        """
-        Generate a pseudorandom sequence from a seed matrix.
-        
-        Args:
-            seed: n×n tropical matrix (the seed)
-            T: number of additional outputs (total length T+1)
-        
-        Returns:
-            List of T+1 hash values in {0, ..., q-1}
-        """
-        output = []
-        for i in range(T + 1):
-            power = tropical_mat_pow(seed, i)
-            output.append(self.hash_func(power, self.q))
-        return output
-    
-    def generate_batch(self, seeds: List[np.ndarray], T: int) -> List[List[int]]:
-        """Generate sequences for multiple seeds."""
-        return [self.generate(s, T) for s in seeds]
+    n = len(M)
+    trace_val = min(M[i][i] for i in range(n) if M[i][i] != INF)
+    if trace_val == INF:
+        return 0
+    return int(trace_val) % modulus
 
-
-# ============================================================
-# 4. Statistical Distance Computation
-# ============================================================
-
-def statistical_distance(p: np.ndarray, q_dist: np.ndarray) -> float:
+def hash_weighted_mod(M: List[List[float]], modulus: int = 8, 
+                       weights: Optional[List[int]] = None) -> int:
+    """Weighted hash with random coefficients.
+    
+    h(M) = (∑ w_{ij} · M[i,j]) mod modulus
+    
+    Closer to a two-universal hash when weights are random.
+    
+    Time: O(n²)
     """
-    Compute statistical distance (total variation distance).
+    n = len(M)
+    if weights is None:
+        # Default weights: position-dependent
+        weights = list(range(1, n*n + 1))
+    total = 0
+    idx = 0
+    for row in M:
+        for x in row:
+            if x != INF:
+                total += weights[idx] * int(x)
+            idx += 1
+    return total % modulus
+
+# ─────────────────────────────────────────────────────────────────────
+# §3. Orbit Hash Computation
+# ─────────────────────────────────────────────────────────────────────
+
+@dataclass
+class OrbitHashResult:
+    """Result of orbit hash computation."""
+    sequence: Tuple[int, ...]
+    powers: List[Tuple[Tuple[float, ...], ...]]
+    distinct_powers: int
+
+def compute_orbit_hash(
+    seed: List[List[float]], 
+    T: int,
+    hash_fn: Callable = hash_sum_mod,
+    modulus: int = 8
+) -> OrbitHashResult:
+    """Compute the full orbit hash sequence for a single seed.
     
-    SD(p, q) = (1/2) · Σ_x |p(x) - q(x)|
+    Algorithm:
+        1. Compute G^0, G^1, ..., G^T by repeated tropical multiplication
+        2. Apply hash function to each power
+        3. Track distinct powers for expansion analysis
+    
+    Time: O(T · n³) for matrix powering + O(T · n²) for hashing
+    Space: O(T · n²) for storing all powers
     
     Args:
-        p: probability distribution (array summing to 1)
-        q_dist: probability distribution (array summing to 1)
+        seed: n×n tropical matrix (the "seed")
+        T: orbit length (produces T+1 outputs)
+        hash_fn: extractor function M → {0,...,modulus-1}
+        modulus: output alphabet size
     
     Returns:
-        Statistical distance in [0, 1]
+        OrbitHashResult with sequence, powers, and expansion count
     """
-    assert len(p) == len(q_dist), "Distributions must have same support size"
-    return 0.5 * np.sum(np.abs(p - q_dist))
+    powers = []
+    hashes = []
+    power_set = set()
+    
+    for i in range(T + 1):
+        power = trop_matpow(seed, i)
+        power_tuple = tuple(tuple(row) for row in power)
+        powers.append(power_tuple)
+        power_set.add(power_tuple)
+        hashes.append(hash_fn(power, modulus))
+    
+    return OrbitHashResult(
+        sequence=tuple(hashes),
+        powers=powers,
+        distinct_powers=len(power_set)
+    )
 
-def orbit_hash_stat_dist(seeds: List[np.ndarray], 
-                          prg: TropicalOrbitPRG, 
-                          T: int) -> float:
+def compute_prime_power_orbit_hash(
+    seed: List[List[float]],
+    T: int,
+    p: int = 2,
+    hash_fn: Callable = hash_sum_mod,
+    modulus: int = 8
+) -> OrbitHashResult:
+    """Compute prime-power thinned orbit hash.
+    
+    Produces [h(G^(p^0)), h(G^(p^1)), ..., h(G^(p^T))].
+    
+    By the prime-power amplification theorem, geometric error decay
+    replaces the linear (T+1)ε bound with ε₀/(1-r).
+    
+    Time: O(T · n³ · log(p^T)) = O(T² · n³ · log p)
     """
-    Compute statistical distance between orbit hash output and uniform.
+    powers = []
+    hashes = []
+    power_set = set()
+    
+    for j in range(T + 1):
+        exp = p ** j
+        power = trop_matpow(seed, exp)
+        power_tuple = tuple(tuple(row) for row in power)
+        powers.append(power_tuple)
+        power_set.add(power_tuple)
+        hashes.append(hash_fn(power, modulus))
+    
+    return OrbitHashResult(
+        sequence=tuple(hashes),
+        powers=powers,
+        distinct_powers=len(power_set)
+    )
+
+# ─────────────────────────────────────────────────────────────────────
+# §4. Statistical Distance Computation
+# ─────────────────────────────────────────────────────────────────────
+
+def compute_statistical_distance(
+    samples: List[Tuple[int, ...]],
+    alphabet_size: int,
+    length: int
+) -> float:
+    """Compute statistical distance of empirical distribution from uniform.
+    
+    SD(P, U) = (1/2) ∑_x |P(x) - 1/|Ω||
+    
+    where Ω = {0,...,alphabet_size-1}^length.
+    
+    Time: O(N + |Ω|) where N = len(samples)
+    
+    Args:
+        samples: list of output sequences (each a tuple of ints)
+        alphabet_size: size of output alphabet per coordinate
+        length: length of each sequence
+    
+    Returns:
+        Statistical distance from uniform ∈ [0, 1]
+    """
+    counts = Counter(samples)
+    total = len(samples)
+    total_outcomes = alphabet_size ** length
+    uniform_prob = 1.0 / total_outcomes
+    
+    total_var = 0.0
+    for seq, count in counts.items():
+        total_var += abs(count / total - uniform_prob)
+    missing = total_outcomes - len(counts)
+    total_var += missing * uniform_prob
+    
+    return total_var / 2.0
+
+# ─────────────────────────────────────────────────────────────────────
+# §5. Prefix Fiber Analysis
+# ─────────────────────────────────────────────────────────────────────
+
+@dataclass
+class FiberAnalysis:
+    """Analysis of prefix fiber structure at a given step."""
+    step: int
+    num_distinct_prefixes: int
+    max_fiber_size: int
+    avg_fiber_size: float
+    conditional_min_entropy: float  # log₂(|S|/B) where B = max fiber
+
+def analyze_prefix_fibers(
+    seeds: List[List[List[float]]],
+    T: int,
+    hash_fn: Callable = hash_sum_mod,
+    modulus: int = 8
+) -> List[FiberAnalysis]:
+    """Analyze prefix fiber structure of the orbit hash.
+    
+    For each step i ≤ T:
+    - Compute the prefix map s ↦ (h(G^0), ..., h(G^(i-1)))
+    - Find the maximum fiber size B
+    - Compute conditional min-entropy lower bound log₂(|S|/B)
+    
+    This implements the structural analysis behind the theorem
+    `conditional_minEntropy_from_fiber`.
+    
+    Time: O(|S| · T · n³) for matrix powering
+    Space: O(|S| · T) for hash sequences
     
     Args:
         seeds: list of seed matrices
-        prg: the PRG instance
-        T: orbit length
+        T: maximum orbit step
+        hash_fn: hash/extractor function
+        modulus: output alphabet size
     
     Returns:
-        Statistical distance from uniform on {0,...,q-1}^{T+1}
+        List of FiberAnalysis objects, one per step
     """
     N = len(seeds)
-    q = prg.q
-    total_outputs = q ** (T + 1)
     
-    # Count occurrences of each output sequence
-    counts = {}
+    # Precompute all hash sequences
+    all_hashes = []
     for s in seeds:
-        seq = tuple(prg.generate(s, T))
-        counts[seq] = counts.get(seq, 0) + 1
+        hashes = []
+        for i in range(T + 1):
+            power = trop_matpow(s, i)
+            hashes.append(hash_fn(power, modulus))
+        all_hashes.append(tuple(hashes))
     
-    # Build empirical distribution
-    p_emp = np.zeros(total_outputs)
-    for seq, count in counts.items():
-        idx = sum(seq[i] * q**i for i in range(T + 1))
-        if idx < total_outputs:
-            p_emp[idx] = count / N
-    
-    # Uniform distribution
-    p_uni = np.ones(total_outputs) / total_outputs
-    
-    return statistical_distance(p_emp, p_uni)
-
-
-# ============================================================
-# 5. Conditional Extraction Verification
-# ============================================================
-
-def verify_conditional_extraction(seeds: List[np.ndarray],
-                                   prg: TropicalOrbitPRG,
-                                   step: int) -> Tuple[float, Dict]:
-    """
-    Verify the conditional extraction property at a given step.
-    
-    For each possible prefix hash sequence, checks that the distribution
-    of the next hash value within the prefix fiber is close to uniform.
-    
-    Args:
-        seeds: list of seed matrices
-        prg: the PRG instance
-        step: the step to verify (0-indexed)
-    
-    Returns:
-        (max_sd, details): maximum statistical distance and detailed analysis
-    """
-    q = prg.q
-    max_sd = 0.0
-    details = {
-        'step': step,
-        'num_prefixes': q ** step,
-        'nonempty_fibers': 0,
-        'fiber_sizes': [],
-        'fiber_sds': []
-    }
-    
-    for prefix in cart_product(range(q), repeat=step):
-        # Find seeds matching this prefix
-        fiber = []
-        for s in seeds:
-            matches = True
-            for j in range(step):
-                power = tropical_mat_pow(s, j)
-                if prg.hash_func(power, q) != prefix[j]:
-                    matches = False
-                    break
-            if matches:
-                fiber.append(s)
+    results = []
+    for i in range(T + 1):
+        prefix_map: Dict[Tuple, int] = Counter()
+        for hashes in all_hashes:
+            prefix = hashes[:i]
+            prefix_map[prefix] += 1
         
-        if len(fiber) == 0:
-            continue
+        max_fiber = max(prefix_map.values()) if prefix_map else 0
+        num_prefixes = len(prefix_map)
+        avg_fiber = N / num_prefixes if num_prefixes > 0 else 0
+        cond_entropy = np.log2(N / max_fiber) if max_fiber > 0 else float('inf')
         
-        details['nonempty_fibers'] += 1
-        details['fiber_sizes'].append(len(fiber))
-        
-        # Distribution of next hash value within fiber
-        counts = np.zeros(q)
-        for s in fiber:
-            power = tropical_mat_pow(s, step)
-            b = prg.hash_func(power, q)
-            counts[b] += 1
-        
-        p_cond = counts / len(fiber)
-        p_uniform = np.ones(q) / q
-        
-        sd = statistical_distance(p_cond, p_uniform)
-        details['fiber_sds'].append(sd)
-        max_sd = max(max_sd, sd)
-    
-    return max_sd, details
-
-
-# ============================================================
-# 6. Prefix Fiber Analysis
-# ============================================================
-
-def analyze_prefix_fibers(seeds: List[np.ndarray],
-                           prg: TropicalOrbitPRG,
-                           max_depth: int = 3) -> Dict:
-    """
-    Analyze the prefix fiber structure of the orbit.
-    
-    Args:
-        seeds: list of seed matrices
-        prg: the PRG instance
-        max_depth: maximum prefix depth to analyze
-    
-    Returns:
-        Dictionary with fiber statistics at each depth
-    """
-    q = prg.q
-    results = {}
-    
-    for depth in range(1, max_depth + 1):
-        fiber_sizes = []
-        
-        for prefix in cart_product(range(q), repeat=depth):
-            fiber_size = 0
-            for s in seeds:
-                matches = True
-                for j in range(depth):
-                    power = tropical_mat_pow(s, j)
-                    if prg.hash_func(power, q) != prefix[j]:
-                        matches = False
-                        break
-                if matches:
-                    fiber_size += 1
-            
-            if fiber_size > 0:
-                fiber_sizes.append(fiber_size)
-        
-        results[depth] = {
-            'nonempty_fibers': len(fiber_sizes),
-            'total_prefixes': q ** depth,
-            'fiber_sizes': fiber_sizes,
-            'max_fiber': max(fiber_sizes) if fiber_sizes else 0,
-            'mean_fiber': np.mean(fiber_sizes) if fiber_sizes else 0,
-            'expected_uniform': len(seeds) / q ** depth
-        }
+        results.append(FiberAnalysis(
+            step=i,
+            num_distinct_prefixes=num_prefixes,
+            max_fiber_size=max_fiber,
+            avg_fiber_size=avg_fiber,
+            conditional_min_entropy=cond_entropy
+        ))
     
     return results
 
+# ─────────────────────────────────────────────────────────────────────
+# §6. Conditional Extraction Quality
+# ─────────────────────────────────────────────────────────────────────
 
-# ============================================================
-# 7. Example Usage
-# ============================================================
+@dataclass
+class ExtractionQuality:
+    """Quality metrics for conditional extraction at a given step."""
+    step: int
+    max_conditional_stat_dist: float
+    avg_conditional_stat_dist: float
+    num_fibers: int
+
+def measure_extraction_quality(
+    seeds: List[List[List[float]]],
+    T: int,
+    hash_fn: Callable = hash_sum_mod,
+    modulus: int = 8
+) -> List[ExtractionQuality]:
+    """Measure conditional extraction quality at each orbit step.
+    
+    For each step i, measures how close the conditional distribution
+    of h(G^i) given the prefix (h(G^0),...,h(G^(i-1))) is to uniform.
+    
+    This validates the `condExtract` hypothesis of the main theorem.
+    
+    Time: O(|S| · T · n³)
+    
+    Args:
+        seeds: list of seed matrices
+        T: maximum orbit step
+        hash_fn: hash/extractor function
+        modulus: output alphabet size
+    
+    Returns:
+        List of ExtractionQuality objects
+    """
+    N = len(seeds)
+    
+    all_hashes = []
+    for s in seeds:
+        hashes = []
+        for i in range(T + 1):
+            power = trop_matpow(s, i)
+            hashes.append(hash_fn(power, modulus))
+        all_hashes.append(tuple(hashes))
+    
+    results = []
+    for i in range(T + 1):
+        prefix_groups: Dict[Tuple, List[int]] = {}
+        for hashes in all_hashes:
+            prefix = hashes[:i]
+            if prefix not in prefix_groups:
+                prefix_groups[prefix] = []
+            prefix_groups[prefix].append(hashes[i])
+        
+        max_sd = 0.0
+        avg_sd = 0.0
+        for prefix, values in prefix_groups.items():
+            counts = Counter(values)
+            fiber_size = len(values)
+            sd = 0.0
+            for b in range(modulus):
+                prob = counts.get(b, 0) / fiber_size
+                sd += abs(prob - 1.0 / modulus)
+            sd /= 2.0
+            max_sd = max(max_sd, sd)
+            avg_sd += sd * fiber_size / N
+        
+        results.append(ExtractionQuality(
+            step=i,
+            max_conditional_stat_dist=max_sd,
+            avg_conditional_stat_dist=avg_sd,
+            num_fibers=len(prefix_groups)
+        ))
+    
+    return results
+
+# ─────────────────────────────────────────────────────────────────────
+# §7. Hybrid Argument Bound
+# ─────────────────────────────────────────────────────────────────────
+
+def hybrid_bound(
+    step_errors: List[float],
+    T: int
+) -> float:
+    """Compute the hybrid argument bound on total statistical distance.
+    
+    By the tropical orbit PRG theorem (tropical_orbit_prg),
+    if the conditional extraction error at each step ≤ ε,
+    then the total statistical distance ≤ (T+1)·ε.
+    
+    This function computes the tighter bound when step errors vary:
+    total ≤ ∑_{i=0}^{T} ε_i.
+    
+    Args:
+        step_errors: list of per-step extraction errors ε_0, ..., ε_T
+        T: orbit length
+    
+    Returns:
+        Upper bound on total statistical distance
+    """
+    return sum(step_errors[:T+1])
+
+def geometric_bound(
+    eps0: float,
+    r: float,
+    T: int
+) -> float:
+    """Compute the geometric series bound for prime-power orbits.
+    
+    By `prime_power_geometric_error_bound`, if step errors decay
+    geometrically as ε_j ≤ ε₀·r^j with 0 ≤ r < 1, then the
+    cumulative error is bounded by ε₀/(1-r).
+    
+    Args:
+        eps0: initial error ε₀
+        r: decay rate (0 ≤ r < 1)
+        T: orbit length
+    
+    Returns:
+        Upper bound ε₀/(1-r)
+    """
+    assert 0 <= r < 1, f"Decay rate must satisfy 0 ≤ r < 1, got {r}"
+    return eps0 / (1 - r)
+
+# ─────────────────────────────────────────────────────────────────────
+# §8. Full PRG Pipeline
+# ─────────────────────────────────────────────────────────────────────
+
+@dataclass
+class PRGOutput:
+    """Complete output of the tropical orbit PRG analysis."""
+    seed_count: int
+    orbit_length: int
+    alphabet_size: int
+    sequences: List[Tuple[int, ...]]
+    stat_distances: List[float]  # at each prefix length
+    fiber_analysis: List[FiberAnalysis]
+    extraction_quality: List[ExtractionQuality]
+    hybrid_bound: float
+    expansion_fraction: float  # fraction of seeds with full expansion
+
+def run_tropical_prg_analysis(
+    n: int = 2,
+    num_seeds: int = 64,
+    T: int = 5,
+    modulus: int = 4,
+    value_range: int = 15,
+    seed: int = 42,
+    hash_fn: Callable = hash_sum_mod,
+    prime_power: bool = False,
+    p: int = 2
+) -> PRGOutput:
+    """Run complete tropical orbit PRG analysis.
+    
+    Full pipeline:
+    1. Generate seed family
+    2. Compute orbit hashes
+    3. Measure statistical distance at each length
+    4. Analyze prefix fibers
+    5. Measure extraction quality
+    6. Compute theoretical bounds
+    
+    Time: O(num_seeds · T · n³)
+    
+    Args:
+        n: matrix dimension
+        num_seeds: size of seed family
+        T: orbit length
+        modulus: hash output alphabet size
+        value_range: range of matrix entries
+        seed: random seed for reproducibility
+        hash_fn: hash/extractor function
+        prime_power: use prime-power thinning
+        p: prime for thinning
+    
+    Returns:
+        PRGOutput with complete analysis
+    """
+    rng = np.random.default_rng(seed)
+    seeds = []
+    for _ in range(num_seeds):
+        M = [[int(rng.integers(0, value_range+1)) for _ in range(n)] for _ in range(n)]
+        seeds.append(M)
+    
+    # Compute orbit hashes
+    if prime_power:
+        orbit_results = [compute_prime_power_orbit_hash(s, T, p, hash_fn, modulus) 
+                        for s in seeds]
+    else:
+        orbit_results = [compute_orbit_hash(s, T, hash_fn, modulus) for s in seeds]
+    
+    sequences = [r.sequence for r in orbit_results]
+    
+    # Expansion analysis
+    full_expansion = sum(1 for r in orbit_results if r.distinct_powers == T + 1)
+    
+    # Statistical distances at each prefix length
+    stat_dists = []
+    for t in range(T + 1):
+        truncated = [seq[:t+1] for seq in sequences]
+        sd = compute_statistical_distance(truncated, modulus, t + 1)
+        stat_dists.append(sd)
+    
+    # Fiber analysis
+    fiber_analysis = analyze_prefix_fibers(seeds, T, hash_fn, modulus)
+    
+    # Extraction quality
+    extraction = measure_extraction_quality(seeds, T, hash_fn, modulus)
+    
+    # Hybrid bound
+    max_eps = max(e.max_conditional_stat_dist for e in extraction)
+    hbound = (T + 1) * max_eps
+    
+    return PRGOutput(
+        seed_count=num_seeds,
+        orbit_length=T,
+        alphabet_size=modulus,
+        sequences=sequences,
+        stat_distances=stat_dists,
+        fiber_analysis=fiber_analysis,
+        extraction_quality=extraction,
+        hybrid_bound=hbound,
+        expansion_fraction=full_expansion / num_seeds
+    )
+
 
 if __name__ == "__main__":
-    print("Tropical Orbit PRG — Algorithm Demonstrations")
-    print("=" * 60)
+    # Example usage
+    result = run_tropical_prg_analysis(n=2, num_seeds=128, T=6, modulus=4)
     
-    # Setup
-    np.random.seed(42)
-    n = 2
-    q = 4
-    num_seeds = 300
-    
-    seeds = [np.random.randint(0, 8, size=(n, n)).astype(float) 
-             for _ in range(num_seeds)]
-    
-    prg = TropicalOrbitPRG(hash_func=trace_hash, q=q)
-    
-    # 1. Generate pseudorandom sequences
-    print("\n1. Pseudorandom sequence generation:")
-    for idx in range(3):
-        seq = prg.generate(seeds[idx], T=10)
-        print(f"   Seed {idx}: {seq}")
-    
-    # 2. Statistical distance analysis
-    print("\n2. Statistical distance from uniform:")
-    for T in range(4):
-        sd = orbit_hash_stat_dist(seeds, prg, T)
-        print(f"   T={T}: SD = {sd:.6f}, bound = {(T+1)*0.05:.6f}")
-    
-    # 3. Conditional extraction verification
-    print("\n3. Conditional extraction verification:")
-    for step in range(3):
-        eps, details = verify_conditional_extraction(seeds, prg, step)
-        print(f"   Step {step}: ε = {eps:.6f}, "
-              f"nonempty fibers = {details['nonempty_fibers']}")
-    
-    # 4. Prefix fiber analysis
-    print("\n4. Prefix fiber analysis:")
-    fiber_results = analyze_prefix_fibers(seeds, prg, max_depth=3)
-    for depth, info in fiber_results.items():
-        print(f"   Depth {depth}: max fiber = {info['max_fiber']}, "
-              f"mean = {info['mean_fiber']:.1f}, "
-              f"expected = {info['expected_uniform']:.1f}")
-    
-    print("\nAll algorithms completed successfully.")
+    print("Tropical Orbit PRG Analysis")
+    print(f"  Seeds: {result.seed_count}, T: {result.orbit_length}, "
+          f"|β|: {result.alphabet_size}")
+    print(f"  Expansion fraction: {result.expansion_fraction:.1%}")
+    print(f"\n  Statistical distances by length:")
+    for t, sd in enumerate(result.stat_distances):
+        print(f"    Length {t+1}: {sd:.4f}")
+    print(f"\n  Hybrid bound: {result.hybrid_bound:.4f}")
+    print(f"  Actual max SD: {max(result.stat_distances):.4f}")

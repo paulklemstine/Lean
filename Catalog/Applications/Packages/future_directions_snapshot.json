@@ -732,10 +732,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a54a94dd",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc205d47",
     "timestamp": "2026-05-17T03:06:58.908378+00:00"
   },
   {
@@ -1672,5 +1672,86 @@
     "source_exp_id": "c0fc49e2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T04:47:06.181464+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "1. Complete the Rank-2 Coincidence Theorem",
+    "description": "**Status**: The rank-2 Dressian ↔ four-point condition is proved. The full coincidence Dr(2,n) = Trop(Gr(2,n)) requires proving that every four-point metric is tropically realizable.\n\n**Strategy**: Formalize the classical result that every four-point metric is a tree metric (Buneman's theorem), then show tree metrics are realizable over the field of formal Puiseux series ℝ{{t}}. This requires:\n- Defining weighted trees and path metrics\n- Proving the four-point condition characterizes tree metrics\n- Constructing explicit realizations via Puiseux series coordinates\n\n**Impact**: Establishes the complete tropical-phylogenetic correspondence in rank 2, providing a formal foundation for tree reconstruction algorithms in computational biology.",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "75c7e5d3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:49:34.893123+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "2. Formalize Valuated Matroid Theory",
+    "description": "**Status**: We use an ad-hoc definition of tropical Plücker relations. The full theory should use Dress-Wenzel valuated matroids.\n\n**Strategy**: Define valuated matroids as functions w : {r-subsets} → ℝ ∪ {∞} satisfying the tropical Plücker relations (equivalently, the \"exchange axiom\" for valuated matroids). Prove:\n- Every matroid with trivial valuation is a valuated matroid\n- The Dressian parametrizes valuated matroids\n- The tropical Grassmannian parametrizes realizable valuated matroids\n- The support (set of finite-weight subsets) of a valuated matroid is a matroid\n\n**Impact**: Creates a reusable library for tropical combinatorics, connecting matroid theory, tropical geometry, and algebraic combinatorics.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "75c7e5d3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:49:34.919121+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "3. Build a Certified Non-Realizability Library",
+    "description": "**Status**: The Fano matroid is proved non-representable over ℝ. Other non-representable matroids exist.\n\n**Strategy**: Formalize additional non-representability results:\n- The non-Fano matroid (dual of Fano): representable only over characteristic ≠ 2\n- The Vámos matroid: not representable over ANY field\n- MacLane's matroid, Pappus matroid, and other classical examples\n- Each provides a point in the Dressian minus the tropical Grassmannian\n\n**Impact**: A certified library of non-realizability obstructions, useful for:\n- Algorithmic matroid theory\n- Combinatorial optimization (matroid intersection, partition)\n- Tropical moduli theory (understanding boundary strata)",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "75c7e5d3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:49:34.946394+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "4. Define Tropical Grassmannians via Initial Ideals",
+    "description": "**Status**: Our InTropicalGrassmannian3 uses a simplified \"initial matroid\" characterization. The full definition uses tropical varieties and initial ideals.\n\n**Strategy**: Formalize:\n- Non-archimedean valued fields (Mathlib has some infrastructure)\n- Tropicalization of polynomial ideals\n- The Plücker ideal and its tropicalization\n- Prove that Trop(Gr(r,n)) = tropicalization of the Plücker ideal\n\n**Cross-domain connections**:\n- Initial ideal theory connects to Gröbner bases and computational algebra\n- Tropical varieties connect to Newton polytopes and toric geometry\n- The secondary fan structure of the Dressian connects to regular subdivisions",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "75c7e5d3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:49:34.970752+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "5. Tropical Moduli of Curves and Phylogenetics",
+    "description": "**Status**: The rank-2 result connects Dr(2,n) to tree metrics / phylogenetic trees.\n\n**Strategy**: Formalize the identification:\n- Trop(Gr(2,n)) ≅ M̄₀,ₙᵗʳᵒᵖ (tropical moduli of genus-0 curves with n marks)\n- This is the space of metric trees with n labeled leaves\n- The combinatorial types (tree topologies) correspond to maximal cones\n- The Dressian fan structure encodes the phylogenetic tree space\n\n**Applications**:\n- Certified algorithms for phylogenetic tree reconstruction\n- Tropical approaches to the moduli space M̄₀,ₙ\n- Connections to cluster algebras and positive geometries\n\n**Impact**: Bridges tropical algebraic geometry with computational biology, establishing formal foundations for statistical phylogenetics and geometric approaches to evolutionary inference.\n\n---\n\nEach direction a",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "75c7e5d3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:49:34.993924+00:00"
   }
 ]
