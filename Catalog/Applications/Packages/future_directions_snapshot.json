@@ -416,10 +416,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d4c4fc6",
     "timestamp": "2026-05-17T07:17:01.375346+00:00"
   },
   {
@@ -450,21 +450,6 @@
     "source_exp_id": "493b32c8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T07:39:39.339028+00:00"
-  },
-  {
-    "id": "fd_0275",
-    "title": "Define tropical monotone circuits",
-    "description": "formally as DAGs with min and + gates.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "6244d0ef",
-    "timestamp": "2026-05-17T07:39:39.479995+00:00"
   },
   {
     "id": "fd_0276",
@@ -1642,5 +1627,51 @@
     "source_exp_id": "9cd4e7fb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T08:21:58.047847+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Theorem Statement",
+    "description": "Define a DAG-backed representation `TropDAG n` with explicit acyclicity certification (via topological ordering). Prove that for every formula-like `TropCircuit n`, there exists an equivalent `TropDAG n` with evaluation agreement, and conversely that every `TropDAG n` can be unfolded into a `TropCircuit n` preserving semantics.\n\n```\ntheorem dag_circuit_equiv (D : TropDAG n) (x : Fin n → ℝ) :\n    TropDAG.eval D x = TropCircuit.eval (unfold D) x\n```",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6244d0ef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T09:56:16.798525+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Why It Matters",
+    "description": "DAG representations capture sharing — subcircuits reused multiple times — which is the key to separating formula size from circuit size. This distinction is central to complexity theory: monotone circuit lower bounds (Razborov, Alon–Boppana) fundamentally depend on DAG structure. Formalizing DAG semantics would open the path to formal circuit complexity results.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6244d0ef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T09:56:16.818218+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Cross-Domain Connection",
+    "description": "DAG circuits correspond directly to dynamic programming tables: each node computes a subproblem, `+` concatenates costs, and `min` selects optimal branches. This connection would formalize the equivalence between circuit evaluation and Bellman-equation solving.\n\n---",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6244d0ef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T09:56:16.837800+00:00"
   }
 ]
