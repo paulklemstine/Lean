@@ -16,22 +16,6 @@
     "timestamp": "2026-05-14T16:03:53.810233+00:00"
   },
   {
-    "id": "seed_014",
-    "title": "Homomorphic Encryption over Tropical Semirings",
-    "description": "Construct a fully homomorphic encryption scheme over min-plus arithmetic where addition and multiplication of ciphertexts correspond to tropical operations on plaintexts. Prove correctness and security against chosen-plaintext attacks, showing that the idempotent property of tropical addition enables bootstrapping without the noise growth that plagues classical FHE.",
-    "domains": [
-      "Cryptography",
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.87,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "beabd842",
-    "timestamp": "2026-05-14T16:03:53.818879+00:00"
-  },
-  {
     "id": "seed_034",
     "title": "Quantum Speedup via Tropical Dequantization",
     "description": "Prove that the dequantization of quantum algorithms—replacing quantum amplitude with tropical weights—preserves the speedup structure while eliminating quantum hardware requirements. Show that tropical dequantized algorithms achieve the same asymptotic complexity as their quantum counterparts for search and sampling problems, and that the min-plus interference pattern captures the essential quantum parallelism.",
@@ -172,7 +156,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "c0fc49e2",
+    "consumed_by_exp_id": "30c5294d",
     "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
@@ -528,20 +512,6 @@
     "source_exp_id": "0ab00abc",
     "consumed_by_exp_id": "b0c11eac",
     "timestamp": "2026-05-17T02:47:00.377245+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "Generalize the reduced polynomial framework",
-    "description": ": Replace ZMod 3 with ZMod p throughout. The key identity x^p = x holds in any 𝔽_p. Reduced polynomials have exponents < p in each variable, giving p^n monomials. The indicator polynomial becomes ∏ᵢ (1 - (xᵢ - aᵢ)^(p-1)).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0ab00abc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:47:00.395305+00:00"
   },
   {
     "id": "fd_0267",
@@ -947,20 +917,6 @@
     "source_exp_id": "0cb1656b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T03:35:22.039593+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "Iterates on definitions",
-    "description": "when theorems fail, documenting the mathematical reasons for design choices (as we did with strict vs. weak domination)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0cb1656b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:35:22.059940+00:00"
   },
   {
     "id": "fd_0264",
@@ -1699,5 +1655,86 @@
     "source_exp_id": "72596401",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T02:00:26.854609+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "1. Randomized Fiber-Based Tropical Encryption with Formal IND-CPA Security",
+    "description": "**Hypothesis:** By replacing the deterministic encode with a randomized encoder that samples uniformly from a large fiber of ciphertexts (all decrypting to the same plaintext), one can achieve a meaningful indistinguishability-based security notion analogous to IND-CPA.\n\n**Approach:**\n- Define a `RandomizedTropicalEncScheme` where `encode : key → ℕ → RandomM Cipher` samples from a finite fiber `F(k, m) = {c : Cipher | decode(k, c) = m}`.\n- Define an IND-CPA game as a `Prop` over a finite probability space: the adversary cannot distinguish encryptions of two chosen messages with advantage > ε.\n- **Key theorem target:** For fibers of size ≥ 2^λ (security parameter), prove that any adversary making q queries has advantage ≤ q / 2^λ.\n- **Proof strategy:** Show that the adversary's view is a un",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "beabd842",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:30:23.832177+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "2. Homomorphic Bellman-Ford and Viterbi Over Encrypted Weighted Graphs",
+    "description": "**Hypothesis:** Complete multi-round Bellman-Ford and Viterbi algorithms can be represented as tropical circuits and evaluated homomorphically with provable correctness, enabling privacy-preserving shortest-path and hidden Markov model inference.\n\n**Approach:**\n- Represent a weighted graph G = (V, E, w) where weights w : E → ℕ are encrypted.\n- Define `bellmanFordCircuit(G, n) : TropCircuit` representing n rounds of Bellman-Ford over G.\n- Prove `∀ G n, decode(k, ceval(S, τ, bellmanFordCircuit(G, n))) = bellmanFordResult(G, n, σ)`.\n- Extend to Viterbi (max-plus variant) by dualizing min to max.\n\n**Key theorem targets:**\n```\ntheorem encrypted_bellman_ford_correct\n  (G : WeightedGraph) (n : ℕ) (S : TropicalEncScheme) (k : S.key) :\n  ∀ v, decode(k, encryptedBF(S, k, G, n, v)) = shortestDist(G, ",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "beabd842",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:30:23.859867+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "3. Categorical Formulation via Idempotent Semiring Objects",
+    "description": "**Hypothesis:** Tropical homomorphic encryption is an instance of a general categorical construction: a *homomorphic functor* between categories enriched over idempotent semirings, and this abstraction yields free theorems for any idempotent semiring (not just min-plus over ℕ).\n\n**Approach:**\n- Define `IdempotentSemiringCat` as a category whose objects are idempotent semirings and whose morphisms are semiring homomorphisms.\n- A tropical encryption scheme is a diagram: `encode` as a section of `decode` in a suitable fiber category.\n- Compositional correctness becomes the universal property of free algebras (term evaluation).\n- Generalize from (ℕ, min, +) to (ℝ≥0, min, +), (Bool, ∨, ∧), tropical matrices, etc.\n\n**Key theorem target:**\n```\ntheorem generic_idempotent_homomorphic_correctness\n  ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "beabd842",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:30:23.881705+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "4. Tropical Information Theory: Min-Plus Entropy and Data Processing Inequality",
+    "description": "**Hypothesis:** There exists a natural notion of entropy for distributions over tropical semirings — a \"min-plus entropy\" — and this entropy satisfies a data processing inequality that provides an information-theoretic foundation for tropical cryptographic security.\n\n**Approach:**\n- Define `tropicalEntropy(X) = -min_{x} log P(X = x)` (min-entropy, reinterpreted tropically).\n- Prove a tropical data processing inequality: for any tropical circuit φ, `tropicalEntropy(φ(X)) ≤ tropicalEntropy(X)`.\n- Show that the order leakage theorem (§7) is equivalent to a tropical entropy bound: deterministic encoding with zero noise entropy must leak order information.\n- Connect to Rényi entropy and its tropical limit.\n\n**Key theorem target:**\n```\ntheorem tropical_data_processing\n  (X : TropicalRandomVar) (",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "beabd842",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:30:23.903247+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Summary Prioritization",
+    "description": "| Direction | Impact | Feasibility | Timeline |\n|-----------|--------|-------------|----------|\n| 1. Randomized IND-CPA | Very High | Medium | 3-6 months |\n| 2. Bellman-Ford/Viterbi | High | High | 1-3 months |\n| 3. Categorical formulation | Medium | Medium | 3-6 months |\n| 4. Tropical information theory | Very High | Low-Medium | 6-12 months |\n| 5. Tropical neural inference | Transformative | Low | 12+ months |\n\n**Recommended next step:** Direction 2 (Bellman-Ford/Viterbi) for immediate impact and publishability, in parallel with Direction 1 (randomized security) for theoretical depth.",
+    "domains": [
+      "Tropical",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "beabd842",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:30:23.944166+00:00"
   }
 ]
