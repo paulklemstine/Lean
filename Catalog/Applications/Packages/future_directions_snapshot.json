@@ -330,20 +330,6 @@
     "timestamp": "2026-05-17T12:53:33.351604+00:00"
   },
   {
-    "id": "fd_0282",
-    "title": "Prove spectral gap for L",
-    "description": ": On an appropriate function space (Hölder continuous with respect to the symbolic metric), L has spectral gap when restricted to mean-zero functions.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a36e8f9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T13:33:42.748357+00:00"
-  },
-  {
     "id": "fd_0284",
     "title": "Prove exponential mixing",
     "description": ": The correlation function ⟨f ∘ σⁿ, g⟩ - ⟨f⟩⟨g⟩ decays as O(ρⁿ).\n\n### Lean Target\n```lean\ntheorem transfer_operator_mixing\n    (L : TransferOperator BerggrenShift)\n    (hGap : spectralGap L ρ)\n    (f g : HolderObservable BerggrenShift) :\n    |correlation L f g n - ⟨f⟩ * ⟨g⟩| ≤ C * ρ^n * ‖f‖_α * ‖g‖_α\n```\n\n### Cross-Domain Impact\n- Formal thermodynamic formalism in a proof assistant\n- Connection between Ruelle zeta functions and pseudorandomness\n- New tools for analyzing PRGs via pressure and entropy\n- Bridge to fractal geometry (Hausdorff dimension of Berggren orbit attractors)\n\n---\n\n## Priority Ordering",
@@ -407,20 +393,6 @@
     "timestamp": "2026-05-17T15:03:32.981213+00:00"
   },
   {
-    "id": "fd_0278",
-    "title": "Direction 4",
-    "description": "(Circuit derandomization) — Ambitious, requires circuit formalization.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e6a583e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:19:10.821210+00:00"
-  },
-  {
     "id": "fd_0260",
     "title": "Representation-theoretic decomposition",
     "description": ": Decompose L²(X_q) into irreducible representations of the orthogonal group O(2,1; ℤ/qℤ). Show that each nontrivial component has bounded operator norm under the Berggren averaging.",
@@ -467,35 +439,6 @@
     "timestamp": "2026-05-17T15:21:59.549951+00:00"
   },
   {
-    "id": "fd_0274",
-    "title": "Direction 6",
-    "description": "(Neural interpretability) — Highest applied impact, most speculative",
-    "domains": [
-      "MachineLearning",
-      "Speculative"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "31421af6",
-    "consumed_by_exp_id": "570b15b9",
-    "timestamp": "2026-05-17T15:38:27.261721+00:00"
-  },
-  {
-    "id": "fd_0272",
-    "title": "Sheaf + Transformer",
-    "description": ": Viewing attention heads as sections of a verification sheaf would enable a categorical treatment of multi-head attention certification.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "90a65a27",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:37:43.513380+00:00"
-  },
-  {
     "id": "fd_0264",
     "title": "Identify the Berggren generators",
     "description": "as explicit elements of PGL₂(𝔽_q) via the rational parametrization (m² - n² : 2mn : m² + n²) of the conic",
@@ -508,86 +451,6 @@
     "source_exp_id": "1c1883b3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:38:42.769159+00:00"
-  },
-  {
-    "id": "fd_0272",
-    "title": "Sum-of-two-squares form",
-    "description": ": Q(x,y,z) = x² + y² - z². Already studied (this is the Berggren case).",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.904078+00:00"
-  },
-  {
-    "id": "fd_0274",
-    "title": "Higher-rank forms",
-    "description": ": Q(x₁,...,x_{n+1}) = x₁² + ... + x_n² - x_{n+1}² with n > 2. The isotropic cone becomes higher-dimensional, and the representation theory involves SO(n,1).\n\n### Expected Results\n- For signature (n,1) with k generators, the spectral gap should be 1 - 1/√k when the generators are \"Lorentz-orthogonal\"\n- The constant 1/√k generalizes the 1/√3 for three generators\n\n### Cross-Domain Impact\n- Lattice-based cryptography: understanding spectral properties of lattice actions\n- Quantum error correction: connections to hyperbolic geometry codes\n- Cosmology: spectral gaps in discrete models of de Sitter space\n\n---\n\n## Direction 4: Apollonian and Markoff Semigroup Expansion\n\n### Hypothesis\nThe Apollonian gasket group (acting on Descartes quadruples) and the Markoff semigroup (acting on Markoff triples)",
-    "domains": [
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.938309+00:00"
-  },
-  {
-    "id": "fd_0268",
-    "title": "Build the Lean skeleton",
-    "description": "with `sorry`-marked lemmas capturing the key logical steps.",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2e27e30c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:00:57.330055+00:00"
-  },
-  {
-    "id": "fd_0272",
-    "title": "Perturbation theory",
-    "description": ": View approximate model as exact model + error, bound the CHSH error by 4·2ε + O(ε²).\n\n### Cross-Domain Significance\n- **Robust quantum cryptography**: Quantifies security degradation under imperfect measurements\n- **Approximate computation**: Models noise in classical simulation of quantum correlations\n- **Learning theory**: Connects to approximate expert prediction with bounded perturbations\n\n---\n\n## Direction 2: Prediction/Nonlocality Equivalence Theorem\n\n### Goal\nDefine a finite expert class associated to a local model and prove that Bell locality implies a regret bound, establishing a formal equivalence between prediction optimality and classical correlations.\n\n### Precise Theorem Statement\n```\ndef expertClassFromLocalModel {n : ℕ} (L : LocalModel n) :\n    Fin L.numStates → (Fin n → ",
-    "domains": [
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6d6b9f8a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:01:29.654439+00:00"
-  },
-  {
-    "id": "fd_0274",
-    "title": "Dual formulation",
-    "description": ": Use the minimax theorem to show that optimal prediction against adversarial nature corresponds to optimal classical correlation production.\n\n### Cross-Domain Significance\n- **Machine learning foundations**: Fundamental limits of classical prediction\n- **Game theory**: Connection between strategic play and physical correlations\n- **Algorithmic fairness**: Resource constraints on prediction quality\n\n---\n\n## Direction 3: Information Lower Bound for CHSH Violation\n\n### Goal\nProve that any abstract strategy family achieving |CHSH| > 4 requires information budget strictly above a classically bounded threshold.\n\n### Precise Theorem Statement\n```\nstructure StrategyFamily (n k : ℕ) where\n  strategies : Fin (2^k) → Fin n → ℚ → Bool\n  -- k bits of shared information\n\ntheorem information_lower_bound",
-    "domains": [
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6d6b9f8a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:01:29.692027+00:00"
   },
   {
     "id": "fd_0276",
@@ -605,51 +468,6 @@
     "source_exp_id": "6d6b9f8a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T17:01:29.723493+00:00"
-  },
-  {
-    "id": "fd_0278",
-    "title": "Uniform bound",
-    "description": ": All strata with γ ∈ [0,1] are classical, so the CHSH bound applies uniformly.\n\n### Cross-Domain Significance\n- **Quantum resource theory**: Coherence as a graded computational resource\n- **Complexity hierarchy**: Analogous to NP_γ classes in coherence-stratified complexity\n- **Phase transitions**: Identify critical coherence thresholds for qualitative changes in achievable correlations\n\n---\n\n## Direction 5: Proof Complexity Interpretation\n\n### Goal\nEncode local hidden-variable assignments as certificates and prove that bounded certificate complexity implies Bell-classical behavior.\n\n### Precise Theorem Statement\n```\ndef CertificateSystem (n : ℕ) (cert_length : ℕ) :=\n  Fin (2^cert_length) → Fin n → ℚ → Bool\n\n-- A certificate system produces classical correlations\ntheorem bounded_certifica",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6d6b9f8a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:01:29.755619+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Define the Reed–Muller code",
-    "description": "RM(r, m, q) as the image of the evaluation map:\n   ```\n   ev : {f ∈ F_q[X₁,…,X_m] : deg(f) ≤ r} → F_q^{q^m}\n   ```\n   where ev(f) = (f(a))_{a ∈ F_q^m}.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79d995d4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:05:27.072473+00:00"
-  },
-  {
-    "id": "fd_0268",
-    "title": "Minimum weight = q^m − max zeros",
-    "description": "A nonzero codeword ev(f) has Hamming weight q^m − |Z(f)|. By Schwartz–Zippel, |Z(f)| ≤ r · q^{m−1}, so the minimum weight is ≥ (q − r) · q^{m−1}.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79d995d4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:05:27.092596+00:00"
   },
   {
     "id": "fd_0269",
@@ -683,35 +501,6 @@
     "timestamp": "2026-05-17T17:05:27.155020+00:00"
   },
   {
-    "id": "fd_0272",
-    "title": "Connect to circuit complexity:",
-    "description": "Use `mulGates_lower_bound_from_degree` to show that circuits with few multiplication gates have small degree, hence are efficiently testable.\n\n### Key Lemma Stack\n- `pit_soundness`: Pr[false positive] ≤ degreeBound(C) / |S|\n- `pit_completeness`: C.toMvPolynomial = 0 ⟹ ∀ r, C.eval r = 0\n- `circuit_pit_efficiency`: PIT for depth-d circuits with bounded fan-in runs in O(n · 2^d) time\n\n### Cross-Domain Impact\n- **Derandomization**: Connects to Kabanets–Impagliazzo: deterministic PIT ⟹ circuit lower bounds.\n- **Verified computation**: Certified randomized verification of arithmetic circuit outputs.\n\n### Estimated Difficulty\nMedium-Low. Most components exist; the main work is connecting `schwartz_zippel_succ` with the circuit degree bounds already formalized.\n\n---\n\n## Direction 3: Polynomial Fin",
-    "domains": [
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79d995d4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:05:27.176600+00:00"
-  },
-  {
-    "id": "fd_0274",
-    "title": "Fingerprint test:",
-    "description": "For strings s ≠ t, encode(s) − encode(t) is a nonzero polynomial of degree ≤ n.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79d995d4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:05:27.212443+00:00"
-  },
-  {
     "id": "fd_0276",
     "title": "Streaming variant:",
     "description": "In a streaming setting, maintain the fingerprint h(s) = Σᵢ sᵢ · r^i mod p using O(log p) space.\n\n### Key Lemma Stack\n- `fingerprint_soundness`: s ≠ t ⟹ Pr[h(s) = h(t)] ≤ n/q\n- `fingerprint_completeness`: s = t ⟹ h(s) = h(t) deterministically\n- `streaming_space_bound`: Space = O(log q) bits\n\n### Cross-Domain Impact\n- **Streaming algorithms**: Formal foundation for equality testing in data streams.\n- **Database verification**: Certified consistency checks for replicated databases.\n- **Communication complexity**: Formalized lower bounds via polynomial methods.\n\n### Estimated Difficulty\nLow-Medium. Uses only the univariate case (already proved).\n\n---\n\n## Direction 4: Low-Degree Testing over Finite Grids\n\n### Hypothesis\nThe Schwartz–Zippel bound can be extended to prove the soundness of low-deg",
@@ -741,20 +530,6 @@
     "timestamp": "2026-05-17T17:05:27.267582+00:00"
   },
   {
-    "id": "fd_0278",
-    "title": "Contrapositive:",
-    "description": "If f is δ-far from every degree-r polynomial (disagrees on ≥ δ fraction of points), then for a random (a, d):\n   ```\n   Pr[f_{a,d} is degree ≤ r] ≤ 1 − δ + something small\n   ```",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79d995d4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:05:27.285599+00:00"
-  },
-  {
     "id": "fd_0281",
     "title": "Derivation from Schwartz–Zippel:",
     "description": "If f were zero on all of S₁ × … × S_n, the zero set would have cardinality |S₁| · … · |S_n| > t₁ · |S₁| · … · |S_n| / |S₁| ≥ deg(f) · product / max, contradicting Schwartz–Zippel (with suitable subset counting).",
@@ -767,20 +542,6 @@
     "source_exp_id": "79d995d4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T17:05:27.352956+00:00"
-  },
-  {
-    "id": "fd_0282",
-    "title": "Applications:",
-    "description": "The Combinatorial Nullstellensatz directly implies the Chevalley–Warning theorem, the Cauchy–Davenport theorem, and other results in additive combinatorics.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79d995d4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:05:27.373658+00:00"
   },
   {
     "id": "fd_0179",
@@ -954,24 +715,6 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
-  },
-  {
-    "id": "fd_0225",
-    "title": "3. Adjunctions and Galois Connections Between Theories",
-    "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "eaecf225",
-    "timestamp": "2026-05-16T02:14:30.254922+00:00"
   },
   {
     "id": "fd_0218",
@@ -1442,7 +1185,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8c5ff762",
-    "consumed_by_exp_id": "9f04b702",
+    "consumed_by_exp_id": "b0fecc18",
     "timestamp": "2026-05-17T15:07:30.027859+00:00"
   },
   {
@@ -1458,22 +1201,6 @@
     "source_exp_id": "8c5ff762",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T15:07:30.050712+00:00"
-  },
-  {
-    "id": "fd_0274",
-    "title": "3. Tropical Quotient Statistics: Well-Definedness on TP^{n-1}",
-    "description": "**Hypothesis**: Ranking statistics, argmin sets, and gap structures descend to well-defined functions on the tropical projective space `TP^{n-1} = ℝ^n / (1,1,...,1)`.\n\n**Formal target**:\n```\ndef TropProj (n : ℕ) := Quotient (Setoid.mk (@TropEquiv n) tropequiv_equivalence)\n\nnoncomputable def argmin_on_TropProj {n : ℕ} [NeZero n] :\n    TropProj n → Set (Fin n) :=\n  Quotient.lift (fun x => {i | ∀ j, x i ≤ x j}) (by\n    intro x y hxy\n    exact tropequiv_preserves_argmin_set hxy)\n```\n\n**Proof strategy**: The key lemma `tropequiv_preserves_argmin_set` already shows the lift is well-defined. The remaining work is defining `TropProj` as a quotient type and showing various statistics lift.\n\n**Statistics to lift**:\n- Argmin set (done in principle)\n- Ranking permutation (the permutation sorting the v",
-    "domains": [
-      "Tropical",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "522714fd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:31:26.086697+00:00"
   },
   {
     "id": "fd_0276",
@@ -1492,36 +1219,6 @@
     "timestamp": "2026-05-17T16:31:26.128856+00:00"
   },
   {
-    "id": "fd_0278",
-    "title": "7. Tropical Hecke Symmetry Interpretation",
-    "description": "**Connection to catalog**: `tropical_hecke_shift_one` shows that additive shift appears as a Hecke operator in the tropical Langlands program.\n\n**Hypothesis**: The ranking-invariance theorem can be reinterpreted as invariance under a tropical Hecke operator, connecting applied data analysis to representation theory.\n\n**Formal target**: Show that the Hecke shift operator on tropical functions preserves the ranking filtration.\n\n**Impact**: Provides unexpected algebraic depth to what appears to be an elementary observation. The Hecke interpretation suggests that tropical invariance is part of a larger symmetry group acting on data representations, potentially leading to new invariants beyond ranking.\n\n---",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "522714fd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:31:26.164652+00:00"
-  },
-  {
-    "id": "fd_0274",
-    "title": "Complexity Analysis",
-    "description": "- Brute-force over `|P|^4` chords × `n` steps: O(n · |P|^8).\n- Factor-graph elimination with treewidth 2: O(n · |P|^4) — exponential compression in voice count.\n- Formal theorem target: prove the treewidth bound on the SATB factor graph.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "41ac42f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:13.829702+00:00"
-  },
-  {
     "id": "fd_0276",
     "title": "Key Formalization Targets",
     "description": "- `satb_automaton_accepts_legal`: Formal automaton-language equivalence.\n- `automaton_product_decomposition`: Factored state space theorem.\n- `myhill_nerode_bound`: Upper bound on the number of equivalence classes.",
@@ -1534,21 +1231,6 @@
     "source_exp_id": "41ac42f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:38:13.881378+00:00"
-  },
-  {
-    "id": "fd_0278",
-    "title": "Phase 3 (Long-term, 6-12 months)",
-    "description": "- Direction 3: Tropical variety computation\n- Direction 2: Statistical learning of tropical energies\n- Direction 7: Multi-agent safety applications",
-    "domains": [
-      "Tropical",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "41ac42f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:13.925482+00:00"
   },
   {
     "id": "fd_0265",
@@ -1583,41 +1265,6 @@
     "source_exp_id": "371a34c3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T17:10:25.426544+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "3. Orbit Closure Under Commuting Symmetries",
-    "description": "**Theorem Statement:**\n```lean\n/-- If g commutes with f and both are continuous, then g maps the\nomega-limit set of f at x into itself. -/\ntheorem commute_maps_omegaLimit\n    {α : Type*} [TopologicalSpace α]\n    {f g : α → α} (hf : Continuous f) (hg : Continuous g)\n    (hcomm : Function.Commute f g) (x : α) :\n    MapsTo g (closure (range (fun n : ℕ => f^[n] x)))\n             (closure (range (fun n : ℕ => f^[n] x)))\n```\n\n**Proof Strategy:**\nShow `g` maps the orbit `{f^[n] x | n ∈ ℕ}` into itself using `commute_iterate_apply`, then extend to the closure using continuity of `g`. Specifically, `g (f^[n] x) = f^[n] (g x)`, but `g x` might not equal `f^[k] x` for any `k`. The correct approach: show `g '' orbit_f(x) ⊆ orbit_f(g x)`, then handle the case where orbits coincide (e.g., when `g x` is ",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "371a34c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:10:25.448633+00:00"
-  },
-  {
-    "id": "fd_0268",
-    "title": "4. Finite Orbit Vectors as Tropical/Combinatorial Encodings",
-    "description": "**Theorem Statement:**\n```lean\n/-- The orbit vector map composed with a continuous functional yields\na continuous real-valued feature. This is the bridge to tropical encodings:\nif φ is a max-plus linear functional, the composition gives a tropical feature. -/\ntheorem continuous_orbit_feature\n    {α : Type*} [TopologicalSpace α]\n    {N : ℕ} {f : α → α} (hf : Continuous f)\n    {φ : (Fin N → α) → ℝ} (hφ : Continuous φ) :\n    Continuous (φ ∘ fun x : α => (fun k : Fin N => f^[k.1] x))\n```\n\n**Proof Strategy:**\nDirect composition of `continuous_orbit_vector` with `hφ`. The mathematical content lies in choosing appropriate `φ`:\n- `φ = max` gives the \"orbit supremum\" feature\n- `φ = ∑` gives moment-based features\n- Tropical (max-plus) functionals give piecewise-linear features\n\n**Cross-Domain Signif",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "371a34c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:10:25.473118+00:00"
   },
   {
     "id": "fd_0269",
@@ -1675,22 +1322,6 @@
     "timestamp": "2026-05-17T17:19:53.549572+00:00"
   },
   {
-    "id": "fd_0272",
-    "title": "2. Diagonalizability Preservation under Arithmetic Tensor Factorization",
-    "description": "**Goal:** If all prime-power operators T(p^a) are diagonalizable, then T(n) is diagonalizable.\n\n**Theorem Target:**\n```\ndiag_kron :\n  IsDiagonalizable(A) → IsDiagonalizable(B) → IsDiagonalizable(A ⊗ B)\n```\n\n**Proof Strategy:**\n- If A = P D_A P⁻¹ and B = Q D_B Q⁻¹, then A ⊗ B = (P ⊗ Q)(D_A ⊗ D_B)(P ⊗ Q)⁻¹.\n- The Kronecker product of invertible matrices is invertible, and the Kronecker product of diagonal matrices is diagonal.\n- Induct over the prime factorization support.\n\n**Cross-Domain Impact:**\n- In numerical linear algebra, Kronecker-structured matrices arise in PDEs on product domains; diagonalizability ensures efficient spectral solvers.\n- In dynamical systems, diagonalizability of transfer operators controls mixing rates.\n\n---",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cf6f85f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:19:53.570465+00:00"
-  },
-  {
     "id": "fd_0273",
     "title": "3. Hecke Algebra Model Formalization",
     "description": "**Goal:** Instantiate the abstract spectral arithmetic theorem for a toy Hecke algebra acting on a finite-dimensional space of modular forms.\n\n**Theorem Target:**\n```\nhecke_spectral :\n  ∀ n, T(n) eigenvalue = ∏_p T(p^{v_p(n)}) eigenvalue\n```\nfor the classical Hecke operators on S_k(Γ₀(N)).\n\n**Proof Strategy:**\n- Define Hecke operators on a finite-dimensional space (e.g., S_12(SL₂(ℤ)) ≅ ℂ, where T(n) acts by τ(n)).\n- Verify the coprime multiplicativity axiom T(mn) = T(m)T(n) for gcd(m,n)=1.\n- Apply the general spectral arithmetic theorem.\n- Connect eigenvalues to Ramanujan's τ-function as a verification.\n\n**Cross-Domain Impact:**\n- This is the entry point to formalized Langlands-style mathematics.\n- Euler product factorization of L-functions becomes a corollary of spectral arithmetic.\n\n---",
@@ -1705,25 +1336,6 @@
     "source_exp_id": "5cf6f85f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T17:19:53.590614+00:00"
-  },
-  {
-    "id": "fd_0274",
-    "title": "4. Tropical Spectral Transform",
-    "description": "**Goal:** Show that logarithms of absolute eigenvalues convert multiplicative spectral laws into additive polyhedral/tropical laws.\n\n**Theorem Target:**\n```\ntropical_spectral :\n  log|spectrum(A ⊗ B)| = log|spectrum(A)| + log|spectrum(B)|\n```\nwhere addition is Minkowski sum of sets.\n\n**Proof Strategy:**\n- Apply the exact spectrum equality (Direction 1) and the logarithm map.\n- Show log|α·β| = log|α| + log|β| converts product sets to Minkowski sums.\n- Connect to tropical semiring (ℝ, min, +) or (ℝ, max, +).\n\n**Cross-Domain Impact:**\n- In optimization, tropical spectral geometry connects to linear programming duality.\n- In algebraic geometry, this relates to tropicalization of spectral varieties.\n- Provides a bridge to idempotent analysis and max-plus algebra.\n\n---",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cf6f85f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:19:53.610960+00:00"
   },
   {
     "id": "fd_0275",
@@ -1759,5 +1371,73 @@
     "source_exp_id": "5cf6f85f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T17:19:53.653922+00:00"
+  },
+  {
+    "id": "fd_0277",
+    "title": "1. Generic ACI Normalization for Arbitrary Idempotent Commutative Binary Operati",
+    "description": "**Goal**: Generalize the `normalize_aci` framework from tropical `min` to any idempotent commutative monoid operation.\n\n**Theorem target**:\n```\ntheorem generic_aci_normalize_sound {α : Type} [LinearOrder α] [DecidableEq α]\n    (op : α → α → α) (h_comm : ∀ a b, op a b = op b a)\n    (h_assoc : ∀ a b c, op (op a b) c = op a (op b c))\n    (h_idem : ∀ a, op a a = a) :\n    ∀ e₁ e₂ : GenExpr α, GenACIEquiv op e₁ e₂ ↔ generic_normalize e₁ = generic_normalize e₂\n```\n\n**Approach**: Abstract the `TropExpr` inductive to a parametric expression type, with `op` replacing `tmin`. The flattening, sorting, and deduplication pipeline transfers directly. The key proof infrastructure (permutation invariance, dedup soundness) is already operation-agnostic.\n\n**Impact**: Provides certified normalization for latt",
+    "domains": [
+      "Analysis",
+      "Tropical",
+      "Cryptography",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eaecf225",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:25:09.479445+00:00"
+  },
+  {
+    "id": "fd_0279",
+    "title": "3. Certified Equivalence for Weighted Automata over Tropical Semirings",
+    "description": "**Goal**: Use ACI normalization as a preprocessing step for deciding equivalence of weighted automata expressions over the min-plus semiring.\n\n**Theorem target**:\n```\ntheorem weighted_automaton_equiv_decidable\n    (A B : WeightedAutomaton ℝ) (h : language_equiv A B) :\n    ∀ w : List Σ, weight A w = weight B w\n```\n\n**Approach**: Weighted automata over (ℝ, min, +) compute shortest-path weights. Their algebraic expressions involve `min` (nondeterminism) and `+` (sequential composition). ACI normalization eliminates redundant paths (duplicate `min` branches). Combined with Kleene-star expansion and distributivity normalization, this yields a decision procedure for bounded-depth equivalence.\n\n**Connection to this work**: The `normalize_aci_strictly_stronger` theorem shows that ACI normalization",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eaecf225",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:25:09.516399+00:00"
+  },
+  {
+    "id": "fd_0280",
+    "title": "4. Tropical Polynomial Support Normalization and Hypersurface Invariance",
+    "description": "**Goal**: Prove that ACI-normalized tropical polynomials compute the same tropical hypersurface (the locus where the minimum is achieved by at least two terms).\n\n**Theorem target**:\n```\ntheorem tropical_hypersurface_invariant (p q : TropPoly)\n    (h : normalize_aci_poly p = normalize_aci_poly q) :\n    tropical_hypersurface p = tropical_hypersurface q\n```\n\n**Approach**: A tropical hypersurface `V(p)` is the set of points where the minimum in `p` is achieved by ≥ 2 monomials. Since ACI normalization preserves the set of monomials (removing only duplicates, which don't affect the achieving set), the hypersurface is invariant. The formal proof uses `eval_eq_of_normalize_aci_eq` to show pointwise equality, then derives hypersurface equality.\n\n**Significance**: This connects symbolic normalizati",
+    "domains": [
+      "Analysis",
+      "Tropical",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eaecf225",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:25:09.535148+00:00"
+  },
+  {
+    "id": "fd_0281",
+    "title": "5. Reflective Tactic for Semilattice/Idempotent-Semiring Equalities",
+    "description": "**Goal**: Package the ACI decision procedure as a reflective tactic that automatically discharges goals of the form `min(a, min(a, b)) = min(a, b)` or more complex semilattice equalities.\n\n**Implementation sketch**:\n```\n/-- Tactic that normalizes both sides of a min-equality using ACI normalization\n    and checks syntactic equality of normal forms. -/\nmacro \"aci_norm\" : tactic => ...\n```\n\n**Approach**: Use the `normalize_aci_eq_iff_aci` theorem as the soundness certificate. The tactic:\n1. Reifies the goal into `TropExpr` syntax\n2. Applies `normalize_aci` to both sides\n3. Checks `DecidableEq` on normal forms\n4. Uses `eval_eq_of_normalize_aci_eq` to close the goal\n\n**Impact**: Provides push-button automation for min/max/lattice identities throughout Mathlib and downstream projects. This is t",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eaecf225",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:25:09.554983+00:00"
   }
 ]
