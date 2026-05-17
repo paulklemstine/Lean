@@ -453,22 +453,6 @@
     "timestamp": "2026-05-16T21:34:33.969194+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "Formalization requires",
-    "description": ":\n   - A clean definition of the interactive protocol state\n   - Lemma: partial sums over remaining variables produce degree-bounded univariate polynomials\n   - Composition of single-round soundness via the union bound\n\n### Key Lemmas to Formalize\n- Partial summation preserves polynomial degree\n- Single-round soundness from univariate Schwartz–Zippel\n- Protocol correctness: honest prover always passes\n\n### Cross-Domain Impact\n- **Verifiable computation**: Sum-check is the core of GKR, Spartan, and other proof systems.\n- **Interactive proofs**: IP = PSPACE relies on sum-check.\n- **Blockchain**: Polynomial commitment schemes use sum-check variants.\n\n---\n\n## Direction 3: Formal Low-Degree Testing Soundness\n\n### Target Theorem\n```\ntheorem low_degree_test_soundness\n  (𝔽 : Type*) [Field 𝔽] [Fint",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3e135d69",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:05:47.364615+00:00"
-  },
-  {
     "id": "fd_0260",
     "title": "Direct slice rank approach",
     "description": ": Define slice rank for order-3 tensors T : V × V × V → k. Prove that the diagonal tensor restricted to a cap set A has slice rank |A|. Prove that the polynomial decomposition forces slice rank ≤ 3 · (number of monomials of degree ≤ 2n/3 with exponents < 3). Combine to get |A| ≤ 3 · binom(n, ≤ 2n/3, restricted).",
@@ -497,23 +481,6 @@
     "timestamp": "2026-05-17T02:47:00.358439+00:00"
   },
   {
-    "id": "fd_0262",
-    "title": "Combinatorial dimension argument",
-    "description": ": Bypass tensors entirely. Use the polynomial method to show that the indicator functions {1_a : a ∈ A} restricted to a cap set, expressed as degree-≤-2n/3 polynomials, must be linearly independent. Count dimensions.\n\n### Cross-Domain Connections\n- **Algebraic complexity**: Slice rank is related to tensor rank, which governs matrix multiplication complexity. Formalizing slice rank creates infrastructure for Strassen-type lower bounds.\n- **Communication complexity**: Tensor rank lower bounds imply communication complexity lower bounds for multiparty problems.\n- **Quantum information**: Tensor decompositions appear in quantum entanglement classification.\n\n---\n\n## Direction 2: Generalized Progression-Free Bounds in 𝔽_p^n\n\n### Target Theorem\nExtend cap set bounds to arbitrary prime fields: for",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0ab00abc",
-    "consumed_by_exp_id": "b0c11eac",
-    "timestamp": "2026-05-17T02:47:00.377245+00:00"
-  },
-  {
     "id": "fd_0267",
     "title": "Direct construction",
     "description": ": Build the linear equivalence using `interpolationPoly` as the inverse of evaluation. The main work is showing linearity of interpolation (which follows from linearity of the sum construction) and the left/right inverses (which follow from evaluation correctness and injectivity).",
@@ -521,10 +488,10 @@
       "Bridges"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0ab00abc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3838861",
     "timestamp": "2026-05-17T02:47:00.471492+00:00"
   },
   {
@@ -740,20 +707,6 @@
     "timestamp": "2026-05-17T03:06:58.849542+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "Triangle inequality route:",
-    "description": "Decompose `|⟨P' - Q, D⟩|` as `|⟨P - Q, D⟩ - ⟨P - P', D⟩|`, bound the second term by `K · d(P, P')`, and apply the certified radius bound.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a54a94dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:06:58.866654+00:00"
-  },
-  {
     "id": "fd_0251",
     "title": "Dual tropical certificate:",
     "description": "Express the distinguishing advantage as a difference of tropical linear forms, then use `tropical_lattice_det_bound` to derive the Lipschitz constant from the tropical determinant.\n\n### Cross-Domain Connection\n**Post-quantum security proofs:** Tropical one-way functions (formalized in `TropicalOneWayFoundations.lean`) have hardness parameterized by dimension. The certified radius framework could formalize security reductions where the distinguishing advantage is preserved under bounded perturbation of cryptographic parameters.\n\n---\n\n## Direction 5: Formal Equivalence Between Margin Certificates and Tropical Chamber Stability\n\n### Theorem Statement\nFor a tropical polynomial classifier, the set of inputs where the classifier has margin ≥ m is exactly a tropical polyhedral cell (intersection ",
@@ -832,20 +785,6 @@
     "timestamp": "2026-05-17T03:06:58.971530+00:00"
   },
   {
-    "id": "fd_0257",
-    "title": "Bridge",
-    "description": "to coding theory by proving Reed-Muller distance bounds (Direction 1), connecting to existing code distance literature.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e59ef4a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:31:40.275897+00:00"
-  },
-  {
     "id": "fd_0258",
     "title": "Experiment",
     "description": "with algebraic complexity applications (Direction 5), using computational experiments to identify the sharpest circuit lower bounds achievable from the evaluation framework.",
@@ -859,20 +798,6 @@
     "source_exp_id": "7e59ef4a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T03:31:40.300235+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Iterate",
-    "description": "on the framework by adding new polynomial spaces (homogeneous, sparse, multilinear) as they become relevant to applications.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e59ef4a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:31:40.325688+00:00"
   },
   {
     "id": "fd_0260",
@@ -903,22 +828,6 @@
     "timestamp": "2026-05-17T03:35:22.019528+00:00"
   },
   {
-    "id": "fd_0262",
-    "title": "Validates cross-domain connections",
-    "description": "by consulting both tropical geometry and ML/verification literature",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0cb1656b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:35:22.039593+00:00"
-  },
-  {
     "id": "fd_0264",
     "title": "Produces both formal proofs and working implementations",
     "description": "so that theoretical results are immediately usable\n\n### Priority Order",
@@ -931,20 +840,6 @@
     "source_exp_id": "0cb1656b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T03:35:22.084547+00:00"
-  },
-  {
-    "id": "fd_0262",
-    "title": "Direction 4",
-    "description": "(certified generation) — practical application",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dc51a80a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:38:03.155313+00:00"
   },
   {
     "id": "fd_0264",
@@ -1635,23 +1530,6 @@
     "timestamp": "2026-05-17T02:00:26.816383+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "4. Tropical Gröbner Bases and Simplification Engine",
-    "description": "**Hypothesis:** Tropical Gröbner basis computation can be formalized and used to create a more powerful simplification engine that handles not just identities but also implications and conditional rewrites in tropical algebra.\n\n**Strategy:**\n- Formalize tropical ideals and the notion of a tropical basis.\n- Implement a tropical Buchberger algorithm (or its tropical analogue using *standard pairs*).\n- Prove termination and correctness of the tropical Gröbner basis computation.\n- Use the computed basis for membership testing: given a tropical identity `f = g`, check if `f - g` (in a suitable sense) belongs to the ideal generated by the semiring axioms.\n\n**Key Challenge:** Tropical Gröbner bases require a fundamentally different treatment from classical Gröbner bases because the tropical semir",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "72596401",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:00:26.835308+00:00"
-  },
-  {
     "id": "fd_0251",
     "title": "5. Piecewise-Linear Neural Network Verification via Tropical Geometry",
     "description": "**Hypothesis:** ReLU neural networks are tropical rational maps, and the tropical normalization tactic can be extended to verify properties of piecewise-linear functions arising from neural network computation.\n\n**Strategy:**\n- Formalize the correspondence: a ReLU neuron `max(0, w·x + b)` is a tropical polynomial.\n- A feedforward ReLU network is a composition of tropical polynomial maps.\n- Develop a tactic that can normalize the tropical polynomial representation of a small network and verify input-output properties.\n- Connect to existing work on *certified robustness* and *adversarial example detection*.\n\n**Key Theorem Target:**\n```\ntheorem relu_network_tropical_form (W : List (Matrix m n ℝ)) (b : List (Vector m ℝ)) :\n    ∃ p : TropPoly, ∀ x : Vector n ℝ, network_eval W b x = trop_eval p ",
@@ -1668,22 +1546,6 @@
     "source_exp_id": "72596401",
     "consumed_by_exp_id": "29a487a8",
     "timestamp": "2026-05-17T02:00:26.854609+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "1. Randomized Fiber-Based Tropical Encryption with Formal IND-CPA Security",
-    "description": "**Hypothesis:** By replacing the deterministic encode with a randomized encoder that samples uniformly from a large fiber of ciphertexts (all decrypting to the same plaintext), one can achieve a meaningful indistinguishability-based security notion analogous to IND-CPA.\n\n**Approach:**\n- Define a `RandomizedTropicalEncScheme` where `encode : key → ℕ → RandomM Cipher` samples from a finite fiber `F(k, m) = {c : Cipher | decode(k, c) = m}`.\n- Define an IND-CPA game as a `Prop` over a finite probability space: the adversary cannot distinguish encryptions of two chosen messages with advantage > ε.\n- **Key theorem target:** For fibers of size ≥ 2^λ (security parameter), prove that any adversary making q queries has advantage ≤ q / 2^λ.\n- **Proof strategy:** Show that the adversary's view is a un",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "beabd842",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:30:23.832177+00:00"
   },
   {
     "id": "fd_0260",
@@ -1718,24 +1580,6 @@
     "timestamp": "2026-05-17T04:30:23.881705+00:00"
   },
   {
-    "id": "fd_0262",
-    "title": "4. Tropical Information Theory: Min-Plus Entropy and Data Processing Inequality",
-    "description": "**Hypothesis:** There exists a natural notion of entropy for distributions over tropical semirings — a \"min-plus entropy\" — and this entropy satisfies a data processing inequality that provides an information-theoretic foundation for tropical cryptographic security.\n\n**Approach:**\n- Define `tropicalEntropy(X) = -min_{x} log P(X = x)` (min-entropy, reinterpreted tropically).\n- Prove a tropical data processing inequality: for any tropical circuit φ, `tropicalEntropy(φ(X)) ≤ tropicalEntropy(X)`.\n- Show that the order leakage theorem (§7) is equivalent to a tropical entropy bound: deterministic encoding with zero noise entropy must leak order information.\n- Connect to Rényi entropy and its tropical limit.\n\n**Key theorem target:**\n```\ntheorem tropical_data_processing\n  (X : TropicalRandomVar) (",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "beabd842",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:30:23.903247+00:00"
-  },
-  {
     "id": "fd_0264",
     "title": "Summary Prioritization",
     "description": "| Direction | Impact | Feasibility | Timeline |\n|-----------|--------|-------------|----------|\n| 1. Randomized IND-CPA | Very High | Medium | 3-6 months |\n| 2. Bellman-Ford/Viterbi | High | High | 1-3 months |\n| 3. Categorical formulation | Medium | Medium | 3-6 months |\n| 4. Tropical information theory | Very High | Low-Medium | 6-12 months |\n| 5. Tropical neural inference | Transformative | Low | 12+ months |\n\n**Recommended next step:** Direction 2 (Bellman-Ford/Viterbi) for immediate impact and publishability, in parallel with Direction 1 (randomized security) for theoretical depth.",
@@ -1749,5 +1593,84 @@
     "source_exp_id": "beabd842",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T04:30:23.944166+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "1. Exact Edge-Isoperimetric Profile of the Triangular Lattice",
+    "description": "**Goal**: Prove the exact edge-isoperimetric inequality for finite subsets of the triangular lattice (A₂ root lattice with nearest-neighbor edges).\n\n**Hypothesis**: The minimizers are hexagonal patches in the dual representation, connected to hex lattice results via planar duality. The triangular lattice is the 1-skeleton of the hexagonal tiling, so boundary minimization on one lattice corresponds to a dual problem on the other.\n\n**Proof Strategy**: Transfer the compression arguments from the hex lattice via the duality map. Each hex cell corresponds to a triangular lattice vertex, and hex edges correspond to triangular faces. The edge boundary of a hex cell set maps to the vertex boundary in the triangular lattice under appropriate definitions.\n\n**Cross-Domain Impact**: Triangular lattice",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c0fc49e2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:47:06.099865+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "2. General Discrete Wulff Theorem for Abelian Cayley Graphs",
+    "description": "**Goal**: Prove that for finitely generated abelian groups with centrally symmetric generating sets, the edge-isoperimetric minimizers are discrete Wulff shapes — zonotopes determined by the dual norm of the generating set.\n\n**Hypothesis**: For any finite connected set S in such a Cayley graph with |S| = n, the edge boundary satisfies ∂S ≥ ∂W(n), where W(n) is the Wulff shape of volume n. The hex lattice theorem is the special case G = ℤ² with generators {±e₁, ±e₂, ±(e₁-e₂)}.\n\n**Proof Strategy**:\n1. Define the anisotropic perimeter norm dual to the generating set\n2. Prove compression in each generator direction preserves volume and reduces boundary\n3. Show fully compressed sets converge to Wulff zonotopes\n4. Compute exact boundary of Wulff shapes via generating function methods\n\n**Key Chal",
+    "domains": [
+      "Cryptography",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c0fc49e2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:47:06.120457+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "3. Stability Theorem: Quantitative Honeycomb Rigidity",
+    "description": "**Goal**: Prove that sets with near-minimal boundary are close to hex patches in symmetric-difference distance.\n\n**Precise Conjecture**: For any connected S ⊂ hex lattice with |S| = 3r²+3r+1 and ∂S ≤ 12r + 6 + δ, there exists a translate T of hexPatch(r) such that |S △ T| ≤ C·δ for a universal constant C.\n\n**Proof Strategy**: \n1. Show that boundary deficit δ controls the number of \"non-convex\" fibers after compression\n2. Use the compression trajectory to bound symmetric difference\n3. Derive the optimal constant C by analyzing worst-case fiber deviations\n\n**Applications**: Stability estimates are crucial for statistical mechanics (controlling fluctuations around equilibrium shapes) and for algorithmic applications (certifying that a region is \"nearly optimal\").\n\n---",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c0fc49e2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:47:06.140680+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "4. Anisotropic Variant: Weighted Edge Boundary Minimization",
+    "description": "**Goal**: For direction-dependent edge weights w(d) on the 6 hex directions, identify the exact minimizers of the weighted boundary ∑ w(d) · (boundary edges in direction d).\n\n**Hypothesis**: Minimizers are distorted hexagonal patches — the Wulff shapes of the anisotropic metric defined by the weights. When weights break the 6-fold symmetry, the optimal shape becomes a non-regular hexagon.\n\n**Proof Strategy**:\n1. Define anisotropic compression that respects the weight structure\n2. Prove monotonicity of weighted boundary under weighted compression\n3. Classify fixed points of anisotropic compression\n4. Compute exact weighted boundary of distorted hex patches\n\n**Physical Motivation**: Crystal surfaces in real materials have direction-dependent surface energies. This variant directly models ani",
+    "domains": [
+      "Cryptography",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c0fc49e2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:47:06.161738+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "5. Hex-Lattice Mean Curvature Flow via Iterative Compression",
+    "description": "**Goal**: Define a discrete mean curvature flow on hex lattice regions by iteratively removing boundary cells with highest local boundary contribution and adding cells to concave boundary positions. Prove convergence to the hex patch shape.\n\n**Precise Formulation**:\n1. Define the discrete curvature κ(p) of a boundary cell p as 6 - 2·(internal neighbors of p)\n2. At each time step, remove the cell with highest κ and add a cell at the position with lowest κ (maintaining constant volume)\n3. Prove this flow converges to a hex patch in O(r²) steps\n\n**Cross-Domain Impact**: This connects discrete differential geometry to combinatorial optimization, providing:\n- A polynomial-time algorithm for hex-lattice shape optimization\n- A discrete analogue of continuous MCF with convergence guarantees\n- A mo",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c0fc49e2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T04:47:06.181464+00:00"
   }
 ]
