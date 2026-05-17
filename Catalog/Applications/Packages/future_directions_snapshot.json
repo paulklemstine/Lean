@@ -494,20 +494,6 @@
     "timestamp": "2026-05-17T15:03:32.981213+00:00"
   },
   {
-    "id": "fd_0273",
-    "title": "Proofs",
-    "description": ": Prove helper lemmas bottom-up, verifying each builds.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5e6a583e",
-    "consumed_by_exp_id": "6d6b9f8a",
-    "timestamp": "2026-05-17T15:19:10.716194+00:00"
-  },
-  {
     "id": "fd_0278",
     "title": "Direction 4",
     "description": "(Circuit derandomization) — Ambitious, requires circuit formalization.",
@@ -652,18 +638,33 @@
     "timestamp": "2026-05-17T15:27:52.158778+00:00"
   },
   {
-    "id": "fd_0273",
-    "title": "Product structure",
-    "description": ": When observations are conditionally independent given X, prove that V(X|Y₁,...,Yₙ) has a tractable product form.",
+    "id": "fd_0272",
+    "title": "Direction 5",
+    "description": "(Algorithm extraction) — Most practically useful",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "3818c5e0",
+    "source_exp_id": "31421af6",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:27:59.353503+00:00"
+    "timestamp": "2026-05-17T15:38:27.214491+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Direction 6",
+    "description": "(Neural interpretability) — Highest applied impact, most speculative",
+    "domains": [
+      "MachineLearning",
+      "Speculative"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "31421af6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:38:27.261721+00:00"
   },
   {
     "id": "fd_0126",
@@ -1156,23 +1157,6 @@
     "timestamp": "2026-05-17T08:12:18.229812+00:00"
   },
   {
-    "id": "fd_0256",
-    "title": "3. Lower Bound Transport Theorem (Quantitative)",
-    "description": "**Goal:** Prove that specific tropical circuit lower bounds (e.g., for sorting networks, shortest-path problems) yield explicit width-depth tradeoff lower bounds for tropical BPs.\n\n**Theorem target:**\n```\ntheorem sorting_bp_tradeoff (n : ℕ) (hn : 2 ≤ n) :\n    ∀ w d : ℕ, (∀ P : TropicalBP w d, computes_sorting P n) →\n    n * Nat.log 2 n ≤ 2 * w * w * d + w\n```\n\n**Strategy:**\n1. Formalize sorting networks as tropical circuits computing the minimum-cost permutation.\n2. Prove the Ω(n log n) lower bound for comparison-based sorting circuits.\n3. Apply `tropical_lower_bound_transfer` to transport this into a BP tradeoff.\n\n**Cross-domain connections:**\n- Connects to the AKS sorting network and its optimality\n- Relates to communication complexity lower bounds (information-theoretic)\n- Links tropica",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0db29d83",
-    "consumed_by_exp_id": "31421af6",
-    "timestamp": "2026-05-17T08:12:18.252022+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Background",
     "description": "In many real-world deployments, data points are not static—they evolve over time. The question is: can we maintain certified radii as the dataset drifts, without recomputing from scratch?\n\nOur incremental persistence theorem (Theorem B) shows that inserting a new point costs O(md). For kinetic updates where existing points move by small increments, we conjecture that:\n- Certificate changes are Lipschitz in the point movement\n- A priority queue on \"certificate expiration times\" enables event-driven updates\n- The amortized cost is logarithmic in N",
@@ -1270,10 +1254,10 @@
       "Bridges"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "97483b17",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1c1883b3",
     "timestamp": "2026-05-17T12:47:39.141850+00:00"
   },
   {
