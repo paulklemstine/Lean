@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <style>
+    text { font-family: 'Segoe UI', Arial, sans-serif; }
+    .title { font-size: 16px; font-weight: bold; fill: #1a1a2e; }
+    .label { font-size: 12px; fill: #16213e; }
+    .weight { font-size: 11px; fill: #e94560; font-weight: bold; }
+    .op { font-size: 14px; fill: #0f3460; font-weight: bold; }
+    .result { font-size: 13px; fill: #533483; font-weight: bold; }
+  </style>
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" class="title">SP Network Decomposition Tree</text>
+
+  <!-- Root: Series node -->
+  <rect x="255" y="50" width="90" height="35" rx="8" fill="#e8f4f8" stroke="#0f3460" stroke-width="2"/>
+  <text x="300" y="72" text-anchor="middle" class="op">Series (+)</text>
+  <text x="300" y="100" text-anchor="middle" class="result">dist = 12</text>
+
+  <!-- Left: Parallel node -->
+  <rect x="105" y="140" width="110" height="35" rx="8" fill="#fce4ec" stroke="#e94560" stroke-width="2"/>
+  <text x="160" y="162" text-anchor="middle" class="op">Parallel (min)</text>
+  <text x="160" y="190" text-anchor="middle" class="result">dist = 3</text>
+
+  <!-- Right: Series node -->
+  <rect x="355" y="140" width="100" height="35" rx="8" fill="#e8f4f8" stroke="#0f3460" stroke-width="2"/>
+  <text x="405" y="162" text-anchor="middle" class="op">Series (+)</text>
+  <text x="405" y="190" text-anchor="middle" class="result">dist = 9</text>
+
+  <!-- Edges from root -->
+  <line x1="280" y1="85" x2="160" y2="140" stroke="#555" stroke-width="1.5"/>
+  <line x1="320" y1="85" x2="405" y2="140" stroke="#555" stroke-width="1.5"/>
+
+  <!-- Leaf nodes (edges) -->
+  <!-- Left-left: Edge(3) -->
+  <rect x="55" y="240" width="80" height="30" rx="6" fill="#e8eaf6" stroke="#3f51b5" stroke-width="1.5"/>
+  <text x="95" y="260" text-anchor="middle" class="weight">Edge(3)</text>
+
+  <!-- Left-right: Edge(5) -->
+  <rect x="175" y="240" width="80" height="30" rx="6" fill="#e8eaf6" stroke="#3f51b5" stroke-width="1.5"/>
+  <text x="215" y="260" text-anchor="middle" class="weight">Edge(5)</text>
+
+  <!-- Right-left: Edge(2) -->
+  <rect x="325" y="240" width="80" height="30" rx="6" fill="#e8eaf6" stroke="#3f51b5" stroke-width="1.5"/>
+  <text x="365" y="260" text-anchor="middle" class="weight">Edge(2)</text>
+
+  <!-- Right-right: Edge(7) -->
+  <rect x="445" y="240" width="80" height="30" rx="6" fill="#e8eaf6" stroke="#3f51b5" stroke-width="1.5"/>
+  <text x="485" y="260" text-anchor="middle" class="weight">Edge(7)</text>
+
+  <!-- Edges to leaves -->
+  <line x1="130" y1="175" x2="95" y2="240" stroke="#555" stroke-width="1.5"/>
+  <line x1="190" y1="175" x2="215" y2="240" stroke="#555" stroke-width="1.5"/>
+  <line x1="385" y1="175" x2="365" y2="240" stroke="#555" stroke-width="1.5"/>
+  <line x1="425" y1="175" x2="485" y2="240" stroke="#555" stroke-width="1.5"/>
+
+  <!-- Tropical expression -->
+  <text x="300" y="320" text-anchor="middle" class="label">Tropical expression: (3 ⊕ 5) ⊙ (2 ⊙ 7)</text>
+  <text x="300" y="345" text-anchor="middle" class="label">= min(3, 5) + (2 + 7) = 3 + 9 = 12</text>
+
+  <!-- Legend -->
+  <rect x="30" y="370" width="15" height="10" rx="2" fill="#e8f4f8" stroke="#0f3460"/>
+  <text x="50" y="379" class="label">Series (tropical ⊙ = add)</text>
+  <rect x="250" y="370" width="15" height="10" rx="2" fill="#fce4ec" stroke="#e94560"/>
+  <text x="270" y="379" class="label">Parallel (tropical ⊕ = min)</text>
+  <rect x="460" y="370" width="15" height="10" rx="2" fill="#e8eaf6" stroke="#3f51b5"/>
+  <text x="480" y="379" class="label">Edge</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="450" viewBox="0 0 700 450">
+  <style>
+    text { font-family: 'Segoe UI', Arial, sans-serif; }
+    .title { font-size: 18px; font-weight: bold; fill: #1a1a2e; }
+    .domain { font-size: 14px; font-weight: bold; }
+    .detail { font-size: 11px; fill: #444; }
+    .arrow { font-size: 13px; fill: #e94560; font-weight: bold; }
+  </style>
+
+  <!-- Title -->
+  <text x="350" y="35" text-anchor="middle" class="title">The Three-Way Tropical Bridge</text>
+
+  <!-- Domain 1: Boundary Rigidity -->
+  <rect x="30" y="60" width="200" height="120" rx="12" fill="#e3f2fd" stroke="#1565c0" stroke-width="2.5"/>
+  <text x="130" y="85" text-anchor="middle" class="domain" fill="#1565c0">Boundary Rigidity</text>
+  <text x="130" y="105" text-anchor="middle" class="detail">SP networks</text>
+  <text x="130" y="120" text-anchor="middle" class="detail">Boundary distance</text>
+  <text x="130" y="135" text-anchor="middle" class="detail">= complete invariant</text>
+  <text x="130" y="155" text-anchor="middle" class="detail">Inverse problems</text>
+
+  <!-- Domain 2: Tropical Algebra -->
+  <rect x="250" y="280" width="200" height="120" rx="12" fill="#fce4ec" stroke="#c62828" stroke-width="2.5"/>
+  <text x="350" y="305" text-anchor="middle" class="domain" fill="#c62828">Tropical Algebra</text>
+  <text x="350" y="325" text-anchor="middle" class="detail">Min-plus matrices</text>
+  <text x="350" y="340" text-anchor="middle" class="detail">Associativity, monotonicity</text>
+  <text x="350" y="355" text-anchor="middle" class="detail">Path semantics</text>
+  <text x="350" y="375" text-anchor="middle" class="detail">Shortest path closure</text>
+
+  <!-- Domain 3: Hyperbolicity -->
+  <rect x="470" y="60" width="200" height="120" rx="12" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.5"/>
+  <text x="570" y="85" text-anchor="middle" class="domain" fill="#2e7d32">Hyperbolicity</text>
+  <text x="570" y="105" text-anchor="middle" class="detail">Four-point condition</text>
+  <text x="570" y="120" text-anchor="middle" class="detail">Ultrametric ⟹ δ=0</text>
+  <text x="570" y="135" text-anchor="middle" class="detail">Gromov product</text>
+  <text x="570" y="155" text-anchor="middle" class="detail">Coarse geometry</text>
+
+  <!-- Connecting arrows with labels -->
+  <!-- Rigidity ↔ Algebra -->
+  <path d="M 130 180 Q 130 340 250 340" fill="none" stroke="#9c27b0" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="120" y="270" text-anchor="middle" class="arrow" fill="#9c27b0">SP dist =</text>
+  <text x="120" y="285" text-anchor="middle" class="arrow" fill="#9c27b0">tropical eval</text>
+
+  <!-- Algebra ↔ Hyperbolicity -->
+  <path d="M 450 340 Q 570 340 570 180" fill="none" stroke="#ff6f00" stroke-width="2.5" marker-end="url(#arrowhead2)"/>
+  <text x="570" y="270" text-anchor="middle" class="arrow" fill="#ff6f00">Matrix closure</text>
+  <text x="570" y="285" text-anchor="middle" class="arrow" fill="#ff6f00">= distance metric</text>
+
+  <!-- Rigidity ↔ Hyperbolicity -->
+  <path d="M 230 90 L 470 90" fill="none" stroke="#00695c" stroke-width="2.5" marker-end="url(#arrowhead3)"/>
+  <text x="350" y="83" text-anchor="middle" class="arrow" fill="#00695c">Boundary metric is 0-hyperbolic</text>
+
+  <!-- Central unifying concept -->
+  <ellipse cx="350" cy="210" rx="100" ry="35" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  <text x="350" y="207" text-anchor="middle" class="domain" fill="#e65100">Tropical</text>
+  <text x="350" y="225" text-anchor="middle" class="domain" fill="#e65100">Convexity</text>
+
+  <!-- Arrowheads -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9c27b0"/>
+    </marker>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff6f00"/>
+    </marker>
+    <marker id="arrowhead3" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#00695c"/>
+    </marker>
+  </defs>
+
+  <!-- Footer -->
+  <text x="350" y="435" text-anchor="middle" class="detail" font-style="italic">
+    Boundary data determines internal geometry precisely where tropical convexity is tame
+  </text>
+</svg>

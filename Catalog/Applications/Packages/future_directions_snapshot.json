@@ -907,25 +907,6 @@
     "timestamp": "2026-05-16T02:14:30.254922+00:00"
   },
   {
-    "id": "fd_0226",
-    "title": "4. Cryptography ↔ Learning ↔ Tropical Triads via Composed Morphisms",
-    "description": "**Hypothesis:** The bridge graph Height → Dimension → Security already hints at a three-way connection between arithmetic learning theory (heights), tropical geometry (dimensions), and cryptographic security (security parameters). A full triad would show that hardness results in any one domain automatically imply hardness results in the other two.\n\n**Proof Strategy:**\n- Formalize the tropical valuation as a `TheorySpec` with `inv = tropical_degree`.\n- Build a morphism from tropical specs to security specs via dimension bounds.\n- Build a morphism from learning specs (Lipschitz/margin bounds) to height specs.\n- Compose to get a certified triad: Learning → Height → Dimension → Security.\n- Prove: any new lower bound in learning theory automatically yields a new lower bound in cryptographic sec",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "8b09e852",
-    "timestamp": "2026-05-16T02:14:30.267025+00:00"
-  },
-  {
     "id": "fd_0218",
     "title": "1. Tropical Expanders and Extractor-Quality Orbit Families",
     "description": "**Hypothesis:** There exist explicit families of tropical matrices whose orbits satisfy the conditional extraction property with near-optimal parameters (ε ≈ 2^{-Ω(n)}).\n\n**Approach:**\n- Define a notion of *tropical expander*: a finite set S of n×n tropical matrices such that for any subset A ⊆ S with |A| ≥ δ|S|, the set {A·G : G ∈ S} has significantly more distinct elements than A.\n- Prove that tropical expansion implies bounded prefix fibers, which by our `conditional_minEntropy_from_fiber` theorem implies conditional extraction.\n- Construct explicit tropical expanders using Cayley graphs of matrix groups over the tropical semiring, analogous to classical expander constructions from SL(2, F_p).\n\n**Key Lemma to Formalize:**\n> If S is a (K, ε)-tropical expander, then `maxPrefixFiberCard S ",
@@ -1203,10 +1184,10 @@
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "df23c5f9",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97483b17",
     "timestamp": "2026-05-17T07:35:53.303086+00:00"
   },
   {
@@ -1474,5 +1455,75 @@
     "source_exp_id": "5ffd606c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T10:05:21.875681+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "1. Multivariate Tropical Rational Canonical Forms",
+    "description": "**Goal**: Extend the univariate canonical form to continuous piecewise-linear maps ℝⁿ → ℝ.\n\n**Hypothesis**: Generic CPL maps admit canonical tropical-rational stratified normal forms, unique modulo regular subdivision data over the Newton polytope of the function.\n\n**Proof Strategy**: \n- Define multivariate tropical polynomials as max of affine forms ℝⁿ → ℝ.\n- The analogue of \"strictly increasing slopes\" becomes a condition on the normal fan of the Newton polytope.\n- Canonicality corresponds to the lower convex hull of the extended Newton polytope being in general position.\n- For uniqueness, use the theory of regular subdivisions: two tropical polynomials defining the same convex PL function must induce the same regular subdivision of their Newton polytope.\n\n**Key Challenge**: The breakpoi",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b09e852",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:38:02.053109+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "2. Certified Minimization and Lower Bounds for ReLU Network Size",
+    "description": "**Goal**: Use the canonical tropical complexity (number of terms in the minimal tropical-rational form) to prove architecture-independent lower bounds on the number of hidden units needed to represent a given function.\n\n**Hypothesis**: The tropical complexity (number of essential affine pieces in the canonical form) provides a tight lower bound on the minimum width×depth product of any ReLU network computing the function.\n\n**Proof Strategy**:\n- Show that a ReLU network with W hidden units can produce at most O(W^L) breakpoints (where L is depth).\n- The canonical tropical form has exactly as many terms as there are maximal-dimensional cells in the function's linearity regions.\n- Therefore, if the canonical form has N terms, any network needs width×depth ≥ Ω(log N).\n\n**Concrete Next Step**: ",
+    "domains": [
+      "Tropical",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b09e852",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:38:02.091336+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "3. Tropical Semantics for Quantized and Integer-Valued Networks",
+    "description": "**Goal**: Connect canonical tropical forms to Presburger arithmetic and exact decision procedures for quantized neural networks.\n\n**Hypothesis**: When slopes and intercepts are rational (or integer), the canonical tropical-rational form lives in a decidable fragment of arithmetic, enabling fully automated equivalence checking.\n\n**Proof Strategy**:\n- Restrict to tropical polynomials with rational coefficients.\n- Show that canonicalization preserves rationality.\n- The equivalence checking problem reduces to comparing finite lists of rational numbers.\n- Connect to Presburger arithmetic via the observation that piecewise-linear functions with integer breakpoints correspond to Presburger-definable functions.\n\n**Key Challenge**: Handle the interaction between rational arithmetic and the ordering",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b09e852",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:38:02.111070+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "4. Operadic Composition Laws for Canonical Tropical Semantics",
+    "description": "**Goal**: Extend the profile-completeness theorem (`tropical_profile_complete_for_bounded_architecture_congruence`) into a compositional semantics of subnetworks using operad theory.\n\n**Hypothesis**: The canonical tropical-rational form is functorial with respect to network composition: the canonical form of a composed network can be computed from the canonical forms of its components via an explicit operadic structure.\n\n**Proof Strategy**:\n- Define a colored operad whose colors are \"tropical complexity types\" (number of terms, slope ranges).\n- Operations in the operad correspond to network composition patterns (serial, parallel, skip connections).\n- The canonicalization map is an operad morphism from the \"syntax operad\" of network architectures to the \"semantics operad\" of canonical tropi",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8b09e852",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:38:02.130153+00:00"
   }
 ]
