@@ -1,1046 +1,999 @@
 #!/usr/bin/env python3
 """
-Applications of the Finite-Field Polynomial Method.
+Applications of the Evaluation-Kernel Framework.
 
-Demonstrates real-world applications of the evaluation-kernel framework:
-1. Error-correcting codes (Reed-Muller / Reed-Solomon)
+Demonstrates real-world applications of the polynomial vanishing theorem:
+1. Reed-Solomon error correction
 2. Secret sharing (Shamir's scheme)
-3. Polynomial identity testing (algebraic circuit verification)
-4. Finite geometry (Kakeya-like set analysis)
+3. Polynomial identity testing
+4. Combinatorial set bounds (cap set style)
 """
 
-from itertools import product
-from typing import List, Tuple, Dict
-import numpy as np
+from math import comb
+from itertools import product as cart_product
+from typing import List, Tuple, Dict, Optional
+import random
+
+# Import core algorithms
+from algorithms import (
+    GF, enumerate_bounded_monomials, monomial_space_dimension,
+    build_evaluation_matrix, find_kernel_basis,
+    construct_vanishing_polynomial, verify_vanishing,
+    polynomial_to_string
+)
 
 
-def mod_inv(a: int, p: int) -> int:
-    """Modular inverse via Fermat's little theorem."""
-    return pow(int(a % p), p - 2, p) if a % p != 0 else 0
+# ============================================================
+# Application 1: Reed-Solomon Decoding Bound
+# ============================================================
 
-
-# ============================================================================
-# APPLICATION 1: Reed-Solomon Error Correction
-# ============================================================================
-def reed_solomon_demo():
+def app_reed_solomon():
     """
-    Demonstrate Reed-Solomon error correction using the polynomial method.
-
-    Reed-Solomon codes encode messages as evaluations of low-degree polynomials.
-    The polynomial vanishing theorem guarantees that different messages produce
-    codewords differing in many positions, enabling error correction.
+    Demonstrate Reed-Solomon code parameters using the evaluation framework.
+    
+    A Reed-Solomon code RS(k, n) over GF(q):
+    - Message: polynomial f of degree < k
+    - Codeword: (f(α_1), ..., f(α_n)) for n evaluation points
+    - By our theorem: if f ≠ 0 and deg f < k, then f has < k roots
+    - Therefore: minimum distance ≥ n - k + 1 (Singleton bound, met with equality)
     """
-    print("=" * 60)
-    print("APPLICATION 1: Reed-Solomon Error Correction")
-    print("=" * 60)
+    print("=" * 70)
+    print("APPLICATION 1: Reed-Solomon Code Parameters")
+    print("=" * 70)
     print()
-
-    p = 7  # Work over F_7
-    k = 3  # Message length (= degree bound)
-    n = p  # Codeword length (evaluate at all of F_7)
-
-    print(f"Field: F_{p}")
-    print(f"Message length: k = {k}")
-    print(f"Codeword length: n = {n}")
-    print(f"Minimum distance: n - k + 1 = {n - k + 1}")
-    print(f"Can correct up to {(n - k) // 2} errors")
+    
+    p = 11  # GF(11)
+    field = GF(p)
+    k = 4   # Message dimension (degree < k)
+    n = p   # Block length (evaluate at all field elements)
+    
+    print(f"Reed-Solomon code RS({k}, {n}) over GF({p})")
+    print(f"  Message space: polynomials of degree < {k}")
+    print(f"  Dimension: {k}")
+    print(f"  Block length: {n}")
     print()
-
-    # Encode: message → polynomial → evaluations
-    message = [2, 5, 1]  # Represents 2 + 5x + x^2
-    print(f"Message: {message}")
-    print(f"Polynomial: {message[0]} + {message[1]}x + {message[2]}x²")
-
+    
+    # Encode a random message
+    message = [random.randint(0, p-1) for _ in range(k)]
+    print(f"  Example message (coefficients): {message}")
+    
+    # Evaluate at all points
     codeword = []
     for x in range(p):
-        val = sum(message[i] * pow(x, i, p) for i in range(k)) % p
+        val = 0
+        for i, c in enumerate(message):
+            val = field.add(val, field.mul(c, field.pow(x, i)))
         codeword.append(val)
-    print(f"Codeword: {codeword}")
-
-    # Simulate errors
-    import random
-    random.seed(42)
-    received = codeword.copy()
-    error_positions = random.sample(range(n), 2)  # 2 errors
-    for pos in error_positions:
-        received[pos] = (received[pos] + random.randint(1, p - 1)) % p
-    print(f"Error positions: {error_positions}")
-    print(f"Received:  {received}")
-
-    # Decode using Berlekamp-Welch style approach
-    # Find error locator polynomial E(x) and value polynomial N(x)
-    # such that received[i] * E(i) = N(i) for all i
-    # This reduces to solving a linear system over F_p
-
-    num_errors = 2  # We assume we know the number of errors
-    # E(x) = x^2 + e1*x + e0 (monic, degree = num_errors)
-    # N(x) = n0 + n1*x + n2*x^2 + n3*x^3 (degree < k + num_errors - 1)
-
-    # Set up linear system: received[i] * E(i) = N(i)
-    # received[i] * (i^2 + e1*i + e0) = n0 + n1*i + n2*i^2 + n3*i^3
-    # Rearranging: received[i]*e0 + received[i]*i*e1 - n0 - n1*i - n2*i^2 - n3*i^3 = -received[i]*i^2
-
-    num_N_coeffs = k + num_errors - 1  # degree of N < k + num_errors
-    total_unknowns = num_errors + num_N_coeffs  # e0, e1, n0, n1, n2, n3
-
-    A_mat = np.zeros((n, total_unknowns), dtype=int)
-    b_vec = np.zeros(n, dtype=int)
-
-    for i in range(n):
-        # E coefficients: e0, e1
-        A_mat[i, 0] = received[i]  # e0 coefficient
-        A_mat[i, 1] = (received[i] * i) % p  # e1 coefficient
-        # N coefficients: -n0, -n1, -n2, -n3
-        for j in range(num_N_coeffs):
-            A_mat[i, num_errors + j] = (-pow(i, j, p)) % p
-        # RHS
-        b_vec[i] = (-received[i] * pow(i, num_errors, p)) % p
-
-    A_mat = A_mat % p
-    b_vec = b_vec % p
-
-    # Solve via Gaussian elimination
-    augmented = np.hstack([A_mat, b_vec.reshape(-1, 1)]) % p
-    m_rows, n_cols = augmented.shape
-
-    pivot_row_idx = 0
-    for col in range(n_cols - 1):
-        pivot = None
-        for r in range(pivot_row_idx, m_rows):
-            if augmented[r, col] % p != 0:
-                pivot = r
-                break
-        if pivot is None:
-            continue
-        augmented[[pivot_row_idx, pivot]] = augmented[[pivot, pivot_row_idx]]
-        inv = mod_inv(augmented[pivot_row_idx, col], p)
-        augmented[pivot_row_idx] = (augmented[pivot_row_idx] * inv) % p
-        for r in range(m_rows):
-            if r != pivot_row_idx and augmented[r, col] % p != 0:
-                factor = augmented[r, col]
-                augmented[r] = (augmented[r] - factor * augmented[pivot_row_idx]) % p
-        pivot_row_idx += 1
-
-    solution = augmented[:total_unknowns, -1] % p
-    e_coeffs = list(solution[:num_errors])
-    n_coeffs = list(solution[num_errors:])
-
-    # E(x) = x^2 + e1*x + e0
-    print(f"\nError locator E(x) = x² + {e_coeffs[1]}x + {e_coeffs[0]}")
-
-    # Find roots of E(x) to locate errors
-    error_locs = []
-    for x in range(p):
-        val = (pow(x, 2, p) + e_coeffs[1] * x + e_coeffs[0]) % p
-        if val == 0:
-            error_locs.append(x)
-    print(f"Error locations (roots of E): {error_locs}")
-
-    # Recover original polynomial: N(x) / E(x)
-    # Evaluate at non-error positions and interpolate
-    clean_points = [(x, codeword[x]) for x in range(p) if x not in error_locs]
-    # Use first k points for Lagrange interpolation
-    interp_points = clean_points[:k]
-
-    decoded = [0] * k
-    for i in range(k):
-        xi, yi = interp_points[i]
-        # Lagrange basis
-        basis_coeffs = [1]
-        for j in range(k):
-            if i == j:
-                continue
-            xj = interp_points[j][0]
-            denom = mod_inv((xi - xj) % p, p)
-            new_coeffs = [0] * (len(basis_coeffs) + 1)
-            for idx, c in enumerate(basis_coeffs):
-                new_coeffs[idx] = (new_coeffs[idx] + c * ((-xj) % p) * denom) % p
-                new_coeffs[idx + 1] = (new_coeffs[idx + 1] + c * denom) % p
-            basis_coeffs = new_coeffs
-        for idx in range(min(k, len(basis_coeffs))):
-            decoded[idx] = (decoded[idx] + yi * basis_coeffs[idx]) % p
-
-    print(f"Decoded message: {decoded}")
-    print(f"Original message: {message}")
-    print(f"Decoding correct: {decoded == message}  ✓")
+    
+    print(f"  Codeword: {codeword}")
+    
+    # Count nonzero positions (Hamming weight)
+    weight = sum(1 for c in codeword if c != 0)
+    print(f"  Hamming weight: {weight}")
+    print(f"  Minimum distance bound: ≥ {n} - {k} + 1 = {n - k + 1}")
+    print(f"  (Our theorem guarantees: degree-{k-1} poly has ≤ {k-1} roots)")
+    print()
+    
+    # Show error correction capability
+    t = (n - k) // 2  # Error correction capability
+    print(f"  Error correction capability: {t} errors")
+    print(f"  Error detection capability: {n - k} errors")
     print()
 
 
-# ============================================================================
-# APPLICATION 2: Shamir Secret Sharing
-# ============================================================================
-def shamir_secret_sharing_demo():
+# ============================================================  
+# Application 2: Shamir's Secret Sharing
+# ============================================================
+
+def app_secret_sharing():
     """
     Demonstrate Shamir's secret sharing using polynomial evaluation.
-
-    The polynomial method provides the mathematical foundation:
-    a degree-(t-1) polynomial is uniquely determined by t evaluation points
-    (interpolation), but t-1 points reveal no information about the secret
-    (the vanishing polynomial theorem shows there's always a consistent
-    polynomial through any t-1 points for any secret value).
+    
+    The key insight from our framework: the evaluation map from degree-< k
+    polynomials to k evaluation points is injective (when points are distinct).
+    This means k shares uniquely determine the secret, while k-1 shares
+    reveal nothing (the kernel is nontrivial for fewer evaluation points).
     """
-    print("=" * 60)
-    print("APPLICATION 2: Shamir Secret Sharing")
-    print("=" * 60)
+    print("=" * 70)
+    print("APPLICATION 2: Shamir's Secret Sharing")
+    print("=" * 70)
     print()
-
-    p = 13  # Work over F_13
-    secret = 7
-    threshold = 3  # Need 3 shares to reconstruct
-    num_shares = 5
-
-    print(f"Field: F_{p}")
-    print(f"Secret: {secret}")
-    print(f"Threshold: {threshold} (need {threshold} shares to reconstruct)")
-    print(f"Total shares: {num_shares}")
+    
+    p = 31  # GF(31) — large enough for interesting secrets
+    field = GF(p)
+    secret = 17  # The secret to share
+    k = 3   # Threshold: need k shares to reconstruct
+    n = 5   # Total number of shares
+    
+    print(f"Secret: {secret} (in GF({p}))")
+    print(f"Threshold: {k} shares needed")
+    print(f"Total shares: {n}")
     print()
-
-    # Create sharing polynomial: f(x) = secret + a1*x + a2*x^2
-    import random
-    random.seed(123)
-    coeffs = [secret] + [random.randint(1, p - 1) for _ in range(threshold - 1)]
-    print(f"Secret polynomial: f(x) = {coeffs[0]} + {coeffs[1]}x + {coeffs[2]}x²")
-
-    # Generate shares: (i, f(i)) for i = 1, ..., num_shares
+    
+    # Choose random polynomial f of degree < k with f(0) = secret
+    coeffs = [secret] + [random.randint(1, p-1) for _ in range(k-1)]
+    print(f"Secret polynomial coefficients: {coeffs}")
+    
+    # Generate shares: (i, f(i)) for i = 1, ..., n
     shares = []
-    for i in range(1, num_shares + 1):
-        val = sum(coeffs[j] * pow(i, j, p) for j in range(threshold)) % p
+    for i in range(1, n + 1):
+        val = 0
+        for j, c in enumerate(coeffs):
+            val = field.add(val, field.mul(c, field.pow(i, j)))
         shares.append((i, val))
-        print(f"  Share {i}: ({i}, {val})")
-
-    # Reconstruct from any threshold shares
-    print(f"\nReconstruction from shares 1, 3, 5:")
-    selected = [shares[0], shares[2], shares[4]]
-
+    
+    print(f"Shares: {shares}")
+    print()
+    
+    # Reconstruct from k shares using Lagrange interpolation
+    selected = shares[:k]
+    print(f"Reconstructing from {k} shares: {selected}")
+    
+    # Lagrange interpolation at x = 0
     reconstructed = 0
     for i, (xi, yi) in enumerate(selected):
-        # Lagrange basis polynomial evaluated at 0
-        basis_at_0 = 1
+        # Compute Lagrange basis polynomial L_i(0)
+        numer = 1
+        denom = 1
         for j, (xj, _) in enumerate(selected):
             if i != j:
-                basis_at_0 = (basis_at_0 * ((-xj) % p) * mod_inv((xi - xj) % p, p)) % p
-        reconstructed = (reconstructed + yi * basis_at_0) % p
-
-    print(f"  Reconstructed secret: {reconstructed}")
-    print(f"  Original secret: {secret}")
-    print(f"  Correct: {reconstructed == secret}  ✓")
-
-    # Show that 2 shares reveal nothing
-    print(f"\nWith only 2 shares, ANY secret is consistent:")
-    two_shares = [shares[0], shares[1]]
-    for candidate_secret in range(p):
-        # Find polynomial through (0, candidate_secret), share1, share2
-        # This always has a solution (3 unknowns, 3 equations... but we only have 2 constraints + secret)
-        # Actually with 2 shares and degree 2, we need to show consistency
-        # For each candidate secret, find a1 such that the system is consistent
-        # f(x1) = candidate_secret + a1*x1 + a2*x1^2 = y1
-        # f(x2) = candidate_secret + a1*x2 + a2*x2^2 = y2
-        x1, y1 = two_shares[0]
-        x2, y2 = two_shares[1]
-        # Two equations, two unknowns (a1, a2) - always solvable if x1 ≠ x2
-        # [x1, x1^2] [a1]   [y1 - s]
-        # [x2, x2^2] [a2] = [y2 - s]
-        det = (x1 * pow(x2, 2, p) - x2 * pow(x1, 2, p)) % p
-        if det % p != 0:
-            pass  # Solution exists
-    print(f"  All {p} possible secrets are consistent with 2 shares  ✓")
-    print(f"  → 2 shares reveal zero information about the secret")
+                numer = field.mul(numer, field.neg(xj))
+                denom = field.mul(denom, field.sub(xi, xj))
+        basis = field.div(numer, denom)
+        reconstructed = field.add(reconstructed, field.mul(yi, basis))
+    
+    print(f"Reconstructed secret: {reconstructed}")
+    print(f"Correct: {reconstructed == secret} ✓" if reconstructed == secret else "Incorrect ✗")
+    print()
+    
+    # Show that k-1 shares are insufficient
+    print(f"With only {k-1} shares, the evaluation kernel is nontrivial:")
+    print(f"  dim M(1, {k}) = {k} > {k-1} = |shares|")
+    print(f"  → Multiple polynomials consistent with these shares")
+    print(f"  → The secret (value at 0) is completely undetermined")
     print()
 
 
-# ============================================================================
-# APPLICATION 3: Polynomial Identity Testing
-# ============================================================================
-def polynomial_identity_testing_demo():
+# ============================================================
+# Application 3: Schwartz-Zippel Polynomial Identity Testing
+# ============================================================
+
+def app_schwartz_zippel():
     """
-    Demonstrate polynomial identity testing for algebraic circuit verification.
-
-    Given two algebraic expressions (circuits), test if they compute
-    the same polynomial by evaluating at random points. The Schwartz-Zippel
-    lemma bounds the error probability.
+    Demonstrate the Schwartz-Zippel lemma connection.
+    
+    Our vanishing theorem gives the EXISTENCE side: small sets admit 
+    vanishing polynomials. The Schwartz-Zippel lemma gives the UPPER BOUND 
+    side: a nonzero polynomial of degree d over GF(q)^n has at most 
+    d · q^(n-1) roots.
+    
+    Together, they bracket the behavior of polynomial zeros over finite fields.
     """
-    print("=" * 60)
-    print("APPLICATION 3: Polynomial Identity Testing")
-    print("=" * 60)
+    print("=" * 70)
+    print("APPLICATION 3: Polynomial Identity Testing (Schwartz-Zippel)")
+    print("=" * 70)
     print()
-
-    p = 101  # Work over F_101
-
-    print(f"Field: F_{p}")
+    
+    p = 7  # GF(7)
+    field = GF(p)
+    n = 2  # 2 variables
+    
+    # Two representations of the same polynomial
+    # f(x,y) = (x + y)^2
+    # g(x,y) = x^2 + 2xy + y^2
+    def f(x, y):
+        return field.pow(field.add(x, y), 2)
+    
+    def g(x, y):
+        return field.add(
+            field.add(field.pow(x, 2), field.mul(2, field.mul(x, y))),
+            field.pow(y, 2)
+        )
+    
+    print("Testing if f(x,y) = (x+y)² equals g(x,y) = x² + 2xy + y² over GF(7)")
     print()
-
-    # Test: Is (x + y)^2 = x^2 + 2xy + y^2 ?
-    print("Test 1: Is (x + y)² = x² + 2xy + y² ?")
-    import random
-    random.seed(42)
-    num_tests = 10
-    all_equal = True
+    
+    # Random test
+    num_tests = 5
+    print(f"Random evaluation tests ({num_tests} random points):")
+    all_match = True
     for _ in range(num_tests):
-        x = random.randint(0, p - 1)
-        y = random.randint(0, p - 1)
-        lhs = pow(x + y, 2, p)
-        rhs = (pow(x, 2, p) + 2 * x * y + pow(y, 2, p)) % p
-        if lhs != rhs:
-            all_equal = False
-            break
-    print(f"  {num_tests} random tests: {'all equal ✓' if all_equal else 'found difference ✗'}")
-    print(f"  Error probability ≤ (2/{p})^{num_tests} ≈ {(2/p)**num_tests:.2e}")
-
-    # Test: Is (x + y)(x - y) = x^2 - y^2 ?
-    print("\nTest 2: Is (x + y)(x - y) = x² - y² ?")
-    all_equal = True
-    for _ in range(num_tests):
-        x = random.randint(0, p - 1)
-        y = random.randint(0, p - 1)
-        lhs = ((x + y) * (x - y)) % p
-        rhs = (pow(x, 2, p) - pow(y, 2, p)) % p
-        if lhs != rhs:
-            all_equal = False
-            break
-    print(f"  {num_tests} random tests: {'all equal ✓' if all_equal else 'found difference ✗'}")
-
-    # Test: Is x^3 + y^3 = (x + y)(x^2 - xy + y^2) ?
-    print("\nTest 3: Is x³ + y³ = (x + y)(x² - xy + y²) ?")
-    all_equal = True
-    for _ in range(num_tests):
-        x = random.randint(0, p - 1)
-        y = random.randint(0, p - 1)
-        lhs = (pow(x, 3, p) + pow(y, 3, p)) % p
-        rhs = ((x + y) * (pow(x, 2, p) - x * y + pow(y, 2, p))) % p
-        if lhs != rhs:
-            all_equal = False
-            break
-    print(f"  {num_tests} random tests: {'all equal ✓' if all_equal else 'found difference ✗'}")
-
-    # Test a FALSE identity: Is x^2 + y^2 = (x + y)^2 ?
-    print("\nTest 4: Is x² + y² = (x + y)² ?  [FALSE]")
-    found_diff = False
-    for trial in range(num_tests):
-        x = random.randint(0, p - 1)
-        y = random.randint(0, p - 1)
-        lhs = (pow(x, 2, p) + pow(y, 2, p)) % p
-        rhs = pow(x + y, 2, p)
-        if lhs != rhs:
-            found_diff = True
-            print(f"  Found counterexample at trial {trial + 1}: x={x}, y={y}")
-            print(f"    LHS = {lhs}, RHS = {rhs}")
-            break
-    if not found_diff:
-        print(f"  No difference found in {num_tests} tests (unlikely!)")
+        x, y = random.randint(0, p-1), random.randint(0, p-1)
+        fval = f(x, y)
+        gval = g(x, y)
+        match = fval == gval
+        all_match = all_match and match
+        print(f"  ({x}, {y}): f = {fval}, g = {gval} {'✓' if match else '✗'}")
+    
+    print(f"\nAll tests passed: {all_match}")
+    print()
+    
+    # Schwartz-Zippel bound
+    degree = 2
+    print(f"Schwartz-Zippel guarantee:")
+    print(f"  If f ≠ g, then Pr[f(r) = g(r)] ≤ {degree}/{p} = {degree/p:.3f}")
+    print(f"  After {num_tests} independent tests: ≤ ({degree}/{p})^{num_tests} = {(degree/p)**num_tests:.6f}")
+    print()
+    
+    # Connection to our vanishing theorem
+    print("Connection to our framework:")
+    print(f"  h = f - g is a polynomial of degree ≤ {degree}")
+    print(f"  If h ≠ 0: it has ≤ {degree} · {p}^({n}-1) = {degree * p**(n-1)} roots in GF({p})^{n}")
+    print(f"  Total points: {p}^{n} = {p**n}")
+    print(f"  Non-root fraction: ≥ 1 - {degree}/{p} = {1 - degree/p:.3f}")
+    print()
+    
+    # Our theorem gives the complementary view
+    print("Our vanishing theorem (complementary view):")
+    dim_d_plus_1 = monomial_space_dimension(n, degree + 1)
+    print(f"  dim M({n}, {degree+1}) = {dim_d_plus_1}")
+    print(f"  If |E| < {dim_d_plus_1}, there EXISTS a degree-≤{degree} poly vanishing on E")
+    print(f"  ↔ Sets of size < {dim_d_plus_1} cannot certify polynomial identity")
     print()
 
 
-# ============================================================================
-# APPLICATION 4: Kakeya Set Analysis
-# ============================================================================
-def kakeya_set_analysis():
+# ============================================================
+# Application 4: Cap Set / Combinatorial Bounds
+# ============================================================
+
+def app_cap_set_bounds():
     """
-    Analyze Kakeya-like sets over finite fields.
-
-    A Kakeya set contains a line in every direction. The polynomial method
-    proves these sets must be large. We demonstrate by constructing examples
-    and computing their sizes.
+    Demonstrate how dimension counting constrains combinatorial structures.
+    
+    A 'cap set' in GF(3)^n is a set containing no three-term arithmetic
+    progression. The polynomial method constrains cap set size by showing
+    that certain polynomial spaces have limited dimension.
     """
-    print("=" * 60)
-    print("APPLICATION 4: Kakeya Set Analysis over Finite Fields")
-    print("=" * 60)
+    print("=" * 70)
+    print("APPLICATION 4: Combinatorial Bounds via Dimension Counting")
+    print("=" * 70)
+    print()
+    
+    print("Cap Set Problem: largest subset of GF(3)^n with no 3-term AP")
+    print()
+    
+    # For small n, compute bounds
+    for n_val in range(1, 6):
+        total = 3**n_val
+        
+        # Our dimension-based observation:
+        # The indicator function of a cap set has special properties
+        # that constrain which polynomial spaces it can interact with
+        
+        # Simple bound from our framework:
+        # A degree-restricted polynomial vanishing on a set E exists when
+        # |E| < dim M(n, d)
+        for d in [2, 3, n_val + 1]:
+            dim = monomial_space_dimension(n_val, d)
+            if d <= 3:
+                print(f"  n={n_val}: |GF(3)^{n_val}| = {total:>5}, "
+                      f"dim M({n_val},{d}) = {dim:>5}, "
+                      f"ratio = {dim/total:.3f}")
+    
+    print()
+    print("Key insight: when dim M(n,d) > |GF(3)^n|, every subset admits a")
+    print("vanishing polynomial of degree < d. This constrains algebraic")
+    print("certificates for combinatorial properties like AP-freeness.")
+    print()
+    
+    # Demonstrate for GF(3)^2
+    p = 3
+    n = 2
+    field = GF(p)
+    
+    all_points = list(cart_product(range(p), repeat=n))
+    
+    # Find a cap set (no 3-AP) in GF(3)^2
+    # A 3-AP is {a, a+d, a+2d} for d ≠ 0
+    cap = []
+    for point in all_points:
+        is_ok = True
+        for existing in cap:
+            for other in cap:
+                if existing == other:
+                    continue
+                # Check if point completes a 3-AP with existing and other
+                mid = tuple(field.add(existing[i], other[i]) for i in range(n))
+                mid = tuple(field.div(mid[i], 2) if p != 2 else mid[i] for i in range(n))
+                if mid == point:
+                    is_ok = False
+                    break
+            if not is_ok:
+                break
+        if is_ok:
+            cap.append(point)
+    
+    print(f"Example cap set in GF(3)^2: {cap}")
+    print(f"Size: {len(cap)} out of {p**n} = {p}^{n}")
+    print()
+    
+    # Show vanishing polynomial for this cap set
+    d = 3
+    dim = monomial_space_dimension(n, d)
+    print(f"dim M({n}, {d}) = {dim}")
+    if len(cap) < dim:
+        poly = construct_vanishing_polynomial(field, n, d, cap)
+        if poly:
+            print(f"Vanishing polynomial of degree < {d}:")
+            print(f"  {polynomial_to_string(poly, ['x', 'y'])}")
+            print(f"  Vanishes on cap set: {verify_vanishing(field, poly, cap)}")
     print()
 
-    p = 5  # F_5
-    n = 2  # 2 dimensions
 
-    print(f"Field: F_{p}, Dimension: {n}")
-    print(f"|F_{p}^{n}| = {p**n}")
+# ============================================================
+# Main
+# ============================================================
+
+def main():
+    random.seed(42)  # For reproducibility
+    
+    print("APPLICATIONS OF THE EVALUATION-KERNEL FRAMEWORK")
+    print("=" * 70)
     print()
-
-    # A Kakeya set: for every direction v ∈ F_p^n \ {0},
-    # contains a line {a + t*v : t ∈ F_p}
-
-    # Construct a Kakeya set by choosing a base point for each direction
-    all_directions = []
-    for v in product(range(p), repeat=n):
-        if any(vi != 0 for vi in v):
-            # Normalize: first nonzero coordinate is 1
-            first_nonzero = next(i for i, vi in enumerate(v) if vi != 0)
-            inv = mod_inv(v[first_nonzero], p)
-            normalized = tuple((vi * inv) % p for vi in v)
-            if normalized not in all_directions:
-                all_directions.append(normalized)
-
-    print(f"Number of distinct directions: {len(all_directions)}")
-
-    # Build Kakeya set: for each direction, add a line through origin
-    kakeya_set = set()
-    for v in all_directions:
-        base = tuple(0 for _ in range(n))  # base point = origin (simplest choice)
-        for t in range(p):
-            point = tuple((base[i] + t * v[i]) % p for i in range(n))
-            kakeya_set.add(point)
-
-    print(f"Kakeya set size (lines through origin): {len(kakeya_set)}")
-    print(f"This is {len(kakeya_set)}/{p**n} = {len(kakeya_set)/p**n:.1%} of all points")
-
-    # Try to find a smaller Kakeya set by varying base points
-    import random
-    random.seed(42)
-
-    best_size = len(kakeya_set)
-    best_set = kakeya_set
-
-    for attempt in range(100):
-        candidate = set()
-        for v in all_directions:
-            base = tuple(random.randint(0, p - 1) for _ in range(n))
-            for t in range(p):
-                point = tuple((base[i] + t * v[i]) % p for i in range(n))
-                candidate.add(point)
-        if len(candidate) < best_size:
-            best_size = len(candidate)
-            best_set = candidate
-
-    print(f"Smallest Kakeya set found (100 attempts): {best_size}")
-    print(f"Theoretical lower bound (Dvir): ≥ {p**n // (2**n)} (roughly q^n / n!)")
+    
+    app_reed_solomon()
+    app_secret_sharing()
+    app_schwartz_zippel()
+    app_cap_set_bounds()
+    
+    print("=" * 70)
+    print("SUMMARY OF APPLICATIONS")
+    print("=" * 70)
     print()
-
-    # Check the polynomial method prediction
-    # If |E| < d^n, a vanishing polynomial of box-degree d exists
-    # For Kakeya sets, lines force degree constraints on any vanishing polynomial
-    print("Polynomial method analysis:")
-    for d in range(1, p + 1):
-        dim = d ** n
-        print(f"  Box-degree {d}: dim = {dim}, ", end="")
-        if best_size < dim:
-            print(f"|E| = {best_size} < {dim} → vanishing polynomial exists")
-        else:
-            print(f"|E| = {best_size} ≥ {dim} → no automatic vanishing polynomial")
+    print("The evaluation-kernel framework provides a unified foundation for:")
     print()
+    print("1. CODING THEORY: Reed-Solomon parameters and distance bounds")
+    print("   follow directly from the evaluation map's kernel structure.")
+    print()
+    print("2. CRYPTOGRAPHY: Secret sharing security relies on the kernel")
+    print("   being nontrivial below the threshold (our theorem).")
+    print()
+    print("3. RANDOMIZED ALGORITHMS: Schwartz-Zippel identity testing")
+    print("   is dual to our vanishing theorem.")
+    print()
+    print("4. COMBINATORICS: Cap set and other extremal problems use")
+    print("   dimension counting from the polynomial method.")
+    print()
+    print("All four applications trace back to the same principle:")
+    print("dim V > |E| ⟹ nontrivial kernel of evaluation map V → K^E")
 
 
 if __name__ == "__main__":
-    reed_solomon_demo()
-    shamir_secret_sharing_demo()
-    polynomial_identity_testing_demo()
-    kakeya_set_analysis()
+    main()
 
 
 #!/usr/bin/env python3
 """
-Demonstration of the Finite-Field Polynomial Method.
+Demonstration of the Evaluation-Kernel Framework for the Polynomial Method.
 
-This script provides concrete numerical examples illustrating the core theorems:
-1. Abstract kernel-existence principle (dimension counting)
-2. Univariate polynomial vanishing on finite sets
-3. Multivariate box-degree polynomial vanishing
-4. Evaluation map rank analysis
-
-All computations are done over finite fields using modular arithmetic.
+Shows concrete numerical examples of the core theorems:
+1. Univariate polynomial vanishing on small sets
+2. Multivariate dimension counting (stars-and-bars)
+3. The kernel-existence principle in action
 """
 
 import numpy as np
 from itertools import product
+from math import comb
+from functools import reduce
 
 
-def mod_inv(a, p):
-    """Modular inverse of a mod p using Fermat's little theorem."""
-    return pow(int(a), p - 2, p) if a % p != 0 else 0
+def gf_add(a, b, p):
+    """Addition in GF(p)."""
+    return (a + b) % p
+
+def gf_mul(a, b, p):
+    """Multiplication in GF(p)."""
+    return (a * b) % p
+
+def gf_neg(a, p):
+    """Negation in GF(p)."""
+    return (-a) % p
+
+def gf_inv(a, p):
+    """Multiplicative inverse in GF(p) using Fermat's little theorem."""
+    if a % p == 0:
+        raise ValueError("Cannot invert zero")
+    return pow(a, p - 2, p)
 
 
-def poly_eval_mod(coeffs, x, p):
-    """Evaluate polynomial with given coefficients at x mod p."""
-    result = 0
-    for i, c in enumerate(coeffs):
-        result = (result + c * pow(x, i, p)) % p
-    return result
+# ============================================================
+# Demo 1: Univariate Polynomial Vanishing
+# ============================================================
 
-
-def mv_poly_eval_mod(coeffs_dict, point, p):
-    """Evaluate multivariate polynomial at a point mod p.
-    coeffs_dict: {(e1, e2, ...): coeff, ...} mapping exponent tuples to coefficients.
+def demo_univariate_vanishing():
     """
-    result = 0
-    for exponents, coeff in coeffs_dict.items():
-        term = coeff
-        for i, e in enumerate(exponents):
-            term = (term * pow(int(point[i]), int(e), p)) % p
-        result = (result + term) % p
-    return result
-
-
-def build_evaluation_matrix(monomials, points, p):
-    """Build the evaluation matrix A where A[i,j] = monomial_j(point_i) mod p."""
-    m = len(points)
-    n = len(monomials)
-    A = np.zeros((m, n), dtype=int)
-    for i, pt in enumerate(points):
-        for j, mono in enumerate(monomials):
-            val = 1
-            for k, e in enumerate(mono):
-                val = (val * pow(int(pt[k]), int(e), p)) % p
-            A[i, j] = val
-    return A
-
-
-def gaussian_elimination_mod(A, p):
-    """Perform Gaussian elimination mod p, return rank and kernel basis."""
-    A = A.copy().astype(int) % p
-    m, n = A.shape
-    pivot_cols = []
-    row = 0
-
-    for col in range(n):
-        # Find pivot
-        pivot_row = None
-        for r in range(row, m):
-            if A[r, col] % p != 0:
-                pivot_row = r
-                break
-        if pivot_row is None:
-            continue
-
-        # Swap rows
-        A[[row, pivot_row]] = A[[pivot_row, row]]
-        pivot_cols.append(col)
-
-        # Eliminate
-        inv = mod_inv(A[row, col], p)
-        A[row] = (A[row] * inv) % p
-        for r in range(m):
-            if r != row and A[r, col] % p != 0:
-                factor = A[r, col]
-                A[r] = (A[r] - factor * A[row]) % p
-
-        row += 1
-
-    rank = len(pivot_cols)
-
-    # Extract kernel basis
-    free_cols = [c for c in range(n) if c not in pivot_cols]
-    kernel_basis = []
-
-    for fc in free_cols:
-        vec = np.zeros(n, dtype=int)
-        vec[fc] = 1
-        for i, pc in enumerate(pivot_cols):
-            vec[pc] = (-A[i, fc]) % p
-        kernel_basis.append(vec % p)
-
-    return rank, kernel_basis
-
-
-# ============================================================================
-# DEMO 1: Univariate Polynomial Vanishing
-# ============================================================================
-def demo_univariate():
-    """Demonstrate the univariate polynomial vanishing theorem."""
+    Demonstrate: for |E| < d, there exists a nonzero polynomial of degree < d
+    vanishing on E. We construct p(X) = ∏_{a ∈ E} (X - a).
+    """
     print("=" * 70)
     print("DEMO 1: Univariate Polynomial Vanishing Theorem")
     print("=" * 70)
     print()
-
-    p = 7  # Working over F_7
-    E = [1, 3, 5]  # Finite set E ⊆ F_7
-    d = 5  # Degree bound
-
-    print(f"Field: F_{p}")
+    
+    p = 7  # Working over GF(7)
+    E = [1, 3, 5]  # |E| = 3
+    d = 5  # Degree bound: 3 < 5 ✓
+    
+    print(f"Field: GF({p})")
     print(f"Set E = {E}, |E| = {len(E)}")
     print(f"Degree bound d = {d}")
-    print(f"Condition: |E| = {len(E)} < {d} = d  ✓")
+    print(f"Condition: |E| = {len(E)} < {d} = d ✓")
     print()
-
-    # Constructive witness: p(X) = ∏_{a ∈ E} (X - a)
-    # Compute coefficients by expanding the product
-    coeffs = [1]  # Start with constant polynomial 1
+    
+    # Construct p(X) = ∏(X - a) for a ∈ E
+    # Represent polynomials as coefficient lists [a0, a1, ..., an]
+    poly = [1]  # Start with 1
     for a in E:
-        new_coeffs = [0] * (len(coeffs) + 1)
-        for i, c in enumerate(coeffs):
-            new_coeffs[i] = (new_coeffs[i] + c * ((-a) % p)) % p
-            new_coeffs[i + 1] = (new_coeffs[i + 1] + c) % p
-        coeffs = new_coeffs
-
+        # Multiply by (X - a)
+        new_poly = [0] * (len(poly) + 1)
+        for i, c in enumerate(poly):
+            new_poly[i] = gf_add(new_poly[i], gf_mul(c, gf_neg(a, p), p), p)
+            new_poly[i + 1] = gf_add(new_poly[i + 1], c, p)
+        poly = new_poly
+    
     # Remove trailing zeros
-    while len(coeffs) > 1 and coeffs[-1] == 0:
-        coeffs.pop()
-
-    print(f"Constructive witness: p(X) = ∏_{{a ∈ E}} (X - a)")
-    print(f"Coefficients (ascending degree): {coeffs}")
-    print(f"Degree of p: {len(coeffs) - 1}")
-    print(f"p ≠ 0: {any(c != 0 for c in coeffs)}  ✓")
-    print(f"deg(p) = {len(coeffs) - 1} < {d} = d  ✓")
+    while len(poly) > 1 and poly[-1] == 0:
+        poly.pop()
+    
+    print(f"Constructed polynomial p(X) = ∏_{{a ∈ E}} (X - a)")
+    terms = []
+    for i, c in enumerate(poly):
+        if c != 0:
+            if i == 0:
+                terms.append(str(c))
+            elif i == 1:
+                terms.append(f"{c}·X")
+            else:
+                terms.append(f"{c}·X^{i}")
+    print(f"p(X) = {' + '.join(terms)} (mod {p})")
+    print(f"Degree of p: {len(poly) - 1}")
+    print(f"Degree < d: {len(poly) - 1} < {d} ✓")
     print()
-
-    print("Verification: p vanishes on E")
-    for x in E:
-        val = poly_eval_mod(coeffs, x, p)
-        print(f"  p({x}) = {val} mod {p}  {'✓' if val == 0 else '✗'}")
-
-    # Also show it doesn't vanish everywhere
-    print()
-    print("Non-vanishing outside E:")
+    
+    # Evaluate on E
+    print("Evaluations on E:")
+    for a in E:
+        val = 0
+        for i, c in enumerate(poly):
+            val = gf_add(val, gf_mul(c, pow(a, i, p), p), p)
+        print(f"  p({a}) = {val} {'✓' if val == 0 else '✗'}")
+    
+    # Evaluate on all of GF(p)
+    print(f"\nEvaluations on all of GF({p}):")
     for x in range(p):
-        if x not in E:
-            val = poly_eval_mod(coeffs, x, p)
-            print(f"  p({x}) = {val} mod {p}")
+        val = 0
+        for i, c in enumerate(poly):
+            val = gf_add(val, gf_mul(c, pow(x, i, p), p), p)
+        marker = " ← vanishes (in E)" if x in E else ""
+        print(f"  p({x}) = {val}{marker}")
     print()
 
 
-# ============================================================================
-# DEMO 2: Abstract Kernel-Existence (Rank-Nullity)
-# ============================================================================
-def demo_rank_nullity():
-    """Demonstrate the abstract kernel-existence principle."""
-    print("=" * 70)
-    print("DEMO 2: Abstract Kernel-Existence Principle")
-    print("=" * 70)
-    print()
+# ============================================================
+# Demo 2: Dimension Counting (Stars and Bars)
+# ============================================================
 
-    p = 5  # F_5
-    n = 2  # 2 variables
-    d = 3  # Box degree bound
-
-    # Monomials with each exponent < d
-    monomials = list(product(range(d), repeat=n))
-    dim_V = len(monomials)  # = d^n
-
-    print(f"Field: F_{p}")
-    print(f"Variables: {n}, Box degree bound: {d}")
-    print(f"Monomial space dimension: d^n = {d}^{n} = {dim_V}")
-    print(f"Monomials: {monomials}")
-    print()
-
-    # Choose E with |E| < d^n
-    # Take a small subset of F_5^2
-    all_points = list(product(range(p), repeat=n))
-    E = all_points[:dim_V - 2]  # |E| = d^n - 2 < d^n
-
-    print(f"|E| = {len(E)} < {dim_V} = dim(V)")
-    print()
-
-    # Build evaluation matrix
-    A = build_evaluation_matrix(monomials, E, p)
-    rank, kernel = gaussian_elimination_mod(A, p)  # rows=points, cols=monomials
-
-    print(f"Evaluation matrix size: {A.shape[0]} × {A.shape[1]}")
-    print(f"  (rows = |E| = {A.shape[0]}, columns = dim(V) = {A.shape[1]})")
-    print(f"Rank of evaluation matrix: {rank}")
-    print(f"Kernel dimension: {dim_V - rank}")
-    print(f"Kernel dimension > 0: {dim_V - rank > 0}  ✓")
-    print()
-
-    if kernel:
-        vec = kernel[0]
-        print(f"Kernel vector (polynomial coefficients): {list(vec)}")
-        # Verify it vanishes on E
-        poly_dict = {}
-        for j, mono in enumerate(monomials):
-            if vec[j] != 0:
-                poly_dict[mono] = int(vec[j])
-
-        print("Polynomial terms:")
-        for mono, coeff in poly_dict.items():
-            term = f"  {coeff}"
-            for i, e in enumerate(mono):
-                if e > 0:
-                    term += f" · x_{i}^{e}"
-            print(term)
-
-        print()
-        print("Verification: polynomial vanishes on E")
-        all_zero = True
-        for pt in E[:5]:  # Show first 5
-            val = mv_poly_eval_mod(poly_dict, pt, p)
-            status = "✓" if val == 0 else "✗"
-            print(f"  p{pt} = {val} mod {p}  {status}")
-            if val != 0:
-                all_zero = False
-        if len(E) > 5:
-            # Check remaining silently
-            for pt in E[5:]:
-                val = mv_poly_eval_mod(poly_dict, pt, p)
-                if val != 0:
-                    all_zero = False
-            print(f"  ... ({len(E) - 5} more points, all verified)")
-        print(f"All evaluations zero: {all_zero}  ✓")
-    print()
+def count_bounded_monomials(n, d):
+    """Count monomials in n variables with total degree < d."""
+    if d == 0:
+        return 0
+    count = 0
+    if n == 0:
+        return 1 if d > 0 else 0
+    # Enumerate all tuples (e1, ..., en) with sum < d
+    def backtrack(var, remaining_degree):
+        if var == n:
+            return 1
+        total = 0
+        for e in range(remaining_degree):
+            total += backtrack(var + 1, remaining_degree - e)
+        return total
+    return backtrack(0, d)
 
 
-# ============================================================================
-# DEMO 3: Dimension Counting for Box-Degree Spaces
-# ============================================================================
 def demo_dimension_counting():
-    """Show how dimension counting works for various parameters."""
+    """
+    Demonstrate the dimension formula: dim M(n,d) = C(d+n-1, n).
+    """
     print("=" * 70)
-    print("DEMO 3: Dimension Counting — When Vanishing Polynomials Exist")
-    print("=" * 70)
-    print()
-
-    print("For box-degree-d polynomials in n variables over F_q:")
-    print("  dim(V) = d^n")
-    print("  A nonzero vanishing polynomial exists when |E| < d^n")
-    print()
-
-    print(f"{'n':>3} {'d':>3} {'q':>3} {'dim=d^n':>10} {'|F_q^n|=q^n':>12} {'Threshold':>10}")
-    print("-" * 50)
-    for n in [1, 2, 3, 4]:
-        for d in [2, 3, 5]:
-            for q in [2, 3, 5, 7]:
-                if d <= q:  # d should be ≤ q for meaningful bound
-                    dim = d ** n
-                    total = q ** n
-                    print(f"{n:>3} {d:>3} {q:>3} {dim:>10} {total:>12} {dim-1:>10}")
-    print()
-    print("'Threshold' = maximum |E| that guarantees a vanishing polynomial exists")
-    print()
-
-
-# ============================================================================
-# DEMO 4: Evaluation Map as Linear Algebra
-# ============================================================================
-def demo_evaluation_map():
-    """Visualize the evaluation map structure."""
-    print("=" * 70)
-    print("DEMO 4: Evaluation Map Structure")
+    print("DEMO 2: Dimension of Bounded-Degree Polynomial Spaces")
     print("=" * 70)
     print()
+    
+    print(f"{'n':>3} {'d':>3} {'C(d+n-1,n)':>12} {'Enumerated':>12} {'Match':>6}")
+    print("-" * 42)
+    
+    for n in range(1, 6):
+        for d in range(1, 6):
+            formula = comb(d + n - 1, n)
+            enumerated = count_bounded_monomials(n, d)
+            match = "✓" if formula == enumerated else "✗"
+            print(f"{n:>3} {d:>3} {formula:>12} {enumerated:>12} {match:>6}")
+    print()
+    
+    # Show explicit monomials for small cases
+    print("Explicit monomials for n=2, d=3 (total degree < 3):")
+    print("  Variables: x₁, x₂")
+    monomials = []
+    for e1 in range(3):
+        for e2 in range(3 - e1):
+            if e1 == 0 and e2 == 0:
+                monomials.append("1")
+            elif e1 == 0:
+                monomials.append(f"x₂^{e2}" if e2 > 1 else "x₂")
+            elif e2 == 0:
+                monomials.append(f"x₁^{e1}" if e1 > 1 else "x₁")
+            else:
+                t1 = f"x₁^{e1}" if e1 > 1 else "x₁"
+                t2 = f"x₂^{e2}" if e2 > 1 else "x₂"
+                monomials.append(f"{t1}·{t2}")
+    print(f"  Monomials: {', '.join(monomials)}")
+    print(f"  Count: {len(monomials)} = C({3+2-1},{2}) = C(4,2) = {comb(4,2)}")
+    print()
 
-    p = 3  # F_3
+
+# ============================================================
+# Demo 3: Evaluation Matrix and Kernel
+# ============================================================
+
+def demo_evaluation_kernel():
+    """
+    Demonstrate the kernel-existence principle: when |E| < dim V,
+    the evaluation map has nontrivial kernel.
+    """
+    print("=" * 70)
+    print("DEMO 3: Evaluation Matrix Kernel (Multivariate)")
+    print("=" * 70)
+    print()
+    
+    p = 5  # GF(5)
     n = 2  # 2 variables
-    d = 2  # Box degree < 2, so monomials: 1, x0, x1, x0·x1
-
-    monomials = list(product(range(d), repeat=n))
-    E = [(0, 0), (1, 0), (0, 1)]  # 3 points in F_3^2
-
-    print(f"Field: F_{p}, Variables: {n}, Degree bound: {d}")
-    print(f"Monomials (d^n = {d**n}): {monomials}")
-    print(f"Evaluation points (|E| = {len(E)}): {E}")
+    d = 3  # degree < 3
+    
+    dim = comb(d + n - 1, n)
+    print(f"Field: GF({p}), n = {n} variables, degree bound d = {d}")
+    print(f"Dimension of M(n,d) = C({d+n-1},{n}) = {dim}")
     print()
-
-    A = build_evaluation_matrix(monomials, E, p)
-    print("Evaluation matrix A (rows=points, cols=monomials):")
-    mono_labels = []
-    for m in monomials:
-        if all(e == 0 for e in m):
-            mono_labels.append("1")
-        else:
-            parts = []
-            for i, e in enumerate(m):
-                if e > 0:
-                    parts.append(f"x{i}^{e}" if e > 1 else f"x{i}")
-            mono_labels.append("·".join(parts))
-
-    header = "        " + "  ".join(f"{l:>6}" for l in mono_labels)
+    
+    # Generate monomials of degree < d
+    monomials = []
+    for e1 in range(d):
+        for e2 in range(d - e1):
+            monomials.append((e1, e2))
+    
+    print(f"Monomials (degree < {d}): {monomials}")
+    print(f"Number of monomials: {len(monomials)}")
+    print()
+    
+    # Choose a set E with |E| < dim
+    # Take E to be a small subset of GF(5)^2
+    E = [(0, 0), (1, 0), (0, 1), (1, 1), (2, 0)]
+    print(f"Evaluation set E = {E}")
+    print(f"|E| = {len(E)} < {dim} = dim M(n,d)")
+    print()
+    
+    # Build evaluation matrix A where A[i,j] = monomial_j(E[i])
+    A = np.zeros((len(E), len(monomials)), dtype=int)
+    for i, point in enumerate(E):
+        for j, (e1, e2) in enumerate(monomials):
+            A[i, j] = pow(point[0], e1, p) * pow(point[1], e2, p) % p
+    
+    print("Evaluation matrix (rows = points, cols = monomials):")
+    header = "     " + "".join(f"{'x^'+str(m[0])+'y^'+str(m[1]):>8}" for m in monomials)
     print(header)
-    for i, pt in enumerate(E):
-        row_str = f"{str(pt):>8}" + "  ".join(f"{A[i,j]:>6}" for j in range(A.shape[1]))
-        print(row_str)
-
-    rank, kernel = gaussian_elimination_mod(A, p)
+    for i, point in enumerate(E):
+        row = f"{str(point):>5}" + "".join(f"{A[i,j]:>8}" for j in range(len(monomials)))
+        print(row)
     print()
-    print(f"Rank: {rank}")
-    print(f"Nullity: {len(monomials) - rank}")
-
-    if len(E) < len(monomials):
-        print(f"\n|E| = {len(E)} < {len(monomials)} = dim(V)")
-        print("→ Kernel is nontrivial: a nonzero vanishing polynomial exists!")
-    elif len(E) == len(monomials):
-        print(f"\n|E| = {len(E)} = {len(monomials)} = dim(V)")
-        if rank == len(monomials):
-            print("→ Evaluation map is injective: unique interpolation!")
-        else:
-            print("→ Evaluation map is not injective: vanishing polynomial exists")
+    
+    print(f"Matrix shape: {A.shape[0]} × {A.shape[1]}")
+    print(f"Rows ({len(E)}) < Columns ({len(monomials)})")
+    print(f"→ Kernel is nontrivial (dimension ≥ {len(monomials) - len(E)})")
     print()
+    
+    # Find kernel over GF(p) using Gaussian elimination
+    # Simple row reduction mod p
+    M = A.T.copy()  # Work with transpose: columns = points
+    rows, cols = M.shape
+    pivot_cols = []
+    free_vars = []
+    
+    row = 0
+    for col in range(cols):
+        # Find pivot
+        found = False
+        for r in range(row, rows):
+            if M[r, col] % p != 0:
+                M[[row, r]] = M[[r, row]]
+                found = True
+                break
+        if not found:
+            free_vars.append(col)
+            continue
+        pivot_cols.append(col)
+        # Scale pivot row
+        inv = gf_inv(int(M[row, col]), p)
+        M[row] = (M[row] * inv) % p
+        # Eliminate
+        for r in range(rows):
+            if r != row and M[r, col] % p != 0:
+                factor = int(M[r, col])
+                M[r] = (M[r] - factor * M[row]) % p
+        row += 1
+    
+    rank = len(pivot_cols)
+    nullity = rows - rank
+    print(f"Rank of evaluation matrix: {rank}")
+    print(f"Nullity (kernel dimension): {nullity}")
+    print(f"→ There exist {nullity} linearly independent polynomials of degree < {d}")
+    print(f"   that vanish on all {len(E)} points of E")
+    print()
+
+
+# ============================================================
+# Demo 4: Threshold Behavior
+# ============================================================
+
+def demo_threshold():
+    """
+    Show the sharp threshold: when |E| = dim M(n,d), the evaluation map
+    can be injective (no vanishing polynomial); when |E| < dim, it never is.
+    """
+    print("=" * 70)
+    print("DEMO 4: Sharp Threshold for Polynomial Vanishing")
+    print("=" * 70)
+    print()
+    
+    p = 7  # GF(7)
+    
+    print(f"Univariate over GF({p}):")
+    print(f"{'d':>4} {'dim M(1,d)':>12} {'|E|':>6} {'Kernel?':>10}")
+    print("-" * 36)
+    
+    for d in range(1, 8):
+        dim = d  # For univariate, dim M(1,d) = d
+        for card_E in [d - 1, d]:
+            if card_E < 0 or card_E > p:
+                continue
+            E = list(range(card_E))
+            
+            # Build evaluation matrix
+            A = np.zeros((card_E, d), dtype=int)
+            for i, x in enumerate(E):
+                for j in range(d):
+                    A[i, j] = pow(x, j, p) % p
+            
+            # Compute rank mod p (approximately, using numpy)
+            if card_E == 0:
+                has_kernel = d > 0
+            elif card_E >= d:
+                has_kernel = False  # Vandermonde with distinct points
+            else:
+                has_kernel = True  # More columns than rows
+            
+            kernel_str = "YES (guaranteed)" if card_E < d else "possibly NO"
+            print(f"{d:>4} {dim:>12} {card_E:>6} {kernel_str:>16}")
+    print()
+    print("Key insight: |E| < d GUARANTEES a vanishing polynomial exists.")
+    print("At |E| = d, the Vandermonde matrix may be full rank → no vanishing poly.")
+    print()
+
+
+# ============================================================
+# Demo 5: Reed-Muller Code Connection
+# ============================================================
+
+def demo_reed_muller():
+    """
+    Show the connection to Reed-Muller codes: the evaluation map IS the
+    encoding map, and the minimum distance relates to our vanishing theorem.
+    """
+    print("=" * 70)
+    print("DEMO 5: Reed-Muller Code Connection")
+    print("=" * 70)
+    print()
+    
+    p = 3  # GF(3)
+    n = 2  # 2 variables
+    d = 2  # degree < 2 (affine functions)
+    
+    # All points of GF(3)^2
+    all_points = list(product(range(p), repeat=n))
+    
+    dim = comb(d + n - 1, n)
+    print(f"Reed-Muller code RM({d-1}, {n}) over GF({p})")
+    print(f"  Message space dimension: {dim}")
+    print(f"  Block length: {p**n} = {p}^{n}")
+    print()
+    
+    # Monomials of degree < d
+    monomials = []
+    for e1 in range(d):
+        for e2 in range(d - e1):
+            monomials.append((e1, e2))
+    
+    # Build the full evaluation matrix (encoding matrix)
+    G = np.zeros((dim, p**n), dtype=int)
+    for j, point in enumerate(all_points):
+        for i, (e1, e2) in enumerate(monomials):
+            G[i, j] = pow(point[0], e1, p) * pow(point[1], e2, p) % p
+    
+    print("Generator matrix (rows = basis polynomials, cols = evaluation points):")
+    for i, m in enumerate(monomials):
+        row_str = " ".join(f"{G[i,j]}" for j in range(p**n))
+        print(f"  x^{m[0]}y^{m[1]}: [{row_str}]")
+    print()
+    
+    # The vanishing theorem says: any polynomial of degree < d that vanishes
+    # on E requires |E| ≥ dim. Equivalently, any nonzero codeword has at most
+    # |F^n| - dim zero positions, i.e., minimum distance ≥ |F^n| - dim + 1... 
+    # Actually, the relationship is more subtle for multivariate codes.
+    
+    # For univariate RS codes, the bound is clean:
+    print(f"For comparison, univariate Reed-Solomon RS({d}, {p}):")
+    print(f"  Dimension: {d}")
+    print(f"  Block length: {p}")
+    print(f"  By our theorem: nonzero poly of degree < {d} has ≤ {d-1} roots")
+    print(f"  → Minimum distance ≥ {p} - {d-1} = {p - d + 1}")
+    print()
+    print("Our vanishing theorem provides the OBVERSE bound:")
+    print(f"  If |E| < {dim}, there EXISTS a degree-{d-1} polynomial vanishing on E")
+    print(f"  This means sets of size < {dim} CANNOT distinguish all low-degree polynomials")
+    print()
+
+
+def main():
+    demo_univariate_vanishing()
+    demo_dimension_counting()
+    demo_evaluation_kernel()
+    demo_threshold()
+    demo_reed_muller()
+    
+    print("=" * 70)
+    print("SUMMARY")
+    print("=" * 70)
+    print()
+    print("These demos illustrate the core theorems formalized in our framework:")
+    print()
+    print("1. UNIVARIATE VANISHING: For |E| < d, ∃ nonzero p of degree < d")
+    print("   vanishing on E. (Constructive: p = ∏(X - a) for a ∈ E)")
+    print()
+    print("2. DIMENSION FORMULA: dim M(n,d) = C(d+n-1, n) by stars-and-bars.")
+    print()
+    print("3. KERNEL EXISTENCE: When |E| < dim V, any linear map V → K^E")
+    print("   has nontrivial kernel. (Rank-nullity principle)")
+    print()
+    print("4. SHARP THRESHOLD: The bound |E| < dim is tight — at equality,")
+    print("   the evaluation map can be injective (Vandermonde non-degeneracy).")
+    print()
+    print("5. CODING THEORY: The evaluation map = Reed-Muller encoding.")
+    print("   Kernel existence ↔ distance bounds for algebraic codes.")
 
 
 if __name__ == "__main__":
-    demo_univariate()
-    demo_rank_nullity()
-    demo_dimension_counting()
-    demo_evaluation_map()
-
-    print("=" * 70)
-    print("Summary")
-    print("=" * 70)
-    print()
-    print("The polynomial method works by a simple but powerful observation:")
-    print("when the space of low-degree polynomials is larger than the number")
-    print("of evaluation constraints, linear algebra guarantees the existence")
-    print("of a nonzero polynomial vanishing on the constraint set.")
-    print()
-    print("This is not just an abstract curiosity — it is the engine behind:")
-    print("  • Reed–Muller error-correcting codes")
-    print("  • Polynomial identity testing algorithms")
-    print("  • Finite-field Kakeya set lower bounds")
-    print("  • Algebraic circuit complexity lower bounds")
-    print("  • Cap set and sunflower combinatorics")
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualizations for the Finite-Field Polynomial Method.
-
-Generates figures illustrating:
-1. Evaluation matrix structure and rank
-2. Dimension counting phase diagram
-3. Vanishing polynomial zero sets
-4. Reed-Muller code weight distribution
+Visualizations for the Evaluation-Kernel Framework.
+Generates figures as PNG files.
 """
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from itertools import product
+from math import comb
+from itertools import product as cart_product
 import base64
-from io import BytesIO
+import io
 
-
-def fig_to_base64(fig):
-    """Convert matplotlib figure to base64 PNG data URI."""
-    buf = BytesIO()
+def fig_to_base64(fig) -> str:
+    """Convert a matplotlib figure to a base64 data URI."""
+    buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    encoded = base64.b64encode(buf.read()).decode('utf-8')
+    data = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
-    return f"data:image/png;base64,{encoded}"
+    return f"data:image/png;base64,{data}"
 
 
-def mod_inv(a, p):
-    return pow(int(a % p), p - 2, p) if a % p != 0 else 0
+def viz_dimension_heatmap():
+    """Heatmap of dim M(n,d) = C(d+n-1, n)."""
+    fig, ax = plt.subplots(figsize=(8, 6))
+    
+    ns = range(1, 8)
+    ds = range(1, 10)
+    
+    data = np.array([[comb(d + n - 1, n) for d in ds] for n in ns])
+    
+    im = ax.imshow(np.log10(data + 1), cmap='YlOrRd', aspect='auto')
+    
+    # Add text annotations
+    for i, n in enumerate(ns):
+        for j, d in enumerate(ds):
+            val = data[i, j]
+            color = 'white' if val > 100 else 'black'
+            ax.text(j, i, str(val), ha='center', va='center', 
+                    fontsize=8, color=color, fontweight='bold')
+    
+    ax.set_xticks(range(len(ds)))
+    ax.set_xticklabels([str(d) for d in ds])
+    ax.set_yticks(range(len(ns)))
+    ax.set_yticklabels([str(n) for n in ns])
+    ax.set_xlabel('Degree bound d', fontsize=12)
+    ax.set_ylabel('Number of variables n', fontsize=12)
+    ax.set_title('Dimension of Bounded-Degree Polynomial Space M(n,d)\ndim = C(d+n-1, n)', fontsize=14)
+    
+    plt.colorbar(im, ax=ax, label='log₁₀(dimension)')
+    fig.savefig('fig_dimension_heatmap.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
+
+
+def viz_threshold_diagram():
+    """Diagram showing the sharp threshold for polynomial vanishing."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    
+    # Left: Univariate threshold
+    ax = axes[0]
+    p = 11
+    ds = range(1, p + 1)
+    
+    for d in ds:
+        # Below threshold: kernel exists (green)
+        ax.barh(d, d - 1, left=0, color='#2ecc71', alpha=0.7, height=0.8)
+        # At/above threshold: no guarantee (red)
+        ax.barh(d, p - (d - 1), left=d - 1, color='#e74c3c', alpha=0.3, height=0.8)
+        ax.axvline(x=d, color='gray', linestyle=':', alpha=0.3)
+    
+    ax.set_xlabel('|E| (set size)', fontsize=12)
+    ax.set_ylabel('d (degree bound)', fontsize=12)
+    ax.set_title(f'Univariate Vanishing Threshold over GF({p})', fontsize=13)
+    ax.legend(['Guaranteed vanishing poly', 'No guarantee'], 
+              loc='lower right', framealpha=0.9)
+    
+    # Right: Multivariate threshold for n=2
+    ax = axes[1]
+    n = 2
+    ds_mv = range(1, 8)
+    
+    bar_green = []
+    bar_red = []
+    
+    for d in ds_mv:
+        dim = comb(d + n - 1, n)
+        bar_green.append(dim - 1)
+        bar_red.append(max(0, 50 - (dim - 1)))
+    
+    y_pos = list(ds_mv)
+    ax.barh(y_pos, bar_green, color='#2ecc71', alpha=0.7, height=0.6, label='Vanishing poly guaranteed')
+    ax.barh(y_pos, bar_red, left=bar_green, color='#e74c3c', alpha=0.3, height=0.6, label='No guarantee')
+    
+    for d in ds_mv:
+        dim = comb(d + n - 1, n)
+        ax.text(dim, d, f' dim={dim}', va='center', fontsize=9, color='#2c3e50')
+    
+    ax.set_xlabel('|E| (set size)', fontsize=12)
+    ax.set_ylabel('d (degree bound)', fontsize=12)
+    ax.set_title(f'Multivariate Vanishing Threshold (n={n} variables)', fontsize=13)
+    ax.legend(loc='lower right', framealpha=0.9)
+    
+    plt.tight_layout()
+    fig.savefig('fig_threshold.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
 def viz_evaluation_matrix():
-    """Visualize the evaluation matrix for box-degree polynomials."""
+    """Visualize the evaluation matrix structure."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
     p = 5
     n = 2
     d = 3
-    monomials = list(product(range(d), repeat=n))
-    points = list(product(range(p), repeat=n))[:12]
-
-    A = np.zeros((len(points), len(monomials)), dtype=int)
+    
+    # Monomials
+    monomials = []
+    for e1 in range(d):
+        for e2 in range(d - e1):
+            monomials.append((e1, e2))
+    
+    # Points
+    points = [(i, j) for i in range(p) for j in range(p)][:8]
+    
+    # Build matrix
+    A = np.zeros((len(points), len(monomials)))
     for i, pt in enumerate(points):
-        for j, mono in enumerate(monomials):
-            val = 1
-            for k_idx, e in enumerate(mono):
-                val = (val * pow(int(pt[k_idx]), int(e), p)) % p
-            A[i, j] = val
-
-    fig, ax = plt.subplots(figsize=(10, 8))
-    im = ax.imshow(A, cmap='YlOrRd', aspect='auto')
-
-    mono_labels = []
-    for m in monomials:
-        if all(e == 0 for e in m):
-            mono_labels.append("1")
+        for j, (e1, e2) in enumerate(monomials):
+            A[i, j] = pow(pt[0], e1, p) * pow(pt[1], e2, p) % p
+    
+    im = ax.imshow(A, cmap='viridis', aspect='auto')
+    
+    # Labels
+    mon_labels = []
+    for e1, e2 in monomials:
+        if e1 == 0 and e2 == 0:
+            mon_labels.append('1')
+        elif e1 == 0:
+            mon_labels.append(f'y{"" if e2 == 1 else "²"}')
+        elif e2 == 0:
+            mon_labels.append(f'x{"" if e1 == 1 else "²"}')
         else:
-            parts = []
-            for i_var, e in enumerate(m):
-                if e > 0:
-                    parts.append(f"x{i_var}{'²' if e == 2 else '' if e == 1 else f'^{e}'}")
-            mono_labels.append("·".join(parts))
-
+            mon_labels.append(f'x{"" if e1 == 1 else "²"}y{"" if e2 == 1 else "²"}')
+    
     ax.set_xticks(range(len(monomials)))
-    ax.set_xticklabels(mono_labels, rotation=45, ha='right', fontsize=9)
+    ax.set_xticklabels(mon_labels, fontsize=10)
     ax.set_yticks(range(len(points)))
-    ax.set_yticklabels([str(pt) for pt in points], fontsize=8)
-
+    ax.set_yticklabels([str(pt) for pt in points], fontsize=9)
+    ax.set_xlabel('Monomials (degree < 3)', fontsize=12)
+    ax.set_ylabel('Evaluation points in GF(5)²', fontsize=12)
+    ax.set_title('Evaluation Matrix over GF(5)\n8 points × 6 monomials → kernel dim ≥ 6 - 8 is not useful here\nbut with 5 points × 6 monomials → kernel dim ≥ 1', fontsize=12)
+    
+    # Add text
     for i in range(len(points)):
         for j in range(len(monomials)):
-            ax.text(j, i, str(A[i, j]), ha='center', va='center', fontsize=8,
-                    color='white' if A[i, j] > p // 2 else 'black')
-
-    ax.set_xlabel('Monomials (columns = basis of polynomial space)', fontsize=11)
-    ax.set_ylabel('Evaluation points (rows)', fontsize=11)
-    ax.set_title(f'Evaluation Matrix over F_{p}\n'
-                 f'dim(V) = {len(monomials)} monomials, |E| = {len(points)} points',
-                 fontsize=13)
-    plt.colorbar(im, ax=ax, label='Value mod p')
-
-    return fig_to_base64(fig)
+            ax.text(j, i, f'{int(A[i,j])}', ha='center', va='center',
+                    color='white' if A[i,j] > 2 else 'black', fontsize=10)
+    
+    plt.colorbar(im, ax=ax, label='Value in GF(5)')
+    fig.savefig('fig_eval_matrix.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
-def viz_dimension_phase_diagram():
-    """Phase diagram showing when vanishing polynomials exist."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: univariate
-    ax = axes[0]
-    ds = range(1, 15)
-    es = range(0, 15)
-    phase = np.zeros((len(list(es)), len(list(ds))))
-
-    for i, e_card in enumerate(es):
-        for j, d_val in enumerate(ds):
-            if e_card < d_val:
-                phase[i, j] = 1  # Vanishing polynomial exists
-            else:
-                phase[i, j] = 0
-
-    cmap = plt.cm.colors.ListedColormap(['#ff6b6b', '#51cf66'])
-    ax.imshow(phase, cmap=cmap, aspect='auto', origin='lower',
-              extent=[0.5, 14.5, -0.5, 14.5])
-    ax.set_xlabel('Degree bound d', fontsize=12)
-    ax.set_ylabel('|E| (set size)', fontsize=12)
-    ax.set_title('Univariate: Vanishing Polynomial Exists?', fontsize=13)
-    ax.plot([0.5, 14.5], [0.5, 14.5], 'k--', linewidth=2, label='|E| = d boundary')
+def viz_kernel_dimension():
+    """Plot kernel dimension as function of |E| for various (n,d)."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    configs = [
+        (1, 5, 'Univariate, d=5'),
+        (2, 3, 'Bivariate, d=3'),
+        (2, 4, 'Bivariate, d=4'),
+        (3, 3, 'Trivariate, d=3'),
+    ]
+    
+    colors = ['#3498db', '#e74c3c', '#2ecc71', '#9b59b6']
+    
+    for (n, d, label), color in zip(configs, colors):
+        dim = comb(d + n - 1, n)
+        E_sizes = range(0, dim + 3)
+        kernel_dims = [max(0, dim - e) for e in E_sizes]
+        
+        ax.plot(E_sizes, kernel_dims, 'o-', color=color, label=f'{label} (dim={dim})',
+                markersize=4, linewidth=2)
+        ax.axvline(x=dim, color=color, linestyle='--', alpha=0.3)
+    
+    ax.set_xlabel('|E| (number of evaluation points)', fontsize=12)
+    ax.set_ylabel('Guaranteed kernel dimension (≥ dim - |E|)', fontsize=12)
+    ax.set_title('Kernel Dimension of Evaluation Map\nPositive kernel ⟹ vanishing polynomial exists', fontsize=13)
     ax.legend(fontsize=10)
-
-    # Add text labels
-    ax.text(10, 3, 'EXISTS\n(|E| < d)', ha='center', va='center',
-            fontsize=14, fontweight='bold', color='darkgreen')
-    ax.text(4, 11, 'NOT\nGUARANTEED', ha='center', va='center',
-            fontsize=14, fontweight='bold', color='darkred')
-
-    # Right: multivariate dimension landscape
-    ax = axes[1]
-    ns = range(1, 6)
-    ds_mv = range(1, 8)
-    dims = np.zeros((len(list(ns)), len(list(ds_mv))))
-
-    for i, n_val in enumerate(ns):
-        for j, d_val in enumerate(ds_mv):
-            dims[i, j] = d_val ** n_val
-
-    im = ax.imshow(dims, cmap='viridis', aspect='auto', origin='lower',
-                   extent=[0.5, 7.5, 0.5, 5.5], norm=matplotlib.colors.LogNorm())
-    ax.set_xlabel('Box degree bound d', fontsize=12)
-    ax.set_ylabel('Number of variables n', fontsize=12)
-    ax.set_title('Multivariate: dim(V) = d^n', fontsize=13)
-    plt.colorbar(im, ax=ax, label='Dimension of polynomial space')
-
-    for i, n_val in enumerate(ns):
-        for j, d_val in enumerate(ds_mv):
-            val = d_val ** n_val
-            ax.text(j + 1, i + 1, str(val), ha='center', va='center',
-                    fontsize=8, color='white' if val > 50 else 'black')
-
-    plt.tight_layout()
-    return fig_to_base64(fig)
-
-
-def viz_vanishing_zero_set():
-    """Visualize the zero set of a vanishing polynomial over F_p^2."""
-    p = 7
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    for idx, (title, poly_func) in enumerate([
-        ("x² + y² - 1", lambda x, y: (x**2 + y**2 - 1) % p),
-        ("x·y", lambda x, y: (x * y) % p),
-        ("x³ - y² + x", lambda x, y: (x**3 - y**2 + x) % p),
-    ]):
-        ax = axes[idx]
-        all_pts = list(product(range(p), repeat=2))
-        zeros = [(x, y) for x, y in all_pts if poly_func(x, y) == 0]
-        nonzeros = [(x, y) for x, y in all_pts if poly_func(x, y) != 0]
-
-        if nonzeros:
-            nz_x, nz_y = zip(*nonzeros)
-            ax.scatter(nz_x, nz_y, c='lightgray', s=40, alpha=0.5, label='Nonzero')
-        if zeros:
-            z_x, z_y = zip(*zeros)
-            ax.scatter(z_x, z_y, c='red', s=80, zorder=5, label=f'Zeros ({len(zeros)} pts)')
-
-        ax.set_xlabel('x', fontsize=11)
-        ax.set_ylabel('y', fontsize=11)
-        ax.set_title(f'f(x,y) = {title}\nover F_{p}', fontsize=12)
-        ax.set_xticks(range(p))
-        ax.set_yticks(range(p))
-        ax.legend(fontsize=9)
-        ax.grid(True, alpha=0.3)
-        ax.set_aspect('equal')
-
-    plt.suptitle('Zero Sets of Polynomials over Finite Fields', fontsize=14, y=1.02)
-    plt.tight_layout()
-    return fig_to_base64(fig)
-
-
-def viz_reed_muller_weights():
-    """Visualize Reed-Muller codeword weight distribution."""
-    import random
-    random.seed(42)
-
-    p = 5
-    configs = [(1, 2, "RM(5,1,2)"), (1, 3, "RM(5,1,3)"), (2, 2, "RM(5,2,2)")]
-
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-    for idx, (n_var, d, label) in enumerate(configs):
-        ax = axes[idx]
-        monomials = list(product(range(d), repeat=n_var))
-        all_points = list(product(range(p), repeat=n_var))
-        dim = len(monomials)
-        length = len(all_points)
-
-        weights = []
-        num_samples = min(500, p ** dim)
-
-        for _ in range(num_samples):
-            msg = [random.randint(0, p - 1) for _ in range(dim)]
-            if all(m == 0 for m in msg):
-                continue
-
-            codeword = []
-            for pt in all_points:
-                val = 0
-                for j, mono in enumerate(monomials):
-                    term = msg[j]
-                    for k_idx, e in enumerate(mono):
-                        term = (term * pow(int(pt[k_idx]), int(e), p)) % p
-                    val = (val + term) % p
-                codeword.append(val)
-
-            weight = sum(1 for c in codeword if c != 0)
-            weights.append(weight)
-
-        ax.hist(weights, bins=range(0, length + 2), color='steelblue',
-                edgecolor='white', alpha=0.8)
-        ax.axvline(x=min(weights) if weights else 0, color='red',
-                   linestyle='--', linewidth=2, label=f'Min weight = {min(weights) if weights else 0}')
-        ax.set_xlabel('Hamming weight', fontsize=11)
-        ax.set_ylabel('Count', fontsize=11)
-        ax.set_title(f'{label}\nn={n_var}, d={d}, p={p}\n'
-                     f'dim={dim}, length={length}', fontsize=11)
-        ax.legend(fontsize=9)
-
-    plt.suptitle('Reed-Muller Codeword Weight Distributions', fontsize=14, y=1.02)
-    plt.tight_layout()
-    return fig_to_base64(fig)
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='black', linewidth=0.5)
+    
+    ax.fill_between(range(0, 25), 0, -1, alpha=0.1, color='red', label='_')
+    ax.set_ylim(-0.5, max(comb(d + n - 1, n) for n, d, _ in configs) + 1)
+    
+    fig.savefig('fig_kernel_dimension.png', dpi=150, bbox_inches='tight')
+    b64 = fig_to_base64(fig)
+    return b64
 
 
 if __name__ == "__main__":
     print("Generating visualizations...")
-
-    print("  1. Evaluation matrix...")
-    eval_b64 = viz_evaluation_matrix()
-    print(f"     Generated ({len(eval_b64)} chars)")
-
-    print("  2. Phase diagram...")
-    phase_b64 = viz_dimension_phase_diagram()
-    print(f"     Generated ({len(phase_b64)} chars)")
-
-    print("  3. Zero sets...")
-    zeros_b64 = viz_vanishing_zero_set()
-    print(f"     Generated ({len(zeros_b64)} chars)")
-
-    print("  4. Reed-Muller weights...")
-    weights_b64 = viz_reed_muller_weights()
-    print(f"     Generated ({len(weights_b64)} chars)")
-
-    print("\nAll visualizations generated successfully.")
-
-    # Save as standalone HTML for quick viewing
-    html = f"""<!DOCTYPE html>
-<html><head><title>Polynomial Method Visualizations</title></head>
-<body style="max-width:900px;margin:auto;font-family:sans-serif">
-<h1>Finite-Field Polynomial Method — Visualizations</h1>
-<h2>1. Evaluation Matrix</h2>
-<img src="{eval_b64}" style="max-width:100%">
-<h2>2. Dimension Phase Diagram</h2>
-<img src="{phase_b64}" style="max-width:100%">
-<h2>3. Zero Sets over Finite Fields</h2>
-<img src="{zeros_b64}" style="max-width:100%">
-<h2>4. Reed-Muller Weight Distributions</h2>
-<img src="{weights_b64}" style="max-width:100%">
-</body></html>"""
-
-    with open("visualizations.html", "w") as f:
-        f.write(html)
-    print("Saved visualizations.html")
+    
+    b64_1 = viz_dimension_heatmap()
+    print(f"  fig_dimension_heatmap.png generated ({len(b64_1)} chars base64)")
+    
+    b64_2 = viz_threshold_diagram()
+    print(f"  fig_threshold.png generated ({len(b64_2)} chars base64)")
+    
+    b64_3 = viz_evaluation_matrix()
+    print(f"  fig_eval_matrix.png generated ({len(b64_3)} chars base64)")
+    
+    b64_4 = viz_kernel_dimension()
+    print(f"  fig_kernel_dimension.png generated ({len(b64_4)} chars base64)")
+    
+    print("\nAll visualizations saved as PNG files.")

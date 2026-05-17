@@ -768,6 +768,191 @@
     "timestamp": "2026-05-17T03:03:33.148216+00:00"
   },
   {
+    "id": "fd_0244",
+    "title": "Case-split strategy:",
+    "description": "Enumerate all 8 cases of `(a, b, r)` being `⊥` or `some _`. For the `(some, some, some)` case, reduce to `real_add_le_iff_le_sub`. For `⊥` cases, use `bot_le` and definitional unfolding.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.744374+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Typeclass derivation:",
+    "description": "Show that `WithBot ℝ` with `tropicalAdd` satisfies `OrderedAddCommMonoid` and `SupSet`/`InfSet` instances, then construct the residuated lattice instance via `ResidualatedLattice.mk`.\n\n### Cross-Domain Connection\n**Quantale semantics in program analysis:** A residuated lattice on `WithBot ℝ` would serve as a semantic domain for abstract interpretation, where `wbotResidual` computes weakest preconditions for resource-bounded programs. This connects certified robustness to the theory of abstract interpretation (Cousot & Cousot, 1977).\n\n---\n\n## Direction 2: Tropical Hypersurface Distance as Certified Robustness\n\n### Theorem Statement\nFor a tropical polynomial `p(x) = max_i(aᵢ + ⟨wᵢ, x⟩)` defining a classifier, the certified radius at point `x₀` equals the tropical distance from `x₀` to the tr",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.773107+00:00"
+  },
+  {
+    "id": "fd_0246",
+    "title": "Direct computation:",
+    "description": "Define the tropical boundary distance as the gap between the top two affine forms, then show `certifiedRadius` applied to this gap reduces to the quotient by the Lipschitz constant.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.789948+00:00"
+  },
+  {
+    "id": "fd_0247",
+    "title": "Polyhedral geometry route:",
+    "description": "Use Mathlib's `Polyhedron` API to represent tropical cells as convex polytopes, then compute the distance to the cell boundary and relate it to the margin.\n\n### Cross-Domain Connection\n**Neural network interpretability:** ReLU networks are tropical rational maps. The tropical hypersurface distance gives a geometric interpretation of the network's decision boundary, connecting robustness certification to the theory of tropical algebraic varieties.\n\n---\n\n## Direction 3: Entropy Contraction via Residual Robustness Bounds\n\n### Theorem Statement\nIf a channel `W : α → β → ℝ` is `K`-Lipschitz in its input (with respect to Hamming distance on `α` and statistical distance on output distributions), then the mutual information `I(X; W(X))` contracts by at least `certifiedRadius(H(X), K)` under pertur",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.810934+00:00"
+  },
+  {
+    "id": "fd_0248",
+    "title": "Data processing inequality route:",
+    "description": "Use the data processing inequality to bound `I(X'; W(X'))` in terms of `I(X; W(X))` plus a Lipschitz correction, then apply `certifiedRadius_margin_ineq`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.829295+00:00"
+  },
+  {
+    "id": "fd_0249",
+    "title": "Direct Lipschitz chain:",
+    "description": "Bound `|I(X; W) - I(X'; W)|` by `K · d(X, X')` using the Lipschitz property of mutual information, then use `d(X, X') ≤ r ≤ m/K` to get the margin bound.\n\n### Cross-Domain Connection\n**Differential privacy:** The Lipschitz condition on a channel is equivalent to differential privacy with parameter `ε = K`. Entropy contraction certified by radii gives a new perspective on the privacy-utility tradeoff: the certified radius measures the maximum data perturbation that preserves utility bounds.\n\n---\n\n## Direction 4: Cryptographic Distinguishability Certificates via Tropical Separation\n\n### Theorem Statement\nFor two distributions `P, Q` on a finite type, if their statistical distance satisfies `Δ(P, Q) ≥ m` and a tropical determinant certificate gives a Lipschitz bound `K` on the distinguisher, ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.849542+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Triangle inequality route:",
+    "description": "Decompose `|⟨P' - Q, D⟩|` as `|⟨P - Q, D⟩ - ⟨P - P', D⟩|`, bound the second term by `K · d(P, P')`, and apply the certified radius bound.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.866654+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Dual tropical certificate:",
+    "description": "Express the distinguishing advantage as a difference of tropical linear forms, then use `tropical_lattice_det_bound` to derive the Lipschitz constant from the tropical determinant.\n\n### Cross-Domain Connection\n**Post-quantum security proofs:** Tropical one-way functions (formalized in `TropicalOneWayFoundations.lean`) have hardness parameterized by dimension. The certified radius framework could formalize security reductions where the distinguishing advantage is preserved under bounded perturbation of cryptographic parameters.\n\n---\n\n## Direction 5: Formal Equivalence Between Margin Certificates and Tropical Chamber Stability\n\n### Theorem Statement\nFor a tropical polynomial classifier, the set of inputs where the classifier has margin ≥ m is exactly a tropical polyhedral cell (intersection ",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.887479+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Lipschitz ball inclusion:",
+    "description": "Show that the certified ball around `x` is contained in the margin cell using `finite_certified_ball_nonneg` (generalized to infinite sets), then bound the Chebyshev radius from below.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.908378+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Tropical halfspace decomposition:",
+    "description": "Express the margin cell as an intersection of tropical halfspaces `{x | aᵢ + ⟨wᵢ, x⟩ - aⱼ - ⟨wⱼ, x⟩ ≥ 0}`, compute the distance to each halfspace boundary, and take the minimum.\n\n### Cross-Domain Connection\n**Optimization and convex geometry:** The Chebyshev radius of a convex body is a fundamental quantity in convex optimization (related to the John ellipsoid). Identifying it with a certified radius connects robustness certification to the theory of convex body geometry and interior-point methods.\n\n---\n\n## Implementation Priorities",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.931363+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Direction 1",
+    "description": "(full residuated lattice) should be attempted first — it completes the algebraic infrastructure and unlocks Directions 2–5.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.952770+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Directions 2 and 5",
+    "description": "(tropical geometry) require additional Mathlib infrastructure for polyhedral geometry and may need new API development.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a54a94dd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:06:58.971530+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -975,6 +1160,21 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Summary: Research Roadmap",
+    "description": "| Priority | Direction | Key Theorem | Dependencies |\n|----------|-----------|-------------|--------------|\n| 1 | Finite Products | `finProd_universal` | Binary product (done) |\n| 2 | Termination | `product_reduction_terminates` | Product + well-founded induction |\n| 3 | Pressure Bounds | `pressure_product_bound` | Product + real analysis |\n| 4 | Automata Sync | `product_word_bound` | Product + combinatorics |\n| 5 | Security Comp | `composed_security_bound` | Dual (min) product |\n\nEach direction builds directly on the categorical product infrastructure established in this work. The key insight is that invariant-bearing systems form a category with enough structure (products, identity, composition, associativity) to support systematic compositional reasoning across thermodynamics, automata ",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "a015a16c",
+    "consumed_by_exp_id": "8e87fa71",
+    "timestamp": "2026-05-15T08:01:09.762727+00:00"
   },
   {
     "id": "fd_0194",
