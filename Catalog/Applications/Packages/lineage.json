@@ -13,10 +13,19 @@
       "id": "compositional_analysis",
       "title": "Compositional Tropical Semantics for Event Graphs",
       "domain": "Tropical Algebra / Systems Theory",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
+      "primary_domain": "Tropical",
+      "shape": "star",
       "date": "2026-05-17T18:21:39Z",
       "hue": 270
+    },
+    {
+      "id": "statement",
+      "title": "Anisotropic Footprint Bound on Finite Cartesian Products",
+      "domain": "Algebra / Combinatorics / Coding Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-17T18:25:10Z",
+      "hue": 90
     }
   ],
   "edges": [],
