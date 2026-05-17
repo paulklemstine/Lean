@@ -25,10 +25,10 @@
       "Algebra"
     ],
     "priority_score": 0.87,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "beabd842",
     "timestamp": "2026-05-14T16:03:53.818879+00:00"
   },
   {
@@ -500,22 +500,6 @@
     "timestamp": "2026-05-16T21:09:48.059246+00:00"
   },
   {
-    "id": "fd_0270",
-    "title": "Extract convergence rate",
-    "description": "from the contraction constant.\n\n### Required New Definitions\n\n- `discountedTropicalMap`: `T_γ(x)_i = max_j(A_{ij} + γ·x_j)`.\n- Integration with Mathlib's metric space and contraction mapping infrastructure.\n\n### Anticipated Blockers\n\n- The map `T_γ` is γ-contracting but acts on `Fin n → ℝ` with `ℓ∞` norm — need to show this is a complete metric space (it is, as a product of complete spaces).\n- Connecting with Mathlib's `ContractingWith` may require some API work.\n\n### Enabling Lemmas\n\n- `tropicalMatMap_nonexpansive_coord` — the undiscounted version. The discounted version multiplies the bound by γ.\n- `tropicalMatMap_monotone` — monotonicity is inherited by the discounted operator.\n\n### Cross-Domain Impact\n\n- **Reinforcement learning**: certified value function bounds for MDPs.\n- **Robust c",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "477ce9c1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T21:09:48.122316+00:00"
-  },
-  {
     "id": "fd_0244",
     "title": "Proof strategy:",
     "description": "- Define Dr(r,n) as the set of vectors satisfying all 3-term tropical Plücker relations.\n- Define Trop(Gr(r,n)) via initial ideals or valuated realizability.\n- For r=2: prove equality using the tree-metric characterization (both sides equal\n  the space of tree metrics).\n- For r=3: exhibit an explicit counterexample (the Fano matroid provides one for n=7).",
@@ -547,66 +531,6 @@
     "timestamp": "2026-05-16T22:05:47.364615+00:00"
   },
   {
-    "id": "fd_0257",
-    "title": "Formalize",
-    "description": "each direction as a Lean 4 module with sorry-marked lemma skeletons.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b7383f62",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T00:34:34.668515+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "Alternating minimization",
-    "description": ": Show each BA step decreases the Lagrangian. The E-step minimizes over channels for fixed output distribution; the M-step minimizes over output distributions for fixed channel.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de00b05b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:05:51.696303+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "KKT conditions",
-    "description": ": Show the limit point satisfies the KKT conditions of the convex optimization problem.\n\n### Cross-Domain Connection\nBlahut-Arimoto is an instance of the EM algorithm for exponential families. Proving convergence in Lean would create infrastructure reusable for machine learning convergence proofs.\n\n---\n\n## Direction 2: Tropical Legendre Duality for Finite Rate-Distortion\n\n### Theorem Statement\nFor finite alphabets, the rate-distortion function admits a dual representation:\n\n$$R(D) = \\sup_{\\lambda \\geq 0} [\\Phi(\\lambda) - \\lambda D]$$\n\nwhere $\\Phi(\\lambda) = \\min_K [I(\\mu, K) + \\lambda \\cdot \\text{dist}(\\mu, K, d)]$ is the rate-distortion Lagrangian. This dual representation expresses R(D) as the Legendre-Fenchel conjugate of -Φ, and for finite alphabets, the supremum is achieved by a finit",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de00b05b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:05:51.732816+00:00"
-  },
-  {
-    "id": "fd_0265",
-    "title": "Birkhoff's theorem",
-    "description": ": The set of doubly stochastic matrices is the convex hull of permutation matrices; the minimum over couplings equals the minimum over permutations for integer-valued empirical measures.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "de00b05b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:05:51.873795+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Direct bijection",
     "description": ": Establish a bijection between permutations and deterministic couplings, preserving cost.\n\n### Cross-Domain Connection\nThis connects voice-leading to the rich theory of optimal transport, including Kantorovich duality, Sinkhorn algorithms, and geodesics in Wasserstein space. It would enable treating chord progressions as curves in Wasserstein space.\n\n---\n\n## Direction 5: Semantic Compression Theorem for Finite Symbolic Dynamical Systems\n\n### Theorem Statement\nFor a finite-state symbolic dynamical system (Markov chain) on state space S with transition matrix P and a semantic distortion measure d_sem (capturing meaning-preserving vs. meaning-distorting simplifications), the rate-distortion function R_sem(D) characterizes the fundamental limits of semantic compression: how much can you simpl",
@@ -624,88 +548,168 @@
     "timestamp": "2026-05-17T01:05:51.891615+00:00"
   },
   {
-    "id": "fd_0259",
-    "title": "Validate the mathematical architecture",
-    "description": "by writing the full proof skeleton with `sorry`-ed lemmas.",
+    "id": "fd_0260",
+    "title": "Direct slice rank approach",
+    "description": ": Define slice rank for order-3 tensors T : V × V × V → k. Prove that the diagonal tensor restricted to a cap set A has slice rank |A|. Prove that the polynomial decomposition forces slice rank ≤ 3 · (number of monomials of degree ≤ 2n/3 with exponents < 3). Combine to get |A| ≤ 3 · binom(n, ≤ 2n/3, restricted).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ab00abc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:47:00.339606+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Partition rank variant",
+    "description": ": Use the simpler notion of partition rank (Naslund 2020) which avoids some tensor formalism. Define a function F : A × A × A → 𝔽₃ that is \"diagonal\" (nonzero only when x = y = z) and show it has low partition rank.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ab00abc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:47:00.358439+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Combinatorial dimension argument",
+    "description": ": Bypass tensors entirely. Use the polynomial method to show that the indicator functions {1_a : a ∈ A} restricted to a cap set, expressed as degree-≤-2n/3 polynomials, must be linearly independent. Count dimensions.\n\n### Cross-Domain Connections\n- **Algebraic complexity**: Slice rank is related to tensor rank, which governs matrix multiplication complexity. Formalizing slice rank creates infrastructure for Strassen-type lower bounds.\n- **Communication complexity**: Tensor rank lower bounds imply communication complexity lower bounds for multiparty problems.\n- **Quantum information**: Tensor decompositions appear in quantum entanglement classification.\n\n---\n\n## Direction 2: Generalized Progression-Free Bounds in 𝔽_p^n\n\n### Target Theorem\nExtend cap set bounds to arbitrary prime fields: for",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ab00abc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:47:00.377245+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Generalize the reduced polynomial framework",
+    "description": ": Replace ZMod 3 with ZMod p throughout. The key identity x^p = x holds in any 𝔽_p. Reduced polynomials have exponents < p in each variable, giving p^n monomials. The indicator polynomial becomes ∏ᵢ (1 - (xᵢ - aᵢ)^(p-1)).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ab00abc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:47:00.395305+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Subtype approach",
+    "description": ": Define the subtype of reduced polynomials, equip it with the submodule structure from `restrictDegree`, and show the evaluation map is bijective using `exists_reduced_poly_rep` and `reduced_poly_eval_injective`.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ab00abc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:47:00.451905+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Direct construction",
+    "description": ": Build the linear equivalence using `interpolationPoly` as the inverse of evaluation. The main work is showing linearity of interpolation (which follows from linearity of the sum construction) and the left/right inverses (which follow from evaluation correctness and injectivity).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ab00abc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:47:00.471492+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "Dimension argument",
+    "description": ": Show both spaces have dimension 3^n (reduced monomials form a basis of the polynomial subspace, and functions on a 3^n-element set form a 3^n-dimensional space). A bijective linear map between equidimensional spaces is an isomorphism.\n\n### Cross-Domain Connections\n- **Algebraic geometry**: This is a concrete instance of the coordinate ring isomorphism for a finite variety. Formalizing it opens paths to algebraic geometry over finite fields.\n- **Coding theory**: The evaluation map is precisely the encoding map of Reed-Muller codes over 𝔽₃.\n- **Pseudorandomness**: The polynomial representation is fundamental to constructions of pseudorandom generators and extractors.\n\n---\n\n## Direction 4: Additive Energy Bounds from Cap Set Constraints\n\n### Target Theorem\nCap sets have near-minimal additiv",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ab00abc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:47:00.491038+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Direct counting via polynomial vanishing",
+    "description": ": Use the polynomial method to count solutions to a + b = c + d in A⁴. The progression-free constraint limits the \"degenerate\" solutions, and the polynomial space dimension limits the total.\n\n### Cross-Domain Connections\n- **Additive combinatorics**: This directly strengthens the existing `bounded_autocorr_bounded_energy` theorem in the catalog, creating a bridge between spectral methods and polynomial methods.\n- **Ergodic theory**: Additive energy bounds are a key ingredient in ergodic-theoretic proofs of Szemerédi's theorem.\n- **Cryptography**: Low additive energy is a requirement for certain hash function constructions and randomness extractors.\n\n---\n\n## Direction 5: Finite-Field Incidence Geometry via Polynomial Partitioning\n\n### Target Theorem\nThe Kakeya conjecture over finite fields:",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0ab00abc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:47:00.546219+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Dvir's polynomial method",
+    "description": ": The original proof by Dvir (2009) uses the polynomial method directly. If K is a Kakeya set with |K| < binom(n+q-1, n), then there exists a nonzero polynomial of degree < q vanishing on K. But a polynomial of degree < q vanishing on a line in every direction must be zero (by the Schwartz-Zippel lemma applied along each line). Contradiction.",
     "domains": [
       "Logic"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "10777b48",
+    "source_exp_id": "0ab00abc",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:41:36.685632+00:00"
+    "timestamp": "2026-05-17T02:47:00.564466+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Direction 1",
-    "description": "(Amplified Freivalds) — immediate, builds directly on current results, high confidence of completion.",
+    "id": "fd_0273",
+    "title": "Algebraic method with multiplicity",
+    "description": ": Dvir-Kopparty-Saraf-Sudan strengthened this with multiplicity arguments. This requires formalizing polynomial multiplicities at points.",
     "domains": [
-      "Bridges"
+      "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "10777b48",
+    "source_exp_id": "0ab00abc",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:41:37.141302+00:00"
+    "timestamp": "2026-05-17T02:47:00.583421+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Direction 4",
-    "description": "(Schwartz-Zippel) — substantial but well-understood mathematics, very high impact.",
+    "id": "fd_0274",
+    "title": "Polynomial partitioning",
+    "description": ": The Guth-Katz approach (for ℝ^n) uses polynomial partitioning, which could be adapted to finite fields for incidence geometry applications.",
     "domains": [
-      "Bridges"
+      "Algebra",
+      "Geometry"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "10777b48",
+    "source_exp_id": "0ab00abc",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:41:37.171644+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Formalize definitions",
-    "description": "in Lean 4 (1-2 weeks per direction).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bf67dda8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:16:44.658902+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "State key lemmas",
-    "description": "with sorry (validate skeleton compiles).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bf67dda8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:16:44.678088+00:00"
-  },
-  {
-    "id": "fd_0254",
-    "title": "Iterate",
-    "description": ": use failures to refine hypotheses and proof strategies.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bf67dda8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:16:44.692701+00:00"
+    "timestamp": "2026-05-17T02:47:00.601952+00:00"
   },
   {
     "id": "fd_0113",
@@ -1328,172 +1332,6 @@
     "timestamp": "2026-05-16T13:12:11.734256+00:00"
   },
   {
-    "id": "fd_0257",
-    "title": "3. Reverse Transport: Cryptographic Hardness Implies Learning Impossibility",
-    "description": "**Hypothesis**: The affine morphism chain is invertible under additional convexity assumptions. If the morphisms are *bi-Lipschitz* (both upper and lower affine bounds), then cryptographic hardness assumptions (e.g., LWE, SVP) yield provable lower bounds on learning complexity.\n\n**Proof Strategy**:\n- Define `BiTheoryMorphism` with both `A.inv x ≤ c * B.inv (map x) + a` and `B.inv (map x) ≤ c' * A.inv x + a'`.\n- Prove that composition preserves the bi-Lipschitz property.\n- Instantiate: if LWE is hard (security parameter ≥ λ), then any learner that could break the corresponding learning problem must have sample complexity ≥ f(λ).\n\n**Cross-domain Connections**: This is the learning-theoretic analogue of cryptographic hardness assumptions. It would formalize the folklore intuition that \"if you",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2a24e1c8",
-    "consumed_by_exp_id": "a54a94dd",
-    "timestamp": "2026-05-16T22:10:48.812835+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "Hypothesis",
-    "description": "The tropical semiring $(\\mathbb{R} \\cup \\{-\\infty\\}, \\max, +)$ with residual $a \\multimap c = c - a$ forms a residuated lattice, and tropical aggregation layers are residuated maps. The compositional stability theorem is then a statement about cut-elimination in a quantitative proof system.",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "be71e654",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:13:17.427899+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "Phase 1 (Months 1-3): Foundations",
-    "description": "- Formalize Direction 2 (certified radii) as the most directly applicable extension\n- Begin Direction 3 (residuated lattice on `WithBot ℝ`)\n- Develop computational benchmarks for Direction 5",
-    "domains": [
-      "Cryptography"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "be71e654",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:13:17.468441+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "1. Tropical Lorentzian Geometry: Causal Cones and Light-Cone Structure",
-    "description": "**Theorem target**: Define tropical causal cones and prove that the one-sided displacement preorder on `Fin n → ℝ` admits a natural cone structure analogous to future light-cones in Lorentzian geometry.\n\n```\ndef TropicalCausalCone (x : Fin n → ℝ) (T : ℝ) : Set (Fin n → ℝ) :=\n  { y | TropicalCausal tropicalOneSidedDisplacement T x y }\n\ntheorem causal_cone_nested (x : Fin n → ℝ) {T₁ T₂ : ℝ} (h : T₁ ≤ T₂) :\n    TropicalCausalCone x T₁ ⊆ TropicalCausalCone x T₂\n\ntheorem causal_cone_convex (x : Fin n → ℝ) (T : ℝ) :\n    Convex ℝ (TropicalCausalCone x T)\n```\n\n**Lean definitions needed**: `TropicalCausalCone`, tropical convexity predicates, cone algebra operations.\n\n**Proof strategy**: The nested cone property follows from monotonicity of the budget parameter. Convexity requires showing that if `m",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cfffd08",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:25:54.739410+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "3. Tropical Neural Network Causal Certificates",
-    "description": "**Theorem target**: For a tropical (max-plus) neural network with layer maps `f₁, ..., f_L`, prove that if each layer is nonexpansive with Lipschitz constant `≤ 1`, then the entire network preserves the causal preorder, and adversarial perturbation budgets compose additively across layers.\n\n```\ndef TropicalNetwork (layers : List (Fin n → ℝ → Fin n → ℝ)) := ...\n\ntheorem network_causal_certificate\n    (net : TropicalNetwork layers)\n    (h_nonexp : ∀ l ∈ layers, TropicalNonexpansive τ τ l)\n    {x y : Fin n → ℝ} (hxy : TropicalFuture τ x y) :\n    TropicalFuture τ (net.eval x) (net.eval y)\n\ntheorem adversarial_budget_composition\n    (net : TropicalNetwork layers)\n    (budgets : List ℝ)\n    (h_layer_budgets : ∀ i x, TropicalCausal τ (budgets[i]) x (layers[i] x)) :\n    TropicalCausal τ (budgets.s",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cfffd08",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:25:54.779176+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "5. Tropical Entropy and Causal Information Flow",
-    "description": "**Theorem target**: Define a notion of causal information capacity using tropical entropy, and prove that nonexpansive maps cannot increase causal information flow.\n\n```\ndef tropicalCausalEntropy (τ : α → α → ℝ) (S : Finset α) (T : ℝ) : ℝ :=\n  Finset.log (S.filter (fun y => ∃ x ∈ S, TropicalCausal τ T x y)).card\n\ntheorem causal_entropy_nonincreasing\n    {α β : Type*} {τ₁ : α → α → ℝ} {τ₂ : β → β → ℝ} {f : α → β}\n    (hf : TropicalNonexpansive τ₁ τ₂ f)\n    (S : Finset α) (T : ℝ) :\n    tropicalCausalEntropy τ₂ (S.image f) T ≤ tropicalCausalEntropy τ₁ S T\n\ntheorem security_from_causal_entropy\n    (τ : α → α → ℝ) (S : Finset α) (T : ℝ) :\n    tropicalCausalEntropy τ S T ≤ Finset.log S.card\n```\n\n**Lean definitions needed**: `tropicalCausalEntropy`, connection to `tropicalEntropy` from the existi",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5cfffd08",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:25:54.821807+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "2. Residuated Category of Tropical Layers",
-    "description": "**Objective:** Define a category whose objects are finite-dimensional real vector spaces (or types with a partial order) and whose morphisms are residuated monotone maps. Prove that this category is closed under composition, products, and coproducts.\n\n**Hypothesis:** The structure `ResiduatedMap α β` (a pair of forward/backward maps satisfying the Galois connection) forms a category:\n- Identity: `(id, id)` is residuated.\n- Composition: proven by `residual_comp`.\n- Products: `(f × g, f♯ × g♯)` is residuated when `f` and `g` are.\n\n**Proof Strategy:**\n1. Define `ResiduatedMap` as a structure with `toFun`, `residual`, and the `gc` proof.\n2. Define `ResiduatedMap.id` and `ResiduatedMap.comp`.\n3. Show this satisfies the category laws (use `CategoryStruct` from Mathlib).\n4. Prove the product and ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b1f62ec",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:08:10.845643+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "2. Freivalds for Matrix Product Verification via PIT",
-    "description": "**Target theorem**:\n```lean\ntheorem freivalds_product_verification\n    {q n : ℕ} [Fact q.Prime]\n    (A B C : Matrix (Fin n) (Fin n) (ZMod q))\n    (hneq : A * B ≠ C) :\n    Fintype.card {r : Fin n → ZMod q // (A * B).mulVec r = C.mulVec r}\n      ≤ q ^ (n - 1)\n```\n\n**Proof strategy**: Set `D = A * B - C`, observe `D ≠ 0`, and note that `D.mulVec r = 0 ↔ (A*B).mulVec r = C.mulVec r`. Apply `freivalds_from_schwartz_zippel` to `D`. This is already partially formalized in `Freivalds.lean` for square matrices; the rectangular generalization follows from the current work.\n\n**Application**: This formalizes the full Freivalds algorithm: given matrices A, B, C, pick a random vector r over ZMod q and check whether `A*(B*r) = C*r`. If `AB ≠ C`, the check catches the error with probability at least `1 - ",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e846ce5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:10:48.655625+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "4. Coding-Theoretic Reinterpretation",
-    "description": "**Target**: Formalize the connection between linear forms and parity-check equations in coding theory.\n\n**Key theorem**:\n```lean\ntheorem parity_check_fraction\n    {q p : ℕ} [Fact q.Prime] (hp : 0 < p)\n    (w : Fin p → ZMod q) (hw : w ≠ 0) :\n    (Fintype.card {r : Fin p → ZMod q // ∑ j, w j * r j = 0} : ℚ) /\n      (Fintype.card (Fin p → ZMod q) : ℚ) ≤ 1 / q\n```\n\n**Context**: A nonzero vector `w` defines a single parity-check equation. The theorem says exactly a `1/q` fraction of all words satisfy a nontrivial parity check. This is the foundation for:\n- Minimum distance bounds for linear codes\n- Reed–Muller code analysis (where parity checks are polynomial evaluations)\n- Low-density parity-check (LDPC) code analysis\n\n**Proof strategy**: Divide both sides of `card_solutions_linear_form_le` by",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e846ce5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:10:48.697719+00:00"
-  },
-  {
-    "id": "fd_0265",
-    "title": "Conjecture Statement",
-    "description": "In the tropical semiring (ℝ ∪ {∞}, min, +), the \"support extraction\" principle states: if a tropical polynomial f has a monomial with coefficient strictly smaller (more extreme) than all other monomials at the exponent vector d, and if variable bounds are given by finite sets S_i, then there exists a point in the tropical Cartesian product where f achieves a value determined by the d-monomial.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "705965b8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T00:34:14.134551+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Lean Target (Conjectural)",
     "description": "```lean\ntheorem tropical_support_extraction\n    {ι : Type*} [Fintype ι] [DecidableEq ι]\n    (coeffs : (ι →₀ ℕ) → WithTop ℝ)\n    (d : ι →₀ ℕ)\n    (S : ι → Finset ℝ)\n    (hmin : ∀ m ≠ d, coeffs d < coeffs m) :\n    ∃ x ∈ tropicalGrid S,\n      tropicalEval coeffs x = coeffs d + ∑ i, d i • tropicalMin (S i)\n```",
@@ -1507,67 +1345,6 @@
     "source_exp_id": "705965b8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T00:34:14.156206+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "Target Theorem",
-    "description": "```\ntheorem reduced_realization_same_topology\n    (D : Matrix (Fin n) (Fin n) ℝ)\n    (hm : IsFiniteMetric D) (h4 : FourPointCondition D)\n    (T₁ T₂ : LBTree) (hred₁ : T₁.Reduced) (hred₂ : T₂.Reduced)\n    (hreal₁ : T₁.Realizes D) (hreal₂ : T₂.Realizes D)\n    (hlabels₁ : T₁.labels = ...) (hlabels₂ : T₂.labels = ...) :\n    T₁.SameTopology T₂\n```",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e61522de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:39:05.197219+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "Feasibility",
-    "description": "Medium. The individual perturbation bounds are proved. The main challenge is tracking error propagation through recursive reconstruction. The constant C(n) needs to be made explicit.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e61522de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:39:05.260767+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "Cross-Domain Significance",
-    "description": "This is the \"Rosetta Stone\" theorem connecting:\n- Finite metric geometry (four-point condition)\n- Algebraic geometry (Grassmannian)\n- Tropical geometry (tropicalization)\n- Phylogenetics (tree reconstruction)\n\nA formal proof would be a landmark result connecting these four domains.\n\n---",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e61522de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:39:05.291495+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Summary of Dependencies",
-    "description": "```\n                    [5. Tropical Plücker]\n                           ↑\n                    [2. Cone Interior]\n                           ↑\n              [1. Full Tree Uniqueness]  ←→  [4. Certified Algorithm]\n                     ↑           ↑\n         [cherry_pair_metric_invariant]\n                     ↑\n    [cherry_dist_diff_eq_rootDist_diff]\n         [same_topology_cherry_iff]\n              [noisy stability]\n                     ↑\n           [3. Full Stability]\n```\n\nEach direction builds on the current development and opens new formal research territory at the intersection of tropical geometry, metric rigidity, and algorithmic phylogenetics.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e61522de",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T01:39:05.313392+00:00"
   },
   {
     "id": "fd_0247",
@@ -1657,83 +1434,5 @@
     "source_exp_id": "72596401",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T02:00:26.854609+00:00"
-  },
-  {
-    "id": "fd_0255",
-    "title": "Concrete Theorem Target",
-    "description": "```lean\ntheorem hitting_set_for_bounded_circuits\n    {K : Type*} [Field K] [Fintype K] [DecidableEq K]\n    {n d : ℕ} (hd : d < Fintype.card K)\n    (H : Finset (Fin n → K))\n    (hH : ∀ f : MvPolynomial (Fin n) K, f ≠ 0 → f.totalDegree ≤ d →\n      ∃ x ∈ H, MvPolynomial.eval x f ≠ 0) :\n    -- H is a hitting set: deterministic PIT using |H| evaluations\n    ∀ f : MvPolynomial (Fin n) K, f.totalDegree ≤ d →\n      (∀ x ∈ H, MvPolynomial.eval x f = 0) → f = 0\n```",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1afd62f8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:25:16.766604+00:00"
-  },
-  {
-    "id": "fd_0256",
-    "title": "Why This Opens a Research Corridor",
-    "description": "Explicit hitting sets are the *derandomization* of PIT. A formal construction would be the first certified step toward the Kabanets–Impagliazzo program: PIT derandomization implies circuit lower bounds or factoring is easy. This direction would produce the first machine-verified result in algebraic derandomization.\n\n---",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1afd62f8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:25:16.783045+00:00"
-  },
-  {
-    "id": "fd_0257",
-    "title": "Concrete Theorem Target (Restricted Version)",
-    "description": "```lean\n-- For depth-3 circuits (ΣΠΣ), the implication is unconditional:\ntheorem kabanets_impagliazzo_depth3\n    (derandomize_PIT : ∀ (K : Type*) [Field K] [Fintype K] [DecidableEq K],\n      ∀ n d : ℕ, ∃ H : Finset (Fin n → K),\n        H.card ≤ (n * d) ^ 3 ∧\n        ∀ f : MvPolynomial (Fin n) K, f ≠ 0 → f.totalDegree ≤ d →\n          ∃ x ∈ H, MvPolynomial.eval x f ≠ 0) :\n    -- Consequence: lower bound on ΣΠΣ circuit size for certain explicit polynomials\n    True -- placeholder for the formal lower bound\n```",
-    "domains": [
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1afd62f8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:25:16.952775+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Dependencies",
-    "description": "- `fingerprint_collision_bound` (this work) — already proved.\n- `vecPoly_injective` (this work) — already proved.\n- Requires formalizing ε-almost universal hash families and the birthday bound.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1afd62f8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:25:16.979900+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Cross-Cutting Theme: Building the Formal Kabanets–Impagliazzo Worldview",
-    "description": "All five directions converge on a single vision: **formally certifying the deep connections between algebraic structure, computational complexity, and randomized verification.** The theorems proved in this work are the first stones of this bridge:\n\n| This Work | Next Step | Ultimate Goal |\n|-----------|-----------|---------------|\n| `fingerprint_collision_bound` | Streaming lower bounds | Formal communication complexity |\n| `schwartz_zippel_subtype` | Explicit hitting sets | Formal PIT derandomization |\n| `many_zeros_force_zero` | Circuit lower bounds | Formal Kabanets–Impagliazzo |\n| `nonzero_codeword_probe_collision_bound` | Sum-check protocol | Formal IP = PSPACE |\n| `vecPoly_injective` | Universal hashing | Formal cryptographic security |\n\nEach direction is independently valuable and p",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1afd62f8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T02:25:17.006485+00:00"
   }
 ]
