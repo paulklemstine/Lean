@@ -391,36 +391,6 @@
     "timestamp": "2026-05-17T07:39:39.526079+00:00"
   },
   {
-    "id": "fd_0258",
-    "title": "Lasota-Yorke inequality:",
-    "description": "Establish a Lasota-Yorke inequality for L on BV or Lipschitz spaces. Use the entry growth bound `berggren_entry_growth_bound` to control distortion of inverse branches.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1ba249c5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:59:36.602974+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "Trace method:",
-    "description": "Compute tr(NB^(2k)) via counting closed nonbacktracking walks and use moment bounds to control the second eigenvalue.\n\n### Cross-Domain Connection\nThis connects to the **Ramanujan graph** program of Lubotzky-Phillips-Sarnak and to Friedman's theorem on random regular graphs. A Ramanujan bound for the nonbacktracking Berggren operator would place the Berggren tree alongside LPS graphs as a natural arithmetic expander.\n\n---\n\n## Direction 3: Deterministic Sampling Theorem for Primitive Triples\n\n### Goal\nUse the spectral gap to construct a deterministic algorithm that generates a collection of N primitive Pythagorean triples whose empirical distribution approximates the uniform distribution on depth-n triples, with explicit error bounds.\n\n### Theorem Statement\nThere exists a deterministic poly",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1ba249c5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:59:36.678518+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Expander walk derandomization:",
     "description": "Apply the standard ε-bias construction: take a single seed and use the spectral gap to generate pseudorandom bits via the expander walk. The number of seeds needed is O(log(3^n)/gap) = O(n).",
@@ -433,38 +403,6 @@
     "source_exp_id": "1ba249c5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T08:59:36.696523+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "Method of conditional expectations:",
-    "description": "Derandomize the probabilistic argument by greedily choosing each sibling at each level to minimize the discrepancy.\n\n### Cross-Domain Connection\nThis bridges **number theory** and **computational complexity theory**. A deterministic sampler for primitive triples would be the first example of derandomization in an arithmetic-geometric setting, connecting expander theory to Diophantine equations.\n\n---\n\n## Direction 4: Automorphic and Thermodynamic Bridge\n\n### Goal\nInterpret the Berggren spectral gap in terms of automorphic forms on SO(2,1;ℤ) and the thermodynamic formalism of the modular surface.\n\n### Theorem Statement\nThe Berggren generators generate a thin subgroup Γ < SO(2,1;ℤ). The spectral gap of the Berggren tree dynamics is related to the spectral gap of the Laplacian on the arithmeti",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1ba249c5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:59:36.717527+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Selberg's 1/4 conjecture approach:",
-    "description": "If the spectral gap for the Laplacian on Γ\\ℍ² exceeds 1/4, then the representation-theoretic spectral gap translates to mixing of the random walk via the Bowen-Margulis measure.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1ba249c5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:59:36.740504+00:00"
   },
   {
     "id": "fd_0265",
@@ -485,21 +423,6 @@
     "timestamp": "2026-05-17T08:59:36.762065+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Nisan-Wigderson generator:",
-    "description": "Use the Berggren expander as the underlying graph in a Nisan-Wigderson PRG construction. The spectral gap guarantees that the PRG fools bounded tests.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1ba249c5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:59:36.784603+00:00"
-  },
-  {
     "id": "fd_0270",
     "title": "Phase 4:",
     "description": "Extend to deep networks using layer-wise barrier decomposition.\n\n**Key challenge:** The barrier terms become infinite at activation boundaries (where neurons switch). Use ε-smoothing: replace log|z| with log(|z| + ε) and anneal ε during training.\n\n**Concrete next step:** Train a 2-layer network on MNIST with the barrier loss, measure certified accuracy at ε = 0.1 (L∞), and compare against PGD adversarial training and TRADES.\n\n**Expected impact:** State-of-the-art certified accuracy via a principled optimization objective.\n\n---\n\n## Direction 3: Tropical-MILP Hybrid Verifiers with Completeness Certificates\n\n### Problem Statement\nBuild a verification system that uses cheap tropical/affine certificates as a preprocessing step for MILP, with provable completeness guarantees.\n\n### Current State\n",
@@ -513,20 +436,6 @@
     "source_exp_id": "1d4c4fc6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T10:32:08.586511+00:00"
-  },
-  {
-    "id": "fd_0271",
-    "title": "Upper bound:",
-    "description": "Use packing arguments. N regions in a bounded domain have average diameter O(1/N^{1/n}), so the region radius is at most this.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1d4c4fc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:32:08.605086+00:00"
   },
   {
     "id": "fd_0273",
@@ -559,48 +468,6 @@
     "timestamp": "2026-05-17T10:32:08.719383+00:00"
   },
   {
-    "id": "fd_0279",
-    "title": "Direction 2 (Interior-point training):",
-    "description": "Most impactful for practitioners, but requires careful engineering.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1d4c4fc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:32:08.757175+00:00"
-  },
-  {
-    "id": "fd_0280",
-    "title": "Direction 4 (Expressivity-robustness):",
-    "description": "Most theoretically significant, could establish a new subfield.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1d4c4fc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:32:08.779125+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "Weekly cross-team meetings",
-    "description": "to identify shared lemma needs and avoid duplication.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "85071bef",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:30:47.774704+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Shared Lean library:",
     "description": "All proven lemmas go into a common `TropicalRobustness` module.",
@@ -616,32 +483,187 @@
     "timestamp": "2026-05-17T11:30:47.805105+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Hypothesis testing:",
-    "description": "Before formalizing, test each conjecture with `#eval` on concrete examples.",
+    "id": "fd_0270",
+    "title": "Connection to existing work",
+    "description": ": The project already contains `periodicBP_eval_eq_tropPow` and `periodicBP_spectral_bound` in the max-plus setting. Translate these to min-plus and strengthen to an exact limit theorem.\n\n### Key Lemmas to Formalize\n- `tropical_eigenvalue_eq_cycle_mean`: λ(M) equals the minimum cycle mean\n- `subadditive_convergence`: Fekete's lemma for ℕ∞-valued sequences\n- `periodic_transfer_spectral_radius`: The growth rate of M^d converges to λ(M)\n\n### Cross-Domain Impact\n- **Statistical mechanics**: λ(M) is the ground-state energy per unit length of an infinite strip with periodic boundary conditions\n- **Automata theory**: λ(M) determines the asymptotic growth rate of the most accepting run\n- **Scheduling**: λ(M) is the throughput of a periodic manufacturing system\n\n### Estimated Difficulty: ★★★☆☆\n\n---",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "85071bef",
+    "source_exp_id": "262182fb",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:30:47.826597+00:00"
+    "timestamp": "2026-05-17T11:33:52.695115+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Iterate:",
-    "description": "After initial results, recombine teams for the integration phase (Directions 3–5).",
+    "id": "fd_0272",
+    "title": "Lower bound",
+    "description": ": Show that any width-w BP has transfer product of tropical rank ≤ w, by proving that each layer multiplication preserves a rank bound.",
     "domains": [
-      "Bridges"
+      "Tropical"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "85071bef",
+    "source_exp_id": "262182fb",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:30:47.847562+00:00"
+    "timestamp": "2026-05-17T11:33:52.736089+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Minimization algorithm",
+    "description": ": Define a tropical analogue of the Myhill-Nerode theorem, using tropical linear dependence to identify mergeable states.\n\n### Key Formalization Targets\n- `tropicalRank`: Definition of tropical matrix rank\n- `rank_width_upper_bound`: tropicalRank(transferProduct(P)) ≤ P.width\n- `rank_width_lower_bound`: Any BP computing f has width ≥ tropicalRank(transferProduct(f))\n- `tropical_minimization`: Algorithm to find the minimum-width equivalent BP\n\n### Cross-Domain Impact\n- **Complexity theory**: Tropical rank lower bounds ↔ branching program width lower bounds\n- **Automata theory**: Generalizes classical automaton minimization to weighted (tropical) automata\n- **Machine learning**: Compressed representations of Viterbi-type computations\n\n### Estimated Difficulty: ★★★★☆\n\n---\n\n## Direction 3: Wid",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:52.758509+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Communication complexity bridge",
+    "description": ": Width-bounded BPs correspond to communication protocols with bounded message size. Transfer rank bounds translate to partition number lower bounds in communication complexity.",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:52.777649+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Explicit functions",
+    "description": ": For the element distinctness function on n elements, prove that any width-w BP requires depth Ω(n²/w) by showing the transfer product has tropical rank Ω(n).\n\n### Key Formalization Targets\n- `width_depth_product_lb`: w · d ≥ tropicalRank(f) for explicit functions\n- `element_distinctness_rank`: tropicalRank for element distinctness ≥ Ω(n)\n- `communication_to_transfer_rank`: BP communication complexity ≥ log(tropicalRank)\n\n### Cross-Domain Impact\n- **Circuit complexity**: New lower bound technique via tropical linear algebra\n- **Streaming algorithms**: Memory-pass tradeoffs via transfer rank\n- **VLSI design**: Area-time tradeoffs via tropical matrix factorization\n\n### Estimated Difficulty: ★★★★★\n\n---\n\n## Direction 4: Tropical Partition Functions at Finite Temperature\n\n### Hypothesis\nThe fi",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:52.819878+00:00"
+  },
+  {
+    "id": "fd_0277",
+    "title": "Maslov dequantization",
+    "description": ": The log-sum-exp semiring is a deformation of the tropical semiring parametrized by T (the \"Planck constant\"). Prove convergence using Maslov's dequantization theorem.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:52.839296+00:00"
+  },
+  {
+    "id": "fd_0278",
+    "title": "Continuity of matrix products",
+    "description": ": Show that the matrix product is continuous in the deformation parameter T, ensuring convergence of the full transfer product.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:52.866321+00:00"
+  },
+  {
+    "id": "fd_0282",
+    "title": "Identify costs",
+    "description": ": Forward state = min prefix cost, backward state = min suffix cost, total = min over decomposition points.\n\n### Key Formalization Targets\n- `backwardState`: Backward Bellman propagation\n- `forward_backward_decomposition`: minCost = min_v (forward(i,v) + backward(i,v))\n- `tropical_chapman_kolmogorov`: The decomposition holds at every layer\n- `bidirectional_search`: An optimized algorithm using both directions\n\n### Cross-Domain Impact\n- **Graph algorithms**: Bidirectional shortest path search with correctness proof\n- **Control theory**: Hamilton-Jacobi-Bellman duality in discrete tropical settings\n- **Verification**: Compositional verification of layered systems via forward/backward analysis\n\n### Estimated Difficulty: ★★★☆☆\n\n---\n\n## Implementation Roadmap\n\n### Phase 1 (Near-term): Direction",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:52.955254+00:00"
+  },
+  {
+    "id": "fd_0283",
+    "title": "Semiring dynamics",
+    "description": ": All five directions explore the dynamics of semiring-valued operators. A general theory of \"tropical dynamical systems\" could unify them.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:52.974286+00:00"
+  },
+  {
+    "id": "fd_0284",
+    "title": "Operator compression",
+    "description": ": Transfer rank, spectral radius, and width bounds are all facets of the question: \"How compressible is the transfer operator?\"",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:52.994991+00:00"
+  },
+  {
+    "id": "fd_0285",
+    "title": "Temperature as deformation parameter",
+    "description": ": The T-parametric view connects tropical (T=0) and probabilistic (T>0) computation, suggesting a unified complexity theory of approximate optimization.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:53.015123+00:00"
+  },
+  {
+    "id": "fd_0286",
+    "title": "Formal verification as methodology",
+    "description": ": Machine-checked proofs provide certainty about foundational results, enabling confident construction of deeper theories on verified foundations.\n\n---\n\n## Team Directive\n\nEach direction should be pursued by a team that:",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "262182fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:33:53.035527+00:00"
   },
   {
     "id": "fd_0113",
@@ -1245,24 +1267,6 @@
     "timestamp": "2026-05-17T07:35:53.275696+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Direction 3: Certified Tropical Matrix Algebra",
-    "description": "**Hypothesis:** The scalar-level reflection tactic can be lifted to matrix expressions over the tropical semiring, enabling automated proofs of tropical matrix identities and spectral properties.\n\n**Proof Strategy:**\n1. Define `TropMatExpr` as matrices of `CTropExpr` entries.\n2. Implement tropical matrix multiplication: `(A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})`.\n3. Lift `normalize_ca` entry-wise and prove that normalized matrix equality implies semantic equality.\n4. For spectral properties: formalize the tropical eigenvalue as the minimum cycle mean in the associated weighted digraph. Prove that `tr(A^n)/n → λ(A)` tropically.\n5. Connect to the existing `MinPlusSpectral.lean` infrastructure.\n\n**Impact:** Tropical matrix algebra is the computational engine behind:\n- Shortest-path algorithms (",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "df23c5f9",
-    "consumed_by_exp_id": "97483b17",
-    "timestamp": "2026-05-17T07:35:53.303086+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "2. Reverse Simulation: Circuit → Branching Program",
     "description": "**Goal:** Characterize when layered circuits can be compiled back into bounded-width branching programs, with explicit width bounds.\n\n**Theorem target:**\n```\ntheorem circuit_to_bp_reverse\n    (n : ℕ) (C : LayeredCircuit n) :\n    ∃ w : ℕ, w ≤ 2 ^ C.width ∧\n    ∃ P : BP n w C.depth,\n      ∀ x, P.Accepts x ↔ C.Accepts x\n```\n\n**Strategy:** The reverse simulation encodes the entire state of a circuit layer (w' Boolean gates) as a single state in a branching program of width 2^{w'}. Each transition reads the relevant input bits and updates the state according to the circuit's gate logic. The width bound 2^{w'} is exponential because each BP state must encode all possible valuations of the gates in a single layer.\n\n**Key insight:** This exponential blowup is unavoidable in general (NC¹ vs L separ",
@@ -1315,39 +1319,6 @@
     "timestamp": "2026-05-17T08:12:18.271699+00:00"
   },
   {
-    "id": "fd_0258",
-    "title": "5. Transfer Operators and Partition Functions",
-    "description": "**Goal:** Formalize BP evaluation as a transfer-operator computation and show the circuit is its dynamic-program unfolding.\n\n**Theorem target:**\n```\ntheorem bp_eval_eq_transfer_matrix_product\n    (w d : ℕ) (P : TropicalBP w d) :\n    P.minCost = (transferProduct P d).apply startVec P.accept\n\ntheorem circuit_unrolls_transfer\n    (w d : ℕ) (P : TropicalBP w d) :\n    tropBPToCircuit P = unfoldTransferProduct (transferMatrices P)\n```\n\n**Strategy:**\n1. Define `transferMatrix P i` as the w×w tropical matrix for layer i, with entry (u,v) = edgeWeight(i, u, v).\n2. Define `transferProduct P d` as the tropical matrix product M₀ ⊗ M₁ ⊗ ... ⊗ M_{d-1}.\n3. Show BP.minCost = the (start, accept) entry of the transfer product.\n4. Show the circuit evaluation is exactly the iterative computation of this matri",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0db29d83",
-    "consumed_by_exp_id": "262182fb",
-    "timestamp": "2026-05-17T08:12:18.293148+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "Key Lean Targets",
-    "description": "- Generalize `facetDist` with a `NormedSpace` parameter and dual norm.\n- Prove `facetDist_certifies_robustness` for the general case using the abstract Hahn–Banach inequality in Mathlib.\n- Instantiate for L1, L2, L∞ with explicit dual norm computations.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "740c7329",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:20:23.421417+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Background",
     "description": "In many real-world deployments, data points are not static—they evolve over time. The question is: can we maintain certified radii as the dataset drifts, without recomputing from scratch?\n\nOur incremental persistence theorem (Theorem B) shows that inserting a new point costs O(md). For kinetic updates where existing points move by small increments, we conjecture that:\n- Certificate changes are Lipschitz in the point movement\n- A priority queue on \"certificate expiration times\" enables event-driven updates\n- The amortized cost is logarithmic in N",
@@ -1362,20 +1333,6 @@
     "timestamp": "2026-05-17T08:20:23.440660+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Impact",
-    "description": "Would establish that certified robustness is not merely a geometric quantity but an information-theoretic one, opening connections to privacy, compression, and coding theory.\n\n---",
-    "domains": [
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "740c7329",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:20:23.468915+00:00"
-  },
-  {
     "id": "fd_0265",
     "title": "Phase 2 (Months 3-6): Core Development",
     "description": "- Build kinetic certification framework (Direction 2)\n- Formalize tropical information-theoretic connections (Direction 4)\n- Prototype nearest-facet compilation (Direction 5)",
@@ -1388,20 +1345,6 @@
     "source_exp_id": "740c7329",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T08:20:23.574805+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Phase 3 (Months 6-12): Integration and Publication",
-    "description": "- Unify Directions 1-5 into a comprehensive framework\n- Implement GPU-accelerated certification library\n- Produce benchmarks on standard robustness datasets (MNIST, CIFAR-10)\n- Submit to top venues (ICML, NeurIPS, FOCS/STOC for theoretical contributions)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "740c7329",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:20:23.598132+00:00"
   },
   {
     "id": "fd_0260",
@@ -1420,21 +1363,6 @@
     "timestamp": "2026-05-17T09:56:16.798525+00:00"
   },
   {
-    "id": "fd_0261",
-    "title": "Why It Matters",
-    "description": "DAG representations capture sharing — subcircuits reused multiple times — which is the key to separating formula size from circuit size. This distinction is central to complexity theory: monotone circuit lower bounds (Razborov, Alon–Boppana) fundamentally depend on DAG structure. Formalizing DAG semantics would open the path to formal circuit complexity results.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6244d0ef",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T09:56:16.818218+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Cross-Domain Connection",
     "description": "DAG circuits correspond directly to dynamic programming tables: each node computes a subproblem, `+` concatenates costs, and `min` selects optimal branches. This connection would formalize the equivalence between circuit evaluation and Bellman-equation solving.\n\n---",
@@ -1450,35 +1378,6 @@
     "timestamp": "2026-05-17T09:56:16.837800+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Lean Type Signature Sketch",
-    "description": "```lean\ntheorem tropical_markov_contraction\n    {n m : ℕ} (hn : 0 < n) (hm : 0 < m)\n    (π : Fin n → Fin m) (hπ : Function.Surjective π)\n    (σ : Fin m → Fin n)  -- a \"spread-back\" section\n    (hσ : ∀ j, π (σ j) = j)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hmix : ∀ x : Fin n → ℝ,\n      tropSpread hm (coarseGrainMax hn hm π hπ x) ≤\n      α * tropSpread hn x) :\n    ∀ (x : Fin n → ℝ) (k : ℕ),\n      -- k-fold iterated coarse-graining contracts spread by α^k\n      iteratedSpread k π σ x ≤ α ^ k * tropSpread hn x := by\n  sorry\n```",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5ffd606c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:05:21.768975+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "`tropical_spectral_bound` → Direction 2",
-    "description": "The spectral bound controls growth in matrix-driven dynamics, enabling long-horizon kinetic certification.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5ffd606c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:05:21.824735+00:00"
-  },
-  {
     "id": "fd_0265",
     "title": "`tropical_fundamental_theorem_of_arithmetic` → Direction 4",
     "description": "Unique factorization in tropical semirings provides algebraic tools for decomposing tropical polytopes into irreducible facets.\n\n---",
@@ -1492,22 +1391,6 @@
     "source_exp_id": "5ffd606c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T10:05:21.849797+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Research Priorities",
-    "description": "**Immediate (Month 7-8)**: Direction 1 (Markov contraction) — extends data processing directly.\n**Medium-term (Month 9-10)**: Direction 2 (matrix-driven certification) — highest application impact.\n**Ambitious (Month 11-12)**: Direction 3 (channel capacity) — most theoretically novel.\n**Long-term**: Directions 4-5 — require more mathematical infrastructure.\n\nThe overarching goal: make the Lean library the authoritative formal reference for **tropical certified information dynamics** — a new subfield bridging tropical geometry, information theory, and verified computation.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5ffd606c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:05:21.875681+00:00"
   },
   {
     "id": "fd_0251",
@@ -1626,34 +1509,6 @@
     "timestamp": "2026-05-17T10:48:24.827247+00:00"
   },
   {
-    "id": "fd_0258",
-    "title": "Phase 1 (Months 1-2)",
-    "description": "- Implement multi-terminal SP networks (Direction 1)\n- Define treewidth and tree decompositions (Direction 2)\n- Prove tropical Schur complement basics (Direction 4)",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8f686496",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:48:24.864646+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Phase 2 (Months 2-4)",
-    "description": "- Prove multi-terminal boundary rigidity for k=3\n- Prove hyperbolicity bounds for series-parallel with depth\n- Implement tropical eigenvalue computation",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8f686496",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:48:24.882938+00:00"
-  },
-  {
     "id": "fd_0260",
     "title": "Ongoing",
     "description": "- Maintain and extend the certified tropical linear algebra library\n- Generate computational experiments validating conjectures\n- Write papers for each completed direction",
@@ -1682,21 +1537,6 @@
     "source_exp_id": "6d2f8cf4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T11:31:09.830914+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Hypothesis",
-    "description": "For any `α` with a negation-like involution `σ : α → α` satisfying `σ(a + b) = σ(a) + σ(b)` and `σ(inf a b) = sup (σ a) (σ b)`, the simulation theorem for min-plus circuits implies an identical theorem for max-plus circuits with the same operation bound.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6d2f8cf4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:31:09.850755+00:00"
   },
   {
     "id": "fd_0267",
