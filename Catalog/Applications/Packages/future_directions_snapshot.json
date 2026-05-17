@@ -62,6 +62,20 @@
     "timestamp": "2026-05-14T16:16:22.718724+00:00"
   },
   {
+    "id": "fd_0195",
+    "title": "Tactic engineer",
+    "description": ": Implements the syntax-to-semantics bridge and verified tactic (Direction 4).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "465c3121",
+    "consumed_by_exp_id": "79d995d4",
+    "timestamp": "2026-05-15T03:03:37.382470+00:00"
+  },
+  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -538,20 +552,6 @@
     "timestamp": "2026-05-17T16:32:06.971013+00:00"
   },
   {
-    "id": "fd_0268",
-    "title": "Documents connections",
-    "description": "to classical mathematical results in docstrings.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4c33555c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:32:07.086950+00:00"
-  },
-  {
     "id": "fd_0270",
     "title": "Sum-check + Block Structure",
     "description": ": Compositional interactive proofs where each block has its own sum-check verifier. This would give formally verified *interactive* block verification.",
@@ -559,10 +559,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "90a65a27",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5cf6f85f",
     "timestamp": "2026-05-17T16:37:43.472463+00:00"
   },
   {
@@ -607,6 +607,157 @@
     "source_exp_id": "90a65a27",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:37:43.534409+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Identify the Berggren generators",
+    "description": "as explicit elements of PGL₂(𝔽_q) via the rational parametrization (m² - n² : 2mn : m² + n²) of the conic",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.769159+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Decompose",
+    "description": "ℂ[P¹(𝔽_q)] = **1** ⊕ St ⊕ (remaining irreducibles) using the character table of PGL₂(𝔽_q)",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.787395+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Compute",
+    "description": "the eigenvalue of T_q on the Steinberg representation St, showing it equals a cube root of the character value with magnitude 1/√3",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.804717+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Formalize",
+    "description": "in machine-checked mathematics\n\n### Cross-Domain Connections\n- Automorphic forms: the operator T_q is a finite analogue of a Hecke operator\n- Algebraic geometry: the conic is a genus-0 curve, and the eigenfunctions are sections of line bundles\n- Quantum computing: the spectral decomposition provides a quantum walk framework\n\n### Estimated Difficulty\nHigh. Requires formalizing finite group representation theory for PGL₂ in a proof assistant, including character tables and the Steinberg representation.\n\n---\n\n## Direction 2: Composite Modulus Spectral Factorization via CRT\n\n### Hypothesis\nFor composite moduli n = p₁^{a₁} ⋯ p_k^{a_k}, the Berggren operator spectrum on P(X_n) factors as a tensor product of the spectra on each P(X_{p_i^{a_i}}), with the spectral gap remaining 1 - 1/√3.\n\n### Proo",
+    "domains": [
+      "Physics",
+      "Pythagorean",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.823022+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Show",
+    "description": "the Berggren action respects this decomposition",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.854525+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "Prove",
+    "description": "the tensor product spectral theorem: eigenvalues of T_n are products of eigenvalues of T_{p_i^{a_i}}",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.869928+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Handle",
+    "description": "prime powers p^a separately — the isotropic cone mod p^a has different structure from mod p\n\n### Key Lemma\nFor coprime m, n: the projective cone P(X_{mn}) maps surjectively to P(X_m) × P(X_n) with controllable fibers.\n\n### Applications\n- Derandomization with composite-modulus arithmetic circuits\n- Equidistribution results for Pythagorean triples mod arbitrary integers\n- Connection to Dirichlet L-functions and their functional equations\n\n### Estimated Difficulty\nMedium. The CRT for linear actions is standard; the main challenge is handling projectivization and prime powers.\n\n---\n\n## Direction 3: Higher-Dimensional Quadratic Form Analogues\n\n### Hypothesis\nFor any non-degenerate ternary quadratic form Q over ℤ with signature (2,1), the semigroup of generators preserving Q and generating all p",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.888177+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Sum-of-two-squares form",
+    "description": ": Q(x,y,z) = x² + y² - z². Already studied (this is the Berggren case).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.904078+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "General Lorentzian forms",
+    "description": ": Q(x,y,z) = ax² + by² - cz² for various a,b,c.",
+    "domains": [
+      "Physics"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.920009+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Higher-rank forms",
+    "description": ": Q(x₁,...,x_{n+1}) = x₁² + ... + x_n² - x_{n+1}² with n > 2. The isotropic cone becomes higher-dimensional, and the representation theory involves SO(n,1).\n\n### Expected Results\n- For signature (n,1) with k generators, the spectral gap should be 1 - 1/√k when the generators are \"Lorentz-orthogonal\"\n- The constant 1/√k generalizes the 1/√3 for three generators\n\n### Cross-Domain Impact\n- Lattice-based cryptography: understanding spectral properties of lattice actions\n- Quantum error correction: connections to hyperbolic geometry codes\n- Cosmology: spectral gaps in discrete models of de Sitter space\n\n---\n\n## Direction 4: Apollonian and Markoff Semigroup Expansion\n\n### Hypothesis\nThe Apollonian gasket group (acting on Descartes quadruples) and the Markoff semigroup (acting on Markoff triples)",
+    "domains": [
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1c1883b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:38:42.938309+00:00"
   },
   {
     "id": "fd_0179",
@@ -1006,10 +1157,10 @@
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "41f0f930",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f09dcb6a",
     "timestamp": "2026-05-16T13:12:11.717096+00:00"
   },
   {
@@ -1246,21 +1397,6 @@
     "timestamp": "2026-05-17T13:45:31.781487+00:00"
   },
   {
-    "id": "fd_0268",
-    "title": "5. Derive Extractor and Hitting-Set Constructions from Arithmetic Walks",
-    "description": "**Hypothesis**: Arithmetic walks on expanding orbits yield deterministic extractors and hitting sets for structured polynomial sources.\n\n**Proof Strategy**:\n- An extractor maps a \"weakly random\" source to a \"nearly uniform\" output. The arithmetic walk theorem says: if the input distribution is supported on the orbit with min-entropy k, then n = O((log(orbit_size) - k) / log(1/ρ)) steps of the walk produce a distribution that is ε-close to uniform.\n- For hitting sets: if a polynomial p is nonzero on a fraction δ of the orbit, then a walk of length n = O(log(1/δε)/log(1/ρ)) starting from any point hits a nonzero of p with probability ≥ 1-ε.\n- Formalize the extractor property using the Leftover Hash Lemma adapted to expander walks.\n\n**Cross-domain Connections**: Randomness extractors (Trevisa",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b3b0e7e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T14:26:22.944758+00:00"
-  },
-  {
     "id": "fd_0261",
     "title": "Statement",
     "description": "Generalize the footprint bound from the full grid GF(q)^n to arbitrary Cartesian products ∏ᵢ Sᵢ where Sᵢ ⊆ F are finite nonempty subsets.\n\n**Target Theorem**: For f ∈ F[X₁,...,Xₙ] reduced modulo the vanishing ideals ⟨∏_{a ∈ Sᵢ}(Xᵢ − a)⟩ and nonzero:\n```\n|{x ∈ ∏Sᵢ : f(x) ≠ 0}| ≥ ∏ᵢ (|Sᵢ| − eᵢ)\n```",
@@ -1289,24 +1425,6 @@
     "timestamp": "2026-05-17T15:07:30.050712+00:00"
   },
   {
-    "id": "fd_0268",
-    "title": "Cross-Domain Research Connections",
-    "description": "| Direction | Algebra | Combinatorics | Coding Theory | CS Theory | Cryptography |\n|-----------|---------|---------------|---------------|-----------|--------------|\n| 1. Alon–Füredi | ✓ vanishing ideals | ✓ grid bounds | ✓ Cartesian codes | | |\n| 2. Nullstellensatz | ✓ coefficient extraction | ✓ existence proofs | | ✓ derandomization | |\n| 3. Decoding | | | ✓ error correction | ✓ list decoding | ✓ code-based crypto |\n| 4. Systems | ✓ Gröbner bases | ✓ variety counting | | ✓ SAT solving | ✓ algebraic attacks |\n| 5. Interpolation | ✓ function spaces | | ✓ encoding | ✓ complexity | ✓ secret sharing |\n\n---",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8c5ff762",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:07:37.218670+00:00"
-  },
-  {
     "id": "fd_0267",
     "title": "2. Dualizing to Max-Plus Algebra",
     "description": "**Hypothesis:** The entire infrastructure (AST, normalizer, reflection theorem, tactic) can be systematically dualized from min-plus to max-plus by a single semantic dictionary swap, yielding a `tropical_max` tactic with zero new proof effort.\n\n**Proof Strategy:**\n- Define `CTropExprMax` with `tmax` replacing `tmin`, evaluating as `max` instead of `min`\n- Prove a meta-theorem: for any `ACEquiv`-closed proof in min-plus, there exists a corresponding proof in max-plus, by the order-reversing isomorphism `x ↦ -x`\n- Alternatively, implement a direct syntactic translation `dual : CTropExpr → CTropExprMax` and prove `eval_max σ (dual e) = -(eval_min (fun i => -(σ i)) e)`\n- The max-plus normalizer is then `dual ∘ cnormalize_ca ∘ undual`\n\n**Applications:**\n- Critical path method (CPM) in project s",
@@ -1321,23 +1439,6 @@
     "source_exp_id": "bc9ede85",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T15:23:44.120929+00:00"
-  },
-  {
-    "id": "fd_0268",
-    "title": "3. Certified Shortest-Path and Dynamic Programming Verification",
-    "description": "**Hypothesis:** The tropical reflection tactic can serve as a certified backend for verifying the correctness of dynamic programming recurrences and shortest-path algorithms expressed as tropical matrix equations.\n\n**Proof Strategy:**\n- Formalize tropical matrix multiplication: `(A ⊕ B)ᵢⱼ = min_k(Aᵢₖ + Bₖⱼ)`\n- Express the Bellman-Ford recurrence as iterated tropical matrix-vector multiplication\n- Use the `tropical` tactic to verify algebraic properties of the recurrence (associativity of tropical matrix multiplication, fixed-point equations)\n- Formalize the correspondence: `shortest_path G s t = (W^n)_{s,t}` where `W` is the weight matrix and `^n` is tropical matrix power\n- Verify small instances (3-5 node graphs) automatically via the tactic\n\n**Concrete deliverables:**\n- A formalized trop",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bc9ede85",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:23:44.143824+00:00"
   },
   {
     "id": "fd_0273",
@@ -1371,22 +1472,6 @@
     "source_exp_id": "522714fd",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:31:26.086697+00:00"
-  },
-  {
-    "id": "fd_0275",
-    "title": "4. Min-Plus Spectral Observables and Tropical Eigenvectors",
-    "description": "**Connection to catalog**: `tropical_eigenpair_one_by_one` provides the 1×1 case. The next step is to show that tropical eigenvector structure is preserved under equivalence.\n\n**Formal target**:\n```\n-- A tropical eigenvector of A with eigenvalue λ satisfies:\n-- min_j (A i j + v j) = λ + v i  for all i\ndef IsTropEigenvector (A : Matrix (Fin n) (Fin n) ℝ) (v : Fin n → ℝ) (λ : ℝ) : Prop :=\n  ∀ i, (Finset.univ.inf' ⟨0, Finset.mem_univ 0⟩ (fun j => A i j + v j)) = λ + v i\n\ntheorem trop_eigenvector_shift_invariant\n    {n : ℕ} [NeZero n] (A : Matrix (Fin n) (Fin n) ℝ) (v w : Fin n → ℝ) (λ : ℝ)\n    (hv : IsTropEigenvector A v λ) (hw : TropEquiv v w) :\n    IsTropEigenvector A w λ\n```\n\n**Proof strategy**: If `w i = v i + c`, then `A i j + w j = A i j + v j + c`, so the min shifts by `c`, and `λ + w ",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "522714fd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:31:26.107952+00:00"
   },
   {
     "id": "fd_0276",
@@ -1448,22 +1533,6 @@
     "source_exp_id": "41ac42f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:38:13.829702+00:00"
-  },
-  {
-    "id": "fd_0275",
-    "title": "Mathematical Significance",
-    "description": "This would be the first instance of a musical constraint system identified as a tropical algebraic variety, opening connections to:\n- Tropical intersection theory\n- Berkovich analytic spaces\n- Non-Archimedean amoebas\n- Algebraic complexity theory\n\n---",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "41ac42f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:13.850305+00:00"
   },
   {
     "id": "fd_0276",

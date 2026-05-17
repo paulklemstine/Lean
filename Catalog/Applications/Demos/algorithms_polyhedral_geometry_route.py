@@ -1,286 +1,298 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Polyhedral Robustness Certification
+algorithms.py — Certified Robustness via Tropical Polyhedral Geometry
 
-Implements the core algorithms from the research:
-1. Certified radius computation for tropical/ReLU classifiers
-2. Active facet identification
-3. Boundary distance computation
-4. Multi-class robustness verification
+Implements algorithms for computing exact polyhedral robustness certificates
+for piecewise-affine (ReLU/tropical) classifiers.
+
+Key Algorithms:
+1. PolyhedralCertifier — computes certified radius from affine score data
+2. TropicalCellDecomposer — identifies active cell and facet structure
+3. BoundaryDistanceComputer — exact distance to cell boundary
 """
 
 import numpy as np
-from typing import List, Tuple, Optional, Dict
 from dataclasses import dataclass
+from typing import List, Optional, Tuple
+import time
 
 
 @dataclass
-class AffineForm:
-    """An affine form ℓ(x) = a · x + b on ℝⁿ."""
-    a: np.ndarray  # normal vector
-    b: float       # bias
-
-    def evaluate(self, x: np.ndarray) -> float:
-        """Evaluate ℓ(x) = a · x + b."""
-        return float(np.dot(self.a, x) + self.b)
+class RobustnessCertificate:
+    """A certified robustness certificate for a tropical classifier."""
+    point: np.ndarray
+    predicted_class: int
+    certified_radius: float
+    active_facet: Optional[int]  # competitor achieving the minimum
+    margin: float  # raw score gap to nearest competitor
+    normalized_margins: dict  # {competitor: gap / ||normal||}
+    lipschitz_radius: float  # baseline Lipschitz certificate for comparison
 
 
 @dataclass
-class TropicalClassifier:
-    """A tropical (max-affine) classifier f(x) = max_i ℓ_i(x).
+class TropicalCell:
+    """Representation of a tropical cell as a polyhedron."""
+    index: int
+    normals: List[np.ndarray]  # a_k - a_j for each competitor j
+    offsets: List[float]       # b_k - b_j for each competitor j
+    competitors: List[int]     # indices of competitors
+    
+    def contains(self, x: np.ndarray) -> bool:
+        """Check membership: all halfspace constraints satisfied."""
+        return all(np.dot(n, x) >= o - 1e-12 
+                   for n, o in zip(self.normals, self.offsets))
+    
+    def is_strictly_interior(self, x: np.ndarray) -> bool:
+        """Check strict interior: all constraints strictly satisfied."""
+        return all(np.dot(n, x) > o + 1e-12 
+                   for n, o in zip(self.normals, self.offsets))
 
-    The classifier assigns to each input x the class k that maximizes
-    the affine score ℓ_k(x) = a_k · x + b_k.
 
-    Attributes:
-        forms: List of affine forms, one per class.
-
-    Complexity:
-        - classify: O(n · |ι|) where n = dim, |ι| = number of classes
-        - certified_radius: O(n · |ι|)
-        - active_facet: O(n · |ι|)
+class PolyhedralCertifier:
     """
-
-    forms: List[AffineForm]
-
-    @property
-    def n_classes(self) -> int:
-        return len(self.forms)
-
-    @property
-    def dim(self) -> int:
-        return len(self.forms[0].a)
-
+    Computes polyhedral robustness certificates for tropical classifiers.
+    
+    Given affine score functions ℓ_i(x) = ⟪a_i, x⟫ + b_i, computes the
+    exact certified radius at any point using the normalized margin formula:
+    
+        r(x) = min_{j ≠ k} (ℓ_k(x) - ℓ_j(x)) / ‖a_k - a_j‖
+    
+    Time complexity: O(n_classes * n_features) per point
+    Space complexity: O(n_classes * n_features) for weight storage
+    
+    This is provably at least as sharp as the global Lipschitz certificate
+    r_lip(x) = margin(x) / (2K), and often significantly sharper.
+    """
+    
+    def __init__(self, weights: np.ndarray, biases: np.ndarray):
+        """
+        Args:
+            weights: (n_classes, n_features) array of weight vectors a_i
+            biases: (n_classes,) array of bias terms b_i
+        """
+        self.weights = np.asarray(weights, dtype=np.float64)
+        self.biases = np.asarray(biases, dtype=np.float64)
+        self.n_classes = weights.shape[0]
+        self.n_features = weights.shape[1]
+        
+        # Precompute pairwise normal vectors and their norms
+        self._normal_norms = np.zeros((self.n_classes, self.n_classes))
+        for i in range(self.n_classes):
+            for j in range(self.n_classes):
+                if i != j:
+                    self._normal_norms[i, j] = np.linalg.norm(
+                        self.weights[i] - self.weights[j])
+        
+        # Global Lipschitz constant
+        self._K = max(np.linalg.norm(self.weights[i]) 
+                      for i in range(self.n_classes))
+    
     def scores(self, x: np.ndarray) -> np.ndarray:
-        """Compute all affine scores at x.
-
-        Time complexity: O(n · |ι|)
-        """
-        return np.array([f.evaluate(x) for f in self.forms])
-
-    def classify(self, x: np.ndarray) -> int:
-        """Return the winning class index.
-
-        Time complexity: O(n · |ι|)
-        """
+        """Compute all affine scores at x."""
+        return self.weights @ x + self.biases
+    
+    def predict(self, x: np.ndarray) -> int:
+        """Return predicted class (argmax of scores)."""
         return int(np.argmax(self.scores(x)))
-
-    def margin(self, x: np.ndarray, k: int) -> float:
-        """Compute the raw margin: min_{j≠k} (ℓ_k(x) - ℓ_j(x)).
-
-        Time complexity: O(n · |ι|)
+    
+    def certify(self, x: np.ndarray) -> RobustnessCertificate:
+        """
+        Compute the full robustness certificate at point x.
+        
+        Returns a RobustnessCertificate with the polyhedral certified radius,
+        the active facet (nearest competitor), and comparison with Lipschitz.
+        
+        Complexity: O(n_classes * n_features)
         """
         s = self.scores(x)
-        gaps = [s[k] - s[j] for j in range(self.n_classes) if j != k]
-        return min(gaps) if gaps else float('inf')
-
-    def normalized_margin(self, x: np.ndarray, k: int, j: int) -> float:
-        """Compute the normalized margin for class k vs competitor j:
-        (ℓ_k(x) - ℓ_j(x)) / ‖a_k - a_j‖.
-
-        This equals the distance from x to the tie hyperplane ℓ_k = ℓ_j.
-
-        Time complexity: O(n)
-        """
-        gap = self.forms[k].evaluate(x) - self.forms[j].evaluate(x)
-        normal_diff = self.forms[k].a - self.forms[j].a
-        norm = np.linalg.norm(normal_diff)
-        if norm < 1e-15:
-            return float('inf') if gap >= 0 else float('-inf')
-        return gap / norm
-
-    def certified_radius(self, x: np.ndarray, k: Optional[int] = None) -> float:
-        """Compute the certified robustness radius at x for class k.
-
-        If k is None, uses the current winning class.
-
-        The certified radius is:
-            r(x) = min_{j≠k} (ℓ_k(x) - ℓ_j(x)) / ‖a_k - a_j‖
-
-        Any perturbation y with ‖y - x‖ < r(x) is guaranteed to have
-        the same classification as x.
-
-        Time complexity: O(n · |ι|)
-        Space complexity: O(|ι|)
-
-        Returns:
-            float: The certified radius. Positive iff k strictly wins at x.
-        """
-        if k is None:
-            k = self.classify(x)
-        margins = []
+        k = int(np.argmax(s))
+        
+        min_normalized_margin = float('inf')
+        active_facet = None
+        raw_margin = float('inf')
+        normalized_margins = {}
+        
         for j in range(self.n_classes):
-            if j != k:
-                margins.append(self.normalized_margin(x, k, j))
-        return min(margins) if margins else float('inf')
-
-    def active_facet(self, x: np.ndarray, k: Optional[int] = None) -> Tuple[int, float]:
-        """Identify the active (nearest) facet of the tropical cell.
-
-        The active facet corresponds to the competitor class j* that minimizes
-        the normalized margin, i.e., the nearest tie hyperplane.
-
-        Time complexity: O(n · |ι|)
-
-        Returns:
-            (j*, dist): The competitor index and the distance to its tie hyperplane.
-        """
-        if k is None:
-            k = self.classify(x)
-        best_j = -1
-        best_dist = float('inf')
-        for j in range(self.n_classes):
-            if j != k:
-                d = self.normalized_margin(x, k, j)
-                if d < best_dist:
-                    best_dist = d
-                    best_j = j
-        return best_j, best_dist
-
-    def nearest_boundary_point(self, x: np.ndarray, k: Optional[int] = None) -> np.ndarray:
-        """Compute the nearest point on the tropical cell boundary.
-
-        Projects x onto the nearest tie hyperplane ℓ_k = ℓ_{j*}.
-
-        Time complexity: O(n · |ι|)
-        """
-        if k is None:
-            k = self.classify(x)
-        j, _ = self.active_facet(x, k)
-
-        # Project onto hyperplane ⟨a_k - a_j, y⟩ = b_j - b_k
-        u = self.forms[k].a - self.forms[j].a
-        c = self.forms[j].b - self.forms[k].b
-        inner_ux = np.dot(u, x)
-        t = (c - inner_ux) / np.dot(u, u)
-        return x + t * u
-
-    def lipschitz_certificate(self, x: np.ndarray, k: Optional[int] = None) -> float:
-        """Compute the global Lipschitz robustness certificate.
-
-        Uses the formula: margin / (2 * K) where K = max_{i≠j} ‖a_i - a_j‖.
-
-        This is the baseline certificate that our polyhedral certificate improves upon.
-
-        Time complexity: O(n · |ι|²)
-        """
-        if k is None:
-            k = self.classify(x)
-        K = max(
-            np.linalg.norm(self.forms[i].a - self.forms[j].a)
-            for i in range(self.n_classes)
-            for j in range(self.n_classes)
-            if i != j
+            if j == k:
+                continue
+            gap = s[k] - s[j]
+            raw_margin = min(raw_margin, gap)
+            
+            norm_diff = self._normal_norms[k, j]
+            if norm_diff < 1e-15:
+                if gap < -1e-12:
+                    return RobustnessCertificate(
+                        point=x.copy(), predicted_class=k,
+                        certified_radius=0.0, active_facet=j,
+                        margin=gap, normalized_margins={},
+                        lipschitz_radius=0.0)
+                continue
+            
+            nm = gap / norm_diff
+            normalized_margins[j] = nm
+            if nm < min_normalized_margin:
+                min_normalized_margin = nm
+                active_facet = j
+        
+        lip_radius = raw_margin / (2 * self._K) if self._K > 0 else float('inf')
+        
+        return RobustnessCertificate(
+            point=x.copy(),
+            predicted_class=k,
+            certified_radius=max(0, min_normalized_margin),
+            active_facet=active_facet,
+            margin=raw_margin,
+            normalized_margins=normalized_margins,
+            lipschitz_radius=lip_radius
         )
-        margin = self.margin(x, k)
-        return margin / (2 * K) if K > 0 else float('inf')
-
-    def verify_robustness(self, x: np.ndarray, epsilon: float,
-                          n_samples: int = 10000) -> Dict:
-        """Empirically verify robustness within an ε-ball.
-
-        Time complexity: O(n_samples · n · |ι|)
-
-        Returns:
-            Dict with verification results.
+    
+    def get_cell(self, k: int) -> TropicalCell:
+        """Return the TropicalCell object for class k."""
+        normals = []
+        offsets = []
+        competitors = []
+        for j in range(self.n_classes):
+            if j == k:
+                continue
+            normals.append(self.weights[k] - self.weights[j])
+            offsets.append(self.biases[k] - self.biases[j])
+            competitors.append(j)
+        return TropicalCell(k, normals, offsets, competitors)
+    
+    def batch_certify(self, X: np.ndarray) -> List[RobustnessCertificate]:
         """
-        k = self.classify(x)
-        r = self.certified_radius(x, k)
-
-        violations = 0
-        for _ in range(n_samples):
-            direction = np.random.randn(self.dim)
-            direction /= np.linalg.norm(direction)
-            delta = direction * epsilon
-            y = x + delta
-            if self.classify(y) != k:
-                violations += 1
-
-        return {
-            'point': x,
-            'class': k,
-            'certified_radius': r,
-            'test_epsilon': epsilon,
-            'n_samples': n_samples,
-            'violations': violations,
-            'certified': epsilon <= r,
-            'empirical_robust': violations == 0,
-        }
+        Certify a batch of points.
+        
+        Complexity: O(n_points * n_classes * n_features)
+        """
+        return [self.certify(X[i]) for i in range(X.shape[0])]
 
 
-def batch_certify(classifier: TropicalClassifier,
-                  points: np.ndarray) -> np.ndarray:
-    """Compute certified radii for a batch of points.
-
-    Algorithm:
-        For each point x_i:
-            1. Classify x_i → k_i
-            2. For each j ≠ k_i, compute normalized margin
-            3. Take minimum → r_i
-
-    Time complexity: O(N · n · |ι|) where N = number of points
-    Space complexity: O(N)
-
-    Args:
-        classifier: TropicalClassifier instance
-        points: (N, n) array of input points
-
-    Returns:
-        (N,) array of certified radii
+class BoundaryDistanceComputer:
     """
-    radii = np.zeros(len(points))
-    for i, x in enumerate(points):
-        k = classifier.classify(x)
-        radii[i] = classifier.certified_radius(x, k)
-    return radii
-
-
-def construct_from_relu_layer(W: np.ndarray, bias: np.ndarray) -> TropicalClassifier:
-    """Construct a tropical classifier from a single ReLU layer.
-
-    A single linear layer followed by comparison gives a tropical classifier
-    where the affine forms are the rows of the weight matrix.
-
-    Args:
-        W: (|ι|, n) weight matrix
-        bias: (|ι|,) bias vector
-
-    Returns:
-        TropicalClassifier
+    Computes exact distances to tropical cell boundaries.
+    
+    For each competitor j ≠ k, the tie hyperplane {y | ℓ_j(y) = ℓ_k(y)}
+    has exact distance formula:
+    
+        d_j(x) = |ℓ_k(x) - ℓ_j(x)| / ‖a_k - a_j‖
+    
+    The distance to the full boundary is min_j d_j(x).
     """
-    forms = [AffineForm(a=W[i], b=float(bias[i])) for i in range(len(W))]
-    return TropicalClassifier(forms=forms)
+    
+    def __init__(self, certifier: PolyhedralCertifier):
+        self.certifier = certifier
+    
+    def facet_distances(self, x: np.ndarray, k: int) -> dict:
+        """
+        Compute distance from x to each facet of cell C_k.
+        
+        Returns: dict mapping competitor index j to distance d_j(x)
+        """
+        s = self.certifier.scores(x)
+        distances = {}
+        for j in range(self.certifier.n_classes):
+            if j == k:
+                continue
+            gap = abs(s[k] - s[j])
+            norm_diff = self.certifier._normal_norms[k, j]
+            if norm_diff > 1e-15:
+                distances[j] = gap / norm_diff
+        return distances
+    
+    def nearest_boundary_point(self, x: np.ndarray, k: int, j: int) -> np.ndarray:
+        """
+        Project x onto the tie hyperplane ℓ_k = ℓ_j.
+        
+        The projection is: x - ((ℓ_k(x) - ℓ_j(x)) / ‖a_k - a_j‖²) * (a_k - a_j)
+        """
+        s = self.certifier.scores(x)
+        normal = self.certifier.weights[k] - self.certifier.weights[j]
+        gap = (s[k] - s[j])
+        norm_sq = np.dot(normal, normal)
+        if norm_sq < 1e-30:
+            return x.copy()
+        return x - (gap / norm_sq) * normal
 
 
-# Example usage
+def benchmark_certification(n_features_list: List[int], 
+                             n_classes: int = 10,
+                             n_points: int = 100) -> dict:
+    """
+    Benchmark certification time vs. dimension.
+    
+    Returns timing data for plotting.
+    """
+    results = {'dimensions': [], 'times': [], 'avg_radius': [], 'avg_improvement': []}
+    
+    for n_feat in n_features_list:
+        np.random.seed(42)
+        W = np.random.randn(n_classes, n_feat)
+        b = np.random.randn(n_classes)
+        cert = PolyhedralCertifier(W, b)
+        
+        X = np.random.randn(n_points, n_feat) * 0.5
+        
+        start = time.time()
+        certs = cert.batch_certify(X)
+        elapsed = time.time() - start
+        
+        radii = [c.certified_radius for c in certs]
+        improvements = [c.certified_radius / c.lipschitz_radius 
+                       for c in certs if c.lipschitz_radius > 0]
+        
+        results['dimensions'].append(n_feat)
+        results['times'].append(elapsed)
+        results['avg_radius'].append(np.mean(radii))
+        results['avg_improvement'].append(np.mean(improvements) if improvements else 1.0)
+    
+    return results
+
+
 if __name__ == "__main__":
-    # Create a 3-class classifier in ℝ²
-    classifier = TropicalClassifier(forms=[
-        AffineForm(a=np.array([2.0, 1.0]), b=0.0),
-        AffineForm(a=np.array([-1.0, 2.0]), b=1.0),
-        AffineForm(a=np.array([0.0, -1.0]), b=3.0),
-    ])
-
-    x = np.array([2.0, 0.5])
-    k = classifier.classify(x)
-    r = classifier.certified_radius(x, k)
-    j_star, d_star = classifier.active_facet(x, k)
-    r_lip = classifier.lipschitz_certificate(x, k)
-
-    print(f"Classifier: 3 classes in ℝ²")
-    print(f"Point x = {x}")
-    print(f"Winning class: {k}")
-    print(f"Certified radius (polyhedral): {r:.4f}")
-    print(f"Certified radius (Lipschitz):  {r_lip:.4f}")
-    print(f"Improvement: {r/r_lip:.2f}×")
-    print(f"Active facet: class {j_star} at distance {d_star:.4f}")
-    print(f"Nearest boundary point: {classifier.nearest_boundary_point(x, k)}")
-
-    # Batch certification
-    np.random.seed(42)
-    points = np.random.randn(100, 2) * 2
-    radii = batch_certify(classifier, points)
-    print(f"\nBatch certification of 100 random points:")
-    print(f"  Mean certified radius: {np.mean(radii):.4f}")
-    print(f"  Min certified radius:  {np.min(radii):.4f}")
-    print(f"  Max certified radius:  {np.max(radii):.4f}")
+    print("=" * 70)
+    print("POLYHEDRAL CERTIFIER — Algorithm Demo")
+    print("=" * 70)
+    
+    # 3-class classifier in ℝ²
+    W = np.array([[2.0, 1.0], [-1.0, 3.0], [0.0, -2.0]])
+    b = np.array([0.0, 1.0, 5.0])
+    
+    certifier = PolyhedralCertifier(W, b)
+    bdc = BoundaryDistanceComputer(certifier)
+    
+    x = np.array([1.0, 2.0])
+    cert = certifier.certify(x)
+    
+    print(f"\nPoint: {x}")
+    print(f"Predicted class: {cert.predicted_class}")
+    print(f"Certified radius: {cert.certified_radius:.6f}")
+    print(f"Active facet (nearest competitor): class {cert.active_facet}")
+    print(f"Raw margin: {cert.margin:.4f}")
+    print(f"Lipschitz radius: {cert.lipschitz_radius:.6f}")
+    print(f"Improvement: {cert.certified_radius / cert.lipschitz_radius:.2f}x")
+    
+    print(f"\nFacet distances:")
+    distances = bdc.facet_distances(x, cert.predicted_class)
+    for j, d in sorted(distances.items()):
+        print(f"  d(x, facet_{j}) = {d:.6f}")
+    
+    if cert.active_facet is not None:
+        proj = bdc.nearest_boundary_point(x, cert.predicted_class, cert.active_facet)
+        print(f"\nNearest boundary point (on facet {cert.active_facet}): {proj}")
+        print(f"Verification: ‖x - proj‖ = {np.linalg.norm(x - proj):.6f}")
+    
+    # Benchmark
+    print("\n" + "=" * 70)
+    print("BENCHMARK: Certification time vs. dimension")
+    print("=" * 70)
+    
+    dims = [2, 5, 10, 20, 50, 100, 200, 500]
+    results = benchmark_certification(dims)
+    
+    print(f"{'Dim':>6s} | {'Time (ms)':>10s} | {'Avg Radius':>10s} | {'Improvement':>11s}")
+    print("-" * 50)
+    for i, d in enumerate(results['dimensions']):
+        print(f"{d:>6d} | {results['times'][i]*1000:>10.2f} | "
+              f"{results['avg_radius'][i]:>10.6f} | "
+              f"{results['avg_improvement'][i]:>10.2f}x")
