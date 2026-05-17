@@ -374,10 +374,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "09f78c38",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1afd62f8",
     "timestamp": "2026-05-16T09:05:20.454171+00:00"
   },
   {
@@ -650,6 +650,35 @@
     "timestamp": "2026-05-16T23:23:49.625623+00:00"
   },
   {
+    "id": "fd_0260",
+    "title": "Direction 2",
+    "description": "(general finite fields) — lowest effort, highest reuse value. The proof is nearly identical to our current formalization with `ZMod q` replaced by a generic `Field F`.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2f4ddb26",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:54:56.601629+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Direction 1",
+    "description": "(Freivalds soundness) — immediate application, directly composes our theorem with matrix multiplication.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2f4ddb26",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-16T23:54:56.628348+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -872,20 +901,6 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
-  },
-  {
-    "id": "fd_0193",
-    "title": "1. Rank-Sensitive Exact Kernel Cardinality",
-    "description": "**Goal**: Strengthen the bound `|ker(M)| ≤ q^(p-1)` to the exact formula `|ker(M)| = q^(p - rank(M))`.\n\n**Theorem statement**:\n```lean\ntheorem card_mulVec_kernel_exact\n    {q m p : ℕ} [Fact q.Prime]\n    (M : Matrix (Fin m) (Fin p) (ZMod q)) :\n    Fintype.card {r : Fin p → ZMod q // M.mulVec r = 0}\n      = q ^ (p - Module.finrank (ZMod q) (Matrix.mulVecLin M).range)\n```\n\n**Strategy**: Use `Matrix.mulVecLin` to interpret M as a linear map, apply rank-nullity to get `dim(ker) = p - dim(range)`, then use `Module.card_eq_pow_finrank` on the kernel submodule. The main technical challenge is establishing `Fintype` on the kernel of `mulVecLin` and connecting the subtype formulation to the Submodule.ker formulation.\n\n**Impact**: Gives exact acceptance probabilities for Freivalds depending on the ra",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "cb03e742",
-    "consumed_by_exp_id": "2f4ddb26",
-    "timestamp": "2026-05-15T09:04:34.968723+00:00"
   },
   {
     "id": "fd_0194",
