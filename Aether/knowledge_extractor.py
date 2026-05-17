@@ -1520,9 +1520,10 @@ Research mode: {concept.research_mode}
         """Ask Pi-Agent to review and clean up the future directions list.
 
         Combines similar entries, flags low-quality/junk directions for removal,
-        and marks them as abandoned. Only runs every ~10 cycles to save API cost.
+        and marks them as pruned. Only runs every ~10 cycles to save API cost.
         """
-        fd_manager = self.memory
+        from research_memory import FutureDirectionsManager
+        fd_manager = FutureDirectionsManager(self.workspace)
         available = [d for d in fd_manager._directions if d.status == "available"]
         if len(available) < 5:
             return
