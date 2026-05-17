@@ -16,22 +16,6 @@
     "timestamp": "2026-05-14T16:03:53.810233+00:00"
   },
   {
-    "id": "seed_059",
-    "title": "Homotopy Type Theory via Tropical Higher Inductive Types",
-    "description": "Prove that higher inductive types in homotopy type theory have tropical shadows where the path type becomes min-plus equidistance, and that the tropical univalence axiom is a decidable min-plus identity. Show that tropical HoTT captures the combinatorial skeleton of homotopy types while eliminating the topological complexity, yielding a computational interpretation of univalence.",
-    "domains": [
-      "Logic",
-      "Algebra",
-      "Bridges"
-    ],
-    "priority_score": 0.84,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "b6df6c6b",
-    "timestamp": "2026-05-14T16:03:53.853831+00:00"
-  },
-  {
     "id": "seed_051",
     "title": "Alien Mathematics: What Theorems Would Non-Carbon Life Prove?",
     "description": "Construct a formal framework for alien mathematics by varying the underlying semiring from classical arithmetic to tropical, idempotent, and p-adic algebras. Prove that each semiring choice yields a distinct provability landscape, and that the theorems of idempotent alien civilizations are precisely the tropical shadow theorems of classical results. Show that the intersection of all semiring-provable statements is exactly the combinatorial core of mathematics.",
@@ -677,6 +661,63 @@
     "timestamp": "2026-05-17T14:06:07.128822+00:00"
   },
   {
+    "id": "fd_0260",
+    "title": "Formal verification",
+    "description": ": All five direction theorems fully proved in Lean 4, zero sorry.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b6df6c6b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T14:15:43.330832+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Computational",
+    "description": ": Canonical labeling running on matrices up to n = 100 in under 1 second.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b6df6c6b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T14:15:43.350328+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Applications",
+    "description": ": At least one published case study applying tropical equivalence to real data (phylogenetics or network analysis).",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b6df6c6b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T14:15:43.370363+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Community",
+    "description": ": Public Lean library for tropical type theory, integrated with Mathlib.",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b6df6c6b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T14:15:43.389731+00:00"
+  },
+  {
     "id": "fd_0126",
     "title": "Specific Hypotheses",
     "description": "- **H1.1**: Bach chorale voice-leading can be characterized as shortest paths in a tropical hypergraph where nodes are 4-note chords and hyperedges encode simultaneous constraints (parallel fifths between any pair, voice spacing, voice crossing).\n- **H1.2**: The four-voice generalization of the zero-cost theorem holds: legal SATB counterpoint = zero locus of a 6-component penalty (one per voice pair).\n- **H1.3**: The exponential blowup in candidate space (P^4n vs P^n) can be managed via tropical tensor decomposition, factoring the 4-voice problem into coupled 2-voice subproblems.",
@@ -912,7 +953,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "483c8105",
+    "consumed_by_exp_id": "bc9ede85",
     "timestamp": "2026-05-16T02:14:30.279911+00:00"
   },
   {
