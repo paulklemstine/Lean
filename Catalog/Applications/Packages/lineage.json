@@ -8,6 +8,15 @@
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:05Z",
       "hue": 90
+    },
+    {
+      "id": "2_eventual_periodicity_transfer_via_semiconjugacy",
+      "title": "Eventual Periodicity Transfer via Semiconjugacy",
+      "domain": "Cryptography / Discrete Dynamical Systems",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-05-17T19:57:24Z",
+      "hue": 270
     }
   ],
   "edges": [],

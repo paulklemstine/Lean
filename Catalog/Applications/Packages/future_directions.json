@@ -984,6 +984,66 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T18:48:26.949134+00:00"
+    },
+    {
+      "id": "fd_0054",
+      "title": "Escape from subgroups",
+      "description": ": Show that the Berggren generators act irreducibly on $(\\mathbb{Z}/q\\mathbb{Z})^3$, so no proper subgroup obstruction exists.",
+      "source_exp_id": "9f04b702",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:07.431117+00:00"
+    },
+    {
+      "id": "fd_0055",
+      "title": "Approximate subgroup classification",
+      "description": ": Use Helfgott's method (adapted from SL₂ to the Lorentz group) to show that approximate subgroups of $G_q$ must be close to actual subgroups.",
+      "source_exp_id": "9f04b702",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:07.432333+00:00"
+    },
+    {
+      "id": "fd_0056",
+      "title": "Energy extraction",
+      "description": ": Apply the Cauchy–Schwarz energy bound (already formalized) to convert small tripling into high energy, then use the approximate subgroup classifier to derive contradiction.\n\n### Cross-Domain Significance\n\n- Creates the first formal noncommutative product theorem for an arithmetic semigroup.\n- Opens a template for Apollonian packings, Markoff surfaces, and other thin matrix groups.\n- Directly implies equidistribution of primitive Pythagorean triples in congruence classes.\n\n---\n\n## Direction 2: Certified Pseudorandom Generator from Berggren Walks\n\n### Statement\n\nThe Berggren random walk on $G_q$ constitutes a certified pseudorandom generator: for any statistical test $\\phi : G_q \\to \\{0, 1\\}$, after $k \\geq C \\log q$ steps (where $C$ depends only on the spectral gap), the walk's output is ",
+      "source_exp_id": "9f04b702",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Physics",
+        "Pythagorean",
+        "Bridges",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:07.433698+00:00"
     }
   ],
   "pruned": []
