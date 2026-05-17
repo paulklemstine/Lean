@@ -25,10 +25,10 @@
       "Tropical"
     ],
     "priority_score": 0.84,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a33794dc",
     "timestamp": "2026-05-14T16:03:53.831081+00:00"
   },
   {
@@ -41,10 +41,10 @@
       "Bridges"
     ],
     "priority_score": 0.84,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b6df6c6b",
     "timestamp": "2026-05-14T16:03:53.853831+00:00"
   },
   {
@@ -101,10 +101,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "9743e28c",
-    "consumed_by_exp_id": "4feb8159",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T23:59:16.192013+00:00"
   },
   {
@@ -384,10 +384,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82044794",
     "timestamp": "2026-05-17T11:33:52.777649+00:00"
   },
   {
@@ -626,6 +626,79 @@
     "source_exp_id": "e054be3f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T12:52:39.507056+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Tropical channel theory",
+    "description": "(Directions 3, 5) provides the algebraic framework for information processing in max-plus algebra.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "05176da5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:53:29.196235+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Contraction principles",
+    "description": "(Directions 1, 2) show that dynamical evolution and iterated processing monotonically reduce distinguishability.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "05176da5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:53:29.330328+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Geometric certification",
+    "description": "(Direction 4) translates algebraic margins into geometric distances, closing the loop between information theory and computational geometry.\n\nThe ultimate synthesis theorem would state:\n\n> *For a tropical dynamical system with spectral radius ≤ 0, the decision regions of any tropical affine classifier have certified persistence times that are computable from the initial margin, the spectral data, and the Birkhoff contraction coefficient of the transition matrix. Moreover, the information capacity of the effective channel decreases monotonically along trajectories.*\n\nThis would be the **Fundamental Theorem of Tropical Certified Information Dynamics**: a single formal framework unifying dynamical stability, information monotonicity, and geometric certification for piecewise-linear computatio",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "05176da5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:53:33.351604+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Direction 1",
+    "description": "(Markov contraction) — highest impact, most tractable, extends Phase II results directly.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "05176da5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:53:33.407592+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Direction 2",
+    "description": "(Matrix kinetic certification) — requires spectral theory infrastructure.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "05176da5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:53:33.469291+00:00"
   },
   {
     "id": "fd_0126",
@@ -1099,10 +1172,10 @@
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "51691e39",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba415921",
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
   },
   {
