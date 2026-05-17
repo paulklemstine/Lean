@@ -13,3 +13,4 @@
 *.tar.gz
 *.output
 /Aether/.aether_workspace
+!/Catalog/Applications/Packages/future_directions.json

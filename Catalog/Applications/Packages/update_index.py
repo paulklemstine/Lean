@@ -103,7 +103,7 @@ def update_index():
     # Find the Catalog root (grandparent of Packages dir) for git commands
     catalog_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
 
-    json_files = [f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions_snapshot.json")]
+    json_files = [f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json")]
 
     viz_dir = os.path.join(script_dir, "visualizations")
     os.makedirs(viz_dir, exist_ok=True)
@@ -333,18 +333,18 @@ def append_future_directions(script_dir, db_path):
     """Read future_directions.json and append window.FUTURE_DIRECTIONS to packages_db.js.
 
     Tries the Aether workspace first (local dev), then falls back to
-    the committed snapshot in the Packages directory (CI/GitHub Pages).
+    future_directions.json in the Packages directory (CI/GitHub Pages).
     """
     # Try Aether workspace (local dev)
     fd_path = os.path.abspath(os.path.join(script_dir, "..", "..", "..", "Aether", ".aether_workspace", "future_directions.json"))
-    # Fallback: committed snapshot in Packages directory (CI/GitHub Pages)
-    snapshot_path = os.path.join(script_dir, "future_directions_snapshot.json")
+    # Fallback: committed copy in Packages directory (CI/GitHub Pages)
+    local_copy_path = os.path.join(script_dir, "future_directions.json")
 
     if os.path.exists(fd_path):
         source = fd_path
-    elif os.path.exists(snapshot_path):
-        source = snapshot_path
-        print(f"Aether workspace not found, using committed snapshot")
+    elif os.path.exists(local_copy_path):
+        source = local_copy_path
+        print(f"Aether workspace not found, using local future_directions.json")
     else:
         print(f"No future_directions.json found, skipping")
         return
@@ -363,31 +363,14 @@ def append_future_directions(script_dir, db_path):
         print(f"Warning: failed to load future_directions.json: {e}")
         return
 
-    # If loaded from workspace, also update the snapshot
+    # If loaded from workspace, also copy to Packages dir for GitHub Pages
     if source == fd_path:
         try:
-            # Filter out completed/pruned before writing snapshot too
-            active_directions = [d for d in directions if d.get("status") not in ("completed", "pruned")]
-            display_for_snapshot = []
-            for d in active_directions:
-                display_for_snapshot.append({
-                    "id": d.get("id", ""),
-                    "title": d.get("title", ""),
-                    "description": d.get("description", ""),
-                    "domains": d.get("domains", []),
-                    "priority_score": d.get("priority_score", 0),
-                    "status": d.get("status", "available"),
-                    "research_mode": d.get("research_mode", ""),
-                    "source_exp_id": d.get("source_exp_id", ""),
-                    "consumed_by_exp_id": d.get("consumed_by_exp_id", ""),
-                    "timestamp": d.get("timestamp", ""),
-                })
-            display_for_snapshot.sort(key=lambda x: x["priority_score"], reverse=True)
-            with open(snapshot_path, 'w', encoding='utf-8') as f:
-                json.dump(display_for_snapshot, f, indent=2, ensure_ascii=False)
-            print(f"Updated future_directions_snapshot.json ({len(display_for_snapshot)} active directions, {len(directions) - len(active_directions)} completed/pruned filtered)")
+            import shutil
+            shutil.copy2(fd_path, local_copy_path)
+            print(f"Copied future_directions.json to Packages/ ({len(directions)} directions)")
         except Exception as e:
-            print(f"Warning: failed to update snapshot: {e}")
+            print(f"Warning: failed to copy future_directions.json: {e}")
 
     # Filter out completed/pruned directions (no need to ship stale data)
     directions = [d for d in directions if d.get("status") not in ("completed", "pruned")]
