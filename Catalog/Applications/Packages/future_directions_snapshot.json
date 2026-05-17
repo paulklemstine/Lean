@@ -147,6 +147,20 @@
   },
   {
     "id": "fd_0197",
+    "title": "Eigenvector perturbation",
+    "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "9743e28c",
+    "consumed_by_exp_id": "7371b140",
+    "timestamp": "2026-05-14T23:59:16.192013+00:00"
+  },
+  {
+    "id": "fd_0197",
     "title": "Prove closure properties",
     "description": ": Product and union constructions for tree automata (analogous to the word case, using `tropical_add_distrib_inf` for the product).",
     "domains": [
@@ -786,6 +800,62 @@
     "timestamp": "2026-05-17T06:13:19.139807+00:00"
   },
   {
+    "id": "fd_0261",
+    "title": "States the exact theorem",
+    "description": "in Lean 4 with all hypotheses explicit.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "96833c6b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:36:25.036318+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Builds a proof skeleton",
+    "description": "with helper lemmas marked `sorry`.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "96833c6b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:36:25.054224+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Identifies the critical lemma",
+    "description": "(the one that requires the deepest mathematical insight).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "96833c6b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:36:25.072598+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Iterates",
+    "description": ": if the critical lemma fails, restructure the proof approach.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "96833c6b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:36:25.095305+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -1086,23 +1156,6 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
-  },
-  {
-    "id": "fd_0211",
-    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
-    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
-    "domains": [
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7b109bab",
-    "consumed_by_exp_id": "96833c6b",
-    "timestamp": "2026-05-15T09:19:36.848982+00:00"
   },
   {
     "id": "fd_0226",
