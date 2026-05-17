@@ -963,8 +963,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "in_progress",
-      "consumed_by_exp_id": "fe53467b",
+      "status": "available",
+      "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T18:48:26.949133+00:00"
     },
     {
@@ -1372,8 +1372,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "1149f313",
       "timestamp": "2026-05-17T19:57:55.763845+00:00"
     },
     {
@@ -2029,7 +2029,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "fcad70f2",
       "timestamp": "2026-05-17T21:05:56.334018+00:00"
     },
@@ -2234,8 +2234,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "a62293c6",
       "timestamp": "2026-05-17T21:29:22.486708+00:00"
     },
     {
