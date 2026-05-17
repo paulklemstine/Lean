@@ -766,6 +766,76 @@
     "timestamp": "2026-05-17T07:39:39.747782+00:00"
   },
   {
+    "id": "fd_0249",
+    "title": "States 3-5 precise lemmas",
+    "description": "that decompose the conjecture into formally provable pieces",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0b76ff96",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:05:09.523200+00:00"
+  },
+  {
+    "id": "fd_0250",
+    "title": "Validates computationally",
+    "description": "with examples in Python before attempting formal proofs",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0b76ff96",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:05:09.540092+00:00"
+  },
+  {
+    "id": "fd_0251",
+    "title": "Builds on existing verified infrastructure",
+    "description": "— do not re-prove what is already available",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0b76ff96",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:05:09.561080+00:00"
+  },
+  {
+    "id": "fd_0252",
+    "title": "Identifies the bridge theorems",
+    "description": "in the existing catalog that provide the most leverage",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0b76ff96",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:05:09.580768+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "Iterates weekly",
+    "description": "with updated proof attempts and counterexample searches",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0b76ff96",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:05:09.598528+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -958,6 +1028,21 @@
     "source_exp_id": "5a40fd94",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T04:35:31.634295+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Summary: Research Roadmap",
+    "description": "| Priority | Direction | Key Theorem | Dependencies |\n|----------|-----------|-------------|--------------|\n| 1 | Finite Products | `finProd_universal` | Binary product (done) |\n| 2 | Termination | `product_reduction_terminates` | Product + well-founded induction |\n| 3 | Pressure Bounds | `pressure_product_bound` | Product + real analysis |\n| 4 | Automata Sync | `product_word_bound` | Product + combinatorics |\n| 5 | Security Comp | `composed_security_bound` | Dual (min) product |\n\nEach direction builds directly on the categorical product infrastructure established in this work. The key insight is that invariant-bearing systems form a category with enough structure (products, identity, composition, associativity) to support systematic compositional reasoning across thermodynamics, automata ",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "a015a16c",
+    "consumed_by_exp_id": "1ba249c5",
+    "timestamp": "2026-05-15T08:01:09.762727+00:00"
   },
   {
     "id": "fd_0194",
@@ -1263,23 +1348,6 @@
     "source_exp_id": "51691e39",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
-  },
-  {
-    "id": "fd_0231",
-    "title": "Direction 1: Envelope Canonicalization and Exact Minimization",
-    "description": "**Hypothesis:** The *envelope-canonical form* (monomials that achieve the pointwise minimum at some n ∈ ℕ) gives an exact characterization of minimal weighted automaton states.\n\n**Background:** Our formalized Pareto-canonical form (NatCanonical) preserves the language but may retain redundant monomials — those that never achieve the minimum but are not pointwise dominated by any single competitor. The envelope-canonical form removes exactly the semantically redundant monomials.\n\n**Proof Strategy:**\n1. Define `EnvelopeCanonical p = p.filter (fun m => ∃ n : ℕ, ∀ m' ∈ p, monoEval m n ≤ monoEval m' n)`.\n2. Show `EnvelopeCanonical p ⊆ NatCanonical p` (envelope-essential implies Pareto-optimal).\n3. Prove each envelope-canonical monomial is the *unique* minimizer at some n (use distinct slopes an",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "41f0f930",
-    "consumed_by_exp_id": "0b76ff96",
-    "timestamp": "2026-05-16T13:12:11.670833+00:00"
   },
   {
     "id": "fd_0232",
