@@ -1606,7 +1606,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "4c964ad4",
       "timestamp": "2026-05-17T20:40:43.019441+00:00"
     },
@@ -1888,8 +1888,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "e237c583",
       "timestamp": "2026-05-17T21:05:45.339479+00:00"
     },
     {
@@ -2100,6 +2100,101 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:56.342143+00:00"
+    },
+    {
+      "id": "fd_0115",
+      "title": "Precise Theorem Target",
+      "description": "```\ntheorem tropical_hard_core_bit\n  (pow : TropicalPow)\n  (hOWF : TropicalOneWayFunction pow) :\n  ∃ hc : ℤ → Bool,\n    ∀ predictor : ℕ → ℤ → Bool,\n      negligible (fun n =>\n        agreeProb (fun x => predictor n (pow x n)) (fun x => hc x) - 1/2)\n```",
+      "source_exp_id": "4c964ad4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:27:10.236010+00:00"
+    },
+    {
+      "id": "fd_0116",
+      "title": "Why It Would Be Field-Opening",
+      "description": "The Goldreich-Levin theorem extracts a hard-core bit from any one-way function using inner products. The tropical analogue would use **min-plus inner products**: given vectors x, r ∈ ℤⁿ, define hc(x, r) = ⊕ᵢ (xᵢ ⊗ rᵢ) mod 2 = (Σᵢ xᵢ · rᵢ) mod 2. If this works, it would:\n\n- Enable tropical bit-commitment schemes (via the standard OWF → hard-core → commitment chain).\n- Provide tropical pseudorandom functions (via the GGM tree construction).\n- Establish that tropical one-wayness has the same theoretical power as classical one-wayness.",
+      "source_exp_id": "4c964ad4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Probability",
+        "Tropical",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:27:10.239243+00:00"
+    },
+    {
+      "id": "fd_0117",
+      "title": "Precise Target",
+      "description": "```\nclass SecurityGame (α : Type) where\n  real : Distribution α\n  ideal : Distribution α\n  advantage : Distinguisher α → ℕ → ℝ\n\nclass HybridArgument (G : SecurityGame α) where\n  hybrids : ℕ → Distribution α\n  hybrids_endpoints : hybrids 0 = G.real ∧ hybrids m = G.ideal\n  step_reduction : ∀ i, StepAdvantage i → ReductionAdvantage i\n\ntheorem generic_hybrid_security\n  (G : SecurityGame α)\n  (H : HybridArgument G)\n  (hsteps : ∀ i, negligible (H.step_advantage i)) :\n  negligible (G.advantage D)\n```",
+      "source_exp_id": "4c964ad4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Probability",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:27:10.248747+00:00"
+    },
+    {
+      "id": "fd_0118",
+      "title": "Building On",
+      "description": "- `computational_hybrid_total_bound` (this work): the generic hybrid theorem.\n- `TropicalDistinguisher`, `ComputationallySecurePRG` (this work): the security vocabulary.\n- `negligible_sum_finset` (this work): the asymptotic closure properties.\n\n---",
+      "source_exp_id": "4c964ad4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Tropical"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:27:10.252044+00:00"
+    },
+    {
+      "id": "fd_0119",
+      "title": "Cross-Cutting Theme: Cryptography from Idempotent Geometry",
+      "description": "All five directions converge on a single thesis: **the information-theoretic irreversibility of idempotent operations (min(a,a) = a, information loss through selection) is a sufficient foundation for cryptographic hardness.**\n\nThis challenges the implicit assumption in cryptography that hard problems must arise from group-theoretic, number-theoretic, or lattice-geometric structure. If confirmed, it opens the door to:\n\n- Cryptography from tropical convexity and ultrametric spaces.\n- Hardness amplification via tropical product constructions.\n- A unified theory connecting optimization hardness (NP-hard tropical problems) to cryptographic pseudorandomness.\n\nThe formal verification infrastructure developed here — negligible function closure, computational hybrid arguments, OWF-to-PRG reductions",
+      "source_exp_id": "4c964ad4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Tropical",
+        "Cryptography",
+        "Algebra",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:27:10.255174+00:00"
     }
   ],
   "pruned": []

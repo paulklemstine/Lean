@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "binary_search",
@@ -79,13 +79,29 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 92
+      "hue": 90
+    },
+    {
+      "id": "coupling_argument",
+      "title": "Additive Coupling from Factor-Wise Growth: A Tensorization Principle for Tropical Dynamics",
+      "domain": "Tropical Geometry / Optimization / Dynamic Programming",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-17T21:29:20Z",
+      "hue": 270
     }
   ],
   "edges": [
     {
       "source": "2_tropical_amplitude_amplification",
       "target": "binary_search",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "2_tropical_amplitude_amplification",
+      "target": "coupling_argument",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -99,6 +115,12 @@
     }
   ],
   "domain_bridges": [
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
+      "package_count": 2,
+      "strength": 0.7
+    },
     {
       "domain_a": "Computation",
       "domain_b": "Tropical",
@@ -119,12 +141,6 @@
     },
     {
       "domain_a": "Bridges",
-      "domain_b": "Tropical",
-      "package_count": 1,
-      "strength": 0.5
-    },
-    {
-      "domain_a": "Geometry",
       "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5
