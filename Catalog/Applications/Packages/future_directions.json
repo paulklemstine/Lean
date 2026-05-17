@@ -605,7 +605,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "2647df12",
       "timestamp": "2026-05-17T18:48:26.949093+00:00"
     },
@@ -2700,6 +2700,76 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:23:46.452021+00:00"
+    },
+    {
+      "id": "fd_0147",
+      "title": "Problem Statement",
+      "description": "Extend the path formalism with a transport operation for dependent types. Given a path in a base type and a fibered type over it, transport elements from the fiber over the start point to the fiber over the endpoint.",
+      "source_exp_id": "2647df12",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:03:29.899416+00:00"
+    },
+    {
+      "id": "fd_0148",
+      "title": "Lean Signature",
+      "description": "```lean\nclass CubicalTransport (I : Type u) extends CubicalInterval I where\n  transport : {A : I → Type v} → (∀ i, A i) → A i0 → A i1\n\ndef sigma_transport {I : Type u} [CubicalTransport I]\n    {A : Type v} {B : A → Type w} {a₀ a₁ : A}\n    (p : PathOver (I := I) A a₀ a₁)\n    (b : B a₀) : B a₁ := ...\n\ntheorem sigma_path {I : Type u} [CubicalTransport I]\n    {A : Type v} {B : A → Type w}\n    {s t : (a : A) × B a}\n    (p : PathOver (I := I) A s.1 t.1)\n    (q : PathOver (I := I) (B t.1) (sigma_transport p s.2) t.2) :\n    PathOver (I := I) ((a : A) × B a) s t\n```",
+      "source_exp_id": "2647df12",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:03:29.903650+00:00"
+    },
+    {
+      "id": "fd_0149",
+      "title": "Cross-Domain Connections",
+      "description": "- **Category theory:** Transport corresponds to functorial action of the base change functor in fibered categories. The sigma path theorem is the total space functor's action on morphisms.\n- **Physics:** Transport along paths in a fibration models parallel transport in gauge theory. The base type is spacetime, fibers are internal spaces, and paths are worldlines.\n- **Programming languages:** Transport over dependent sums corresponds to coercion in gradual type systems: when a base type evolves, dependent data must be coerced along the type change.\n\n---",
+      "source_exp_id": "2647df12",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:03:29.908091+00:00"
+    },
+    {
+      "id": "fd_0150",
+      "title": "Summary",
+      "description": "| # | Direction | Key Theorem | Difficulty | Impact |\n|---|-----------|-------------|------------|--------|\n| 1 | Dependent sum transport | sigma_path | Medium | Enables dependent type manipulation |\n| 2 | Composition & Kan filling | pathTrans_assoc | Hard | Unlocks ∞-groupoid structure |\n| 3 | π₁(S¹) ≅ ℤ | pi1_circle_iso_Z | Hard | First synthetic homotopy computation |\n| 4 | NbE for codes | nbe_correct | Medium | Connects to PL semantics |\n| 5 | Process semantics | parallel_comm | Medium | Bridges to concurrency theory |\n\nEach direction is immediately actionable with the current codebase as a foundation. The most impactful next step is **Direction 2** (composition), as it unlocks path concatenation and enables all subsequent homotopical constructions.",
+      "source_exp_id": "2647df12",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Topology",
+        "Bridges",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:03:29.925246+00:00"
     }
   ],
   "pruned": []
