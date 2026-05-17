@@ -634,6 +634,49 @@
     "timestamp": "2026-05-17T13:33:42.807820+00:00"
   },
   {
+    "id": "fd_0257",
+    "title": "Direction 5",
+    "description": "(Abstract interpretation) — Most immediately practical; directly uses the existing theorem cluster.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82044794",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T14:06:07.081342+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Direction 2",
+    "description": "(Compositional networks) — High applied value; relatively straightforward extension.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82044794",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T14:06:07.106566+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Direction 1",
+    "description": "(Interval Perron–Frobenius) — Highest mathematical impact; requires tropical spectral theory infrastructure.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "82044794",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T14:06:07.128822+00:00"
+  },
+  {
     "id": "fd_0126",
     "title": "Specific Hypotheses",
     "description": "- **H1.1**: Bach chorale voice-leading can be characterized as shortest paths in a tropical hypergraph where nodes are 4-note chords and hyperedges encode simultaneous constraints (parallel fifths between any pair, voice spacing, voice crossing).\n- **H1.2**: The four-voice generalization of the zero-cost theorem holds: legal SATB counterpoint = zero locus of a 6-component penalty (one per voice pair).\n- **H1.3**: The exponential blowup in candidate space (P^4n vs P^n) can be managed via tropical tensor decomposition, factoring the 4-voice problem into coupled 2-voice subproblems.",
@@ -821,6 +864,23 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
+  },
+  {
+    "id": "fd_0211",
+    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
+    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
+    "domains": [
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "ed6d4394",
+    "timestamp": "2026-05-15T09:19:36.848982+00:00"
   },
   {
     "id": "fd_0225",
