@@ -360,10 +360,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b62b8fc6",
     "timestamp": "2026-05-16T19:15:45.179177+00:00"
   },
   {
@@ -1497,23 +1497,6 @@
     "timestamp": "2026-05-17T02:00:26.770253+00:00"
   },
   {
-    "id": "fd_0249",
-    "title": "3. Certified Shortest-Path and Dynamic Programming Verification",
-    "description": "**Hypothesis:** The tropical normalization tactic can serve as the algebraic backend for *certified shortest-path algorithms* and *dynamic programming correctness proofs*.\n\n**Strategy:**\n- Formalize min-plus matrix multiplication as a concrete instantiation of tropical algebra.\n- Express the Floyd-Warshall/Bellman-Ford recurrences as tropical polynomial identities.\n- Use the normalization tactic to verify algebraic steps in correctness proofs (e.g., that the Bellman operator is well-defined up to ACI equivalence).\n- Connect to existing Mathlib formalization of graph theory and matrix algebra.\n\n**Concrete Target Theorems:**\n```\ntheorem bellman_step_ACI (W V : Matrix n n ℝ) :\n    tropical_min_plus_mul W (tropical_min_plus_mul W V)\n    = tropical_min_plus_mul (tropical_min_plus_mul W W) V\n```",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "72596401",
-    "consumed_by_exp_id": "53e2f8f2",
-    "timestamp": "2026-05-17T02:00:26.816383+00:00"
-  },
-  {
     "id": "fd_0251",
     "title": "5. Piecewise-Linear Neural Network Verification via Tropical Geometry",
     "description": "**Hypothesis:** ReLU neural networks are tropical rational maps, and the tropical normalization tactic can be extended to verify properties of piecewise-linear functions arising from neural network computation.\n\n**Strategy:**\n- Formalize the correspondence: a ReLU neuron `max(0, w·x + b)` is a tropical polynomial.\n- A feedforward ReLU network is a composition of tropical polynomial maps.\n- Develop a tactic that can normalize the tropical polynomial representation of a small network and verify input-output properties.\n- Connect to existing work on *certified robustness* and *adversarial example detection*.\n\n**Key Theorem Target:**\n```\ntheorem relu_network_tropical_form (W : List (Matrix m n ℝ)) (b : List (Vector m ℝ)) :\n    ∃ p : TropPoly, ∀ x : Vector n ℝ, network_eval W b x = trop_eval p ",
@@ -1696,5 +1679,92 @@
     "source_exp_id": "cc205d47",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:38:17.437810+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "1. Data Processing Inequality for Certified Radii",
+    "description": "**Target Theorem**: If a channel `W` is `K`-Lipschitz as a map on input distributions (measured by total variation or statistical distance), and a post-processing function `f` does not increase the Lipschitz constant, then the certified radius `r = m/K` for mutual information stability is preserved (or enlarged) under post-processing.\n\n**Formal Statement Sketch**:\n```\ntheorem certified_radius_data_processing\n    (W : Channel α β) (f : β → γ)\n    (K₁ K₂ : ℝ) (hK₁ : K₁-Lipschitz MI(·; W))\n    (hK₂ : K₂ ≤ K₁)\n    (hDPI : K₂-Lipschitz MI(·; f ∘ W)) :\n    certified_radius(MI(·; f ∘ W), m) ≥ certified_radius(MI(·; W), m)\n```\n\n**Proof Strategy**: Combine `tropicalMI_deterministic_DPI` from the existing library with the generic `lipschitz_margin_bound`. The key step is showing that post-processing",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "53e2f8f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:47:24.685688+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "2. Composition Theorems for Privacy-Stability Certificates",
+    "description": "**Target Theorem**: If two channels `W₁` and `W₂` are independently applied, and each has Lipschitz constants `K₁` and `K₂` for their respective MI functionals, then the composed channel has a Lipschitz constant bounded by `K₁ + K₂` (for parallel composition) or `K₁ · K₂` (for sequential composition), yielding explicit certified radii for the composed system.\n\n**Formal Statement Sketch**:\n```\ntheorem parallel_composition_lipschitz\n    (K₁ K₂ : ℝ) (W₁ : Channel α β₁) (W₂ : Channel α β₂)\n    (hK₁ : tropical_privacy_lipschitz d MI₁ K₁)\n    (hK₂ : tropical_privacy_lipschitz d MI₂ K₂) :\n    tropical_privacy_lipschitz d (MI₁ + MI₂) (K₁ + K₂)\n```\n\n**Proof Strategy**: Use the triangle inequality for absolute values to decompose `|MI₁(X) + MI₂(X) - MI₁(X') - MI₂(X')| ≤ |MI₁(X) - MI₁(X')| + |MI₂(X) ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "53e2f8f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:47:24.712042+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "3. Tropical Certificates for Total Variation and KL-Based Distinguishers",
+    "description": "**Target Theorem**: Instantiate the generic `distinguisher_radius_separation` theorem with concrete distinguisher scores based on total variation distance, KL divergence, and Rényi divergence. Show that tropical separation certificates (e.g., from tropical determinant computations) yield explicit Lipschitz constants for these divergence-based distinguishers.\n\n**Formal Statement Sketch**:\n```\ntheorem tv_distinguisher_lipschitz\n    (d : FDist α → FDist α → ℝ := totalVariation)\n    (D : FDist α → ℝ := fun μ => totalVariation μ Q) :\n    ∀ μ ν, |D μ - D ν| ≤ 1 * d μ ν\n\ntheorem kl_distinguisher_lipschitz_local\n    (Q : FDist α) (δ : ℝ) (hδ : ∀ x, Q.pmf x ≥ δ) :\n    ∀ μ ν (hμ hν : support-bounded),\n      |KL μ Q - KL ν Q| ≤ (log(1/δ) + 1) * d μ ν\n```\n\n**Proof Strategy**: For total variation, the ",
+    "domains": [
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "53e2f8f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:47:24.741686+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "4. Extractor Robustness Under Bounded Source Drift",
+    "description": "**Target Theorem**: If a randomness extractor `Ext` has output close to uniform when the source has min-entropy at least `k`, and the min-entropy functional is `K`-Lipschitz with respect to statistical distance on sources, then the extractor remains secure under bounded source drift: any perturbation of the source within radius `r ≤ ε/(2K)` preserves `ε/2`-closeness to uniform.\n\n**Formal Statement Sketch**:\n```\ntheorem extractor_robustness_source_drift\n    (Ext : Source → Output)\n    (K ε r : ℝ)\n    (X X' : Source)\n    (hExt : sd(Ext(X), Uniform) ≤ ε)\n    (hLip : ∀ μ ν, |sd(Ext(μ), Uniform) - sd(Ext(ν), Uniform)| ≤ K * sd(μ, ν))\n    (hclose : sd(X, X') ≤ r) (hr : r ≤ ε / (2 * K)) :\n    sd(Ext(X'), Uniform) ≤ 3ε/2\n```\n\n**Proof Strategy**: Apply `lipschitz_chain_bound` with `f = fun μ => sd(",
+    "domains": [
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "53e2f8f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:47:24.766623+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "5. Categorical Formulation of Certified Information Contraction",
+    "description": "**Target Theorem**: Define a category `CertChannel` of channels equipped with Lipschitz certificates, where morphisms are contraction-preserving post-processing maps. Prove that this category is closed under composition and that the certified radius is functorial (i.e., composition of certified channels yields certified channels with explicit radius bounds).\n\n**Formal Statement Sketch**:\n```\nstructure CertChannel (α β : Type*) where\n  channel : Channel α β\n  lipschitz_const : ℝ\n  cert : ∀ μ ν, |MI μ channel - MI ν channel| ≤ lipschitz_const * d μ ν\n\ninstance : Category CertChannel where\n  Hom := contraction_preserving_maps\n  comp := fun f g => ⟨g.channel ∘ f.channel, f.K * g.K, ...⟩\n\ntheorem certified_radius_functorial\n    (f : CertChannel α β) (g : CertChannel β γ) :\n    (g ∘ f).certified",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "53e2f8f2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:47:24.792010+00:00"
   }
 ]

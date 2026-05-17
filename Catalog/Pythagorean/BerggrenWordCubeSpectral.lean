@@ -318,6 +318,76 @@ def berggrenInner {L : ℕ} (f g : BerggrenFn L) : ℝ :=
 def noiseBias {L : ℕ} (ρ : ℝ) (f : BerggrenFn L) : ℝ :=
   berggrenInner (productNoise L ρ f) (fun _ => 1)
 
+/-! ## Noise Kernel Column Sum and Sum Preservation -/
+
+/-- The noise kernel column sums are 1 (i.e., it is doubly stochastic). -/
+theorem noiseKernel_col_sum (ρ : ℝ) (b : Fin 3) :
+    ∑ a : Fin 3, noiseKernel ρ a b = 1 := by
+  simp only [noiseKernel, Fin.sum_univ_three]; fin_cases b <;> simp <;> ring
+
+/-
+Product noise preserves the total sum of a function (doubly stochastic).
+-/
+theorem productNoise_sum_preserves (L : ℕ) (ρ : ℝ) (f : BerggrenFn L) :
+    ∑ x : BerggrenWordSpace L, (productNoise L ρ f) x =
+    ∑ x : BerggrenWordSpace L, f x := by
+  -- We can swap the order of summation (Finset.sum_comm).
+  have h_comm : ∑ x : BerggrenWordSpace L, ∑ y : BerggrenWordSpace L, (∏ i : Fin L, noiseKernel ρ (x i) (y i)) * f y = ∑ y : BerggrenWordSpace L, ∑ x : BerggrenWordSpace L, (∏ i : Fin L, noiseKernel ρ (x i) (y i)) * f y := by
+    exact Finset.sum_comm;
+  -- After swapping, the outer sum is over y, and the inner sum is ∑_x ∏_i K(x_i, y_i). By Fubini on finite products, this factorizes as ∏_i (∑_{x_i} K(x_i, y_i)).
+  have h_factor : ∀ y : BerggrenWordSpace L, ∑ x : BerggrenWordSpace L, (∏ i : Fin L, noiseKernel ρ (x i) (y i)) = 1 := by
+    intro y
+    have h_prod : ∏ i : Fin L, ∑ x_i : Fin 3, noiseKernel ρ x_i (y i) = 1 := by
+      exact Finset.prod_eq_one fun i _ => noiseKernel_col_sum ρ _;
+    rw [ ← h_prod, Finset.prod_sum ];
+    refine' Finset.sum_bij ( fun x _ => fun i _ => x i ) _ _ _ _ <;> simp +decide;
+    · simp +contextual [ funext_iff ];
+    · exact fun b => ⟨ fun i => b i ( Finset.mem_univ i ), rfl ⟩;
+  simp_all +decide [ ← Finset.mul_sum _ _ _, ← Finset.sum_mul ];
+  convert h_comm using 1
+
+/-! ## Homogeneous Degree Preservation and Norm Bound -/
+
+/-- Product noise preserves the homogeneous degree-`d` submodule
+    (since it acts by scalar multiplication ρ^d). -/
+theorem productNoise_preserves_homogeneousDegree (L d : ℕ) (ρ : ℝ) :
+    ∀ f ∈ homogeneousDegreeSubmodule L d,
+      productNoise L ρ f ∈ homogeneousDegreeSubmodule L d := by
+  intro f hf
+  rw [productNoise_eigen_on_homogeneousDegree L d ρ f hf]
+  exact Submodule.smul_mem _ _ hf
+
+/-
+Norm bound on the homogeneous degree-`d` sector: productNoise contracts
+    by factor |ρ|^d in any seminorm.
+-/
+theorem productNoise_norm_on_homogeneousDegree (L d : ℕ) (ρ : ℝ)
+    (f : BerggrenFn L) (hf : f ∈ homogeneousDegreeSubmodule L d) :
+    ‖productNoise L ρ f‖ = |ρ| ^ d * ‖f‖ := by
+  rw [ productNoise_eigen_on_homogeneousDegree L d ρ f hf, norm_smul, Real.norm_eq_abs, abs_pow ]
+
+/-! ## Spectral Bias Bound -/
+
+/-
+**Berggren bias bound from spectral decay**: On the homogeneous degree-`d`
+    sector, `n` iterations of productNoise contract the sup norm by `(ρ^d)^n`.
+    This instantiates the abstract `bias_bound_of_spectral_decay` theorem from
+    `SpectralPseudorandomness`.
+-/
+theorem berggren_bias_bound_of_spectral_decay
+    (L d : ℕ) (ρ : ℝ) (hρ : 0 ≤ ρ ∧ ρ ≤ 1)
+    (f : BerggrenFn L)
+    (hf : f ∈ homogeneousDegreeSubmodule L d)
+    (hmean : ∑ x : BerggrenWordSpace L, f x = 0)
+    (n : ℕ) :
+    ‖(⇑(productNoise L ρ))^[n] f‖ ≤ (ρ ^ d) ^ n * ‖f‖ := by
+  -- By induction on $n$, we can show that $(productNoise L ρ)^{[n]} f = (ρ^d)^n • f$.
+  have h_ind : ∀ n, (productNoise L ρ)^[n] f = (ρ^d)^n • f := by
+    intro n;
+    induction n <;> simp_all +decide [ Function.iterate_succ_apply', pow_succ, mul_assoc, smul_smul ];
+    rw [ productNoise_eigen_on_homogeneousDegree L d ρ f hf, smul_smul, mul_comm ];
+  rw [ h_ind, norm_smul, Real.norm_of_nonneg ( pow_nonneg ( pow_nonneg hρ.1 _ ) _ ) ]
+
 end BerggrenWordCube
 
 end
