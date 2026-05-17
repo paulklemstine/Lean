@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "binary_search",
@@ -71,12 +71,28 @@
       "shape": "icosahedron",
       "date": "2026-05-17T21:05:54Z",
       "hue": 270
+    },
+    {
+      "id": "hybrid_argument_with_computational_distinguishers",
+      "title": "Computational Hybrid Arguments for Tropical Pseudorandom Generators",
+      "domain": "Tropical Cryptography",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-05-17T21:27:07Z",
+      "hue": 92
     }
   ],
   "edges": [
     {
       "source": "2_tropical_amplitude_amplification",
       "target": "binary_search",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "5_tropical_pseudorandom_generators_from_orbit_expa",
+      "target": "hybrid_argument_with_computational_distinguishers",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -109,6 +125,12 @@
     },
     {
       "domain_a": "Geometry",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Cryptography",
       "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5

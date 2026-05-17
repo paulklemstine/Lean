@@ -479,8 +479,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "5604465c",
       "timestamp": "2026-05-17T18:48:26.949079+00:00"
     },
     {
@@ -1202,8 +1202,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "cd682ee6",
       "timestamp": "2026-05-17T19:57:55.750627+00:00"
     },
     {
@@ -1332,7 +1332,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "3b534baf",
       "timestamp": "2026-05-17T19:57:55.760721+00:00"
     },
@@ -1851,8 +1851,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "1147b8c8",
       "timestamp": "2026-05-17T21:05:29.612613+00:00"
     },
     {
@@ -1979,6 +1979,127 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:45.350624+00:00"
+    },
+    {
+      "id": "fd_0108",
+      "title": "Hypothesis formulation",
+      "description": ": State the target theorem precisely in Lean 4 syntax.",
+      "source_exp_id": "3b534baf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:56.329682+00:00"
+    },
+    {
+      "id": "fd_0109",
+      "title": "Computational validation",
+      "description": ": Use `#eval` with concrete finite examples to verify the conjecture.",
+      "source_exp_id": "3b534baf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:56.331962+00:00"
+    },
+    {
+      "id": "fd_0110",
+      "title": "Decomposition",
+      "description": ": Break the theorem into 3–8 helper lemmas, each capturing one logical step.",
+      "source_exp_id": "3b534baf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:56.334018+00:00"
+    },
+    {
+      "id": "fd_0111",
+      "title": "Proof",
+      "description": ": Prove helper lemmas bottom-up, validating each with `lean_build`.",
+      "source_exp_id": "3b534baf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:56.335833+00:00"
+    },
+    {
+      "id": "fd_0112",
+      "title": "Integration",
+      "description": ": Assemble the main theorem from proven helpers.",
+      "source_exp_id": "3b534baf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:56.337688+00:00"
+    },
+    {
+      "id": "fd_0113",
+      "title": "Cross-domain documentation",
+      "description": ": Write explicit comments connecting each result to its applications.",
+      "source_exp_id": "3b534baf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:56.339710+00:00"
+    },
+    {
+      "id": "fd_0114",
+      "title": "Iteration",
+      "description": ": Update this document with new directions opened by each proved theorem.",
+      "source_exp_id": "3b534baf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:56.342143+00:00"
     }
   ],
   "pruned": []
