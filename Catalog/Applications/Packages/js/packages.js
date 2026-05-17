@@ -84,42 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             paperDiv.innerHTML = '<p style="color:var(--text-muted)">No research paper provided.</p>';
         }
 
-        // Visualizations
-        const vizDiv = document.getElementById('content-visualizations');
-        vizDiv.innerHTML = '';
-        if (data.visualizations && data.visualizations.length > 0) {
-            data.visualizations.forEach((viz, index) => {
-                const card = document.createElement('div');
-                card.className = 'gallery-card';
-                card.style.cursor = 'pointer';
-                card.addEventListener('click', () => window.openLightbox(index));
-
-                let imgContent = '';
-                if (viz.file) {
-                    imgContent = `<img src="${viz.file}" alt="${viz.name || 'Visualization'}">`;
-                } else if (viz.data && viz.data.startsWith('<svg')) {
-                    const svgUri = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(viz.data);
-                    imgContent = `<img src="${svgUri}" alt="${viz.name || 'Visualization'}">`;
-                } else if (viz.data && viz.data.startsWith('data:image')) {
-                    imgContent = `<img src="${viz.data}" alt="${viz.name || 'Visualization'}">`;
-                } else {
-                    imgContent = '<p style="color:#666">Invalid image data</p>';
-                }
-
-                card.innerHTML = `
-                    <div class="gallery-img-container">
-                        ${imgContent}
-                    </div>
-                    <div class="gallery-info">
-                        <div class="gallery-title">${viz.name || 'Visualization'}</div>
-                        ${viz.description ? `<p style="color:var(--text-muted);font-size:0.9rem">${viz.description}</p>` : ''}
-                    </div>
-                `;
-                vizDiv.appendChild(card);
-            });
-        } else {
-            vizDiv.innerHTML = '<p style="color:var(--text-muted)">No visualizations generated.</p>';
-        }
+        // Visualizations (tab removed — skip rendering)
 
         // Algorithms & Demos
         renderCodeBlocks('content-algorithms', data.algorithms, 'pseudocode');
