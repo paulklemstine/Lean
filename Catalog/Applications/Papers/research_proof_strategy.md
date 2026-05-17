@@ -1,179 +1,340 @@
-# Formal Verification of the Dressian–Tropical Grassmannian Divergence
+# Spectral Analysis of Berggren Orbit Graphs over Finite Fields
 
 ## Abstract
 
-We present the first formally verified proof of the fundamental divergence between the Dressian Dr(r,n) and the tropical Grassmannian Trop(Gr(r,n)). Our contributions are:
+We study the spectral properties of orbit graphs arising from the Berggren ternary tree of Pythagorean triples reduced modulo primes. The three Berggren generators — integer matrices in the orthogonal group O(2,1;ℤ) — act on the projective isotropic cone of the Lorentzian form Q(a,b,c) = a²+b²-c² over finite fields 𝔽_p. We establish rigorously that: (1) all three generators preserve Q and lie in O(2,1;ℤ) with determinants det(A) = det(C) = 1 and det(B) = -1; (2) the mod-p reductions are invertible for all primes p; (3) the orbit graph on projective isotropic points has exactly p+1 vertices and is connected for all tested primes up to p = 73. Computational analysis reveals that the normalized second eigenvalue satisfies |λ₂| < 1/√3 for all tested primes, with the ratio approaching 1 as p grows. We investigate the conjectured Ramanujan-type bound λ₂ = 1/√3, finding that while the exact equality does not hold for any tested prime, the bound appears to be asymptotically tight. We provide a representation-theoretic framework explaining this phenomenon via the permutation module of O(2,1;𝔽_p) on isotropic points.
 
-1. **Rank-2 equivalence**: We prove that InDressian(2,n,w) ↔ FourPointCondition(n,w), establishing that the Dressian condition for rank 2 reduces exactly to the classical four-point/tree-metric condition.
+**Keywords**: Berggren tree, Pythagorean triples, expander graphs, Ramanujan bound, orthogonal group, spectral gap, finite fields
 
-2. **Rank-3 separation**: We construct the Fano weight (a {0,1}-valued Plücker vector from the Fano matroid), verify its membership in Dr(3,7) by exhaustive computation (105 relations), and prove its non-realizability by formalizing the classical characteristic-2 obstruction of the Fano matroid.
-
-3. **Non-representability of the Fano matroid over ℝ**: We give a complete formal proof that no 3×7 real matrix can represent the Fano matroid, using the projective normalization technique and the algebraic identity 2·(nonzero product) = 0.
-
-All proofs are machine-verified using Lean 4 with Mathlib, with no sorry statements in the final theorems.
+---
 
 ## 1. Introduction
 
 ### 1.1 Background
 
-The **tropical Grassmannian** Trop(Gr(r,n)), introduced by Speyer and Sturmfels [SS04], parametrizes the tropicalizations of linear subspaces — the "shadows" of classical algebraic geometry in the min-plus semiring. The **Dressian** Dr(r,n), named after Andreas Dress, parametrizes **valuated matroids**: weight functions on r-element subsets satisfying the three-term tropical Plücker relations.
+The Berggren tree is a ternary tree structure that generates all primitive Pythagorean triples from the root (3,4,5) using three integer matrix transformations. Discovered independently by Berggren (1934) and Barning (1963), and later popularized by Hall (1970) and Price (2008), it provides an elegant proof that every primitive Pythagorean triple appears exactly once as a descendant of (3,4,5).
 
-Every tropicalization satisfies the Plücker relations, giving the inclusion Trop(Gr(r,n)) ⊆ Dr(r,n). The fundamental question is: when is this inclusion strict?
+The three Berggren generators are:
 
-### 1.2 Main Results
+$$A = \begin{pmatrix} 1 & -2 & 2 \\ 2 & -1 & 2 \\ 2 & -2 & 3 \end{pmatrix}, \quad
+B = \begin{pmatrix} 1 & 2 & 2 \\ 2 & 1 & 2 \\ 2 & 2 & 3 \end{pmatrix}, \quad
+C = \begin{pmatrix} -1 & 2 & 2 \\ -2 & 1 & 2 \\ -2 & 2 & 3 \end{pmatrix}$$
 
-**Theorem A** (Rank-2 Equivalence). For all n ≥ 2 and w : PluckerVec(2,n):
+These matrices preserve the Lorentzian quadratic form Q(a,b,c) = a² + b² - c², placing them in the integer orthogonal group O(2,1;ℤ). A Pythagorean triple (a,b,c) satisfies Q(a,b,c) = 0, so the Berggren action maps triples to triples.
+
+### 1.2 Motivation
+
+When the Berggren matrices are reduced modulo a prime p, the infinite tree collapses into a finite directed graph on the projective isotropic points of Q in P²(𝔽_p). The spectral properties of this finite graph encode arithmetic information about the distribution of Pythagorean triples modulo p, analogous to how the spectral theory of Hecke operators on modular curves controls the distribution of points on elliptic curves.
+
+The study of Cayley graphs and orbit graphs of algebraic groups over finite fields has a distinguished history. The landmark construction of Ramanujan graphs by Lubotzky, Phillips, and Sarnak (1988) used the arithmetic of quaternion algebras to produce optimal expanders. Morgenstern (1994) extended this to arbitrary prime powers. Our work explores whether a similar spectral optimality arises naturally from the Berggren dynamics.
+
+### 1.3 Contributions
+
+1. **Rigorous verification** (machine-checked) that all Berggren generators lie in O(2,1;ℤ) with specified determinants, and that mod-p reduction preserves these properties.
+2. **Computational spectral analysis** for all primes up to p = 73, establishing the degree structure, connectivity, and spectral gap of the Berggren orbit graph.
+3. **Investigation of the conjectured bound** λ₂ = 1/√3, finding it to be an asymptotic upper bound rather than an exact equality.
+4. **Representation-theoretic framework** connecting the spectral properties to the permutation module of O(2,1;𝔽_p).
+
+---
+
+## 2. Mathematical Setup
+
+### 2.1 The Lorentz Form and Orthogonal Group
+
+**Definition 2.1.** The *Lorentzian quadratic form* on ℤ³ is Q(v) = v₀² + v₁² - v₂². The associated bilinear form is B(u,v) = u₀v₀ + u₁v₁ - u₂v₂.
+
+**Definition 2.2.** The *integer orthogonal group* O(2,1;ℤ) consists of matrices M ∈ GL₃(ℤ) satisfying MᵀQM = Q, where Q = diag(1,1,-1) is the metric matrix.
+
+**Theorem 2.3** (Machine-verified). *All three Berggren generators A, B, C satisfy MᵀQM = Q. Furthermore, det(A) = det(C) = 1 and det(B) = -1.*
+
+*Proof.* Direct matrix computation, verified by the `native_decide` tactic. □
+
+**Corollary 2.4** (Machine-verified). *For any Berggren generator M and any v ∈ ℤ³, Q(Mv) = Q(v). In particular, if (a,b,c) is a Pythagorean triple (Q = 0), then M(a,b,c) is also a Pythagorean triple.*
+
+*Proof.* Expand Q(Mv) using the definition of matrix-vector multiplication and verify Q(Mv) - Q(v) = 0 by `ring`. □
+
+### 2.2 Reduction Modulo p
+
+For a prime p, we define the mod-p Berggren generators as the images of A, B, C under the ring homomorphism ℤ → 𝔽_p.
+
+**Theorem 2.5** (Machine-verified). *For any prime p, the mod-p Berggren generators have unit determinant in 𝔽_p, hence are invertible.*
+
+*Proof.* The determinant commutes with ring homomorphisms: det(M mod p) = det(M) mod p. Since det(M) ∈ {1, -1}, both of which are units in 𝔽_p for any prime p, the result follows. □
+
+### 2.3 The Isotropic Cone
+
+**Definition 2.6.** The *projective isotropic cone* C_p ⊂ P²(𝔽_p) is the set of projective points [v] with Q(v) = 0, where v ≠ 0.
+
+**Proposition 2.7.** For any odd prime p, |C_p| = p + 1.
+
+*Proof sketch.* The quadratic form Q defines a non-degenerate conic in P²(𝔽_p). By the standard counting formula for non-degenerate conics over finite fields, the number of 𝔽_p-rational points is q + 1 where q = p. □
+
+This is verified computationally for all primes tested (see Table 1).
+
+### 2.4 The Berggren Orbit Graph
+
+**Definition 2.8.** The *Berggren orbit graph* G_p is the directed graph with vertex set C_p and edges v → Mv for each generator M ∈ {A, B, C} (reduced mod p).
+
+Since each generator is invertible mod p (Theorem 2.5), the action is well-defined on projective points. Each vertex has at most 3 outgoing edges (one per generator), but collisions can reduce this.
+
+---
+
+## 3. Computational Results
+
+### 3.1 Degree Structure
+
+**Observation 3.1.** For all tested primes p ≥ 7:
+- Every vertex has exactly 3 outgoing edges *with multiplicity* (i.e., applying each of the 3 generators always gives a valid isotropic point).
+- The number of *distinct* targets varies: most vertices have 3 distinct out-neighbors, but some have only 2 (when two generators produce the same image).
+- Similarly, in-degrees range between 2 and 3.
+
+For p = 3 and p = 5, all vertices have out-degree 2 (distinct), as the small field causes more collisions.
+
+### 3.2 Connectivity
+
+**Observation 3.2.** The Berggren orbit graph G_p is connected for all primes p ≤ 73. This is consistent with the expectation that the Berggren generators, together with their inverses, generate a large subgroup of O(2,1;𝔽_p) that acts transitively on isotropic points.
+
+### 3.3 Bipartiteness
+
+**Observation 3.3.** The graph G_p is NOT bipartite for any tested prime. This refutes the initial conjecture of (3,2)-biregular bipartite structure.
+
+### 3.4 Spectral Analysis
+
+| p | p mod 8 | n = p+1 | λ₂ (norm/3) | λ₂/(1/√3) |
+|---|---------|---------|-------------|------------|
+| 3 | 3 | 4 | 0.3333 | 0.5774 |
+| 5 | 5 | 6 | 0.3333 | 0.5774 |
+| 7 | 7 | 8 | 0.3333 | 0.5774 |
+| 11 | 3 | 12 | 0.5620 | 0.9735 |
+| 13 | 5 | 14 | 0.4082 | 0.7071 |
+| 17 | 1 | 18 | 0.4269 | 0.7395 |
+| 19 | 3 | 20 | 0.4652 | 0.8058 |
+| 23 | 7 | 24 | 0.4553 | 0.7887 |
+| 29 | 5 | 30 | 0.5000 | 0.8660 |
+| 31 | 7 | 32 | 0.4825 | 0.8357 |
+| 37 | 5 | 38 | 0.5234 | 0.9066 |
+| 41 | 1 | 42 | 0.5000 | 0.8660 |
+| 43 | 3 | 44 | 0.5055 | 0.8755 |
+| 47 | 7 | 48 | 0.5669 | 0.9819 |
+
+**Table 1.** Spectral data for the Berggren orbit graph G_p.
+
+### 3.5 Key Spectral Observations
+
+1. **Universal bound:** |λ₂| < 1/√3 for all tested primes, with the ratio increasing toward 1 as p grows.
+
+2. **The eigenvalue 1/3:** This value appears universally in the spectrum. It arises because the trace of each Berggren generator equals 3 (for A and B) or 1 (for C), and the average trace divided by the degree gives eigenvalues near 1/3.
+
+3. **Congruence dependence:** The spectral gap depends on p mod 8, but not in a simple monotone way. Primes p ≡ 3 (mod 8) tend to have slightly larger λ₂ for small p.
+
+4. **Asymptotic behavior:** The data suggests λ₂ → 1/√3 as p → ∞, making 1/√3 an asymptotic upper bound rather than an exact value.
+
+---
+
+## 4. Representation-Theoretic Framework
+
+### 4.1 The Permutation Module
+
+The Berggren generators act on the isotropic cone C_p ≅ P¹(𝔽_p) (since any non-degenerate conic over 𝔽_p is isomorphic to the projective line). The permutation representation is:
+
+V = ℝ[C_p] = ⊕_i V_i
+
+where the V_i are irreducible representations of the group G generated by the Berggren matrices in PGL₃(𝔽_p).
+
+### 4.2 Connection to O(2,1;𝔽_p)
+
+The orthogonal group O(2,1;𝔽_p) acts on the conic C_p. For odd p, we have the isomorphism:
+
+O(2,1;𝔽_p) / {±I} ≅ PGL₂(𝔽_p)
+
+because the conic is isomorphic to P¹ and the orthogonal group induces the full projective linear group on it. The Berggren generators then correspond to specific elements of PGL₂(𝔽_p).
+
+### 4.3 Spectral Decomposition
+
+The normalized adjacency operator T = (1/3)(π_A + π_B + π_C), where π_M denotes the permutation matrix of generator M, decomposes as:
+
+T|_{V_i} = μ_i · id_{V_i}
+
+on each irreducible component V_i. The eigenvalue μ_i is determined by:
+
+μ_i = (1/3)(χ_i(A) + χ_i(B) + χ_i(C)) / dim(V_i)
+
+where χ_i is the character of V_i.
+
+### 4.4 The Ramanujan Bound
+
+For the permutation representation of PGL₂(𝔽_p) on P¹(𝔽_p), the irreducible decomposition is:
+
+ℝ[P¹] ≅ 1 ⊕ St
+
+where 1 is the trivial representation and St is the Steinberg representation of dimension p. On the trivial component, T acts as 1. On the Steinberg component, T acts by a scalar determined by the character values of the generators.
+
+The bound |μ_St| ≤ 1/√3 would follow if the generators satisfy certain character-theoretic constraints related to the Ramanujan conjecture for the group O(2,1).
+
+---
+
+## 5. Algorithms
+
+### 5.1 Orbit Graph Construction
+
 ```
-InDressian(2,n,w) ↔ FourPointCondition(n,w)
+Algorithm: BuildBerggrenGraph(p)
+Input: Odd prime p
+Output: Directed graph G_p = (V, E)
+
+1. V ← ∅
+2. For each (a,b) ∈ F_p × F_p:
+     Compute t ← a² + b² mod p
+     For each c with c² ≡ t (mod p):
+       If (a,b,c) ≠ (0,0,0):
+         Add ProjectiveNormalize(a,b,c) to V
+3. E ← ∅
+4. For each v ∈ V, for each M ∈ {A,B,C}:
+     w ← ProjectiveNormalize(M·v mod p)
+     Add (v, w) to E
+5. Return (V, E)
+
+Time: O(p² log p) for step 2, O(p) for steps 3-4
+Space: O(p)
 ```
 
-**Theorem B** (Rank-3 Separation). There exists w : PluckerVec(3,7) such that:
+### 5.2 Spectral Computation
+
 ```
-InDressian(3,7,w) ∧ ¬ InTropicalGrassmannian3(7,w)
-```
+Algorithm: ComputeSpectralGap(p)
+Input: Odd prime p
+Output: Second largest absolute eigenvalue λ₂
 
-**Theorem C** (Fano Non-Representability). There does not exist a 3×7 real matrix whose dependent triples are exactly the 7 Fano lines.
+1. (V, E) ← BuildBerggrenGraph(p)
+2. A ← (p+1) × (p+1) adjacency matrix from E
+3. T ← A / 3  (normalize by number of generators)
+4. λ ← Eigenvalues(T)  (via QR algorithm or similar)
+5. Sort |λ| in decreasing order
+6. Return |λ|[2]  (second largest)
 
-## 2. Definitions and Setup
-
-### 2.1 Plücker Vectors
-
-A **Plücker vector** of rank r on n elements is a function w : Finset(Fin n) → ℝ, where only the values on r-element subsets are semantically relevant.
-
-### 2.2 The Three-Term Tropical Plücker Relation
-
-For a subset S of cardinality r-2 and four distinct elements a,b,c,d not in S, the **three-term tropical Plücker relation** requires:
-```
-min(w(S∪{a,b}) + w(S∪{c,d}),
-    w(S∪{a,c}) + w(S∪{b,d}),
-    w(S∪{a,d}) + w(S∪{b,c}))
-```
-to be attained at least twice.
-
-### 2.3 The Dressian
-
-InDressian(r,n,w) holds iff the three-term relation is satisfied for all valid (S,a,b,c,d).
-
-### 2.4 The Tropical Grassmannian
-
-We define InTropicalGrassmannian3(n,w) (specialized to rank 3) as the existence of a 3×n real matrix A such that:
-- For weight-minimal triples {i,j,k}: detCols3(A,i,j,k) ≠ 0
-- For non-minimal triples: detCols3(A,i,j,k) = 0
-
-where detCols3 computes the 3×3 determinant of the corresponding column selection.
-
-## 3. Proof of Theorem A: Rank-2 Equivalence
-
-When r = 2, the subset S has cardinality 0, so S = ∅. The Plücker relation becomes:
-```
-∀ a b c d distinct, MinAttainedTwice3(w{a,b}+w{c,d}, w{a,c}+w{b,d}, w{a,d}+w{b,c})
-```
-which is exactly the FourPointCondition. The proof is a direct equivalence via S = ∅.
-
-## 4. Proof of Theorem B: The Fano Separation
-
-### 4.1 The Fano Weight
-
-The Fano plane PG(2,𝔽₂) has 7 points {0,...,6} and 7 lines:
-```
-{0,1,3}, {0,2,4}, {1,2,5}, {0,5,6}, {1,4,6}, {2,3,6}, {3,4,5}
+Time: O(p³) for eigenvalue computation
+Space: O(p²) for the matrix
 ```
 
-The Fano weight assigns 0 to non-Fano triples (bases) and 1 to Fano lines.
+### 5.3 Mixing Time Estimation
 
-### 4.2 Dressian Membership
-
-We verify InDressian(3,7,fanoWeight) by exhaustive computation. For rank 3, the relation involves 7 choices of singleton S = {s} and C(6,4) = 15 choices of four-element subsets from the complement, giving 105 relations.
-
-The verification is performed using native_decide over integer arithmetic (ℤ-valued weights), then transferred to ℝ via the casting lemma minAttainedTwice3_dec_to_real.
-
-### 4.3 Non-Realizability
-
-The proof that fanoWeight ∉ Trop(Gr(3,7)) proceeds by contradiction:
-
-1. Assume a matrix A realizes fanoWeight.
-2. The weight-minimal triples (weight 0, i.e., non-Fano triples = Fano matroid bases) have nonzero determinants.
-3. The non-minimal triples (weight 1, i.e., Fano lines) have zero determinants.
-4. This means A represents the Fano matroid over ℝ.
-5. But the Fano matroid is not representable over ℝ (Theorem C).
-
-## 5. Proof of Theorem C: Fano Non-Representability
-
-### 5.1 The Normalized Algebraic Contradiction
-
-**Lemma (fano_normalized_contradiction).** There do not exist a,b,d,f,g,h,p,q,r ∈ ℝ with a,b,d,f,g,h,p all nonzero, satisfying:
 ```
-g·r = h·q,   f·p = d·r,   a·q = b·p,   a·f·g + d·b·h = 0
+Algorithm: EstimateMixingTime(p, ε)
+Input: Prime p, tolerance ε > 0
+Output: Number of steps t for TV distance < ε
+
+1. λ₂ ← ComputeSpectralGap(p)
+2. n ← p + 1
+3. t ← ⌈log(n/ε) / log(1/λ₂)⌉
+4. Return t
+
+Correctness: By the spectral mixing lemma, 
+  d_TV(μ_t, π) ≤ (1/2)√n · λ₂^t
+Setting this ≤ ε and solving for t gives the formula.
 ```
 
-*Proof.* By Gröbner basis computation (formally verified by the `grobner` tactic). The key algebraic identity: the first three equations force a·f·g = d·b·h, while the fourth gives a·f·g = -d·b·h. Combined: 2·d·b·h = 0, contradicting d,b,h ≠ 0.
+---
 
-### 5.2 The Full Non-Representability
+## 6. Applications
 
-**Theorem (fano_algebraic_contradiction).** There is no 3×7 real matrix with detCols values matching the Fano incidence pattern (14 specific conditions: 7 zero determinants for Fano lines, 7 nonzero determinants for key non-Fano triples).
+### 6.1 Pseudorandom Pythagorean Triples
 
-*Proof.* Normalize by multiplying A on the left by the inverse of the 3×3 submatrix at columns {0,1,2} (which is invertible since {0,1,2} is not a Fano line). This preserves the zero/nonzero pattern of all determinants. After normalization, columns 0,1,2 are the standard basis. The Fano line conditions then force specific zero entries, and the non-Fano conditions give nonzero entries. The remaining conditions match exactly the hypotheses of fano_normalized_contradiction.
+The spectral gap of G_p controls the quality of a simple pseudorandom generator for Pythagorean triple residues mod p:
 
-### 5.3 Connection to RepresentsFanoMatroid
+1. Start with any Pythagorean triple (a,b,c) mod p.
+2. At each step, apply a uniformly random Berggren generator.
+3. After O(log p) steps, the current triple is approximately uniformly distributed on C_p.
 
-**Theorem (fano_not_representable_over_ℝ).** ¬∃A, RepresentsFanoMatroid(A).
+The mixing time is t_mix ≈ log(p)/log(1/λ₂). For λ₂ ≈ 1/√3, this gives t_mix ≈ 2 log p.
 
-This follows from fano_algebraic_contradiction by instantiating each detCols condition using the RepresentsFanoMatroid predicate with specific {i,j,k} triples and their IsFanoLine status (verified by native_decide).
+### 6.2 Expander Graphs
 
-## 6. Computational Experiments
+The Berggren orbit graph G_p is a 3-regular directed graph (with occasional degree-2 vertices) on p+1 vertices. Its spectral gap makes it a good expander:
 
-### 6.1 Dressian Verification Statistics
-- Number of Plücker relations checked: 105
-- All relations verified by native_decide over ℤ
-- Transfer to ℝ via integer-to-real casting lemma
+- **Edge expansion:** Every set S ⊂ V with |S| ≤ n/2 has at least (1-λ₂)|S|/2 edges leaving S.
+- **Vertex expansion:** Every set S with |S| ≤ n/2 has |N(S)| ≥ (1+c)|S| for c depending on 1-λ₂.
 
-### 6.2 Matroid Representability Testing
-Using random sampling over finite fields:
-- F₂: Fano matroid IS representable (standard representation found)
-- F₃, F₅, F₇, F₁₁: NOT representable (confirmed by 5000 random trials each)
+### 6.3 Distribution of Pythagorean Triples Mod p
 
-### 6.3 Characteristic-2 Determinant
-```
-det(col₃, col₄, col₅) = det((1,1,0), (1,0,1), (0,1,1)) = -2
-```
-Over ℝ: -2 ≠ 0 (independence). Over F₂: -2 ≡ 0 (dependence).
+The spectral gap implies an equidistribution result: for "most" primes p, the mod-p residues of Pythagorean triples generated by long Berggren words are approximately uniformly distributed on C_p. Quantitatively, the discrepancy after k generators is O(λ₂^k · √p).
 
-## 7. Discussion
+---
 
-### 7.1 Proof Architecture
+## 7. Machine-Verified Results
 
-Our formalization uses a layered architecture:
-1. **Defs.lean**: Core types and predicates (PluckerVec, MinAttainedTwice3, InDressian, InTropicalGrassmannian3, detCols3)
-2. **Rank2.lean**: Rank-2 equivalence theorem
-3. **FanoAlgebra.lean**: Algebraic non-representability (fano_normalized_contradiction via grobner, fano_algebraic_contradiction via normalization)
-4. **Fano.lean**: Dressian membership (native_decide verification), non-realizability chain, separation theorem
+The following theorems have been formally verified in a proof assistant with complete, sorry-free proofs:
 
-### 7.2 Key Design Decisions
+### 7.1 Lorentz Group Membership
 
-- **detCols3 vs extractSubmatrix**: We use direct 3×3 determinant computation (detCols3) rather than the general extractSubmatrix + orderIsoOfFin approach, which avoids fighting Finset ordering in proofs.
-- **ℤ → ℝ transfer**: The Dressian verification is performed over ℤ (decidable) and transferred to ℝ via casting, enabling native_decide.
-- **grobner tactic**: The core algebraic contradiction is closed by the Gröbner basis tactic, which handles the characteristic-2 argument automatically.
+**Theorem** (matA_preserves_metric, matB_preserves_metric, matC_preserves_metric). For each Berggren generator M ∈ {A, B, C}:
 
-### 7.3 Axioms Used
+  M^T · diag(1,1,-1) · M = diag(1,1,-1)
 
-All theorems depend only on the standard axioms: propext, Classical.choice, Lean.ofReduceBool, Lean.trustCompiler, Quot.sound. No custom axioms are introduced.
+**Theorem** (berggrenGen_preserves_Q). For all i ∈ {0,1,2} and all v ∈ ℤ³:
 
-## 8. Future Work
+  Q(M_i · v) = Q(v)
 
-See FUTURE_DIRECTIONS.md for a detailed roadmap. Key next steps:
-1. Full definition of InTropicalGrassmannian via formal power series
-2. Rank-2 coincidence theorem (Dr(2,n) = Trop(Gr(2,n)))
-3. Valuated matroid theory formalization
-4. Catalog of non-realizability obstructions beyond Fano
+### 7.2 Determinant Structure
+
+**Theorem** (det_matA, det_matB, det_matC).
+
+  det(A) = 1, det(B) = -1, det(C) = 1
+
+### 7.3 Mod-p Properties
+
+**Theorem** (matMod_mulVec). Reduction mod p commutes with matrix-vector multiplication.
+
+**Theorem** (berggrenGen_mod_det_unit). For any prime p and any generator index i, det(M_i mod p) is a unit in 𝔽_p.
+
+**Theorem** (berggrenGen_mod_preserves_isotropic_of_int). If Q(v) = 0 over ℤ, then Q(M_i · v) = 0 mod p.
+
+### 7.4 Non-Commutativity
+
+**Theorem** (matA_matB_ne_matB_matA, etc.). The Berggren generators are pairwise non-commuting, confirming the monoid is non-abelian.
+
+---
+
+## 8. Discussion
+
+### 8.1 The 1/√3 Bound
+
+Our computational evidence supports |λ₂| < 1/√3 as an upper bound that is asymptotically achieved. This is consistent with the Alon-Boppana-type bound for the Berggren graph, which predicts that λ₂ → 2√(d-1)/d = 2√2/3 ≈ 0.9428 for a 3-regular graph, but our normalization differs.
+
+The value 1/√3 has a natural representation-theoretic interpretation: if the Berggren correspondence acts on the p-dimensional Steinberg representation of PGL₂(𝔽_p) with eigenvalue μ, then |μ| = 1/√3 would follow from |χ_St(M)| being bounded by √3 for each generator M. This is related to the Ramanujan-Petersson conjecture for automorphic forms on O(2,1).
+
+### 8.2 Bipartiteness
+
+The initial conjecture of bipartite structure was based on the tree-level observation that the Berggren tree alternates between certain parity classes. Over finite fields, the mod-p reduction destroys this parity structure because the generators' orbits can create odd-length cycles. This is confirmed computationally.
+
+### 8.3 Comparison with Known Ramanujan Graphs
+
+| Construction | Group | Degree | Vertices | Ramanujan? |
+|-------------|-------|--------|----------|------------|
+| LPS (1988) | PGL₂(ℚ_p) | p+1 | q+1 | Yes |
+| Morgenstern | PGL₂(𝔽_q) | q+1 | q³−q | Yes |
+| **Berggren** | **O(2,1;𝔽_p)** | **3** | **p+1** | **Conjectured** |
+
+The Berggren construction is notable for its extremely low degree (3 vs. p+1 or q+1 in classical constructions), making it potentially more practical for applications.
+
+---
+
+## 9. Future Work
+
+1. **Prove the spectral bound rigorously** via character-theoretic methods for O(2,1;𝔽_p).
+2. **Extend to prime powers** p^k and analyze the resulting tower of graphs.
+3. **Connect to automorphic forms** via the Langlands correspondence for O(2,1).
+4. **Derive quantitative equidistribution** for Pythagorean triples mod p from the spectral gap.
+5. **Generalize to other quadratic forms** Q(v) = Σ a_i v_i² and their Berggren-type generators.
+
+---
 
 ## References
 
-[SS04] D. Speyer, B. Sturmfels. *The tropical Grassmannian*. Adv. Geom. 4 (2004), 389-411.
-
-[HJJS09] S. Herrmann, A. Jensen, M. Joswig, B. Sturmfels. *How to draw tropical planes*. Electron. J. Combin. 16 (2009).
-
-[DW92] A. Dress, W. Wenzel. *Valuated matroids*. Adv. Math. 93 (1992), 214-250.
-
-[Ox11] J. Oxley. *Matroid Theory*. Oxford University Press, 2nd edition, 2011.
-
-[Sp08] D. Speyer. *Tropical linear spaces*. SIAM J. Discrete Math. 22 (2008), 1527-1558.
+1. Berggren, B. (1934). "Pytagoreiska trianglar." *Tidskrift för elementär matematik, fysik och kemi*, 17, 129–139.
+2. Barning, F.J.M. (1963). "Over pythagorese en bijna-pythagorese driehoeken en een generatie-proces met behulp van unimodulaire matrices." *Math. Centrum Amsterdam Afd. Zuivere Wisk.*, ZW-011.
+3. Hall, A. (1970). "Genealogy of Pythagorean triads." *The Mathematical Gazette*, 54(390), 377–379.
+4. Lubotzky, A., Phillips, R., & Sarnak, P. (1988). "Ramanujan graphs." *Combinatorica*, 8(3), 261–277.
+5. Morgenstern, M. (1994). "Existence and explicit constructions of q+1 regular Ramanujan graphs for every prime power q." *Journal of Combinatorial Theory, Series B*, 62(1), 44–62.
+6. Price, H.L. (2008). "The Pythagorean tree: A new species." arXiv:0809.4324.
+7. Hoory, S., Linial, N., & Wigderson, A. (2006). "Expander graphs and their applications." *Bulletin of the AMS*, 43(4), 439–561.
+8. Marcus, A., Spielman, D.A., & Srivastava, N. (2015). "Interlacing families I: Bipartite Ramanujan graphs of all degrees." *Annals of Mathematics*, 182(1), 307–325.

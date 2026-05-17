@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "coupling_argument",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
@@ -106,7 +106,16 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-17T22:04:04Z",
-      "hue": 91
+      "hue": 271
+    },
+    {
+      "id": "proof_strategy",
+      "title": "Spectral Analysis of Berggren Orbit Graphs over Finite Fields",
+      "domain": "Number Theory / Spectral Graph Theory / Algebraic Groups",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-17T22:04:18Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -127,6 +136,13 @@
     {
       "source": "5_tropical_pseudorandom_generators_from_orbit_expa",
       "target": "hybrid_argument_with_computational_distinguishers",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "representation_theoretic_decomposition",
+      "target": "proof_strategy",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"

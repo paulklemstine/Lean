@@ -641,7 +641,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "f4b79e6c",
       "timestamp": "2026-05-17T18:48:26.949096+00:00"
     },
@@ -2416,6 +2416,109 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:01:35.084743+00:00"
+    },
+    {
+      "id": "fd_0131",
+      "title": "Theorem Statement",
+      "description": "```\ntheorem hydrogen_selfadjoint :\n  IsSelfAdjoint (hydrogenHamiltonian : UnboundedOperator (L2 ℝ³ ℂ))\n```",
+      "source_exp_id": "f4b79e6c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:06.928190+00:00"
+    },
+    {
+      "id": "fd_0132",
+      "title": "Dependencies",
+      "description": "- Mathlib's `MeasureTheory.Lp` for L² spaces\n- Sobolev space infrastructure (currently absent from Mathlib)\n- Distribution theory for weak derivatives\n- Kato–Rellich theorem (new formalization required)",
+      "source_exp_id": "f4b79e6c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:06.931737+00:00"
+    },
+    {
+      "id": "fd_0133",
+      "title": "6. Associated Legendre Polynomials and Orthogonal Polynomial Theory",
+      "description": "Formalize P_l^m(x) via Rodrigues' formula, prove the orthogonality relation\n∫₋₁¹ P_l^m(x) P_l'^m(x) dx = δ_{ll'} · 2(l+m)!/((2l+1)(l-m)!),\nconnecting to the general theory of classical orthogonal polynomials.",
+      "source_exp_id": "f4b79e6c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:06.944316+00:00"
+    },
+    {
+      "id": "fd_0134",
+      "title": "7. Laguerre Polynomials and Radial Wavefunctions",
+      "description": "Define generalized Laguerre polynomials L_n^α(x), prove orthogonality\nwith respect to the weight x^α e^{-x}, and show the radial hydrogen\nwavefunctions R_{nl}(r) ∝ r^l e^{-r/n} L_{n-l-1}^{2l+1}(2r/n) satisfy\nthe radial Schrödinger equation.",
+      "source_exp_id": "f4b79e6c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:06.947415+00:00"
+    },
+    {
+      "id": "fd_0135",
+      "title": "8. Rydberg Formula and Spectral Series",
+      "description": "Formally verify the Rydberg formula for all spectral series\n(Lyman, Balmer, Paschen, Brackett, Pfund) and prove the series limits.\nThe Balmer series limit proved in this work is a prototype.",
+      "source_exp_id": "f4b79e6c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:06.950047+00:00"
+    },
+    {
+      "id": "fd_0136",
+      "title": "10. Fine Structure and Relativistic Corrections",
+      "description": "Formalize the leading relativistic corrections:\n- Kinetic energy correction: -p⁴/(8m³c²)\n- Spin-orbit coupling: (1/2m²c²)(1/r)(dV/dr)L·S\n- Darwin term: (πℏ²/2m²c²)|ψ(0)|²\nAnd prove the fine-structure formula E_{n,j} = E_n[1 + α²/n²(n/(j+1/2) - 3/4)].",
+      "source_exp_id": "f4b79e6c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:04:06.952653+00:00"
     }
   ],
   "pruned": []

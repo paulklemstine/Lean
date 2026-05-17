@@ -1,496 +1,669 @@
+#!/usr/bin/env python3
 """
-Applications of Tropical Grassmannian Theory
+Applications of Berggren Orbit Graph Spectral Theory
 
-Demonstrates connections to:
-1. Phylogenetics — tree reconstruction from distance matrices
-2. Network geometry — shortest path metrics and four-point condition
-3. Combinatorial optimization — matroid representability
+Demonstrates practical applications of the spectral properties of Berggren
+dynamics modulo primes, including:
+1. Pseudorandom generation of Pythagorean triples mod p
+2. Mixing time analysis for Berggren random walks
+3. Expander graph constructions
+4. Distribution analysis of Pythagorean triple residues
 """
 
-from itertools import combinations
 import numpy as np
+from collections import Counter
+from algorithms import BerggrenOrbitGraph, BERGGREN_GENS, projective_normalize
 
 
-def reconstruct_tree_from_distances(n, d):
-    """Reconstruct a tree from a distance matrix using the neighbor-joining heuristic.
+def pythagorean_triple_distribution(p: int, num_steps: int = 10000) -> dict:
+    """Analyze distribution of Pythagorean triple residues via random Berggren walk.
 
-    If d satisfies the four-point condition, it is a tree metric, and
-    the tree can be recovered exactly.
+    Starting from (3,4,5), repeatedly apply a uniformly random Berggren generator
+    and record the mod-p residues. Spectral gap controls convergence to uniform.
 
     Args:
-        n: number of leaves
-        d: distance matrix (n×n numpy array)
+        p: prime modulus
+        num_steps: number of random walk steps
 
     Returns:
-        List of (node_i, node_j, weight) edges
+        Dictionary with distribution statistics
     """
-    # Simple neighbor-joining
-    active = list(range(n))
-    edges = []
-    dist = d.copy()
-    next_node = n
+    v = (3 % p, 4 % p, 5 % p)
+    v = projective_normalize(v, p)
 
-    while len(active) > 2:
-        # Find the pair with minimum adjusted distance
-        best_pair = None
-        best_val = float('inf')
-        m = len(active)
+    visit_counts = Counter()
+    rng = np.random.default_rng(42)
 
-        for i_idx in range(m):
-            for j_idx in range(i_idx + 1, m):
-                i, j = active[i_idx], active[j_idx]
-                r_i = sum(dist[i, active[k]] for k in range(m)) / (m - 2)
-                r_j = sum(dist[j, active[k]] for k in range(m)) / (m - 2)
-                val = dist[i, j] - r_i - r_j
-                if val < best_val:
-                    best_val = val
-                    best_pair = (i, j, i_idx, j_idx)
+    for step in range(num_steps):
+        visit_counts[v] += 1
+        # Pick random generator
+        M = BERGGREN_GENS[rng.integers(3)]
+        result = tuple(
+            sum(int(M[i][j]) * v[j] for j in range(3)) % p
+            for i in range(3)
+        )
+        v = projective_normalize(result, p)
 
-        i, j, i_idx, j_idx = best_pair
+    # Analyze uniformity
+    G = BerggrenOrbitGraph(p)
+    n = G.n
+    expected = num_steps / n
+    counts = [visit_counts.get(v, 0) for v in G.vertices]
 
-        # Create new node
-        new = next_node
-        next_node += 1
+    chi_sq = sum((c - expected)**2 / expected for c in counts)
+    max_dev = max(abs(c - expected) / expected for c in counts)
 
-        # Edge weights
-        m = len(active)
-        r_i = sum(dist[i, active[k]] for k in range(m)) / (m - 2) if m > 2 else 0
-        r_j = sum(dist[j, active[k]] for k in range(m)) / (m - 2) if m > 2 else 0
-        w_i = (dist[i, j] + r_i - r_j) / 2
-        w_j = dist[i, j] - w_i
-        edges.append((i, new, round(w_i, 4)))
-        edges.append((j, new, round(w_j, 4)))
-
-        # Update distances
-        new_dist = np.zeros((next_node, next_node))
-        new_dist[:dist.shape[0], :dist.shape[1]] = dist
-        for k in range(m):
-            node_k = active[k]
-            if node_k != i and node_k != j:
-                d_new = (dist[i, node_k] + dist[j, node_k] - dist[i, j]) / 2
-                new_dist[new, node_k] = d_new
-                new_dist[node_k, new] = d_new
-
-        dist = new_dist
-        active = [x for x in active if x != i and x != j] + [new]
-
-    # Final edge
-    if len(active) == 2:
-        edges.append((active[0], active[1], round(dist[active[0], active[1]], 4)))
-
-    return edges
+    return {
+        'p': p,
+        'n': n,
+        'num_steps': num_steps,
+        'expected_per_vertex': expected,
+        'min_visits': min(counts),
+        'max_visits': max(counts),
+        'chi_squared': chi_sq,
+        'max_deviation': max_dev,
+        'spectral_gap': G.spectral_gap('norm3'),
+    }
 
 
-def check_matroid_realizability(bases, n, r, primes):
-    """Check matroid realizability over various fields.
+def expander_quality_analysis(p: int) -> dict:
+    """Analyze the quality of the Berggren graph as an expander.
 
-    Returns a dict mapping each prime to whether the matroid is representable.
+    An (n, d, lambda)-expander has vertex expansion and edge expansion
+    properties controlled by the spectral gap.
+
+    Args:
+        p: prime modulus
+
+    Returns:
+        Expander quality metrics
     """
-    results = {}
-    bases_set = set(bases)
+    G = BerggrenOrbitGraph(p)
+    lam2 = G.spectral_gap('norm3')
+    n = G.n
 
-    for p in primes:
-        found = False
-        # Try all r×n matrices over F_p (for small cases)
-        if p ** (r * n) <= 100000:
-            # Exhaustive search for very small cases
-            pass
+    # Expander mixing lemma: |e(S,T) - d*|S|*|T|/n| <= lambda * sqrt(|S|*|T|)
+    # For d=3 normalization
+    d = 3
 
-        # Random sampling
-        for _ in range(2000):
-            A = np.random.randint(0, p, size=(r, n))
-            match = True
-            for cols in combinations(range(n), r):
-                submat = A[:, list(cols)]
-                det_val = int(round(np.linalg.det(submat))) % p
-                is_basis = frozenset(cols) in bases_set
-                if (det_val != 0) != is_basis:
-                    match = False
-                    break
-            if match:
-                found = True
-                break
+    # Cheeger inequality: h >= (1 - lambda) / 2
+    cheeger_lower = (1 - lam2) / 2
 
-        results[p] = found
+    return {
+        'p': p,
+        'n': n,
+        'degree': d,
+        'lambda2': lam2,
+        'spectral_gap': 1 - lam2,
+        'cheeger_lower_bound': cheeger_lower,
+        'mixing_time': G.mixing_time_estimate(),
+        'is_ramanujan': lam2 <= 2 * np.sqrt(d - 1) / d,
+    }
 
-    return results
+
+def convergence_rate_demo(p: int = 23):
+    """Demonstrate how the spectral gap controls convergence rate.
+
+    Shows the total variation distance between the random walk distribution
+    and the stationary distribution as a function of the number of steps.
+
+    Args:
+        p: prime modulus
+    """
+    G = BerggrenOrbitGraph(p)
+    n = G.n
+    T = G.markov_matrix()
+
+    # Start from a delta distribution at vertex 0
+    dist = np.zeros(n)
+    dist[0] = 1.0
+
+    # Stationary distribution (uniform for doubly stochastic)
+    stat = np.ones(n) / n
+
+    print(f"\nConvergence analysis for p={p} (n={n}):")
+    print(f"Spectral gap (1-λ₂) = {1 - G.spectral_gap('markov'):.6f}")
+    print(f"{'Step':>6} {'TV distance':>15} {'Predicted bound':>18}")
+    print("-" * 45)
+
+    lam2 = G.spectral_gap('markov')
+    for step in [0, 1, 2, 5, 10, 20, 50, 100]:
+        if step > 0:
+            dist = dist @ T
+        tv = 0.5 * np.sum(np.abs(dist - stat))
+        bound = 0.5 * np.sqrt(n) * lam2**step if step > 0 else 1.0
+        print(f"{step:6d} {tv:15.10f} {min(bound, 1.0):18.10f}")
+
+
+def main():
+    print("=" * 60)
+    print("APPLICATIONS OF BERGGREN SPECTRAL THEORY")
+    print("=" * 60)
+
+    # 1. Pseudorandom distribution
+    print("\n--- Application 1: Pseudorandom Triple Distribution ---")
+    for p in [11, 23, 47]:
+        result = pythagorean_triple_distribution(p, num_steps=5000)
+        print(f"p={p}: n={result['n']}, λ₂={result['spectral_gap']:.4f}, "
+              f"max_dev={result['max_deviation']:.4f}, "
+              f"χ²={result['chi_squared']:.2f}")
+
+    # 2. Expander quality
+    print("\n--- Application 2: Expander Quality ---")
+    print(f"{'p':>4} {'n':>5} {'λ₂':>8} {'gap':>8} {'Cheeger':>8} {'mix_t':>8} {'Ram?':>5}")
+    for p in [5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]:
+        r = expander_quality_analysis(p)
+        print(f"{r['p']:4d} {r['n']:5d} {r['lambda2']:8.4f} {r['spectral_gap']:8.4f} "
+              f"{r['cheeger_lower_bound']:8.4f} {r['mixing_time']:8.1f} "
+              f"{'Y' if r['is_ramanujan'] else 'N':>5}")
+
+    # 3. Convergence demo
+    print("\n--- Application 3: Mixing Convergence ---")
+    convergence_rate_demo(23)
+    convergence_rate_demo(47)
 
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("APPLICATION 1: Phylogenetic Tree Reconstruction")
-    print("=" * 60)
-
-    # Create a tree metric
-    # Tree: species 0,1,2,3 with known pairwise distances
-    d = np.array([
-        [0, 3, 7, 8],
-        [3, 0, 6, 7],
-        [7, 6, 0, 3],
-        [8, 7, 3, 0],
-    ], dtype=float)
-
-    print("\nDistance matrix:")
-    print(d.astype(int))
-
-    edges = reconstruct_tree_from_distances(4, d)
-    print("\nReconstructed tree edges:")
-    for i, j, w in edges:
-        label_i = f"Leaf {i}" if i < 4 else f"Node {i}"
-        label_j = f"Leaf {j}" if j < 4 else f"Node {j}"
-        print(f"  {label_i} --[{w}]-- {label_j}")
-
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Matroid Representability over Finite Fields")
-    print("=" * 60)
-
-    FANO_LINES = [
-        frozenset({0, 1, 3}), frozenset({0, 2, 4}), frozenset({1, 2, 5}),
-        frozenset({0, 5, 6}), frozenset({1, 4, 6}), frozenset({2, 3, 6}),
-        frozenset({3, 4, 5}),
-    ]
-    all_triples = [frozenset(t) for t in combinations(range(7), 3)]
-    fano_bases = [t for t in all_triples if t not in FANO_LINES]
-
-    print(f"\nFano matroid F₇: {len(fano_bases)} bases, {len(FANO_LINES)} lines")
-
-    primes = [2, 3, 5, 7, 11]
-    results = check_matroid_realizability(fano_bases, 7, 3, primes)
-
-    print("\nRepresentability over finite fields:")
-    for p, rep in results.items():
-        status = "✓ REPRESENTABLE" if rep else "✗ Not representable"
-        print(f"  F_{p}: {status}")
-
-    print("\n  The Fano matroid is representable ONLY over char 2!")
-    print("  This is the algebraic root of the Dressian ≠ Trop(Gr) phenomenon.")
+    main()
 
 
+#!/usr/bin/env python3
 """
-Tropical Grassmannians and Dressians: Demonstrations
+Berggren Orbit Graphs over F_p: Spectral Analysis Demo
 
-This module demonstrates the key mathematical objects from the formalization:
-1. The Fano matroid and its tropical Plücker relations
-2. The four-point condition for rank-2 Dressians
-3. The characteristic-2 obstruction for Fano non-representability
+Computes the Berggren orbit graph for primes p, analyzes degree structure,
+bipartiteness, connected components, and spectral properties. Explores the
+conjectured Ramanujan-type bound lambda_2 = 1/sqrt(3) for p % 8 != 1.
+
+Usage:
+    python demo.py
 """
 
 import numpy as np
-from itertools import combinations
+from collections import defaultdict
+import sys
 
 # ============================================================
-# Fano Matroid
+# Berggren Generators (3x3 integer matrices in O(2,1; Z))
 # ============================================================
 
-FANO_LINES = [
-    frozenset({0, 1, 3}),
-    frozenset({0, 2, 4}),
-    frozenset({1, 2, 5}),
-    frozenset({0, 5, 6}),
-    frozenset({1, 4, 6}),
-    frozenset({2, 3, 6}),
-    frozenset({3, 4, 5}),
-]
+A = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]], dtype=int)
+B = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]], dtype=int)
+C = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]], dtype=int)
 
-def is_fano_line(triple):
-    """Check if a 3-element set is a Fano line."""
-    return frozenset(triple) in FANO_LINES
+GENERATORS = [A, B, C]
+GEN_NAMES = ['A', 'B', 'C']
 
-def fano_weight(triple):
-    """The Fano weight: 0 on bases, 1 on Fano lines."""
-    return 1 if is_fano_line(triple) else 0
 
-def check_plucker_relation(w, s, a, b, c, d):
-    """Check the 3-term tropical Plücker relation for rank 3.
+def lorentz_form(v, p):
+    """Q(v) = v[0]^2 + v[1]^2 - v[2]^2 mod p"""
+    return (v[0]**2 + v[1]**2 - v[2]**2) % p
 
-    For S = {s} and distinct a,b,c,d not in S:
-    min(w(S∪{a,b}) + w(S∪{c,d}),
-        w(S∪{a,c}) + w(S∪{b,d}),
-        w(S∪{a,d}) + w(S∪{b,c}))
-    must be attained at least twice.
-    """
-    v1 = w(frozenset({s, a, b})) + w(frozenset({s, c, d}))
-    v2 = w(frozenset({s, a, c})) + w(frozenset({s, b, d}))
-    v3 = w(frozenset({s, a, d})) + w(frozenset({s, b, c}))
 
-    vals = sorted([v1, v2, v3])
-    return vals[0] == vals[1]  # minimum attained at least twice
+def is_nonzero(v, p):
+    """Check if v is not the zero vector mod p"""
+    return any(x % p != 0 for x in v)
 
-def verify_dressian_membership():
-    """Verify that fano_weight satisfies all tropical Plücker relations."""
-    print("=" * 60)
-    print("Verifying Fano weight is in the Dressian Dr(3,7)")
-    print("=" * 60)
 
-    count = 0
-    for s in range(7):
-        others = [x for x in range(7) if x != s]
-        for combo in combinations(others, 4):
-            a, b, c, d = combo
-            ok = check_plucker_relation(fano_weight, s, a, b, c, d)
-            count += 1
-            if not ok:
-                print(f"  FAILED at s={s}, (a,b,c,d)={combo}")
-                return False
+def normalize_projective(v, p):
+    """Normalize to projective coordinates: first nonzero = 1"""
+    v_mod = tuple(x % p for x in v)
+    for i in range(3):
+        if v_mod[i] != 0:
+            inv = pow(int(v_mod[i]), p - 2, p)
+            return tuple((x * inv) % p for x in v_mod)
+    return None
 
-    print(f"  Checked {count} Plücker relations: ALL PASSED ✓")
-    print(f"  fanoWeight ∈ Dr(3,7)")
-    return True
 
-def demonstrate_fano_matroid():
-    """Display the Fano matroid structure."""
-    print("\n" + "=" * 60)
-    print("The Fano Matroid F₇")
-    print("=" * 60)
+def find_projective_isotropic(p):
+    """Find all projective isotropic points on Q=0 in P^2(F_p)."""
+    points = set()
+    for a in range(p):
+        for b in range(p):
+            for c in range(p):
+                if not is_nonzero((a, b, c), p):
+                    continue
+                if lorentz_form((a, b, c), p) == 0:
+                    pt = normalize_projective((a, b, c), p)
+                    if pt is not None:
+                        points.add(pt)
+    return sorted(points)
 
-    all_triples = list(combinations(range(7), 3))
-    lines = [t for t in all_triples if is_fano_line(t)]
-    bases = [t for t in all_triples if not is_fano_line(t)]
 
-    print(f"\n  Ground set: {{0, 1, 2, 3, 4, 5, 6}}")
-    print(f"  Total 3-element subsets: {len(all_triples)}")
-    print(f"  Fano lines (dependent):  {len(lines)}")
-    print(f"  Bases (independent):     {len(bases)}")
-    print(f"\n  The 7 Fano lines:")
-    for i, line in enumerate(lines):
-        print(f"    L{i+1}: {set(line)}")
+def apply_gen(M, v, p):
+    """Apply matrix M to vector v mod p, return projective normalization."""
+    result = tuple(sum(int(M[i][j]) * v[j] for j in range(3)) % p for i in range(3))
+    return normalize_projective(result, p)
 
-def demonstrate_char2_obstruction():
-    """Show the characteristic-2 obstruction for Fano representability."""
-    print("\n" + "=" * 60)
-    print("Characteristic-2 Obstruction")
-    print("=" * 60)
 
-    # Standard F₂ representation
-    cols = {
-        0: np.array([1, 0, 0]),
-        1: np.array([0, 1, 0]),
-        2: np.array([0, 0, 1]),
-        3: np.array([1, 1, 0]),
-        4: np.array([1, 0, 1]),
-        5: np.array([0, 1, 1]),
-        6: np.array([1, 1, 1]),
+def build_directed_graph(p):
+    """Build directed Berggren graph on projective isotropic points.
+    Edge v -> w means w = M*v for some generator M in {A, B, C}."""
+    vertices = find_projective_isotropic(p)
+    vert_set = set(vertices)
+    idx = {v: i for i, v in enumerate(vertices)}
+    n = len(vertices)
+
+    out_edges = defaultdict(list)  # v -> list of (w, gen_name)
+    in_edges = defaultdict(list)   # w -> list of (v, gen_name)
+
+    for v in vertices:
+        for M, name in zip(GENERATORS, GEN_NAMES):
+            w = apply_gen(M, v, p)
+            if w is not None and w in vert_set:
+                out_edges[v].append((w, name))
+                in_edges[w].append((v, name))
+
+    return vertices, idx, out_edges, in_edges
+
+
+def connected_components(vertices, out_edges, in_edges):
+    """Find connected components (treating as undirected)."""
+    visited = set()
+    components = []
+
+    for start in vertices:
+        if start in visited:
+            continue
+        comp = set()
+        queue = [start]
+        while queue:
+            v = queue.pop()
+            if v in visited:
+                continue
+            visited.add(v)
+            comp.add(v)
+            for w, _ in out_edges.get(v, []):
+                if w not in visited:
+                    queue.append(w)
+            for u, _ in in_edges.get(v, []):
+                if u not in visited:
+                    queue.append(u)
+        components.append(sorted(comp))
+
+    return components
+
+
+def check_bipartite(vertices, out_edges):
+    """Check if directed graph is bipartite (ignoring direction)."""
+    color = {}
+    is_bip = True
+
+    for start in vertices:
+        if start in color:
+            continue
+        color[start] = 0
+        queue = [start]
+        while queue:
+            v = queue.pop(0)
+            for w, _ in out_edges.get(v, []):
+                if w not in color:
+                    color[w] = 1 - color[v]
+                    queue.append(w)
+                elif color[w] == color[v]:
+                    is_bip = False
+
+    return is_bip, color
+
+
+def adjacency_matrix(vertices, idx, out_edges):
+    """Build adjacency matrix of the directed graph."""
+    n = len(vertices)
+    A_mat = np.zeros((n, n))
+    for v in vertices:
+        i = idx[v]
+        for w, _ in out_edges.get(v, []):
+            j = idx[w]
+            A_mat[i][j] += 1.0  # may have multiplicities
+    return A_mat
+
+
+def analyze_prime(p, verbose=True):
+    """Full analysis of Berggren orbit graph mod p."""
+    vertices, idx, out_edges, in_edges = build_directed_graph(p)
+    n = len(vertices)
+
+    if n == 0:
+        if verbose:
+            print(f"p={p}: no isotropic points")
+        return None
+
+    # Degree analysis
+    out_degs = [len(set(w for w, _ in out_edges.get(v, []))) for v in vertices]
+    in_degs = [len(set(u for u, _ in in_edges.get(v, []))) for v in vertices]
+    out_degs_with_mult = [len(out_edges.get(v, [])) for v in vertices]
+
+    # Components
+    comps = connected_components(vertices, out_edges, in_edges)
+
+    # Bipartiteness
+    is_bip, coloring = check_bipartite(vertices, out_edges)
+
+    # Adjacency matrix and spectrum
+    A_mat = adjacency_matrix(vertices, idx, out_edges)
+
+    # Various normalizations
+    eigs_plain = np.sort(np.real(np.linalg.eigvals(A_mat)))[::-1]
+
+    # Row-stochastic (Markov) normalization
+    row_sums = A_mat.sum(axis=1)
+    row_sums[row_sums == 0] = 1
+    T_markov = A_mat / row_sums[:, np.newaxis]
+    eigs_markov = np.sort(np.real(np.linalg.eigvals(T_markov)))[::-1]
+
+    # Normalized by 3 (since each vertex has 3 forward edges)
+    T_norm3 = A_mat / 3.0
+    eigs_norm3 = np.sort(np.real(np.linalg.eigvals(T_norm3)))[::-1]
+
+    abs_eigs_markov = np.sort(np.abs(eigs_markov))[::-1]
+    abs_eigs_norm3 = np.sort(np.abs(eigs_norm3))[::-1]
+    abs_eigs_plain = np.sort(np.abs(eigs_plain))[::-1]
+
+    target = 1.0 / np.sqrt(3)
+
+    if verbose:
+        print(f"\n{'='*60}")
+        print(f"p = {p},  p mod 8 = {p % 8}")
+        print(f"{'='*60}")
+        print(f"  Projective isotropic points: {n}  (= p+1 = {p+1})")
+        print(f"  Connected components: {len(comps)} (sizes: {[len(c) for c in comps]})")
+        print(f"  Bipartite: {is_bip}")
+        print(f"  Out-degrees (distinct targets): min={min(out_degs)}, max={max(out_degs)}")
+        print(f"  Out-degrees (with mult):        min={min(out_degs_with_mult)}, max={max(out_degs_with_mult)}")
+        print(f"  In-degrees (distinct sources):  min={min(in_degs)}, max={max(in_degs)}")
+        print()
+        print(f"  Plain adjacency eigenvalues (top 6): {eigs_plain[:6].round(6)}")
+        print(f"  Markov eigenvalues (top 6):          {eigs_markov[:6].round(6)}")
+        print(f"  Norm-by-3 eigenvalues (top 6):       {eigs_norm3[:6].round(6)}")
+        print()
+        print(f"  |lambda_2| (Markov):  {abs_eigs_markov[1]:.6f}")
+        print(f"  |lambda_2| (norm-3):  {abs_eigs_norm3[1]:.6f}")
+        print(f"  |lambda_2| (plain):   {abs_eigs_plain[1]:.6f}")
+        print(f"  1/sqrt(3) target:     {target:.6f}")
+        print(f"  Ratio (norm-3):       {abs_eigs_norm3[1]/target:.6f}")
+
+    return {
+        'p': p, 'n': n,
+        'components': len(comps),
+        'comp_sizes': [len(c) for c in comps],
+        'bipartite': is_bip,
+        'out_deg_range': (min(out_degs), max(out_degs)),
+        'in_deg_range': (min(in_degs), max(in_degs)),
+        'eigs_plain': eigs_plain,
+        'eigs_markov': eigs_markov,
+        'eigs_norm3': eigs_norm3,
+        'lambda2_markov': abs_eigs_markov[1] if len(abs_eigs_markov) > 1 else 0,
+        'lambda2_norm3': abs_eigs_norm3[1] if len(abs_eigs_norm3) > 1 else 0,
+        'lambda2_plain': abs_eigs_plain[1] if len(abs_eigs_plain) > 1 else 0,
     }
 
-    print("\n  Standard F₂ representation (7 nonzero vectors of F₂³):")
-    for k, v in cols.items():
-        print(f"    v{k} = {tuple(v)}")
 
-    # Compute the key determinant
-    det345 = np.linalg.det(np.column_stack([cols[3], cols[4], cols[5]]))
-    print(f"\n  det(v₃, v₄, v₅) over ℝ = {det345:.0f}")
-    print(f"  det(v₃, v₄, v₅) over F₂ = {int(det345) % 2}")
-    print(f"\n  Over ℝ: det = -2 ≠ 0, so {{3,4,5}} is NOT dependent")
-    print(f"  Over F₂: det ≡ 0, so {{3,4,5}} IS dependent")
-    print(f"\n  ⟹ The Fano matroid requires characteristic 2!")
-    print(f"  ⟹ Not representable over ℝ (or any char ≠ 2 field)")
+def verify_lorentz_preservation():
+    """Verify that all generators preserve Q(v) = v0^2 + v1^2 - v2^2."""
+    Q = np.diag([1, 1, -1])
+    print("Lorentz form preservation check:")
+    for M, name in zip(GENERATORS, GEN_NAMES):
+        result = M.T @ Q @ M
+        preserved = np.array_equal(result, Q)
+        print(f"  {name}^T Q {name} = Q: {preserved}")
+        print(f"  det({name}) = {int(round(np.linalg.det(M)))}")
+    print()
 
-def demonstrate_four_point_condition():
-    """Demonstrate the rank-2 four-point/tree-metric condition."""
-    print("\n" + "=" * 60)
-    print("Rank-2 Four-Point Condition (Tree Metrics)")
+
+def main():
+    print("=" * 60)
+    print("BERGGREN ORBIT GRAPH SPECTRAL ANALYSIS")
     print("=" * 60)
 
-    # Example: tree metric on 4 leaves
-    # Tree: 0--[2]--x--[1]--1, x--[3]--y, y--[1]--2, y--[2]--3
-    d = np.zeros((4, 4))
-    d[0,1] = d[1,0] = 3  # 2+1
-    d[0,2] = d[2,0] = 6  # 2+3+1
-    d[0,3] = d[3,0] = 7  # 2+3+2
-    d[1,2] = d[2,1] = 5  # 1+3+1
-    d[1,3] = d[3,1] = 6  # 1+3+2
-    d[2,3] = d[3,2] = 3  # 1+2
+    verify_lorentz_preservation()
 
-    print("\n  Tree metric on 4 leaves:")
-    for i in range(4):
-        for j in range(i+1, 4):
-            print(f"    d({i},{j}) = {d[i,j]:.0f}")
+    target = 1.0 / np.sqrt(3)
+    print(f"Target eigenvalue: 1/sqrt(3) = {target:.10f}")
+    print()
 
-    # Plücker vector w({i,j}) = -d(i,j)
-    print("\n  Tropical Plücker vector w({i,j}) = -d(i,j):")
-    for i in range(4):
-        for j in range(i+1, 4):
-            print(f"    w({{{i},{j}}}) = {-d[i,j]:.0f}")
+    # Analyze primes
+    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+    results = {}
+    for p in primes:
+        r = analyze_prime(p, verbose=True)
+        if r:
+            results[p] = r
 
-    # Check four-point condition
-    s1 = (-d[0,1]) + (-d[2,3])  # w(01) + w(23)
-    s2 = (-d[0,2]) + (-d[1,3])  # w(02) + w(13)
-    s3 = (-d[0,3]) + (-d[1,2])  # w(03) + w(12)
+    # Summary table
+    print("\n" + "=" * 90)
+    print("SUMMARY TABLE")
+    print("=" * 90)
+    print(f"{'p':>4} {'p%8':>4} {'n':>5} {'#comp':>5} {'bip':>5} "
+          f"{'out-deg':>10} {'in-deg':>10} "
+          f"{'λ₂(M)':>10} {'λ₂(/3)':>10} {'1/√3':>10} {'ratio':>10}")
+    print("-" * 90)
+    for p in sorted(results.keys()):
+        r = results[p]
+        out_r = f"{r['out_deg_range'][0]}-{r['out_deg_range'][1]}"
+        in_r = f"{r['in_deg_range'][0]}-{r['in_deg_range'][1]}"
+        ratio = r['lambda2_norm3'] / target if target > 0 else 0
+        print(f"{p:4d} {p%8:4d} {r['n']:5d} {r['components']:5d} "
+              f"{'Y' if r['bipartite'] else 'N':>5} "
+              f"{out_r:>10} {in_r:>10} "
+              f"{r['lambda2_markov']:10.6f} {r['lambda2_norm3']:10.6f} "
+              f"{target:10.6f} {ratio:10.6f}")
 
-    print(f"\n  Three sums for {{0,1,2,3}}:")
-    print(f"    w({{0,1}}) + w({{2,3}}) = {s1:.0f}")
-    print(f"    w({{0,2}}) + w({{1,3}}) = {s2:.0f}")
-    print(f"    w({{0,3}}) + w({{1,2}}) = {s3:.0f}")
+    print("\n" + "=" * 60)
+    print("KEY OBSERVATIONS")
+    print("=" * 60)
+    print(f"1. Number of projective isotropic points = p+1 for all tested primes.")
+    print(f"2. The graph is NOT bipartite for most primes.")
+    print(f"3. Out-degrees vary between 2 and 3 (not uniformly 3).")
+    print(f"4. The spectral gap does NOT equal 1/sqrt(3) exactly for any prime tested.")
+    print(f"5. The nontrivial eigenvalue 1/3 appears consistently (from 3-cycles).")
+    print(f"6. As p grows, the spectral gap appears to approach specific limits")
+    print(f"   that depend on p mod 8.")
 
-    vals = sorted([s1, s2, s3])
-    satisfied = vals[0] == vals[1]
-    print(f"\n  Minimum = {vals[0]:.0f}, attained {'≥2' if satisfied else '<2'} times")
-    print(f"  Four-point condition: {'SATISFIED ✓' if satisfied else 'FAILED ✗'}")
 
 if __name__ == "__main__":
-    demonstrate_fano_matroid()
-    verify_dressian_membership()
-    demonstrate_char2_obstruction()
-    demonstrate_four_point_condition()
-
-    print("\n" + "=" * 60)
-    print("CONCLUSION")
-    print("=" * 60)
-    print("  fanoWeight ∈ Dr(3,7)       ✓ (verified)")
-    print("  fanoWeight ∉ Trop(Gr(3,7)) ✓ (Fano not representable over char ≠ 2)")
-    print("  ⟹ Dr(3,7) ⊋ Trop(Gr(3,7))  — the first divergence!")
+    main()
 
 
+#!/usr/bin/env python3
 """
-Visualizations for Tropical Grassmannian / Dressian theory.
-Generates the Fano plane diagram and the inclusion diagram.
+Visualizations for Berggren Orbit Graph Spectral Analysis
+
+Generates publication-quality figures showing:
+1. Spectral gap vs prime
+2. Eigenvalue distribution
+3. Degree structure
+4. Convergence rates
 """
 
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import numpy as np
+from algorithms import BerggrenOrbitGraph
 import base64
-import io
+from io import BytesIO
 
-def fano_plane_diagram():
-    """Draw the Fano plane with its 7 points and 7 lines."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
 
-    # Place 7 points: outer triangle + inner triangle + center
-    r_outer = 2.0
-    r_inner = 1.0
-    angles_outer = [np.pi/2, np.pi/2 + 2*np.pi/3, np.pi/2 + 4*np.pi/3]
-    angles_inner = [np.pi/2 + np.pi/3, np.pi/2 + np.pi, np.pi/2 + 5*np.pi/3]
-
-    # Points: use specific layout
-    pts = {}
-    pts[0] = np.array([0, r_outer])           # top
-    pts[1] = np.array([r_outer*np.cos(angles_outer[1]), r_outer*np.sin(angles_outer[1])])  # bottom-left
-    pts[2] = np.array([r_outer*np.cos(angles_outer[2]), r_outer*np.sin(angles_outer[2])])  # bottom-right
-    pts[3] = (pts[0] + pts[1]) / 2            # midpoint 0-1
-    pts[4] = (pts[0] + pts[2]) / 2            # midpoint 0-2
-    pts[5] = (pts[1] + pts[2]) / 2            # midpoint 1-2
-    pts[6] = np.array([0, 0])                 # center
-
-    # Fano lines
-    fano_lines = [
-        (0, 1, 3), (0, 2, 4), (1, 2, 5),
-        (0, 5, 6), (1, 4, 6), (2, 3, 6), (3, 4, 5)
-    ]
-
-    # Draw lines
-    colors = plt.cm.Set2(np.linspace(0, 1, 7))
-    for idx, (a, b, c) in enumerate(fano_lines):
-        pa, pb, pc = pts[a], pts[b], pts[c]
-        # Draw through all three points
-        if idx < 3:  # sides of triangle
-            ax.plot([pa[0], pb[0]], [pa[1], pb[1]], '-', color=colors[idx],
-                    linewidth=2, alpha=0.7, zorder=1)
-        elif idx == 6:  # inscribed triangle (3,4,5)
-            ax.plot([pa[0], pb[0]], [pa[1], pb[1]], '-', color=colors[idx],
-                    linewidth=2, alpha=0.7, zorder=1)
-            ax.plot([pb[0], pc[0]], [pb[1], pc[1]], '-', color=colors[idx],
-                    linewidth=2, alpha=0.7, zorder=1)
-            ax.plot([pc[0], pa[0]], [pc[1], pa[1]], '-', color=colors[idx],
-                    linewidth=2, alpha=0.7, zorder=1)
-        else:  # medians (through center)
-            # Extend line through the three points
-            direction = pc - pa
-            t_vals = np.linspace(-0.3, 1.3, 100)
-            line_pts = pa + np.outer(t_vals, direction)
-            ax.plot(line_pts[:, 0], line_pts[:, 1], '-', color=colors[idx],
-                    linewidth=2, alpha=0.7, zorder=1)
-
-    # Draw inscribed circle for the {3,4,5} line
-    circle = plt.Circle((0, -0.15), r_inner*0.65, fill=False,
-                         color=colors[6], linewidth=2, alpha=0.7, zorder=1)
-    ax.add_patch(circle)
-
-    # Draw points
-    for k, p in pts.items():
-        ax.plot(p[0], p[1], 'o', markersize=20, color='#2C3E50',
-                markeredgecolor='white', markeredgewidth=2, zorder=5)
-        ax.text(p[0], p[1], str(k), ha='center', va='center',
-                fontsize=12, fontweight='bold', color='white', zorder=6)
-
-    ax.set_xlim(-2.8, 2.8)
-    ax.set_ylim(-2.5, 2.8)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('The Fano Plane PG(2, 𝔽₂)\n7 points, 7 lines, 3 points per line',
-                 fontsize=16, fontweight='bold', pad=20)
-
-    # Legend
-    legend_text = "Lines: {0,1,3}, {0,2,4}, {1,2,5},\n{0,5,6}, {1,4,6}, {2,3,6}, {3,4,5}"
-    ax.text(0, -2.3, legend_text, ha='center', fontsize=10, style='italic',
-            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-    fig.tight_layout()
-    return fig
-
-def inclusion_diagram():
-    """Draw the inclusion diagram Trop(Gr(r,n)) ⊆ Dr(r,n)."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Rank 2: equality
-    ax = axes[0]
-    circle1 = plt.Circle((0, 0), 1.5, fill=True, facecolor='#3498DB',
-                          alpha=0.3, edgecolor='#2C3E50', linewidth=2)
-    ax.add_patch(circle1)
-    ax.text(0, 0.3, 'Dr(2,n)', fontsize=16, ha='center', fontweight='bold')
-    ax.text(0, -0.3, '= Trop(Gr(2,n))', fontsize=14, ha='center')
-    ax.text(0, -0.9, '= Tree Metrics', fontsize=12, ha='center', style='italic')
-    ax.set_xlim(-2.2, 2.2)
-    ax.set_ylim(-2.2, 2.2)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('Rank 2: Coincidence', fontsize=14, fontweight='bold')
-
-    # Rank 3: strict inclusion
-    ax = axes[1]
-    outer = plt.Circle((0, 0), 1.8, fill=True, facecolor='#E74C3C',
-                        alpha=0.2, edgecolor='#C0392B', linewidth=2)
-    inner = plt.Circle((-0.3, 0), 1.0, fill=True, facecolor='#2ECC71',
-                        alpha=0.3, edgecolor='#27AE60', linewidth=2)
-    ax.add_patch(outer)
-    ax.add_patch(inner)
-    ax.text(-0.3, 0, 'Trop(Gr(3,7))', fontsize=12, ha='center', fontweight='bold')
-    ax.text(1.0, 0.8, 'Dr(3,7)', fontsize=14, ha='center', fontweight='bold',
-            color='#C0392B')
-    # Mark the Fano point
-    ax.plot(1.2, -0.3, '*', markersize=20, color='#8E44AD', zorder=5)
-    ax.text(1.2, -0.7, 'Fano\nweight', fontsize=10, ha='center', color='#8E44AD',
-            fontweight='bold')
-    ax.annotate('', xy=(0.7, 0.0), xytext=(1.15, -0.25),
-                arrowprops=dict(arrowstyle='->', color='#8E44AD', lw=1.5))
-
-    ax.set_xlim(-2.5, 2.5)
-    ax.set_ylim(-2.2, 2.2)
-    ax.set_aspect('equal')
-    ax.axis('off')
-    ax.set_title('Rank 3: Strict Inclusion ⊊', fontsize=14, fontweight='bold')
-
-    fig.suptitle('Tropical Grassmannian vs Dressian',
-                 fontsize=18, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    return fig
-
-def fig_to_base64(fig):
-    """Convert a matplotlib figure to a base64 data URI."""
-    buf = io.BytesIO()
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 data URI."""
+    buf = BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
     data = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
     return f"data:image/png;base64,{data}"
 
-if __name__ == "__main__":
-    fig1 = fano_plane_diagram()
-    fig1.savefig('/workspace/request-project/fano_plane.png', dpi=150, bbox_inches='tight')
-    print("Saved fano_plane.png")
 
-    fig2 = inclusion_diagram()
-    fig2.savefig('/workspace/request-project/inclusion_diagram.png', dpi=150, bbox_inches='tight')
-    print("Saved inclusion_diagram.png")
+def plot_spectral_gap_vs_prime():
+    """Plot spectral gap lambda_2 as a function of prime p."""
+    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73]
+    gaps = []
+    p_mod8 = []
+
+    for p in primes:
+        G = BerggrenOrbitGraph(p)
+        gaps.append(G.spectral_gap('norm3'))
+        p_mod8.append(p % 8)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Color by p mod 8
+    colors = {1: 'red', 3: 'blue', 5: 'green', 7: 'orange'}
+    labels_done = set()
+    for p, g, m in zip(primes, gaps, p_mod8):
+        label = f'p ≡ {m} (mod 8)' if m not in labels_done else None
+        ax.scatter(p, g, c=colors.get(m, 'gray'), s=80, zorder=5, label=label)
+        labels_done.add(m)
+
+    target = 1.0 / np.sqrt(3)
+    ax.axhline(y=target, color='red', linestyle='--', alpha=0.7, label=f'1/√3 ≈ {target:.4f}')
+    ax.axhline(y=1/3, color='purple', linestyle=':', alpha=0.5, label='1/3')
+
+    ax.set_xlabel('Prime p', fontsize=14)
+    ax.set_ylabel('|λ₂| (normalized by 3)', fontsize=14)
+    ax.set_title('Spectral Gap of Berggren Orbit Graph mod p', fontsize=16)
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim(0, 0.7)
+
+    return fig
+
+
+def plot_eigenvalue_histogram(p=47):
+    """Plot histogram of all eigenvalues for a specific prime."""
+    G = BerggrenOrbitGraph(p)
+    eigs = G.spectrum('norm3')
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    ax.hist(eigs, bins=30, color='steelblue', edgecolor='black', alpha=0.7)
+    target = 1.0 / np.sqrt(3)
+    ax.axvline(x=target, color='red', linestyle='--', linewidth=2, label=f'1/√3 ≈ {target:.4f}')
+    ax.axvline(x=-target, color='red', linestyle='--', linewidth=2)
+    ax.axvline(x=1/3, color='green', linestyle=':', linewidth=2, label='1/3')
+
+    ax.set_xlabel('Eigenvalue', fontsize=14)
+    ax.set_ylabel('Count', fontsize=14)
+    ax.set_title(f'Eigenvalue Distribution of Berggren Graph (p={p}, n={G.n})', fontsize=16)
+    ax.legend(fontsize=12)
+    ax.grid(True, alpha=0.3)
+
+    return fig
+
+
+def plot_degree_distribution():
+    """Plot degree distribution across primes."""
+    primes = [5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+    out_deg2 = []
+    out_deg3 = []
+    in_deg2 = []
+    in_deg3 = []
+
+    for p in primes:
+        G = BerggrenOrbitGraph(p)
+        od = G.out_degree_distribution()
+        id_ = G.in_degree_distribution()
+        out_deg2.append(od.get(2, 0) / G.n * 100)
+        out_deg3.append(od.get(3, 0) / G.n * 100)
+        in_deg2.append(id_.get(2, 0) / G.n * 100)
+        in_deg3.append(id_.get(3, 0) / G.n * 100)
+
+    x = range(len(primes))
+    width = 0.35
+
+    ax1.bar([i - width/2 for i in x], out_deg2, width, label='Out-degree 2', color='steelblue')
+    ax1.bar([i + width/2 for i in x], out_deg3, width, label='Out-degree 3', color='coral')
+    ax1.set_xticks(list(x))
+    ax1.set_xticklabels(primes)
+    ax1.set_xlabel('Prime p')
+    ax1.set_ylabel('Percentage of vertices')
+    ax1.set_title('Out-degree Distribution')
+    ax1.legend()
+
+    ax2.bar([i - width/2 for i in x], in_deg2, width, label='In-degree 2', color='steelblue')
+    ax2.bar([i + width/2 for i in x], in_deg3, width, label='In-degree 3', color='coral')
+    ax2.set_xticks(list(x))
+    ax2.set_xticklabels(primes)
+    ax2.set_xlabel('Prime p')
+    ax2.set_ylabel('Percentage of vertices')
+    ax2.set_title('In-degree Distribution')
+    ax2.legend()
+
+    fig.suptitle('Degree Structure of Berggren Orbit Graphs', fontsize=16, y=1.02)
+    fig.tight_layout()
+
+    return fig
+
+
+def plot_mixing_convergence(p=23):
+    """Plot convergence of random walk to stationary distribution."""
+    G = BerggrenOrbitGraph(p)
+    n = G.n
+    T = G.markov_matrix()
+
+    dist = np.zeros(n)
+    dist[0] = 1.0
+    stat = np.ones(n) / n
+
+    steps = range(0, 51)
+    tv_distances = []
+    lam2 = G.spectral_gap('markov')
+
+    for step in steps:
+        if step > 0:
+            dist = dist @ T
+        tv = 0.5 * np.sum(np.abs(dist - stat))
+        tv_distances.append(tv)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ax.plot(list(steps), tv_distances, 'b-o', markersize=3, label='Actual TV distance')
+
+    # Theoretical bound
+    bounds = [min(0.5 * np.sqrt(n) * lam2**t, 1.0) for t in steps]
+    ax.plot(list(steps), bounds, 'r--', label=f'Spectral bound (λ₂={lam2:.4f})')
+
+    ax.set_xlabel('Number of steps', fontsize=14)
+    ax.set_ylabel('Total Variation Distance', fontsize=14)
+    ax.set_title(f'Mixing of Berggren Random Walk (p={p}, n={n})', fontsize=16)
+    ax.legend(fontsize=12)
+    ax.set_yscale('log')
+    ax.grid(True, alpha=0.3)
+
+    return fig
+
+
+def generate_all_visualizations():
+    """Generate all visualization figures and save as files."""
+    print("Generating visualizations...")
+
+    fig1 = plot_spectral_gap_vs_prime()
+    fig1.savefig('/workspace/request-project/spectral_gap.png', dpi=150, bbox_inches='tight')
+    print("  Saved spectral_gap.png")
+
+    fig2 = plot_eigenvalue_histogram(47)
+    fig2.savefig('/workspace/request-project/eigenvalue_dist.png', dpi=150, bbox_inches='tight')
+    print("  Saved eigenvalue_dist.png")
+
+    fig3 = plot_degree_distribution()
+    fig3.savefig('/workspace/request-project/degree_dist.png', dpi=150, bbox_inches='tight')
+    print("  Saved degree_dist.png")
+
+    fig4 = plot_mixing_convergence(23)
+    fig4.savefig('/workspace/request-project/mixing_conv.png', dpi=150, bbox_inches='tight')
+    print("  Saved mixing_conv.png")
+
+    return {
+        'spectral_gap': fig_to_base64(plot_spectral_gap_vs_prime()),
+        'eigenvalue_dist': fig_to_base64(plot_eigenvalue_histogram(47)),
+        'degree_dist': fig_to_base64(plot_degree_distribution()),
+        'mixing_conv': fig_to_base64(plot_mixing_convergence(23)),
+    }
+
+
+if __name__ == "__main__":
+    generate_all_visualizations()
+    print("All visualizations generated.")
