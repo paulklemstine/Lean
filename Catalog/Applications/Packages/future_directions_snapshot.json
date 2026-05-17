@@ -137,10 +137,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9cd4e7fb",
     "timestamp": "2026-05-14T16:24:30.140249+00:00"
   },
   {
@@ -710,6 +710,62 @@
     "source_exp_id": "0ab00abc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T02:47:00.601952+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Parallel pursuit",
+    "description": ": Directions 1, 3, and 4 are relatively independent and can be pursued concurrently.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "aa9f66df",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:03:33.084163+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Sequential deepening",
+    "description": ": Direction 2 builds on Direction 4 (stability of spectral data as $k \\to \\infty$). Direction 5 builds on all preceding directions.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "aa9f66df",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:03:33.104550+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Experimental validation",
+    "description": ": Each direction should begin with computational experiments (eigenvalue computations, orbit statistics, numerical verification of conjectures) before formal proof attempts.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "aa9f66df",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:03:33.125786+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Cross-pollination",
+    "description": ": Results in any direction should be immediately tested for implications in the others. For example, congruence spectral gaps (Direction 1) may constrain the eigenvalue tower (Direction 4).",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "aa9f66df",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:03:33.148216+00:00"
   },
   {
     "id": "fd_0113",
