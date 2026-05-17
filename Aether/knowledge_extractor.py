@@ -1507,8 +1507,91 @@ Research mode: {concept.research_mode}
                     print(f"  - {f}")
         except Exception as e:
             print(f"[Cleanup] Warning: sync verification failed: {e}")
-            
+
+        # 5. LLM-assisted future directions cleanup
+        try:
+            await asyncio.to_thread(self._cleanup_future_directions)
+        except Exception as e:
+            print(f"[Cleanup] Warning: future directions cleanup failed: {e}")
+
         return job
+
+    def _cleanup_future_directions(self) -> None:
+        """Ask Pi-Agent to review and clean up the future directions list.
+
+        Combines similar entries, flags low-quality/junk directions for removal,
+        and marks them as abandoned. Only runs every ~10 cycles to save API cost.
+        """
+        fd_manager = self.memory
+        available = [d for d in fd_manager._directions if d.status == "available"]
+        if len(available) < 5:
+            return
+
+        # Only run every ~10 cycles to save pollen
+        if self.cycle_count % 10 != 0 and self.cycle_count > 0:
+            return
+
+        print(f"[Cleanup] Asking Pi-Agent to review {len(available)} future directions...")
+
+        # Build a compact listing of available directions
+        dir_lines = []
+        for d in available:
+            dir_lines.append(f"[{d.id}] (priority={d.priority_score:.2f}, domains={','.join(d.domains)}) {d.title}: {d.description[:120]}")
+        directions_text = "\n".join(dir_lines)
+
+        system = (
+            "You are a research direction curator for the Aether autonomous math research system. "
+            "Your job is to clean up the future research directions list.\n\n"
+            "Analyze the directions below and identify:\n"
+            "1. DUPLICATES: Directions that are substantially similar and should be merged. "
+            "Pick the better one to keep, mark the other for removal.\n"
+            "2. JUNK: Directions that are vague, trivially obvious, nonsensical, or not real mathematics. "
+            "Mark these for removal.\n"
+            "3. LOW_QUALITY: Directions with very generic descriptions that provide no actionable research path. "
+            "Mark these for removal if there are plenty of better directions.\n\n"
+            "Be conservative — only flag clear duplicates, obvious junk, or truly useless entries. "
+            "Respond in this exact JSON format:\n"
+            '{\n'
+            '  "remove": ["dir_id_1", "dir_id_2", ...],\n'
+            '  "merge": [{"keep": "dir_id", "absorb": "dir_id_to_remove", "reason": "..."}],\n'
+            '  "notes": "brief summary of what you changed and why"\n'
+            '}'
+        )
+
+        user = f"Here are {len(available)} available future research directions:\n\n{directions_text}"
+
+        try:
+            raw = self.pi_agent._call_pollinations(system, user, timeout=60)
+        except Exception as e:
+            print(f"[Cleanup] Pi-Agent call failed: {e}")
+            return
+
+        result = self.pi_agent._parse_json_response(raw)
+        if not result:
+            print(f"[Cleanup] Could not parse Pi-Agent cleanup response")
+            return
+
+        removed = 0
+        # Handle direct removals
+        for dir_id in result.get("remove", []):
+            d = fd_manager.get_direction_by_id(dir_id)
+            if d and d.status == "available":
+                d.status = "pruned"
+                removed += 1
+
+        # Handle merges: keep the better one, remove the absorbed one
+        for merge in result.get("merge", []):
+            absorb_id = merge.get("absorb", "")
+            d = fd_manager.get_direction_by_id(absorb_id)
+            if d and d.status == "available":
+                d.status = "pruned"
+                removed += 1
+
+        if removed > 0:
+            fd_manager._save()
+
+        notes = result.get("notes", "")
+        print(f"[Cleanup] Directions cleanup: removed {removed} directions. {notes}")
 
     def _verify_catalog_sync(self, job: ResearchJob) -> dict:
         """Verify all output files are properly placed in the Catalog."""
@@ -1703,7 +1786,13 @@ Research mode: {concept.research_mode}
                 print(f"[Cleanup] WARNING: {len(sync_report['missing_files'])} files not found")
         except Exception as e:
             print(f"[Cleanup] Warning: sync verification failed: {e}")
-        
+
+        # 5. LLM-assisted future directions cleanup
+        try:
+            self._cleanup_future_directions()
+        except Exception as e:
+            print(f"[Cleanup] Warning: future directions cleanup failed: {e}")
+
         return job
 
     # ==================================================================

@@ -598,6 +598,13 @@ class FutureDirectionsManager:
         Deprecated: now resets to available so the direction can be retried."""
         self.mark_direction_available(direction_id)
 
+    def get_direction_by_id(self, direction_id: str) -> Optional[FutureDirection]:
+        """Look up a direction by its ID."""
+        for d in self._directions:
+            if d.id == direction_id:
+                return d
+        return None
+
     def mark_direction_available(self, direction_id: str) -> None:
         """Reset a direction back to available so it can be retried."""
         for d in self._directions:
