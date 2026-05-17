@@ -1424,8 +1424,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "02db7d25",
       "timestamp": "2026-05-17T20:28:09.921911+00:00"
     },
     {
@@ -2234,7 +2234,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "a62293c6",
       "timestamp": "2026-05-17T21:29:22.486708+00:00"
     },
@@ -2939,6 +2939,74 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:04:00.074288+00:00"
+    },
+    {
+      "id": "fd_0160",
+      "title": "Tensorization as a universal principle",
+      "description": ": Products decompose. This should be axiomatized and reused across all settings.",
+      "source_exp_id": "a62293c6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:07:55.584465+00:00"
+    },
+    {
+      "id": "fd_0161",
+      "title": "Approximate decomposition with error control",
+      "description": ": Exact factorization is rare; bounded coupling is common. Error analysis is the key to practical applicability.",
+      "source_exp_id": "a62293c6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:07:55.588204+00:00"
+    },
+    {
+      "id": "fd_0162",
+      "title": "Machine verification",
+      "description": ": Each direction should produce formally verified theorems, building a library of compositional planning certificates.",
+      "source_exp_id": "a62293c6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:07:55.591610+00:00"
+    },
+    {
+      "id": "fd_0163",
+      "title": "Algorithmic realization",
+      "description": ": Every theoretical result should come with an implementable algorithm and complexity analysis.",
+      "source_exp_id": "a62293c6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:07:55.595462+00:00"
     }
   ],
   "pruned": []

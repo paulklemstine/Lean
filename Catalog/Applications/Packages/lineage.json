@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 100
+      "hue": 275
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -67,10 +67,10 @@
       "id": "binary_search",
       "title": "Threshold Phase Transitions in Bonus-Perturbed Finite Optimization",
       "domain": "Bridges: Optimization Theory, Tropical Geometry, Formal Verification",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
       "date": "2026-05-17T21:05:54Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "hybrid_argument_with_computational_distinguishers",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "coupling_argument",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
@@ -106,7 +106,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-17T22:04:04Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "proof_strategy",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:04:18Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "line_restriction",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:07:44Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "irreducibility",
@@ -133,7 +133,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:23:43Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "decomposition",
@@ -142,7 +142,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:30:35Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -151,7 +151,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-17T23:03:26Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "overview",
@@ -169,7 +169,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T23:03:58Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "2_factored_bellman_residual_tensorization_for_stru",
@@ -178,7 +178,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:07:53Z",
-      "hue": 270
+      "hue": 272
+    },
+    {
+      "id": "proposed_theorem_statement",
+      "title": "Period Transport Under Semiconjugacy: Formalized Orbit Arithmetic",
+      "domain": "Dynamical Systems / Discrete Mathematics / Formal Verification",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-17T23:23:40Z",
+      "hue": 271
     }
   ],
   "edges": [
@@ -236,6 +245,13 @@
       "target": "proof_strategy",
       "strength": 1.0,
       "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "2_eventual_periodicity_transfer_via_semiconjugacy",
+      "target": "proposed_theorem_statement",
+      "strength": 1.0,
+      "label": "Proposed Theorem Statement",
       "type": "provenance"
     },
     {
