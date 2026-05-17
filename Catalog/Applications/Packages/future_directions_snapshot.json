@@ -760,6 +760,64 @@
     "timestamp": "2026-05-17T16:38:42.938309+00:00"
   },
   {
+    "id": "fd_0267",
+    "title": "Validate the hypothesis",
+    "description": "computationally using the Python implementations provided.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2e27e30c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:00:57.314323+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "Build the Lean skeleton",
+    "description": "with `sorry`-marked lemmas capturing the key logical steps.",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2e27e30c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:00:57.330055+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Prove bottom-up",
+    "description": ", starting from the simplest supporting lemmas.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2e27e30c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:00:57.346165+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "Cross-pollinate",
+    "description": ": results from one direction should be used in others (e.g., Direction 1's concavity result feeds Direction 5's algorithm design).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2e27e30c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:00:57.361755+00:00"
+  },
+  {
     "id": "fd_0179",
     "title": "1. Activation-Region Nerve as a Simplicial Complex",
     "description": "**Objective**: Formalize the nerve of the activation region decomposition of a ReLU network as a finite simplicial complex, and identify certified robustness with exactness of a margin cosheaf on this nerve.\n\n**Approach**: A ReLU network with $n$ layers and widths $w_1, \\ldots, w_n$ partitions $\\mathbb{R}^d$ into at most $\\prod_i \\binom{w_i}{k}$ polyhedral activation regions, each determined by a sign pattern. The nerve of this cover — where simplices correspond to nonempty intersections of activation regions — encodes the combinatorial topology of the classifier. Define a cosheaf $\\mathcal{M}$ on this nerve assigning to each simplex the minimum margin over its closure, and prove that exactness of the cosheaf complex $\\mathcal{M}_0 \\to \\mathcal{M}_1 \\to \\cdots$ in degree 1 is equivalent to",
@@ -1181,24 +1239,6 @@
     "source_exp_id": "41f0f930",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:12:11.734256+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "1. Extending to Distributive Tropical Polynomial Normal Forms",
-    "description": "**Hypothesis:** The ACI normalizer for the `min`/`+` fragment can be extended to handle the distributive law `a + min(b, c) = min(a + b, a + c)`, yielding a complete decision procedure for the full tropical semiring identity problem.\n\n**Strategy:**\n- Define a canonical *tropical polynomial normal form* as `min` of *tropical monomials* (sums of variables with natural number coefficients).\n- Implement distributive expansion: push `+` inside `min` until all `min`-operands are monomial sums.\n- After expansion, apply the existing ACI normalizer to the resulting min-of-monomials expression.\n- Prove soundness via a sequence of rewriting steps, each justified by the distributive law.\n\n**Key Lemma to Formalize:**\n```\n∀ e : TropExpr, ∃ nf : TropPolyNF, eval σ e = eval σ (embed nf)\n```\n\n**Cross-domai",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "72596401",
-    "consumed_by_exp_id": "2e27e30c",
-    "timestamp": "2026-05-17T02:00:26.770253+00:00"
   },
   {
     "id": "fd_0255",
