@@ -191,8 +191,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.91,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "bb132674",
       "timestamp": "2026-05-17T18:48:26.949050+00:00"
     },
     {
@@ -497,8 +497,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.83,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "2014b85a",
       "timestamp": "2026-05-17T18:48:26.949080+00:00"
     },
     {
@@ -641,8 +641,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "f4b79e6c",
       "timestamp": "2026-05-17T18:48:26.949096+00:00"
     },
     {
@@ -735,8 +735,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "0ec29bf4",
       "timestamp": "2026-05-17T18:48:26.949102+00:00"
     },
     {
@@ -887,8 +887,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.91,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "e2bd21c1",
       "timestamp": "2026-05-17T18:48:26.949121+00:00"
     },
     {
@@ -1166,6 +1166,250 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:42.241524+00:00"
+    },
+    {
+      "id": "fd_0064",
+      "title": "Distributivity approach:",
+      "description": "Use tropical_plus_distributes_over_min to push the factor-wise oracle shift through the product cost decomposition. The key is that min over a product of finite sets distributes as min over each factor.",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.748452+00:00"
+    },
+    {
+      "id": "fd_0065",
+      "title": "Coupling argument:",
+      "description": "Model each factor independently, show that the gap in each factor grows by β/k per round, then argue that the total gap (sum of factor gaps) grows by β per round.\n\n### Cross-Domain Connection\n**Graphical models and belief propagation:** Factor-wise tropical amplification is analogous to message-passing in probabilistic graphical models, where beliefs are updated locally. This connects to the sum-product algorithm (in the tropical semiring: the min-sum algorithm) and to convergence theory for loopy belief propagation.\n\n---\n\n## Direction 2: Min-Plus Fixed-Point Search via Bellman-Grover Iteration\n\n### Vision\nThe Bellman equation V(s) = min_a [c(s,a) + γ·V(s')] is the foundation of dynamic programming and reinforcement learning. It is a fixed-point equation in the tropical semiring. Tropical ",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Tropical",
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.750627+00:00"
+    },
+    {
+      "id": "fd_0066",
+      "title": "Spectral analysis:",
+      "description": "Analyze the min-plus eigenvalues of the composition diffuse ∘ T. The diffusion step squares the spectral gap, yielding quadratic convergence.",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Tropical"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.751829+00:00"
+    },
+    {
+      "id": "fd_0067",
+      "title": "Direct contraction:",
+      "description": "Show that diffuse(T(c)) - v* = 2·(T(c) - v*) pointwise (when T(c) ≥ v*), so the contraction factor squares: γ → γ².\n\n### Cross-Domain Connection\n**Reinforcement learning:** Value iteration is the workhorse of RL. Accelerating it by a factor of 2 in the exponent would halve the sample complexity of model-based RL algorithms. The tropical Grover step applied to the Bellman operator could be the foundation of \"tropically accelerated\" RL.\n\n---\n\n## Direction 3: Tropical Adversary Lower Bounds\n\n### Vision\nIn quantum computing, the adversary method gives tight lower bounds on query complexity. A tropical adversary method would give lower bounds on the number of oracle shift rounds needed to isolate the marked argmin, providing optimality guarantees for the amplification framework.\n\n### Target The",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "Physics",
+        "Bridges",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.753550+00:00"
+    },
+    {
+      "id": "fd_0068",
+      "title": "Direct counting:",
+      "description": "Since each round adds exactly β to the unmarked minimum and preserves the marked minimum, the gap increases by exactly β per round. To overcome an initial deficit of |Δ₀|, exactly ⌈|Δ₀|/β⌉ rounds are necessary (not just sufficient).",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.754778+00:00"
+    },
+    {
+      "id": "fd_0069",
+      "title": "Information-theoretic:",
+      "description": "Model the oracle shift as a communication channel and bound the information gained per round about the marked set membership.\n\n### Cross-Domain Connection\n**Circuit complexity:** Lower bounds on tropical amplification rounds translate to depth lower bounds for min-plus circuits solving structured search problems. This could contribute to the program of proving circuit complexity separations via tropical methods.\n\n---\n\n## Direction 4: Cellular Automata Implementation of Tropical Amplification\n\n### Vision\nA min-plus cellular automaton (CA) is a dynamical system where each cell updates its state based on the min-plus combination of its neighbors' states. If the tropical amplification operator can be realized as a local CA rule, then amplification becomes a *distributed, parallel* computation ",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "Bridges",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.756179+00:00"
+    },
+    {
+      "id": "fd_0070",
+      "title": "Monotonicity argument:",
+      "description": "Show that the local oracle shift is monotone (costs only increase for unmarked states) and that the local minimum propagation is equivalent to the global operation after diameter(G) rounds.",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.757438+00:00"
+    },
+    {
+      "id": "fd_0071",
+      "title": "Connection to min_plus_ca_periodic_definable:",
+      "description": "Use the existing theorem on periodic definability of min-plus CA orbits to show that the amplification operator's behavior is eventually periodic, guaranteeing convergence.\n\n### Cross-Domain Connection\n**Distributed computing:** Local tropical amplification is a model for distributed consensus in sensor networks: each node adjusts its estimate based on neighbors, with marked \"anchor\" nodes providing ground truth. The gap growth theorem guarantees convergence.\n\n---\n\n## Direction 5: Tropical Amplitude Estimation and Counting\n\n### Vision\nQuantum amplitude estimation [Brassard et al. 2002] estimates the probability of a measurement outcome — equivalently, the fraction of marked states — using O(1/ε) queries for ε-precision. The tropical analogue would estimate the *value* of markedMin (the min",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Tropical",
+        "Physics",
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.759209+00:00"
+    },
+    {
+      "id": "fd_0072",
+      "title": "Binary search:",
+      "description": "Use binary search on the bonus parameter β. For β too small, the global minimum is still unmarked. For β large enough, the global minimum becomes marked. The transition point reveals markedMin to within ±β precision.",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.760721+00:00"
+    },
+    {
+      "id": "fd_0073",
+      "title": "Gap monitoring:",
+      "description": "Iterate the Grover step and monitor the global minimum. When it stabilizes, it equals markedMin. The gap-doubling theorem guarantees stabilization in O(log(1/Δ₀)) rounds.\n\n### Cross-Domain Connection\n**Quantum-tropical duality:** This is the exact tropical analogue of quantum amplitude estimation. Just as quantum estimation counts marked states, tropical estimation finds the optimal marked cost. The logarithmic query complexity mirrors the quantum case, suggesting a deep structural parallel.\n\n---\n\n## Team Research Directive\n\nEach direction above defines a self-contained research program with:\n- A precise mathematical conjecture\n- A concrete formalization target\n- Multiple proof approaches to attempt in parallel\n- Applications that motivate and validate the theory\n\nThe recommended workflow:",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Tropical",
+        "Physics",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.762542+00:00"
+    },
+    {
+      "id": "fd_0074",
+      "title": "Validate conjectures computationally",
+      "description": "using the Python demo framework",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.763845+00:00"
+    },
+    {
+      "id": "fd_0075",
+      "title": "Formalize definitions",
+      "description": "in Lean 4 with sorry'd theorem statements",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.765035+00:00"
+    },
+    {
+      "id": "fd_0076",
+      "title": "Iterate:",
+      "description": "failed proofs reveal false conjectures; adjust and retry",
+      "source_exp_id": "74be2cea",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:55.766167+00:00"
     }
   ],
   "pruned": []
