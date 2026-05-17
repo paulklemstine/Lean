@@ -104,10 +104,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37f474ef",
     "timestamp": "2026-05-14T16:16:22.737665+00:00"
   },
   {
@@ -452,23 +452,6 @@
     "source_exp_id": "60bd27bc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T06:57:09.906179+00:00"
-  },
-  {
-    "id": "fd_0276",
-    "title": "Hardness evidence",
-    "description": ": Connect to known undecidability results for max-plus linear systems.\n\n### Cross-Domain Connections\n- Max-plus linear systems theory (Cohen, Gaubert, Quadrat)\n- System identification in control theory\n- Weighted automata and formal series\n\n### Concrete Next Step\nFormalize the tropical discrete event system model and the identification problem. Prove the reduction from identification to power inversion for the case k=2. Connect to existing Catalog theorems on tropical automata (WeightedTraceSemantics, PolynomialMinimization).\n\n---\n\n## Direction 5: Formal Complexity Classes for Semiring Computation\n\n### Hypothesis\nThere exists a natural complexity class \"Tropical-P\" of problems solvable in polynomial time with tropical arithmetic, and the tropical power inversion problem is complete for a r",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "0db29d83",
-    "timestamp": "2026-05-17T06:57:09.945380+00:00"
   },
   {
     "id": "fd_0277",
@@ -1598,5 +1581,126 @@
     "source_exp_id": "df23c5f9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T07:35:53.355833+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "1. Weighted Tropical Extension over ℝ",
+    "description": "**Goal:** Extend the simulation theorem from `WithTop ℕ` to `WithTop ℝ` or the extended tropical semiring ℝ ∪ {-∞}.\n\n**Theorem target:**\n```\ntheorem weighted_bp_to_tropical_circuit_real\n    (w d : ℕ) (P : WeightedBP w d ℝ) :\n    ∃ C : TropicalCircuitR,\n      C.opCount ≤ 2 * w * w * d + w ∧\n      ∀ x, tropEvalCircuit C x = tropEvalBP P x\n```\n\n**Strategy:** The algebraic structure of the proof is identical — only the coefficient ring changes. The key challenge is handling `WithTop ℝ` (or `EReal`) arithmetic in Lean, particularly the interaction of `⊤` with addition. Use Mathlib's `EReal` or `WithTop ℝ` infrastructure and verify that `inf` and `+` distribute correctly.\n\n**Cross-domain connection:** This connects to tropical algebraic geometry, where tropical polynomials are piecewise-linear f",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db29d83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:12:18.202360+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "2. Reverse Simulation: Circuit → Branching Program",
+    "description": "**Goal:** Characterize when layered circuits can be compiled back into bounded-width branching programs, with explicit width bounds.\n\n**Theorem target:**\n```\ntheorem circuit_to_bp_reverse\n    (n : ℕ) (C : LayeredCircuit n) :\n    ∃ w : ℕ, w ≤ 2 ^ C.width ∧\n    ∃ P : BP n w C.depth,\n      ∀ x, P.Accepts x ↔ C.Accepts x\n```\n\n**Strategy:** The reverse simulation encodes the entire state of a circuit layer (w' Boolean gates) as a single state in a branching program of width 2^{w'}. Each transition reads the relevant input bits and updates the state according to the circuit's gate logic. The width bound 2^{w'} is exponential because each BP state must encode all possible valuations of the gates in a single layer.\n\n**Key insight:** This exponential blowup is unavoidable in general (NC¹ vs L separ",
+    "domains": [
+      "EML",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db29d83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:12:18.229812+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "3. Lower Bound Transport Theorem (Quantitative)",
+    "description": "**Goal:** Prove that specific tropical circuit lower bounds (e.g., for sorting networks, shortest-path problems) yield explicit width-depth tradeoff lower bounds for tropical BPs.\n\n**Theorem target:**\n```\ntheorem sorting_bp_tradeoff (n : ℕ) (hn : 2 ≤ n) :\n    ∀ w d : ℕ, (∀ P : TropicalBP w d, computes_sorting P n) →\n    n * Nat.log 2 n ≤ 2 * w * w * d + w\n```\n\n**Strategy:**\n1. Formalize sorting networks as tropical circuits computing the minimum-cost permutation.\n2. Prove the Ω(n log n) lower bound for comparison-based sorting circuits.\n3. Apply `tropical_lower_bound_transfer` to transport this into a BP tradeoff.\n\n**Cross-domain connections:**\n- Connects to the AKS sorting network and its optimality\n- Relates to communication complexity lower bounds (information-theoretic)\n- Links tropica",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db29d83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:12:18.252022+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "4. Semiring-Parametric Simulation",
+    "description": "**Goal:** Abstract the simulation theorem over an arbitrary idempotent semiring, making it a universal transfer principle.\n\n**Theorem target:**\n```\ntheorem semiring_bp_to_circuit [SemiringS : Semiring S] [CompleteLatticeS : CompleteLattice S]\n    (w d : ℕ) (P : SemiringBP S w d) :\n    ∃ C : SemiringCircuit S,\n      C.opCount ≤ 2 * w * w * d + w ∧\n      C.output = P.eval\n```\n\n**Strategy:** Define `SemiringBP S w d` with edge weights in S. Replace OR with the semiring's addition (join) and AND with multiplication. The reachability recurrence becomes:\n```\nreach(i+1, v) = Σ_u reach(i, u) * weight(i, u, v)\n```\nwhich is exactly matrix-vector multiplication over S. The simulation is the same construction for any S.\n\n**Instances to verify:**\n- S = Bool (∨, ∧): original Boolean case\n- S = WithTop ℕ",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db29d83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:12:18.271699+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "5. Transfer Operators and Partition Functions",
+    "description": "**Goal:** Formalize BP evaluation as a transfer-operator computation and show the circuit is its dynamic-program unfolding.\n\n**Theorem target:**\n```\ntheorem bp_eval_eq_transfer_matrix_product\n    (w d : ℕ) (P : TropicalBP w d) :\n    P.minCost = (transferProduct P d).apply startVec P.accept\n\ntheorem circuit_unrolls_transfer\n    (w d : ℕ) (P : TropicalBP w d) :\n    tropBPToCircuit P = unfoldTransferProduct (transferMatrices P)\n```\n\n**Strategy:**\n1. Define `transferMatrix P i` as the w×w tropical matrix for layer i, with entry (u,v) = edgeWeight(i, u, v).\n2. Define `transferProduct P d` as the tropical matrix product M₀ ⊗ M₁ ⊗ ... ⊗ M_{d-1}.\n3. Show BP.minCost = the (start, accept) entry of the transfer product.\n4. Show the circuit evaluation is exactly the iterative computation of this matri",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db29d83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:12:18.293148+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "6. Tropical Neural Network Connections",
+    "description": "**Goal:** Show that ReLU neural networks are tropical circuits, and use the simulation theorem to relate network architecture to branching program complexity.\n\n**Approach:**\n1. Formalize that ReLU(x) = max(0, x) is a tropical gate (max-plus operation).\n2. Show that a ReLU network with L layers and width W is a tropical circuit of depth L and width W.\n3. Apply the reverse simulation to get a tropical BP of width ≤ 2^W and depth L.\n4. Conclude: any function computable by a width-W, depth-L ReLU network is computable by a tropical BP of width 2^W and depth L.\n\n**Implication:** Lower bounds on tropical BP width directly translate to lower bounds on ReLU network width, providing a new tool for understanding neural network expressiveness.\n\n---",
+    "domains": [
+      "Tropical",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db29d83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:12:18.312033+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "7. Formal Complexity Class Characterizations",
+    "description": "**Goal:** Use the simulation theorem to formally characterize complexity classes defined by branching program width.\n\n**Specific targets:**\n- Formalize that width-5 polynomial-size BPs = NC¹ (Barrington's theorem)\n- Formalize that polynomial-width polynomial-size BPs = L (logspace)\n- Use the simulation to show NC¹ ⊆ circuits of size O(n^{10}) (explicit bound from width-5, polynomial-depth BPs)\n\n**Strategy:** These are deep results requiring substantial additional infrastructure (complexity classes, polynomial bounds, uniformity conditions). The simulation theorem provides the \"easy direction\" of such characterizations; the hard direction (showing the class is not larger) requires separate arguments.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0db29d83",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:12:18.330884+00:00"
   }
 ]
