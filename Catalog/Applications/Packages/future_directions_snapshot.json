@@ -592,6 +592,63 @@
     "timestamp": "2026-05-16T23:54:56.601629+00:00"
   },
   {
+    "id": "fd_0257",
+    "title": "Formalize",
+    "description": "each direction as a Lean 4 module with sorry-marked lemma skeletons.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b7383f62",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:34:34.668515+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Validate",
+    "description": "key conjectures computationally with Python experiments on random matrices.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b7383f62",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:34:34.686058+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Prove",
+    "description": "lemmas bottom-up, starting with the simplest algebraic identities.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b7383f62",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:34:34.703955+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Document",
+    "description": "cross-domain interpretations in module-level docstrings.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b7383f62",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:34:34.721506+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -1227,21 +1284,18 @@
     "timestamp": "2026-05-16T13:12:11.734256+00:00"
   },
   {
-    "id": "fd_0256",
-    "title": "2. Categorical Semantics of Hardness Reductions",
-    "description": "**Hypothesis**: The `TheoryMorphism` framework is the object-level data of a category `HardnessTransport` whose objects are `TheorySpec`s and whose morphisms are `TheoryMorphism`s. This category admits:\n- A monoidal structure (tensor product of theories)\n- A functorial embedding of classical complexity-class reductions\n- A notion of \"hardness amplification\" as endomorphisms with c > 1\n\n**Proof Strategy**:\n- Prove that `TheoryMorphism.comp` is associative (up to equality of the map, c, a fields).\n- Construct identity morphisms (c = 1, a = 0, map = id).\n- Verify the category axioms and explore enrichment over the ordered monoid (ℝ, *, ≤).\n- Connect to the existing formalization of category theory in Mathlib.\n\n**Cross-domain Connections**: This would connect reduction theory from computationa",
+    "id": "fd_0244",
+    "title": "Broader Impact",
+    "description": "This direction connects arithmetic thermodynamics to:\n- Information theory: S(E) is the rate function for the entropy of integers at energy level E\n- Optimization: the Legendre transform is central to convex optimization and duality theory\n- Economics: analogues of Gibbs measures appear in discrete choice theory (logit models)",
     "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
+      "Bridges"
     ],
     "priority_score": 0.7,
     "status": "in_progress",
     "research_mode": "prove",
-    "source_exp_id": "2a24e1c8",
-    "consumed_by_exp_id": "b7383f62",
-    "timestamp": "2026-05-16T22:10:48.796280+00:00"
+    "source_exp_id": "8b829eb9",
+    "consumed_by_exp_id": "233830c5",
+    "timestamp": "2026-05-16T14:28:58.186572+00:00"
   },
   {
     "id": "fd_0257",
