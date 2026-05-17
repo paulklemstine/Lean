@@ -1147,6 +1147,25 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:27.082233+00:00"
+    },
+    {
+      "id": "fd_0063",
+      "title": "Proposed Lean signature:",
+      "description": "```lean\ntheorem berggren_product_theorem (q : ℕ) (hq : q.Prime) (hq5 : 5 ≤ q)\n    (A : Finset (BerggrenQuotient q)) (hA : A.Nonempty)\n    (hA_small : (A.card : ℝ) ≤ (Fintype.card (BerggrenQuotient q) : ℝ) ^ (1 - δ)) :\n    (A.card : ℝ) ^ (1 + ε) ≤ (tripleProduct A).card\n```",
+      "source_exp_id": "88a28fa9",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Pythagorean"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:42.241524+00:00"
     }
   ],
   "pruned": []

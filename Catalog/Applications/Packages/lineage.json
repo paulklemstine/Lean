@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,16 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 91
+      "hue": 90
+    },
+    {
+      "id": "2_tropical_amplitude_amplification",
+      "title": "Tropical Amplitude Amplification via Min-Plus Dynamics and Gap Squaring",
+      "domain": "Tropical Mathematics / Algorithmic Search Theory",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-17T19:57:53Z",
+      "hue": 95
     }
   ],
   "edges": [],
