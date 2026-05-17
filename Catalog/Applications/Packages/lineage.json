@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "coupling_argument",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
@@ -106,7 +106,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-17T22:04:04Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "proof_strategy",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:07:44Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "irreducibility",
@@ -133,7 +133,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:23:43Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "decomposition",
@@ -151,7 +151,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-17T23:03:26Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "overview",
@@ -160,6 +160,15 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:03:44Z",
+      "hue": 270
+    },
+    {
+      "id": "random_matrix_counting",
+      "title": "Fiber Bounds for Orbit-Prefix Maps of Tropical Matrix Actions",
+      "domain": "Tropical Geometry / Combinatorics / Dynamical Systems",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-17T23:03:58Z",
       "hue": 270
     }
   ],
@@ -212,17 +221,24 @@
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
+    },
+    {
+      "source": "5_tropical_pseudorandom_generators_from_orbit_expa",
+      "target": "random_matrix_counting",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
     }
   ],
   "domain_bridges": [
     {
-      "domain_a": "Algebra",
+      "domain_a": "Geometry",
       "domain_b": "Tropical",
-      "package_count": 2,
-      "strength": 0.7
+      "package_count": 3,
+      "strength": 0.9000000000000001
     },
     {
-      "domain_a": "Geometry",
+      "domain_a": "Algebra",
       "domain_b": "Tropical",
       "package_count": 2,
       "strength": 0.7
