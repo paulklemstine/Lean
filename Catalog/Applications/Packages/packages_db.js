@@ -1538,6 +1538,290 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-17T20:28:09.930273+00:00"
   },
   {
+    "id": "fd_0082",
+    "title": "Eigenvalue analysis",
+    "description": "Show that a generic tropical matrix has a unique maximum-weight cycle (tropical eigenvalue), and that the transient behavior before reaching periodicity creates entropy.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.007544+00:00"
+  },
+  {
+    "id": "fd_0083",
+    "title": "Random matrix counting",
+    "description": "Use combinatorial enumeration to count the number of matrices producing each orbit prefix. If the tropical multiplication map is \"sufficiently surjective,\" prefix fibers cannot be too large.",
+    "domains": [
+      "Combinatorics",
+      "Probability",
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.009578+00:00"
+  },
+  {
+    "id": "fd_0084",
+    "title": "Reduction to path counting",
+    "description": "Since tropical matrix entries encode optimal path weights, orbit expansion reduces to showing that optimal k-step paths through a random weighted graph are diverse.\n\n### Key Lemma to Formalize\n```\n\u2200 \u03b5 > 0, \u2203 q\u2080, \u2200 q \u2265 q\u2080, \u2200 n \u2265 2, \u2200 T \u2264 q^{n/2},\n  |{G \u2208 Mat(n, {0,...,q-1}) : orbit_expansion(G, T, c\u00b7log q)}| / q^{n\u00b2} \u2265 1 - \u03b5\n```\n\n### Cross-Domain Connections\n- Random graph theory (random shortest paths)\n- Tropical spectral theory (eigenvalue multiplicity)\n- Percolation theory (path diversity in random media)\n\n### Impact\nAn unconditional result would give the first PRG construction where the entropy source is provably present without any hardness assumption, albeit in a restricted computational model.\n\n---\n\n## Direction 2: Computational Indistinguishability from Tropical Hardness\n\n### Hypoth",
+    "domains": [
+      "Analysis",
+      "Probability",
+      "Tropical",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.012213+00:00"
+  },
+  {
+    "id": "fd_0085",
+    "title": "Define tropical one-way functions",
+    "description": "Formalize the assumption that G \u2192 G^{\u2297T} is one-way in the tropical semiring.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.014759+00:00"
+  },
+  {
+    "id": "fd_0086",
+    "title": "Goldreich-Levin extraction",
+    "description": "Adapt the Goldreich-Levin hard-core bit theorem to the tropical setting: if G \u2192 G^{\u2297T} is one-way, then h(G^{\u2297t}) is computationally unpredictable for suitable h.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.016875+00:00"
+  },
+  {
+    "id": "fd_0087",
+    "title": "Hybrid argument with computational distinguishers",
+    "description": "Extend the statistical hybrid theorem to computational distinguishers using the existing `tropical_orbit_prg_computational_bound` from `PRGSecurity.lean`.\n\n### Key Lemma to Formalize\n```\ntheorem tropical_OWF_implies_PRG :\n  TropicalOneWayFunction pow \u2192\n  ComputationallySecurePRG (orbitHash pow hash T) poly_time_tests\n```\n\n### Cross-Domain Connections\n- Post-quantum cryptography (tropical operations resist Shor's algorithm)\n- Lattice-based cryptography (max-plus has lattice-like structure)\n- Tropical complexity theory (NP-hardness of tropical problems)\n\n### Impact\nWould establish tropical algebra as a new foundation for cryptographic hardness, complementing lattice-based and code-based approaches.\n\n---\n\n## Direction 3: Multi-Source Tropical Extractors\n\n### Hypothesis\nGiven k independent tro",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "4c964ad4",
+    "timestamp": "2026-05-17T20:40:43.019441+00:00"
+  },
+  {
+    "id": "fd_0088",
+    "title": "Independent source model",
+    "description": "Formalize k independent tropical orbits as a product probability space.",
+    "domains": [
+      "Probability",
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.021605+00:00"
+  },
+  {
+    "id": "fd_0089",
+    "title": "XOR lemma for tropical extraction",
+    "description": "Show that XOR-ing hash outputs from independent orbits amplifies closeness to uniform: if each is \u03b5-close, the XOR is \u03b5^k-close.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.023684+00:00"
+  },
+  {
+    "id": "fd_0090",
+    "title": "Somewhere-random sources",
+    "description": "Prove that if at least one of the k orbits has high conditional entropy, the combined output is close to uniform.\n\n### Key Lemma to Formalize\n```\ntheorem multi_source_tropical_extraction :\n  \u2200 i, condExtract seed_i pow_i hash_i T \u03b5 \u2192\n  independent(seed_1, ..., seed_k) \u2192\n  statDist (combined_output) uniform \u2264 \u03b5^k\n```\n\n### Cross-Domain Connections\n- Multi-source extractor theory (Chor-Goldreich, Raz)\n- Distributed randomness generation\n- Blockchain random beacons (combining independent entropy sources)\n\n### Impact\nWould provide a practical method for combining weak tropical entropy sources into strong randomness, applicable to distributed systems.\n\n---\n\n## Direction 4: Entropy Rate Theorems for Tropical Semigroup Actions\n\n### Hypothesis\nFor a finite tropical semigroup S acting on a state spa",
+    "domains": [
+      "Probability",
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.026326+00:00"
+  },
+  {
+    "id": "fd_0091",
+    "title": "Subadditivity",
+    "description": "Show that conditional min-entropy satisfies a subadditivity property under tropical iteration.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.028887+00:00"
+  },
+  {
+    "id": "fd_0092",
+    "title": "Fekete's lemma",
+    "description": "Apply the subadditive sequence lemma to establish existence of the limit.",
+    "domains": [
+      "Analysis"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.031456+00:00"
+  },
+  {
+    "id": "fd_0093",
+    "title": "Spectral connection",
+    "description": "Relate the entropy rate to the maximum cycle mean (tropical eigenvalue) of the transition semigroup.\n\n### Key Definition\n```\ndef tropicalEntropyRate (S : TropicalSemigroup) (\u03bc : PMF S.Seed) : \u211d :=\n  \u2a06 T, conditionalMinEntropy (pow \u00b7 T) (orbitPrefix \u00b7 T) \u03bc / T\n```\n\n### Cross-Domain Connections\n- Ergodic theory (Shannon entropy rate, Kolmogorov-Sinai entropy)\n- Symbolic dynamics (topological entropy of shift spaces)\n- Thermodynamic formalism (free energy and entropy production)\n- Tropical spectral theory (max cycle mean)\n\n### Impact\nWould create a bridge between measure-theoretic ergodic theory and finite tropical combinatorics, enabling entropy-based analysis of max-plus dynamical systems.\n\n---\n\n## Direction 5: Tropical Nisan-Wigderson Generators\n\n### Hypothesis\nThere exists a function f: {",
+    "domains": [
+      "Analysis",
+      "Topology",
+      "Probability",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.034369+00:00"
+  },
+  {
+    "id": "fd_0094",
+    "title": "Tropical circuit model",
+    "description": "Use the existing `TropicalCircuit` formalization to define tropical circuit complexity classes.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.037118+00:00"
+  },
+  {
+    "id": "fd_0095",
+    "title": "Design construction",
+    "description": "Build a (k, \u2113)-design {S\u2081, ..., S_m} \u2286 2^{[n]} as in the Nisan-Wigderson framework.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.039396+00:00"
+  },
+  {
+    "id": "fd_0096",
+    "title": "NW generator",
+    "description": "Define NW_f(x) = (f(x|_{S\u2081}), ..., f(x|_{S_m})) and prove it fools tropical polynomial-size tests under the assumption that f is tropically hard.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.041706+00:00"
+  },
+  {
+    "id": "fd_0097",
+    "title": "Connect to existing NW infrastructure",
+    "description": "Use the `NWGenerator` and `prgFools` definitions from `HardnessRandomness/Defs.lean`.\n\n### Key Theorem\n```\ntheorem tropical_NW_PRG :\n  TropicalHardFunction f n (2^{n^\u03b4}) \u2192\n  HasDesign D n k \u2113 \u2192\n  PRGFools (TropicalCircuits (poly n)) (NWGenerator f D) (1/poly n)\n```\n\n### Cross-Domain Connections\n- Circuit complexity (lower bounds for tropical circuits)\n- Derandomization (BPP vs P in tropical models)\n- Algebraic complexity (VP vs VNP tropical analogues)\n- The existing `TropicalHVR` framework in the codebase\n\n### Impact\nWould complete the hardness-vs-randomness program for tropical computation, showing that tropical circuit lower bounds (which are known in some restricted models) imply deterministic simulation of tropical randomized algorithms.\n\n---\n\n## Meta-Direction: Automated Research Pipe",
+    "domains": [
+      "Probability",
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.044669+00:00"
+  },
+  {
+    "id": "fd_0098",
+    "title": "Generates conjectures",
+    "description": "about tropical orbit expansion from computational experiments",
+    "domains": [
+      "NumberTheory",
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.047082+00:00"
+  },
+  {
+    "id": "fd_0099",
+    "title": "Iterates",
+    "description": "on refined conjectures\n\n### Components\n- Computational sweep over tropical matrix families (varying n, q, orbit properties)\n- Statistical testing of conditional entropy hypotheses\n- Automated theorem prover integration for candidate lemmas\n- Knowledge base of proven results and known obstructions\n\n### Key Metrics to Track\n- Fraction of generic matrices satisfying orbit expansion\n- Growth rate of conditional support sizes as a function of n, q\n- Relationship between tropical spectral gap and extraction quality\n- Computational complexity of orbit hash inversion\n\n---\n\n## Priority Ordering",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Tropical",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e40771b9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T20:40:43.050241+00:00"
+  },
+  {
     "id": "fd_0057",
     "title": "Overview",
     "description": "The theorems `semiconj_iterate_eq`, `semiconj_eventually_periodic`, and `semiconj_eventually_periodic_of_fintype` establish the foundational infrastructure for transporting orbit structure through deterministic maps between dynamical systems. This document outlines five concrete next steps at breakthrough level, each building on the catalog of existing results.\n\n---",

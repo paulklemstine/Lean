@@ -1823,3 +1823,61 @@ body.light-theme .gallery-card:hover {
     box-shadow: 0 0 30px rgba(124, 58, 237, 0.1), var(--shadow-lg);
     border-color: rgba(124, 58, 237, 0.3);
 }
+
+/* ─── Toast Notification ─── */
+
+#aether-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    max-width: 360px;
+    padding: 16px 20px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.15), var(--shadow-lg);
+    cursor: pointer;
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    backdrop-filter: blur(12px);
+}
+
+#aether-toast.toast-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#aether-toast .toast-title {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #22ccff, #8844ff, #ff4466);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+}
+
+#aether-toast .toast-body {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+#aether-toast:hover {
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.25), var(--shadow-lg);
+}
+
+body.light-theme #aether-toast {
+    background: #ffffff;
+    border-color: #d1d5db;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1), 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme #aether-toast .toast-body {
+    color: #6b7280;
+}

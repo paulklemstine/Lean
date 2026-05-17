@@ -227,6 +227,7 @@
     <script src="js/pyodide-runner.js"></script>
     <script src="js/knowledge-graph.js"></script>
     <script src="js/directions.js"></script>
+    <script src="js/notifications.js"></script>
     <script>
     // Cross-module coordination and initialization
     document.addEventListener('DOMContentLoaded', () => {
@@ -242,6 +243,11 @@
             window.populateDomainFilter();
         }
 
+        // Initialize notifications: mark current packages as seen
+        if (window.AetherNotifications) {
+            window.AetherNotifications.init(window.PACKAGE_INDEX);
+        }
+
         // Periodic refresh: check for new packages every 60 seconds
         // Skip on file:// protocol (CORS blocks fetch on local files)
         if (location.protocol !== 'file:') {
@@ -254,10 +260,20 @@
                     const fn = new Function(text + '; return { INDEX: window.PACKAGE_INDEX, DB: window.PACKAGE_DB, GRAPH: window.PACKAGE_GRAPH, DIRECTIONS: window.FUTURE_DIRECTIONS };');
                     const newData = fn();
                     if (newData.INDEX && newData.INDEX.length > prevCount) {
+                        // Find which packages are new
+                        const prevFilenames = new Set((window.PACKAGE_INDEX || []).map(p => p.filename));
+                        const newFilenames = newData.INDEX.filter(p => !prevFilenames.has(p.filename)).map(p => p.filename);
+
                         window.PACKAGE_INDEX = newData.INDEX;
                         window.PACKAGE_DB = newData.DB;
                         window.Aether.packages = newData.INDEX;
                         if (window.renderSidebar) window.renderSidebar(newData.INDEX);
+
+                        // Browser + in-app notification for new packages
+                        if (window.AetherNotifications && newFilenames.length > 0) {
+                            window.AetherNotifications.onNewPackages(newData.INDEX, newFilenames);
+                        }
+
                         if (newData.GRAPH && newData.GRAPH.nodes) {
                             newData.GRAPH.nodes.forEach(n => {
                                 if (window.addGraphNode) window.addGraphNode(n);
