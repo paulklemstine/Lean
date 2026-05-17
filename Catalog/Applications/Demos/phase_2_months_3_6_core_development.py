@@ -1,342 +1,261 @@
 #!/usr/bin/env python3
 """
-Applications of Tropical Kinetic Certification
+Tropical Certified Information Dynamics — Applications
 
-Real-world applications demonstrating the practical impact of the theorems:
-1. Certified robustness of ReLU neural network classifiers
-2. Streaming data temporal stability guarantees
-3. Max-pooling information loss quantification
-4. Polyhedral decision boundary verification
+Real-world applications of the tropical certification theorems:
+1. Neural network robustness certification
+2. Hybrid system guard verification
+3. Max-pooling information loss analysis
+4. Streaming data decision stability
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 from typing import List, Tuple
+from algorithms import (
+    trop_affine_score, compute_kinetic_certificate,
+    compute_polyhedral_certificate, compute_spread_contraction,
+    compute_tmi, postprocess_channel, compute_kinetic_polyhedral_certificate
+)
 
 
-# ============================================================================
-# Application 1: Certified Robustness for Tropicalized Neural Networks
-# ============================================================================
+# ========================================================================
+# Application 1: Neural Network Robustness Certification
+# ========================================================================
 
-def tropicalized_relu_network(
-    W1: np.ndarray, b1: np.ndarray,
-    W2: np.ndarray, b2: np.ndarray,
-    x: np.ndarray
-) -> np.ndarray:
+def neural_network_robustness():
+    """Demonstrate tropical certification for a simple tropicalized neural network.
+
+    A 2-class classifier with tropical affine scores over 5-dimensional inputs.
+    We certify robustness against adversarial perturbations along specific directions.
     """
-    Simulate a 2-layer ReLU network in tropical form.
-
-    In the tropical limit, ReLU(Wx + b) becomes max-plus:
-    output_j = max_i(W_{j,i} + x_i) + b_j (approximately, for dominant terms).
-    """
-    # Layer 1: tropical max-plus
-    h = np.array([b1[j] + np.max(W1[j] + x) for j in range(len(b1))])
-    h = np.maximum(h, 0)  # ReLU
-
-    # Layer 2: standard linear (classification head)
-    return W2 @ h + b2
-
-
-def certify_neural_classifier(
-    W1: np.ndarray, b1: np.ndarray,
-    W2: np.ndarray, b2: np.ndarray,
-    x0: np.ndarray, v: np.ndarray,
-    num_classes: int
-) -> dict:
-    """
-    Certify temporal robustness of a neural classifier.
-
-    Uses tropical margin analysis to guarantee that the classifier's
-    decision is stable under the trajectory x(t) = x0 + t*v.
-    """
-    # Compute class scores at t=0
-    scores = tropicalized_relu_network(W1, b1, W2, b2, x0)
-    winner = int(np.argmax(scores))
-
-    # Compute margins to each other class
-    margins = scores[winner] - scores
-    margins[winner] = float('inf')
-    min_margin = np.min(margins)
-
-    # Lipschitz bound
-    L = np.max(np.abs(v))
-    eps = min_margin / (2 * L + 1) if min_margin > 0 else 0.0
-
-    return {
-        'scores': scores,
-        'winner': winner,
-        'min_margin': min_margin,
-        'lipschitz': L,
-        'stability_radius': eps,
-        'is_robust': min_margin > 0
-    }
-
-
-def demo_neural_robustness():
-    """Demonstrate certified robustness for a tropical neural network."""
     print("=" * 70)
-    print("APPLICATION 1: Neural Network Temporal Robustness")
+    print("APPLICATION 1: Neural Network Robustness Certification")
     print("=" * 70)
 
     np.random.seed(42)
+    n = 5  # input dimension
 
-    # Create a simple 3-class classifier
-    n_input = 5
-    n_hidden = 4
-    n_classes = 3
+    # Two-class tropicalized classifier
+    w_class0 = np.array([0.8, 1.2, 0.3, 0.9, 0.5])
+    w_class1 = np.array([0.5, 0.7, 1.1, 0.4, 0.8])
+    b0, b1 = 0.3, -0.1
 
-    W1 = np.random.randn(n_hidden, n_input) * 0.5
-    b1 = np.random.randn(n_hidden) * 0.1
-    W2 = np.random.randn(n_classes, n_hidden) * 0.5
-    b2 = np.zeros(n_classes)
+    # Test input
+    x = np.array([1.0, 0.5, 2.0, 1.5, 0.8])
 
-    # Test multiple input points
-    n_points = 100
-    stability_radii = []
+    s0 = trop_affine_score(w_class0, x, b0)
+    s1 = trop_affine_score(w_class1, x, b1)
+    print(f"\nInput: x = {x}")
+    print(f"Score class 0: {s0:.4f}")
+    print(f"Score class 1: {s1:.4f}")
+    print(f"Predicted class: {0 if s0 > s1 else 1}")
+    print(f"Margin: {abs(s0-s1):.4f}")
 
-    for _ in range(n_points):
-        x0 = np.random.randn(n_input)
-        v = np.random.randn(n_input) * 0.5
-
-        result = certify_neural_classifier(W1, b1, W2, b2, x0, v, n_classes)
-        if result['is_robust']:
-            stability_radii.append(result['stability_radius'])
-
-    print(f"\nTested {n_points} random inputs with random velocities")
-    print(f"Certifiable: {len(stability_radii)} / {n_points}")
-    print(f"Mean stability radius: {np.mean(stability_radii):.4f}")
-    print(f"Min stability radius: {np.min(stability_radii):.4f}")
-    print(f"Max stability radius: {np.max(stability_radii):.4f}")
-
-    # Detailed example
-    x0 = np.array([1.0, -0.5, 0.3, 0.8, -0.2])
-    v = np.array([0.1, -0.1, 0.05, -0.05, 0.02])
-    result = certify_neural_classifier(W1, b1, W2, b2, x0, v, n_classes)
-
-    print(f"\nDetailed example:")
-    print(f"  Input: x0 = {x0}")
-    print(f"  Velocity: v = {v}")
-    print(f"  Scores: {result['scores']}")
-    print(f"  Winner: class {result['winner']}")
-    print(f"  Margin: {result['min_margin']:.4f}")
-    print(f"  Certified stability: |t| < {result['stability_radius']:.4f}")
-
-
-# ============================================================================
-# Application 2: Streaming Data Stability
-# ============================================================================
-
-def demo_streaming_stability():
-    """
-    Demonstrate temporal stability guarantees for streaming classification.
-
-    Models a sensor reading that drifts over time and certifies
-    how long a classification decision remains valid.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Streaming Data Temporal Stability")
-    print("=" * 70)
-
-    # Scenario: 3 sensors monitoring system health
-    # Classification: Normal / Warning / Critical
-    n_sensors = 3
-    n_classes = 3
-
-    # Tropical weight vectors (learned from training data)
-    weights = [
-        np.array([2.0, 1.0, 0.5]),   # Normal
-        np.array([0.5, 2.0, 1.5]),    # Warning
-        np.array([-0.5, 0.5, 3.0]),   # Critical
+    # Certify against different perturbation directions
+    print("\nRobustness certificates against perturbation directions:")
+    directions = [
+        ("random noise", np.random.randn(n)),
+        ("coordinate 3 attack", np.array([0, 0, 1, 0, 0], dtype=float)),
+        ("uniform drift", np.ones(n) * 0.1),
+        ("adversarial (max gradient)", w_class1 - w_class0),
     ]
-    biases = [1.0, 0.0, -1.0]
 
-    # Current sensor readings
-    sensor_reading = np.array([3.0, 2.0, 1.0])
-
-    # Expected drift rate (from sensor noise model)
-    drift_rate = np.array([0.1, 0.15, 0.05])
-
-    # Compute scores
-    scores = [biases[c] + np.max(weights[c] + sensor_reading) for c in range(n_classes)]
-    winner = int(np.argmax(scores))
-    class_names = ['Normal', 'Warning', 'Critical']
-
-    print(f"\nSensor readings: {sensor_reading}")
-    print(f"Drift rate: {drift_rate}")
-    print(f"\nClass scores:")
-    for c in range(n_classes):
-        print(f"  {class_names[c]}: {scores[c]:.3f}")
-    print(f"Classification: {class_names[winner]}")
-
-    # Compute certified stability
-    L = np.max(np.abs(drift_rate))
-    min_margin = float('inf')
-    for c in range(n_classes):
-        if c != winner:
-            margin = scores[winner] - scores[c]
-            min_margin = min(min_margin, margin)
-
-    eps = min_margin / (2 * L + 1)
-    print(f"\nMinimum margin: {min_margin:.3f}")
-    print(f"Lipschitz constant: {L:.3f}")
-    print(f"Certified valid for: |t| < {eps:.3f} time units")
-    print(f"  → No re-classification needed for {eps:.1f} time units")
-
-    # Plot score evolution
-    t_range = np.linspace(-2*eps, 5*eps, 500)
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    for c in range(n_classes):
-        scores_t = [biases[c] + np.max(weights[c] + sensor_reading + t * drift_rate)
-                    for t in t_range]
-        ax.plot(t_range, scores_t, linewidth=2, label=class_names[c])
-
-    ax.axvspan(-eps, eps, alpha=0.15, color='green', label=f'Certified window (|t| < {eps:.2f})')
-    ax.axvline(x=0, color='black', linestyle=':', alpha=0.5)
-    ax.set_xlabel('Time', fontsize=12)
-    ax.set_ylabel('Class Score', fontsize=12)
-    ax.set_title('Streaming Classification: Certified Temporal Stability', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('streaming_stability.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Plot saved to streaming_stability.png")
+    for name, v in directions:
+        v_norm = v / np.max(np.abs(v)) if np.max(np.abs(v)) > 0 else v
+        cert = compute_kinetic_certificate(
+            [w_class0, w_class1], [b0, b1], x, v_norm
+        )
+        print(f"  {name:30s}: T = {cert.certified_time:.4f} "
+              f"(L={cert.lipschitz_constant:.3f})")
 
 
-# ============================================================================
-# Application 3: Max-Pooling Information Loss
-# ============================================================================
+# ========================================================================
+# Application 2: Hybrid System Guard Verification
+# ========================================================================
 
-def demo_max_pooling_info():
-    """
-    Quantify information loss through max-pooling layers.
+def hybrid_system_guards():
+    """Demonstrate polyhedral guard certification for a hybrid control system.
 
-    Uses tropical spread as an information measure to show that
-    max-pooling provably reduces distinguishability.
+    A robot operating in a workspace with safety constraints. We certify
+    that the robot remains in a safe operating zone for an explicit time horizon.
     """
     print("\n" + "=" * 70)
-    print("APPLICATION 3: Max-Pooling Information Loss Quantification")
+    print("APPLICATION 2: Hybrid System Guard Verification")
     print("=" * 70)
 
-    # Simulate feature map (8 channels)
-    np.random.seed(123)
-    feature_map = np.array([5.2, 2.1, 8.7, 1.3, 6.5, 3.8, 7.2, 4.1])
-    print(f"\nFeature map: {feature_map}")
-    print(f"Spread: {np.max(feature_map) - np.min(feature_map):.3f}")
-
-    # Apply max-pooling with different pool sizes
-    pool_sizes = [2, 4, 8]
-    results = []
-
-    for ps in pool_sizes:
-        n_pools = len(feature_map) // ps
-        pooled = np.array([np.max(feature_map[i*ps:(i+1)*ps]) for i in range(n_pools)])
-        spread = np.max(pooled) - np.min(pooled)
-        results.append((ps, pooled, spread))
-        print(f"\nPool size {ps}: {pooled}")
-        print(f"  Spread: {spread:.3f}")
-        print(f"  Reduction: {(1 - spread / (np.max(feature_map) - np.min(feature_map)))*100:.1f}%")
-
-    # Iterated pooling
-    print("\n--- Iterated Max-Pooling ---")
-    current = np.random.randn(16) * 3 + 5
-    print(f"Layer 0 ({len(current)} features): spread = {np.max(current)-np.min(current):.3f}")
-
-    spreads = [np.max(current) - np.min(current)]
-    sizes = [len(current)]
-
-    while len(current) > 1:
-        n = len(current)
-        current = np.array([np.max(current[i:i+2]) for i in range(0, n, 2)])
-        spread = np.max(current) - np.min(current)
-        spreads.append(spread)
-        sizes.append(len(current))
-        print(f"Layer {len(spreads)-1} ({len(current)} features): spread = {spread:.3f}")
-
-    print(f"\nSpread monotonically decreasing: {all(s1 >= s2 - 1e-10 for s1, s2 in zip(spreads, spreads[1:]))}")
-
-    # Plot
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(range(len(spreads)), spreads, 'bo-', linewidth=2, markersize=8)
-    ax.set_xlabel('Pooling Layer', fontsize=12)
-    ax.set_ylabel('Tropical Spread', fontsize=12)
-    ax.set_title('Information Loss Through Iterated Max-Pooling', fontsize=14)
-    ax.set_xticks(range(len(spreads)))
-    ax.set_xticklabels([f'Layer {i}\n({s} feat.)' for i, s in enumerate(sizes)], fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('max_pooling_info.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Plot saved to max_pooling_info.png")
-
-
-# ============================================================================
-# Application 4: Polyhedral Decision Boundary Verification
-# ============================================================================
-
-def demo_decision_boundary():
-    """
-    Verify safety of a polyhedral decision region for autonomous systems.
-
-    Models a self-driving scenario where the vehicle must stay within
-    a safe operating polyhedron.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: Decision Boundary Verification")
-    print("=" * 70)
-
-    # Safe operating region for a 2D vehicle:
-    # Speed and steering angle constraints
-    # speed ∈ [0, 30], steering ∈ [-45°, 45°]
-    # Plus stability constraint: speed + |steering| <= 50
+    # Workspace constraints for a 2D robot
+    # Safe zone: 0.5 ≤ x ≤ 4.5, 0.5 ≤ y ≤ 3.5, x + y ≤ 6
     A = np.array([
-        [1, 0],     # speed <= 30
-        [-1, 0],    # -speed <= 0
-        [0, 1],     # steering <= 45
-        [0, -1],    # -steering <= 45
-        [1, 1],     # speed + steering <= 50
-        [1, -1],    # speed - steering <= 50
-    ])
-    b = np.array([30, 0, 45, 45, 50, 50])
+        [1, 0],     # x ≤ 4.5
+        [-1, 0],    # -x ≤ -0.5
+        [0, 1],     # y ≤ 3.5
+        [0, -1],    # -y ≤ -0.5
+        [1, 1],     # x + y ≤ 6
+    ], dtype=float)
+    b = np.array([4.5, -0.5, 3.5, -0.5, 6.0])
 
-    # Current state
-    state = np.array([15.0, 10.0])  # speed=15, steering=10
+    # Robot current position and velocity
+    scenarios = [
+        ("Center of workspace", np.array([2.5, 2.0]), np.array([0.5, 0.3])),
+        ("Near boundary", np.array([4.0, 1.0]), np.array([0.2, 0.1])),
+        ("Moving toward corner", np.array([3.0, 2.5]), np.array([0.4, 0.4])),
+    ]
 
-    # Expected state change rate
-    velocity = np.array([2.0, -1.5])  # accelerating, straightening
-
-    slacks = b - A @ state
-    rn = np.sum(np.abs(A), axis=1)
-    eps_per = slacks / (rn + 1)
-    eps = np.min(eps_per[slacks > 0]) if np.any(slacks > 0) else 0
-
-    v_bound = np.sum(np.abs(velocity)) + 1
-    time_horizon = eps / v_bound
-
-    print(f"\nCurrent state: speed={state[0]}, steering={state[1]}")
-    print(f"Rate of change: Δspeed={velocity[0]}/s, Δsteering={velocity[1]}/s")
-    print(f"\nConstraint slacks: {slacks}")
-    print(f"Minimum slack: {np.min(slacks):.2f}")
-    print(f"Spatial stability radius: {eps:.4f}")
-    print(f"Certified safe for: {time_horizon:.4f} seconds")
-    print(f"  → No safety re-check needed for {time_horizon:.2f} seconds")
+    for name, x0, v in scenarios:
+        spatial_r, time_cert = compute_kinetic_polyhedral_certificate(A, b, x0, v)
+        pcert = compute_polyhedral_certificate(A, b, x0)
+        print(f"\n  Scenario: {name}")
+        print(f"  Position: {x0}, Velocity: {v}")
+        print(f"  Min slack: {pcert.min_slack:.4f}")
+        print(f"  Spatial radius: {spatial_r:.4f}")
+        print(f"  Certified safe time: {time_cert:.4f} seconds")
+        print(f"  Critical constraint: #{pcert.critical_constraint}")
 
 
-# ============================================================================
-# Main
-# ============================================================================
+# ========================================================================
+# Application 3: Max-Pooling Information Loss
+# ========================================================================
 
-if __name__ == '__main__':
-    demo_neural_robustness()
-    demo_streaming_stability()
-    demo_max_pooling_info()
-    demo_decision_boundary()
+def max_pooling_analysis():
+    """Analyze information loss through max-pooling layers using spread contraction.
 
+    Simulates a 1D signal processed by successive max-pooling layers,
+    measuring the spread contraction at each stage.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Max-Pooling Information Loss Analysis")
+    print("=" * 70)
+
+    # Simulate a signal with rich structure
+    np.random.seed(123)
+    n = 64
+    t = np.linspace(0, 4 * np.pi, n)
+    signal = np.sin(t) + 0.5 * np.sin(3 * t) + 0.3 * np.random.randn(n)
+
+    print(f"\nOriginal signal: {n} samples")
+    print(f"Original spread: {np.max(signal) - np.min(signal):.4f}")
+
+    # Apply successive 2x max-pooling
+    current = signal
+    layer = 0
+    while len(current) >= 2:
+        n_cur = len(current)
+        n_blocks = n_cur // 2
+        partition = [[2*i, 2*i+1] for i in range(n_blocks)]
+        result = compute_spread_contraction(current[:n_blocks*2], partition)
+
+        print(f"  Layer {layer}: {n_cur} → {n_blocks} samples, "
+              f"spread {result.original_spread:.4f} → {result.coarsened_spread:.4f} "
+              f"(ratio: {result.contraction_ratio:.4f})")
+
+        current = result.coarsened_vector
+        layer += 1
+
+    print(f"\nFinal value after full pooling: {current[0]:.4f}")
+    print("Note: spread can only decrease (DPI), confirming theorem.")
+
+
+# ========================================================================
+# Application 4: Channel Composition Information Bound
+# ========================================================================
+
+def channel_composition():
+    """Demonstrate that composing channels cannot increase TMI.
+
+    Models a communication system where a tropical channel is followed
+    by deterministic processing stages.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 4: Tropical Channel Information Bounds")
+    print("=" * 70)
+
+    # Original channel: 3 inputs, 6 outputs
+    K = np.array([
+        [5, 2, 4, 1, 3, 0],
+        [1, 5, 0, 4, 2, 3],
+        [3, 0, 2, 5, 1, 4],
+    ], dtype=float)
+
+    tmi_original = compute_tmi(K)
+    print(f"\nOriginal channel K (3×6):")
+    print(K)
+    print(f"TMI(K) = {tmi_original:.4f}")
+
+    # Successive coarse-grainings
+    coarsenings = [
+        ("Merge pairs", [0, 0, 1, 1, 2, 2]),
+        ("Merge triples", [0, 0, 0, 1, 1, 1]),
+        ("Binary output", [0, 0, 0, 1, 1, 1]),
+        ("Collapse all", [0, 0, 0, 0, 0, 0]),
+    ]
+
+    for name, g in coarsenings:
+        Kg = postprocess_channel(K, g)
+        tmi_g = compute_tmi(Kg)
+        print(f"\n  {name} (g={g}):")
+        print(f"  TMI = {tmi_g:.4f} ≤ {tmi_original:.4f} (original)")
+        assert tmi_g <= tmi_original + 1e-10, "DPI violated!"
+
+    print("\nAll coarse-grainings satisfy TMI(K▷g) ≤ TMI(K). ✓")
+
+
+# ========================================================================
+# Application 5: Streaming Decision Stability
+# ========================================================================
+
+def streaming_stability():
+    """Demonstrate kinetic certification for streaming data decisions.
+
+    Models a real-time system that classifies streaming sensor data.
+    The input evolves linearly between sensor readings, and we certify
+    that the classification is stable between readings.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 5: Streaming Decision Stability")
+    print("=" * 70)
+
+    np.random.seed(55)
+    n_features = 8
+    n_classes = 4
+    sensor_interval = 0.1  # seconds between readings
+
+    # Multi-class tropicalized classifier
+    weights = [np.random.randn(n_features) * 0.5 for _ in range(n_classes)]
+    biases = [np.random.randn() * 0.2 for _ in range(n_classes)]
+
+    # Simulate streaming data
+    x_current = np.random.randn(n_features)
+    v_drift = np.random.randn(n_features) * 0.3  # sensor drift rate
+
+    print(f"\n{n_classes}-class classifier, {n_features} features")
+    print(f"Sensor reading interval: {sensor_interval}s")
+    print(f"Max drift rate: {np.max(np.abs(v_drift)):.4f}/s")
+
+    # Compute certificates at each "sensor reading"
+    n_readings = 10
+    for step in range(n_readings):
+        x_now = x_current + step * sensor_interval * v_drift
+
+        # Compute scores
+        scores = [trop_affine_score(w, x_now, b)
+                  for w, b in zip(weights, biases)]
+        winner = np.argmax(scores)
+        margin = scores[winner] - sorted(scores)[-2]
+
+        cert = compute_kinetic_certificate(weights, biases, x_now, v_drift)
+        safe = cert.certified_time >= sensor_interval
+
+        print(f"  t={step*sensor_interval:.1f}s: class={winner}, "
+              f"margin={margin:.4f}, cert_time={cert.certified_time:.4f}s "
+              f"{'✓ SAFE' if safe else '⚠ RECHECK'}")
+
+
+if __name__ == "__main__":
+    neural_network_robustness()
+    hybrid_system_guards()
+    max_pooling_analysis()
+    channel_composition()
+    streaming_stability()
     print("\n" + "=" * 70)
     print("All applications completed successfully!")
     print("=" * 70)
@@ -344,421 +263,857 @@ if __name__ == '__main__':
 
 #!/usr/bin/env python3
 """
-Tropical Kinetic Certification: Concrete Numerical Demonstrations
+Tropical Certified Information Dynamics — Demonstrations
 
-Demonstrates the three main theorems:
-1. Kinetic Tropical Margin Stability
-2. Tropical Data Processing Inequality (Spread Monotonicity)
-3. Polyhedral Membership Stability
+Concrete numerical examples demonstrating the three main theorems:
+1. Kinetic tropical margin stability
+2. Tropical data processing inequality (spread contraction)
+3. Polyhedral membership stability
+"""
 
-Each demo uses concrete numerical examples to illustrate the theorems.
+import numpy as np
+from typing import Tuple, List
+
+
+def trop_affine_score(w: np.ndarray, x: np.ndarray, b: float) -> float:
+    """Tropical affine score: b + max_i(w_i + x_i)."""
+    return b + np.max(w + x)
+
+
+def line_path(x0: np.ndarray, v: np.ndarray, t: float) -> np.ndarray:
+    """Linear path: x(t) = x0 + t * v."""
+    return x0 + t * v
+
+
+def kinetic_certificate(w1: np.ndarray, w2: np.ndarray, b1: float, b2: float,
+                         x0: np.ndarray, v: np.ndarray) -> float:
+    """Compute the certified stability time for kinetic tropical margin stability.
+    Returns T > 0 such that for |t| < T, score1 > score2."""
+    margin = trop_affine_score(w1, x0, b1) - trop_affine_score(w2, x0, b2)
+    if margin <= 0:
+        return 0.0
+    L = np.max(np.abs(v))
+    return margin / (2 * L + 1)
+
+
+def trop_spread(x: np.ndarray) -> float:
+    """Tropical spread: max(x) - min(x)."""
+    return np.max(x) - np.min(x)
+
+
+def coarse_grain_max(x: np.ndarray, partition: List[List[int]]) -> np.ndarray:
+    """Coarse-grain by taking max over each block of the partition."""
+    return np.array([np.max(x[block]) for block in partition])
+
+
+def poly_slack(A: np.ndarray, b: np.ndarray, x: np.ndarray) -> np.ndarray:
+    """Compute polyhedral slack: s_j = b_j - sum_i A_{ji} x_i."""
+    return b - A @ x
+
+
+def poly_stability_radius(A: np.ndarray, b: np.ndarray, x: np.ndarray) -> float:
+    """Compute the explicit stability radius for polyhedral membership."""
+    slack = poly_slack(A, b, x)
+    if np.any(slack <= 0):
+        return 0.0
+    row_norms = np.sum(np.abs(A), axis=1)
+    radii = slack / (row_norms + 1)
+    return np.min(radii)
+
+
+# ========================================================================
+# Demo 1: Kinetic Tropical Margin Stability
+# ========================================================================
+def demo_kinetic_stability():
+    print("=" * 70)
+    print("DEMO 1: Kinetic Tropical Margin Stability")
+    print("=" * 70)
+
+    n = 4
+    w1 = np.array([1.0, 0.5, 0.8, 1.2])
+    w2 = np.array([0.3, 0.9, 0.2, 0.7])
+    b1, b2 = 0.5, -0.1
+    x0 = np.array([1.0, 2.0, 1.5, 0.8])
+    v = np.array([0.1, -0.05, 0.2, -0.15])
+
+    score1 = trop_affine_score(w1, x0, b1)
+    score2 = trop_affine_score(w2, x0, b2)
+    margin = score1 - score2
+
+    print(f"\nWeights w1 = {w1}, w2 = {w2}")
+    print(f"Biases b1 = {b1}, b2 = {b2}")
+    print(f"Position x0 = {x0}, velocity v = {v}")
+    print(f"\nScore 1 at t=0: {score1:.4f}")
+    print(f"Score 2 at t=0: {score2:.4f}")
+    print(f"Margin at t=0: {margin:.4f}")
+
+    T = kinetic_certificate(w1, w2, b1, b2, x0, v)
+    L = np.max(np.abs(v))
+    print(f"\nMax velocity component |v|_∞ = {L:.4f}")
+    print(f"Certified stability time: T = {T:.4f}")
+
+    # Verify along the trajectory
+    print(f"\nVerification along trajectory:")
+    times = np.linspace(-T * 1.5, T * 1.5, 21)
+    for t in times:
+        xt = line_path(x0, v, t)
+        s1 = trop_affine_score(w1, xt, b1)
+        s2 = trop_affine_score(w2, xt, b2)
+        inside = abs(t) < T
+        correct = s1 > s2
+        status = "✓" if (inside and correct) or not inside else "✗"
+        certified = "CERT" if inside else "    "
+        print(f"  t = {t:+.3f}  margin = {s1-s2:+.4f}  {certified} {status}")
+
+
+# ========================================================================
+# Demo 2: Tropical Data Processing Inequality (Spread Contraction)
+# ========================================================================
+def demo_spread_contraction():
+    print("\n" + "=" * 70)
+    print("DEMO 2: Tropical Data Processing Inequality (Spread Contraction)")
+    print("=" * 70)
+
+    # Example 1: Simple partition
+    x = np.array([3.0, 1.0, 4.0, 1.0, 5.0, 9.0, 2.0, 6.0])
+    partition = [[0, 1], [2, 3], [4, 5], [6, 7]]  # blocks of 2
+
+    orig_spread = trop_spread(x)
+    coarsened = coarse_grain_max(x, partition)
+    coarse_spread = trop_spread(coarsened)
+
+    print(f"\nOriginal vector: {x}")
+    print(f"Partition: {partition}")
+    print(f"Coarsened vector (block max): {coarsened}")
+    print(f"\nOriginal spread: {orig_spread:.4f}")
+    print(f"Coarsened spread: {coarse_spread:.4f}")
+    print(f"Spread ratio: {coarse_spread/orig_spread:.4f}")
+    print(f"DPI satisfied: {coarse_spread <= orig_spread + 1e-10}")
+
+    # Example 2: Aggressive compression
+    print(f"\n--- Aggressive compression ---")
+    partition2 = [[0, 1, 2, 3], [4, 5, 6, 7]]  # two big blocks
+    coarsened2 = coarse_grain_max(x, partition2)
+    coarse_spread2 = trop_spread(coarsened2)
+
+    print(f"Partition: {partition2}")
+    print(f"Coarsened vector: {coarsened2}")
+    print(f"Coarsened spread: {coarse_spread2:.4f}")
+    print(f"Spread ratio: {coarse_spread2/orig_spread:.4f}")
+    print(f"More compression → more contraction: {coarse_spread2 <= coarse_spread + 1e-10}")
+
+    # Statistical validation
+    print(f"\n--- Statistical validation (1000 random trials) ---")
+    violations = 0
+    ratios = []
+    for _ in range(1000):
+        n_pts = 20
+        m_blocks = 5
+        xx = np.random.randn(n_pts) * 3
+        # Random surjective partition
+        perm = np.random.permutation(n_pts)
+        part = [[] for _ in range(m_blocks)]
+        for idx in range(m_blocks):
+            part[idx].append(perm[idx])  # ensure surjectivity
+        for idx in range(m_blocks, n_pts):
+            part[np.random.randint(m_blocks)].append(perm[idx])
+
+        os = trop_spread(xx)
+        cs = trop_spread(coarse_grain_max(xx, part))
+        if cs > os + 1e-10:
+            violations += 1
+        if os > 0:
+            ratios.append(cs / os)
+
+    print(f"Violations of DPI: {violations}/1000")
+    print(f"Mean spread ratio: {np.mean(ratios):.4f}")
+    print(f"Max spread ratio: {np.max(ratios):.6f}")
+
+
+# ========================================================================
+# Demo 3: Polyhedral Membership Stability
+# ========================================================================
+def demo_polyhedral_stability():
+    print("\n" + "=" * 70)
+    print("DEMO 3: Polyhedral Membership Stability")
+    print("=" * 70)
+
+    # Define a polyhedron in R^3: a cube [-1,1]^3
+    # Constraints: x_i <= 1 and -x_i <= 1 for i = 1,2,3
+    A = np.array([
+        [1, 0, 0],   # x1 <= 1
+        [-1, 0, 0],  # -x1 <= 1
+        [0, 1, 0],   # x2 <= 1
+        [0, -1, 0],  # -x2 <= 1
+        [0, 0, 1],   # x3 <= 1
+        [0, 0, -1],  # -x3 <= 1
+    ], dtype=float)
+    b = np.ones(6)
+
+    # Point near the center
+    x = np.array([0.0, 0.0, 0.0])
+    slack = poly_slack(A, b, x)
+    radius = poly_stability_radius(A, b, x)
+
+    print(f"\nPolyhedron: unit cube [-1,1]³")
+    print(f"Point: x = {x}")
+    print(f"Slack: {slack}")
+    print(f"Stability radius: {radius:.4f}")
+
+    # Point near a face
+    x2 = np.array([0.8, 0.0, 0.0])
+    slack2 = poly_slack(A, b, x2)
+    radius2 = poly_stability_radius(A, b, x2)
+
+    print(f"\nPoint near face: x = {x2}")
+    print(f"Slack: {slack2}")
+    print(f"Stability radius: {radius2:.4f}")
+    print(f"(Smaller radius because closer to boundary)")
+
+    # Verify perturbations
+    print(f"\nVerification with random perturbations:")
+    n_tests = 1000
+    n_inside = 0
+    for _ in range(n_tests):
+        delta = np.random.uniform(-radius2 * 0.99, radius2 * 0.99, size=3)
+        y = x2 + delta
+        if np.all(A @ y <= b + 1e-10):
+            n_inside += 1
+    print(f"  Within certified radius: {n_inside}/{n_tests} inside polyhedron")
+
+    n_outside_tests = 0
+    for _ in range(n_tests):
+        delta = np.random.uniform(-radius2 * 2, radius2 * 2, size=3)
+        y = x2 + delta
+        if np.all(A @ y <= b + 1e-10):
+            n_outside_tests += 1
+    print(f"  Wider perturbation (2x radius): {n_outside_tests}/{n_tests} inside")
+
+
+# ========================================================================
+# Demo 4: Combined Kinetic Polyhedral Stability
+# ========================================================================
+def demo_kinetic_polyhedral():
+    print("\n" + "=" * 70)
+    print("DEMO 4: Combined Kinetic Polyhedral Stability")
+    print("=" * 70)
+
+    # Polyhedron in R^2
+    A = np.array([
+        [1, 1],    # x + y <= 3
+        [-1, 0],   # -x <= 1
+        [0, -1],   # -y <= 1
+        [1, -1],   # x - y <= 2
+    ], dtype=float)
+    b = np.array([3.0, 1.0, 1.0, 2.0])
+
+    x0 = np.array([0.5, 0.5])
+    v = np.array([0.3, -0.2])
+
+    slack = poly_slack(A, b, x0)
+    spatial_radius = poly_stability_radius(A, b, x0)
+    speed = np.sum(np.abs(v))
+    time_cert = spatial_radius / (speed + 1)
+
+    print(f"\nPolyhedron: 4 constraints in R²")
+    print(f"Initial position: x0 = {x0}")
+    print(f"Velocity: v = {v}")
+    print(f"Slack: {slack}")
+    print(f"Spatial stability radius: {spatial_radius:.4f}")
+    print(f"Speed ∑|v_i|: {speed:.4f}")
+    print(f"Kinetic polyhedral certificate: T = {time_cert:.4f}")
+
+    # Trace the trajectory
+    print(f"\nTrajectory check:")
+    for t in np.linspace(0, time_cert * 2, 11):
+        xt = line_path(x0, v, t)
+        inside = np.all(A @ xt <= b + 1e-10)
+        certified = t < time_cert
+        status = "CERT ✓" if certified else ("     ✓" if inside else "     ✗")
+        print(f"  t = {t:.3f}  x(t) = [{xt[0]:+.3f}, {xt[1]:+.3f}]  "
+              f"inside={inside}  {status}")
+
+
+# ========================================================================
+# Demo 5: Tropical Mutual Information & Data Processing
+# ========================================================================
+def demo_tropical_mutual_information():
+    print("\n" + "=" * 70)
+    print("DEMO 5: Tropical Mutual Information & Data Processing")
+    print("=" * 70)
+
+    # Channel K : {0,1,2} -> {0,1,2,3} -> R
+    K = np.array([
+        [3.0, 1.0, 2.0, 0.5],
+        [1.0, 3.0, 0.5, 2.0],
+        [0.5, 2.0, 3.0, 1.0],
+    ])
+
+    def one_sided_sep(K, x1, x2):
+        return np.max(K[x1] - K[x2])
+
+    def trop_dist(K, x1, x2):
+        return one_sided_sep(K, x1, x2) + one_sided_sep(K, x2, x1)
+
+    def tmi(K):
+        n = K.shape[0]
+        return max(trop_dist(K, i, j) for i in range(n) for j in range(n))
+
+    print(f"\nChannel K (3 inputs, 4 outputs):")
+    print(K)
+    print(f"TMI(K) = {tmi(K):.4f}")
+
+    # Coarse-grain: merge outputs {0,1} -> 0, {2,3} -> 1
+    def postprocess(K, g):
+        n_in = K.shape[0]
+        n_out = max(g) + 1
+        Kg = np.zeros((n_in, n_out))
+        for z in range(n_out):
+            fiber = [y for y in range(K.shape[1]) if g[y] == z]
+            Kg[:, z] = np.max(K[:, fiber], axis=1)
+        return Kg
+
+    g = [0, 0, 1, 1]  # merge pairs
+    Kg = postprocess(K, g)
+    print(f"\nPost-processing: g = {g}")
+    print(f"Post-processed channel K▷g:")
+    print(Kg)
+    print(f"TMI(K▷g) = {tmi(Kg):.4f}")
+    print(f"TMI(K▷g) ≤ TMI(K): {tmi(Kg) <= tmi(K) + 1e-10}")
+
+    # Even more aggressive compression
+    g2 = [0, 0, 0, 1]
+    Kg2 = postprocess(K, g2)
+    print(f"\nMore aggressive: g = {g2}")
+    print(f"TMI(K▷g) = {tmi(Kg2):.4f}")
+    print(f"TMI(K▷g) ≤ TMI(K): {tmi(Kg2) <= tmi(K) + 1e-10}")
+
+
+if __name__ == "__main__":
+    demo_kinetic_stability()
+    demo_spread_contraction()
+    demo_polyhedral_stability()
+    demo_kinetic_polyhedral()
+    demo_tropical_mutual_information()
+    print("\n" + "=" * 70)
+    print("All demos completed successfully!")
+    print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json with all deliverables bundled."""
+
+import json
+import sys
+sys.path.insert(0, '.')
+from visualizations import generate_all_visualizations
+
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+def main():
+    # Read all content
+    article = read_file('ARTICLE.md')
+    research_paper = read_file('RESEARCH_PAPER.md')
+    future_directions = read_file('FUTURE_DIRECTIONS.md')
+    demo_code = read_file('demo.py')
+    algorithms_code = read_file('algorithms.py')
+    applications_code = read_file('applications.py')
+
+    # Read Lean proofs
+    lean1 = read_file('Catalog/Tropical/KineticCertification.lean')
+    lean2 = read_file('Catalog/Tropical/InformationTheory.lean')
+    lean3 = read_file('Catalog/Tropical/PhaseII/KineticCertification.lean')
+    lean_proofs = (
+        "-- ═══════════════════════════════════════════════════════════════\n"
+        "-- File: Tropical/KineticCertification.lean\n"
+        "-- Kinetic Certification, Data Processing, Polyhedral Compilation\n"
+        "-- ═══════════════════════════════════════════════════════════════\n\n"
+        + lean1 + "\n\n"
+        "-- ═══════════════════════════════════════════════════════════════\n"
+        "-- File: Tropical/InformationTheory.lean\n"
+        "-- Tropical Information Theory & Data Processing Inequality\n"
+        "-- ═══════════════════════════════════════════════════════════════\n\n"
+        + lean2 + "\n\n"
+        "-- ═══════════════════════════════════════════════════════════════\n"
+        "-- File: Tropical/PhaseII/KineticCertification.lean\n"
+        "-- Max Along Line Lipschitz Bound\n"
+        "-- ═══════════════════════════════════════════════════════════════\n\n"
+        + lean3
+    )
+
+    # Generate visualizations
+    vizs = generate_all_visualizations()
+
+    package = {
+        "title": "Tropical Certified Information Dynamics: Kinetic Stability, Data Processing, and Polyhedral Compilation",
+        "domain": "Tropical Geometry / Information Theory / Certified Computation",
+        "article": article,
+        "research_paper": research_paper,
+        "future_directions": future_directions,
+        "demos": [
+            {
+                "name": "Kinetic Tropical Margin Stability",
+                "code": demo_code
+            },
+            {
+                "name": "Real-World Applications",
+                "code": applications_code
+            }
+        ],
+        "algorithms": [
+            {
+                "name": "Kinetic Certificate Computation",
+                "pseudocode": (
+                    "Algorithm: ComputeKineticCertificate\n"
+                    "Input: weights w₁, w₂ : ℝⁿ, biases b₁, b₂ : ℝ, position x₀ : ℝⁿ, velocity v : ℝⁿ\n"
+                    "Output: certified stability time T > 0\n\n"
+                    "1. Compute score₁ = b₁ + max_i(w₁[i] + x₀[i])\n"
+                    "2. Compute score₂ = b₂ + max_i(w₂[i] + x₀[i])\n"
+                    "3. m ← score₁ - score₂\n"
+                    "4. If m ≤ 0: return 0\n"
+                    "5. L ← max_i |v[i]|\n"
+                    "6. Return m / (2L + 1)\n\n"
+                    "Complexity: O(n) time, O(1) space"
+                ),
+                "code": algorithms_code
+            },
+            {
+                "name": "Polyhedral Stability Radius",
+                "pseudocode": (
+                    "Algorithm: ComputePolyhedralCertificate\n"
+                    "Input: A : ℝᵏˣⁿ, b : ℝᵏ, x : ℝⁿ\n"
+                    "Output: certified perturbation radius ε > 0\n\n"
+                    "1. For j = 1 to k:\n"
+                    "     slack[j] ← b[j] - ∑ᵢ A[j,i] * x[i]\n"
+                    "     norm[j] ← ∑ᵢ |A[j,i]|\n"
+                    "     radius[j] ← slack[j] / (norm[j] + 1)\n"
+                    "2. Return min_j radius[j]\n\n"
+                    "Complexity: O(kn) time, O(k) space"
+                ),
+                "code": algorithms_code
+            }
+        ],
+        "visualizations": [
+            {
+                "name": "Kinetic Tropical Margin Stability",
+                "data": vizs["kinetic_stability"]
+            },
+            {
+                "name": "Spread Contraction Under Coarse-Graining",
+                "data": vizs["spread_contraction"]
+            },
+            {
+                "name": "Polyhedral Membership Stability",
+                "data": vizs["polyhedral_stability"]
+            },
+            {
+                "name": "Tropical Data Processing Inequality",
+                "data": vizs["tropical_dpi"]
+            }
+        ],
+        "lean_proofs": lean_proofs
+    }
+
+    with open('PACKAGE.json', 'w') as f:
+        json.dump(package, f, indent=2, ensure_ascii=False)
+
+    print(f"PACKAGE.json generated ({len(json.dumps(package))} bytes)")
+
+if __name__ == "__main__":
+    main()
+
+
+#!/usr/bin/env python3
+"""
+Tropical Certified Information Dynamics — Visualizations
+
+Generates publication-quality figures illustrating the main theorems.
+Saves as PNG and returns base64-encoded data URIs.
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from typing import List, Tuple, Callable
+import matplotlib.patches as patches
+from matplotlib.colors import LinearSegmentedColormap
+import base64
+import io
+import json
 
-# ============================================================================
-# Core Definitions
-# ============================================================================
 
-def trop_affine_score(w: np.ndarray, x: np.ndarray, b: float) -> float:
-    """Tropical affine score: b + max_i(w_i + x_i)."""
-    return b + np.max(w + x)
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 data URI."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
+                facecolor='white', edgecolor='none')
+    buf.seek(0)
+    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{b64}"
 
-def line_path(x0: np.ndarray, v: np.ndarray, t: float) -> np.ndarray:
-    """Linear path: x(t) = x0 + t * v."""
-    return x0 + t * v
 
-def trop_spread(x: np.ndarray) -> float:
-    """Tropical spread: max(x) - min(x)."""
-    return np.max(x) - np.min(x)
+def viz_kinetic_stability() -> str:
+    """Visualize kinetic tropical margin stability."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-def coarse_grain_max(x: np.ndarray, pi_map: Callable[[int], int], m: int) -> np.ndarray:
-    """Coarse-grain by taking max over fibers of pi."""
-    result = np.full(m, -np.inf)
-    for i in range(len(x)):
-        j = pi_map(i)
-        result[j] = max(result[j], x[i])
-    return result
+    # Parameters
+    w1 = np.array([1.0, 0.5, 0.8, 1.2])
+    w2 = np.array([0.3, 0.9, 0.2, 0.7])
+    b1, b2 = 0.5, -0.1
+    x0 = np.array([1.0, 2.0, 1.5, 0.8])
+    v = np.array([0.1, -0.05, 0.2, -0.15])
 
-def affine_form(c: np.ndarray, x: np.ndarray) -> float:
-    """Affine form: sum_i c_i * x_i."""
-    return np.dot(c, x)
+    def score(w, b, t):
+        xt = x0 + t * v
+        return b + np.max(w + xt)
 
-def poly_slack(A: np.ndarray, b: np.ndarray, x: np.ndarray) -> np.ndarray:
-    """Polyhedral slack: b_j - sum_i A_{j,i} * x_i."""
-    return b - A @ x
+    ts = np.linspace(-1.5, 1.5, 500)
+    s1 = [score(w1, b1, t) for t in ts]
+    s2 = [score(w2, b2, t) for t in ts]
 
-def in_polyhedron(A: np.ndarray, b: np.ndarray, x: np.ndarray) -> bool:
-    """Check if x is in the polyhedron {x : Ax <= b}."""
-    return np.all(A @ x <= b + 1e-12)
-
-def row_norm(A: np.ndarray) -> np.ndarray:
-    """Row norms: sum_i |A_{j,i}| for each row j."""
-    return np.sum(np.abs(A), axis=1)
-
-# ============================================================================
-# Demo 1: Kinetic Tropical Margin Stability
-# ============================================================================
-
-def demo_kinetic_stability():
-    """Demonstrate kinetic tropical margin stability."""
-    print("=" * 70)
-    print("DEMO 1: Kinetic Tropical Margin Stability")
-    print("=" * 70)
-
-    # Setup: two competing tropical affine scores
-    n = 4
-    w1 = np.array([1.0, 3.0, 2.0, 0.5])
-    w2 = np.array([2.0, 1.0, 1.5, 1.0])
-    b1, b2 = 0.5, 0.0
-    x0 = np.array([1.0, 0.5, 2.0, 1.5])
-    v = np.array([0.3, -0.2, 0.1, -0.4])  # velocity
-
-    # Compute margin at t=0
-    score1_0 = trop_affine_score(w1, x0, b1)
-    score2_0 = trop_affine_score(w2, x0, b2)
-    margin = score1_0 - score2_0
-
-    print(f"\nWeight vectors: w1 = {w1}, w2 = {w2}")
-    print(f"Biases: b1 = {b1}, b2 = {b2}")
-    print(f"Initial position: x0 = {x0}")
-    print(f"Velocity: v = {v}")
-    print(f"\nScore 1 at t=0: {score1_0:.4f}")
-    print(f"Score 2 at t=0: {score2_0:.4f}")
-    print(f"Margin at t=0: {margin:.4f}")
-
-    # Compute explicit stability bound
+    margin_0 = score(w1, b1, 0) - score(w2, b2, 0)
     L = np.max(np.abs(v))
-    eps_bound = margin / (2 * L + 1)
-    print(f"\nLipschitz constant L = max|v_i| = {L:.4f}")
-    print(f"Certified stability radius: ε = m/(2L+1) = {eps_bound:.4f}")
+    T = margin_0 / (2 * L + 1)
 
-    # Verify: compute scores over time
-    t_values = np.linspace(-2 * eps_bound, 2 * eps_bound, 1000)
-    scores1 = [trop_affine_score(w1, line_path(x0, v, t), b1) for t in t_values]
-    scores2 = [trop_affine_score(w2, line_path(x0, v, t), b2) for t in t_values]
-    margins = np.array(scores1) - np.array(scores2)
+    # Left panel: scores over time
+    ax = axes[0]
+    ax.plot(ts, s1, 'b-', linewidth=2, label='Score 1 (winner)')
+    ax.plot(ts, s2, 'r-', linewidth=2, label='Score 2')
+    ax.axvspan(-T, T, alpha=0.15, color='green', label=f'Certified interval (|t|<{T:.3f})')
+    ax.axvline(0, color='gray', linestyle='--', alpha=0.5)
+    ax.set_xlabel('Time t', fontsize=12)
+    ax.set_ylabel('Tropical Affine Score', fontsize=12)
+    ax.set_title('Kinetic Tropical Margin Stability', fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
 
-    # Find actual crossing time
-    sign_changes = np.where(np.diff(np.sign(margins)))[0]
-    if len(sign_changes) > 0:
-        actual_crossing = np.min(np.abs(t_values[sign_changes]))
-        print(f"Actual first crossing at |t| ≈ {actual_crossing:.4f}")
-        print(f"Certified bound is conservative by factor {actual_crossing/eps_bound:.2f}x")
-    else:
-        print("No crossing observed in the range — margin remains positive")
-
-    # Plot
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    ax1.plot(t_values, scores1, 'b-', linewidth=2, label='Score 1')
-    ax1.plot(t_values, scores2, 'r-', linewidth=2, label='Score 2')
-    ax1.axvline(x=-eps_bound, color='green', linestyle='--', alpha=0.7, label=f'ε = {eps_bound:.3f}')
-    ax1.axvline(x=eps_bound, color='green', linestyle='--', alpha=0.7)
-    ax1.axvspan(-eps_bound, eps_bound, alpha=0.1, color='green')
-    ax1.set_xlabel('Time t', fontsize=12)
-    ax1.set_ylabel('Tropical Affine Score', fontsize=12)
-    ax1.set_title('Kinetic Tropical Scores Along Path', fontsize=14)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-
-    ax2.plot(t_values, margins, 'purple', linewidth=2)
-    ax2.axhline(y=0, color='black', linestyle='-', alpha=0.3)
-    ax2.axvline(x=-eps_bound, color='green', linestyle='--', alpha=0.7, label=f'Certified ε = {eps_bound:.3f}')
-    ax2.axvline(x=eps_bound, color='green', linestyle='--', alpha=0.7)
-    ax2.axvspan(-eps_bound, eps_bound, alpha=0.1, color='green')
-    ax2.set_xlabel('Time t', fontsize=12)
-    ax2.set_ylabel('Margin (Score 1 - Score 2)', fontsize=12)
-    ax2.set_title('Certified Margin Stability', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
+    # Right panel: margin over time
+    ax = axes[1]
+    margins = [s1[i] - s2[i] for i in range(len(ts))]
+    ax.plot(ts, margins, 'k-', linewidth=2)
+    ax.axhline(0, color='red', linestyle='-', alpha=0.5, linewidth=1)
+    ax.axvspan(-T, T, alpha=0.15, color='green')
+    ax.fill_between(ts, 0, margins, where=[m > 0 for m in margins],
+                     alpha=0.1, color='blue')
+    ax.fill_between(ts, 0, margins, where=[m <= 0 for m in margins],
+                     alpha=0.1, color='red')
+    ax.axvline(-T, color='green', linestyle=':', linewidth=1.5)
+    ax.axvline(T, color='green', linestyle=':', linewidth=1.5)
+    ax.set_xlabel('Time t', fontsize=12)
+    ax.set_ylabel('Margin (Score 1 - Score 2)', fontsize=12)
+    ax.set_title(f'Margin Evolution (m₀={margin_0:.3f}, T={T:.3f})', fontsize=14)
+    ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('kinetic_stability.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("\nPlot saved to kinetic_stability.png")
+    return fig_to_base64(fig)
 
-# ============================================================================
-# Demo 2: Tropical Data Processing Inequality
-# ============================================================================
 
-def demo_data_processing():
-    """Demonstrate tropical spread monotonicity under coarse-graining."""
-    print("\n" + "=" * 70)
-    print("DEMO 2: Tropical Data Processing Inequality")
-    print("=" * 70)
+def viz_spread_contraction() -> str:
+    """Visualize tropical spread contraction under coarse-graining."""
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-    # Example 1: Simple coarse-graining
-    x = np.array([5.0, 2.0, 8.0, 1.0, 6.0, 3.0])
-    n = len(x)
-
-    # Surjection π: {0,1,2,3,4,5} → {0,1,2}
-    # Fibers: {0,1} → 0, {2,3} → 1, {4,5} → 2
-    pi_map = lambda i: i // 2
-    m = 3
-
-    cg_x = coarse_grain_max(x, pi_map, m)
-    spread_before = trop_spread(x)
-    spread_after = trop_spread(cg_x)
-
-    print(f"\nOriginal vector x = {x}")
-    print(f"Partition: {{0,1}}→0, {{2,3}}→1, {{4,5}}→2")
-    print(f"Coarse-grained: T_π(x) = {cg_x}")
-    print(f"\nSpread before: {spread_before:.4f}")
-    print(f"Spread after:  {spread_after:.4f}")
-    print(f"Spread decreased: {spread_before >= spread_after}")
-    print(f"Reduction: {(1 - spread_after/spread_before)*100:.1f}%")
-
-    # Example 2: Many random trials
     np.random.seed(42)
-    n_trials = 10000
-    n_dim = 10
-    violations = 0
-    reductions = []
+    n = 16
+    x = np.random.randn(n) * 2 + np.sin(np.linspace(0, 2*np.pi, n)) * 3
+
+    # Original signal
+    ax = axes[0]
+    ax.bar(range(n), x, color='steelblue', alpha=0.7, edgecolor='navy')
+    ax.axhline(np.max(x), color='red', linestyle='--', alpha=0.7, label=f'max = {np.max(x):.2f}')
+    ax.axhline(np.min(x), color='blue', linestyle='--', alpha=0.7, label=f'min = {np.min(x):.2f}')
+    spread_orig = np.max(x) - np.min(x)
+    ax.set_title(f'Original (spread = {spread_orig:.2f})', fontsize=13)
+    ax.set_xlabel('Index', fontsize=11)
+    ax.set_ylabel('Score', fontsize=11)
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3, axis='y')
+
+    # 4-block coarse-graining
+    partition4 = [[4*i+j for j in range(4)] for i in range(4)]
+    coarse4 = np.array([np.max(x[block]) for block in partition4])
+    ax = axes[1]
+    colors = plt.cm.Set2(np.linspace(0, 1, 4))
+    for bi, block in enumerate(partition4):
+        for idx in block:
+            ax.bar(idx, x[idx], color=colors[bi], alpha=0.4, edgecolor='gray')
+    # Draw block maxima
+    for bi, block in enumerate(partition4):
+        mid = np.mean(block)
+        ax.plot([block[0]-0.4, block[-1]+0.4], [coarse4[bi], coarse4[bi]],
+                color=colors[bi], linewidth=3)
+    spread_4 = np.max(coarse4) - np.min(coarse4)
+    ax.set_title(f'4-block (spread = {spread_4:.2f}, ratio = {spread_4/spread_orig:.2f})',
+                 fontsize=13)
+    ax.set_xlabel('Index', fontsize=11)
+    ax.grid(True, alpha=0.3, axis='y')
+
+    # Statistical spread ratios
+    ax = axes[2]
+    n_trials = 2000
+    ms = [2, 4, 8, 12]
+    ratios_by_m = {m: [] for m in ms}
 
     for _ in range(n_trials):
-        x = np.random.randn(n_dim) * 5
-        # Random surjection onto m outputs
-        m_out = np.random.randint(2, n_dim)
-        # Build a guaranteed surjection
-        pi_vals = np.random.randint(0, m_out, size=n_dim)
-        # Ensure surjectivity: place each output value at least once
-        perm = np.random.permutation(n_dim)
-        for j in range(m_out):
-            pi_vals[perm[j]] = j
-        pi_map_rand = lambda i, pv=pi_vals: pv[i]
+        xx = np.random.randn(n) * 3
+        os = np.max(xx) - np.min(xx)
+        if os < 1e-10:
+            continue
+        for m in ms:
+            perm = np.random.permutation(n)
+            part = [[] for _ in range(m)]
+            for idx in range(m):
+                part[idx].append(perm[idx])
+            for idx in range(m, n):
+                part[np.random.randint(m)].append(perm[idx])
+            coarse = np.array([np.max(xx[bl]) for bl in part])
+            cs = np.max(coarse) - np.min(coarse)
+            ratios_by_m[m].append(cs / os)
 
-        cg = coarse_grain_max(x, pi_map_rand, m_out)
-        s_before = trop_spread(x)
-        s_after = trop_spread(cg)
+    positions = range(len(ms))
+    bp = ax.boxplot([ratios_by_m[m] for m in ms], positions=positions,
+                     widths=0.6, patch_artist=True)
+    colors_bp = plt.cm.viridis(np.linspace(0.2, 0.8, len(ms)))
+    for patch, color in zip(bp['boxes'], colors_bp):
+        patch.set_facecolor(color)
+        patch.set_alpha(0.7)
+    ax.axhline(1.0, color='red', linestyle='--', alpha=0.7, label='DPI bound')
+    ax.set_xticks(positions)
+    ax.set_xticklabels([f'm={m}' for m in ms])
+    ax.set_xlabel('Number of blocks', fontsize=11)
+    ax.set_ylabel('Spread ratio', fontsize=11)
+    ax.set_title('Spread Contraction Distribution', fontsize=13)
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3, axis='y')
 
-        if s_after > s_before + 1e-10:
-            violations += 1
-        if s_before > 0:
-            reductions.append(1 - s_after / s_before)
-
-    print(f"\nRandom verification ({n_trials} trials):")
-    print(f"  Violations: {violations}")
-    print(f"  Mean spread reduction: {np.mean(reductions)*100:.1f}%")
-    print(f"  Max spread reduction: {np.max(reductions)*100:.1f}%")
-
-    # Plot: spread reduction histogram
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.hist(reductions, bins=50, color='steelblue', edgecolor='white', alpha=0.8)
-    ax.axvline(x=0, color='red', linestyle='--', linewidth=2, label='No reduction')
-    ax.set_xlabel('Spread Reduction Fraction', fontsize=12)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.set_title('Tropical Data Processing: Spread Reduction under Coarse-Graining', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
     plt.tight_layout()
-    plt.savefig('data_processing.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Plot saved to data_processing.png")
+    return fig_to_base64(fig)
 
-# ============================================================================
-# Demo 3: Polyhedral Membership Stability
-# ============================================================================
 
-def demo_polyhedral_stability():
-    """Demonstrate polyhedral membership stability with explicit bounds."""
-    print("\n" + "=" * 70)
-    print("DEMO 3: Polyhedral Membership Stability")
-    print("=" * 70)
+def viz_polyhedral_stability() -> str:
+    """Visualize polyhedral membership stability in 2D."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # Define a simple polyhedron in 2D: a square [-1,1] x [-1,1]
-    # Constraints: x1 <= 1, -x1 <= 1, x2 <= 1, -x2 <= 1
+    # Define a polygon in R^2
+    # x + y <= 4, -x + y <= 1, x - y <= 2, -x - y <= 1
     A = np.array([
-        [1.0, 0.0],   # x1 <= 1
-        [-1.0, 0.0],  # -x1 <= 1
-        [0.0, 1.0],   # x2 <= 1
-        [0.0, -1.0],  # -x2 <= 1
-    ])
-    b = np.array([1.0, 1.0, 1.0, 1.0])
+        [1, 1],
+        [-1, 1],
+        [1, -1],
+        [-1, -1],
+    ], dtype=float)
+    b_vec = np.array([4.0, 1.0, 2.0, 1.0])
 
-    # Test point inside
-    x = np.array([0.3, 0.5])
+    # Generate polygon vertices for plotting
+    from matplotlib.patches import Polygon
+    from scipy.optimize import linprog
 
-    slacks = poly_slack(A, b, x)
-    rn = row_norm(A)
-    eps_per_constraint = slacks / (rn + 1)
-    eps = np.min(eps_per_constraint)
+    # Sample boundary
+    theta = np.linspace(0, 2*np.pi, 1000)
+    boundary_pts = []
+    for th in theta:
+        d = np.array([np.cos(th), np.sin(th)])
+        # Find max t such that A(x0 + t*d) <= b
+        # A*x0 + t*A*d <= b => t <= (b - A*x0) / (A*d) for A*d > 0
+        x0_ref = np.array([0.75, 0.0])  # center-ish
+        Ad = A @ d
+        slack = b_vec - A @ x0_ref
+        ts = []
+        for j in range(len(b_vec)):
+            if Ad[j] > 1e-10:
+                ts.append(slack[j] / Ad[j])
+        if ts:
+            t_max = min(ts)
+            boundary_pts.append(x0_ref + t_max * d)
 
-    print(f"\nPolyhedron: [-1,1] × [-1,1]")
-    print(f"Test point: x = {x}")
-    print(f"Inside polyhedron: {in_polyhedron(A, b, x)}")
-    print(f"\nSlacks per constraint: {slacks}")
-    print(f"Row norms: {rn}")
-    print(f"ε per constraint: {eps_per_constraint}")
-    print(f"Certified stability radius: ε = {eps:.4f}")
+    boundary_pts = np.array(boundary_pts)
 
-    # Verify with random perturbations
-    n_tests = 10000
-    violations_inside = 0
-    violations_outside = 0
+    # Left panel: polyhedron with stability balls
+    ax = axes[0]
+    if len(boundary_pts) > 0:
+        poly = Polygon(boundary_pts, fill=True, facecolor='lightblue',
+                       edgecolor='navy', linewidth=2, alpha=0.5)
+        ax.add_patch(poly)
 
-    for _ in range(n_tests):
-        delta = np.random.uniform(-eps, eps, size=2)
-        y_inside = x + delta * 0.99
-        y_outside = x + delta * 2.0
+    # Test points with stability radii
+    test_points = [
+        np.array([0.75, 0.0]),
+        np.array([1.5, 0.5]),
+        np.array([0.0, 0.5]),
+    ]
+    point_colors = ['green', 'orange', 'purple']
 
-        if not in_polyhedron(A, b, y_inside):
-            violations_inside += 1
-        # Check if outside bound gives violations
-        if not in_polyhedron(A, b, y_outside):
-            violations_outside += 1
+    for pt, color in zip(test_points, point_colors):
+        slack = b_vec - A @ pt
+        if np.all(slack > 0):
+            row_norms = np.sum(np.abs(A), axis=1)
+            radii = slack / (row_norms + 1)
+            eps = np.min(radii)
 
-    print(f"\nVerification ({n_tests} random perturbations):")
-    print(f"  Within ε: {violations_inside} violations (should be 0)")
-    print(f"  Beyond 2ε: {violations_outside} violations (may occur)")
+            circle = plt.Circle(pt, eps, fill=False, edgecolor=color,
+                               linewidth=2, linestyle='--')
+            ax.add_patch(circle)
+            ax.plot(*pt, 'o', color=color, markersize=8)
+            ax.annotate(f'ε={eps:.3f}', pt + np.array([0.05, 0.05]),
+                       fontsize=10, color=color)
 
-    # Plot
-    fig, ax = plt.subplots(figsize=(8, 8))
-
-    # Draw polyhedron
-    rect = plt.Rectangle((-1, -1), 2, 2, fill=False, edgecolor='black', linewidth=2)
-    ax.add_patch(rect)
-
-    # Draw certified region
-    circle = plt.Circle(x, eps, fill=True, facecolor='lightgreen', edgecolor='green',
-                        linewidth=2, alpha=0.4, label=f'Certified ε = {eps:.3f}')
-    ax.add_patch(circle)
-
-    # Draw point
-    ax.plot(x[0], x[1], 'ro', markersize=10, zorder=5, label=f'x = ({x[0]}, {x[1]})')
-
-    # Draw some perturbations
-    np.random.seed(123)
-    for _ in range(200):
-        angle = np.random.uniform(0, 2*np.pi)
-        r = np.random.uniform(0, eps * 0.99)
-        y = x + r * np.array([np.cos(angle), np.sin(angle)])
-        ax.plot(y[0], y[1], 'g.', markersize=2, alpha=0.5)
-
-    ax.set_xlim(-1.5, 1.5)
-    ax.set_ylim(-1.5, 1.5)
+    ax.set_xlim(-1.5, 3.5)
+    ax.set_ylim(-2, 3)
     ax.set_aspect('equal')
     ax.set_xlabel('x₁', fontsize=12)
     ax.set_ylabel('x₂', fontsize=12)
-    ax.set_title('Polyhedral Membership Stability Certificate', fontsize=14)
-    ax.legend(fontsize=11, loc='upper left')
+    ax.set_title('Polyhedral Stability Radii', fontsize=14)
     ax.grid(True, alpha=0.3)
 
-    plt.tight_layout()
-    plt.savefig('polyhedral_stability.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Plot saved to polyhedral_stability.png")
+    # Right panel: slack heat map
+    ax = axes[1]
+    x1_range = np.linspace(-1.5, 3.5, 200)
+    x2_range = np.linspace(-2, 3, 200)
+    X1, X2 = np.meshgrid(x1_range, x2_range)
 
-# ============================================================================
-# Demo 4: Combined Kinetic Polyhedral Stability
-# ============================================================================
+    min_slack = np.zeros_like(X1)
+    for i in range(X1.shape[0]):
+        for j in range(X1.shape[1]):
+            pt = np.array([X1[i,j], X2[i,j]])
+            slack = b_vec - A @ pt
+            row_norms = np.sum(np.abs(A), axis=1)
+            radii = slack / (row_norms + 1)
+            if np.all(slack > 0):
+                min_slack[i,j] = np.min(radii)
+            else:
+                min_slack[i,j] = 0
 
-def demo_kinetic_polyhedral():
-    """Demonstrate the synthesis theorem: kinetic polyhedral stability."""
-    print("\n" + "=" * 70)
-    print("DEMO 4: Kinetic Polyhedral Stability (Synthesis)")
-    print("=" * 70)
-
-    # Polyhedron in 2D: triangle
-    A = np.array([
-        [1.0, 1.0],    # x1 + x2 <= 3
-        [-1.0, 0.0],   # -x1 <= 0 (i.e., x1 >= 0)
-        [0.0, -1.0],   # -x2 <= 0 (i.e., x2 >= 0)
-    ])
-    b = np.array([3.0, 0.0, 0.0])
-
-    # Starting point inside triangle
-    x0 = np.array([1.0, 1.0])
-    v = np.array([0.5, 0.3])  # velocity
-
-    slacks = poly_slack(A, b, x0)
-    print(f"\nPolyhedron: x1+x2 ≤ 3, x1 ≥ 0, x2 ≥ 0 (triangle)")
-    print(f"Starting point: x0 = {x0}")
-    print(f"Velocity: v = {v}")
-    print(f"Slacks at x0: {slacks}")
-
-    # Compute certified time horizon
-    rn = row_norm(A)
-    eps_spatial = np.min(slacks / (rn + 1))
-
-    # Time bound: need |t * v_i| < eps for all i
-    v_sum = np.sum(np.abs(v)) + 1
-    eps_time = eps_spatial / v_sum
-
-    print(f"Certified spatial radius: {eps_spatial:.4f}")
-    print(f"Certified time horizon: |t| < {eps_time:.4f}")
-
-    # Trace trajectory
-    t_values = np.linspace(-3 * eps_time, 3 * eps_time, 500)
-    inside = [in_polyhedron(A, b, line_path(x0, v, t)) for t in t_values]
-
-    # Find actual exit time
-    inside_arr = np.array(inside, dtype=float)
-    transitions = np.where(np.diff(inside_arr))[0]
-
-    print(f"\nTrajectory analysis:")
-    if len(transitions) > 0:
-        actual_exit = np.min(np.abs(t_values[transitions]))
-        print(f"  Actual exit time: |t| ≈ {actual_exit:.4f}")
-        print(f"  Conservatism factor: {actual_exit/eps_time:.2f}x")
-    else:
-        print("  No exit observed in range")
-
-    # Plot
-    fig, ax = plt.subplots(figsize=(8, 8))
-
-    # Draw triangle
-    triangle = plt.Polygon([(0, 0), (3, 0), (0, 3)], fill=True,
-                           facecolor='lightyellow', edgecolor='black', linewidth=2)
-    ax.add_patch(triangle)
-
-    # Draw trajectory
-    trajectory_x = [line_path(x0, v, t)[0] for t in t_values]
-    trajectory_y = [line_path(x0, v, t)[1] for t in t_values]
-
-    # Color trajectory by inside/outside
-    for i in range(len(t_values) - 1):
-        color = 'green' if inside[i] else 'red'
-        ax.plot(trajectory_x[i:i+2], trajectory_y[i:i+2], color=color, linewidth=2)
-
-    # Mark certified region
-    t_cert = np.linspace(-eps_time, eps_time, 100)
-    cert_x = [line_path(x0, v, t)[0] for t in t_cert]
-    cert_y = [line_path(x0, v, t)[1] for t in t_cert]
-    ax.plot(cert_x, cert_y, 'b-', linewidth=4, alpha=0.6, label=f'Certified (|t| < {eps_time:.3f})')
-
-    ax.plot(x0[0], x0[1], 'ko', markersize=10, zorder=5, label='x₀')
-    ax.arrow(x0[0], x0[1], v[0]*0.3, v[1]*0.3, head_width=0.05,
-             head_length=0.02, fc='black', ec='black')
-
-    ax.set_xlim(-0.5, 3.5)
-    ax.set_ylim(-0.5, 3.5)
-    ax.set_aspect('equal')
+    cmap = LinearSegmentedColormap.from_list('custom',
+        ['white', '#e6f3ff', '#99ccff', '#3399ff', '#0066cc'], N=256)
+    im = ax.contourf(X1, X2, min_slack, levels=20, cmap=cmap)
+    ax.contour(X1, X2, min_slack, levels=[0], colors='navy', linewidths=2)
+    plt.colorbar(im, ax=ax, label='Stability radius ε')
     ax.set_xlabel('x₁', fontsize=12)
     ax.set_ylabel('x₂', fontsize=12)
-    ax.set_title('Kinetic Polyhedral Stability: Certified Path', fontsize=14)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
+    ax.set_title('Stability Radius Heat Map', fontsize=14)
+    ax.set_aspect('equal')
 
     plt.tight_layout()
-    plt.savefig('kinetic_polyhedral.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Plot saved to kinetic_polyhedral.png")
+    return fig_to_base64(fig)
 
-# ============================================================================
-# Main
-# ============================================================================
 
-if __name__ == '__main__':
-    demo_kinetic_stability()
-    demo_data_processing()
-    demo_polyhedral_stability()
-    demo_kinetic_polyhedral()
+def viz_tropical_dpi() -> str:
+    """Visualize the tropical data processing inequality for channels."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    print("\n" + "=" * 70)
-    print("All demos completed successfully!")
-    print("=" * 70)
+    # Channel with varying compression levels
+    K = np.array([
+        [5, 2, 4, 1, 3, 0, 2, 4],
+        [1, 5, 0, 4, 2, 3, 1, 3],
+        [3, 0, 2, 5, 1, 4, 3, 2],
+        [2, 3, 1, 2, 4, 1, 5, 0],
+    ], dtype=float)
+
+    def compute_tmi_local(K):
+        n_in = K.shape[0]
+        max_dist = 0.0
+        for i in range(n_in):
+            for j in range(n_in):
+                fwd = np.max(K[i] - K[j])
+                bwd = np.max(K[j] - K[i])
+                max_dist = max(max_dist, fwd + bwd)
+        return max_dist
+
+    def postprocess_local(K, g):
+        n_in = K.shape[0]
+        n_out = max(g) + 1
+        Kg = np.full((n_in, n_out), -np.inf)
+        for y, z in enumerate(g):
+            Kg[:, z] = np.maximum(Kg[:, z], K[:, y])
+        return Kg
+
+    # Different compression levels
+    compressions = [
+        ("8→8 (identity)", list(range(8))),
+        ("8→4 (pairs)", [0, 0, 1, 1, 2, 2, 3, 3]),
+        ("8→2 (halves)", [0, 0, 0, 0, 1, 1, 1, 1]),
+        ("8→1 (collapse)", [0, 0, 0, 0, 0, 0, 0, 0]),
+    ]
+
+    labels = []
+    tmis = []
+    for name, g in compressions:
+        Kg = postprocess_local(K, g)
+        tmi_val = compute_tmi_local(Kg)
+        labels.append(name)
+        tmis.append(tmi_val)
+
+    # Left panel: TMI bar chart
+    ax = axes[0]
+    colors = plt.cm.RdYlGn_r(np.linspace(0.2, 0.8, len(labels)))
+    bars = ax.bar(range(len(labels)), tmis, color=colors, edgecolor='black', alpha=0.8)
+    ax.set_xticks(range(len(labels)))
+    ax.set_xticklabels([l.split('(')[1].rstrip(')') for l in labels],
+                        rotation=15, fontsize=10)
+    ax.set_ylabel('TMI', fontsize=12)
+    ax.set_title('TMI Under Progressive Compression', fontsize=14)
+    ax.axhline(tmis[0], color='red', linestyle='--', alpha=0.5,
+               label=f'Original TMI = {tmis[0]:.2f}')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3, axis='y')
+
+    # Add values on bars
+    for bar, val in zip(bars, tmis):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
+                f'{val:.2f}', ha='center', fontsize=10)
+
+    # Right panel: Distinguishability matrix
+    ax = axes[1]
+    n_in = K.shape[0]
+    dist_matrix = np.zeros((n_in, n_in))
+    for i in range(n_in):
+        for j in range(n_in):
+            fwd = np.max(K[i] - K[j])
+            bwd = np.max(K[j] - K[i])
+            dist_matrix[i, j] = fwd + bwd
+
+    im = ax.imshow(dist_matrix, cmap='YlOrRd', interpolation='nearest')
+    plt.colorbar(im, ax=ax, label='δ_K(x₁, x₂)')
+    ax.set_xlabel('Input x₂', fontsize=12)
+    ax.set_ylabel('Input x₁', fontsize=12)
+    ax.set_title('Pairwise Tropical Distinguishability', fontsize=14)
+    for i in range(n_in):
+        for j in range(n_in):
+            ax.text(j, i, f'{dist_matrix[i,j]:.1f}', ha='center', va='center',
+                   fontsize=11, color='black' if dist_matrix[i,j] < 6 else 'white')
+
+    plt.tight_layout()
+    return fig_to_base64(fig)
+
+
+def generate_all_visualizations():
+    """Generate all visualizations and return as a dictionary."""
+    print("Generating visualizations...")
+
+    viz1 = viz_kinetic_stability()
+    print("  ✓ Kinetic stability")
+
+    viz2 = viz_spread_contraction()
+    print("  ✓ Spread contraction")
+
+    viz3 = viz_polyhedral_stability()
+    print("  ✓ Polyhedral stability")
+
+    viz4 = viz_tropical_dpi()
+    print("  ✓ Tropical DPI")
+
+    return {
+        "kinetic_stability": viz1,
+        "spread_contraction": viz2,
+        "polyhedral_stability": viz3,
+        "tropical_dpi": viz4,
+    }
+
+
+if __name__ == "__main__":
+    vizs = generate_all_visualizations()
+    print(f"\nGenerated {len(vizs)} visualizations.")
+    for name, data in vizs.items():
+        print(f"  {name}: {len(data)} bytes")

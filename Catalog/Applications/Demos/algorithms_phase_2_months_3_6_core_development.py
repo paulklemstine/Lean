@@ -1,381 +1,424 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tropical Kinetic Certification
+Tropical Certified Information Dynamics — Algorithms
 
-Implements the core algorithms derived from the formal theorems:
-1. Kinetic margin certificate computation
-2. Tropical coarse-graining and spread analysis
-3. Polyhedral slack-based stability certificates
-4. Combined kinetic-polyhedral certification
+Complete implementations of the certification algorithms with docstrings,
+type hints, complexity analysis, and example usage.
 """
 
 import numpy as np
-from typing import List, Tuple, Dict, Optional, Callable
+from typing import List, Tuple, Optional
 from dataclasses import dataclass
 
 
-# ============================================================================
+# ========================================================================
 # Data Structures
-# ============================================================================
+# ========================================================================
 
 @dataclass
 class KineticCertificate:
-    """Certificate for kinetic tropical margin stability."""
+    """Certificate of kinetic tropical margin stability.
+
+    Attributes:
+        margin: The score margin at t=0 (must be > 0 for valid certificate).
+        lipschitz_constant: Max |v_i|, the worst-case score drift rate.
+        certified_time: The guaranteed stability time T = m/(2L+1).
+        winning_class: Index of the winning class at t=0.
+    """
     margin: float
     lipschitz_constant: float
-    stability_radius: float
+    certified_time: float
     winning_class: int
-    is_certified: bool
-
-    def __repr__(self) -> str:
-        return (f"KineticCertificate(margin={self.margin:.6f}, "
-                f"L={self.lipschitz_constant:.6f}, "
-                f"ε={self.stability_radius:.6f}, "
-                f"winner={self.winning_class}, "
-                f"certified={self.is_certified})")
 
 
 @dataclass
 class PolyhedralCertificate:
-    """Certificate for polyhedral membership stability."""
-    slacks: np.ndarray
-    row_norms: np.ndarray
-    stability_radius: float
-    min_slack: float
-    is_interior: bool
+    """Certificate of polyhedral membership stability.
 
-    def __repr__(self) -> str:
-        return (f"PolyhedralCertificate(ε={self.stability_radius:.6f}, "
-                f"min_slack={self.min_slack:.6f}, "
-                f"interior={self.is_interior})")
+    Attributes:
+        min_slack: Minimum slack across all constraints.
+        stability_radius: The certified perturbation radius.
+        slack_vector: Individual slacks for each constraint.
+        critical_constraint: Index of the tightest constraint.
+    """
+    min_slack: float
+    stability_radius: float
+    slack_vector: np.ndarray
+    critical_constraint: int
 
 
 @dataclass
-class KineticPolyhedralCertificate:
-    """Combined certificate for kinetic polyhedral stability."""
-    spatial_radius: float
-    time_horizon: float
-    velocity_bound: float
-    is_certified: bool
+class SpreadContractionResult:
+    """Result of spread contraction computation.
 
-    def __repr__(self) -> str:
-        return (f"KineticPolyhedralCertificate(δ={self.spatial_radius:.6f}, "
-                f"T={self.time_horizon:.6f}, "
-                f"certified={self.is_certified})")
+    Attributes:
+        original_spread: Spread of the original vector.
+        coarsened_spread: Spread after coarse-graining.
+        contraction_ratio: coarsened_spread / original_spread.
+        coarsened_vector: The coarse-grained output vector.
+    """
+    original_spread: float
+    coarsened_spread: float
+    contraction_ratio: float
+    coarsened_vector: np.ndarray
 
 
-# ============================================================================
-# Algorithm 1: Kinetic Tropical Margin Certificate
-# ============================================================================
+# ========================================================================
+# Algorithm 1: Tropical Affine Score Computation
+# ========================================================================
+
+def trop_affine_score(w: np.ndarray, x: np.ndarray, b: float) -> float:
+    """Compute the tropical affine score: b + max_i(w_i + x_i).
+
+    This is the fundamental building block for tropicalized neural networks.
+    A ReLU network layer computes max(0, Wx + b), which in tropical arithmetic
+    corresponds to multiple tropical affine scores.
+
+    Args:
+        w: Weight vector of shape (n,).
+        x: Input vector of shape (n,).
+        b: Bias scalar.
+
+    Returns:
+        The tropical affine score.
+
+    Complexity: O(n) time, O(1) space.
+
+    Example:
+        >>> trop_affine_score(np.array([1.0, 0.5]), np.array([2.0, 3.0]), 0.1)
+        3.6
+    """
+    return b + np.max(w + x)
+
+
+# ========================================================================
+# Algorithm 2: Kinetic Certificate Computation
+# ========================================================================
 
 def compute_kinetic_certificate(
     weights: List[np.ndarray],
     biases: List[float],
     x0: np.ndarray,
-    v: np.ndarray,
-    class1: int = 0,
-    class2: int = 1
+    v: np.ndarray
 ) -> KineticCertificate:
-    """
-    Compute a kinetic tropical margin stability certificate.
+    """Compute a kinetic tropical margin stability certificate.
 
-    Given weight vectors and biases for multiple classes, compute the
-    certified time interval during which the winning class at t=0
-    remains the winner along the trajectory x(t) = x0 + t*v.
+    Given K competing tropical affine scores and a linear trajectory
+    x(t) = x0 + t*v, certifies that the winning class at t=0 remains
+    the winner for |t| < T.
 
     Algorithm:
-        1. Compute scores s_i = b_i + max_j(w_{i,j} + x0_j) for each class
-        2. Find the winning class (argmax score)
-        3. Compute margin m = s_winner - s_runner_up
-        4. Compute Lipschitz constant L = max_j |v_j|
-        5. Return certificate with ε = m / (2L + 1)
-
-    Complexity: O(C * n) where C = number of classes, n = dimension
+        1. Compute all K scores at t=0.
+        2. Find the winner and the margin to the runner-up.
+        3. Compute L = max_i |v_i|.
+        4. Return T = margin / (2*L + 1).
 
     Args:
-        weights: List of weight vectors, one per class
-        biases: List of bias values, one per class
-        x0: Initial position vector
-        v: Velocity vector
-        class1, class2: Indices of the two classes to compare
+        weights: List of K weight vectors, each shape (n,).
+        biases: List of K bias scalars.
+        x0: Initial position, shape (n,).
+        v: Velocity vector, shape (n,).
 
     Returns:
-        KineticCertificate with certified stability radius
+        KineticCertificate with the certified stability time.
+
+    Complexity: O(K*n) time, O(K) space.
+
+    Example:
+        >>> w1, w2 = np.array([1.0, 0.5]), np.array([0.3, 0.9])
+        >>> cert = compute_kinetic_certificate([w1, w2], [0.5, -0.1],
+        ...     np.array([1.0, 2.0]), np.array([0.1, -0.05]))
+        >>> cert.certified_time > 0
+        True
     """
-    n = len(x0)
+    scores = [trop_affine_score(w, x0, b) for w, b in zip(weights, biases)]
+    sorted_indices = np.argsort(scores)[::-1]
+    winner = sorted_indices[0]
+    runner_up = sorted_indices[1]
+    margin = scores[winner] - scores[runner_up]
 
-    # Compute scores at t=0
-    score1 = biases[class1] + np.max(weights[class1] + x0)
-    score2 = biases[class2] + np.max(weights[class2] + x0)
+    if margin <= 0:
+        return KineticCertificate(
+            margin=margin,
+            lipschitz_constant=np.max(np.abs(v)),
+            certified_time=0.0,
+            winning_class=winner
+        )
 
-    margin = score1 - score2
-    winner = class1 if margin > 0 else class2
-
-    # Lipschitz constant
     L = np.max(np.abs(v))
-
-    # Stability radius
-    abs_margin = abs(margin)
-    eps = abs_margin / (2 * L + 1) if abs_margin > 0 else 0.0
+    T = margin / (2 * L + 1)
 
     return KineticCertificate(
-        margin=abs_margin,
+        margin=margin,
         lipschitz_constant=L,
-        stability_radius=eps,
-        winning_class=winner,
-        is_certified=abs_margin > 0
+        certified_time=T,
+        winning_class=winner
     )
 
 
-def compute_multiclass_kinetic_certificate(
+def verify_kinetic_certificate(
+    cert: KineticCertificate,
     weights: List[np.ndarray],
     biases: List[float],
     x0: np.ndarray,
-    v: np.ndarray
-) -> KineticCertificate:
+    v: np.ndarray,
+    n_samples: int = 1000
+) -> bool:
+    """Empirically verify a kinetic certificate by sampling the trajectory.
+
+    Args:
+        cert: The certificate to verify.
+        weights, biases, x0, v: The problem parameters.
+        n_samples: Number of time samples within the certified interval.
+
+    Returns:
+        True if the certificate holds for all sampled times.
     """
-    Compute kinetic certificate for multi-class tropical classification.
+    if cert.certified_time <= 0:
+        return True
 
-    Finds the minimum pairwise margin between the winning class and all others.
+    times = np.linspace(-cert.certified_time * 0.999, cert.certified_time * 0.999,
+                        n_samples)
+    for t in times:
+        xt = x0 + t * v
+        scores = [trop_affine_score(w, xt, b)
+                  for w, b in zip(weights, biases)]
+        if np.argmax(scores) != cert.winning_class:
+            return False
+    return True
 
-    Complexity: O(C * n) where C = number of classes, n = dimension
+
+# ========================================================================
+# Algorithm 3: Spread Contraction Computation
+# ========================================================================
+
+def compute_spread_contraction(
+    x: np.ndarray,
+    partition: List[List[int]]
+) -> SpreadContractionResult:
+    """Compute the spread before and after coarse-graining.
+
+    Implements the tropical data processing inequality:
+    spread(T_π(x)) ≤ spread(x).
+
+    Algorithm:
+        1. Compute spread(x) = max(x) - min(x).
+        2. For each block B in the partition, compute max(x[B]).
+        3. Compute spread of the coarsened vector.
+        4. Return both spreads and the contraction ratio.
+
+    Args:
+        x: Input score vector, shape (n,).
+        partition: List of blocks, each a list of indices.
+            Must be a partition of {0, ..., n-1} with each block nonempty.
+
+    Returns:
+        SpreadContractionResult with original and coarsened spreads.
+
+    Complexity: O(n) time, O(m) space where m = len(partition).
+
+    Example:
+        >>> x = np.array([3.0, 1.0, 4.0, 1.0, 5.0, 9.0])
+        >>> result = compute_spread_contraction(x, [[0,1], [2,3], [4,5]])
+        >>> result.contraction_ratio <= 1.0
+        True
     """
-    C = len(weights)
-    scores = [biases[c] + np.max(weights[c] + x0) for c in range(C)]
-    winner = int(np.argmax(scores))
+    orig_spread = np.max(x) - np.min(x)
+    coarsened = np.array([np.max(x[block]) for block in partition])
+    coarse_spread = np.max(coarsened) - np.min(coarsened)
 
-    # Minimum margin to any other class
-    min_margin = float('inf')
-    for c in range(C):
-        if c != winner:
-            margin = scores[winner] - scores[c]
-            min_margin = min(min_margin, margin)
+    ratio = coarse_spread / orig_spread if orig_spread > 0 else 0.0
 
-    L = np.max(np.abs(v))
-    eps = min_margin / (2 * L + 1) if min_margin > 0 else 0.0
-
-    return KineticCertificate(
-        margin=min_margin,
-        lipschitz_constant=L,
-        stability_radius=eps,
-        winning_class=winner,
-        is_certified=min_margin > 0
+    return SpreadContractionResult(
+        original_spread=orig_spread,
+        coarsened_spread=coarse_spread,
+        contraction_ratio=ratio,
+        coarsened_vector=coarsened
     )
 
 
-# ============================================================================
-# Algorithm 2: Tropical Coarse-Graining and Spread Analysis
-# ============================================================================
-
-def compute_coarse_graining(
-    x: np.ndarray,
-    partition: List[List[int]]
-) -> np.ndarray:
-    """
-    Compute tropical coarse-graining by taking max over partition blocks.
-
-    Algorithm:
-        For each block B in partition:
-            output[j] = max_{i in B} x[i]
-
-    Complexity: O(n)
-
-    Args:
-        x: Input score vector
-        partition: List of index sets forming a partition of {0,...,n-1}
-
-    Returns:
-        Coarse-grained vector
-    """
-    result = np.empty(len(partition))
-    for j, block in enumerate(partition):
-        result[j] = np.max(x[block])
-    return result
-
-
-def verify_spread_monotonicity(
-    x: np.ndarray,
-    partition: List[List[int]]
-) -> Tuple[float, float, bool]:
-    """
-    Verify the tropical data processing inequality for a given input and partition.
-
-    Returns (spread_before, spread_after, is_monotone).
-    """
-    cg = compute_coarse_graining(x, partition)
-    spread_before = np.max(x) - np.min(x)
-    spread_after = np.max(cg) - np.min(cg)
-    return spread_before, spread_after, spread_after <= spread_before + 1e-12
-
-
-def iterated_coarse_graining(
-    x: np.ndarray,
-    partitions: List[List[List[int]]]
-) -> List[Tuple[np.ndarray, float]]:
-    """
-    Apply iterated coarse-graining and track spread at each step.
-
-    Demonstrates that spread is monotonically non-increasing.
-
-    Complexity: O(k * n) where k = number of iterations
-    """
-    results = [(x.copy(), np.max(x) - np.min(x))]
-    current = x.copy()
-
-    for partition in partitions:
-        current = compute_coarse_graining(current, partition)
-        spread = np.max(current) - np.min(current)
-        results.append((current.copy(), spread))
-
-    return results
-
-
-# ============================================================================
-# Algorithm 3: Polyhedral Stability Certificate
-# ============================================================================
+# ========================================================================
+# Algorithm 4: Polyhedral Stability Radius
+# ========================================================================
 
 def compute_polyhedral_certificate(
     A: np.ndarray,
     b: np.ndarray,
     x: np.ndarray
 ) -> PolyhedralCertificate:
-    """
-    Compute an explicit polyhedral membership stability certificate.
+    """Compute an explicit polyhedral membership stability certificate.
+
+    For a polyhedron P = {x : Ax ≤ b}, certifies that all points within
+    ℓ∞-distance ε of x lie in P, where ε = min_j s_j(x)/(R_j + 1).
 
     Algorithm:
-        1. Compute slack s_j = b_j - (Ax)_j for each constraint
-        2. Compute row norms r_j = sum_i |A_{j,i}|
-        3. Compute per-constraint radius: ε_j = s_j / (r_j + 1)
-        4. Return ε = min_j ε_j
-
-    Complexity: O(k * n) where k = constraints, n = dimension
+        1. Compute slack s_j = b_j - (Ax)_j for each constraint j.
+        2. Compute row norm R_j = ∑_i |A_{ji}| for each constraint j.
+        3. Compute radius_j = s_j / (R_j + 1) for each constraint j.
+        4. Return ε = min_j radius_j.
 
     Args:
-        A: Constraint matrix (k x n)
-        b: Right-hand side vector (k,)
-        x: Test point (n,)
+        A: Constraint matrix, shape (k, n).
+        b: Constraint bounds, shape (k,).
+        x: Query point, shape (n,).
 
     Returns:
-        PolyhedralCertificate with certified stability radius
+        PolyhedralCertificate with the stability radius.
+
+    Complexity: O(kn) time, O(k) space.
+
+    Example:
+        >>> A = np.array([[1, 0], [-1, 0], [0, 1], [0, -1]], dtype=float)
+        >>> b = np.ones(4)
+        >>> cert = compute_polyhedral_certificate(A, b, np.array([0.0, 0.0]))
+        >>> cert.stability_radius
+        0.5
     """
-    slacks = b - A @ x
-    rn = np.sum(np.abs(A), axis=1)
+    slack = b - A @ x
+    if np.any(slack <= 0):
+        critical = int(np.argmin(slack))
+        return PolyhedralCertificate(
+            min_slack=float(np.min(slack)),
+            stability_radius=0.0,
+            slack_vector=slack,
+            critical_constraint=critical
+        )
 
-    is_interior = np.all(slacks > 0)
-    min_slack = np.min(slacks) if len(slacks) > 0 else float('inf')
-
-    if is_interior:
-        eps_per_constraint = slacks / (rn + 1)
-        eps = np.min(eps_per_constraint)
-    else:
-        eps = 0.0
+    row_norms = np.sum(np.abs(A), axis=1)
+    radii = slack / (row_norms + 1)
+    critical = int(np.argmin(radii))
 
     return PolyhedralCertificate(
-        slacks=slacks,
-        row_norms=rn,
-        stability_radius=eps,
-        min_slack=min_slack,
-        is_interior=is_interior
+        min_slack=float(np.min(slack)),
+        stability_radius=float(np.min(radii)),
+        slack_vector=slack,
+        critical_constraint=critical
     )
 
 
-# ============================================================================
-# Algorithm 4: Combined Kinetic-Polyhedral Certificate
-# ============================================================================
+# ========================================================================
+# Algorithm 5: Tropical Mutual Information
+# ========================================================================
+
+def compute_tmi(K: np.ndarray) -> float:
+    """Compute the tropical mutual information of a channel.
+
+    TMI(K) = max_{x1,x2} δ_K(x1, x2) where
+    δ_K(x1,x2) = max_y(K[x1,y] - K[x2,y]) + max_y(K[x2,y] - K[x1,y]).
+
+    Args:
+        K: Channel matrix, shape (n_inputs, n_outputs).
+
+    Returns:
+        The tropical mutual information.
+
+    Complexity: O(n_inputs² × n_outputs) time.
+    """
+    n_in = K.shape[0]
+    max_dist = 0.0
+    for i in range(n_in):
+        for j in range(n_in):
+            forward = np.max(K[i] - K[j])
+            backward = np.max(K[j] - K[i])
+            dist = forward + backward
+            max_dist = max(max_dist, dist)
+    return max_dist
+
+
+def postprocess_channel(K: np.ndarray, g: List[int]) -> np.ndarray:
+    """Post-process a channel by a deterministic map.
+
+    (K▷g)(x,z) = max{K(x,y) : g(y) = z}.
+
+    Args:
+        K: Channel matrix, shape (n_inputs, n_outputs).
+        g: Deterministic map from outputs to new outputs.
+
+    Returns:
+        Post-processed channel matrix.
+    """
+    n_in = K.shape[0]
+    n_out_new = max(g) + 1
+    Kg = np.full((n_in, n_out_new), -np.inf)
+    for y, z in enumerate(g):
+        Kg[:, z] = np.maximum(Kg[:, z], K[:, y])
+    return Kg
+
+
+# ========================================================================
+# Algorithm 6: Combined Kinetic Polyhedral Certificate
+# ========================================================================
 
 def compute_kinetic_polyhedral_certificate(
     A: np.ndarray,
     b: np.ndarray,
     x0: np.ndarray,
     v: np.ndarray
-) -> KineticPolyhedralCertificate:
-    """
-    Compute a combined kinetic polyhedral stability certificate.
+) -> Tuple[float, float]:
+    """Compute a combined kinetic polyhedral stability certificate.
 
-    If x0 is in the strict interior of {x : Ax <= b} and moves along
-    x(t) = x0 + t*v, certify the time horizon for which membership holds.
+    Certifies that x(t) = x0 + t*v remains in P = {x : Ax ≤ b}
+    for |t| < T.
 
     Algorithm:
-        1. Compute polyhedral certificate at x0 → spatial radius δ
-        2. Compute velocity bound: ||v||_1 + 1
-        3. Return time horizon T = δ / (||v||_1 + 1)
-
-    Complexity: O(k * n)
+        1. Compute spatial stability radius δ.
+        2. Compute speed bound S = ∑|v_i| + 1.
+        3. Return T = δ / S.
 
     Args:
-        A: Constraint matrix (k x n)
-        b: Right-hand side vector (k,)
-        x0: Initial position
-        v: Velocity vector
+        A, b: Polyhedron parameters.
+        x0: Initial position.
+        v: Velocity vector.
 
     Returns:
-        KineticPolyhedralCertificate with certified time horizon
+        Tuple (stability_radius, certified_time).
     """
-    poly_cert = compute_polyhedral_certificate(A, b, x0)
+    cert = compute_polyhedral_certificate(A, b, x0)
+    if cert.stability_radius <= 0:
+        return (0.0, 0.0)
 
-    if not poly_cert.is_interior:
-        return KineticPolyhedralCertificate(
-            spatial_radius=0.0,
-            time_horizon=0.0,
-            velocity_bound=np.sum(np.abs(v)),
-            is_certified=False
-        )
+    speed = np.sum(np.abs(v)) + 1
+    T = cert.stability_radius / speed
 
-    v_bound = np.sum(np.abs(v)) + 1
-    time_horizon = poly_cert.stability_radius / v_bound
-
-    return KineticPolyhedralCertificate(
-        spatial_radius=poly_cert.stability_radius,
-        time_horizon=time_horizon,
-        velocity_bound=v_bound,
-        is_certified=True
-    )
+    return (cert.stability_radius, T)
 
 
-# ============================================================================
-# Example usage
-# ============================================================================
+# ========================================================================
+# Example Usage
+# ========================================================================
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print("Algorithm Examples")
-    print("=" * 60)
+    print("=" * 50)
 
-    # Example 1: Kinetic certificate
-    print("\n--- Kinetic Certificate ---")
-    weights = [np.array([1.0, 3.0, 2.0]), np.array([2.0, 1.0, 1.5])]
-    biases = [0.5, 0.0]
-    x0 = np.array([1.0, 0.5, 2.0])
-    v = np.array([0.3, -0.2, 0.1])
+    # Kinetic certificate
+    w1 = np.array([1.0, 0.5, 0.8])
+    w2 = np.array([0.3, 0.9, 0.2])
+    x0 = np.array([1.0, 2.0, 1.5])
+    v = np.array([0.1, -0.05, 0.2])
 
-    cert = compute_kinetic_certificate(weights, biases, x0, v)
-    print(cert)
+    cert = compute_kinetic_certificate([w1, w2], [0.5, -0.1], x0, v)
+    print(f"\nKinetic Certificate:")
+    print(f"  Margin: {cert.margin:.4f}")
+    print(f"  Lipschitz constant: {cert.lipschitz_constant:.4f}")
+    print(f"  Certified time: {cert.certified_time:.4f}")
+    print(f"  Winning class: {cert.winning_class}")
+    print(f"  Verified: {verify_kinetic_certificate(cert, [w1, w2], [0.5, -0.1], x0, v)}")
 
-    # Example 2: Multi-class
-    print("\n--- Multi-class Kinetic Certificate ---")
-    weights3 = [np.array([1.0, 3.0, 2.0]),
-                np.array([2.0, 1.0, 1.5]),
-                np.array([0.5, 2.0, 3.0])]
-    biases3 = [0.5, 0.0, -0.5]
-    cert3 = compute_multiclass_kinetic_certificate(weights3, biases3, x0, v)
-    print(cert3)
+    # Spread contraction
+    x = np.array([3.0, 1.0, 4.0, 1.0, 5.0, 9.0, 2.0, 6.0])
+    result = compute_spread_contraction(x, [[0, 1], [2, 3], [4, 5], [6, 7]])
+    print(f"\nSpread Contraction:")
+    print(f"  Original spread: {result.original_spread:.4f}")
+    print(f"  Coarsened spread: {result.coarsened_spread:.4f}")
+    print(f"  Contraction ratio: {result.contraction_ratio:.4f}")
 
-    # Example 3: Spread monotonicity
-    print("\n--- Spread Monotonicity ---")
-    x = np.array([5.0, 2.0, 8.0, 1.0, 6.0, 3.0])
-    partition = [[0, 1], [2, 3], [4, 5]]
-    s_before, s_after, is_mono = verify_spread_monotonicity(x, partition)
-    print(f"Spread: {s_before:.2f} → {s_after:.2f}, monotone: {is_mono}")
-
-    # Example 4: Polyhedral certificate
-    print("\n--- Polyhedral Certificate ---")
-    A = np.array([[1, 0], [-1, 0], [0, 1], [0, -1]])
-    b = np.array([1, 1, 1, 1])
-    x = np.array([0.3, 0.5])
-    poly_cert = compute_polyhedral_certificate(A, b, x)
-    print(poly_cert)
-
-    # Example 5: Combined kinetic-polyhedral
-    print("\n--- Kinetic-Polyhedral Certificate ---")
-    v = np.array([0.5, 0.3])
-    kp_cert = compute_kinetic_polyhedral_certificate(A, b, x, v)
-    print(kp_cert)
+    # Polyhedral certificate
+    A = np.array([[1, 0, 0], [-1, 0, 0], [0, 1, 0],
+                  [0, -1, 0], [0, 0, 1], [0, 0, -1]], dtype=float)
+    b_vec = np.ones(6)
+    pcert = compute_polyhedral_certificate(A, b_vec, np.array([0.3, -0.2, 0.1]))
+    print(f"\nPolyhedral Certificate:")
+    print(f"  Min slack: {pcert.min_slack:.4f}")
+    print(f"  Stability radius: {pcert.stability_radius:.4f}")
+    print(f"  Critical constraint: {pcert.critical_constraint}")

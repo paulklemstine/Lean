@@ -361,53 +361,6 @@
     "timestamp": "2026-05-17T08:59:36.696523+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Thermodynamic pressure function:",
-    "description": "Define the pressure P(s) = log(spectral radius of L_s) for the weighted transfer operator L_s, and show that P has a unique zero at s = δ (the Hausdorff dimension of the limit set).\n\n### Cross-Domain Connection\nThis connects to the **Langlands program** (automorphic representations of arithmetic groups), **hyperbolic geometry** (the geometry of Γ\\ℍ²), and **statistical mechanics** (thermodynamic formalism). The Berggren tree would serve as a concrete testing ground for the general theory of thin groups.\n\n---\n\n## Direction 5: Complexity-Theoretic Derandomization Corollary\n\n### Goal\nProve that the Berggren spectral gap implies a nontrivial derandomization result in computational complexity: certain randomized algorithms for testing properties of Pythagorean triples can be made deterministic ",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1ba249c5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:59:36.762065+00:00"
-  },
-  {
-    "id": "fd_0270",
-    "title": "Phase 4:",
-    "description": "Extend to deep networks using layer-wise barrier decomposition.\n\n**Key challenge:** The barrier terms become infinite at activation boundaries (where neurons switch). Use ε-smoothing: replace log|z| with log(|z| + ε) and anneal ε during training.\n\n**Concrete next step:** Train a 2-layer network on MNIST with the barrier loss, measure certified accuracy at ε = 0.1 (L∞), and compare against PGD adversarial training and TRADES.\n\n**Expected impact:** State-of-the-art certified accuracy via a principled optimization objective.\n\n---\n\n## Direction 3: Tropical-MILP Hybrid Verifiers with Completeness Certificates\n\n### Problem Statement\nBuild a verification system that uses cheap tropical/affine certificates as a preprocessing step for MILP, with provable completeness guarantees.\n\n### Current State\n",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1d4c4fc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:32:08.586511+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "Tighter analysis:",
-    "description": "For networks with specific architectures (e.g., width m, depth L), relate N to m and L, and propagate to robustness bounds.\n\n**Key lemma to prove:** For a single-hidden-layer ReLU network with m neurons:\n- Maximum number of regions: O(mⁿ)\n- Average region radius in the unit ball: Ω(1/m)\n- Therefore: average compositional radius ≥ Ω(1/m)\n\n**Concrete next step:** Prove the single-hidden-layer bound formally. Extend to depth 2 and compare with experimental measurements.\n\n**Expected impact:** First provable expressivity-robustness tradeoff theorem with explicit constants.\n\n---\n\n## Direction 5: Certified Robustness as a Sheaf on Polyhedral Complexes\n\n### Problem Statement\nModel the compositional certificate structure as a sheaf on the polyhedral complex of linear regions, and use sheaf cohomolo",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1d4c4fc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:32:08.642917+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Shared Lean library:",
     "description": "All proven lemmas go into a common `TropicalRobustness` module.",
@@ -421,54 +374,6 @@
     "source_exp_id": "85071bef",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T11:30:47.805105+00:00"
-  },
-  {
-    "id": "fd_0270",
-    "title": "Connection to existing work",
-    "description": ": The project already contains `periodicBP_eval_eq_tropPow` and `periodicBP_spectral_bound` in the max-plus setting. Translate these to min-plus and strengthen to an exact limit theorem.\n\n### Key Lemmas to Formalize\n- `tropical_eigenvalue_eq_cycle_mean`: λ(M) equals the minimum cycle mean\n- `subadditive_convergence`: Fekete's lemma for ℕ∞-valued sequences\n- `periodic_transfer_spectral_radius`: The growth rate of M^d converges to λ(M)\n\n### Cross-Domain Impact\n- **Statistical mechanics**: λ(M) is the ground-state energy per unit length of an infinite strip with periodic boundary conditions\n- **Automata theory**: λ(M) determines the asymptotic growth rate of the most accepting run\n- **Scheduling**: λ(M) is the throughput of a periodic manufacturing system\n\n### Estimated Difficulty: ★★★☆☆\n\n---",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:33:52.695115+00:00"
-  },
-  {
-    "id": "fd_0272",
-    "title": "Lower bound",
-    "description": ": Show that any width-w BP has transfer product of tropical rank ≤ w, by proving that each layer multiplication preserves a rank bound.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "6a36e8f9",
-    "timestamp": "2026-05-17T11:33:52.736089+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "Minimization algorithm",
-    "description": ": Define a tropical analogue of the Myhill-Nerode theorem, using tropical linear dependence to identify mergeable states.\n\n### Key Formalization Targets\n- `tropicalRank`: Definition of tropical matrix rank\n- `rank_width_upper_bound`: tropicalRank(transferProduct(P)) ≤ P.width\n- `rank_width_lower_bound`: Any BP computing f has width ≥ tropicalRank(transferProduct(f))\n- `tropical_minimization`: Algorithm to find the minimum-width equivalent BP\n\n### Cross-Domain Impact\n- **Complexity theory**: Tropical rank lower bounds ↔ branching program width lower bounds\n- **Automata theory**: Generalizes classical automaton minimization to weighted (tropical) automata\n- **Machine learning**: Compressed representations of Viterbi-type computations\n\n### Estimated Difficulty: ★★★★☆\n\n---\n\n## Direction 3: Wid",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:33:52.758509+00:00"
   },
   {
     "id": "fd_0274",
@@ -486,22 +391,6 @@
     "timestamp": "2026-05-17T11:33:52.777649+00:00"
   },
   {
-    "id": "fd_0282",
-    "title": "Identify costs",
-    "description": ": Forward state = min prefix cost, backward state = min suffix cost, total = min over decomposition points.\n\n### Key Formalization Targets\n- `backwardState`: Backward Bellman propagation\n- `forward_backward_decomposition`: minCost = min_v (forward(i,v) + backward(i,v))\n- `tropical_chapman_kolmogorov`: The decomposition holds at every layer\n- `bidirectional_search`: An optimized algorithm using both directions\n\n### Cross-Domain Impact\n- **Graph algorithms**: Bidirectional shortest path search with correctness proof\n- **Control theory**: Hamilton-Jacobi-Bellman duality in discrete tropical settings\n- **Verification**: Compositional verification of layered systems via forward/backward analysis\n\n### Estimated Difficulty: ★★★☆☆\n\n---\n\n## Implementation Roadmap\n\n### Phase 1 (Near-term): Direction",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:33:52.955254+00:00"
-  },
-  {
     "id": "fd_0283",
     "title": "Semiring dynamics",
     "description": ": All five directions explore the dynamics of semiring-valued operators. A general theory of \"tropical dynamical systems\" could unify them.",
@@ -515,49 +404,6 @@
     "source_exp_id": "262182fb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T11:33:52.974286+00:00"
-  },
-  {
-    "id": "fd_0284",
-    "title": "Operator compression",
-    "description": ": Transfer rank, spectral radius, and width bounds are all facets of the question: \"How compressible is the transfer operator?\"",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:33:52.994991+00:00"
-  },
-  {
-    "id": "fd_0285",
-    "title": "Temperature as deformation parameter",
-    "description": ": The T-parametric view connects tropical (T=0) and probabilistic (T>0) computation, suggesting a unified complexity theory of approximate optimization.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:33:53.015123+00:00"
-  },
-  {
-    "id": "fd_0286",
-    "title": "Formal verification as methodology",
-    "description": ": Machine-checked proofs provide certainty about foundational results, enabling confident construction of deeper theories on verified foundations.\n\n---\n\n## Team Directive\n\nEach direction should be pursued by a team that:",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "262182fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:33:53.035527+00:00"
   },
   {
     "id": "fd_0258",
@@ -591,86 +437,6 @@
     "timestamp": "2026-05-17T12:02:39.033653+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Cross-domain instantiation",
-    "description": ": Apply to at least one concrete domain (graphs, neural nets, etc.).",
-    "domains": [
-      "Bridges",
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "737aae9f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:02:39.089096+00:00"
-  },
-  {
-    "id": "fd_0268",
-    "title": "Operator renewal theory",
-    "description": ": Use the tree structure to decompose the transfer operator into a sum of composition operators, each associated with a branch. Apply Ionescu-Tulcea–Marinescu theory to deduce quasi-compactness from the Lasota–Yorke inequality.\n\n### Cross-Domain Connection\nThis connects directly to **thermodynamic formalism** and the theory of dynamical zeta functions. The spectral gap of the transfer operator would imply exponential decay of correlations for the natural invariant measure on the limit set of the Berggren semigroup, analogous to Gauss measure for continued fractions.\n\n---\n\n## Direction 2: Nonbacktracking Ramanujan Refinement\n\n### Exact Theorem Statement\nDefine the nonbacktracking operator B on the edge set of the depth-n Berggren graph (where edges represent parent→child transitions). Prove",
-    "domains": [
-      "Pythagorean",
-      "EML",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4ee71e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:14:15.271578+00:00"
-  },
-  {
-    "id": "fd_0270",
-    "title": "Hashimoto matrix decomposition",
-    "description": ": Decompose the nonbacktracking matrix into a product involving the adjacency and degree matrices, then transfer the spectral bound from the already-proved sibling contraction.\n\n### Cross-Domain Connection\nThis connects to the **Friedman theorem** on random regular graphs and to the broader Ramanujan graph conjecture. If realized, it would place Berggren trees in the same spectral class as optimal arithmetic expanders (Lubotzky–Phillips–Sarnak, Margulis).\n\n---\n\n## Direction 3: Deterministic Sampling Theorem for Primitive Triples\n\n### Exact Theorem Statement\nGiven a bounded test function φ : ℤ³ → ℝ and ε > 0, construct a deterministic algorithm that outputs a set S of N primitive Pythagorean triples such that |N⁻¹ Σ_{t∈S} φ(t) - μ(φ)| < ε, where μ is the natural (Berggren) probability measu",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4ee71e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:14:15.309581+00:00"
-  },
-  {
-    "id": "fd_0272",
-    "title": "Nisan–Wigderson generator with Berggren seed",
-    "description": ": Construct an explicit pseudorandom generator whose seed is a short Berggren walk. Use the Ramanujan bound to prove fooling for bounded-degree polynomial tests.\n\n### Cross-Domain Connection\nThis directly addresses **complexity-theoretic derandomization** (BPP vs P question). It would provide a concrete number-theoretic construction for ε-biased sets in the spirit of Naor–Naor, but using the arithmetic structure of Pythagorean triples rather than algebraic geometry.\n\n---\n\n## Direction 4: Bridge to Automorphic / Thermodynamic Formalism\n\n### Exact Theorem Statement\nIdentify the Berggren semigroup Γ = ⟨B₁, B₂, B₃⟩ with a thin subgroup of SO(2,1; ℤ). Prove that the representation-theoretic spectral gap for the regular representation of Γ on L²(SO(2,1; ℝ)/Γ) implies the combinatorial spectral g",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4ee71e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:14:15.349484+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "Bourgain–Gamburd method",
-    "description": ": Apply the Bourgain–Gamburd expansion machine, which converts a spectral gap for a group representation into a combinatorial spectral gap for the associated Cayley graph. The key input is a product theorem in SO(2,1).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4ee71e9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:14:15.368815+00:00"
-  },
-  {
     "id": "fd_0274",
     "title": "Selberg's 3/16 theorem analogue",
     "description": ": Adapt Selberg's bound on the first eigenvalue of the Laplacian on arithmetic surfaces to the Berggren setting. Use the Lorentz form Q to identify the associated symmetric space.\n\n### Cross-Domain Connection\nThis connects to the **Selberg eigenvalue conjecture** and to Sarnak's program on thin groups. It would provide a formal bridge between the combinatorial spectral theory of this project and the deep automorphic theory of arithmetic lattices.\n\n---\n\n## Direction 5: Complexity-Theoretic Derandomization Corollary\n\n### Exact Theorem Statement\nProve that any randomized algorithm A that uses O(n) random bits and runs in polynomial time can be simulated by a deterministic algorithm A' that uses the Berggren expander as a source of pseudorandom bits, with only polynomial overhead in running ti",
@@ -691,20 +457,6 @@
     "timestamp": "2026-05-17T12:14:15.395546+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Via sign collapse",
-    "description": ": Use `prime_three_mod_four_no_nonsign_square_collision` (generalized to all primes) to show elements lie in ≤ 2 residue classes mod `p`. Count integers in `[-M, M]` per residue class using `Finset.Icc` cardinality bounds.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "40fc847b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:25:27.815654+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Via pigeonhole",
     "description": ": Map `ev` into `ZMod p × {0, 1}` (residue class, sign flag). Use `Finset.card_le_card` to bound the image, then `Nat.div` bounds for preimage sizes.\n\n### Cross-Domain Significance\nCombined with eigenvalue bounds from regular graph theory (`|λ| ≤ d`), this gives explicit multiplicity limits for spectral square classes — a new graph-theoretic invariant.\n\n---\n\n## Direction 2: Characteristic Polynomial Congruence Obstructions for Regular Graphs\n\n### Problem Statement\nCan the characteristic polynomial of a `d`-regular graph on `n` vertices be constrained modulo a prime `p`? Specifically, the trace is 0, the sum of squared eigenvalues is `nd`, and these create modular constraints on the polynomial coefficients.\n\n### Precise Theorem Statement\nFor a `d`-regular simple graph on `n` vertices with i",
@@ -718,67 +470,6 @@
     "source_exp_id": "40fc847b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T12:25:28.474205+00:00"
-  },
-  {
-    "id": "fd_0268",
-    "title": "Newton's identity approach",
-    "description": ": Use the relation between power sums and elementary symmetric polynomials to propagate the constraint to higher coefficients of the characteristic polynomial.\n\n### Cross-Domain Significance\nThis would show that primes dividing the regularity degree create \"shadows\" in the modular spectrum — a new structural invariant for graph isomorphism testing and spectral classification.\n\n---\n\n## Direction 3: Prime 3 mod 4 Exclusion Theorems for Norm-Generated Eigenvalue Sets\n\n### Problem Statement\nIf eigenvalues of a graph arise as norms of elements in ℤ[√d] for some `d`, and a prime `p ≡ 3 (mod 4)` divides the norm, what does this force?\n\n### Precise Theorem Statement\nFor `p ≡ 3 (mod 4)` and elements `α = a + b√d ∈ ℤ[√d]`, if `p | Norm(α) = a² - db²`, then either `p | a` and `p | b`, or `-d` is a qu",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "40fc847b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:25:28.662121+00:00"
-  },
-  {
-    "id": "fd_0270",
-    "title": "Quadratic residue symbol approach",
-    "description": ": Use the Legendre symbol `(d/p)` to classify: if `(d/p) = -1`, then the first case always holds; if `(d/p) = 1`, both cases are possible.\n\n### Cross-Domain Significance\nThis connects norm forms from algebraic number theory to spectral obstructions. For graphs whose eigenvalues arise from algebraic integers (e.g., Cayley graphs of number field units), this gives unconditional exclusion results for primes `p ≡ 3 (mod 4)` where `(-d/p) = -1`.\n\n---\n\n## Direction 4: Formalized Finite-Search Classification Under Energy and Congruence Constraints\n\n### Problem Statement\nGiven bounds on eigenvalue size, spectral energy, and a modulus `N`, enumerate all feasible integer spectra up to isomorphism.\n\n### Precise Theorem Statement\nThe set of integer spectra `ev : Fin n → ℤ` satisfying `|ev(i)| ≤ M`, `∑",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "40fc847b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:25:28.825809+00:00"
-  },
-  {
-    "id": "fd_0272",
-    "title": "Constructive enumeration",
-    "description": ": Build the set explicitly using `Finset.filter` on the product `(Finset.Icc (-M) M)^n`, then prove its cardinality satisfies the stated bound.\n\n### Cross-Domain Significance\nThis is the algorithmic payoff of the theory: a complete search procedure for integer spectra satisfying combined spectral and arithmetic constraints. It could be used for:\n- Exhaustive classification of small graph spectra\n- Verification of spectral uniqueness conjectures\n- Automated counterexample search\n\n---\n\n## Direction 5: Spectral Polynomial Annihilator Library\n\n### Problem Statement\nBuild a library of low-degree polynomials that annihilate specific eigenvalue configurations, starting from the B₂ cubic and extending to other matrix families.\n\n### Precise Theorem Statement\nFor each Berggren matrix Bₖ, classify th",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "40fc847b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:25:28.967455+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "Direct factorization",
-    "description": ": Use `ring` for algebraic identities, `interval_cases` for integer root classification.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "40fc847b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:25:28.999667+00:00"
   },
   {
     "id": "fd_0274",
@@ -809,6 +500,132 @@
     "source_exp_id": "40fc847b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T12:27:07.755915+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Formalize Karp's formula",
+    "description": "Prove the classical identity:\n   ```\n   maxCycleMean A = max_i min_{0≤k<n} (D(n,i) - D(k,i)) / (n - k)\n   ```\n   where `D(k,i)` is the maximum weight walk of length k ending at i. This reduces the spectral problem to finite optimization.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e054be3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:52:39.136670+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Executable extraction",
+    "description": "Use Lean's code generation to produce an executable certified algorithm.\n\n### Cross-Domain Connections\n- **Algorithmics**: First verified implementation of a classical graph optimization algorithm\n- **Real-time systems**: Certified worst-case execution time bounds\n- **Operations research**: Verified cycle time computation for scheduling\n\n### Estimated Difficulty\nMedium. The key challenge is formalizing the walk/path enumeration and connecting it to tropical matrix powers. The algebraic infrastructure is already in place.\n\n---\n\n## Direction 2: Min-Plus Duality and Certified Latency Bounds\n\n### Hypothesis\nThe duality between max-plus (throughput) and min-plus (latency) tropical algebras can be formalized, yielding certified two-sided performance envelopes: throughput from max-plus, worst-cas",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e054be3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:52:39.176499+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Performance envelopes",
+    "description": "Combine max-plus and min-plus analysis to produce two-sided bounds:\n   ```\n   k * λ_min + v_min ≤ x_k ≤ k * λ_max + v_max\n   ```\n   This gives both throughput guarantees and latency guarantees.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e054be3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:52:39.242724+00:00"
+  },
+  {
+    "id": "fd_0275",
+    "title": "Network calculus connection",
+    "description": "Show that the min-plus eigenpair corresponds to the service curve in network calculus, connecting to deterministic queueing theory.\n\n### Cross-Domain Connections\n- **Network calculus**: Formal service curves and arrival curves\n- **Queueing theory**: Deterministic delay bounds for FIFO systems\n- **Embedded systems**: Worst-case response time certification\n\n### Estimated Difficulty\nMedium-Low. The min-plus theory mirrors the max-plus theory almost exactly. The main work is the duality proof and the performance envelope theorem.\n\n---\n\n## Direction 3: Eventual Periodicity of Tropical Matrix Powers\n\n### Hypothesis\nFor irreducible matrices over ℝ, tropical matrix powers become eventually periodic (after normalization by the eigenvalue): there exists T and p such that for all k ≥ T, `tropPow A (k",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e054be3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:52:39.263477+00:00"
+  },
+  {
+    "id": "fd_0277",
+    "title": "Prove nilpotency on the critical graph complement",
+    "description": "On the non-critical part of the graph, the normalized matrix B is \"tropically nilpotent\" — its powers eventually reach -∞ (in extended tropical) or become dominated by the critical part.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e054be3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:52:39.303216+00:00"
+  },
+  {
+    "id": "fd_0279",
+    "title": "Combine",
+    "description": "Show that for k ≥ (n-1)², `tropPow B k` depends only on k mod σ, giving eventual periodicity.\n\n### Cross-Domain Connections\n- **Dynamical systems**: Formal periodic orbit theory\n- **Manufacturing**: Steady-state production rate certification\n- **Automata theory**: Connection to counter automata periodicity\n\n### Estimated Difficulty\nHigh. This requires deep structural theory about the critical graph and its cyclicity. The key technical challenge is formalizing the partition into critical and non-critical components.\n\n---\n\n## Direction 4: Formal Comparison with Classical Perron–Frobenius\n\n### Hypothesis\nThe tropical Perron–Frobenius theorem is a \"degeneration\" of the classical Perron–Frobenius theorem for nonneg real matrices, obtained by the logarithmic limit (Maslov dequantization). This c",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e054be3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:52:39.344103+00:00"
+  },
+  {
+    "id": "fd_0283",
+    "title": "Connect eigenvectors",
+    "description": "Show that `ε · log(v_ε)` converges to the tropical eigenvector.\n\n### Cross-Domain Connections\n- **Statistical mechanics**: Tropical limit = zero-temperature limit\n- **Optimization**: Log-sum-exp → max as temperature → 0\n- **Machine learning**: Softmax → hardmax limiting behavior\n\n### Estimated Difficulty\nVery High. This requires both the classical Perron–Frobenius theorem (partially in Mathlib) and nontrivial analysis (limits, logarithms, matrix exponentials). However, even partial results (e.g., for 2×2 matrices) would be valuable.\n\n---\n\n## Direction 5: Integration with Timed Automata and Synchronous Dataflow\n\n### Hypothesis\nThe tropical eigenpair framework can be extended to certify performance properties of timed automata and synchronous dataflow (SDF) graphs, providing a bridge between",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e054be3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:52:39.424387+00:00"
+  },
+  {
+    "id": "fd_0287",
+    "title": "Compositional analysis",
+    "description": "Prove that series and parallel composition of event graphs corresponds to tropical matrix operations, enabling modular throughput certification.\n\n### Cross-Domain Connections\n- **VLSI design**: Certified throughput for hardware pipelines\n- **Signal processing**: Verified streaming computation rates\n- **Embedded systems**: Formal timing analysis for safety-critical software\n- **Railway signaling**: Certified timetable feasibility\n\n### Estimated Difficulty\nHigh. The SDF/timed automata formalization is substantial, but the reduction to tropical matrices is well-established in the literature. A starting point would be to formalize the event graph → tropical matrix reduction for a concrete class of systems.\n\n---\n\n## Priority Ordering",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e054be3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T12:52:39.507056+00:00"
   },
   {
     "id": "fd_0126",
@@ -1361,24 +1178,6 @@
     "timestamp": "2026-05-16T13:12:11.734256+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Direction 2: Max-Plus Dualization",
-    "description": "**Hypothesis:** The entire tactic infrastructure can be systematically dualized from min-plus to max-plus algebra by a functorial transformation, yielding a parallel `tropical_max` tactic with zero additional proof effort.\n\n**Proof Strategy:**\n1. Define a `dual : CTropExpr → CTropExpr` map that swaps `tmin` for `tmax` (a new constructor).\n2. Prove `eval_max σ (dual e) = -eval_min (fun i => -σ i) e`, exploiting `max a b = -min(-a)(-b)`.\n3. Transfer all soundness theorems through this duality: `normalize_ca_sound` for max follows from the min version by negation.\n4. Alternatively, parameterize the entire development over a `TropicalSemiring` typeclass that abstracts over the choice of `min` vs `max`.\n\n**Impact:** Max-plus algebra is the native language of scheduling theory, discrete event sy",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "df23c5f9",
-    "consumed_by_exp_id": "05176da5",
-    "timestamp": "2026-05-17T07:35:53.275696+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "2. Reverse Simulation: Circuit → Branching Program",
     "description": "**Goal:** Characterize when layered circuits can be compiled back into bounded-width branching programs, with explicit width bounds.\n\n**Theorem target:**\n```\ntheorem circuit_to_bp_reverse\n    (n : ℕ) (C : LayeredCircuit n) :\n    ∃ w : ℕ, w ≤ 2 ^ C.width ∧\n    ∃ P : BP n w C.depth,\n      ∀ x, P.Accepts x ↔ C.Accepts x\n```\n\n**Strategy:** The reverse simulation encodes the entire state of a circuit layer (w' Boolean gates) as a single state in a branching program of width 2^{w'}. Each transition reads the relevant input bits and updates the state according to the circuit's gate logic. The width bound 2^{w'} is exponential because each BP state must encode all possible valuations of the gates in a single layer.\n\n**Key insight:** This exponential blowup is unavoidable in general (NC¹ vs L separ",
@@ -1427,20 +1226,6 @@
     "timestamp": "2026-05-17T08:20:23.440660+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Phase 2 (Months 3-6): Core Development",
-    "description": "- Build kinetic certification framework (Direction 2)\n- Formalize tropical information-theoretic connections (Direction 4)\n- Prototype nearest-facet compilation (Direction 5)",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "740c7329",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:20:23.574805+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Cross-Domain Connection",
     "description": "DAG circuits correspond directly to dynamic programming tables: each node computes a subproblem, `+` concatenates costs, and `min` selects optimal branches. This connection would formalize the equivalence between circuit evaluation and Bellman-equation solving.\n\n---",
@@ -1454,21 +1239,6 @@
     "source_exp_id": "6244d0ef",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T09:56:16.837800+00:00"
-  },
-  {
-    "id": "fd_0265",
-    "title": "`tropical_fundamental_theorem_of_arithmetic` → Direction 4",
-    "description": "Unique factorization in tropical semirings provides algebraic tools for decomposing tropical polytopes into irreducible facets.\n\n---",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5ffd606c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T10:05:21.849797+00:00"
   },
   {
     "id": "fd_0251",
@@ -1570,21 +1340,6 @@
     "timestamp": "2026-05-17T10:48:24.791068+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Goal",
-    "description": "Formalize the syntactic duality between min-plus and max-plus tropical circuits, and prove that the simulation theorem transfers automatically between conventions.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6d2f8cf4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T11:31:09.830914+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "Theorem Statement",
     "description": "```\ntheorem karp_minimum_cycle_mean [NeZero n]\n    (A : Fin n → Fin n → ℝ) :\n    tropicalEigenvalue A =\n    Finset.inf' Finset.univ Finset.univ_nonempty (fun i =>\n      Finset.sup' (Finset.range n) (by simp) (fun k =>\n        (tropMatPow A n i i - tropMatPow A k i i) / (n - k)))\n```",
@@ -1597,20 +1352,6 @@
     "source_exp_id": "97483b17",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T12:47:36.021332+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "Prerequisites",
-    "description": "- Formalize the cycle decomposition lemma: every walk of length $> n$ contains a simple cycle.\n- Prove that the minimum cycle mean is attained by a simple cycle.\n- Connect `tropMatPow A k i j` with the weight of minimum-weight walks.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97483b17",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:47:38.866499+00:00"
   },
   {
     "id": "fd_0264",
@@ -1626,20 +1367,6 @@
     "source_exp_id": "97483b17",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T12:47:39.141850+00:00"
-  },
-  {
-    "id": "fd_0265",
-    "title": "Research Roadmap",
-    "description": "```\nDirection 2 (Kleene Star)  ──→  Direction 1 (Karp's Theorem)\n         ↓                              ↓\nDirection 3 (Automata)     ──→  Direction 5 (Mean-Payoff Games)\n                                        ↓\n                           Direction 4 (Cayley-Hamilton)\n```\n\n**Recommended execution order:**\n1. Direction 2 (Kleene Star) — builds directly on power stabilization\n2. Direction 3 (Weighted Automata) — uses associativity and distributivity\n3. Direction 1 (Karp's Theorem) — requires cycle decomposition infrastructure\n4. Direction 5 (Mean-Payoff Games) — requires eigenvalue characterization from Direction 1\n5. Direction 4 (Cayley-Hamilton) — deepest, requires optimal assignment theory\n\nEach direction can seed an independent research cycle with clear hypotheses, proof strategies, and",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97483b17",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:47:39.417377+00:00"
   },
   {
     "id": "fd_0266",
