@@ -87,10 +87,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3818c5e0",
     "timestamp": "2026-05-15T07:06:08.035548+00:00"
   },
   {
@@ -557,6 +557,78 @@
     "source_exp_id": "7371b140",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T14:44:04.254565+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Hypothesis Formation",
+    "description": ": State the conjecture precisely, with boundary cases and potential counterexamples identified.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "483c8105",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:03:32.897113+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Computational Exploration",
+    "description": ": Write Python/Sage code to test the conjecture on small examples, build intuition.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "483c8105",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:03:32.916823+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Proof Skeleton",
+    "description": ": Write Lean 4 definitions and sorry'd lemma statements capturing the proof architecture.",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "483c8105",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:03:32.936660+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Incremental Formalization",
+    "description": ": Prove lemmas bottom-up, starting from the simplest, validating each step.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "483c8105",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:03:32.957297+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Documentation",
+    "description": ": Maintain a running research paper alongside the formal proofs, updating with each breakthrough.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "483c8105",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:03:32.981213+00:00"
   },
   {
     "id": "fd_0126",
