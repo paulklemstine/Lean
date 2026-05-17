@@ -1332,8 +1332,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "3b534baf",
       "timestamp": "2026-05-17T19:57:55.760721+00:00"
     },
     {
@@ -1410,6 +1410,92 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.766167+00:00"
+    },
+    {
+      "id": "fd_0077",
+      "title": "Direction 1",
+      "description": "(closure operators) — extends the existing framework with minimal new definitions.",
+      "source_exp_id": "8ba485f8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T20:28:09.921911+00:00"
+    },
+    {
+      "id": "fd_0078",
+      "title": "Direction 2",
+      "description": "(affine distortion) — immediately applicable to complexity theory.",
+      "source_exp_id": "8ba485f8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T20:28:09.924569+00:00"
+    },
+    {
+      "id": "fd_0079",
+      "title": "Direction 3",
+      "description": "(category structure) — provides organizing framework for the rest.",
+      "source_exp_id": "8ba485f8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T20:28:09.926898+00:00"
+    },
+    {
+      "id": "fd_0080",
+      "title": "Direction 5",
+      "description": "(abstract interpretation) — highest applied impact.",
+      "source_exp_id": "8ba485f8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T20:28:09.928777+00:00"
+    },
+    {
+      "id": "fd_0081",
+      "title": "Direction 4",
+      "description": "(tropical-Fourier) — most technically challenging, highest novelty.",
+      "source_exp_id": "8ba485f8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T20:28:09.930273+00:00"
     }
   ],
   "pruned": []

@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,13 +34,28 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 272
+      "hue": 271
+    },
+    {
+      "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
+      "title": "Tropical Pseudorandom Generators from Orbit Expansion",
+      "domain": "Tropical Algebra / Pseudorandomness / Information Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-17T20:40:39Z",
+      "hue": 90
     }
   ],
   "edges": [],
   "domain_bridges": [
     {
       "domain_a": "Computation",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Algebra",
       "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5
