@@ -720,6 +720,91 @@
     "timestamp": "2026-05-17T06:13:19.139807+00:00"
   },
   {
+    "id": "fd_0259",
+    "title": "Tropical entropy",
+    "description": "`Φ(S) = log |S|` is the fundamental extensive variable.",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2466d1aa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:50:22.796648+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Tensorization",
+    "description": "guarantees extensivity under composition.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2466d1aa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:50:22.817188+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Data-processing",
+    "description": "ensures entropy cannot increase under processing.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2466d1aa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:50:22.839539+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Closure operators",
+    "description": "provide the dynamics (equilibration).",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2466d1aa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:50:22.862033+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Automata counting",
+    "description": "gives the statistical mechanics (partition functions).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2466d1aa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:50:22.879535+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Formula complexity",
+    "description": "gives the proof-theoretic content.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2466d1aa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T06:50:22.897271+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -897,22 +982,6 @@
   },
   {
     "id": "fd_0200",
-    "title": "Research Team Directive",
-    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "2466d1aa",
-    "timestamp": "2026-05-15T03:04:56.387897+00:00"
-  },
-  {
-    "id": "fd_0200",
     "title": "1. Confluence and Canonical Forms for Commutative-Associative Tropical Syntax",
     "description": "**Precise statement:** Extend `TropExpr` with associativity and commutativity normalization rules for `tmin` and `add`. Define `normalize_ca : TropExpr → TropExpr` that flattens nested `tmin`/`add` nodes into sorted lists of children (using a total order on `TropExpr`). Prove:\n\n```\n∀ e, eval σ (normalize_ca e) = eval σ e\n∀ e, normalize_ca (normalize_ca e) = normalize_ca e\n∀ e₁ e₂, (∀ σ, eval σ e₁ = eval σ e₂) → normalize_ca e₁ = normalize_ca e₂  -- on the AC fragment\n```\n\n**Proof strategy:** Define a canonical flattened representation (sorted lists of summands/minands). Show the flattening+sorting procedure preserves eval by commutativity and associativity of `min` and `+` over `ℝ`. Idempotence follows from the determinism of sorting. Completeness on the AC fragment requires showing that a",
     "domains": [
@@ -1020,6 +1089,24 @@
     "source_exp_id": "97644adb",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
+  },
+  {
+    "id": "fd_0225",
+    "title": "3. Adjunctions and Galois Connections Between Theories",
+    "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "67f5da38",
+    "consumed_by_exp_id": "eaecf225",
+    "timestamp": "2026-05-16T02:14:30.254922+00:00"
   },
   {
     "id": "fd_0226",
