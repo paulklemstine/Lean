@@ -191,7 +191,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.91,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "bb132674",
       "timestamp": "2026-05-17T18:48:26.949050+00:00"
     },
@@ -1874,6 +1874,111 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:29.615130+00:00"
+    },
+    {
+      "id": "fd_0102",
+      "title": "Irreducibility",
+      "description": ": Use the rational root theorem (no rational roots since ±1 are not roots) combined with factorization analysis. Alternatively, reduce mod 2 where the polynomial is irreducible (verifiable by exhaustive check over F₂), then apply Hensel-style lifting or direct irreducibility transfer.",
+      "source_exp_id": "bb132674",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:45.339479+00:00"
+    },
+    {
+      "id": "fd_0103",
+      "title": "Galois group = S₅",
+      "description": ": Two-step argument:\n   - Show Gal(f) contains a 5-cycle: f is irreducible mod 2, so the Frobenius at 2 is a 5-cycle.\n   - Show Gal(f) ⊄ A₅: the discriminant is 2869 = 19 × 151, which is not a perfect square. Formalize the connection between discriminant and the sign character.\n   - A transitive subgroup of S₅ containing a 5-cycle and not contained in A₅ must be S₅.\n\n### Dependencies\n- Mathlib: `Polynomial.Irreducible`, `Polynomial.Gal`, `Polynomial.roots`, `Finset.card`\n- New definitions needed: discriminant of a polynomial (may exist in Mathlib), Frobenius element formalization, connection between factorization mod p and cycle types\n\n### Cross-Domain Connection\n**Computational Algebra**: This would enable formally verified factorization of polynomials over ℚ, with applications to certifi",
+      "source_exp_id": "bb132674",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Bridges",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:45.342520+00:00"
+    },
+    {
+      "id": "fd_0104",
+      "title": "Cyclic groups",
+      "description": ": Use cyclotomic polynomials. Φₙ(X) has Galois group (ℤ/nℤ)* over ℚ. For prime n, this is cyclic of order n-1. Construct appropriate subfield extensions.",
+      "source_exp_id": "bb132674",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:45.344615+00:00"
+    },
+    {
+      "id": "fd_0105",
+      "title": "Dihedral groups",
+      "description": ": Use minimal polynomials of cos(2π/n), which generate extensions with dihedral Galois groups.",
+      "source_exp_id": "bb132674",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:45.346869+00:00"
+    },
+    {
+      "id": "fd_0106",
+      "title": "S₅",
+      "description": ": Use X⁵ − X − 1 (conditional on Direction 1).",
+      "source_exp_id": "bb132674",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:45.348829+00:00"
+    },
+    {
+      "id": "fd_0107",
+      "title": "General solvable groups",
+      "description": ": Use Shafarevich's theorem (much harder, probably out of reach).",
+      "source_exp_id": "bb132674",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T21:05:45.350624+00:00"
     }
   ],
   "pruned": []

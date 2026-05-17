@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -61,10 +61,27 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 90
+      "hue": 92
+    },
+    {
+      "id": "binary_search",
+      "title": "Threshold Phase Transitions in Bonus-Perturbed Finite Optimization",
+      "domain": "Bridges: Optimization Theory, Tropical Geometry, Formal Verification",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-17T21:05:54Z",
+      "hue": 270
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "source": "2_tropical_amplitude_amplification",
+      "target": "binary_search",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    }
+  ],
   "domain_bridges": [
     {
       "domain_a": "Computation",
@@ -74,6 +91,24 @@
     },
     {
       "domain_a": "Algebra",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Bridges",
+      "domain_b": "Geometry",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Bridges",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Geometry",
       "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5
