@@ -963,8 +963,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "fe53467b",
       "timestamp": "2026-05-17T18:48:26.949133+00:00"
     },
     {
@@ -2592,6 +2592,42 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:04:20.761086+00:00"
+    },
+    {
+      "id": "fd_0141",
+      "title": "Proof decomposition",
+      "description": ": Break into helper lemmas, each capturing one logical step.",
+      "source_exp_id": "c91ca14f",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:07:45.941311+00:00"
+    },
+    {
+      "id": "fd_0142",
+      "title": "Cross-domain bridge",
+      "description": ": Identify at least one concrete application outside pure mathematics.",
+      "source_exp_id": "c91ca14f",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T22:07:45.944966+00:00"
     }
   ],
   "pruned": []
