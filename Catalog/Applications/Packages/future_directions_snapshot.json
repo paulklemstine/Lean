@@ -396,20 +396,6 @@
     "timestamp": "2026-05-16T13:37:23.953786+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Extremal witness",
-    "description": ": The witness is\n   ```\n   f(x₁,...,xₙ) = ∏_{i=1}^{a} ∏_{c ∈ 𝔽_q \\ {0}} (xᵢ − c) · ∏_{j=1}^{b} (x_{a+1} − cⱼ)\n   ```\n   This vanishes on a precisely computable union of coordinate subspaces.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "38f08fce",
-    "consumed_by_exp_id": "7e59ef4a",
-    "timestamp": "2026-05-16T19:15:45.160819+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "Key challenge",
     "description": ": The fibers are no longer parallel hyperplanes in a single coordinate; the zero set has a tensor-product structure across multiple coordinates.\n\n### Formalization Target\n\n```lean\ntheorem generalized_reedMuller_min_distance\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d a b : ℕ)\n    (h_decomp : d = a * (Fintype.card 𝔽 - 1) + b)\n    (hb : b < Fintype.card 𝔽 - 1)\n    (ha : a < n) :\n    reedMullerMinWeight 𝔽 n d = (Fintype.card 𝔽 - b) * (Fintype.card 𝔽) ^ (n - 1 - a)\n```\n\n### Cross-Domain Connections\n- **Coding theory**: Completes the parameter analysis for all generalized Reed–Muller codes\n- **Algebraic geometry**: Classification of extremal hypersurfaces in finite affine space\n- **Complexity theory**: Tight soundness bounds for algebraic PCPs with arbitrary degree\n\n### Difficulty: ★★★★☆\n\n--",
@@ -586,10 +572,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0ab00abc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0c11eac",
     "timestamp": "2026-05-17T02:47:00.377245+00:00"
   },
   {
@@ -951,6 +937,63 @@
     "source_exp_id": "a54a94dd",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T03:06:58.971530+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Formalize",
+    "description": "Schwartz-Zippel and box-degree variants (Directions 2-3), validating the inductive structure.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e59ef4a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:31:40.244027+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Bridge",
+    "description": "to coding theory by proving Reed-Muller distance bounds (Direction 1), connecting to existing code distance literature.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e59ef4a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:31:40.275897+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Experiment",
+    "description": "with algebraic complexity applications (Direction 5), using computational experiments to identify the sharpest circuit lower bounds achievable from the evaluation framework.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e59ef4a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:31:40.300235+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Iterate",
+    "description": "on the framework by adding new polynomial spaces (homogeneous, sparse, multilinear) as they become relevant to applications.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e59ef4a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T03:31:40.325688+00:00"
   },
   {
     "id": "fd_0113",
