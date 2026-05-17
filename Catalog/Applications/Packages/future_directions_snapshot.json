@@ -361,20 +361,6 @@
     "timestamp": "2026-05-17T03:06:58.810934+00:00"
   },
   {
-    "id": "fd_0268",
-    "title": "Define trapdoor families",
-    "description": ": Matrices G where the graph has a known decomposition (e.g., G = L + R for lower/upper triangular L, R in the tropical sense) such that G² can be efficiently inverted given L and R.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:57:09.789412+00:00"
-  },
-  {
     "id": "fd_0277",
     "title": "Define Tropical-P",
     "description": ": Problems computable by polynomial-size tropical circuits (using min and +).",
@@ -388,83 +374,6 @@
     "source_exp_id": "60bd27bc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T06:57:09.963432+00:00"
-  },
-  {
-    "id": "fd_0284",
-    "title": "Potential quantum resistance",
-    "description": ": Since tropical operations don't involve group structure, Shor's algorithm and its variants may not apply, offering a genuinely new post-quantum direction.",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:57:10.094710+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Compositional bound",
-    "description": "Prove that $r_{\\text{global}} \\geq \\min(r_{\\text{local}}, r_{\\text{region}})$ and characterize when equality holds.\n\n### Cross-Domain Connections\n- **Tropical geometry:** Tropical rational maps, Newton polytopes\n- **Deep learning theory:** Linear region counting, expressivity\n- **Verification:** MILP-based robustness verification\n\n### Deliverables\n- Formal theorem on local-global radius relationship\n- Algorithm for computing local radii in each linear region\n- Comparison with existing deep network certification methods\n\n---\n\n## Direction 5: Tropical Barrier Functions and Interior-Point Certified Training\n\n### Hypothesis\nA log-barrier function based on the margin distances $-\\sum_{j \\neq i} \\log \\Delta_{i,j}(x_0)$ provides a smooth, strongly convex surrogate for robust training that converg",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "1d4c4fc6",
-    "timestamp": "2026-05-17T07:17:01.375346+00:00"
-  },
-  {
-    "id": "fd_0268",
-    "title": "Define tropical rank",
-    "description": "as the minimum number of tropical rank-1 matrices (outer products in the min-plus semiring) needed to represent a given matrix.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.321305+00:00"
-  },
-  {
-    "id": "fd_0269",
-    "title": "Prove a tropical analogue of the rank lower bound",
-    "description": ": if the tropical rank of the communication matrix is $r$, then any protocol requires cost at least $\\log r$.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.339028+00:00"
-  },
-  {
-    "id": "fd_0276",
-    "title": "Relate to tropical BPs",
-    "description": ": show that width-$w$, depth-$d$ BPs are equivalent to circuits of size $O(w^2 \\cdot d)$.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.503889+00:00"
   },
   {
     "id": "fd_0277",
@@ -482,75 +391,6 @@
     "timestamp": "2026-05-17T07:39:39.526079+00:00"
   },
   {
-    "id": "fd_0278",
-    "title": "Connect to Valiant's permanent-determinant conjecture",
-    "description": "via tropical geometry.\n\n### Proof Strategy\n- Use the obstruction certificate framework, but extended to circuits.\n- The tropical permanent has exponentially many \"contributing terms\" (perfect matchings).\n- Any monotone circuit computing it must \"separately handle\" each matching, requiring exponential size.\n- Formalize using the weight-function counting argument of Jerrum-Snir.\n\n### Cross-Domain Connections\n- **Algebraic complexity**: Valiant's VP vs VNP\n- **Combinatorial optimization**: matching algorithms, assignment problems\n- **Tropical geometry**: tropical Grassmannians and resultants\n\n### Expected Impact\nA formal tropical monotone circuit lower bound would be a major result in algebraic complexity theory, connecting the tropical framework to the deepest open problems in the field.\n\n--",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.556367+00:00"
-  },
-  {
-    "id": "fd_0281",
-    "title": "Connect to the Thompson-Brent area-time framework",
-    "description": "via tropical translation.\n\n### Proof Strategy\n- Use the existing width-depth tradeoff theorem as the starting point.\n- Width = bisection bandwidth = $O(\\sqrt{A})$ for 2D layouts.\n- Obstruction cost for sorting = $\\Omega(n \\log n)$ (information-theoretic).\n- Combine: $\\sqrt{A} \\cdot T \\geq n \\log n$, giving $AT^2 \\geq n^2 \\log^2 n$.\n\n### Cross-Domain Connections\n- **VLSI design**: chip layout optimization, wire congestion\n- **Parallel computing**: communication volume lower bounds\n- **Network-on-chip**: routing and congestion for multi-core systems\n\n### Expected Impact\nTropical VLSI lower bounds would provide physically meaningful cost measures that align with actual chip design constraints, going beyond purely combinatorial models.\n\n---\n\n## Direction 5: Tropical Information Complexity and ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.625723+00:00"
-  },
-  {
-    "id": "fd_0284",
-    "title": "Define tropical mutual information",
-    "description": "and prove it lower-bounds tropical communication complexity.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.690111+00:00"
-  },
-  {
-    "id": "fd_0285",
-    "title": "Prove a tropical Fano inequality",
-    "description": "bounding error probability in terms of tropical entropy.\n\n### Proof Strategy\n- Use Maslov's dequantization framework to derive tropical information measures as limits of classical ones.\n- The data-processing inequality should follow from the monotonicity of tropical matrix composition.\n- Connect to existing work on idempotent probability and min-plus measure theory.\n\n### Cross-Domain Connections\n- **Information theory**: channel capacity, rate-distortion\n- **Statistical physics**: free energy, Gibbs measures\n- **Optimal transport**: Kantorovich duality, Wasserstein distances\n- **Machine learning**: information bottleneck method\n\n### Expected Impact\nA tropical information theory would provide a fundamentally new way to reason about optimization and decision-making under constraints, with ap",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:39:39.747782+00:00"
-  },
-  {
     "id": "fd_0258",
     "title": "Lasota-Yorke inequality:",
     "description": "Establish a Lasota-Yorke inequality for L on BV or Lipschitz spaces. Use the entry growth bound `berggren_entry_growth_bound` to control distortion of inverse branches.",
@@ -563,23 +403,6 @@
     "source_exp_id": "1ba249c5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T08:59:36.602974+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Doeblin condition:",
-    "description": "Verify a Doeblin-type mixing condition using the Lorentz spectral identity SᵀQS = diag(1,1,-9) to show that iterates of L spread mass.\n\n### Cross-Domain Connection\nThis connects Berggren dynamics to the **thermodynamic formalism** of Ruelle, Bowen, and Sinai. The transfer operator is the \"partition function\" of the Berggren dynamical system, and the spectral gap controls the rate of approach to equilibrium — a phase transition result for primitive Pythagorean triples.\n\n---\n\n## Direction 2: Nonbacktracking Ramanujan Refinement\n\n### Goal\nReplace the simple random walk on K₃ with the nonbacktracking walk on the Berggren tree, and prove a Ramanujan-type bound for the resulting operator. The nonbacktracking walk avoids returning to the previous node, which should give a sharper spectral gap.\n\n#",
-    "domains": [
-      "Physics",
-      "Pythagorean",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1ba249c5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:59:36.640293+00:00"
   },
   {
     "id": "fd_0261",
@@ -677,66 +500,91 @@
     "timestamp": "2026-05-17T08:59:36.784603+00:00"
   },
   {
-    "id": "fd_0267",
-    "title": "Impagliazzo-Wigderson framework:",
-    "description": "If the spectral gap is strong enough, apply the Impagliazzo-Wigderson paradigm to show that BPP-type algorithms for Pythagorean properties can be derandomized under standard hardness assumptions.",
+    "id": "fd_0270",
+    "title": "Phase 4:",
+    "description": "Extend to deep networks using layer-wise barrier decomposition.\n\n**Key challenge:** The barrier terms become infinite at activation boundaries (where neurons switch). Use ε-smoothing: replace log|z| with log(|z| + ε) and anneal ε during training.\n\n**Concrete next step:** Train a 2-layer network on MNIST with the barrier loss, measure certified accuracy at ε = 0.1 (L∞), and compare against PGD adversarial training and TRADES.\n\n**Expected impact:** State-of-the-art certified accuracy via a principled optimization objective.\n\n---\n\n## Direction 3: Tropical-MILP Hybrid Verifiers with Completeness Certificates\n\n### Problem Statement\nBuild a verification system that uses cheap tropical/affine certificates as a preprocessing step for MILP, with provable completeness guarantees.\n\n### Current State\n",
     "domains": [
-      "Pythagorean",
+      "Tropical",
       "Algebra"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1ba249c5",
+    "source_exp_id": "1d4c4fc6",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:59:36.803181+00:00"
+    "timestamp": "2026-05-17T10:32:08.586511+00:00"
   },
   {
-    "id": "fd_0268",
-    "title": "Square lattice:",
-    "description": "Define directional compressions along the two principal axes. The proof is simpler because there are only 2 directions (vs. 3 for hex), but the optimal shapes have a different symmetry group.",
-    "domains": [
-      "Cryptography",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f9d525d9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T09:12:55.125719+00:00"
-  },
-  {
-    "id": "fd_0269",
-    "title": "Triangular lattice:",
-    "description": "Define compressions along 3 directions. The combinatorics are similar to the hex case but with different fiber structures.\n3. Develop a unified framework that parameterizes the lattice geometry and derives stability from abstract compression properties.\n\n### Cross-Domain Connections\n- **Tropical geometry:** Wulff shapes on lattices correspond to Newton polytopes of tropical polynomials. Stability of Wulff shapes translates to stability of tropical varieties.\n- **Discrete optimal transport:** The symmetric-difference bound is a zeroth-order transport bound. Upgrading to a first-order bound (actual transport distance) would connect to discrete Monge-Kantorovich theory.\n\n### Estimated Difficulty: Medium-Hard\nThe square lattice case should be easier than the hex case. The triangular case requi",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f9d525d9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T09:12:55.159680+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Builds the prerequisites bottom-up",
-    "description": "before attacking the main theorem",
+    "id": "fd_0271",
+    "title": "Upper bound:",
+    "description": "Use packing arguments. N regions in a bounded domain have average diameter O(1/N^{1/n}), so the region radius is at most this.",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "37f474ef",
+    "source_exp_id": "1d4c4fc6",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T09:27:32.884053+00:00"
+    "timestamp": "2026-05-17T10:32:08.605086+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Tighter analysis:",
+    "description": "For networks with specific architectures (e.g., width m, depth L), relate N to m and L, and propagate to robustness bounds.\n\n**Key lemma to prove:** For a single-hidden-layer ReLU network with m neurons:\n- Maximum number of regions: O(mⁿ)\n- Average region radius in the unit ball: Ω(1/m)\n- Therefore: average compositional radius ≥ Ω(1/m)\n\n**Concrete next step:** Prove the single-hidden-layer bound formally. Extend to depth 2 and compare with experimental measurements.\n\n**Expected impact:** First provable expressivity-robustness tradeoff theorem with explicit constants.\n\n---\n\n## Direction 5: Certified Robustness as a Sheaf on Polyhedral Complexes\n\n### Problem Statement\nModel the compositional certificate structure as a sheaf on the polyhedral complex of linear regions, and use sheaf cohomolo",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1d4c4fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:32:08.642917+00:00"
+  },
+  {
+    "id": "fd_0277",
+    "title": "Global section:",
+    "description": "a global certified radius is a global section of F.\n\n**Key insight:** H¹(X, F) ≠ 0 indicates that local certificates cannot be glued into a global one—there are topological obstructions to robustness. These correspond to \"adversarial cycles\": paths through the polyhedral complex that gradually reduce the margin.\n\n**Concrete next step:**\n1. Compute the polyhedral complex for small networks (2D input, 2–4 neurons).\n2. Construct the robustness sheaf explicitly.\n3. Compute H⁰ and H¹ and interpret in terms of adversarial vulnerability.\n\n**Expected impact:** A topological invariant of neural network robustness, connecting to persistent homology and TDA.\n\n---\n\n## Cross-Cutting Themes\n\n### Computational Complexity\nAll five directions share the question: what is the complexity of computing the exac",
+    "domains": [
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1d4c4fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:32:08.719383+00:00"
+  },
+  {
+    "id": "fd_0279",
+    "title": "Direction 2 (Interior-point training):",
+    "description": "Most impactful for practitioners, but requires careful engineering.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1d4c4fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:32:08.757175+00:00"
+  },
+  {
+    "id": "fd_0280",
+    "title": "Direction 4 (Expressivity-robustness):",
+    "description": "Most theoretically significant, could establish a new subfield.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1d4c4fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T10:32:08.779125+00:00"
   },
   {
     "id": "fd_0113",
@@ -1344,24 +1192,6 @@
     "timestamp": "2026-05-17T02:00:26.770253+00:00"
   },
   {
-    "id": "fd_0268",
-    "title": "Direction 4: Certified Security Scaling Laws",
-    "description": "**Hypothesis:** For tropical classifiers/cryptosystems with dimension-dependent parameters, the certified perturbation radius admits explicit asymptotic bounds as a function of dimension.\n\n**Formal Target:**\n\n```\ntheorem certified_radius_scaling\n  (n : ℕ) (K C : ℕ)\n  (score : Fin C → TropicalAffineForm (Fin n))\n  (hK : ∀ c, (score c).numTerms = K)\n  (hnorm : ∀ c k, ‖(score c).slopes k‖₁ ≤ α * √n) :\n  certifiedRadius score c₀ x ≥ margin / (2 * α * √n)\n```\n\n**Proof Strategy:**\n1. The Lipschitz constant of each score is bounded by α·√n (by hypothesis on slope norms).\n2. The certified radius is margin/(2L) ≥ margin/(2α√n).\n3. For random classifiers, the margin concentrates around a dimension-independent constant (by central limit theorem arguments on the max of independent linear forms).\n4. Th",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "29a487a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:38:03.464075+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Direction 3: Certified Tropical Matrix Algebra",
     "description": "**Hypothesis:** The scalar-level reflection tactic can be lifted to matrix expressions over the tropical semiring, enabling automated proofs of tropical matrix identities and spectral properties.\n\n**Proof Strategy:**\n1. Define `TropMatExpr` as matrices of `CTropExpr` entries.\n2. Implement tropical matrix multiplication: `(A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})`.\n3. Lift `normalize_ca` entry-wise and prove that normalized matrix equality implies semantic equality.\n4. For spectral properties: formalize the tropical eigenvalue as the minimum cycle mean in the associated weighted digraph. Prove that `tr(A^n)/n → λ(A)` tropically.\n5. Connect to the existing `MinPlusSpectral.lean` infrastructure.\n\n**Impact:** Tropical matrix algebra is the computational engine behind:\n- Shortest-path algorithms (",
@@ -1380,26 +1210,6 @@
     "timestamp": "2026-05-17T07:35:53.303086+00:00"
   },
   {
-    "id": "fd_0268",
-    "title": "Direction 5: Piecewise-Linear Neural Network Verification",
-    "description": "**Hypothesis:** Since tropical polynomials compute piecewise-linear functions (specifically, pointwise minima of affine functions), the tropical reflection tactic can serve as a backend for verifying properties of ReLU neural networks.\n\n**Proof Strategy:**\n1. A ReLU network with one hidden layer computes `f(x) = max(0, Wx + b)`, which is a tropical rational function.\n2. Formalize the correspondence: every piecewise-linear function on ℝⁿ with integer slopes is a tropical rational function (Theorem of [Tropical Geometry literature]).\n3. Verification queries like \"does `f(x) = g(x)` for all x in a tropical polytope?\" reduce to tropical polynomial identity checking in the restricted fragment.\n4. Use the reflection tactic to discharge these identities automatically.\n5. Extend to compositional r",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "df23c5f9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:35:53.355833+00:00"
-  },
-  {
     "id": "fd_0254",
     "title": "1. Weighted Tropical Extension over ℝ",
     "description": "**Goal:** Extend the simulation theorem from `WithTop ℕ` to `WithTop ℝ` or the extended tropical semiring ℝ ∪ {-∞}.\n\n**Theorem target:**\n```\ntheorem weighted_bp_to_tropical_circuit_real\n    (w d : ℕ) (P : WeightedBP w d ℝ) :\n    ∃ C : TropicalCircuitR,\n      C.opCount ≤ 2 * w * w * d + w ∧\n      ∀ x, tropEvalCircuit C x = tropEvalBP P x\n```\n\n**Strategy:** The algebraic structure of the proof is identical — only the coefficient ring changes. The key challenge is handling `WithTop ℝ` (or `EReal`) arithmetic in Lean, particularly the interaction of `⊤` with addition. Use Mathlib's `EReal` or `WithTop ℝ` infrastructure and verify that `inf` and `+` distribute correctly.\n\n**Cross-domain connection:** This connects to tropical algebraic geometry, where tropical polynomials are piecewise-linear f",
@@ -1412,10 +1222,10 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0db29d83",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d2f8cf4",
     "timestamp": "2026-05-17T08:12:18.202360+00:00"
   },
   {
@@ -1490,22 +1300,6 @@
     "timestamp": "2026-05-17T08:12:18.293148+00:00"
   },
   {
-    "id": "fd_0259",
-    "title": "6. Tropical Neural Network Connections",
-    "description": "**Goal:** Show that ReLU neural networks are tropical circuits, and use the simulation theorem to relate network architecture to branching program complexity.\n\n**Approach:**\n1. Formalize that ReLU(x) = max(0, x) is a tropical gate (max-plus operation).\n2. Show that a ReLU network with L layers and width W is a tropical circuit of depth L and width W.\n3. Apply the reverse simulation to get a tropical BP of width ≤ 2^W and depth L.\n4. Conclude: any function computable by a width-W, depth-L ReLU network is computable by a tropical BP of width 2^W and depth L.\n\n**Implication:** Lower bounds on tropical BP width directly translate to lower bounds on ReLU network width, providing a new tool for understanding neural network expressiveness.\n\n---",
-    "domains": [
-      "Tropical",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0db29d83",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:12:18.312033+00:00"
-  },
-  {
     "id": "fd_0261",
     "title": "Key Lean Targets",
     "description": "- Generalize `facetDist` with a `NormedSpace` parameter and dual norm.\n- Prove `facetDist_certifies_robustness` for the general case using the abstract Hahn–Banach inequality in Mathlib.\n- Instantiate for L1, L2, L∞ with explicit dual norm computations.",
@@ -1574,41 +1368,6 @@
     "source_exp_id": "740c7329",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T08:20:23.598132+00:00"
-  },
-  {
-    "id": "fd_0268",
-    "title": "Direction 1: Tropical Schur Complement for Network Decomposition",
-    "description": "**Hypothesis**: The tropical (min-plus) analogue of the Schur complement provides an exact formula for eliminating internal vertices from a network, reducing the all-pairs shortest-path problem to smaller subproblems.\n\n**Proof Strategy**:\n1. Define the tropical Schur complement: for a partitioned matrix W = [[A, B], [C, D]], define S = A ⊕ B ⊗ D* ⊗ C where D* is the tropical closure of D.\n2. Prove that S gives exact shortest-path distances among the \"boundary\" vertices of the first block.\n3. Show that Schur complementation preserves the no-negative-cycle condition.\n4. Prove a tropical analogue of the matrix determinant lemma for rank-1 updates.\n\n**Cross-Domain Connections**: Gaussian elimination in tropical linear algebra; hierarchical decomposition in graph algorithms (nested dissection);",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cd4e7fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:21:58.027309+00:00"
-  },
-  {
-    "id": "fd_0269",
-    "title": "Direction 2: Boundary Rigidity for Series-Parallel Networks",
-    "description": "**Hypothesis**: For series-parallel networks with positive edge weights, the boundary distance matrix uniquely determines the network up to isomorphism. This extends the tree case to a richer graph class.\n\n**Proof Strategy**:\n1. Prove that series-parallel networks have bounded treewidth (treewidth ≤ 2).\n2. Show that the tropical Schur complement decomposes series-parallel networks into series and parallel compositions.\n3. Prove that each decomposition step is uniquely recoverable from boundary distances.\n4. Use induction on the decomposition tree to establish global uniqueness.\n\n**Cross-Domain Connections**: Phylogenetic tree reconstruction from distance matrices; electrical network tomography (recovering resistor values from boundary measurements); the Gel'fand inverse problem.\n\n**Concret",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9cd4e7fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:21:58.047847+00:00"
   },
   {
     "id": "fd_0260",
