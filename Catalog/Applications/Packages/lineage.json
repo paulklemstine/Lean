@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "coupling_argument",
@@ -88,7 +88,16 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 270
+      "hue": 101
+    },
+    {
+      "id": "langlands_correspondence_gl1_case",
+      "title": "GL(1) Langlands Correspondence over ℚ: Formal Verification of Abelian Class Field Theory",
+      "domain": "Algebraic Number Theory / Langlands Program",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-17T22:01:32Z",
+      "hue": 271
     }
   ],
   "edges": [
