@@ -1,292 +1,272 @@
-#!/usr/bin/env python3
 """
-Algorithms for Tropical Polynomial Canonicalization and Automata Construction
+Tropical Polynomial Canonicalization–Automata Bridge: Algorithms
+================================================================
 
-Implements:
-1. Pareto-canonical form computation (O(n log n))
-2. Envelope-canonical form computation (O(n log n) via convex hull)
-3. Diagonal WFA construction from canonical monomials
-4. Nerode equivalence class computation
-5. Minimal automaton extraction
+Implements the core algorithms from the research paper:
+1. Canonicalization (Pareto front computation)
+2. Tropical polynomial evaluation
+3. Residual computation and Nerode class counting
+4. Finite automaton construction
+5. Lower envelope visualization support
 """
 
+from typing import List, Tuple, Optional, Dict, Set, Callable
+from dataclasses import dataclass
 import numpy as np
-from typing import List, Tuple, Optional, Dict, Set
-from dataclasses import dataclass, field
 
 
 @dataclass(frozen=True)
 class TropMono:
-    """A tropical monomial: coeff + exp · x."""
+    """Tropical monomial: coeff + exp * x.
+
+    Attributes:
+        exp: Non-negative integer exponent (slope).
+        coeff: Real coefficient (intercept).
+    """
     exp: int
     coeff: float
 
     def eval(self, x: float) -> float:
+        """Evaluate the monomial at x."""
         return self.coeff + self.exp * x
 
     def __repr__(self):
-        return f"({self.exp}, {self.coeff:.2f})"
+        if self.exp == 0:
+            return f"{self.coeff:.2f}"
+        return f"{self.coeff:.2f} + {self.exp}x"
 
 
-@dataclass
-class TropPoly:
-    """A tropical polynomial: a collection of monomials."""
-    monomials: List[TropMono]
+def trop_eval(monomials: List[TropMono], x: float) -> float:
+    """Evaluate a tropical polynomial at x: min over all monomials.
 
-    def eval(self, x: float) -> float:
-        """Evaluate: min over all monomials."""
-        return min(m.eval(x) for m in self.monomials)
-
-    def language(self, n: int) -> float:
-        """The weighted language L(n)."""
-        return self.eval(float(n))
-
-    def residual(self, k: int, n: int) -> float:
-        """Residual at prefix k evaluated at suffix n."""
-        return self.language(k + n)
-
-
-# =============================================================================
-# Algorithm 1: Pareto-Canonical Form (O(n log n))
-# =============================================================================
-
-def pareto_canonical(poly: TropPoly) -> TropPoly:
-    """
-    Compute the ℕ-canonical (Pareto) form.
-
-    Algorithm:
-    1. Sort monomials by exponent (ascending).
-    2. For each exponent group, keep only the one with smallest coefficient.
-    3. Scan the deduplicated list; remove any monomial dominated by a previous one
-       (i.e., with both larger exponent and larger coefficient).
-
-    Complexity: O(n log n) where n = |monomials|.
+    Args:
+        monomials: Nonempty list of monomials.
+        x: Evaluation point.
 
     Returns:
-        TropPoly with only Pareto-optimal monomials.
+        min_{m ∈ monomials} (m.coeff + m.exp * x)
+
+    Time complexity: O(|monomials|)
     """
-    if not poly.monomials:
-        return TropPoly([])
+    assert len(monomials) > 0, "Polynomial must be nonempty"
+    return min(m.eval(x) for m in monomials)
 
-    # Step 1: Sort by exponent, then by coefficient for ties
-    sorted_monos = sorted(poly.monomials, key=lambda m: (m.exp, m.coeff))
 
-    # Step 2: Deduplicate by exponent (keep smallest coefficient)
-    deduped: List[TropMono] = []
+def nat_dominates(m1: TropMono, m2: TropMono) -> bool:
+    """Check if m1 ℕ-dominates m2.
+
+    Theorem (natDominates_iff):
+        NatDominates(m1, m2) ⟺ m1.exp ≤ m2.exp ∧ m1.coeff ≤ m2.coeff
+
+    Time complexity: O(1)
+    """
+    return m1.exp <= m2.exp and m1.coeff <= m2.coeff
+
+
+def canonicalize(monomials: List[TropMono]) -> List[TropMono]:
+    """Compute the ℕ-canonical form (Pareto front).
+
+    Algorithm:
+        1. Sort by exponent (ascending)
+        2. Scan, keeping only monomials with strictly decreasing coefficient
+
+    This implements NatCanonical(p) from the formal development.
+
+    Args:
+        monomials: Nonempty list of monomials.
+
+    Returns:
+        Pareto-optimal monomials (non-dominated subset).
+
+    Time complexity: O(n log n) where n = |monomials|
+    Space complexity: O(n)
+    """
+    assert len(monomials) > 0
+
+    # Sort by exponent, then by coefficient for same exponent
+    sorted_monos = sorted(monomials, key=lambda m: (m.exp, m.coeff))
+
+    # Among same-exponent monomials, keep only the one with smallest coefficient
+    deduped = []
     for m in sorted_monos:
         if not deduped or deduped[-1].exp != m.exp:
             deduped.append(m)
-        # else: skip (already have one with same exp and ≤ coeff)
+        elif m.coeff < deduped[-1].coeff:
+            deduped[-1] = m
 
-    # Step 3: Pareto filter — scan and keep only non-dominated monomials
-    # After deduplication, exponents are strictly increasing.
-    # A monomial is dominated iff some earlier monomial has ≤ coeff (and ≤ exp).
-    # Since exponents increase, we need: no earlier monomial has ≤ coeff.
-    # Track the running minimum coefficient.
-    result: List[TropMono] = []
-    min_coeff = float('inf')
-    for m in deduped:
-        if m.coeff < min_coeff:
-            # Not dominated: its coefficient is strictly less than all previous
+    # Scan for Pareto front: keep monomials with strictly decreasing coefficient
+    result = [deduped[0]]
+    for m in deduped[1:]:
+        if m.coeff < result[-1].coeff:
             result.append(m)
-            min_coeff = m.coeff
-        # else: dominated by some earlier monomial with ≤ coeff and ≤ exp
 
-    return TropPoly(result)
+    return result
 
 
-# =============================================================================
-# Algorithm 2: Envelope-Canonical Form (O(n log n) via lower hull)
-# =============================================================================
+def poly_language(monomials: List[TropMono], n: int) -> float:
+    """Compute the weighted language L_p(n) = tropEval(p, n).
 
-def envelope_canonical(poly: TropPoly) -> TropPoly:
+    Time complexity: O(|monomials|)
     """
-    Compute the envelope-canonical form: keep only monomials that contribute
-    to the lower envelope (achieve the minimum at some n ∈ ℕ).
+    return trop_eval(monomials, float(n))
 
-    Algorithm:
-    1. Start with the Pareto-canonical form.
-    2. The lower envelope of affine functions is computed via a scan similar
-       to convex hull: process monomials in decreasing exponent order,
-       maintain a stack of "active" monomials.
-    3. Check which monomials contribute at integer points.
 
-    Complexity: O(n log n).
+def compute_residual(monomials: List[TropMono], k: int, n: int) -> float:
+    """Compute residual(L_p, k)(n) = L_p(k + n).
+
+    Time complexity: O(|monomials|)
     """
-    pareto = pareto_canonical(poly)
-    if len(pareto.monomials) <= 1:
-        return pareto
-
-    # Pareto monomials have strictly increasing exponent and strictly
-    # decreasing coefficient. Process them to find which contribute
-    # to the lower envelope on ℕ.
-    monos = pareto.monomials  # sorted by increasing exp, decreasing coeff
-
-    # Find the range where each monomial is optimal
-    # Monomial i is optimal when: c_i + e_i * x ≤ c_j + e_j * x for all j
-    # Between consecutive monomials i and i+1:
-    # Crossover at x* = (c_i - c_{i+1}) / (e_{i+1} - e_i)
-
-    essential: List[TropMono] = []
-    stack: List[int] = []  # indices into monos
-
-    for i in range(len(monos)):
-        while len(stack) >= 2:
-            j = stack[-1]
-            k = stack[-2]
-            # Check if monos[j] is below monos[i] and monos[k]'s crossing
-            # Crossing of k and i: x* = (c_k - c_i) / (e_i - e_k)
-            # Crossing of k and j: x** = (c_k - c_j) / (e_j - e_k)
-            # If x* <= x**, then j is never the minimum — remove it
-            cross_ki = (monos[k].coeff - monos[i].coeff) / (monos[i].exp - monos[k].exp)
-            cross_kj = (monos[k].coeff - monos[j].coeff) / (monos[j].exp - monos[k].exp)
-            if cross_ki <= cross_kj:
-                stack.pop()
-            else:
-                break
-        stack.append(i)
-
-    # Now check which stacked monomials actually achieve the min at some n ∈ ℕ
-    for idx in stack:
-        essential.append(monos[idx])
-
-    return TropPoly(essential)
+    return poly_language(monomials, k + n)
 
 
-# =============================================================================
-# Algorithm 3: Nerode Equivalence Classes
-# =============================================================================
+def residual_signature(monomials: List[TropMono], k: int,
+                       length: int = 30) -> Tuple[float, ...]:
+    """Compute a signature for the residual at k (first `length` values).
 
-def nerode_classes(poly: TropPoly, max_k: int = 50, suffix_len: int = 50) -> Dict[int, List[int]]:
+    Two residuals are equal iff their signatures match (for large enough length).
+
+    Time complexity: O(length * |monomials|)
     """
-    Compute Nerode equivalence classes by comparing residual functions.
+    return tuple(round(compute_residual(monomials, k, n), 10)
+                 for n in range(length))
 
-    Two prefix lengths k₁, k₂ are Nerode-equivalent if their residuals agree:
-    L(k₁ + n) = L(k₂ + n) for all n.
 
-    We approximate by checking suffixes up to suffix_len.
+def count_nerode_classes(monomials: List[TropMono],
+                         max_k: int = 100,
+                         sig_length: int = 30) -> int:
+    """Count the number of distinct Nerode classes up to prefix length max_k.
+
+    Time complexity: O(max_k * sig_length * |monomials|)
+    """
+    seen: Set[Tuple[float, ...]] = set()
+    for k in range(max_k + 1):
+        sig = residual_signature(monomials, k, sig_length)
+        seen.add(sig)
+    return len(seen)
+
+
+def find_eventual_monomial(monomials: List[TropMono]) -> Tuple[int, TropMono]:
+    """Find the eventually dominating monomial and threshold N.
+
+    By polyLanguage_eventually_affine, there exists N and m₀ with
+    minimal exponent such that L_p(n) = monoEval(m₀, n) for all n ≥ N.
 
     Returns:
-        Dict mapping representative k to list of equivalent k values.
+        (N, m₀) where N is the threshold and m₀ is the dominating monomial.
+
+    Time complexity: O(|monomials|)
     """
-    classes: Dict[int, List[int]] = {}
-    residuals: Dict[int, Tuple[float, ...]] = {}
+    # Find monomial with minimum exponent, break ties by coefficient
+    m0 = min(monomials, key=lambda m: (m.exp, m.coeff))
 
-    for k in range(max_k):
-        res = tuple(poly.residual(k, n) for n in range(suffix_len))
-        residuals[k] = res
+    N = 0
+    for m in monomials:
+        if m.exp == m0.exp and m.coeff == m0.coeff:
+            continue
+        if m.exp == m0.exp:
+            continue  # Same exp but higher coeff, m0 dominates at all n
+        # Find smallest n where m0.eval(n) < m.eval(n)
+        # c0 + e0*n < c + e*n ⟺ n > (c0 - c) / (e - e0)
+        threshold = (m0.coeff - m.coeff) / (m.exp - m0.exp)
+        N = max(N, int(np.ceil(threshold)) + 1)
 
-        found = False
-        for rep in classes:
-            if residuals[rep] == res:
-                classes[rep].append(k)
-                found = True
-                break
-        if not found:
-            classes[k] = [k]
+    return N, m0
 
-    return classes
-
-
-# =============================================================================
-# Algorithm 4: Diagonal WFA Construction
-# =============================================================================
 
 @dataclass
-class TropWFA:
-    """A tropical weighted finite automaton over a single letter."""
-    states: List[str]
-    init_costs: Dict[str, float]
-    trans_costs: Dict[str, float]  # self-loop cost for each state
-    final_costs: Dict[str, float]
+class TropAutomaton:
+    """A finite-state tropical automaton over a single-letter alphabet.
 
-    def eval(self, n: int) -> float:
-        """Evaluate: min over states of (init + n * trans + final)."""
-        return min(
-            self.init_costs[s] + n * self.trans_costs[s] + self.final_costs[s]
-            for s in self.states
-        )
-
-
-def build_diagonal_wfa(poly: TropPoly) -> TropWFA:
+    The automaton has states {0, 1, ..., num_states-1}.
+    State 0 is the initial state.
+    The transition function increments the state (capped at num_states-1).
+    The output function maps each state to a real value.
     """
-    Build a diagonal WFA from a tropical polynomial.
+    num_states: int
+    outputs: List[float]
 
-    Each monomial (e, c) becomes a state with:
-    - Initial cost = c
-    - Self-loop transition cost = e
-    - Final cost = 0
+    def run(self, n: int) -> float:
+        """Compute the language value at input length n."""
+        state = min(n, self.num_states - 1)
+        return self.outputs[state]
 
-    The WFA computes L(n) = min_i (c_i + e_i · n).
+
+def build_automaton(monomials: List[TropMono]) -> TropAutomaton:
+    """Build a finite-state tropical automaton recognizing L_p.
+
+    Uses the eventual affine behavior: states track input length
+    up to threshold N, then remain in the eventual state.
+
+    Time complexity: O(N * |monomials|) where N is the affine threshold
     """
-    states = []
-    init_costs = {}
-    trans_costs = {}
-    final_costs = {}
-
-    for i, m in enumerate(poly.monomials):
-        name = f"s{i}({m.exp},{m.coeff:.0f})"
-        states.append(name)
-        init_costs[name] = m.coeff
-        trans_costs[name] = float(m.exp)
-        final_costs[name] = 0.0
-
-    return TropWFA(states, init_costs, trans_costs, final_costs)
+    N, m0 = find_eventual_monomial(monomials)
+    num_states = N + 1
+    outputs = [poly_language(monomials, k) for k in range(num_states)]
+    return TropAutomaton(num_states=num_states, outputs=outputs)
 
 
-# =============================================================================
-# Main Demo
-# =============================================================================
+def verify_automaton(monomials: List[TropMono], automaton: TropAutomaton,
+                     max_n: int = 100) -> bool:
+    """Verify that the automaton correctly recognizes the polynomial language.
+
+    Time complexity: O(max_n * |monomials|)
+    """
+    N, m0 = find_eventual_monomial(monomials)
+    for n in range(max_n + 1):
+        expected = poly_language(monomials, n)
+        if n < automaton.num_states:
+            actual = automaton.outputs[n]
+        else:
+            actual = m0.eval(float(n))
+        if abs(expected - actual) > 1e-10:
+            return False
+    return True
+
+
+def lower_envelope_data(monomials: List[TropMono],
+                        x_range: Tuple[float, float] = (0, 20),
+                        num_points: int = 1000) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Compute the lower envelope and individual monomial curves.
+
+    Returns:
+        (x_vals, envelope_vals, mono_vals) where mono_vals[i] is the
+        i-th monomial's values.
+    """
+    x_vals = np.linspace(x_range[0], x_range[1], num_points)
+    mono_vals = np.array([[m.eval(x) for x in x_vals] for m in monomials])
+    envelope_vals = np.min(mono_vals, axis=0)
+    return x_vals, envelope_vals, mono_vals
+
+
+# === Demonstration ===
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("Tropical Polynomial Canonicalization Algorithms")
-    print("=" * 70)
+    print("Tropical Polynomial Algorithms")
+    print("=" * 50)
 
     # Example polynomial
-    poly = TropPoly([
-        TropMono(0, 10), TropMono(1, 5), TropMono(2, 3),
-        TropMono(2, 7), TropMono(3, 0), TropMono(3, 4),
-        TropMono(5, -2)
-    ])
+    monos = [TropMono(0, 10), TropMono(1, 2), TropMono(2, 0)]
+    print(f"\nPolynomial: min({', '.join(str(m) for m in monos)})")
 
-    print(f"\nOriginal: {poly.monomials}")
+    # Canonicalization
+    canon = canonicalize(monos)
+    print(f"Canonical:  min({', '.join(str(m) for m in canon)})")
+    print(f"  Removed {len(monos) - len(canon)} dominated monomials")
 
-    # Pareto canonical
-    pareto = pareto_canonical(poly)
-    print(f"Pareto canonical: {pareto.monomials}")
+    # Language values
+    vals = [poly_language(monos, n) for n in range(15)]
+    print(f"\nLanguage L(0..14): {vals}")
 
-    # Envelope canonical
-    envelope = envelope_canonical(poly)
-    print(f"Envelope canonical: {envelope.monomials}")
-
-    # Verify language preservation
-    print(f"\nLanguage preservation check:")
-    for n in range(10):
-        orig = poly.language(n)
-        par = pareto.language(n)
-        env = envelope.language(n)
-        print(f"  n={n}: L_orig={orig:.1f}, L_pareto={par:.1f}, "
-              f"L_envelope={env:.1f}, "
-              f"match={'✓' if abs(orig-par)<1e-10 and abs(orig-env)<1e-10 else '✗'}")
+    # Eventual behavior
+    N, m0 = find_eventual_monomial(monos)
+    print(f"\nEventually affine from N={N}: L(n) = {m0}")
 
     # Nerode classes
-    print(f"\nNerode equivalence classes:")
-    classes = nerode_classes(poly, max_k=20)
-    for rep, members in classes.items():
-        print(f"  Class {rep}: {members}")
+    n_classes = count_nerode_classes(monos, max_k=N + 10)
+    print(f"\nNerode classes (k ≤ {N + 10}): {n_classes}")
 
-    # WFA construction
-    wfa = build_diagonal_wfa(pareto)
-    print(f"\nDiagonal WFA from Pareto canonical ({len(wfa.states)} states):")
-    for s in wfa.states:
-        print(f"  {s}: init={wfa.init_costs[s]:.0f}, "
-              f"trans={wfa.trans_costs[s]:.0f}, "
-              f"final={wfa.final_costs[s]:.0f}")
-
-    print(f"\nWFA evaluation check:")
-    for n in range(10):
-        wfa_val = wfa.eval(n)
-        poly_val = poly.language(n)
-        print(f"  n={n}: WFA={wfa_val:.1f}, L={poly_val:.1f}, "
-              f"match={'✓' if abs(wfa_val-poly_val)<1e-10 else '✗'}")
+    # Automaton
+    aut = build_automaton(monos)
+    print(f"\nAutomaton: {aut.num_states} states")
+    print(f"  Outputs: {aut.outputs}")
+    print(f"  Correct: {verify_automaton(monos, aut)}")

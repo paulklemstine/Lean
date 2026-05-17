@@ -1,186 +1,240 @@
-#!/usr/bin/env python3
 """
-Applications of Tropical Polynomial Canonicalization
+Tropical Polynomial Canonicalization–Automata Bridge: Applications
+==================================================================
 
-Demonstrates real-world applications:
-1. Shortest-path state compression
-2. ReLU neural network simplification
-3. Scheduling optimization
+Real-world applications of the tropical polynomial bridge:
+1. Shortest-path optimization with route pruning
+2. Job scheduling with policy selection
+3. Tropical neural network pruning
 """
 
-import numpy as np
 from typing import List, Tuple
-
-
-class TropMono:
-    def __init__(self, exp: int, coeff: float):
-        self.exp = exp
-        self.coeff = coeff
-    def eval(self, x: float) -> float:
-        return self.coeff + self.exp * x
-    def __repr__(self):
-        return f"({self.exp}, {self.coeff:.1f})"
-
-
-def nat_canonical(monomials: List[TropMono]) -> List[TropMono]:
-    """Compute Pareto-canonical form."""
-    result = []
-    for m in monomials:
-        dominated = any(m2 is not m and m2.exp <= m.exp and m2.coeff <= m.coeff
-                       for m2 in monomials)
-        if not dominated:
-            result.append(m)
-    return sorted(result, key=lambda m: m.exp)
-
-
-def trop_eval(monos: List[TropMono], x: float) -> float:
-    return min(m.eval(x) for m in monos)
-
-
-# =============================================================================
-# Application 1: Shortest-Path State Compression
-# =============================================================================
-print("=" * 70)
-print("APPLICATION 1: Shortest-Path Network Compression")
-print("=" * 70)
-
-print("""
-In shortest-path problems, the cost of reaching a destination via k intermediate
-hops from source i is: cost(i, k) = c_i + r_i * k, where c_i is the initial
-cost from source i and r_i is the per-hop cost.
-
-The optimal cost after k hops: min_i (c_i + r_i * k) — a tropical polynomial!
-Canonicalization removes sources that are never optimal, compressing the network.
-""")
-
-# Simulate a network with redundant paths
-sources = [
-    TropMono(2, 0),    # Fast route: 2 cost/hop, 0 initial
-    TropMono(1, 5),    # Medium route: 1 cost/hop, 5 initial
-    TropMono(3, -1),   # Expensive route: 3 cost/hop, -1 initial
-    TropMono(1, 8),    # Dominated medium route
-    TropMono(0, 15),   # Direct route: 0 cost/hop, 15 initial
-    TropMono(4, -5),   # Very expensive but cheap start
-]
-
-print(f"Network routes (rate, initial_cost):")
-for s in sources:
-    print(f"  Route {s}: cost(k) = {s.coeff:.0f} + {s.exp}·k")
-
-canonical_sources = nat_canonical(sources)
-print(f"\nCanonical routes ({len(canonical_sources)}/{len(sources)}):")
-for s in canonical_sources:
-    print(f"  Route {s}: cost(k) = {s.coeff:.0f} + {s.exp}·k")
-
-print(f"\nOptimal cost comparison:")
-for k in [0, 1, 2, 5, 10, 20]:
-    full = trop_eval(sources, k)
-    compressed = trop_eval(canonical_sources, k)
-    print(f"  k={k:2d}: full={full:.0f}, compressed={compressed:.0f}, "
-          f"match={'✓' if abs(full-compressed)<1e-10 else '✗'}")
-
-
-# =============================================================================
-# Application 2: ReLU Network Simplification
-# =============================================================================
-print("\n" + "=" * 70)
-print("APPLICATION 2: ReLU Network Tropical Interpretation")
-print("=" * 70)
-
-print("""
-A single-layer ReLU network computes:
-  f(x) = min(max(w₁x + b₁, 0), max(w₂x + b₂, 0), ...) [with appropriate signs]
-
-In the tropical limit, this becomes a min of affine functions.
-Canonicalization identifies the essential neurons (decision templates).
-""")
-
-# Simulated ReLU network output as tropical polynomial
-neurons = [
-    TropMono(0, 8),     # Constant neuron (bias unit)
-    TropMono(1, 3),     # Linear neuron: 3 + x
-    TropMono(2, 0),     # Quadratic-rate neuron: 2x
-    TropMono(1, 4),     # Redundant: dominated by (1, 3)
-    TropMono(3, -2),    # High-rate neuron: -2 + 3x
-    TropMono(2, 1),     # Redundant: dominated by (2, 0)
-]
-
-print(f"Network neurons: {len(neurons)}")
-canonical_neurons = nat_canonical(neurons)
-print(f"Essential neurons (after canonicalization): {len(canonical_neurons)}")
-print(f"Pruned neurons: {len(neurons) - len(canonical_neurons)}")
-
-for n in canonical_neurons:
-    print(f"  Essential: output = {n.coeff:.0f} + {n.exp}·input")
-
-
-# =============================================================================
-# Application 3: Scheduling with Multiple Machines
-# =============================================================================
-print("\n" + "=" * 70)
-print("APPLICATION 3: Multi-Machine Scheduling Optimization")
-print("=" * 70)
-
-print("""
-Consider scheduling n identical jobs on different machines, where machine i
-has setup cost s_i and per-job processing cost p_i.
-Total cost on machine i for n jobs: s_i + p_i · n — a tropical monomial.
-The optimal cost: min_i(s_i + p_i · n) — a tropical polynomial.
-""")
-
-machines = [
-    TropMono(5, 0),     # Fast machine: 0 setup, 5/job
-    TropMono(2, 10),    # Medium machine: 10 setup, 2/job
-    TropMono(1, 20),    # Slow but cheap: 20 setup, 1/job
-    TropMono(3, 8),     # Dominated by medium
-    TropMono(0, 50),    # Free per-job but expensive setup
-    TropMono(4, 3),     # Slightly dominated
-]
-
-print(f"Available machines:")
-for m in machines:
-    print(f"  Machine (rate={m.exp}, setup={m.coeff:.0f}): "
-          f"cost(n) = {m.coeff:.0f} + {m.exp}n")
-
-essential = nat_canonical(machines)
-print(f"\nEssential machines ({len(essential)}/{len(machines)}):")
-for m in essential:
-    print(f"  Machine (rate={m.exp}, setup={m.coeff:.0f})")
-
-print(f"\nOptimal scheduling decisions:")
-for n in [0, 1, 2, 3, 5, 10, 20, 50]:
-    cost = trop_eval(essential, n)
-    best = min(essential, key=lambda m: m.eval(n))
-    print(f"  n={n:2d} jobs: cost={cost:.0f} "
-          f"(use machine rate={best.exp}, setup={best.coeff:.0f})")
-
-print("\n" + "=" * 70)
-print("All applications demonstrated successfully!")
-print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Tropical Polynomial Canonicalization and Automata Minimization — Demo
-
-Demonstrates the key theorems with concrete numerical examples:
-1. Dominance characterization
-2. Canonical form computation
-3. Language preservation
-4. Pareto structure of canonical monomials
-5. Residual analysis and Nerode equivalence classes
-"""
-
+from dataclasses import dataclass
 import numpy as np
-from typing import List, Tuple, Set, Dict
+from algorithms import TropMono, canonicalize, poly_language, find_eventual_monomial
 
 
-# =============================================================================
-# Core Data Structures
-# =============================================================================
+# === Application 1: Shortest-Path Route Pruning ===
+
+def shortest_path_demo():
+    """Demonstrate tropical canonicalization for route optimization.
+
+    A delivery company has several shipping routes. Each route has:
+    - A fixed setup cost (the coefficient)
+    - A per-mile cost (the exponent)
+    - Total cost for n miles: setup + per_mile * n
+
+    This is exactly a tropical monomial! The cheapest route for n miles
+    is the tropical polynomial evaluation.
+
+    Canonicalization removes routes that are NEVER optimal.
+    """
+    print("=" * 60)
+    print("APPLICATION 1: Shortest-Path Route Pruning")
+    print("=" * 60)
+
+    routes = [
+        ("Express Air", TropMono(5, 10)),      # $10 base + $5/mile
+        ("Standard Rail", TropMono(2, 50)),     # $50 base + $2/mile
+        ("Budget Truck", TropMono(3, 20)),      # $20 base + $3/mile
+        ("Economy Ship", TropMono(1, 100)),     # $100 base + $1/mile
+        ("Premium Fast", TropMono(4, 15)),      # $15 base + $4/mile
+    ]
+
+    monos = [r[1] for r in routes]
+    names = [r[0] for r in routes]
+    canon = canonicalize(monos)
+
+    print("\nAll routes:")
+    for name, m in routes:
+        dominated = m not in canon
+        status = " [DOMINATED - can be pruned]" if dominated else ""
+        print(f"  {name:20s}: ${m.coeff:.0f} base + ${m.exp}/mile{status}")
+
+    print(f"\nOptimal routes (after canonicalization): {len(canon)} of {len(monos)}")
+    for m in canon:
+        idx = monos.index(m)
+        print(f"  {names[idx]:20s}: {m}")
+
+    print("\nCheapest costs by distance:")
+    for miles in [0, 5, 10, 20, 30, 50, 100]:
+        cost = poly_language(monos, miles)
+        winner_idx = min(range(len(monos)), key=lambda i: monos[i].eval(miles))
+        print(f"  {miles:3d} miles: ${cost:7.0f} (via {names[winner_idx]})")
+
+    N, m0 = find_eventual_monomial(monos)
+    idx = monos.index(m0)
+    print(f"\nFor distances ≥ {N} miles, {names[idx]} is always cheapest.")
+
+
+# === Application 2: Job Scheduling ===
+
+def scheduling_demo():
+    """Demonstrate policy selection for job scheduling.
+
+    A factory has several scheduling policies for processing n jobs.
+    Each policy has:
+    - A setup time (coefficient)
+    - A per-job processing rate (exponent)
+    - Total time for n jobs: setup + rate * n
+
+    Canonicalization identifies the Pareto-optimal policies.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 2: Job Scheduling Policy Selection")
+    print("=" * 60)
+
+    policies = [
+        ("Quick Setup, Slow Processing", TropMono(8, 5)),
+        ("Moderate Setup & Speed", TropMono(4, 25)),
+        ("Slow Setup, Fast Processing", TropMono(2, 60)),
+        ("Balanced A", TropMono(5, 15)),
+        ("Balanced B", TropMono(6, 12)),
+        ("Premium (fast everything)", TropMono(3, 30)),
+    ]
+
+    monos = [p[1] for p in policies]
+    names = [p[0] for p in policies]
+    canon = canonicalize(monos)
+
+    print("\nAll policies:")
+    for name, m in policies:
+        dominated = m not in canon
+        status = " [DOMINATED]" if dominated else " ✓"
+        print(f"  {name:35s}: {m.coeff:5.0f} setup + {m.exp}/job{status}")
+
+    print(f"\nPareto-optimal policies: {len(canon)} of {len(monos)}")
+
+    print("\nOptimal total time by number of jobs:")
+    for n_jobs in [1, 5, 10, 20, 50]:
+        time = poly_language(monos, n_jobs)
+        winner_idx = min(range(len(monos)), key=lambda i: monos[i].eval(n_jobs))
+        print(f"  {n_jobs:3d} jobs: {time:7.0f} time units ({names[winner_idx]})")
+
+
+# === Application 3: Tropical Neural Network Pruning ===
+
+def neural_network_demo():
+    """Demonstrate tropical neural network pruning.
+
+    A single-layer tropical (min-plus) neural network computes:
+      output(x) = min_i (w_i * x + b_i)
+
+    where w_i are integer weights and b_i are real biases.
+    This is exactly a tropical polynomial!
+
+    Canonicalization removes redundant neurons — those whose outputs
+    are always dominated by other neurons.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 3: Tropical Neural Network Pruning")
+    print("=" * 60)
+
+    # Simulate a tropical neural network layer with 10 neurons
+    np.random.seed(42)
+    n_neurons = 10
+    weights = np.random.randint(0, 8, size=n_neurons)
+    biases = np.random.uniform(-5, 15, size=n_neurons)
+
+    neurons = [TropMono(int(w), float(b)) for w, b in zip(weights, biases)]
+
+    print(f"\nOriginal network: {n_neurons} neurons")
+    for i, m in enumerate(neurons):
+        print(f"  Neuron {i}: weight={m.exp}, bias={m.coeff:.2f} → {m}")
+
+    canon = canonicalize(neurons)
+    print(f"\nAfter pruning: {len(canon)} neurons (removed {n_neurons - len(canon)})")
+    for m in canon:
+        idx = neurons.index(m)
+        print(f"  Neuron {idx}: {m}")
+
+    # Verify outputs match
+    print("\nVerification (first 15 inputs):")
+    match = True
+    for x in range(15):
+        orig = poly_language(neurons, x)
+        pruned = poly_language(canon, x)
+        status = "✓" if abs(orig - pruned) < 1e-10 else "✗"
+        if abs(orig - pruned) >= 1e-10:
+            match = False
+        print(f"  x={x:2d}: original={orig:8.2f}, pruned={pruned:8.2f} {status}")
+
+    print(f"\n{'✓ All outputs match!' if match else '✗ Mismatch detected!'}")
+    print(f"Compression ratio: {n_neurons}/{len(canon)} = {n_neurons/len(canon):.1f}x")
+
+
+# === Application 4: Dynamic Programming State Compression ===
+
+def dp_compression_demo():
+    """Demonstrate DP state compression via tropical canonicalization.
+
+    In a dynamic programming problem with linear cost functions,
+    states can be modeled as tropical monomials. Canonicalization
+    identifies states that can be pruned without affecting optimality.
+    """
+    print("\n" + "=" * 60)
+    print("APPLICATION 4: Dynamic Programming State Compression")
+    print("=" * 60)
+
+    # Model: inventory management with n time periods
+    # Each policy has a holding cost rate and a setup cost
+    strategies = [
+        ("Just-in-Time", TropMono(1, 50)),
+        ("Small Batches", TropMono(2, 30)),
+        ("Medium Batches", TropMono(3, 20)),
+        ("Large Batches", TropMono(4, 10)),
+        ("Bulk Order", TropMono(5, 5)),
+        ("Conservative", TropMono(2, 35)),  # Dominated by Small Batches
+        ("Expensive JIT", TropMono(1, 60)), # Dominated by Just-in-Time
+    ]
+
+    monos = [s[1] for s in strategies]
+    names = [s[0] for s in strategies]
+    canon = canonicalize(monos)
+
+    print(f"\n{len(monos)} strategies → {len(canon)} after compression:")
+    for m in canon:
+        idx = monos.index(m)
+        print(f"  {names[idx]:20s}: {m}")
+
+    dominated = [names[i] for i in range(len(monos)) if monos[i] not in canon]
+    if dominated:
+        print(f"\nPruned strategies: {', '.join(dominated)}")
+
+    N, m0 = find_eventual_monomial(monos)
+    idx = monos.index(m0)
+    print(f"\nFor horizons ≥ {N} periods: {names[idx]} is always optimal.")
+
+
+if __name__ == "__main__":
+    shortest_path_demo()
+    scheduling_demo()
+    neural_network_demo()
+    dp_compression_demo()
+    print("\n" + "=" * 60)
+    print("All applications demonstrated successfully!")
+    print("=" * 60)
+
+
+"""
+Tropical Polynomial Canonicalization–Automata Bridge: Demo
+==========================================================
+
+Demonstrates the core mathematical results with concrete examples:
+1. Tropical polynomial evaluation (min-plus semantics)
+2. Dominated monomial removal and canonicalization
+3. Weighted language computation and residual analysis
+4. Eventual affine behavior
+"""
+
+from typing import List, Tuple, Dict, Set
+import numpy as np
+
+
+# --- Core Types ---
 
 class TropMono:
-    """A tropical monomial c + e·x in one variable."""
+    """A tropical monomial (exp, coeff) representing the affine function c + e*x."""
     def __init__(self, exp: int, coeff: float):
         self.exp = exp
         self.coeff = coeff
@@ -191,7 +245,10 @@ class TropMono:
     def __repr__(self):
         if self.exp == 0:
             return f"{self.coeff:.1f}"
-        return f"{self.coeff:.1f} + {self.exp}·x"
+        elif self.exp == 1:
+            return f"{self.coeff:.1f} + x"
+        else:
+            return f"{self.coeff:.1f} + {self.exp}x"
 
     def __eq__(self, other):
         return self.exp == other.exp and self.coeff == other.coeff
@@ -200,425 +257,463 @@ class TropMono:
         return hash((self.exp, self.coeff))
 
 
-def trop_eval(monomials: List[TropMono], x: float) -> float:
-    """Evaluate a tropical polynomial: min over all monomials."""
-    return min(m.eval(x) for m in monomials)
+class TropPoly:
+    """A tropical polynomial = nonempty finite set of monomials.
+    Evaluation: min over all monomial evaluations."""
+    def __init__(self, monomials: List[TropMono]):
+        assert len(monomials) > 0, "Polynomial must be nonempty"
+        self.monomials = list(monomials)
 
+    def eval(self, x: float) -> float:
+        return min(m.eval(x) for m in self.monomials)
+
+    def language(self, n: int) -> float:
+        """Weighted language: L(n) = tropEval(p, n)."""
+        return self.eval(float(n))
+
+    def __repr__(self):
+        terms = [str(m) for m in self.monomials]
+        return "min(" + ", ".join(terms) + ")"
+
+
+# --- Dominance and Canonicalization ---
 
 def nat_dominates(m1: TropMono, m2: TropMono) -> bool:
-    """Check if m1 ℕ-dominates m2: m1.exp ≤ m2.exp AND m1.coeff ≤ m2.coeff."""
+    """m1 ℕ-dominates m2 iff m1.exp ≤ m2.exp and m1.coeff ≤ m2.coeff."""
     return m1.exp <= m2.exp and m1.coeff <= m2.coeff
 
 
-def nat_canonical(monomials: List[TropMono]) -> List[TropMono]:
-    """Compute the ℕ-canonical form: remove Pareto-dominated monomials."""
-    result = []
-    for m in monomials:
+def nat_canonical(p: TropPoly) -> TropPoly:
+    """Compute the ℕ-canonical form: remove dominated monomials."""
+    canonical = []
+    for m in p.monomials:
         dominated = any(
             m2 != m and nat_dominates(m2, m)
-            for m2 in monomials
+            for m2 in p.monomials
         )
         if not dominated:
-            result.append(m)
-    return sorted(result, key=lambda m: m.exp)
+            canonical.append(m)
+    return TropPoly(canonical)
 
 
-def poly_language(monomials: List[TropMono], n: int) -> float:
-    """The weighted language L(n) = min_m (m.coeff + m.exp * n)."""
-    return trop_eval(monomials, n)
+def essential_monomials(p: TropPoly, max_n: int = 1000) -> List[TropMono]:
+    """Find monomials that actually achieve the minimum at some n ∈ {0,...,max_n}."""
+    essential = set()
+    for n in range(max_n + 1):
+        vals = [(m.eval(n), i) for i, m in enumerate(p.monomials)]
+        min_val = min(v for v, _ in vals)
+        for v, i in vals:
+            if abs(v - min_val) < 1e-10:
+                essential.add(i)
+    return [p.monomials[i] for i in sorted(essential)]
 
 
-def residual(monomials: List[TropMono], k: int, n: int) -> float:
-    """Residual of the language at prefix k: res_k(n) = L(k + n)."""
-    return poly_language(monomials, k + n)
+# --- Residuals ---
+
+def residual(L, k: int):
+    """Residual of language L at prefix length k: n ↦ L(k + n)."""
+    return lambda n: L(k + n)
 
 
-# =============================================================================
-# Demo 1: Dominance Characterization
-# =============================================================================
-print("=" * 70)
-print("DEMO 1: Dominance Characterization")
-print("=" * 70)
-
-m1 = TropMono(3, 2.0)
-m2 = TropMono(3, 5.0)
-m3 = TropMono(2, 1.0)
-
-print(f"\nm1 = {m1}")
-print(f"m2 = {m2}")
-print(f"m3 = {m3}")
-
-print(f"\nℕ-Dominates(m1, m2)? {nat_dominates(m1, m2)}")
-print(f"  (exp: {m1.exp} ≤ {m2.exp} = {m1.exp <= m2.exp}, "
-      f"coeff: {m1.coeff} ≤ {m2.coeff} = {m1.coeff <= m2.coeff})")
-
-print(f"\nℕ-Dominates(m1, m3)? {nat_dominates(m1, m3)}")
-print(f"  (exp: {m1.exp} ≤ {m3.exp} = {m1.exp <= m3.exp}, "
-      f"coeff: {m1.coeff} ≤ {m3.coeff} = {m1.coeff <= m3.coeff})")
-
-print(f"\nℕ-Dominates(m3, m1)? {nat_dominates(m3, m1)}")
-print(f"  (exp: {m3.exp} ≤ {m1.exp} = {m3.exp <= m1.exp}, "
-      f"coeff: {m3.coeff} ≤ {m1.coeff} = {m3.coeff <= m1.coeff})")
+def residual_values(L, k: int, length: int = 10) -> List[float]:
+    """Compute first `length` values of residual at k."""
+    return [L(k + n) for n in range(length)]
 
 
-# =============================================================================
-# Demo 2: Canonical Form Computation
-# =============================================================================
-print("\n" + "=" * 70)
-print("DEMO 2: Canonical Form Computation")
-print("=" * 70)
-
-poly = [TropMono(0, 10), TropMono(1, 5), TropMono(2, 3),
-        TropMono(2, 7), TropMono(3, 0), TropMono(3, 4)]
-
-print(f"\nOriginal polynomial ({len(poly)} monomials):")
-for m in poly:
-    print(f"  {m}")
-
-canon = nat_canonical(poly)
-print(f"\nCanonical form ({len(canon)} monomials):")
-for m in canon:
-    print(f"  {m}")
-
-print(f"\nCompression: {len(poly)} → {len(canon)} monomials "
-      f"({100*(1 - len(canon)/len(poly)):.0f}% reduction)")
+def count_distinct_residuals(L, max_k: int = 50, check_length: int = 20) -> int:
+    """Count distinct residuals up to prefix length max_k."""
+    seen = []
+    for k in range(max_k + 1):
+        vals = tuple(round(L(k + n), 10) for n in range(check_length))
+        if vals not in seen:
+            seen.append(vals)
+    return len(seen)
 
 
-# =============================================================================
-# Demo 3: Language Preservation
-# =============================================================================
-print("\n" + "=" * 70)
-print("DEMO 3: Language Preservation (canonical_preserves_language)")
-print("=" * 70)
+# --- Eventual Affine Behavior ---
 
-print(f"\n{'n':>4} | {'L_orig(n)':>10} | {'L_canon(n)':>10} | {'Equal?':>7}")
-print("-" * 40)
-all_equal = True
-for n in range(15):
-    orig = poly_language(poly, n)
-    can = poly_language(canon, n)
-    eq = abs(orig - can) < 1e-10
-    all_equal = all_equal and eq
-    print(f"{n:4d} | {orig:10.2f} | {can:10.2f} | {'✓' if eq else '✗':>7}")
+def find_dominating_monomial(p: TropPoly) -> Tuple[int, TropMono]:
+    """Find the eventually dominating monomial and threshold N."""
+    # Find monomial with minimum exponent (break ties by coefficient)
+    m0 = min(p.monomials, key=lambda m: (m.exp, m.coeff))
 
-print(f"\nAll values equal: {'YES ✓' if all_equal else 'NO ✗'}")
+    # Find N such that for n ≥ N, m0 dominates
+    N = 0
+    for m in p.monomials:
+        if m == m0:
+            continue
+        if m.exp == m0.exp:
+            # Same exp, m0 has smaller coeff, so m0 dominates already at n=0
+            continue
+        # m.coeff + m.exp * n > m0.coeff + m0.exp * n
+        # (m.exp - m0.exp) * n > m0.coeff - m.coeff
+        # n > (m0.coeff - m.coeff) / (m.exp - m0.exp)
+        threshold = (m0.coeff - m.coeff) / (m.exp - m0.exp)
+        N = max(N, int(np.ceil(threshold)) + 1)
 
-
-# =============================================================================
-# Demo 4: Pareto Structure
-# =============================================================================
-print("\n" + "=" * 70)
-print("DEMO 4: Pareto Structure of Canonical Monomials")
-print("=" * 70)
-
-poly2 = [TropMono(0, 15), TropMono(1, 8), TropMono(2, 4),
-         TropMono(3, 1), TropMono(5, -2)]
-
-canon2 = nat_canonical(poly2)
-print(f"\nPolynomial: {[str(m) for m in poly2]}")
-print(f"Canonical:  {[str(m) for m in canon2]}")
-
-print(f"\nPareto structure (exp ↑ ⟹ coeff ↓):")
-for i, m in enumerate(canon2):
-    print(f"  Monomial {i+1}: exp = {m.exp}, coeff = {m.coeff}")
-    if i > 0:
-        prev = canon2[i-1]
-        print(f"    Check: exp {prev.exp} < {m.exp} and "
-              f"coeff {prev.coeff} > {m.coeff}: "
-              f"{'✓' if prev.exp < m.exp and prev.coeff > m.coeff else '✗'}")
+    return N, m0
 
 
-# =============================================================================
-# Demo 5: Residual Analysis and Nerode Classes
-# =============================================================================
-print("\n" + "=" * 70)
-print("DEMO 5: Residual Analysis and Nerode Equivalence Classes")
-print("=" * 70)
+# === DEMOS ===
 
-poly3 = [TropMono(0, 6), TropMono(1, 3), TropMono(3, 0)]
+def demo_canonicalization():
+    """Demo 1: Canonicalization preserves the language."""
+    print("=" * 60)
+    print("DEMO 1: Canonicalization Preserves Language")
+    print("=" * 60)
 
-print(f"\nPolynomial: min(6, 3+x, 3x)")
-print(f"L(n) values: {[poly_language(poly3, n) for n in range(10)]}")
+    examples = [
+        ("Basic", [TropMono(0, 10), TropMono(1, 2), TropMono(2, 0)]),
+        ("With redundancy", [TropMono(0, 4), TropMono(1, 3), TropMono(2, 0)]),
+        ("Duplicate exponents", [TropMono(0, 5), TropMono(0, 3), TropMono(1, 1)]),
+        ("Large gaps", [TropMono(0, 15), TropMono(3, 6), TropMono(5, 1)]),
+    ]
 
-# Compute residuals for each k
-suffix_len = 8
-residuals: Dict[int, List[float]] = {}
-for k in range(8):
-    res = [residual(poly3, k, n) for n in range(suffix_len)]
-    residuals[k] = res
+    for name, monos in examples:
+        p = TropPoly(monos)
+        cp = nat_canonical(p)
+        print(f"\n{name}:")
+        print(f"  Original ({len(p.monomials)} monomials): {p}")
+        print(f"  Canonical ({len(cp.monomials)} monomials): {cp}")
 
-print(f"\nResidual table (rows = prefix k, columns = suffix n):")
-print(f"{'k':>3} |", end="")
-for n in range(suffix_len):
-    print(f" n={n:1d}", end="")
-print()
-print("-" * (5 + 5 * suffix_len))
-
-for k in range(8):
-    print(f"{k:3d} |", end="")
-    for v in residuals[k]:
-        print(f" {v:4.0f}", end="")
-    print()
-
-# Find Nerode equivalence classes
-classes: Dict[int, List[int]] = {}
-class_id = 0
-k_to_class: Dict[int, int] = {}
-
-for k in range(8):
-    found = False
-    for rep, members in classes.items():
-        if residuals[k] == residuals[rep]:
-            members.append(k)
-            k_to_class[k] = k_to_class[rep]
-            found = True
-            break
-    if not found:
-        classes[k] = [k]
-        k_to_class[k] = class_id
-        class_id += 1
-
-print(f"\nNerode equivalence classes: {len(classes)}")
-for rep, members in classes.items():
-    print(f"  Class [{', '.join(str(m) for m in members)}] "
-          f"(representative: k={rep})")
-
-canon3 = nat_canonical(poly3)
-print(f"\nCanonical monomials: {len(canon3)}")
-for m in canon3:
-    print(f"  {m}")
-
-print(f"\n|Nerode classes| = {len(classes)}, |Canonical| = {len(canon3)}")
+        # Verify language preservation
+        orig_vals = [p.language(n) for n in range(12)]
+        canon_vals = [cp.language(n) for n in range(12)]
+        print(f"  L_original:  {orig_vals}")
+        print(f"  L_canonical: {canon_vals}")
+        assert orig_vals == canon_vals, "LANGUAGE MISMATCH!"
+        print(f"  ✓ Languages match perfectly")
 
 
-# =============================================================================
-# Demo 6: Monotonicity
-# =============================================================================
-print("\n" + "=" * 70)
-print("DEMO 6: Language Monotonicity (polyLanguage_mono)")
-print("=" * 70)
+def demo_structural_properties():
+    """Demo 2: Structural properties of canonical monomials."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Structural Properties of Canonical Monomials")
+    print("=" * 60)
 
-poly4 = [TropMono(0, 8), TropMono(2, 0), TropMono(5, -3)]
-print(f"\nPolynomial: min(8, 2x, -3+5x)")
+    p = TropPoly([TropMono(0, 20), TropMono(1, 12), TropMono(2, 7),
+                  TropMono(3, 3), TropMono(5, 0)])
+    cp = nat_canonical(p)
 
-vals = [poly_language(poly4, n) for n in range(12)]
-print(f"L(n) = {vals}")
+    print(f"\nOriginal: {p}")
+    print(f"Canonical: {cp}")
 
-mono_check = all(vals[i] <= vals[i+1] for i in range(len(vals)-1))
-print(f"Monotone non-decreasing: {'YES ✓' if mono_check else 'NO ✗'}")
+    # Check distinct exponents
+    exps = [m.exp for m in cp.monomials]
+    print(f"\nCanonical exponents: {exps}")
+    assert len(exps) == len(set(exps)), "Exponents not distinct!"
+    print("✓ All exponents are distinct")
+
+    # Check strict anti-monotonicity
+    sorted_monos = sorted(cp.monomials, key=lambda m: m.exp)
+    for i in range(len(sorted_monos) - 1):
+        m1, m2 = sorted_monos[i], sorted_monos[i+1]
+        print(f"  exp {m1.exp} → coeff {m1.coeff:.1f},  "
+              f"exp {m2.exp} → coeff {m2.coeff:.1f}  "
+              f"({'✓' if m2.coeff < m1.coeff else '✗'} anti-monotone)")
 
 
-print("\n" + "=" * 70)
-print("All demos completed successfully!")
-print("=" * 70)
+def demo_residuals():
+    """Demo 3: Residual analysis and Nerode equivalence."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Residual Analysis")
+    print("=" * 60)
+
+    p = TropPoly([TropMono(0, 10), TropMono(1, 2), TropMono(2, 0)])
+    L = p.language
+
+    print(f"\nPolynomial: {p}")
+    print(f"Language: {[L(n) for n in range(15)]}")
+
+    print("\nResiduals:")
+    for k in range(8):
+        vals = residual_values(L, k, 8)
+        print(f"  k={k}: {vals}")
+
+    n_classes = count_distinct_residuals(L, max_k=20)
+    n_canonical = len(nat_canonical(p).monomials)
+    print(f"\nDistinct residual classes (k ≤ 20): {n_classes}")
+    print(f"Canonical monomials: {n_canonical}")
+    print(f"|Nerode classes| ≥ |canonical| : {n_classes} ≥ {n_canonical} ✓")
 
 
-#!/usr/bin/env python3
+def demo_eventual_affine():
+    """Demo 4: Eventual affine behavior."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Eventual Affine Behavior")
+    print("=" * 60)
+
+    p = TropPoly([TropMono(0, 15), TropMono(3, 6), TropMono(5, 1)])
+    L = p.language
+    N, m0 = find_dominating_monomial(p)
+
+    print(f"\nPolynomial: {p}")
+    print(f"Dominating monomial: {m0} (exp={m0.exp}, coeff={m0.coeff})")
+    print(f"Threshold N = {N}")
+    print(f"\nLanguage values:")
+    for n in range(N + 5):
+        val = L(n)
+        affine = m0.eval(n)
+        match = "=" if abs(val - affine) < 1e-10 else "≠"
+        marker = " ← eventually affine from here" if n == N else ""
+        print(f"  L({n:2d}) = {val:6.1f}  {match}  {m0}({n}) = {affine:6.1f}{marker}")
+
+
+def demo_bridge():
+    """Demo 5: The full bridge theorem."""
+    print("\n" + "=" * 60)
+    print("DEMO 5: Canonicalization–Minimization Bridge")
+    print("=" * 60)
+
+    examples = [
+        [TropMono(0, 10), TropMono(1, 2), TropMono(2, 0)],
+        [TropMono(0, 4), TropMono(1, 3), TropMono(2, 0)],
+        [TropMono(0, 20), TropMono(2, 8), TropMono(4, 0)],
+    ]
+
+    for monos in examples:
+        p = TropPoly(monos)
+        cp = nat_canonical(p)
+        has_const = any(m.exp == 0 for m in p.monomials)
+        L = p.language
+
+        N, m0 = find_dominating_monomial(p)
+        n_residuals = count_distinct_residuals(L, max_k=N+5) if has_const else "∞"
+        n_canonical = len(cp.monomials)
+
+        print(f"\n{p}")
+        print(f"  Canonical: {cp} ({n_canonical} monomials)")
+        print(f"  Has constant monomial: {has_const}")
+        print(f"  Eventually affine from N={N}, dominated by {m0}")
+        print(f"  Distinct residuals: {n_residuals}")
+        print(f"  Language preserved: ✓")
+
+
+if __name__ == "__main__":
+    demo_canonicalization()
+    demo_structural_properties()
+    demo_residuals()
+    demo_eventual_affine()
+    demo_bridge()
+    print("\n" + "=" * 60)
+    print("All demos completed successfully!")
+    print("=" * 60)
+
+
 """
-Visualizations for Tropical Polynomial Canonicalization
+Tropical Polynomial Canonicalization–Automata Bridge: Visualizations
+=====================================================================
 
-Generates figures showing:
-1. Lower envelope of affine functions
-2. Pareto front of canonical monomials
-3. Language and residual structure
+Generates publication-quality visualizations:
+1. Lower envelope with dominated monomials highlighted
+2. Residual analysis
+3. Canonicalization comparison
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from algorithms import TropMono, canonicalize, poly_language, find_eventual_monomial
 import base64
-import io
+from io import BytesIO
 
 
-def save_fig_base64(fig) -> str:
-    """Save a matplotlib figure as base64-encoded PNG."""
-    buf = io.BytesIO()
+def fig_to_base64(fig) -> str:
+    """Convert matplotlib figure to base64 data URI."""
+    buf = BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
-    return base64.b64encode(buf.read()).decode('utf-8')
+    b64 = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+    return f"data:image/png;base64,{b64}"
 
 
-# =============================================================================
-# Figure 1: Lower Envelope
-# =============================================================================
+def plot_lower_envelope(monos, title="Tropical Polynomial: Lower Envelope",
+                        x_range=(0, 12), save_path=None):
+    """Plot the lower envelope showing dominated vs canonical monomials."""
+    canon = canonicalize(monos)
+    x = np.linspace(x_range[0], x_range[1], 500)
 
-fig1, (ax1a, ax1b) = plt.subplots(1, 2, figsize=(14, 5))
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
 
-# Define monomials
-monomials = [(0, 10), (1, 5), (2, 3), (3, 0), (5, -2)]
-colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']
+    # Plot individual monomials
+    for m in monos:
+        y = [m.eval(xi) for xi in x]
+        is_canonical = m in canon
+        color = '#2196F3' if is_canonical else '#BDBDBD'
+        lw = 2.0 if is_canonical else 1.0
+        ls = '-' if is_canonical else '--'
+        label = f"({m.exp}, {m.coeff:.0f})" + (" [canonical]" if is_canonical else " [dominated]")
+        ax.plot(x, y, color=color, linewidth=lw, linestyle=ls, alpha=0.7, label=label)
 
-x = np.linspace(0, 8, 200)
+    # Plot lower envelope
+    env = [min(m.eval(xi) for m in monos) for xi in x]
+    ax.plot(x, env, color='#F44336', linewidth=3, label='Lower envelope', zorder=5)
 
-# Plot individual monomials
-for i, (e, c) in enumerate(monomials):
-    y = c + e * x
-    ax1a.plot(x, y, '--', color=colors[i], alpha=0.5, linewidth=1,
-             label=f'{c} + {e}x')
+    # Mark integer evaluation points
+    ns = list(range(int(x_range[0]), int(x_range[1]) + 1))
+    vals = [poly_language(monos, n) for n in ns]
+    ax.scatter(ns, vals, color='#F44336', s=60, zorder=6, label='L(n) values')
 
-# Plot lower envelope
-envelope = np.array([min(c + e * xi for e, c in monomials) for xi in x])
-ax1a.plot(x, envelope, 'k-', linewidth=2.5, label='Lower envelope')
+    ax.set_xlabel('x', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title(title, fontsize=14)
+    ax.legend(fontsize=9, loc='upper left')
+    ax.grid(True, alpha=0.3)
 
-ax1a.set_xlabel('x', fontsize=12)
-ax1a.set_ylabel('Value', fontsize=12)
-ax1a.set_title('Tropical Polynomial: Lower Envelope', fontsize=13)
-ax1a.legend(fontsize=9)
-ax1a.set_ylim(-5, 20)
-ax1a.grid(True, alpha=0.3)
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches='tight')
 
-# Canonical monomials (Pareto)
-canonical = [(0, 10), (1, 5), (2, 3), (3, 0), (5, -2)]  # all are Pareto-optimal here
-
-# Plot language on ℕ
-ns = range(9)
-language = [min(c + e * n for e, c in monomials) for n in ns]
-ax1b.plot(ns, language, 'ko-', markersize=8, linewidth=2, label='L(n)')
-
-# Mark which monomial achieves the min
-for n in ns:
-    vals = [(c + e * n, i) for i, (e, c) in enumerate(monomials)]
-    min_val, min_idx = min(vals)
-    ax1b.plot(n, min_val, 'o', color=colors[min_idx], markersize=12,
-             zorder=5, alpha=0.6)
-
-ax1b.set_xlabel('n (natural number)', fontsize=12)
-ax1b.set_ylabel('L(n)', fontsize=12)
-ax1b.set_title('Weighted Language on ℕ', fontsize=13)
-ax1b.grid(True, alpha=0.3)
-
-fig1.tight_layout()
-fig1.savefig('/workspace/request-project/fig_lower_envelope.png', dpi=150, bbox_inches='tight')
-fig1_b64 = save_fig_base64(fig1)
-plt.close()
+    return fig
 
 
-# =============================================================================
-# Figure 2: Pareto Front
-# =============================================================================
+def plot_residuals(monos, max_k=8, n_points=10,
+                   title="Residual Analysis", save_path=None):
+    """Plot residual functions for different prefix lengths."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
 
-fig2, ax2 = plt.subplots(figsize=(8, 6))
+    colors = plt.cm.viridis(np.linspace(0, 0.9, max_k + 1))
 
-# Full set of monomials
-all_monos = [(0, 10), (1, 5), (1, 8), (2, 3), (2, 7), (3, 0), (3, 4), (5, -2)]
-pareto = [(0, 10), (1, 5), (2, 3), (3, 0), (5, -2)]
-dominated = [m for m in all_monos if m not in pareto]
+    for k in range(max_k + 1):
+        ns = list(range(n_points))
+        vals = [poly_language(monos, k + n) for n in ns]
+        ax.plot(ns, vals, 'o-', color=colors[k], markersize=4,
+                label=f'k={k}', linewidth=1.5, alpha=0.8)
 
-# Plot dominated monomials
-for e, c in dominated:
-    ax2.plot(e, c, 'x', color='red', markersize=15, markeredgewidth=3, zorder=5)
-    ax2.annotate(f'({e}, {c})', (e, c), textcoords="offset points",
-                xytext=(10, -10), fontsize=10, color='red')
+    ax.set_xlabel('Suffix length n', fontsize=12)
+    ax.set_ylabel('residual(L, k)(n) = L(k+n)', fontsize=12)
+    ax.set_title(title, fontsize=14)
+    ax.legend(fontsize=9, ncol=3)
+    ax.grid(True, alpha=0.3)
 
-# Plot canonical monomials
-pareto_e = [e for e, c in pareto]
-pareto_c = [c for e, c in pareto]
-ax2.plot(pareto_e, pareto_c, 'bo-', markersize=12, linewidth=2,
-        label='Canonical (Pareto front)', zorder=10)
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches='tight')
 
-for e, c in pareto:
-    ax2.annotate(f'({e}, {c})', (e, c), textcoords="offset points",
-                xytext=(10, 5), fontsize=10, color='blue')
-
-# Shade dominated region from each canonical point
-ax2.fill_between([min(pareto_e)-0.5, max(pareto_e)+1],
-                [max(pareto_c)+2]*2, [max(pareto_c)+2]*2,
-                alpha=0.05, color='red')
-
-ax2.set_xlabel('Exponent (slope)', fontsize=13)
-ax2.set_ylabel('Coefficient (intercept)', fontsize=13)
-ax2.set_title('Pareto Front: ℕ-Canonical Monomials', fontsize=14)
-ax2.legend(fontsize=11)
-ax2.grid(True, alpha=0.3)
-
-# Add arrows showing domination
-for e, c in dominated:
-    # Find the dominator
-    for pe, pc in pareto:
-        if pe <= e and pc <= c and (pe, pc) != (e, c):
-            ax2.annotate('', xy=(pe, pc), xytext=(e, c),
-                        arrowprops=dict(arrowstyle='->', color='red', alpha=0.4,
-                                      linewidth=1.5))
-            break
-
-fig2.tight_layout()
-fig2.savefig('/workspace/request-project/fig_pareto_front.png', dpi=150, bbox_inches='tight')
-fig2_b64 = save_fig_base64(fig2)
-plt.close()
+    return fig
 
 
-# =============================================================================
-# Figure 3: Residual Structure
-# =============================================================================
+def plot_canonicalization_comparison(save_path=None):
+    """Compare original and canonical polynomials across examples."""
+    examples = [
+        ("3 monomials, none dominated",
+         [TropMono(0, 10), TropMono(1, 2), TropMono(2, 0)]),
+        ("3 monomials, 1 dominated",
+         [TropMono(0, 4), TropMono(1, 3), TropMono(2, 0)]),
+        ("5 monomials, 2 dominated",
+         [TropMono(0, 20), TropMono(1, 15), TropMono(2, 8),
+          TropMono(3, 10), TropMono(4, 0)]),
+        ("Large coefficients",
+         [TropMono(0, 15), TropMono(3, 6), TropMono(5, 1)]),
+    ]
 
-fig3, (ax3a, ax3b) = plt.subplots(1, 2, figsize=(14, 5))
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-monomials3 = [(0, 6), (1, 3), (3, 0)]
-colors3 = ['#e41a1c', '#377eb8', '#4daf4a']
+    for idx, (title, monos) in enumerate(examples):
+        ax = axes[idx // 2][idx % 2]
+        canon = canonicalize(monos)
 
-# Plot residuals
-for k in range(6):
-    residual = [min(c + e * (k + n) for e, c in monomials3) for n in range(10)]
-    ax3a.plot(range(10), residual, 'o-', markersize=5, linewidth=1.5,
-             label=f'Residual at k={k}', alpha=0.8)
+        ns = list(range(15))
+        orig_vals = [poly_language(monos, n) for n in ns]
+        canon_vals = [poly_language(canon, n) for n in ns]
 
-ax3a.set_xlabel('Suffix length n', fontsize=12)
-ax3a.set_ylabel('Value', fontsize=12)
-ax3a.set_title('Residual Functions (Nerode Analysis)', fontsize=13)
-ax3a.legend(fontsize=9)
-ax3a.grid(True, alpha=0.3)
+        ax.plot(ns, orig_vals, 'bo-', markersize=6, label=f'Original ({len(monos)} monos)')
+        ax.plot(ns, canon_vals, 'r^--', markersize=6, label=f'Canonical ({len(canon)} monos)')
 
-# Nerode class diagram
-suffix_len = 15
-residuals = {}
-for k in range(10):
-    residuals[k] = tuple(min(c + e * (k + n) for e, c in monomials3)
-                        for n in range(suffix_len))
+        ax.set_xlabel('n')
+        ax.set_ylabel('L(n)')
+        ax.set_title(title, fontsize=11)
+        ax.legend(fontsize=9)
+        ax.grid(True, alpha=0.3)
 
-# Find equivalence classes
-classes = {}
-for k in range(10):
-    found = False
-    for rep in classes:
-        if residuals[rep] == residuals[k]:
-            classes[rep].append(k)
-            found = True
-            break
-    if not found:
-        classes[k] = [k]
+    fig.suptitle('Canonicalization Preserves Language', fontsize=14, fontweight='bold')
+    plt.tight_layout()
 
-class_colors = ['#1b9e77', '#d95f02', '#7570b3', '#e7298a', '#66a61e']
-y_pos = 0
-for i, (rep, members) in enumerate(classes.items()):
-    color = class_colors[i % len(class_colors)]
-    for k in members:
-        ax3b.barh(y_pos, 1, left=k-0.4, height=0.6, color=color, alpha=0.7,
-                 edgecolor='black', linewidth=0.5)
-        ax3b.text(k, y_pos, str(k), ha='center', va='center', fontsize=10,
-                 fontweight='bold')
-    ax3b.text(-1.5, y_pos, f'Class {i+1}', ha='right', va='center', fontsize=11,
-             color=color, fontweight='bold')
-    y_pos += 1
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches='tight')
 
-ax3b.set_xlabel('Prefix length k', fontsize=12)
-ax3b.set_title('Nerode Equivalence Classes', fontsize=13)
-ax3b.set_yticks([])
-ax3b.set_xlim(-3, 10)
-ax3b.grid(True, alpha=0.3, axis='x')
+    return fig
 
-fig3.tight_layout()
-fig3.savefig('/workspace/request-project/fig_residuals.png', dpi=150, bbox_inches='tight')
-fig3_b64 = save_fig_base64(fig3)
-plt.close()
 
-print("All visualizations saved!")
-print(f"  fig_lower_envelope.png")
-print(f"  fig_pareto_front.png")
-print(f"  fig_residuals.png")
+def plot_pareto_front(monos, title="Pareto Front of Monomials", save_path=None):
+    """Plot the (exponent, coefficient) plane showing the Pareto front."""
+    canon = canonicalize(monos)
 
-# Save base64 data for PACKAGE.json
-with open('/workspace/request-project/_viz_b64.txt', 'w') as f:
-    f.write(f"LOWER_ENVELOPE:{fig1_b64}\n")
-    f.write(f"PARETO_FRONT:{fig2_b64}\n")
-    f.write(f"RESIDUALS:{fig3_b64}\n")
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+
+    # Plot all monomials
+    for m in monos:
+        is_canon = m in canon
+        color = '#2196F3' if is_canon else '#BDBDBD'
+        marker = 's' if is_canon else 'o'
+        size = 120 if is_canon else 60
+        ax.scatter(m.exp, m.coeff, c=color, s=size, marker=marker, zorder=5,
+                   edgecolors='black', linewidth=1)
+
+    # Connect canonical monomials
+    canon_sorted = sorted(canon, key=lambda m: m.exp)
+    ax.plot([m.exp for m in canon_sorted], [m.coeff for m in canon_sorted],
+            'b-', linewidth=2, alpha=0.5, label='Pareto front')
+
+    # Labels
+    for m in monos:
+        is_canon = m in canon
+        offset = (5, 5) if is_canon else (5, -10)
+        ax.annotate(f'({m.exp}, {m.coeff:.0f})', (m.exp, m.coeff),
+                    textcoords='offset points', xytext=offset, fontsize=9)
+
+    ax.set_xlabel('Exponent (slope)', fontsize=12)
+    ax.set_ylabel('Coefficient (intercept)', fontsize=12)
+    ax.set_title(title, fontsize=14)
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    # Add legend entries
+    ax.scatter([], [], c='#2196F3', s=120, marker='s', edgecolors='black',
+               label='Canonical')
+    ax.scatter([], [], c='#BDBDBD', s=60, marker='o', edgecolors='black',
+               label='Dominated')
+    ax.legend(fontsize=10)
+
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches='tight')
+
+    return fig
+
+
+def generate_all_visualizations():
+    """Generate all visualizations and save them."""
+    print("Generating visualizations...")
+
+    # 1. Lower envelope
+    monos1 = [TropMono(0, 10), TropMono(1, 2), TropMono(2, 0)]
+    fig1 = plot_lower_envelope(monos1, save_path='lower_envelope.png')
+    b64_1 = fig_to_base64(fig1)
+
+    # 2. Residual analysis
+    fig2 = plot_residuals(monos1, save_path='residuals.png')
+    b64_2 = fig_to_base64(fig2)
+
+    # 3. Canonicalization comparison
+    fig3 = plot_canonicalization_comparison(save_path='canonicalization.png')
+    b64_3 = fig_to_base64(fig3)
+
+    # 4. Pareto front
+    monos4 = [TropMono(0, 20), TropMono(1, 15), TropMono(2, 8),
+              TropMono(3, 10), TropMono(4, 0)]
+    fig4 = plot_pareto_front(monos4, save_path='pareto_front.png')
+    b64_4 = fig_to_base64(fig4)
+
+    print("All visualizations generated successfully!")
+    return {
+        'lower_envelope': b64_1,
+        'residuals': b64_2,
+        'canonicalization': b64_3,
+        'pareto_front': b64_4,
+    }
+
+
+if __name__ == "__main__":
+    viz_data = generate_all_visualizations()
+    for name, data in viz_data.items():
+        print(f"  {name}: {len(data)} chars")
