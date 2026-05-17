@@ -1,400 +1,372 @@
 #!/usr/bin/env python3
 """
-Algorithms: Schwartz–Zippel PIT and Freivalds' Verification
+Algorithms: Schwartz-Zippel PIT and Freivalds' Verification
 
-Implementations of the core algorithms with full documentation,
-type hints, complexity analysis, and example usage.
+Complete implementations of the key algorithms with type hints,
+docstrings, complexity analysis, and example usage.
 """
 
-import random
-import numpy as np
 from typing import Dict, Tuple, List, Optional
+import numpy as np
+from functools import reduce
 
 
-# =============================================================================
-# Core Finite Field Arithmetic
-# =============================================================================
+# ============================================================================
+# Algorithm 1: Freivalds' Randomized Matrix Verification
+# ============================================================================
 
-class FiniteField:
+class FreivaldsVerifier:
     """
-    Arithmetic in Z/qZ for prime q.
-    
-    This is a minimal implementation for demonstration purposes.
-    For production use, consider galois or sympy.
-    """
-    
-    def __init__(self, q: int):
-        """Initialize with prime modulus q."""
-        if q < 2:
-            raise ValueError(f"Modulus must be ≥ 2, got {q}")
-        self.q = q
-    
-    def add(self, a: int, b: int) -> int:
-        return (a + b) % self.q
-    
-    def mul(self, a: int, b: int) -> int:
-        return (a * b) % self.q
-    
-    def neg(self, a: int) -> int:
-        return (-a) % self.q
-    
-    def inv(self, a: int) -> int:
-        """Multiplicative inverse via extended Euclidean algorithm."""
-        if a % self.q == 0:
-            raise ZeroDivisionError("Cannot invert zero")
-        return pow(a, self.q - 2, self.q)
-    
-    def random_element(self) -> int:
-        return random.randint(0, self.q - 1)
-    
-    def random_vector(self, n: int) -> List[int]:
-        return [self.random_element() for _ in range(n)]
-    
-    def random_matrix(self, m: int, n: int) -> np.ndarray:
-        return np.array([[self.random_element() for _ in range(n)] for _ in range(m)])
-    
-    def mat_mul(self, A: np.ndarray, B: np.ndarray) -> np.ndarray:
-        """Matrix multiplication mod q."""
-        return np.mod(A @ B, self.q)
-    
-    def mat_vec(self, M: np.ndarray, v: np.ndarray) -> np.ndarray:
-        """Matrix-vector multiplication mod q."""
-        return np.mod(M @ v, self.q)
+    Freivalds' algorithm for randomized matrix multiplication verification.
 
+    Given n×n matrices A, B, C over Z/pZ, tests whether A*B = C
+    using O(n²) operations per trial instead of O(n^ω) for direct multiplication.
 
-# =============================================================================
-# Multivariate Polynomial
-# =============================================================================
+    Error guarantee: If A*B ≠ C, each independent trial detects the error
+    with probability ≥ 1 - 1/p. After k trials, error probability ≤ (1/p)^k.
 
-class MvPolynomial:
+    Time complexity: O(k * n²) field operations
+    Space complexity: O(n) for the random vector
     """
-    Sparse multivariate polynomial over Z/qZ.
-    
-    Represented as a dictionary: exponent tuple → coefficient.
-    Example: x²y + 3z is {(2,1,0): 1, (0,0,1): 3}
-    """
-    
-    def __init__(self, coeffs: Dict[Tuple[int, ...], int], q: int):
+
+    def __init__(self, prime: int):
         """
         Args:
-            coeffs: Map from exponent tuples to coefficients (mod q).
-            q: Prime modulus.
+            prime: The prime modulus defining the field Z/pZ.
         """
-        self.q = q
-        self.coeffs: Dict[Tuple[int, ...], int] = {}
-        for exp, coeff in coeffs.items():
-            c = coeff % q
-            if c != 0:
-                self.coeffs[exp] = c
-    
-    @property
-    def n_vars(self) -> int:
-        """Number of variables."""
-        if not self.coeffs:
-            return 0
-        return len(next(iter(self.coeffs.keys())))
-    
+        self.p = prime
+
+    def verify(self, A: np.ndarray, B: np.ndarray, C: np.ndarray,
+               num_trials: int = 1) -> bool:
+        """
+        Test whether A*B ≡ C (mod p).
+
+        Args:
+            A: n×n integer matrix
+            B: n×n integer matrix
+            C: n×n integer matrix (claimed product)
+            num_trials: Number of independent random trials
+
+        Returns:
+            True if all trials pass (consistent with A*B = C).
+            False if any trial detects an error (definitely A*B ≠ C).
+
+        Complexity:
+            Time: O(num_trials * n²)
+            Space: O(n)
+        """
+        n = A.shape[0]
+        assert A.shape == B.shape == C.shape == (n, n)
+
+        for _ in range(num_trials):
+            # Step 1: Generate random vector r ∈ (Z/pZ)^n
+            r = np.random.randint(0, self.p, size=(n, 1))
+
+            # Step 2: Compute B*r (O(n²))
+            Br = B @ r % self.p
+
+            # Step 3: Compute A*(B*r) (O(n²))
+            ABr = A @ Br % self.p
+
+            # Step 4: Compute C*r (O(n²))
+            Cr = C @ r % self.p
+
+            # Step 5: Compare
+            if not np.array_equal(ABr % self.p, Cr % self.p):
+                return False  # Definitely incorrect
+
+        return True  # Probably correct
+
+    def error_bound(self, num_trials: int = 1) -> float:
+        """
+        Upper bound on the probability of a false positive.
+
+        Args:
+            num_trials: Number of independent trials
+
+        Returns:
+            Upper bound (1/p)^num_trials on error probability.
+        """
+        return (1.0 / self.p) ** num_trials
+
+
+# ============================================================================
+# Algorithm 2: Schwartz-Zippel Polynomial Identity Testing
+# ============================================================================
+
+class SparsePolynomial:
+    """
+    A sparse multivariate polynomial over Z/pZ.
+
+    Represented as a dictionary mapping exponent tuples to coefficients.
+    E.g., 3*x0^2*x1 + 2*x0 is {(2,1): 3, (1,0): 2}.
+    """
+
+    def __init__(self, coeffs: Dict[Tuple[int, ...], int], num_vars: int, prime: int):
+        """
+        Args:
+            coeffs: Mapping from exponent tuples to nonzero coefficients.
+            num_vars: Number of variables.
+            prime: Field characteristic.
+        """
+        self.coeffs = {k: v % prime for k, v in coeffs.items() if v % prime != 0}
+        self.num_vars = num_vars
+        self.p = prime
+
+    def evaluate(self, point: Tuple[int, ...]) -> int:
+        """
+        Evaluate polynomial at a point over Z/pZ.
+
+        Args:
+            point: Tuple of field elements (x₀, x₁, ..., x_{n-1}).
+
+        Returns:
+            f(point) mod p.
+
+        Complexity: O(|support| * n) field operations.
+        """
+        assert len(point) == self.num_vars
+        result = 0
+        for exps, coeff in self.coeffs.items():
+            term = coeff
+            for i, e in enumerate(exps):
+                term = (term * pow(point[i], e, self.p)) % self.p
+            result = (result + term) % self.p
+        return result
+
     @property
     def total_degree(self) -> int:
-        """Maximum sum of exponents over all monomials."""
+        """Total degree of the polynomial."""
         if not self.coeffs:
-            return -1  # Convention: zero polynomial has degree -∞
-        return max(sum(exp) for exp in self.coeffs.keys())
-    
+            return -1  # Convention: zero polynomial has degree -1
+        return max(sum(exps) for exps in self.coeffs.keys())
+
     @property
     def is_zero(self) -> bool:
+        """Whether the polynomial is identically zero."""
         return len(self.coeffs) == 0
-    
-    def eval(self, point: Tuple[int, ...]) -> int:
+
+    def __add__(self, other: 'SparsePolynomial') -> 'SparsePolynomial':
+        """Add two polynomials."""
+        assert self.num_vars == other.num_vars and self.p == other.p
+        result = dict(self.coeffs)
+        for k, v in other.coeffs.items():
+            result[k] = (result.get(k, 0) + v) % self.p
+        return SparsePolynomial(result, self.num_vars, self.p)
+
+    def __neg__(self) -> 'SparsePolynomial':
+        """Negate a polynomial."""
+        return SparsePolynomial(
+            {k: (-v) % self.p for k, v in self.coeffs.items()},
+            self.num_vars, self.p
+        )
+
+    def __sub__(self, other: 'SparsePolynomial') -> 'SparsePolynomial':
+        """Subtract two polynomials."""
+        return self + (-other)
+
+
+class SchwartzZippelPIT:
+    """
+    Schwartz-Zippel Polynomial Identity Testing.
+
+    Tests whether a polynomial f is identically zero by evaluating at random points.
+
+    Soundness: If f ≠ 0 and deg(f) ≤ d, then
+        Pr[f(r) = 0 for random r ∈ S^n] ≤ d / |S|
+
+    Time complexity: O(T_eval) per trial, where T_eval is the evaluation cost.
+    """
+
+    def __init__(self, prime: int):
         """
-        Evaluate the polynomial at a point in (Z/qZ)^n.
-        
-        Time: O(s · n) where s = number of monomials, n = number of variables.
+        Args:
+            prime: Characteristic of the field Z/pZ.
         """
-        result = 0
-        for exp, coeff in self.coeffs.items():
-            term = coeff
-            for i, e in enumerate(exp):
-                term = (term * pow(int(point[i]), int(e), self.q)) % self.q
-            result = (result + term) % self.q
-        return result
-    
-    def __repr__(self) -> str:
-        if self.is_zero:
-            return "0"
-        terms = []
-        for exp, coeff in sorted(self.coeffs.items(), key=lambda x: (-sum(x[0]), x[0])):
-            parts = [f"x{i}^{e}" if e > 1 else f"x{i}" for i, e in enumerate(exp) if e > 0]
-            if parts:
-                term = f"{coeff}·{'·'.join(parts)}" if coeff != 1 else '·'.join(parts)
-            else:
-                term = str(coeff)
-            terms.append(term)
-        return " + ".join(terms)
+        self.p = prime
+
+    def test_identity(self, poly: SparsePolynomial,
+                      num_trials: int = 10) -> Tuple[bool, Optional[Tuple[int, ...]]]:
+        """
+        Test whether a polynomial is identically zero.
+
+        Args:
+            poly: Polynomial to test.
+            num_trials: Number of random evaluation points to try.
+
+        Returns:
+            (is_probably_zero, witness):
+            - (True, None) if all evaluations returned 0.
+            - (False, point) if a nonzero evaluation was found at `point`.
+
+        Complexity: O(num_trials * |support| * n) field operations.
+        """
+        for _ in range(num_trials):
+            point = tuple(int(x) for x in np.random.randint(0, self.p, size=poly.num_vars))
+            val = poly.evaluate(point)
+            if val != 0:
+                return False, point
+        return True, None
+
+    def error_bound(self, degree: int, num_trials: int = 1) -> float:
+        """
+        Upper bound on false zero probability.
+
+        Args:
+            degree: Upper bound on total degree.
+            num_trials: Number of independent trials.
+
+        Returns:
+            (degree/p)^num_trials upper bound on error.
+        """
+        return (degree / self.p) ** num_trials
 
 
-# =============================================================================
-# Algorithm 1: Schwartz–Zippel PIT
-# =============================================================================
-
-def schwartz_zippel_pit(
-    poly: MvPolynomial,
-    num_trials: int = 1,
-    verbose: bool = False
-) -> bool:
-    """
-    Schwartz–Zippel Polynomial Identity Test.
-    
-    Tests whether a multivariate polynomial over Z/qZ is identically zero
-    by evaluating at random points.
-    
-    Args:
-        poly: The polynomial to test.
-        num_trials: Number of independent random evaluations (k).
-        verbose: Print evaluation details.
-    
-    Returns:
-        True if the polynomial appears to be zero (might be wrong).
-        False if a nonzero evaluation was found (definitely nonzero).
-    
-    Error Bound:
-        If poly ≠ 0, Pr[returns True] ≤ (deg(poly) / q)^k
-        where q is the field size and k = num_trials.
-    
-    Complexity:
-        Time: O(k · s · n) where s = #monomials, n = #variables.
-        Space: O(n) for the random point.
-    
-    Example:
-        >>> f = MvPolynomial({(2,0): 1, (0,2): 1, (1,1): 5}, q=7)  # x²+y²+5xy over Z/7Z
-        >>> schwartz_zippel_pit(f, num_trials=10)
-        False  # f is nonzero, detected with high probability
-    """
-    q = poly.q
-    n = poly.n_vars
-    
-    if poly.is_zero:
-        return True  # Trivially zero
-    
-    field = FiniteField(q)
-    
-    for trial in range(num_trials):
-        point = tuple(field.random_vector(n))
-        value = poly.eval(point)
-        
-        if verbose:
-            print(f"  Trial {trial+1}: f{point} = {value}")
-        
-        if value != 0:
-            return False  # Definitely nonzero
-    
-    return True  # Likely zero (or unlucky)
-
-
-# =============================================================================
-# Algorithm 2: Freivalds' Algorithm
-# =============================================================================
-
-def freivalds_verify(
-    A: np.ndarray,
-    B: np.ndarray,
-    C: np.ndarray,
-    q: int,
-    num_trials: int = 1,
-    verbose: bool = False
-) -> bool:
-    """
-    Freivalds' Randomized Matrix Multiplication Verification.
-    
-    Tests whether A·B ≡ C (mod q) by random vector sampling.
-    
-    Args:
-        A: m×p matrix over Z/qZ.
-        B: p×n matrix over Z/qZ.
-        C: m×n matrix over Z/qZ (claimed product).
-        q: Prime modulus.
-        num_trials: Number of independent random tests (k).
-        verbose: Print test details.
-    
-    Returns:
-        True if all tests pass (A·B might equal C).
-        False if any test fails (definitely A·B ≠ C).
-    
-    Error Bound:
-        If A·B ≠ C, Pr[returns True] ≤ (1/q)^k.
-        This follows from the degree-1 Schwartz–Zippel bound:
-        the discrepancy D = AB - C has a nonzero row defining
-        a degree-1 polynomial that vanishes on ≤ q^{n-1} of q^n inputs.
-    
-    Complexity:
-        Time: O(k · (mp + mn)) = O(k · n · (m+p)) for each trial.
-              Two matrix-vector products: B·r (p×n · n) and A·(Br) (m×p · p).
-        Space: O(max(m,n,p)) for the random vector and intermediate products.
-    
-    Comparison with naive:
-        Naive verification: compute A·B explicitly → O(m·n·p) or O(n^ω).
-        Freivalds with k trials: O(k·n²) for square n×n matrices.
-        Speedup: factor of n/k (or n^{ω-2}/k with fast multiplication).
-    
-    Example:
-        >>> A = np.array([[1, 2], [3, 4]])
-        >>> B = np.array([[5, 6], [7, 8]])
-        >>> C = np.mod(A @ B, 11)
-        >>> freivalds_verify(A, B, C, q=11, num_trials=5)
-        True
-    """
-    field = FiniteField(q)
-    n = B.shape[1]  # Number of columns of B (and C)
-    
-    for trial in range(num_trials):
-        r = np.array(field.random_vector(n))
-        
-        # Compute A·(B·r) mod q  — O(pn + mp) operations
-        Br = field.mat_vec(B, r)
-        ABr = field.mat_vec(A, Br)
-        
-        # Compute C·r mod q — O(mn) operations
-        Cr = field.mat_vec(C, r)
-        
-        if verbose:
-            print(f"  Trial {trial+1}: r = {r}")
-            print(f"    A·(B·r) = {ABr}")
-            print(f"    C·r     = {Cr}")
-            print(f"    Match: {np.array_equal(ABr, Cr)}")
-        
-        if not np.array_equal(ABr, Cr):
-            return False  # Definitely AB ≠ C
-    
-    return True  # Likely AB = C
-
-
-# =============================================================================
+# ============================================================================
 # Algorithm 3: Polynomial Fingerprinting
-# =============================================================================
+# ============================================================================
 
-def polynomial_fingerprint(
-    data: List[int],
-    q: int,
-    eval_point: Optional[int] = None
-) -> int:
+class PolynomialFingerprint:
     """
-    Polynomial fingerprinting: hash a data vector to a single field element.
-    
-    Encodes data = [a₀, a₁, ..., aₙ₋₁] as the polynomial
-    p(x) = a₀ + a₁·x + a₂·x² + ... + aₙ₋₁·x^{n-1}
-    and evaluates at a random (or specified) point r ∈ Z/qZ.
-    
-    By Schwartz–Zippel (degree n-1, 1 variable):
-    if data₁ ≠ data₂, then Pr[fingerprint₁ = fingerprint₂] ≤ (n-1)/q.
-    
-    Args:
-        data: List of integers (coefficients mod q).
-        q: Prime modulus.
-        eval_point: Evaluation point (random if None).
-    
-    Returns:
-        The fingerprint p(r) mod q.
-    
-    Complexity:
-        Time: O(n) using Horner's method.
-        Space: O(1) beyond input.
+    Polynomial fingerprinting for equality testing.
+
+    Encodes a sequence (s₁, ..., s_n) as the polynomial
+    f_s(X) = s₁ + s₂X + s₃X² + ... + s_nX^{n-1}
+
+    Two distinct sequences s ≠ t have Pr[f_s(r) = f_t(r)] ≤ (n-1)/p
+    for a random r ∈ Z/pZ.
+
+    Space complexity: O(log p) bits (only need to store the fingerprint value).
     """
-    if eval_point is None:
-        eval_point = random.randint(0, q - 1)
-    
-    # Horner's method: p(r) = a₀ + r·(a₁ + r·(a₂ + ... ))
-    result = 0
-    for coeff in reversed(data):
-        result = (result * eval_point + coeff) % q
-    
-    return result
+
+    def __init__(self, prime: int):
+        self.p = prime
+        self.r = np.random.randint(0, prime)
+
+    def fingerprint(self, sequence: List[int]) -> int:
+        """
+        Compute the polynomial fingerprint of a sequence.
+
+        Args:
+            sequence: List of integers.
+
+        Returns:
+            f_s(r) mod p where r is the random evaluation point.
+
+        Complexity: O(n) field operations (Horner's method).
+        """
+        # Horner's method: evaluate s₁ + s₂r + s₃r² + ... + s_nr^{n-1}
+        result = 0
+        for coeff in reversed(sequence):
+            result = (result * self.r + coeff) % self.p
+        return result
+
+    def test_equality(self, seq1: List[int], seq2: List[int]) -> bool:
+        """
+        Test whether two sequences are equal using fingerprinting.
+
+        Args:
+            seq1, seq2: Sequences to compare.
+
+        Returns:
+            True if fingerprints match (probably equal).
+            False if fingerprints differ (definitely not equal).
+        """
+        return self.fingerprint(seq1) == self.fingerprint(seq2)
+
+    def error_bound(self, max_length: int) -> float:
+        """
+        Upper bound on false equality probability.
+
+        Args:
+            max_length: Maximum length of the sequences.
+
+        Returns:
+            (max_length - 1) / p upper bound on error.
+        """
+        return (max_length - 1) / self.p
 
 
-def fingerprint_equality_test(
-    data1: List[int],
-    data2: List[int],
-    q: int,
-    num_trials: int = 1
-) -> bool:
-    """
-    Test equality of two data vectors using polynomial fingerprinting.
-    
-    Args:
-        data1, data2: Data vectors to compare.
-        q: Prime modulus (should be >> len(data)).
-        num_trials: Number of independent tests.
-    
-    Returns:
-        True if fingerprints match (might be wrong if data1 ≠ data2).
-        False if fingerprints differ (definitely data1 ≠ data2).
-    
-    Error: Pr[false positive] ≤ ((n-1)/q)^k where n = max(len(data1), len(data2)).
-    """
-    for _ in range(num_trials):
-        r = random.randint(0, q - 1)
-        fp1 = polynomial_fingerprint(data1, q, r)
-        fp2 = polynomial_fingerprint(data2, q, r)
-        if fp1 != fp2:
-            return False
-    return True
-
-
-# =============================================================================
+# ============================================================================
 # Example Usage
-# =============================================================================
+# ============================================================================
+
+def example_freivalds():
+    """Example: Verify matrix multiplication."""
+    print("=" * 60)
+    print("Example: Freivalds' Algorithm")
+    print("=" * 60)
+
+    n, p = 50, 101
+    verifier = FreivaldsVerifier(prime=p)
+
+    # Create matrices and correct product
+    A = np.random.randint(0, p, (n, n))
+    B = np.random.randint(0, p, (n, n))
+    C_correct = A @ B % p
+
+    # Test correct product
+    result = verifier.verify(A, B, C_correct, num_trials=5)
+    print(f"Correct product test: {'PASS' if result else 'FAIL'}")
+
+    # Test incorrect product (single entry error)
+    C_wrong = C_correct.copy()
+    C_wrong[0, 0] = (C_wrong[0, 0] + 1) % p
+    result = verifier.verify(A, B, C_wrong, num_trials=5)
+    print(f"Incorrect product test: {'PASS (false positive!)' if result else 'FAIL (correctly detected)'}")
+    print(f"Error bound for 5 trials: {verifier.error_bound(5):.2e}")
+    print()
+
+
+def example_schwartz_zippel():
+    """Example: Polynomial identity testing."""
+    print("=" * 60)
+    print("Example: Schwartz-Zippel PIT")
+    print("=" * 60)
+
+    p = 97
+    pit = SchwartzZippelPIT(prime=p)
+
+    # Test a nonzero polynomial
+    f = SparsePolynomial({(2, 0): 1, (0, 2): 1, (1, 1): 3}, num_vars=2, prime=p)
+    is_zero, witness = pit.test_identity(f)
+    print(f"f = x² + y² + 3xy: {'zero' if is_zero else f'nonzero (witness: {witness})'}")
+
+    # Test the zero polynomial
+    g = SparsePolynomial({}, num_vars=2, prime=p)
+    is_zero, witness = pit.test_identity(g)
+    print(f"g = 0: {'zero' if is_zero else f'nonzero (witness: {witness})'}")
+
+    # Test f - f (should be zero)
+    h = f - f
+    is_zero, witness = pit.test_identity(h)
+    print(f"f - f: {'zero' if is_zero else f'nonzero (witness: {witness})'}")
+    print()
+
+
+def example_fingerprinting():
+    """Example: Polynomial fingerprinting for string comparison."""
+    print("=" * 60)
+    print("Example: Polynomial Fingerprinting")
+    print("=" * 60)
+
+    fp = PolynomialFingerprint(prime=10007)
+
+    # Equal sequences
+    s1 = list(range(1000))
+    s2 = list(range(1000))
+    print(f"Equal sequences (len=1000): match={fp.test_equality(s1, s2)}")
+
+    # Different sequences
+    s3 = list(range(1000))
+    s3[500] = (s3[500] + 1)
+    print(f"Different sequences: match={fp.test_equality(s1, s3)}")
+    print(f"Error bound: {fp.error_bound(1000):.6f}")
+    print()
+
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Algorithm Demonstrations")
-    print("=" * 60)
-    
-    # --- Schwartz–Zippel PIT ---
-    print("\n--- Schwartz–Zippel PIT ---")
-    
-    # Nonzero polynomial: x² + y² + 5xy over Z/7Z
-    f_nonzero = MvPolynomial({(2, 0): 1, (0, 2): 1, (1, 1): 5}, q=7)
-    print(f"f = {f_nonzero}, degree = {f_nonzero.total_degree}")
-    result = schwartz_zippel_pit(f_nonzero, num_trials=5, verbose=True)
-    print(f"PIT result: {'possibly zero' if result else 'definitely nonzero'}")
-    
-    # Zero polynomial (disguised): (x+y)² - x² - 2xy - y² = 0 over Z/7Z
-    f_zero = MvPolynomial({(2, 0): 0, (0, 2): 0, (1, 1): 0}, q=7)
-    print(f"\ng = {f_zero} (zero polynomial)")
-    result = schwartz_zippel_pit(f_zero, num_trials=5, verbose=True)
-    print(f"PIT result: {'possibly zero' if result else 'definitely nonzero'}")
-    
-    # --- Freivalds ---
-    print("\n--- Freivalds' Algorithm ---")
-    
-    q = 11
-    n = 3
-    field = FiniteField(q)
-    A = field.random_matrix(n, n)
-    B = field.random_matrix(n, n)
-    C_correct = field.mat_mul(A, B)
-    C_wrong = C_correct.copy()
-    C_wrong[1, 1] = (C_wrong[1, 1] + 1) % q
-    
-    print(f"\nCorrect product test:")
-    result = freivalds_verify(A, B, C_correct, q, num_trials=3, verbose=True)
-    print(f"Result: {'PASS' if result else 'FAIL'}")
-    
-    print(f"\nWrong product test:")
-    result = freivalds_verify(A, B, C_wrong, q, num_trials=3, verbose=True)
-    print(f"Result: {'PASS (false accept!)' if result else 'FAIL (error detected)'}")
-    
-    # --- Fingerprinting ---
-    print("\n--- Polynomial Fingerprinting ---")
-    
-    q = 101
-    data1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    data2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    data3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11]  # Last element different
-    
-    print(f"data1 = {data1}")
-    print(f"data2 = {data2}")
-    print(f"data3 = {data3}")
-    
-    print(f"\ndata1 == data2? {fingerprint_equality_test(data1, data2, q, num_trials=5)}")
-    print(f"data1 == data3? {fingerprint_equality_test(data1, data3, q, num_trials=5)}")
-    print(f"Error bound per trial: {(len(data1)-1)/q:.4f}")
+    np.random.seed(42)
+    example_freivalds()
+    example_schwartz_zippel()
+    example_fingerprinting()

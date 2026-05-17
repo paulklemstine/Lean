@@ -414,10 +414,10 @@
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "483c8105",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "daea38ab",
     "timestamp": "2026-05-17T15:03:32.981213+00:00"
   },
   {
@@ -495,20 +495,6 @@
     "timestamp": "2026-05-17T15:21:59.549951+00:00"
   },
   {
-    "id": "fd_0271",
-    "title": "Subadditivity attempt",
-    "description": ": I∞(X; Y₁, ..., Yₙ) ≤ ∑ᵢ I∞(X; Yᵢ) — this would follow from a superadditivity of conditional min-entropy: H∞(X|Y₁,...,Yₙ) ≥ ∑ᵢ H∞(X|Yᵢ) − (n−1)H∞(X). However, this is unlikely to hold in full generality for min-entropy.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3818c5e0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:27:52.139885+00:00"
-  },
-  {
     "id": "fd_0274",
     "title": "Direction 6",
     "description": "(Neural interpretability) — Highest applied impact, most speculative",
@@ -517,39 +503,11 @@
       "Speculative"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "31421af6",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "570b15b9",
     "timestamp": "2026-05-17T15:38:27.261721+00:00"
-  },
-  {
-    "id": "fd_0265",
-    "title": "Tests computationally",
-    "description": "using `#eval` with concrete examples before attempting proofs.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4c33555c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:31:56.986130+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Cross-references",
-    "description": "with existing catalog theorems (especially `closure_iteration_linear_bound`, `boundedWordCount_linear_times_exponential`, `formula_has_term`).",
-    "domains": [
-      "EML"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4c33555c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:32:06.971013+00:00"
   },
   {
     "id": "fd_0270",
@@ -564,21 +522,6 @@
     "source_exp_id": "90a65a27",
     "consumed_by_exp_id": "5cf6f85f",
     "timestamp": "2026-05-17T16:37:43.472463+00:00"
-  },
-  {
-    "id": "fd_0271",
-    "title": "Tropical + Spectral",
-    "description": ": Combining tropical ℓ^∞ bounds with spectral ℓ² bounds would give a two-sided certificate: tropical bounds handle worst-case, spectral bounds handle average-case.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "90a65a27",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:37:43.494126+00:00"
   },
   {
     "id": "fd_0272",
@@ -623,20 +566,6 @@
     "timestamp": "2026-05-17T16:38:42.769159+00:00"
   },
   {
-    "id": "fd_0265",
-    "title": "Decompose",
-    "description": "ℂ[P¹(𝔽_q)] = **1** ⊕ St ⊕ (remaining irreducibles) using the character table of PGL₂(𝔽_q)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.787395+00:00"
-  },
-  {
     "id": "fd_0266",
     "title": "Compute",
     "description": "the eigenvalue of T_q on the Steinberg representation St, showing it equals a cube root of the character value with magnitude 1/√3",
@@ -651,39 +580,6 @@
     "timestamp": "2026-05-17T16:38:42.804717+00:00"
   },
   {
-    "id": "fd_0267",
-    "title": "Formalize",
-    "description": "in machine-checked mathematics\n\n### Cross-Domain Connections\n- Automorphic forms: the operator T_q is a finite analogue of a Hecke operator\n- Algebraic geometry: the conic is a genus-0 curve, and the eigenfunctions are sections of line bundles\n- Quantum computing: the spectral decomposition provides a quantum walk framework\n\n### Estimated Difficulty\nHigh. Requires formalizing finite group representation theory for PGL₂ in a proof assistant, including character tables and the Steinberg representation.\n\n---\n\n## Direction 2: Composite Modulus Spectral Factorization via CRT\n\n### Hypothesis\nFor composite moduli n = p₁^{a₁} ⋯ p_k^{a_k}, the Berggren operator spectrum on P(X_n) factors as a tensor product of the spectra on each P(X_{p_i^{a_i}}), with the spectral gap remaining 1 - 1/√3.\n\n### Proo",
-    "domains": [
-      "Physics",
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.823022+00:00"
-  },
-  {
-    "id": "fd_0269",
-    "title": "Show",
-    "description": "the Berggren action respects this decomposition",
-    "domains": [
-      "Pythagorean"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.854525+00:00"
-  },
-  {
     "id": "fd_0270",
     "title": "Prove",
     "description": "the tensor product spectral theorem: eigenvalues of T_n are products of eigenvalues of T_{p_i^{a_i}}",
@@ -696,22 +592,6 @@
     "source_exp_id": "1c1883b3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:38:42.869928+00:00"
-  },
-  {
-    "id": "fd_0271",
-    "title": "Handle",
-    "description": "prime powers p^a separately — the isotropic cone mod p^a has different structure from mod p\n\n### Key Lemma\nFor coprime m, n: the projective cone P(X_{mn}) maps surjectively to P(X_m) × P(X_n) with controllable fibers.\n\n### Applications\n- Derandomization with composite-modulus arithmetic circuits\n- Equidistribution results for Pythagorean triples mod arbitrary integers\n- Connection to Dirichlet L-functions and their functional equations\n\n### Estimated Difficulty\nMedium. The CRT for linear actions is standard; the main challenge is handling projectivization and prime powers.\n\n---\n\n## Direction 3: Higher-Dimensional Quadratic Form Analogues\n\n### Hypothesis\nFor any non-degenerate ternary quadratic form Q over ℤ with signature (2,1), the semigroup of generators preserving Q and generating all p",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.888177+00:00"
   },
   {
     "id": "fd_0272",
@@ -760,20 +640,6 @@
     "timestamp": "2026-05-17T16:38:42.938309+00:00"
   },
   {
-    "id": "fd_0267",
-    "title": "Validate the hypothesis",
-    "description": "computationally using the Python implementations provided.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2e27e30c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:00:57.314323+00:00"
-  },
-  {
     "id": "fd_0268",
     "title": "Build the Lean skeleton",
     "description": "with `sorry`-marked lemmas capturing the key logical steps.",
@@ -790,20 +656,6 @@
     "timestamp": "2026-05-17T17:00:57.330055+00:00"
   },
   {
-    "id": "fd_0269",
-    "title": "Prove bottom-up",
-    "description": ", starting from the simplest supporting lemmas.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2e27e30c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:00:57.346165+00:00"
-  },
-  {
     "id": "fd_0270",
     "title": "Cross-pollinate",
     "description": ": results from one direction should be used in others (e.g., Direction 1's concavity result feeds Direction 5's algorithm design).",
@@ -816,6 +668,114 @@
     "source_exp_id": "2e27e30c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T17:00:57.361755+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Perturbation theory",
+    "description": ": View approximate model as exact model + error, bound the CHSH error by 4·2ε + O(ε²).\n\n### Cross-Domain Significance\n- **Robust quantum cryptography**: Quantifies security degradation under imperfect measurements\n- **Approximate computation**: Models noise in classical simulation of quantum correlations\n- **Learning theory**: Connects to approximate expert prediction with bounded perturbations\n\n---\n\n## Direction 2: Prediction/Nonlocality Equivalence Theorem\n\n### Goal\nDefine a finite expert class associated to a local model and prove that Bell locality implies a regret bound, establishing a formal equivalence between prediction optimality and classical correlations.\n\n### Precise Theorem Statement\n```\ndef expertClassFromLocalModel {n : ℕ} (L : LocalModel n) :\n    Fin L.numStates → (Fin n → ",
+    "domains": [
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6d6b9f8a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:01:29.654439+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Expert-to-LHV reduction",
+    "description": ": Show that each expert in the class corresponds to a deterministic LHV assignment, then apply existing regret bounds.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6d6b9f8a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:01:29.672307+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Dual formulation",
+    "description": ": Use the minimax theorem to show that optimal prediction against adversarial nature corresponds to optimal classical correlation production.\n\n### Cross-Domain Significance\n- **Machine learning foundations**: Fundamental limits of classical prediction\n- **Game theory**: Connection between strategic play and physical correlations\n- **Algorithmic fairness**: Resource constraints on prediction quality\n\n---\n\n## Direction 3: Information Lower Bound for CHSH Violation\n\n### Goal\nProve that any abstract strategy family achieving |CHSH| > 4 requires information budget strictly above a classically bounded threshold.\n\n### Precise Theorem Statement\n```\nstructure StrategyFamily (n k : ℕ) where\n  strategies : Fin (2^k) → Fin n → ℚ → Bool\n  -- k bits of shared information\n\ntheorem information_lower_bound",
+    "domains": [
+      "Bridges",
+      "MachineLearning"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6d6b9f8a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:01:29.692027+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Information-theoretic",
+    "description": ": Use Holevo bound to show k bits of classical information can produce at most 2^k deterministic strategies, each classical.\n\n### Cross-Domain Significance\n- **Communication complexity**: Lower bounds on shared randomness for correlation production\n- **Quantum information**: Quantifies the classical simulation cost of quantum correlations\n- **Cryptographic security**: Bounds on eavesdropper information from observed violations\n\n---\n\n## Direction 4: Coherence Stratification of Correlation Models\n\n### Goal\nDefine levels of coherence and prove monotonicity of attainable correlation strength across strata.\n\n### Precise Theorem Statement\n```\ndef correlationStratum (γ : ℝ) : Set ℝ :=\n  { s : ℝ | ∃ (n : ℕ) (L : LocalModel n) (H : ℝ) (hn : 0 < n),\n    CoherenceVal H n hn ≥ γ ∧\n    s = chshQuantity",
+    "domains": [
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6d6b9f8a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:01:29.723493+00:00"
+  },
+  {
+    "id": "fd_0278",
+    "title": "Uniform bound",
+    "description": ": All strata with γ ∈ [0,1] are classical, so the CHSH bound applies uniformly.\n\n### Cross-Domain Significance\n- **Quantum resource theory**: Coherence as a graded computational resource\n- **Complexity hierarchy**: Analogous to NP_γ classes in coherence-stratified complexity\n- **Phase transitions**: Identify critical coherence thresholds for qualitative changes in achievable correlations\n\n---\n\n## Direction 5: Proof Complexity Interpretation\n\n### Goal\nEncode local hidden-variable assignments as certificates and prove that bounded certificate complexity implies Bell-classical behavior.\n\n### Precise Theorem Statement\n```\ndef CertificateSystem (n : ℕ) (cert_length : ℕ) :=\n  Fin (2^cert_length) → Fin n → ℚ → Bool\n\n-- A certificate system produces classical correlations\ntheorem bounded_certifica",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6d6b9f8a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:01:29.755619+00:00"
+  },
+  {
+    "id": "fd_0279",
+    "title": "Direct reduction",
+    "description": ": A certificate system with any finite cert_length is literally a local model. Apply bell_chsh_bound.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6d6b9f8a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:01:29.771354+00:00"
+  },
+  {
+    "id": "fd_0280",
+    "title": "Counting argument",
+    "description": ": Show that the set of achievable CHSH values from k-bit certificates is a convex polytope contained in [-4, 4].",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6d6b9f8a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:01:29.788374+00:00"
   },
   {
     "id": "fd_0179",
@@ -1463,22 +1423,6 @@
     "source_exp_id": "8c5ff762",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T15:07:30.050712+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "2. Dualizing to Max-Plus Algebra",
-    "description": "**Hypothesis:** The entire infrastructure (AST, normalizer, reflection theorem, tactic) can be systematically dualized from min-plus to max-plus by a single semantic dictionary swap, yielding a `tropical_max` tactic with zero new proof effort.\n\n**Proof Strategy:**\n- Define `CTropExprMax` with `tmax` replacing `tmin`, evaluating as `max` instead of `min`\n- Prove a meta-theorem: for any `ACEquiv`-closed proof in min-plus, there exists a corresponding proof in max-plus, by the order-reversing isomorphism `x ↦ -x`\n- Alternatively, implement a direct syntactic translation `dual : CTropExpr → CTropExprMax` and prove `eval_max σ (dual e) = -(eval_min (fun i => -(σ i)) e)`\n- The max-plus normalizer is then `dual ∘ cnormalize_ca ∘ undual`\n\n**Applications:**\n- Critical path method (CPM) in project s",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bc9ede85",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:23:44.120929+00:00"
   },
   {
     "id": "fd_0273",
