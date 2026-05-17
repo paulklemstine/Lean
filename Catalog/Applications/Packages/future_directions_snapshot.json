@@ -110,20 +110,6 @@
     "timestamp": "2026-05-14T16:16:22.718724+00:00"
   },
   {
-    "id": "fd_0084",
-    "title": "Apply FO Transform",
-    "description": ": The standard FO transform (Hofheinz-Hövelmanns-Kiltz variant) converts CPA-secure PKE to CCA2-secure KEM. Verify that tropical ElGamal satisfies the required structural properties: correctness, γ-spreadness (the ciphertext has sufficient entropy).",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3cb1c42c",
-    "consumed_by_exp_id": "bf67dda8",
-    "timestamp": "2026-05-14T16:16:22.730452+00:00"
-  },
-  {
     "id": "fd_0088",
     "title": "Tropical-specific optimization",
     "description": ": The min-plus structure allows a more efficient protocol: the prover can commit to the \"argmin witnesses\" (which k achieves the minimum for each (i,j)) rather than the full matrices.\n\n### Key Lemmas Needed\n- `tropical_zkp_completeness`: An honest prover always convinces the verifier.\n- `tropical_zkp_soundness`: A cheating prover is caught with probability ≥ 1/2.\n- `tropical_zkp_zero_knowledge`: The verifier's view can be simulated without the witness.\n- `tropical_zkp_knowledge_extraction`: From two accepting transcripts with different challenges, one can extract A and B.\n\n### Candidate Lean Files\n- `Cryptography/TropicalZeroKnowledge.lean`\n- `Cryptography/SigmaProtocol.lean`\n\n### Cross-Domain Connections\n- **Graph Theory → ZK Proofs**: Path witnesses in layered graphs become the \"knowledg",
@@ -680,6 +666,48 @@
     "timestamp": "2026-05-17T01:41:37.171644+00:00"
   },
   {
+    "id": "fd_0252",
+    "title": "Formalize definitions",
+    "description": "in Lean 4 (1-2 weeks per direction).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bf67dda8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:16:44.658902+00:00"
+  },
+  {
+    "id": "fd_0253",
+    "title": "State key lemmas",
+    "description": "with sorry (validate skeleton compiles).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bf67dda8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:16:44.678088+00:00"
+  },
+  {
+    "id": "fd_0254",
+    "title": "Iterate",
+    "description": ": use failures to refine hypotheses and proof strategies.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bf67dda8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T02:16:44.692701+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -1011,7 +1039,7 @@
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "aa9f66df",
+    "consumed_by_exp_id": "6f8b6d11",
     "timestamp": "2026-05-16T02:14:30.279911+00:00"
   },
   {
