@@ -1471,5 +1471,161 @@
     "source_exp_id": "a00f01af",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T12:51:54.594622+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Direction 1: Full Lower Bound via Hyperplane Restriction Induction",
+    "description": "**Status**: The upper bound (extremal polynomial construction) is fully formalized. The lower bound requires additional infrastructure.\n\n**Concrete next step**: Formalize the polynomial factoring lemma for `MvPolynomial`:\n\n```\nIf f ∈ MvPolynomial(Fin (n+1)) 𝔽 vanishes identically on the hyperplane x₀ = c,\nthen (X₀ - C c) ∣ f and totalDegree(f / (X₀ - C c)) ≤ totalDegree(f) - 1.\n```\n\n**Required infrastructure**:\n- Connect `MvPolynomial.finSuccEquiv` with `fiberRestrict` to show that fiber vanishing implies polynomial divisibility\n- Formalize the factor theorem for polynomials over integral domains (`Polynomial.dvd_iff_isRoot`)\n- Track total degree through the `finSuccEquiv` equivalence\n- Prove the numerical optimization: for all valid t, `(q-t) * minWt(n-1, d-t) ≥ (q-b) * q^(n-1-a)`\n\n**Proo",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:10.916836+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Direction 2: Rigidity / Classification of Minimum-Weight Codewords",
+    "description": "**Hypothesis**: Every minimum-weight codeword of RM_q(n,d) is, up to affine equivalence, the canonical extremal polynomial:\n\n```\nf(x) = c · ∏_{i<a} ∏_{c'≠αᵢ} (xᵢ - c') · ∏_{j<b} (x_a - βⱼ)\n```\n\n**Proof strategy**:\n1. Show that any minimum-weight polynomial must have the maximum number of vanishing fibers in some coordinate (exactly q-1)\n2. After factoring, the quotient must again achieve minimum weight in fewer variables\n3. By induction, the polynomial must have the product structure\n4. The affine group acts transitively on the choices of coordinates and field elements\n\n**Formal statement** (target):\n```lean\ntheorem extremizer_rigidity\n    (f : MvPolynomial (Fin n) 𝔽) (hf : f ≠ 0)\n    (hdeg : f.totalDegree ≤ d)\n    (hmin : hammingWeight f = (card 𝔽 - b) * (card 𝔽) ^ (n - 1 - a)) :\n    ∃ (σ",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:10.941621+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Direction 3: Projective Reed–Muller Codes",
+    "description": "**Background**: Projective Reed–Muller codes evaluate homogeneous polynomials on projective space P^(n-1)(𝔽_q) instead of affine space.\n\n**Hypothesis**: The minimum distance of the projective Reed–Muller code PRM_q(n,d) is:\n```\nd_min = q^{n-1-a} - b · q^{n-2-a}  (for appropriate decomposition)\n```\n\n**Proof strategy**: Relate projective evaluations to affine evaluations via dehomogenization. The projective code arises as a punctured/shortened version of the affine code.\n\n**Formal target**:\n```lean\ndef projectiveRMMinDistance (q n d : ℕ) : ℕ := ...\ntheorem projective_rm_exact_distance ... := ...\n```\n\n**Impact**: Projective codes have better rate-distance tradeoffs and are used in algebraic geometry codes. Formalizing their parameters would extend the infrastructure significantly.\n\n---",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:10.961046+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Direction 4: Gröbner Footprint Bound for Finite Grids",
+    "description": "**Background**: The minimum distance can alternatively be proved via the Gröbner footprint (leading monomial shadow) method, which gives a purely combinatorial proof.\n\n**Hypothesis**: For any nonzero reduced polynomial f modulo (X_i^q - X_i), the support of the evaluation vector is at least as large as the \"anti-footprint\" of the leading monomial.\n\n**Required infrastructure**:\n- Reduction modulo the vanishing ideal (X_i^q - X_i)\n- Monomial orders for `MvPolynomial`\n- Leading monomial extraction\n- Footprint/staircase counting\n\n**Proof strategy**:\n1. Show every function on 𝔽^n has a unique reduced representative with exponents < q\n2. The leading monomial X_1^{e_1}...X_n^{e_n} determines a \"footprint\" region\n3. The number of nonzeros is at least the complement of the footprint: ∏(q - e_i) ≥ (",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:10.981334+00:00"
+  },
+  {
+    "id": "fd_0259",
+    "title": "Direction 5: Exact Soundness Theorems for Low-Degree Tests",
+    "description": "**Background**: Low-degree tests are fundamental primitives in PCP constructions and interactive proofs. The Schwartz-Zippel lemma provides soundness bounds, but the generalized Reed–Muller theorem gives EXACT worst-case soundness.\n\n**Concrete target**:\n```lean\ntheorem low_degree_test_exact_soundness\n    (q n d : ℕ) (hq : 1 < q) (f : (Fin n → 𝔽) → 𝔽)\n    (hf : f ≠ 0) (hdeg : isDegreeAtMost d f) :\n    (card {x : Fin n → 𝔽 | f x ≠ 0} : ℚ) / (card 𝔽) ^ n ≥\n      (q - b) * q^(n-1-a) / q^n\n```\n\n**Applications**:\n- Optimal soundness for sum-check protocol variants\n- Tight analysis of algebraic proximity testing\n- Improved PCP constructions using exact distance information\n\n**Cross-domain connection**: This bridges coding theory and computational complexity, providing formal infrastructure for ve",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:11.000943+00:00"
+  },
+  {
+    "id": "fd_0260",
+    "title": "Direction 6: Generalized Hamming Weights and Weight Hierarchies",
+    "description": "**Background**: The r-th generalized Hamming weight of a linear code is the minimum support size of any r-dimensional subcode. For Reed–Muller codes, these are known but not formalized.\n\n**Hypothesis**: The r-th generalized Hamming weight of RM_q(n,d) has an explicit formula involving a multi-parameter generalization of the (a,b) decomposition.\n\n**Proof strategy**: Extend the extremal polynomial construction to r-dimensional subcodes. The extremizers should be \"product\" subcodes concentrated on a few coordinates.\n\n**Impact**: Generalized Hamming weights determine the wire-tap channel capacity and the security of secret sharing schemes based on Reed–Muller codes.\n\n---",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:11.021216+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Direction 7: Finite Schwartz–Zippel with Optimal Constants",
+    "description": "**Target**: Formalize the sharp version of the Schwartz-Zippel lemma as a standalone theorem in finite algebraic geometry:\n\n```lean\ntheorem sharp_schwartz_zippel\n    (f : MvPolynomial (Fin n) 𝔽) (hf : f ≠ 0) (hdeg : f.totalDegree ≤ d) :\n    card {x : Fin n → 𝔽 | f x = 0} ≤ q^n - (q-b) * q^(n-1-a)\n```\n\nThis is equivalent to the minimum distance theorem but phrased as a zero-count bound, making it directly applicable in:\n- Probabilistic method arguments in combinatorics\n- Derandomization constructions\n- Algebraic circuit complexity lower bounds\n\n---",
+    "domains": [
+      "Algebra",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:11.039748+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Phase 1 (Near-term): Complete the Lower Bound",
+    "description": "- Formalize `MvPolynomial` factoring via `finSuccEquiv`\n- Prove degree tracking through factoring\n- Complete the inductive lower bound proof\n- **Estimated effort**: 1-2 weeks",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:11.056740+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Phase 2 (Medium-term): Rigidity and Applications",
+    "description": "- Prove extremizer classification\n- Formalize low-degree test soundness\n- Add projective Reed–Muller parameters\n- **Estimated effort**: 1-2 months",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:11.073823+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Keywords",
+    "description": "generalized Reed–Muller code, minimum distance, finite-field hypersurface, sharp zero-count theorem, affine fiber decomposition, tensor-product vanishing, low-degree testing, algebraic PCP, finite Nullstellensatz, Gröbner footprint bound, extremal support, finite affine geometry, weight hierarchy, projective Reed–Muller code, polynomial identity testing",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b62b8fc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T13:33:11.092879+00:00"
   }
 ]
