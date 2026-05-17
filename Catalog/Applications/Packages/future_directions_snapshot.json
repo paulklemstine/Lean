@@ -553,6 +553,90 @@
     "timestamp": "2026-05-17T15:38:27.261721+00:00"
   },
   {
+    "id": "fd_0264",
+    "title": "States precise conjectures",
+    "description": "as formal Lean theorem statements with `sorry`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4c33555c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:31:56.967409+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Tests computationally",
+    "description": "using `#eval` with concrete examples before attempting proofs.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4c33555c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:31:56.986130+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Decomposes aggressively",
+    "description": "into 3-10 helper lemmas per main theorem.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4c33555c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:32:03.409193+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Cross-references",
+    "description": "with existing catalog theorems (especially `closure_iteration_linear_bound`, `boundedWordCount_linear_times_exponential`, `formula_has_term`).",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4c33555c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:32:06.971013+00:00"
+  },
+  {
+    "id": "fd_0268",
+    "title": "Documents connections",
+    "description": "to classical mathematical results in docstrings.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4c33555c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:32:07.086950+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Iterates continuously",
+    "description": "— each proved theorem should suggest the next conjecture.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4c33555c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T16:32:07.263395+00:00"
+  },
+  {
     "id": "fd_0126",
     "title": "Specific Hypotheses",
     "description": "- **H1.1**: Bach chorale voice-leading can be characterized as shortest paths in a tropical hypergraph where nodes are 4-note chords and hyperedges encode simultaneous constraints (parallel fifths between any pair, voice spacing, voice crossing).\n- **H1.2**: The four-voice generalization of the zero-cost theorem holds: legal SATB counterpoint = zero locus of a 6-component penalty (one per voice pair).\n- **H1.3**: The exponential blowup in candidate space (P^4n vs P^n) can be managed via tropical tensor decomposition, factoring the 4-voice problem into coupled 2-voice subproblems.",
@@ -628,22 +712,6 @@
     "source_exp_id": "8fece6dc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:35:01.991565+00:00"
-  },
-  {
-    "id": "fd_0200",
-    "title": "Research Team Directive",
-    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "4c33555c",
-    "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
     "id": "fd_0200",
@@ -1297,10 +1365,10 @@
       "Geometry"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2b3b0e7e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "371a34c3",
     "timestamp": "2026-05-17T14:26:22.965741+00:00"
   },
   {
@@ -1311,10 +1379,10 @@
       "Bridges"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8c5ff762",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "529258a7",
     "timestamp": "2026-05-17T15:07:30.027859+00:00"
   },
   {

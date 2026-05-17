@@ -3,407 +3,388 @@
 Algorithms for Decomposable Matrix Verification
 
 Implements the core algorithms from the formal theory:
-1. Freivalds' algorithm for probabilistic matrix verification
-2. Block-diagonal decomposition and local verification
-3. Tropical norm bounds and robustness certification
-4. Compositional layer verification for neural networks
+1. Freivalds' probabilistic matrix verification
+2. Block-diagonal decomposition and verification
+3. Tropical norm bounds and robustness certificates
+4. Combined local-to-global verification pipeline
 
-All algorithms include complexity analysis and docstrings.
+All algorithms include complexity analysis, type hints, and examples.
 """
 
 import numpy as np
-from typing import List, Tuple, Optional, Callable
+from typing import Tuple, List, Optional, Dict
 from dataclasses import dataclass
 
 
-# ============================================================
-# Algorithm 1: Freivalds' Matrix Verification
-# ============================================================
+# ============================================================================
+# Data Structures
+# ============================================================================
+
+@dataclass
+class VerificationResult:
+    """Result of a matrix verification check."""
+    passed: bool
+    confidence: float  # probability of correctness
+    method: str
+    details: Dict
+
+
+@dataclass
+class BlockStructure:
+    """A block-diagonal decomposition of a matrix."""
+    blocks: List[np.ndarray]
+    block_sizes: List[int]
+    total_size: int
+
+    @staticmethod
+    def from_blocks(blocks: List[np.ndarray]) -> 'BlockStructure':
+        sizes = [b.shape[0] for b in blocks]
+        return BlockStructure(blocks=blocks, block_sizes=sizes,
+                              total_size=sum(sizes))
+
+    def to_full_matrix(self) -> np.ndarray:
+        """Assemble the block diagonal matrix. O(n²) where n = total_size."""
+        n = self.total_size
+        M = np.zeros((n, n))
+        offset = 0
+        for block in self.blocks:
+            s = block.shape[0]
+            M[offset:offset+s, offset:offset+s] = block
+            offset += s
+        return M
+
+
+@dataclass
+class TropicalCertificate:
+    """A tropical robustness certificate for a matrix computation."""
+    matrix_norm_bound: float  # max|M_ij|
+    input_bound: float        # max|x_i|
+    output_bound: float       # guaranteed bound on max|M*x|_i
+    detection_margin: float    # minimum detectable discrepancy
+    dimension: int
+
+
+# ============================================================================
+# Algorithm 1: Freivalds' Verification
+# ============================================================================
 
 def freivalds_verify(
     A: np.ndarray,
     B: np.ndarray,
     C: np.ndarray,
-    num_trials: int = 10,
-    field_size: Optional[int] = None
-) -> Tuple[bool, float]:
+    trials: int = 20,
+    field_size: int = 2
+) -> VerificationResult:
     """
-    Freivalds' randomized matrix identity verification.
+    Freivalds' randomized matrix verification algorithm.
 
-    Tests whether A @ B == C using random vector probes.
+    Checks whether A * B = C using random vector probes.
 
     Algorithm:
-        1. For each trial:
-           a. Sample random vector r from F^n
-           b. Compute A(Br) and Cr
-           c. If A(Br) ≠ Cr, return FAIL
-        2. If all trials pass, return ACCEPT
+        for t = 1 to trials:
+            sample r uniformly from {0,1,...,field_size-1}^n
+            if A*(B*r) ≠ C*r: return FAIL
+        return PASS
 
     Complexity:
-        - Time: O(k · n²) for k trials on n×n matrices
-        - Space: O(n) additional
-        - Error probability: ≤ (1/|F|)^k
+        Time:  O(trials * n²) — each trial is two matrix-vector products
+        Space: O(n) — only stores the random vector and intermediate results
+
+    Soundness (formally verified as freivalds_detection_probability):
+        If A*B ≠ C, Pr[all trials pass] ≤ (1/field_size)^trials
 
     Args:
         A, B, C: n×n matrices
-        num_trials: number of independent random checks
-        field_size: if specified, work in GF(p); otherwise use reals
+        trials: number of independent random trials
+        field_size: size of the random vector alphabet
 
     Returns:
-        (result, confidence) where result=True means likely equal,
-        confidence is the probability of correctness
+        VerificationResult with confidence level
     """
     n = A.shape[0]
+    assert A.shape == B.shape == C.shape == (n, n)
 
-    for trial in range(num_trials):
-        if field_size:
-            r = np.random.randint(0, field_size, n)
-            Br = (B @ r) % field_size
-            ABr = (A @ Br) % field_size
-            Cr = (C @ r) % field_size
-            if not np.array_equal(ABr, Cr):
-                return False, 1.0
-        else:
-            r = np.random.randn(n)
-            ABr = A @ (B @ r)
-            Cr = C @ r
-            if not np.allclose(ABr, Cr, atol=1e-10):
-                return False, 1.0
+    for t in range(trials):
+        r = np.random.randint(0, field_size, size=n).astype(float)
+        lhs = A @ (B @ r)
+        rhs = C @ r
+        if not np.allclose(lhs, rhs, atol=1e-10):
+            return VerificationResult(
+                passed=False,
+                confidence=1.0,
+                method="freivalds",
+                details={"failing_trial": t, "discrepancy": np.max(np.abs(lhs - rhs))}
+            )
 
-    if field_size:
-        error_prob = (1.0 / field_size) ** num_trials
-    else:
-        error_prob = 0.0  # Exact arithmetic: false positive prob is 0
-    return True, 1.0 - error_prob
-
-
-# ============================================================
-# Algorithm 2: Block-Diagonal Decomposition
-# ============================================================
-
-@dataclass
-class BlockStructure:
-    """Describes a block-diagonal matrix structure."""
-    block_sizes: List[int]
-    num_blocks: int
-    total_size: int
-
-    @staticmethod
-    def from_sizes(sizes: List[int]) -> 'BlockStructure':
-        return BlockStructure(
-            block_sizes=sizes,
-            num_blocks=len(sizes),
-            total_size=sum(sizes)
-        )
-
-
-def extract_blocks(
-    M: np.ndarray,
-    structure: BlockStructure
-) -> List[np.ndarray]:
-    """
-    Extract diagonal blocks from a block-diagonal matrix.
-
-    Complexity: O(Σ n_i²)
-    """
-    blocks = []
-    offset = 0
-    for s in structure.block_sizes:
-        blocks.append(M[offset:offset+s, offset:offset+s].copy())
-        offset += s
-    return blocks
-
-
-def assemble_block_diagonal(
-    blocks: List[np.ndarray],
-    structure: BlockStructure
-) -> np.ndarray:
-    """
-    Assemble a block-diagonal matrix from blocks.
-
-    Complexity: O(Σ n_i²)
-    """
-    M = np.zeros((structure.total_size, structure.total_size))
-    offset = 0
-    for block, s in zip(blocks, structure.block_sizes):
-        M[offset:offset+s, offset:offset+s] = block
-        offset += s
-    return M
-
-
-def block_diagonal_verify(
-    A: np.ndarray,
-    B: np.ndarray,
-    C: np.ndarray,
-    structure: BlockStructure
-) -> Tuple[bool, Optional[int]]:
-    """
-    Verify A @ B == C by checking each diagonal block independently.
-
-    This implements the block_diagonal_mul_eq_iff theorem:
-    blockDiagonal(A) * blockDiagonal(B) = blockDiagonal(C)
-    iff ∀ i, A_i * B_i = C_i
-
-    Complexity:
-        - Time: O(Σ n_i³) vs O(N³) for full verification
-        - Space: O(max(n_i²))
-        - Speedup: up to k× for k equal-sized blocks
-
-    Returns:
-        (result, failing_block) where failing_block is the index
-        of the first failing block if result is False
-    """
-    A_blocks = extract_blocks(A, structure)
-    B_blocks = extract_blocks(B, structure)
-    C_blocks = extract_blocks(C, structure)
-
-    for i, (Ai, Bi, Ci) in enumerate(zip(A_blocks, B_blocks, C_blocks)):
-        if not np.allclose(Ai @ Bi, Ci, atol=1e-10):
-            return False, i
-
-    return True, None
-
-
-# ============================================================
-# Algorithm 3: Tropical Robustness Certification
-# ============================================================
-
-def tropical_norm(v: np.ndarray) -> float:
-    """
-    Tropical (max-plus) norm: max|v_i|.
-
-    This is the L∞ norm, which is the natural norm in tropical geometry.
-    """
-    return float(np.max(np.abs(v)))
-
-
-def tropical_matrix_norm(M: np.ndarray) -> float:
-    """Maximum absolute entry of a matrix."""
-    return float(np.max(np.abs(M)))
-
-
-def tropical_mulvec_bound(
-    D: np.ndarray,
-    r: np.ndarray,
-    D_max: Optional[float] = None,
-    r_max: Optional[float] = None
-) -> Tuple[float, float]:
-    """
-    Compute actual and theoretical tropical norm bound for D @ r.
-
-    Theorem (tropical_mulVec_norm_bound):
-        |D·r|_∞ ≤ n · D_max · r_max
-
-    Returns:
-        (actual_norm, theoretical_bound)
-    """
-    n = D.shape[0]
-    if D_max is None:
-        D_max = tropical_matrix_norm(D)
-    if r_max is None:
-        r_max = tropical_norm(r)
-
-    actual = tropical_norm(D @ r)
-    bound = n * D_max * r_max
-    return actual, bound
-
-
-def find_robustness_witness(
-    W: np.ndarray,
-    W_prime: np.ndarray
-) -> Tuple[np.ndarray, float]:
-    """
-    Find a witness vector that detects the difference between W and W'.
-
-    Implements tropical_robustness_margin: if W ≠ W', find r with
-    |r_i| ≤ 1 such that W·r ≠ W'·r.
-
-    Strategy: Use standard basis vector at the column of the max
-    absolute entry of D = W - W'.
-
-    Complexity: O(n²) to find the witness
-
-    Returns:
-        (witness_vector, separation_magnitude)
-    """
-    D = W - W_prime
-    n = D.shape[0]
-
-    # Find maximum absolute entry
-    i_max, j_max = np.unravel_index(np.argmax(np.abs(D)), D.shape)
-
-    # Standard basis witness
-    r = np.zeros(n)
-    r[j_max] = 1.0
-
-    separation = tropical_norm(D @ r)
-    return r, separation
-
-
-def tropical_composition_bound(
-    layers: List[np.ndarray],
-    x: np.ndarray
-) -> Tuple[float, float]:
-    """
-    Compute tropical norm bound for a composed multi-layer computation.
-
-    For L layers with bounds B_1, ..., B_L and input bound x_max:
-        |(W_1 · W_2 · ... · W_L) · x|_∞ ≤ n^L · (∏ B_i) · x_max
-
-    Complexity: O(L · n²)
-
-    Returns:
-        (actual_norm, theoretical_bound)
-    """
-    n = layers[0].shape[0]
-    x_max = tropical_norm(x)
-
-    # Compute actual output
-    result = x.copy()
-    for W in reversed(layers):
-        result = W @ result
-    actual = tropical_norm(result)
-
-    # Compute bound
-    bound = x_max
-    for W in layers:
-        B = tropical_matrix_norm(W)
-        bound = n * B * bound
-
-    return actual, bound
-
-
-# ============================================================
-# Algorithm 4: Neural Layer Verification
-# ============================================================
-
-@dataclass
-class LayerCertificate:
-    """Certificate that a layer computation is correct."""
-    layer_index: int
-    weight_match: bool
-    max_discrepancy: float
-    witness_vector: Optional[np.ndarray]
-    tropical_margin: float
-
-
-def verify_linear_layer(
-    W: np.ndarray,
-    W_prime: np.ndarray,
-    x: np.ndarray,
-    layer_index: int = 0
-) -> LayerCertificate:
-    """
-    Verify that two weight matrices produce the same output on input x.
-
-    Implements linear_layer_certificate:
-    If W·x = W'·x, then layerEval(W, x) = layerEval(W', x).
-
-    Also computes tropical robustness margin for the layer.
-    """
-    output_diff = np.linalg.norm(W @ x - W_prime @ x)
-    weight_match = output_diff < 1e-10
-
-    D = W - W_prime
-    max_disc = tropical_matrix_norm(D)
-    tropical_margin = max_disc  # The max entry is the margin
-
-    witness = None
-    if not weight_match:
-        witness, _ = find_robustness_witness(W, W_prime)
-
-    return LayerCertificate(
-        layer_index=layer_index,
-        weight_match=weight_match,
-        max_discrepancy=max_disc,
-        witness_vector=witness,
-        tropical_margin=tropical_margin
+    false_positive_prob = (1.0 / field_size) ** trials
+    return VerificationResult(
+        passed=True,
+        confidence=1.0 - false_positive_prob,
+        method="freivalds",
+        details={"trials": trials, "field_size": field_size,
+                 "false_positive_bound": false_positive_prob}
     )
 
 
-def verify_block_network(
-    W_blocks: List[np.ndarray],
-    W_prime_blocks: List[np.ndarray],
-    x_blocks: List[np.ndarray]
-) -> Tuple[bool, List[LayerCertificate]]:
-    """
-    Verify a block-diagonal network layer by checking each block independently.
+# ============================================================================
+# Algorithm 2: Block-Diagonal Verification
+# ============================================================================
 
-    Implements block_network_certificate: local block certificates
-    imply global network certificate.
+def block_diagonal_verify(
+    A_blocks: List[np.ndarray],
+    B_blocks: List[np.ndarray],
+    C_blocks: List[np.ndarray]
+) -> VerificationResult:
+    """
+    Block-diagonal structural verification.
+
+    Checks blockDiag(A) * blockDiag(B) = blockDiag(C) by verifying
+    each block independently: A_i * B_i = C_i for all i.
+
+    Algorithm (formally verified as block_diagonal_mul_eq_iff):
+        for i = 1 to k:
+            if A_i * B_i ≠ C_i: return FAIL at block i
+        return PASS
+
+    Complexity:
+        Time:  O(Σ n_i³) — k independent matrix multiplications
+               Compare to O(N³) for the full N×N matrix where N = Σ n_i
+        Space: O(max n_i²) — only need one block at a time
+
+    Speedup: If blocks have equal size n/k, speedup is k² over naive.
+
+    Args:
+        A_blocks, B_blocks, C_blocks: lists of square matrices (one per block)
 
     Returns:
-        (all_match, certificates_per_block)
+        VerificationResult with failing block index if applicable
     """
-    certificates = []
-    all_match = True
+    assert len(A_blocks) == len(B_blocks) == len(C_blocks)
 
-    for i, (W, Wp, x) in enumerate(zip(W_blocks, W_prime_blocks, x_blocks)):
-        cert = verify_linear_layer(W, Wp, x, layer_index=i)
-        certificates.append(cert)
-        if not cert.weight_match:
-            all_match = False
+    failing_blocks = []
+    for i, (a, b, c) in enumerate(zip(A_blocks, B_blocks, C_blocks)):
+        product = a @ b
+        if not np.allclose(product, c):
+            failing_blocks.append(i)
 
-    return all_match, certificates
+    if failing_blocks:
+        return VerificationResult(
+            passed=False,
+            confidence=1.0,
+            method="block_diagonal",
+            details={"failing_blocks": failing_blocks,
+                     "num_blocks": len(A_blocks)}
+        )
+    return VerificationResult(
+        passed=True,
+        confidence=1.0,
+        method="block_diagonal",
+        details={"num_blocks": len(A_blocks),
+                 "block_sizes": [a.shape[0] for a in A_blocks]}
+    )
 
 
-def verify_composed_network(
-    layers: List[np.ndarray],
-    layers_prime: List[np.ndarray],
+# ============================================================================
+# Algorithm 3: Tropical Robustness Certificate
+# ============================================================================
+
+def tropical_certificate(
+    M: np.ndarray,
     x: np.ndarray
-) -> Tuple[bool, List[LayerCertificate]]:
+) -> TropicalCertificate:
     """
-    Verify a multi-layer network by checking each layer sequentially.
+    Compute a tropical robustness certificate for a matrix-vector product.
 
-    Implements verification_composition: if each layer agrees,
-    the composed output agrees.
+    Given M and x, computes bounds on M*x using the tropical (max-plus)
+    norm infrastructure.
 
-    Complexity: O(L · n²) for L layers of size n
+    Formally verified bound (tropical_mulVec_entrywise_bound):
+        |M*x|_i ≤ n * max|M_ij| * max|x_k|  for all i
+
+    Complexity:
+        Time:  O(n²) — scan all matrix entries
+        Space: O(1) — only stores scalar bounds
+
+    Args:
+        M: m×n matrix
+        x: n-dimensional vector
+
+    Returns:
+        TropicalCertificate with norm bounds
     """
-    certificates = []
-    current_input = x.copy()
-    all_match = True
+    n = M.shape[1]
+    M_max = float(np.max(np.abs(M)))
+    x_max = float(np.max(np.abs(x)))
+    output_bound = n * M_max * x_max
 
-    for i, (W, Wp) in enumerate(zip(layers, layers_prime)):
-        cert = verify_linear_layer(W, Wp, current_input, layer_index=i)
-        certificates.append(cert)
-        if not cert.weight_match:
-            all_match = False
-        current_input = W @ current_input  # Propagate through true network
+    # Detection margin: if a perturbation δM has max entry ≥ ε,
+    # then the standard basis witness detects discrepancy ≥ ε
+    detection_margin = M_max if M_max > 0 else 0.0
 
-    return all_match, certificates
+    return TropicalCertificate(
+        matrix_norm_bound=M_max,
+        input_bound=x_max,
+        output_bound=output_bound,
+        detection_margin=detection_margin,
+        dimension=n
+    )
 
 
-# ============================================================
-# Complexity Analysis Summary
-# ============================================================
+def compose_tropical_certificates(
+    certs: List[TropicalCertificate]
+) -> float:
+    """
+    Compose tropical security margins from multiple independent blocks.
 
-COMPLEXITY_TABLE = """
-Algorithm                    | Time         | Space   | Error Bound
------------------------------|--------------|---------|------------------
-Freivalds (k trials)         | O(k·n²)      | O(n)    | (1/|F|)^k
-Block verification           | O(Σ n_i³)    | O(n_i²) | Exact
-Tropical witness finding     | O(n²)        | O(n)    | Exact
-Tropical composition bound   | O(L·n²)      | O(n)    | Exact
-Layer-by-layer verification  | O(L·n²)      | O(n)    | Exact
-Block network verification   | O(k·n_i²)    | O(n_i)  | Exact per block
-"""
+    Formally verified (combined_tropical_certificate):
+        If each block has positive margin, the combined margin is
+        the minimum of individual margins.
 
+    Complexity:
+        Time:  O(k) where k = number of blocks
+        Space: O(1)
+    """
+    if not certs:
+        return 0.0
+    return min(c.detection_margin for c in certs)
+
+
+# ============================================================================
+# Algorithm 4: Combined Local-to-Global Verification Pipeline
+# ============================================================================
+
+def local_to_global_verify(
+    A_blocks: List[np.ndarray],
+    B_blocks: List[np.ndarray],
+    C_blocks: List[np.ndarray],
+    freivalds_trials: int = 10,
+    field_size: int = 2
+) -> Dict:
+    """
+    Combined local-to-global verification pipeline.
+
+    Implements the enhanced trichotomy (enhanced_trichotomy_over_reals):
+    1. Structural check: verify each block independently
+    2. Robustness check: find bounded-norm witness if failure detected
+    3. Probabilistic check: run Freivalds on the full system
+
+    Algorithm:
+        1. For each block i: check A_i * B_i = C_i
+        2. If any block fails:
+           a. Identify failing blocks (structural detection)
+           b. Construct witness vector (robustness detection)
+           c. Run Freivalds on full system (probabilistic detection)
+        3. Return combined certificate
+
+    Complexity:
+        Time:  O(Σ n_i³ + trials * N²) where N = Σ n_i
+        Space: O(N²) for assembling full matrices
+
+    Args:
+        A_blocks, B_blocks, C_blocks: block matrices
+        freivalds_trials: number of Freivalds trials
+        field_size: Freivalds field size
+
+    Returns:
+        Dictionary with results from all three pillars
+    """
+    results = {}
+
+    # Pillar 1: Structural verification
+    block_result = block_diagonal_verify(A_blocks, B_blocks, C_blocks)
+    results["structural"] = block_result
+
+    # Pillar 2: Robustness — find witness if blocks differ
+    if not block_result.passed:
+        failing = block_result.details["failing_blocks"]
+        witness_info = []
+        for i in failing:
+            D = A_blocks[i] @ B_blocks[i] - C_blocks[i]
+            # Standard basis witness (as in formal proof)
+            best_j = int(np.argmax([np.linalg.norm(D[:, j])
+                                     for j in range(D.shape[1])]))
+            discrepancy = float(np.linalg.norm(D[:, best_j]))
+            witness_info.append({
+                "block": i,
+                "witness_column": best_j,
+                "discrepancy_norm": discrepancy
+            })
+        results["robustness"] = {
+            "witnesses_found": True,
+            "witness_details": witness_info
+        }
+    else:
+        results["robustness"] = {"witnesses_found": False}
+
+    # Pillar 3: Probabilistic verification on full system
+    A_struct = BlockStructure.from_blocks(A_blocks)
+    B_struct = BlockStructure.from_blocks(B_blocks)
+    C_struct = BlockStructure.from_blocks(C_blocks)
+
+    A_full = A_struct.to_full_matrix()
+    B_full = B_struct.to_full_matrix()
+    C_full = C_struct.to_full_matrix()
+
+    freivalds_result = freivalds_verify(A_full, B_full, C_full,
+                                         freivalds_trials, field_size)
+    results["probabilistic"] = freivalds_result
+
+    # Pillar 4: Tropical certificate
+    D_full = A_full @ B_full - C_full
+    if not np.allclose(D_full, 0):
+        x = np.ones(D_full.shape[1])
+        cert = tropical_certificate(D_full, x)
+        results["tropical"] = cert
+    else:
+        results["tropical"] = None
+
+    return results
+
+
+# ============================================================================
+# Example Usage
+# ============================================================================
 
 if __name__ == "__main__":
-    print("Decomposable Matrix Verification — Algorithm Library")
-    print(COMPLEXITY_TABLE)
+    print("=" * 70)
+    print("Decomposable Verification — Algorithm Demonstrations")
+    print("=" * 70)
 
-    # Quick smoke test
-    n = 10
+    # Example 1: Correct computation
+    n = 50
     A = np.random.randn(n, n)
     B = np.random.randn(n, n)
     C = A @ B
 
-    result, confidence = freivalds_verify(A, B, C)
-    print(f"Freivalds verify (correct): result={result}, confidence={confidence:.6f}")
+    print("\n--- Example 1: Correct product ---")
+    result = freivalds_verify(A, B, C)
+    print(f"Freivalds: passed={result.passed}, confidence={result.confidence:.10f}")
 
+    # Example 2: Incorrect computation
     C_wrong = C.copy()
-    C_wrong[0, 0] += 0.001
-    result, confidence = freivalds_verify(A, B, C_wrong)
-    print(f"Freivalds verify (wrong):   result={result}, confidence={confidence:.6f}")
+    C_wrong[0, 0] += 0.01
+    print("\n--- Example 2: Incorrect product ---")
+    result = freivalds_verify(A, B, C_wrong)
+    print(f"Freivalds: passed={result.passed}, details={result.details}")
+
+    # Example 3: Block-diagonal verification
+    print("\n--- Example 3: Block-diagonal verification ---")
+    blocks_A = [np.random.randn(10, 10) for _ in range(5)]
+    blocks_B = [np.random.randn(10, 10) for _ in range(5)]
+    blocks_C = [a @ b for a, b in zip(blocks_A, blocks_B)]
+    blocks_C[2][0, 0] += 1.0  # break block 2
+
+    result = block_diagonal_verify(blocks_A, blocks_B, blocks_C)
+    print(f"Block verification: passed={result.passed}")
+    print(f"  Failing blocks: {result.details.get('failing_blocks', [])}")
+
+    # Example 4: Full pipeline
+    print("\n--- Example 4: Full local-to-global pipeline ---")
+    results = local_to_global_verify(blocks_A, blocks_B, blocks_C)
+    print(f"Structural: passed={results['structural'].passed}")
+    print(f"Robustness: witnesses_found={results['robustness']['witnesses_found']}")
+    print(f"Probabilistic: passed={results['probabilistic'].passed}")
+    if results['tropical']:
+        print(f"Tropical margin: {results['tropical'].detection_margin:.4f}")
+
+    print("\n✓ All algorithms demonstrated successfully")

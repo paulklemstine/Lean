@@ -1,1 +1,1 @@
-# See algorithms.py for full implementation
+# See algorithms.py block_diagonal_verify()
