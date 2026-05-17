@@ -410,6 +410,20 @@
     "timestamp": "2026-05-16T13:37:23.953786+00:00"
   },
   {
+    "id": "fd_0241",
+    "title": "Extremal witness",
+    "description": ": The witness is\n   ```\n   f(x₁,...,xₙ) = ∏_{i=1}^{a} ∏_{c ∈ 𝔽_q \\ {0}} (xᵢ − c) · ∏_{j=1}^{b} (x_{a+1} − cⱼ)\n   ```\n   This vanishes on a precisely computable union of coordinate subspaces.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "38f08fce",
+    "consumed_by_exp_id": "7e59ef4a",
+    "timestamp": "2026-05-16T19:15:45.160819+00:00"
+  },
+  {
     "id": "fd_0242",
     "title": "Key challenge",
     "description": ": The fibers are no longer parallel hyperplanes in a single coordinate; the zero set has a tensor-product structure across multiple coordinates.\n\n### Formalization Target\n\n```lean\ntheorem generalized_reedMuller_min_distance\n    (𝔽 : Type*) [Field 𝔽] [Fintype 𝔽]\n    (n d a b : ℕ)\n    (h_decomp : d = a * (Fintype.card 𝔽 - 1) + b)\n    (hb : b < Fintype.card 𝔽 - 1)\n    (ha : a < n) :\n    reedMullerMinWeight 𝔽 n d = (Fintype.card 𝔽 - b) * (Fintype.card 𝔽) ^ (n - 1 - a)\n```\n\n### Cross-Domain Connections\n- **Coding theory**: Completes the parameter analysis for all generalized Reed–Muller codes\n- **Algebraic geometry**: Classification of extremal hypersurfaces in finite affine space\n- **Complexity theory**: Tight soundness bounds for algebraic PCPs with arbitrary degree\n\n### Difficulty: ★★★★☆\n\n--",
@@ -604,34 +618,6 @@
     "source_exp_id": "b7383f62",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T00:34:34.668515+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "Validate",
-    "description": "key conjectures computationally with Python experiments on random matrices.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b7383f62",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T00:34:34.686058+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Prove",
-    "description": "lemmas bottom-up, starting with the simplest algebraic identities.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b7383f62",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T00:34:34.703955+00:00"
   },
   {
     "id": "fd_0260",
@@ -1284,20 +1270,6 @@
     "timestamp": "2026-05-16T13:12:11.734256+00:00"
   },
   {
-    "id": "fd_0244",
-    "title": "Broader Impact",
-    "description": "This direction connects arithmetic thermodynamics to:\n- Information theory: S(E) is the rate function for the entropy of integers at energy level E\n- Optimization: the Legendre transform is central to convex optimization and duality theory\n- Economics: analogues of Gibbs measures appear in discrete choice theory (logit models)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "8b829eb9",
-    "consumed_by_exp_id": "233830c5",
-    "timestamp": "2026-05-16T14:28:58.186572+00:00"
-  },
-  {
     "id": "fd_0257",
     "title": "3. Reverse Transport: Cryptographic Hardness Implies Learning Impossibility",
     "description": "**Hypothesis**: The affine morphism chain is invertible under additional convexity assumptions. If the morphisms are *bi-Lipschitz* (both upper and lower affine bounds), then cryptographic hardness assumptions (e.g., LWE, SVP) yield provable lower bounds on learning complexity.\n\n**Proof Strategy**:\n- Define `BiTheoryMorphism` with both `A.inv x ≤ c * B.inv (map x) + a` and `B.inv (map x) ≤ c' * A.inv x + a'`.\n- Prove that composition preserves the bi-Lipschitz property.\n- Instantiate: if LWE is hard (security parameter ≥ λ), then any learner that could break the corresponding learning problem must have sample complexity ≥ f(λ).\n\n**Cross-domain Connections**: This is the learning-theoretic analogue of cryptographic hardness assumptions. It would formalize the folklore intuition that \"if you",
@@ -1435,21 +1407,6 @@
     "timestamp": "2026-05-16T22:25:54.821807+00:00"
   },
   {
-    "id": "fd_0259",
-    "title": "Phase 1 (Immediate, 1–2 months)",
-    "description": "- **Direction 1**: Tropical Cheeger inequality (most directly builds on current work)\n- **Direction 5**: Spectral gap bound (uses existing Mathlib Perron–Frobenius infrastructure)",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "99efecb5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T22:52:54.320928+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "1. Extended Tropical Residuation on `WithBot ℝ`",
     "description": "**Objective:** Formalize tropical residuation over the complete tropical semiring `ℝ ∪ {−∞}`, modeled as `WithBot ℝ` in Lean/Mathlib.\n\n**Hypothesis:** The residuation theorems extend to `WithBot ℝ` with explicit handling of the `−∞` cases:\n- `sup(∅) = −∞` is naturally handled by `Finset.sup` with `OrderBot`.\n- The residual `c − a` when `c = −∞` should yield `−∞`.\n- When `a = −∞`, the translation `x + (−∞) = −∞` for all `x`, and the residual degenerates.\n\n**Proof Strategy:**\n1. Use `WithBot ℝ` which already has `OrderBot` and `SemilatticeSup` instances in Mathlib.\n2. Define tropical addition as `WithBot.map₂ (· + ·)` or via the existing `Tropical` type in Mathlib.\n3. Prove residuation with case analysis on `⊥` vs. `some x`.\n4. The matrix-level theorem should follow by the same pattern.\n\n**K",
@@ -1484,24 +1441,6 @@
     "source_exp_id": "9b1f62ec",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T23:08:10.845643+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "4. Certified Robustness for Max-Plus Neural Architectures",
-    "description": "**Objective:** Use the matrix residuation theorems to derive exact backward certificates for layered tropical (max-plus affine) neural networks, and compare with existing interval/abstract-interpretation methods.\n\n**Hypothesis:** For a max-plus network `F = F_{W_L} ∘ ... ∘ F_{W_1}`:\n- The backward bound `B_{W_1}(B_{W_2}(...B_{W_L}(z)...))` is the exact tightest input bound.\n- This is strictly tighter than interval arithmetic propagation.\n- The computation has complexity `O(L · m · n)` where `m, n` are layer dimensions.\n\n**Proof Strategy:**\n1. Instantiate `tropical_two_layer_composition_residuation` for `L` layers by induction.\n2. Prove that the compositional residual is strictly tighter than naive interval propagation.\n3. Implement and benchmark against existing abstract interpretation too",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9b1f62ec",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:08:10.890447+00:00"
   },
   {
     "id": "fd_0260",
@@ -1564,73 +1503,6 @@
     "timestamp": "2026-05-16T23:10:48.697719+00:00"
   },
   {
-    "id": "fd_0258",
-    "title": "5. Complexity/Soundness Bridge",
-    "description": "**Vision**: Combine zero-density bounds with algebraic circuit complexity lower bounds to formulate a certified statement connecting computational complexity and probabilistic soundness.\n\n**Conceptual theorem**:\n> If a polynomial `P` computable by a circuit of depth `d` and `s` multiplication gates satisfies the Schwartz–Zippel bound `|zeros(P)| ≤ deg(P) · |F|^{n-1}`, and the circuit complexity lower bounds give `deg(P) ≥ 2^{d-1}` and `deg(P) ≥ s`, then:\n> - The error probability of PIT on `P` is at most `deg(P)/|F|`\n> - Any circuit computing `P` needs depth `≥ log₂(deg(P)) + 1`\n> - Any circuit computing `P` needs `≥ deg(P)` multiplication gates\n\n**Formal target**: A unified theorem connecting `depth_lower_bound_from_degree`, `mulGates_lower_bound_from_degree`, and the Schwartz–Zippel zero",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e846ce5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:10:48.721853+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Research Roadmap",
-    "description": "| Priority | Direction | Estimated Effort | Dependencies |\n|----------|-----------|-----------------|--------------|\n| 1 | Product verification (§2) | Low | Current work |\n| 2 | Parity-check fraction (§4) | Low | Current work |\n| 3 | General Schwartz–Zippel (§1) | Medium | SchwartzZippel.lean |\n| 4 | Degree-d specialization (§3) | Medium | §1 |\n| 5 | Complexity bridge (§5) | High | §1, circuit formalization |\n\nEach direction should be pursued with:\n- **Concrete hypotheses** to test via `#eval` before formalizing\n- **Decomposition** into 3–8 helper lemmas per theorem\n- **Cross-referencing** with existing Mathlib infrastructure\n- **Documentation** connecting formal results to their algorithmic/complexity-theoretic significance",
-    "domains": [
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e846ce5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:10:48.744317+00:00"
-  },
-  {
-    "id": "fd_0258",
-    "title": "1. Semantic Completeness for Monotone Term Functions on Finite Chains",
-    "description": "**Theorem Target:** Every monotone function `f : (Fin k)^n → Fin k` is representable by some `MonotoneCircuit (Fin k) n`.\n\n**Proof Strategy:**\n- For `k = 2` (Boolean), this is the classical result that every monotone Boolean function can be computed by a monotone formula (using AND/OR without negation).\n- For general finite chains, proceed by structural induction on `k`. Use the threshold decomposition: express `f` as a min-max combination of threshold predicates `f(x) ≥ j` for each level `j`.\n- Formalize the construction as a recursive circuit builder and prove semantic correctness.\n\n**Cross-Domain Significance:**\n- Connects monotone circuit complexity to lattice-valued logic and multi-valued model checking.\n- Provides constructive witnesses for the representation theorem in universal alg",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e5da3534",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:27:21.817566+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "2. Circuit Substitution and Clone Structure",
-    "description": "**Theorem Target:**\n```\ndef MonotoneCircuit.subst (c : MonotoneCircuit α n) (σ : Fin n → MonotoneCircuit α m) :\n    MonotoneCircuit α m\n\ntheorem MonotoneCircuit.eval_subst (c : MonotoneCircuit α n)\n    (σ : Fin n → MonotoneCircuit α m) (x : Fin m → α) :\n    eval (subst c σ) x = eval c (fun i => eval (σ i) x)\n```\n\n**Proof Strategy:**\n- Define `subst` by structural recursion: replace each `var i` with `σ i`, keep constants, recurse on gates.\n- Prove `eval_subst` by induction on `c`. The `var` case is definitional, the `const` case trivial, and the `and`/`or` cases follow by congruence.\n- Prove associativity: `subst (subst c σ) τ = subst c (fun i => subst (σ i) τ)`.\n\n**Cross-Domain Significance:**\n- Establishes that monotone circuits form a **clone** (operadic composition structure), connecti",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e5da3534",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:27:21.837295+00:00"
-  },
-  {
     "id": "fd_0260",
     "title": "3. Distributive Normal Form Theorem",
     "description": "**Theorem Target:** Define a normalization procedure that converts any circuit to a canonical \"max-of-mins\" (DNF-like) or \"min-of-maxs\" (CNF-like) form, and prove semantic preservation.\n\n```\ndef MonotoneCircuit.toDNF : MonotoneCircuit α n → MonotoneCircuit α n\ntheorem MonotoneCircuit.eval_toDNF (c : MonotoneCircuit α n) (x : Fin n → α) :\n    eval (toDNF c) x = eval c x\n```\n\n**Proof Strategy:**\n- Repeatedly apply the distributive law `min(a, max(b,c)) = max(min(a,b), min(a,c))` to push all `min` operations inside `max` operations.\n- Formalize as a recursive rewrite on the circuit tree structure.\n- Use `eval_and_or_distrib` (already proved) as the key soundness lemma for each rewrite step.\n- Prove termination via a suitable measure (e.g., number of `and`-over-`or` nestings).\n\n**Cross-Domain ",
@@ -1664,20 +1536,6 @@
     "source_exp_id": "e5da3534",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T23:27:21.917901+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "Theorem Statement",
-    "description": "```lean\ntheorem hilbert_series_mvPolynomial (n : ℕ) :\n    (∑ m in Finset.range N, (finrank K (homogeneousComponent' K (Fin n) m)) * X^m : PowerSeries K) \n    = ... -- truncation of 1/(1-X)^n\n```\n\nMore precisely, formalize that the Hilbert function H(m) = C(m+n-1, n-1) satisfies the generating function identity ∑ H(m) t^m = 1/(1-t)^n as formal power series.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bffc2558",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-16T23:41:10.612157+00:00"
   },
   {
     "id": "fd_0260",
@@ -1770,5 +1628,51 @@
     "source_exp_id": "705965b8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T00:34:14.213908+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Precise Theorem Statement",
+    "description": "For an $n$-round sum-check protocol over $\\mathbb{F}_q$ with individual variable degree $d$, if the prover deviates from the honest strategy at any round, the probability of passing all verifier checks is at most $nd/q$.\n\n```\ntheorem sumcheck_multi_round_soundness\n    {F : Type*} [Field F] [Fintype F] [DecidableEq F]\n    (n d : ℕ)\n    (sent truePoly : Fin n → Polynomial F)\n    (hne : ∃ i, sent i ≠ truePoly i)\n    (hdeg : ∀ i, (sent i - truePoly i).natDegree ≤ d) :\n    -- Probability of all rounds passing ≤ n * d / |F|\n    sorry\n```",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "233830c5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:58:24.973110+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Why Breakthrough-Level",
+    "description": "This would be the first formally verified end-to-end soundness theorem for an interactive proof protocol. It directly enables verified soundness claims for systems worth billions of dollars in deployed cryptocurrency infrastructure.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "233830c5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:58:24.991860+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Cross-Domain Connection",
+    "description": "**Complexity theory:** This theorem directly yields a formal proof that $\\text{IP} \\supseteq \\text{\\#P}$, since sum-check reduces counting problems to interactive verification. Combined with arithmetization, it approaches the celebrated IP = PSPACE theorem.\n\n---",
+    "domains": [
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "233830c5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T00:58:25.498578+00:00"
   }
 ]

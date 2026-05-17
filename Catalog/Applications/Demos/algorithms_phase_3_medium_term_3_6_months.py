@@ -1,338 +1,348 @@
-#!/usr/bin/env python3
 """
 Algorithms for Finite Rate-Distortion Theory and Voice-Leading Geometry
 
-Implements the core algorithms from the research paper:
-1. Blahut-Arimoto algorithm for computing R(D)
-2. Optimal voice-leading assignment (Hungarian algorithm)
-3. Voice-leading rate-distortion computation
-4. Tropical/piecewise-linear envelope extraction
-
-Each algorithm has docstrings, type hints, and complexity analysis.
+Implements:
+1. Blahut-Arimoto algorithm for R(D) computation
+2. Hungarian algorithm interface for optimal voice-leading
+3. Tropical envelope computation
+4. Voice-leading rate-distortion pipeline
 """
 
 import numpy as np
 from itertools import permutations
-from typing import Tuple, List, Optional
+from typing import List, Tuple, Optional, Dict
 
 
-# ============================================================================
-# Algorithm 1: Blahut-Arimoto for Finite Rate-Distortion
-# ============================================================================
+# ============================================================
+# Algorithm 1: Blahut-Arimoto for Rate-Distortion
+# ============================================================
 
-def blahut_arimoto(
-    p_x: np.ndarray,
-    d: np.ndarray,
-    beta: float = 1.0,
-    max_iter: int = 500,
-    tol: float = 1e-10
-) -> Tuple[float, np.ndarray, float]:
+class BlahutArimoto:
     """
-    Blahut-Arimoto algorithm for computing R(D) at a given slope parameter β.
-    
-    Computes the channel W that minimizes I(X;Y) + β·E[d(X,Y)] for a given β ≥ 0.
-    The pair (D(β), R(β)) traces out the R(D) curve as β varies.
-    
-    Algorithm:
-        1. Initialize W uniformly
-        2. Repeat until convergence:
-           a. q(y) = Σ_x p(x) W(y|x)              [output marginal]
-           b. W(y|x) ∝ q(y) exp(-β d(x,y))        [channel update]
-        3. Compute I(X;Y) and E[d(X,Y)]
-    
-    Complexity:
-        Time: O(max_iter · |X| · |Y|)
-        Space: O(|X| · |Y|)
-    
-    Convergence: Guaranteed to converge to the global optimum (the objective
-    I + β·D is convex in W). Rate: geometric, typically O(1/ε) iterations.
-    
-    Args:
-        p_x: Source distribution, shape (|X|,)
-        d: Distortion matrix, shape (|X|, |Y|)
-        beta: Lagrange multiplier (slope parameter) ≥ 0
-        max_iter: Maximum number of iterations
-        tol: Convergence tolerance on mutual information
-    
-    Returns:
-        rate: Mutual information I(X;Y) in nats
-        channel: Optimal channel W[x, y] = P(Y=y|X=x)
-        distortion: Expected distortion E[d(X,Y)]
+    Blahut-Arimoto algorithm for computing the rate-distortion function.
+
+    The algorithm iteratively optimizes the test channel K(y|x) and
+    output distribution q(y) to find the minimum mutual information
+    I(X;Y) subject to expected distortion E[d(X,Y)] <= D.
+
+    Time Complexity: O(T * |X| * |Y|) per lambda value,
+        where T is the number of iterations.
+    Space Complexity: O(|X| * |Y|)
+
+    Convergence: Guaranteed to converge to the global optimum
+        since the optimization is convex.
+
+    Parameters
+    ----------
+    p_x : np.ndarray
+        Source distribution, shape (|X|,)
+    d : np.ndarray
+        Distortion matrix, shape (|X|, |Y|)
     """
-    n_x, n_y = d.shape
-    assert len(p_x) == n_x, "Source distribution size must match distortion matrix"
-    assert np.abs(np.sum(p_x) - 1.0) < 1e-8, "Source must be a probability distribution"
-    
-    # Initialize channel uniformly
-    W = np.ones((n_x, n_y)) / n_y
-    
-    prev_rate = float('inf')
-    
-    for iteration in range(max_iter):
-        # E-step: compute output marginal
-        q_y = p_x @ W
-        q_y = np.maximum(q_y, 1e-300)
-        
-        # M-step: update channel
-        for x in range(n_x):
-            log_weights = np.log(q_y) - beta * d[x]
-            log_weights -= np.max(log_weights)  # numerical stability
-            W[x] = np.exp(log_weights)
-            W[x] /= np.sum(W[x])
-        
-        # Compute mutual information
-        q_y = p_x @ W
-        q_y = np.maximum(q_y, 1e-300)
-        rate = 0.0
-        for x in range(n_x):
-            for y in range(n_y):
-                joint = p_x[x] * W[x, y]
-                if joint > 1e-300:
-                    rate += joint * np.log(joint / (p_x[x] * q_y[y]))
-        
-        # Check convergence
-        if abs(rate - prev_rate) < tol:
-            break
-        prev_rate = rate
-    
-    # Compute distortion
-    distortion = np.sum(p_x[:, None] * W * d)
-    
-    return rate, W, distortion
+
+    def __init__(self, p_x: np.ndarray, d: np.ndarray):
+        self.p_x = p_x
+        self.d = d
+        self.n_x, self.n_y = d.shape
+
+    def compute_channel(self, lam: float, max_iter: int = 1000,
+                         tol: float = 1e-12) -> Tuple[np.ndarray, float, float]:
+        """
+        Compute the optimal channel for a given Lagrange multiplier.
+
+        Parameters
+        ----------
+        lam : float
+            Lagrange multiplier (>= 0). Larger lambda penalizes distortion more.
+        max_iter : int
+            Maximum number of iterations.
+        tol : float
+            Convergence tolerance.
+
+        Returns
+        -------
+        kernel : np.ndarray
+            Optimal test channel K(y|x), shape (|X|, |Y|)
+        rate : float
+            Achieved mutual information I(X;Y) in bits
+        distortion : float
+            Achieved expected distortion E[d(X,Y)]
+        """
+        q_y = np.ones(self.n_y) / self.n_y
+
+        for _ in range(max_iter):
+            # E-step: update kernel
+            log_kernel = np.log(q_y[None, :] + 1e-300) - lam * self.d
+            log_kernel -= log_kernel.max(axis=1, keepdims=True)
+            kernel = np.exp(log_kernel)
+            kernel /= kernel.sum(axis=1, keepdims=True)
+
+            # M-step: update output distribution
+            q_y_new = (self.p_x[:, None] * kernel).sum(axis=0)
+
+            if np.max(np.abs(q_y_new - q_y)) < tol:
+                break
+            q_y = q_y_new
+
+        p_xy = self.p_x[:, None] * kernel
+        rate = self._mutual_info(p_xy)
+        distortion = np.sum(self.p_x[:, None] * kernel * self.d)
+        return kernel, rate, distortion
+
+    def compute_rd_curve(self, n_points: int = 200) -> Dict:
+        """
+        Compute the full R(D) curve by sweeping lambda.
+
+        Returns
+        -------
+        result : dict
+            Contains 'D' (distortions), 'R' (rates), 'lambdas',
+            and 'channels' (optimal channels at each point).
+        """
+        lambdas = np.logspace(-3, 4, n_points)
+        results = {'D': [], 'R': [], 'lambdas': [], 'channels': []}
+
+        for lam in lambdas:
+            kernel, rate, dist = self.compute_channel(lam)
+            results['D'].append(dist)
+            results['R'].append(rate)
+            results['lambdas'].append(lam)
+            results['channels'].append(kernel)
+
+        # Sort by distortion
+        idx = np.argsort(results['D'])
+        results['D'] = np.array(results['D'])[idx]
+        results['R'] = np.array(results['R'])[idx]
+        results['lambdas'] = np.array(results['lambdas'])[idx]
+        results['channels'] = [results['channels'][i] for i in idx]
+
+        return results
+
+    def _mutual_info(self, p_xy: np.ndarray) -> float:
+        """Compute mutual information from joint distribution."""
+        p_x = p_xy.sum(axis=1)
+        p_y = p_xy.sum(axis=0)
+        mi = 0.0
+        for i in range(p_xy.shape[0]):
+            for j in range(p_xy.shape[1]):
+                if p_xy[i, j] > 1e-15:
+                    mi += p_xy[i, j] * np.log2(
+                        p_xy[i, j] / (p_x[i] * p_y[j] + 1e-300))
+        return mi
 
 
-def compute_rd_curve(
-    p_x: np.ndarray,
-    d: np.ndarray,
-    n_points: int = 100,
-    beta_range: Tuple[float, float] = (0.01, 50.0)
-) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Compute the full R(D) curve by sweeping the Lagrange multiplier β.
-    
-    Complexity: O(n_points · max_iter · |X| · |Y|)
-    
-    Args:
-        p_x: Source distribution
-        d: Distortion matrix
-        n_points: Number of points on the curve
-        beta_range: Range of β values to sweep
-    
-    Returns:
-        D_values: Array of distortion values
-        R_values: Array of rate values (in nats)
-    """
-    betas = np.logspace(np.log10(beta_range[0]), np.log10(beta_range[1]), n_points)
-    
-    D_values = []
-    R_values = []
-    
-    for beta in betas:
-        rate, _, distortion = blahut_arimoto(p_x, d, beta=beta)
-        D_values.append(distortion)
-        R_values.append(max(0, rate))
-    
-    # Sort by distortion
-    idx = np.argsort(D_values)
-    return np.array(D_values)[idx], np.array(R_values)[idx]
+# ============================================================
+# Algorithm 2: Voice-Leading Distance (Optimal Assignment)
+# ============================================================
 
-
-# ============================================================================
-# Algorithm 2: Optimal Voice-Leading Assignment
-# ============================================================================
-
-def optimal_voice_leading(
-    V: List[int],
-    W: List[int]
-) -> Tuple[float, List[int]]:
+class VoiceLeadingSolver:
     """
-    Find the optimal voice-leading between two equal-cardinality voicings.
-    
-    Minimizes total displacement Σ_i |V[i] - W[σ(i)]| over all permutations σ.
-    
-    For small n (≤ 8), uses brute-force enumeration.
-    For larger n, this should use the Hungarian algorithm.
-    
-    Complexity:
-        Brute force: O(n! · n)
-        Hungarian: O(n³)
-    
-    Args:
-        V: Source voicing (list of pitch values)
-        W: Target voicing (list of pitch values)
-    
-    Returns:
-        cost: Minimum total displacement
-        assignment: Optimal permutation (list)
+    Solver for optimal voice-leading between chords.
+
+    For small chord sizes (n <= 8), uses exhaustive permutation search.
+    For larger chords, would use the Hungarian algorithm.
+
+    Time Complexity: O(n! * n) for exhaustive search
+    Space Complexity: O(n)
     """
-    n = len(V)
-    assert len(W) == n, "Voicings must have equal cardinality"
-    
-    if n <= 8:
-        # Brute force for small n
+
+    @staticmethod
+    def min_distance(chord_a: List[int], chord_b: List[int]) -> Tuple[float, Tuple]:
+        """
+        Find the minimum L1 voice-leading distance and optimal assignment.
+
+        Parameters
+        ----------
+        chord_a, chord_b : lists of integer pitches
+
+        Returns
+        -------
+        min_cost : float
+            Minimum total absolute displacement
+        best_perm : tuple
+            The permutation achieving the minimum
+        """
+        n = len(chord_a)
+        assert len(chord_b) == n
         min_cost = float('inf')
-        best_perm = list(range(n))
+        best_perm = tuple(range(n))
+
         for perm in permutations(range(n)):
-            cost = sum(abs(V[i] - W[perm[i]]) for i in range(n))
+            cost = sum(abs(chord_b[perm[i]] - chord_a[i]) for i in range(n))
             if cost < min_cost:
                 min_cost = cost
-                best_perm = list(perm)
-        return min_cost, best_perm
-    else:
-        # For larger n, use sorted assignment as approximation
-        V_sorted = sorted(enumerate(V), key=lambda x: x[1])
-        W_sorted = sorted(enumerate(W), key=lambda x: x[1])
-        perm = [0] * n
-        for (vi, _), (wi, _) in zip(V_sorted, W_sorted):
-            perm[vi] = wi
-        cost = sum(abs(V[i] - W[perm[i]]) for i in range(n))
-        return cost, perm
+                best_perm = perm
+
+        return float(min_cost), best_perm
+
+    @staticmethod
+    def distance_matrix(chords: List[List[int]]) -> np.ndarray:
+        """Compute pairwise voice-leading distance matrix."""
+        n = len(chords)
+        D = np.zeros((n, n))
+        for i in range(n):
+            for j in range(n):
+                D[i, j], _ = VoiceLeadingSolver.min_distance(chords[i], chords[j])
+        return D
 
 
-def voice_leading_distance_matrix(
-    voicings: List[List[int]]
-) -> np.ndarray:
+# ============================================================
+# Algorithm 3: Tropical Envelope Computation
+# ============================================================
+
+class TropicalEnvelope:
     """
-    Compute the pairwise voice-leading distance matrix.
-    
-    Complexity: O(n² · k! · k) where n = number of voicings, k = voicing size
-    
-    Args:
-        voicings: List of voicings
-    
-    Returns:
-        Distance matrix (n × n)
+    Compute the tropical (piecewise-linear) envelope of a convex function.
+
+    Given a convex function f sampled at points, find a set of affine
+    functions whose supremum approximates f.
+
+    The key insight: a convex function on ℝ is the supremum of its
+    supporting hyperplanes, which for 1D functions are tangent lines.
+    For finite-dimensional rate-distortion, finitely many suffice.
     """
-    n = len(voicings)
-    D = np.zeros((n, n))
-    for i in range(n):
-        for j in range(i + 1, n):
-            cost, _ = optimal_voice_leading(voicings[i], voicings[j])
-            D[i, j] = cost
-            D[j, i] = cost
-    return D
+
+    @staticmethod
+    def compute_envelope(D: np.ndarray, R: np.ndarray,
+                          n_supports: int = 10) -> List[Tuple[float, float]]:
+        """
+        Compute supporting affine functionals for a convex curve.
+
+        Parameters
+        ----------
+        D : np.ndarray
+            x-coordinates (distortion values), sorted
+        R : np.ndarray
+            y-coordinates (rate values)
+        n_supports : int
+            Number of supporting lines to compute
+
+        Returns
+        -------
+        affines : list of (slope, intercept) tuples
+        """
+        # Remove trivial tail
+        valid = R > 1e-6
+        if not np.any(valid):
+            return [(0.0, 0.0)]
+        D_v = D[valid]
+        R_v = R[valid]
+
+        # Sample points and compute tangent slopes
+        indices = np.linspace(0, len(D_v) - 1, n_supports + 2, dtype=int)[1:-1]
+        affines = []
+
+        for idx in indices:
+            if 0 < idx < len(D_v) - 1:
+                slope = (R_v[idx + 1] - R_v[idx - 1]) / \
+                        (D_v[idx + 1] - D_v[idx - 1] + 1e-15)
+                intercept = R_v[idx] - slope * D_v[idx]
+                affines.append((slope, intercept))
+
+        return affines
+
+    @staticmethod
+    def evaluate_envelope(affines: List[Tuple[float, float]],
+                           D: np.ndarray) -> np.ndarray:
+        """Evaluate the tropical envelope (sup of affine functions)."""
+        result = np.full_like(D, -np.inf)
+        for m, b in affines:
+            result = np.maximum(result, m * D + b)
+        return np.maximum(result, 0)
 
 
-# ============================================================================
-# Algorithm 3: Voice-Leading Rate-Distortion
-# ============================================================================
+# ============================================================
+# Algorithm 4: Voice-Leading Rate-Distortion Pipeline
+# ============================================================
 
-def voice_leading_rate_distortion(
-    repertoire: List[List[int]],
-    prototypes: List[List[int]],
-    mu: np.ndarray,
-    n_points: int = 100
-) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+class VoiceLeadingRD:
     """
-    Compute the rate-distortion function for voice-leading distortion.
-    
-    Given a repertoire Ω of voicings with distribution μ and a prototype
-    space Π, computes R_VL(D) = inf{I(X;Y) : E[d_VL(X,Y)] ≤ D}
-    where d_VL is the voice-leading distance.
-    
-    This is the computational realization of the bridge theorem:
-    voice-leading distortion induces a finite rate-distortion problem.
-    
-    Complexity: O(|Ω| · |Π| · k! · k + n_points · BA_cost)
-    
-    Args:
-        repertoire: List of source voicings
-        prototypes: List of prototype voicings
-        mu: Probability distribution over repertoire
-        n_points: Number of R(D) curve points
-    
-    Returns:
-        D_values: Distortion values
-        R_values: Rate values (nats)
-        distortion_matrix: Voice-leading distortion matrix
+    Complete pipeline: chord repertoire → voice-leading distortion → R(D).
+
+    This implements the "grand bridge theorem" computationally:
+    musical structure induces a rate-distortion problem whose
+    solution characterizes optimal harmonic compression.
     """
-    n_rep = len(repertoire)
-    n_proto = len(prototypes)
-    
-    # Build voice-leading distortion matrix
-    d = np.zeros((n_rep, n_proto))
-    for i, V in enumerate(repertoire):
-        for j, W in enumerate(prototypes):
-            d[i, j], _ = optimal_voice_leading(V, W)
-    
-    D_values, R_values = compute_rd_curve(mu, d, n_points)
-    
-    return D_values, R_values, d
+
+    def __init__(self, repertoire: List[List[int]],
+                 prototypes: List[List[int]],
+                 source_dist: Optional[np.ndarray] = None):
+        self.repertoire = repertoire
+        self.prototypes = prototypes
+        self.n_rep = len(repertoire)
+        self.n_proto = len(prototypes)
+
+        if source_dist is None:
+            self.p_x = np.ones(self.n_rep) / self.n_rep
+        else:
+            self.p_x = source_dist / source_dist.sum()
+
+        # Compute distortion matrix
+        self.d = np.zeros((self.n_rep, self.n_proto))
+        for i, chord in enumerate(repertoire):
+            for j, proto in enumerate(prototypes):
+                self.d[i, j], _ = VoiceLeadingSolver.min_distance(chord, proto)
+
+    def compute_rd(self, n_points: int = 200) -> Dict:
+        """Compute the voice-leading rate-distortion curve."""
+        ba = BlahutArimoto(self.p_x, self.d)
+        return ba.compute_rd_curve(n_points)
+
+    def optimal_compression(self, target_rate: float) -> Dict:
+        """
+        Find the optimal compression scheme for a target rate.
+
+        Returns the channel (assignment probabilities) and
+        achieved distortion.
+        """
+        ba = BlahutArimoto(self.p_x, self.d)
+
+        # Binary search for the right lambda
+        lam_low, lam_high = 0.001, 100.0
+        for _ in range(50):
+            lam_mid = (lam_low + lam_high) / 2
+            _, rate, dist = ba.compute_channel(lam_mid)
+            if rate > target_rate:
+                lam_low = lam_mid
+            else:
+                lam_high = lam_mid
+
+        kernel, rate, dist = ba.compute_channel((lam_low + lam_high) / 2)
+        return {
+            'channel': kernel,
+            'rate': rate,
+            'distortion': dist,
+            'lambda': (lam_low + lam_high) / 2
+        }
 
 
-# ============================================================================
-# Algorithm 4: Tropical Envelope Extraction
-# ============================================================================
-
-def tropical_envelope(
-    D_values: np.ndarray,
-    R_values: np.ndarray,
-    n_supporting: int = 10
-) -> List[Tuple[float, float]]:
-    """
-    Extract the tropical/piecewise-linear envelope of an R(D) curve.
-    
-    R(D) = sup_{(m,b) ∈ A} (m·D + b) for a finite set A of affine functionals.
-    
-    Approximates this by computing supporting hyperplanes at sample points.
-    
-    The tropical interpretation: under sign change, R(D) = -inf_{(m,b)} (-m·D - b),
-    which is a min-plus tropical polynomial.
-    
-    Complexity: O(n · n_supporting) where n = len(D_values)
-    
-    Args:
-        D_values: Distortion values (sorted)
-        R_values: Rate values
-        n_supporting: Number of supporting hyperplanes
-    
-    Returns:
-        List of (slope, intercept) pairs defining the tropical envelope
-    """
-    # Compute numerical derivatives
-    dR_dD = np.gradient(R_values, D_values)
-    
-    # Sample supporting hyperplanes at evenly spaced points
-    indices = np.linspace(0, len(D_values) - 1, n_supporting + 2, dtype=int)[1:-1]
-    
-    envelope = []
-    for idx in indices:
-        D0 = D_values[idx]
-        R0 = R_values[idx]
-        slope = dR_dD[idx]
-        intercept = R0 - slope * D0
-        envelope.append((slope, intercept))
-    
-    return envelope
-
-
-# ============================================================================
-# Example usage
-# ============================================================================
+# ============================================================
+# Example Usage
+# ============================================================
 
 if __name__ == '__main__':
-    print("=== Finite Rate-Distortion Algorithms ===\n")
-    
-    # Example 1: Binary source
-    p_x = np.array([0.7, 0.3])
-    d = np.array([[0, 1], [1, 0]])
-    
-    D_vals, R_vals = compute_rd_curve(p_x, d, n_points=50)
-    print(f"Binary source R(D) curve: {len(D_vals)} points computed")
-    print(f"  D range: [{D_vals[0]:.4f}, {D_vals[-1]:.4f}]")
-    print(f"  R range: [{R_vals[-1]:.4f}, {R_vals[0]:.4f}] nats")
-    
-    # Example 2: Voice-leading
-    repertoire = [[0, 4, 7], [0, 3, 7], [0, 5, 9], [2, 7, 11]]
-    prototypes = [[0, 4, 7], [2, 7, 11]]
-    mu = np.array([0.3, 0.2, 0.3, 0.2])
-    
-    D_vl, R_vl, d_mat = voice_leading_rate_distortion(repertoire, prototypes, mu)
-    print(f"\nVoice-leading R(D): {len(D_vl)} points")
-    print(f"  Distortion matrix:\n{d_mat}")
-    
-    # Example 3: Tropical envelope
-    envelope = tropical_envelope(D_vals, R_vals)
-    print(f"\nTropical envelope: {len(envelope)} supporting hyperplanes")
-    for i, (m, b) in enumerate(envelope[:5]):
-        print(f"  Affine {i+1}: R ≥ {m:.4f}·D + {b:.4f}")
+    # Example: Common chord repertoire
+    repertoire = [
+        [60, 64, 67],  # C major
+        [60, 63, 67],  # C minor
+        [65, 69, 72],  # F major
+        [67, 71, 74],  # G major
+        [69, 72, 76],  # A minor
+    ]
+    prototypes = [
+        [60, 64, 67],  # C major
+        [67, 71, 74],  # G major
+    ]
+
+    vlrd = VoiceLeadingRD(repertoire, prototypes)
+    result = vlrd.compute_rd()
+
+    print("Voice-Leading Rate-Distortion Curve:")
+    print(f"  D range: [{result['D'].min():.2f}, {result['D'].max():.2f}]")
+    print(f"  R range: [{result['R'].min():.4f}, {result['R'].max():.4f}]")
+
+    # Find optimal compression at 0.5 bits
+    comp = vlrd.optimal_compression(0.5)
+    print(f"\nOptimal compression at ~0.5 bits:")
+    print(f"  Achieved rate: {comp['rate']:.4f} bits")
+    print(f"  Achieved distortion: {comp['distortion']:.2f} semitones")
