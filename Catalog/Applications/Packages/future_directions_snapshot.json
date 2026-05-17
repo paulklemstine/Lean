@@ -77,23 +77,6 @@
     "timestamp": "2026-05-15T07:06:08.019179+00:00"
   },
   {
-    "id": "fd_0202",
-    "title": "Logarithmic bridge",
-    "description": ": The transform `W = -log P` converts to tropical geometry.",
-    "domains": [
-      "Tropical",
-      "EML",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5906278a",
-    "consumed_by_exp_id": "3818c5e0",
-    "timestamp": "2026-05-15T07:06:08.035548+00:00"
-  },
-  {
     "id": "fd_0205",
     "title": "Ramanujan-type bounds",
     "description": ": optimal spectral bounds would make Berggren lattices provably good for derandomization.",
@@ -511,20 +494,6 @@
     "timestamp": "2026-05-17T15:03:32.981213+00:00"
   },
   {
-    "id": "fd_0270",
-    "title": "Hypothesis",
-    "description": ": State the precise mathematical claim.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e6a583e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:19:10.659880+00:00"
-  },
-  {
     "id": "fd_0273",
     "title": "Proofs",
     "description": ": Prove helper lemmas bottom-up, verifying each builds.",
@@ -655,6 +624,48 @@
     "timestamp": "2026-05-17T15:21:59.631704+00:00"
   },
   {
+    "id": "fd_0271",
+    "title": "Subadditivity attempt",
+    "description": ": I∞(X; Y₁, ..., Yₙ) ≤ ∑ᵢ I∞(X; Yᵢ) — this would follow from a superadditivity of conditional min-entropy: H∞(X|Y₁,...,Yₙ) ≥ ∑ᵢ H∞(X|Yᵢ) − (n−1)H∞(X). However, this is unlikely to hold in full generality for min-entropy.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3818c5e0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:27:52.139885+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Sequential chain rule",
+    "description": ": I∞(X; Y₁, ..., Yₙ) ≤ ∑ᵢ [H∞(X|Y₁,...,Yᵢ₋₁) − H∞(X|Y₁,...,Yᵢ)]. This is tautological but becomes useful when individual terms are bounded.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3818c5e0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:27:52.158778+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Product structure",
+    "description": ": When observations are conditionally independent given X, prove that V(X|Y₁,...,Yₙ) has a tractable product form.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3818c5e0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:27:59.353503+00:00"
+  },
+  {
     "id": "fd_0126",
     "title": "Specific Hypotheses",
     "description": "- **H1.1**: Bach chorale voice-leading can be characterized as shortest paths in a tropical hypergraph where nodes are 4-note chords and hyperedges encode simultaneous constraints (parallel fifths between any pair, voice spacing, voice crossing).\n- **H1.2**: The four-voice generalization of the zero-cost theorem holds: legal SATB counterpoint = zero locus of a 6-component penalty (one per voice pair).\n- **H1.3**: The exponential blowup in candidate space (P^4n vs P^n) can be managed via tropical tensor decomposition, factoring the 4-voice problem into coupled 2-voice subproblems.",
@@ -664,10 +675,10 @@
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f37e592e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "41ac42f5",
     "timestamp": "2026-05-14T16:24:05.738126+00:00"
   },
   {
@@ -1690,24 +1701,5 @@
     "source_exp_id": "bc9ede85",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T15:23:44.168093+00:00"
-  },
-  {
-    "id": "fd_0270",
-    "title": "5. Piecewise-Linear Neural Network Verification via Tropical Geometry",
-    "description": "**Hypothesis:** ReLU neural networks define piecewise-linear functions that are tropical rational functions. The tropical normalizer can be extended to provide certified bounds on the output of ReLU networks, connecting tropical algebra to neural network verification.\n\n**Proof Strategy:**\n- Formalize the correspondence: `ReLU(x) = max(0, x) = -min(0, -x)`, so compositions of affine maps and ReLU are tropical rational functions\n- For a single-hidden-layer network `f(x) = Σᵢ wᵢ · max(0, aᵢ · x + bᵢ)`, express `f` as a max-plus (dual tropical) polynomial\n- Use the tropical normalizer to compute the canonical form of `f`, which reveals the linear regions explicitly\n- Prove certified Lipschitz bounds from the canonical form: the Lipschitz constant equals the maximum slope of any linear piece\n- ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bc9ede85",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:23:44.189486+00:00"
   }
 ]

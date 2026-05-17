@@ -1,970 +1,1028 @@
 #!/usr/bin/env python3
 """
-Applications of Tropical SP Network Boundary Rigidity.
+Applications of Tropical SP Network Theory
 
 Demonstrates real-world applications:
-1. Network routing: optimal path computation in communication networks
-2. Supply chain optimization: series-parallel logistics networks
-3. Tropical circuit analysis: min-plus circuit evaluation
-4. Phylogenetic distance: tree metric reconstruction
-5. Dynamic programming: Bellman equation structure
+1. Network reliability analysis
+2. Supply chain optimization
+3. Circuit timing analysis
+4. Phylogenetic tree reconstruction
 """
 
 import numpy as np
-from typing import List, Dict, Tuple
 from algorithms import (
-    SPNode, atom, series, parallel,
-    effective_distance, tropical_closure,
-    tropical_vertex_elimination, boundary_distance_matrix,
-    canonical_reduce
+    SPExpr, Atom, Series, Parallel,
+    eff_dist, path_weights, num_paths,
+    tropical_eliminate_vertex, floyd_warshall,
+    boundary_distance_matrix, INF
 )
 
 
-# ============================================================
-# Application 1: Network Routing
-# ============================================================
+def pretty(e):
+    """Pretty-print an SP expression."""
+    match e:
+        case Atom(w):
+            return str(w)
+        case Series(l, r):
+            return f"({pretty(l)} → {pretty(r)})"
+        case Parallel(l, r):
+            return f"({pretty(l)} ∥ {pretty(r)})"
 
-def network_routing_demo():
-    """
-    Tropical SP networks model routing in communication networks.
 
-    In a network where edges represent links with latency (delay),
-    the effective distance is the minimum end-to-end latency.
-    Series = sequential hops (latencies add).
-    Parallel = alternative routes (take the fastest).
+# ═══════════════════════════════════════════════════════════════
+# Application 1: Supply Chain / Logistics
+# ═══════════════════════════════════════════════════════════════
+
+def app_supply_chain():
+    """Model a supply chain as a tropical SP network.
+
+    Each edge weight represents transit time (days).
+    Series = sequential stages, Parallel = alternative routes.
+    Effective distance = fastest delivery time.
     """
     print("=" * 60)
-    print("APPLICATION 1: Network Routing Optimization")
+    print("APPLICATION 1: Supply Chain Optimization")
     print("=" * 60)
+    print()
 
-    # Model a network with two paths from source to destination
-    # Path 1: fiber link (3ms) → satellite hop (50ms)
-    # Path 2: terrestrial (10ms) → terrestrial (12ms)
-    path1 = series(atom(3), atom(50))
-    path2 = series(atom(10), atom(12))
-    network = parallel(path1, path2)
+    # Factory → Distribution Center → Customer
+    # Two factory-to-DC routes (air vs ground)
+    # Two DC-to-customer routes (express vs standard)
 
-    print(f"\nNetwork topology:")
-    print(f"  Path 1 (fiber→satellite): latency = {effective_distance(path1)} ms")
-    print(f"  Path 2 (terrestrial):     latency = {effective_distance(path2)} ms")
-    print(f"  Best route:               latency = {effective_distance(network)} ms")
-    print(f"\n  The min-plus algebra automatically selects the optimal route!")
+    air_shipping = Atom(2)       # 2 days by air
+    ground_shipping = Atom(7)    # 7 days by ground
+    factory_to_dc = Parallel(air_shipping, ground_shipping)
 
-    # Adding a third redundant path
-    path3 = series(atom(8), atom(8), atom(8))
-    enhanced = parallel(network, path3)
-    print(f"\n  Adding path 3 (3 hops of 8ms each): {effective_distance(path3)} ms")
-    print(f"  Enhanced network optimal:            {effective_distance(enhanced)} ms")
+    express_delivery = Atom(1)   # 1 day express
+    standard_delivery = Atom(4)  # 4 days standard
+    dc_to_customer = Parallel(express_delivery, standard_delivery)
+
+    full_chain = Series(factory_to_dc, dc_to_customer)
+
+    print(f"  Supply chain: {pretty(full_chain)}")
+    print(f"  Fastest delivery: {eff_dist(full_chain)} days")
+    print(f"  All possible delivery times: {path_weights(full_chain)} days")
+    print(f"  Number of route combinations: {num_paths(full_chain)}")
+    print()
+
+    # Add a direct factory-to-customer drone option (5 days)
+    drone = Atom(5)
+    chain_with_drone = Parallel(full_chain, drone)
+
+    print(f"  With drone option ({pretty(drone)} days):")
+    print(f"  Fastest delivery: {eff_dist(chain_with_drone)} days")
+    print(f"  All delivery times: {path_weights(chain_with_drone)} days")
+    print()
 
 
-# ============================================================
-# Application 2: Supply Chain Optimization
-# ============================================================
+# ═══════════════════════════════════════════════════════════════
+# Application 2: Digital Circuit Timing
+# ═══════════════════════════════════════════════════════════════
 
-def supply_chain_demo():
+def app_circuit_timing():
+    """Model critical path analysis in a digital circuit.
+
+    Each edge weight = gate delay (nanoseconds).
+    Series = sequential gates, Parallel = independent paths.
+    Effective distance = critical path delay (minimum propagation time).
     """
-    Supply chains have natural series-parallel structure:
-    - Series = sequential processing stages
-    - Parallel = alternative suppliers/routes
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Supply Chain Optimization")
     print("=" * 60)
-
-    # Manufacturing pipeline
-    # Stage 1: Raw materials (choice of 2 suppliers)
-    supplier_a = atom(5)   # 5 days
-    supplier_b = atom(3)   # 3 days
-    sourcing = parallel(supplier_a, supplier_b)
-
-    # Stage 2: Manufacturing (sequential steps)
-    machining = atom(2)
-    assembly = atom(4)
-    testing = atom(1)
-    manufacturing = series(machining, assembly, testing)
-
-    # Stage 3: Shipping (choice of methods)
-    air = atom(1)
-    sea = atom(14)
-    shipping = parallel(air, sea)
-
-    # Total pipeline
-    pipeline = series(sourcing, manufacturing, shipping)
-
-    print(f"\n  Sourcing (best supplier):   {effective_distance(sourcing)} days")
-    print(f"  Manufacturing:              {effective_distance(manufacturing)} days")
-    print(f"  Shipping (fastest):         {effective_distance(shipping)} days")
-    print(f"  Total pipeline (optimal):   {effective_distance(pipeline)} days")
-    print(f"\n  Boundary rigidity tells us: the external lead time")
-    print(f"  uniquely determines the reduced internal structure.")
-
-
-# ============================================================
-# Application 3: Tropical Circuit Analysis
-# ============================================================
-
-def circuit_analysis_demo():
-    """
-    SP networks are tropical circuits: min-plus analogues of Boolean circuits.
-    - Parallel = tropical OR (min)
-    - Series = tropical AND (add)
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Tropical Circuit Analysis")
+    print("APPLICATION 2: Digital Circuit Timing Analysis")
     print("=" * 60)
+    print()
 
-    # Build a tropical circuit that computes min(a+b, c+d, a+d)
-    a, b, c, d = 3.0, 7.0, 5.0, 2.0
+    # A combinational logic block:
+    # Input → AND gate (2ns) → buffer chain (OR 3ns, AND 2ns) → output
+    # OR
+    # Input → fast path: XOR gate (4ns) → output
 
-    circuit = parallel(
-        series(atom(a), atom(b)),   # a + b = 10
-        series(atom(c), atom(d)),   # c + d = 7
-        series(atom(a), atom(d))    # a + d = 5
+    slow_path = Series(Atom(2), Parallel(Atom(3), Atom(2)))
+    fast_path = Atom(4)
+    circuit = Parallel(slow_path, fast_path)
+
+    print(f"  Circuit: {pretty(circuit)}")
+    print(f"  Critical path delay: {eff_dist(circuit)} ns")
+    print(f"  All path delays: {path_weights(circuit)} ns")
+    print(f"  Number of signal paths: {num_paths(circuit)}")
+    print()
+
+    # Multi-stage pipeline
+    stage1 = Parallel(Atom(3), Atom(5))
+    stage2 = Parallel(Atom(2), Atom(4))
+    stage3 = Atom(1)
+    pipeline = Series(stage1, Series(stage2, stage3))
+
+    print(f"  Pipeline: {pretty(pipeline)}")
+    print(f"  Min propagation delay: {eff_dist(pipeline)} ns")
+    print(f"  All propagation times: {path_weights(pipeline)} ns")
+    print()
+
+
+# ═══════════════════════════════════════════════════════════════
+# Application 3: Network Inverse Problem
+# ═══════════════════════════════════════════════════════════════
+
+def app_inverse_problem():
+    """Demonstrate the tropical inverse problem:
+    Given boundary distances, what can we infer about internal structure?
+
+    This is the core application of the rigidity theorems.
+    """
+    print("=" * 60)
+    print("APPLICATION 3: Tropical Inverse Problem")
+    print("=" * 60)
+    print()
+
+    # Create a hidden network
+    hidden = Series(
+        Parallel(Atom(2), Atom(5)),
+        Series(Atom(3), Parallel(Atom(1), Atom(4)))
     )
 
-    print(f"\n  Inputs: a={a}, b={b}, c={c}, d={d}")
-    print(f"  Circuit computes: min(a+b, c+d, a+d)")
-    print(f"    a+b = {a+b}")
-    print(f"    c+d = {c+d}")
-    print(f"    a+d = {a+d}")
-    print(f"  Circuit output: {effective_distance(circuit)}")
-    print(f"  Expected: {min(a+b, c+d, a+d)}")
+    print("  Hidden SP network structure:")
+    print(f"    {pretty(hidden)}")
+    print(f"    Effective distance (boundary observable): {eff_dist(hidden)}")
+    print(f"    Full path spectrum: {path_weights(hidden)}")
+    print()
 
-    # Demonstrate that circuit complexity = SP expression size
-    from algorithms import sp_size, sp_depth
-    print(f"\n  Circuit size (# gates): {sp_size(circuit)}")
-    print(f"  Circuit depth: {sp_depth(circuit)}")
+    # The boundary observer sees only the effective distance
+    observed_dist = eff_dist(hidden)
+    print(f"  Boundary observer sees: d = {observed_dist}")
+    print()
+
+    # Show what structures are consistent with this distance
+    print("  Consistent simple structures:")
+    candidates = [
+        Atom(observed_dist),
+        Series(Atom(1), Atom(observed_dist - 1)),
+        Parallel(Atom(observed_dist), Atom(observed_dist + 3)),
+    ]
+    for c in candidates:
+        if eff_dist(c) == observed_dist:
+            print(f"    {pretty(c)} → effDist = {eff_dist(c)} ✓")
+
+    print()
+    print("  Key insight: The effective distance alone doesn't determine")
+    print("  the network structure. The full path weight multiset provides")
+    print("  richer information, and for k≥3 terminal networks, the")
+    print("  boundary distance MATRIX can uniquely determine the structure.")
+    print()
 
 
-# ============================================================
-# Application 4: Phylogenetic Distance Reconstruction
-# ============================================================
+# ═══════════════════════════════════════════════════════════════
+# Application 4: Graph Sparsification via Elimination
+# ═══════════════════════════════════════════════════════════════
 
-def phylogenetics_demo():
+def app_graph_sparsification():
+    """Demonstrate tropical elimination as graph sparsification.
+
+    Interior vertices are eliminated while preserving boundary distances.
+    This is useful for network reduction and summarization.
     """
-    Tree metrics (phylogenetic distances) are a special case of SP networks.
-    The boundary rigidity theorem generalizes tree metric reconstruction.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 4: Phylogenetic Tree Metric")
     print("=" * 60)
-
-    # A simple phylogenetic tree:
-    #        root
-    #       /    \
-    #      v      w
-    #     / \      \
-    #    A   B      C
-    # Distances: root-v = 2, v-A = 1, v-B = 3, root-w = 4, w-C = 1
-
-    # Tree as SP network (from A to C through the tree)
-    # d(A, B) = 1 + 3 = 4 (through v)
-    # d(A, C) = 1 + 2 + 4 + 1 = 8 (through root)
-    # d(B, C) = 3 + 2 + 4 + 1 = 10 (through root)
-
-    # Build the pairwise distance matrix
-    D = np.array([
-        [0, 4, 8],
-        [4, 0, 10],
-        [8, 10, 0]
-    ])
-    print(f"\n  Leaf distance matrix:")
-    print(f"    d(A,B) = {D[0,1]}")
-    print(f"    d(A,C) = {D[0,2]}")
-    print(f"    d(B,C) = {D[1,2]}")
-
-    # Four-point condition check (tree-likeness)
-    # For tree metrics: d(w,x) + d(y,z) ≤ max(d(w,y)+d(x,z), d(w,z)+d(x,y))
-    labels = ['A', 'B', 'C']
-    print(f"\n  Four-point condition (tree-likeness test):")
-    lhs = D[0,1] + D[2,2]  # d(A,B) + d(C,C)
-    rhs = max(D[0,2] + D[1,2], D[0,2] + D[1,2])
-    print(f"    d(A,B) + d(C,C) = {lhs} ≤ max(...) = {rhs}: {'✓' if lhs <= rhs else '✗'}")
-
-    print(f"\n  Tree metric reconstruction is a boundary rigidity problem:")
-    print(f"  the leaf-to-leaf distances determine the tree structure.")
-
-
-# ============================================================
-# Application 5: Dynamic Programming (Bellman)
-# ============================================================
-
-def dynamic_programming_demo():
-    """
-    The tropical semiring is the algebraic foundation of dynamic programming.
-    SP network evaluation IS Bellman's principle of optimality.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 5: Dynamic Programming (Bellman's Principle)")
+    print("APPLICATION 4: Graph Sparsification via Tropical Elimination")
     print("=" * 60)
+    print()
 
-    # Shortest path problem as tropical matrix multiplication
-    # Graph: 0 → 1 (cost 2), 0 → 2 (cost 5), 1 → 2 (cost 1), 1 → 3 (cost 4), 2 → 3 (cost 3)
-    INF = np.inf
-    W = np.array([
-        [0,   2,   5,   INF],
-        [INF, 0,   1,   4  ],
-        [INF, INF, 0,   3  ],
-        [INF, INF, INF, 0  ]
-    ])
+    # Create a larger network
+    # 7 vertices: 0, 1, 2 are boundary; 3, 4, 5, 6 are internal
+    n = 7
+    W = np.full((n, n), INF)
+    for i in range(n):
+        W[i, i] = 0
 
-    print(f"\n  Weight matrix (DAG with 4 vertices):")
-    print(f"  {W}")
-
-    D = tropical_closure(W)
-    print(f"\n  All-pairs shortest paths (tropical closure):")
-    print(f"  {D}")
-
-    print(f"\n  Shortest path 0→3: {D[0,3]}")
-    print(f"    Via 0→1→2→3: cost = {2 + 1 + 3}")
-    print(f"    Via 0→1→3:   cost = {2 + 4}")
-    print(f"    Via 0→2→3:   cost = {5 + 3}")
-    print(f"    Optimal: {min(2+1+3, 2+4, 5+3)}")
-
-    # As SP expression
-    route_012_3 = series(atom(2), atom(1), atom(3))   # 0→1→2→3
-    route_01_3 = series(atom(2), atom(4))              # 0→1→3
-    route_02_3 = series(atom(5), atom(3))              # 0→2→3
-    all_routes = parallel(route_012_3, route_01_3, route_02_3)
-
-    print(f"\n  As SP expression: parallel(series(2,1,3), series(2,4), series(5,3))")
-    print(f"  Effective distance: {effective_distance(all_routes)}")
-    print(f"  Reduced form: {canonical_reduce(all_routes)}")
-
-
-# ============================================================
-# Application 6: Sensitivity Analysis
-# ============================================================
-
-def sensitivity_demo():
-    """
-    Demonstrate how boundary distance changes with weight perturbations.
-    The monotonicity theorems guarantee controlled sensitivity.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 6: Sensitivity Analysis")
-    print("=" * 60)
-
-    base_network = parallel(
-        series(atom(3), atom(5)),   # path 1: cost 8
-        series(atom(4), atom(2))    # path 2: cost 6
-    )
-    base_dist = effective_distance(base_network)
-    print(f"\n  Base network effective distance: {base_dist}")
-
-    # Perturb weights and observe changes
-    print(f"\n  Weight perturbation analysis:")
-    print(f"  {'Perturbation':30s} {'New dist':>10s} {'Change':>10s}")
-    print(f"  {'-'*50}")
-
-    perturbations = [
-        ("Path 1, edge 1: 3→2", parallel(series(atom(2), atom(5)), series(atom(4), atom(2)))),
-        ("Path 1, edge 1: 3→4", parallel(series(atom(4), atom(5)), series(atom(4), atom(2)))),
-        ("Path 2, edge 2: 2→1", parallel(series(atom(3), atom(5)), series(atom(4), atom(1)))),
-        ("Path 2, edge 2: 2→3", parallel(series(atom(3), atom(5)), series(atom(4), atom(3)))),
-        ("Both paths +1 each edge", parallel(series(atom(4), atom(6)), series(atom(5), atom(3)))),
+    edges = [
+        (0, 3, 2), (0, 4, 5),
+        (3, 4, 1), (3, 5, 3),
+        (4, 5, 2), (4, 6, 4),
+        (5, 1, 1), (5, 6, 2),
+        (6, 2, 3),
+        (1, 2, 6),
     ]
 
-    for desc, net in perturbations:
-        d = effective_distance(net)
-        print(f"  {desc:30s} {d:10.1f} {d - base_dist:+10.1f}")
+    for u, v, w in edges:
+        W[u, v] = w
+        W[v, u] = w
+
+    print(f"  Original graph: {n} vertices, {len(edges)} edges")
+    print(f"  Boundary vertices: {{0, 1, 2}}")
+    print(f"  Internal vertices: {{3, 4, 5, 6}}")
+    print()
+
+    # Compute boundary distances via Floyd-Warshall
+    D_full = floyd_warshall(W)
+    boundary = [0, 1, 2]
+
+    print("  Full shortest-path distances (boundary):")
+    for i in boundary:
+        for j in boundary:
+            if i < j:
+                print(f"    d({i},{j}) = {D_full[i,j]:.0f}")
+
+    # Compute via tropical elimination
+    D_elim = boundary_distance_matrix(W, boundary)
+    print()
+    print("  Tropical elimination distances (boundary):")
+    for i_new, i_old in enumerate(boundary):
+        for j_new, j_old in enumerate(boundary):
+            if i_old < j_old:
+                print(f"    d({i_old},{j_old}) = {D_elim[i_new,j_new]:.0f}")
+
+    # Verify they match
+    match = True
+    for i_new, i_old in enumerate(boundary):
+        for j_new, j_old in enumerate(boundary):
+            if abs(D_elim[i_new, j_new] - D_full[i_old, j_old]) > 1e-9:
+                match = False
+
+    print()
+    print(f"  Elimination matches Floyd-Warshall: {'✓' if match else '✗'}")
+    print(f"  Reduced from {n} vertices to {len(boundary)} vertices")
+    print(f"  Compression ratio: {len(boundary)/n:.1%}")
+    print()
 
 
-# ============================================================
-# Main
-# ============================================================
+# ═══════════════════════════════════════════════════════════════
+# Application 5: Dynamic Programming Connection
+# ═══════════════════════════════════════════════════════════════
+
+def app_dynamic_programming():
+    """Show the connection between SP evaluation and dynamic programming.
+
+    The effective distance computation is a tropical (min-plus) DP:
+    - Series = Bellman equation composition
+    - Parallel = taking the best option
+    """
+    print("=" * 60)
+    print("APPLICATION 5: Dynamic Programming / Bellman Connection")
+    print("=" * 60)
+    print()
+
+    # Model a shortest-path problem as SP composition
+    # Road network: city A → city B via intermediate cities
+
+    # Route 1: A →(3)→ X →(2)→ Y →(4)→ B
+    route1 = Series(Atom(3), Series(Atom(2), Atom(4)))
+
+    # Route 2: A →(5)→ Z →(3)→ B
+    route2 = Series(Atom(5), Atom(3))
+
+    # Route 3: A →(10)→ B (direct highway)
+    route3 = Atom(10)
+
+    # Best route: parallel of all options
+    best = Parallel(Parallel(route1, route2), route3)
+
+    print("  Road network: A → B")
+    print(f"    Route 1 (via X,Y): {pretty(route1)} = {eff_dist(route1)}")
+    print(f"    Route 2 (via Z):   {pretty(route2)} = {eff_dist(route2)}")
+    print(f"    Route 3 (direct):  {pretty(route3)} = {eff_dist(route3)}")
+    print()
+    print(f"  Optimal route (Bellman): min = {eff_dist(best)}")
+    print(f"  All route costs: {path_weights(best)}")
+    print()
+    print("  This is exactly the Bellman optimality principle:")
+    print("  V*(s) = min_a { c(s,a) + V*(next(s,a)) }")
+    print("  where series = c + V* and parallel = min_a")
+    print()
+
+
+# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    network_routing_demo()
-    supply_chain_demo()
-    circuit_analysis_demo()
-    phylogenetics_demo()
-    dynamic_programming_demo()
-    sensitivity_demo()
+    print()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  TROPICAL SP NETWORK APPLICATIONS                      ║")
+    print("║  Real-World Uses of Formally Verified Theory            ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    print()
 
-    print("\n" + "=" * 60)
-    print("ALL APPLICATIONS DEMONSTRATED ✓")
-    print("=" * 60)
+    app_supply_chain()
+    app_circuit_timing()
+    app_inverse_problem()
+    app_graph_sparsification()
+    app_dynamic_programming()
+
+    print("All applications demonstrated successfully! ✓")
 
 
 #!/usr/bin/env python3
 """
-Demonstration of Series-Parallel Tropical Network Boundary Rigidity.
+Tropical Series-Parallel Network Theory — Interactive Demo
 
-This script illustrates the key theorems with concrete numerical examples:
-1. Compositional tropical semantics (series = add, parallel = min)
-2. Canonical reduction to atoms
-3. Boundary distance matrix computation
-4. Tropical vertex elimination (Schur complement)
-5. Boundary rigidity for reduced expressions
+Demonstrates the core theorems with concrete numerical examples:
+1. Compositional tropical semantics (series adds, parallel takes min)
+2. Path weight multiset characterization
+3. Tropical vertex elimination (Schur complement)
+4. Tropical distributivity
+
+Each example corresponds to a formally verified theorem.
 """
 
-import numpy as np
-from typing import Union, Tuple
+from dataclasses import dataclass
+from typing import List
+from itertools import product
 
 
-# ============================================================
+# ─────────────────────────────────────────────────────────────────
 # SP Expression Tree
-# ============================================================
+# ─────────────────────────────────────────────────────────────────
 
-class SPExpr:
-    """Two-terminal series-parallel network expression."""
-    pass
-
-
-class Atom(SPExpr):
-    """A single edge with weight w."""
-    def __init__(self, w: float):
-        self.w = w
+@dataclass
+class Atom:
+    """Single edge with weight w."""
+    weight: int
 
     def __repr__(self):
-        return f"Atom({self.w})"
-
-    def __eq__(self, other):
-        return isinstance(other, Atom) and self.w == other.w
+        return f"Atom({self.weight})"
 
 
-class Series(SPExpr):
-    """Series composition: connect two networks end-to-end."""
-    def __init__(self, e1: SPExpr, e2: SPExpr):
-        self.e1 = e1
-        self.e2 = e2
+@dataclass
+class Series:
+    """Series composition of two SP networks."""
+    left: object
+    right: object
 
     def __repr__(self):
-        return f"Series({self.e1}, {self.e2})"
-
-    def __eq__(self, other):
-        return isinstance(other, Series) and self.e1 == other.e1 and self.e2 == other.e2
+        return f"Series({self.left}, {self.right})"
 
 
-class Parallel(SPExpr):
-    """Parallel composition: connect two networks between the same terminals."""
-    def __init__(self, e1: SPExpr, e2: SPExpr):
-        self.e1 = e1
-        self.e2 = e2
+@dataclass
+class Parallel:
+    """Parallel composition of two SP networks."""
+    left: object
+    right: object
 
     def __repr__(self):
-        return f"Parallel({self.e1}, {self.e2})"
-
-    def __eq__(self, other):
-        return isinstance(other, Parallel) and self.e1 == other.e1 and self.e2 == other.e2
+        return f"Parallel({self.left}, {self.right})"
 
 
-# ============================================================
-# Effective Distance
-# ============================================================
-
-def eff_dist(e: SPExpr) -> float:
-    """
-    Compute the effective distance (boundary observable) of an SP expression.
-    - Atom(w): distance = w
-    - Series(e1, e2): distance = eff_dist(e1) + eff_dist(e2)
-    - Parallel(e1, e2): distance = min(eff_dist(e1), eff_dist(e2))
-    """
-    if isinstance(e, Atom):
-        return e.w
-    elif isinstance(e, Series):
-        return eff_dist(e.e1) + eff_dist(e.e2)
-    elif isinstance(e, Parallel):
-        return min(eff_dist(e.e1), eff_dist(e.e2))
-    else:
-        raise TypeError(f"Unknown SPExpr type: {type(e)}")
+SPExpr = Atom | Series | Parallel
 
 
-def pos_weights(e: SPExpr) -> bool:
-    """Check that all atom weights are positive."""
-    if isinstance(e, Atom):
-        return e.w > 0
-    elif isinstance(e, Series):
-        return pos_weights(e.e1) and pos_weights(e.e2)
-    elif isinstance(e, Parallel):
-        return pos_weights(e.e1) and pos_weights(e.e2)
-    return False
+def eff_dist(e: SPExpr) -> int:
+    """Effective distance (shortest path between terminals).
+    Formally verified as SPExpr.effDist."""
+    match e:
+        case Atom(w):
+            return w
+        case Series(l, r):
+            return eff_dist(l) + eff_dist(r)
+        case Parallel(l, r):
+            return min(eff_dist(l), eff_dist(r))
 
 
-def reduce(e: SPExpr) -> Atom:
-    """Canonical reduction: replace any SP expression with Atom(eff_dist(e))."""
-    return Atom(eff_dist(e))
+def path_weights(e: SPExpr) -> List[int]:
+    """All source-to-sink path weights (as a sorted list).
+    Formally verified as SPExpr.pathWeights."""
+    match e:
+        case Atom(w):
+            return [w]
+        case Series(l, r):
+            pw_l = path_weights(l)
+            pw_r = path_weights(r)
+            return sorted(a + b for a, b in product(pw_l, pw_r))
+        case Parallel(l, r):
+            return sorted(path_weights(l) + path_weights(r))
 
 
-def boundary_matrix(e: SPExpr) -> np.ndarray:
-    """
-    Boundary distance matrix for a two-terminal network.
-    Returns the 2x2 matrix [[0, d], [d, 0]] where d = eff_dist(e).
-    """
-    d = eff_dist(e)
-    return np.array([[0, d], [d, 0]])
+def num_paths(e: SPExpr) -> int:
+    """Number of source-to-sink paths.
+    Formally verified as SPExpr.numPaths."""
+    match e:
+        case Atom(_):
+            return 1
+        case Series(l, r):
+            return num_paths(l) * num_paths(r)
+        case Parallel(l, r):
+            return num_paths(l) + num_paths(r)
 
 
-# ============================================================
-# Tropical Vertex Elimination
-# ============================================================
-
-def path_graph_3(w1: float, w2: float) -> np.ndarray:
-    """
-    Distance matrix for a 3-vertex path graph s--v--t.
-    Vertices: 0=s, 1=v, 2=t.
-    Edge weights: w1 (s-v), w2 (v-t).
-    """
-    return np.array([
-        [0,      w1,     w1 + w2],
-        [w1,     0,      w2     ],
-        [w1+w2,  w2,     0      ]
-    ])
+def total_weight(e: SPExpr) -> int:
+    """Total weight of all atoms."""
+    match e:
+        case Atom(w):
+            return w
+        case Series(l, r) | Parallel(l, r):
+            return total_weight(l) + total_weight(r)
 
 
-def boundary_restrict(D: np.ndarray) -> np.ndarray:
-    """
-    Extract the boundary submatrix for boundary vertices {0, 2}
-    from a 3x3 distance matrix.
-    """
-    indices = [0, 2]
-    return D[np.ix_(indices, indices)]
+def pretty(e: SPExpr) -> str:
+    """Pretty-print an SP expression."""
+    match e:
+        case Atom(w):
+            return str(w)
+        case Series(l, r):
+            return f"({pretty(l)} + {pretty(r)})"
+        case Parallel(l, r):
+            return f"min({pretty(l)}, {pretty(r)})"
 
 
-# ============================================================
-# Demonstrations
-# ============================================================
+# ─────────────────────────────────────────────────────────────────
+# Tropical Elimination (Schur Complement)
+# ─────────────────────────────────────────────────────────────────
 
-def demo_compositionality():
-    """Demonstrate tropical compositional semantics."""
+INF = float('inf')
+
+
+def tropical_elim3(w_sv, w_vt, w_st):
+    """Tropical Schur complement for 3-vertex graph.
+    Formally verified as SPExpr.tropicalElim3."""
+    return min(w_st, w_sv + w_vt)
+
+
+# ─────────────────────────────────────────────────────────────────
+# Demo 1: Compositional Semantics
+# ─────────────────────────────────────────────────────────────────
+
+def demo_compositional():
     print("=" * 60)
     print("DEMO 1: Compositional Tropical Semantics")
     print("=" * 60)
-
-    e1 = Atom(3.0)
-    e2 = Atom(5.0)
-    e3 = Atom(2.0)
-
-    series_e = Series(e1, e2)
-    parallel_e = Parallel(e1, e3)
-
-    print(f"\ne1 = {e1}, eff_dist = {eff_dist(e1)}")
-    print(f"e2 = {e2}, eff_dist = {eff_dist(e2)}")
-    print(f"e3 = {e3}, eff_dist = {eff_dist(e3)}")
-    print(f"\nSeries(e1, e2) = {series_e}")
-    print(f"  eff_dist = {eff_dist(series_e)}  (= {eff_dist(e1)} + {eff_dist(e2)})")
-    print(f"\nParallel(e1, e3) = {parallel_e}")
-    print(f"  eff_dist = {eff_dist(parallel_e)}  (= min({eff_dist(e1)}, {eff_dist(e3)}))")
-
-    # Verify compositionality
-    assert eff_dist(series_e) == eff_dist(e1) + eff_dist(e2)
-    assert eff_dist(parallel_e) == min(eff_dist(e1), eff_dist(e3))
-    print("\n✓ Compositionality verified: series = add, parallel = min")
-
-
-def demo_algebraic_laws():
-    """Demonstrate tropical algebraic laws."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Tropical Algebraic Laws")
-    print("=" * 60)
-
-    a, b, c = Atom(3.0), Atom(5.0), Atom(2.0)
-
-    # Series associativity
-    lhs = eff_dist(Series(Series(a, b), c))
-    rhs = eff_dist(Series(a, Series(b, c)))
-    print(f"\nSeries associativity: {lhs} = {rhs}  ✓" if lhs == rhs else f"FAIL: {lhs} ≠ {rhs}")
-
-    # Parallel commutativity
-    lhs = eff_dist(Parallel(a, b))
-    rhs = eff_dist(Parallel(b, a))
-    print(f"Parallel commutativity: {lhs} = {rhs}  ✓" if lhs == rhs else f"FAIL")
-
-    # Parallel idempotency
-    lhs = eff_dist(Parallel(a, a))
-    rhs = eff_dist(a)
-    print(f"Parallel idempotency: {lhs} = {rhs}  ✓" if lhs == rhs else f"FAIL")
-
-    # Distributivity: series over parallel
-    lhs = eff_dist(Series(a, Parallel(b, c)))
-    rhs = eff_dist(Parallel(Series(a, b), Series(a, c)))
-    print(f"Left distributivity: {lhs} = {rhs}  ✓" if lhs == rhs else f"FAIL")
-
-    lhs = eff_dist(Series(Parallel(a, b), c))
-    rhs = eff_dist(Parallel(Series(a, c), Series(b, c)))
-    print(f"Right distributivity: {lhs} = {rhs}  ✓" if lhs == rhs else f"FAIL")
-
-
-def demo_canonical_reduction():
-    """Demonstrate canonical reduction to atoms."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Canonical Reduction")
-    print("=" * 60)
-
-    # Complex expression
-    e = Parallel(
-        Series(Atom(2.0), Atom(3.0)),   # effective distance = 5
-        Series(Atom(1.0), Atom(6.0))    # effective distance = 7
-    )
-    # Parallel takes min: eff_dist = min(5, 7) = 5
-    print(f"\nExpression: {e}")
-    print(f"Effective distance: {eff_dist(e)}")
-    print(f"Reduced form: {reduce(e)}")
-    print(f"Effective distance of reduced: {eff_dist(reduce(e))}")
-    assert eff_dist(e) == eff_dist(reduce(e))
-    print("✓ Reduction preserves effective distance")
-
-
-def demo_boundary_matrix():
-    """Demonstrate boundary distance matrix computation."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Boundary Distance Matrix")
-    print("=" * 60)
-
-    e1 = Atom(3.0)
-    e2 = Atom(5.0)
-
-    M1 = boundary_matrix(e1)
-    M2 = boundary_matrix(e2)
-
-    print(f"\ne1 = {e1}")
-    print(f"Boundary matrix:\n{M1}")
-
-    print(f"\ne2 = {e2}")
-    print(f"Boundary matrix:\n{M2}")
-
-    # Series: off-diagonal entries add
-    series_e = Series(e1, e2)
-    M_series = boundary_matrix(series_e)
-    M_series_expected = np.array([[0, 8], [8, 0]])
-    print(f"\nSeries(e1, e2) boundary matrix:\n{M_series}")
-    assert np.allclose(M_series, M_series_expected)
-    print("✓ Series boundary matrix = add off-diagonal entries")
-
-    # Parallel: off-diagonal entries take min
-    parallel_e = Parallel(e1, e2)
-    M_parallel = boundary_matrix(parallel_e)
-    M_parallel_expected = np.array([[0, 3], [3, 0]])
-    print(f"\nParallel(e1, e2) boundary matrix:\n{M_parallel}")
-    assert np.allclose(M_parallel, M_parallel_expected)
-    print("✓ Parallel boundary matrix = min off-diagonal entries")
-
-
-def demo_vertex_elimination():
-    """Demonstrate tropical vertex elimination (Schur complement)."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Tropical Vertex Elimination (Schur Complement)")
-    print("=" * 60)
-
-    w1, w2 = 3.0, 5.0
-
-    # Full 3-vertex distance matrix
-    D = path_graph_3(w1, w2)
-    print(f"\n3-vertex path graph (weights {w1}, {w2}):")
-    print(f"Full distance matrix:\n{D}")
-
-    # Boundary restriction (eliminate interior vertex)
-    D_boundary = boundary_restrict(D)
-    print(f"\nBoundary distance matrix (after eliminating vertex 1):\n{D_boundary}")
-
-    # Compare with atom
-    M_atom = boundary_matrix(Atom(w1 + w2))
-    print(f"\nAtom({w1 + w2}) boundary matrix:\n{M_atom}")
-    assert np.allclose(D_boundary, M_atom)
-    print("✓ Vertex elimination = tropical Schur complement")
-
-    # Compare with series
-    M_series = boundary_matrix(Series(Atom(w1), Atom(w2)))
-    print(f"\nSeries(Atom({w1}), Atom({w2})) boundary matrix:\n{M_series}")
-    assert np.allclose(D_boundary, M_series)
-    print("✓ Vertex elimination = series composition")
-
-
-def demo_boundary_rigidity():
-    """Demonstrate boundary rigidity for reduced expressions."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Boundary Rigidity")
-    print("=" * 60)
-
-    # Two different complex expressions with the same effective distance
-    e1 = Parallel(
-        Series(Atom(1.0), Atom(4.0)),  # eff_dist = 5
-        Series(Atom(2.0), Atom(3.0))   # eff_dist = 5
-    )
-    e2 = Series(
-        Atom(2.0),
-        Atom(3.0)
-    )
-
-    print(f"\ne1 = {e1}")
-    print(f"  eff_dist = {eff_dist(e1)}")
-    print(f"\ne2 = {e2}")
-    print(f"  eff_dist = {eff_dist(e2)}")
-    print(f"\nBoth have same effective distance: {eff_dist(e1) == eff_dist(e2)}")
-
-    # But their reduced forms are equal!
-    r1 = reduce(e1)
-    r2 = reduce(e2)
-    print(f"\nReduced e1: {r1}")
-    print(f"Reduced e2: {r2}")
-    print(f"Reduced forms equal: {r1 == r2}")
-    assert r1 == r2
-    print("✓ Boundary rigidity: same effective distance → same reduced form")
-
-
-def demo_tropical_semiring():
-    """Show that effective distance is a tropical semiring homomorphism."""
-    print("\n" + "=" * 60)
-    print("DEMO 7: Tropical Semiring Homomorphism")
-    print("=" * 60)
-
-    print("\nThe SP expression algebra maps to the tropical semiring (ℝ, +, min):")
-    print("  series  ↦  + (tropical multiplication)")
-    print("  parallel ↦ min (tropical addition)")
     print()
 
-    # Build a complex expression tree
-    a, b, c, d = Atom(1.0), Atom(4.0), Atom(2.0), Atom(3.0)
-    expr = Series(
-        Parallel(a, b),    # min(1, 4) = 1
-        Parallel(c, d)     # min(2, 3) = 2
-    )
-    # Series: 1 + 2 = 3
+    # Build example networks
+    e1 = Atom(3)
+    e2 = Atom(5)
+    e3 = Atom(2)
 
-    print(f"Expression: Series(Parallel(1, 4), Parallel(2, 3))")
-    print(f"Tropical evaluation: ({min(1,4)} ⊕ {min(2,3)}) ⊙ = {min(1,4)} + {min(2,3)} = {min(1,4) + min(2,3)}")
-    print(f"eff_dist = {eff_dist(expr)}")
-    assert eff_dist(expr) == min(1, 4) + min(2, 3)
-    print("✓ Homomorphism verified")
+    s12 = Series(e1, e2)
+    p12 = Parallel(e1, e2)
 
+    print(f"  e₁ = {pretty(e1)},  effDist = {eff_dist(e1)}")
+    print(f"  e₂ = {pretty(e2)},  effDist = {eff_dist(e2)}")
+    print()
+
+    # Series: distances ADD
+    print("  Series composition (distances add):")
+    print(f"    series(e₁, e₂) = {pretty(s12)}")
+    print(f"    effDist = {eff_dist(e1)} + {eff_dist(e2)} = {eff_dist(s12)}")
+    assert eff_dist(s12) == eff_dist(e1) + eff_dist(e2)
+    print(f"    ✓ Verified: effDist_series")
+    print()
+
+    # Parallel: distances take MIN
+    print("  Parallel composition (distances take min):")
+    print(f"    parallel(e₁, e₂) = {pretty(p12)}")
+    print(f"    effDist = min({eff_dist(e1)}, {eff_dist(e2)}) = {eff_dist(p12)}")
+    assert eff_dist(p12) == min(eff_dist(e1), eff_dist(e2))
+    print(f"    ✓ Verified: effDist_parallel")
+    print()
+
+    # Complex network
+    complex = Series(Parallel(Atom(2), Atom(7)), Series(Atom(1), Atom(4)))
+    print(f"  Complex network: {pretty(complex)}")
+    print(f"    effDist = {eff_dist(complex)}")
+    print(f"    Paths: {path_weights(complex)}")
+    print(f"    Number of paths: {num_paths(complex)}")
+    print()
+
+
+# ─────────────────────────────────────────────────────────────────
+# Demo 2: Path Weight Characterization
+# ─────────────────────────────────────────────────────────────────
+
+def demo_path_weights():
+    print("=" * 60)
+    print("DEMO 2: Fundamental Path-Distance Theorem")
+    print("=" * 60)
+    print()
+    print("  Theorem: effDist = min(pathWeights)")
+    print("  (The shortest path IS the minimum of all path weights)")
+    print()
+
+    examples = [
+        Atom(5),
+        Series(Atom(3), Atom(4)),
+        Parallel(Atom(2), Atom(8)),
+        Series(Parallel(Atom(1), Atom(3)), Atom(2)),
+        Parallel(Series(Atom(2), Atom(3)), Series(Atom(1), Atom(6))),
+        Parallel(
+            Series(Atom(1), Parallel(Atom(2), Atom(5))),
+            Atom(10)
+        ),
+    ]
+
+    for e in examples:
+        pw = path_weights(e)
+        d = eff_dist(e)
+        n = num_paths(e)
+        print(f"  {pretty(e)}")
+        print(f"    paths = {pw}")
+        print(f"    effDist = {d} = min({pw}) ✓")
+        print(f"    numPaths = {n} = len({pw}) ✓")
+        assert d == min(pw)
+        assert d in pw
+        assert n == len(pw)
+        print()
+
+
+# ─────────────────────────────────────────────────────────────────
+# Demo 3: Tropical Distributivity
+# ─────────────────────────────────────────────────────────────────
+
+def demo_distributivity():
+    print("=" * 60)
+    print("DEMO 3: Tropical Distributivity")
+    print("=" * 60)
+    print()
+    print("  Theorem: a + min(b, c) = min(a+b, a+c)")
+    print("  (Series distributes over parallel)")
+    print()
+
+    test_cases = [(2, 3, 7), (1, 5, 5), (0, 4, 9), (10, 1, 100)]
+
+    for a, b, c in test_cases:
+        e1 = Atom(a)
+        e2 = Atom(b)
+        e3 = Atom(c)
+
+        lhs = Series(e1, Parallel(e2, e3))
+        rhs_val = min(eff_dist(Series(e1, e2)), eff_dist(Series(e1, e3)))
+
+        print(f"  a={a}, b={b}, c={c}:")
+        print(f"    {a} + min({b},{c}) = {a} + {min(b,c)} = {eff_dist(lhs)}")
+        print(f"    min({a}+{b}, {a}+{c}) = min({a+b}, {a+c}) = {rhs_val}")
+        assert eff_dist(lhs) == rhs_val
+        print(f"    ✓ Equal!")
+        print()
+
+
+# ─────────────────────────────────────────────────────────────────
+# Demo 4: Tropical Vertex Elimination (Schur Complement)
+# ─────────────────────────────────────────────────────────────────
+
+def demo_elimination():
+    print("=" * 60)
+    print("DEMO 4: Tropical Vertex Elimination")
+    print("=" * 60)
+    print()
+    print("  Eliminating internal vertices via tropical Schur complement")
+    print()
+
+    # Case 1: Pure series (no direct edge)
+    print("  Case 1: Series graph s →(3)→ v →(4)→ t, no direct edge")
+    result = tropical_elim3(3, 4, INF)
+    print(f"    tropicalElim3(3, 4, ∞) = min(∞, 3+4) = {result}")
+    assert result == 7
+    print(f"    ✓ Equals series weight 3+4 = 7")
+    print()
+
+    # Case 2: Diamond graph (direct + indirect)
+    print("  Case 2: Diamond graph with direct edge weight 5")
+    print("           and indirect path 3 + 4 = 7")
+    result = tropical_elim3(3, 4, 5)
+    print(f"    tropicalElim3(3, 4, 5) = min(5, 3+4) = min(5, 7) = {result}")
+    assert result == 5
+    print(f"    ✓ Direct edge is shorter, chosen by min")
+    print()
+
+    # Case 3: Diamond where indirect is shorter
+    print("  Case 3: Diamond graph with direct edge weight 10")
+    print("           and indirect path 2 + 3 = 5")
+    result = tropical_elim3(2, 3, 10)
+    print(f"    tropicalElim3(2, 3, 10) = min(10, 2+3) = min(10, 5) = {result}")
+    assert result == 5
+    print(f"    ✓ Indirect path is shorter, chosen by min")
+    print()
+
+
+# ─────────────────────────────────────────────────────────────────
+# Demo 5: Semiring Properties Summary
+# ─────────────────────────────────────────────────────────────────
+
+def demo_semiring():
+    print("=" * 60)
+    print("DEMO 5: Tropical Semiring Structure")
+    print("=" * 60)
+    print()
+    print("  SP networks form a model of the tropical semiring (ℕ, min, +):")
+    print()
+
+    a, b, c = Atom(3), Atom(5), Atom(2)
+
+    # Commutativity of parallel
+    assert eff_dist(Parallel(a, b)) == eff_dist(Parallel(b, a))
+    print("  ✓ min is commutative: parallel(a,b) = parallel(b,a)")
+
+    # Associativity of parallel
+    assert eff_dist(Parallel(Parallel(a, b), c)) == eff_dist(Parallel(a, Parallel(b, c)))
+    print("  ✓ min is associative: parallel(parallel(a,b),c) = parallel(a,parallel(b,c))")
+
+    # Idempotency of parallel
+    assert eff_dist(Parallel(a, a)) == eff_dist(a)
+    print("  ✓ min is idempotent: parallel(a,a) = a")
+
+    # Associativity of series
+    assert eff_dist(Series(Series(a, b), c)) == eff_dist(Series(a, Series(b, c)))
+    print("  ✓ + is associative: series(series(a,b),c) = series(a,series(b,c))")
+
+    # Identity for series
+    zero = Atom(0)
+    assert eff_dist(Series(zero, a)) == eff_dist(a)
+    print("  ✓ 0 is identity for +: series(atom(0), a) = a")
+
+    # Left distributivity
+    assert eff_dist(Series(a, Parallel(b, c))) == \
+           min(eff_dist(Series(a, b)), eff_dist(Series(a, c)))
+    print("  ✓ + distributes over min from left")
+
+    # Right distributivity
+    assert eff_dist(Series(Parallel(a, b), c)) == \
+           min(eff_dist(Series(a, c)), eff_dist(Series(b, c)))
+    print("  ✓ + distributes over min from right")
+
+    print()
+    print("  All tropical semiring axioms verified! ✓")
+    print()
+
+
+# ─────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    demo_compositionality()
-    demo_algebraic_laws()
-    demo_canonical_reduction()
-    demo_boundary_matrix()
-    demo_vertex_elimination()
-    demo_boundary_rigidity()
-    demo_tropical_semiring()
+    print()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  TROPICAL SERIES-PARALLEL NETWORK THEORY                ║")
+    print("║  Compositional Semantics & Boundary Rigidity            ║")
+    print("║  All results formally verified                          ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    print()
 
-    print("\n" + "=" * 60)
-    print("ALL DEMOS PASSED ✓")
-    print("=" * 60)
+    demo_compositional()
+    demo_path_weights()
+    demo_distributivity()
+    demo_elimination()
+    demo_semiring()
+
+    print("All demos passed successfully! ✓")
+
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json from all deliverables."""
+import json
+
+# Read viz data
+with open('viz_data.json') as f:
+    viz = json.load(f)
+
+# Read lean files
+with open('Tropical/SPNetwork.lean') as f:
+    lean1 = f.read()
+with open('Tropical/SPElimination.lean') as f:
+    lean2 = f.read()
+
+# Read markdown files
+with open('ARTICLE.md') as f:
+    article = f.read()
+with open('RESEARCH_PAPER.md') as f:
+    paper = f.read()
+with open('FUTURE_DIRECTIONS.md') as f:
+    future = f.read()
+
+# Read python files
+with open('demo.py') as f:
+    demo = f.read()
+with open('algorithms.py') as f:
+    algo = f.read()
+with open('applications.py') as f:
+    apps = f.read()
+
+package = {
+    "title": "Tropical Series-Parallel Network Theory: Compositional Semantics and Boundary Rigidity",
+    "domain": "Tropical Geometry / Graph Theory / Inverse Problems",
+    "article": article,
+    "research_paper": paper,
+    "future_directions": future,
+    "demos": [
+        {"name": "Tropical SP Network Demo", "code": demo},
+        {"name": "Applications Demo", "code": apps},
+    ],
+    "algorithms": [
+        {
+            "name": "Effective Distance Computation",
+            "pseudocode": (
+                "ALGORITHM: EffDist(e)\n"
+                "INPUT: SP expression e\n"
+                "OUTPUT: shortest-path distance\n\n"
+                "match e with\n"
+                "| atom(w) -> return w\n"
+                "| series(e1, e2) -> return EffDist(e1) + EffDist(e2)\n"
+                "| parallel(e1, e2) -> return min(EffDist(e1), EffDist(e2))\n\n"
+                "Time: O(n), Space: O(depth)"
+            ),
+            "code": algo,
+        },
+        {
+            "name": "Tropical Vertex Elimination",
+            "pseudocode": (
+                "ALGORITHM: TropElimVertex(W, v)\n"
+                "INPUT: n*n weight matrix W, vertex index v\n"
+                "OUTPUT: (n-1)*(n-1) reduced weight matrix\n\n"
+                "for each pair (i, j) with i != v and j != v:\n"
+                "    W_new[i,j] = min(W[i,j], W[i,v] + W[v,j])\n"
+                "return W_new\n\n"
+                "Time: O(n^2), Space: O(n^2)"
+            ),
+            "code": algo,
+        },
+    ],
+    "visualizations": [
+        {"name": "SP Expression Tree", "data": viz["sp_tree"]},
+        {"name": "Tropical Elimination Process", "data": viz["elimination"]},
+        {"name": "Tropical Semiring Operations", "data": viz["semiring_ops"]},
+        {"name": "Path Weight Distributions", "data": viz["path_dist"]},
+    ],
+    "lean_proofs": (
+        lean1
+        + "\n\n-- ═══════════════════════════════════════\n"
+        + "-- File: Tropical/SPElimination.lean\n"
+        + "-- ═══════════════════════════════════════\n\n"
+        + lean2
+    ),
+}
+
+with open("PACKAGE.json", "w") as f:
+    json.dump(package, f, ensure_ascii=False)
+
+print("PACKAGE.json created successfully")
+print(f"Size: {len(json.dumps(package))} bytes")
 
 
 #!/usr/bin/env python3
 """
-Visualizations for Series-Parallel Tropical Network Boundary Rigidity.
-
-Generates publication-quality figures illustrating the key mathematical structures.
+Visualizations for Tropical Series-Parallel Network Theory.
+Generates PNG figures for the article and research paper.
 """
 
-import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch
+import matplotlib.patches as patches
+import numpy as np
 import base64
-from io import BytesIO
+import io
+import json
 
 
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64-encoded PNG data URI."""
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
-                facecolor='white', edgecolor='none')
+def fig_to_base64(fig):
+    """Convert matplotlib figure to base64 data URI."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     buf.seek(0)
     data = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
     return f"data:image/png;base64,{data}"
 
 
-def viz_sp_composition():
-    """Visualize series and parallel composition with tropical semantics."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+# ═══════════════════════════════════════════════════════════════
+# Visualization 1: SP Expression Tree with Effective Distances
+# ═══════════════════════════════════════════════════════════════
 
-    # Atom
-    ax = axes[0]
-    ax.set_xlim(-0.5, 3.5)
-    ax.set_ylim(-1, 1)
-    ax.plot([0, 3], [0, 0], 'b-', linewidth=3)
-    ax.plot(0, 0, 'ko', markersize=12, zorder=5)
-    ax.plot(3, 0, 'ko', markersize=12, zorder=5)
-    ax.text(0, -0.3, 's', fontsize=14, ha='center', fontweight='bold')
-    ax.text(3, -0.3, 't', fontsize=14, ha='center', fontweight='bold')
-    ax.text(1.5, 0.2, 'w', fontsize=16, ha='center', color='blue', fontweight='bold')
-    ax.set_title('Atom(w)\nd(s,t) = w', fontsize=13, fontweight='bold')
+def viz_sp_tree():
+    """Visualize an SP expression tree annotated with effective distances."""
+    fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+    ax.set_xlim(-1, 11)
+    ax.set_ylim(-0.5, 7)
     ax.axis('off')
+    ax.set_title('Series-Parallel Expression Tree\nwith Tropical Effective Distances',
+                 fontsize=14, fontweight='bold', pad=20)
 
-    # Series
-    ax = axes[1]
-    ax.set_xlim(-0.5, 6.5)
-    ax.set_ylim(-1, 1)
-    ax.plot([0, 3], [0, 0], 'b-', linewidth=3)
-    ax.plot([3, 6], [0, 0], 'r-', linewidth=3)
-    ax.plot(0, 0, 'ko', markersize=12, zorder=5)
-    ax.plot(3, 0, 'ko', markersize=12, zorder=5)
-    ax.plot(6, 0, 'ko', markersize=12, zorder=5)
-    ax.text(0, -0.3, 's', fontsize=14, ha='center', fontweight='bold')
-    ax.text(3, -0.3, 'v', fontsize=14, ha='center', fontweight='bold')
-    ax.text(6, -0.3, 't', fontsize=14, ha='center', fontweight='bold')
-    ax.text(1.5, 0.2, 'w₁', fontsize=16, ha='center', color='blue', fontweight='bold')
-    ax.text(4.5, 0.2, 'w₂', fontsize=16, ha='center', color='red', fontweight='bold')
-    ax.set_title('Series(N₁, N₂)\nd(s,t) = w₁ + w₂', fontsize=13, fontweight='bold')
-    ax.axis('off')
+    # Draw the tree for: series(parallel(atom(2), atom(5)), atom(3))
+    # Root: series, effDist = 5
+    # Left: parallel, effDist = 2
+    # Left-Left: atom(2), effDist = 2
+    # Left-Right: atom(5), effDist = 5
+    # Right: atom(3), effDist = 3
 
-    # Parallel
-    ax = axes[2]
-    ax.set_xlim(-0.5, 3.5)
-    ax.set_ylim(-1.5, 1.5)
-    theta1 = np.linspace(0, 1, 50)
-    x_top = 3 * theta1
-    y_top = 0.8 * np.sin(np.pi * theta1)
-    x_bot = 3 * theta1
-    y_bot = -0.8 * np.sin(np.pi * theta1)
-    ax.plot(x_top, y_top, 'b-', linewidth=3)
-    ax.plot(x_bot, y_bot, 'r-', linewidth=3)
-    ax.plot(0, 0, 'ko', markersize=12, zorder=5)
-    ax.plot(3, 0, 'ko', markersize=12, zorder=5)
-    ax.text(0, -0.35, 's', fontsize=14, ha='center', fontweight='bold')
-    ax.text(3, -0.35, 't', fontsize=14, ha='center', fontweight='bold')
-    ax.text(1.5, 0.95, 'w₁', fontsize=16, ha='center', color='blue', fontweight='bold')
-    ax.text(1.5, -1.0, 'w₂', fontsize=16, ha='center', color='red', fontweight='bold')
-    ax.set_title('Parallel(N₁, N₂)\nd(s,t) = min(w₁, w₂)', fontsize=13, fontweight='bold')
-    ax.axis('off')
+    nodes = {
+        'root': (5, 6, 'Series\n(+)', 5, '#4ECDC4'),
+        'left': (2.5, 3.5, 'Parallel\n(min)', 2, '#FF6B6B'),
+        'right': (7.5, 3.5, 'Atom\nw=3', 3, '#45B7D1'),
+        'll': (1, 1, 'Atom\nw=2', 2, '#45B7D1'),
+        'lr': (4, 1, 'Atom\nw=5', 5, '#45B7D1'),
+    }
 
-    fig.suptitle('Series-Parallel Network Composition', fontsize=16, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    return fig
+    edges = [('root', 'left'), ('root', 'right'), ('left', 'll'), ('left', 'lr')]
 
+    # Draw edges
+    for parent, child in edges:
+        px, py = nodes[parent][0], nodes[parent][1]
+        cx, cy = nodes[child][0], nodes[child][1]
+        ax.plot([px, cx], [py - 0.5, cy + 0.5], 'k-', linewidth=2, zorder=1)
 
-def viz_tropical_algebra():
-    """Visualize the tropical semiring laws."""
-    fig, ax = plt.subplots(figsize=(10, 7))
+    # Draw nodes
+    for key, (x, y, label, dist, color) in nodes.items():
+        circle = plt.Circle((x, y), 0.7, color=color, ec='black', linewidth=2, zorder=2)
+        ax.add_patch(circle)
+        ax.text(x, y + 0.1, label, ha='center', va='center', fontsize=9, fontweight='bold')
+        ax.text(x, y - 0.5, f'd={dist}', ha='center', va='top', fontsize=10,
+                color='darkred', fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.2', facecolor='lightyellow', edgecolor='orange'))
 
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 8)
-    ax.axis('off')
+    # Add legend
+    ax.text(0, -0.3, 'Series: d = d₁ + d₂ = 2 + 3 = 5', fontsize=11, color='#4ECDC4',
+            fontweight='bold')
+    ax.text(0, -0.8, 'Parallel: d = min(d₁, d₂) = min(2, 5) = 2', fontsize=11,
+            color='#FF6B6B', fontweight='bold')
 
-    # Title
-    ax.text(5, 7.5, 'Tropical Semiring Laws for SP Networks',
-            fontsize=18, ha='center', fontweight='bold')
-
-    # Laws
-    laws = [
-        ('Series Associativity:', 'S(S(A,B), C) ≡ S(A, S(B,C))', '(a+b)+c = a+(b+c)'),
-        ('Series Commutativity:', 'S(A, B) ≡ S(B, A)', 'a+b = b+a'),
-        ('Parallel Associativity:', 'P(P(A,B), C) ≡ P(A, P(B,C))', 'min(min(a,b),c) = min(a,min(b,c))'),
-        ('Parallel Commutativity:', 'P(A, B) ≡ P(B, A)', 'min(a,b) = min(b,a)'),
-        ('Parallel Idempotency:', 'P(A, A) ≡ A', 'min(a,a) = a'),
-        ('Left Distributivity:', 'S(A, P(B,C)) ≡ P(S(A,B), S(A,C))', 'a+min(b,c) = min(a+b,a+c)'),
-        ('Right Distributivity:', 'S(P(A,B), C) ≡ P(S(A,C), S(B,C))', 'min(a,b)+c = min(a+c,b+c)'),
-    ]
-
-    for i, (name, sp_form, trop_form) in enumerate(laws):
-        y = 6.5 - i * 0.85
-        ax.text(0.3, y, name, fontsize=12, fontweight='bold', color='#333')
-        ax.text(3.5, y, sp_form, fontsize=11, fontfamily='monospace', color='#0066cc')
-        ax.text(7.5, y, f'⟹  {trop_form}', fontsize=11, fontfamily='monospace', color='#cc3300')
-
-    # Footer
-    ax.text(5, 0.3,
-            'SP Algebra ─→ Tropical Semiring (ℝ, +, min)\n'
-            'series ↦ + (tropical ⊗)    parallel ↦ min (tropical ⊕)',
-            fontsize=13, ha='center', style='italic',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightyellow', alpha=0.8))
-
-    fig.tight_layout()
-    return fig
+    fig.savefig('/workspace/request-project/viz_sp_tree.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
 
 
-def viz_vertex_elimination():
-    """Visualize tropical vertex elimination (Schur complement)."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+# ═══════════════════════════════════════════════════════════════
+# Visualization 2: Tropical Elimination Process
+# ═══════════════════════════════════════════════════════════════
 
-    # Before elimination
-    ax = axes[0]
-    ax.set_xlim(-0.5, 4.5)
-    ax.set_ylim(-1.5, 1.5)
-    # Triangle: s(0,0), v(2,1), t(4,0)
-    ax.plot([0, 2], [0, 1], 'b-', linewidth=3)
-    ax.plot([2, 4], [1, 0], 'r-', linewidth=3)
-    ax.plot(0, 0, 'go', markersize=15, zorder=5)  # boundary
-    ax.plot(2, 1, 'o', color='orange', markersize=15, zorder=5)  # interior
-    ax.plot(4, 0, 'go', markersize=15, zorder=5)  # boundary
-    ax.text(0, -0.5, 's (boundary)', fontsize=11, ha='center')
-    ax.text(2, 1.4, 'v (interior)', fontsize=11, ha='center', color='orange')
-    ax.text(4, -0.5, 't (boundary)', fontsize=11, ha='center')
-    ax.text(0.7, 0.7, 'w₁=3', fontsize=14, color='blue', fontweight='bold')
-    ax.text(3.3, 0.7, 'w₂=5', fontsize=14, color='red', fontweight='bold')
-    ax.set_title('Before Elimination', fontsize=13, fontweight='bold')
-    ax.axis('off')
-
-    # Arrow
-    ax = axes[1]
-    ax.set_xlim(0, 4)
-    ax.set_ylim(-1, 1)
-    ax.annotate('', xy=(3.5, 0), xytext=(0.5, 0),
-                arrowprops=dict(arrowstyle='->', lw=3, color='black'))
-    ax.text(2, 0.3, 'Tropical\nSchur Complement', fontsize=12,
-            ha='center', fontweight='bold', color='purple')
-    ax.text(2, -0.5, 'Eliminate vertex v', fontsize=11,
-            ha='center', style='italic')
-    ax.axis('off')
-
-    # After elimination
-    ax = axes[2]
-    ax.set_xlim(-0.5, 4.5)
-    ax.set_ylim(-1.5, 1.5)
-    ax.plot([0, 4], [0, 0], 'purple', linewidth=3)
-    ax.plot(0, 0, 'go', markersize=15, zorder=5)
-    ax.plot(4, 0, 'go', markersize=15, zorder=5)
-    ax.text(0, -0.5, 's', fontsize=11, ha='center')
-    ax.text(4, -0.5, 't', fontsize=11, ha='center')
-    ax.text(2, 0.3, 'w₁+w₂ = 8', fontsize=14, ha='center',
-            color='purple', fontweight='bold')
-    ax.set_title('After Elimination', fontsize=13, fontweight='bold')
-    ax.axis('off')
-
-    fig.suptitle('Tropical Vertex Elimination = Series Composition',
-                 fontsize=16, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    return fig
-
-
-def viz_boundary_rigidity():
-    """Visualize the boundary rigidity theorem."""
+def viz_elimination():
+    """Visualize the tropical vertex elimination process."""
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    # Two different internal structures
+    for ax in axes:
+        ax.set_xlim(-0.5, 4.5)
+        ax.set_ylim(-0.5, 3.5)
+        ax.axis('off')
+
+    # Before elimination: 3 vertices
     ax = axes[0]
-    ax.set_xlim(-0.5, 4.5)
-    ax.set_ylim(-2, 2)
-    # Complex network 1
-    ax.plot([0, 2, 4], [0, 1, 0], 'b-', linewidth=2)
-    ax.plot([0, 2, 4], [0, -1, 0], 'r-', linewidth=2)
-    ax.plot(0, 0, 'go', markersize=15, zorder=5)
-    ax.plot(4, 0, 'go', markersize=15, zorder=5)
-    ax.plot(2, 1, 'ko', markersize=8, zorder=5)
-    ax.plot(2, -1, 'ko', markersize=8, zorder=5)
-    ax.text(0.7, 0.8, '2', fontsize=12, color='blue')
-    ax.text(3.3, 0.8, '3', fontsize=12, color='blue')
-    ax.text(0.7, -0.7, '1', fontsize=12, color='red')
-    ax.text(3.3, -0.7, '4', fontsize=12, color='red')
-    ax.text(2, -1.8, 'P(S(2,3), S(1,4))\nd = min(5, 5) = 5', fontsize=11, ha='center')
-    ax.set_title('Network N₁', fontsize=13, fontweight='bold')
-    ax.axis('off')
+    ax.set_title('Before Elimination', fontsize=13, fontweight='bold')
+    # Vertices
+    for pos, label in [((0, 1.5), 's'), ((2, 3), 'v'), ((4, 1.5), 't')]:
+        circle = plt.Circle(pos, 0.35, color='#4ECDC4' if label != 'v' else '#FF6B6B',
+                           ec='black', linewidth=2, zorder=3)
+        ax.add_patch(circle)
+        ax.text(pos[0], pos[1], label, ha='center', va='center', fontsize=14, fontweight='bold')
 
-    ax = axes[1]
-    ax.set_xlim(-0.5, 4.5)
-    ax.set_ylim(-2, 2)
-    # Simple network 2
-    ax.plot([0, 4], [0, 0], 'purple', linewidth=3)
-    ax.plot(0, 0, 'go', markersize=15, zorder=5)
-    ax.plot(4, 0, 'go', markersize=15, zorder=5)
-    ax.text(2, 0.3, '5', fontsize=14, ha='center', color='purple', fontweight='bold')
-    ax.text(2, -1.8, 'Atom(5)\nd = 5', fontsize=11, ha='center')
-    ax.set_title('Network N₂ (Reduced)', fontsize=13, fontweight='bold')
-    ax.axis('off')
+    # Edges
+    ax.annotate('', xy=(1.7, 2.7), xytext=(0.3, 1.7),
+                arrowprops=dict(arrowstyle='-', lw=2, color='black'))
+    ax.text(0.7, 2.4, 'w₁=3', fontsize=11, color='blue', fontweight='bold')
 
-    # Rigidity statement
-    ax = axes[2]
-    ax.set_xlim(0, 6)
-    ax.set_ylim(0, 6)
-    ax.axis('off')
-
-    props = dict(boxstyle='round,pad=1', facecolor='lightblue', alpha=0.8)
-    ax.text(3, 5, 'Boundary Rigidity Theorem', fontsize=14,
-            ha='center', fontweight='bold')
-    ax.text(3, 3.8,
-            'If two reduced SP networks\nhave the same boundary\ndistance matrix...',
-            fontsize=12, ha='center', bbox=props)
-    ax.annotate('', xy=(3, 1.8), xytext=(3, 2.8),
-                arrowprops=dict(arrowstyle='->', lw=2, color='darkgreen'))
-    props2 = dict(boxstyle='round,pad=1', facecolor='lightgreen', alpha=0.8)
-    ax.text(3, 1,
-            '...then they are\nthe same network!',
-            fontsize=13, ha='center', fontweight='bold',
-            bbox=props2)
-
-    fig.suptitle('Boundary Distance Determines Reduced SP Structure',
-                 fontsize=16, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    return fig
-
-
-def viz_tropical_homomorphism():
-    """Visualize the tropical semiring homomorphism."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 7)
-    ax.axis('off')
-
-    # SP Algebra box
-    props_sp = dict(boxstyle='round,pad=0.8', facecolor='#E8F4FD', alpha=0.9, edgecolor='#2196F3', linewidth=2)
-    ax.text(2.5, 5.5, 'SP Expression Algebra', fontsize=14, ha='center',
-            fontweight='bold', bbox=props_sp)
-    ax.text(2.5, 4.5, 'Operations:', fontsize=12, ha='center')
-    ax.text(2.5, 3.8, '• series(e₁, e₂)', fontsize=11, ha='center', fontfamily='monospace')
-    ax.text(2.5, 3.2, '• parallel(e₁, e₂)', fontsize=11, ha='center', fontfamily='monospace')
-    ax.text(2.5, 2.5, '• atom(w)', fontsize=11, ha='center', fontfamily='monospace')
+    ax.annotate('', xy=(3.7, 1.7), xytext=(2.3, 2.7),
+                arrowprops=dict(arrowstyle='-', lw=2, color='black'))
+    ax.text(3.1, 2.4, 'w₂=4', fontsize=11, color='blue', fontweight='bold')
 
     # Arrow
-    ax.annotate('effDist', xy=(6.5, 4), xytext=(4.5, 4),
-                fontsize=14, fontweight='bold', color='#E91E63',
-                arrowprops=dict(arrowstyle='->', lw=3, color='#E91E63'),
-                va='center', ha='center')
+    axes[1].set_xlim(-1, 1)
+    axes[1].set_ylim(-1, 1)
+    axes[1].annotate('', xy=(0.5, 0), xytext=(-0.5, 0),
+                     arrowprops=dict(arrowstyle='->', lw=3, color='red'))
+    axes[1].text(0, 0.3, 'Eliminate v', ha='center', fontsize=12,
+                fontweight='bold', color='red')
+    axes[1].text(0, -0.3, 'min(∞, 3+4) = 7', ha='center', fontsize=11,
+                color='darkred')
+    axes[1].set_title('Tropical Schur\nComplement', fontsize=13, fontweight='bold')
 
-    # Tropical semiring box
-    props_trop = dict(boxstyle='round,pad=0.8', facecolor='#FFF3E0', alpha=0.9, edgecolor='#FF9800', linewidth=2)
-    ax.text(7.5, 5.5, 'Tropical Semiring (ℝ, +, min)', fontsize=14, ha='center',
-            fontweight='bold', bbox=props_trop)
-    ax.text(7.5, 4.5, 'Operations:', fontsize=12, ha='center')
-    ax.text(7.5, 3.8, '• a + b  (⊗ tropical mul)', fontsize=11, ha='center', fontfamily='monospace')
-    ax.text(7.5, 3.2, '• min(a, b)  (⊕ tropical add)', fontsize=11, ha='center', fontfamily='monospace')
-    ax.text(7.5, 2.5, '• w ∈ ℝ', fontsize=11, ha='center', fontfamily='monospace')
+    # After elimination: 2 vertices
+    ax = axes[2]
+    ax.set_title('After Elimination', fontsize=13, fontweight='bold')
+    for pos, label in [((1, 1.5), 's'), ((3, 1.5), 't')]:
+        circle = plt.Circle(pos, 0.35, color='#4ECDC4',
+                           ec='black', linewidth=2, zorder=3)
+        ax.add_patch(circle)
+        ax.text(pos[0], pos[1], label, ha='center', va='center', fontsize=14, fontweight='bold')
 
-    # Homomorphism equations
-    props_eq = dict(boxstyle='round,pad=0.5', facecolor='#E8F5E9', alpha=0.9, edgecolor='#4CAF50', linewidth=2)
-    ax.text(5, 1.2,
-            'effDist(series(e₁,e₂)) = effDist(e₁) + effDist(e₂)\n'
-            'effDist(parallel(e₁,e₂)) = min(effDist(e₁), effDist(e₂))',
-            fontsize=12, ha='center', fontfamily='monospace', bbox=props_eq)
+    ax.annotate('', xy=(2.65, 1.5), xytext=(1.35, 1.5),
+                arrowprops=dict(arrowstyle='-', lw=3, color='green'))
+    ax.text(2, 1.9, 'd=7', fontsize=13, color='green', fontweight='bold')
 
-    ax.text(5, 0.3, 'The effective distance is a tropical semiring homomorphism',
-            fontsize=11, ha='center', style='italic', color='#666')
-
-    fig.suptitle('Tropical Semiring Homomorphism', fontsize=16, fontweight='bold')
-    fig.tight_layout()
-    return fig
+    fig.savefig('/workspace/request-project/viz_elimination.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
 
 
-def generate_all_visualizations():
-    """Generate all visualizations and save as files."""
+# ═══════════════════════════════════════════════════════════════
+# Visualization 3: Tropical Semiring Operations
+# ═══════════════════════════════════════════════════════════════
 
-    print("Generating visualizations...")
+def viz_semiring_ops():
+    """Visualize the tropical semiring operations on SP networks."""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    figs = {
-        'sp_composition': viz_sp_composition(),
-        'tropical_algebra': viz_tropical_algebra(),
-        'vertex_elimination': viz_vertex_elimination(),
-        'boundary_rigidity': viz_boundary_rigidity(),
-        'tropical_homomorphism': viz_tropical_homomorphism(),
-    }
+    # Series composition
+    ax = axes[0]
+    ax.set_xlim(-0.5, 8.5)
+    ax.set_ylim(-0.5, 3)
+    ax.axis('off')
+    ax.set_title('Series: Distances ADD\nd(series) = d₁ + d₂', fontsize=13, fontweight='bold')
 
-    for name, fig in figs.items():
-        filename = f'{name}.png'
-        fig.savefig(filename, dpi=150, bbox_inches='tight',
-                    facecolor='white', edgecolor='none')
-        print(f"  Saved {filename}")
-        plt.close(fig)
+    # Draw two networks in series
+    for x, label, w in [(0, 's', None), (3, 'm', None), (6, 't', None)]:
+        color = '#4ECDC4' if label != 'm' else '#FFD93D'
+        circle = plt.Circle((x, 1.5), 0.35, color=color, ec='black', linewidth=2, zorder=3)
+        ax.add_patch(circle)
+        ax.text(x, 1.5, label, ha='center', va='center', fontsize=12, fontweight='bold')
 
-    print("All visualizations generated ✓")
-    return figs
+    # Edges
+    ax.plot([0.35, 2.65], [1.5, 1.5], 'b-', linewidth=3)
+    ax.text(1.5, 1.8, 'd₁ = 3', fontsize=12, color='blue', ha='center', fontweight='bold')
+    ax.plot([3.35, 5.65], [1.5, 1.5], 'r-', linewidth=3)
+    ax.text(4.5, 1.8, 'd₂ = 4', fontsize=12, color='red', ha='center', fontweight='bold')
+
+    # Result
+    ax.text(3, 0.3, '→ d = 3 + 4 = 7', fontsize=14, ha='center',
+            fontweight='bold', color='darkgreen',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='lightgreen', edgecolor='green'))
+
+    # Parallel composition
+    ax = axes[1]
+    ax.set_xlim(-0.5, 6.5)
+    ax.set_ylim(-0.5, 4)
+    ax.axis('off')
+    ax.set_title('Parallel: Distances take MIN\nd(parallel) = min(d₁, d₂)', fontsize=13,
+                fontweight='bold')
+
+    # Two parallel paths
+    for pos, label in [((0, 2), 's'), ((6, 2), 't')]:
+        circle = plt.Circle(pos, 0.35, color='#4ECDC4', ec='black', linewidth=2, zorder=3)
+        ax.add_patch(circle)
+        ax.text(pos[0], pos[1], label, ha='center', va='center', fontsize=12, fontweight='bold')
+
+    # Upper path
+    ax.annotate('', xy=(5.65, 2.3), xytext=(0.35, 2.3),
+                arrowprops=dict(arrowstyle='-', lw=3, color='blue',
+                               connectionstyle='arc3,rad=0.3'))
+    ax.text(3, 3.5, 'd₁ = 2', fontsize=12, color='blue', ha='center', fontweight='bold')
+
+    # Lower path
+    ax.annotate('', xy=(5.65, 1.7), xytext=(0.35, 1.7),
+                arrowprops=dict(arrowstyle='-', lw=3, color='red',
+                               connectionstyle='arc3,rad=-0.3'))
+    ax.text(3, 0.5, 'd₂ = 5', fontsize=12, color='red', ha='center', fontweight='bold')
+
+    # Result
+    ax.text(3, -0.2, '→ d = min(2, 5) = 2', fontsize=14, ha='center',
+            fontweight='bold', color='darkgreen',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='lightgreen', edgecolor='green'))
+
+    plt.tight_layout()
+    fig.savefig('/workspace/request-project/viz_semiring_ops.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
 
 
-def get_all_base64():
-    """Return all visualizations as base64 data URIs."""
-    return {
-        'sp_composition': fig_to_base64(viz_sp_composition()),
-        'tropical_algebra': fig_to_base64(viz_tropical_algebra()),
-        'vertex_elimination': fig_to_base64(viz_vertex_elimination()),
-        'boundary_rigidity': fig_to_base64(viz_boundary_rigidity()),
-        'tropical_homomorphism': fig_to_base64(viz_tropical_homomorphism()),
-    }
+# ═══════════════════════════════════════════════════════════════
+# Visualization 4: Path Weight Distribution
+# ═══════════════════════════════════════════════════════════════
 
+def viz_path_distribution():
+    """Visualize path weight distributions for different SP networks."""
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+    from demo import SPExpr as _, Atom, Series, Parallel, eff_dist, path_weights
+
+    examples = [
+        ("Atom(5)", Atom(5)),
+        ("Parallel(Atom(2), Atom(8))", Parallel(Atom(2), Atom(8))),
+        ("Series(Par(1,3), Atom(2))", Series(Parallel(Atom(1), Atom(3)), Atom(2))),
+        ("Par(Ser(1,Par(2,5)), Atom(10))",
+         Parallel(Series(Atom(1), Parallel(Atom(2), Atom(5))), Atom(10))),
+    ]
+
+    for ax, (name, expr) in zip(axes.flat, examples):
+        pw = path_weights(expr)
+        d = eff_dist(expr)
+
+        colors = ['#FF6B6B' if w == d else '#4ECDC4' for w in pw]
+        bars = ax.bar(range(len(pw)), pw, color=colors, edgecolor='black', linewidth=1.5)
+
+        ax.axhline(y=d, color='red', linestyle='--', linewidth=2, label=f'effDist = {d}')
+        ax.set_title(name, fontsize=11, fontweight='bold')
+        ax.set_ylabel('Path Weight')
+        ax.set_xlabel('Path Index')
+        ax.legend(fontsize=10)
+        ax.set_xticks(range(len(pw)))
+
+        for i, w in enumerate(pw):
+            ax.text(i, w + 0.2, str(w), ha='center', fontsize=10, fontweight='bold')
+
+    fig.suptitle('Path Weight Distributions\n(Red = minimum = effective distance)',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    fig.savefig('/workspace/request-project/viz_paths.png', dpi=150, bbox_inches='tight')
+    return fig_to_base64(fig)
+
+
+# ═══════════════════════════════════════════════════════════════
+# Main
+# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    generate_all_visualizations()
+    print("Generating visualizations...")
+
+    data = {}
+    data['sp_tree'] = viz_sp_tree()
+    print("  ✓ SP expression tree")
+
+    data['elimination'] = viz_elimination()
+    print("  ✓ Tropical elimination")
+
+    data['semiring_ops'] = viz_semiring_ops()
+    print("  ✓ Semiring operations")
+
+    data['path_dist'] = viz_path_distribution()
+    print("  ✓ Path weight distributions")
+
+    # Save data for JSON package
+    with open('/workspace/request-project/viz_data.json', 'w') as f:
+        json.dump(data, f)
+
+    print("\nAll visualizations generated! ✓")
+    print("Files saved: viz_sp_tree.png, viz_elimination.png, viz_semiring_ops.png, viz_paths.png")
