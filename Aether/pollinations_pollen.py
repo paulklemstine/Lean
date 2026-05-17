@@ -23,7 +23,7 @@ class PollinationsPollenConfig:
     estimated_pollen_per_call: float = 0.008
     estimated_pollen_per_pi_execution: float = 0.05
     balance_cache_seconds: int = 60
-    reset_buffer_seconds: int = 10
+    reset_buffer_seconds: int = 300
     max_sleep_seconds: int = 30
     forecast_safety_multiplier: float = 1.35
     forecast_alpha: float = 0.25
@@ -65,7 +65,7 @@ class PollinationsPollenConfig:
             estimated_pollen_per_call=float(raw.get("estimated_pollen_per_call", 0.008)),
             estimated_pollen_per_pi_execution=float(raw.get("estimated_pollen_per_pi_execution", 0.05)),
             balance_cache_seconds=int(raw.get("balance_cache_seconds", 60)),
-            reset_buffer_seconds=int(raw.get("reset_buffer_seconds", 10)),
+            reset_buffer_seconds=int(raw.get("reset_buffer_seconds", 300)),
             max_sleep_seconds=int(raw.get("max_sleep_seconds", 30)),
             forecast_safety_multiplier=float(raw.get("forecast_safety_multiplier", 1.35)),
             forecast_alpha=float(raw.get("forecast_alpha", 0.25)),

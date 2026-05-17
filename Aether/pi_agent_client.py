@@ -463,12 +463,10 @@ class PiAgentClient:
                 )
 
                 if response.status_code in (402, 429):
-                    # Pollen depleted — wait for hourly reset
+                    # Pollen depleted — wait for hourly reset (pollen resets at :00, we wait until :05)
                     self.pollen_gate.mark_depleted_from_response(response)
                     wait_until = self.pollen_gate._next_hour_reset(time.time())
                     wait_seconds = max(60, wait_until - time.time())
-                    # Cap wait at 30 minutes
-                    wait_seconds = min(wait_seconds, 1800)
                     reset_at = time.strftime("%H:%M:%S", time.localtime(time.time() + wait_seconds))
                     print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_seconds:.0f}s until reset ~{reset_at} (attempt {attempt+1}/{max_retries})")
                     time.sleep(wait_seconds)
@@ -496,8 +494,8 @@ class PiAgentClient:
                     # Already handled above, but catch if raise_for_status hits first
                     self.pollen_gate.mark_depleted_from_response(e.response)
                     wait_until = self.pollen_gate._next_hour_reset(time.time())
-                    wait_seconds = min(max(60, wait_until - time.time()), 1800)
-                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_seconds:.0f}s (attempt {attempt+1}/{max_retries})")
+                    wait_seconds = max(60, wait_until - time.time())
+                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_seconds:.0f}s until reset (attempt {attempt+1}/{max_retries})")
                     time.sleep(wait_seconds)
                     continue
                 if e.response.status_code >= 500 and attempt < max_retries - 1:
