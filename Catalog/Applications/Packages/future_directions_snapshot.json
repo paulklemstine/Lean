@@ -111,23 +111,6 @@
     "timestamp": "2026-05-14T16:16:22.737665+00:00"
   },
   {
-    "id": "fd_0145",
-    "title": "Idempotent convergence",
-    "description": ": The sequence of tropical matrix powers `W, W², W³, ...` stabilizes at `W^(n-1)` for n-vertex graphs (Kleene star finiteness).\n\n### Proof Strategy\nUse the connection between tropical matrix multiplication and min-plus path composition. The rank-1 update formula is the tropical analogue of the Sherman–Morrison formula.\n\n### Cross-Domain Connections\n- Tropical linear algebra and the Kleene star\n- Dynamic graph algorithms (incremental shortest paths)\n- Operadic composition in higher algebra\n- Transfer matrix methods in statistical physics\n\n---\n\n## Direction 5: Tropical Holography via Boundary Distance Reconstruction\n\n### Hypothesis\nA weighted graph's internal structure can be reconstructed (up to isomorphism) from the boundary-to-boundary tropical distance matrix. This is a discrete analogue",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6bbd4646",
-    "consumed_by_exp_id": "9cd4e7fb",
-    "timestamp": "2026-05-14T16:24:30.140249+00:00"
-  },
-  {
     "id": "fd_0197",
     "title": "Eigenvector perturbation",
     "description": ": Prove that eigenvectors change by at most O(n·ε) in sup-norm (this requires more work and may depend on the spectral gap).",
@@ -395,37 +378,6 @@
     "timestamp": "2026-05-17T03:06:58.810934+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Formula complexity",
-    "description": "gives the proof-theoretic content.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2466d1aa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:50:22.897271+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Reduction to constraint satisfaction",
-    "description": ": Model the inversion problem as a system of tropical polynomial equations and apply existing complexity results for tropical solving.\n\n### Cross-Domain Connections\n- Random matrix theory (tropical version, cf. Baccelli-Mairesse)\n- Constraint satisfaction phase transitions\n- Average-case complexity theory\n\n### Concrete Next Step\nImplement a large-scale computational experiment: generate 10,000 random 5×5 matrices for each M ∈ {10, 100, 1000, 10000}, compute G², count preimages via exhaustive search (feasible for 5×5), and plot the distribution of preimage counts as a function of M.\n\n---\n\n## Direction 2: Tropical Trapdoor Functions\n\n### Hypothesis\nThere exist families of tropical matrices where inversion is hard without a trapdoor but efficient with knowledge of the original graph structure",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:57:09.769815+00:00"
-  },
-  {
     "id": "fd_0268",
     "title": "Define trapdoor families",
     "description": ": Matrices G where the graph has a known decomposition (e.g., G = L + R for lower/upper triangular L, R in the tropical sense) such that G² can be efficiently inverted given L and R.",
@@ -447,10 +399,10 @@
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "60bd27bc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f686496",
     "timestamp": "2026-05-17T06:57:09.906179+00:00"
   },
   {
@@ -483,41 +435,6 @@
     "source_exp_id": "60bd27bc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T06:57:10.094710+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Formalization",
-    "description": "Formalize the LP reduction and its correctness, connecting to Mathlib's convex optimization infrastructure.\n\n### Cross-Domain Connections\n- **Convex optimization:** LP duality, active set methods\n- **Computational geometry:** Voronoi diagrams of hyperplane arrangements\n- **Robust ML:** Optimal classification points for maximum robustness\n\n### Deliverables\n- Formal proof that Chebyshev center = LP solution\n- Algorithm with $O(\\text{poly}(m, n))$ complexity\n- Characterization of when the center is unique\n\n---\n\n## Direction 2: John Ellipsoid Analogues for Tropical Margin Cells\n\n### Hypothesis\nThe John ellipsoid (maximum-volume inscribed ellipsoid) of a tropical margin cell provides direction-dependent robustness certificates that are tighter than the isotropic Chebyshev ball by a factor of up",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.187974+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "Tropical specialization",
-    "description": "For tropical margin cells, the constraints have the specific form $(W_i - W_j)^T x \\geq a_j - a_i$, which may admit simpler SDP formulations.\n\n### Cross-Domain Connections\n- **Convex geometry:** John's theorem, Löwner-John ellipsoid\n- **Robust optimization:** Ellipsoidal uncertainty sets\n- **Adversarial ML:** Direction-dependent perturbation budgets\n\n### Deliverables\n- SDP formulation for tropical John ellipsoid\n- Proof that John ellipsoid robustness dominates Chebyshev ball\n- Comparison with $\\ell_\\infty$ robustness certificates\n\n---\n\n## Direction 3: Algorithmic Robust Certification via Active Facets\n\n### Hypothesis\nFor points deep in the interior of a margin cell, only a small number of \"active facets\" (nearest boundaries) determine the Chebyshev radius. An incremental algorithm can main",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6c322112",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:17:01.244679+00:00"
   },
   {
     "id": "fd_0259",
@@ -625,10 +542,10 @@
       "Computation"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "493b32c8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6244d0ef",
     "timestamp": "2026-05-17T07:39:39.479995+00:00"
   },
   {
@@ -729,76 +646,6 @@
     "source_exp_id": "493b32c8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T07:39:39.747782+00:00"
-  },
-  {
-    "id": "fd_0249",
-    "title": "States 3-5 precise lemmas",
-    "description": "that decompose the conjecture into formally provable pieces",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0b76ff96",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:05:09.523200+00:00"
-  },
-  {
-    "id": "fd_0250",
-    "title": "Validates computationally",
-    "description": "with examples in Python before attempting formal proofs",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0b76ff96",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:05:09.540092+00:00"
-  },
-  {
-    "id": "fd_0251",
-    "title": "Builds on existing verified infrastructure",
-    "description": "— do not re-prove what is already available",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0b76ff96",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:05:09.561080+00:00"
-  },
-  {
-    "id": "fd_0252",
-    "title": "Identifies the bridge theorems",
-    "description": "in the existing catalog that provide the most leverage",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0b76ff96",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:05:09.580768+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "Iterates weekly",
-    "description": "with updated proof attempts and counterexample searches",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0b76ff96",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:05:09.598528+00:00"
   },
   {
     "id": "fd_0113",
@@ -986,10 +833,10 @@
       "MachineLearning"
     ],
     "priority_score": 0.7,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "d2a18598",
-    "consumed_by_exp_id": "4388f83a",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
@@ -1421,56 +1268,6 @@
     "timestamp": "2026-05-17T02:00:26.770253+00:00"
   },
   {
-    "id": "fd_0250",
-    "title": "2. Robust Nerve Theorem for Decision Regions",
-    "description": "**Hypothesis.** Given a collection of margin cells with certified pairwise inscribed-ball overlaps, the nerve complex of the collection is stable under bounded score perturbations. That is, if all Lipschitz certified radii exceed a threshold, the homotopy type of the nerve is preserved.\n\n**Proof strategy.**\n- Use the ball-inclusion theorem to guarantee that certified intersections of margin cells are nonempty.\n- Apply a nerve lemma (good-cover theorem) to conclude that the nerve captures the topology of the union.\n- Show that bounded perturbations of scores preserve the nonemptiness of intersections when the certified radii are large enough.\n\n**Cross-domain connection.** This connects adversarial robustness certification to topological data analysis and persistent homology of classifiers.\n",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc205d47",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:38:17.375942+00:00"
-  },
-  {
-    "id": "fd_0253",
-    "title": "5. Optimization Principle: Maximizing Decision-Cell Inscribed Radii",
-    "description": "**Hypothesis.** Training a classifier to maximize `γ / K` (margin divided by Lipschitz constant) is equivalent to maximizing a lower bound on the Chebyshev radius of the decision cell at each training point. This provides a geometric foundation for adversarial training.\n\n**Proof strategy.**\n- Show that the certified radius `γ / K` is monotone in `γ` and anti-monotone in `K`.\n- Formalize the training objective `maximize min_x (γ(x) / K)` and prove it provides a uniform lower bound on inscribed radii across all training points.\n- Connect to spectral-norm regularization: bounding `K` by constraining weight matrix spectral norms.\n\n**Cross-domain connection.** This bridges geometric measure theory (inscribed balls, Chebyshev centers) with robust optimization, adversarial training, and spectral ",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc205d47",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:38:17.437810+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Direction 3: Persistent Chamber Stability",
-    "description": "**Hypothesis:** The topological structure of the chamber complex (as measured by persistent homology barcodes) is stable under bounded perturbations of the tropical affine form parameters.\n\n**Formal Target:**\n\nDefine the *chamber complex filtration* by margin level:\n\n$$\\mathcal{C}(m) = \\{\\sigma \\mid C_\\sigma \\cap \\text{PairwiseMarginRegion}(c_0, m) \\neq \\emptyset\\}$$\n\n**Proof Strategy:**\n1. Show that the chamber complex is a polyhedral complex (using Theorem A).\n2. The filtration by margin level is a sublevel set filtration of a piecewise-linear function.\n3. Apply the stability theorem for persistent homology: if the score functions are perturbed by ε, the bottleneck distance between the persistence diagrams is at most the Lipschitz constant times ε.\n4. The key lemma: the margin function i",
-    "domains": [
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "29a487a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T06:38:03.444175+00:00"
-  },
-  {
     "id": "fd_0268",
     "title": "Direction 4: Certified Security Scaling Laws",
     "description": "**Hypothesis:** For tropical classifiers/cryptosystems with dimension-dependent parameters, the certified perturbation radius admits explicit asymptotic bounds as a function of dimension.\n\n**Formal Target:**\n\n```\ntheorem certified_radius_scaling\n  (n : ℕ) (K C : ℕ)\n  (score : Fin C → TropicalAffineForm (Fin n))\n  (hK : ∀ c, (score c).numTerms = K)\n  (hnorm : ∀ c k, ‖(score c).slopes k‖₁ ≤ α * √n) :\n  certifiedRadius score c₀ x ≥ margin / (2 * α * √n)\n```\n\n**Proof Strategy:**\n1. The Lipschitz constant of each score is bounded by α·√n (by hypothesis on slope norms).\n2. The certified radius is margin/(2L) ≥ margin/(2α√n).\n3. For random classifiers, the margin concentrates around a dimension-independent constant (by central limit theorem arguments on the max of independent linear forms).\n4. Th",
@@ -1487,24 +1284,6 @@
     "source_exp_id": "29a487a8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T06:38:03.464075+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Direction 1: Distributive Extension — Tropical Polynomial Normal Forms",
-    "description": "**Hypothesis:** The ACI normalizer can be extended to handle the distributive law `a + min(b, c) = min(a + b, a + c)`, yielding a complete decision procedure for the full tropical semiring fragment (without subtraction).\n\n**Proof Strategy:**\n1. Define a *tropical polynomial normal form* as `min` of sums of variables and constants — i.e., a formal tropical polynomial in \"expanded\" form.\n2. Implement a `distribute` pass that pushes `+` through `min` until every `min`-child is a pure sum.\n3. After distribution, apply the existing ACI normalizer to the resulting `min`-of-sums expression.\n4. Prove soundness of the distribution step: `eval(distribute(e)) = eval(e)` by structural induction, using `tropical_plus_distributes_over_min` as the key rewrite.\n5. Compose: `normalize_full = normalize_ca ∘",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "df23c5f9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:35:53.248455+00:00"
   },
   {
     "id": "fd_0265",
@@ -1541,24 +1320,6 @@
     "source_exp_id": "df23c5f9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T07:35:53.303086+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Direction 4: Tropical Convexity and Optimization Certificates",
-    "description": "**Hypothesis:** The reflection tactic can serve as the algebraic kernel for a certified tropical convexity checker, verifying that a point lies in a tropical polytope or that a tropical linear program has a given optimal value.\n\n**Proof Strategy:**\n1. Define tropical convex combinations: `tconv(x, y, λ) = min(λ + x, μ + y)` where `λ + μ = 0` tropically.\n2. A tropical polytope is the tropical convex hull of finitely many points. Membership reduces to solving a system of tropical linear equations.\n3. Use the reflection tactic to verify algebraic identities arising in membership certificates.\n4. For tropical linear programming: the optimal value of `min_x max_i (a_i + x)` can be computed by the reflection tactic when the problem is finite and concrete.\n5. Prove a tropical Farkas lemma: either",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "df23c5f9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T07:35:53.326813+00:00"
   },
   {
     "id": "fd_0268",
@@ -1744,20 +1505,6 @@
     "timestamp": "2026-05-17T08:20:23.468915+00:00"
   },
   {
-    "id": "fd_0264",
-    "title": "Phase 1 (Months 1-3): Foundation",
-    "description": "- Complete dual-norm generalization (Direction 1)\n- Prove Lipschitz continuity of pointCert (prerequisite for Direction 2)\n- Explore arrangement combinatorics (Direction 3)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "740c7329",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:20:23.496683+00:00"
-  },
-  {
     "id": "fd_0265",
     "title": "Phase 2 (Months 3-6): Core Development",
     "description": "- Build kinetic certification framework (Direction 2)\n- Formalize tropical information-theoretic connections (Direction 4)\n- Prototype nearest-facet compilation (Direction 5)",
@@ -1786,17 +1533,124 @@
     "timestamp": "2026-05-17T08:20:23.598132+00:00"
   },
   {
-    "id": "fd_0267",
-    "title": "Validation Strategy",
-    "description": "- Each direction should produce at least one formally verified theorem\n- Computational experiments should demonstrate wall-clock speedups\n- Cross-validate with existing certification tools (CROWN, α-CROWN, DeepPoly)",
+    "id": "fd_0268",
+    "title": "Direction 1: Tropical Schur Complement for Network Decomposition",
+    "description": "**Hypothesis**: The tropical (min-plus) analogue of the Schur complement provides an exact formula for eliminating internal vertices from a network, reducing the all-pairs shortest-path problem to smaller subproblems.\n\n**Proof Strategy**:\n1. Define the tropical Schur complement: for a partitioned matrix W = [[A, B], [C, D]], define S = A ⊕ B ⊗ D* ⊗ C where D* is the tropical closure of D.\n2. Prove that S gives exact shortest-path distances among the \"boundary\" vertices of the first block.\n3. Show that Schur complementation preserves the no-negative-cycle condition.\n4. Prove a tropical analogue of the matrix determinant lemma for rank-1 updates.\n\n**Cross-Domain Connections**: Gaussian elimination in tropical linear algebra; hierarchical decomposition in graph algorithms (nested dissection);",
     "domains": [
-      "Bridges"
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "740c7329",
+    "source_exp_id": "9cd4e7fb",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T08:20:23.618338+00:00"
+    "timestamp": "2026-05-17T08:21:58.027309+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Direction 2: Boundary Rigidity for Series-Parallel Networks",
+    "description": "**Hypothesis**: For series-parallel networks with positive edge weights, the boundary distance matrix uniquely determines the network up to isomorphism. This extends the tree case to a richer graph class.\n\n**Proof Strategy**:\n1. Prove that series-parallel networks have bounded treewidth (treewidth ≤ 2).\n2. Show that the tropical Schur complement decomposes series-parallel networks into series and parallel compositions.\n3. Prove that each decomposition step is uniquely recoverable from boundary distances.\n4. Use induction on the decomposition tree to establish global uniqueness.\n\n**Cross-Domain Connections**: Phylogenetic tree reconstruction from distance matrices; electrical network tomography (recovering resistor values from boundary measurements); the Gel'fand inverse problem.\n\n**Concret",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cd4e7fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:21:58.047847+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "Direction 3: Tropical Curvature from Boundary Distance Defects",
+    "description": "**Hypothesis**: Define a \"tropical curvature\" of a network as the defect in the four-point condition (the failure of the metric to be tree-like). This curvature is computable from the boundary distance matrix and quantifies the network's topological complexity.\n\n**Proof Strategy**:\n1. Define Gromov hyperbolicity δ via the four-point condition: d(x,z) + d(y,w) ≤ max(d(x,y)+d(z,w), d(x,w)+d(y,z)) + 2δ.\n2. Show that δ is computable from the boundary distance matrix when the boundary is sufficiently dense.\n3. Prove that δ = 0 characterizes tree-like metrics (recovering the tree boundary rigidity theorem).\n4. Establish upper bounds on δ for series-parallel and planar networks.\n\n**Cross-Domain Connections**: Gromov hyperbolicity in geometric group theory; negative curvature in Riemannian geometr",
+    "domains": [
+      "Tropical",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cd4e7fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:21:58.069475+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Direction 4: Tropical Resolvent and Green's Function",
+    "description": "**Hypothesis**: The tropical analogue of the resolvent (I - λW)⁻¹ provides a parameterized family of distance-like matrices that interpolates between the identity and the full shortest-path closure, with poles at tropical eigenvalues.\n\n**Proof Strategy**:\n1. Define the tropical resolvent R(λ) = ⨅_{k≥0} (λ^k ⊗ W^⊗k) for λ ∈ [0,∞).\n2. Prove convergence using the tropical power stabilization theorem: R(λ) stabilizes for each λ.\n3. Identify the critical values of λ where the resolvent structure changes (tropical eigenvalues).\n4. Prove that the tropical eigenvalues equal the cycle means min_{cycle C} (weight(C)/length(C)).\n\n**Cross-Domain Connections**: Spectral graph theory; resolvent methods in functional analysis; transfer matrices in statistical mechanics; Green's functions in quantum field",
+    "domains": [
+      "Tropical",
+      "Physics",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cd4e7fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:21:58.091858+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Direction 5: Idempotent Renormalization via Transfer-Matrix Composition",
+    "description": "**Hypothesis**: The tropical stabilization theorem provides a finite renormalization group for transfer matrices: composing transfer matrices for network segments and then applying tropical closure gives the same result as direct computation on the full network.\n\n**Proof Strategy**:\n1. Define transfer matrices T_{AB} for network segments connecting boundary sets A and B.\n2. Prove the composition law: T_{AC} = T_{AB} ⊗ T_{BC} (tropical matrix product of transfer matrices).\n3. Show that the tropical closure commutes with composition: (T₁ ⊗ T₂)* = T₁* ⊗ T₂* under appropriate conditions.\n4. Prove that this gives an exact renormalization group for shortest-path computations.\n\n**Cross-Domain Connections**: Renormalization group in physics; compositional semantics in programming languages (operad",
+    "domains": [
+      "Tropical",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cd4e7fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:21:58.112396+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Phase 1 (Immediate: 1-3 months)",
+    "description": "- Complete the cycle removal lemma (`chainW_ge_tropPow_of_long`) to eliminate the remaining sorry\n- Formalize tropical Schur complements and prove the reduction theorem\n- Implement incremental shortest-path updates for single-edge modifications",
+    "domains": [
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cd4e7fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:21:58.131890+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Phase 2 (Medium-term: 3-6 months)",
+    "description": "- Prove boundary rigidity for series-parallel networks\n- Formalize Gromov hyperbolicity in the tropical framework\n- Develop a certified tropical linear algebra library",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9cd4e7fb",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T08:21:58.149231+00:00"
   }
 ]
