@@ -62,20 +62,6 @@
     "timestamp": "2026-05-14T16:16:22.718724+00:00"
   },
   {
-    "id": "fd_0195",
-    "title": "Tactic engineer",
-    "description": ": Implements the syntax-to-semantics bridge and verified tactic (Direction 4).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "465c3121",
-    "consumed_by_exp_id": "79d995d4",
-    "timestamp": "2026-05-15T03:03:37.382470+00:00"
-  },
-  {
     "id": "fd_0200",
     "title": "Asymptotic analysis",
     "description": ": As `m → ∞`, the bound converges to `-log(1/(n+1)) = log(n+1)`, the maximum possible tropical cycle mean.\n\n### Cross-Domain Significance\n\n- **Markov chains**: Converts mixing time estimates into tropical energy barriers at scale `m`.\n- **Statistical physics**: The quantity `-log((P^m)_{ij})` is the m-step free energy cost of reaching state `j` from `i`; cycle means become average loop free energies.\n- **Algorithms**: Provides computable certificates for mixing via tropical cycle computation on powered matrices.\n\n### Lean Formalization Target\n\n```\ntheorem multi_step_tropical_gap\n    {n m : ℕ} (P : Matrix (Fin (n+1)) (Fin (n+1)) ℝ)\n    (hrow : RowStochastic P) (hpos : PositiveMatrix P)\n    (α : ℝ) (hα : 0 < α) (hα1 : α < 1)\n    (hpow : ∀ i j, (P ^ m) i j ≤ α) :\n    -Real.log α ≤ triangleCyc",
@@ -435,20 +421,6 @@
     "timestamp": "2026-05-17T15:19:10.821210+00:00"
   },
   {
-    "id": "fd_0279",
-    "title": "Direction 7",
-    "description": "(Algebraic spectral gap) — Requires heavy number theory.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e6a583e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:19:10.841827+00:00"
-  },
-  {
     "id": "fd_0260",
     "title": "Representation-theoretic decomposition",
     "description": ": Decompose L²(X_q) into irreducible representations of the orthogonal group O(2,1; ℤ/qℤ). Show that each nontrivial component has bounded operator norm under the Berggren averaging.",
@@ -510,20 +482,6 @@
     "timestamp": "2026-05-17T15:38:27.261721+00:00"
   },
   {
-    "id": "fd_0270",
-    "title": "Sum-check + Block Structure",
-    "description": ": Compositional interactive proofs where each block has its own sum-check verifier. This would give formally verified *interactive* block verification.",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "90a65a27",
-    "consumed_by_exp_id": "5cf6f85f",
-    "timestamp": "2026-05-17T16:37:43.472463+00:00"
-  },
-  {
     "id": "fd_0272",
     "title": "Sheaf + Transformer",
     "description": ": Viewing attention heads as sections of a verification sheaf would enable a categorical treatment of multi-head attention certification.",
@@ -536,20 +494,6 @@
     "source_exp_id": "90a65a27",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:37:43.513380+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "Freivalds + Neural Verification",
-    "description": ": Running Freivalds-style probes on neural network layers as a fast pre-check before expensive formal verification. The soundness bound provides formal guarantees on the probe's reliability.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "90a65a27",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:37:43.534409+00:00"
   },
   {
     "id": "fd_0264",
@@ -566,34 +510,6 @@
     "timestamp": "2026-05-17T16:38:42.769159+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Compute",
-    "description": "the eigenvalue of T_q on the Steinberg representation St, showing it equals a cube root of the character value with magnitude 1/√3",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.804717+00:00"
-  },
-  {
-    "id": "fd_0270",
-    "title": "Prove",
-    "description": "the tensor product spectral theorem: eigenvalues of T_n are products of eigenvalues of T_{p_i^{a_i}}",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.869928+00:00"
-  },
-  {
     "id": "fd_0272",
     "title": "Sum-of-two-squares form",
     "description": ": Q(x,y,z) = x² + y² - z². Already studied (this is the Berggren case).",
@@ -606,20 +522,6 @@
     "source_exp_id": "1c1883b3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:38:42.904078+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "General Lorentzian forms",
-    "description": ": Q(x,y,z) = ax² + by² - cz² for various a,b,c.",
-    "domains": [
-      "Physics"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1c1883b3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:42.920009+00:00"
   },
   {
     "id": "fd_0274",
@@ -656,20 +558,6 @@
     "timestamp": "2026-05-17T17:00:57.330055+00:00"
   },
   {
-    "id": "fd_0270",
-    "title": "Cross-pollinate",
-    "description": ": results from one direction should be used in others (e.g., Direction 1's concavity result feeds Direction 5's algorithm design).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2e27e30c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:00:57.361755+00:00"
-  },
-  {
     "id": "fd_0272",
     "title": "Perturbation theory",
     "description": ": View approximate model as exact model + error, bound the CHSH error by 4·2ε + O(ε²).\n\n### Cross-Domain Significance\n- **Robust quantum cryptography**: Quantifies security degradation under imperfect measurements\n- **Approximate computation**: Models noise in classical simulation of quantum correlations\n- **Learning theory**: Connects to approximate expert prediction with bounded perturbations\n\n---\n\n## Direction 2: Prediction/Nonlocality Equivalence Theorem\n\n### Goal\nDefine a finite expert class associated to a local model and prove that Bell locality implies a regret bound, establishing a formal equivalence between prediction optimality and classical correlations.\n\n### Precise Theorem Statement\n```\ndef expertClassFromLocalModel {n : ℕ} (L : LocalModel n) :\n    Fin L.numStates → (Fin n → ",
@@ -685,20 +573,6 @@
     "source_exp_id": "6d6b9f8a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T17:01:29.654439+00:00"
-  },
-  {
-    "id": "fd_0273",
-    "title": "Expert-to-LHV reduction",
-    "description": ": Show that each expert in the class corresponds to a deterministic LHV assignment, then apply existing regret bounds.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6d6b9f8a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:01:29.672307+00:00"
   },
   {
     "id": "fd_0274",
@@ -750,32 +624,163 @@
     "timestamp": "2026-05-17T17:01:29.755619+00:00"
   },
   {
-    "id": "fd_0279",
-    "title": "Direct reduction",
-    "description": ": A certificate system with any finite cert_length is literally a local model. Apply bell_chsh_bound.",
+    "id": "fd_0267",
+    "title": "Define the Reed–Muller code",
+    "description": "RM(r, m, q) as the image of the evaluation map:\n   ```\n   ev : {f ∈ F_q[X₁,…,X_m] : deg(f) ≤ r} → F_q^{q^m}\n   ```\n   where ev(f) = (f(a))_{a ∈ F_q^m}.",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "6d6b9f8a",
+    "source_exp_id": "79d995d4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:01:29.771354+00:00"
+    "timestamp": "2026-05-17T17:05:27.072473+00:00"
   },
   {
-    "id": "fd_0280",
-    "title": "Counting argument",
-    "description": ": Show that the set of achievable CHSH values from k-bit certificates is a convex polytope contained in [-4, 4].",
+    "id": "fd_0268",
+    "title": "Minimum weight = q^m − max zeros",
+    "description": "A nonzero codeword ev(f) has Hamming weight q^m − |Z(f)|. By Schwartz–Zippel, |Z(f)| ≤ r · q^{m−1}, so the minimum weight is ≥ (q − r) · q^{m−1}.",
     "domains": [
       "Bridges"
     ],
     "priority_score": 0.75,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "6d6b9f8a",
+    "source_exp_id": "79d995d4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T17:01:29.788374+00:00"
+    "timestamp": "2026-05-17T17:05:27.092596+00:00"
+  },
+  {
+    "id": "fd_0269",
+    "title": "Tightness",
+    "description": "Exhibit f(X₁) = X₁(X₁ − 1)···(X₁ − (r−1)), which has exactly r · q^{m−1} zeros (it vanishes when X₁ takes any of r specific values, regardless of other variables).\n\n### Key Lemma Stack\n- `ReedMuller.eval_injective`: The evaluation map is injective for r < q.\n- `ReedMuller.min_weight`: Minimum weight = (q − r) · q^{m−1}.\n- `ReedMuller.distance_eq`: Minimum distance = (q − r) · q^{m−1} (since the code is linear).\n\n### Cross-Domain Impact\n- **Coding theory**: First formally verified minimum distance for a multivariate code family.\n- **Complexity theory**: Reed–Muller codes are central to the proof of IP = PSPACE.\n- **Cryptography**: Low-degree testing is foundational for SNARKs and STARKs.\n\n### Estimated Difficulty\nMedium. The main Schwartz–Zippel bound is already proved; the remaining work i",
+    "domains": [
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79d995d4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:05:27.113735+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Soundness theorem:",
+    "description": "If C.toMvPolynomial ≠ 0 and |S| ≥ 2 · C.degreeBound, then:\n   ```\n   Pr_{r ∈ S^n}[C.eval r = 0] ≤ C.degreeBound / |S| ≤ 1/2\n   ```\n   This follows from `totalDegree_le_degreeBound` + `schwartz_zippel_succ`.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79d995d4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:05:27.155020+00:00"
+  },
+  {
+    "id": "fd_0272",
+    "title": "Connect to circuit complexity:",
+    "description": "Use `mulGates_lower_bound_from_degree` to show that circuits with few multiplication gates have small degree, hence are efficiently testable.\n\n### Key Lemma Stack\n- `pit_soundness`: Pr[false positive] ≤ degreeBound(C) / |S|\n- `pit_completeness`: C.toMvPolynomial = 0 ⟹ ∀ r, C.eval r = 0\n- `circuit_pit_efficiency`: PIT for depth-d circuits with bounded fan-in runs in O(n · 2^d) time\n\n### Cross-Domain Impact\n- **Derandomization**: Connects to Kabanets–Impagliazzo: deterministic PIT ⟹ circuit lower bounds.\n- **Verified computation**: Certified randomized verification of arithmetic circuit outputs.\n\n### Estimated Difficulty\nMedium-Low. Most components exist; the main work is connecting `schwartz_zippel_succ` with the circuit degree bounds already formalized.\n\n---\n\n## Direction 3: Polynomial Fin",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79d995d4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:05:27.176600+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Fingerprint test:",
+    "description": "For strings s ≠ t, encode(s) − encode(t) is a nonzero polynomial of degree ≤ n.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79d995d4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:05:27.212443+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Streaming variant:",
+    "description": "In a streaming setting, maintain the fingerprint h(s) = Σᵢ sᵢ · r^i mod p using O(log p) space.\n\n### Key Lemma Stack\n- `fingerprint_soundness`: s ≠ t ⟹ Pr[h(s) = h(t)] ≤ n/q\n- `fingerprint_completeness`: s = t ⟹ h(s) = h(t) deterministically\n- `streaming_space_bound`: Space = O(log q) bits\n\n### Cross-Domain Impact\n- **Streaming algorithms**: Formal foundation for equality testing in data streams.\n- **Database verification**: Certified consistency checks for replicated databases.\n- **Communication complexity**: Formalized lower bounds via polynomial methods.\n\n### Estimated Difficulty\nLow-Medium. Uses only the univariate case (already proved).\n\n---\n\n## Direction 4: Low-Degree Testing over Finite Grids\n\n### Hypothesis\nThe Schwartz–Zippel bound can be extended to prove the soundness of low-deg",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79d995d4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:05:27.250106+00:00"
+  },
+  {
+    "id": "fd_0277",
+    "title": "Line restriction:",
+    "description": "For a random direction d ∈ F_q^m and point a ∈ F_q^m, define the restriction:\n   ```\n   f_{a,d}(t) = f(a + t · d)\n   ```\n   If f is a degree-r polynomial, each f_{a,d} is a univariate polynomial of degree ≤ r.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "79d995d4",
+    "consumed_by_exp_id": "c91ca14f",
+    "timestamp": "2026-05-17T17:05:27.267582+00:00"
+  },
+  {
+    "id": "fd_0278",
+    "title": "Contrapositive:",
+    "description": "If f is δ-far from every degree-r polynomial (disagrees on ≥ δ fraction of points), then for a random (a, d):\n   ```\n   Pr[f_{a,d} is degree ≤ r] ≤ 1 − δ + something small\n   ```",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79d995d4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:05:27.285599+00:00"
+  },
+  {
+    "id": "fd_0281",
+    "title": "Derivation from Schwartz–Zippel:",
+    "description": "If f were zero on all of S₁ × … × S_n, the zero set would have cardinality |S₁| · … · |S_n| > t₁ · |S₁| · … · |S_n| / |S₁| ≥ deg(f) · product / max, contradicting Schwartz–Zippel (with suitable subset counting).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79d995d4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:05:27.352956+00:00"
+  },
+  {
+    "id": "fd_0282",
+    "title": "Applications:",
+    "description": "The Combinatorial Nullstellensatz directly implies the Chevalley–Warning theorem, the Cauchy–Davenport theorem, and other results in additive combinatorics.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79d995d4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T17:05:27.373658+00:00"
   },
   {
     "id": "fd_0179",
@@ -837,6 +842,22 @@
     "source_exp_id": "8fece6dc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-14T19:35:01.991565+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Research Team Directive",
+    "description": "Each direction above can be pursued independently by a sub-team:\n\n- **Team 1 (Probabilistic)**: Freivalds + Sum-Check. Requires finite field infrastructure in Mathlib.\n- **Team 2 (Robustness)**: Approximate checks + Tropical. Requires norm theory and order theory.\n- **Team 3 (Structure)**: Sheaf gluing + Block matrices. Pure linear algebra and set theory.\n- **Team 4 (Applications)**: Neural layer verification. Requires connecting to concrete ML architectures.\n\n**Hypothesis pipeline**: Each team should (1) state precise conjectures, (2) test with `#eval` on small instances, (3) prove key lemmas, (4) assemble the full theorem, (5) document cross-connections.\n\nThe current formalization provides the algebraic core that all teams build on. The key insight — that global matrix identities decompo",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "d2a18598",
+    "consumed_by_exp_id": "fcad4efd",
+    "timestamp": "2026-05-15T03:04:56.387897+00:00"
   },
   {
     "id": "fd_0200",
@@ -1122,10 +1143,10 @@
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "51691e39",
-    "consumed_by_exp_id": "ba415921",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T08:34:40.309070+00:00"
   },
   {
@@ -1425,23 +1446,6 @@
     "timestamp": "2026-05-17T15:07:30.050712+00:00"
   },
   {
-    "id": "fd_0273",
-    "title": "2. Phylogenetic Quartet Invariance Under Tropical Normalization",
-    "description": "**Hypothesis**: Quartet selection (the four-point condition used in neighbor-joining and related phylogenetic methods) is invariant under tropical equivalence of dissimilarity vectors.\n\n**Formal target**:\n```\ndef quartet_topology {n : ℕ} (d : Fin n → Fin n → ℝ) (a b c e : Fin n) : Prop :=\n  d a b + d c e ≤ d a c + d b e ∧ d a b + d c e ≤ d a e + d b c\n\ntheorem tropequiv_preserves_quartet_topology\n    {n : ℕ} (d₁ d₂ : Fin n → Fin n → ℝ) (c : ℝ)\n    (hshift : ∀ i j, d₂ i j = d₁ i j + c) :\n    ∀ a b c' e, quartet_topology d₁ a b c' e ↔ quartet_topology d₂ a b c' e\n```\n\n**Proof strategy**: The quartet condition involves sums of pairs of distances. Under uniform additive shift, each sum `d₁ a b + d₁ c e` becomes `(d₁ a b + c) + (d₁ c e + c) = d₁ a b + d₁ c e + 2c`. Since the same `2c` is added ",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "522714fd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:31:26.060294+00:00"
-  },
-  {
     "id": "fd_0274",
     "title": "3. Tropical Quotient Statistics: Well-Definedness on TP^{n-1}",
     "description": "**Hypothesis**: Ranking statistics, argmin sets, and gap structures descend to well-defined functions on the tropical projective space `TP^{n-1} = ℝ^n / (1,1,...,1)`.\n\n**Formal target**:\n```\ndef TropProj (n : ℕ) := Quotient (Setoid.mk (@TropEquiv n) tropequiv_equivalence)\n\nnoncomputable def argmin_on_TropProj {n : ℕ} [NeZero n] :\n    TropProj n → Set (Fin n) :=\n  Quotient.lift (fun x => {i | ∀ j, x i ≤ x j}) (by\n    intro x y hxy\n    exact tropequiv_preserves_argmin_set hxy)\n```\n\n**Proof strategy**: The key lemma `tropequiv_preserves_argmin_set` already shows the lift is well-defined. The remaining work is defining `TropProj` as a quotient type and showing various statistics lift.\n\n**Statistics to lift**:\n- Argmin set (done in principle)\n- Ranking permutation (the permutation sorting the v",
@@ -1489,21 +1493,6 @@
     "timestamp": "2026-05-17T16:31:26.164652+00:00"
   },
   {
-    "id": "fd_0279",
-    "title": "Summary: Prioritized Roadmap",
-    "description": "| Priority | Direction | Difficulty | Impact |\n|----------|-----------|------------|--------|\n| 1 | Approximate stability (§1) | Medium | High — enables real-data certification |\n| 2 | Quartet invariance (§2) | Low-Medium | High — direct phylogenetics application |\n| 3 | Quotient statistics (§3) | Medium | High — structural foundation |\n| 4 | Centrality pipeline (§6) | Low | Medium — concrete case study |\n| 5 | Spectral observables (§4) | High | High — connects to spectral theory |\n| 6 | Sufficiency theory (§5) | High | Very High — new theoretical framework |\n| 7 | Hecke interpretation (§7) | Very High | Transformative — connects to Langlands |\n\nEach direction builds on the verified theorems in `TropicalEquivalenceInvariance.lean` and can be pursued independently. The recommended team stru",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "522714fd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:31:26.200285+00:00"
-  },
-  {
     "id": "fd_0274",
     "title": "Complexity Analysis",
     "description": "- Brute-force over `|P|^4` chords × `n` steps: O(n · |P|^8).\n- Factor-graph elimination with treewidth 2: O(n · |P|^4) — exponential compression in voice count.\n- Formal theorem target: prove the treewidth bound on the SATB factor graph.",
@@ -1546,22 +1535,5 @@
     "source_exp_id": "41ac42f5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T16:38:13.925482+00:00"
-  },
-  {
-    "id": "fd_0279",
-    "title": "Validation Strategy",
-    "description": "Each direction should be validated by:\n1. Computational experiments (Python implementations demonstrating the theorems)\n2. Formal proofs in Lean 4 (extending the existing `TropicalHypergraphCounterpoint.lean`)\n3. At least one concrete worked example (specific chord progressions, specific agent configurations)\n4. Complexity analysis comparing the tropical approach to brute-force alternatives",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "41ac42f5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T16:38:13.946532+00:00"
   }
 ]
