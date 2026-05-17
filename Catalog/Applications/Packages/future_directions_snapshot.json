@@ -841,6 +841,34 @@
     "timestamp": "2026-05-17T05:40:37.606137+00:00"
   },
   {
+    "id": "fd_0264",
+    "title": "Forward inclusion",
+    "description": "(`degreeLeSubmodule L k ≤ ⨆ ...`): If `f` depends on at most `k` coordinates (say on set `S` with `|S| ≤ k`), decompose `f` into its homogeneous Fourier components. Each component has degree ≤ `|S|` ≤ `k`. This requires constructing the explicit orthogonal projection onto each homogeneous sector using the mean-zero decomposition at each coordinate.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4991975",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:59:43.598073+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Backward inclusion",
+    "description": "(`⨆ ... ≤ degreeLeSubmodule L k`): If `f` is in `homogeneousDegreeSubmodule L d` with `d ≤ k`, then `f` depends on at most `d ≤ k` coordinates by the `ConstantAt` condition in the definition of generators.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4991975",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:59:43.618569+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -1142,22 +1170,21 @@
     "timestamp": "2026-05-15T09:07:29.334666+00:00"
   },
   {
-    "id": "fd_0225",
-    "title": "3. Adjunctions and Galois Connections Between Theories",
-    "description": "**Hypothesis:** Some pairs of theories are not merely connected by one-directional morphisms but by adjunctions: a morphism `f : A → B` and a morphism `g : B → A` such that `f ∘ g` and `g ∘ f` satisfy approximation inequalities. This would capture the bidirectional nature of many mathematical dualities (e.g., Legendre transform, Fourier duality, tropical-algebraic correspondence).\n\n**Proof Strategy:**\n- Define `TheoryAdj (A B : TheorySpec)` as a pair of morphisms with approximate round-trip properties.\n- Prove that adjunctions compose.\n- Show that an adjunction `A ⇌ B` implies mutual lower-bound transfer with quantitative loss bounds.\n- Instantiate on the height-dimension adjunction (height embeds into dimension, dimension projects back with +1 loss).\n\n**Cross-Domain Connections:** Galois ",
+    "id": "fd_0211",
+    "title": "Direction 4: Voice-Leading as Discrete Optimal Transport",
+    "description": "**Hypothesis**: The voice-leading cost between two chords is a Wasserstein-type optimal transport distance over the discrete pitch space, and the counterpoint optimization problem can be recast as a dynamic optimal transport problem on a time-varying measure space.\n\n**Proof Strategy**:\n1. Model each vertical sonority as a discrete measure: μ_i = δ_{u(i)} + δ_{v(i)} on ℤ.\n2. Define the transport cost c(x, y) = melodicLeapPenalty(x, y) between consecutive positions.\n3. Show that the melodic component of totalCost equals the sum of Wasserstein-1 distances W₁(μ_i, μ_{i+1}) over consecutive time steps (in the two-voice case, this reduces to the absolute step cost).\n4. Prove stability: if the cantus firmus changes by ε in sup-norm, the optimal melody changes by at most f(ε) for an explicit modul",
     "domains": [
-      "Tropical",
       "Bridges",
-      "Algebra",
       "MachineLearning",
-      "Logic"
+      "Logic",
+      "Geometry"
     ],
     "priority_score": 0.7,
     "status": "in_progress",
     "research_mode": "prove",
-    "source_exp_id": "67f5da38",
-    "consumed_by_exp_id": "d4991975",
-    "timestamp": "2026-05-16T02:14:30.254922+00:00"
+    "source_exp_id": "7b109bab",
+    "consumed_by_exp_id": "96833c6b",
+    "timestamp": "2026-05-15T09:19:36.848982+00:00"
   },
   {
     "id": "fd_0226",

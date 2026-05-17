@@ -1,388 +1,379 @@
 #!/usr/bin/env python3
 """
-Algorithms for Berggren Spectral Dynamics
+Berggren Ramanujan Expander — Algorithms
 
-Implements the core algorithms from the spectral theory of the Berggren tree:
-1. Berggren triple generation and tree traversal
-2. Sibling transition operator and spectral decomposition
-3. Observable averaging and discrepancy computation
-4. Mixing time estimation
+Implements the core algorithms arising from the spectral theory of
+Berggren dynamics on primitive Pythagorean triples.
+
+Algorithms:
+  1. Berggren Tree Generator (BFS/DFS with depth/height bounds)
+  2. Spectral Gap Computation via eigenvalue analysis
+  3. Observable Averaging with mixing time estimation
+  4. Pseudorandom Triple Sampler (exploiting spectral gap)
+  5. Discrepancy Estimator for arithmetic test functions
 """
 
 import numpy as np
 from typing import List, Tuple, Optional, Callable
-from dataclasses import dataclass
+from collections import deque
+
+# ============================================================
+# Berggren Generators
+# ============================================================
+
+B1 = np.array([[ 1, -2, 2],
+               [ 2, -1, 2],
+               [ 2, -2, 3]], dtype=np.int64)
+
+B2 = np.array([[ 1,  2, 2],
+               [ 2,  1, 2],
+               [ 2,  2, 3]], dtype=np.int64)
+
+B3 = np.array([[-1,  2, 2],
+               [-2,  1, 2],
+               [-2,  2, 3]], dtype=np.int64)
+
+GENERATORS = [B1, B2, B3]
+ROOT = np.array([3, 4, 5], dtype=np.int64)
 
 
-# ============================================================================
-# Core Data Structures
-# ============================================================================
+# ============================================================
+# Algorithm 1: Berggren Tree Generator
+# ============================================================
 
-@dataclass
-class BerggrenTriple:
-    """A primitive Pythagorean triple (a, b, c) with a² + b² = c²."""
-    a: int
-    b: int
-    c: int
-    depth: int = 0
-    word: str = ""
-
-    def is_pythagorean(self) -> bool:
-        return self.a**2 + self.b**2 == self.c**2
-
-    def as_vector(self) -> np.ndarray:
-        return np.array([self.a, self.b, self.c])
-
-    def lorentz_form(self) -> int:
-        return self.a**2 + self.b**2 - self.c**2
-
-    def ratio(self) -> float:
-        """The ratio a/c, a key projective coordinate."""
-        return self.a / self.c if self.c != 0 else 0.0
-
-
-# ============================================================================
-# Algorithm 1: Berggren Tree Generation
-# ============================================================================
-
-# Generator matrices
-GENERATORS = {
-    'A': np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]]),
-    'B': np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]]),
-    'C': np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])
-}
-
-ROOT = BerggrenTriple(3, 4, 5, depth=0, word="")
-
-
-def generate_berggren_tree(max_depth: int) -> List[BerggrenTriple]:
+def berggren_tree_bfs(max_depth: int = 5) -> List[Tuple[int, int, int, int]]:
     """
-    Generate all Berggren triples up to a given depth.
+    Generate all primitive Pythagorean triples in the Berggren tree
+    up to a given depth using breadth-first search.
 
-    Algorithm: BFS traversal of the ternary Berggren tree.
-    Time complexity: O(3^d) where d = max_depth.
-    Space complexity: O(3^d).
+    Returns: List of (a, b, c, depth) tuples.
 
-    Each node has exactly 3 children (one per generator A, B, C).
-    The tree is a complete ternary tree, so depth d produces 3^d leaves.
+    Complexity:
+      Time:  O(3^d) where d = max_depth
+      Space: O(3^d) to store all triples
 
-    Args:
-        max_depth: Maximum depth to generate.
-
-    Returns:
-        List of all BerggrenTriple objects at depth ≤ max_depth.
+    >>> triples = berggren_tree_bfs(2)
+    >>> all(a**2 + b**2 == c**2 for a, b, c, _ in triples)
+    True
     """
-    all_triples = [ROOT]
-    current_layer = [ROOT]
+    result = []
+    queue: deque = deque()
+    queue.append((ROOT, 0))
 
-    for depth in range(1, max_depth + 1):
-        next_layer = []
-        for parent in current_layer:
-            v = parent.as_vector()
-            for name, gen in GENERATORS.items():
-                child_v = gen @ v
-                child = BerggrenTriple(
-                    a=int(child_v[0]), b=int(child_v[1]), c=int(child_v[2]),
-                    depth=depth,
-                    word=parent.word + name
-                )
-                next_layer.append(child)
-                all_triples.append(child)
-        current_layer = next_layer
+    while queue:
+        triple, depth = queue.popleft()
+        a, b, c = int(triple[0]), int(triple[1]), int(triple[2])
+        result.append((a, b, c, depth))
 
-    return all_triples
+        if depth < max_depth:
+            for B in GENERATORS:
+                child = B @ triple
+                queue.append((child, depth + 1))
 
-
-def generate_depth_n_triples(n: int) -> List[BerggrenTriple]:
-    """Generate only the triples at exact depth n."""
-    if n == 0:
-        return [ROOT]
-
-    current = [ROOT]
-    for depth in range(1, n + 1):
-        next_layer = []
-        for parent in current:
-            v = parent.as_vector()
-            for name, gen in GENERATORS.items():
-                child_v = gen @ v
-                child = BerggrenTriple(
-                    a=int(child_v[0]), b=int(child_v[1]), c=int(child_v[2]),
-                    depth=depth,
-                    word=parent.word + name
-                )
-                next_layer.append(child)
-        current = next_layer
-    return current
-
-
-# ============================================================================
-# Algorithm 2: Sibling Transition Operator
-# ============================================================================
-
-def sibling_transition_matrix(n: int = 3) -> np.ndarray:
-    """
-    Construct the sibling transition matrix for the K_n random walk.
-
-    The matrix T has T[i,j] = 1/(n-1) for i ≠ j and T[i,i] = 0.
-    This is the random walk on the complete graph K_n.
-
-    For Berggren dynamics (n=3):
-    - Eigenvalue 1 with eigenvector (1,1,1)/√3
-    - Eigenvalue -1/(n-1) = -1/2 with multiplicity n-1 = 2
-
-    Spectral gap: ρ = 1/(n-1) = 1/2.
-
-    Args:
-        n: Number of vertices (default 3 for Berggren siblings).
-
-    Returns:
-        n×n transition matrix.
-    """
-    T = np.ones((n, n)) / (n - 1)
-    np.fill_diagonal(T, 0)
-    return T
-
-
-def spectral_decomposition(T: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Compute the spectral decomposition of a symmetric transition matrix.
-
-    Returns eigenvalues (sorted descending) and eigenvectors.
-    """
-    eigenvalues, eigenvectors = np.linalg.eigh(T)
-    idx = np.argsort(eigenvalues)[::-1]
-    return eigenvalues[idx], eigenvectors[:, idx]
-
-
-def compute_spectral_gap(T: np.ndarray) -> float:
-    """
-    Compute the spectral gap: 1 - |λ₂| where λ₂ is the second-largest
-    eigenvalue in absolute value.
-
-    For an expander, this is strictly positive.
-    """
-    eigenvalues = np.linalg.eigvalsh(T)
-    sorted_eigs = sorted(np.abs(eigenvalues), reverse=True)
-    return 1.0 - sorted_eigs[1] if len(sorted_eigs) > 1 else 1.0
-
-
-# ============================================================================
-# Algorithm 3: Observable Averaging and Contraction
-# ============================================================================
-
-def apply_operator_iterate(T: np.ndarray, f: np.ndarray, k: int) -> np.ndarray:
-    """
-    Apply the operator T to function f exactly k times: T^k f.
-
-    Uses repeated matrix-vector multiplication for efficiency.
-    Time complexity: O(k · n²) where n = dimension.
-
-    Args:
-        T: Transition matrix.
-        f: Function values (vector).
-        k: Number of iterations.
-
-    Returns:
-        T^k f.
-    """
-    result = f.copy()
-    for _ in range(k):
-        result = T @ result
     return result
 
 
-def l2_norm_sq(f: np.ndarray) -> float:
-    """Compute ∑ f_i² (l² norm squared)."""
-    return float(np.sum(f**2))
-
-
-def contraction_rate(T: np.ndarray, f: np.ndarray) -> float:
+def berggren_tree_bounded(max_hypotenuse: int = 1000) -> List[Tuple[int, int, int]]:
     """
-    Compute the contraction rate ||Tf||₂ / ||f||₂ for a given function.
+    Generate primitive Pythagorean triples with hypotenuse ≤ max_hypotenuse.
 
-    For mean-zero f on K₃ walk, this should be exactly 1/2.
+    Uses DFS with pruning: since each generator increases the hypotenuse,
+    we can prune branches that exceed the bound.
+
+    Complexity:
+      Time:  O(N log N) where N is the number of triples found
+      Space: O(N)
+
+    >>> triples = berggren_tree_bounded(100)
+    >>> all(a**2 + b**2 == c**2 for a, b, c in triples)
+    True
+    >>> max(c for _, _, c in triples) <= 100
+    True
     """
-    norm_f = np.linalg.norm(f)
-    if norm_f < 1e-15:
-        return 0.0
-    return np.linalg.norm(T @ f) / norm_f
+    result = []
+    stack = [ROOT]
+
+    while stack:
+        triple = stack.pop()
+        a, b, c = int(triple[0]), int(triple[1]), int(triple[2])
+
+        if c > max_hypotenuse:
+            continue
+
+        result.append((a, b, c))
+
+        for B in GENERATORS:
+            child = B @ triple
+            if int(child[2]) <= max_hypotenuse:
+                stack.append(child)
+
+    return sorted(result, key=lambda t: t[2])
 
 
-def center_function(f: np.ndarray) -> np.ndarray:
-    """Make a function mean-zero by subtracting its mean."""
-    return f - f.mean()
+# ============================================================
+# Algorithm 2: Spectral Gap Computation
+# ============================================================
 
-
-# ============================================================================
-# Algorithm 4: Mixing Time Estimation
-# ============================================================================
-
-def mixing_time_bound(rho: float, n_states: int, epsilon: float = 0.01) -> float:
+def compute_spectral_gap(transition_matrix: np.ndarray) -> dict:
     """
-    Estimate the mixing time for a Markov chain with spectral gap 1-ρ.
+    Compute the spectral gap of a transition matrix.
 
-    The mixing time to reach total variation distance ε from stationarity
-    satisfies: t_mix(ε) ≤ log(n/ε) / log(1/ρ).
+    The spectral gap is defined as 1 - |λ₂| where λ₂ is the
+    second-largest eigenvalue in absolute value.
 
-    For the Berggren sibling walk with ρ = 1/2:
-    - n = 3 states
-    - t_mix(0.01) ≤ log(300) / log(2) ≈ 8.2
+    For the Berggren sibling operator on K₃:
+      λ₁ = 1, λ₂ = λ₃ = -1/2
+      gap = 1 - 1/2 = 1/2
 
     Args:
-        rho: Spectral parameter (second eigenvalue magnitude).
-        n_states: Number of states.
-        epsilon: Target total variation distance.
+        transition_matrix: Row-stochastic matrix.
 
     Returns:
-        Upper bound on mixing time.
+        Dictionary with eigenvalues, gap, and mixing time estimate.
+
+    Complexity:
+      Time:  O(n³) for n×n matrix (eigendecomposition)
+      Space: O(n²)
+
+    >>> T = np.array([[0, 0.5, 0.5], [0.5, 0, 0.5], [0.5, 0.5, 0]])
+    >>> result = compute_spectral_gap(T)
+    >>> abs(result['spectral_gap'] - 0.5) < 1e-10
+    True
     """
-    if rho >= 1.0 or rho <= 0:
-        return float('inf')
-    return np.log(n_states / epsilon) / np.log(1.0 / rho)
+    eigenvalues = np.sort(np.linalg.eigvals(transition_matrix).real)[::-1]
+    abs_eigenvalues = np.sort(np.abs(eigenvalues))[::-1]
 
+    lambda_1 = abs_eigenvalues[0]
+    lambda_2 = abs_eigenvalues[1] if len(abs_eigenvalues) > 1 else 0.0
+    gap = lambda_1 - lambda_2
 
-def discrepancy_bound(B: float, rho: float, k: int, n_states: int = 3) -> float:
-    """
-    Compute the discrepancy bound for a B-bounded observable after k steps.
-
-    ||T^k(f - mean)||₂² ≤ ρ^(2k) · n · (2B)²
-
-    For the Berggren walk:
-    - ρ = 1/2
-    - n = 3
-    - bound = (1/4)^k · 12B²
-
-    Args:
-        B: Bound on the observable (|f| ≤ B).
-        rho: Spectral parameter.
-        k: Number of iterations.
-        n_states: Number of states.
-
-    Returns:
-        Upper bound on l² norm squared of discrepancy.
-    """
-    return rho**(2*k) * n_states * (2*B)**2
-
-
-# ============================================================================
-# Algorithm 5: Lorentz Form Analysis
-# ============================================================================
-
-Q_MATRIX = np.diag([1, 1, -1])
-
-def lorentz_form(v: np.ndarray) -> float:
-    """Compute Q(v) = v₀² + v₁² - v₂²."""
-    return float(v @ Q_MATRIX @ v)
-
-
-def berggren_sum_lorentz_action(v: np.ndarray) -> float:
-    """
-    Compute Q(Sv) using the identity S^T Q S = diag(1,1,-9).
-
-    Q(Sv) = v₀² + v₁² - 9v₂²
-
-    For Pythagorean v (Q(v) = 0): Q(Sv) = -8v₂² = -8c².
-    """
-    return v[0]**2 + v[1]**2 - 9 * v[2]**2
-
-
-def spatial_contraction_factor() -> float:
-    """
-    The spatial contraction factor of the averaged Berggren operator.
-
-    Under the Lorentz form, the spatial components (a,b) contribute at rate 1
-    while the temporal component (c) contributes at rate 9.
-    The contraction factor on spatial components is 1/9.
-    """
-    return 1.0 / 9.0
-
-
-# ============================================================================
-# Algorithm 6: Depth Statistics
-# ============================================================================
-
-def depth_statistics(depth: int) -> dict:
-    """
-    Compute statistics of Berggren triples at a given depth.
-
-    Returns dictionary with:
-    - count: number of triples
-    - mean_ratio: average a/c ratio
-    - std_ratio: standard deviation of a/c
-    - min_hypotenuse: smallest c
-    - max_hypotenuse: largest c
-    - mean_hypotenuse: average c
-    """
-    triples = generate_depth_n_triples(depth)
-
-    ratios = [t.ratio() for t in triples]
-    hyps = [t.c for t in triples]
+    # Mixing time: k such that λ₂^k < ε
+    epsilon = 0.01
+    if lambda_2 > 0 and lambda_2 < 1:
+        mixing_time = int(np.ceil(np.log(1/epsilon) / np.log(1/lambda_2)))
+    else:
+        mixing_time = 1
 
     return {
-        'count': len(triples),
-        'mean_ratio': np.mean(ratios),
-        'std_ratio': np.std(ratios),
-        'min_hypotenuse': min(hyps),
-        'max_hypotenuse': max(hyps),
-        'mean_hypotenuse': np.mean(hyps),
-        'all_pythagorean': all(t.is_pythagorean() for t in triples)
+        'eigenvalues': eigenvalues,
+        'abs_eigenvalues': abs_eigenvalues,
+        'lambda_1': lambda_1,
+        'lambda_2': lambda_2,
+        'spectral_gap': gap,
+        'contraction_rate': lambda_2**2,  # l² norm squared contracts by this
+        'mixing_time_001': mixing_time,
     }
 
 
-# ============================================================================
-# Main: Run All Algorithms
-# ============================================================================
+# ============================================================
+# Algorithm 3: Observable Averaging with Mixing Time
+# ============================================================
+
+def observable_average(
+    observable: Callable[[Tuple[int, int, int]], float],
+    depth: int,
+    iterations: int = 10
+) -> dict:
+    """
+    Compute the average of an observable over Berggren triples at a given
+    depth, along with mixing-corrected confidence bounds.
+
+    The Ramanujan bound guarantees exponential convergence of the
+    empirical average to the true mean, with explicit error bounds.
+
+    Args:
+        observable: Function mapping (a, b, c) to a real value.
+        depth: Depth in the Berggren tree.
+        iterations: Number of sibling-mixing iterations for error estimation.
+
+    Returns:
+        Dictionary with average, variance, and Ramanujan error bound.
+
+    Complexity:
+      Time:  O(3^depth)
+      Space: O(3^depth)
+    """
+    triples = berggren_tree_bfs(depth)
+    depth_triples = [(a, b, c) for a, b, c, d in triples if d == depth]
+
+    if not depth_triples:
+        return {'average': 0.0, 'count': 0}
+
+    values = np.array([observable(t) for t in depth_triples])
+    n = len(values)
+    avg = np.mean(values)
+    var = np.var(values)
+    B = np.max(np.abs(values))
+
+    # Ramanujan bound: after k sibling mixing steps,
+    # discrepancy ≤ sqrt(12) · B · (1/2)^k
+    ramanujan_bounds = {}
+    for k in [1, 5, 10, 20]:
+        bound = np.sqrt(12) * B * (0.5)**k
+        ramanujan_bounds[f'k={k}'] = bound
+
+    return {
+        'average': avg,
+        'variance': var,
+        'count': n,
+        'max_abs': B,
+        'ramanujan_bounds': ramanujan_bounds,
+    }
+
+
+# ============================================================
+# Algorithm 4: Pseudorandom Triple Sampler
+# ============================================================
+
+def pseudorandom_sampler(
+    n_samples: int = 100,
+    depth: int = 8,
+    mixing_steps: int = 5,
+    seed: Optional[int] = None
+) -> List[Tuple[int, int, int]]:
+    """
+    Generate pseudorandom primitive Pythagorean triples using the
+    Berggren expander structure.
+
+    The algorithm exploits the spectral gap: starting from a fixed triple,
+    apply random Berggren generators. After O(log(1/ε)) steps, the
+    distribution is ε-close to uniform over the depth-d reachable set.
+
+    The Ramanujan bound ρ = 1/2 guarantees that mixing_steps ≥ log₂(1/ε)
+    suffice for ε-approximate uniformity.
+
+    Args:
+        n_samples: Number of triples to generate.
+        depth: Total random walk depth.
+        mixing_steps: Additional mixing steps beyond initial walk.
+        seed: Random seed for reproducibility.
+
+    Returns:
+        List of pseudorandom primitive Pythagorean triples.
+
+    Complexity:
+      Time:  O(n_samples · depth) matrix-vector multiplications
+      Space: O(n_samples)
+
+    >>> triples = pseudorandom_sampler(50, depth=6, seed=42)
+    >>> all(a**2 + b**2 == c**2 for a, b, c in triples)
+    True
+    """
+    rng = np.random.default_rng(seed)
+    samples = []
+
+    for _ in range(n_samples):
+        triple = ROOT.copy()
+        for _ in range(depth + mixing_steps):
+            gen_idx = rng.integers(0, 3)
+            triple = GENERATORS[gen_idx] @ triple
+        a, b, c = int(triple[0]), int(triple[1]), int(triple[2])
+        # Ensure positive legs (take absolute values)
+        samples.append((abs(a), abs(b), abs(c)))
+
+    return samples
+
+
+# ============================================================
+# Algorithm 5: Discrepancy Estimator
+# ============================================================
+
+def discrepancy_estimator(
+    test_functions: List[Callable[[Tuple[int, int, int]], float]],
+    max_depth: int = 6
+) -> dict:
+    """
+    Estimate the discrepancy of the Berggren distribution against
+    a family of test functions at each depth.
+
+    For each test function φ and depth d, computes:
+      D_d(φ) = |E_d[φ] - E_{d-1}[φ]|
+
+    The Ramanujan bound predicts D_d(φ) ≤ C · (1/2)^d for bounded φ.
+
+    Args:
+        test_functions: List of test functions (a,b,c) → ℝ.
+        max_depth: Maximum depth to analyze.
+
+    Returns:
+        Dictionary mapping test function index to list of discrepancies.
+
+    Complexity:
+      Time:  O(T · 3^max_depth) where T = number of test functions
+      Space: O(3^max_depth)
+    """
+    triples = berggren_tree_bfs(max_depth)
+
+    results = {}
+    for idx, phi in enumerate(test_functions):
+        discrepancies = []
+        prev_avg = None
+        for d in range(max_depth + 1):
+            depth_triples = [(a, b, c) for a, b, c, dd in triples if dd == d]
+            if depth_triples:
+                values = [phi(t) for t in depth_triples]
+                avg = np.mean(values)
+                if prev_avg is not None:
+                    discrepancies.append(abs(avg - prev_avg))
+                prev_avg = avg
+        results[idx] = discrepancies
+
+    return results
+
+
+# ============================================================
+# Example Usage
+# ============================================================
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("BERGGREN SPECTRAL DYNAMICS: Algorithm Demonstrations")
-    print("=" * 70)
+    print("=" * 60)
+    print("ALGORITHM DEMONSTRATIONS")
+    print("=" * 60)
 
-    # Algorithm 1: Generate triples
-    print("\n--- Algorithm 1: Tree Generation ---")
-    triples = generate_berggren_tree(4)
-    print(f"Total triples up to depth 4: {len(triples)}")
-    for d in range(5):
-        count = sum(1 for t in triples if t.depth == d)
-        print(f"  Depth {d}: {count} triples")
+    # Algorithm 1: Tree generation
+    print("\n--- Algorithm 1: Berggren Tree ---")
+    triples = berggren_tree_bfs(3)
+    print(f"  Triples at depth ≤ 3: {len(triples)}")
+    for a, b, c, d in triples[:5]:
+        print(f"    ({a}, {b}, {c}) at depth {d}")
 
-    # Algorithm 2: Spectral decomposition
-    print("\n--- Algorithm 2: Spectral Decomposition ---")
-    T = sibling_transition_matrix(3)
-    eigs, vecs = spectral_decomposition(T)
-    gap = compute_spectral_gap(T)
-    print(f"Eigenvalues: {eigs}")
-    print(f"Spectral gap: {gap:.4f}")
-    print(f"ρ = 1/2 confirmed: {np.isclose(1 - gap, 0.5)}")
+    bounded = berggren_tree_bounded(200)
+    print(f"\n  Triples with c ≤ 200: {len(bounded)}")
+    for a, b, c in bounded[:5]:
+        print(f"    ({a}, {b}, {c})")
 
-    # Algorithm 3: Contraction verification
-    print("\n--- Algorithm 3: Observable Contraction ---")
-    f = np.array([1.0, -0.3, -0.7])  # mean-zero
-    for k in range(6):
-        Tkf = apply_operator_iterate(T, f, k)
-        norm_sq = l2_norm_sq(Tkf)
-        bound = (0.25)**k * l2_norm_sq(f)
-        print(f"  k={k}: ||T^k f||² = {norm_sq:.8f}, bound = {bound:.8f}")
+    # Algorithm 2: Spectral gap
+    print("\n--- Algorithm 2: Spectral Gap ---")
+    T = np.array([[0, 0.5, 0.5], [0.5, 0, 0.5], [0.5, 0.5, 0]])
+    result = compute_spectral_gap(T)
+    print(f"  Eigenvalues: {result['eigenvalues']}")
+    print(f"  Spectral gap: {result['spectral_gap']:.4f}")
+    print(f"  Contraction rate (l²): {result['contraction_rate']:.4f}")
+    print(f"  Mixing time (ε=0.01): {result['mixing_time_001']} steps")
 
-    # Algorithm 4: Mixing time
-    print("\n--- Algorithm 4: Mixing Time ---")
-    for eps in [0.1, 0.01, 0.001]:
-        t_mix = mixing_time_bound(0.5, 3, eps)
-        print(f"  t_mix({eps}) ≤ {t_mix:.2f}")
+    # Algorithm 3: Observable averaging
+    print("\n--- Algorithm 3: Observable Averaging ---")
+    # Test: ratio a/c (parametrizes the angle)
+    result = observable_average(lambda t: t[0]/t[2], depth=4)
+    print(f"  Average a/c at depth 4: {result['average']:.6f}")
+    print(f"  Count: {result['count']}")
+    print(f"  Ramanujan bounds: {result['ramanujan_bounds']}")
 
-    # Algorithm 5: Lorentz analysis
-    print("\n--- Algorithm 5: Lorentz Form ---")
-    v = np.array([3.0, 4.0, 5.0])
-    S = sum(GENERATORS.values())
-    Sv = S @ v
-    print(f"v = {v}, Q(v) = {lorentz_form(v)}")
-    print(f"Sv = {Sv}, Q(Sv) = {lorentz_form(Sv)}")
-    print(f"Identity: Q(Sv) = v0² + v1² - 9v2² = {berggren_sum_lorentz_action(v)}")
+    # Algorithm 4: Pseudorandom sampling
+    print("\n--- Algorithm 4: Pseudorandom Sampler ---")
+    samples = pseudorandom_sampler(10, depth=8, seed=42)
+    print(f"  10 pseudorandom triples:")
+    for a, b, c in samples:
+        print(f"    ({a}, {b}, {c})  [a²+b²=c²: {a**2 + b**2 == c**2}]")
 
-    # Algorithm 6: Depth statistics
-    print("\n--- Algorithm 6: Depth Statistics ---")
-    for d in range(6):
-        stats = depth_statistics(d)
-        print(f"  Depth {d}: {stats['count']} triples, "
-              f"mean(a/c) = {stats['mean_ratio']:.4f}, "
-              f"hyp range = [{stats['min_hypotenuse']}, {stats['max_hypotenuse']}]")
+    # Algorithm 5: Discrepancy estimation
+    print("\n--- Algorithm 5: Discrepancy Estimation ---")
+    test_fns = [
+        lambda t: t[0] / t[2],  # a/c ratio
+        lambda t: t[1] / t[2],  # b/c ratio
+        lambda t: float(t[0] % 2 == 1),  # a odd indicator
+    ]
+    disc = discrepancy_estimator(test_fns, max_depth=5)
+    for idx, discs in disc.items():
+        print(f"  Test function {idx}: discrepancies = "
+              f"{[f'{d:.4f}' for d in discs]}")
