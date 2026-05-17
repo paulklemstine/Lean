@@ -587,6 +587,63 @@
     "timestamp": "2026-05-17T10:32:08.779125+00:00"
   },
   {
+    "id": "fd_0261",
+    "title": "Weekly cross-team meetings",
+    "description": "to identify shared lemma needs and avoid duplication.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "85071bef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:30:47.774704+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Shared Lean library:",
+    "description": "All proven lemmas go into a common `TropicalRobustness` module.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "85071bef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:30:47.805105+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Hypothesis testing:",
+    "description": "Before formalizing, test each conjecture with `#eval` on concrete examples.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "85071bef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:30:47.826597+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Iterate:",
+    "description": "After initial results, recombine teams for the integration phase (Directions 3–5).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "85071bef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T11:30:47.847562+00:00"
+  },
+  {
     "id": "fd_0113",
     "title": "Direction 1: Multi-Invariant Theory Morphisms and Product Orders",
     "description": "**Hypothesis:** Enriching theories from single `ℕ`-valued invariants to tuples `ℕ^k` (or lattice-valued invariants) enables simultaneous transfer of multiple independent certificates — for example, transferring both a height bound *and* a stability constant in a single morphism.\n\n**Proof Strategy:**\n1. Define `RichTheory` with `Inv : Carrier → Fin k → ℕ` (or `Carrier → L` for a lattice `L`).\n2. Define `RichHom` requiring componentwise monotonicity.\n3. Prove that the product order on `ℕ^k` makes composition and transfer work identically to the scalar case.\n4. Show that the scalar framework embeds as the `k=1` special case.\n5. Prove a \"dominance theorem\": a composite morphism dominates each component morphism in every coordinate simultaneously.\n\n**Cross-Domain Connection:** This enables tran",
@@ -1153,24 +1210,6 @@
     "source_exp_id": "41f0f930",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-16T13:12:11.734256+00:00"
-  },
-  {
-    "id": "fd_0247",
-    "title": "1. Extending to Distributive Tropical Polynomial Normal Forms",
-    "description": "**Hypothesis:** The ACI normalizer for the `min`/`+` fragment can be extended to handle the distributive law `a + min(b, c) = min(a + b, a + c)`, yielding a complete decision procedure for the full tropical semiring identity problem.\n\n**Strategy:**\n- Define a canonical *tropical polynomial normal form* as `min` of *tropical monomials* (sums of variables with natural number coefficients).\n- Implement distributive expansion: push `+` inside `min` until all `min`-operands are monomial sums.\n- After expansion, apply the existing ACI normalizer to the resulting min-of-monomials expression.\n- Prove soundness via a sequence of rewriting steps, each justified by the distributive law.\n\n**Key Lemma to Formalize:**\n```\n∀ e : TropExpr, ∃ nf : TropPolyNF, eval σ e = eval σ (embed nf)\n```\n\n**Cross-domai",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "72596401",
-    "consumed_by_exp_id": "85071bef",
-    "timestamp": "2026-05-17T02:00:26.770253+00:00"
   },
   {
     "id": "fd_0266",
