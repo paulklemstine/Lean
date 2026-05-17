@@ -393,10 +393,10 @@
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0ab00abc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "febdbe21",
     "timestamp": "2026-05-17T02:47:00.546219+00:00"
   },
   {
@@ -527,21 +527,6 @@
     "timestamp": "2026-05-17T03:06:58.931363+00:00"
   },
   {
-    "id": "fd_0254",
-    "title": "Direction 1",
-    "description": "(full residuated lattice) should be attempted first — it completes the algebraic infrastructure and unlocks Directions 2–5.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a54a94dd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T03:06:58.952770+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "Directions 2 and 5",
     "description": "(tropical geometry) require additional Mathlib infrastructure for polyhedral geometry and may need new API development.",
@@ -632,23 +617,6 @@
     "timestamp": "2026-05-17T05:33:20.219612+00:00"
   },
   {
-    "id": "fd_0270",
-    "title": "Induction",
-    "description": "on the number of variables $m$.\n\n### Cross-Domain Impact\n\n- **Numerical analysis**: Rigorous foundation for spectral element methods on product grids.\n- **Cryptography**: Certified multilinear extensions for sum-check based proof systems (Lasso, Spartan, etc.).\n- **Tensor decomposition**: Algebraic interface for exact tensor reconstruction.\n\n---\n\n## 3. Noisy Reconstruction: Berlekamp–Welch Decoding\n\n### Theorem Statement\n\n```\ntheorem berlekamp_welch_decoding\n    (K : Type*) [Field K] (v : Fin n → K) (hv : Function.Injective v)\n    (k : ℕ) (hk : 2 * k ≤ n + 1)\n    (p : Polynomial.degreeLT K k)\n    (received : Fin n → K)\n    (herrors : (Finset.univ.filter (fun i => received i ≠ p.1.eval (v i))).card ≤ (n - k) / 2) :\n    ∃! q : Polynomial.degreeLT K k,\n      (Finset.univ.filter (fun i => rece",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b3838861",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:33:20.286845+00:00"
-  },
-  {
     "id": "fd_0271",
     "title": "Key equation",
     "description": ": If $p$ is the transmitted polynomial and $E$ is the error-locator polynomial (vanishing at corrupted positions), then $r(x) \\cdot E(x) = p(x) \\cdot E(x)$ at all evaluation points. This yields a *linear* system in the unknowns (coefficients of $p \\cdot E$ and $E$).",
@@ -691,6 +659,186 @@
     "source_exp_id": "b3838861",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:33:20.409154+00:00"
+  },
+  {
+    "id": "fd_0255",
+    "title": "Prove the three-variable degree classification",
+    "description": ": Each monomial x^α·y^β·z^γ in the expansion satisfies |α|+|β|+|γ| ≤ 2n, and by the (already formalized) degree splitting lemma, min(|α|,|β|,|γ|) ≤ ⌊2n/3⌋.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.205319+00:00"
+  },
+  {
+    "id": "fd_0256",
+    "title": "Formalize the matrix rank bound",
+    "description": ": If M = Σ_{j=1}^r v_j · w_j^T, then rank(M) ≤ r. This is basic linear algebra but needs a clean Lean statement for matrices over ZMod 3.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.223402+00:00"
+  },
+  {
+    "id": "fd_0257",
+    "title": "Connect the pieces",
+    "description": ": The kernel matrix equals the identity (rank = |A|), and it decomposes into ≤ 3·D₀ rank-1 pieces, giving |A| ≤ 3·D₀.\n\n### Hypothesis\nThe bottleneck is step 1 (polynomial expansion), not the linear algebra. A dedicated effort on multivariate polynomial manipulation over finite fields would break through.\n\n### Cross-Domain Impact\nThis infrastructure would immediately enable formal slice-rank arguments, which are the foundation of the entire polynomial method in combinatorics.\n\n---\n\n## Direction 2: Extension from F₃ⁿ to F_pⁿ\n\n### Status\nThe current development is specific to F₃. The Croot–Lev–Pach method generalizes to F_p for any prime p, with the indicator polynomial Δ(v) = ∏_i(1 − v_i^{p-1}).\n\n### Concrete Next Steps",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.246012+00:00"
+  },
+  {
+    "id": "fd_0258",
+    "title": "Generalize `deltaIndicator` to `ZMod p`",
+    "description": ": Replace the exponent 2 with p−1. The key identity becomes: over F_p, x^{p-1} = 0 iff x = 0, and x^{p-1} = 1 iff x ≠ 0 (Fermat's little theorem).",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.267478+00:00"
+  },
+  {
+    "id": "fd_0261",
+    "title": "Prove the generalized monomial count bound",
+    "description": ": |A| ≤ p · D_{(p-1)n/p} where monomials have individual degrees ≤ p−1.\n\n### Hypothesis\nThe generalization is mostly straightforward once the F₃ case is fully formalized. The main challenge is making `decide` tactics work for general primes (they won't — need to use algebraic proofs instead of finite case analysis).\n\n### Cross-Domain Impact\n- **Coding theory**: Bounds on codes avoiding arithmetic progressions over F_p.\n- **Additive combinatorics**: Formal bounds on Roth-type problems in finite fields.\n- **Number theory**: Connections to Szemerédi-type results.\n\n---\n\n## Direction 3: Formal Slice-Rank Theory\n\n### Status\nThe current development deliberately avoids tensors and slice rank. However, the matrix-rank approach we use is a shadow of the full slice-rank formalism.\n\n### Concrete Next ",
+    "domains": [
+      "Bridges",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.325211+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Define tensors over finite fields",
+    "description": ": Formalize k-tensors T : (F_q^n)^k → F_q as multilinear functions.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.342900+00:00"
+  },
+  {
+    "id": "fd_0266",
+    "title": "Derive the cap set bound as a corollary",
+    "description": ".\n\n### Hypothesis\nA general slice-rank theory in Lean would be a major contribution to formal mathematics, enabling a whole family of polynomial method results (sunflower lemma, partition regularity, etc.).\n\n### Cross-Domain Impact\n- **Algebraic complexity**: Slice rank directly connects to tensor rank and matrix multiplication barriers.\n- **Communication complexity**: Multiparty communication lower bounds via tensor methods.\n- **Quantum information**: Entanglement rank and stabilizer formalism connections.\n\n---\n\n## Direction 4: Finite-Field Function Algebra Infrastructure\n\n### Status\nThe current development uses `deltaIndicator` as a concrete function, not as an element of a formal polynomial algebra.\n\n### Concrete Next Steps",
+    "domains": [
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.418850+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Formalize the quotient ring R_n = F_q[x_1,...,x_n]/(x_i^q − x_i)",
+    "description": ": Show this is isomorphic to the ring of all functions (F_q)^n → F_q.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.436478+00:00"
+  },
+  {
+    "id": "fd_0271",
+    "title": "Connect evaluation to polynomial representation",
+    "description": ": The evaluation map MvPolynomial → R_n is surjective with explicitly described kernel.\n\n### Hypothesis\nThis infrastructure is the most impactful single investment. It would make ALL polynomial method arguments over finite fields dramatically easier to formalize.\n\n### Cross-Domain Impact\n- **Finite geometry**: Counting arguments in AG(n,q) and PG(n,q).\n- **Coding theory**: Weight distribution bounds via polynomial methods.\n- **Cryptography**: Formal analysis of algebraic attacks on symmetric ciphers.\n\n---\n\n## Direction 5: Computational Verification and Asymptotic Analysis\n\n### Status\nWe have computed numLowDegMonomials for small n. The asymptotic behavior (showing the exponential base is strictly less than 3) has not been formalized.\n\n### Concrete Next Steps",
+    "domains": [
+      "Cryptography",
+      "EML",
+      "Bridges",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.508831+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Formalize the exponential bound",
+    "description": ": 3 · D_{2n/3} ≤ C · (2.756)^n for some explicit constant C.",
+    "domains": [
+      "EML"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.568064+00:00"
+  },
+  {
+    "id": "fd_0275",
+    "title": "Connect to cap set density",
+    "description": ": |A|/3^n ≤ C · (2.756/3)^n → 0 exponentially.\n\n### Hypothesis\nThe asymptotic analysis requires real analysis infrastructure (saddle-point method or Stirling bounds). The generating function identity is purely combinatorial and should be formalizable now.\n\n### Cross-Domain Impact\n- **Analytic combinatorics**: Formal saddle-point methods for coefficient extraction.\n- **Information theory**: Entropy-based capacity arguments for constrained codes.\n\n---\n\n## Cross-Domain Bridge Theorems\n\n### Bridge to Communication Complexity\nThe kernel matrix M(a,b) = δ_{a,b} on a cap set has a natural interpretation as a communication matrix. The monomial decomposition bounds the communication complexity of the equality function restricted to cap sets. Formalizing this connection would create a bridge between",
+    "domains": [
+      "EML",
+      "Bridges",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.588315+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Direction 4",
+    "description": "(Function algebra) — Highest long-term impact, enables everything else",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0c11eac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T05:40:37.606137+00:00"
   },
   {
     "id": "fd_0113",
@@ -1415,22 +1563,6 @@
     "timestamp": "2026-05-17T04:47:06.161738+00:00"
   },
   {
-    "id": "fd_0259",
-    "title": "1. Complete the Rank-2 Coincidence Theorem",
-    "description": "**Status**: The rank-2 Dressian ↔ four-point condition is proved. The full coincidence Dr(2,n) = Trop(Gr(2,n)) requires proving that every four-point metric is tropically realizable.\n\n**Strategy**: Formalize the classical result that every four-point metric is a tree metric (Buneman's theorem), then show tree metrics are realizable over the field of formal Puiseux series ℝ{{t}}. This requires:\n- Defining weighted trees and path metrics\n- Proving the four-point condition characterizes tree metrics\n- Constructing explicit realizations via Puiseux series coordinates\n\n**Impact**: Establishes the complete tropical-phylogenetic correspondence in rank 2, providing a formal foundation for tree reconstruction algorithms in computational biology.",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "75c7e5d3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:49:34.893123+00:00"
-  },
-  {
     "id": "fd_0262",
     "title": "4. Define Tropical Grassmannians via Initial Ideals",
     "description": "**Status**: Our InTropicalGrassmannian3 uses a simplified \"initial matroid\" characterization. The full definition uses tropical varieties and initial ideals.\n\n**Strategy**: Formalize:\n- Non-archimedean valued fields (Mathlib has some infrastructure)\n- Tropicalization of polynomial ideals\n- The Plücker ideal and its tropicalization\n- Prove that Trop(Gr(r,n)) = tropicalization of the Plücker ideal\n\n**Cross-domain connections**:\n- Initial ideal theory connects to Gröbner bases and computational algebra\n- Tropical varieties connect to Newton polytopes and toric geometry\n- The secondary fan structure of the Dressian connects to regular subdivisions",
@@ -1446,40 +1578,6 @@
     "source_exp_id": "75c7e5d3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T04:49:34.970752+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "5. Tropical Moduli of Curves and Phylogenetics",
-    "description": "**Status**: The rank-2 result connects Dr(2,n) to tree metrics / phylogenetic trees.\n\n**Strategy**: Formalize the identification:\n- Trop(Gr(2,n)) ≅ M̄₀,ₙᵗʳᵒᵖ (tropical moduli of genus-0 curves with n marks)\n- This is the space of metric trees with n labeled leaves\n- The combinatorial types (tree topologies) correspond to maximal cones\n- The Dressian fan structure encodes the phylogenetic tree space\n\n**Applications**:\n- Certified algorithms for phylogenetic tree reconstruction\n- Tropical approaches to the moduli space M̄₀,ₙ\n- Connections to cluster algebras and positive geometries\n\n**Impact**: Bridges tropical algebraic geometry with computational biology, establishing formal foundations for statistical phylogenetics and geometric approaches to evolutionary inference.\n\n---\n\nEach direction a",
-    "domains": [
-      "Tropical",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "75c7e5d3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T04:49:34.993924+00:00"
-  },
-  {
-    "id": "fd_0259",
-    "title": "1. Exact Acceptance Probability for Rank-Deficient Discrepancies",
-    "description": "**Hypothesis:** When the discrepancy matrix `D = K - A*B` has rank `r`, the acceptance set `{v | D.mulVec v = 0}` has cardinality exactly `q^(p - r)`, giving acceptance probability `q^{-r}`.\n\n**Proof Strategy:**\n- Formalize the rank-nullity theorem for finite-dimensional vector spaces over `ZMod q`.\n- Show `ker(D.mulVec)` is a subspace of dimension `p - r`.\n- Use `Module.card_eq_pow_finrank` (already used in FreivaldsBridge) to compute the kernel cardinality.\n- The rank-1 case (single discrepant row) already gives the `1/q` bound; the general case refines to `q^{-r}`.\n\n**Cross-Domain Connections:**\n- Error-correcting codes: the kernel structure mirrors the dual code of the row space.\n- Quantum error correction: syndrome measurement is analogous to mulVec evaluation.\n\n**Actionable Next Step",
-    "domains": [
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "30c5294d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:24:21.626064+00:00"
   },
   {
     "id": "fd_0261",
@@ -1515,39 +1613,6 @@
     "source_exp_id": "30c5294d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T05:24:21.699036+00:00"
-  },
-  {
-    "id": "fd_0263",
-    "title": "5. Finite Affine Geometry and Hyperplane Counting",
-    "description": "**Hypothesis:** The acceptance set `{r | dotProduct v r = 0}` for a nonzero `v` is an affine hyperplane in `F_q^p`, and the soundness bound is a statement about the fraction of points on a hyperplane in a finite affine space.\n\n**Proof Strategy:**\n- Formalize affine hyperplanes in `F_q^p` as cosets of codimension-1 subspaces.\n- Show the zero set of a nonzero linear functional is a hyperplane.\n- Prove the hyperplane has exactly `q^{p-1}` points (already done via `card_ker_dotLin`).\n- Generalize to affine subspaces of arbitrary codimension.\n\n**Cross-Domain Connections:**\n- Finite geometry: incidence bounds (Szemerédi-Trotter over finite fields).\n- Coding theory: Reed-Solomon codes are evaluations on affine lines.\n- Combinatorics: Kakeya-type problems over finite fields (Dvir's theorem).\n\n**Ac",
-    "domains": [
-      "EML",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "30c5294d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:24:21.721036+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Summary Priority Matrix",
-    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|-------------|\n| 1. Exact probability | Medium | High | rank-nullity for matrices |\n| 2. Sum-check protocol | Hard | Very High | multivariate polynomial eval |\n| 3. Schwartz-Zippel | Medium-Hard | Very High | MvPolynomial infrastructure |\n| 4. Stream fingerprinting | Medium | High | univariate root bound |\n| 5. Finite geometry | Medium | Medium | linear algebra over ZMod |\n\n**Recommended order:** 4 → 1 → 3 → 5 → 2 (increasing difficulty, each building on the previous).",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "30c5294d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T05:24:21.740924+00:00"
   },
   {
     "id": "fd_0249",
