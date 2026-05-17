@@ -300,21 +300,6 @@
     "timestamp": "2026-05-17T12:02:39.033653+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Via pigeonhole",
-    "description": ": Map `ev` into `ZMod p × {0, 1}` (residue class, sign flag). Use `Finset.card_le_card` to bound the image, then `Nat.div` bounds for preimage sizes.\n\n### Cross-Domain Significance\nCombined with eigenvalue bounds from regular graph theory (`|λ| ≤ d`), this gives explicit multiplicity limits for spectral square classes — a new graph-theoretic invariant.\n\n---\n\n## Direction 2: Characteristic Polynomial Congruence Obstructions for Regular Graphs\n\n### Problem Statement\nCan the characteristic polynomial of a `d`-regular graph on `n` vertices be constrained modulo a prime `p`? Specifically, the trace is 0, the sum of squared eigenvalues is `nd`, and these create modular constraints on the polynomial coefficients.\n\n### Precise Theorem Statement\nFor a `d`-regular simple graph on `n` vertices with i",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "40fc847b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:25:28.474205+00:00"
-  },
-  {
     "id": "fd_0287",
     "title": "Compositional analysis",
     "description": "Prove that series and parallel composition of event graphs corresponds to tropical matrix operations, enabling modular throughput certification.\n\n### Cross-Domain Connections\n- **VLSI design**: Certified throughput for hardware pipelines\n- **Signal processing**: Verified streaming computation rates\n- **Embedded systems**: Formal timing analysis for safety-critical software\n- **Railway signaling**: Certified timetable feasibility\n\n### Estimated Difficulty\nHigh. The SDF/timed automata formalization is substantial, but the reduction to tropical matrices is well-established in the literature. A starting point would be to formalize the event graph → tropical matrix reduction for a concrete class of systems.\n\n---\n\n## Priority Ordering",
@@ -375,52 +360,6 @@
     "source_exp_id": "6a36e8f9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T13:33:42.335433+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Apply Salehi-Golsefidy–Varjú [SGV12]",
-    "description": ": For Zariski-dense subgroups of semisimple algebraic groups over ℤ, the congruence quotients form a uniform expander family. The Berggren group satisfies the hypotheses (finitely generated, Zariski-dense in SO(2,1)).",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a36e8f9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T13:33:42.356092+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Determine exact spectral gap",
-    "description": ": Investigate whether ρ = 1/√3 is exact (perhaps forced by the structure of the 3-generator uniform measure) or asymptotic. If exact, this would give a Ramanujan-type bound.\n\n### Lean Target\n```lean\ntheorem berggren_uniform_expansion :\n    ∃ ρ < 1, ∀ q : ℕ, q.Prime → q ≥ 5 →\n      berggrenSecondEigenvalue q ≤ ρ\n```\n\n### Cross-Domain Impact\n- Explicit Ramanujan-type graphs from arithmetic dynamics\n- Connection to the Selberg 1/4 conjecture for thin groups\n- New source of optimal expanders for coding theory\n\n---\n\n## Direction 2: Deterministic Extractor from Thin-Orbit Dynamics\n\n### Goal\nUpgrade the Berggren PRG to a deterministic extractor or condenser for arithmetic weak random sources.\n\n### Hypothesis\nIf the source distribution has min-entropy k supported on Berggren orbits, then the outpu",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a36e8f9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T13:33:42.380661+00:00"
-  },
-  {
-    "id": "fd_0276",
-    "title": "Use bounded_circuit_degree_bound",
-    "description": "(from the project catalog): A circuit of size s computes a polynomial of degree ≤ 2^s. For circuits with bounded multiplicative depth, the degree is controlled.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a36e8f9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T13:33:42.583557+00:00"
   },
   {
     "id": "fd_0282",
@@ -500,65 +439,6 @@
     "timestamp": "2026-05-17T14:15:43.389731+00:00"
   },
   {
-    "id": "fd_0274",
-    "title": "Long-term",
-    "description": ": Direction 5 (categorical) — the deepest structural result, requiring all other directions as prerequisites.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b9c60d0c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T14:33:45.726467+00:00"
-  },
-  {
-    "id": "fd_0274",
-    "title": "Hex lattice symmetry group",
-    "description": ": Full dihedral D₆ action on HexCell",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7371b140",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T14:44:04.195883+00:00"
-  },
-  {
-    "id": "fd_0276",
-    "title": "Compression operators",
-    "description": ": Full Steiner symmetrization on hex grid with monotonicity proofs",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7371b140",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T14:44:04.234156+00:00"
-  },
-  {
-    "id": "fd_0277",
-    "title": "Translation and symmetry quotienting",
-    "description": ": Define \"up to translation\" equivalence cleanly\n\n---\n\n## Cross-Domain Connections\n\n| Direction | Mathematics | Physics | Engineering | CS |\n|-----------|------------|---------|-------------|-----|\n| 1. Width bound | Additive combinatorics | — | — | — |\n| 2. Stability | Quantitative isoperimetry | Crystal relaxation | Network robustness | — |\n| 3. Full profile | Extremal combinatorics | Phase transitions | Optimal deployment | Separator bounds |\n| 4. Anisotropic | Convex geometry | Wulff construction | Antenna design | — |\n| 5. Curvature flow | Geometric analysis | Surface diffusion | Image processing | Game AI |\n\n---\n\n## Team Directive\n\nEach direction should be pursued by a team that:",
-    "domains": [
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7371b140",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T14:44:04.254565+00:00"
-  },
-  {
     "id": "fd_0256",
     "title": "Hypothesis Formation",
     "description": ": State the conjecture precisely, with boundary cases and potential counterexamples identified.",
@@ -629,6 +509,62 @@
     "source_exp_id": "483c8105",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T15:03:32.981213+00:00"
+  },
+  {
+    "id": "fd_0270",
+    "title": "Hypothesis",
+    "description": ": State the precise mathematical claim.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e6a583e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:19:10.659880+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Proofs",
+    "description": ": Prove helper lemmas bottom-up, verifying each builds.",
+    "domains": [
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "5e6a583e",
+    "consumed_by_exp_id": "6d6b9f8a",
+    "timestamp": "2026-05-17T15:19:10.716194+00:00"
+  },
+  {
+    "id": "fd_0278",
+    "title": "Direction 4",
+    "description": "(Circuit derandomization) — Ambitious, requires circuit formalization.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e6a583e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:19:10.821210+00:00"
+  },
+  {
+    "id": "fd_0279",
+    "title": "Direction 7",
+    "description": "(Algebraic spectral gap) — Requires heavy number theory.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e6a583e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-17T15:19:10.841827+00:00"
   },
   {
     "id": "fd_0126",
@@ -1257,37 +1193,6 @@
     "timestamp": "2026-05-17T12:47:39.141850+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Why It Matters",
-    "description": "Our min-plus/max-plus duality is a special case: negation defines a semiring isomorphism `(ℝ, min, +) ≅ (ℝ, max, +)`. Generalizing to arbitrary semiring isomorphisms would yield a single meta-theorem covering tropical duality, Boolean duality (De Morgan), and algebraic circuit equivalences simultaneously.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a00f01af",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T12:51:54.551303+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Meta-Direction: Building a Formal Tropical Complexity Theory",
-    "description": "The five directions above converge on a single program: **building a machine-verified tropical complexity theory** where:\n\n- Circuit models are defined once and specialized to conventions via isomorphism.\n- Lower bounds transfer automatically across conventions.\n- Algorithms dualize formally, producing verified dual algorithms.\n- Connections to Boolean complexity, automata theory, and convex analysis are proved, not assumed.\n\nThis program has the potential to become the first complete formal complexity theory for a non-Boolean computational model, establishing a template for formalizing complexity theory more broadly.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a00f01af",
-    "consumed_by_exp_id": "1de6f3ad",
-    "timestamp": "2026-05-17T12:51:54.594622+00:00"
-  },
-  {
     "id": "fd_0255",
     "title": "Direction 1: Full Lower Bound via Hyperplane Restriction Induction",
     "description": "**Status**: The upper bound (extremal polynomial construction) is fully formalized. The lower bound requires additional infrastructure.\n\n**Concrete next step**: Formalize the polynomial factoring lemma for `MvPolynomial`:\n\n```\nIf f ∈ MvPolynomial(Fin (n+1)) 𝔽 vanishes identically on the hyperplane x₀ = c,\nthen (X₀ - C c) ∣ f and totalDegree(f / (X₀ - C c)) ≤ totalDegree(f) - 1.\n```\n\n**Required infrastructure**:\n- Connect `MvPolynomial.finSuccEquiv` with `fiberRestrict` to show that fiber vanishing implies polynomial divisibility\n- Formalize the factor theorem for polynomials over integral domains (`Polynomial.dvd_iff_isRoot`)\n- Track total degree through the `finSuccEquiv` equivalence\n- Prove the numerical optimization: for all valid t, `(q-t) * minWt(n-1, d-t) ≥ (q-b) * q^(n-1-a)`\n\n**Proo",
@@ -1508,41 +1413,6 @@
     "timestamp": "2026-05-17T14:26:22.883807+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "3. Instantiate the Framework for Apollonian Group mod q",
-    "description": "**Hypothesis**: The Apollonian group (generated by four reflections preserving the Descartes quadratic form) acting on Descartes quadruples mod q produces an expander for most primes q.\n\n**Proof Strategy**:\n- Define the Apollonian generators as 4×4 integer matrices preserving Q(x,y,z,w) = 2(x²+y²+z²+w²) - (x+y+z+w)².\n- Compute orbits mod q and verify spectral gaps computationally.\n- The strong approximation results of Fuchs (2011) and Bourgain-Kontorovich (2014) imply that the Apollonian group surjects onto (Z/qZ)⁴/Q for almost all q, which should give spectral gap.\n- Formalize the orbit structure using the Descartes circle theorem.\n\n**Cross-domain Connections**: Apollonian gaskets, thin groups, strong approximation, Bourgain-Gamburd expansion machine.\n\n**Impact**: Would demonstrate that t",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b3b0e7e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T14:26:22.905377+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "4. Representation-Theoretic Decomposition of Test Spaces",
-    "description": "**Hypothesis**: Polynomial test functions on arithmetic orbits decompose into irreducible representations of the acting group, with each component decaying at a rate determined by its representation-theoretic type.\n\n**Proof Strategy**:\n- For the Berggren group mod q, the orbit carries a representation of the finite group O(2,1,Z/qZ).\n- Decompose L²(orbit) into irreducible representations.\n- Show that degree-d polynomial tests lie in a bounded number of irreducible components.\n- The spectral gap gives the worst-case decay rate, but individual components may decay faster.\n- Formalize using Mathlib's representation theory (RepresentationTheory.Basic).\n\n**Cross-domain Connections**: Representation theory of finite groups of Lie type, automorphic forms, harmonic analysis on symmetric spaces.\n\n*",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2b3b0e7e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T14:26:22.924659+00:00"
-  },
-  {
     "id": "fd_0268",
     "title": "5. Derive Extractor and Hitting-Set Constructions from Arithmetic Walks",
     "description": "**Hypothesis**: Arithmetic walks on expanding orbits yield deterministic extractors and hitting sets for structured polynomial sources.\n\n**Proof Strategy**:\n- An extractor maps a \"weakly random\" source to a \"nearly uniform\" output. The arithmetic walk theorem says: if the input distribution is supported on the orbit with min-entropy k, then n = O((log(orbit_size) - k) / log(1/ρ)) steps of the walk produce a distribution that is ε-close to uniform.\n- For hitting sets: if a polynomial p is nonzero on a fraction δ of the orbit, then a walk of length n = O(log(1/δε)/log(1/ρ)) starting from any point hits a nonzero of p with probability ≥ 1-ε.\n- Formalize the extractor property using the Leftover Hash Lemma adapted to expander walks.\n\n**Cross-domain Connections**: Randomness extractors (Trevisa",
@@ -1645,34 +1515,6 @@
     "source_exp_id": "8c5ff762",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T15:07:36.860885+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Phase 2 (Short-term, Weeks 3–6)",
-    "description": "- Direction 2: Combinatorial Nullstellensatz (builds on Phase 1)\n- Direction 3a: Reed–Muller minimum distance (direct application)",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8c5ff762",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:07:36.974947+00:00"
-  },
-  {
-    "id": "fd_0267",
-    "title": "Phase 3 (Medium-term, Weeks 7–12)",
-    "description": "- Direction 3b–3c: Affine Cartesian codes and decoding bounds\n- Direction 5b–5c: Interpolation algorithms and evaluation matrices",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8c5ff762",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T15:07:37.097445+00:00"
   },
   {
     "id": "fd_0268",
