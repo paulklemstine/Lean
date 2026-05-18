@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1190 of the highest-quality
+A curated collection of 1197 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1190
+Total files: 1197
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -182,6 +182,7 @@ import FINAL.Bridges.BreakthroughDirections
 import FINAL.Bridges.Bridge
 import FINAL.Bridges.ByzantineCertificate
 import FINAL.Bridges.CartesianFootprintBound
+import FINAL.Bridges.CategoricalBridges
 import FINAL.Bridges.CategoricalTropicalUltrametric
 import FINAL.Bridges.CategorifiedShannonTheory
 import FINAL.Bridges.CausalClosure
@@ -290,6 +291,7 @@ import FINAL.Bridges.LawvereEMLMetricSemantics
 import FINAL.Bridges.LawvereThermodynamicGalois
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
+import FINAL.Bridges.LocalizationGeneralization
 import FINAL.Bridges.LogSumExpVariational
 import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.LowDegreeTesting
@@ -304,6 +306,7 @@ import FINAL.Bridges.Minimality
 import FINAL.Bridges.ModularScatteringDuality
 import FINAL.Bridges.MoonshineCodingTheory
 import FINAL.Bridges.MorseInequalities
+import FINAL.Bridges.MultiClassCertificationBridge
 import FINAL.Bridges.Network
 import FINAL.Bridges.NeuralBirkhoffDecomposition
 import FINAL.Bridges.NeuralProofMining
@@ -371,6 +374,7 @@ import FINAL.Bridges.SpectralApplications
 import FINAL.Bridges.SpectralCrypto
 import FINAL.Bridges.SpectralProofSpace
 import FINAL.Bridges.SpectralRealization
+import FINAL.Bridges.SpectralReciprocity
 import FINAL.Bridges.StabilizerGaloisConcatenation
 import FINAL.Bridges.StoneChuClosureDuality
 import FINAL.Bridges.StoneDualityMLAdvanced
@@ -454,6 +458,7 @@ import FINAL.Bridges.TropicalRadonDuality
 import FINAL.Bridges.TropicalRadonGraphDuality
 import FINAL.Bridges.TropicalRateDistortion
 import FINAL.Bridges.TropicalRateDistortionExact
+import FINAL.Bridges.TropicalReLUDepthSeparation
 import FINAL.Bridges.TropicalResiduationRealization
 import FINAL.Bridges.TropicalResiduationTrapdoorDuality
 import FINAL.Bridges.TropicalSatake
@@ -530,6 +535,7 @@ import FINAL.Computation.FiveDreams
 import FINAL.Computation.FutureResearchTheorems
 import FINAL.Computation.GravityOracle
 import FINAL.Computation.InformationEntropy
+import FINAL.Computation.KarchmerWigderson
 import FINAL.Computation.KraftShannon
 import FINAL.Computation.MetaOracle
 import FINAL.Computation.MetaOracleFiveQuestions
@@ -1147,6 +1153,7 @@ import FINAL.Tropical.TropicalDegreeRobustness
 import FINAL.Tropical.TropicalEntropyCompact
 import FINAL.Tropical.TropicalFactoring
 import FINAL.Tropical.TropicalFano
+import FINAL.Tropical.TropicalFormula
 import FINAL.Tropical.TropicalFrontierResearch
 import FINAL.Tropical.TropicalFutureDirections
 import FINAL.Tropical.TropicalGameEquilibria
