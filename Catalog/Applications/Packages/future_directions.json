@@ -390,7 +390,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "1e8dff4d",
       "timestamp": "2026-05-17T18:48:26.949072+00:00"
     },
@@ -944,8 +944,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "0ae94cf3",
       "timestamp": "2026-05-17T18:48:26.949131+00:00"
     },
     {
@@ -2198,7 +2198,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:29:22.482768+00:00"
     },
@@ -2413,7 +2413,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:04:06.928190+00:00"
     },
@@ -2448,7 +2448,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:04:06.944316+00:00"
     },
@@ -3097,7 +3097,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:01:40.672071+00:00"
     },
@@ -3561,7 +3561,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:05:11.106068+00:00"
     },
@@ -3654,7 +3654,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:04:33.094091+00:00"
     },
@@ -3789,7 +3789,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:04:45.209416+00:00"
     },
@@ -3807,7 +3807,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:04:45.212590+00:00"
     },
@@ -4092,7 +4092,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:03:57.142741+00:00"
     },
@@ -4109,7 +4109,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:03:57.147052+00:00"
     },
@@ -4126,7 +4126,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:03:57.151237+00:00"
     },
@@ -4143,7 +4143,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:04:19.997405+00:00"
     },
@@ -4160,7 +4160,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:04:20.002916+00:00"
     },
@@ -4177,7 +4177,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:04:20.007318+00:00"
     },
@@ -4194,7 +4194,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:04:20.012410+00:00"
     },
@@ -4424,7 +4424,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T04:03:34.893372+00:00"
     },
@@ -4554,7 +4554,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T04:06:30.567892+00:00"
     },
@@ -4571,7 +4571,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T04:06:30.573635+00:00"
     },
@@ -4588,7 +4588,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T04:06:30.578335+00:00"
     },
@@ -4605,7 +4605,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T04:06:30.582821+00:00"
     },
@@ -4622,7 +4622,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T04:06:30.587646+00:00"
     },
@@ -4639,9 +4639,109 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T04:06:30.591991+00:00"
+    },
+    {
+      "id": "fd_0250",
+      "title": "1. Reidemeister II Invariance via Planar Arc Models",
+      "description": "**Status:** The current formalization proves bracket invariance under RIII (via state bijection) and RI behavior (via sum decomposition). RII invariance requires richer diagram structure.\n\n**Next Step:** Build a concrete planar diagram model using arc-connection data:\n- Define `PlanarDiagram` with explicit arc pairings at each crossing\n- Derive loop counts computationally from the arc connection graph\n- Prove RII invariance by showing the algebraic identity `A²δ + 2 + A⁻²δ = -(A⁴ + A⁻⁴)` cancels correctly when combined with the topology-dependent loop contributions\n- This requires tracking how individual loops merge/split under smoothing, not just total loop counts\n\n**Impact:** Completes the full Reidemeister invariance proof for the Jones polynomial. Opens the door to certified knot recog",
+      "source_exp_id": "1e8dff4d",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Topology",
+        "Algebra",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:01:41.418506+00:00"
+    },
+    {
+      "id": "fd_0251",
+      "title": "2. Adequacy and the Span Theorem for Alternating Knots",
+      "description": "**Status:** The detection theorem (`jones_ne_one_of_adequate`) is stated but requires coefficient-level analysis of Laurent polynomials.\n\n**Next Step:** Build a Laurent polynomial coefficient API:\n- Prove `δ^k` has leading coefficient `(-1)^k` at degree `2k`\n- Prove the state contribution `T(e) * δ^m` has support in `[e - 2m, e + 2m]`\n- Show that for adequate diagrams, the leading coefficient of the bracket comes uniquely from the all-A state\n- Derive the Kauffman–Murasugi–Thistlethwaite span formula: `span(⟨D⟩) = 4n` for reduced alternating diagrams with `n` crossings\n- Conclude: alternating knots with `n > 0` crossings have `jones ≠ 1`\n\n**Impact:** Machine-verified unknot detection in the alternating class. First formally proved detection theorem in knot theory.\n\n**Proof Strategy:** Indu",
+      "source_exp_id": "1e8dff4d",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Topology",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:01:41.425877+00:00"
+    },
+    {
+      "id": "fd_0252",
+      "title": "3. Braid Group Representations and Markov Trace",
+      "description": "**Status:** The current formalization uses abstract diagram models. Braids provide a more algebraic entry point.\n\n**Next Step:**\n- Define the braid group `B_n` as a finitely presented group (Artin generators with braid relations)\n- Define braid closure and prove every link is a closed braid (Alexander's theorem, stated axiomatically)\n- Define the Temperley–Lieb algebra `TL_n(δ)` as a quotient of the braid group algebra\n- Construct the Jones representation `B_n → TL_n`\n- Define the Markov trace on `TL_n` and prove it yields the Jones polynomial\n- Prove agreement with the Kauffman bracket on braid closures\n\n**Impact:** Opens quantum algebra formalization: R-matrices, quantum groups, modular tensor categories. Enables certified computation of Jones polynomials for torus knots via braid word e",
+      "source_exp_id": "1e8dff4d",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Topology",
+        "Physics",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:01:41.433066+00:00"
+    },
+    {
+      "id": "fd_0253",
+      "title": "4. Khovanov Homology as a Categorification",
+      "description": "**Status:** The Kauffman bracket is a decategorified invariant (a polynomial). Khovanov homology lifts it to a graded chain complex.\n\n**Next Step:**\n- Define the Khovanov chain complex: for each state, assign a graded vector space based on loop count\n- Define the differential using merge/split maps between smoothing states\n- Prove the graded Euler characteristic equals the Jones polynomial\n- Prove Reidemeister invariance of Khovanov homology (as a bigraded group, up to isomorphism)\n- Compute Khovanov homology for the trefoil and figure-eight knot\n\n**Impact:** First formal categorification in topology. Khovanov homology detects the unknot (Kronheimer–Mrowka, via gauge theory), so this would be a step toward certified unknot detection algorithms.\n\n**Hypothesis:** The chain complex structure ",
+      "source_exp_id": "1e8dff4d",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Topology",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:01:41.439580+00:00"
+    },
+    {
+      "id": "fd_0254",
+      "title": "5. Certified Knot Recognition Pipeline",
+      "description": "**Status:** The formalization provides invariant computation (Jones polynomial) but not decision procedures.\n\n**Next Step:**\n- Implement Dowker notation and PD code parsers as Lean definitions\n- Build a verified bracket evaluator: given a PD code, compute the bracket by state-sum enumeration\n- Implement the Reidemeister move search: given two diagrams, search for a sequence of moves connecting them\n- Use the Jones polynomial as a first-pass filter: if `jones D₁ ≠ jones D₂`, certify that `D₁` and `D₂` represent different knots\n- For alternating knots, use the span theorem to certify unknottedness\n\n**Impact:** First formally verified knot tabulation tool. Could certify knot tables up to ~15 crossings with proof certificates.\n\n**Performance Target:** Bracket evaluation for diagrams with ≤ 20 ",
+      "source_exp_id": "1e8dff4d",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Topology",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:01:41.446728+00:00"
     }
   ],
   "pruned": [
