@@ -3754,7 +3754,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "37cff0cf",
       "timestamp": "2026-05-18T01:04:45.202462+00:00"
     },
@@ -4427,6 +4427,119 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T04:03:34.893372+00:00"
+    },
+    {
+      "id": "fd_0239",
+      "title": "Direction 1: Fixed-Point Lattice Completeness",
+      "description": "**Theorem Statement.** The set of EML-closed sets (fixed points of `EMLCl`) forms a complete lattice when ordered by inclusion, with meets given by intersection and joins by closure of union.\n\n**Proposed Lean Signature:**\n```lean\nnoncomputable def emlClosedLattice : CompleteLattice {C : Set (ℝ → ℝ) // EMLCl C = C} where\n  sup := fun ⟨A, hA⟩ ⟨B, hB⟩ => ⟨EMLCl (A ∪ B), emlCl_idempotent _⟩\n  inf := fun ⟨A, hA⟩ ⟨B, hB⟩ => ⟨A ∩ B, eml_fixedPoint_inter_closed A B hA hB⟩\n  sSup := fun S => ⟨EMLCl (⋃₀ (Subtype.val '' S)), emlCl_idempotent _⟩\n  sInf := fun S => ⟨⋂₀ (Subtype.val '' S), ...⟩\n  ...\n```\n\n**Proof Strategy.** We already have `eml_fixedPoint_inter_closed` for binary meets and `emlCloseds_completeLattice` for the Closeds type. The remaining work is to construct an order isomorphism between",
+      "source_exp_id": "37cff0cf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "Cryptography",
+        "EML",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:14.466615+00:00"
+    },
+    {
+      "id": "fd_0240",
+      "title": "Direction 2: Closure Commutes with Algebraic Operations",
+      "description": "**Theorem Statement.** If `A` and `B` are EML-closed, then `EMLCl({f + g | f ∈ A, g ∈ B})` can be characterized in terms of `A` and `B`. More precisely, the \"pointwise sum\" of two closed sets is contained in the closure of their union.\n\n**Proposed Lean Signature:**\n```lean\ntheorem eml_closure_pointwise_add_subset (A B : Set (ℝ → ℝ))\n    (hA : EMLCl A = A) (hB : EMLCl B = B) :\n    {h : ℝ → ℝ | ∃ f ∈ A, ∃ g ∈ B, h = fun x => f x + g x} ⊆ EMLCl (A ∪ B) := by\n  sorry\n\ntheorem eml_closure_pointwise_mul_subset (A B : Set (ℝ → ℝ))\n    (hA : EMLCl A = A) (hB : EMLCl B = B) :\n    {h : ℝ → ℝ | ∃ f ∈ A, ∃ g ∈ B, h = fun x => f x * g x} ⊆ EMLCl (A ∪ B) := by\n  sorry\n```\n\n**Proof Strategy.** Since `f ∈ A ⊆ EMLCl(A ∪ B)` and `g ∈ B ⊆ EMLCl(A ∪ B)`, their sum/product is in `EMLCl(A ∪ B)` by the `add` and",
+      "source_exp_id": "37cff0cf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Cryptography",
+        "EML",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:14.474026+00:00"
+    },
+    {
+      "id": "fd_0241",
+      "title": "Direction 3: Deficiency Monotonicity Under Closure",
+      "description": "**Theorem Statement.** If a \"semantic complexity\" measure (deficiency, Kolmogorov complexity bound, etc.) is monotone with respect to set inclusion and assigns finite values to closed sets, then closure does not increase deficiency.\n\n**Proposed Lean Signature:**\n```lean\ntheorem deficiency_monotone_under_closure\n    (δ : Set (ℝ → ℝ) → ℝ) (hδ_mono : Antitone δ)\n    (A : Set (ℝ → ℝ)) :\n    δ (EMLCl A) ≤ δ A := by\n  exact hδ_mono (subset_emlCl A)\n```\n\n**Proof Strategy.** This is immediate from antitononicity of any complexity measure and extensivity of closure (`A ⊆ EMLCl A`). The real content is in instantiating `δ` with the deficiency function from `ThermodynamicChaitinBarrier.lean` and verifying the monotonicity hypothesis.\n\n**Cross-Domain Significance.** This creates the bridge between the",
+      "source_exp_id": "37cff0cf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Physics",
+        "EML",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:14.481174+00:00"
+    },
+    {
+      "id": "fd_0242",
+      "title": "Direction 4: Abstract Interpretation via Closure Monad",
+      "description": "**Theorem Statement.** The closure operator `EMLCl` satisfies the monad laws: `return` is inclusion (`A ⊆ EMLCl A`), `join` is idempotence (`EMLCl ∘ EMLCl = EMLCl`), and `bind` is monotone application. This makes `EMLCl` an abstract interpretation monad.\n\n**Proposed Lean Signature:**\n```lean\ntheorem emlCl_monad_unit (A : Set (ℝ → ℝ)) : A ⊆ EMLCl A :=\n  subset_emlCl A\n\ntheorem emlCl_monad_join (A : Set (ℝ → ℝ)) : EMLCl (EMLCl A) = EMLCl A :=\n  emlCl_idempotent A\n\ntheorem emlCl_monad_bind_assoc (A : Set (ℝ → ℝ)) (f : Set (ℝ → ℝ) → Set (ℝ → ℝ))\n    (hf : Monotone f) (hf_cl : ∀ S, f S ⊆ EMLCl (f S)) :\n    EMLCl (⋃ x ∈ A, f {x}) = EMLCl (⋃ x ∈ EMLCl A, f {x}) := by\n  sorry\n```\n\n**Proof Strategy.** The unit and join laws are already proved. The bind associativity requires showing that the closur",
+      "source_exp_id": "37cff0cf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "EML",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:14.487325+00:00"
+    },
+    {
+      "id": "fd_0243",
+      "title": "Direction 5: Convex-Thermodynamic Representation",
+      "description": "**Theorem Statement.** Under suitable topological assumptions on `Set (ℝ → ℝ)` (e.g., a metrizable topology compatible with the order), the closure operator `EMLCl` can be represented as the lower semicontinuous envelope (convex closure) of an associated \"free energy\" functional.\n\n**Proposed Lean Signature:**\n```lean\n/-- A representation theorem connecting EML closure to convex envelopes.\n    Under a compatible topology, the closure of A equals the intersection\n    of all topologically closed, EML-closed sets containing A. -/\ntheorem eml_closure_topological_representation\n    [TopologicalSpace (Set (ℝ → ℝ))]\n    (hcompat : ∀ A : Set (ℝ → ℝ), IsOpen {B | A ⊆ B})\n    (A : Set (ℝ → ℝ)) :\n    EMLCl A = sInf {C | A ⊆ C ∧ EMLCl C = C ∧ IsClosed {B | B ⊆ C}} := by\n  sorry\n```\n\n**Proof Strategy.**",
+      "source_exp_id": "37cff0cf",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Topology",
+        "Physics",
+        "Cryptography",
+        "EML",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:14.493717+00:00"
     }
   ],
   "pruned": [
