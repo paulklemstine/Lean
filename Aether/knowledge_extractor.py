@@ -2165,10 +2165,10 @@ Research mode: {concept.research_mode}
                     fd = FutureDirection(
                         id=f"fd_{len(fd_manager._directions):04d}",
                         title=title_line,
-                        description=fd_text[:4000],
+                        description=fd_text,
                         source_exp_id=job.job_id,
                         source_path="future_directions_md",
-                        domains=fd_manager._infer_domains(fd_text[:2000]),
+                        domains=fd_manager._infer_domains(fd_text),
                         depth_estimate=3,
                         priority_score=0.75,
                     )
@@ -2291,10 +2291,10 @@ Research mode: {concept.research_mode}
                                 fd = FutureDirection(
                                     id=f"fd_{len(fd_manager._directions):04d}",
                                     title=title_line,
-                                    description=fd_text[:4000],
+                                    description=fd_text,
                                     source_exp_id=job.job_id,
                                     source_path="future_directions_md",
-                                    domains=fd_manager._infer_domains(fd_text[:2000]),
+                                    domains=fd_manager._infer_domains(fd_text),
                                     depth_estimate=3,
                                     priority_score=0.75,
                                 )
