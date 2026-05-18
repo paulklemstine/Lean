@@ -749,7 +749,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T10:17:17.089808+00:00"
     },
@@ -1030,7 +1030,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T10:17:17.103111+00:00"
     },
@@ -1085,7 +1085,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.72,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T10:17:17.106124+00:00"
     },
@@ -1153,6 +1153,44 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T11:05:45.217014+00:00"
+    },
+    {
+      "id": "fd_0063",
+      "title": "This document outlines five concrete next steps building on the formalized Karch",
+      "description": "# Future Directions: Monotone Circuit Complexity in Lean\n\nThis document outlines five concrete next steps building on the formalized Karchmer-Wigderson correspondence and monotone formula lower bounds.\n\n---\n\n## 1. Full KW Equivalence for General (Non-Monotone) Formulas\n\n**Theorem Statement:**\nFor any Boolean function `f : (Fin n → Bool) → Bool`, the minimum depth of a formula (with negation) computing `f` equals the deterministic communication complexity of the KW relation `KW_f`, where Alice holds `x ∈ f⁻¹(1)`, Bob holds `y ∈ f⁻¹(0)`, and they must find `i` with `x i ≠ y i`.\n\n**Lean Definitions Needed:**\n- `Formula n` — formulas with negation, AND, OR\n- `KWRelation n f` — general KW relation (find any differing index)\n- `DetProtocol` — general deterministic protocol (not restricted to monotone queries)\n\n**Proof Strategy:**\nExtend the current proof by allowing negation gates. In the formula→protocol direction, a negation flips which player queries. In the protocol→formula direction, the same OR/AND construction works but with negated variables at leaves where the protocol output indicates `y i = true ∧ x i = false`.\n\n**Cross-Domain Connection:**\nConnects to proof complexity via feasible interpolation: a short proof of `φ(x) ∧ ψ(y) → ∨ᵢ (xᵢ ≠ yᵢ)` yields a short communication protocol, hence a small formula separator.\n\n---\n\n## 2. Logarithmic Lower Bound for OR via Rectangle Counting\n\n**Theorem Statement:**\n```\ntheorem orFn_KW_cost_ge_log (hn : 1 ≤ n) (P : KWProtocol n (orFn n)) :\n    Nat.clog 2 n ≤ P.cost\n```\n\n**Lean Definitions Needed:**\n- `KWProto.numLeaves` — count leaves in a protocol tree\n- `KWProto.numLeaves_le_pow_cost` — the number of leaves is at most `2^cost`\n- Proof that each leaf of an OR protocol covers at most one Alice input\n\n**Proof Strategy:**\nEach leaf `i` of a correct KW protocol for OR has `hA : ∀ x, orFn x = true → x i = true`. Among the `n` \"unit vectors\" (exactly one coordinate true), only the one with coordinate `i` true satisfies this. So each leaf covers at most one unit vector. There are `n` unit vectors, so at least `n` leaves are needed. Since a protocol of cost `c` has at most `2^c` leaves, `2^c ≥ n`, giving `c ≥ ⌈log₂ n⌉`.\n\n**Cross-Domain Connection:**\nThis is a miniature version of rectangle/partition lower bounds. The same counting argument generalizes to threshold functions and clique predicates.\n\n---\n\n## 3. Monotone Circuit Size Lower Bounds via Approximation Method\n\n**Theorem Statement:**\n```\ntheorem monotone_circuit_size_lower_bound_for_clique\n    (m k : ℕ) (C : MonoCircuit (numEdges m)) (hC : C.eval = hasClique m k) :\n    explicitBound m k ≤ C.size\n```\n\n**Lean Definitions Needed:**\n- `MonoCircuit n` — monotone circuits (DAGs, not just trees/formulas)\n- `Graph m`, `hasClique m k` — graph predicates\n- `SimpleApproximator` — low-complexity approximators (e.g., DNFs of bounded width)\n- `approximationError` — probability of disagreement under a chosen distribution\n\n**Proof Strategy (Razborov's Approximation Method):**\n1. Every small monotone circuit is close to a simple approximator under a random graph distribution.\n2. Every simple approximator fails to distinguish clique-containing graphs from sparse graphs.\n3. The clique predicate does distinguish them, so no small circuit computes it.\n\nThe key technical lemma: each AND/OR gate introduces bounded approximation error, which accumulates multiplicatively with circuit size.\n\n**Cross-Domain Connection:**\nLinks to extremal combinatorics (sunflower lemma), probability (random graph models), and information theory (the approximator's \"information content\" is bounded).\n\n---\n\n## 4. Feasible Interpolation for Resolution\n\n**Theorem Statement:**\n```\ntheorem resolution_interpolation\n    (π : ResolutionProof (φ ∧ ψ → ⊥))\n    (h_disjoint : Disjoint (vars φ) (vars ψ)) :\n    ∃ C : MonoCircuit n, C.eval = interpolant φ ψ ∧ C.size ≤ π.size\n```\n\n**Lean Definitions Needed:**\n- `ResolutionProof` — resolution proof system for propositional logic\n- `interpolant` — Cr",
+      "source_exp_id": "acbf4c21",
+      "source_path": "future_directions_md",
+      "domains": [
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T11:06:21.110562+00:00"
+    },
+    {
+      "id": "fd_0064",
+      "title": "Phase Transition in Proof Compression for Formal Arithmetic",
+      "description": "Conjecture: Fix a sound finitely axiomatized theory T extending elementary arithmetic and a complete deterministic proof normalizer N for its formal proofs. There exists a critical exponent alpha_T such that for families of true Pi_2 statements {phi_n} with shortest raw proof length L(n), the shortest normalized proof length L_N(n) exhibits a sharp dichotomy: either L_N(n) <= poly(L(n)) for all sufficiently large n, or L_N(n) >= exp(L(n)^alpha_T) infinitely often, with no intermediate asymptotic regime on any natural complete family encoding total-search principles. Test: implement multiple normalization/translation pipelines in Lean or another proof assistant for benchmark families (pigeonhole, Paris-Harrington fragments, circuit lower-bound surrogates, finite combinatorial principles) and measure whether proof-length distortion clusters into polynomial vs stretched/exponential classes, searching for a universal threshold per theory. A single robust family with stable intermediate asymptotics would refute the conjecture. Impact: would uncover a new universality law for proof complexity, giving a quantitative theory of when formalization and normalization preserve mathematical insight versus causing unavoidable proof explosion.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Proof Complexity",
+        "Mathematical Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T11:06:28.605908+00:00"
     }
   ],
   "pruned": [
