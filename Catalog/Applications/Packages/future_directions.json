@@ -2900,7 +2900,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "46e03e85",
       "timestamp": "2026-05-17T23:03:47.826958+00:00"
     },
@@ -3638,6 +3638,107 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:02:08.756629+00:00"
+    },
+    {
+      "id": "fd_0198",
+      "title": "1. Eventual-Period Preservation for Pre-Periodic Points",
+      "description": "**Hypothesis**: If `x` is pre-periodic under `f` (i.e., `f^[k](x)` is periodic for some `k > 0` but `x` itself is not periodic), and `e` semiconjugates `f` to `g`, then `e(x)` is pre-periodic under `g` with pre-period at most `k` and eventual period dividing the eventual period of `x`.\n\n**Proof Strategy**: Extend `semiconj_periodic_dvd` by applying it to the iterate `f^[k](x)`, which is periodic. The semiconjugacy iterate lemma gives `e(f^[k](x)) = g^[k](e(x))`, reducing the problem to the periodic case for the tail orbit.\n\n**Impact**: This would complete the classification of orbit types under compression: fixed points, periodic orbits, and pre-periodic tails are all systematically preserved with quantitative bounds. It is the natural completion of the period-compression theory.\n\n**Cross-",
+      "source_exp_id": "46e03e85",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:04:33.094091+00:00"
+    },
+    {
+      "id": "fd_0199",
+      "title": "2. Entropy-Style Lower Bounds from Cycle Structure",
+      "description": "**Hypothesis**: Let `C(f)` be the number of distinct periodic orbits of `f` on a finite type `α`. If `e : α → β` surjectively semiconjugates `f` to `g`, then `C(g) ≤ C(f)`. Moreover, if `f` has orbits of lengths `n₁, n₂, ..., n_k` whose images under `e` remain distinct orbits of the same lengths, then `card(β) ≥ n₁ + n₂ + ... + n_k`.\n\n**Proof Strategy**: Use `surjective_semiconj_periodicPts_image` to show periodic orbits map surjectively onto periodic orbits. Count orbits by partitioning `periodicPts` into equivalence classes under the orbit relation. The cardinality bound follows from the fact that distinct orbits contribute disjoint subsets of `β`.\n\n**Impact**: This gives a combinatorial information-theoretic lower bound on latent space size: the more complex the cycle structure, the lar",
+      "source_exp_id": "46e03e85",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Topology",
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:04:33.099671+00:00"
+    },
+    {
+      "id": "fd_0200",
+      "title": "3. Categorical Quotient Dynamics for Learned Encoders",
+      "description": "**Hypothesis**: The category of finite dynamical systems with semiconjugacies as morphisms admits a well-defined quotient construction: given `f : α → α` and a surjection `e : α → β` satisfying `FiberInvariant f e`, there exists a unique `g : β → β` such that `e` semiconjugates `f` to `g`.\n\n**Proof Strategy**: Define `g(y) = e(f(x))` for any `x` with `e(x) = y`; fiber invariance ensures this is well-defined. Prove uniqueness from surjectivity. Then show this quotient is functorial: composing two fiber-invariant quotients yields a fiber-invariant quotient.\n\n**Impact**: This provides the categorical foundation for multi-level compression: an encoder can be decomposed as a chain of successively coarser quotients, each preserving periodic structure. It is the mathematical framework for hierarc",
+      "source_exp_id": "46e03e85",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:04:33.104764+00:00"
+    },
+    {
+      "id": "fd_0201",
+      "title": "4. Algebraic Circuit Lower Bounds for Exact Latent Simulators",
+      "description": "**Hypothesis**: If a Boolean/arithmetic circuit of depth `d` computes both the encoder `e : {0,1}^n → {0,1}^m` and the latent update `g : {0,1}^m → {0,1}^m` such that `e ∘ f = g ∘ e` for a given `f` with a cycle of length `2^k`, then `d ≥ k` or the circuit size is at least `2^k`.\n\n**Proof Strategy**: Unroll the semiconjugacy for `2^k` steps. The composed circuit `e ∘ f^[2^k]` must be the identity on the orbit, while `g^[2^k]` must also be the identity. Use degree-based or gate-count lower bounds from algebraic circuit complexity (e.g., `depth_lower_bound_from_degree` style arguments) to show that representing a permutation of order `2^k` requires sufficient circuit resources.\n\n**Impact**: This is the bridge between dynamical state compression and circuit complexity. It would show that pres",
+      "source_exp_id": "46e03e85",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:04:33.109908+00:00"
+    },
+    {
+      "id": "fd_0202",
+      "title": "Implementation Priority",
+      "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|--------------|\n| 1. Pre-periodic preservation | Low | Medium | Direct extension of current work |\n| 2. Entropy lower bounds | Medium | High | Orbit counting infrastructure |\n| 3. Categorical quotients | Medium | High | Fiber invariance, category theory |\n| 4. Circuit lower bounds | High | Very High | Algebraic complexity foundations |\n| 5. Verified abstraction-refinement | Medium | Very High | Algorithm formalization |\n\nDirections 1 and 5 are the most immediately actionable. Direction 4 represents the deepest theoretical advance but requires substantial algebraic complexity infrastructure. Direction 3 provides the cleanest mathematical framework for the entire program.",
+      "source_exp_id": "46e03e85",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:04:33.114176+00:00"
     }
   ],
   "pruned": [
