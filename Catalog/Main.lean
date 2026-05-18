@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1412 of the highest-quality
+A curated collection of 1420 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1412
+Total files: 1420
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -42,6 +42,7 @@ import FINAL.Algebra.DeepOpenProblems
 import FINAL.Algebra.Defs
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Derivability
+import FINAL.Algebra.DescartesInvariance
 import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
@@ -60,6 +61,7 @@ import FINAL.Algebra.FermatFactor
 import FINAL.Algebra.FluidGravity
 import FINAL.Algebra.Foundation
 import FINAL.Algebra.Foundations
+import FINAL.Algebra.Foundations_2
 import FINAL.Algebra.Freivalds
 import FINAL.Algebra.FreivaldsBridge
 import FINAL.Algebra.FreivaldsSchwartzZippel
@@ -79,6 +81,7 @@ import FINAL.Algebra.HDWalletCascade
 import FINAL.Algebra.HomingMissile
 import FINAL.Algebra.HurwitzQuaternions
 import FINAL.Algebra.Hyperbolic
+import FINAL.Algebra.IOFExplorations
 import FINAL.Algebra.IdempotentCongruenceBasis
 import FINAL.Algebra.IdempotentHilbertBasis
 import FINAL.Algebra.IdempotentLensing
@@ -107,11 +110,14 @@ import FINAL.Algebra.MontgomeryPairCorrelation
 import FINAL.Algebra.MoonshotExplorations
 import FINAL.Algebra.MultiocularGodOracle
 import FINAL.Algebra.NewExplorations
+import FINAL.Algebra.NewHypotheses
 import FINAL.Algebra.NewResults
 import FINAL.Algebra.NewtonIdempotent
+import FINAL.Algebra.Nilpotent
 import FINAL.Algebra.NuclearAlgebra
 import FINAL.Algebra.NullstellensatzPIT
 import FINAL.Algebra.NumberLineOracle
+import FINAL.Algebra.Observable
 import FINAL.Algebra.OpenDirections
 import FINAL.Algebra.OpenQuestions
 import FINAL.Algebra.OpenQuestions_2
@@ -130,6 +136,7 @@ import FINAL.Algebra.QDF_HE_Frontiers
 import FINAL.Algebra.QDF_NewDirections
 import FINAL.Algebra.QuadrupleGhostStructure
 import FINAL.Algebra.Quantum
+import FINAL.Algebra.QuantumCollapse
 import FINAL.Algebra.QuantumPhaseLatticeExtended
 import FINAL.Algebra.QuaternaryPythagoreanTree
 import FINAL.Algebra.QuaternionDescent
@@ -605,6 +612,7 @@ import FINAL.Computation.AffineDistortionComplexity
 import FINAL.Computation.Algebra
 import FINAL.Computation.AlgorithmicCertificate
 import FINAL.Computation.AutomatedTheoryOracle
+import FINAL.Computation.BarrierFramework
 import FINAL.Computation.Basic
 import FINAL.Computation.Bifurcation
 import FINAL.Computation.BinarySearch
