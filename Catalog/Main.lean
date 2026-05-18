@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1497 of the highest-quality
+A curated collection of 1499 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1497
+Total files: 1499
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -82,10 +82,12 @@ import FINAL.Algebra.GroebnerDerandomization
 import FINAL.Algebra.GroupSolvability
 import FINAL.Algebra.GroverAttacks
 import FINAL.Algebra.HDWalletCascade
+import FINAL.Algebra.HilbertClassFieldBasic
 import FINAL.Algebra.HomingMissile
 import FINAL.Algebra.HurwitzQuaternions
 import FINAL.Algebra.Hyperbolic
 import FINAL.Algebra.IOFExplorations
+import FINAL.Algebra.IdealClassGroupBridge
 import FINAL.Algebra.IdempotentCongruenceBasis
 import FINAL.Algebra.IdempotentHilbertBasis
 import FINAL.Algebra.IdempotentLensing
