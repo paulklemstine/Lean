@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1289 of the highest-quality
+A curated collection of 1296 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1289
+Total files: 1296
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -40,6 +40,7 @@ import FINAL.Algebra.Defs
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Derivability
 import FINAL.Algebra.DifferenceSetSymmetry
+import FINAL.Algebra.Dim2
 import FINAL.Algebra.Distance
 import FINAL.Algebra.ECDLP
 import FINAL.Algebra.EMLCongruenceHilbert
@@ -795,6 +796,7 @@ import FINAL.Geometry.UnifiedLightTheory
 import FINAL.Geometry.UnifiedTheory
 import FINAL.Logic.Advanced
 import FINAL.Logic.AdvancedTheorems
+import FINAL.Logic.AdversarialPrediction
 import FINAL.Logic.BooleanFunctions
 import FINAL.Logic.Bridge
 import FINAL.Logic.CertifiedNumberTheoryDecide
@@ -829,6 +831,8 @@ import FINAL.Logic.OracleTeamGenesis
 import FINAL.Logic.ParallelClosureCanonicalization
 import FINAL.Logic.ParameterizedStereographic
 import FINAL.Logic.PhotonChannels
+import FINAL.Logic.PostQuantumSignatures
+import FINAL.Logic.PvsNP
 import FINAL.Logic.QuantumMirrorComputation
 import FINAL.Logic.QueryComplexity
 import FINAL.Logic.ResearchOrdinalDepth
@@ -1016,6 +1020,7 @@ import FINAL.Pythagorean.BerggrenGroupoid
 import FINAL.Pythagorean.BerggrenHarmonicTropical
 import FINAL.Pythagorean.BerggrenHolographicDuality
 import FINAL.Pythagorean.BerggrenLorentz
+import FINAL.Pythagorean.BerggrenLorentzComplexity
 import FINAL.Pythagorean.BerggrenNWGenerator
 import FINAL.Pythagorean.BerggrenPGL2
 import FINAL.Pythagorean.BerggrenProductGrowth
@@ -1033,12 +1038,14 @@ import FINAL.Pythagorean.Core
 import FINAL.Pythagorean.CoreFormalization
 import FINAL.Pythagorean.CoreTheorems
 import FINAL.Pythagorean.DeepOpenProblems
+import FINAL.Pythagorean.DescentTheory
 import FINAL.Pythagorean.Duality
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.FiveDirections
 import FINAL.Pythagorean.Foundations
 import FINAL.Pythagorean.GeodesicInvariants
 import FINAL.Pythagorean.HarmonicMusicTheory
+import FINAL.Pythagorean.HigherDimGhost
 import FINAL.Pythagorean.HigherDimQuadruples
 import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.LagrangeFourSquare

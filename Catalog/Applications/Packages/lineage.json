@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "galois_group__s",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -52,7 +52,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -61,7 +61,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 314
+      "hue": 271
     },
     {
       "id": "expected_lean_signature",
@@ -71,6 +71,15 @@
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
       "hue": 270
+    },
+    {
+      "id": "jacobian_conjecture_degree_2_and_3_cases",
+      "title": "Jacobian Conjecture: Quadratic Rigidity, Cubic Reduction, and Noncommutative Horizons",
+      "domain": "Algebra / Algebraic Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-18T14:16:32Z",
+      "hue": 275
     }
   ],
   "edges": [],
@@ -78,6 +87,12 @@
     {
       "domain_a": "Algebra",
       "domain_b": "Cryptography",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Geometry",
       "package_count": 1,
       "strength": 0.5
     }
