@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1494 of the highest-quality
+A curated collection of 1497 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1494
+Total files: 1497
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -869,6 +869,7 @@ import FINAL.EML.VecEML
 import FINAL.EML.VectorStoneWeierstrass
 import FINAL.Geometry.AdvancedTheory
 import FINAL.Geometry.BerggrenRamanujan
+import FINAL.Geometry.CupsCaps
 import FINAL.Geometry.DiscreteMorseInequalities
 import FINAL.Geometry.EulerTopology
 import FINAL.Geometry.GapMatterResearch
@@ -879,8 +880,10 @@ import FINAL.Geometry.InverseStereoMobiusNext
 import FINAL.Geometry.InverseStereoResearch
 import FINAL.Geometry.InverseStereoSecp256k1
 import FINAL.Geometry.InverseStereoUniverse
+import FINAL.Geometry.MonotoneSubseq
 import FINAL.Geometry.MultiHeadStereographic
 import FINAL.Geometry.NonAbelianGauge
+import FINAL.Geometry.Orient
 import FINAL.Geometry.OvalArrangement
 import FINAL.Geometry.PadicMobius
 import FINAL.Geometry.PhotonEventGraph
