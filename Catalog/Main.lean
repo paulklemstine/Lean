@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1451 of the highest-quality
+A curated collection of 1459 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1451
+Total files: 1459
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -962,6 +962,7 @@ import FINAL.MachineLearning.Attention
 import FINAL.MachineLearning.Basic
 import FINAL.MachineLearning.BerggrenOrbitSpectral
 import FINAL.MachineLearning.BernoulliMeasure
+import FINAL.MachineLearning.BiologicalCrystallization
 import FINAL.MachineLearning.BoundedDivisorSearch
 import FINAL.MachineLearning.BoundedFamily
 import FINAL.MachineLearning.BracketRobustness
@@ -980,11 +981,14 @@ import FINAL.MachineLearning.Coboundary
 import FINAL.MachineLearning.CommitmentProtocol
 import FINAL.MachineLearning.CompilationCompression
 import FINAL.MachineLearning.Compositionality
+import FINAL.MachineLearning.CompressionPipeline
 import FINAL.MachineLearning.ConceptualDependencyCriticalPath
 import FINAL.MachineLearning.ConvergenceTheory
 import FINAL.MachineLearning.Core
 import FINAL.MachineLearning.CrystallizationTheory
 import FINAL.MachineLearning.CurriculumTheory
+import FINAL.MachineLearning.CyclicGroupSubgroups
+import FINAL.MachineLearning.CyclotomicGaloisGroup
 import FINAL.MachineLearning.Defs
 import FINAL.MachineLearning.ECOCRobustness
 import FINAL.MachineLearning.EulerBricks
@@ -1000,6 +1004,7 @@ import FINAL.MachineLearning.GravityAI
 import FINAL.MachineLearning.GroupTheory
 import FINAL.MachineLearning.HexGeometry
 import FINAL.MachineLearning.IdempotentAggregation
+import FINAL.MachineLearning.InferenceArithmetic
 import FINAL.MachineLearning.IterateBound
 import FINAL.MachineLearning.Kardashev
 import FINAL.MachineLearning.KardashevBound
@@ -1010,6 +1015,7 @@ import FINAL.MachineLearning.LegendreGapReduction
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LoopFoundations
 import FINAL.MachineLearning.MaxPlusRepresenter
+import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MinMax
 import FINAL.MachineLearning.MultiHead
 import FINAL.MachineLearning.MulticlassMargin
@@ -1033,9 +1039,11 @@ import FINAL.MachineLearning.ProofTheoreticDepth
 import FINAL.MachineLearning.ProvabilityPACBayesian
 import FINAL.MachineLearning.QuantizedResidualMDL
 import FINAL.MachineLearning.QuantumMoonshots
+import FINAL.MachineLearning.QuantumNeuralArchitecture
 import FINAL.MachineLearning.QuantumObservables
 import FINAL.MachineLearning.ReflectiveConvergence
 import FINAL.MachineLearning.ReflectiveConvergenceArchitecture
+import FINAL.MachineLearning.ResNetLipschitz
 import FINAL.MachineLearning.Scaling
 import FINAL.MachineLearning.SemiringRelativeReality
 import FINAL.MachineLearning.SheafCertifiedRobustness
