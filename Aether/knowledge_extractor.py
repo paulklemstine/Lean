@@ -443,7 +443,7 @@ class KnowledgeExtractor:
           1. Lean 4 proofs
           2. Standalone popular-science ARTICLE (no "scientific american" / "lean" mentions)
           3. Comprehensive RESEARCH_PAPER with depth
-          4. Python demos, visualizations, algorithms
+          4. Python demos, algorithms
           5. Applications code
           6. FUTURE_DIRECTIONS roadmap
           7. JSON Data Package bundling everything
@@ -516,28 +516,20 @@ RESEARCH PAPER REQUIREMENTS:
 • **Length**: 3000–8000 words. Comprehensive and substantive.
 
 ────────────────────────────────────────────────────────────────────────────
-DELIVERABLE 4 — Python Code: Demos, Visualizations, Algorithms
+DELIVERABLE 4 — Python Code: Demos, Algorithms
 ────────────────────────────────────────────────────────────────────────────
 - **demo.py** — Working Python code demonstrating the theorems with
   concrete numerical examples. Make the math tangible.
-- **visualizations** — matplotlib / plotly charts showing key mathematical
-  structures, convergence behavior, phase diagrams, etc.
-  Save figures as PNG/SVG files for inclusion in the HTML package.
 - **algorithms.py** — Implement any algorithms from the research paper.
   Include docstrings, type hints, and example usage.
 - **applications.py** — Code showing real-world applications of the results.
-  If the math applies to ML, crypto, physics — show it working.
+  Show the math working.
 
 ────────────────────────────────────────────────────────────────────────────
 DELIVERABLE 5 — FUTURE_DIRECTIONS.md  (MANDATORY — drives next cycle)
 ────────────────────────────────────────────────────────────────────────────
 The MOST IMPORTANT deliverable. Structured roadmap of breakthrough
 research opportunities opened by this work. See detailed spec below.
-
-**Team Directive**: Create a team to conduct research, brainstorm hypotheses,
-run experiments, validate data, update knowledge base and iterate forever.
-Each future direction should be specific enough for a team to pick up and
-pursue with clear hypotheses, proof strategies, and cross-domain connections.
 
 ────────────────────────────────────────────────────────────────────────────
 DELIVERABLE 6 — JSON Data Package  →  PACKAGE.json
@@ -554,14 +546,9 @@ Requirements:
     "future_directions": "Markdown content...",
     "demos": [ {{ "name": "...", "code": "# Must be 100% self-contained. Do not import local files like 'algorithms'" }} ],
     "algorithms": [ {{ "name": "...", "pseudocode": "...", "code": "executable Python implementation" }} ],
-    "visualizations": [ {{ "name": "...", "data": "base64 encoded URI or inline SVG string" }} ],
     "lean_proofs": "Raw lean code..."
   }}
 • **String Encoding**: Ensure all Markdown and code is properly JSON-escaped (e.g. `\n` for newlines).
-• **Embedded images**: ALL images (charts, diagrams, visualizations) MUST be
-  embedded directly in the JSON. If you generate matplotlib/plotly figures, convert them to base64
-  data URIs (e.g., `data:image/png;base64,...`). For SVG diagrams, put the raw `<svg>...</svg>`
-  string into the `data` field. NEVER reference external image files.
 • **Complete**: Include ALL content from the article, research paper, and code. This JSON file
   is the sole data source for the frontend web application.
 
@@ -736,10 +723,9 @@ Research mode: {concept.research_mode}
 
         Aristotle is free to organize however it sees fit. We scan for:
         - Any .lean files containing theorem proofs
-        - Any .py files (demos, applications, algorithms, visualizations)
+        - Any .py files (demos, applications, algorithms)
         - Any .md files (articles, research papers, discussions, future directions)
         - Any .html files (standalone HTML packages)
-        - Any .svg/.png files (visualizations, diagrams)
         - Any other useful artifacts
         """
         lean_files = []
@@ -750,7 +736,6 @@ Research mode: {concept.research_mode}
         article_files = []
         research_paper_files = []
         json_package_files = []
-        visual_files = []
         summary = None
         # Track diff files and seen paths to avoid duplicates.
         # We cannot set attributes on Path objects (they use __slots__),
@@ -832,8 +817,6 @@ Research mode: {concept.research_mode}
                 elif f.endswith(".json") and f != "knowledge_data.json":
                     # JSON package files (PACKAGE.json or similar)
                     json_package_files.append(fp)
-                elif f.endswith((".svg", ".png", ".jpg", ".jpeg")):
-                    visual_files.append(fp)
                 elif f.endswith(".md") and f not in ("README.md", "PROMPT.md"):
                     fname_lower = f.lower()
                     if "future_directions" in fname_lower or "future-directions" in fname_lower:
@@ -963,7 +946,6 @@ Research mode: {concept.research_mode}
               f"Article: {len(article_files)} files, "
               f"ResearchPaper: {len(research_paper_files)} files, "
               f"JSON: {len(json_package_files)} files, "
-              f"Visuals: {len(visual_files)} files, "
               f"FUTURE_DIRECTIONS: {len(future_directions_files)} files, "
               f"Discussion: {len(discussion_files)} files, "
               f"Sorries: {job.sorry_count}, Theorems: {job.theorem_count}")

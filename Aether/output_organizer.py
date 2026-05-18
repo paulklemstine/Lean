@@ -8,7 +8,7 @@ Placement rules:
 - .lean theorems (with sorries) → Catalog/Speculative/AutoResearch/
 - Research papers (.md) → Catalog/Applications/Papers/
 - Python demos (.py) → Catalog/Applications/Demos/
-- SVG diagrams (.svg) → Catalog/Applications/Visuals/
+- SVG diagrams (.svg) → Catalog/Applications/Visuals/ (deprecated)
 - SciAm articles (.md discussion) → Catalog/Applications/Articles/
 - Raw experiment data → Catalog/ResearchOutput/{exp_id}/
 """
@@ -147,12 +147,8 @@ ARTIFACT_PATTERNS = {
         "exts": [".md"],
     },
     "demo": {
-        "names": ["demo", "example", "visualization_code", "DEMO"],
+        "names": ["demo", "example", "DEMO"],
         "exts": [".py"],
-    },
-    "visual": {
-        "names": ["diagram", "figure", "visual", "svg", "SVG"],
-        "exts": [".svg", ".png"],
     },
     "article": {
         "names": ["DISCUSSION", "discussion", "article", "sciam", "SCIAM",
@@ -357,9 +353,6 @@ class OutputOrganizer:
             return "demo"
 
         # Check visuals
-        if suffix in (".svg", ".png", ".jpg", ".gif"):
-            return "visual"
-
         return "raw"
 
     def _parse_aristotle_summary(self, result_dir: Path) -> Optional[Dict[str, Any]]:
@@ -568,8 +561,6 @@ class OutputOrganizer:
             new_name = f"{safe_title}_article.md"
         elif suffix == ".py":
             new_name = f"{safe_title}_demo.py"
-        elif suffix == ".svg":
-            new_name = f"{safe_title}_diagram.svg"
         else:
             new_name = source.name
 
