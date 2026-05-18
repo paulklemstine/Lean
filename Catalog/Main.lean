@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1373 of the highest-quality
+A curated collection of 1383 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1373
+Total files: 1383
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -253,6 +253,7 @@ import FINAL.Bridges.CompositionalMusicSpec
 import FINAL.Bridges.CondensationSemantics
 import FINAL.Bridges.ContractionTropicalCryptoBridge
 import FINAL.Bridges.Core
+import FINAL.Bridges.Correspondence
 import FINAL.Bridges.CupProductCryptography
 import FINAL.Bridges.CycleSystolicBound
 import FINAL.Bridges.Decoder
@@ -676,6 +677,7 @@ import FINAL.Cryptography.BerggrenSubsemigroupRigidity
 import FINAL.Cryptography.BerggrenSymplecticCodes
 import FINAL.Cryptography.BiOrderSeparation
 import FINAL.Cryptography.ClosureMatroidSecretSharing
+import FINAL.Cryptography.ClosureOneWay
 import FINAL.Cryptography.Commitments
 import FINAL.Cryptography.CongruenceLatticeFactoring
 import FINAL.Cryptography.Core
@@ -692,6 +694,7 @@ import FINAL.Cryptography.HTLCLightning
 import FINAL.Cryptography.LeftoverHash
 import FINAL.Cryptography.MLLFormula
 import FINAL.Cryptography.MasterFormula
+import FINAL.Cryptography.MigrationGameTheory
 import FINAL.Cryptography.MinDistance
 import FINAL.Cryptography.MinimumDistance
 import FINAL.Cryptography.MooreClosure
@@ -703,6 +706,7 @@ import FINAL.Cryptography.PythagoreanLatticeReduction
 import FINAL.Cryptography.SPBQuantumCrypto
 import FINAL.Cryptography.SchnorrProtocol
 import FINAL.Cryptography.SemiconjTransfer
+import FINAL.Cryptography.ShorECDSA
 import FINAL.Cryptography.TropicalCryptoBridge
 import FINAL.Cryptography.TropicalCryptoPrimitives
 import FINAL.Cryptography.TropicalCryptoRobustnessBridge
@@ -818,6 +822,7 @@ import FINAL.Geometry.InverseStereoMobiusNext
 import FINAL.Geometry.InverseStereoResearch
 import FINAL.Geometry.InverseStereoSecp256k1
 import FINAL.Geometry.InverseStereoUniverse
+import FINAL.Geometry.MultiHeadStereographic
 import FINAL.Geometry.NonAbelianGauge
 import FINAL.Geometry.OvalArrangement
 import FINAL.Geometry.PadicMobius
@@ -1020,6 +1025,7 @@ import FINAL.Physics.CircuitHopfAlgebra
 import FINAL.Physics.ClassicalQuantumAction
 import FINAL.Physics.CohomologicalContextuality
 import FINAL.Physics.Core
+import FINAL.Physics.Degeneracy
 import FINAL.Physics.EigenvalueRepulsion_2
 import FINAL.Physics.Entanglement
 import FINAL.Physics.Foundations
@@ -1028,6 +1034,7 @@ import FINAL.Physics.IdempotentQuantum
 import FINAL.Physics.Landauer
 import FINAL.Physics.LorentzBerggrenThermodynamic
 import FINAL.Physics.MoonshotQuantum
+import FINAL.Physics.OrbitalGoalDynamics
 import FINAL.Physics.PauliClosureFoundations
 import FINAL.Physics.PlanckSpacetime
 import FINAL.Physics.QuantumE8ModularForms
@@ -1037,12 +1044,15 @@ import FINAL.Physics.Teleportation
 import FINAL.Physics.Theorems
 import FINAL.Physics.ToricCode
 import FINAL.Physics.TropicalBarrier
+import FINAL.Physics.TropicalBlackHoleEntropy
 import FINAL.Physics.TropicalDiffusion
 import FINAL.Physics.TropicalDiffusionRegularity
+import FINAL.Physics.TropicalFeynman
 import FINAL.Physics.TropicalLanglands
 import FINAL.Physics.TropicalMirrorSymmetry
 import FINAL.Physics.TropicalTDuality
 import FINAL.Physics.TropicalVacuumEnergy
+import FINAL.Physics.V12_VariationalPrinciples
 import FINAL.Physics.VonNeumannEntropy
 import FINAL.Pythagorean.AdvancedFactoringResearch
 import FINAL.Pythagorean.Basic
