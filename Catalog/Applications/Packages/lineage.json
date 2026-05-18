@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 92
+      "hue": 100
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "binary_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:05:54Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "hybrid_argument_with_computational_distinguishers",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "coupling_argument",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
@@ -106,7 +106,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-17T22:04:04Z",
-      "hue": 280
+      "hue": 112
     },
     {
       "id": "proof_strategy",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:04:18Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "line_restriction",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:07:44Z",
-      "hue": 280
+      "hue": 92
     },
     {
       "id": "irreducibility",
@@ -142,7 +142,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T22:30:35Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -151,7 +151,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-17T23:03:26Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "overview",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:03:44Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "random_matrix_counting",
@@ -169,7 +169,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T23:03:58Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "2_factored_bellman_residual_tensorization_for_stru",
@@ -178,7 +178,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:07:53Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "proposed_theorem_statement",
@@ -196,7 +196,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T00:01:38Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -205,7 +205,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T00:04:28Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_2",
@@ -214,7 +214,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T00:04:38Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "5_abstract_ordered_algebraic_generalization",
@@ -223,7 +223,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T00:04:53Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_1",
@@ -232,7 +232,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T00:05:08Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "graph_coloring_chromatic_polynomial_theory",
@@ -241,7 +241,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T00:15:01Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "machine_learning_state_compression",
@@ -250,7 +250,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-18T01:04:30Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "exact_theorem_statement",
@@ -259,7 +259,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T01:04:43Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "define_tropical_one_way_functions",
@@ -268,7 +268,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T01:04:59Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "sum_the_bounds",
@@ -277,7 +277,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T01:21:10Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "cyclic_groups",
@@ -286,7 +286,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T01:27:31Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "identify_the_image_of_the_berggren_generators_in_p",
@@ -295,7 +295,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T01:42:34Z",
-      "hue": 92
+      "hue": 270
+    },
+    {
+      "id": "cross_domain_connection",
+      "title": "Union-Closed Families as Positive-Correlation Systems",
+      "domain": "Combinatorics / Statistical Mechanics / Information Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-18T02:03:54Z",
+      "hue": 91
     }
   ],
   "edges": [
@@ -325,6 +334,13 @@
       "target": "coupling_argument",
       "strength": 1.0,
       "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "validate_conjectures_computationally",
+      "target": "cross_domain_connection",
+      "strength": 1.0,
+      "label": "Proposed Formalization",
       "type": "provenance"
     },
     {

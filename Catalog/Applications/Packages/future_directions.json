@@ -2517,7 +2517,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "a8ef4557",
       "timestamp": "2026-05-17T22:04:20.751655+00:00"
     },
@@ -3754,8 +3754,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "37cff0cf",
       "timestamp": "2026-05-18T01:04:45.202462+00:00"
     },
     {
@@ -4043,6 +4043,41 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:27:34.146990+00:00"
+    },
+    {
+      "id": "fd_0219",
+      "title": "Representation-theoretic:",
+      "description": "Use Selberg's 3/16 theorem or its analogues for PGL₂(F_p) to bound the matrix coefficients of the Berggren operators in non-trivial representations.",
+      "source_exp_id": "a8ef4557",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:01:09.099691+00:00"
+    },
+    {
+      "id": "fd_0220",
+      "title": "Sum-product methods:",
+      "description": "The generator C₂ is an additive shift (u ↦ u+2) while A₂ involves inversion (u ↦ 2−1/u). The interplay between addition and inversion is exactly the structure exploited in sum-product estimates. Apply the Bourgain–Gamburd machinery to obtain expansion from the non-concentration of random products.",
+      "source_exp_id": "a8ef4557",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:01:09.105202+00:00"
     }
   ],
   "pruned": [
