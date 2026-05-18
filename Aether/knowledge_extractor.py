@@ -1501,6 +1501,12 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: future directions cleanup failed: {e}")
 
+        # 6. Catalog pruning — immortalize best theorems, remove junk
+        try:
+            await asyncio.to_thread(self._prune_catalog)
+        except Exception as e:
+            print(f"[Cleanup] Warning: catalog pruning failed: {e}")
+
         return job
 
     def _cleanup_future_directions(self) -> None:
@@ -1595,6 +1601,206 @@ Research mode: {concept.research_mode}
 
         notes = result.get("notes", "")
         print(f"[Cleanup] Directions cleanup: removed {removed}, brainstormed 1 new. {notes}")
+
+    def _prune_catalog(self) -> None:
+        """Immortalize best theorems into FINAL/, remove junk from the Catalog.
+
+        Scans .lean files, auto-immortalizes clear winners, sends gray-area
+        files to Pi-Agent for review, and removes junk.
+        """
+        catalog_root = self.catalog_root
+        final_dir = catalog_root / "FINAL"
+        final_dir.mkdir(parents=True, exist_ok=True)
+
+        # Build set of already-immortalized files
+        already_final = set()
+        for f in final_dir.rglob("*.lean"):
+            already_final.add(f.name)
+
+        # Scan all .lean files (excluding FINAL, Speculative, .lake, ResearchOutput)
+        skip_dirs = {"FINAL", "Speculative", ".lake", "ResearchOutput", "Applications"}
+        candidates = []
+        for f in catalog_root.rglob("*.lean"):
+            # Skip if any parent dir is in skip_dirs
+            parts = f.relative_to(catalog_root).parts
+            if any(p in skip_dirs for p in parts):
+                continue
+            if f.name in already_final:
+                continue
+            if f.name == "Main.lean":
+                continue
+
+            # Quick heuristic scan
+            try:
+                content = f.read_text(encoding="utf-8", errors="replace")
+            except Exception:
+                continue
+
+            lines = content.split("\n")
+            line_count = len([l for l in lines if l.strip() and not l.strip().startswith("--")])
+            has_sorry = "sorry" in content
+            theorem_count = len(re.findall(r"^\s*(theorem|lemma)\s", content, re.MULTILINE))
+            has_deep_proof = bool(re.search(r"\b(induction|rcases|by_contra|omega|linarith|field_simp|ring_nf)\b", content))
+            is_trivial_only = not has_deep_proof and bool(re.search(r"\b(trivial|simp|rfl|decide|native_decide)\b", content))
+
+            candidates.append({
+                "path": str(f.relative_to(catalog_root)),
+                "name": f.name,
+                "domain": parts[0] if parts else "Unknown",
+                "lines": line_count,
+                "sorries": has_sorry,
+                "theorems": theorem_count,
+                "deep_proof": has_deep_proof,
+                "trivial_only": is_trivial_only,
+                "abs_path": f,
+            })
+
+        if not candidates:
+            return
+
+        # Auto-immortalize clear winners: sorry-free, >100 lines, deep proofs
+        auto_immortalized = 0
+        for c in candidates:
+            if not c["sorries"] and c["lines"] > 100 and c["deep_proof"] and c["theorems"] >= 3:
+                self._immortalize_file(c, final_dir)
+                auto_immortalized += 1
+        if auto_immortalized:
+            print(f"[Prune] Auto-immortalized {auto_immortalized} high-quality files")
+
+        # Auto-remove clear junk: trivial-only, very short, or sorry-containing
+        auto_removed = 0
+        for c in candidates:
+            if c["sorries"] or (c["lines"] < 15 and c["trivial_only"]) or (c["theorems"] == 0 and c["lines"] < 30):
+                try:
+                    c["abs_path"].unlink(missing_ok=True)
+                    auto_removed += 1
+                except Exception:
+                    pass
+        if auto_removed:
+            print(f"[Prune] Auto-removed {auto_removed} junk files")
+
+        # Gray area: send to Pi-Agent for review
+        gray_area = [c for c in candidates
+                     if not (not c["sorries"] and c["lines"] > 100 and c["deep_proof"] and c["theorems"] >= 3)
+                     and not (c["sorries"] or (c["lines"] < 15 and c["trivial_only"]) or (c["theorems"] == 0 and c["lines"] < 30))]
+
+        if not gray_area:
+            self._rebuild_final_main(final_dir)
+            return
+
+        # Send batches of up to 30 to Pi-Agent
+        batch = gray_area[:30]
+        summaries = []
+        for c in batch:
+            tag = "deep" if c["deep_proof"] else ("trivial" if c["trivial_only"] else "mixed")
+            summaries.append(
+                f"  {c['path']} | {c['theorems']} theorems | {c['lines']} lines | "
+                f"sorry={'yes' if c['sorries'] else 'no'} | proofs={tag}"
+            )
+        listing = "\n".join(summaries)
+
+        system = (
+            "You are a Lean 4 theorem curator for the Aether research engine.\n"
+            "Review these .lean file summaries. For each, decide:\n"
+            "- IMMORTALIZE: contains genuinely interesting theorems with non-trivial proofs\n"
+            "- REMOVE: trivial tautologies, duplicates, or too shallow to keep\n\n"
+            "Be generous with immortalization (keep good work). Be strict with removal (only clear junk).\n"
+            "Respond in JSON:\n"
+            '{\n'
+            '  "immortalize": ["path/to/File1.lean", ...],\n'
+            '  "remove": ["path/to/Junk1.lean", ...],\n'
+            '  "notes": "brief summary"\n'
+            '}'
+        )
+
+        user = f"Lean files to review ({len(batch)} gray-area files):\n\n{listing}"
+
+        try:
+            raw = self.pi_agent._call_pollinations(system, user, timeout=60)
+        except Exception as e:
+            print(f"[Prune] Pi-Agent call failed: {e}")
+            self._rebuild_final_main(final_dir)
+            return
+
+        result = self.pi_agent._parse_json_response(raw)
+        if not result:
+            print(f"[Prune] Could not parse Pi-Agent response")
+            self._rebuild_final_main(final_dir)
+            return
+
+        # Process immortalizations
+        llm_immortalized = 0
+        for path_str in result.get("immortalize", []):
+            c = next((c for c in batch if c["path"] == path_str), None)
+            if c:
+                self._immortalize_file(c, final_dir)
+                llm_immortalized += 1
+
+        # Process removals
+        llm_removed = 0
+        for path_str in result.get("remove", []):
+            c = next((c for c in batch if c["path"] == path_str), None)
+            if c:
+                try:
+                    c["abs_path"].unlink(missing_ok=True)
+                    llm_removed += 1
+                except Exception:
+                    pass
+
+        notes = result.get("notes", "")
+        print(f"[Prune] LLM: immortalized {llm_immortalized}, removed {llm_removed}. {notes}")
+
+        # Rebuild Main.lean from FINAL
+        self._rebuild_final_main(final_dir)
+
+        # Clean up empty directories
+        self._cleanup_empty_dirs(catalog_root)
+
+    def _immortalize_file(self, candidate: dict, final_dir: Path) -> None:
+        """Copy a .lean file into the FINAL directory."""
+        src = candidate["abs_path"]
+        domain = candidate["domain"]
+        dest_dir = final_dir / domain
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        dest = dest_dir / src.name
+        if not dest.exists():
+            try:
+                import shutil
+                shutil.copy2(str(src), str(dest))
+            except Exception:
+                pass
+
+    def _rebuild_final_main(self, final_dir: Path) -> None:
+        """Rebuild Catalog/Main.lean from all files in FINAL/."""
+        imports = []
+        for f in sorted(final_dir.rglob("*.lean")):
+            if f.name == "Main.lean":
+                continue
+            rel = f.relative_to(self.catalog_root)
+            # Convert path to Lean import: FINAL/Algebra/File.lean → FINAL.Algebra.File
+            import_path = str(rel.with_suffix("")).replace("/", ".")
+            imports.append(f"import {import_path}")
+
+        if imports:
+            header = (
+                "/- Aether FINAL Catalog\n"
+                f"A curated collection of {len(imports)} of the highest-quality\n"
+                "formally verified mathematical results from the Aether engine.\n"
+                "Sorry-free. No placeholders. Auto-maintained.\n"
+                f"Total files: {len(imports)}\n"
+                "-/\n"
+            )
+            main_path = self.catalog_root / "Main.lean"
+            main_path.write_text(header + "\n".join(imports) + "\n", encoding="utf-8")
+
+    def _cleanup_empty_dirs(self, root: Path) -> None:
+        """Remove empty directories in the catalog tree."""
+        for d in sorted(root.rglob("*"), reverse=True):
+            if d.is_dir() and not any(d.iterdir()):
+                try:
+                    d.rmdir()
+                except Exception:
+                    pass
 
     def _verify_catalog_sync(self, job: ResearchJob) -> dict:
         """Verify all output files are properly placed in the Catalog."""
@@ -1795,6 +2001,12 @@ Research mode: {concept.research_mode}
             self._cleanup_future_directions()
         except Exception as e:
             print(f"[Cleanup] Warning: future directions cleanup failed: {e}")
+
+        # Catalog pruning — immortalize best, remove junk
+        try:
+            self._prune_catalog()
+        except Exception as e:
+            print(f"[Cleanup] Warning: catalog pruning failed: {e}")
 
         return job
 
