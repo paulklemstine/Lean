@@ -407,8 +407,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.83,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "7489c51b",
       "timestamp": "2026-05-18T10:17:17.078678+00:00"
     },
     {
@@ -956,8 +956,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "4a2f0501",
       "timestamp": "2026-05-18T10:17:17.099597+00:00"
     },
     {
@@ -975,7 +975,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "969a1aa9",
       "timestamp": "2026-05-18T10:17:17.100523+00:00"
     },
@@ -1289,6 +1289,26 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T13:03:56.305224+00:00"
+    },
+    {
+      "id": "fd_0070",
+      "title": "The formalization of finite-verification-plus-descent schemas opens several conc",
+      "description": "# Future Directions: Proof Strategy Mining\n\n## Overview\n\nThe formalization of finite-verification-plus-descent schemas opens several concrete research directions. Each is stated as a falsifiable conjecture with a clear validation path.\n\n---\n\n### 1. Well-Founded Classification Schema\n\n**Conjecture**: Every theorem in a formal mathematics catalog whose proof combines a finite verified region with a dominance/reduction step can be refactored as a direct instance of `global_of_base_and_wf_descent` — that is, the theorem follows by instantiating the schema with appropriate choices of `r`, `B`, and `P`.\n\n**Test**: For each candidate theorem (e.g., `goldbach_from_finite_check_and_cover`, `finite_classification_from_dominance`), extract the implicit well-founded relation `r`, base predicate `B`, and target property `P`. Attempt to restate the theorem as `global_of_base_and_wf_descent r P B hB hstep hwf`. Success means the original proof factors through the schema; failure identifies structural features not captured by single-step descent.\n\n**Impact**: If true, this would demonstrate that a single reusable theorem can replace dozens of bespoke induction arguments across different mathematical domains, dramatically reducing proof maintenance costs and enabling compositional proof engineering.\n\n---\n\n### 2. Finite Branching Search-to-Proof Compiler\n\n**Conjecture**: A finitely branching reduction relation with decidable terminal certificates admits a generic theorem converting exhaustive bounded search plus well-foundedness into a universal correctness certificate. Specifically, there exists a theorem of the form:\n\n```\ntheorem search_to_proof\n  {α : Type*} [DecidableEq α]\n  (r : α → Finset α)    -- finitely branching reduction\n  (terminal : α → Bool)  -- decidable base check\n  (P : α → Prop)\n  (hterm : ∀ a, terminal a = true → P a)\n  (hstep : ∀ a, terminal a = false → ∀ b ∈ r a, P b → P a)\n  (hwf : WellFounded (fun b a => b ∈ r a)) :\n  ∀ a, P a\n```\n\n**Test**: Formalize finite branching trees in the proof assistant and attempt to prove the generic compiler theorem. If it succeeds, instantiate it on at least two concrete examples (e.g., game solving and constraint propagation). If it fails, identify whether the obstruction is a missing compactness condition, a decidability gap, or a structural limitation of well-founded induction.\n\n**Impact**: If true, this would provide an automated bridge between computational search (SAT solving, model checking, exhaustive enumeration) and formal mathematical proof, enabling a new class of \"computation-backed\" theorems.\n\n---\n\n### 3. Minimal Counterexample API\n\n**Conjecture**: A reusable API for minimal counterexample arguments — providing standard combinators for \"assume a minimal bad object, derive contradiction\" — can reduce the proof term size of descent-style theorems by at least 30% compared with direct strong induction proofs, across a benchmark of at least 10 theorems.\n\n**Test**: Implement both proof styles (direct induction and minimal-counterexample API) for a suite of theorems including:\n- Infinite pigeonhole principle\n- König's lemma\n- Every finite DAG has a topological ordering\n- Dickson's lemma\n- Kruskal's tree theorem (finite case)\n\nMeasure proof term size (character count of the proof term after elaboration) and dependency graph depth for both styles. The conjecture is confirmed if the API style is ≥30% shorter on average.\n\n**Impact**: If true, this would establish minimal counterexample reasoning as a superior proof methodology for a broad class of combinatorial and algebraic results, justifying investment in API development.\n\n---\n\n### 4. Local-to-Global Transfer Beyond Arithmetic\n\n**Conjecture**: The finite-check/descent schema instantiates nontrivially in quantum information theory, yielding a generic theorem that bounded local correlation constraints on measurement operators imply a global Bell-type inequality. Specifically, there exists a complexity measure μ on quantum correlation sce",
+      "source_exp_id": "969a1aa9",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T13:04:20.592944+00:00"
     }
   ],
   "pruned": [

@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1276 of the highest-quality
+A curated collection of 1289 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1276
+Total files: 1289
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -77,6 +77,7 @@ import FINAL.Algebra.IdempotentLensing
 import FINAL.Algebra.InsideOutFactor
 import FINAL.Algebra.InsideOutResearch
 import FINAL.Algebra.IntegerDiffraction
+import FINAL.Algebra.InvariantStatistic
 import FINAL.Algebra.InversePythagoreanTree
 import FINAL.Algebra.InvertedTreeV3Research
 import FINAL.Algebra.KaroubiIdempotent
@@ -409,6 +410,7 @@ import FINAL.Bridges.StoneChuClosureDuality
 import FINAL.Bridges.StoneDualityMLAdvanced
 import FINAL.Bridges.StoneDualityMLCore
 import FINAL.Bridges.StoneWeierstrassTropicalPolytope
+import FINAL.Bridges.SumBounds
 import FINAL.Bridges.SumcheckSoundness
 import FINAL.Bridges.Support
 import FINAL.Bridges.SymplecticCryptography
@@ -566,7 +568,10 @@ import FINAL.Computation.Bifurcation
 import FINAL.Computation.BinarySearch
 import FINAL.Computation.BranchingPrograms
 import FINAL.Computation.Circuits
+import FINAL.Computation.ClosureCompressionCore
+import FINAL.Computation.ClosureCompressionDuality
 import FINAL.Computation.ClosureCompressionOptimality
+import FINAL.Computation.ClosureKolmogorovDuality
 import FINAL.Computation.CollatzTropical
 import FINAL.Computation.CollatzTropicalContraction
 import FINAL.Computation.Compression
@@ -807,19 +812,24 @@ import FINAL.Logic.FormalTime
 import FINAL.Logic.Foundations
 import FINAL.Logic.Framework
 import FINAL.Logic.Freivalds
+import FINAL.Logic.GuardedFixedPointIndex
 import FINAL.Logic.GuardedFixpoint
 import FINAL.Logic.GuardedTrace
+import FINAL.Logic.HigherBootstrap
 import FINAL.Logic.HolographicSearch
 import FINAL.Logic.HyperAgentTheory
 import FINAL.Logic.IncrementalRecompute
 import FINAL.Logic.InterventionSequencing
 import FINAL.Logic.LightNumberLine
+import FINAL.Logic.LogSumExp
 import FINAL.Logic.ModularComposition
 import FINAL.Logic.OneGateAgent
+import FINAL.Logic.OracleDimensionReduction
 import FINAL.Logic.OracleTeamGenesis
 import FINAL.Logic.ParallelClosureCanonicalization
 import FINAL.Logic.ParameterizedStereographic
 import FINAL.Logic.PhotonChannels
+import FINAL.Logic.QuantumMirrorComputation
 import FINAL.Logic.QueryComplexity
 import FINAL.Logic.ResearchOrdinalDepth
 import FINAL.Logic.ResourceBoundedNonlocality
@@ -829,10 +839,12 @@ import FINAL.Logic.TemporalStoneBridge
 import FINAL.Logic.TemporalStoneDuality
 import FINAL.Logic.TemporalStoneSemiringBridge
 import FINAL.Logic.TheorySpaceGeodesics
+import FINAL.Logic.TracedCircuitSemantics
 import FINAL.Logic.TropicalCurryHoward
 import FINAL.Logic.TropicalCurryHowardCanonical
 import FINAL.Logic.TropicalGodelSentence
 import FINAL.Logic.TropicalHoTT
+import FINAL.Logic.TropicalMetamathematics
 import FINAL.Logic.TropicalTypeTheory
 import FINAL.Logic.UniversalDecoder
 import FINAL.Logic.UniversalPhotonMap
@@ -844,6 +856,7 @@ import FINAL.Logic.VoiceLeadingCostN
 import FINAL.Logic.VoiceLeadingGeometry
 import FINAL.MachineLearning.ActivationNerveCosheafRobustness
 import FINAL.MachineLearning.AdjointAutoencoder
+import FINAL.MachineLearning.AetherQualityControl
 import FINAL.MachineLearning.AetherStressTesting
 import FINAL.MachineLearning.AlgebraicCausalInference
 import FINAL.MachineLearning.AlgebraicNeuralArchitecture
