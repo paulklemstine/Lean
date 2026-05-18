@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1327 of the highest-quality
+A curated collection of 1335 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1327
+Total files: 1335
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -266,6 +266,7 @@ import FINAL.Bridges.FiniteDescriptionComplexity
 import FINAL.Bridges.FiniteRiesz
 import FINAL.Bridges.FiniteTransferCore
 import FINAL.Bridges.FiveFrontiers
+import FINAL.Bridges.FootprintHelpers
 import FINAL.Bridges.Foundations
 import FINAL.Bridges.FunctorialDecoding
 import FINAL.Bridges.GL3KemenyRobustness
@@ -825,6 +826,7 @@ import FINAL.Logic.InterventionSequencing
 import FINAL.Logic.LightNumberLine
 import FINAL.Logic.LogSumExp
 import FINAL.Logic.ModularComposition
+import FINAL.Logic.NoveltyCertification
 import FINAL.Logic.OneGateAgent
 import FINAL.Logic.OracleDimensionReduction
 import FINAL.Logic.OracleTeamGenesis
@@ -1096,6 +1098,7 @@ import FINAL.Tropical.AutomorphicBuildings
 import FINAL.Tropical.BPCircuitSimulation
 import FINAL.Tropical.BalancedConsciousness
 import FINAL.Tropical.Basic
+import FINAL.Tropical.BellmanFord
 import FINAL.Tropical.BerggrenSatakeCorrespondence
 import FINAL.Tropical.BerggrenShellMesh
 import FINAL.Tropical.BerggrenTropicalBridge
@@ -1110,6 +1113,7 @@ import FINAL.Tropical.CertifiedCanonicalization
 import FINAL.Tropical.CertifiedNormalForm
 import FINAL.Tropical.ChargeReversalSymmetry
 import FINAL.Tropical.ChargedTropicalReweighting
+import FINAL.Tropical.ChoraleRigidity
 import FINAL.Tropical.ChronologicalOrder
 import FINAL.Tropical.Closure
 import FINAL.Tropical.CollatzWielandt
@@ -1164,6 +1168,7 @@ import FINAL.Tropical.HodgeCorrespondence
 import FINAL.Tropical.HorizonStability
 import FINAL.Tropical.HybridArgument
 import FINAL.Tropical.Hyperbolicity
+import FINAL.Tropical.HyperplaneDistance
 import FINAL.Tropical.Hypersurface
 import FINAL.Tropical.InformationTheory
 import FINAL.Tropical.KineticCertification
@@ -1206,6 +1211,7 @@ import FINAL.Tropical.OrbitPRG
 import FINAL.Tropical.OrbitPrefixFiber
 import FINAL.Tropical.PAdicTropical
 import FINAL.Tropical.PRGSecurity
+import FINAL.Tropical.PeriodicOrbits
 import FINAL.Tropical.PeriodsMotives
 import FINAL.Tropical.PerronFrobenius
 import FINAL.Tropical.PersistentTropicalBridge
@@ -1215,6 +1221,7 @@ import FINAL.Tropical.PolynomialBridge
 import FINAL.Tropical.PolynomialMinimization
 import FINAL.Tropical.PrimePowerAmplification
 import FINAL.Tropical.Product
+import FINAL.Tropical.ProductAutomaton
 import FINAL.Tropical.QaryDataProcessing
 import FINAL.Tropical.QarySourceCoding
 import FINAL.Tropical.QuantumLLMCompilation
@@ -1264,6 +1271,7 @@ import FINAL.Tropical.TropicalAdvancedTheory
 import FINAL.Tropical.TropicalAgentEpsilon
 import FINAL.Tropical.TropicalBSDAbelianVariety
 import FINAL.Tropical.TropicalBarrier
+import FINAL.Tropical.TropicalCells
 import FINAL.Tropical.TropicalCompressionMonad
 import FINAL.Tropical.TropicalConformalExtension
 import FINAL.Tropical.TropicalCuspidalFactorization

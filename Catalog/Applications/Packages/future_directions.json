@@ -1373,6 +1373,27 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T14:42:52.107532+00:00"
+    },
+    {
+      "id": "fd_0074",
+      "title": "This document outlines 5 concrete research directions opened by the formalizatio",
+      "description": "# Future Directions: Formalized Primality Testing and Arithmetic Complexity\n\n## Overview\n\nThis document outlines 5 concrete research directions opened by the formalization of Miller-Rabin and AKS primality testing infrastructure. Each direction includes precise theorem statements, proof strategies, and cross-domain significance.\n\n---\n\n## Direction 1: Complete the Miller-Rabin Quarter Bound via Unit Group CRT\n\n### Target Theorem\n```lean\ntheorem miller_rabin_liar_card_le_quarter\n    (n : ℕ) (hn_odd : n % 2 = 1)\n    (hn_comp : ¬ Nat.Prime n) (hge : 3 ≤ n) :\n    4 * (MRLiars n).card ≤ n - 1\n```\n\n### Proof Strategy\n\nThe proof decomposes into two cases via `composite_odd_dichotomy` (already proved):\n\n**Case 1: n = a · b with gcd(a,b) = 1.** The key infrastructure needed:\n- Formalize the CRT isomorphism (ZMod n)ˣ ≅ (ZMod a)ˣ × (ZMod b)ˣ as a group isomorphism\n- Show that strong pseudoprime liars must have \"synchronized signatures\" — both CRT components must reach -1 at the same squaring step\n- Prove this synchronization constrains liars to a subgroup of index ≥ 4\n\n**Case 2: n = p^k, k ≥ 2.** The key infrastructure needed:\n- Formalize that (ZMod (p^k))ˣ is cyclic for odd prime p\n- Show the liar set forms a subgroup whose size divides φ(p^k)/4\n\n### Required Helper Lemmas (10-15 lemmas)\n```lean\n-- CRT for unit groups\ntheorem ZMod.unitsEquivProd (a b : ℕ) (hab : Nat.Coprime a b) :\n    (ZMod (a * b))ˣ ≃* (ZMod a)ˣ × (ZMod b)ˣ\n\n-- Cyclic structure of units mod prime power\ntheorem ZMod.units_prime_pow_isCyclic (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) (k : ℕ) (hk : 1 ≤ k) :\n    IsCyclic (ZMod (p ^ k))ˣ\n\n-- Synchronized signature lemma\ntheorem liar_synchronized_signature (n a b : ℕ) (hn : n = a * b)\n    (hcop : Nat.Coprime a b) (x : ℕ) (hx : StrongPseudoprimeBase n x) :\n    ∃ r, (x ^ (d * 2^r) ≡ -1 [MOD a]) ∧ (x ^ (d * 2^r) ≡ -1 [MOD b])\n```\n\n### Cross-Domain Significance\n- Creates reusable unit group CRT infrastructure for all of algebraic number theory\n- Enables formal study of pseudoprime distributions and density theorems\n- Foundation for Solovay-Strassen formalization (Direction 2)\n- Connects to formal group theory and representation theory\n\n### Estimated Effort\n800-1200 lines of Lean, building on Mathlib's existing ZMod and group theory infrastructure.\n\n---\n\n## Direction 2: Formalized Solovay-Strassen via Jacobi Symbol Theory\n\n### Target Theorem\n```lean\ntheorem solovay_strassen_soundness\n    (n : ℕ) (hn_odd : n % 2 = 1) (hn_comp : ¬ Nat.Prime n) (hge : 3 ≤ n) :\n    2 * (EulerLiars n).card ≤ n - 1\n```\n\nwhere\n```lean\ndef EulerLiar (n a : ℕ) : Prop :=\n    Nat.Coprime a n ∧ a ^ ((n-1)/2) ≡ jacobiSymbol a n [MOD n]\n\ndef EulerLiars (n : ℕ) : Finset ℕ :=\n    (Finset.range n).filter (fun a => 1 ≤ a ∧ EulerLiar n a)\n```\n\n### Proof Strategy\n1. Formalize the Jacobi symbol as a multiplicative function on ℤ\n2. Prove Euler's criterion: for prime p and gcd(a,p) = 1, a^((p-1)/2) ≡ (a/p) (mod p)\n3. Show that for composite n, the Euler liars form a proper subgroup of (Z/nZ)*\n4. Use Lagrange's theorem to bound the liar count at most (n-1)/2\n\n### Key Supporting Theorems\n```lean\n-- Euler's criterion\ntheorem euler_criterion (p a : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2)\n    (ha : Nat.Coprime a p) :\n    a ^ ((p-1)/2) ≡ jacobiSymbol a p [MOD p]\n\n-- Jacobi symbol multiplicativity\ntheorem jacobiSymbol_mul (a b n : ℤ) :\n    jacobiSymbol (a * b) n = jacobiSymbol a n * jacobiSymbol b n\n\n-- Every MR liar is an Euler liar\ntheorem strong_pseudoprime_implies_euler (n a : ℕ) :\n    StrongPseudoprimeBase n a → EulerLiar n a\n```\n\n### Cross-Domain Significance\n- Bridges to quadratic reciprocity and class field theory\n- Creates infrastructure for Jacobi sums and character theory\n- Connects to formal L-function theory\n- Relevant to lattice-based cryptography verification\n\n### Estimated Effort\n600-900 lines. Mathlib already has some Jacobi symbol infrastructure.\n\n---\n\n## Direction 3: Full AKS Correctness Proof\n\n### Target Theorem\n```lean\ntheorem aks_criterion\n    (n r : ℕ) (",
+      "source_exp_id": "51f363f3",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T15:04:38.634308+00:00"
     }
   ],
   "pruned": [

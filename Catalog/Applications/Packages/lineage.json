@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 314
+      "hue": 359
     },
     {
       "id": "galois_group__s",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -52,7 +52,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -61,7 +61,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "expected_lean_signature",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -79,7 +79,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -88,7 +88,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 112
+      "hue": 100
     },
     {
       "id": "percolation_threshold",
@@ -106,7 +106,16 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 271
+      "hue": 91
+    },
+    {
+      "id": "certified_novelty_detection_for_theorem_provers",
+      "title": "Formal Novelty Certification for Theorem Spaces",
+      "domain": "Logic / Metric Proof Theory",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-18T15:05:02Z",
+      "hue": 112
     }
   ],
   "edges": [],
