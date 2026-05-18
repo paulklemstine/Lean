@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1493 of the highest-quality
+A curated collection of 1494 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1493
+Total files: 1494
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -1149,6 +1149,7 @@ import FINAL.Physics.PlanckSpacetime
 import FINAL.Physics.QuantumE8ModularForms
 import FINAL.Physics.SelectionRules
 import FINAL.Physics.Spectrum
+import FINAL.Physics.StabilizerBounds
 import FINAL.Physics.Teleportation
 import FINAL.Physics.Theorems
 import FINAL.Physics.ToricCode
