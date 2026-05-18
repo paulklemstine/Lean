@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1486 of the highest-quality
+A curated collection of 1490 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1486
+Total files: 1490
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -136,6 +136,7 @@ import FINAL.Algebra.Photon
 import FINAL.Algebra.PhysicalPhenomena
 import FINAL.Algebra.PolyMethod
 import FINAL.Algebra.PredictionGeometry
+import FINAL.Algebra.ProjectiveResolutionConcrete
 import FINAL.Algebra.PythagoreanPhotonics
 import FINAL.Algebra.PythagoreanQuadruples
 import FINAL.Algebra.QDF_ArithGeomQuantum
@@ -906,6 +907,7 @@ import FINAL.Logic.DimensionalProjection
 import FINAL.Logic.DynamicalProofComplexity
 import FINAL.Logic.EntanglementDifficulty
 import FINAL.Logic.EntanglementNetwork
+import FINAL.Logic.Equiv
 import FINAL.Logic.FormalTime
 import FINAL.Logic.Foundations
 import FINAL.Logic.Framework
@@ -952,6 +954,7 @@ import FINAL.Logic.TropicalHoTT
 import FINAL.Logic.TropicalIncompleteness
 import FINAL.Logic.TropicalMetamathematics
 import FINAL.Logic.TropicalTypeTheory
+import FINAL.Logic.Univalence
 import FINAL.Logic.UniversalDecoder
 import FINAL.Logic.UniversalPhotonMap
 import FINAL.Logic.UniversalSATSolver
@@ -1065,6 +1068,7 @@ import FINAL.MachineLearning.QuantumPhaseLattice
 import FINAL.MachineLearning.ReflectiveConvergence
 import FINAL.MachineLearning.ReflectiveConvergenceArchitecture
 import FINAL.MachineLearning.ResNetLipschitz
+import FINAL.MachineLearning.ReversibleComputing
 import FINAL.MachineLearning.Scaling
 import FINAL.MachineLearning.SelfAdjointFiniteDim
 import FINAL.MachineLearning.SemanticCompression
