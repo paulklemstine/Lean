@@ -981,7 +981,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "dcb79ee6",
       "timestamp": "2026-05-17T18:48:26.949134+00:00"
     },
@@ -4721,8 +4721,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "22ecc7e4",
       "timestamp": "2026-05-18T05:01:41.439580+00:00"
     },
     {
@@ -4742,6 +4742,241 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T05:01:41.446728+00:00"
+    },
+    {
+      "id": "fd_0255",
+      "title": "Extension of Dijkstra certificate",
+      "description": ": Add heuristic to the state, prove that admissibility implies the settled-optimality invariant still holds. The key insight: if h is admissible, then extracting the minimum f-score vertex is equivalent to extracting the minimum g-score vertex among those that could be on an optimal path.",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.929648+00:00"
+    },
+    {
+      "id": "fd_0256",
+      "title": "Reduction to Dijkstra on modified weights",
+      "description": ": Define w'(u,v) = w(u,v) - h(u) + h(v) (Johnson's technique). Show A* on (w, h) = Dijkstra on w'. Prove w' is nonneg from consistency.\n\n### Cross-Domain Connection\n\nA* with the entropy heuristic h(v) = remaining Shannon entropy connects to **information-directed search** in reinforcement learning and Bayesian optimization.\n\n---\n\n## Direction 2: Verified Fast Polynomial Multiplication\n\n### Theorem Target\n\n```lean\ntheorem ntt_polynomial_multiply_correct\n    {R : Type} [CommRing R] [IsDomain R]\n    (n : ℕ) (ω : R) (hω : IsPrimitiveRoot ω (2 * n))\n    (a b : Fin n → R) :\n    nttPolyMul ω a b = polyMul a b\n```\n\nwhere `nttPolyMul` uses forward NTT, pointwise multiply, inverse NTT, and `polyMul` is naive polynomial multiplication (not cyclic — linear convolution).\n\n### Required Definitions\n\n- `p",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges",
+        "Algebra",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.936472+00:00"
+    },
+    {
+      "id": "fd_0257",
+      "title": "Direct from convolution theorem",
+      "description": ": Pad inputs to length 2n with zeros. Cyclic convolution of zero-padded sequences equals linear convolution for the first n+m-1 terms. Apply the verified NTT convolution theorem, then the inverse NTT.",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.941779+00:00"
+    },
+    {
+      "id": "fd_0258",
+      "title": "Matrix factorization approach",
+      "description": ": Express NTT as a Vandermonde matrix, prove the Vandermonde matrix is invertible when ω is primitive, and derive the inverse NTT. Then polynomial multiplication follows from the diagonal representation of circulant matrices.\n\n### Cross-Domain Connection\n\nThis directly enables **verified lattice cryptography**: CRYSTALS-Kyber and CRYSTALS-Dilithium use NTT-based polynomial multiplication over Zq[X]/(X^n + 1). Proving multiplication correct is a prerequisite for verified post-quantum security.\n\n---\n\n## Direction 3: Information-Theoretic Lower Bounds\n\n### Theorem Target\n\n```lean\ntheorem comparison_search_lower_bound\n    {n : ℕ} (hn : 1 < n)\n    (A : ComparisonAlgorithm n) :\n    A.worstCaseComparisons ≥ Nat.clog 2 n\n```\n\n### Required Definitions\n\n- `ComparisonAlgorithm n`: a decision tree of ",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics",
+        "Cryptography",
+        "Bridges",
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.948113+00:00"
+    },
+    {
+      "id": "fd_0259",
+      "title": "Counting argument",
+      "description": ": A binary decision tree of depth d has at most 2^d leaves. To distinguish n elements, need 2^d ≥ n, hence d ≥ ⌈log₂ n⌉.",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.952854+00:00"
+    },
+    {
+      "id": "fd_0260",
+      "title": "Entropy argument",
+      "description": ": Any comparison yields at most 1 bit of information. Identifying one of n equally likely elements requires log₂(n) bits. Use the verified `search_information_duality` theorem to bridge search depth and entropy.\n\n### Cross-Domain Connection\n\nThis would establish the **information-theoretic optimality of binary search**: the upper bound (from `binarySearch_steps_pow2`) matches the lower bound, proving that binary search is optimal among comparison-based algorithms. This extends to sorting lower bounds (Ω(n log n)) via the same entropy argument.\n\n---\n\n## Direction 4: Tropical Shortest-Path Closure\n\n### Theorem Target\n\n```lean\ntheorem shortestPath_eq_tropicalClosure\n    {n : ℕ}\n    (W : Matrix (Fin n) (Fin n) (WithTop ℕ)) :\n    shortestPathMatrix W = tropicalKleeneStar W\n```\n\nwhere `tropicalK",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "Bridges",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.959296+00:00"
+    },
+    {
+      "id": "fd_0261",
+      "title": "Direct induction on path length",
+      "description": ": W^k[i,j] gives the shortest path from i to j using at most k edges. Since shortest simple paths have at most n-1 edges, the Kleene star stabilizes at W^(n-1).",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.964463+00:00"
+    },
+    {
+      "id": "fd_0262",
+      "title": "Floyd-Warshall as tropical Gaussian elimination",
+      "description": ": Formalize Floyd-Warshall as Gaussian elimination in the tropical semiring. The correctness of Gaussian elimination in semirings gives the Kleene star formula.\n\n### Cross-Domain Connection\n\nThis bridges **algorithm verification** and **tropical geometry**. Tropical Kleene stars appear in:\n- Dynamic programming (all semiring shortest paths)\n- Regular expression matching (path algebras)\n- Algebraic graph theory\n- Economic equilibrium (min-cost flow as tropical linear programming)\n\n---\n\n## Direction 5: Amortized Analysis via Potential Functions\n\n### Theorem Target\n\n```lean\ntheorem amortized_complexity_bound\n    {State Spec : Type*}\n    (A : AmortizedCertificate State Spec)\n    (init : State)\n    (hInv : A.invariant init)\n    (hAmort : ∀ s, A.invariant s → ¬A.terminal s →\n        A.actualCost",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "Bridges",
+        "Algebra",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.970712+00:00"
+    },
+    {
+      "id": "fd_0263",
+      "title": "Telescoping sum",
+      "description": ": The amortized inequality telescopes: Σ actualCost(i) = Σ (amortizedBound - Δpotential(i)) = T·amortizedBound - (potential(final) - potential(init)) ≤ T·amortizedBound + potential(init).",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.975426+00:00"
+    },
+    {
+      "id": "fd_0264",
+      "title": "Reduction to base framework",
+      "description": ": Show that the amortized certificate with potential Φ and bound B can be converted to a standard AlgorithmicCertificate with potential = B·T_remaining + Φ, giving the same termination and correctness guarantees.\n\n### Cross-Domain Connection\n\nAmortized analysis via potentials connects to **thermodynamic computing**: the potential function is analogous to free energy, actual cost to work, and the amortized bound to the equilibrium cost. Landauer's principle (energy cost of erasing a bit) is a physical instance of amortized analysis.\n\n---\n\n## Implementation Roadmap\n\n### Phase 1 (Immediate, 1-2 weeks)\n- Direction 3: Comparison lower bounds (direct counting argument, minimal new infrastructure)\n- Direction 5: Amortized analysis (extends existing framework naturally)\n\n### Phase 2 (Short-term, 2",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics",
+        "Bridges",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.981844+00:00"
+    },
+    {
+      "id": "fd_0265",
+      "title": "Hypothesis formation",
+      "description": ": State the target theorem precisely in Lean",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.986188+00:00"
+    },
+    {
+      "id": "fd_0266",
+      "title": "Validation",
+      "description": ": Test with `#eval` and computational experiments",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.991555+00:00"
+    },
+    {
+      "id": "fd_0267",
+      "title": "Proof construction",
+      "description": ": Prove helpers bottom-up, then main theorem",
+      "source_exp_id": "dcb79ee6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T05:04:42.995855+00:00"
     }
   ],
   "pruned": [
