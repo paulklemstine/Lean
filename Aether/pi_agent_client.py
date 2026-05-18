@@ -293,7 +293,7 @@ _QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
     - +0.1: Advances a priority open problem from the research context
     - +0.1: Introduces novel definitions that enable further theorems
     - +0.05: Has a well-structured proof with clear comments
-    - +0.05: Produces artifacts beyond just Lean (paper, demo, visualization)
+    - +0.05: Produces artifacts beyond just Lean (paper, demo, article)
 
     ## Visionary Boosting Factors (additional, for breakthrough results)
     - +0.15: Opens an entirely new mathematical field (not just extends existing work)
@@ -1800,7 +1800,7 @@ class PiAgentClient:
             update knowledge base and iterate forever.
 
             Required: Lean 4 proofs, FUTURE_DIRECTIONS.md
-            Optional: ARTICLE.md, RESEARCH_PAPER.md, demo.py, diagram.svg
+            Optional: ARTICLE.md, RESEARCH_PAPER.md, demo.py
 
             FUTURE_DIRECTIONS.md is critical — it drives the next research cycle.
             Each direction must be a testable scientific hypothesis: a precise,
