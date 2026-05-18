@@ -1,1 +1,0 @@
-# See algorithms.py: construct_quotient_dynamics()
