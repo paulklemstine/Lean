@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1364 of the highest-quality
+A curated collection of 1367 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1364
+Total files: 1367
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -681,6 +681,7 @@ import FINAL.Cryptography.CryptographicClosureHulls
 import FINAL.Cryptography.CutCryptography
 import FINAL.Cryptography.DiophantineCryptoCore
 import FINAL.Cryptography.Divisibility
+import FINAL.Cryptography.FactorQuadruples
 import FINAL.Cryptography.FiniteStoneClosure
 import FINAL.Cryptography.Foundation
 import FINAL.Cryptography.Freeness
@@ -688,6 +689,7 @@ import FINAL.Cryptography.GeometricCryptanalysis
 import FINAL.Cryptography.HTLCLightning
 import FINAL.Cryptography.LeftoverHash
 import FINAL.Cryptography.MLLFormula
+import FINAL.Cryptography.MasterFormula
 import FINAL.Cryptography.MinDistance
 import FINAL.Cryptography.MinimumDistance
 import FINAL.Cryptography.MooreClosure
@@ -939,6 +941,7 @@ import FINAL.MachineLearning.HexGeometry
 import FINAL.MachineLearning.IdempotentAggregation
 import FINAL.MachineLearning.LLMSingleMatMul
 import FINAL.MachineLearning.LSEConvergence
+import FINAL.MachineLearning.LegendreGapReduction
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LoopFoundations
 import FINAL.MachineLearning.MaxPlusRepresenter
