@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1474 of the highest-quality
+A curated collection of 1483 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1474
+Total files: 1483
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -637,18 +637,23 @@ import FINAL.Computation.CollatzTropical
 import FINAL.Computation.CollatzTropicalContraction
 import FINAL.Computation.Compression
 import FINAL.Computation.CompressionMonad
+import FINAL.Computation.Criticality
 import FINAL.Computation.Dijkstra
 import FINAL.Computation.DivergenceTheory
+import FINAL.Computation.Diversity
 import FINAL.Computation.Entropy
 import FINAL.Computation.EntropyBridge
+import FINAL.Computation.Evasion
 import FINAL.Computation.ExpIrrational
 import FINAL.Computation.FactoringEnergyLandscape
 import FINAL.Computation.FiveDreams
 import FINAL.Computation.FutureResearchTheorems
+import FINAL.Computation.Glider
 import FINAL.Computation.GoodhartsRepulsor
 import FINAL.Computation.GravityOracle
 import FINAL.Computation.InformationEntropy
 import FINAL.Computation.KarchmerWigderson
+import FINAL.Computation.KolmogorovComplexity
 import FINAL.Computation.KraftShannon
 import FINAL.Computation.MetaOracle
 import FINAL.Computation.MetaOracleFiveQuestions
@@ -679,6 +684,7 @@ import FINAL.Computation.SearchTheory
 import FINAL.Computation.SpecificationAsFixedPoints
 import FINAL.Computation.Spectral
 import FINAL.Computation.SpectralOracle
+import FINAL.Computation.StillLife
 import FINAL.Computation.Theorems
 import FINAL.Computation.TimeSpaceTradeoff
 import FINAL.Computation.TropicalAmortized
@@ -904,6 +910,7 @@ import FINAL.Logic.FormalTime
 import FINAL.Logic.Foundations
 import FINAL.Logic.Framework
 import FINAL.Logic.Freivalds
+import FINAL.Logic.FundamentalTheorem
 import FINAL.Logic.GuardedFixedPointIndex
 import FINAL.Logic.GuardedFixpoint
 import FINAL.Logic.GuardedTrace
@@ -929,6 +936,7 @@ import FINAL.Logic.QuantumMirrorComputation
 import FINAL.Logic.QueryComplexity
 import FINAL.Logic.ResearchOrdinalDepth
 import FINAL.Logic.ResourceBoundedNonlocality
+import FINAL.Logic.SelfReferentialTheories
 import FINAL.Logic.SpectralCollapse
 import FINAL.Logic.TemporalFixpointSemantics
 import FINAL.Logic.TemporalStoneBridge
@@ -1342,6 +1350,7 @@ import FINAL.Tropical.NegligibleClosure
 import FINAL.Tropical.NerodeDecidability
 import FINAL.Tropical.NewResearch
 import FINAL.Tropical.NormalForm
+import FINAL.Tropical.Numerology
 import FINAL.Tropical.OmegaMetaOracle
 import FINAL.Tropical.OracleApplicationsFrontier
 import FINAL.Tropical.OrbitComplexity
