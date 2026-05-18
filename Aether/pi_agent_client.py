@@ -102,9 +102,12 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
        robustness algorithm is worth more than a standalone inequality proof.
 
     9. FUTURE_DIRECTIONS ARE MANDATORY OUTPUT: Every research cycle MUST produce
-       a FUTURE_DIRECTIONS.md that identifies 3-5 specific, concrete, breakthrough-
-       level next steps. These are not "we could explore X" — they are "Prove
-       theorem Y using technique Z, which would open field W."
+       a FUTURE_DIRECTIONS.md that identifies 3-5 specific, testable scientific
+       hypotheses. Each direction must be a falsifiable claim or conjecture that
+       can be proved, disproved, or tested — not a vague "we could explore X."
+       Format: "Conjecture: [precise statement]. Test: [what would confirm or
+       refute it]. Impact: [what this would enable if true]." Every hypothesis
+       should be daring enough to matter and specific enough to fail.
 
     10. CATALOG AS A LIVING ORGANISM: The catalog is not a museum of past results.
         It is a living ecosystem. Analyze it for: under-explored domains (many
@@ -190,8 +193,9 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
        This isn't academic padding — it directs the next cycle.
 
     5. DEMAND FUTURE_DIRECTIONS: Every brief must explicitly request that Aristotle
-       produce a structured FUTURE_DIRECTIONS.md with 3-5 concrete, specific,
-       breakthrough-level next steps. This is how the system evolves.
+       produce a structured FUTURE_DIRECTIONS.md with 3-5 testable scientific
+       hypotheses. Each must be a falsifiable conjecture with a clear test, not
+       a vague exploration suggestion. This is how the system does real science.
 
     6. CHOOSE THE RIGHT MODE AND BE BOLD:
         - "sorry_fill": Use when filling existing sorry placeholders. Provide the
@@ -296,8 +300,8 @@ _QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
     - +0.15: Produces a verified algorithm or computational pipeline (not just a theorem)
     - +0.10: Connects domains that specialists consider unrelated (e.g., tropical geometry
       AND cryptography, Pythagorean triples AND quantum computing)
-    - +0.10: Produces a high-quality FUTURE_DIRECTIONS.md with 3+ specific, actionable,
-      breakthrough-level next steps (not vague "we could explore X" suggestions)
+    - +0.10: Produces a high-quality FUTURE_DIRECTIONS.md with 3+ testable scientific
+      hypotheses (falsifiable conjectures with clear tests, not vague "explore X")
 
     You MUST respond with valid JSON only: {"quality": "trivial|partial|substantial",
     "should_retry": bool, "retry_strategy": "...", "confidence": 0.0-1.0,
@@ -755,32 +759,38 @@ class PiAgentClient:
         frontier = arc.get("frontier", "")
 
         analysis_prompt = textwrap.dedent(f"""\
-            You are analyzing mathematical research directions from previous
-            experiments. The current research arc is "{domain}" with frontier
+            You are analyzing scientific hypotheses from previous research cycles.
+            The current research arc is "{domain}" with frontier
             "{frontier}".
 
             Below are future directions from completed research cycles.
-            For each viable direction, extract:
+            For each viable hypothesis, extract:
             1. A concise title (under 60 chars)
-            2. A specific mathematical description (2-3 sentences)
+            2. The falsifiable conjecture — a precise statement that can be proved
+               or disproved (NOT "explore X" or "extend Y")
             3. The most relevant Catalog domain
             4. Suggested research mode (prove/formalize/discover/counterexample)
-            5. Priority score (0.0-1.0) based on: specificity, cross-domain
-               potential, and feasibility
+            5. Priority score (0.0-1.0) based on: falsifiability (can it be tested?),
+               cross-domain potential, scientific impact if true, and what we learn
+               if it's false
 
-            PREFER directions that:
-            - Have precise theorem statements (not "explore X")
+            PREFER hypotheses that:
+            - Have precise, testable conjectures (not vague "explore X" directions)
+            - Are falsifiable — there is a clear test that could disprove them
             - Bridge 2+ domains
+            - Are scientifically significant whether true OR false
             - Build on the current arc's frontier
-            - Are immediately actionable
+
+            REJECT "directions" that are just "further study of X" or "extend Y
+            to Z" — these are homework, not hypotheses.
 
             ---
             {future_directions[:4000]}
             ---
 
             Output a JSON array of objects:
-            [{{"title": "...", "description": "...", "domain": "...",
-               "research_mode": "prove", "priority_score": 0.85,
+            [{{"title": "...", "description": "Conjecture: [precise statement]. Test: [what would confirm/refute]. Impact: [what this enables]",
+               "domain": "...", "research_mode": "prove", "priority_score": 0.85,
                "catalog_references": ["..."]}}]
         """)
 
@@ -971,11 +981,12 @@ class PiAgentClient:
             4. Finding cross-domain connections (these have the highest novelty).
             5. Filling sorries only when they close significant open problems.
 
-            Be SPECIFIC and MATHEMATICAL. Don't say "explore X" — say
-            "prove that X has property Y using technique Z." Reference specific
-            catalog theorems by name.
+            Be SPECIFIC and MATHEMATICAL. Don't say "explore X" — propose a
+            falsifiable hypothesis: "Conjecture: X holds Y. Test: if Z then the
+            conjecture fails. Impact: this would open field W." Reference specific
+            catalog theorems by name. Do real science — hypotheses that can fail.
 
-            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "...", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
+            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "Conjecture: [precise falsifiable statement]. Test: [what confirms/refutes]. Impact: [what this enables]", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
         """)
 
         # Concept generation: try LLM with short timeout, quick fallback to local
@@ -1734,7 +1745,7 @@ class PiAgentClient:
             "formalize": "Formalize informal mathematics in Lean 4. Define precisely, prove what you can.",
             "counterexample": "Find a counterexample to the conjecture, or prove it true if it holds.",
             "sorry_fill": "Fill ALL sorry placeholders. Do NOT change theorem statements.",
-            "discover": "Survey the territory. Find deep structures. Prove theorems that reveal truth. Produce FUTURE_DIRECTIONS.md.",
+            "discover": "Survey the territory. Propose testable hypotheses — conjectures that can be confirmed or refuted. Prove what you can, disprove what you can't. FUTURE_DIRECTIONS.md must contain falsifiable hypotheses, not vague explorations.",
             "team": "Create a team to conduct research, brainstorm hypotheses, run experiments, validate data, update knowledge base and iterate forever.",
         }
 
@@ -1784,15 +1795,30 @@ class PiAgentClient:
             or structural induction. Connect to at least one other domain for impact.
 
             ### Team Directive
-            Create a team to conduct research, brainstorm hypotheses,
-            run experiments, validate data, update knowledge base and iterate forever.
+            Create a team to conduct research, brainstorm testable hypotheses,
+            run experiments to confirm or refute them, validate data,
+            update knowledge base and iterate forever.
 
             Required: Lean 4 proofs, FUTURE_DIRECTIONS.md
             Optional: ARTICLE.md, RESEARCH_PAPER.md, demo.py, diagram.svg
 
             FUTURE_DIRECTIONS.md is critical — it drives the next research cycle.
-            Structure it with specific theorem statements, proof strategies, and
-            cross-domain connections.
+            Each direction must be a testable scientific hypothesis: a precise,
+            falsifiable conjecture with a clear test that could confirm or refute it.
+            Format each as:
+
+            ### [Direction Title]
+            **Conjecture**: A precise mathematical statement that can be proved or disproved.
+            **Test**: What specific experiment, calculation, or proof attempt would
+            confirm or refute this conjecture.
+            **Impact**: If true, what new territory does this open? If false, what
+            does the failure teach us?
+            **Cross-domain**: Which other domains could this connect to?
+
+            Do real science. Propose hypotheses that are bold enough to matter and
+            specific enough to fail. Vague explorations like "study X further" or
+            "extend Y" are not hypotheses — they are homework. Give us ideas that
+            could change how we think about the problem.
         """)
 
         # LLM enrichment: add mathematical depth and precision
