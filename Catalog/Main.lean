@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1435 of the highest-quality
+A curated collection of 1450 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1435
+Total files: 1450
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -953,6 +953,7 @@ import FINAL.MachineLearning.AdjointAutoencoder
 import FINAL.MachineLearning.AetherQualityControl
 import FINAL.MachineLearning.AetherStressTesting
 import FINAL.MachineLearning.AlgebraicCausalInference
+import FINAL.MachineLearning.AlgebraicElectricity
 import FINAL.MachineLearning.AlgebraicNeuralArchitecture
 import FINAL.MachineLearning.Applications
 import FINAL.MachineLearning.AsymptoticRate
@@ -964,6 +965,7 @@ import FINAL.MachineLearning.BoundedDivisorSearch
 import FINAL.MachineLearning.BoundedFamily
 import FINAL.MachineLearning.BracketRobustness
 import FINAL.MachineLearning.BroadcastTheorems
+import FINAL.MachineLearning.Catoni
 import FINAL.MachineLearning.CechComplex
 import FINAL.MachineLearning.CechDecisionBoundaryObstructions
 import FINAL.MachineLearning.CechRobustnessCertification
@@ -984,6 +986,7 @@ import FINAL.MachineLearning.CrystallizationTheory
 import FINAL.MachineLearning.CurriculumTheory
 import FINAL.MachineLearning.Defs
 import FINAL.MachineLearning.ECOCRobustness
+import FINAL.MachineLearning.EulerBricks
 import FINAL.MachineLearning.Evaluation
 import FINAL.MachineLearning.FactoredBellmanResidual
 import FINAL.MachineLearning.FaithfulRepresentation
@@ -996,6 +999,9 @@ import FINAL.MachineLearning.GravityAI
 import FINAL.MachineLearning.GroupTheory
 import FINAL.MachineLearning.HexGeometry
 import FINAL.MachineLearning.IdempotentAggregation
+import FINAL.MachineLearning.IterateBound
+import FINAL.MachineLearning.Kardashev
+import FINAL.MachineLearning.KardashevBound
 import FINAL.MachineLearning.LLMSingleMatMul
 import FINAL.MachineLearning.LSEBound
 import FINAL.MachineLearning.LSEConvergence
@@ -1004,31 +1010,39 @@ import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LoopFoundations
 import FINAL.MachineLearning.MaxPlusRepresenter
 import FINAL.MachineLearning.MinMax
+import FINAL.MachineLearning.MultiHead
 import FINAL.MachineLearning.MulticlassMargin
 import FINAL.MachineLearning.NNCompilationTheory
 import FINAL.MachineLearning.NetherPortals
+import FINAL.MachineLearning.NetworkOptimality
 import FINAL.MachineLearning.NeuralCompilationTeams
 import FINAL.MachineLearning.NeuralSheafCohomology
 import FINAL.MachineLearning.OrdinalResearchGovernance
 import FINAL.MachineLearning.PadicCramerRao
 import FINAL.MachineLearning.Parity
+import FINAL.MachineLearning.Percolation
 import FINAL.MachineLearning.PhotonEpistemicBridge
 import FINAL.MachineLearning.PhotonNetworks
 import FINAL.MachineLearning.PluralityRobust
 import FINAL.MachineLearning.PresheafIdentifiability
+import FINAL.MachineLearning.PrimitiveReduction
 import FINAL.MachineLearning.ProfileDepthGap
 import FINAL.MachineLearning.PromptOptimization
 import FINAL.MachineLearning.ProofTheoreticDepth
 import FINAL.MachineLearning.ProvabilityPACBayesian
 import FINAL.MachineLearning.QuantizedResidualMDL
+import FINAL.MachineLearning.QuantumMoonshots
 import FINAL.MachineLearning.QuantumObservables
 import FINAL.MachineLearning.ReflectiveConvergence
 import FINAL.MachineLearning.ReflectiveConvergenceArchitecture
+import FINAL.MachineLearning.Scaling
 import FINAL.MachineLearning.SemiringRelativeReality
 import FINAL.MachineLearning.SheafCertifiedRobustness
+import FINAL.MachineLearning.SinkTheorem
 import FINAL.MachineLearning.SmallCases
 import FINAL.MachineLearning.SpectralBounds
 import FINAL.MachineLearning.Stability
+import FINAL.MachineLearning.Surface
 import FINAL.MachineLearning.TheoremA
 import FINAL.MachineLearning.TheoremNoveltyCertification
 import FINAL.MachineLearning.TriangularThreshold
@@ -1055,6 +1069,7 @@ import FINAL.MachineLearning.TropicalNeuralRobustness
 import FINAL.MachineLearning.TropicalPairwiseRobustness
 import FINAL.MachineLearning.TropicalReflectiveEquilibrium
 import FINAL.MachineLearning.TropicalRobustness
+import FINAL.MachineLearning.TropicalRouting
 import FINAL.MachineLearning.TropicalScalingLaws
 import FINAL.MachineLearning.TropicalTimeTravel
 import FINAL.MachineLearning.TropicalTop2Robustness
