@@ -84,7 +84,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "55fc2527",
       "timestamp": "2026-05-17T18:48:26.949041+00:00"
     },
@@ -5399,6 +5399,113 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T07:10:26.186742+00:00"
+    },
+    {
+      "id": "fd_0290",
+      "title": "Expected Lean Signature",
+      "description": "```lean\ntheorem odd_perfect_euler_shape {n : ℕ}\n    (hperf : Perfect n) (hodd : Odd n) :\n    ∃ q k m : ℕ,\n      Nat.Prime q ∧\n      q % 4 = 1 ∧\n      n = q ^ (4 * k + 1) * m ^ 2 ∧\n      Nat.Coprime q m := by sorry\n```",
+      "source_exp_id": "55fc2527",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:42.282129+00:00"
+    },
+    {
+      "id": "fd_0291",
+      "title": "Helper Lemmas Needed",
+      "description": "```lean\ntheorem sigma_prime_pow_odd_exp_parity {p a : ℕ} (hp : Nat.Prime p) (hodd_p : Odd p) :\n    Even (sigma (p ^ a)) ↔ Odd a := by sorry\n\ntheorem odd_perfect_exactly_one_odd_exp {n : ℕ}\n    (hperf : Perfect n) (hodd : Odd n) :\n    ∃! p, p ∈ n.primeFactors ∧ Odd (n.factorization p) := by sorry\n```",
+      "source_exp_id": "55fc2527",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:42.290324+00:00"
+    },
+    {
+      "id": "fd_0292",
+      "title": "Why This Opens a New Field-Line",
+      "description": "Euler's shape theorem is the gateway to all deeper odd perfect number results. It constrains the factorization structure so severely that it enables:\n- Bounds on the number of prime factors (since most must appear with even exponent)\n- Modular constraints on the special prime q\n- Branch-and-bound exclusion algorithms over the shape parameters\n\nThis theorem has never been formally verified and would be a significant contribution to the formal mathematics community.\n\n---",
+      "source_exp_id": "55fc2527",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:42.297621+00:00"
+    },
+    {
+      "id": "fd_0293",
+      "title": "Hypotheses to Test",
+      "description": "1. The abundancy optimization approach can produce ω(n) ≥ 9 for odd perfects within 6 months.\n2. Euler's shape theorem can be formalized using the parity analysis of σ(p^k) within the existing framework.\n3. A certified branch-and-bound exclusion can cover all odd perfect candidates with ω(n) ≤ 4.",
+      "source_exp_id": "55fc2527",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:42.338758+00:00"
+    },
+    {
+      "id": "fd_0294",
+      "title": "Key Dependencies",
+      "description": "- Direction 1 (Euler shape) is prerequisite for Directions 2 and 3.\n- Direction 4 (multiperfect) is independent and can proceed in parallel.\n- Direction 5 (Robin) requires Mathlib analytic infrastructure and is the longest-term goal.",
+      "source_exp_id": "55fc2527",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:42.345108+00:00"
+    },
+    {
+      "id": "fd_0295",
+      "title": "Cross-Domain Connections to Exploit",
+      "description": "- **Formal optimization** (Direction 3): connect to verified linear programming and branch-and-bound.\n- **Computational algebra** (Direction 4): use Lean's `norm_num` extensions for large-scale computation.\n- **Analytic number theory** (Direction 5): bridge to Mathlib's growing analysis library.\n- **Proof automation** (all directions): develop custom tactics for divisor-sum reasoning.",
+      "source_exp_id": "55fc2527",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:42.351009+00:00"
     }
   ],
   "pruned": [
