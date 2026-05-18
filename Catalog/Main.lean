@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1304 of the highest-quality
+A curated collection of 1318 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1304
+Total files: 1318
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -832,6 +832,7 @@ import FINAL.Logic.ParallelClosureCanonicalization
 import FINAL.Logic.ParameterizedStereographic
 import FINAL.Logic.PhotonChannels
 import FINAL.Logic.PostQuantumSignatures
+import FINAL.Logic.ProductEncoding
 import FINAL.Logic.PvsNP
 import FINAL.Logic.QuantumMirrorComputation
 import FINAL.Logic.QueryComplexity
@@ -848,6 +849,7 @@ import FINAL.Logic.TropicalCurryHoward
 import FINAL.Logic.TropicalCurryHowardCanonical
 import FINAL.Logic.TropicalGodelSentence
 import FINAL.Logic.TropicalHoTT
+import FINAL.Logic.TropicalIncompleteness
 import FINAL.Logic.TropicalMetamathematics
 import FINAL.Logic.TropicalTypeTheory
 import FINAL.Logic.UniversalDecoder
@@ -869,6 +871,7 @@ import FINAL.MachineLearning.AsymptoticRate
 import FINAL.MachineLearning.Attention
 import FINAL.MachineLearning.Basic
 import FINAL.MachineLearning.BerggrenOrbitSpectral
+import FINAL.MachineLearning.BernoulliMeasure
 import FINAL.MachineLearning.BoundedDivisorSearch
 import FINAL.MachineLearning.BoundedFamily
 import FINAL.MachineLearning.BracketRobustness
@@ -937,6 +940,7 @@ import FINAL.MachineLearning.SpectralBounds
 import FINAL.MachineLearning.Stability
 import FINAL.MachineLearning.TheoremA
 import FINAL.MachineLearning.TheoremNoveltyCertification
+import FINAL.MachineLearning.TriangularThreshold
 import FINAL.MachineLearning.TropKME
 import FINAL.MachineLearning.TropicalAdversarialRegularization
 import FINAL.MachineLearning.TropicalAdversarialTraining
@@ -1086,6 +1090,7 @@ import FINAL.Tropical.AmplitudeAmplification
 import FINAL.Tropical.Applications
 import FINAL.Tropical.ApproximateRobustness
 import FINAL.Tropical.ApproximateVerification
+import FINAL.Tropical.ArthurSelbergGL2
 import FINAL.Tropical.Asymptotic
 import FINAL.Tropical.AutomorphicBuildings
 import FINAL.Tropical.BPCircuitSimulation
@@ -1159,10 +1164,12 @@ import FINAL.Tropical.HybridArgument
 import FINAL.Tropical.Hyperbolicity
 import FINAL.Tropical.InformationTheory
 import FINAL.Tropical.KineticCertification
+import FINAL.Tropical.LSEConvexity
 import FINAL.Tropical.LSEPruning
 import FINAL.Tropical.LegendreDuality
 import FINAL.Tropical.Lipschitz
 import FINAL.Tropical.LipschitzChain
+import FINAL.Tropical.LocalLanglands
 import FINAL.Tropical.LocalToGlobal
 import FINAL.Tropical.LorentzForce
 import FINAL.Tropical.LowRankAttack
@@ -1185,6 +1192,7 @@ import FINAL.Tropical.MutualInformation
 import FINAL.Tropical.MyhillNerode
 import FINAL.Tropical.NNCompilationExtended
 import FINAL.Tropical.NerodeDecidability
+import FINAL.Tropical.NewResearch
 import FINAL.Tropical.NormalForm
 import FINAL.Tropical.OmegaMetaOracle
 import FINAL.Tropical.OracleApplicationsFrontier
@@ -1239,6 +1247,7 @@ import FINAL.Tropical.Surgery
 import FINAL.Tropical.Surjectivity_of_the_Tropical_Satake_Transform_for_GL₃
 import FINAL.Tropical.Synthesis
 import FINAL.Tropical.Theorems
+import FINAL.Tropical.ThetaCorrespondence
 import FINAL.Tropical.Threshold
 import FINAL.Tropical.Throughput
 import FINAL.Tropical.TransferOperators
@@ -1247,6 +1256,7 @@ import FINAL.Tropical.TropProtocol
 import FINAL.Tropical.TropicalACNormalization
 import FINAL.Tropical.TropicalAdditiveCombinatorics
 import FINAL.Tropical.TropicalAdvancedTheory
+import FINAL.Tropical.TropicalAgentEpsilon
 import FINAL.Tropical.TropicalBarrier
 import FINAL.Tropical.TropicalCompressionMonad
 import FINAL.Tropical.TropicalConformalExtension
@@ -1260,6 +1270,7 @@ import FINAL.Tropical.TropicalFactoring
 import FINAL.Tropical.TropicalFano
 import FINAL.Tropical.TropicalFormula
 import FINAL.Tropical.TropicalFrontierResearch
+import FINAL.Tropical.TropicalFrontiers
 import FINAL.Tropical.TropicalFutureDirections
 import FINAL.Tropical.TropicalGameEquilibria
 import FINAL.Tropical.TropicalGeneralNetworks
@@ -1277,6 +1288,7 @@ import FINAL.Tropical.TropicalOracleResearch
 import FINAL.Tropical.TropicalOrbitPRG
 import FINAL.Tropical.TropicalPathAlgebra
 import FINAL.Tropical.TropicalPruning
+import FINAL.Tropical.TropicalQuantumBrain
 import FINAL.Tropical.TropicalResiduation
 import FINAL.Tropical.TropicalSatake
 import FINAL.Tropical.TropicalSatakeGL3
@@ -1284,6 +1296,7 @@ import FINAL.Tropical.TropicalSatakeGL3Algebra
 import FINAL.Tropical.TropicalSatakeSurjectivity
 import FINAL.Tropical.TropicalSchurGL3
 import FINAL.Tropical.TropicalSelfReasoning
+import FINAL.Tropical.TropicalSemiring
 import FINAL.Tropical.TropicalSieveTheory
 import FINAL.Tropical.TropicalStructure
 import FINAL.Tropical.TropicalTrapdoor
@@ -1291,6 +1304,7 @@ import FINAL.Tropical.TropicalTrapdoorReversal
 import FINAL.Tropical.TropicalTypeTheory
 import FINAL.Tropical.TropicalUpperHalfPlane
 import FINAL.Tropical.TropicalVerticalComposition
+import FINAL.Tropical.TropicalViTFormalization
 import FINAL.Tropical.Tropical_Certified_Robustness_for_Multi_Class_ReLU_Networks
 import FINAL.Tropical.Tropical_Certified_Robustness_for_Residual_Neural_Networks_with_Skip_Connections
 import FINAL.Tropical.Tropical_Feynman_Calculus_via_Maslov_Dequantization_of_the_SPB_Classical_Action
