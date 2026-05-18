@@ -3077,7 +3077,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "0143783c",
       "timestamp": "2026-05-18T00:01:40.667774+00:00"
     },
@@ -4078,6 +4078,57 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:01:09.105202+00:00"
+    },
+    {
+      "id": "fd_0221",
+      "title": "Formal verification",
+      "description": ": Prove each lemma in Lean, bottom-up from simplest to most complex.",
+      "source_exp_id": "0143783c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:03:57.142741+00:00"
+    },
+    {
+      "id": "fd_0222",
+      "title": "Cross-domain interpretation",
+      "description": ": After each theorem is verified, write a paragraph explaining its meaning in at least two other domains (statistical mechanics, information theory, computer science, etc.).",
+      "source_exp_id": "0143783c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:03:57.147052+00:00"
+    },
+    {
+      "id": "fd_0223",
+      "title": "Iterate",
+      "description": ": Use failures and surprises to generate new conjectures. Update the knowledge base.",
+      "source_exp_id": "0143783c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:03:57.151237+00:00"
     }
   ],
   "pruned": [
