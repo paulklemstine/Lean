@@ -467,13 +467,25 @@ class PiAgentClient:
                 )
 
                 if response.status_code in (402, 429):
-                    # Pollen depleted — wait for hourly reset (pollen resets at :00, we wait until :05)
+                    # Pollen depleted — poll every 5 min until it's back
+                    # Pollen resets at the top of the hour, we wait until :05
                     self.pollen_gate.mark_depleted_from_response(response)
                     wait_until = self.pollen_gate._next_hour_reset(time.time())
-                    wait_seconds = max(60, wait_until - time.time())
-                    reset_at = time.strftime("%H:%M:%S", time.localtime(time.time() + wait_seconds))
-                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_seconds:.0f}s until reset ~{reset_at} (attempt {attempt+1}/{max_retries})")
-                    time.sleep(wait_seconds)
+                    reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))
+                    print(f"[Pi-Agent] Pollen depleted (402). Polling every 5min until reset ~{reset_at} (attempt {attempt+1}/{max_retries})")
+                    while time.time() < wait_until:
+                        sleep_until = min(wait_until, time.time() + 300)
+                        time.sleep(max(60, sleep_until - time.time()))
+                        # Try a quick check — if pollen is back, break early
+                        try:
+                            check = self.client.get("https://pollinations.ai/api/v1/pollen_status",
+                                                    headers={"Authorization": f"Bearer {self.pollen_gate.api_key}"},
+                                                    timeout=10)
+                            if check.status_code == 200:
+                                print(f"[Pi-Agent] Pollen restored early!")
+                                break
+                        except Exception:
+                            pass
                     continue  # Retry after waiting
 
                 response.raise_for_status()
@@ -498,9 +510,19 @@ class PiAgentClient:
                     # Already handled above, but catch if raise_for_status hits first
                     self.pollen_gate.mark_depleted_from_response(e.response)
                     wait_until = self.pollen_gate._next_hour_reset(time.time())
-                    wait_seconds = max(60, wait_until - time.time())
-                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_seconds:.0f}s until reset (attempt {attempt+1}/{max_retries})")
-                    time.sleep(wait_seconds)
+                    print(f"[Pi-Agent] Pollen depleted (402). Polling every 5min until reset (attempt {attempt+1}/{max_retries})")
+                    while time.time() < wait_until:
+                        sleep_until = min(wait_until, time.time() + 300)
+                        time.sleep(max(60, sleep_until - time.time()))
+                        try:
+                            check = self.client.get("https://pollinations.ai/api/v1/pollen_status",
+                                                    headers={"Authorization": f"Bearer {self.pollen_gate.api_key}"},
+                                                    timeout=10)
+                            if check.status_code == 200:
+                                print(f"[Pi-Agent] Pollen restored early!")
+                                break
+                        except Exception:
+                            pass
                     continue
                 if e.response.status_code >= 500 and attempt < max_retries - 1:
                     print(f"[Pi-Agent] ← Server error {e.response.status_code}, retrying ({attempt+1}/{max_retries})")
