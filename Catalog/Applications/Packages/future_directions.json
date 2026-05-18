@@ -85,7 +85,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.96,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "347ab92a",
       "timestamp": "2026-05-18T10:17:17.071899+00:00"
     },
@@ -245,8 +245,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.94,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "a8172b84",
       "timestamp": "2026-05-18T10:17:17.074531+00:00"
     },
     {
@@ -1011,8 +1011,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.91,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "c37dec2c",
       "timestamp": "2026-05-18T10:17:17.102254+00:00"
     },
     {
@@ -1513,8 +1513,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "0c181e41",
       "timestamp": "2026-05-18T16:01:28.112143+00:00"
     },
     {
@@ -1626,8 +1626,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "7814ee5c",
       "timestamp": "2026-05-18T17:04:08.698097+00:00"
     },
     {
@@ -1655,6 +1655,30 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T17:04:29.886121+00:00"
+    },
+    {
+      "id": "fd_0087",
+      "title": "This document identifies five specific, testable scientific hypotheses arising f",
+      "description": "# Future Directions: Formal Meta-Complexity\n\nThis document identifies five specific, testable scientific hypotheses arising from the formal barrier framework connecting Karchmer–Wigderson communication complexity, compression impossibility, and entropy bounds. Each hypothesis is falsifiable: it can be confirmed, refuted, or tested within the existing formal infrastructure.\n\n---\n\n## Hypothesis 1: Entropy–KW Equivalence for Symmetric Functions\n\n**Conjecture:** For every symmetric Boolean function family `f_n : (Fin n → Bool) → Bool` (i.e., one whose output depends only on the Hamming weight of the input), the KW witness cardinality satisfies:\n\n```\nc₁ · n · |T(f)| · |F(f)| ≤ |KWWitness(f_n)| ≤ c₂ · n · |T(f)| · |F(f)|\n```\n\nwhere `T(f)` and `F(f)` are the sets of true/false inputs and `c₁, c₂` are absolute constants. Equivalently, `log₂ |KWWitness(f_n)|` is within `O(1)` of `log₂(n) + log₂|T(f)| + log₂|F(f)|`.\n\n**Test:** Compute exact `|KWWitness(f)|` for parity, majority, threshold-k, and OR on `n = 2, 3, ..., 8`. Check whether the ratio `|KWWitness(f)| / (n · |T(f)| · |F(f)|)` is bounded between constants.\n\n**Lean objects:** `KWWitness`, `parityFn`, `Fintype.card`. Define `symmetricBoolFn` and prove the counting formula.\n\n**Refutation criterion:** If for any symmetric family the ratio diverges (grows or shrinks with n), the conjecture is false.\n\n**Impact:** If true, this gives a complete combinatorial formula for KW witness entropy of symmetric functions, providing exact compression bounds and making lower-bound arguments for this class fully mechanizable.\n\n---\n\n## Hypothesis 2: Compression-to-Formula Transfer with Tight Constants\n\n**Conjecture:** For every monotone Boolean function `f` on `n` variables, if `|KWWitness(f)| ≥ 2^d`, then every monotone formula computing `f` has depth at least `d - O(log n)`. The additive correction `O(log n)` accounts for the difference between witness-space cardinality and communication complexity.\n\nMore precisely: define `KWComplexityExact(f)` as the actual minimum-cost KW protocol for `f`. Then:\n\n```\n⌊log₂ |KWWitness(f)|⌋ - c · log n ≤ KWComplexityExact(f) ≤ ⌊log₂ |KWWitness(f)|⌋\n```\n\nfor an absolute constant `c`.\n\n**Test:**\n1. For parity, majority, OR on `n = 2, ..., 6`, compute both `|KWWitness(f)|` and the actual optimal KW protocol cost (by exhaustive search over protocol trees).\n2. Check whether the gap between `log₂ |KWWitness(f)|` and optimal protocol cost exceeds `c · log n`.\n\n**Lean objects:** `KWWitness`, `KWProto.cost`, `cardinality_forces_long_code`, `MonoFormula.depth`.\n\n**Refutation criterion:** If for some explicit function family the gap grows faster than `O(log n)`, the conjecture fails.\n\n**Impact:** Establishes quantitative tightness of the compression–complexity bridge, enabling formal arguments that use witness counting as a proxy for actual communication complexity.\n\n---\n\n## Hypothesis 3: Natural Property Obstruction via Formal PRF Schema\n\n**Conjecture:** There exists a formal axiom schema `PRFAxiom(G, s)` — asserting that `G` is a pseudorandom function family secure against circuits of size `s(n)` — such that:\n\nAny predicate `P` on Boolean functions that is simultaneously:\n- **Large:** `P` holds for ≥ `2^{-n}` fraction of all `n`-variable functions,\n- **Useful:** `P(f) → f` requires circuits of size `> s(n)`,\n- **Constructive:** `P` is computable in time `poly(2^n)`,\n\nimplies a polynomial-time distinguisher for `G`, contradicting `PRFAxiom(G, s)`.\n\n**Test:**\n1. Define `PRFAxiom` as a Lean predicate on function families.\n2. Define `LargeProperty`, `UsefulAgainst`, `Constructive` (extending the skeleton in `BarrierFramework.lean`).\n3. Attempt to prove: `PRFAxiom(G, s) → ¬(LargeProperty P ∧ UsefulAgainst P s ∧ Constructive P)`.\n4. If the proof goes through, the formalization of the Natural Proofs barrier is complete.\n\n**Lean objects:** `BoolFnProperty`, `IsLargeProperty`, `IsUsefulAgainst`, `natural_proof_distinguisher`.\n\n**Refutation criterion:** If the axiom schema is too weak (admits trivial models where the conclusion fails), it needs strengthening. If the definitions are inconsistent, the formalization reveals it.\n\n**Impact:** A complete formal Natural Proofs barrier would be a landmark in certified complexity theory, machine-verifying one of the three major barriers to P ≠ NP proofs.\n\n---\n\n## Hypothesis 4: Witness-Space Geometry Determines Entropy for Level-Set Functions\n\n**Conjecture:** For any Boolean function `f` defined by a Hamming-weight threshold (i.e., `f(x) = 1 iff wt(x) ∈ S` for some set `S ⊆ {0, ..., n}`), the KW witness cardinality is exactly:\n\n```\n|KWWitness(f)| = Σ_{(a,b) : a ∈ S, b ∉ S} C(n, a) · C(n, b) · |{i : the i-th coordinate can differ between weight-a and weight-b inputs}|\n```\n\nwhere the last factor equals `n` when `|a - b|` = 1, and depends on the Hamming geometry otherwise.\n\nFor the special case of threshold functions `f(x) = 1 iff wt(x) ≥ k`:\n\n```\n|KWWitness(f)| = n · C(n, k) · C(n, k-1) · (some correction factor)\n```\n\n**Test:** Compute exact `|KWWitness(f)|` for threshold-k functions with `n = 4, 5, 6` and `k = 1, 2, ..., n`, and verify the formula.\n\n**Lean objects:** Define `thresholdFn (n k : ℕ) : BoolVec n → Bool`, compute `Fintype.card (KWWitness (thresholdFn n k))` for small cases via `#eval` or `decide`.\n\n**Refutation criterion:** If the exact formula doesn't match computed values for any `(n, k)`, refine the combinatorial formula.\n\n**Impact:** Exact witness-space formulas enable sharp compression bounds without exhaustive enumeration, making the barrier framework computationally efficient for large `n`.\n\n---\n\n## Hypothesis 5: Proof-Complexity Transfer via Finite Incompressibility\n\n**Conjecture:** The finite incompressibility theorem `cardinality_forces_long_code` can be applied to formal proof systems to derive nontrivial width or size lower bounds.\n\nSpecifically: define a simple proof system (e.g., tree-like Resolution) where proofs are finite binary trees with clauses at leaves. Define the \"witness space\" of a proof as the set of all root-to-leaf paths. Then:\n\n- If the clause set has `m` clauses, the witness space of any refutation has cardinality ≥ `m`.\n- By `cardinality_forces_long_code`, any injective encoding of paths needs code length ≥ `⌊log₂ m⌋`.\n- This translates to: tree-like Resolution refutations of `m`-clause formulas have depth ≥ `⌊log₂ m⌋`.\n\n**Test:**\n1. Define `ResolutionProof` as an inductive type of binary trees with clause labels.\n2. Define the witness space (root-to-leaf paths).\n3. Prove `|paths| ≥ |clauses|` for refutations.\n4. Apply `cardinality_forces_long_code` to conclude the depth bound.\n5. Verify against known results: tree-like Resolution depth for pigeonhole formulas.\n\n**Lean objects:** Define `ResolutionTree`, `proofPaths`, prove `card_paths_ge_clauses`, then apply `cardinality_forces_long_code`.\n\n**Refutation criterion:** If `|paths| ≥ |clauses|` fails for some valid refutation, the proof system model is wrong. If the depth bound is trivially weaker than known results, the approach needs refinement.\n\n**Impact:** Connecting the compression framework to proof complexity opens a new route to formalizing Resolution and Cutting Planes lower bounds, with potential applications to SAT solver analysis and automated reasoning.\n\n---\n\n## Implementation Priority\n\n1. **Hypothesis 4** (exact formulas) — most immediately testable with `#eval`\n2. **Hypothesis 1** (symmetric functions) — builds on existing `parityFn` infrastructure\n3. **Hypothesis 2** (tight constants) — requires implementing optimal protocol search\n4. **Hypothesis 5** (proof complexity) — new definitions needed but clear path\n5. **Hypothesis 3** (natural proofs) — most ambitious, requires careful axiom design\n\nEach hypothesis generates concrete Lean code and can be tested within 1–2 development cycles. The framework in `Computation/BarrierFramework.lean` provides the foundation for all five directions.\n",
+      "source_exp_id": "347ab92a",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Bridges",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T17:04:49.623131+00:00"
     }
   ],
   "pruned": [

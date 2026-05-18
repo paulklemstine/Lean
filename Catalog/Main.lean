@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1420 of the highest-quality
+A curated collection of 1427 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1420
+Total files: 1427
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -33,6 +33,7 @@ import FINAL.Algebra.ChimeraFactoring
 import FINAL.Algebra.ClosedFormAncestor
 import FINAL.Algebra.ComputationalSoundness
 import FINAL.Algebra.ConnesKreimerCoproduct
+import FINAL.Algebra.Convergents
 import FINAL.Algebra.CoordinateRingDepth
 import FINAL.Algebra.Core
 import FINAL.Algebra.CosmicBootstrap
@@ -95,6 +96,7 @@ import FINAL.Algebra.KaroubiIdempotent
 import FINAL.Algebra.KernelCardinality
 import FINAL.Algebra.KernelDensity
 import FINAL.Algebra.Langlands
+import FINAL.Algebra.LatticeNonceAttack
 import FINAL.Algebra.LatticeTreeDuality
 import FINAL.Algebra.LightConeTheory
 import FINAL.Algebra.LightDarkPrimes
@@ -142,6 +144,7 @@ import FINAL.Algebra.QuaternaryPythagoreanTree
 import FINAL.Algebra.QuaternionDescent
 import FINAL.Algebra.RamanujanFrontiers3
 import FINAL.Algebra.RamanujanOpenProblems
+import FINAL.Algebra.Reciprocity
 import FINAL.Algebra.RiemannConnection
 import FINAL.Algebra.Robustness
 import FINAL.Algebra.RotaBaxter
@@ -176,6 +179,7 @@ import FINAL.Algebra.UnifyingTheory
 import FINAL.Algebra.UniswapV4Hooks
 import FINAL.Algebra.UniversalParentInverse
 import FINAL.Algebra.UniversalTranslator
+import FINAL.Algebra.Valuations
 import FINAL.Algebra.WeightedRotaBaxter
 import FINAL.Algebra.ZKQuantumVuln
 import FINAL.Bridges.ActivationNerveMarginCosheaf
@@ -754,10 +758,12 @@ import FINAL.EML.AdvancedTheorems
 import FINAL.EML.AdvancedTheory
 import FINAL.EML.AdversarialRobustness
 import FINAL.EML.AlgebraicMaxClosure
+import FINAL.EML.AlgebraicReality
 import FINAL.EML.AlignmentSafetyTheory
 import FINAL.EML.ApproximationBounds
 import FINAL.EML.AutoMLTheory
 import FINAL.EML.Basic
+import FINAL.EML.BerggrenGenesis
 import FINAL.EML.CWApprox
 import FINAL.EML.CausalInferenceTheory
 import FINAL.EML.CausalRepresentationTheory
@@ -862,6 +868,7 @@ import FINAL.Geometry.NonAbelianGauge
 import FINAL.Geometry.OvalArrangement
 import FINAL.Geometry.PadicMobius
 import FINAL.Geometry.PhotonEventGraph
+import FINAL.Geometry.QuantumCircuits
 import FINAL.Geometry.QuantumGravityErrorCorrection
 import FINAL.Geometry.QuotientSpaces
 import FINAL.Geometry.RamanujanFrontiers

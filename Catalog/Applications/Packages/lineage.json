@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -25,7 +25,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "galois_group__s",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 314
+      "hue": 270
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -61,7 +61,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "expected_lean_signature",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -79,7 +79,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -88,7 +88,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "percolation_threshold",
@@ -97,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -106,7 +106,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 280
+      "hue": 272
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -115,7 +115,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -124,7 +124,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -133,7 +133,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T16:00:38Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "legendres_conjecture",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -160,7 +160,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T17:03:39Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -169,7 +169,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -178,7 +178,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "p_vs_np_problem",
@@ -187,10 +187,27 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 271
+      "hue": 91
+    },
+    {
+      "id": "create_a_team_to_conduct_research_brainstorm_hypot",
+      "title": "Ordinal Collapse Theorems for Bounded-Branching Research Objects",
+      "domain": "Ordinal Analysis / Complexity Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-18T18:02:56Z",
+      "hue": 270
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "source": "research_depth_via_proof_theoretic_ordinal_analysi",
+      "target": "create_a_team_to_conduct_research_brainstorm_hypot",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    }
+  ],
   "domain_bridges": [
     {
       "domain_a": "Algebra",
