@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1370 of the highest-quality
+A curated collection of 1373 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1370
+Total files: 1373
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -205,6 +205,7 @@ import FINAL.Bridges.ChronometricCore
 import FINAL.Bridges.ChronometricTrace
 import FINAL.Bridges.ClosureCapacityAttentionDuality
 import FINAL.Bridges.ClosureCapacitySecretSharingDuality
+import FINAL.Bridges.ClosureCechRealizationDuality
 import FINAL.Bridges.ClosureCircuitDuality
 import FINAL.Bridges.ClosureCore
 import FINAL.Bridges.ClosureCosmologyDuality
@@ -441,6 +442,7 @@ import FINAL.Bridges.TannakaClosureReconstruction
 import FINAL.Bridges.TannakianNeuralArchitecture
 import FINAL.Bridges.TemporalFixedPointSemantics
 import FINAL.Bridges.TemporalStoneBirkhoffDuality
+import FINAL.Bridges.TemporalStoneSemiringDuality
 import FINAL.Bridges.Theorems
 import FINAL.Bridges.TheoryAdjunctions
 import FINAL.Bridges.TheoryMorphisms
@@ -1050,6 +1052,7 @@ import FINAL.Pythagorean.BerggrenCompleteness
 import FINAL.Pythagorean.BerggrenCrossDomain
 import FINAL.Pythagorean.BerggrenDescent
 import FINAL.Pythagorean.BerggrenDescentComplete
+import FINAL.Pythagorean.BerggrenDynamics
 import FINAL.Pythagorean.BerggrenExpanderDynamics
 import FINAL.Pythagorean.BerggrenExpanderTheory
 import FINAL.Pythagorean.BerggrenFareyCorrespondence

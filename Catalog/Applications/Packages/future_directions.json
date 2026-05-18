@@ -85,8 +85,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.96,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "347ab92a",
       "timestamp": "2026-05-18T10:17:17.071899+00:00"
     },
     {
@@ -174,8 +174,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "e45ec9e5",
       "timestamp": "2026-05-18T10:17:17.073368+00:00"
     },
     {
@@ -192,8 +192,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "0ea0300b",
       "timestamp": "2026-05-18T10:17:17.073705+00:00"
     },
     {
@@ -513,7 +513,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T10:17:17.081997+00:00"
     },
@@ -824,7 +824,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T10:17:17.092820+00:00"
     },
@@ -843,8 +843,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "e63858e4",
       "timestamp": "2026-05-18T10:17:17.093858+00:00"
     },
     {
@@ -1049,7 +1049,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.76,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "04840ac1",
       "timestamp": "2026-05-18T10:17:17.103936+00:00"
     },
@@ -1433,7 +1433,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T15:05:34.600847+00:00"
     },
@@ -1495,7 +1495,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T16:01:20.664366+00:00"
     },
@@ -1516,6 +1516,46 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T16:01:28.112143+00:00"
+    },
+    {
+      "id": "fd_0081",
+      "title": "**Conjecture:** Replacing eventual equivalence (agreement on a cofinite set) by ",
+      "description": "# Future Directions: Computable Nonstandard Arithmetic\n\n## Hypothesis 1: Filter-Generalized Transfer\n\n**Conjecture:** Replacing eventual equivalence (agreement on a cofinite set) by equivalence modulo any free ultrafilter on ℕ yields a `HyperNat` structure that supports transfer for *all* first-order sentences in the language of ordered semirings — not just quantifier-free identities.\n\n**Test:** Implement the construction over Mathlib's `Filter` and `Ultrafilter` APIs. Define `UltraHyperNat F := Quotient (ultrafilterSetoid F)` for an ultrafilter `F`. Prove the quantifier-free transfer theorem generalizes (this should follow from the same pointwise argument). Then attempt to prove Łoś's theorem for existential sentences: if `∃ x, P(x)` holds in ℕ, does `∃ x, P(x)` hold in `UltraHyperNat F`? Failure to define a well-behaved total order (the cofinite filter version only gives a preorder, not a total order) would refute the conjecture in the eventual-equivalence setting but confirm it for genuine ultrafilters.\n\n**Impact:** A full Łoś theorem in formal mathematics would be the first machine-verified model-theoretic transfer principle, opening nonstandard analysis proper inside a proof assistant.\n\n## Hypothesis 2: Automatic Predicate Descent\n\n**Conjecture:** Every eventually stable MSO-recognizable predicate on unary-coded naturals descends to a well-defined predicate on `HyperNat`. Specifically, if `P : ℕ → Prop` is recognized by a Büchi automaton on the binary representation, and `P` is eventually stable (there exists `N` such that `P(n)` depends only on bits above position `N`), then the induced predicate on sequences `(fun f => ∀ᶠ n, P(f n))` respects eventual equivalence.\n\n**Test:** Formalize a class of MSO-recognizable predicates on natural numbers (e.g., \"the binary representation contains an even number of 1s\"). Show that for eventually stable predicates, the lifted predicate is invariant under eventual equivalence of input sequences. A counterexample automaton whose recognized set is not eventually stable (e.g., parity of the number itself) would refute the claim in full generality, clarifying the boundary.\n\n**Impact:** This would connect formal nonstandard arithmetic to automata theory and decidability, potentially enabling automated reasoning about asymptotic properties of MSO-definable number-theoretic functions.\n\n## Hypothesis 3: Polynomial Asymptotics as Hyperidentities\n\n**Conjecture:** For all polynomials `p, q : Polynomial ℕ`, eventual inequality `p(n) ≤ q(n)` for all sufficiently large `n` is equivalent to `evalHyper p ω ≤ evalHyper q ω` in the eventual ordering on `HyperNat`.\n\n**Test:** The forward direction (eventual inequality implies hyper-inequality) is already proved in our framework. For the reverse direction, prove: if `evalHyper p ω ≤ evalHyper q ω`, then `p(n) ≤ q(n)` for all sufficiently large `n`. This requires showing that the leading coefficient comparison determines the eventual ordering. A polynomial counterexample (if one exists) would identify a gap between the cofinite-filter quotient and a genuine ultrapower.\n\n**Impact:** This would establish that polynomial growth comparisons are *exactly* captured by the hypernatural ordering, making `HyperNat` a complete decision procedure for polynomial asymptotic comparisons.\n\n## Hypothesis 4: Hyper-Divisibility Completeness for Polynomial Sequences\n\n**Conjecture:** Every divisibility relation between polynomial sequences that holds eventually is witnessed as divisibility in `HyperNat`, and conversely. That is, for polynomials `p, q : Polynomial ℕ`, `(∃ N, ∀ n ≥ N, p(n) ∣ q(n))` if and only if `hdvd (evalHyper p ω) (evalHyper q ω)`.\n\n**Test:** The forward direction is proved. For the reverse, one must show that hyper-divisibility at omega implies eventual divisibility of the underlying polynomial sequences. Test with `p(n) = n`, `q(n) = n²` (should work), and `p(n) = n+1`, `q(n) = n` (should fail in both directions). A failure of the reverse direction for specific polynomial pairs would refute completeness and clarify what additional structure (e.g., ultrafilters) is needed.\n\n**Impact:** Would establish `HyperNat` as a complete algebraic framework for reasoning about polynomial divisibility asymptotics, with applications to algebraic number theory and symbolic computation.\n\n## Hypothesis 5: Nonstandard Complexity Witnesses\n\n**Conjecture:** Asymptotic domination of computable functions `f = O(g)` — meaning `∃ C N, ∀ n ≥ N, f(n) ≤ C · g(n)` — can be represented as the existence of a standard constant `C` such that `mk f ≤ ofNat' C * mk g` in `HyperNat`'s eventual ordering. Moreover, this representation is functorial: if `f = O(g)` and `g = O(h)`, then the corresponding hypernatural inequalities compose.\n\n**Test:** Formalize big-O notation via eventual inequalities. Prove that `f = O(g)` iff there exists `C : ℕ` with `le (mk f) (ofNat' C * mk g)`. Verify functoriality (transitivity of the representation). Test with concrete pairs: `f(n) = n`, `g(n) = n²` (should give `C = 1`); `f(n) = n log n`, `g(n) = n²` (requires encoding log). A mismatch between the standard big-O constant and the hypernatural witness constant would identify where the naive formulation breaks.\n\n**Impact:** Would create a formal bridge between complexity theory and nonstandard arithmetic, enabling machine-verified reasoning about asymptotic resource bounds using algebraic methods rather than epsilon-delta arguments.\n",
+      "source_exp_id": "04840ac1",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Tropical",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T16:01:55.345038+00:00"
+    },
+    {
+      "id": "fd_0082",
+      "title": "Benford Renormalization for Prime-Generated Dynamical Orbits",
+      "description": "Conjecture: Let T be a polynomial or rational map with integer coefficients and degree at least 2, and let a_p(n)=T^n(p) be the orbit starting from a prime p, restricted to those pairs (p,n) for which a_p(n) is nonzero and grows unboundedly. Then, outside an explicit exceptional class consisting of maps semiconjugate to monomials or powering maps, the leading-digit distribution of |a_p(n)| over primes p<=X and times 1<=n<=N converges to Benford's law as X,N->infinity, and the discrepancy is asymptotically controlled by equidistribution of log|T^n(p)| mod 1. Test: For broad families such as T(x)=x^2+1, x^2-2, (x^2+1)/(x+1) on integer points where defined, compute the joint digit frequencies over large prime seeds and iterate depths; confirmation requires convergence to log10(1+1/d) for digits d=1,...,9 together with provable mod-1 equidistribution in at least one non-exceptional family, while systematic persistent non-Benford bias in a generic family refutes the conjecture. Impact: This would connect arithmetic dynamics, prime statistics, and digital phenomena, yielding a new universality principle for nonlinear number-theoretic sequences and suggesting digit-law diagnostics for hidden algebraic structure in dynamical systems.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Analytic Number Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T16:02:03.975948+00:00"
     }
   ],
   "pruned": [
