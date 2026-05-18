@@ -568,8 +568,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "88c262b3",
       "timestamp": "2026-05-17T18:48:26.949090+00:00"
     },
     {
@@ -868,8 +868,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "a0b4c703",
       "timestamp": "2026-05-17T18:48:26.949120+00:00"
     },
     {
@@ -4363,8 +4363,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "c01b10ca",
       "timestamp": "2026-05-18T04:03:34.872086+00:00"
     },
     {
@@ -4721,7 +4721,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "22ecc7e4",
       "timestamp": "2026-05-18T05:01:41.439580+00:00"
     },
@@ -5413,8 +5413,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "9957cc8c",
       "timestamp": "2026-05-18T07:10:42.282129+00:00"
     },
     {
@@ -5613,6 +5613,78 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T07:10:59.462512+00:00"
+    },
+    {
+      "id": "fd_0302",
+      "title": "Key challenge",
+      "description": ": Circle tracking — determining which circles merge or split at each edge — requires either an explicit combinatorial model (e.g., planar diagrams with arc labels) or an abstract axiomatization (e.g., a functor from the cube category to R-modules).\n\n**Impact**: Completes the chain complex formalization, enabling homology computation.\n\n---\n\n## Direction 2: Reidemeister Invariance via Chain Homotopy Equivalences\n\n**Status**: The bracket-level Reidemeister invariances (RI, RIII) are already formalized. Chain-level invariance requires lifting these to chain homotopy equivalences.\n\n**Hypothesis**: For each Reidemeister move, there exists an explicit chain homotopy equivalence between the Khovanov complexes of diagrams related by that move.\n\n**Strategy**:\n- **RI**: The complex of a diagram with ",
+      "source_exp_id": "22ecc7e4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Topology",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:11:10.403859+00:00"
+    },
+    {
+      "id": "fd_0303",
+      "title": "Tensor product algebra in Lean",
+      "description": ": Improved support for `TensorProduct R M N` computations.",
+      "source_exp_id": "22ecc7e4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:11:10.410101+00:00"
+    },
+    {
+      "id": "fd_0304",
+      "title": "Matrix Smith normal form",
+      "description": ": Certified integer matrix decomposition.",
+      "source_exp_id": "22ecc7e4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:11:10.415496+00:00"
+    },
+    {
+      "id": "fd_0305",
+      "title": "Spectral sequences",
+      "description": ": Formal framework for filtered complexes and spectral sequences in Mathlib.",
+      "source_exp_id": "22ecc7e4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:11:10.420940+00:00"
     }
   ],
   "pruned": [
@@ -5649,6 +5721,23 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:27.079657+00:00"
+    },
+    {
+      "id": "fd_0306",
+      "title": "Planar diagram combinatorics",
+      "description": ": A library for manipulating planar link diagrams (PD codes, Gauss codes).",
+      "source_exp_id": "22ecc7e4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:11:10.426457+00:00"
     }
   ]
 }

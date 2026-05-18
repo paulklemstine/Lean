@@ -1508,91 +1508,7 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: sync verification failed: {e}")
 
-        # 5. LLM-assisted future directions cleanup
-        try:
-            await asyncio.to_thread(self._cleanup_future_directions)
-        except Exception as e:
-            print(f"[Cleanup] Warning: future directions cleanup failed: {e}")
-
         return job
-
-    def _cleanup_future_directions(self) -> None:
-        """Ask Pi-Agent to review and clean up the future directions list.
-
-        Combines similar entries, flags low-quality/junk directions for removal,
-        and marks them as pruned. Only runs every ~10 cycles to save API cost.
-        """
-        from research_memory import FutureDirectionsManager
-        fd_manager = FutureDirectionsManager(self.workspace)
-        available = [d for d in fd_manager._directions if d.status == "available"]
-        if len(available) < 5:
-            return
-
-        # Only run every ~10 cycles to save pollen
-        if self.cycle_count % 10 != 0 and self.cycle_count > 0:
-            return
-
-        print(f"[Cleanup] Asking Pi-Agent to review {len(available)} future directions...")
-
-        # Build a compact listing of available directions
-        dir_lines = []
-        for d in available:
-            dir_lines.append(f"[{d.id}] (priority={d.priority_score:.2f}, domains={','.join(d.domains)}) {d.title}: {d.description[:120]}")
-        directions_text = "\n".join(dir_lines)
-
-        system = (
-            "You are a research direction curator for the Aether autonomous math research system. "
-            "Your job is to clean up the future research directions list.\n\n"
-            "Analyze the directions below and identify:\n"
-            "1. DUPLICATES: Directions that are substantially similar and should be merged. "
-            "Pick the better one to keep, mark the other for removal.\n"
-            "2. JUNK: Directions that are vague, trivially obvious, nonsensical, or not real mathematics. "
-            "Mark these for removal.\n"
-            "3. LOW_QUALITY: Directions with very generic descriptions that provide no actionable research path. "
-            "Mark these for removal if there are plenty of better directions.\n\n"
-            "Be conservative — only flag clear duplicates, obvious junk, or truly useless entries. "
-            "Respond in this exact JSON format:\n"
-            '{\n'
-            '  "remove": ["dir_id_1", "dir_id_2", ...],\n'
-            '  "merge": [{"keep": "dir_id", "absorb": "dir_id_to_remove", "reason": "..."}],\n'
-            '  "notes": "brief summary of what you changed and why"\n'
-            '}'
-        )
-
-        user = f"Here are {len(available)} available future research directions:\n\n{directions_text}"
-
-        try:
-            raw = self.pi_agent._call_pollinations(system, user, timeout=60)
-        except Exception as e:
-            print(f"[Cleanup] Pi-Agent call failed: {e}")
-            return
-
-        result = self.pi_agent._parse_json_response(raw)
-        if not result:
-            print(f"[Cleanup] Could not parse Pi-Agent cleanup response")
-            return
-
-        removed = 0
-        # Handle direct removals
-        for dir_id in result.get("remove", []):
-            d = fd_manager.get_direction_by_id(dir_id)
-            if d and d.status == "available":
-                d.status = "pruned"
-                removed += 1
-
-        # Handle merges: keep the better one, remove the absorbed one
-        for merge in result.get("merge", []):
-            absorb_id = merge.get("absorb", "")
-            d = fd_manager.get_direction_by_id(absorb_id)
-            if d and d.status == "available":
-                d.status = "pruned"
-                removed += 1
-
-        if removed > 0:
-            fd_manager._save()
-
-        notes = result.get("notes", "")
-        print(f"[Cleanup] Directions cleanup: removed {removed} directions. {notes}")
 
     def _verify_catalog_sync(self, job: ResearchJob) -> dict:
         """Verify all output files are properly placed in the Catalog."""
@@ -1788,12 +1704,6 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: sync verification failed: {e}")
 
-        # 5. LLM-assisted future directions cleanup
-        try:
-            self._cleanup_future_directions()
-        except Exception as e:
-            print(f"[Cleanup] Warning: future directions cleanup failed: {e}")
-
         return job
 
     # ==================================================================
@@ -1912,44 +1822,58 @@ Research mode: {concept.research_mode}
         # 6b. EXTRACT FUTURE DIRECTIONS from Aristotle's output
         if job.status == "integrated" and job.job_id:
             try:
-                from research_memory import FutureDirectionsManager
+                from research_memory import FutureDirectionsManager, FutureDirection
                 fd_manager = FutureDirectionsManager(self.workspace)
                 fd_added = 0
+                # Add the FUTURE_DIRECTIONS.md as a single whole-file direction
+                fd_text = None
                 # Try result_future_directions first
-                if job.result_future_directions and len(job.result_future_directions) > 100:
-                    added = fd_manager.add_directions_from_text(
-                        job.result_future_directions, job.job_id, "result_future_directions"
-                    )
-                    if added:
-                        fd_added += added
+                if job.result_future_directions and len(job.result_future_directions) > 50:
+                    fd_text = job.result_future_directions
                 # Fallback: try JSON package's future_directions field
-                if fd_added == 0 and job.result_json_package:
+                if not fd_text and job.result_json_package:
                     try:
                         pkg = json.loads(job.result_json_package)
                         fd_text = pkg.get("future_directions", "")
-                        if fd_text and len(fd_text) > 100:
-                            added = fd_manager.add_directions_from_text(
-                                fd_text, job.job_id, "json_package"
-                            )
-                            if added:
-                                fd_added += added
+                        if len(fd_text) < 50:
+                            fd_text = None
                     except Exception:
                         pass
                 # Also scan project dir for FUTURE_DIRECTIONS.md files
-                if fd_added == 0 and job.project_dir and job.project_dir.exists():
+                if not fd_text and job.project_dir and job.project_dir.exists():
                     for fd_file in job.project_dir.rglob("FUTURE_DIRECTIONS*.md"):
                         try:
                             fd_content = fd_file.read_text(encoding="utf-8", errors="replace")
-                            if len(fd_content) > 100:
-                                added = fd_manager.add_directions_from_text(
-                                    fd_content, job.job_id, str(fd_file)
-                                )
-                                if added:
-                                    fd_added += added
+                            if len(fd_content) > 50:
+                                fd_text = fd_content
+                                break
                         except Exception:
                             pass
-                if fd_added > 0:
-                    print(f"[Cycle] Added {fd_added} future directions from cycle {job.job_id}")
+                if fd_text:
+                    # Generate a title from the first meaningful line
+                    title_line = ""
+                    for line in fd_text.split("\n"):
+                        line = line.strip()
+                        if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
+                            title_line = line[:80]
+                            break
+                    if not title_line:
+                        title_line = f"Future directions from cycle {job.job_id[:8]}"
+                    fd = FutureDirection(
+                        id=f"fd_{len(fd_manager._directions):04d}",
+                        title=title_line,
+                        description=fd_text[:4000],
+                        source_exp_id=job.job_id,
+                        source_path="future_directions_md",
+                        domains=fd_manager._infer_domains(fd_text[:2000]),
+                        depth_estimate=3,
+                        priority_score=0.75,
+                    )
+                    fd_manager.add_direction(fd)
+                    fd_added = 1
+                    print(f"[Cycle] Added future directions as single entry from cycle {job.job_id}")
+                else:
+                    print(f"[Cycle] No future directions found for cycle {job.job_id}")
                 # Mark the consumed direction as completed
                 for d in fd_manager._directions:
                     if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
@@ -2029,41 +1953,52 @@ Research mode: {concept.research_mode}
                     # Extract future directions and mark consumed direction as completed
                     if job.status == "integrated" and job.job_id:
                         try:
-                            from research_memory import FutureDirectionsManager
+                            from research_memory import FutureDirectionsManager, FutureDirection
                             fd_manager = FutureDirectionsManager(self.workspace)
-                            fd_added = 0
-                            if job.result_future_directions and len(job.result_future_directions) > 100:
-                                added = fd_manager.add_directions_from_text(
-                                    job.result_future_directions, job.job_id, "result_future_directions"
-                                )
-                                if added:
-                                    fd_added += added
-                            if fd_added == 0 and job.result_json_package:
+                            # Add FUTURE_DIRECTIONS.md as a single whole-file direction
+                            fd_text = None
+                            if job.result_future_directions and len(job.result_future_directions) > 50:
+                                fd_text = job.result_future_directions
+                            if not fd_text and job.result_json_package:
                                 try:
                                     pkg = json.loads(job.result_json_package)
                                     fd_text = pkg.get("future_directions", "")
-                                    if fd_text and len(fd_text) > 100:
-                                        added = fd_manager.add_directions_from_text(
-                                            fd_text, job.job_id, "json_package"
-                                        )
-                                        if added:
-                                            fd_added += added
+                                    if len(fd_text) < 50:
+                                        fd_text = None
                                 except Exception:
                                     pass
-                            if fd_added == 0 and job.project_dir and job.project_dir.exists():
+                            if not fd_text and job.project_dir and job.project_dir.exists():
                                 for fd_file in job.project_dir.rglob("FUTURE_DIRECTIONS*.md"):
                                     try:
                                         fd_content = fd_file.read_text(encoding="utf-8", errors="replace")
-                                        if len(fd_content) > 100:
-                                            added = fd_manager.add_directions_from_text(
-                                                fd_content, job.job_id, str(fd_file)
-                                            )
-                                            if added:
-                                                fd_added += added
+                                        if len(fd_content) > 50:
+                                            fd_text = fd_content
+                                            break
                                     except Exception:
                                         pass
-                            if fd_added > 0:
-                                print(f"[Continuous] Added {fd_added} future directions from cycle {job.job_id}")
+                            if fd_text:
+                                title_line = ""
+                                for line in fd_text.split("\n"):
+                                    line = line.strip()
+                                    if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
+                                        title_line = line[:80]
+                                        break
+                                if not title_line:
+                                    title_line = f"Future directions from cycle {job.job_id[:8]}"
+                                fd = FutureDirection(
+                                    id=f"fd_{len(fd_manager._directions):04d}",
+                                    title=title_line,
+                                    description=fd_text[:4000],
+                                    source_exp_id=job.job_id,
+                                    source_path="future_directions_md",
+                                    domains=fd_manager._infer_domains(fd_text[:2000]),
+                                    depth_estimate=3,
+                                    priority_score=0.75,
+                                )
+                                fd_manager.add_direction(fd)
+                                print(f"[Continuous] Added future directions as single entry from cycle {job.job_id}")
+                            else:
+                                print(f"[Continuous] No future directions found for cycle {job.job_id}")
                             for d in fd_manager._directions:
                                 if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
                                     fd_manager.mark_direction_completed(d.id)
