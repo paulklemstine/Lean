@@ -698,7 +698,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "87ef9188",
       "timestamp": "2026-05-17T18:48:26.949100+00:00"
     },
@@ -5506,6 +5506,113 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T07:10:42.351009+00:00"
+    },
+    {
+      "id": "fd_0296",
+      "title": "Lean Type Signature",
+      "description": "```lean\ndef IsQuantumChannel {n : Type*} [Fintype n] [DecidableEq n]\n    (Φ : Matrix n n ℂ →ₗ[ℂ] Matrix (n × n) (n × n) ℂ) : Prop :=\n  -- Completely positive and trace preserving\n  (∀ ρ, IsDensityMatrix ρ → IsDensityMatrix (partialTraceRight (Φ ρ))) ∧\n  (∀ ρ, (Φ ρ).trace = ρ.trace)\n\ndef Broadcasts {n : Type*} [Fintype n] [DecidableEq n]\n    (Φ : Matrix n n ℂ →ₗ[ℂ] Matrix (n × n) (n × n) ℂ) (ρ : Matrix n n ℂ) : Prop :=\n  partialTraceRight (Φ ρ) = ρ ∧ partialTraceLeft (Φ ρ) = ρ\n\ntheorem no_broadcasting_iff_commute\n    {n : Type*} [Fintype n] [DecidableEq n]\n    (ρ σ : Matrix n n ℂ) (hρ : IsDensityMatrix ρ) (hσ : IsDensityMatrix σ) :\n    (∃ Φ, IsQuantumChannel Φ ∧ Broadcasts Φ ρ ∧ Broadcasts Φ σ) ↔\n    ρ * σ = σ * ρ\n```",
+      "source_exp_id": "87ef9188",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:59.402519+00:00"
+    },
+    {
+      "id": "fd_0297",
+      "title": "Phase 1 (Near-term)",
+      "description": "- Direction 4 (Kraus representation) — requires spectral theorem but produces the most reusable infrastructure\n- Direction 3 (BB84 simplified) — can use existing no-cloning with minimal new machinery",
+      "source_exp_id": "87ef9188",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:59.434905+00:00"
+    },
+    {
+      "id": "fd_0298",
+      "title": "Phase 2 (Medium-term)",
+      "description": "- Direction 1 (No-broadcasting) — deepest conceptual result, requires quantum channels\n- Direction 5 (CKW monogamy) — requires concurrence, which needs eigenvalue computations",
+      "source_exp_id": "87ef9188",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:59.444160+00:00"
+    },
+    {
+      "id": "fd_0299",
+      "title": "Phase 3 (Long-term)",
+      "description": "- Direction 2 (Data processing inequality) — requires matrix logarithm and advanced trace inequalities\n- Categorical quantum mechanics — teleportation as snake equation\n- Quantum error correction formalization",
+      "source_exp_id": "87ef9188",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:59.449820+00:00"
+    },
+    {
+      "id": "fd_0300",
+      "title": "Cross-cutting Infrastructure Needs",
+      "description": "- Spectral theorem for finite-dimensional Hermitian matrices\n- Matrix functions (log, sqrt, powers) via functional calculus\n- Complete positivity and Choi isomorphism\n- Von Neumann entropy\n\n---",
+      "source_exp_id": "87ef9188",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:59.455190+00:00"
+    },
+    {
+      "id": "fd_0301",
+      "title": "Connection to Existing Catalog",
+      "description": "The current verified results provide:\n- **Inner product factorization** (`inner_kronVec`) → reusable for all tensor product computations\n- **Partial trace properties** → foundation for all channel/entanglement theory\n- **Pauli matrix identities** → foundation for qubit gate verification\n- **Tangle/entropy relationship** → stepping stone to monogamy and capacity theorems\n\nThese connect to existing catalog entries:\n- `post_quantum_security_entropy_defect_bound` → entropy infrastructure\n- `quantum_singleton_bound`, `quantum_hamming_bound_5_1_3` → quantum coding theory\n- `quantum_birthday_bound` → quantum collision bounds\n\nThe ultimate goal: a verified stack from linear algebra through quantum channels to quantum cryptographic security proofs, forming the world's first machine-checked quantum ",
+      "source_exp_id": "87ef9188",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Physics",
+        "Cryptography",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:59.462512+00:00"
     }
   ],
   "pruned": [

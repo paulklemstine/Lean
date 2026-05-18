@@ -72,9 +72,7 @@ noncomputable def writhe {n : ℕ} (D : OrientedLinkDiagram n) : ℤ :=
 
 /-! ## Reidemeister moves -/
 
-/-- Reidemeister I (positive kink): D₁ (n+1 crossings) has a positive kink
-    whose last crossing, when A-smoothed, adds a loop,
-    and when B-smoothed, preserves loops. -/
+/-- Reidemeister I (positive kink) -/
 structure ReidemeisterI {n : ℕ} (D₁ : OrientedLinkDiagram (n + 1))
     (D₂ : OrientedLinkDiagram n) : Prop where
   kink_sign : D₁.sign (Fin.last n) = CrossingSign.pos
@@ -84,42 +82,12 @@ structure ReidemeisterI {n : ℕ} (D₁ : OrientedLinkDiagram (n + 1))
   loops_B : ∀ (s : KState n),
     D₁.loops (Fin.snoc s Smoothing.B) = D₂.loops s
 
-/-- Negative Reidemeister I: the kink has negative sign -/
-structure ReidemeisterI_neg {n : ℕ} (D₁ : OrientedLinkDiagram (n + 1))
-    (D₂ : OrientedLinkDiagram n) : Prop where
-  kink_sign : D₁.sign (Fin.last n) = CrossingSign.neg
-  sign_agree : ∀ (i : Fin n), D₁.sign (i.castSucc) = D₂.sign i
-  loops_A : ∀ (s : KState n),
-    D₁.loops (Fin.snoc s Smoothing.A) = D₂.loops s
-  loops_B : ∀ (s : KState n),
-    D₁.loops (Fin.snoc s Smoothing.B) = D₂.loops s + 1
-
-/-- Reidemeister II: D₁ (n+2 crossings) has two extra crossings
-    forming a cancelling pair. -/
-structure ReidemeisterII {n : ℕ} (D₁ : LinkDiagram (n + 2))
-    (D₂ : LinkDiagram n) : Prop where
-  loops_AA : ∀ (s : KState n),
-    D₁.loops (Fin.snoc (Fin.snoc s Smoothing.A) Smoothing.A) = D₂.loops s + 1
-  loops_AB : ∀ (s : KState n),
-    D₁.loops (Fin.snoc (Fin.snoc s Smoothing.A) Smoothing.B) = D₂.loops s
-  loops_BA : ∀ (s : KState n),
-    D₁.loops (Fin.snoc (Fin.snoc s Smoothing.B) Smoothing.A) = D₂.loops s
-  loops_BB : ∀ (s : KState n),
-    D₁.loops (Fin.snoc (Fin.snoc s Smoothing.B) Smoothing.B) = D₂.loops s + 1
-
-/-- Reidemeister III: same crossing count with state bijection
-    preserving smoothing counts and loop counts. -/
+/-- Reidemeister III -/
 structure ReidemeisterIII {n : ℕ} (D₁ D₂ : LinkDiagram n) : Prop where
   state_bijection : ∃ (f : KState n → KState n),
     Function.Bijective f ∧
     (∀ s, numAS n s = numAS n (f s)) ∧
     (∀ s, D₁.loops s = D₂.loops (f s))
-
-/-- Oriented Reidemeister III preserves writhe. -/
-structure OrientedReidemeisterIII {n : ℕ}
-    (D₁ D₂ : OrientedLinkDiagram n) : Prop where
-  unoriented : ReidemeisterIII D₁.toLinkDiagram D₂.toLinkDiagram
-  writhe_eq : writhe D₁ = writhe D₂
 
 /-! ## Concrete diagrams -/
 
@@ -132,37 +100,5 @@ def unknotDiagram : LinkDiagram 0 where
 def orientedUnknot : OrientedLinkDiagram 0 where
   toLinkDiagram := unknotDiagram
   sign := Fin.elim0
-
-/-! ## Adequacy -/
-
-/-- The number of loops in the all-A state -/
-def loopsA {n : ℕ} (D : LinkDiagram n) : ℕ :=
-  D.loops (fun _ => Smoothing.A)
-
-/-- The number of loops in the all-B state -/
-def loopsB {n : ℕ} (D : LinkDiagram n) : ℕ :=
-  D.loops (fun _ => Smoothing.B)
-
-/-- The maximum degree contributed by a state:
-    numAS(s) - numBS(s) + 2*(loops(s) - 1) -/
-noncomputable def stateMaxDeg {n : ℕ} (D : LinkDiagram n) (s : KState n) : ℤ :=
-  ↑(numAS n s) - ↑(numBS n s) + 2 * (↑(D.loops s) - 1)
-
-/-- A-adequate: the all-A state achieves a strictly higher max degree
-    than any other state. This ensures the leading coefficient of
-    the bracket is nonzero. -/
-def AAdequate {n : ℕ} (D : LinkDiagram n) : Prop :=
-  ∀ (s : KState n), s ≠ (fun _ => Smoothing.A) →
-    stateMaxDeg D s < stateMaxDeg D (fun _ => Smoothing.A)
-
-/-- B-adequate: the all-B state achieves a strictly lower min degree. -/
-def BAdequate {n : ℕ} (D : LinkDiagram n) : Prop :=
-  ∀ (s : KState n), s ≠ (fun _ => Smoothing.B) →
-    -(stateMaxDeg D s) < -(stateMaxDeg D (fun _ => Smoothing.B))
-
-/-- Adequate = both A-adequate and B-adequate.
-    All reduced alternating diagrams are adequate. -/
-def Adequate {n : ℕ} (D : LinkDiagram n) : Prop :=
-  AAdequate D ∧ BAdequate D
 
 end Knot
