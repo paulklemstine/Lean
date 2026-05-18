@@ -497,7 +497,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.83,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "2014b85a",
       "timestamp": "2026-05-17T18:48:26.949080+00:00"
     },
@@ -3373,8 +3373,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "74c4c009",
       "timestamp": "2026-05-18T00:04:40.928954+00:00"
     },
     {
@@ -3586,6 +3586,58 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:05:11.121755+00:00"
+    },
+    {
+      "id": "fd_0195",
+      "title": "Formalization lead",
+      "description": ": Responsible for Lean 4 development and Mathlib integration",
+      "source_exp_id": "2014b85a",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:02:08.747493+00:00"
+    },
+    {
+      "id": "fd_0196",
+      "title": "Mathematical advisor",
+      "description": ": Ensures proof strategies are sound and identifies shortcuts",
+      "source_exp_id": "2014b85a",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:02:08.752806+00:00"
+    },
+    {
+      "id": "fd_0197",
+      "title": "Cross-domain specialist",
+      "description": ": Connects results to applications in physics, CS, or other fields",
+      "source_exp_id": "2014b85a",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:02:08.756629+00:00"
     }
   ],
   "pruned": [

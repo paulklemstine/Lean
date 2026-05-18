@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "sum_product_estimates",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,14 +34,14 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
       "title": "Tropical Pseudorandom Generators from Orbit Expansion",
       "domain": "Tropical Algebra / Pseudorandomness / Information Theory",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
+      "primary_domain": "Tropical",
+      "shape": "star",
       "date": "2026-05-17T20:40:39Z",
       "hue": 270
     },
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "binary_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:05:54Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hybrid_argument_with_computational_distinguishers",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "coupling_argument",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
@@ -106,7 +106,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-17T22:04:04Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "proof_strategy",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:04:18Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "line_restriction",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:07:44Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "irreducibility",
@@ -133,16 +133,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:23:43Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "decomposition",
       "title": "Directional Decomposition for Tropical Dragon Dynamics",
       "domain": "Algebra / Tropical Dynamics / Symbolic Dynamics",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
+      "primary_domain": "Tropical",
+      "shape": "star",
       "date": "2026-05-17T22:30:35Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -151,7 +151,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-17T23:03:26Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "overview",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:03:44Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "random_matrix_counting",
@@ -169,7 +169,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T23:03:58Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "2_factored_bellman_residual_tensorization_for_stru",
@@ -178,7 +178,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:07:53Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "proposed_theorem_statement",
@@ -187,7 +187,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:23:40Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "validate_conjectures_computationally",
@@ -196,7 +196,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T00:01:38Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -205,7 +205,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T00:04:28Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_2",
@@ -214,16 +214,16 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T00:04:38Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "5_abstract_ordered_algebraic_generalization",
       "title": "Ordered Additive Aggregation: A Universal Algebraic Framework for Monotone Finite-Sum Inequalities",
       "domain": "Ordered Algebra / Optimization / Tropical Mathematics",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
+      "primary_domain": "Tropical",
+      "shape": "star",
       "date": "2026-05-18T00:04:53Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_1",
@@ -232,7 +232,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T00:05:08Z",
-      "hue": 89
+      "hue": 271
     },
     {
       "id": "graph_coloring_chromatic_polynomial_theory",
@@ -241,7 +241,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T00:15:01Z",
-      "hue": 90
+      "hue": 270
+    },
+    {
+      "id": "machine_learning_state_compression",
+      "title": "Periodic Orbit Compression Under Semiconjugacy of Finite Dynamical Systems",
+      "domain": "Algebra / Dynamical Systems / Machine Learning",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-18T01:04:30Z",
+      "hue": 179
     }
   ],
   "edges": [
@@ -306,6 +315,13 @@
       "target": "irreducibility",
       "strength": 1.0,
       "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "overview",
+      "target": "machine_learning_state_compression",
+      "strength": 1.0,
+      "label": "Toward a Semiconjugacy Category",
       "type": "provenance"
     },
     {
@@ -378,6 +394,12 @@
     {
       "domain_a": "Cryptography",
       "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "MachineLearning",
       "package_count": 1,
       "strength": 0.5
     }
