@@ -479,7 +479,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "5604465c",
       "timestamp": "2026-05-17T18:48:26.949079+00:00"
     },
@@ -3100,6 +3100,27 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:01:40.672071+00:00"
+    },
+    {
+      "id": "fd_0169",
+      "title": "Cross-Domain Connection:",
+      "description": "Bridges to information theory, statistical mechanics (Gibbs measures, positive correlation), and the FKG inequality. The entropy approach views union-closed families as constrained probability spaces where closure under unions induces monotone coupling, connecting to lattice gas models and phase transitions.",
+      "source_exp_id": "5604465c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Cryptography",
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:30.984206+00:00"
     }
   ],
   "pruned": [
