@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="400" viewBox="0 0 700 400">
+<style>
+  text { font-family: "Helvetica", "Arial", sans-serif; }
+  .title { font-size: 16px; font-weight: bold; fill: #333; }
+  .subtitle { font-size: 12px; fill: #666; font-style: italic; }
+  .math { font-size: 14px; fill: #222; }
+  .arrow { stroke: #444; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+  .label { font-size: 11px; fill: #666; }
+  .box { fill: #f0f4ff; stroke: #4466aa; stroke-width: 1.5; rx: 5; }
+  .highlight { fill: #fff3e0; stroke: #e65100; stroke-width: 1.5; rx: 5; }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#444"/>
+  </marker>
+</defs>
+
+<!-- Title -->
+<text x="350" y="30" class="title" text-anchor="middle">Derived Functor Construction over ℤ</text>
+
+<!-- Resolution row -->
+<text x="50" y="70" class="subtitle">Free Resolution:</text>
+<rect x="120" y="80" width="40" height="30" class="box"/>
+<text x="140" y="100" class="math" text-anchor="middle">ℤ</text>
+<line x1="165" y1="95" x2="245" y2="95" class="arrow"/>
+<text x="205" y="88" class="label" text-anchor="middle">·n</text>
+<rect x="250" y="80" width="40" height="30" class="box"/>
+<text x="270" y="100" class="math" text-anchor="middle">ℤ</text>
+<line x1="295" y1="95" x2="365" y2="95" class="arrow"/>
+<text x="330" y="88" class="label" text-anchor="middle">π</text>
+<rect x="370" y="80" width="60" height="30" class="highlight"/>
+<text x="400" y="100" class="math" text-anchor="middle">ℤ/nℤ</text>
+<line x1="435" y1="95" x2="475" y2="95" class="arrow"/>
+<text x="490" y="100" class="math" text-anchor="middle">0</text>
+
+<!-- Apply Hom row -->
+<text x="50" y="170" class="subtitle">Apply Hom(−,A):</text>
+<text x="140" y="200" class="math" text-anchor="middle">0</text>
+<line x1="155" y1="195" x2="235" y2="195" class="arrow"/>
+<rect x="240" y="180" width="40" height="30" class="box"/>
+<text x="260" y="200" class="math" text-anchor="middle">A</text>
+<line x1="285" y1="195" x2="355" y2="195" class="arrow"/>
+<text x="320" y="188" class="label" text-anchor="middle">·n</text>
+<rect x="360" y="180" width="40" height="30" class="box"/>
+<text x="380" y="200" class="math" text-anchor="middle">A</text>
+<line x1="405" y1="195" x2="465" y2="195" class="arrow"/>
+<text x="490" y="200" class="math" text-anchor="middle">0</text>
+
+<!-- Results -->
+<rect x="120" y="240" width="250" height="30" class="highlight"/>
+<text x="245" y="260" class="math" text-anchor="middle">Ext⁰ = ker(·n) = n-torsion(A)</text>
+<rect x="120" y="280" width="250" height="30" class="highlight"/>
+<text x="245" y="300" class="math" text-anchor="middle">Ext¹ = coker(·n) = A/nA</text>
+
+<!-- Apply Tensor row -->
+<text x="400" y="250" class="subtitle">Apply (−⊗A):</text>
+<rect x="400" y="260" width="250" height="30" class="highlight"/>
+<text x="525" y="280" class="math" text-anchor="middle">Tor₁ = ker(·n) = n-torsion(A)</text>
+<rect x="400" y="300" width="250" height="30" class="highlight"/>
+<text x="525" y="320" class="math" text-anchor="middle">Tor₀ = coker(·n) = A/nA</text>
+
+<!-- Key result -->
+<rect x="120" y="340" width="530" height="40" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+<text x="385" y="365" class="title" text-anchor="middle" fill="#1b5e20">
+  For A = ℤ/mℤ: Ext¹ ≅ Tor₁ ≅ ℤ/gcd(n,m)ℤ
+</text>
+</svg>

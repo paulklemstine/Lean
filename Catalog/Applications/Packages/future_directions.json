@@ -830,8 +830,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "f6622269",
       "timestamp": "2026-05-17T18:48:26.949114+00:00"
     },
     {
@@ -963,7 +963,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "3bbbe003",
       "timestamp": "2026-05-17T18:48:26.949133+00:00"
     },
@@ -4197,6 +4197,115 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:04:20.012410+00:00"
+    },
+    {
+      "id": "fd_0228",
+      "title": "1. Gershgorin Disc Theorem — Certified Spectral Enclosure",
+      "description": "**Theorem Statement (target):**\n```\ntheorem eigenvalue_mem_gershgorin\n  {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (μ : ℂ) (hμ : IsEigenvalue A μ) :\n  ∃ i : Fin n, Complex.abs (μ - A i i) ≤ ∑ j in Finset.univ.erase i, Complex.abs (A i j)\n```\n\n**Why it matters:** Gershgorin's circle theorem is the most widely used spectral enclosure result in numerical linear algebra, control theory, and quantum chemistry. A machine-verified version would provide the first *certified* spectral localization tool inside a proof assistant, enabling automated verification of stability bounds for dynamical systems, convergence guarantees for iterative solvers, and spectral gap certificates for Markov chains.\n\n**Proof strategy:** Starting from the eigenvalue equation Av = μv, pick the index i where |v_i| is maximal. ",
+      "source_exp_id": "3bbbe003",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Combinatorics",
+        "Physics",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:27:02.337783+00:00"
+    },
+    {
+      "id": "fd_0229",
+      "title": "2. Tropical Affine Envelope — Canonical Piecewise-Linear Normal Form",
+      "description": "**Theorem Statement (target):**\n```\ndef AffForm (n : ℕ) := (Fin n → ℕ) × ℕ  -- coefficients + constant\n\ndef evalAffForm (σ : Fin n → ℕ) (af : AffForm n) : ℕ :=\n  (∑ i, af.1 i * σ i) + af.2\n\ntheorem TropExpr.exists_affine_nf {n : ℕ} :\n  ∀ e : TropExpr (Fin n), ∃ nf : List (AffForm n),\n    nf ≠ [] ∧ ∀ σ, TropExpr.eval σ e = nf.map (evalAffForm σ) |>.minimum\n```\n\n**Why it matters:** This theorem says every tropical expression has a canonical representation as the minimum of finitely many affine forms — the tropical analogue of converting a polynomial to its Newton polytope. This is the mathematical foundation for tropical convexity, tropical linear programming, and connections to neural network verification (ReLU networks compute piecewise-linear functions, which are exactly tropical rational",
+      "source_exp_id": "3bbbe003",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:27:02.344893+00:00"
+    },
+    {
+      "id": "fd_0230",
+      "title": "3. Certified Bounded Diophantine Search with Witness Extraction",
+      "description": "**Theorem Statement (target):**\n```\ninductive BoundedDioph where\n  | dvd : ℕ → ℕ → BoundedDioph\n  | eq : ℕ → ℕ → BoundedDioph\n  | and : BoundedDioph → BoundedDioph → BoundedDioph\n  | or : BoundedDioph → BoundedDioph → BoundedDioph\n  | existsLe : ℕ → (ℕ → BoundedDioph) → BoundedDioph\n  | forallLe : ℕ → (ℕ → BoundedDioph) → BoundedDioph\n\ntheorem BoundedDioph.decide_sound_complete (φ : BoundedDioph) :\n  φ.check = true ↔ φ.toProp\n\ntheorem BoundedDioph.witness (φ : BoundedDioph) (h : φ.check = true) :\n  φ.extractWitness = some w → φ.verifyWitness w = true\n```\n\n**Why it matters:** This creates a formal analogue of NP-witness checking: for any bounded arithmetic formula with quantifiers over finite ranges, we can compute a boolean answer and extract a certificate. This bridges computational compl",
+      "source_exp_id": "3bbbe003",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Cryptography",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:27:02.352701+00:00"
+    },
+    {
+      "id": "fd_0231",
+      "title": "4. Operator Norm Submultiplicativity from Row-Sum Certificates",
+      "description": "**Theorem Statement (target):**\n```\ntheorem operator_norm_submultiplicative_rowsum\n  {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℝ) (CA CB : ℝ)\n  (hA : ∀ i, ∑ j, |A i j| ≤ CA) (hB : ∀ i, ∑ j, |B i j| ≤ CB) :\n  ∀ i, ∑ j, |(A * B) i j| ≤ CA * CB\n```\n\n**Why it matters:** This shows that row-sum certificates compose multiplicatively under matrix multiplication. This is the key property that makes the `spectral_bound` approach scalable: bounding the norm of a product of matrices reduces to bounding each factor separately. Applications include stability analysis of iterated linear systems, convergence proofs for power methods, and mixing time bounds for Markov chains.\n\n**Proof strategy:** Expand (A * B)_ij = Σ_k A_ik * B_kj. Use triangle inequality: Σ_j |Σ_k A_ik B_kj| ≤ Σ_j Σ_k |A_ik| |B_kj| = Σ_k |A",
+      "source_exp_id": "3bbbe003",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Bridges",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:27:02.359615+00:00"
+    },
+    {
+      "id": "fd_0232",
+      "title": "5. Reflection Principle Metatheorem — Certified Micro-Solver Framework",
+      "description": "**Theorem Statement (target):**\n```\nstructure CertifiedDecider (P : α → Prop) where\n  check : α → Bool\n  sound : ∀ x, check x = true → P x\n  complete : ∀ x, P x → check x = true\n\ntheorem CertifiedDecider.iff {P : α → Prop} (d : CertifiedDecider P) (x : α) :\n  d.check x = true ↔ P x\n\ntheorem CertifiedDecider.compose {P Q : α → Prop}\n  (dP : CertifiedDecider P) (dQ : CertifiedDecider Q) :\n  CertifiedDecider (fun x => P x ∧ Q x)\n\ntheorem CertifiedDecider.map {P : α → Prop} {Q : β → Prop}\n  (d : CertifiedDecider P) (f : β → α) (hf : ∀ b, Q b ↔ P (f b)) :\n  CertifiedDecider Q\n```\n\n**Why it matters:** This abstracts the pattern common to all three tactic families into a reusable framework. A `CertifiedDecider` is a structure bundling a computable checker with its soundness and completeness proof",
+      "source_exp_id": "3bbbe003",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Tropical",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:27:02.367204+00:00"
     }
   ],
   "pruned": [
