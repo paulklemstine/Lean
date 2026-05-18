@@ -407,7 +407,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.83,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "7489c51b",
       "timestamp": "2026-05-18T10:17:17.078678+00:00"
     },
@@ -805,8 +805,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "ff4becc5",
       "timestamp": "2026-05-18T10:17:17.091956+00:00"
     },
     {
@@ -937,8 +937,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.78,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "00d5d7af",
       "timestamp": "2026-05-18T10:17:17.098731+00:00"
     },
     {
@@ -1286,8 +1286,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "2c0c7c30",
       "timestamp": "2026-05-18T13:03:56.305224+00:00"
     },
     {
@@ -1413,6 +1413,29 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T15:05:05.942097+00:00"
+    },
+    {
+      "id": "fd_0076",
+      "title": "**Statement:** Every smooth real quartic curve (degree 4, squarefree polynomial ",
+      "description": "# Future Directions: Formal Hilbert 16 Program\n\n## Conjecture 1: Certified Quartic Oval Classification\n\n**Statement:** Every smooth real quartic curve (degree 4, squarefree polynomial with smooth projective closure) has a real locus whose topological type belongs to exactly one of 6 distinct oval arrangement classes, and the maximum oval count is exactly 4 (realized by Harnack's construction).\n\n**Test:** Formalize the 6 topological types as `Finset`-valued invariants. For each type, construct an explicit polynomial witness in Lean using `MvPolynomial (Fin 2) ℝ` and verify:\n- The polynomial has total degree 4.\n- The discriminant condition (smoothness proxy) is satisfied.\n- A certified component-count procedure (via Sturm chain or cylindrical algebraic decomposition) produces the expected oval count.\n\n**Confirm/Refute:** Implement a decision procedure for the topological type of a quartic given its coefficient vector. Run on parametric families `a·x⁴ + b·x²y² + c·y⁴ + d·x² + e·y² + f = 0` and verify that the computed type always belongs to the classified list.\n\n**Impact:** Produces the first machine-checked classification of real quartic curves. Validates the formal infrastructure against a fully understood case. Opens the door to degree-5 and degree-6 classification.\n\n---\n\n## Conjecture 2: Harnack Bound via Formalized Smith–Thom Inequality\n\n**Statement:** For a smooth real projective variety `X` of dimension `n` defined over ℝ, with complex conjugation involution `σ`, the sum of mod-2 Betti numbers of the real locus `X(ℝ)` is at most the sum of mod-2 Betti numbers of the complex locus `X(ℂ)`:\n\n$$\\sum_i \\dim H_i(X(\\mathbb{R}); \\mathbb{F}_2) \\leq \\sum_i \\dim H_i(X(\\mathbb{C}); \\mathbb{F}_2)$$\n\nFor smooth plane curves, this specializes to: number of ovals ≤ genus + 1.\n\n**Test:** Formalize the Smith–Thom inequality for finite CW complexes with a cellular involution using the `FinChainComplex` infrastructure from the Morse theory catalog. Derive the Harnack bound as a corollary by computing the Betti numbers of smooth complex plane curves (which are compact Riemann surfaces of known genus).\n\n**Confirm/Refute:** The inequality is true (classical theorem). The test is whether it can be formalized in ≤ 500 lines of Lean 4, reusing the existing chain complex infrastructure. If the proof requires > 1000 lines or substantial new homological algebra, this indicates gaps in Mathlib's coverage that should be documented.\n\n**Impact:** Replaces the axiomatic Harnack bound with a fully derived theorem, making the entire degree → genus → oval chain machine-checked from first principles. This would be the strongest formal result in real algebraic geometry to date.\n\n---\n\n## Conjecture 3: Nesting Depth of Ovals is Bounded by ⌊d/2⌋ from Bézout's Theorem\n\n**Statement:** For a smooth real plane curve of degree `d`, the nesting depth of the oval arrangement (length of the longest chain in the nesting partial order) is at most ⌊d/2⌋. This follows from Bézout's theorem: a line meeting an oval of the real curve must intersect it in an even number of points (entering and exiting), and can meet the entire curve in at most `d` points total.\n\n**Test:** Formalize Bézout's theorem for plane curves at the level of intersection multiplicity (using `MvPolynomial` resultants). Prove that a generic line meeting `k` nested ovals intersects the curve in at least `2k` points, hence `2k ≤ d`, giving `k ≤ ⌊d/2⌋`.\n\n**Confirm/Refute:** The bound is tight: construct explicit curves of each degree with nesting depth exactly ⌊d/2⌋. For degree 4, an ellipse inside an ellipse achieves depth 2 = ⌊4/2⌋.\n\n**Impact:** Derives the depth bound from algebraic geometry (Bézout) rather than taking it as an axiom. Creates a formal bridge between intersection theory and oval topology.\n\n---\n\n## Conjecture 4: Persistent Periodic Orbits under Hamiltonian Perturbation\n\n**Statement:** For a polynomial Hamiltonian `H` of degree `d` and a small polynomial perturbation `εg` (with `g` of degree ≤ d",
+      "source_exp_id": "7489c51b",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Topology",
+        "Algebra",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T15:05:34.600847+00:00"
     }
   ],
   "pruned": [

@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -25,7 +25,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 112
+      "hue": 272
     },
     {
       "id": "galois_group__s",
@@ -52,7 +52,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 112
+      "hue": 271
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -61,7 +61,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "expected_lean_signature",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -79,7 +79,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -88,7 +88,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "percolation_threshold",
@@ -97,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 292
+      "hue": 91
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -106,7 +106,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 90
+      "hue": 134
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -115,7 +115,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -124,7 +124,16 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 275
+      "hue": 272
+    },
+    {
+      "id": "homotopy_type_theory_foundations",
+      "title": "Homotopy Type Theory Foundations: A Formally Verified Kernel",
+      "domain": "Logic / Foundations of Mathematics",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-18T16:00:38Z",
+      "hue": 270
     }
   ],
   "edges": [],
