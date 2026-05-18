@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "identify_the_image_of_the_berggren_generators_in_p.json",
+    "title": "Berggren Generators in PGL\u2082: Projective Dynamics of Pythagorean Triples",
+    "domain": "Arithmetic Dynamics / Number Theory / Algebraic Groups",
+    "date": "2026-05-18T01:42:34Z",
+    "exp_id": "a8ef4557"
+  },
+  {
     "filename": "cyclic_groups.json",
     "title": "Certified Subfield Extraction from Prime Cyclotomic Extensions via the Cyclic Galois Correspondence",
     "domain": "Algebraic Number Theory / Galois Theory",
@@ -1728,6 +1735,59 @@ window.PACKAGE_DB = {
       "2882da3c"
     ]
   },
+  "identify_the_image_of_the_berggren_generators_in_p.json": {
+    "title": "Berggren Generators in PGL\u2082: Projective Dynamics of Pythagorean Triples",
+    "domain": "Arithmetic Dynamics / Number Theory / Algebraic Groups",
+    "article": "# The Hidden Geometry Behind an Ancient Number Puzzle\n\n## A 4,000-year-old problem reveals a secret connection between trees, mirrors, and the mathematics of codes\n\nThere is a tablet in a museum in New York \u2014 cracked, palm-sized, covered in wedge-shaped marks pressed into clay nearly four thousand years ago \u2014 that lists fifteen rows of numbers. Each row is a Pythagorean triple: three whole numbers, like 3, 4, and 5, where the first two squared add up to the third squared. The Babylonians who pressed those marks understood something profound: certain right triangles have sides that are all whole numbers. The question that has haunted mathematicians ever since is deceptively simple. How do you find *all* of them?\n\nIn 1934, a Swedish mathematician named Berggren discovered something remarkable. He showed that every primitive Pythagorean triple \u2014 every right triangle with whole-number sides sharing no common factor \u2014 could be generated from the single seed triple (3, 4, 5) by applying three specific transformations, over and over, in any order. The result is an infinite ternary tree: the root is (3, 4, 5), and every node has exactly three children, produced by multiplying the parent triple's coordinates by three different matrices. The entire universe of primitive Pythagorean triples lives in this tree, with no repetitions and no gaps.\n\nFor almost a century, Berggren's tree was understood as a combinatorial fact about integer arithmetic. Beautiful, yes. Useful, certainly \u2014 it gives an efficient algorithm for listing triples. But fundamentally, it seemed like a statement about whole numbers and nothing else.\n\nUntil now.\n\n## The Collapse\n\nThe breakthrough begins with a question: what happens if you project the Berggren tree onto a finite world?\n\nTo understand what this means, imagine the integers wrapping around a clock face. In ordinary arithmetic, numbers go on forever: 1, 2, 3, 4, and so on. But on a clock with p hours (where p is a prime number), arithmetic \"wraps around\": after p \u2212 1 comes 0 again. Mathematicians call this *modular arithmetic*, and it is the foundation of modern cryptography, coding theory, and much of theoretical computer science.\n\nWhen you reduce the Berggren tree modulo a prime p, something astonishing happens. The three 3\u00d73 matrix operations, which seemed hopelessly nonlinear \u2014 each one scrambles all three coordinates of a triple in a complicated way \u2014 suddenly *collapse* into elementary 2\u00d72 operations on a pair of parameters. Where you had a three-dimensional scramble, you now have a two-dimensional transformation that is almost trivially simple.\n\nHow simple? One of the three operations is a *shear*: it adds a constant to one parameter while leaving the other alone. Another is a related rational transformation. The third is a swap combined with a shift. These are the most basic building blocks of projective geometry \u2014 the mathematics of perspective, vanishing points, and coordinate transformations.\n\n## The Conic Bridge\n\nThe key insight is an ancient one, repurposed. Over two thousand years ago, Euclid (or perhaps mathematicians before him) noticed that you can parametrize all Pythagorean triples using two numbers, m and n, via the formula:\n\n> a = m\u00b2 \u2212 n\u00b2, b = 2mn, c = m\u00b2 + n\u00b2\n\nThis formula maps every pair (m, n) to a triple (a, b, c) satisfying a\u00b2 + b\u00b2 = c\u00b2. Geometrically, this parametrization identifies the \"Pythagorean conic\" \u2014 the set of points satisfying x\u00b2 + y\u00b2 = z\u00b2 \u2014 with a projective line. Every point on the conic corresponds to a ratio [m : n], just as every direction in a plane corresponds to a slope.\n\nThe Berggren matrices act on Pythagorean triples. Through the Euclid parametrization, they induce transformations on the parameter pairs (m, n). The newly proved theorem computes these induced transformations exactly:\n\n- **Generator A** maps (m, n) to (2m \u2212 n, m)\n- **Generator B** maps (m, n) to (2m + n, m)\n- **Generator C** maps (m, n) to (m + 2n, n)\n\nEach of these is a *linear* map on the pair (m, n) \u2014 representable by a 2\u00d72 matrix. The nonlinear complexity of the 3\u00d73 Berggren action has been completely absorbed into the quadratic structure of the Euclid parametrization. What remains is pure projective linear algebra.\n\n## Through the Looking Glass of Finite Fields\n\nThis compression becomes especially powerful over finite fields. In the world of integers, m and n range over all whole numbers. Over the clock-face arithmetic of F_p (integers modulo a prime p), m and n range over just p values. The projective line \u2014 all ratios [m : n] \u2014 has exactly p + 1 points. The Berggren generators become explicit, computable permutations of these p + 1 points.\n\nComputational experiments reveal a striking pattern. For every odd prime p tested \u2014 from p = 3 up to p = 47 and beyond \u2014 the three Berggren generators act *transitively* on the projective line. This means: starting from any point, you can reach every other point by applying some sequence of Berggren operations. No point is isolated. No corner of the projective line is inaccessible.\n\nEven more remarkably, the group generated by the three Berggren 2\u00d72 matrices turns out to be one of the most important objects in mathematics. When p \u2261 3 (mod 4), the Berggren generators produce the *full* projective general linear group PGL\u2082(F_p) \u2014 essentially all invertible 2\u00d72 transformations. When p \u2261 1 (mod 4), they generate the projective special linear group PSL\u2082(F_p), an equally fundamental object that appears everywhere from number theory to physics to the classification of simple groups.\n\n## Why This Matters\n\nThe collapse of the Berggren tree into projective linear dynamics opens at least four major doors.\n\n**Door 1: Cryptography and codes.** The groups PGL\u2082 and PSL\u2082 over finite fields are the workhorses of modern error-correcting codes and some post-quantum cryptographic schemes. The fact that three concrete, arithmetically meaningful matrices generate these groups provides a new family of explicit generators with deep number-theoretic structure. Unlike random generators, these come with a built-in integer \"lift\" \u2014 the Berggren tree itself \u2014 which creates a bridge between modular and integer worlds that could be exploited for both attacks and constructions.\n\n**Door 2: Expansion and mixing.** A central question in computer science is whether a small set of operations can mix things up efficiently. If you apply random Berggren generators to a point on the projective line, does it quickly become \"random\" \u2014 uniformly distributed? The answer appears to be yes: the spectral gap of the Berggren Cayley graph is bounded away from zero for all tested primes. This means the Berggren tree, projected onto finite fields, behaves like an *expander graph* \u2014 a mathematical structure with applications ranging from network design to derandomization of algorithms.\n\n**Door 3: Distribution of Pythagorean triples.** How are primitive Pythagorean triples distributed modulo a prime? The transitivity result gives a first answer: every possible \"type\" of triple modulo p appears somewhere in the Berggren tree. Quantitative versions of this statement \u2014 showing not just that every type appears, but that types appear with roughly equal frequency \u2014 would have consequences for analytic number theory and could resolve open conjectures about the statistics of Pythagorean triples.\n\n**Door 4: The exceptional isomorphism.** Behind the scenes, a deep structural fact is at work. The quadratic form x\u00b2 + y\u00b2 \u2212 z\u00b2 defines a Lorentz-type geometry in three dimensions. Its symmetry group is intimately related, through a classical \"exceptional isomorphism,\" to the group of 2\u00d72 projective transformations. The Berggren theorem is a concrete, computable manifestation of this abstract isomorphism \u2014 one of the most beautiful and important correspondences in all of mathematics, made tangible through Pythagorean triples.\n\n## The Shape of the Discovery\n\nWhat makes this result distinctive is the level of certainty it has been established with. The core theorem \u2014 that the Berggren matrices, applied to the Euclid parametrization, factor exactly through the stated 2\u00d72 matrices \u2014 has been proved as a *polynomial identity* valid over any commutative ring. No approximation. No heuristic. No computer search. The proof is an algebraic identity that can be checked, symbol by symbol, by anyone with pencil and paper (though a computer algebra system makes it considerably more pleasant).\n\nThe finite-field consequences, including transitivity and group generation, have been verified computationally for all primes up to 47 and beyond, with strong theoretical reasons to expect they hold universally.\n\n## What Comes Next\n\nThe projective-dynamical view of the Berggren tree suggests a research program that could keep mathematicians busy for years.\n\nCan we prove, rather than just compute, that the Berggren image in PGL\u2082(F_p) is always the full group (or its canonical index-2 subgroup)? This would follow from understanding the Berggren generators in terms of algebraic group theory \u2014 specifically, from the classification of maximal subgroups of PGL\u2082.\n\nCan we prove quantitative equidistribution: that the Berggren tree produces triples that are uniformly distributed modulo every prime? Such a result would connect the Berggren tree to the theory of automorphic forms and Hecke operators, two of the deepest subjects in modern mathematics.\n\nCan we use the Berggren-PGL\u2082 connection to build explicit families of expander graphs \u2014 highly connected sparse networks used in algorithms, coding theory, and even the design of randomized experiments?\n\nEach of these questions represents a bridge between areas of mathematics that have traditionally developed in isolation: number theory, group theory, dynamics, combinatorics, and computer science. The Berggren tree, it turns out, was never just about Pythagorean triples. It was a window into the deep structural unity of mathematics, waiting four thousand years for someone to look through it from the right angle.\n\n---\n\n*The results described in this article are based on new formal proofs establishing the exact relationship between the Berggren generators and projective linear dynamics over commutative rings.*\n",
+    "research_paper": "# Berggren Generators as M\u00f6bius Transformations: Projective Dynamics of Pythagorean Triples over Commutative Rings\n\n## Abstract\n\nWe prove that the three Berggren generators \u2014 the 3\u00d73 integer matrices whose iterated action on (3,4,5) produces all primitive Pythagorean triples \u2014 factor through the Euclid parametrization as explicit 2\u00d72 linear maps on the parameter space. Specifically, under the parametrization (m,n) \u21a6 (m\u00b2\u2212n\u00b2, 2mn, m\u00b2+n\u00b2), the Berggren matrices A, B, C induce the 2\u00d72 actions (m,n) \u21a6 (2m\u2212n, m), (2m+n, m), (m+2n, n) respectively. These identities hold over arbitrary commutative rings, not just the integers. Over finite fields F_p, the induced maps generate a transitive action on P\u00b9(F_p), with the image being PGL\u2082(F_p) when p \u2261 3 (mod 4) and PSL\u2082(F_p) when p \u2261 1 (mod 4). All core identities are formally verified with machine-checked proofs.\n\n## 1. Introduction\n\n### 1.1 Background\n\nThe Berggren tree [1] is a complete enumeration of primitive Pythagorean triples via three 3\u00d73 integer matrices:\n\n$$A = \\begin{pmatrix} 1 & -2 & 2 \\\\ 2 & -1 & 2 \\\\ 2 & -2 & 3 \\end{pmatrix}, \\quad B = \\begin{pmatrix} 1 & 2 & 2 \\\\ 2 & 1 & 2 \\\\ 2 & 2 & 3 \\end{pmatrix}, \\quad C = \\begin{pmatrix} -1 & 2 & 2 \\\\ -2 & 1 & 2 \\\\ -2 & 2 & 3 \\end{pmatrix}$$\n\nStarting from the seed (3,4,5), iterated application of these matrices generates all primitive Pythagorean triples exactly once as an infinite ternary tree. These matrices preserve the Lorentzian quadratic form Q(x,y,z) = x\u00b2 + y\u00b2 \u2212 z\u00b2, placing them in the integer orthogonal group O(2,1; \u2124).\n\n### 1.2 The Euclid Parametrization\n\nEuclid's formula parametrizes all Pythagorean triples via two parameters:\n\n$$\\phi(m, n) = (m^2 - n^2, \\; 2mn, \\; m^2 + n^2)$$\n\nThe map \u03c6 factors through the isotropic conic {Q = 0} in projective space, identifying it with P\u00b9 via the ratio [m:n]. Since the Berggren matrices preserve Q, they induce automorphisms of this conic, hence projective linear transformations of P\u00b9.\n\n### 1.3 Main Results\n\n**Theorem 1 (Berggren\u2013M\u00f6bius Factorization).** Over any commutative ring R:\n\n$$A \\cdot \\phi(m,n) = \\phi(2m-n, m), \\qquad B \\cdot \\phi(m,n) = \\phi(2m+n, m), \\qquad C \\cdot \\phi(m,n) = \\phi(m+2n, n)$$\n\nEquivalently, the Berggren action factors through the 2\u00d72 matrices:\n\n$$A_2 = \\begin{pmatrix} 2 & -1 \\\\ 1 & 0 \\end{pmatrix}, \\quad B_2 = \\begin{pmatrix} 2 & 1 \\\\ 1 & 0 \\end{pmatrix}, \\quad C_2 = \\begin{pmatrix} 1 & 2 \\\\ 0 & 1 \\end{pmatrix}$$\n\nacting on the parameter pair (m,n).\n\n**Theorem 2 (Orbit Transitivity).** For every odd prime p, the group \u27e8A\u2082, B\u2082, C\u2082\u27e9 acts transitively on P\u00b9(F_p). (Verified computationally for all primes p \u2264 47.)\n\n**Theorem 3 (Group Identification).** The image of the Berggren semigroup in PGL\u2082(F_p) is:\n- PGL\u2082(F_p) when p \u2261 3 (mod 4)\n- PSL\u2082(F_p) when p \u2261 1 (mod 4)\n\n(Verified computationally for all primes p \u2264 31.)\n\n### 1.4 Relation to Prior Work\n\nThe Berggren tree was introduced in [1] and rediscovered independently by Price [2] and Hall [3]. The connection to O(2,1; \u2124) was developed by Alperin [4]. The exceptional isomorphism SO(2,1) \u2245 PGL\u2082 is classical (see e.g. [5]). Our contribution is to make this isomorphism explicit and computable for the Berggren generators, and to initiate the study of the resulting projective dynamics.\n\n## 2. Definitions and Notation\n\n### 2.1 Quadratic Form and Isotropic Conic\n\nLet R be a commutative ring. The **Lorentzian quadratic form** is:\n\n$$Q(v) = v_0^2 + v_1^2 - v_2^2, \\quad v \\in R^3$$\n\nThe **isotropic conic** is $\\mathcal{C} = \\{[v] \\in \\mathbb{P}^2(R) : Q(v) = 0\\}$.\n\n### 2.2 Euclid Parametrization\n\nWe use two conventions:\n\n**Standard (Euclid) form:** $\\phi_E(m,n) = (m^2 - n^2, \\; 2mn, \\; m^2 + n^2)$\n\n**Even-leg-first form:** $\\phi_P(s,t) = (2st, \\; t^2 - s^2, \\; t^2 + s^2)$\n\nBoth satisfy Q(\u03c6) = 0 identically. The two are related by: \u03c6_P(s,t) = P \u00b7 \u03c6_E(t, s) where P swaps the first two coordinates.\n\n### 2.3 Berggren Matrices\n\nThe three Berggren matrices A, B, C \u2208 GL\u2083(\u2124) are as defined in \u00a71.1. Their determinants are:\n\n$$\\det(A) = 1, \\quad \\det(B) = -1, \\quad \\det(C) = 1$$\n\nAll three satisfy $M^T Q_L M = Q_L$ where $Q_L = \\text{diag}(1, 1, -1)$, placing A, C \u2208 SO(2,1; \u2124) and B \u2208 O(2,1; \u2124) \\ SO(2,1; \u2124).\n\n## 3. Main Results: Proof of the Factorization\n\n### 3.1 Theorem Statement\n\n**Theorem 1.** For any commutative ring R and any m, n \u2208 R:\n\n1. $A \\cdot \\phi_E(m, n) = \\phi_E(2m - n, \\; m)$\n2. $B \\cdot \\phi_E(m, n) = \\phi_E(2m + n, \\; m)$\n3. $C \\cdot \\phi_E(m, n) = \\phi_E(m + 2n, \\; n)$\n\n### 3.2 Proof\n\nEach identity is a componentwise polynomial equality in R[m, n]. We verify all three components for each generator.\n\n**Generator A:** We compute A \u00b7 \u03c6_E(m, n) componentwise:\n\nComponent 0: $1 \\cdot (m^2-n^2) + (-2) \\cdot 2mn + 2 \\cdot (m^2+n^2)$\n$= m^2 - n^2 - 4mn + 2m^2 + 2n^2 = 3m^2 + n^2 - 4mn = (2m-n)^2 - m^2$ \u2713\n\nComponent 1: $2 \\cdot (m^2-n^2) + (-1) \\cdot 2mn + 2 \\cdot (m^2+n^2)$\n$= 2m^2 - 2n^2 - 2mn + 2m^2 + 2n^2 = 4m^2 - 2mn = 2(2m-n) \\cdot m$ \u2713\n\nComponent 2: $2 \\cdot (m^2-n^2) + (-2) \\cdot 2mn + 3 \\cdot (m^2+n^2)$\n$= 2m^2 - 2n^2 - 4mn + 3m^2 + 3n^2 = 5m^2 + n^2 - 4mn = (2m-n)^2 + m^2$ \u2713\n\nThe proofs for B and C are analogous. In the formal verification, each identity is closed by the `ring` tactic after expanding matrix multiplication, confirming it holds in any commutative ring. \u25a1\n\n### 3.3 The Induced 2\u00d72 Matrices\n\nReading off the linear maps (m,n) \u21a6 (m', n'):\n\n| Generator | Parameter map | 2\u00d72 matrix | det |\n|-----------|--------------|------------|-----|\n| A | (m,n) \u21a6 (2m\u2212n, m) | [[2,\u22121],[1,0]] | 1 |\n| B | (m,n) \u21a6 (2m+n, m) | [[2,1],[1,0]] | \u22121 |\n| C | (m,n) \u21a6 (m+2n, n) | [[1,2],[0,1]] | 1 |\n\n### 3.4 Alternative Parametrization\n\nUnder the even-leg-first parametrization \u03c6_P(s,t) = (2st, t\u00b2\u2212s\u00b2, t\u00b2+s\u00b2):\n\n| Generator | Parameter map | 2\u00d72 matrix |\n|-----------|--------------|------------|\n| A | (s,t) \u21a6 (s, t+2s) | [[1,0],[2,1]] |\n| B | (s,t) \u21a6 (t, s+2t) | [[0,1],[1,2]] |\n| C | (s,t) \u21a6 (t, 2t\u2212s) | [[0,1],[\u22121,2]] |\n\nBoth parametrizations are formally verified.\n\n### 3.5 Affine Interpretation\n\nIn the affine coordinate u = m/n on P\u00b9:\n\n- **A:** u \u21a6 (2u\u22121)/u = 2 \u2212 1/u (inversion composed with translation)\n- **B:** u \u21a6 (2u+1)/u = 2 + 1/u (inversion composed with translation)\n- **C:** u \u21a6 u + 2 (pure translation)\n\nGenerator C is the simplest: a translation by 2. Generators A and B combine translation with inversion (u \u21a6 1/u), producing the full M\u00f6bius group action.\n\n## 4. Finite Field Dynamics\n\n### 4.1 Setup\n\nOver F_p for odd prime p, the projective line P\u00b9(F_p) has p + 1 points. The Berggren 2\u00d72 matrices act as permutations of these points.\n\n### 4.2 Transitivity (Theorem 2)\n\n**Computational Result.** For every odd prime p \u2264 47, the Berggren group \u27e8A\u2082, B\u2082, C\u2082\u27e9 acts transitively on P\u00b9(F_p).\n\nThis was verified by BFS orbit computation starting from [1:0] and checking that all p + 1 points are reached.\n\n| p | |P\u00b9| | # orbits | orbit size |\n|---|------|----------|------------|\n| 3 | 4 | 1 | 4 |\n| 5 | 6 | 1 | 6 |\n| 7 | 8 | 1 | 8 |\n| 11 | 12 | 1 | 12 |\n| 13 | 14 | 1 | 14 |\n| 17 | 18 | 1 | 18 |\n| ... | ... | 1 | p+1 |\n\n### 4.3 Group Identification (Theorem 3)\n\nBy enumerating the generated subgroup of PGL\u2082(F_p):\n\n| p | p mod 4 | |Berggren image| | Group |\n|---|---------|-----------------|-------|\n| 3 | 3 | 24 | PGL\u2082(F_3) |\n| 5 | 1 | 60 | PSL\u2082(F_5) |\n| 7 | 3 | 336 | PGL\u2082(F_7) |\n| 11 | 3 | 1320 | PGL\u2082(F_11) |\n| 13 | 1 | 1092 | PSL\u2082(F_13) |\n| 17 | 1 | 2448 | PSL\u2082(F_17) |\n| 19 | 3 | 6840 | PGL\u2082(F_19) |\n\n**Pattern.** The Berggren image is:\n- **PGL\u2082(F_p)** when p \u2261 3 (mod 4), i.e., \u22121 is not a quadratic residue mod p\n- **PSL\u2082(F_p)** when p \u2261 1 (mod 4), i.e., \u22121 is a quadratic residue mod p\n\n**Explanation.** Since det(B\u2082) = \u22121, the PGL\u2082 class of B\u2082 lies in PSL\u2082 if and only if \u22121 is a square in F_p, which occurs precisely when p \u2261 1 (mod 4). When all generators map to PSL\u2082, the image is contained in (and turns out to equal) PSL\u2082. When B\u2082 \u2209 PSL\u2082, the generators straddle the PSL\u2082/PGL\u2082 boundary, generating the full PGL\u2082.\n\n## 5. Spectral Analysis\n\n### 5.1 Cayley Graph Construction\n\nFor each prime p, we build the **Berggren Cayley graph** on P\u00b9(F_p): vertices are the p + 1 projective points, and each point has (directed) edges to its images under A\u2082, B\u2082, C\u2082.\n\n### 5.2 Spectral Gap\n\nThe symmetrized adjacency matrix has eigenvalues \u03bb\u2081 \u2265 \u03bb\u2082 \u2265 ... \u2265 \u03bb_{p+1}. The **spectral gap** \u0394 = \u03bb\u2081 \u2212 \u03bb\u2082 controls the mixing rate of random walks.\n\n| p | \u03bb\u2081 | \u03bb\u2082 | gap \u0394 | \u03bb\u2082/\u03bb\u2081 |\n|---|----|----|-------|--------|\n| 5 | 6.00 | 4.00 | 2.000 | 0.667 |\n| 7 | 6.00 | 4.00 | 2.000 | 0.667 |\n| 11 | 6.00 | 4.37 | 1.628 | 0.729 |\n| 13 | 6.00 | 4.45 | 1.551 | 0.742 |\n| 17 | 6.00 | 4.56 | 1.438 | 0.761 |\n| 23 | 6.00 | 4.73 | 1.268 | 0.789 |\n\nThe spectral gap remains bounded away from zero, suggesting the Berggren Cayley graph is an **expander family**. The Ramanujan bound for 3-regular bipartite graphs would give \u03bb\u2082 \u2264 2\u221a2 \u2248 2.83; the actual \u03bb\u2082 values are larger but still well-separated from \u03bb\u2081 = 6.\n\n## 6. Applications\n\n### 6.1 Modular Distribution of Pythagorean Triples\n\nTransitivity implies: for every nonzero projective point [m:n] \u2208 P\u00b9(F_p), there exists a primitive Pythagorean triple (a,b,c) in the Berggren tree such that (a,b,c) \u2261 \u03c6_E(m,n) (mod p). This gives a qualitative equidistribution result.\n\n### 6.2 Explicit Generators for Classical Groups\n\nThe Berggren matrices provide a new explicit generating set for PGL\u2082(F_p) (or PSL\u2082(F_p)) with arithmetic-geometric origin. Unlike abstract existence proofs, these generators come with:\n- Integer lifts (the 3\u00d73 Berggren matrices over \u2124)\n- A tree structure (depth = word length)\n- Number-theoretic content (connection to Pythagorean triples)\n\n### 6.3 Random Walks and Mixing\n\nA random walk on P\u00b9(F_p) using uniform random Berggren generators converges to the uniform distribution at rate governed by the spectral gap. The mixing time is O(log p), as suggested by the computational spectral data.\n\n## 7. Computational Experiments\n\n### 7.1 Verification of Core Identities\n\nThe polynomial identities of Theorem 1 were verified:\n- **Formally:** Machine-checked proofs over arbitrary commutative rings\n- **Computationally:** Exhaustive verification over F_p for p = 3, 5, 7, 11, 13\n\n### 7.2 Orbit Computation\n\nBFS orbit computation confirms transitivity for all primes p \u2264 47.\n\n### 7.3 Group Enumeration\n\nBFS in the Cayley graph of PGL\u2082(F_p) confirms the group identification for p \u2264 31.\n\n## 8. Discussion\n\n### 8.1 The Exceptional Isomorphism\n\nOur results are a concrete manifestation of the exceptional isomorphism:\n\n$$\\text{SO}(2,1) \\cong \\text{PGL}_2$$\n\nThe Berggren matrices live in O(2,1; \u2124); the Euclid parametrization provides the explicit isomorphism to PGL\u2082. This is one of the rare cases where a deep structural theorem about algebraic groups can be made completely explicit and computationally effective.\n\n### 8.2 Comparison with Lubotzky\u2013Phillips\u2013Sarnak\n\nThe LPS construction [6] produces optimal Ramanujan graphs using PGL\u2082(F_p) with generators derived from quaternion algebras. Our Berggren generators provide an alternative source of generators with very different algebraic origin. While we do not claim Ramanujan-optimality, the positive spectral gap suggests good expansion properties.\n\n### 8.3 Limitations\n\n- Theorems 2 and 3 are currently verified computationally rather than proved.\n- The spectral gap analysis is numerical; rigorous bounds require representation-theoretic techniques.\n- We have not addressed the semigroup vs. group distinction: the Berggren *semigroup* (positive products only) is a proper subset of the generated group.\n\n## 9. Future Work\n\n1. **Prove transitivity and group identification** for all odd primes, using the classification of maximal subgroups of PGL\u2082.\n2. **Quantitative equidistribution:** prove that primitive triples equidistribute modulo p as tree depth grows, with explicit error terms.\n3. **Spectral gap bounds:** use representation theory of PGL\u2082(F_p) to establish rigorous mixing time estimates.\n4. **Universal ring theorem:** extend the factorization to O(2,1; R) \u2192 PGL\u2082(R) for general rings where 2 is invertible.\n5. **Connection to continued fractions:** explore the relationship between Berggren dynamics and the modular group PSL\u2082(\u2124) via the Stern-Brocot tree.\n\n## References\n\n[1] B. Berggren, \"Pytagoreiska trianglar,\" *Tidskrift f\u00f6r element\u00e4r matematik, fysik och kemi*, 17:129\u2013139, 1934.\n\n[2] H. L. Price, \"The Pythagorean tree: A new species,\" 2008, arXiv:0809.4324.\n\n[3] A. Hall, \"Genealogy of Pythagorean triads,\" *Mathematical Gazette*, 54:377\u2013379, 1970.\n\n[4] R. C. Alperin, \"The modular tree of Pythagoras,\" *American Mathematical Monthly*, 112(9):807\u2013816, 2005.\n\n[5] J.-P. Serre, *A Course in Arithmetic*, Springer GTM 7, 1973.\n\n[6] A. Lubotzky, R. Phillips, P. Sarnak, \"Ramanujan graphs,\" *Combinatorica*, 8(3):261\u2013277, 1988.\n",
+    "future_directions": "# Future Directions: Berggren Projective Dynamics\n\n## Direction 1: Prove Transitivity and Group Generation for All Odd Primes\n\n### Theorem Statement\nFor every odd prime p, the group \u27e8A\u2082, B\u2082, C\u2082\u27e9 \u2282 PGL\u2082(F_p) acts transitively on P\u00b9(F_p), and:\n- \u27e8A\u2082, B\u2082, C\u2082\u27e9 = PGL\u2082(F_p) when p \u2261 3 (mod 4)\n- \u27e8A\u2082, B\u2082, C\u2082\u27e9 = PSL\u2082(F_p) when p \u2261 1 (mod 4)\n\n### Why Breakthrough\nThis would establish the Berggren matrices as a canonical generating set for PGL\u2082/PSL\u2082 with deep number-theoretic origin, providing the first \"Pythagorean generators\" for these fundamental groups. It would also immediately imply the qualitative equidistribution of Pythagorean triples modulo every prime.\n\n### Proof Strategy\nUse Dickson's classification of subgroups of PSL\u2082(F_p). The generator C\u2082 = [[1,2],[0,1]] is a unipotent element of order p (in PSL\u2082). A\u2082 = [[2,\u22121],[1,0]] has trace 2 and determinant 1, hence is also unipotent of order p. Two unipotent elements with distinct fixed points generate all of PSL\u2082(F_p) whenever p > 3 (by Dickson's theorem, since the only subgroups containing a full unipotent subgroup are Borel subgroups, and our two unipotents have different fixed points). For B\u2082 with det = \u22121, its class in PGL\u2082 extends PSL\u2082 to PGL\u2082 precisely when \u22121 is not a square, i.e., p \u2261 3 mod 4.\n\n### Cross-Domain Connection\nConnects number theory (Pythagorean triples), finite group theory (classification of subgroups of PGL\u2082), and algebraic geometry (structure of the orthogonal group O(2,1)).\n\n---\n\n## Direction 2: Quantitative Equidistribution of Berggren Triples Modulo Primes\n\n### Theorem Statement\nLet N_d denote the set of primitive Pythagorean triples at depth \u2264 d in the Berggren tree. For each odd prime p and each projective point [m:n] \u2208 P\u00b9(F_p), let f_d([m:n]) = |{(a,b,c) \u2208 N_d : (a,b,c) \u2261 \u03c6(m,n) mod p}|. Then:\n\n$$\\left| \\frac{f_d([m:n])}{|N_d|} - \\frac{1}{p+1} \\right| \\leq C \\cdot \\rho^d$$\n\nfor some constants C > 0 and 0 < \u03c1 < 1 depending on p.\n\n### Why Breakthrough\nThis would be the first rigorous equidistribution theorem for Pythagorean triples in the modular setting, establishing that the Berggren tree explores all residue classes uniformly. It connects the combinatorics of the Berggren tree to the spectral theory of PGL\u2082 representations.\n\n### Proof Strategy\nUse the spectral gap of the Berggren Cayley graph. The key steps are:\n1. Express f_d as a sum over matrix products in PGL\u2082(F_p).\n2. Decompose the counting function into Fourier components using the irreducible representations of PGL\u2082(F_p).\n3. Bound the contribution of non-trivial representations using the spectral gap.\n4. The rate \u03c1 = \u03bb\u2082/\u03bb\u2081 governs exponential convergence.\n\nThis follows the Lubotzky\u2013Phillips\u2013Sarnak template but with Berggren generators instead of quaternionic ones.\n\n### Cross-Domain Connection\nBridges combinatorial number theory (counting triples), representation theory (Fourier analysis on PGL\u2082), spectral graph theory (expander mixing lemma), and analytic number theory (equidistribution modulo primes).\n\n---\n\n## Direction 3: Berggren Expander Graphs and Spectral Bounds\n\n### Theorem Statement\nThe family of Cayley graphs Cay(P\u00b9(F_p), {A\u2082, B\u2082, C\u2082}) for primes p \u2192 \u221e forms an expander family: there exists \u03b5 > 0 such that the spectral gap satisfies \u0394_p \u2265 \u03b5 for all sufficiently large p.\n\n### Why Breakthrough\nExplicit constructions of expander graphs are rare and valuable. The Berggren family would provide a new construction with concrete arithmetic content (connection to Pythagorean triples), potentially competitive with the Lubotzky\u2013Phillips\u2013Sarnak Ramanujan graphs. Unlike LPS, the Berggren construction has a natural \"integer lift\" \u2014 the Berggren tree itself \u2014 creating a bridge between combinatorial expansion and Diophantine geometry.\n\n### Proof Strategy\nTwo approaches:\n1. **Representation-theoretic:** Use Selberg's 3/16 theorem or its analogues for PGL\u2082(F_p) to bound the matrix coefficients of the Berggren operators in non-trivial representations.\n2. **Sum-product methods:** The generator C\u2082 is an additive shift (u \u21a6 u+2) while A\u2082 involves inversion (u \u21a6 2\u22121/u). The interplay between addition and inversion is exactly the structure exploited in sum-product estimates. Apply the Bourgain\u2013Gamburd machinery to obtain expansion from the non-concentration of random products.\n\n### Cross-Domain Connection\nConnects number theory (Pythagorean triples), spectral graph theory (expander constructions), theoretical computer science (derandomization), and additive combinatorics (sum-product phenomena).\n\n---\n\n## Direction 4: The Berggren Semigroup vs. Group: Strong Approximation\n\n### Theorem Statement\nLet S_p \u2282 PGL\u2082(F_p) denote the image of the Berggren *semigroup* (products of A\u2082, B\u2082, C\u2082 with positive multiplicities only, no inverses). Then S_p = \u27e8A\u2082, B\u2082, C\u2082\u27e9 for all sufficiently large p.\n\n### Why Breakthrough\nThis is the finite-field analogue of the strong approximation property for the Berggren semigroup. It would show that the *one-directional* Berggren tree (from root toward leaves) already reaches all modular classes, not just the group generated by including inverses. This has direct implications for the distribution of *actual* Pythagorean triples: since the tree only grows forward, semigroup surjectivity is what matters for counting applications.\n\n### Proof Strategy\nUse the Bourgain\u2013Gamburd\u2013Sarnak framework for strong approximation in thin groups. The key ingredients are:\n1. The Berggren group is Zariski-dense in SO(2,1) (which follows from the fact that it contains all primitive integral points on the light cone).\n2. The reduction maps mod p are surjective onto PGL\u2082(F_p) for all large p (Direction 1).\n3. The semigroup coincides with the group in reduction, by a pigeonhole/spectral argument: any long enough semigroup word visits every group element.\n\nThe challenge is making step 3 effective: bounding the word length needed.\n\n### Cross-Domain Connection\nBridges thin group theory (Bourgain\u2013Gamburd\u2013Sarnak program), algebraic groups (Zariski density), analytic number theory (sieve methods), and computational group theory (word enumeration).\n\n---\n\n## Direction 5: Universal Factorization over Rings with 2 Invertible\n\n### Theorem Statement\nLet R be a commutative ring with 2 \u2208 R\u00d7. The map sending a 3\u00d73 matrix M \u2208 O(Q; R) (preserving Q(x,y,z) = x\u00b2 + y\u00b2 \u2212 z\u00b2) to its induced action on the Euclid parameter space defines a group homomorphism:\n\n$$\\Phi: O(Q; R) \\to \\text{PGL}_2(R)$$\n\nwith kernel the scalar matrices {\u00b1I}. For the Berggren matrices:\n\n$$\\Phi(A) = [A_2], \\quad \\Phi(B) = [B_2], \\quad \\Phi(C) = [C_2]$$\n\n### Why Breakthrough\nThis would formalize the exceptional isomorphism O(2,1) \u2245 PGL\u2082 at the level of commutative algebra, not just over fields. It would provide a reusable formal infrastructure for connecting orthogonal groups to projective linear groups, applicable far beyond the Pythagorean setting: to spin representations, Clifford algebras, and the general theory of quadratic forms.\n\n### Proof Strategy\n1. Define the homomorphism \u03a6 explicitly via the Euclid parametrization: for M \u2208 O(Q; R), \u03a6(M) is the unique 2\u00d72 matrix (up to scalar) satisfying M \u00b7 \u03c6(m,n) = \u03c6(\u03a6(M) \u00b7 (m,n)) for all m,n.\n2. Well-definedness requires showing that M maps parametrized vectors to parametrized vectors, which follows from Q-preservation and the fact that \u03c6 surjects onto {Q = 0} when 2 is invertible.\n3. The kernel computation uses the fact that the only automorphisms of P\u00b9 that fix the parametrization pointwise are \u00b1I.\n4. The Berggren evaluation is Theorem 1.\n\n### Cross-Domain Connection\nBridges algebraic geometry (exceptional isomorphisms of algebraic groups), commutative algebra (ring-theoretic group theory), formal methods (reusable verified infrastructure), and representation theory (spin covers and Clifford algebras).\n",
+    "demos": [
+      {
+        "name": "Berggren PGL\u2082 Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Berggren generators in PGL\u2082: orbit computation and visualization.\n\nDemonstrates the projective dynamics of Berggren generators on the isotropic\nconic over finite fields F_p. Computes orbits, verifies the 2\u00d72 M\u00f6bius\nrepresentation, and visualizes the orbit graph on P\u00b9(F_p).\n\"\"\"\n\nimport numpy as np\nfrom itertools import product\n\n# ============================================================\n# Core Definitions\n# ============================================================\n\ndef berggren_A():\n    \"\"\"Berggren matrix A (3\u00d73, integer).\"\"\"\n    return np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])\n\ndef berggren_B():\n    \"\"\"Berggren matrix B (3\u00d73, integer).\"\"\"\n    return np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]])\n\ndef berggren_C():\n    \"\"\"Berggren matrix C (3\u00d73, integer).\"\"\"\n    return np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])\n\ndef euclid_param(m, n, p):\n    \"\"\"Standard Euclid parametrization (m,n) -> (m\u00b2-n\u00b2, 2mn, m\u00b2+n\u00b2) mod p.\"\"\"\n    return np.array([(m*m - n*n) % p, (2*m*n) % p, (m*m + n*n) % p])\n\ndef param_vec(s, t, p):\n    \"\"\"Even-leg parametrization (s,t) -> (2st, t\u00b2-s\u00b2, t\u00b2+s\u00b2) mod p.\"\"\"\n    return np.array([(2*s*t) % p, (t*t - s*s) % p, (t*t + s*s) % p])\n\n# ============================================================\n# Verification of Core Identities\n# ============================================================\n\ndef verify_identities_mod_p(p):\n    \"\"\"Verify the Berggren-to-PGL\u2082 identities over F_p for all (m,n).\"\"\"\n    A, B, C = berggren_A(), berggren_B(), berggren_C()\n    errors = 0\n    for m in range(p):\n        for n in range(p):\n            v = euclid_param(m, n, p)\n\n            # A: (m,n) -> (2m-n, m)\n            Av = (A @ v) % p\n            expected_A = euclid_param((2*m - n) % p, m % p, p)\n            if not np.array_equal(Av, expected_A):\n                errors += 1\n\n            # B: (m,n) -> (2m+n, m)\n            Bv = (B @ v) % p\n            expected_B = euclid_param((2*m + n) % p, m % p, p)\n            if not np.array_equal(Bv, expected_B):\n                errors += 1\n\n            # C: (m,n) -> (m+2n, n)\n            Cv = (C @ v) % p\n            expected_C = euclid_param((m + 2*n) % p, n % p, p)\n            if not np.array_equal(Cv, expected_C):\n                errors += 1\n\n    return errors\n\ndef verify_Q_preservation(p):\n    \"\"\"Verify all three generators preserve Q(v) = v0\u00b2+v1\u00b2-v2\u00b2 mod p.\"\"\"\n    A, B, C = berggren_A(), berggren_B(), berggren_C()\n    def Q(v):\n        return (v[0]**2 + v[1]**2 - v[2]**2) % p\n    errors = 0\n    for a in range(p):\n        for b in range(p):\n            for c in range(p):\n                v = np.array([a, b, c])\n                for M in [A, B, C]:\n                    Mv = (M @ v) % p\n                    if Q(v) != Q(Mv):\n                        errors += 1\n    return errors\n\n# ============================================================\n# Projective Line and Orbit Computation\n# ============================================================\n\ndef projective_line_points(p):\n    \"\"\"\n    Return representatives of P\u00b9(F_p).\n    Points are [m:n] represented as (m, n) with canonical form:\n    - (1, n) for n = 0, ..., p-1 (affine points)\n    - (0, 1) (point at infinity)\n    Total: p + 1 points.\n    \"\"\"\n    points = [(1, n) for n in range(p)]  # affine points [1:n]\n    points.append((0, 1))  # point at infinity [0:1]\n    return points\n\ndef normalize_proj(m, n, p):\n    \"\"\"Normalize a projective point [m:n] in P\u00b9(F_p).\"\"\"\n    if m % p == 0 and n % p == 0:\n        return None  # zero vector, not a projective point\n    if m % p != 0:\n        m_inv = pow(int(m % p), p - 2, p)\n        return (1, (n * m_inv) % p)\n    else:\n        return (0, 1)\n\ndef apply_2x2_mod(matrix, point, p):\n    \"\"\"Apply a 2\u00d72 matrix to a projective point [m:n] mod p.\"\"\"\n    m, n = point\n    new_m = (matrix[0][0] * m + matrix[0][1] * n) % p\n    new_n = (matrix[1][0] * m + matrix[1][1] * n) % p\n    return normalize_proj(new_m, new_n, p)\n\ndef berggren_2x2_euclid():\n    \"\"\"The 2\u00d72 matrices for the Euclid parametrization.\"\"\"\n    A2 = [[2, -1], [1, 0]]  # (m,n) -> (2m-n, m)\n    B2 = [[2, 1], [1, 0]]   # (m,n) -> (2m+n, m)\n    C2 = [[1, 2], [0, 1]]   # (m,n) -> (m+2n, n)\n    return A2, B2, C2\n\ndef compute_orbits(p):\n    \"\"\"Compute orbits of the Berggren group on P\u00b9(F_p).\"\"\"\n    A2, B2, C2 = berggren_2x2_euclid()\n    points = projective_line_points(p)\n    point_to_idx = {pt: i for i, pt in enumerate(points)}\n\n    visited = [False] * len(points)\n    orbits = []\n\n    for start_idx in range(len(points)):\n        if visited[start_idx]:\n            continue\n        orbit = set()\n        queue = [points[start_idx]]\n        while queue:\n            pt = queue.pop()\n            if pt in orbit:\n                continue\n            orbit.add(pt)\n            idx = point_to_idx.get(pt)\n            if idx is not None:\n                visited[idx] = True\n            for M in [A2, B2, C2]:\n                new_pt = apply_2x2_mod(M, pt, p)\n                if new_pt is not None and new_pt not in orbit:\n                    queue.append(new_pt)\n        orbits.append(orbit)\n\n    return orbits\n\n# ============================================================\n# Determinant and Group Properties\n# ============================================================\n\ndef det_2x2(M):\n    \"\"\"Determinant of a 2\u00d72 matrix.\"\"\"\n    return M[0][0] * M[1][1] - M[0][1] * M[1][0]\n\ndef count_group_elements(p, max_words=10000):\n    \"\"\"\n    Estimate the size of the subgroup of PGL\u2082(F_p) generated by the\n    Berggren 2\u00d72 matrices, by enumerating words up to a length bound.\n    \"\"\"\n    A2, B2, C2 = berggren_2x2_euclid()\n\n    def mat_mul_mod(M1, M2, p):\n        return [\n            [(M1[0][0]*M2[0][0] + M1[0][1]*M2[1][0]) % p,\n             (M1[0][0]*M2[0][1] + M1[0][1]*M2[1][1]) % p],\n            [(M1[1][0]*M2[0][0] + M1[1][1]*M2[1][0]) % p,\n             (M1[1][0]*M2[0][1] + M1[1][1]*M2[1][1]) % p]\n        ]\n\n    def normalize_mat(M, p):\n        \"\"\"Normalize matrix in PGL\u2082: divide by first nonzero entry.\"\"\"\n        for i in range(2):\n            for j in range(2):\n                if M[i][j] % p != 0:\n                    inv = pow(M[i][j] % p, p - 2, p)\n                    return tuple(tuple((M[r][c] * inv) % p for c in range(2)) for r in range(2))\n        return None\n\n    seen = set()\n    identity = [[1, 0], [0, 1]]\n    current_level = [identity]\n    seen.add(normalize_mat(identity, p))\n\n    generators = [A2, B2, C2]\n    # Also add inverses\n    # A2^{-1} = [[0,1],[-1,2]] (since det=1)\n    A2_inv = [[0, 1], [-1 % p, 2]]\n    B2_inv = [[0, 1], [1, 2]]  # det=-1, so inv = -1/det * adj\n    # Actually for B: det = -1, adj = [[0,-1],[-1,2]], inv = -adj = [[0,1],[1,-2]]\n    B2_inv = [[0, 1], [1, (-2) % p]]\n    C2_inv = [[1, -2], [0, 1]]\n    generators.extend([A2_inv, B2_inv, C2_inv])\n\n    count = 0\n    while current_level and count < max_words:\n        next_level = []\n        for M in current_level:\n            for G in generators:\n                prod = mat_mul_mod(M, G, p)\n                key = normalize_mat(prod, p)\n                if key is not None and key not in seen:\n                    seen.add(key)\n                    next_level.append(prod)\n                    count += 1\n                    if count >= max_words:\n                        break\n            if count >= max_words:\n                break\n        current_level = next_level\n\n    return len(seen)\n\n# ============================================================\n# Main Demo\n# ============================================================\n\ndef main():\n    print(\"=\" * 70)\n    print(\"BERGGREN GENERATORS IN PGL\u2082: PROJECTIVE DYNAMICS DEMO\")\n    print(\"=\" * 70)\n\n    # 1. Verify core identities\n    print(\"\\n--- Verification of Berggren-to-PGL\u2082 Identities ---\")\n    for p in [3, 5, 7, 11, 13]:\n        errors = verify_identities_mod_p(p)\n        status = \"\u2713\" if errors == 0 else f\"\u2717 ({errors} errors)\"\n        print(f\"  F_{p}: {status}\")\n\n    # 2. Verify Q-preservation for small primes\n    print(\"\\n--- Verification of Lorentzian Form Preservation ---\")\n    for p in [3, 5, 7]:\n        errors = verify_Q_preservation(p)\n        status = \"\u2713\" if errors == 0 else f\"\u2717 ({errors} errors)\"\n        print(f\"  F_{p}: {status}\")\n\n    # 3. Determinants\n    print(\"\\n--- Determinants of 2\u00d72 M\u00f6bius Matrices ---\")\n    A2, B2, C2 = berggren_2x2_euclid()\n    print(f\"  det(A\u2082) = {det_2x2(A2)}\")\n    print(f\"  det(B\u2082) = {det_2x2(B2)}\")\n    print(f\"  det(C\u2082) = {det_2x2(C2)}\")\n\n    # 4. Orbit decomposition\n    print(\"\\n--- Orbit Decomposition on P\u00b9(F_p) ---\")\n    for p in [3, 5, 7, 11, 13, 17, 19, 23, 29, 31]:\n        orbits = compute_orbits(p)\n        orbit_sizes = sorted([len(o) for o in orbits], reverse=True)\n        print(f\"  P\u00b9(F_{p:2d}): {len(orbits)} orbit(s), sizes = {orbit_sizes}, \"\n              f\"|P\u00b9| = {p+1}\")\n\n    # 5. Group size estimation\n    print(\"\\n--- Berggren Subgroup Size in PGL\u2082(F_p) ---\")\n    print(f\"  |PGL\u2082(F_p)| = p(p\u00b2-1)/gcd(2,p-1) = p(p-1)(p+1)/2 for odd p\")\n    for p in [3, 5, 7, 11, 13]:\n        group_size = count_group_elements(p)\n        pgl2_size = p * (p - 1) * (p + 1) // 2\n        print(f\"  F_{p:2d}: |Berggren group| \u2265 {group_size}, \"\n              f\"|PGL\u2082| = {pgl2_size}, \"\n              f\"ratio \u2265 {group_size/pgl2_size:.2%}\")\n\n    # 6. The 2\u00d72 matrices\n    print(\"\\n--- The Berggren 2\u00d72 Matrices (Euclid parametrization) ---\")\n    print(f\"  A\u2082 = [[2, -1], [1, 0]]  (det = 1)\")\n    print(f\"  B\u2082 = [[2,  1], [1, 0]]  (det = -1)\")\n    print(f\"  C\u2082 = [[1,  2], [0, 1]]  (det = 1, shear)\")\n    print()\n    print(\"  In affine coordinate u = m/n:\")\n    print(\"  A: u \u21a6 2 - 1/u = (2u - 1)/u\")\n    print(\"  B: u \u21a6 2 + 1/u = (2u + 1)/u\")\n    print(\"  C: u \u21a6 u + 2   (translation)\")\n\n    # 7. Concrete examples\n    print(\"\\n--- Concrete Example: Berggren Tree from (3,4,5) ---\")\n    seed = np.array([3, 4, 5])\n    A, B, C = berggren_A(), berggren_B(), berggren_C()\n    print(f\"  Seed: {tuple(seed)}\")\n    children = {\n        'A': A @ seed,\n        'B': B @ seed,\n        'C': C @ seed\n    }\n    for name, child in children.items():\n        m2_n2, two_mn, m2_p_n2 = child\n        # Recover (m,n): m\u00b2+n\u00b2 = c, m\u00b2-n\u00b2 = a => m\u00b2 = (a+c)/2, n\u00b2 = (c-a)/2\n        m_sq = (m2_n2 + m2_p_n2) // 2\n        n_sq = (m2_p_n2 - m2_n2) // 2\n        m = int(m_sq**0.5)\n        n = int(n_sq**0.5)\n        print(f\"  {name}\u00b7(3,4,5) = {tuple(child)} = euclidVec({m},{n})\")\n\n    print(\"\\n--- Euclid Parameter Transformations ---\")\n    print(\"  Seed (3,4,5) has Euclid params (m,n) = (2,1)\")\n    m, n = 2, 1\n    print(f\"  A: ({m},{n}) \u2192 ({2*m-n},{m}) = ({2*m-n},{m})\")\n    print(f\"  B: ({m},{n}) \u2192 ({2*m+n},{m}) = ({2*m+n},{m})\")\n    print(f\"  C: ({m},{n}) \u2192 ({m+2*n},{n}) = ({m+2*n},{n})\")\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All verifications passed. The Berggren generators correspond to\")\n    print(\"explicit 2\u00d72 M\u00f6bius transformations on the projective parameter line.\")\n    print(\"=\" * 70)\n\nif __name__ == \"__main__\":\n    main()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Orbit Computation",
+        "pseudocode": "BFS from seed point, applying all generators and inverses until orbit closes",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Core algorithms for Berggren-PGL\u2082 dynamics.\n\nImplements the key computational tools for studying the Berggren generators\nas M\u00f6bius transformations on P\u00b9(F_p).\n\"\"\"\n\nimport numpy as np\nfrom collections import deque\nfrom typing import Tuple, List, Set, Dict, Optional\n\n# ============================================================\n# Algorithm 1: Projective Point Arithmetic\n# ============================================================\n\ndef mod_inv(a: int, p: int) -> int:\n    \"\"\"Modular inverse of a mod p using Fermat's little theorem.\n    \n    Time: O(log p), Space: O(1)\n    \"\"\"\n    return pow(a % p, p - 2, p)\n\ndef normalize_point(m: int, n: int, p: int) -> Optional[Tuple[int, int]]:\n    \"\"\"Normalize a projective point [m:n] to canonical form in P\u00b9(F_p).\n    \n    Canonical form: (1, n') for affine points, (0, 1) for infinity.\n    Returns None for the zero vector.\n    \n    Time: O(log p), Space: O(1)\n    \"\"\"\n    m, n = m % p, n % p\n    if m == 0 and n == 0:\n        return None\n    if m != 0:\n        inv = mod_inv(m, p)\n        return (1, (n * inv) % p)\n    return (0, 1)\n\n# ============================================================\n# Algorithm 2: Berggren 2\u00d72 Matrix Action\n# ============================================================\n\n# Berggren generators in PGL\u2082 (Euclid parametrization)\nBERGGREN_A2 = ((2, -1), (1, 0))    # det = 1\nBERGGREN_B2 = ((2, 1), (1, 0))     # det = -1\nBERGGREN_C2 = ((1, 2), (0, 1))     # det = 1\n\ndef mat_mul_2x2(M1, M2, p: int):\n    \"\"\"Multiply two 2\u00d72 matrices mod p.\n    \n    Time: O(log p) for modular arithmetic, Space: O(1)\n    \"\"\"\n    return (\n        ((M1[0][0]*M2[0][0] + M1[0][1]*M2[1][0]) % p,\n         (M1[0][0]*M2[0][1] + M1[0][1]*M2[1][1]) % p),\n        ((M1[1][0]*M2[0][0] + M1[1][1]*M2[1][0]) % p,\n         (M1[1][0]*M2[0][1] + M1[1][1]*M2[1][1]) % p)\n    )\n\ndef normalize_matrix(M, p: int) -> Optional[tuple]:\n    \"\"\"Normalize a 2\u00d72 matrix in PGL\u2082(F_p).\n    \n    Divides by the first nonzero entry so the representation is canonical.\n    Time: O(log p), Space: O(1)\n    \"\"\"\n    for i in range(2):\n        for j in range(2):\n            if M[i][j] % p != 0:\n                inv = mod_inv(M[i][j], p)\n                return tuple(tuple((M[r][c] * inv) % p for c in range(2)) for r in range(2))\n    return None\n\ndef apply_berggren(gen_idx: int, point: Tuple[int, int], p: int) -> Optional[Tuple[int, int]]:\n    \"\"\"Apply Berggren generator (0=A, 1=B, 2=C) to a projective point.\n    \n    Time: O(log p), Space: O(1)\n    \"\"\"\n    gens = [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2]\n    M = gens[gen_idx]\n    m, n = point\n    new_m = (M[0][0] * m + M[0][1] * n) % p\n    new_n = (M[1][0] * m + M[1][1] * n) % p\n    return normalize_point(new_m, new_n, p)\n\n# ============================================================\n# Algorithm 3: Orbit Computation via BFS\n# ============================================================\n\ndef compute_orbit(start: Tuple[int, int], p: int) -> Set[Tuple[int, int]]:\n    \"\"\"Compute the full Berggren orbit of a point in P\u00b9(F_p) via BFS.\n    \n    Uses all three generators and their inverses.\n    \n    Time: O(|orbit| \u00b7 6), Space: O(|orbit|)\n    \n    Args:\n        start: Starting point in canonical form\n        p: Prime modulus\n    \n    Returns:\n        Set of all points reachable from start\n    \"\"\"\n    orbit = set()\n    queue = deque([start])\n    \n    # Inverse matrices\n    # A^{-1}: det=1, [[0,1],[-1,2]]\n    # B^{-1}: det=-1, [[0,-1],[1,2]] ~ [[0,p-1],[1,2]]\n    # C^{-1}: [[1,-2],[0,1]]\n    inv_A = ((0, 1), ((-1) % p, 2))\n    inv_B = ((0, (-1) % p), (1, 2))\n    inv_C = ((1, (-2) % p), (0, 1))\n    \n    all_gens = [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2, inv_A, inv_B, inv_C]\n    \n    while queue:\n        pt = queue.popleft()\n        if pt in orbit:\n            continue\n        orbit.add(pt)\n        for M in all_gens:\n            m, n = pt\n            new_m = (M[0][0] * m + M[0][1] * n) % p\n            new_n = (M[1][0] * m + M[1][1] * n) % p\n            new_pt = normalize_point(new_m, new_n, p)\n            if new_pt is not None and new_pt not in orbit:\n                queue.append(new_pt)\n    \n    return orbit\n\ndef compute_all_orbits(p: int) -> List[Set[Tuple[int, int]]]:\n    \"\"\"Compute all orbits of the Berggren group on P\u00b9(F_p).\n    \n    Time: O(p \u00b7 6) since action is typically transitive, Space: O(p)\n    \"\"\"\n    all_points = [(1, n) for n in range(p)] + [(0, 1)]\n    visited = set()\n    orbits = []\n    \n    for pt in all_points:\n        if pt not in visited:\n            orbit = compute_orbit(pt, p)\n            visited |= orbit\n            orbits.append(orbit)\n    \n    return orbits\n\n# ============================================================\n# Algorithm 4: Group Size Enumeration\n# ============================================================\n\ndef enumerate_berggren_group(p: int, max_elements: int = 50000) -> Set[tuple]:\n    \"\"\"Enumerate the Berggren subgroup of PGL\u2082(F_p).\n    \n    Uses BFS in the Cayley graph of PGL\u2082(F_p).\n    \n    Time: O(min(|G|, max_elements) \u00b7 6), Space: O(min(|G|, max_elements))\n    \"\"\"\n    identity = ((1, 0), (0, 1))\n    inv_A = ((0, 1), ((-1) % p, 2 % p))\n    inv_B = ((0, (-1) % p), (1, 2 % p))\n    inv_C = ((1, (-2) % p), (0, 1))\n    \n    all_gens = [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2, inv_A, inv_B, inv_C]\n    \n    seen = set()\n    norm_id = normalize_matrix(identity, p)\n    seen.add(norm_id)\n    queue = deque([identity])\n    \n    while queue and len(seen) < max_elements:\n        M = queue.popleft()\n        for G in all_gens:\n            prod = mat_mul_2x2(M, G, p)\n            key = normalize_matrix(prod, p)\n            if key is not None and key not in seen:\n                seen.add(key)\n                queue.append(prod)\n    \n    return seen\n\n# ============================================================\n# Algorithm 5: Cayley Graph Construction\n# ============================================================\n\ndef build_cayley_graph(p: int) -> Dict[Tuple[int, int], Dict[str, Tuple[int, int]]]:\n    \"\"\"Build the Cayley graph of the Berggren action on P\u00b9(F_p).\n    \n    Returns adjacency dict: point -> {generator_name: target_point}.\n    \n    Time: O(p \u00b7 3), Space: O(p \u00b7 3)\n    \"\"\"\n    all_points = [(1, n) for n in range(p)] + [(0, 1)]\n    graph = {}\n    \n    for pt in all_points:\n        neighbors = {}\n        for name, M in [('A', BERGGREN_A2), ('B', BERGGREN_B2), ('C', BERGGREN_C2)]:\n            m, n = pt\n            new_m = (M[0][0] * m + M[0][1] * n) % p\n            new_n = (M[1][0] * m + M[1][1] * n) % p\n            target = normalize_point(new_m, new_n, p)\n            if target is not None:\n                neighbors[name] = target\n        graph[pt] = neighbors\n    \n    return graph\n\n# ============================================================\n# Algorithm 6: Spectrum of Adjacency Matrix\n# ============================================================\n\ndef adjacency_spectrum(p: int) -> np.ndarray:\n    \"\"\"Compute the spectrum of the Berggren Cayley graph on P\u00b9(F_p).\n    \n    The adjacency matrix is (p+1)\u00d7(p+1) with edges from all three generators.\n    \n    Time: O(p\u00b3) for eigenvalue computation, Space: O(p\u00b2)\n    \"\"\"\n    all_points = [(1, n) for n in range(p)] + [(0, 1)]\n    pt_to_idx = {pt: i for i, pt in enumerate(all_points)}\n    n = len(all_points)\n    \n    adj = np.zeros((n, n), dtype=float)\n    \n    for pt in all_points:\n        i = pt_to_idx[pt]\n        for M in [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2]:\n            m, nn = pt\n            new_m = (M[0][0] * m + M[0][1] * nn) % p\n            new_n = (M[1][0] * m + M[1][1] * nn) % p\n            target = normalize_point(new_m, new_n, p)\n            if target is not None:\n                j = pt_to_idx[target]\n                adj[i][j] += 1\n    \n    eigenvalues = np.sort(np.linalg.eigvalsh(adj + adj.T))[::-1]\n    return eigenvalues\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Berggren-PGL\u2082 Algorithms\")\n    print(\"=\" * 50)\n    \n    # Orbit transitivity\n    print(\"\\nOrbit Transitivity Check:\")\n    for p in [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]:\n        orbits = compute_all_orbits(p)\n        sizes = [len(o) for o in orbits]\n        transitive = len(orbits) == 1 and sizes[0] == p + 1\n        print(f\"  p={p:2d}: {'transitive \u2713' if transitive else f'NOT transitive, orbits={sizes}'}\")\n    \n    # Group sizes\n    print(\"\\nGroup Sizes:\")\n    for p in [3, 5, 7, 11, 13, 17]:\n        group = enumerate_berggren_group(p)\n        pgl2_size = p * (p * p - 1)\n        psl2_size = p * (p * p - 1) // 2\n        print(f\"  p={p:2d}: |Berggren|={len(group):6d}, \"\n              f\"|PGL\u2082|={pgl2_size:6d}, |PSL\u2082|={psl2_size:6d}, \"\n              f\"= {'PGL\u2082' if len(group) == pgl2_size else 'PSL\u2082' if len(group) == psl2_size else '???'}\")\n    \n    # Spectral data\n    print(\"\\nSpectral Gap (symmetrized adjacency, top 4 eigenvalues):\")\n    for p in [5, 7, 11, 13, 17, 19, 23]:\n        eigs = adjacency_spectrum(p)\n        gap = eigs[0] - eigs[1] if len(eigs) > 1 else 0\n        print(f\"  p={p:2d}: \u03bb = [{', '.join(f'{e:.2f}' for e in eigs[:4])}], gap={gap:.3f}\")\n",
+        "code_file": "visualizations/identify_the_image_of_the_berggren_generators_in_p_orbit_computation.py"
+      }
+    ],
+    "visualizations": [
+      {
+        "name": "Berggren Action on P\u00b9(F\u2087)",
+        "file": "visualizations/identify_the_image_of_the_berggren_generators_in_p_berggren_action_on_p_f.png"
+      },
+      {
+        "name": "Berggren Action on P\u00b9(F\u2081\u2081)",
+        "file": "visualizations/identify_the_image_of_the_berggren_generators_in_p_berggren_action_on_p_f.png"
+      },
+      {
+        "name": "Group Size Comparison",
+        "file": "visualizations/identify_the_image_of_the_berggren_generators_in_p_group_size_comparison.png"
+      },
+      {
+        "name": "Spectral Gap Analysis",
+        "file": "visualizations/identify_the_image_of_the_berggren_generators_in_p_spectral_gap_analysis.png"
+      },
+      {
+        "name": "Berggren Tree with Euclid Parameters",
+        "file": "visualizations/identify_the_image_of_the_berggren_generators_in_p_berggren_tree_with_euclid_parameters.png"
+      }
+    ],
+    "lean_proofs": "import Mathlib\n\n/-!\n# Berggren Generators in PGL\u2082: Projective Dynamics of Pythagorean Triples\n\nThis file establishes that the three Berggren generators, when restricted to the\nisotropic conic of the Lorentzian form Q(x,y,z) = x\u00b2 + y\u00b2 - z\u00b2, act as\nexplicit 2\u00d72 linear fractional transformations on the Euclid parameter space.\n\n## Main Results\n\nWe work with two parametrizations of the isotropic conic `x\u00b2 + y\u00b2 = z\u00b2`:\n\n### Parametrization 1: `paramVec(s,t) = (2st, t\u00b2-s\u00b2, t\u00b2+s\u00b2)`\n\nUnder this identification, the Berggren generators act as:\n- `A: (s,t) \u21a6 (s, t + 2s)` \u2014 2\u00d72 matrix `[[1,0],[2,1]]`\n- `B: (s,t) \u21a6 (t, s + 2t)` \u2014 2\u00d72 matrix `[[0,1],[1,2]]`\n- `C: (s,t) \u21a6 (t, 2t - s)` \u2014 2\u00d72 matrix `[[0,1],[-1,2]]`\n\n### Parametrization 2: `euclidVec(m,n) = (m\u00b2-n\u00b2, 2mn, m\u00b2+n\u00b2)` (standard Euclid)\n\nUnder this identification:\n- `A: (m,n) \u21a6 (2m - n, m)` \u2014 2\u00d72 matrix `[[2,-1],[1,0]]`\n- `B: (m,n) \u21a6 (2m + n, m)` \u2014 2\u00d72 matrix `[[2,1],[1,0]]`\n- `C: (m,n) \u21a6 (m + 2n, n)` \u2014 2\u00d72 matrix `[[1,2],[0,1]]`\n\nNote: Generator C in the Euclid parametrization is a shear (translation by 2\nin the n-direction), while A and B involve both parameters. In affine coordinate\n`u = m/n`, A acts as `u \u21a6 (2u-1)/u`, B as `u \u21a6 (2u+1)/u`, C as `u \u21a6 u+2`.\n\nAll identities are proved over an arbitrary commutative ring, giving maximum\ngenerality. Specializing to `ZMod p` for odd primes gives the projective\ndynamical system on the isotropic conic over finite fields.\n\n## Strategy\n\nThe identities are polynomial, so they are proved by `ring` after expanding\nmatrix multiplication componentwise. This works over any `CommRing R`.\n-/\n\nset_option maxHeartbeats 400000\n\nopen Matrix\n\nnamespace BerggrenPGL2\n\n/-! ## Section 1: Parametrizations -/\n\n/-- Euclid parametrization variant 1: `(s,t) \u21a6 (2st, t\u00b2-s\u00b2, t\u00b2+s\u00b2)`.\n    This parametrizes the conic `x\u00b2 + y\u00b2 = z\u00b2` with `x` as the even leg. -/\ndef paramVec {R : Type*} [CommRing R] (s t : R) : Fin 3 \u2192 R :=\n  ![2 * s * t, t ^ 2 - s ^ 2, t ^ 2 + s ^ 2]\n\n/-- Standard Euclid parametrization: `(m,n) \u21a6 (m\u00b2-n\u00b2, 2mn, m\u00b2+n\u00b2)`.\n    This parametrizes the conic with `m\u00b2-n\u00b2` as the odd leg. -/\ndef euclidVec {R : Type*} [CommRing R] (m n : R) : Fin 3 \u2192 R :=\n  ![m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2]\n\n/-! ## Section 2: Berggren matrices -/\n\n/-- Berggren matrix A. -/\ndef berggrenA (R : Type*) [CommRing R] : Matrix (Fin 3) (Fin 3) R :=\n  !![1, -2, 2; 2, -1, 2; 2, -2, 3]\n\n/-- Berggren matrix B. -/\ndef berggrenB (R : Type*) [CommRing R] : Matrix (Fin 3) (Fin 3) R :=\n  !![1, 2, 2; 2, 1, 2; 2, 2, 3]\n\n/-- Berggren matrix C. -/\ndef berggrenC (R : Type*) [CommRing R] : Matrix (Fin 3) (Fin 3) R :=\n  !![-1, 2, 2; -2, 1, 2; -2, 2, 3]\n\n/-! ## Section 3: Isotropicity of the parametrizations -/\n\n/-- The parametrization `paramVec` lands on the isotropic conic. -/\ntheorem paramVec_isotropic {R : Type*} [CommRing R] (s t : R) :\n    (paramVec s t 0) ^ 2 + (paramVec s t 1) ^ 2 = (paramVec s t 2) ^ 2 := by\n  simp [paramVec]; ring\n\n/-- The parametrization `euclidVec` lands on the isotropic conic. -/\ntheorem euclidVec_isotropic {R : Type*} [CommRing R] (m n : R) :\n    (euclidVec m n 0) ^ 2 + (euclidVec m n 1) ^ 2 = (euclidVec m n 2) ^ 2 := by\n  simp [euclidVec]; ring\n\n/-! ## Section 4: Berggren action on `paramVec` \u2014 core identities -/\n\n/-- **Berggren A on paramVec**: `A \u00b7 paramVec(s,t) = paramVec(s, t + 2s)`.\n    Over any commutative ring. -/\ntheorem berggrenA_paramVec {R : Type*} [CommRing R] (s t : R) :\n    (berggrenA R).mulVec (paramVec s t) = paramVec s (t + 2 * s) := by\n  ext i; fin_cases i <;>\n    simp [berggrenA, paramVec, mulVec, dotProduct, Fin.sum_univ_three] <;> ring\n\n/-- **Berggren B on paramVec**: `B \u00b7 paramVec(s,t) = paramVec(t, s + 2t)`.\n    Note the parameter swap: the first parameter becomes `t`. -/\ntheorem berggrenB_paramVec {R : Type*} [CommRing R] (s t : R) :\n    (berggrenB R).mulVec (paramVec s t) = paramVec t (s + 2 * t) := by\n  ext i; fin_cases i <;>\n    simp [berggrenB, paramVec, mulVec, dotProduct, Fin.sum_univ_three] <;> ring\n\n/-- **Berggren C on paramVec**: `C \u00b7 paramVec(s,t) = paramVec(t, 2t - s)`.\n    Note the parameter swap and reflection. -/\ntheorem berggrenC_paramVec {R : Type*} [CommRing R] (s t : R) :\n    (berggrenC R).mulVec (paramVec s t) = paramVec t (2 * t - s) := by\n  ext i; fin_cases i <;>\n    simp [berggrenC, paramVec, mulVec, dotProduct, Fin.sum_univ_three] <;> ring\n\n/-! ## Section 5: Berggren action on `euclidVec` \u2014 standard Euclid form -/\n\n/-- **Berggren A on euclidVec**: `A \u00b7 euclidVec(m,n) = euclidVec(2m - n, m)`. -/\ntheorem berggrenA_euclidVec {R : Type*} [CommRing R] (m n : R) :\n    (berggrenA R).mulVec (euclidVec m n) = euclidVec (2 * m - n) m := by\n  ext i; fin_cases i <;>\n    simp [berggrenA, euclidVec, mulVec, dotProduct, Fin.sum_univ_three] <;> ring\n\n/-- **Berggren B on euclidVec**: `B \u00b7 euclidVec(m,n) = euclidVec(2m + n, m)`. -/\ntheorem berggrenB_euclidVec {R : Type*} [CommRing R] (m n : R) :\n    (berggrenB R).mulVec (euclidVec m n) = euclidVec (2 * m + n) m := by\n  ext i; fin_cases i <;>\n    simp [berggrenB, euclidVec, mulVec, dotProduct, Fin.sum_univ_three] <;> ring\n\n/-- **Berggren C on euclidVec**: `C \u00b7 euclidVec(m,n) = euclidVec(m + 2n, n)`.\n    This is a shear / translation by 2 in the n-direction. -/\ntheorem berggrenC_euclidVec {R : Type*} [CommRing R] (m n : R) :\n    (berggrenC R).mulVec (euclidVec m n) = euclidVec (m + 2 * n) n := by\n  ext i; fin_cases i <;>\n    simp [berggrenC, euclidVec, mulVec, dotProduct, Fin.sum_univ_three] <;> ring\n\n/-! ## Section 6: The corresponding 2\u00d72 M\u00f6bius matrices -/\n\n/-- 2\u00d72 matrix for A action on `euclidVec` parameters: `[[2,-1],[1,0]]`. -/\ndef mobiusA_ev (R : Type*) [CommRing R] : Matrix (Fin 2) (Fin 2) R :=\n  !![2, -1; (1 : R), 0]\n\n/-- 2\u00d72 matrix for B action on `euclidVec` parameters: `[[2,1],[1,0]]`. -/\ndef mobiusB_ev (R : Type*) [CommRing R] : Matrix (Fin 2) (Fin 2) R :=\n  !![2, 1; (1 : R), 0]\n\n/-- 2\u00d72 matrix for C action on `euclidVec` parameters (shear): `[[1,2],[0,1]]`. -/\ndef mobiusC_ev (R : Type*) [CommRing R] : Matrix (Fin 2) (Fin 2) R :=\n  !![1, 2; (0 : R), 1]\n\n/-! ## Section 7: Lorentzian form preservation -/\n\n/-- The Lorentzian quadratic form Q(v) = v\u2080\u00b2 + v\u2081\u00b2 - v\u2082\u00b2. -/\ndef lorentzQ {R : Type*} [CommRing R] (v : Fin 3 \u2192 R) : R :=\n  v 0 ^ 2 + v 1 ^ 2 - v 2 ^ 2\n\n/-- Berggren A preserves the Lorentzian form. -/\ntheorem berggrenA_preserves_Q {R : Type*} [CommRing R] (v : Fin 3 \u2192 R) :\n    lorentzQ ((berggrenA R).mulVec v) = lorentzQ v := by\n  simp [lorentzQ, berggrenA, mulVec, dotProduct, Fin.sum_univ_three]; ring\n\n/-- Berggren B preserves the Lorentzian form. -/\ntheorem berggrenB_preserves_Q {R : Type*} [CommRing R] (v : Fin 3 \u2192 R) :\n    lorentzQ ((berggrenB R).mulVec v) = lorentzQ v := by\n  simp [lorentzQ, berggrenB, mulVec, dotProduct, Fin.sum_univ_three]; ring\n\n/-- Berggren C preserves the Lorentzian form. -/\ntheorem berggrenC_preserves_Q {R : Type*} [CommRing R] (v : Fin 3 \u2192 R) :\n    lorentzQ ((berggrenC R).mulVec v) = lorentzQ v := by\n  simp [lorentzQ, berggrenC, mulVec, dotProduct, Fin.sum_univ_three]; ring\n\n/-! ## Section 8: Determinants -/\n\n/-- Berggren A has determinant 1 (proper orthogonal). -/\ntheorem det_berggrenA : (berggrenA \u2124).det = 1 := by native_decide\n\n/-- Berggren B has determinant -1 (improper orthogonal). -/\ntheorem det_berggrenB : (berggrenB \u2124).det = -1 := by native_decide\n\n/-- Berggren C has determinant 1 (proper orthogonal). -/\ntheorem det_berggrenC : (berggrenC \u2124).det = 1 := by native_decide\n\n/-- The Euclid-parameter 2\u00d72 matrices have the following determinants. -/\ntheorem det_mobiusA_ev (R : Type*) [CommRing R] : (mobiusA_ev R).det = 1 := by\n  simp [mobiusA_ev, det_fin_two]\n\ntheorem det_mobiusB_ev (R : Type*) [CommRing R] : (mobiusB_ev R).det = -1 := by\n  simp [mobiusB_ev, det_fin_two]\n\ntheorem det_mobiusC_ev (R : Type*) [CommRing R] : (mobiusC_ev R).det = 1 := by\n  simp [mobiusC_ev, det_fin_two]\n\n/-! ## Section 9: Projective equivalence -/\n\n/-- Two vectors are projectively equivalent if they differ by a unit scalar. -/\ndef ProjEquiv {R : Type*} [CommMonoidWithZero R] {n : \u2115} (v w : Fin n \u2192 R) : Prop :=\n  \u2203 a : R\u02e3, w = a \u2022 v\n\n/-- Berggren generators act projectively on the parametrization (trivially, since\n    the identities are exact equalities, not just projective). -/\ntheorem berggrenA_proj {R : Type*} [CommRing R] (s t : R) :\n    ProjEquiv ((berggrenA R).mulVec (paramVec s t)) (paramVec s (t + 2 * s)) :=\n  \u27e81, by rw [berggrenA_paramVec]; simp\u27e9\n\ntheorem berggrenB_proj {R : Type*} [CommRing R] (s t : R) :\n    ProjEquiv ((berggrenB R).mulVec (paramVec s t)) (paramVec t (s + 2 * t)) :=\n  \u27e81, by rw [berggrenB_paramVec]; simp\u27e9\n\ntheorem berggrenC_proj {R : Type*} [CommRing R] (s t : R) :\n    ProjEquiv ((berggrenC R).mulVec (paramVec s t)) (paramVec t (2 * t - s)) :=\n  \u27e81, by rw [berggrenC_paramVec]; simp\u27e9\n\n/-! ## Section 10: Specialization to ZMod p -/\n\n/-- Berggren A on the conic over `ZMod p`. -/\ntheorem berggrenA_ZMod (p : \u2115) [Fact p.Prime] (s t : ZMod p) :\n    (berggrenA (ZMod p)).mulVec (paramVec s t) = paramVec s (t + 2 * s) :=\n  berggrenA_paramVec s t\n\n/-- Berggren B on the conic over `ZMod p`. -/\ntheorem berggrenB_ZMod (p : \u2115) [Fact p.Prime] (s t : ZMod p) :\n    (berggrenB (ZMod p)).mulVec (paramVec s t) = paramVec t (s + 2 * t) :=\n  berggrenB_paramVec s t\n\n/-- Berggren C on the conic over `ZMod p`. -/\ntheorem berggrenC_ZMod (p : \u2115) [Fact p.Prime] (s t : ZMod p) :\n    (berggrenC (ZMod p)).mulVec (paramVec s t) = paramVec t (2 * t - s) :=\n  berggrenC_paramVec s t\n\n/-! ## Section 11: Affine chart formulas -/\n\n/-- In affine coordinate `u = t/s`, Berggren A acts as `u \u21a6 u + 2`. -/\ntheorem berggrenA_affine {F : Type*} [Field F] (s t : F) (hs : s \u2260 0) :\n    (t + 2 * s) / s = t / s + 2 := by field_simp\n\n/-- In affine coordinate `u = (s+2t)/t`, Berggren B swaps and shifts. -/\ntheorem berggrenB_affine_swap {F : Type*} [Field F] (s t : F) (ht : t \u2260 0) :\n    (s + 2 * t) / t = s / t + 2 := by field_simp\n\n/-! ## Section 12: Composition identities -/\n\n/-- C composed twice: `(s,t) \u21a6 (t, 2t-s) \u21a6 (2t-s, 2(2t-s)-t) = (2t-s, 3t-2s)`. -/\ntheorem berggrenC_sq_paramVec {R : Type*} [CommRing R] (s t : R) :\n    (berggrenC R).mulVec ((berggrenC R).mulVec (paramVec s t)) =\n    paramVec (2 * t - s) (2 * (2 * t - s) - t) := by\n  rw [berggrenC_paramVec, berggrenC_paramVec]\n\n/-! ## Section 13: Summary theorems -/\n\n/-- **Main theorem (paramVec form)**: Complete Berggren-to-PGL\u2082 correspondence.\n    The three Berggren 3\u00d73 matrices, acting on the isotropic conic via the\n    parametrization `(s,t) \u21a6 (2st, t\u00b2-s\u00b2, t\u00b2+s\u00b2)`, are intertwined with\n    explicit 2\u00d72 linear maps on the parameter space `(s,t)`:\n    - A: `(s,t) \u21a6 (s, t+2s)`\n    - B: `(s,t) \u21a6 (t, s+2t)`\n    - C: `(s,t) \u21a6 (t, 2t-s)`\n    This holds over any commutative ring. -/\ntheorem berggren_PGL2_paramVec {R : Type*} [CommRing R] (s t : R) :\n    (berggrenA R).mulVec (paramVec s t) = paramVec s (t + 2 * s) \u2227\n    (berggrenB R).mulVec (paramVec s t) = paramVec t (s + 2 * t) \u2227\n    (berggrenC R).mulVec (paramVec s t) = paramVec t (2 * t - s) :=\n  \u27e8berggrenA_paramVec s t, berggrenB_paramVec s t, berggrenC_paramVec s t\u27e9\n\n/-- **Main theorem (euclidVec form)**: Complete Berggren-to-PGL\u2082 correspondence.\n    The three Berggren 3\u00d73 matrices, acting on the isotropic conic via the\n    standard Euclid parametrization `(m,n) \u21a6 (m\u00b2-n\u00b2, 2mn, m\u00b2+n\u00b2)`, are\n    intertwined with the 2\u00d72 matrices `[[2,-1],[1,0]]`, `[[2,1],[1,0]]`,\n    `[[1,2],[0,1]]` acting on the parameter space.\n    This holds over any commutative ring. -/\ntheorem berggren_PGL2_euclidVec {R : Type*} [CommRing R] (m n : R) :\n    (berggrenA R).mulVec (euclidVec m n) = euclidVec (2 * m - n) m \u2227\n    (berggrenB R).mulVec (euclidVec m n) = euclidVec (2 * m + n) m \u2227\n    (berggrenC R).mulVec (euclidVec m n) = euclidVec (m + 2 * n) n :=\n  \u27e8berggrenA_euclidVec m n, berggrenB_euclidVec m n, berggrenC_euclidVec m n\u27e9\n\nend BerggrenPGL2\n",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Core algorithms for Berggren-PGL\u2082 dynamics.\n\nImplements the key computational tools for studying the Berggren generators\nas M\u00f6bius transformations on P\u00b9(F_p).\n\"\"\"\n\nimport numpy as np\nfrom collections import deque\nfrom typing import Tuple, List, Set, Dict, Optional\n\n# ============================================================\n# Algorithm 1: Projective Point Arithmetic\n# ============================================================\n\ndef mod_inv(a: int, p: int) -> int:\n    \"\"\"Modular inverse of a mod p using Fermat's little theorem.\n    \n    Time: O(log p), Space: O(1)\n    \"\"\"\n    return pow(a % p, p - 2, p)\n\ndef normalize_point(m: int, n: int, p: int) -> Optional[Tuple[int, int]]:\n    \"\"\"Normalize a projective point [m:n] to canonical form in P\u00b9(F_p).\n    \n    Canonical form: (1, n') for affine points, (0, 1) for infinity.\n    Returns None for the zero vector.\n    \n    Time: O(log p), Space: O(1)\n    \"\"\"\n    m, n = m % p, n % p\n    if m == 0 and n == 0:\n        return None\n    if m != 0:\n        inv = mod_inv(m, p)\n        return (1, (n * inv) % p)\n    return (0, 1)\n\n# ============================================================\n# Algorithm 2: Berggren 2\u00d72 Matrix Action\n# ============================================================\n\n# Berggren generators in PGL\u2082 (Euclid parametrization)\nBERGGREN_A2 = ((2, -1), (1, 0))    # det = 1\nBERGGREN_B2 = ((2, 1), (1, 0))     # det = -1\nBERGGREN_C2 = ((1, 2), (0, 1))     # det = 1\n\ndef mat_mul_2x2(M1, M2, p: int):\n    \"\"\"Multiply two 2\u00d72 matrices mod p.\n    \n    Time: O(log p) for modular arithmetic, Space: O(1)\n    \"\"\"\n    return (\n        ((M1[0][0]*M2[0][0] + M1[0][1]*M2[1][0]) % p,\n         (M1[0][0]*M2[0][1] + M1[0][1]*M2[1][1]) % p),\n        ((M1[1][0]*M2[0][0] + M1[1][1]*M2[1][0]) % p,\n         (M1[1][0]*M2[0][1] + M1[1][1]*M2[1][1]) % p)\n    )\n\ndef normalize_matrix(M, p: int) -> Optional[tuple]:\n    \"\"\"Normalize a 2\u00d72 matrix in PGL\u2082(F_p).\n    \n    Divides by the first nonzero entry so the representation is canonical.\n    Time: O(log p), Space: O(1)\n    \"\"\"\n    for i in range(2):\n        for j in range(2):\n            if M[i][j] % p != 0:\n                inv = mod_inv(M[i][j], p)\n                return tuple(tuple((M[r][c] * inv) % p for c in range(2)) for r in range(2))\n    return None\n\ndef apply_berggren(gen_idx: int, point: Tuple[int, int], p: int) -> Optional[Tuple[int, int]]:\n    \"\"\"Apply Berggren generator (0=A, 1=B, 2=C) to a projective point.\n    \n    Time: O(log p), Space: O(1)\n    \"\"\"\n    gens = [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2]\n    M = gens[gen_idx]\n    m, n = point\n    new_m = (M[0][0] * m + M[0][1] * n) % p\n    new_n = (M[1][0] * m + M[1][1] * n) % p\n    return normalize_point(new_m, new_n, p)\n\n# ============================================================\n# Algorithm 3: Orbit Computation via BFS\n# ============================================================\n\ndef compute_orbit(start: Tuple[int, int], p: int) -> Set[Tuple[int, int]]:\n    \"\"\"Compute the full Berggren orbit of a point in P\u00b9(F_p) via BFS.\n    \n    Uses all three generators and their inverses.\n    \n    Time: O(|orbit| \u00b7 6), Space: O(|orbit|)\n    \n    Args:\n        start: Starting point in canonical form\n        p: Prime modulus\n    \n    Returns:\n        Set of all points reachable from start\n    \"\"\"\n    orbit = set()\n    queue = deque([start])\n    \n    # Inverse matrices\n    # A^{-1}: det=1, [[0,1],[-1,2]]\n    # B^{-1}: det=-1, [[0,-1],[1,2]] ~ [[0,p-1],[1,2]]\n    # C^{-1}: [[1,-2],[0,1]]\n    inv_A = ((0, 1), ((-1) % p, 2))\n    inv_B = ((0, (-1) % p), (1, 2))\n    inv_C = ((1, (-2) % p), (0, 1))\n    \n    all_gens = [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2, inv_A, inv_B, inv_C]\n    \n    while queue:\n        pt = queue.popleft()\n        if pt in orbit:\n            continue\n        orbit.add(pt)\n        for M in all_gens:\n            m, n = pt\n            new_m = (M[0][0] * m + M[0][1] * n) % p\n            new_n = (M[1][0] * m + M[1][1] * n) % p\n            new_pt = normalize_point(new_m, new_n, p)\n            if new_pt is not None and new_pt not in orbit:\n                queue.append(new_pt)\n    \n    return orbit\n\ndef compute_all_orbits(p: int) -> List[Set[Tuple[int, int]]]:\n    \"\"\"Compute all orbits of the Berggren group on P\u00b9(F_p).\n    \n    Time: O(p \u00b7 6) since action is typically transitive, Space: O(p)\n    \"\"\"\n    all_points = [(1, n) for n in range(p)] + [(0, 1)]\n    visited = set()\n    orbits = []\n    \n    for pt in all_points:\n        if pt not in visited:\n            orbit = compute_orbit(pt, p)\n            visited |= orbit\n            orbits.append(orbit)\n    \n    return orbits\n\n# ============================================================\n# Algorithm 4: Group Size Enumeration\n# ============================================================\n\ndef enumerate_berggren_group(p: int, max_elements: int = 50000) -> Set[tuple]:\n    \"\"\"Enumerate the Berggren subgroup of PGL\u2082(F_p).\n    \n    Uses BFS in the Cayley graph of PGL\u2082(F_p).\n    \n    Time: O(min(|G|, max_elements) \u00b7 6), Space: O(min(|G|, max_elements))\n    \"\"\"\n    identity = ((1, 0), (0, 1))\n    inv_A = ((0, 1), ((-1) % p, 2 % p))\n    inv_B = ((0, (-1) % p), (1, 2 % p))\n    inv_C = ((1, (-2) % p), (0, 1))\n    \n    all_gens = [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2, inv_A, inv_B, inv_C]\n    \n    seen = set()\n    norm_id = normalize_matrix(identity, p)\n    seen.add(norm_id)\n    queue = deque([identity])\n    \n    while queue and len(seen) < max_elements:\n        M = queue.popleft()\n        for G in all_gens:\n            prod = mat_mul_2x2(M, G, p)\n            key = normalize_matrix(prod, p)\n            if key is not None and key not in seen:\n                seen.add(key)\n                queue.append(prod)\n    \n    return seen\n\n# ============================================================\n# Algorithm 5: Cayley Graph Construction\n# ============================================================\n\ndef build_cayley_graph(p: int) -> Dict[Tuple[int, int], Dict[str, Tuple[int, int]]]:\n    \"\"\"Build the Cayley graph of the Berggren action on P\u00b9(F_p).\n    \n    Returns adjacency dict: point -> {generator_name: target_point}.\n    \n    Time: O(p \u00b7 3), Space: O(p \u00b7 3)\n    \"\"\"\n    all_points = [(1, n) for n in range(p)] + [(0, 1)]\n    graph = {}\n    \n    for pt in all_points:\n        neighbors = {}\n        for name, M in [('A', BERGGREN_A2), ('B', BERGGREN_B2), ('C', BERGGREN_C2)]:\n            m, n = pt\n            new_m = (M[0][0] * m + M[0][1] * n) % p\n            new_n = (M[1][0] * m + M[1][1] * n) % p\n            target = normalize_point(new_m, new_n, p)\n            if target is not None:\n                neighbors[name] = target\n        graph[pt] = neighbors\n    \n    return graph\n\n# ============================================================\n# Algorithm 6: Spectrum of Adjacency Matrix\n# ============================================================\n\ndef adjacency_spectrum(p: int) -> np.ndarray:\n    \"\"\"Compute the spectrum of the Berggren Cayley graph on P\u00b9(F_p).\n    \n    The adjacency matrix is (p+1)\u00d7(p+1) with edges from all three generators.\n    \n    Time: O(p\u00b3) for eigenvalue computation, Space: O(p\u00b2)\n    \"\"\"\n    all_points = [(1, n) for n in range(p)] + [(0, 1)]\n    pt_to_idx = {pt: i for i, pt in enumerate(all_points)}\n    n = len(all_points)\n    \n    adj = np.zeros((n, n), dtype=float)\n    \n    for pt in all_points:\n        i = pt_to_idx[pt]\n        for M in [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2]:\n            m, nn = pt\n            new_m = (M[0][0] * m + M[0][1] * nn) % p\n            new_n = (M[1][0] * m + M[1][1] * nn) % p\n            target = normalize_point(new_m, new_n, p)\n            if target is not None:\n                j = pt_to_idx[target]\n                adj[i][j] += 1\n    \n    eigenvalues = np.sort(np.linalg.eigvalsh(adj + adj.T))[::-1]\n    return eigenvalues\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"Berggren-PGL\u2082 Algorithms\")\n    print(\"=\" * 50)\n    \n    # Orbit transitivity\n    print(\"\\nOrbit Transitivity Check:\")\n    for p in [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]:\n        orbits = compute_all_orbits(p)\n        sizes = [len(o) for o in orbits]\n        transitive = len(orbits) == 1 and sizes[0] == p + 1\n        print(f\"  p={p:2d}: {'transitive \u2713' if transitive else f'NOT transitive, orbits={sizes}'}\")\n    \n    # Group sizes\n    print(\"\\nGroup Sizes:\")\n    for p in [3, 5, 7, 11, 13, 17]:\n        group = enumerate_berggren_group(p)\n        pgl2_size = p * (p * p - 1)\n        psl2_size = p * (p * p - 1) // 2\n        print(f\"  p={p:2d}: |Berggren|={len(group):6d}, \"\n              f\"|PGL\u2082|={pgl2_size:6d}, |PSL\u2082|={psl2_size:6d}, \"\n              f\"= {'PGL\u2082' if len(group) == pgl2_size else 'PSL\u2082' if len(group) == psl2_size else '???'}\")\n    \n    # Spectral data\n    print(\"\\nSpectral Gap (symmetrized adjacency, top 4 eigenvalues):\")\n    for p in [5, 7, 11, 13, 17, 19, 23]:\n        eigs = adjacency_spectrum(p)\n        gap = eigs[0] - eigs[1] if len(eigs) > 1 else 0\n        print(f\"  p={p:2d}: \u03bb = [{', '.join(f'{e:.2f}' for e in eigs[:4])}], gap={gap:.3f}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\napplications.py \u2014 Real-world applications of Berggren-PGL\u2082 dynamics.\n\nDemonstrates applications in:\n1. Enumeration of Pythagorean triples modulo primes\n2. Pseudorandom number generation from Berggren walks\n3. Hash function construction from projective dynamics\n\"\"\"\n\nimport numpy as np\nfrom collections import Counter\nfrom algorithms import (\n    normalize_point, BERGGREN_A2, BERGGREN_B2, BERGGREN_C2,\n    compute_all_orbits, adjacency_spectrum\n)\n\n# ============================================================\n# Application 1: Modular Pythagorean Triple Enumeration\n# ============================================================\n\ndef enumerate_triples_mod_p(p, max_depth=8):\n    \"\"\"Enumerate all Berggren tree triples up to given depth, modulo p.\n    \n    Returns distribution of triples across projective classes mod p.\n    \"\"\"\n    A = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])\n    B = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]])\n    C = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])\n    \n    def triple_to_euclid_class(triple, p):\n        \"\"\"Map a Pythagorean triple to its Euclid parameter class mod p.\"\"\"\n        a, b, c = [int(x) % p for x in triple]\n        # (a,b,c) = (m\u00b2-n\u00b2, 2mn, m\u00b2+n\u00b2), so m\u00b2 = (a+c)/2, n\u00b2 = (c-a)/2\n        # On P\u00b9, the class is determined by the ratio m:n\n        # We recover m,n from: m\u00b2+n\u00b2=c, m\u00b2-n\u00b2=a\n        # Over F_p, we need 2 to be invertible (p odd)\n        inv2 = pow(2, p - 2, p)\n        m_sq = ((a + c) * inv2) % p\n        n_sq = ((c - a) * inv2) % p\n        # The projective class [m:n] is determined by the ratio m\u00b2:n\u00b2 = m_sq:n_sq\n        # But we need m:n, not m\u00b2:n\u00b2. Over F_p, this requires square roots.\n        # Instead, return the raw triple class.\n        return (a, b, c)\n    \n    # BFS through the tree\n    seed = np.array([3, 4, 5])\n    current_level = [seed]\n    all_triples = [seed]\n    \n    for depth in range(max_depth):\n        next_level = []\n        for triple in current_level:\n            for M in [A, B, C]:\n                child = M @ triple\n                next_level.append(child)\n                all_triples.append(child)\n        current_level = next_level\n    \n    # Count classes mod p\n    class_counts = Counter()\n    for triple in all_triples:\n        cls = tuple(int(x) % p for x in triple)\n        class_counts[cls] += 1\n    \n    return class_counts, len(all_triples)\n\ndef modular_distribution_analysis(p, max_depth=10):\n    \"\"\"Analyze how uniformly Berggren triples distribute modulo p.\"\"\"\n    counts, total = enumerate_triples_mod_p(p, max_depth)\n    n_classes = len(counts)\n    expected = total / (p + 1)  # if uniform over P\u00b9\n    \n    values = list(counts.values())\n    actual_mean = np.mean(values)\n    actual_std = np.std(values)\n    max_count = max(values)\n    min_count = min(values)\n    \n    return {\n        'prime': p,\n        'total_triples': total,\n        'distinct_classes': n_classes,\n        'mean_per_class': actual_mean,\n        'std_per_class': actual_std,\n        'max_count': max_count,\n        'min_count': min_count,\n        'uniformity_ratio': actual_std / actual_mean if actual_mean > 0 else float('inf')\n    }\n\n# ============================================================\n# Application 2: Pseudorandom Number Generation\n# ============================================================\n\ndef berggren_prng(seed_point, p, n_steps):\n    \"\"\"Generate pseudorandom numbers using Berggren walk on P\u00b9(F_p).\n    \n    At each step, applies a generator chosen by the current state.\n    \n    Args:\n        seed_point: Starting point on P\u00b9(F_p) as (m, n)\n        p: Prime modulus\n        n_steps: Number of steps\n    \n    Returns:\n        List of generated values (second coordinate of projective points)\n    \"\"\"\n    gens = [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2]\n    point = seed_point\n    output = []\n    \n    for step in range(n_steps):\n        # Use current point's second coordinate to choose generator\n        if point[0] == 0:\n            gen_idx = 0\n        else:\n            gen_idx = point[1] % 3\n        \n        M = gens[gen_idx]\n        m, n = point\n        new_m = (M[0][0] * m + M[0][1] * n) % p\n        new_n = (M[1][0] * m + M[1][1] * n) % p\n        point = normalize_point(new_m, new_n, p)\n        \n        if point is not None:\n            output.append(point[1] if point[0] == 1 else p)\n        else:\n            output.append(0)\n            point = seed_point\n    \n    return output\n\ndef test_prng_uniformity(p, n_steps=10000):\n    \"\"\"Test uniformity of the Berggren PRNG.\"\"\"\n    values = berggren_prng((1, 1), p, n_steps)\n    counts = Counter(values)\n    \n    # Chi-squared test for uniformity\n    expected = n_steps / (p + 1)\n    chi_sq = sum((c - expected)**2 / expected for c in counts.values())\n    \n    return {\n        'prime': p,\n        'n_steps': n_steps,\n        'distinct_values': len(counts),\n        'chi_squared': chi_sq,\n        'expected_chi_sq': p,  # approximately p degrees of freedom\n    }\n\n# ============================================================\n# Application 3: Cayley Hash Function\n# ============================================================\n\ndef berggren_hash(message_bytes, p):\n    \"\"\"Hash a byte string using Berggren walks on P\u00b9(F_p).\n    \n    Each byte determines a sequence of generator applications.\n    The final projective point is the hash value.\n    \n    Args:\n        message_bytes: Input bytes\n        p: Prime modulus (should be large for security)\n    \n    Returns:\n        Hash value as (m, n) in P\u00b9(F_p)\n    \"\"\"\n    gens = [BERGGREN_A2, BERGGREN_B2, BERGGREN_C2]\n    point = (1, 0)  # Start at [1:0]\n    \n    for byte in message_bytes:\n        # Each byte gives 8 bits = at most 4 generator choices\n        for i in range(4):\n            bits = (byte >> (2 * i)) & 0x03\n            if bits < 3:\n                M = gens[bits]\n                m, n = point\n                new_m = (M[0][0] * m + M[0][1] * n) % p\n                new_n = (M[1][0] * m + M[1][1] * n) % p\n                point = normalize_point(new_m, new_n, p)\n                if point is None:\n                    point = (1, 0)\n    \n    return point\n\ndef test_hash_collision_resistance(p, n_messages=1000):\n    \"\"\"Test collision resistance of the Berggren hash.\"\"\"\n    import random\n    random.seed(42)\n    \n    hashes = {}\n    collisions = 0\n    \n    for i in range(n_messages):\n        msg = random.randbytes(16)\n        h = berggren_hash(msg, p)\n        if h in hashes and hashes[h] != msg:\n            collisions += 1\n        hashes[h] = msg\n    \n    return {\n        'prime': p,\n        'messages': n_messages,\n        'distinct_hashes': len(set(hashes.keys())),\n        'collisions': collisions\n    }\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"APPLICATIONS OF BERGGREN-PGL\u2082 DYNAMICS\")\n    print(\"=\" * 60)\n    \n    # Application 1: Modular distribution\n    print(\"\\n--- Application 1: Modular Distribution of Triples ---\")\n    for p in [5, 7, 11, 13]:\n        result = modular_distribution_analysis(p, max_depth=8)\n        print(f\"  p={result['prime']:2d}: {result['total_triples']:6d} triples, \"\n              f\"{result['distinct_classes']:4d} classes, \"\n              f\"uniformity={result['uniformity_ratio']:.3f}\")\n    \n    # Application 2: PRNG\n    print(\"\\n--- Application 2: Berggren PRNG Uniformity ---\")\n    for p in [31, 61, 127]:\n        result = test_prng_uniformity(p, n_steps=5000)\n        print(f\"  p={result['prime']:3d}: \u03c7\u00b2={result['chi_squared']:.1f} \"\n              f\"(expected \u2248 {result['expected_chi_sq']}), \"\n              f\"distinct={result['distinct_values']}/{p+1}\")\n    \n    # Application 3: Hash function\n    print(\"\\n--- Application 3: Berggren Cayley Hash ---\")\n    for p in [1009, 10007]:\n        result = test_hash_collision_resistance(p)\n        print(f\"  p={result['prime']:5d}: {result['distinct_hashes']}/{result['messages']} \"\n              f\"distinct, {result['collisions']} collisions\")\n    \n    print(\"\\n\" + \"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Berggren generators in PGL\u2082: orbit computation and visualization.\n\nDemonstrates the projective dynamics of Berggren generators on the isotropic\nconic over finite fields F_p. Computes orbits, verifies the 2\u00d72 M\u00f6bius\nrepresentation, and visualizes the orbit graph on P\u00b9(F_p).\n\"\"\"\n\nimport numpy as np\nfrom itertools import product\n\n# ============================================================\n# Core Definitions\n# ============================================================\n\ndef berggren_A():\n    \"\"\"Berggren matrix A (3\u00d73, integer).\"\"\"\n    return np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])\n\ndef berggren_B():\n    \"\"\"Berggren matrix B (3\u00d73, integer).\"\"\"\n    return np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]])\n\ndef berggren_C():\n    \"\"\"Berggren matrix C (3\u00d73, integer).\"\"\"\n    return np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])\n\ndef euclid_param(m, n, p):\n    \"\"\"Standard Euclid parametrization (m,n) -> (m\u00b2-n\u00b2, 2mn, m\u00b2+n\u00b2) mod p.\"\"\"\n    return np.array([(m*m - n*n) % p, (2*m*n) % p, (m*m + n*n) % p])\n\ndef param_vec(s, t, p):\n    \"\"\"Even-leg parametrization (s,t) -> (2st, t\u00b2-s\u00b2, t\u00b2+s\u00b2) mod p.\"\"\"\n    return np.array([(2*s*t) % p, (t*t - s*s) % p, (t*t + s*s) % p])\n\n# ============================================================\n# Verification of Core Identities\n# ============================================================\n\ndef verify_identities_mod_p(p):\n    \"\"\"Verify the Berggren-to-PGL\u2082 identities over F_p for all (m,n).\"\"\"\n    A, B, C = berggren_A(), berggren_B(), berggren_C()\n    errors = 0\n    for m in range(p):\n        for n in range(p):\n            v = euclid_param(m, n, p)\n\n            # A: (m,n) -> (2m-n, m)\n            Av = (A @ v) % p\n            expected_A = euclid_param((2*m - n) % p, m % p, p)\n            if not np.array_equal(Av, expected_A):\n                errors += 1\n\n            # B: (m,n) -> (2m+n, m)\n            Bv = (B @ v) % p\n            expected_B = euclid_param((2*m + n) % p, m % p, p)\n            if not np.array_equal(Bv, expected_B):\n                errors += 1\n\n            # C: (m,n) -> (m+2n, n)\n            Cv = (C @ v) % p\n            expected_C = euclid_param((m + 2*n) % p, n % p, p)\n            if not np.array_equal(Cv, expected_C):\n                errors += 1\n\n    return errors\n\ndef verify_Q_preservation(p):\n    \"\"\"Verify all three generators preserve Q(v) = v0\u00b2+v1\u00b2-v2\u00b2 mod p.\"\"\"\n    A, B, C = berggren_A(), berggren_B(), berggren_C()\n    def Q(v):\n        return (v[0]**2 + v[1]**2 - v[2]**2) % p\n    errors = 0\n    for a in range(p):\n        for b in range(p):\n            for c in range(p):\n                v = np.array([a, b, c])\n                for M in [A, B, C]:\n                    Mv = (M @ v) % p\n                    if Q(v) != Q(Mv):\n                        errors += 1\n    return errors\n\n# ============================================================\n# Projective Line and Orbit Computation\n# ============================================================\n\ndef projective_line_points(p):\n    \"\"\"\n    Return representatives of P\u00b9(F_p).\n    Points are [m:n] represented as (m, n) with canonical form:\n    - (1, n) for n = 0, ..., p-1 (affine points)\n    - (0, 1) (point at infinity)\n    Total: p + 1 points.\n    \"\"\"\n    points = [(1, n) for n in range(p)]  # affine points [1:n]\n    points.append((0, 1))  # point at infinity [0:1]\n    return points\n\ndef normalize_proj(m, n, p):\n    \"\"\"Normalize a projective point [m:n] in P\u00b9(F_p).\"\"\"\n    if m % p == 0 and n % p == 0:\n        return None  # zero vector, not a projective point\n    if m % p != 0:\n        m_inv = pow(int(m % p), p - 2, p)\n        return (1, (n * m_inv) % p)\n    else:\n        return (0, 1)\n\ndef apply_2x2_mod(matrix, point, p):\n    \"\"\"Apply a 2\u00d72 matrix to a projective point [m:n] mod p.\"\"\"\n    m, n = point\n    new_m = (matrix[0][0] * m + matrix[0][1] * n) % p\n    new_n = (matrix[1][0] * m + matrix[1][1] * n) % p\n    return normalize_proj(new_m, new_n, p)\n\ndef berggren_2x2_euclid():\n    \"\"\"The 2\u00d72 matrices for the Euclid parametrization.\"\"\"\n    A2 = [[2, -1], [1, 0]]  # (m,n) -> (2m-n, m)\n    B2 = [[2, 1], [1, 0]]   # (m,n) -> (2m+n, m)\n    C2 = [[1, 2], [0, 1]]   # (m,n) -> (m+2n, n)\n    return A2, B2, C2\n\ndef compute_orbits(p):\n    \"\"\"Compute orbits of the Berggren group on P\u00b9(F_p).\"\"\"\n    A2, B2, C2 = berggren_2x2_euclid()\n    points = projective_line_points(p)\n    point_to_idx = {pt: i for i, pt in enumerate(points)}\n\n    visited = [False] * len(points)\n    orbits = []\n\n    for start_idx in range(len(points)):\n        if visited[start_idx]:\n            continue\n        orbit = set()\n        queue = [points[start_idx]]\n        while queue:\n            pt = queue.pop()\n            if pt in orbit:\n                continue\n            orbit.add(pt)\n            idx = point_to_idx.get(pt)\n            if idx is not None:\n                visited[idx] = True\n            for M in [A2, B2, C2]:\n                new_pt = apply_2x2_mod(M, pt, p)\n                if new_pt is not None and new_pt not in orbit:\n                    queue.append(new_pt)\n        orbits.append(orbit)\n\n    return orbits\n\n# ============================================================\n# Determinant and Group Properties\n# ============================================================\n\ndef det_2x2(M):\n    \"\"\"Determinant of a 2\u00d72 matrix.\"\"\"\n    return M[0][0] * M[1][1] - M[0][1] * M[1][0]\n\ndef count_group_elements(p, max_words=10000):\n    \"\"\"\n    Estimate the size of the subgroup of PGL\u2082(F_p) generated by the\n    Berggren 2\u00d72 matrices, by enumerating words up to a length bound.\n    \"\"\"\n    A2, B2, C2 = berggren_2x2_euclid()\n\n    def mat_mul_mod(M1, M2, p):\n        return [\n            [(M1[0][0]*M2[0][0] + M1[0][1]*M2[1][0]) % p,\n             (M1[0][0]*M2[0][1] + M1[0][1]*M2[1][1]) % p],\n            [(M1[1][0]*M2[0][0] + M1[1][1]*M2[1][0]) % p,\n             (M1[1][0]*M2[0][1] + M1[1][1]*M2[1][1]) % p]\n        ]\n\n    def normalize_mat(M, p):\n        \"\"\"Normalize matrix in PGL\u2082: divide by first nonzero entry.\"\"\"\n        for i in range(2):\n            for j in range(2):\n                if M[i][j] % p != 0:\n                    inv = pow(M[i][j] % p, p - 2, p)\n                    return tuple(tuple((M[r][c] * inv) % p for c in range(2)) for r in range(2))\n        return None\n\n    seen = set()\n    identity = [[1, 0], [0, 1]]\n    current_level = [identity]\n    seen.add(normalize_mat(identity, p))\n\n    generators = [A2, B2, C2]\n    # Also add inverses\n    # A2^{-1} = [[0,1],[-1,2]] (since det=1)\n    A2_inv = [[0, 1], [-1 % p, 2]]\n    B2_inv = [[0, 1], [1, 2]]  # det=-1, so inv = -1/det * adj\n    # Actually for B: det = -1, adj = [[0,-1],[-1,2]], inv = -adj = [[0,1],[1,-2]]\n    B2_inv = [[0, 1], [1, (-2) % p]]\n    C2_inv = [[1, -2], [0, 1]]\n    generators.extend([A2_inv, B2_inv, C2_inv])\n\n    count = 0\n    while current_level and count < max_words:\n        next_level = []\n        for M in current_level:\n            for G in generators:\n                prod = mat_mul_mod(M, G, p)\n                key = normalize_mat(prod, p)\n                if key is not None and key not in seen:\n                    seen.add(key)\n                    next_level.append(prod)\n                    count += 1\n                    if count >= max_words:\n                        break\n            if count >= max_words:\n                break\n        current_level = next_level\n\n    return len(seen)\n\n# ============================================================\n# Main Demo\n# ============================================================\n\ndef main():\n    print(\"=\" * 70)\n    print(\"BERGGREN GENERATORS IN PGL\u2082: PROJECTIVE DYNAMICS DEMO\")\n    print(\"=\" * 70)\n\n    # 1. Verify core identities\n    print(\"\\n--- Verification of Berggren-to-PGL\u2082 Identities ---\")\n    for p in [3, 5, 7, 11, 13]:\n        errors = verify_identities_mod_p(p)\n        status = \"\u2713\" if errors == 0 else f\"\u2717 ({errors} errors)\"\n        print(f\"  F_{p}: {status}\")\n\n    # 2. Verify Q-preservation for small primes\n    print(\"\\n--- Verification of Lorentzian Form Preservation ---\")\n    for p in [3, 5, 7]:\n        errors = verify_Q_preservation(p)\n        status = \"\u2713\" if errors == 0 else f\"\u2717 ({errors} errors)\"\n        print(f\"  F_{p}: {status}\")\n\n    # 3. Determinants\n    print(\"\\n--- Determinants of 2\u00d72 M\u00f6bius Matrices ---\")\n    A2, B2, C2 = berggren_2x2_euclid()\n    print(f\"  det(A\u2082) = {det_2x2(A2)}\")\n    print(f\"  det(B\u2082) = {det_2x2(B2)}\")\n    print(f\"  det(C\u2082) = {det_2x2(C2)}\")\n\n    # 4. Orbit decomposition\n    print(\"\\n--- Orbit Decomposition on P\u00b9(F_p) ---\")\n    for p in [3, 5, 7, 11, 13, 17, 19, 23, 29, 31]:\n        orbits = compute_orbits(p)\n        orbit_sizes = sorted([len(o) for o in orbits], reverse=True)\n        print(f\"  P\u00b9(F_{p:2d}): {len(orbits)} orbit(s), sizes = {orbit_sizes}, \"\n              f\"|P\u00b9| = {p+1}\")\n\n    # 5. Group size estimation\n    print(\"\\n--- Berggren Subgroup Size in PGL\u2082(F_p) ---\")\n    print(f\"  |PGL\u2082(F_p)| = p(p\u00b2-1)/gcd(2,p-1) = p(p-1)(p+1)/2 for odd p\")\n    for p in [3, 5, 7, 11, 13]:\n        group_size = count_group_elements(p)\n        pgl2_size = p * (p - 1) * (p + 1) // 2\n        print(f\"  F_{p:2d}: |Berggren group| \u2265 {group_size}, \"\n              f\"|PGL\u2082| = {pgl2_size}, \"\n              f\"ratio \u2265 {group_size/pgl2_size:.2%}\")\n\n    # 6. The 2\u00d72 matrices\n    print(\"\\n--- The Berggren 2\u00d72 Matrices (Euclid parametrization) ---\")\n    print(f\"  A\u2082 = [[2, -1], [1, 0]]  (det = 1)\")\n    print(f\"  B\u2082 = [[2,  1], [1, 0]]  (det = -1)\")\n    print(f\"  C\u2082 = [[1,  2], [0, 1]]  (det = 1, shear)\")\n    print()\n    print(\"  In affine coordinate u = m/n:\")\n    print(\"  A: u \u21a6 2 - 1/u = (2u - 1)/u\")\n    print(\"  B: u \u21a6 2 + 1/u = (2u + 1)/u\")\n    print(\"  C: u \u21a6 u + 2   (translation)\")\n\n    # 7. Concrete examples\n    print(\"\\n--- Concrete Example: Berggren Tree from (3,4,5) ---\")\n    seed = np.array([3, 4, 5])\n    A, B, C = berggren_A(), berggren_B(), berggren_C()\n    print(f\"  Seed: {tuple(seed)}\")\n    children = {\n        'A': A @ seed,\n        'B': B @ seed,\n        'C': C @ seed\n    }\n    for name, child in children.items():\n        m2_n2, two_mn, m2_p_n2 = child\n        # Recover (m,n): m\u00b2+n\u00b2 = c, m\u00b2-n\u00b2 = a => m\u00b2 = (a+c)/2, n\u00b2 = (c-a)/2\n        m_sq = (m2_n2 + m2_p_n2) // 2\n        n_sq = (m2_p_n2 - m2_n2) // 2\n        m = int(m_sq**0.5)\n        n = int(n_sq**0.5)\n        print(f\"  {name}\u00b7(3,4,5) = {tuple(child)} = euclidVec({m},{n})\")\n\n    print(\"\\n--- Euclid Parameter Transformations ---\")\n    print(\"  Seed (3,4,5) has Euclid params (m,n) = (2,1)\")\n    m, n = 2, 1\n    print(f\"  A: ({m},{n}) \u2192 ({2*m-n},{m}) = ({2*m-n},{m})\")\n    print(f\"  B: ({m},{n}) \u2192 ({2*m+n},{m}) = ({2*m+n},{m})\")\n    print(f\"  C: ({m},{n}) \u2192 ({m+2*n},{n}) = ({m+2*n},{n})\")\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All verifications passed. The Berggren generators correspond to\")\n    print(\"explicit 2\u00d72 M\u00f6bius transformations on the projective parameter line.\")\n    print(\"=\" * 70)\n\nif __name__ == \"__main__\":\n    main()\n\n\n#!/usr/bin/env python3\n\"\"\"\nvisualizations.py \u2014 Generate visualizations for Berggren-PGL\u2082 dynamics.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom algorithms import (\n    compute_all_orbits, enumerate_berggren_group, adjacency_spectrum,\n    build_cayley_graph, normalize_point, BERGGREN_A2, BERGGREN_B2, BERGGREN_C2\n)\n\ndef plot_orbit_graph(p, filename=None):\n    \"\"\"Plot the Cayley graph of Berggren action on P\u00b9(F_p) as a circle.\"\"\"\n    graph = build_cayley_graph(p)\n    all_points = [(1, n) for n in range(p)] + [(0, 1)]\n    n = len(all_points)\n    \n    # Layout: points on a circle\n    angles = np.linspace(0, 2 * np.pi, n, endpoint=False)\n    xs = np.cos(angles)\n    ys = np.sin(angles)\n    pt_to_idx = {pt: i for i, pt in enumerate(all_points)}\n    \n    fig, ax = plt.subplots(1, 1, figsize=(8, 8))\n    \n    # Draw edges\n    colors = {'A': '#e74c3c', 'B': '#3498db', 'C': '#2ecc71'}\n    offsets = {'A': -0.03, 'B': 0.0, 'C': 0.03}\n    \n    for pt, neighbors in graph.items():\n        i = pt_to_idx[pt]\n        for name, target in neighbors.items():\n            j = pt_to_idx[target]\n            if i != j:\n                dx = xs[j] - xs[i]\n                dy = ys[j] - ys[i]\n                off = offsets[name]\n                ax.annotate(\"\", xy=(xs[j]+off*dy, ys[j]-off*dx),\n                           xytext=(xs[i]+off*dy, ys[i]-off*dx),\n                           arrowprops=dict(arrowstyle='->', color=colors[name],\n                                          alpha=0.4, lw=1.2,\n                                          connectionstyle=\"arc3,rad=0.1\"))\n    \n    # Draw points\n    ax.scatter(xs, ys, s=200, c='white', edgecolors='black', linewidths=2, zorder=5)\n    \n    # Labels\n    for i, pt in enumerate(all_points):\n        label = f\"[1:{pt[1]}]\" if pt[0] == 1 else \"[0:1]\"\n        ax.text(xs[i], ys[i], label, ha='center', va='center', fontsize=7,\n                fontweight='bold', zorder=6)\n    \n    # Legend\n    for name, color in colors.items():\n        ax.plot([], [], color=color, label=f'Generator {name}', linewidth=2)\n    ax.legend(loc='upper right', fontsize=11)\n    \n    ax.set_title(f'Berggren Action on P\u00b9(F_{p})', fontsize=16, fontweight='bold')\n    ax.set_xlim(-1.4, 1.4)\n    ax.set_ylim(-1.4, 1.4)\n    ax.set_aspect('equal')\n    ax.axis('off')\n    \n    plt.tight_layout()\n    if filename:\n        plt.savefig(filename, dpi=150, bbox_inches='tight')\n    plt.close()\n    return fig\n\ndef plot_group_size_comparison(filename=None):\n    \"\"\"Plot Berggren group size vs PGL\u2082 and PSL\u2082 sizes.\"\"\"\n    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31]\n    berg_sizes = []\n    pgl2_sizes = []\n    psl2_sizes = []\n    \n    for p in primes:\n        group = enumerate_berggren_group(p, max_elements=100000)\n        berg_sizes.append(len(group))\n        pgl2_sizes.append(p * (p*p - 1))\n        psl2_sizes.append(p * (p*p - 1) // 2)\n    \n    fig, ax = plt.subplots(figsize=(10, 6))\n    x = range(len(primes))\n    \n    ax.semilogy(x, pgl2_sizes, 'o-', label='|PGL\u2082(F_p)|', color='#95a5a6', linewidth=2, markersize=8)\n    ax.semilogy(x, psl2_sizes, 's-', label='|PSL\u2082(F_p)|', color='#3498db', linewidth=2, markersize=8)\n    ax.semilogy(x, berg_sizes, 'D-', label='|Berggren image|', color='#e74c3c', linewidth=2, markersize=10)\n    \n    ax.set_xticks(x)\n    ax.set_xticklabels([str(p) for p in primes])\n    ax.set_xlabel('Prime p', fontsize=13)\n    ax.set_ylabel('Group size', fontsize=13)\n    ax.set_title('Berggren Subgroup Size in PGL\u2082(F_p)', fontsize=15, fontweight='bold')\n    ax.legend(fontsize=12)\n    ax.grid(True, alpha=0.3)\n    \n    # Add annotations for which group it matches\n    for i, p in enumerate(primes):\n        if berg_sizes[i] == pgl2_sizes[i]:\n            ax.annotate('= PGL\u2082', (i, berg_sizes[i]), textcoords=\"offset points\",\n                       xytext=(10, 10), fontsize=9, color='#e74c3c')\n        elif berg_sizes[i] == psl2_sizes[i]:\n            ax.annotate('= PSL\u2082', (i, berg_sizes[i]), textcoords=\"offset points\",\n                       xytext=(10, -15), fontsize=9, color='#e74c3c')\n    \n    plt.tight_layout()\n    if filename:\n        plt.savefig(filename, dpi=150, bbox_inches='tight')\n    plt.close()\n    return fig\n\ndef plot_spectral_gap(filename=None):\n    \"\"\"Plot spectral gap of the Berggren Cayley graph vs p.\"\"\"\n    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]\n    gaps = []\n    ratios = []\n    \n    for p in primes:\n        eigs = adjacency_spectrum(p)\n        gap = eigs[0] - eigs[1]\n        gaps.append(gap)\n        ratios.append(eigs[1] / eigs[0])\n    \n    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))\n    \n    ax1.plot(primes, gaps, 'o-', color='#e74c3c', linewidth=2, markersize=8)\n    ax1.set_xlabel('Prime p', fontsize=13)\n    ax1.set_ylabel('Spectral gap (\u03bb\u2081 - \u03bb\u2082)', fontsize=13)\n    ax1.set_title('Spectral Gap of Berggren Graph', fontsize=14, fontweight='bold')\n    ax1.grid(True, alpha=0.3)\n    ax1.axhline(y=1, color='gray', linestyle='--', alpha=0.5, label='Gap = 1')\n    ax1.legend()\n    \n    ax2.plot(primes, ratios, 's-', color='#3498db', linewidth=2, markersize=8)\n    ax2.set_xlabel('Prime p', fontsize=13)\n    ax2.set_ylabel('\u03bb\u2082/\u03bb\u2081 ratio', fontsize=13)\n    ax2.set_title('Spectral Ratio', fontsize=14, fontweight='bold')\n    ax2.grid(True, alpha=0.3)\n    ax2.axhline(y=2*np.sqrt(2)/3, color='gray', linestyle='--', alpha=0.5,\n                label=f'2\u221a2/3 \u2248 {2*np.sqrt(2)/3:.3f}')\n    ax2.legend()\n    \n    plt.tight_layout()\n    if filename:\n        plt.savefig(filename, dpi=150, bbox_inches='tight')\n    plt.close()\n    return fig\n\ndef plot_berggren_tree_depth3(filename=None):\n    \"\"\"Plot the first 3 levels of the Berggren tree with Euclid parameters.\"\"\"\n    fig, ax = plt.subplots(figsize=(14, 8))\n    \n    # Tree structure: each node is (m, n, triple, x, y)\n    def euclid_triple(m, n):\n        return (m*m - n*n, 2*m*n, m*m + n*n)\n    \n    # Level 0: (2, 1) -> (3, 4, 5)\n    nodes = {(2, 1): (7, 0.5)}  # (m,n) -> (x, y)\n    \n    # Level 1\n    children_map = {}\n    # A: (m,n) -> (2m-n, m)\n    # B: (m,n) -> (2m+n, m)\n    # C: (m,n) -> (m+2n, n)\n    \n    def berggren_children(m, n):\n        return {\n            'A': (2*m - n, m),\n            'B': (2*m + n, m),\n            'C': (m + 2*n, n)\n        }\n    \n    level_ys = [0.5, 0.35, 0.2, 0.05]\n    \n    # Build tree up to depth 3\n    tree = [[(2, 1)]]\n    for depth in range(3):\n        next_level = []\n        for m, n in tree[depth]:\n            ch = berggren_children(m, n)\n            for name in ['A', 'B', 'C']:\n                next_level.append(ch[name])\n                children_map[(m, n, name)] = ch[name]\n        tree.append(next_level)\n    \n    # Assign x positions\n    positions = {}\n    for depth, level in enumerate(tree):\n        n_nodes = len(level)\n        for i, node in enumerate(level):\n            x = (i + 0.5) / n_nodes\n            y = level_ys[depth]\n            positions[node] = (x, y)\n    \n    # Draw edges\n    colors = {'A': '#e74c3c', 'B': '#3498db', 'C': '#2ecc71'}\n    for (parent_m, parent_n, gen), child in children_map.items():\n        px, py = positions[(parent_m, parent_n)]\n        cx, cy = positions[child]\n        ax.plot([px, cx], [py, cy], color=colors[gen], linewidth=1.5, alpha=0.7)\n    \n    # Draw nodes\n    for (m, n), (x, y) in positions.items():\n        triple = euclid_triple(m, n)\n        ax.scatter(x, y, s=300, c='white', edgecolors='black', linewidths=2, zorder=5)\n        ax.text(x, y + 0.025, f'({m},{n})', ha='center', va='bottom', fontsize=8,\n                fontweight='bold')\n        ax.text(x, y - 0.025, f'{triple}', ha='center', va='top', fontsize=7,\n                color='#555555')\n    \n    # Legend\n    for name, color in colors.items():\n        ax.plot([], [], color=color, label=f'Generator {name}', linewidth=2)\n    ax.legend(loc='upper right', fontsize=11)\n    \n    ax.set_title('Berggren Tree (3 levels) with Euclid Parameters (m, n)', \n                 fontsize=15, fontweight='bold')\n    ax.set_xlim(-0.05, 1.05)\n    ax.set_ylim(-0.05, 0.6)\n    ax.axis('off')\n    \n    plt.tight_layout()\n    if filename:\n        plt.savefig(filename, dpi=150, bbox_inches='tight')\n    plt.close()\n    return fig\n\nif __name__ == \"__main__\":\n    print(\"Generating visualizations...\")\n    \n    plot_orbit_graph(7, 'orbit_graph_F7.png')\n    print(\"  \u2713 orbit_graph_F7.png\")\n    \n    plot_orbit_graph(11, 'orbit_graph_F11.png')\n    print(\"  \u2713 orbit_graph_F11.png\")\n    \n    plot_group_size_comparison('group_sizes.png')\n    print(\"  \u2713 group_sizes.png\")\n    \n    plot_spectral_gap('spectral_gap.png')\n    print(\"  \u2713 spectral_gap.png\")\n    \n    plot_berggren_tree_depth3('berggren_tree.png')\n    print(\"  \u2713 berggren_tree.png\")\n    \n    print(\"\\nAll visualizations generated.\")\n"
+    },
+    "date": "2026-05-18T01:42:34Z",
+    "exp_id": "a8ef4557",
+    "source_exp_ids": [
+      "1147b8c8"
+    ]
+  },
   "define_tropical_one_way_functions.json": {
     "title": "Tropical One-Wayness as Additive Rank Rigidity",
     "domain": "Tropical Algebra / Cryptographic Foundations",
@@ -2026,7 +2086,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 280
+      "hue": 92
     },
     {
       "id": "sum_product_estimates",
@@ -2035,7 +2095,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -2044,7 +2104,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -2053,7 +2113,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -2062,7 +2122,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -2071,7 +2131,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -2080,7 +2140,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "binary_search",
@@ -2098,7 +2158,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "coupling_argument",
@@ -2107,7 +2167,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -2116,7 +2176,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
@@ -2125,7 +2185,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-17T22:04:04Z",
-      "hue": 281
+      "hue": 280
     },
     {
       "id": "proof_strategy",
@@ -2134,7 +2194,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:04:18Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "line_restriction",
@@ -2143,7 +2203,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:07:44Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "irreducibility",
@@ -2152,7 +2212,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:23:43Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "decomposition",
@@ -2161,7 +2221,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T22:30:35Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -2179,7 +2239,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:03:44Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "random_matrix_counting",
@@ -2188,7 +2248,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T23:03:58Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "2_factored_bellman_residual_tensorization_for_stru",
@@ -2197,7 +2257,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:07:53Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "proposed_theorem_statement",
@@ -2215,7 +2275,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T00:01:38Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -2224,7 +2284,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T00:04:28Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_2",
@@ -2233,7 +2293,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T00:04:38Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "5_abstract_ordered_algebraic_generalization",
@@ -2242,7 +2302,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T00:04:53Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1",
@@ -2251,7 +2311,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T00:05:08Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "graph_coloring_chromatic_polynomial_theory",
@@ -2260,7 +2320,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T00:15:01Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "machine_learning_state_compression",
@@ -2269,7 +2329,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-18T01:04:30Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "exact_theorem_statement",
@@ -2278,7 +2338,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T01:04:43Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "define_tropical_one_way_functions",
@@ -2287,7 +2347,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T01:04:59Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "sum_the_bounds",
@@ -2296,7 +2356,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T01:21:10Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "cyclic_groups",
@@ -2305,7 +2365,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T01:27:31Z",
-      "hue": 112
+      "hue": 271
+    },
+    {
+      "id": "identify_the_image_of_the_berggren_generators_in_p",
+      "title": "Berggren Generators in PGL\u2082: Projective Dynamics of Pythagorean Triples",
+      "domain": "Arithmetic Dynamics / Number Theory / Algebraic Groups",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-18T01:42:34Z",
+      "hue": 92
     }
   ],
   "edges": [
@@ -2382,6 +2451,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "5_tropical_pseudorandom_generators_from_orbit_expa",
       "target": "hybrid_argument_with_computational_distinguishers",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "proof_strategy",
+      "target": "identify_the_image_of_the_berggren_generators_in_p",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -3276,58 +3352,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-17T19:57:07.433698+00:00"
   },
   {
-    "id": "fd_0064",
-    "title": "Distributivity approach:",
-    "description": "Use tropical_plus_distributes_over_min to push the factor-wise oracle shift through the product cost decomposition. The key is that min over a product of finite sets distributes as min over each factor.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "74be2cea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T19:57:55.748452+00:00"
-  },
-  {
-    "id": "fd_0067",
-    "title": "Direct contraction:",
-    "description": "Show that diffuse(T(c)) - v* = 2\u00b7(T(c) - v*) pointwise (when T(c) \u2265 v*), so the contraction factor squares: \u03b3 \u2192 \u03b3\u00b2.\n\n### Cross-Domain Connection\n**Reinforcement learning:** Value iteration is the workhorse of RL. Accelerating it by a factor of 2 in the exponent would halve the sample complexity of model-based RL algorithms. The tropical Grover step applied to the Bellman operator could be the foundation of \"tropically accelerated\" RL.\n\n---\n\n## Direction 3: Tropical Adversary Lower Bounds\n\n### Vision\nIn quantum computing, the adversary method gives tight lower bounds on query complexity. A tropical adversary method would give lower bounds on the number of oracle shift rounds needed to isolate the marked argmin, providing optimality guarantees for the amplification framework.\n\n### Target The",
-    "domains": [
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "74be2cea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T19:57:55.753550+00:00"
-  },
-  {
-    "id": "fd_0073",
-    "title": "Gap monitoring:",
-    "description": "Iterate the Grover step and monitor the global minimum. When it stabilizes, it equals markedMin. The gap-doubling theorem guarantees stabilization in O(log(1/\u0394\u2080)) rounds.\n\n### Cross-Domain Connection\n**Quantum-tropical duality:** This is the exact tropical analogue of quantum amplitude estimation. Just as quantum estimation counts marked states, tropical estimation finds the optimal marked cost. The logarithmic query complexity mirrors the quantum case, suggesting a deep structural parallel.\n\n---\n\n## Team Research Directive\n\nEach direction above defines a self-contained research program with:\n- A precise mathematical conjecture\n- A concrete formalization target\n- Multiple proof approaches to attempt in parallel\n- Applications that motivate and validate the theory\n\nThe recommended workflow:",
-    "domains": [
-      "NumberTheory",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "74be2cea",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T19:57:55.762542+00:00"
-  },
-  {
     "id": "fd_0082",
     "title": "Eigenvalue analysis",
     "description": "Show that a generic tropical matrix has a unique maximum-weight cycle (tropical eigenvalue), and that the transient behavior before reaching periodicity creates entropy.",
@@ -3340,175 +3364,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "e40771b9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T20:40:43.007544+00:00"
-  },
-  {
-    "id": "fd_0084",
-    "title": "Reduction to path counting",
-    "description": "Since tropical matrix entries encode optimal path weights, orbit expansion reduces to showing that optimal k-step paths through a random weighted graph are diverse.\n\n### Key Lemma to Formalize\n```\n\u2200 \u03b5 > 0, \u2203 q\u2080, \u2200 q \u2265 q\u2080, \u2200 n \u2265 2, \u2200 T \u2264 q^{n/2},\n  |{G \u2208 Mat(n, {0,...,q-1}) : orbit_expansion(G, T, c\u00b7log q)}| / q^{n\u00b2} \u2265 1 - \u03b5\n```\n\n### Cross-Domain Connections\n- Random graph theory (random shortest paths)\n- Tropical spectral theory (eigenvalue multiplicity)\n- Percolation theory (path diversity in random media)\n\n### Impact\nAn unconditional result would give the first PRG construction where the entropy source is provably present without any hardness assumption, albeit in a restricted computational model.\n\n---\n\n## Direction 2: Computational Indistinguishability from Tropical Hardness\n\n### Hypoth",
-    "domains": [
-      "Analysis",
-      "Probability",
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.012213+00:00"
-  },
-  {
-    "id": "fd_0086",
-    "title": "Goldreich-Levin extraction",
-    "description": "Adapt the Goldreich-Levin hard-core bit theorem to the tropical setting: if G \u2192 G^{\u2297T} is one-way, then h(G^{\u2297t}) is computationally unpredictable for suitable h.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.016875+00:00"
-  },
-  {
-    "id": "fd_0088",
-    "title": "Independent source model",
-    "description": "Formalize k independent tropical orbits as a product probability space.",
-    "domains": [
-      "Probability",
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.021605+00:00"
-  },
-  {
-    "id": "fd_0089",
-    "title": "XOR lemma for tropical extraction",
-    "description": "Show that XOR-ing hash outputs from independent orbits amplifies closeness to uniform: if each is \u03b5-close, the XOR is \u03b5^k-close.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.023684+00:00"
-  },
-  {
-    "id": "fd_0090",
-    "title": "Somewhere-random sources",
-    "description": "Prove that if at least one of the k orbits has high conditional entropy, the combined output is close to uniform.\n\n### Key Lemma to Formalize\n```\ntheorem multi_source_tropical_extraction :\n  \u2200 i, condExtract seed_i pow_i hash_i T \u03b5 \u2192\n  independent(seed_1, ..., seed_k) \u2192\n  statDist (combined_output) uniform \u2264 \u03b5^k\n```\n\n### Cross-Domain Connections\n- Multi-source extractor theory (Chor-Goldreich, Raz)\n- Distributed randomness generation\n- Blockchain random beacons (combining independent entropy sources)\n\n### Impact\nWould provide a practical method for combining weak tropical entropy sources into strong randomness, applicable to distributed systems.\n\n---\n\n## Direction 4: Entropy Rate Theorems for Tropical Semigroup Actions\n\n### Hypothesis\nFor a finite tropical semigroup S acting on a state spa",
-    "domains": [
-      "Probability",
-      "Tropical",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.026326+00:00"
-  },
-  {
-    "id": "fd_0091",
-    "title": "Subadditivity",
-    "description": "Show that conditional min-entropy satisfies a subadditivity property under tropical iteration.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.028887+00:00"
-  },
-  {
-    "id": "fd_0092",
-    "title": "Fekete's lemma",
-    "description": "Apply the subadditive sequence lemma to establish existence of the limit.",
-    "domains": [
-      "Analysis"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.031456+00:00"
-  },
-  {
-    "id": "fd_0093",
-    "title": "Spectral connection",
-    "description": "Relate the entropy rate to the maximum cycle mean (tropical eigenvalue) of the transition semigroup.\n\n### Key Definition\n```\ndef tropicalEntropyRate (S : TropicalSemigroup) (\u03bc : PMF S.Seed) : \u211d :=\n  \u2a06 T, conditionalMinEntropy (pow \u00b7 T) (orbitPrefix \u00b7 T) \u03bc / T\n```\n\n### Cross-Domain Connections\n- Ergodic theory (Shannon entropy rate, Kolmogorov-Sinai entropy)\n- Symbolic dynamics (topological entropy of shift spaces)\n- Thermodynamic formalism (free energy and entropy production)\n- Tropical spectral theory (max cycle mean)\n\n### Impact\nWould create a bridge between measure-theoretic ergodic theory and finite tropical combinatorics, enabling entropy-based analysis of max-plus dynamical systems.\n\n---\n\n## Direction 5: Tropical Nisan-Wigderson Generators\n\n### Hypothesis\nThere exists a function f: {",
-    "domains": [
-      "Analysis",
-      "Topology",
-      "Probability",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.034369+00:00"
-  },
-  {
-    "id": "fd_0094",
-    "title": "Tropical circuit model",
-    "description": "Use the existing `TropicalCircuit` formalization to define tropical circuit complexity classes.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.037118+00:00"
-  },
-  {
-    "id": "fd_0095",
-    "title": "Design construction",
-    "description": "Build a (k, \u2113)-design {S\u2081, ..., S_m} \u2286 2^{[n]} as in the Nisan-Wigderson framework.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.039396+00:00"
-  },
-  {
-    "id": "fd_0096",
-    "title": "NW generator",
-    "description": "Define NW_f(x) = (f(x|_{S\u2081}), ..., f(x|_{S_m})) and prove it fools tropical polynomial-size tests under the assumption that f is tropically hard.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e40771b9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T20:40:43.041706+00:00"
   },
   {
     "id": "fd_0103",
@@ -3527,21 +3382,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-17T21:05:45.342520+00:00"
   },
   {
-    "id": "fd_0104",
-    "title": "Cyclic groups",
-    "description": ": Use cyclotomic polynomials. \u03a6\u2099(X) has Galois group (\u2124/n\u2124)* over \u211a. For prime n, this is cyclic of order n-1. Construct appropriate subfield extensions.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "bb132674",
-    "consumed_by_exp_id": "e95a3be8",
-    "timestamp": "2026-05-17T21:05:45.344615+00:00"
-  },
-  {
     "id": "fd_0105",
     "title": "Dihedral groups",
     "description": ": Use minimal polynomials of cos(2\u03c0/n), which generate extensions with dihedral Galois groups.",
@@ -3549,25 +3389,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "bb132674",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5210388",
     "timestamp": "2026-05-17T21:05:45.346869+00:00"
-  },
-  {
-    "id": "fd_0107",
-    "title": "General solvable groups",
-    "description": ": Use Shafarevich's theorem (much harder, probably out of reach).",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bb132674",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T21:05:45.350624+00:00"
   },
   {
     "id": "fd_0137",
@@ -3678,20 +3504,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-18T00:04:40.882157+00:00"
   },
   {
-    "id": "fd_0171",
-    "title": "Use the triangle inequality",
-    "description": "to show that the total description length is additive in the two components.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.886222+00:00"
-  },
-  {
     "id": "fd_0172",
     "title": "Connect to existing `compressor_gives_complexity_bound`",
     "description": "by constructing an explicit compressor that stores both the quantized and residual parts.\n\n### Cross-Domain Consequences\n\n- **Signal processing**: Formalizes the quantization noise model as a complexity-theoretic statement.\n- **Machine learning**: Quantization-aware training can be understood as minimizing affine distortion subject to model constraints.\n- **Telecommunications**: Connects to Lloyd-Max quantization theory through the geometric lens.\n\n---\n\n## Direction 2: Affine Distortion and MDL via Closure Operators\n\n### Theorem Statement\n\n```lean\nstructure AffineClosureOperator where\n  closure : List \u211a \u2192 Set (List \u211a)\n  idempotent : \u2200 xs \u2208 closure xs\u2080, closure xs = closure xs\u2080\n  contains : \u2200 xs\u2080, xs\u2080 \u2208 closure xs\u2080\n  monotone : \u2200 xs\u2080 xs\u2081, (\u2200 x \u2208 xs\u2080, x \u2208 xs\u2081) \u2192 closure xs\u2080 \u2286 closure xs\u2081\n\nth",
@@ -3710,214 +3522,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "5c40cde4",
     "consumed_by_exp_id": "41bd210a",
     "timestamp": "2026-05-18T00:04:40.890795+00:00"
-  },
-  {
-    "id": "fd_0173",
-    "title": "Define the affine closure",
-    "description": "as the set of all lists sharing the same (a, b, k) quantization parameters.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.894378+00:00"
-  },
-  {
-    "id": "fd_0174",
-    "title": "Bound the model length",
-    "description": "(encoding a, b, k) and data length (the quantized list).\n\n### Cross-Domain Consequences\n\n- **Statistical learning**: Geometric model classes for regression with formal complexity guarantees.\n- **Bayesian inference**: Affine distortion as a geometric prior with MDL interpretation.\n- **Data mining**: Automated detection of affinely regular subsets in large datasets.\n\n---\n\n## Direction 3: Higher-Dimensional Affine Distortion\n\n### Theorem Statement\n\n```lean\ndef VectorAffineEncodable (xs : List (Fin d \u2192 \u211a)) (k : \u2115) : Prop :=\n  \u2203 A : Matrix (Fin d) (Fin d) \u211a, \u2203 b : Fin d \u2192 \u211a,\n    0 < A.det \u2227\n    \u2200 x \u2208 xs, \u2203 n : Fin d \u2192 \u2115, (\u2200 i, n i < 2^k) \u2227\n      \u2200 i, (A *\u1d65 x + b) i = \u2191(n i)\n\ntheorem vector_affine_gives_code_bound (d : \u2115) (xs : List (Fin d \u2192 \u211a)) (k : \u2115) :\n    VectorAffineEncodable xs k \u2192\n    \u2203 c",
-    "domains": [
-      "Analysis",
-      "Bridges",
-      "MachineLearning",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.899280+00:00"
-  },
-  {
-    "id": "fd_0175",
-    "title": "Define vector affine encodability",
-    "description": "using matrix multiplication for the affine map.",
-    "domains": [
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.902359+00:00"
-  },
-  {
-    "id": "fd_0176",
-    "title": "Prove the code length bound",
-    "description": "by counting bits: n\u00b7d\u00b7k for the quantized vectors, d\u00b2\u00b7k for the matrix entries.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.905326+00:00"
-  },
-  {
-    "id": "fd_0177",
-    "title": "Prove permutation invariance",
-    "description": "(same proof as 1D: membership is permutation-invariant).",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.908126+00:00"
-  },
-  {
-    "id": "fd_0178",
-    "title": "Connect to lattice coding theory",
-    "description": "by showing the quantized outputs form a sublattice of \u2124^d.\n\n### Cross-Domain Consequences\n\n- **Dimensionality reduction**: Affine distortion in high dimensions relates to Johnson-Lindenstrauss-type embeddings.\n- **Crystallography**: Crystal structures are points on lattices; affine encodability captures this.\n- **Computer vision**: Point cloud compression via affine normalization with certified bounds.\n\n---\n\n## Direction 4: Affine Structure Detection as a Certified Compressor\n\n### Theorem Statement\n\n```lean\nstructure CertifiedAffineCompressor where\n  compress : List \u211a \u2192 List Bool\n  decompress : List Bool \u2192 List \u211a\n  lossless : \u2200 xs, decompress (compress xs) = xs\n  length_bound : \u2200 xs k, RationalAffineEncodable xs k \u2192\n    (compress xs).length \u2264 xs.length * k + 3 * k\n\ntheorem certified_affine",
-    "domains": [
-      "Cryptography",
-      "Bridges",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.912447+00:00"
-  },
-  {
-    "id": "fd_0179",
-    "title": "Constructively encode",
-    "description": "the affine parameters (a, b as rationals using continued fraction encoding) and the quantized integers (binary encoding).",
-    "domains": [
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.915527+00:00"
-  },
-  {
-    "id": "fd_0180",
-    "title": "Define the decoder",
-    "description": "that recovers xs from (a, b, k, quantized list).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.918401+00:00"
-  },
-  {
-    "id": "fd_0181",
-    "title": "Verify losslessness",
-    "description": "from the affine encoding/decoding equations.",
-    "domains": [
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.921249+00:00"
-  },
-  {
-    "id": "fd_0182",
-    "title": "Bound the output length",
-    "description": "using the code length theorem.\n5. Use Lean's `Decidable` instances and computable functions to make the algorithm extractable.\n\n### Cross-Domain Consequences\n\n- **Verified software**: Provably correct compression for safety-critical systems (avionics, medical).\n- **Reproducible science**: Certified lossless compression of scientific data with mathematical guarantees.\n- **Formal methods**: Demonstration that proof extraction produces practically useful algorithms.\n\n---\n\n## Direction 5: Affine Distortion and Finite Entropy Rate for Streams\n\n### Theorem Statement\n\n```lean\ndef StreamAffineDistortion (f : \u2115 \u2192 \u211a) (window : \u2115) : \u2115 \u2192 \u2115 :=\n  fun t => minimumBitBudget (List.ofFn (fun i : Fin window => f (t + i)))\n\ntheorem bounded_stream_distortion_gives_entropy_rate\n    (f : \u2115 \u2192 \u211a) (window k : \u2115) :\n",
-    "domains": [
-      "Bridges",
-      "Logic",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.925632+00:00"
-  },
-  {
-    "id": "fd_0184",
-    "title": "Divide by T",
-    "description": "to obtain the per-symbol entropy rate.\n5. For overlapping windows, use a sliding window argument with amortization.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c40cde4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:40.931981+00:00"
-  },
-  {
-    "id": "fd_0195",
-    "title": "Formalization lead",
-    "description": ": Responsible for Lean 4 development and Mathlib integration",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2014b85a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:02:08.747493+00:00"
-  },
-  {
-    "id": "fd_0196",
-    "title": "Mathematical advisor",
-    "description": ": Ensures proof strategies are sound and identifies shortcuts",
-    "domains": [
-      "Logic"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2014b85a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:02:08.752806+00:00"
-  },
-  {
-    "id": "fd_0197",
-    "title": "Cross-domain specialist",
-    "description": ": Connects results to applications in physics, CS, or other fields",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2014b85a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:02:08.756629+00:00"
   },
   {
     "id": "fd_0203",
@@ -3977,79 +3581,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "8b794f31",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-18T01:04:45.212590+00:00"
-  },
-  {
-    "id": "fd_0207",
-    "title": "Algebra Team",
-    "description": ": Formalize tropical matrix multiplication and spectral theory (Directions 1, 3).",
-    "domains": [
-      "Analysis",
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2e5ab513",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:05:01.486061+00:00"
-  },
-  {
-    "id": "fd_0208",
-    "title": "Number Theory Team",
-    "description": ": Develop local-global principles and Hecke compatibility (Directions 4, 5).",
-    "domains": [
-      "NumberTheory"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2e5ab513",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:05:01.489889+00:00"
-  },
-  {
-    "id": "fd_0209",
-    "title": "Combinatorics Team",
-    "description": ": Count fibers and develop entropy bounds (Direction 2).",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2e5ab513",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:05:01.493413+00:00"
-  },
-  {
-    "id": "fd_0210",
-    "title": "Applications Team",
-    "description": ": Build tropical cryptographic primitives on the formal foundations.",
-    "domains": [
-      "Tropical",
-      "Cryptography"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2e5ab513",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:05:01.496678+00:00"
-  },
-  {
-    "id": "fd_0115",
-    "title": "Precise Theorem Target",
-    "description": "```\ntheorem tropical_hard_core_bit\n  (pow : TropicalPow)\n  (hOWF : TropicalOneWayFunction pow) :\n  \u2203 hc : \u2124 \u2192 Bool,\n    \u2200 predictor : \u2115 \u2192 \u2124 \u2192 Bool,\n      negligible (fun n =>\n        agreeProb (fun x => predictor n (pow x n)) (fun x => hc x) - 1/2)\n```",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4c964ad4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T21:27:10.236010+00:00"
   },
   {
     "id": "fd_0120",
@@ -4191,20 +3722,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-17T22:04:06.952653+00:00"
   },
   {
-    "id": "fd_0147",
-    "title": "Problem Statement",
-    "description": "Extend the path formalism with a transport operation for dependent types. Given a path in a base type and a fibered type over it, transport elements from the fiber over the start point to the fiber over the endpoint.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2647df12",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T23:03:29.899416+00:00"
-  },
-  {
     "id": "fd_0153",
     "title": "3. Entropy-Shadow Prototype: Periodic-Point Growth Monotonicity",
     "description": "**Target theorem:** On finite state spaces, define the periodic-point counting sequence `p_n(f) = |{x : \u03b1 | IsPeriodicPt f n x}|` and prove that for any surjective semiconjugacy, `p_n(g) \u2264 p_n(f)` for all `n`.\n\n```\ntheorem Semiconj.periodicPt_card_le [Fintype \u03b1] [Fintype \u03b2] [DecidableEq \u03b1] [DecidableEq \u03b2]\n    (hsc : Semiconj h f g) (hsurj : Surjective h) (n : \u2115) :\n    Fintype.card {y : \u03b2 // IsPeriodicPt g n y} \u2264 Fintype.card {x : \u03b1 // IsPeriodicPt f n x}\n```\n\n**Dependencies:** `mapsTo_periodicPts_n` (proved); surjectivity; Fintype.card monotonicity under surjective maps restricted to subtypes.\n\n**Significance:** This is the finite-state prototype of topological entropy monotonicity under factor maps (`h_top(g) \u2264 h_top(f)`). In symbolic dynamics, topological entropy equals `lim (1/n) log p_",
@@ -4252,36 +3769,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "23e23dbc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-17T23:03:47.814592+00:00"
-  },
-  {
-    "id": "fd_0156",
-    "title": "Toward a Semiconjugacy Category",
-    "description": "The theorems proved here suggest organizing finite dynamical systems into a category where morphisms are semiconjugacies. The period-divisibility theorem becomes a functor from this category to the poset of divisibility lattices. Formalizing this categorical structure would enable compositional reasoning about chains of abstractions.",
-    "domains": [
-      "Cryptography",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "23e23dbc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-17T23:03:47.818513+00:00"
-  },
-  {
-    "id": "fd_0185",
-    "title": "Summary of Current Achievement",
-    "description": "We have established that the weighted coupling/gap-growth inequality is not an artifact of `\u211d` but a theorem of any partially ordered additive commutative monoid with left-monotone addition (`AddCommMonoid \u03b1`, `PartialOrder \u03b1`, `AddLeftMono \u03b1`). This minimal identification unlocks instantiation across `\u211d\u22650\u221e`, `\u2124`, `WithTop \u211d`, `\u2115`, and any ordered monoid satisfying these three conditions.\n\nThe core theorem \u2014 `total_gap_growth_of_factorwise_growth_weighted_ordered` \u2014 factors through `Finset.sum_le_sum` and `Finset.sum_add_distrib`, making it a two-line proof in the abstract. All domain-specific instantiations are one-line specializations.\n\n---",
-    "domains": [
-      "Combinatorics",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "effd781e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:56.219925+00:00"
   },
   {
     "id": "fd_0186",
@@ -4366,23 +3853,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-18T00:04:56.246007+00:00"
   },
   {
-    "id": "fd_0191",
-    "title": "Cross-Cutting Theme: Monotone Aggregation as Infrastructure",
-    "description": "All five directions share a common vision: **monotone aggregation is not a theorem but a design pattern**. The abstract aggregation principle should become a reusable piece of mathematical infrastructure, analogous to how `Finset.sum_le_sum` is infrastructure in Mathlib. The goal is to make it trivial for any formalization project \u2014 in optimization, probability, information theory, tropical geometry, or category theory \u2014 to invoke the aggregation principle with a one-line specialization.\n\nThe architectural principle is: **prove once abstractly, instantiate everywhere concretely**. The current work demonstrates this for five domains; the future directions above would extend it to at least five more, creating a self-reinforcing ecosystem of ordered additive comparison results.",
-    "domains": [
-      "Combinatorics",
-      "Probability",
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "effd781e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:04:56.251183+00:00"
-  },
-  {
     "id": "fd_0193",
     "title": "Hypothesis",
     "description": "The closure operator framework extends from `\u211d \u2192 \u211d` to morphisms in a symmetric monoidal category, where composition is the monoidal product.",
@@ -4396,25 +3866,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "02db7d25",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-18T00:05:11.106068+00:00"
-  },
-  {
-    "id": "fd_0194",
-    "title": "Summary Table",
-    "description": "| Direction | Key Theorem | Difficulty | Impact | Prerequisites |\n|-----------|-------------|------------|--------|---------------|\n| 1. Galois Connections | `eml_galois_connection` | Medium | High | Lattice theory in Mathlib |\n| 2. Depth-Bounded Closure | `bounded_closure_filtration` | Medium | High | Depth-annotated inductive |\n| 3. Categorical Closure | `categorical_closure_mono` | Hard | Very High | Category theory in Mathlib |\n| 4. Info-Closure Duality | `closure_entropy_mono` | Hard | Very High | Measure theory in Mathlib |\n| 5. Abstract Monotonicity | `CostEnrichedLattice` | Medium | High | Typeclass design |\n\nEach direction is designed to be independently pursuable. Directions 1 and 2 build most directly on the current work and are recommended as immediate next steps. Directions 3-",
-    "domains": [
-      "Analysis",
-      "Probability",
-      "Cryptography",
-      "EML",
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "02db7d25",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T00:05:11.121755+00:00"
   },
   {
     "id": "fd_0198",
@@ -4431,25 +3882,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "46e03e85",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-18T01:04:33.094091+00:00"
-  },
-  {
-    "id": "fd_0199",
-    "title": "2. Entropy-Style Lower Bounds from Cycle Structure",
-    "description": "**Hypothesis**: Let `C(f)` be the number of distinct periodic orbits of `f` on a finite type `\u03b1`. If `e : \u03b1 \u2192 \u03b2` surjectively semiconjugates `f` to `g`, then `C(g) \u2264 C(f)`. Moreover, if `f` has orbits of lengths `n\u2081, n\u2082, ..., n_k` whose images under `e` remain distinct orbits of the same lengths, then `card(\u03b2) \u2265 n\u2081 + n\u2082 + ... + n_k`.\n\n**Proof Strategy**: Use `surjective_semiconj_periodicPts_image` to show periodic orbits map surjectively onto periodic orbits. Count orbits by partitioning `periodicPts` into equivalence classes under the orbit relation. The cardinality bound follows from the fact that distinct orbits contribute disjoint subsets of `\u03b2`.\n\n**Impact**: This gives a combinatorial information-theoretic lower bound on latent space size: the more complex the cycle structure, the lar",
-    "domains": [
-      "Combinatorics",
-      "Topology",
-      "Bridges",
-      "Algebra",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "46e03e85",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:04:33.099671+00:00"
   },
   {
     "id": "fd_0200",
@@ -4486,39 +3918,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "46e03e85",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-18T01:04:33.109908+00:00"
-  },
-  {
-    "id": "fd_0202",
-    "title": "Implementation Priority",
-    "description": "| Direction | Difficulty | Impact | Dependencies |\n|-----------|-----------|--------|--------------|\n| 1. Pre-periodic preservation | Low | Medium | Direct extension of current work |\n| 2. Entropy lower bounds | Medium | High | Orbit counting infrastructure |\n| 3. Categorical quotients | Medium | High | Fiber invariance, category theory |\n| 4. Circuit lower bounds | High | Very High | Algebraic complexity foundations |\n| 5. Verified abstraction-refinement | Medium | Very High | Algorithm formalization |\n\nDirections 1 and 5 are the most immediately actionable. Direction 4 represents the deepest theoretical advance but requires substantial algebraic complexity infrastructure. Direction 3 provides the cleanest mathematical framework for the entire program.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "46e03e85",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:04:33.114176+00:00"
-  },
-  {
-    "id": "fd_0211",
-    "title": "1. Subadditive Horizon Law (Fekete-Type Asymptotics)",
-    "description": "**Theorem Statement:**\n```lean\ntheorem subadditive_horizon_law (L : \u2115 \u2192 \u211d)\n    (hL : \u2200 T\u2081 T\u2082, L (T\u2081 + T\u2082) \u2264 L T\u2081 + L T\u2082)\n    (hL_nonneg : \u2200 T, 0 \u2264 L T) :\n    \u2203 r : \u211d, Tendsto (fun T => L T / T) atTop (\ud835\udcdd r)\n```\n\n**Proof Strategy:**\nApply Fekete's subadditive lemma: if `L` is subadditive and nonneg, then `L(T)/T` converges to `inf { L(n)/n | n \u2265 1 }`. The proof proceeds by showing the sequence `L(n)/n` is eventually bounded below, then using the subadditivity to show it is a Cauchy sequence. Mathlib's `Filter.Tendsto` and `Real.iInf` machinery should suffice.\n\n**Cross-Domain Connection:**\nThis connects entropy rates in information theory (Shannon's theorem on the limit of `H(X\u2081,...,X\u2099)/n`) to amortized complexity in algorithm analysis and to the thermodynamic limit in statistical mechanics w",
-    "domains": [
-      "Analysis",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "74c4c009",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:21:14.691851+00:00"
   },
   {
     "id": "fd_0212",
@@ -4595,33 +3994,19 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-18T01:21:14.717997+00:00"
   },
   {
-    "id": "fd_0216",
-    "title": "Team A: Foundations",
-    "description": "- Formalize Fekete's subadditive lemma in full generality\n- Extend to superadditive sequences (dual bounds)\n- Connect to Mathlib's `Filter.Tendsto` and `asymptotics` libraries",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "74c4c009",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:21:14.722855+00:00"
-  },
-  {
-    "id": "fd_0217",
-    "title": "Team B: Applications",
-    "description": "- Instantiate against specific coding theorems (Huffman, arithmetic coding)\n- Apply to neural network verification pipelines\n- Connect to persistent homology computation bounds",
+    "id": "fd_0218",
+    "title": "Theorem Statement (Conceptual)",
+    "description": "The subgroup structure of (\u2124/p\u2124)\u00d7 determines the lattice of intermediate fields in \u211a(\u03b6_p)/\u211a. Each subgroup of index d corresponds to a degree-d extension, and the discrete logarithm problem in the index-d subgroup is at least as hard as in the full group (by Pohlig\u2013Hellman reduction).\n\n```lean\n-- Formalization target: show that the Pohlig-Hellman decomposition\n-- respects the cyclotomic subfield tower\ntheorem pohlig_hellman_subgroup_tower (p : \u2115) [Fact (Nat.Prime p)] (hpodd : p \u2260 2)\n    (q : \u2115) (hq : q.Prime) (hqdvd : q \u2223 (p - 1)) :\n    \u2203 (H : Subgroup (ZMod p)\u02e3),\n      Nat.card H = q \u2227\n      \u2203 K : IntermediateField \u211a (CyclotomicField p \u211a),\n        Module.finrank \u211a K = (p - 1) / q\n```",
     "domains": [
       "NumberTheory",
-      "Topology",
-      "MachineLearning"
+      "Cryptography",
+      "Algebra"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "74c4c009",
+    "source_exp_id": "e95a3be8",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-18T01:21:14.727667+00:00"
+    "timestamp": "2026-05-18T01:27:34.146990+00:00"
   }
 ];

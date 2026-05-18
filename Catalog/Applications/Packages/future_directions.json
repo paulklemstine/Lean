@@ -1163,7 +1163,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.748452+00:00"
     },
@@ -1224,7 +1224,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.753550+00:00"
     },
@@ -1338,7 +1338,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.762542+00:00"
     },
@@ -1532,7 +1532,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.012213+00:00"
     },
@@ -1567,7 +1567,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.016875+00:00"
     },
@@ -1607,7 +1607,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.021605+00:00"
     },
@@ -1624,7 +1624,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.023684+00:00"
     },
@@ -1644,7 +1644,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.026326+00:00"
     },
@@ -1661,7 +1661,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.028887+00:00"
     },
@@ -1678,7 +1678,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.031456+00:00"
     },
@@ -1702,7 +1702,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.034369+00:00"
     },
@@ -1720,7 +1720,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.037118+00:00"
     },
@@ -1737,7 +1737,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.039396+00:00"
     },
@@ -1754,7 +1754,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.041706+00:00"
     },
@@ -1908,7 +1908,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "e95a3be8",
       "timestamp": "2026-05-17T21:05:45.344615+00:00"
     },
@@ -1925,8 +1925,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "c5210388",
       "timestamp": "2026-05-17T21:05:45.346869+00:00"
     },
     {
@@ -1959,7 +1959,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:45.350624+00:00"
     },
@@ -2097,7 +2097,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:27:10.236010+00:00"
     },
@@ -2697,7 +2697,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:03:29.899416+00:00"
     },
@@ -2864,7 +2864,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:03:47.818513+00:00"
     },
@@ -3152,7 +3152,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.886222+00:00"
     },
@@ -3193,7 +3193,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.894378+00:00"
     },
@@ -3214,7 +3214,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.899280+00:00"
     },
@@ -3231,7 +3231,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.902359+00:00"
     },
@@ -3248,7 +3248,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.905326+00:00"
     },
@@ -3265,7 +3265,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.908126+00:00"
     },
@@ -3284,7 +3284,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.912447+00:00"
     },
@@ -3302,7 +3302,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.915527+00:00"
     },
@@ -3319,7 +3319,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.918401+00:00"
     },
@@ -3336,7 +3336,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.921249+00:00"
     },
@@ -3356,7 +3356,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.925632+00:00"
     },
@@ -3390,7 +3390,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.931981+00:00"
     },
@@ -3408,7 +3408,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:56.219925+00:00"
     },
@@ -3525,7 +3525,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:56.251183+00:00"
     },
@@ -3583,7 +3583,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:05:11.121755+00:00"
     },
@@ -3600,7 +3600,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:02:08.747493+00:00"
     },
@@ -3617,7 +3617,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:02:08.752806+00:00"
     },
@@ -3635,7 +3635,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:02:08.756629+00:00"
     },
@@ -3676,7 +3676,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:04:33.099671+00:00"
     },
@@ -3736,7 +3736,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:04:33.114176+00:00"
     },
@@ -3826,7 +3826,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:05:01.486061+00:00"
     },
@@ -3843,7 +3843,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:05:01.489889+00:00"
     },
@@ -3860,7 +3860,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:05:01.493413+00:00"
     },
@@ -3878,7 +3878,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:05:01.496678+00:00"
     },
@@ -3899,7 +3899,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:21:14.691851+00:00"
     },
@@ -4002,7 +4002,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:21:14.722855+00:00"
     },
@@ -4021,9 +4021,28 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:21:14.727667+00:00"
+    },
+    {
+      "id": "fd_0218",
+      "title": "Theorem Statement (Conceptual)",
+      "description": "The subgroup structure of (ℤ/pℤ)× determines the lattice of intermediate fields in ℚ(ζ_p)/ℚ. Each subgroup of index d corresponds to a degree-d extension, and the discrete logarithm problem in the index-d subgroup is at least as hard as in the full group (by Pohlig–Hellman reduction).\n\n```lean\n-- Formalization target: show that the Pohlig-Hellman decomposition\n-- respects the cyclotomic subfield tower\ntheorem pohlig_hellman_subgroup_tower (p : ℕ) [Fact (Nat.Prime p)] (hpodd : p ≠ 2)\n    (q : ℕ) (hq : q.Prime) (hqdvd : q ∣ (p - 1)) :\n    ∃ (H : Subgroup (ZMod p)ˣ),\n      Nat.card H = q ∧\n      ∃ K : IntermediateField ℚ (CyclotomicField p ℚ),\n        Module.finrank ℚ K = (p - 1) / q\n```",
+      "source_exp_id": "e95a3be8",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Cryptography",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:27:34.146990+00:00"
     }
   ],
   "pruned": [
