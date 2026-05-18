@@ -981,8 +981,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "dcb79ee6",
       "timestamp": "2026-05-17T18:48:26.949134+00:00"
     },
     {
@@ -1550,7 +1550,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "2e5ab513",
       "timestamp": "2026-05-17T20:40:43.014759+00:00"
     },
@@ -2517,8 +2517,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "a8ef4557",
       "timestamp": "2026-05-17T22:04:20.751655+00:00"
     },
     {
@@ -3175,8 +3175,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "41bd210a",
       "timestamp": "2026-05-18T00:04:40.890795+00:00"
     },
     {
@@ -3810,6 +3810,77 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:04:45.212590+00:00"
+    },
+    {
+      "id": "fd_0207",
+      "title": "Algebra Team",
+      "description": ": Formalize tropical matrix multiplication and spectral theory (Directions 1, 3).",
+      "source_exp_id": "2e5ab513",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Tropical",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:05:01.486061+00:00"
+    },
+    {
+      "id": "fd_0208",
+      "title": "Number Theory Team",
+      "description": ": Develop local-global principles and Hecke compatibility (Directions 4, 5).",
+      "source_exp_id": "2e5ab513",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:05:01.489889+00:00"
+    },
+    {
+      "id": "fd_0209",
+      "title": "Combinatorics Team",
+      "description": ": Count fibers and develop entropy bounds (Direction 2).",
+      "source_exp_id": "2e5ab513",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:05:01.493413+00:00"
+    },
+    {
+      "id": "fd_0210",
+      "title": "Applications Team",
+      "description": ": Build tropical cryptographic primitives on the formal foundations.",
+      "source_exp_id": "2e5ab513",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "Cryptography"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:05:01.496678+00:00"
     }
   ],
   "pruned": [
