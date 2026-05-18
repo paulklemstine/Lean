@@ -1890,8 +1890,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "afe10da9",
       "timestamp": "2026-05-17T21:05:45.342520+00:00"
     },
     {
@@ -3175,7 +3175,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "41bd210a",
       "timestamp": "2026-05-18T00:04:40.890795+00:00"
     },
@@ -3772,8 +3772,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "5475ab04",
       "timestamp": "2026-05-18T01:04:45.206085+00:00"
     },
     {
@@ -4129,6 +4129,74 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:03:57.151237+00:00"
+    },
+    {
+      "id": "fd_0224",
+      "title": "Hypothesis generation",
+      "description": ": Propose new theorems based on cross-domain connections",
+      "source_exp_id": "41bd210a",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:04:19.997405+00:00"
+    },
+    {
+      "id": "fd_0225",
+      "title": "Skeleton construction",
+      "description": ": Write theorem statements with `sorry` proofs",
+      "source_exp_id": "41bd210a",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:04:20.002916+00:00"
+    },
+    {
+      "id": "fd_0226",
+      "title": "Proof search",
+      "description": ": Use automated theorem proving to fill in proofs",
+      "source_exp_id": "41bd210a",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:04:20.007318+00:00"
+    },
+    {
+      "id": "fd_0227",
+      "title": "Documentation",
+      "description": ": Update research paper and future directions",
+      "source_exp_id": "41bd210a",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T02:04:20.012410+00:00"
     }
   ],
   "pruned": [
