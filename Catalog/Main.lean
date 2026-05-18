@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1318 of the highest-quality
+A curated collection of 1327 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1318
+Total files: 1327
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -1122,6 +1122,7 @@ import FINAL.Tropical.Corollaries
 import FINAL.Tropical.CriticalCurves
 import FINAL.Tropical.Defs
 import FINAL.Tropical.Derandomization
+import FINAL.Tropical.DiffConstraints
 import FINAL.Tropical.DivisorTheory
 import FINAL.Tropical.DragonTropical
 import FINAL.Tropical.Duality
@@ -1133,6 +1134,7 @@ import FINAL.Tropical.Existence
 import FINAL.Tropical.Expr
 import FINAL.Tropical.FactorRank
 import FINAL.Tropical.FactorRankSeparation
+import FINAL.Tropical.FactorRecoveryReduction
 import FINAL.Tropical.Fano
 import FINAL.Tropical.FanoIncidence
 import FINAL.Tropical.FermatHypersurface
@@ -1162,8 +1164,10 @@ import FINAL.Tropical.HodgeCorrespondence
 import FINAL.Tropical.HorizonStability
 import FINAL.Tropical.HybridArgument
 import FINAL.Tropical.Hyperbolicity
+import FINAL.Tropical.Hypersurface
 import FINAL.Tropical.InformationTheory
 import FINAL.Tropical.KineticCertification
+import FINAL.Tropical.KleeneStarUpdate
 import FINAL.Tropical.LSEConvexity
 import FINAL.Tropical.LSEPruning
 import FINAL.Tropical.LegendreDuality
@@ -1191,6 +1195,7 @@ import FINAL.Tropical.Monotonicity
 import FINAL.Tropical.MutualInformation
 import FINAL.Tropical.MyhillNerode
 import FINAL.Tropical.NNCompilationExtended
+import FINAL.Tropical.NegligibleClosure
 import FINAL.Tropical.NerodeDecidability
 import FINAL.Tropical.NewResearch
 import FINAL.Tropical.NormalForm
@@ -1257,10 +1262,12 @@ import FINAL.Tropical.TropicalACNormalization
 import FINAL.Tropical.TropicalAdditiveCombinatorics
 import FINAL.Tropical.TropicalAdvancedTheory
 import FINAL.Tropical.TropicalAgentEpsilon
+import FINAL.Tropical.TropicalBSDAbelianVariety
 import FINAL.Tropical.TropicalBarrier
 import FINAL.Tropical.TropicalCompressionMonad
 import FINAL.Tropical.TropicalConformalExtension
 import FINAL.Tropical.TropicalCuspidalFactorization
+import FINAL.Tropical.TropicalCycleCorrespondence
 import FINAL.Tropical.TropicalDeepLearningFoundations
 import FINAL.Tropical.TropicalDeepResearch
 import FINAL.Tropical.TropicalDegreeRobustness
@@ -1284,6 +1291,7 @@ import FINAL.Tropical.TropicalMorseTheory
 import FINAL.Tropical.TropicalNBPLowerBound
 import FINAL.Tropical.TropicalNNFrontier
 import FINAL.Tropical.TropicalNetworkTheory
+import FINAL.Tropical.TropicalOracle
 import FINAL.Tropical.TropicalOracleResearch
 import FINAL.Tropical.TropicalOrbitPRG
 import FINAL.Tropical.TropicalPathAlgebra
@@ -1300,6 +1308,7 @@ import FINAL.Tropical.TropicalSemiring
 import FINAL.Tropical.TropicalSieveTheory
 import FINAL.Tropical.TropicalStructure
 import FINAL.Tropical.TropicalTrapdoor
+import FINAL.Tropical.TropicalTrapdoorResearch
 import FINAL.Tropical.TropicalTrapdoorReversal
 import FINAL.Tropical.TropicalTypeTheory
 import FINAL.Tropical.TropicalUpperHalfPlane

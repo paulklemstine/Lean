@@ -1,6 +1,6 @@
 --- KauffmanBracket.lean
 +++ KauffmanBracket.lean
-@@ -36,4 +42,118 @@
+@@ -36,4 +36,118 @@
    simp only [bracket, unknotDiagram, stateContribution, numAS, numBS, δ]
    simp
  

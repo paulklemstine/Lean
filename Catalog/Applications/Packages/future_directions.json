@@ -495,7 +495,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.76,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "603d10a3",
       "timestamp": "2026-05-18T10:17:17.081520+00:00"
     },
@@ -1351,6 +1351,28 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T14:19:54.625738+00:00"
+    },
+    {
+      "id": "fd_0073",
+      "title": "$$\\frac{d}{dp} \\mathbb{P}_p(A) = \\sum_{i=1}^{n} \\text{Inf}_i(A; p)$$",
+      "description": "# Future Directions: Formal Percolation Threshold Theory\n\n## 1. Finite-Size Convergence of Square Site Crossing Thresholds\n\n- **Conjecture:** The finite-volume threshold $p_n$, defined by $\\text{boxCrossingProbSite}(n, p_n) = 1/2$, converges as $n \\to \\infty$, and the convergence is eventually monotone (i.e., $p_n$ is monotonically decreasing for $n \\geq n_0$ for some explicit $n_0$).\n\n- **Why it matters:** This would give the first formally rigorous route toward defining the infinite-volume critical parameter for square site percolation — the most important open problem in planar percolation. The eventual monotonicity would allow certified interval bounds on $p_c$ from finite computations.\n\n- **Test:** Compute $p_n$ for $n \\leq 8$ by exact enumeration (feasible for $n \\leq 5$, Monte Carlo with certified confidence intervals for $n \\leq 8$). Check whether the sequence is monotonically decreasing after $n = 2$. Cross-reference against the numerical estimate $p_c \\approx 0.592746$.\n\n- **Minimal Lean target:** Extend `boxCrossingProb` to arbitrary $n$, prove `exists_finite_volume_threshold` using `increasing_event_prob_monotone`, and formalize the statement `∃ L : ℝ, Filter.Tendsto (fun n => p_n) Filter.atTop (nhds L)` as a conjecture.\n\n---\n\n## 2. Dual Crossing Dichotomy on Planar Rectangular Grids\n\n- **Conjecture:** For every bond configuration on a rectangular grid $\\{0, \\ldots, n-1\\} \\times \\{0, \\ldots, m-1\\}$, exactly one of the following holds: (a) there exists a horizontal open crossing of the primal graph, or (b) there exists a vertical open crossing of the dual graph. That is, for all $\\omega$: `horizontalOpenCrossing ω ↔ ¬ verticalDualCrossing ω`.\n\n- **Why it matters:** This is the combinatorial core of every self-dual threshold proof. It connects primal and dual lattices and is the key ingredient in proving $p_c(\\text{bond}, \\mathbb{Z}^2) = 1/2$. Formalizing this in Lean would be a major milestone toward a complete proof of the Kesten threshold theorem.\n\n- **Test:** Exhaustive verification on all bond configurations for small grids ($n, m \\leq 4$). Then formalize the graph-theoretic proof using planarity and the Jordan curve theorem for grid graphs.\n\n- **Minimal Lean target:** Define the dual grid graph, formalize `dualBondConfig`, and prove the dichotomy theorem `planar_rect_dual_crossing_complement` on $n \\times m$ grids.\n\n---\n\n## 3. Russo-Type Derivative Formula for Finite Increasing Events\n\n- **Conjecture:** For any increasing event $A$ on a finite product Bernoulli space $\\{0,1\\}^\\alpha$ with $|\\alpha| = n$, the derivative of the Bernoulli probability satisfies:\n$$\\frac{d}{dp} \\mathbb{P}_p(A) = \\sum_{i=1}^{n} \\text{Inf}_i(A; p)$$\nwhere $\\text{Inf}_i(A; p) = \\mathbb{P}_p[A \\text{ is pivotal at } i]$ is the influence of coordinate $i$.\n\n- **Why it matters:** Russo's formula is the gateway to sharp-threshold theory, the KKL theorem, and Boolean function analysis. With this formalized, one can derive quantitative bounds on the width of the percolation phase transition. It would also connect percolation theory to discrete Fourier analysis and computational complexity.\n\n- **Test:** Verify the formula computationally for all increasing events on $\\{0,1\\}^n$ for $n \\leq 5$. Compute influences explicitly and compare $d/dp \\, \\mathbb{P}_p(A)$ (obtained by polynomial differentiation of `bernoulliProb`) against the sum of influences.\n\n- **Minimal Lean target:** Define `pivotalSite`, `influence`, and prove the Russo formula as an identity of polynomials in $p$. This decomposes into: (1) a product-rule lemma for Bernoulli weights, (2) a telescoping identity, and (3) the summation over pivotal coordinates.\n\n---\n\n## 4. Algebraic Certification of the Triangular Threshold via Minimal Polynomial\n\n- **Conjecture:** The critical threshold $2\\sin(\\pi/18)$ is an algebraic number of degree exactly 3 over $\\mathbb{Q}$, with minimal polynomial $p^3 - 3p + 1$. Moreover, the other two roots of this polynomial lie outside $(0,1)$: one is negat",
+      "source_exp_id": "603d10a3",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Cryptography",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T14:42:52.107532+00:00"
     }
   ],
   "pruned": [

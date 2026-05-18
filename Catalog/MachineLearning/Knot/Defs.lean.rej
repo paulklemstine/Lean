@@ -1,6 +1,6 @@
 --- Defs.lean
 +++ Defs.lean
-@@ -133,4 +165,36 @@
+@@ -133,4 +133,36 @@
    toLinkDiagram := unknotDiagram
    sign := Fin.elim0
  

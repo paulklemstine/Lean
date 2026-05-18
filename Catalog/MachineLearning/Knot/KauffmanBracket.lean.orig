@@ -5,6 +5,12 @@
   a state sum:
     ⟨D⟩ = ∑_s A^(#A(s) - #B(s)) · δ^(loops(s) - 1)
   where δ = -A² - A⁻².
+
+  ## Main results
+  - `bracket_unknot`: ⟨unknot⟩ = 1
+  - `bracket_reidemeister_III_invariant`: ⟨D₁⟩ = ⟨D₂⟩ under RIII
+  - `bracket_RI_positive`: ⟨D₁⟩ = -A³ · ⟨D₂⟩ under positive RI
+  - `bracket_RI_negative`: ⟨D₁⟩ = -A⁻³ · ⟨D₂⟩ under negative RI
 -/
 import Mathlib
 import Speculative.Knot.Defs
