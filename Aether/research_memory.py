@@ -870,6 +870,13 @@ if __name__ == "__main__":
         else:
             result = mgr.clear_and_reseed(get_seed_directions())
         print(f"Reset complete: {result}")
+        # Sync to Catalog for GitHub Pages
+        import shutil
+        catalog_fd = Path("../Catalog/Applications/Packages/future_directions.json")
+        workspace_fd = workspace / "future_directions.json"
+        if workspace_fd.exists() and catalog_fd.parent.exists():
+            shutil.copy2(workspace_fd, catalog_fd)
+            print(f"Synced future_directions.json to Catalog/")
     elif args.command == "stats":
         mgr = FutureDirectionsManager(workspace)
         stats = mgr.get_stats()
