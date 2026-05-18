@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "sum_product_estimates",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T19:57:40Z",
-      "hue": 100
+      "hue": 272
     },
     {
       "id": "2_tropical_amplitude_amplification",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-17T21:05:27Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "galois_theory_solvability_of_polynomials",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "binary_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:05:54Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "hybrid_argument_with_computational_distinguishers",
@@ -79,7 +79,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T21:27:07Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "coupling_argument",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 280
+      "hue": 271
     },
     {
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
@@ -106,7 +106,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-17T22:04:04Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "proof_strategy",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:04:18Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "line_restriction",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:07:44Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "irreducibility",
@@ -142,7 +142,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:30:35Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -151,7 +151,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-17T23:03:26Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "overview",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:03:44Z",
-      "hue": 90
+      "hue": 281
     },
     {
       "id": "random_matrix_counting",
@@ -178,7 +178,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:07:53Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "proposed_theorem_statement",
@@ -187,7 +187,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:23:40Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "validate_conjectures_computationally",
@@ -196,7 +196,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T00:01:38Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -214,7 +214,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T00:04:38Z",
-      "hue": 101
+      "hue": 92
     },
     {
       "id": "5_abstract_ordered_algebraic_generalization",
@@ -223,7 +223,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T00:04:53Z",
-      "hue": 91
+      "hue": 90
+    },
+    {
+      "id": "direction_1",
+      "title": "Closure Operators as an Information-Dynamics Engine for EML",
+      "domain": "Order Theory / Functional Analysis / Information Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-18T00:05:08Z",
+      "hue": 270
     }
   ],
   "edges": [
@@ -260,6 +269,13 @@
       "target": "decomposition",
       "strength": 1.0,
       "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "3_adjunctions_and_galois_connections_between_theor",
+      "target": "direction_1",
+      "strength": 1.0,
+      "label": "Specific Theorem Targets",
       "type": "provenance"
     },
     {

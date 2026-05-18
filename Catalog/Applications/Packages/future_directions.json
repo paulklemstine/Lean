@@ -2281,7 +2281,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "effd781e",
       "timestamp": "2026-05-17T21:29:22.496354+00:00"
     },
@@ -3393,6 +3393,141 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:40.931981+00:00"
+    },
+    {
+      "id": "fd_0185",
+      "title": "Summary of Current Achievement",
+      "description": "We have established that the weighted coupling/gap-growth inequality is not an artifact of `ℝ` but a theorem of any partially ordered additive commutative monoid with left-monotone addition (`AddCommMonoid α`, `PartialOrder α`, `AddLeftMono α`). This minimal identification unlocks instantiation across `ℝ≥0∞`, `ℤ`, `WithTop ℝ`, `ℕ`, and any ordered monoid satisfying these three conditions.\n\nThe core theorem — `total_gap_growth_of_factorwise_growth_weighted_ordered` — factors through `Finset.sum_le_sum` and `Finset.sum_add_distrib`, making it a two-line proof in the abstract. All domain-specific instantiations are one-line specializations.\n\n---",
+      "source_exp_id": "effd781e",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:56.219925+00:00"
+    },
+    {
+      "id": "fd_0186",
+      "title": "Direction 1: Bellman Operator Monotonicity over Abstract Ordered Semirings",
+      "description": "**Hypothesis**: The Bellman operator `T : (S → α) → (S → α)` defined by `T(V)(s) = min_a [c(s,a) + γ · V(f(s,a))]` is monotone under the pointwise order on `S → α`, whenever `α` is an ordered semiring with the appropriate completeness properties.\n\n**Strategy**:\n1. Define `BellmanOperator` parametrically over an ordered semiring `α` with an infimum operation.\n2. Prove monotonicity: if `V ≤ W` pointwise, then `T(V) ≤ T(W)` pointwise.\n3. Use the abstract aggregation theorem to lift pointwise Bellman improvement to aggregate value improvement.\n4. Prove contraction (in the sup-metric sense) when `γ < 1` in the appropriate ordered metric.\n\n**Impact**: This would unify discrete DP (over `ℤ`), continuous DP (over `ℝ`), extended DP with forbidden states (over `WithTop ℝ`), and tropical/min-plus DP ",
+      "source_exp_id": "effd781e",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Tropical",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:56.225405+00:00"
+    },
+    {
+      "id": "fd_0187",
+      "title": "Direction 2: ENNReal Decomposition for Finite Entropy/Cost Budgets",
+      "description": "**Hypothesis**: The aggregation principle over `ℝ≥0∞` can serve as the algebraic substrate for finite decomposition theorems in information theory — specifically, for proving that if each component of a system has bounded entropy contribution, the total entropy is bounded.\n\n**Strategy**:\n1. Formalize the entropy decomposition `H(X₁,...,Xₖ) ≤ ∑ᵢ H(Xᵢ)` as an instance of the aggregation principle over `ℝ≥0∞`.\n2. Connect to Mathlib's `MeasureTheory.Measure` framework, interpreting `w i` as conditional entropy terms.\n3. Prove a data-processing inequality variant: if local processing at each coordinate reduces information by at least `δᵢ`, total information decreases by at least `∑ δᵢ`.\n\n**Impact**: This creates a formal bridge between algebraic order theory and information-theoretic inequaliti",
+      "source_exp_id": "effd781e",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:56.230744+00:00"
+    },
+    {
+      "id": "fd_0188",
+      "title": "Direction 3: Tropical Path-Dominance and Min-Plus Convolution Monotonicity",
+      "description": "**Hypothesis**: The aggregation theorem, when interpreted through the tropical (min-plus) lens, yields a formal proof that shortest-path optimality certificates compose: if each edge satisfies the reduced-cost optimality condition, the total path cost satisfies a global optimality bound.\n\n**Strategy**:\n1. Formalize the reduced-cost optimality condition: `c(u,v) + π(u) - π(v) ≥ 0` for potential `π`.\n2. Use `tropical_path_weight_mono` to prove that summing reduced costs along a path yields a nonneg quantity.\n3. Extend to min-plus matrix powers: prove that if `A ≤ B` entrywise (in the tropical sense), then `A⊗ⁿ ≤ B⊗ⁿ` for tropical matrix multiplication.\n4. Connect to tropical polynomial valuation: coordinatewise bounds on coefficients yield bounds on tropical polynomial evaluation.\n\n**Impact*",
+      "source_exp_id": "effd781e",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "Algebra",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:56.235876+00:00"
+    },
+    {
+      "id": "fd_0189",
+      "title": "Direction 4: Categorical Formulation — Order-Enriched Monoidal Functors",
+      "description": "**Hypothesis**: Finite summation `∑ : (ι → α) → α` is a lax monoidal functor from the category of finite types with the pointwise order to the ordered monoid `α`. The aggregation theorem is the statement that this functor is order-preserving.\n\n**Strategy**:\n1. Define the category of finite-type-indexed families with pointwise order as morphisms.\n2. Show that `∑` is a lax monoidal functor preserving the order enrichment.\n3. Prove that composition of order-preserving lax monoidal functors is again order-preserving and lax monoidal.\n4. Use this to derive the aggregation theorem for composed aggregation operations (e.g., sum-of-sums, sum-of-products).\n\n**Impact**: This is the most abstract and visionary direction. It reframes monotone aggregation as a categorical property, enabling automatic t",
+      "source_exp_id": "effd781e",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:56.240973+00:00"
+    },
+    {
+      "id": "fd_0190",
+      "title": "Direction 5: Counterexample Taxonomy for WithTop/WithBot Boundaries",
+      "description": "**Hypothesis**: The aggregation principle holds for `WithTop α` and `WithBot α` when `α` is an ordered additive commutative monoid with appropriate `AddLeftMono` — but there exist structures (e.g., certain non-cancellative monoids, or monoids where `⊤ + ⊤` is ill-defined) where the naive extension fails.\n\n**Strategy**:\n1. Systematically test the typeclass requirements for `WithTop α` and `WithBot α` across different base types.\n2. Identify precisely which of `AddCommMonoid`, `PartialOrder`, `AddLeftMono` can fail for extended types.\n3. Formalize counterexamples where the aggregation principle fails due to non-cancellative behavior or absorption (`⊤ + x = ⊤`).\n4. State precise boundary theorems: \"The aggregation principle holds for `WithTop α` iff α satisfies [conditions].\"\n\n**Impact**: Thi",
+      "source_exp_id": "effd781e",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:56.246007+00:00"
+    },
+    {
+      "id": "fd_0191",
+      "title": "Cross-Cutting Theme: Monotone Aggregation as Infrastructure",
+      "description": "All five directions share a common vision: **monotone aggregation is not a theorem but a design pattern**. The abstract aggregation principle should become a reusable piece of mathematical infrastructure, analogous to how `Finset.sum_le_sum` is infrastructure in Mathlib. The goal is to make it trivial for any formalization project — in optimization, probability, information theory, tropical geometry, or category theory — to invoke the aggregation principle with a one-line specialization.\n\nThe architectural principle is: **prove once abstractly, instantiate everywhere concretely**. The current work demonstrates this for five domains; the future directions above would extend it to at least five more, creating a self-reinforcing ecosystem of ordered additive comparison results.",
+      "source_exp_id": "effd781e",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Probability",
+        "Tropical",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:56.251183+00:00"
     }
   ],
   "pruned": [
