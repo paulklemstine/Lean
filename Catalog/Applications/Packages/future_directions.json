@@ -138,8 +138,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "51f363f3",
       "timestamp": "2026-05-17T18:48:26.949045+00:00"
     },
     {
@@ -550,8 +550,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "acbf4c21",
       "timestamp": "2026-05-17T18:48:26.949084+00:00"
     },
     {
@@ -830,7 +830,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "f6622269",
       "timestamp": "2026-05-17T18:48:26.949114+00:00"
     },
@@ -5107,6 +5107,128 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T07:03:56.665357+00:00"
+    },
+    {
+      "id": "fd_0274",
+      "title": "Proposed Lean Signature",
+      "description": "```lean\ntheorem generic_fiat_shamir_compiler\n    {Stmt Wit Chal Resp Commit : Type*}\n    [Fintype Chal] [DecidableEq Chal]\n    (Σ : SigmaProtocolSecurity Stmt Wit Chal Resp Commit)\n    (extract : Stmt → Commit → Chal → Resp → Chal → Resp → Wit)\n    (h_extract : ∀ stmt com c₁ r₁ c₂ r₂,\n      c₁ ≠ c₂ →\n      Σ.verify stmt com c₁ r₁ →\n      Σ.verify stmt com c₂ r₂ →\n      Σ.relation stmt (extract stmt com c₁ r₁ c₂ r₂))\n    (H : Stmt → Commit → Chal)\n    (A_out₁ A_out₂ : Stmt × Commit × Resp)\n    (hsame_com : A_out₁.2.1 = A_out₂.2.1)\n    (hsame_stmt : A_out₁.1 = A_out₂.1)\n    (hdiff_chal : H A_out₁.1 A_out₁.2.1 ≠ H A_out₂.1 A_out₂.2.1)\n    (hacc₁ : Σ.verify A_out₁.1 A_out₁.2.1 (H A_out₁.1 A_out₁.2.1) A_out₁.2.2)\n    (hacc₂ : Σ.verify A_out₂.1 A_out₂.2.1 (H A_out₂.1 A_out₂.2.1) A_out₂.2.2) :\n  ",
+      "source_exp_id": "f6622269",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:04:12.700858+00:00"
+    },
+    {
+      "id": "fd_0275",
+      "title": "Precise Statement",
+      "description": "Define a formal probability monad over finite types that supports uniform sampling, conditional probability, and statistical distance. Use it to state and prove quantitative security bounds for Schnorr and Fiat-Shamir.",
+      "source_exp_id": "f6622269",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:04:12.721051+00:00"
+    },
+    {
+      "id": "fd_0276",
+      "title": "Team 1: Algebraic Infrastructure",
+      "description": "- Extend gpow API to support multi-generator settings\n- Formalize the discrete log assumption as a type class\n- Build certified group parameter generation",
+      "source_exp_id": "f6622269",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Cryptography",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:04:12.754324+00:00"
+    },
+    {
+      "id": "fd_0277",
+      "title": "Team 2: Sigma Protocol Library",
+      "description": "- Formalize Guillou-Quisquater, Okamoto, and Pedersen protocols\n- Implement and verify OR/AND/threshold compositions\n- Prove generic Fiat-Shamir compiler theorem",
+      "source_exp_id": "f6622269",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:04:12.795062+00:00"
+    },
+    {
+      "id": "fd_0278",
+      "title": "Team 3: Quantitative Security",
+      "description": "- Build finite probability monad\n- Formalize game-based security definitions\n- Prove quantitative forking lemma with exact bounds",
+      "source_exp_id": "f6622269",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:04:12.801028+00:00"
+    },
+    {
+      "id": "fd_0279",
+      "title": "Team 4: Applications",
+      "description": "- Formalize Schnorr signature scheme with concrete security\n- Verify EdDSA parameter choices\n- Connect to elliptic curve group formalizations in Mathlib\n\n---",
+      "source_exp_id": "f6622269",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:04:12.806597+00:00"
+    },
+    {
+      "id": "fd_0280",
+      "title": "Timeline",
+      "description": "**Phase 1 (3 months):** Directions 4 and 5 — exact soundness bounds and probability monad. These build directly on the current formalization.\n\n**Phase 2 (6 months):** Direction 3 — OR-composition. Requires extending the abstract interface with extractors.\n\n**Phase 3 (12 months):** Directions 1 and 2 — generic compiler and signature reduction. These are the breakthrough targets requiring the full infrastructure.",
+      "source_exp_id": "f6622269",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Probability",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:04:12.814970+00:00"
     }
   ],
   "pruned": [
