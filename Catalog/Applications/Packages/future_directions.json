@@ -50,8 +50,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "12caa88a",
       "timestamp": "2026-05-18T10:17:17.071469+00:00"
     },
     {
@@ -1309,6 +1309,27 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T13:04:20.592944+00:00"
+    },
+    {
+      "id": "fd_0071",
+      "title": "This document outlines 5 concrete next steps for extending the formal infrastruc",
+      "description": "# Future Directions: Jacobian Conjecture Formal Development\n\n## Overview\n\nThis document outlines 5 concrete next steps for extending the formal infrastructure for the Jacobian Conjecture. Each direction includes an exact theorem statement, a Lean type signature sketch, two proof strategies, breakthrough potential, and cross-domain connections.\n\n---\n\n## Direction 1: Complete General Quadratic Jacobian Conjecture (All Dimensions)\n\n### Theorem Statement\n\nFor any field $K$ of characteristic zero, any dimension $n$, and any polynomial map $F = I + H : K^n \\to K^n$ with $H$ homogeneous of degree 2 and $\\det(JF) = 1$, the map $F$ is a polynomial automorphism with inverse $G = I - H$.\n\n### Lean Type Signature\n\n```lean\ntheorem quadratic_jacobian_conjecture\n    (K : Type*) [Field K] [CharZero K]\n    (n : ℕ)\n    (H : Fin n → MvPolynomial (Fin n) K)\n    (h_hom : ∀ i, (H i).IsHomogeneous 2)\n    (hjac : jacobianDet (fun i => X i + H i) = 1) :\n    isPolynomialInverse (fun i => X i + H i) (fun i => X i - H i) := by\n  sorry\n```\n\n### Proof Strategy A: Evaluation + Nilpotence\n\n1. Prove that the Jacobian condition implies JH(v) is nilpotent for every evaluation point v (using `isNilpotent_of_det_one_add_smul`).\n2. Show that for quadratic H with nilpotent JH(v), the identity H(v - H(v)) = H(v) holds pointwise via the Euler homogeneity relation and JH·H = 0.\n3. Use `MvPolynomial.funext` to lift pointwise equality to polynomial equality.\n\n### Proof Strategy B: Parametric Coefficient Decomposition\n\n1. Decompose H into explicit monomial form using the basis of degree-2 monomials.\n2. Extract linear constraints (trace = 0) and quadratic constraints (det JH = 0) on coefficients.\n3. Show that all solutions have rank-1 structure H_i = r_i · ℓ(x)² for some linear form ℓ.\n4. Verify the inverse formula G = I - H for rank-1 maps directly.\n\n### Breakthrough Potential\n\nA complete formal proof of the quadratic case in all dimensions would be the first machine-verified case of the Jacobian Conjecture beyond trivial instances. It would validate the nilpotence-based proof strategy and establish the template for attacking the cubic case.\n\n### Cross-Domain Connection\n\n**Algebraic complexity theory**: The inverse $G = I - H$ has the same degree as $F$, implying the algebraic circuit complexity of the inverse is bounded by that of the forward map. This connects to questions about circuit rigidity and polynomial identity testing.\n\n---\n\n## Direction 2: Formal Bass–Connell–Wright Degree Reduction\n\n### Theorem Statement\n\nThe Jacobian Conjecture for polynomial maps of arbitrary degree reduces to the cubic homogeneous case. Specifically, for every polynomial map $F : K^n \\to K^n$ with $\\det(JF) \\in K^*$, there exist $N \\geq n$ and a cubic homogeneous map $\\tilde{H} : K^N \\to K^N$ such that: (1) $\\det(J(I + \\tilde{H})) = 1$, and (2) $I + \\tilde{H}$ is an automorphism implies $F$ is an automorphism.\n\n### Lean Type Signature\n\n```lean\ntheorem BCW_reduction\n    (K : Type*) [Field K] [CharZero K]\n    (n : ℕ) (F : Fin n → MvPolynomial (Fin n) K)\n    (hjac : jacobianCondition F) :\n    ∃ (N : ℕ) (H : Fin N → MvPolynomial (Fin N) K),\n      (∀ i, (H i).IsHomogeneous 3) ∧\n      jacobianDet (fun i => X i + H i) = 1 ∧\n      (isPolynomialAutomorphism (fun i => X i + H i) →\n       isPolynomialAutomorphism F) := by\n  sorry\n```\n\n### Proof Strategy A: Direct Construction via Homogenization\n\n1. Normalize $F$ to identity linear part using the invertibility of the constant Jacobian matrix.\n2. Write $F = I + H_2 + H_3 + \\cdots + H_d$ with $H_k$ homogeneous of degree $k$.\n3. Introduce auxiliary variables $y_{ij}$ and construct the \"cubification\" map that replaces each degree-$k$ term with a product of linear and quadratic terms using new variables.\n4. Show the extended map is cubic homogeneous and preserves the Jacobian condition.\n5. Show that invertibility of the extension implies invertibility of the original.\n\n### Proof Strategy B: Stable Equivalence Framework\n\n1. Formalize the notion of stable e",
+      "source_exp_id": "889377dd",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T14:16:39.350569+00:00"
     }
   ],
   "pruned": [

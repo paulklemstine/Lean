@@ -1,162 +1,131 @@
 /-
-# Frankl's Union-Closed Conjecture: Definitions and Foundational Results
+  # Frankl's Union-Closed Conjecture — Core Definitions
 
-This file establishes the core definitions for Frankl's conjecture on
-union-closed set families, along with basic structural and counting lemmas.
+  This module provides the foundational definitions for studying
+  Frankl's union-closed families conjecture in a finite-set setting.
 
-Frankl's conjecture (1979) states that for every finite union-closed family
-of sets, there exists an element belonging to at least half the sets.
+  ## Main definitions
+
+  * `Frankl.UnionClosed` — a family closed under pairwise union
+  * `Frankl.ground` — the union of all members
+  * `Frankl.appearsIn` — the subfamily containing a given element
+  * `Frankl.element_frequency` — how many members contain an element
+  * `Frankl.IsMaximalMember` — maximality w.r.t. inclusion
+  * `Frankl.maximalMembers` — the finset of all maximal members
+  * `Frankl.dualFamily` — complement-dual relative to a ground set
 -/
 import Mathlib
 
-open Finset
+namespace Frankl
 
-/-- A family of finite sets is union-closed if it is closed under pairwise union. -/
-def UnionClosed {α : Type*} [DecidableEq α] (F : Finset (Finset α)) : Prop :=
-  ∀ ⦃A⦄, A ∈ F → ∀ ⦃B⦄, B ∈ F → A ∪ B ∈ F
+variable {α : Type*} [DecidableEq α]
 
-/-- The abundance of an element `x` in a family `F` is the number of sets in `F`
-    containing `x`. -/
-def abundance {α : Type*} [DecidableEq α] (F : Finset (Finset α)) (x : α) : ℕ :=
-  (F.filter (x ∈ ·)).card
+/-- A family `F` of finite sets is **union-closed** if for every two members
+    `A, B ∈ F`, the union `A ∪ B` also belongs to `F`. -/
+def UnionClosed (F : Finset (Finset α)) : Prop :=
+  ∀ ⦃A B⦄, A ∈ F → B ∈ F → A ∪ B ∈ F
 
-/-- Frankl's property: there exists an element appearing in at least half the sets. -/
-def FranklProperty {α : Type*} [DecidableEq α] (F : Finset (Finset α)) : Prop :=
-  ∃ x, 2 * abundance F x ≥ F.card
-
-/-- The universe of a family is the union of all its member sets. -/
-def familyUniverse {α : Type*} [DecidableEq α] (F : Finset (Finset α)) : Finset α :=
+/-- The **ground set** of a family `F` is the union of all its members. -/
+def ground (F : Finset (Finset α)) : Finset α :=
   F.biUnion id
 
-/-! ## Basic abundance lemmas -/
+/-- The subfamily of `F` consisting of all sets that contain `x`. -/
+def appearsIn (x : α) (F : Finset (Finset α)) : Finset (Finset α) :=
+  F.filter (fun A => x ∈ A)
+
+/-- The **element frequency** of `x` in `F`: the number of members of `F` containing `x`. -/
+def element_frequency (x : α) (F : Finset (Finset α)) : Nat :=
+  (appearsIn x F).card
+
+/-- A member `M` of `F` is **maximal** if no strictly larger member of `F` contains it. -/
+def IsMaximalMember (F : Finset (Finset α)) (M : Finset α) : Prop :=
+  M ∈ F ∧ ∀ A ∈ F, M ⊆ A → A = M
+
+/-- The finset of all maximal members of `F`. -/
+def maximalMembers (F : Finset (Finset α)) : Finset (Finset α) :=
+  F.filter (fun M => ∀ A ∈ F, M ⊆ A → A = M)
+
+/-- The **dual family** of `F` relative to a ground set `U`:
+    complement each member within `U`. -/
+def dualFamily (U : Finset α) (F : Finset (Finset α)) : Finset (Finset α) :=
+  F.image fun A => U \ A
+
+/-! ## Basic API lemmas -/
+
+theorem appearsIn_subset (x : α) (F : Finset (Finset α)) :
+    appearsIn x F ⊆ F :=
+  Finset.filter_subset _ _
+
+theorem mem_appearsIn (x : α) (F : Finset (Finset α)) (A : Finset α) :
+    A ∈ appearsIn x F ↔ A ∈ F ∧ x ∈ A := by
+  simp [appearsIn, Finset.mem_filter]
+
+theorem element_frequency_le_card (x : α) (F : Finset (Finset α)) :
+    element_frequency x F ≤ F.card :=
+  Finset.card_le_card (appearsIn_subset x F)
+
+theorem mem_ground (F : Finset (Finset α)) (x : α) :
+    x ∈ ground F ↔ ∃ A ∈ F, x ∈ A := by
+  simp [ground, Finset.mem_biUnion]
+
+theorem maximalMembers_subset (F : Finset (Finset α)) :
+    maximalMembers F ⊆ F :=
+  Finset.filter_subset _ _
+
+theorem mem_maximalMembers (F : Finset (Finset α)) (M : Finset α) :
+    M ∈ maximalMembers F ↔ IsMaximalMember F M := by
+  simp [maximalMembers, IsMaximalMember, Finset.mem_filter]
+
+theorem element_frequency_pos_of_mem_ground
+    (F : Finset (Finset α)) (x : α) (hx : x ∈ ground F) :
+    0 < element_frequency x F := by
+  rw [mem_ground] at hx
+  obtain ⟨A, hAF, hxA⟩ := hx
+  exact Finset.card_pos.mpr ⟨A, (mem_appearsIn x F A).mpr ⟨hAF, hxA⟩⟩
+
+theorem ground_subset_of_mem {α : Type*} [DecidableEq α]
+    (F : Finset (Finset α)) (A : Finset α) (hA : A ∈ F) :
+    A ⊆ ground F := by
+  intro x hx
+  rw [mem_ground]
+  exact ⟨A, hA, hx⟩
+
+/-- Every nonempty member of a union-closed family yields a nonempty ground set. -/
+theorem ground_nonempty_of_nonempty_member
+    (F : Finset (Finset α)) (hne : ∃ A ∈ F, A.Nonempty) :
+    (ground F).Nonempty := by
+  obtain ⟨A, hAF, ⟨x, hx⟩⟩ := hne
+  exact ⟨x, (mem_ground F x).mpr ⟨A, hAF, hx⟩⟩
+
+/-- In a union-closed family with a nonempty member, `F` itself is nonempty. -/
+theorem family_nonempty_of_nonempty_member
+    (F : Finset (Finset α)) (hne : ∃ A ∈ F, A.Nonempty) :
+    F.Nonempty := by
+  obtain ⟨A, hAF, _⟩ := hne
+  exact ⟨A, hAF⟩
 
 /-
-Abundance is bounded by the family size.
+Every member of `F` is contained in some maximal member.
 -/
-theorem abundance_le_card {α : Type*} [DecidableEq α]
-    (F : Finset (Finset α)) (x : α) :
-    abundance F x ≤ F.card := by
-  exact Finset.card_filter_le _ _
+theorem exists_maximal_containing
+    (F : Finset (Finset α)) (A : Finset α) (hA : A ∈ F) :
+    ∃ M, IsMaximalMember F M ∧ A ⊆ M := by
+  -- We pick a maximal element by Finset induction on cardinality
+  have : ∃ M ∈ F, A ⊆ M ∧ ∀ B ∈ F, M ⊆ B → B = M := by
+    by_contra h
+    push_neg at h
+    -- For every member containing A, there's a strictly larger member
+    -- But F is finite, so this is impossible
+    -- We prove this by strong induction on |ground F| - |M|
+    -- By repeatedly applying the hypothesis `h`, we can construct an infinite sequence of distinct sets in `F` containing `A`.
+    have h_seq : ∀ n : ℕ, ∃ B ∈ F, A ⊆ B ∧ B.card ≥ n := by
+      intro n
+      induction' n with n ih;
+      · exact ⟨ A, hA, Finset.Subset.refl _, Nat.zero_le _ ⟩;
+      · obtain ⟨ B, hB₁, hB₂, hB₃ ⟩ := ih; obtain ⟨ C, hC₁, hC₂, hC₃ ⟩ := h B hB₁ hB₂; exact ⟨ C, hC₁, hB₂.trans hC₂, Nat.succ_le_of_lt ( lt_of_le_of_lt hB₃ ( Finset.card_lt_card ( Finset.ssubset_iff_subset_ne.mpr ⟨ hC₂, by aesop ⟩ ) ) ) ⟩ ;
+    contrapose! h_seq;
+    exact ⟨ F.sup ( fun B => B.card ) + 1, fun B hB hAB => Nat.lt_succ_of_le ( Finset.le_sup ( f := fun B => B.card ) hB ) ⟩
+  obtain ⟨M, hMF, hAM, hMax⟩ := this
+  exact ⟨M, ⟨hMF, hMax⟩, hAM⟩
 
-/-
-Abundance equals the indicator sum over the family.
--/
-theorem abundance_eq_sum {α : Type*} [DecidableEq α]
-    (F : Finset (Finset α)) (x : α) :
-    abundance F x = ∑ s ∈ F, if x ∈ s then 1 else 0 := by
-  simp +decide only [abundance, card_filter]
-
-/-! ## Double-counting identity -/
-
-/-
-The sum of set sizes equals the sum of abundances over the full type.
-    This is the fundamental double-counting identity for set families.
--/
-theorem sum_card_eq_sum_abundance {α : Type*} [Fintype α] [DecidableEq α]
-    (F : Finset (Finset α)) :
-    ∑ s ∈ F, s.card = ∑ x : α, abundance F x := by
-  simp +decide only [abundance_eq_sum];
-  rw [ Finset.sum_comm, Finset.sum_congr rfl ] ; aesop
-
-/-! ## Structural lemmas -/
-
-/-
-Every set in the family is a subset of the family's universe.
--/
-theorem subset_familyUniverse {α : Type*} [DecidableEq α]
-    (F : Finset (Finset α)) (s : Finset α) (hs : s ∈ F) :
-    s ⊆ familyUniverse F := by
-  exact Finset.subset_iff.2 fun x hx => Finset.mem_biUnion.2 ⟨ s, hs, hx ⟩
-
-/-
-The universe of a union-closed nonempty family belongs to the family.
--/
-theorem unionClosed_contains_universe {α : Type*} [DecidableEq α]
-    (F : Finset (Finset α))
-    (hUC : UnionClosed F)
-    (hne : F.Nonempty) :
-    familyUniverse F ∈ F := by
-  have h_sup_mem : ∀ (s : Finset (Finset α)), s.Nonempty → s ⊆ F → s.sup id ∈ F := by
-    intro s hs hsub
-    induction' s using Finset.cons_induction with a s ha ih;
-    · exact False.elim ( Finset.not_nonempty_empty hs );
-    · by_cases hs : s.Nonempty <;> simp_all +decide [ Finset.sup_cons, hUC ];
-      exact hUC ( hsub ( Finset.mem_insert_self _ _ ) ) ( ih ( Finset.Subset.trans ( Finset.subset_insert _ _ ) hsub ) );
-  convert h_sup_mem F hne ( Finset.Subset.refl F ) using 1;
-  unfold familyUniverse; aesop;
-
-/-! ## Average-size and pigeonhole -/
-
-/-
-If the average set size is at least half the universe, some element is abundant.
-    Requires the universe to be nonempty (otherwise there are no elements to be abundant).
--/
-theorem exists_abundant_of_sum_large {α : Type*} [Fintype α] [DecidableEq α]
-    (F : Finset (Finset α))
-    [Nonempty α]
-    (h : Fintype.card α * F.card ≤ 2 * ∑ s ∈ F, s.card) :
-    ∃ x : α, 2 * abundance F x ≥ F.card := by
-  contrapose! h;
-  -- Apply the assumption `h` to each element in the sum.
-  have h_sum : ∑ x : α, 2 * abundance F x < ∑ x : α, F.card := by
-    exact Finset.sum_lt_sum_of_nonempty ( Finset.univ_nonempty ) fun x _ => h x;
-  simp_all +decide [ Finset.mul_sum _ _ _, sum_card_eq_sum_abundance ]
-
-/-
-Sum of set sizes is bounded by family size times universe size.
--/
-theorem sum_card_le_card_mul {α : Type*} [Fintype α] [DecidableEq α]
-    (F : Finset (Finset α)) :
-    ∑ s ∈ F, s.card ≤ F.card * Fintype.card α := by
-  exact le_trans ( Finset.sum_le_sum fun _ _ => Finset.card_le_univ _ ) ( by simp +decide )
-
-/-! ## Lattice reformulation -/
-
-/-
-Union-closure is the same as sup-closure in the Finset lattice.
--/
-theorem unionClosed_iff_supClosed {α : Type*} [DecidableEq α]
-    (F : Finset (Finset α)) :
-    UnionClosed F ↔ ∀ ⦃A⦄, A ∈ F → ∀ ⦃B⦄, B ∈ F → A ⊔ B ∈ F := by
-  exact Iff.symm (Eq.to_iff rfl)
-
-/-! ## Small family cases -/
-
-/-
-A singleton family with a nonempty member satisfies Frankl's property.
-    Note: {∅} does NOT satisfy Frankl's property, so we need the member to be nonempty.
--/
-theorem frankl_card_one_of_nonempty_member {α : Type*} [DecidableEq α]
-    (F : Finset (Finset α))
-    (hcard : F.card = 1)
-    (hne : ∃ s ∈ F, s.Nonempty) :
-    FranklProperty F := by
-  obtain ⟨ s, hs₁, hs₂ ⟩ := hne;
-  obtain ⟨ x, hx ⟩ := hs₂;
-  rw [ Finset.card_eq_one ] at hcard;
-  obtain ⟨ y, rfl ⟩ := hcard; simp_all +decide [ FranklProperty ] ;
-  exact ⟨ x, by rw [ abundance ] ; exact Nat.mul_pos ( by decide ) ( Finset.card_pos.mpr ⟨ y, by aesop ⟩ ) ⟩
-
-/-
-A two-element union-closed family satisfies Frankl's property.
--/
-theorem frankl_card_two {α : Type*} [DecidableEq α]
-    (F : Finset (Finset α))
-    (hUC : UnionClosed F)
-    (hcard : F.card = 2)
-    (hne : F.Nonempty) :
-    FranklProperty F := by
-  -- Since F has exactly two elements, we can consider the following cases:
-  -- Case 1: A ⊆ B
-  -- Case 2: B ⊆ A
-  -- Case 3: A = B
-  by_cases h_case1 : ∃ A B : Finset α, A ∈ F ∧ B ∈ F ∧ A ≠ B ∧ A ⊆ B;
-  · obtain ⟨ A, B, hA, hB, hne, hAB ⟩ := h_case1
-    have hF_eq : F = {A, B} := by
-      rw [ Finset.eq_of_subset_of_card_le ( Finset.insert_subset_iff.mpr ⟨ hA, Finset.singleton_subset_iff.mpr hB ⟩ ) ( by simp +decide [ *, Finset.card_insert_of_notMem ] ) ];
-    -- Since $B$ is nonempty, we can pick an element $x \in B$.
-    obtain ⟨x, hx⟩ : ∃ x, x ∈ B := by
-      exact Finset.nonempty_of_ne_empty ( by aesop_cat );
-    exact ⟨ x, by rw [ hF_eq, abundance ] ; rw [ Finset.filter_insert, Finset.filter_singleton ] ; aesop ⟩;
-  · rw [ Finset.card_eq_two ] at hcard;
-    obtain ⟨ A, B, hne, rfl ⟩ := hcard; have := hUC ( Finset.mem_insert_self _ _ ) ( Finset.mem_insert_of_mem ( Finset.mem_singleton_self _ ) ) ; simp_all +decide ;
+end Frankl

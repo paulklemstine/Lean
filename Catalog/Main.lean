@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1296 of the highest-quality
+A curated collection of 1304 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1296
+Total files: 1304
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -1081,6 +1081,7 @@ import FINAL.Tropical.Advanced
 import FINAL.Tropical.AdvancedTheory
 import FINAL.Tropical.Algebra
 import FINAL.Tropical.AlgebraicMirror
+import FINAL.Tropical.Algorithmic
 import FINAL.Tropical.AmplitudeAmplification
 import FINAL.Tropical.Applications
 import FINAL.Tropical.ApproximateRobustness
@@ -1172,9 +1173,11 @@ import FINAL.Tropical.MaxPlusAlgebra
 import FINAL.Tropical.MaxPlusHeckeAlgebra
 import FINAL.Tropical.MaxPlusLightCone
 import FINAL.Tropical.MetaOracleTropicalAlgebra
+import FINAL.Tropical.MinPlus
 import FINAL.Tropical.MinPlusAlgebra
 import FINAL.Tropical.MinPlusExpr
 import FINAL.Tropical.MinPlusRankOne
+import FINAL.Tropical.MinPlusSpectral
 import FINAL.Tropical.MirrorFixedPoints
 import FINAL.Tropical.MixingTheory
 import FINAL.Tropical.Monotonicity
@@ -1188,6 +1191,7 @@ import FINAL.Tropical.OracleApplicationsFrontier
 import FINAL.Tropical.OrbitComplexity
 import FINAL.Tropical.OrbitPRG
 import FINAL.Tropical.OrbitPrefixFiber
+import FINAL.Tropical.PAdicTropical
 import FINAL.Tropical.PRGSecurity
 import FINAL.Tropical.PeriodsMotives
 import FINAL.Tropical.PerronFrobenius
@@ -1201,6 +1205,7 @@ import FINAL.Tropical.Product
 import FINAL.Tropical.QaryDataProcessing
 import FINAL.Tropical.QarySourceCoding
 import FINAL.Tropical.QuantumLLMCompilation
+import FINAL.Tropical.QuantumTropical
 import FINAL.Tropical.QuantumTropicalComputation
 import FINAL.Tropical.QuantumTropicalComputing
 import FINAL.Tropical.QuantumTropicalFunctor
@@ -1217,7 +1222,9 @@ import FINAL.Tropical.SatakeIsomorphism
 import FINAL.Tropical.SelfLearningOracle
 import FINAL.Tropical.SemiclassicalLimit
 import FINAL.Tropical.SeriesParallel
+import FINAL.Tropical.ShimuraVarieties
 import FINAL.Tropical.SieveEnergetics
+import FINAL.Tropical.SoftMaxConvergence
 import FINAL.Tropical.Softmin
 import FINAL.Tropical.Soundness
 import FINAL.Tropical.Spectral
@@ -1248,6 +1255,7 @@ import FINAL.Tropical.TropicalDeepLearningFoundations
 import FINAL.Tropical.TropicalDeepResearch
 import FINAL.Tropical.TropicalDegreeRobustness
 import FINAL.Tropical.TropicalEntropyCompact
+import FINAL.Tropical.TropicalFFN
 import FINAL.Tropical.TropicalFactoring
 import FINAL.Tropical.TropicalFano
 import FINAL.Tropical.TropicalFormula
