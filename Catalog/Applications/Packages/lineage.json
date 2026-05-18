@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-17T19:57:24Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "sum_product_estimates",
@@ -25,7 +25,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-17T19:57:53Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "3_adjunctions_and_galois_connections_between_theor",
@@ -34,7 +34,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-17T20:28:07Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "5_tropical_pseudorandom_generators_from_orbit_expa",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T20:40:39Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "representation_theoretic_decomposition",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T21:05:42Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "binary_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:05:54Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "hybrid_argument_with_computational_distinguishers",
@@ -88,7 +88,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T21:29:20Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:01:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:04:18Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "line_restriction",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:07:44Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "irreducibility",
@@ -133,7 +133,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:23:43Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "decomposition",
@@ -142,7 +142,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-17T22:30:35Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -151,7 +151,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-17T23:03:26Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "overview",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:03:44Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "random_matrix_counting",
@@ -169,7 +169,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-17T23:03:58Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "2_factored_bellman_residual_tensorization_for_stru",
@@ -178,7 +178,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:07:53Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "proposed_theorem_statement",
@@ -187,7 +187,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-17T23:23:40Z",
-      "hue": 271
+      "hue": 270
+    },
+    {
+      "id": "validate_conjectures_computationally",
+      "title": "Certified Bounded Divisor Search: From Computational Conjecture to Verified Arithmetic Structure",
+      "domain": "Computational Number Theory / Formal Verification",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-18T00:01:38Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -257,6 +266,13 @@
     {
       "source": "5_tropical_pseudorandom_generators_from_orbit_expa",
       "target": "random_matrix_counting",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "2_tropical_amplitude_amplification",
+      "target": "validate_conjectures_computationally",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"

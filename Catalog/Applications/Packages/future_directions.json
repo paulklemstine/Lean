@@ -1075,7 +1075,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "27cf77e6",
       "timestamp": "2026-05-17T19:57:27.072085+00:00"
     },
@@ -2917,8 +2917,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "46e03e85",
       "timestamp": "2026-05-17T23:03:47.826958+00:00"
     },
     {
@@ -3007,6 +3007,77 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:07:55.595462+00:00"
+    },
+    {
+      "id": "fd_0164",
+      "title": "State the main theorem",
+      "description": "with `by sorry` and verify it type-checks.",
+      "source_exp_id": "27cf77e6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:23:42.903889+00:00"
+    },
+    {
+      "id": "fd_0165",
+      "title": "Decompose",
+      "description": "into 3–5 helper lemmas, each capturing one proof step.",
+      "source_exp_id": "27cf77e6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:23:42.909084+00:00"
+    },
+    {
+      "id": "fd_0166",
+      "title": "Cross-validate",
+      "description": "with computational examples using `#eval` on small instances.",
+      "source_exp_id": "27cf77e6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:23:42.912430+00:00"
+    },
+    {
+      "id": "fd_0167",
+      "title": "Document",
+      "description": "cross-domain connections in module docstrings.",
+      "source_exp_id": "27cf77e6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:23:42.915389+00:00"
     }
   ],
   "pruned": []
