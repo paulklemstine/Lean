@@ -84,8 +84,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "55fc2527",
       "timestamp": "2026-05-17T18:48:26.949041+00:00"
     },
     {
@@ -3772,7 +3772,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "5475ab04",
       "timestamp": "2026-05-18T01:04:45.206085+00:00"
     },
@@ -4306,6 +4306,127 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T02:27:02.367204+00:00"
+    },
+    {
+      "id": "fd_0233",
+      "title": "1. Closure Systems from Algebraic Generation",
+      "description": "**Statement:** For any type `α` with a group (or monoid, semigroup, module) structure, the collection of all subgroups (resp. submonoids, subsemigroups, submodules) forms a Moore family. That is:\n- The full group `univ` is a subgroup.\n- Any intersection of subgroups is a subgroup.\n\nTherefore, `mooreClosure` instantiated with `IsSubgroup` yields the *generated subgroup* ⟨S⟩ of any subset S.\n\n**Proof strategy:**\n1. Define `IsSubgroup (S : Set G) : Prop` capturing identity, multiplication closure, and inverse closure.\n2. Prove `IsSubgroup Set.univ` and `∀ F, (∀ s ∈ F, IsSubgroup s) → IsSubgroup (⋂₀ F)`.\n3. Instantiate `mooreClosure IsSubgroup S` and prove it equals the standard generated subgroup in Mathlib (`Subgroup.closure`).\n4. Derive the complete lattice of subgroups as a `mooreClosedSet",
+      "source_exp_id": "5475ab04",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Cryptography",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:03:34.857644+00:00"
+    },
+    {
+      "id": "fd_0234",
+      "title": "2. Moore Families and Abstract Interpretation",
+      "description": "**Statement:** Let `(S, →)` be a monotone transition system on a complete lattice. Define `Closed(X)` iff `X` is an inductive invariant: `post(X) ⊆ X`. Then:\n- `univ` is an inductive invariant.\n- Arbitrary intersections of inductive invariants are inductive invariants.\n\nHence the Moore closure of an initial state set gives the *least inductive invariant* containing the initial states — the strongest provable safety property.\n\n**Proof strategy:**\n1. Formalize `InductiveInvariant (post : Set σ → Set σ) (X : Set σ) : Prop := post X ⊆ X`.\n2. Prove Moore family axioms when `post` is monotone.\n3. Show `mooreClosure (InductiveInvariant post) Init` is the least fixed point above `Init`, connecting to Knaster-Tarski.\n4. Prove equivalence with Cousot-Cousot abstract interpretation's collecting seman",
+      "source_exp_id": "5475ab04",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Cryptography",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:03:34.864708+00:00"
+    },
+    {
+      "id": "fd_0235",
+      "title": "3. Cryptographic Closure Hulls",
+      "description": "**Statement:** In lattice-based cryptography, define the predicate `SecureKeySpace(S)` for a set of lattice vectors meaning:\n- S contains the zero vector (identity).\n- S is closed under the lattice reduction action (e.g., LLL basis reduction preserves membership).\n- S satisfies a norm bound: all vectors in S have norm ≤ B.\n\nThen determine whether `SecureKeySpace` forms a Moore family and characterize when the Moore closure of a seed key set preserves the norm bound.\n\n**Proof strategy:**\n1. Formalize `SecureKeySpace` with norm constraints.\n2. Prove intersection closure for the algebraic part (zero + action stability).\n3. Investigate whether norm bounds survive intersection (they do, since intersection only shrinks the set).\n4. If the norm bound is part of the predicate, prove Moore family a",
+      "source_exp_id": "5475ab04",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Cryptography",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:03:34.872086+00:00"
+    },
+    {
+      "id": "fd_0236",
+      "title": "4. Rewrite-Theoretic Closure and Confluence",
+      "description": "**Statement:** Let `→` be a rewrite relation on words (or terms). Define `Saturated(S)` iff for all `w ∈ S` and all `w → w'`, we have `w' ∈ S`. Then:\n- `univ` is saturated.\n- Arbitrary intersections of saturated sets are saturated.\n\nHence Moore closure gives the *rewrite saturation hull*: the smallest language containing a seed set and closed under rewriting.\n\n**Proof strategy:**\n1. Define `Saturated (R : α → α → Prop) (S : Set α) : Prop := ∀ x ∈ S, ∀ y, R x y → y ∈ S`.\n2. Prove Moore family axioms (straightforward from `ClosedUnderT` generalization).\n3. For confluent `R`, prove that `mooreClosure Saturated S` contains exactly the normal forms reachable from `S`.\n4. Connect to the Church-Rosser theorem: if `R` is confluent, the Moore closure of `{w}` is the equivalence class of `w`.\n\n**Cro",
+      "source_exp_id": "5475ab04",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:03:34.879481+00:00"
+    },
+    {
+      "id": "fd_0237",
+      "title": "5. Tropical and Order-Theoretic Duality",
+      "description": "**Statement:** In tropical (min-plus) algebra, define `TropicalFeasible(S)` for a set of vectors meaning S is closed under componentwise min and tropical scalar addition. Investigate whether such feasible regions form a Moore family, and characterize the Moore closure as a tropical convex hull.\n\n**Proof strategy:**\n1. Define tropical feasibility predicates on `ℝ_max` or `ℝ_min` vectors.\n2. Prove intersection closure for tropical convexity (the intersection of tropically convex sets is tropically convex).\n3. Show `mooreClosure TropicalFeasible S` gives the tropical convex hull of S.\n4. Prove duality: the tropical convex hull has a half-space representation via tropical linear inequalities.\n5. Connect to tropical linear programming: the Moore lattice of tropical feasible regions gives a cert",
+      "source_exp_id": "5475ab04",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical",
+        "Cryptography",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:03:34.886598+00:00"
+    },
+    {
+      "id": "fd_0238",
+      "title": "General Research Program",
+      "description": "The Moore closure formalization is the seed of a **universal closure calculus**: a single theorem that, when instantiated, produces certified closure operators, complete lattices, and Galois connections across all of mathematics. Each future direction above is an instantiation that:\n\n1. Identifies a domain-specific closedness predicate.\n2. Verifies the two Moore family axioms (univ closure + intersection closure).\n3. Inherits the full closure operator + complete lattice infrastructure for free.\n4. Derives domain-specific consequences (generation, saturation, invariance, feasibility).\n\nThe long-term vision is a **library of Moore instances** that makes \"closed under constraints\" a pushbutton construction in formal mathematics, with applications spanning algebra, analysis, logic, computer sc",
+      "source_exp_id": "5475ab04",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Cryptography",
+        "EML",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:03:34.893372+00:00"
     }
   ],
   "pruned": [
