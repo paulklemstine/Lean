@@ -318,7 +318,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "9adfc286",
       "timestamp": "2026-05-17T18:48:26.949064+00:00"
     },
@@ -5229,6 +5229,176 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T07:04:12.814970+00:00"
+    },
+    {
+      "id": "fd_0281",
+      "title": "Induction on dimension",
+      "description": ": Restrict A to the orthogonal complement of the first k-1 eigenvectors. Apply the max Rayleigh quotient result to this restricted operator. Show the min over subspaces is attained by the span of the first k eigenvectors.",
+      "source_exp_id": "9adfc286",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:26.126521+00:00"
+    },
+    {
+      "id": "fd_0282",
+      "title": "Direct variational argument",
+      "description": ": For any k-dimensional subspace V, show that V must contain a vector with nontrivial component in the span of eigenvectors with eigenvalue ≥ λₖ, yielding max R(A,x) ≥ λₖ. Show the span of the first k eigenvectors achieves equality.\n\n### Cross-Domain Impact\n- **Numerical analysis**: Foundation for finite element eigenvalue bounds\n- **Graph theory**: Spectral partitioning, Cheeger inequality, expansion\n- **Quantum chemistry**: Variational principle for ground/excited state energies\n- **Optimization**: SDP relaxation quality bounds\n- **Random matrix theory**: Eigenvalue interlacing and concentration\n\n---\n\n## Direction 2: Spectral Theorem for Compact Self-Adjoint Operators\n\n### Precise Theorem Statement\nLet `T : E →ₗ[ℂ] E` be a compact self-adjoint operator on a separable Hilbert space `E`. T",
+      "source_exp_id": "9adfc286",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Physics",
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:26.136028+00:00"
+    },
+    {
+      "id": "fd_0283",
+      "title": "Iterative extraction",
+      "description": ": Show the Rayleigh quotient attains its supremum on the unit ball (by compactness). The maximizer is an eigenvector. Restrict to its orthogonal complement and repeat. Show eigenvalues converge to 0 by compactness of T.",
+      "source_exp_id": "9adfc286",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:26.142864+00:00"
+    },
+    {
+      "id": "fd_0284",
+      "title": "Spectral measure approach",
+      "description": ": Construct the spectral measure from the resolvent. Show compactness implies discrete spectrum with finite multiplicities and unique accumulation point at 0.\n\n### Cross-Domain Impact\n- **PDE theory**: Eigenfunction expansions for elliptic operators\n- **Quantum mechanics**: Bound state spectral theory, scattering theory\n- **Machine learning**: Kernel PCA, Mercer's theorem\n- **Functional analysis**: Fredholm theory, trace-class operators\n\n---\n\n## Direction 3: Weyl's Perturbation Inequality\n\n### Precise Theorem Statement\nFor Hermitian matrices `A, B` with eigenvalues `α₁ ≤ ⋯ ≤ αₙ` and `β₁ ≤ ⋯ ≤ βₙ`:\n\n```\nmax_i |αᵢ - βᵢ| ≤ ‖A - B‖_op\n```\n\n### Lean Target Signature\n```lean\ntheorem weyl_perturbation\n    {n : Type*} [Fintype n] [DecidableEq n]\n    (A B : Matrix n n ℂ) (hA : A.IsHermitian) (hB : ",
+      "source_exp_id": "9adfc286",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Physics",
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:26.151149+00:00"
+    },
+    {
+      "id": "fd_0285",
+      "title": "Via Courant-Fischer",
+      "description": ": Express both eigenvalues via min-max. For fixed subspace V, the max Rayleigh quotients differ by at most ‖A-B‖_op (by the Cauchy-Schwarz inequality for the perturbation). Take the min over V.",
+      "source_exp_id": "9adfc286",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:26.157445+00:00"
+    },
+    {
+      "id": "fd_0286",
+      "title": "Via eigenvalue interlacing",
+      "description": ": Use the spectral theorem to write A = UDU*, B = UDU* + E where E = B-A. Apply Cauchy interlacing to the perturbed diagonal + perturbation.\n\n### Cross-Domain Impact\n- **Numerical analysis**: Backward stability of QR, SVD\n- **Quantum computing**: Error bounds for approximate Hamiltonians\n- **Statistics**: Perturbation of covariance eigenvalues under noise\n- **Network science**: Stability of spectral clustering under edge perturbations\n\n---\n\n## Direction 4: Löwner Order and Matrix Monotonicity\n\n### Precise Theorem Statement\nFor the Löwner partial order `A ≤_L B ⟺ B - A is PSD`:\n\n1. If `A ≤_L B` then `λₖ(A) ≤ λₖ(B)` for all k.\n2. If `f : ℝ → ℝ` is operator monotone, then `A ≤_L B ⟹ f(A) ≤_L f(B)`.\n3. `x ↦ x^{1/2}` is operator monotone on PSD matrices.\n\n### Lean Target Signature\n```lean\ntheor",
+      "source_exp_id": "9adfc286",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Physics",
+        "Bridges",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:26.165159+00:00"
+    },
+    {
+      "id": "fd_0287",
+      "title": "Via integral representation",
+      "description": ": Operator monotone functions have an integral representation f(t) = a + bt + ∫(t/(1+st) - 1/(1+s))dμ(s). Show each integrand is operator monotone and use linearity.\n\n### Cross-Domain Impact\n- **Quantum information**: Entanglement measures, channel capacities\n- **Optimization**: SDP feasibility, interior point methods\n- **Statistics**: Monotonicity of Fisher information\n- **Control theory**: Lyapunov stability\n\n---\n\n## Direction 5: Spectral Projections and the Born Rule\n\n### Precise Theorem Statement\nFor a Hermitian matrix `A` with eigenvalues `{λᵢ}`, define the spectral projection onto eigenvalue `λ`:\n\n```\nP_λ = ∑_{i : eigenvalues i = λ} |eᵢ⟩⟨eᵢ|\n```\n\nThen:\n1. `P_λ` is an orthogonal projection: `P_λ² = P_λ`, `P_λ* = P_λ`\n2. Completeness: `∑_λ P_λ = I`\n3. Orthogonality: `P_λ P_μ = 0` for `",
+      "source_exp_id": "9adfc286",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Physics",
+        "Bridges",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:26.174910+00:00"
+    },
+    {
+      "id": "fd_0288",
+      "title": "Direct construction",
+      "description": ": Define projections from the eigenbasis. Use orthonormality to verify idempotency and orthogonality. Completeness follows from the eigenbasis being complete.",
+      "source_exp_id": "9adfc286",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:26.180808+00:00"
+    },
+    {
+      "id": "fd_0289",
+      "title": "Via functional calculus",
+      "description": ": Define `P_λ = cfc(A, 1_{λ})` where `1_{λ}` is the indicator function of `{λ}`. All projection properties follow from functional calculus multiplicativity and the spectral mapping theorem.",
+      "source_exp_id": "9adfc286",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T07:10:26.186742+00:00"
     }
   ],
   "pruned": [
