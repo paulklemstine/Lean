@@ -244,8 +244,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.83,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "889377dd",
       "timestamp": "2026-05-17T18:48:26.949056+00:00"
     },
     {
@@ -698,8 +698,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "87ef9188",
       "timestamp": "2026-05-17T18:48:26.949100+00:00"
     },
     {
@@ -1493,7 +1493,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "d0a79989",
       "timestamp": "2026-05-17T20:40:43.007544+00:00"
     },
@@ -4540,6 +4540,108 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T04:06:14.493717+00:00"
+    },
+    {
+      "id": "fd_0244",
+      "title": "Formulates hypotheses",
+      "description": "— precise theorem statements in Lean",
+      "source_exp_id": "d0a79989",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:30.567892+00:00"
+    },
+    {
+      "id": "fd_0245",
+      "title": "Validates computationally",
+      "description": "— Python experiments on concrete matrices",
+      "source_exp_id": "d0a79989",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:30.573635+00:00"
+    },
+    {
+      "id": "fd_0246",
+      "title": "Decomposes into lemmas",
+      "description": "— 5-10 independently provable sub-results",
+      "source_exp_id": "d0a79989",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:30.578335+00:00"
+    },
+    {
+      "id": "fd_0247",
+      "title": "Iterates on proof strategies",
+      "description": "— try at least 2 approaches per theorem",
+      "source_exp_id": "d0a79989",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:30.582821+00:00"
+    },
+    {
+      "id": "fd_0248",
+      "title": "Cross-validates",
+      "description": "— ensure each result connects to at least one external domain",
+      "source_exp_id": "d0a79989",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:30.587646+00:00"
+    },
+    {
+      "id": "fd_0249",
+      "title": "Updates the knowledge base",
+      "description": "— add proved theorems to the tropical catalog",
+      "source_exp_id": "d0a79989",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Tropical"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T04:06:30.591991+00:00"
     }
   ],
   "pruned": [

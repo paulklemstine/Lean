@@ -1,0 +1,153 @@
+/-
+  # Kauffman Bracket Polynomial
+
+  The Kauffman bracket ⟨D⟩ is a Laurent polynomial invariant defined as
+  a state sum:
+    ⟨D⟩ = ∑_s A^(#A(s) - #B(s)) · δ^(loops(s) - 1)
+  where δ = -A² - A⁻².
+
+  ## Main results
+  - `bracket_unknot`: ⟨unknot⟩ = 1
+  - `bracket_reidemeister_III_invariant`: ⟨D₁⟩ = ⟨D₂⟩ under RIII
+  - `bracket_RI_positive`: ⟨D₁⟩ = -A³ · ⟨D₂⟩ under positive RI
+  - `bracket_RI_negative`: ⟨D₁⟩ = -A⁻³ · ⟨D₂⟩ under negative RI
+-/
+import Mathlib
+import Speculative.Knot.Defs
+
+namespace Knot
+
+open LaurentPolynomial Finset
+
+/-- The loop value δ = -A² - A⁻² in ℤ[A, A⁻¹] -/
+noncomputable def δ : LaurentPolynomial ℤ := -(T 2) - T (-2)
+
+/-- The contribution of a single state to the Kauffman bracket -/
+noncomputable def stateContribution {n : ℕ} (D : LinkDiagram n) (s : KState n) :
+    LaurentPolynomial ℤ :=
+  T (↑(numAS n s) - ↑(numBS n s) : ℤ) * δ ^ (D.loops s - 1)
+
+/-- The Kauffman bracket of a link diagram -/
+noncomputable def bracket {n : ℕ} (D : LinkDiagram n) : LaurentPolynomial ℤ :=
+  ∑ s : KState n, stateContribution D s
+
+/-- The Kauffman bracket of the unknot is 1. -/
+theorem bracket_unknot : bracket unknotDiagram = 1 := by
+  simp only [bracket, unknotDiagram, stateContribution, numAS, numBS, δ]
+  simp
+
+/-- The Kauffman bracket is invariant under Reidemeister III moves. -/
+theorem bracket_reidemeister_III_invariant {n : ℕ} {D₁ D₂ : LinkDiagram n}
+    (h : ReidemeisterIII D₁ D₂) : bracket D₁ = bracket D₂ := by
+  obtain ⟨f, hf₁, hf₂, hf₃⟩ := h
+  unfold bracket
+  apply Finset.sum_bij (fun s _ => f s)
+  · exact fun _ _ => Finset.mem_univ _
+  · exact fun s₁ _ s₂ _ h => hf₁.injective h
+  · exact fun b _ => by obtain ⟨a, rfl⟩ := hf₁.2 b; exact ⟨a, Finset.mem_univ _, rfl⟩
+  · unfold stateContribution
+    intro s _; rw [hf₃ s]; rw [show numBS n s = numBS n (f s) from ?_]
+    · rw [hf₂]
+    · have h_card : ∀ s : KState n, numAS n s + numBS n s = n := by
+        intro s; rw [numAS, numBS]
+        rw [Finset.card_filter, Finset.card_filter]
+        rw [← Finset.sum_add_distrib,
+            Finset.sum_congr rfl fun _ _ => by rcases s _ with (_ | _ | _) <;> rfl,
+            Finset.sum_const, Finset.card_fin]
+        norm_num; simp +decide [Smoothing]
+      linarith [hf₂ s, h_card s, h_card (f s)]
+
+/-- Under positive RI, the bracket picks up a factor of -A³. -/
+theorem bracket_RI_positive {n : ℕ}
+    {D₁ : OrientedLinkDiagram (n + 1)} {D₂ : OrientedLinkDiagram n}
+    (h : ReidemeisterI D₁ D₂) :
+    bracket D₁.toLinkDiagram = -(T 3) * bracket D₂.toLinkDiagram := by
+  unfold bracket
+  have h_split : ∀ s : KState n,
+      stateContribution D₁.toLinkDiagram (Fin.snoc s Smoothing.A) +
+      stateContribution D₁.toLinkDiagram (Fin.snoc s Smoothing.B) =
+      -(T 3) * stateContribution D₂.toLinkDiagram s := by
+    intro s
+    simp [stateContribution, h.loops_A, h.loops_B]
+    rw [show numAS (n + 1) (Fin.snoc s Smoothing.A) = numAS n s + 1 from ?_,
+        show numBS (n + 1) (Fin.snoc s Smoothing.A) = numBS n s from ?_,
+        show numAS (n + 1) (Fin.snoc s Smoothing.B) = numAS n s from ?_,
+        show numBS (n + 1) (Fin.snoc s Smoothing.B) = numBS n s + 1 from ?_]
+    · ring
+      rcases k : D₂.loops s with (_ | k) <;>
+        simp_all +decide [pow_succ, sub_eq_add_neg, add_assoc]
+      · ring; exact absurd k (ne_of_gt (D₂.loops_pos s))
+      · unfold δ; ring; grind +suggestions
+    · unfold numBS; rw [Finset.card_filter, Finset.card_filter]
+      rw [Fin.sum_univ_castSucc]; aesop
+    · unfold numAS; rw [Finset.card_filter, Finset.card_filter]
+      rw [Fin.sum_univ_castSucc]; aesop
+    · unfold numBS; rw [Finset.card_filter, Finset.card_filter]
+      rw [Fin.sum_univ_castSucc]; aesop
+    · unfold numAS; rw [Finset.card_filter, Finset.card_filter]
+      rw [Fin.sum_univ_castSucc]; aesop
+  rw [Finset.mul_sum _ _ _,
+      show (Finset.univ : Finset (KState (n + 1))) =
+        Finset.image (fun s : KState n => Fin.snoc s Smoothing.A) Finset.univ ∪
+        Finset.image (fun s : KState n => Fin.snoc s Smoothing.B) Finset.univ from ?_,
+      Finset.sum_union]
+  · rw [Finset.sum_image, Finset.sum_image]
+    · rw [← Finset.sum_add_distrib, Finset.sum_congr rfl fun _ _ => h_split _]
+    · intro s _ t _ h_eq; simp_all +decide [Fin.snoc]
+    · intro s _ t _ h_eq; simp_all +decide [Fin.snoc]
+  · norm_num [Finset.disjoint_left]; decide +revert
+  · ext s; simp [Fin.snoc]
+    by_cases h : s (Fin.last n) = Smoothing.A
+    · left; use fun i => s i.castSucc
+      ext i; induction i using Fin.lastCases <;> aesop
+    · refine Or.inr ⟨fun i => s i.castSucc, ?_⟩
+      ext i; induction i using Fin.lastCases <;> simp_all +decide [Fin.snoc]
+      exact Eq.symm (Or.resolve_left (by cases s (Fin.last n) <;> tauto) h)
+
+/-- Under negative RI, the bracket picks up a factor of -A⁻³. -/
+theorem bracket_RI_negative {n : ℕ}
+    {D₁ : OrientedLinkDiagram (n + 1)} {D₂ : OrientedLinkDiagram n}
+    (h : ReidemeisterI_neg D₁ D₂) :
+    bracket D₁.toLinkDiagram = -(T (-3)) * bracket D₂.toLinkDiagram := by
+  have h_neg : ∀ s : KState n,
+      stateContribution D₁.toLinkDiagram (Fin.snoc s Smoothing.A) +
+      stateContribution D₁.toLinkDiagram (Fin.snoc s Smoothing.B) =
+      -(T (-3)) * stateContribution D₂.toLinkDiagram s := by
+    intro s
+    simp [stateContribution, h.loops_A, h.loops_B]
+    rw [show numAS (n + 1) (Fin.snoc s Smoothing.A) = numAS n s + 1 from ?_,
+        show numBS (n + 1) (Fin.snoc s Smoothing.A) = numBS n s from ?_,
+        show numAS (n + 1) (Fin.snoc s Smoothing.B) = numAS n s from ?_,
+        show numBS (n + 1) (Fin.snoc s Smoothing.B) = numBS n s + 1 from ?_]
+    · rcases k : D₂.loops s with (_ | k) <;>
+        simp_all +decide [pow_succ, mul_assoc, mul_left_comm, mul_add, add_mul, sub_eq_add_neg]
+      · exact absurd k (ne_of_gt (D₂.loops_pos s))
+      · unfold δ; ring; grind +suggestions
+    · unfold numBS; rw [Finset.card_filter, Finset.card_filter]
+      rw [Fin.sum_univ_castSucc]; aesop
+    · unfold numAS; rw [Finset.card_filter, Finset.card_filter]
+      rw [Fin.sum_univ_castSucc]; aesop
+    · unfold numBS; rw [Finset.card_filter, Finset.card_filter]
+      rw [Fin.sum_univ_castSucc]; aesop
+    · unfold numAS; rw [Finset.card_filter, Finset.card_filter]
+      rw [Fin.sum_univ_castSucc]; aesop
+  unfold bracket
+  rw [Finset.mul_sum _ _ _,
+      show (Finset.univ : Finset (KState (n + 1))) =
+        Finset.image (fun s : KState n => Fin.snoc s Smoothing.A) Finset.univ ∪
+        Finset.image (fun s : KState n => Fin.snoc s Smoothing.B) Finset.univ from ?_,
+      Finset.sum_union]
+  · rw [Finset.sum_image, Finset.sum_image]
+    · rw [← Finset.sum_add_distrib, Finset.sum_congr rfl fun _ _ => h_neg _]
+    · intro s _ t _ h_eq; simp_all +decide [Fin.snoc]
+    · intro s _ t _ h_eq; simp_all +decide [Fin.snoc]
+  · norm_num [Finset.disjoint_left]; decide
+  · nontriviality; ext s; simp [Fin.snoc]
+    by_cases h : s (Fin.last n) = Smoothing.A
+    · left; use fun i => s (Fin.castSucc i)
+      ext i; induction i using Fin.lastCases <;> aesop
+    · refine Or.inr ⟨fun i => s i.castSucc, ?_⟩
+      ext i; induction i using Fin.lastCases <;> simp +decide [*]
+      exact Eq.symm (Or.resolve_left (by cases s (Fin.last n) <;> tauto) h)
+
+end Knot
