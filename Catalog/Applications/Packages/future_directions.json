@@ -1092,7 +1092,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:27.073398+00:00"
     },
@@ -1109,26 +1109,9 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:27.075655+00:00"
-    },
-    {
-      "id": "fd_0061",
-      "title": "Builds On",
-      "description": "- `semiconj_minimalPeriod_dvd` (Direction 1)\n- `Function.Semiconj` inverse construction from bijectivity\n\n---",
-      "source_exp_id": "2882da3c",
-      "source_path": "result_future_directions",
-      "domains": [
-        "Bridges"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-17T19:57:27.079657+00:00"
     },
     {
       "id": "fd_0062",
@@ -1144,7 +1127,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:27.082233+00:00"
     },
@@ -1163,7 +1146,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:42.241524+00:00"
     },
@@ -1220,7 +1203,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.751829+00:00"
     },
@@ -1258,7 +1241,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.754778+00:00"
     },
@@ -1277,7 +1260,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.756179+00:00"
     },
@@ -1294,7 +1277,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.757438+00:00"
     },
@@ -1315,7 +1298,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.759209+00:00"
     },
@@ -1372,7 +1355,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "1149f313",
       "timestamp": "2026-05-17T19:57:55.763845+00:00"
     },
@@ -1389,7 +1372,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.765035+00:00"
     },
@@ -1407,7 +1390,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T19:57:55.766167+00:00"
     },
@@ -1459,7 +1442,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:28:09.926898+00:00"
     },
@@ -1476,7 +1459,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:28:09.928777+00:00"
     },
@@ -1493,7 +1476,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:28:09.930273+00:00"
     },
@@ -1792,7 +1775,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.044669+00:00"
     },
@@ -1810,7 +1793,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.047082+00:00"
     },
@@ -1831,7 +1814,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T20:40:43.050241+00:00"
     },
@@ -1871,7 +1854,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:29.615130+00:00"
     },
@@ -1925,8 +1908,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "e95a3be8",
       "timestamp": "2026-05-17T21:05:45.344615+00:00"
     },
     {
@@ -1959,7 +1942,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:45.348829+00:00"
     },
@@ -1993,7 +1976,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:56.329682+00:00"
     },
@@ -2010,7 +1993,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:56.331962+00:00"
     },
@@ -2046,7 +2029,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:56.335833+00:00"
     },
@@ -2063,7 +2046,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:56.337688+00:00"
     },
@@ -2080,7 +2063,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:56.339710+00:00"
     },
@@ -2097,7 +2080,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:05:56.342143+00:00"
     },
@@ -2133,7 +2116,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:27:10.239243+00:00"
     },
@@ -2151,7 +2134,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:27:10.248747+00:00"
     },
@@ -2169,7 +2152,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:27:10.252044+00:00"
     },
@@ -2192,7 +2175,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T21:27:10.255174+00:00"
     },
@@ -2316,7 +2299,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:01:35.056236+00:00"
     },
@@ -2338,7 +2321,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:01:35.060457+00:00"
     },
@@ -2377,7 +2360,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:01:35.077420+00:00"
     },
@@ -2394,7 +2377,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:01:35.080726+00:00"
     },
@@ -2413,7 +2396,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:01:35.084743+00:00"
     },
@@ -2448,7 +2431,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:04:06.931737+00:00"
     },
@@ -2568,7 +2551,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:04:20.757530+00:00"
     },
@@ -2589,7 +2572,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:04:20.761086+00:00"
     },
@@ -2608,7 +2591,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:07:45.941311+00:00"
     },
@@ -2625,7 +2608,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:07:45.944966+00:00"
     },
@@ -2643,7 +2626,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:23:46.440988+00:00"
     },
@@ -2661,7 +2644,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:23:46.444977+00:00"
     },
@@ -2679,7 +2662,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:23:46.448325+00:00"
     },
@@ -2697,7 +2680,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T22:23:46.452021+00:00"
     },
@@ -2731,7 +2714,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:03:29.903650+00:00"
     },
@@ -2748,7 +2731,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:03:29.908091+00:00"
     },
@@ -2767,7 +2750,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:03:29.925246+00:00"
     },
@@ -2786,7 +2769,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:03:47.794408+00:00"
     },
@@ -2805,7 +2788,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:03:47.800048+00:00"
     },
@@ -2899,7 +2882,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:03:47.822439+00:00"
     },
@@ -2936,7 +2919,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:04:00.074288+00:00"
     },
@@ -2953,7 +2936,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:07:55.584465+00:00"
     },
@@ -2970,7 +2953,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:07:55.588204+00:00"
     },
@@ -2987,7 +2970,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:07:55.591610+00:00"
     },
@@ -3004,7 +2987,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:07:55.595462+00:00"
     },
@@ -3021,7 +3004,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:23:42.903889+00:00"
     },
@@ -3040,26 +3023,9 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:23:42.909084+00:00"
-    },
-    {
-      "id": "fd_0166",
-      "title": "Cross-validate",
-      "description": "with computational examples using `#eval` on small instances.",
-      "source_exp_id": "27cf77e6",
-      "source_path": "result_future_directions",
-      "domains": [
-        "Bridges"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-17T23:23:42.912430+00:00"
     },
     {
       "id": "fd_0167",
@@ -3075,10 +3041,101 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-17T23:23:42.915389+00:00"
+    },
+    {
+      "id": "fd_0168",
+      "title": "Compositeness",
+      "description": ": `P N = ¬ Nat.Prime N`, `S N = Finset.Icc 2 (Nat.sqrt N)`, `witness_type d = d ∣ N`",
+      "source_exp_id": "1149f313",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:01:40.663443+00:00"
+    },
+    {
+      "id": "fd_0169",
+      "title": "B-smooth detection",
+      "description": ": `P N = (∀ p, Nat.Prime p → p ∣ N → p ≤ B)`, with witness set `Finset.Icc 2 B`",
+      "source_exp_id": "1149f313",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:01:40.667774+00:00"
+    },
+    {
+      "id": "fd_0170",
+      "title": "Polynomial root bounding",
+      "description": ": `P f = (∃ r, f.eval r = 0)`, with `S f` a finite set determined by degree and coefficients\n\n### Proof Strategy\nInstantiate the compositeness case using `composite_detection_complete_on_Icc`. For other instances, develop analogous bounded search theorems.\n\n### Cross-Domain Significance\nThis captures the shared structure between arithmetic search, information-theoretic feasibility, and algebraic dimension bounds in a single reusable framework.\n\n---\n\n## Direction 2: Least-Witness Correctness and Primality\n\n### Goal\nProve that the least divisor of N found by bounded search is itself prime, giving a stronger structural guarantee than mere divisibility.\n\n### Proposed Theorem\n\n```lean\ntheorem least_divisor_is_prime\n    (N : ℕ) (hN : 2 ≤ N) :\n    Nat.Prime (Nat.minFac N) ∨ N = 1 := by\n  ...\n\nthe",
+      "source_exp_id": "1149f313",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:01:40.672071+00:00"
     }
   ],
-  "pruned": []
+  "pruned": [
+    {
+      "id": "fd_0166",
+      "title": "Cross-validate",
+      "description": "with computational examples using `#eval` on small instances.",
+      "source_exp_id": "27cf77e6",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T23:23:42.912430+00:00"
+    },
+    {
+      "id": "fd_0061",
+      "title": "Builds On",
+      "description": "- `semiconj_minimalPeriod_dvd` (Direction 1)\n- `Function.Semiconj` inverse construction from bijectivity\n\n---",
+      "source_exp_id": "2882da3c",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-17T19:57:27.079657+00:00"
+    }
+  ]
 }
