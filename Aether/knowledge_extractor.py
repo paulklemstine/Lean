@@ -1495,7 +1495,106 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: sync verification failed: {e}")
 
+        # 5. LLM-assisted future directions cleanup
+        try:
+            await asyncio.to_thread(self._cleanup_future_directions)
+        except Exception as e:
+            print(f"[Cleanup] Warning: future directions cleanup failed: {e}")
+
         return job
+
+    def _cleanup_future_directions(self) -> None:
+        """Ask Pi-Agent to prune junk directions and brainstorm a novel new one.
+
+        Reviews the future directions list, removes dead/useless/boring entries,
+        and adds one fresh, interesting direction. Runs every ~10 cycles to save pollen.
+        """
+        from research_memory import FutureDirectionsManager, FutureDirection
+        fd_manager = FutureDirectionsManager(self.workspace)
+        available = [d for d in fd_manager._directions if d.status == "available"]
+        if len(available) < 3:
+            return
+
+        # Only run every ~10 cycles to save pollen
+        if self.cycle_count % 10 != 0 and self.cycle_count > 0:
+            return
+
+        print(f"[Cleanup] Asking Pi-Agent to review {len(available)} future directions...")
+
+        # Build a compact listing
+        dir_lines = []
+        for d in available:
+            desc_preview = d.description[:150].replace("\n", " ").strip()
+            dir_lines.append(f"[{d.id}] (priority={d.priority_score:.2f}) {d.title}: {desc_preview}")
+        directions_text = "\n".join(dir_lines)
+
+        system = (
+            "You are a research direction curator for the Aether autonomous math research system.\n\n"
+            "TASK 1 — PRUNE: Review the future directions below. Identify entries that are:\n"
+            "- JUNK: vague, trivially obvious, nonsensical, or not real mathematics\n"
+            "- BORING: rephrasings of common knowledge with no novel angle\n"
+            "- DEAD: duplicates of other entries or already-proved results\n"
+            "Return their IDs in the \"remove\" array.\n\n"
+            "TASK 2 — BRAINSTORM: Invent ONE novel, interesting, exciting new research direction\n"
+            "that is NOT covered by any existing entry. It should be a testable scientific hypothesis:\n"
+            "a falsifiable conjecture with a clear test. Be bold and creative — cross domains,\n"
+            "think sci-fi, aim for paradigm-shifting ideas. Put it in the \"new_direction\" object.\n\n"
+            "Be conservative with removals (only clear junk/boring/dead). Be creative with the new direction.\n\n"
+            "Respond in this exact JSON format:\n"
+            '{\n'
+            '  "remove": ["dir_id_1", "dir_id_2"],\n'
+            '  "new_direction": {\n'
+            '    "title": "...",\n'
+            '    "description": "Conjecture: [precise falsifiable statement]. Test: [what confirms/refutes]. Impact: [what this enables]",\n'
+            '    "domains": ["Domain1", "Domain2"]\n'
+            '  },\n'
+            '  "notes": "brief summary"\n'
+            '}'
+        )
+
+        user = f"Here are {len(available)} available future research directions:\n\n{directions_text}"
+
+        try:
+            raw = self.pi_agent._call_pollinations(system, user, timeout=60)
+        except Exception as e:
+            print(f"[Cleanup] Pi-Agent call failed: {e}")
+            return
+
+        result = self.pi_agent._parse_json_response(raw)
+        if not result:
+            print(f"[Cleanup] Could not parse Pi-Agent cleanup response")
+            return
+
+        # Remove junk
+        removed = 0
+        for dir_id in result.get("remove", []):
+            d = fd_manager.get_direction_by_id(dir_id)
+            if d and d.status == "available":
+                d.status = "pruned"
+                removed += 1
+
+        # Add brainstormed direction
+        new_dir = result.get("new_direction")
+        added_new = False
+        if new_dir and new_dir.get("title") and new_dir.get("description"):
+            fd = FutureDirection(
+                id=f"fd_{len(fd_manager._directions):04d}",
+                title=new_dir["title"][:80],
+                description=new_dir["description"][:2000],
+                source_exp_id="pi_brainstorm",
+                source_path="brainstorm",
+                domains=new_dir.get("domains", ["Bridges"]),
+                depth_estimate=3,
+                priority_score=0.80,
+            )
+            fd_manager.add_direction(fd)
+            added_new = True
+
+        if removed > 0 or added_new:
+            fd_manager._save()
+
+        notes = result.get("notes", "")
+        print(f"[Cleanup] Directions cleanup: removed {removed}, brainstormed 1 new. {notes}")
 
     def _verify_catalog_sync(self, job: ResearchJob) -> dict:
         """Verify all output files are properly placed in the Catalog."""
@@ -1691,11 +1790,16 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: sync verification failed: {e}")
 
+        # LLM-assisted future directions cleanup
+        try:
+            self._cleanup_future_directions()
+        except Exception as e:
+            print(f"[Cleanup] Warning: future directions cleanup failed: {e}")
+
         return job
 
     # ==================================================================
     # Phase 8: COMMIT — Aether commits and tracks
-    # ==================================================================
 
     def commit(self, job: ResearchJob) -> None:
         """Commit integrated results and track metrics."""
