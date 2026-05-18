@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1395 of the highest-quality
+A curated collection of 1412 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1395
+Total files: 1412
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -10,9 +10,11 @@ import FINAL.Algebra.AlgebraicCircuitComplexity
 import FINAL.Algebra.AlgebraicSpacetime
 import FINAL.Algebra.AlgebraicTheoryOfAlgebra
 import FINAL.Algebra.AntipodeUniqueness
+import FINAL.Algebra.ArbitrageProfit
 import FINAL.Algebra.ArithmeticDarkMatter
 import FINAL.Algebra.AttackComposition
 import FINAL.Algebra.Basic
+import FINAL.Algebra.BayesOptimal
 import FINAL.Algebra.Berggren
 import FINAL.Algebra.BerggrenHopfCore
 import FINAL.Algebra.BerggrenPythagoreanCore
@@ -21,6 +23,7 @@ import FINAL.Algebra.BootstrapDynamics
 import FINAL.Algebra.Bridge10_Research
 import FINAL.Algebra.Bridges
 import FINAL.Algebra.CanonicalTree
+import FINAL.Algebra.CategoryTheory
 import FINAL.Algebra.CausalCertification
 import FINAL.Algebra.CayleyDicksonHierarchy
 import FINAL.Algebra.ChainFactoring
@@ -39,6 +42,7 @@ import FINAL.Algebra.DeepOpenProblems
 import FINAL.Algebra.Defs
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Derivability
+import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
 import FINAL.Algebra.Distance
@@ -50,8 +54,10 @@ import FINAL.Algebra.EvalKernel
 import FINAL.Algebra.ExceptionalGroups
 import FINAL.Algebra.ExtTorBasic
 import FINAL.Algebra.Extensions
+import FINAL.Algebra.FHEOracles
 import FINAL.Algebra.FactoringViaBerggren
 import FINAL.Algebra.FermatFactor
+import FINAL.Algebra.FluidGravity
 import FINAL.Algebra.Foundation
 import FINAL.Algebra.Foundations
 import FINAL.Algebra.Freivalds
@@ -69,6 +75,7 @@ import FINAL.Algebra.GravityAITeam
 import FINAL.Algebra.GroebnerDerandomization
 import FINAL.Algebra.GroupSolvability
 import FINAL.Algebra.GroverAttacks
+import FINAL.Algebra.HDWalletCascade
 import FINAL.Algebra.HomingMissile
 import FINAL.Algebra.HurwitzQuaternions
 import FINAL.Algebra.Hyperbolic
@@ -83,11 +90,13 @@ import FINAL.Algebra.InversePythagoreanTree
 import FINAL.Algebra.InvertedTreeV3Research
 import FINAL.Algebra.KaroubiIdempotent
 import FINAL.Algebra.KernelCardinality
+import FINAL.Algebra.KernelDensity
 import FINAL.Algebra.Langlands
 import FINAL.Algebra.LatticeTreeDuality
 import FINAL.Algebra.LightConeTheory
 import FINAL.Algebra.LightDarkPrimes
 import FINAL.Algebra.Lorentz
+import FINAL.Algebra.MartingalePrediction
 import FINAL.Algebra.MassEnergyDuality
 import FINAL.Algebra.MatrixEncoding
 import FINAL.Algebra.MetaOracleCore
@@ -108,8 +117,10 @@ import FINAL.Algebra.OpenQuestions
 import FINAL.Algebra.OpenQuestions_2
 import FINAL.Algebra.OptimalComputer
 import FINAL.Algebra.Oracle
+import FINAL.Algebra.Orders
 import FINAL.Algebra.Periodic
 import FINAL.Algebra.Photon
+import FINAL.Algebra.PhysicalPhenomena
 import FINAL.Algebra.PolyMethod
 import FINAL.Algebra.PredictionGeometry
 import FINAL.Algebra.PythagoreanPhotonics
@@ -139,6 +150,8 @@ import FINAL.Algebra.SpectralMixing
 import FINAL.Algebra.SpectralTheory
 import FINAL.Algebra.StereographicBridge
 import FINAL.Algebra.StrangeLight
+import FINAL.Algebra.StrangeLoops
+import FINAL.Algebra.Sylvester
 import FINAL.Algebra.Synthesis
 import FINAL.Algebra.ThreeDreams
 import FINAL.Algebra.TimelineGravityCycles
@@ -153,6 +166,7 @@ import FINAL.Algebra.Tropical_p_adic_Valuation_Bounds_and_Lifting_the_Exponent_f
 import FINAL.Algebra.TwoEyesNextSteps
 import FINAL.Algebra.UltrametricCondNeg
 import FINAL.Algebra.UnifyingTheory
+import FINAL.Algebra.UniswapV4Hooks
 import FINAL.Algebra.UniversalParentInverse
 import FINAL.Algebra.UniversalTranslator
 import FINAL.Algebra.WeightedRotaBaxter
@@ -784,6 +798,7 @@ import FINAL.EML.MaxPlusStoneWeierstrass
 import FINAL.EML.MetaPrediction
 import FINAL.EML.ModularForms
 import FINAL.EML.MultiModalTheory
+import FINAL.EML.MultivariateVanishing
 import FINAL.EML.NeuralArchitectureTheory
 import FINAL.EML.NewTheorems
 import FINAL.EML.OISCC
@@ -810,8 +825,10 @@ import FINAL.EML.ThermodynamicChaitinBarrier
 import FINAL.EML.TimeSeriesTheory
 import FINAL.EML.TrainingDynamics
 import FINAL.EML.TransferLearningBounds
+import FINAL.EML.TwoPhase
 import FINAL.EML.UltrametricCertifiedRobustness
 import FINAL.EML.UnifiedCompression
+import FINAL.EML.UnivariateVanishing
 import FINAL.EML.UniversalApproximation
 import FINAL.EML.V14Research
 import FINAL.EML.V15Research

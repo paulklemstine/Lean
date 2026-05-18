@@ -1,218 +1,315 @@
 #!/usr/bin/env python3
 """
-applications.py — Real-world applications of the Berggren tree
+Applications of the Berggren Tree Structure
 
-1. Exact integer geometry: generating right triangles with specific properties
-2. Cryptographic hash: using Berggren words as collision-resistant identifiers
-3. Network topology: Berggren tree as a routing structure
+Real-world applications of the formally verified Berggren tree properties:
+1. Certified generation of right triangles for exact geometry
+2. Collision-free enumeration for computational benchmarks
+3. Hypotenuse analysis for number-theoretic investigations
+4. Symbolic dynamics and coding theory connections
 """
 
-from math import gcd, isqrt
-from typing import List, Tuple, Optional
+from math import gcd, sqrt, log2
+from typing import List, Tuple, Dict, Set
+from collections import defaultdict
 
 Triple = Tuple[int, int, int]
-
-def bergA(a, b, c): return (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
-def bergB(a, b, c): return (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
-def bergC(a, b, c): return (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
-def invBergA(a, b, c): return (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
-def invBergB(a, b, c): return (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-def invBergC(a, b, c): return (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-
 ROOT = (3, 4, 5)
-GENS = {'A': bergA, 'B': bergB, 'C': bergC}
-INVS = {'A': invBergA, 'B': invBergB, 'C': invBergC}
 
-# ═══════════════════════════════════════════════════════════════
-# Application 1: Exact Integer Geometry
-# ═══════════════════════════════════════════════════════════════
+def berg_A(a, b, c): return (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
+def berg_B(a, b, c): return (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
+def berg_C(a, b, c): return (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+def inv_A(a, b, c): return (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
+def inv_B(a, b, c): return (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+def inv_C(a, b, c): return (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
-def find_triples_near_angle(target_ratio: float, tolerance: float, max_c: int) -> List[Triple]:
+GENS = [('A', berg_A), ('B', berg_B), ('C', berg_C)]
+INVS = [('A', inv_A), ('B', inv_B), ('C', inv_C)]
+
+
+# ─── Application 1: Exact Geometry Engine ────────────────────────────────────
+
+def exact_right_triangles(max_c: int) -> List[Triple]:
     """
-    Find primitive Pythagorean triples where a/b is close to target_ratio.
-    Uses Berggren tree enumeration for guaranteed completeness.
-    
-    Application: CAD systems, CNC machining, pixel-perfect rendering
-    where exact integer coordinates with specific angle constraints are needed.
+    Generate all primitive right triangles with integer sides and hypotenuse ≤ max_c.
+
+    Application: CAD systems, CNC machining, and tiling where exact integer
+    coordinates are needed (no floating-point error).
+
+    The Berggren tree guarantees:
+    - Completeness: every primitive triple is generated
+    - No duplicates: each triple appears exactly once
+    - Correctness: a² + b² = c² is formally verified
+
+    Example: Generate tiles for a wall using only exact right-angle triangles.
     """
-    results = []
-    queue = [ROOT]
-    while queue:
-        t = queue.pop(0)
-        a, b, c = t
+    import heapq
+    result = []
+    pq = [(5, ROOT)]
+
+    while pq:
+        c, t = heapq.heappop(pq)
         if c > max_c:
-            continue
-        ratio = a / b if b > 0 else float('inf')
-        if abs(ratio - target_ratio) < tolerance:
-            results.append(t)
-        for gen in GENS.values():
-            child = gen(a, b, c)
-            if child[2] <= max_c:
-                queue.append(child)
-    results.sort(key=lambda t: abs(t[0]/t[1] - target_ratio))
-    return results
-
-def find_triples_with_prime_hyp(max_c: int) -> List[Triple]:
-    """Find all primitive Pythagorean triples whose hypotenuse is prime."""
-    def is_prime(n):
-        if n < 2: return False
-        if n < 4: return True
-        if n % 2 == 0 or n % 3 == 0: return False
-        i = 5
-        while i * i <= n:
-            if n % i == 0 or n % (i+2) == 0: return False
-            i += 6
-        return True
-    
-    results = []
-    queue = [ROOT]
-    while queue:
-        t = queue.pop(0)
-        if t[2] > max_c: continue
-        if is_prime(t[2]):
-            results.append(t)
-        for gen in GENS.values():
+            break
+        result.append(t)
+        for _, gen in GENS:
             child = gen(*t)
             if child[2] <= max_c:
-                queue.append(child)
-    return sorted(results, key=lambda t: t[2])
+                heapq.heappush(pq, (child[2], child))
+    return result
 
-# ═══════════════════════════════════════════════════════════════
-# Application 2: Collision-Resistant Triple Identifier
-# ═══════════════════════════════════════════════════════════════
 
-def triple_to_word(triple: Triple) -> str:
-    """Convert a primitive Pythagorean triple to its unique Berggren word."""
-    if triple == ROOT:
-        return ""
+# ─── Application 2: Primitive Triple Counter ────────────────────────────────
+
+def count_primitives_up_to(N: int) -> int:
+    """
+    Count primitive Pythagorean triples with hypotenuse ≤ N.
+
+    Uses Berggren tree with early termination (guaranteed by monotonicity).
+    The asymptotic count is N/(2π) + O(√N).
+
+    Application: Validating number-theoretic density predictions.
+    """
+    import heapq
+    count = 0
+    pq = [(5, ROOT)]
+    while pq:
+        c, t = heapq.heappop(pq)
+        if c > N:
+            break
+        count += 1
+        for _, gen in GENS:
+            child = gen(*t)
+            if child[2] <= N:
+                heapq.heappush(pq, (child[2], child))
+    return count
+
+
+# ─── Application 3: Address System for Triples ──────────────────────────────
+
+def triple_address(a: int, b: int, c: int) -> str:
+    """
+    Compute the unique ternary address of a primitive Pythagorean triple.
+
+    Each primitive triple has a unique path from root (3,4,5) in the
+    Berggren tree. This gives a canonical naming/addressing scheme.
+
+    Application: Database indexing, content addressing, compression.
+    The address length is O(log c), giving logarithmic-size identifiers.
+    """
     word = []
-    a, b, c = triple
-    while (a, b, c) != ROOT:
-        for name, inv in INVS.items():
-            pa, pb, pc = inv(a, b, c)
-            if pa > 0 and pb > 0 and pc > 0 and pa*pa + pb*pb == pc*pc and gcd(pa, pb) == 1:
+    current = (a, b, c)
+    while current != ROOT:
+        for name, inv in INVS:
+            parent = inv(*current)
+            if all(x > 0 for x in parent):
                 word.append(name)
-                a, b, c = pa, pb, pc
+                current = parent
                 break
-    return "".join(reversed(word))
+        else:
+            raise ValueError(f"Invalid triple: {(a, b, c)}")
+    return ''.join(reversed(word))
 
-def word_to_triple(word: str) -> Triple:
-    """Convert a Berggren word to its unique triple."""
+
+def address_to_triple(address: str) -> Triple:
+    """Recover a triple from its Berggren address."""
+    gen_map = {'A': berg_A, 'B': berg_B, 'C': berg_C}
     t = ROOT
-    for letter in word:
-        t = GENS[letter](*t)
+    for ch in address:
+        t = gen_map[ch](*t)
     return t
 
-# ═══════════════════════════════════════════════════════════════
-# Application 3: Pythagorean Triple Database
-# ═══════════════════════════════════════════════════════════════
 
-def build_triple_database(max_c: int) -> dict:
-    """
-    Build a complete database of primitive Pythagorean triples up to max_c.
-    Each triple is indexed by hypotenuse and includes its Berggren word.
-    """
-    db = {}
-    queue = [(ROOT, "")]
-    while queue:
-        t, word = queue.pop(0)
-        if t[2] > max_c: continue
-        c = t[2]
-        if c not in db:
-            db[c] = []
-        db[c].append({'triple': t, 'word': word, 'depth': len(word)})
-        for name, gen in GENS.items():
-            child = gen(*t)
-            if child[2] <= max_c:
-                queue.append((child, word + name))
-    return db
+# ─── Application 4: Congruence Class Analysis ───────────────────────────────
 
-# ═══════════════════════════════════════════════════════════════
-# Demonstrations
-# ═══════════════════════════════════════════════════════════════
+def congruence_distribution(max_depth: int, modulus: int) -> Dict[int, List[int]]:
+    """
+    Analyze the distribution of hypotenuse values modulo a given modulus
+    at each depth of the Berggren tree.
+
+    Application: Testing equidistribution conjectures for Berggren dynamics.
+    Congruence patterns reveal deep connections to quadratic residues and
+    the distribution of primes ≡ 1 (mod 4).
+    """
+    distribution: Dict[int, List[int]] = {}
+    triples = [ROOT]
+
+    for depth in range(max_depth + 1):
+        residues = [t[2] % modulus for t in triples]
+        counts = [0] * modulus
+        for r in residues:
+            counts[r] += 1
+        distribution[depth] = counts
+        next_triples = []
+        for t in triples:
+            for _, gen in GENS:
+                next_triples.append(gen(*t))
+        triples = next_triples
+
+    return distribution
+
+
+# ─── Application 5: Pythagorean Network ─────────────────────────────────────
+
+def shared_hypotenuse_graph(max_c: int) -> Dict[int, List[Triple]]:
+    """
+    Build a graph where nodes are primitive triples and edges connect
+    triples sharing the same hypotenuse.
+
+    Application: Network analysis of Pythagorean structure.
+    The multiplicity of shared hypotenuses is controlled by the number
+    of prime factors ≡ 1 (mod 4).
+    """
+    triples = exact_right_triangles(max_c)
+    by_hyp: Dict[int, List[Triple]] = defaultdict(list)
+    for t in triples:
+        a, b, c = t
+        # Normalize so a < b
+        if a > b:
+            a, b = b, a
+        by_hyp[c].append((a, b, c))
+    return {c: ts for c, ts in by_hyp.items() if len(ts) > 1}
+
+
+# ─── Application 6: Entropy of Berggren Paths ───────────────────────────────
+
+def path_entropy_analysis(max_c: int) -> Dict[str, float]:
+    """
+    Analyze the frequency of generators A, B, C in Berggren word codes.
+
+    If generators were equally likely, each would appear with probability 1/3,
+    giving entropy H = log₂(3) ≈ 1.585 bits per step. Deviations indicate
+    structure in the symbolic dynamics.
+
+    Application: Data compression of Pythagorean triple databases.
+    """
+    triples = exact_right_triangles(max_c)
+    gen_counts = {'A': 0, 'B': 0, 'C': 0}
+    total_steps = 0
+
+    for t in triples:
+        if t == ROOT:
+            continue
+        code = triple_address(*t)
+        for ch in code:
+            gen_counts[ch] += 1
+            total_steps += 1
+
+    if total_steps == 0:
+        return {'entropy': 0.0, 'A_freq': 0.0, 'B_freq': 0.0, 'C_freq': 0.0}
+
+    freqs = {k: v / total_steps for k, v in gen_counts.items()}
+    entropy = -sum(f * log2(f) for f in freqs.values() if f > 0)
+
+    return {
+        'entropy': round(entropy, 6),
+        'max_entropy': round(log2(3), 6),
+        'A_freq': round(freqs['A'], 6),
+        'B_freq': round(freqs['B'], 6),
+        'C_freq': round(freqs['C'], 6),
+        'total_steps': total_steps,
+        'num_triples': len(triples),
+    }
+
+
+# ─── Main ────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("Application 1: Exact Integer Geometry")
-    print("=" * 70)
-    
-    print("\n  Finding triples near 45° (a/b ≈ 1.0):")
-    near_45 = find_triples_near_angle(1.0, 0.05, 1000)
-    for t in near_45[:5]:
-        print(f"    ({t[0]:>4}, {t[1]:>4}, {t[2]:>4})  angle ≈ {t[0]/t[1]:.4f}")
-    
-    print("\n  Finding triples near 30° (a/b ≈ 0.577):")
-    near_30 = find_triples_near_angle(0.5774, 0.05, 1000)
-    for t in near_30[:5]:
-        print(f"    ({t[0]:>4}, {t[1]:>4}, {t[2]:>4})  angle ≈ {t[0]/t[1]:.4f}")
-    
-    print("\n  Triples with prime hypotenuse (c ≤ 200):")
-    prime_triples = find_triples_with_prime_hyp(200)
-    for t in prime_triples:
-        print(f"    ({t[0]:>4}, {t[1]:>4}, {t[2]:>4})")
-    
-    print("\n" + "=" * 70)
-    print("Application 2: Collision-Resistant Identifiers")
-    print("=" * 70)
-    
-    test_triples = [(3,4,5), (5,12,13), (7,24,25), (119,120,169), (39,80,89)]
+    print("=" * 65)
+    print("  Applications of the Berggren Tree Structure")
+    print("=" * 65)
+
+    # App 1: Exact geometry
+    print("\n--- Application 1: Exact Right Triangles (c ≤ 50) ---")
+    triangles = exact_right_triangles(50)
+    for t in triangles:
+        addr = triple_address(*t)
+        print(f"  {t[0]:>3}² + {t[1]:>3}² = {t[2]:>3}²  address={addr}")
+
+    # App 2: Counting
+    print("\n--- Application 2: Primitive Triple Counts ---")
+    for N in [100, 1000, 10000, 100000]:
+        count = count_primitives_up_to(N)
+        density = count / N
+        predicted = N / (2 * 3.14159265)
+        print(f"  N={N:>7}: count={count:>5}, density={density:.4f}, "
+              f"predicted≈{predicted:.1f}, ratio={count/predicted:.4f}")
+
+    # App 3: Address round-trip
+    print("\n--- Application 3: Address System (Round-Trip Test) ---")
+    test_triples = [(3,4,5), (5,12,13), (15,8,17), (7,24,25), (119,120,169)]
     for t in test_triples:
-        word = triple_to_word(t)
-        recovered = word_to_triple(word)
-        print(f"  {t} → word '{word}' → {recovered} {'✓' if recovered == t else '✗'}")
-    
-    print("\n" + "=" * 70)
-    print("Application 3: Triple Database")
-    print("=" * 70)
-    
-    db = build_triple_database(200)
-    multi_hyp = {c: entries for c, entries in db.items() if len(entries) > 1}
-    print(f"\n  Total hypotenuse values with c ≤ 200: {len(db)}")
-    print(f"  Hypotenuses with multiple triples: {len(multi_hyp)}")
-    
-    for c in sorted(multi_hyp.keys())[:5]:
-        entries = multi_hyp[c]
-        print(f"\n  c = {c}: {len(entries)} triples")
-        for e in entries:
-            print(f"    {e['triple']}, word='{e['word']}', depth={e['depth']}")
-    
-    print("\nAll applications demonstrated successfully.")
+        addr = triple_address(*t)
+        recovered = address_to_triple(addr)
+        ok = recovered == t
+        print(f"  {t} → \"{addr}\" → {recovered}  {'✓' if ok else '✗'}")
+
+    # App 4: Congruence analysis
+    print("\n--- Application 4: Hypotenuse Distribution mod 12 ---")
+    dist = congruence_distribution(6, 12)
+    print(f"  {'Depth':>5} | " + " ".join(f"{r:>4}" for r in range(12)))
+    print("  " + "-" * 60)
+    for d in range(7):
+        print(f"  {d:>5} | " + " ".join(f"{c:>4}" for c in dist[d]))
+
+    # App 5: Shared hypotenuses
+    print("\n--- Application 5: Shared Hypotenuse Network (c ≤ 500) ---")
+    network = shared_hypotenuse_graph(500)
+    for c in sorted(network.keys())[:10]:
+        print(f"  c={c}: {network[c]}")
+
+    # App 6: Entropy
+    print("\n--- Application 6: Path Entropy Analysis ---")
+    for max_c in [100, 500, 2000, 10000]:
+        stats = path_entropy_analysis(max_c)
+        print(f"  c≤{max_c:>5}: H={stats['entropy']:.4f} bits "
+              f"(max={stats['max_entropy']:.4f}), "
+              f"A={stats['A_freq']:.3f} B={stats['B_freq']:.3f} C={stats['C_freq']:.3f}")
+
+    print("\n" + "=" * 65)
+    print("  All applications completed.")
+    print("=" * 65)
 
 
 #!/usr/bin/env python3
 """
-demo.py — Demonstration of the Berggren Tree of Primitive Pythagorean Triples
+Berggren Tree: Demonstrating the Arithmetic Dynamical System on Pythagorean Triples
 
 This script demonstrates the key theorems proved in our formal verification:
-1. Pythagorean property preservation
-2. Primitivity preservation
-3. Hypotenuse strict growth
-4. Lorentz form preservation
-5. Word injectivity (no collisions in the tree)
-6. Determinant structure of Berggren matrices
+1. The three Berggren generators preserve Pythagorean triples
+2. Primitivity is preserved under all generators
+3. Hypotenuse strictly increases at each step
+4. The Lorentz form Q(a,b,c) = a² + b² - c² is invariant
+5. Generator matrices have determinant ±1
+6. The tree enumerates triples without collision
 """
 
 import numpy as np
 from math import gcd
 from typing import Tuple, List
 
-# ═══════════════════════════════════════════════════════════════
-# Core Definitions
-# ═══════════════════════════════════════════════════════════════
+Triple = Tuple[int, int, int]
 
-def bergA(a: int, b: int, c: int) -> Tuple[int, int, int]:
-    """Berggren child A: (a,b,c) -> (a-2b+2c, 2a-b+2c, 2a-2b+3c)"""
+# ─── Berggren Matrices ───────────────────────────────────────────────────────
+
+MAT_A = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]], dtype=int)
+MAT_B = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]], dtype=int)
+MAT_C = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]], dtype=int)
+
+LORENTZ_Q = np.array([[1, 0, 0], [0, 1, 0], [0, 0, -1]], dtype=int)
+
+ROOT = (3, 4, 5)
+
+# ─── Core Functions ──────────────────────────────────────────────────────────
+
+def bergA(a: int, b: int, c: int) -> Triple:
     return (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
 
-def bergB(a: int, b: int, c: int) -> Tuple[int, int, int]:
-    """Berggren child B: (a,b,c) -> (a+2b+2c, 2a+b+2c, 2a+2b+3c)"""
+def bergB(a: int, b: int, c: int) -> Triple:
     return (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
 
-def bergC(a: int, b: int, c: int) -> Tuple[int, int, int]:
-    """Berggren child C: (a,b,c) -> (-a+2b+2c, -2a+b+2c, -2a+2b+3c)"""
+def bergC(a: int, b: int, c: int) -> Triple:
     return (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
-
-GENERATORS = {'A': bergA, 'B': bergB, 'C': bergC}
 
 def is_pythagorean(a: int, b: int, c: int) -> bool:
     return a**2 + b**2 == c**2
@@ -220,418 +317,263 @@ def is_pythagorean(a: int, b: int, c: int) -> bool:
 def is_primitive(a: int, b: int, c: int) -> bool:
     return gcd(gcd(a, b), c) == 1
 
-def lorentz_Q(a: int, b: int, c: int) -> int:
+def lorentz_form(a: int, b: int, c: int) -> int:
     return a**2 + b**2 - c**2
 
-# Berggren matrices
-MAT_A = np.array([[1, -2, 2], [2, -1, 2], [2, -2, 3]])
-MAT_B = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 3]])
-MAT_C = np.array([[-1, 2, 2], [-2, 1, 2], [-2, 2, 3]])
+GENERATORS = {'A': bergA, 'B': bergB, 'C': bergC}
 
-def apply_word(word: str, triple: Tuple[int, int, int]) -> Tuple[int, int, int]:
-    """Apply a Berggren word (string of A/B/C) to a triple."""
-    a, b, c = triple
-    for letter in word:
-        a, b, c = GENERATORS[letter](a, b, c)
-    return (a, b, c)
+# ─── Demo 1: Pythagorean Preservation ────────────────────────────────────────
 
-# ═══════════════════════════════════════════════════════════════
-# Demo 1: Berggren Tree Generation
-# ═══════════════════════════════════════════════════════════════
+def demo_pythagorean_preservation():
+    """Show that each generator maps Pythagorean triples to Pythagorean triples."""
+    print("=" * 70)
+    print("DEMO 1: Pythagorean Preservation")
+    print("=" * 70)
+    print(f"\nRoot triple: {ROOT}")
+    print(f"  Is Pythagorean: {is_pythagorean(*ROOT)} (3² + 4² = {3**2 + 4**2} = 5² = {5**2})")
+    print()
 
-print("=" * 70)
-print("DEMO 1: The Berggren Tree — First Three Generations")
-print("=" * 70)
+    for name, gen in GENERATORS.items():
+        child = gen(*ROOT)
+        a, b, c = child
+        print(f"  Generator {name}: {ROOT} → {child}")
+        print(f"    Check: {a}² + {b}² = {a**2 + b**2}, {c}² = {c**2}")
+        print(f"    Is Pythagorean: {is_pythagorean(*child)}")
+        print(f"    Is Primitive: {is_primitive(*child)}")
+    print()
 
-root = (3, 4, 5)
-print(f"\nRoot: {root}")
-print(f"  Pythagorean: {root[0]}² + {root[1]}² = {root[0]**2} + {root[1]**2} = {root[2]**2} = {root[2]}² ✓")
-print(f"  Primitive: gcd({root[0]},{root[1]},{root[2]}) = {gcd(gcd(root[0],root[1]),root[2])} ✓")
-print(f"  Lorentz Q: {lorentz_Q(*root)} = 0 ✓")
+# ─── Demo 2: Tree Generation ────────────────────────────────────────────────
 
-print("\nGeneration 1:")
-for name, gen in GENERATORS.items():
-    child = gen(*root)
-    print(f"  {name}: {root} → {child}")
-    print(f"    Pythagorean: {child[0]}² + {child[1]}² = {child[0]**2 + child[1]**2} = {child[2]**2} ✓")
-    print(f"    Primitive: gcd = {gcd(gcd(child[0],child[1]),child[2])} ✓")
-    print(f"    Lorentz Q = {lorentz_Q(*child)} ✓")
-    print(f"    Hypotenuse growth: {root[2]} < {child[2]} ✓")
+def demo_tree_generation():
+    """Generate the first few levels of the Berggren tree."""
+    print("=" * 70)
+    print("DEMO 2: Berggren Tree (First 3 Levels)")
+    print("=" * 70)
 
-print("\nGeneration 2 (from A-child (5,12,13)):")
-parent = bergA(*root)
-for name, gen in GENERATORS.items():
-    child = gen(*parent)
-    print(f"  {name}: {parent} → {child}, hyp growth: {parent[2]} < {child[2]} ✓")
+    levels = {0: [ROOT]}
+    for depth in range(3):
+        next_level = []
+        for triple in levels[depth]:
+            for name, gen in GENERATORS.items():
+                child = gen(*triple)
+                next_level.append(child)
+        levels[depth + 1] = next_level
 
-# ═══════════════════════════════════════════════════════════════
-# Demo 2: Word Injectivity
-# ═══════════════════════════════════════════════════════════════
+    for depth, triples in levels.items():
+        print(f"\n  Depth {depth}: ({len(triples)} triple(s))")
+        for t in sorted(triples, key=lambda x: x[2]):
+            a, b, c = t
+            print(f"    ({a:>4}, {b:>4}, {c:>4})  "
+                  f"Pyth={is_pythagorean(*t)}  Prim={is_primitive(*t)}  Q={lorentz_form(*t)}")
+    print()
 
-print("\n" + "=" * 70)
-print("DEMO 2: Word Injectivity — No Collisions in the Berggren Tree")
-print("=" * 70)
+# ─── Demo 3: Lorentz Form Invariance ────────────────────────────────────────
 
-# Generate all words up to length 4
-def all_words(max_len: int) -> List[str]:
-    if max_len == 0:
-        return [""]
-    shorter = all_words(max_len - 1)
-    return shorter + [w + c for w in all_words(max_len - 1) if len(w) == max_len - 1 for c in "ABC"]
+def demo_lorentz_invariance():
+    """Show Q(a,b,c) = a² + b² - c² = 0 is preserved by all generators."""
+    print("=" * 70)
+    print("DEMO 3: Lorentz Form Invariance (Q = a² + b² - c²)")
+    print("=" * 70)
+    print(f"\n  Q(3, 4, 5) = {lorentz_form(*ROOT)}")
 
-words = all_words(4)
-triples = {}
-collisions = 0
-for w in words:
-    t = apply_word(w, root)
-    key = t
-    if key in triples:
-        collisions += 1
-        print(f"  COLLISION: words '{w}' and '{triples[key]}' give same triple {t}")
-    triples[key] = w
+    # Check preservation through 3 levels
+    triples = [ROOT]
+    for depth in range(4):
+        next_triples = []
+        for t in triples:
+            for name, gen in GENERATORS.items():
+                child = gen(*t)
+                q = lorentz_form(*child)
+                if q != 0:
+                    print(f"  ERROR: Q ≠ 0 for {child}!")
+                next_triples.append(child)
+        triples = next_triples
 
-print(f"\nTotal words checked (length ≤ 4): {len(words)}")
-print(f"Distinct triples generated: {len(triples)}")
-print(f"Collisions found: {collisions}")
-print(f"Injectivity verified: {'✓' if collisions == 0 else '✗'}")
+    total = 1 + 3 + 9 + 27 + 81  # levels 0-4
+    print(f"  Verified Q = 0 for all {total} triples through depth 4 ✓")
 
-# ═══════════════════════════════════════════════════════════════
-# Demo 3: Determinant Structure
-# ═══════════════════════════════════════════════════════════════
+    # Matrix verification
+    print("\n  Matrix Lorentz verification (MᵀQM = Q):")
+    for name, mat in [('A', MAT_A), ('B', MAT_B), ('C', MAT_C)]:
+        check = mat.T @ LORENTZ_Q @ mat
+        matches = np.array_equal(check, LORENTZ_Q)
+        print(f"    {name}ᵀ · Q · {name} = Q: {matches}")
+    print()
 
-print("\n" + "=" * 70)
-print("DEMO 3: Determinant Structure — Berggren Generators in O(2,1;ℤ)")
-print("=" * 70)
+# ─── Demo 4: Determinant Structure ──────────────────────────────────────────
 
-Q = np.diag([1, 1, -1])
-for name, mat in [("A", MAT_A), ("B", MAT_B), ("C", MAT_C)]:
-    det = int(round(np.linalg.det(mat)))
-    lorentz_preserved = np.allclose(mat.T @ Q @ mat, Q)
-    print(f"\n  Matrix {name}:")
-    print(f"    det = {det} ({'proper' if det == 1 else 'improper'} Lorentz)")
-    print(f"    Mᵀ·Q·M = Q: {lorentz_preserved} ✓")
+def demo_determinants():
+    """Show generators have determinant ±1."""
+    print("=" * 70)
+    print("DEMO 4: Determinant Structure (Theorem D)")
+    print("=" * 70)
+    for name, mat in [('A', MAT_A), ('B', MAT_B), ('C', MAT_C)]:
+        d = int(round(np.linalg.det(mat)))
+        print(f"  det({name}) = {d:+d}")
+    print(f"\n  Generators A, C ∈ SL(3,ℤ), Generator B ∈ GL(3,ℤ) \\ SL(3,ℤ)")
 
-# Product determinants
-for w in ["AB", "AC", "BC", "ABC", "AA", "BB", "CC"]:
-    mat = np.eye(3, dtype=int)
-    for c in w:
-        mat = mat @ {"A": MAT_A, "B": MAT_B, "C": MAT_C}[c]
-    det = int(round(np.linalg.det(mat)))
-    print(f"  det({w}) = {det}")
+    # Word determinants
+    print("\n  Determinants of sample word matrices:")
+    words = [
+        ("AB", MAT_A @ MAT_B),
+        ("ABC", MAT_A @ MAT_B @ MAT_C),
+        ("AAA", MAT_A @ MAT_A @ MAT_A),
+        ("BBB", MAT_B @ MAT_B @ MAT_B),
+        ("ABCABC", MAT_A @ MAT_B @ MAT_C @ MAT_A @ MAT_B @ MAT_C),
+    ]
+    for name, mat in words:
+        d = int(round(np.linalg.det(mat)))
+        print(f"    det({name}) = {d:+d}")
+    print()
 
-# ═══════════════════════════════════════════════════════════════
-# Demo 4: Hypotenuse Growth Statistics
-# ═══════════════════════════════════════════════════════════════
+# ─── Demo 5: Hypotenuse Growth ──────────────────────────────────────────────
 
-print("\n" + "=" * 70)
-print("DEMO 4: Hypotenuse Growth — Exponential Lower Bounds")
-print("=" * 70)
+def demo_hypotenuse_growth():
+    """Show hypotenuse strictly increases at each step."""
+    print("=" * 70)
+    print("DEMO 5: Hypotenuse Strict Growth (Theorem E)")
+    print("=" * 70)
 
-# Compute min hypotenuse at each depth
-min_hyp_at_depth = {}
-def explore(triple, word, max_depth):
-    d = len(word)
-    if d not in min_hyp_at_depth or triple[2] < min_hyp_at_depth[d]:
-        min_hyp_at_depth[d] = triple[2]
-    if d < max_depth:
-        for name in "ABC":
-            child = GENERATORS[name](*triple)
-            explore(child, word + name, max_depth)
-
-explore(root, "", 10)
-
-print(f"\n{'Depth':>6} {'Min Hypotenuse':>15} {'Ratio to prev':>15} {'Depth+5 bound':>15}")
-print("-" * 55)
-prev = None
-for d in sorted(min_hyp_at_depth.keys()):
-    h = min_hyp_at_depth[d]
-    ratio = f"{h/prev:.4f}" if prev else "—"
-    bound = d + 5
-    print(f"{d:>6} {h:>15} {ratio:>15} {bound:>15}")
-    prev = h
-
-# ═══════════════════════════════════════════════════════════════
-# Demo 5: Fixed Hypotenuse Multiplicity
-# ═══════════════════════════════════════════════════════════════
-
-print("\n" + "=" * 70)
-print("DEMO 5: Fixed-Hypotenuse Multiplicity")
-print("=" * 70)
-
-def count_primitive_triples(c: int) -> List[Tuple[int, int, int]]:
-    """Find all primitive Pythagorean triples with hypotenuse c."""
-    triples = []
-    for a in range(1, c):
-        b_sq = c**2 - a**2
-        if b_sq <= 0:
-            continue
-        b = int(b_sq**0.5)
-        if b*b == b_sq and b > 0 and gcd(a, b) == 1:
-            triples.append((a, b, c))
-    return triples
-
-print(f"\n{'Hypotenuse c':>14} {'# Primitive Triples':>20} {'Triples':>40}")
-print("-" * 78)
-for c in [5, 13, 17, 25, 29, 37, 41, 53, 61, 65, 73, 85, 89, 97, 101, 125, 145, 169, 185]:
-    triples = count_primitive_triples(c)
-    if triples:
-        triple_str = ", ".join(f"({a},{b},{c})" for a,b,c in triples[:3])
-        if len(triples) > 3:
-            triple_str += f" +{len(triples)-3} more"
-        print(f"{c:>14} {len(triples):>20} {triple_str:>40}")
-
-# ═══════════════════════════════════════════════════════════════
-# Demo 6: Forward-Inverse Cancellation
-# ═══════════════════════════════════════════════════════════════
-
-print("\n" + "=" * 70)
-print("DEMO 6: Forward-Inverse Cancellation")
-print("=" * 70)
-
-def invBergA(a, b, c): return (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
-def invBergB(a, b, c): return (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-def invBergC(a, b, c): return (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-
-INVERSES = {'A': invBergA, 'B': invBergB, 'C': invBergC}
-
-for name in "ABC":
-    child = GENERATORS[name](*root)
-    recovered = INVERSES[name](*child)
-    print(f"  inv{name}({name}(3,4,5)) = inv{name}{child} = {recovered} ✓")
-
-print("\nAll demonstrations completed successfully.")
-
-
-#!/usr/bin/env python3
-"""
-visualizations.py — Visualizations of the Berggren Tree
-Generates PNG figures for the research paper and JSON package.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from math import gcd
-from collections import defaultdict
-import base64
-import io
-
-def bergA(a, b, c): return (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
-def bergB(a, b, c): return (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
-def bergC(a, b, c): return (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
-
-GENERATORS = [('A', bergA, '#e74c3c'), ('B', bergB, '#3498db'), ('C', bergC, '#2ecc71')]
-ROOT = (3, 4, 5)
-
-def fig_to_base64(fig):
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    return 'data:image/png;base64,' + base64.b64encode(buf.read()).decode()
-
-# ═══════════════════════════════════════════════════════════════
-# Figure 1: Berggren Tree (first 4 levels)
-# ═══════════════════════════════════════════════════════════════
-
-def make_tree_figure():
-    fig, ax = plt.subplots(1, 1, figsize=(14, 8))
-    
-    positions = {}
-    labels = {}
-    edges = []
-    
-    positions[ROOT] = (0.5, 1.0)
-    labels[ROOT] = f"({ROOT[0]},{ROOT[1]},{ROOT[2]})"
-    
-    def layout(triple, x, y, width, depth, max_depth):
-        if depth >= max_depth:
-            return
-        for i, (name, gen, color) in enumerate(GENERATORS):
-            child = gen(*triple)
-            cx = x + (i - 1) * width
-            cy = y - 0.25
-            positions[child] = (cx, cy)
-            labels[child] = f"({child[0]},{child[1]},{child[2]})"
-            edges.append((triple, child, name, color))
-            layout(child, cx, cy, width/3.3, depth+1, max_depth)
-    
-    layout(ROOT, 0.5, 1.0, 0.3, 0, 3)
-    
-    for parent, child, name, color in edges:
-        px, py = positions[parent]
-        cx, cy = positions[child]
-        ax.plot([px, cx], [py, cy], color=color, linewidth=1.5, alpha=0.7)
-    
-    for triple, (x, y) in positions.items():
-        ax.plot(x, y, 'o', color='white', markersize=8, zorder=3)
-        ax.plot(x, y, 'o', color='#2c3e50', markersize=6, zorder=4)
-        fontsize = 7 if y > 0.5 else 5
-        ax.annotate(labels[triple], (x, y), textcoords="offset points",
-                   xytext=(0, 8), ha='center', fontsize=fontsize, color='#2c3e50')
-    
-    legend_elements = [plt.Line2D([0], [0], color=c, linewidth=2, label=f'Generator {n}')
-                      for n, _, c in GENERATORS]
-    ax.legend(handles=legend_elements, loc='upper left', fontsize=10)
-    
-    ax.set_xlim(-0.1, 1.1)
-    ax.set_ylim(-0.05, 1.1)
-    ax.set_title('The Berggren Tree of Primitive Pythagorean Triples', fontsize=14, fontweight='bold')
-    ax.axis('off')
-    
-    fig.savefig('berggren_tree.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
-
-# ═══════════════════════════════════════════════════════════════
-# Figure 2: Primitive Triples on the Unit Circle
-# ═══════════════════════════════════════════════════════════════
-
-def make_circle_figure():
-    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
-    
-    # Generate triples up to hypotenuse 200
-    triples = []
-    queue = [ROOT]
-    while queue:
-        t = queue.pop(0)
-        if t[2] > 200:
-            continue
-        triples.append(t)
-        for _, gen, _ in GENERATORS:
-            child = gen(*t)
-            if child[2] <= 200:
-                queue.append(child)
-    
-    theta = np.linspace(0, np.pi/2, 200)
-    ax.plot(np.cos(theta), np.sin(theta), 'k-', linewidth=0.5, alpha=0.3)
-    
-    for a, b, c in triples:
-        x, y = a/c, b/c
-        size = max(3, 30 / (c**0.3))
-        ax.plot(x, y, 'o', color='#e74c3c', markersize=size, alpha=0.6)
-    
-    ax.set_xlim(0, 1.05)
-    ax.set_ylim(0, 1.05)
-    ax.set_aspect('equal')
-    ax.set_xlabel('a/c', fontsize=12)
-    ax.set_ylabel('b/c', fontsize=12)
-    ax.set_title('Primitive Pythagorean Triples on the Unit Circle\n(a/c, b/c) for triples with c ≤ 200',
-                fontsize=13, fontweight='bold')
-    ax.grid(True, alpha=0.2)
-    
-    fig.savefig('unit_circle_triples.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
-
-# ═══════════════════════════════════════════════════════════════
-# Figure 3: Hypotenuse Growth by Depth
-# ═══════════════════════════════════════════════════════════════
-
-def make_growth_figure():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-    
-    max_depth = 12
+    # Track minimum hypotenuse at each depth
     min_hyp = {}
     max_hyp = {}
-    count = {}
-    
-    def explore(triple, depth):
-        if depth > max_depth:
-            return
-        c = triple[2]
-        if depth not in min_hyp or c < min_hyp[depth]:
-            min_hyp[depth] = c
-        if depth not in max_hyp or c > max_hyp[depth]:
-            max_hyp[depth] = c
-        count[depth] = count.get(depth, 0) + 1
-        for _, gen, _ in GENERATORS:
-            explore(gen(*triple), depth + 1)
-    
-    explore(ROOT, 0)
-    
-    depths = sorted(min_hyp.keys())
-    mins = [min_hyp[d] for d in depths]
-    maxs = [max_hyp[d] for d in depths]
-    
-    ax1.semilogy(depths, mins, 'o-', color='#3498db', label='Min hypotenuse', linewidth=2)
-    ax1.semilogy(depths, maxs, 's-', color='#e74c3c', label='Max hypotenuse', linewidth=2)
-    ax1.semilogy(depths, [d + 5 for d in depths], '--', color='gray', label='d + 5 (linear bound)', linewidth=1)
-    ax1.set_xlabel('Depth', fontsize=12)
-    ax1.set_ylabel('Hypotenuse', fontsize=12)
-    ax1.set_title('Hypotenuse vs. Tree Depth', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=10)
-    ax1.grid(True, alpha=0.3)
-    
-    counts = [count[d] for d in depths]
-    ax2.semilogy(depths, counts, 'o-', color='#2ecc71', linewidth=2)
-    ax2.semilogy(depths, [3**d for d in depths], '--', color='gray', label='3^d', linewidth=1)
-    ax2.set_xlabel('Depth', fontsize=12)
-    ax2.set_ylabel('Number of triples', fontsize=12)
-    ax2.set_title('Triple Count by Depth', fontsize=13, fontweight='bold')
-    ax2.legend(fontsize=10)
-    ax2.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    fig.savefig('hypotenuse_growth.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
+    triples = [ROOT]
+    for depth in range(8):
+        hyps = [t[2] for t in triples]
+        min_hyp[depth] = min(hyps)
+        max_hyp[depth] = max(hyps)
+        next_triples = []
+        for t in triples:
+            for gen in GENERATORS.values():
+                next_triples.append(gen(*t))
+        triples = next_triples
 
-# ═══════════════════════════════════════════════════════════════
-# Figure 4: Hypotenuse Multiplicity Histogram
-# ═══════════════════════════════════════════════════════════════
+    print(f"\n  {'Depth':>5}  {'Min hyp':>10}  {'Max hyp':>12}  {'# triples':>10}  {'depth+5 ≤ min':>14}")
+    for depth in range(8):
+        count = 3**depth
+        bound_check = "✓" if depth + 5 <= min_hyp[depth] else "✗"
+        print(f"  {depth:>5}  {min_hyp[depth]:>10}  {max_hyp[depth]:>12}  {count:>10}  {bound_check:>14}")
 
-def make_multiplicity_figure():
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-    
-    max_c = 1000
-    hyp_counts = defaultdict(int)
-    
-    queue = [ROOT]
-    while queue:
-        t = queue.pop(0)
-        if t[2] > max_c:
-            continue
-        hyp_counts[t[2]] += 1
-        for _, gen, _ in GENERATORS:
-            child = gen(*t)
-            if child[2] <= max_c:
-                queue.append(child)
-    
-    mult_dist = defaultdict(int)
-    for c, count in hyp_counts.items():
-        mult_dist[count] += 1
-    
-    mults = sorted(mult_dist.keys())
-    freqs = [mult_dist[m] for m in mults]
-    
-    ax.bar(mults, freqs, color='#9b59b6', alpha=0.8, edgecolor='white')
-    ax.set_xlabel('Number of triples sharing a hypotenuse', fontsize=12)
-    ax.set_ylabel('Number of hypotenuse values', fontsize=12)
-    ax.set_title(f'Hypotenuse Multiplicity Distribution (c ≤ {max_c})',
-                fontsize=13, fontweight='bold')
-    ax.grid(True, alpha=0.3, axis='y')
-    
-    for m, f in zip(mults, freqs):
-        ax.annotate(str(f), (m, f), textcoords="offset points",
-                   xytext=(0, 5), ha='center', fontsize=10)
-    
-    fig.savefig('multiplicity_dist.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    plt.close(fig)
-    return b64
+    # Growth ratios
+    print(f"\n  Min hypotenuse growth ratios:")
+    for depth in range(1, 8):
+        ratio = min_hyp[depth] / min_hyp[depth - 1]
+        print(f"    Depth {depth-1}→{depth}: {min_hyp[depth-1]:>8} → {min_hyp[depth]:>8} (×{ratio:.4f})")
+    print()
+
+# ─── Demo 6: No Collisions ──────────────────────────────────────────────────
+
+def demo_no_collisions():
+    """Verify that distinct words produce distinct triples through several levels."""
+    print("=" * 70)
+    print("DEMO 6: No Collisions (Injectivity of Word Coding)")
+    print("=" * 70)
+
+    seen = set()
+    collisions = 0
+    total = 0
+    triples = [ROOT]
+    seen.add(ROOT)
+    total += 1
+
+    for depth in range(7):
+        next_triples = []
+        for t in triples:
+            for gen in GENERATORS.values():
+                child = gen(*t)
+                total += 1
+                if child in seen:
+                    collisions += 1
+                    print(f"  COLLISION at depth {depth+1}: {child}")
+                seen.add(child)
+                next_triples.append(child)
+        triples = next_triples
+
+    print(f"\n  Checked {total} triples through depth 7")
+    print(f"  Unique triples: {len(seen)}")
+    print(f"  Collisions: {collisions}")
+    print(f"  All distinct: {'✓' if collisions == 0 else '✗'}")
+    print()
+
+# ─── Demo 7: Inverse Maps ───────────────────────────────────────────────────
+
+def demo_inverse_maps():
+    """Demonstrate that each generator has an explicit inverse."""
+    print("=" * 70)
+    print("DEMO 7: Inverse Maps (Round-Trip Verification)")
+    print("=" * 70)
+
+    def invA(a, b, c): return (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
+    def invB(a, b, c): return (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+    def invC(a, b, c): return (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
+    test_triples = [
+        (3, 4, 5), (5, 12, 13), (8, 15, 17), (7, 24, 25),
+        (20, 21, 29), (9, 40, 41), (28, 45, 53),
+    ]
+    inverses = {'A': (bergA, invA), 'B': (bergB, invB), 'C': (bergC, invC)}
+
+    all_ok = True
+    for name, (fwd, inv) in inverses.items():
+        print(f"\n  Generator {name}:")
+        for t in test_triples[:3]:
+            child = fwd(*t)
+            recovered = inv(*child)
+            ok = recovered == t
+            all_ok = all_ok and ok
+            print(f"    {t} →{name}→ {child} →{name}⁻¹→ {recovered}  {'✓' if ok else '✗'}")
+
+    print(f"\n  All round-trips successful: {'✓' if all_ok else '✗'}")
+    print()
+
+# ─── Demo 8: Hypotenuse Multiplicity ────────────────────────────────────────
+
+def demo_hypotenuse_multiplicity():
+    """Show that some hypotenuse values correspond to multiple primitive triples."""
+    print("=" * 70)
+    print("DEMO 8: Fixed-Hypotenuse Multiplicity")
+    print("=" * 70)
+
+    # Enumerate primitive triples up to hypotenuse N
+    N = 1000
+    triples_by_hyp = {}
+    for m in range(2, int(N**0.5) + 2):
+        for n in range(1, m):
+            if gcd(m, n) != 1 or (m - n) % 2 == 0:
+                continue
+            a = m*m - n*n
+            b = 2*m*n
+            c = m*m + n*n
+            if c > N:
+                break
+            if a > b:
+                a, b = b, a
+            triples_by_hyp.setdefault(c, []).append((a, b, c))
+
+    multi = {c: ts for c, ts in triples_by_hyp.items() if len(ts) > 1}
+    print(f"\n  Primitive triples with c ≤ {N}: {sum(len(v) for v in triples_by_hyp.values())}")
+    print(f"  Hypotenuse values with multiple triples: {len(multi)}")
+    print(f"\n  First examples of shared hypotenuse:")
+    for c in sorted(multi.keys())[:8]:
+        print(f"    c = {c}: {multi[c]}")
+    print()
+
+# ─── Main ────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
-    b1 = make_tree_figure()
-    print(f"  berggren_tree.png generated ({len(b1)} chars base64)")
-    b2 = make_circle_figure()
-    print(f"  unit_circle_triples.png generated ({len(b2)} chars base64)")
-    b3 = make_growth_figure()
-    print(f"  hypotenuse_growth.png generated ({len(b3)} chars base64)")
-    b4 = make_multiplicity_figure()
-    print(f"  multiplicity_dist.png generated ({len(b4)} chars base64)")
-    print("All visualizations generated successfully.")
+    print("\n" + "▶" * 70)
+    print("  BERGGREN TREE: Arithmetic Dynamical System on Pythagorean Triples")
+    print("▶" * 70 + "\n")
+
+    demo_pythagorean_preservation()
+    demo_tree_generation()
+    demo_lorentz_invariance()
+    demo_determinants()
+    demo_hypotenuse_growth()
+    demo_no_collisions()
+    demo_inverse_maps()
+    demo_hypotenuse_multiplicity()
+
+    print("=" * 70)
+    print("All demonstrations completed successfully.")
+    print("=" * 70)
