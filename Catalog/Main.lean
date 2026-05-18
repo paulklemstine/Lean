@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1246 of the highest-quality
+A curated collection of 1258 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1246
+Total files: 1258
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -40,6 +40,7 @@ import FINAL.Algebra.Defs
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Derivability
 import FINAL.Algebra.DifferenceSetSymmetry
+import FINAL.Algebra.Distance
 import FINAL.Algebra.ECDLP
 import FINAL.Algebra.EMLCongruenceHilbert
 import FINAL.Algebra.EigenvalueRepulsion
@@ -57,6 +58,7 @@ import FINAL.Algebra.FreivaldsBridge
 import FINAL.Algebra.FreivaldsSchwartzZippel
 import FINAL.Algebra.FreivaldsVerification
 import FINAL.Algebra.FutureExploration
+import FINAL.Algebra.GaloisObstruction
 import FINAL.Algebra.GenesisOracle
 import FINAL.Algebra.GeometricNavigation
 import FINAL.Algebra.Ghost
@@ -64,6 +66,7 @@ import FINAL.Algebra.GravitomagneticFrontiers
 import FINAL.Algebra.GravitomagneticStereo
 import FINAL.Algebra.GravityAITeam
 import FINAL.Algebra.GroebnerDerandomization
+import FINAL.Algebra.GroupSolvability
 import FINAL.Algebra.GroverAttacks
 import FINAL.Algebra.HomingMissile
 import FINAL.Algebra.HurwitzQuaternions
@@ -296,6 +299,7 @@ import FINAL.Bridges.IdempotentRenormalizationDuality
 import FINAL.Bridges.IdempotentThermodynamicRealization
 import FINAL.Bridges.IncrementalDAG
 import FINAL.Bridges.Instances
+import FINAL.Bridges.InvariantProduct
 import FINAL.Bridges.InvertedTreeAdvanced
 import FINAL.Bridges.IrreducibleTransfer
 import FINAL.Bridges.KTheoryNeuralAdvanced
@@ -443,6 +447,7 @@ import FINAL.Bridges.TropicalCausality
 import FINAL.Bridges.TropicalChoquetClosureDuality
 import FINAL.Bridges.TropicalChoquetRadonTrapdoorDuality
 import FINAL.Bridges.TropicalChoquetVoronoiDuality
+import FINAL.Bridges.TropicalCongruenceNullstellensatz
 import FINAL.Bridges.TropicalCryptoMLBridge
 import FINAL.Bridges.TropicalCryptographyBreakthrough
 import FINAL.Bridges.TropicalCryptographyBridge
@@ -649,10 +654,12 @@ import FINAL.Cryptography.MinDistance
 import FINAL.Cryptography.MinimumDistance
 import FINAL.Cryptography.NoetherianCertification
 import FINAL.Cryptography.OneWay
+import FINAL.Cryptography.PadicCryptoHardness
 import FINAL.Cryptography.PostIdempotentCrypto
 import FINAL.Cryptography.PythagoreanLatticeReduction
 import FINAL.Cryptography.SPBQuantumCrypto
 import FINAL.Cryptography.SchnorrProtocol
+import FINAL.Cryptography.SemiconjTransfer
 import FINAL.Cryptography.TropicalCryptoBridge
 import FINAL.Cryptography.TropicalCryptoPrimitives
 import FINAL.Cryptography.TropicalCryptoRobustnessBridge
@@ -688,6 +695,7 @@ import FINAL.EML.ConvexRetraction
 import FINAL.EML.Core
 import FINAL.EML.DeepApprox
 import FINAL.EML.DeepComposition
+import FINAL.EML.DepthEfficiency
 import FINAL.EML.DiagonalPhaseTransition
 import FINAL.EML.Dvir
 import FINAL.EML.EMLAdvancedML
@@ -696,6 +704,7 @@ import FINAL.EML.EMLFactoringBridge
 import FINAL.EML.EMLFunctionalCalculus
 import FINAL.EML.EMLNeuralNetworks
 import FINAL.EML.EMLQuantumHybrid
+import FINAL.EML.EMLStoneWeierstrassHausdorff
 import FINAL.EML.EMLTropicalSemiring
 import FINAL.EML.EMLv17Advanced
 import FINAL.EML.EMLv17Core
@@ -799,6 +808,7 @@ import FINAL.Logic.ParallelClosureCanonicalization
 import FINAL.Logic.ParameterizedStereographic
 import FINAL.Logic.PhotonChannels
 import FINAL.Logic.QueryComplexity
+import FINAL.Logic.ResearchOrdinalDepth
 import FINAL.Logic.ResourceBoundedNonlocality
 import FINAL.Logic.SpectralCollapse
 import FINAL.Logic.TemporalFixpointSemantics
@@ -828,6 +838,7 @@ import FINAL.MachineLearning.AsymptoticRate
 import FINAL.MachineLearning.Attention
 import FINAL.MachineLearning.Basic
 import FINAL.MachineLearning.BerggrenOrbitSpectral
+import FINAL.MachineLearning.BoundedDivisorSearch
 import FINAL.MachineLearning.BoundedFamily
 import FINAL.MachineLearning.BracketRobustness
 import FINAL.MachineLearning.BroadcastTheorems
@@ -1020,6 +1031,7 @@ import FINAL.Shared.CryptographicEntropy
 import FINAL.Shared.EntropyAlgebra
 import FINAL.Shared.EntropyAlgebraCrypto
 import FINAL.Shared.EntropyLatticeCrypto
+import FINAL.Shared.Fib_gcd_identity
 import FINAL.Shared.FibonacciLTE
 import FINAL.Shared.Foundations
 import FINAL.Shared.MutualInformation
