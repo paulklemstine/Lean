@@ -3543,7 +3543,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "8b794f31",
       "timestamp": "2026-05-18T00:05:11.098960+00:00"
     },
@@ -3739,6 +3739,77 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:04:33.114176+00:00"
+    },
+    {
+      "id": "fd_0203",
+      "title": "The Galois insertion",
+      "description": "(`eml_galois_insertion_closed`) provides the semantic adjunction that makes generators and closed classes dually related.",
+      "source_exp_id": "8b794f31",
+      "source_path": "result_future_directions",
+      "domains": [
+        "EML",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:04:45.202462+00:00"
+    },
+    {
+      "id": "fd_0204",
+      "title": "The Moore family theorem",
+      "description": "(`eml_moore_family`) ensures that intersections of closed classes remain closed, enabling lattice-theoretic constructions.",
+      "source_exp_id": "8b794f31",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Cryptography",
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:04:45.206085+00:00"
+    },
+    {
+      "id": "fd_0205",
+      "title": "The explicit biconditional",
+      "description": "(`eml_gc_explicit`) is the workhorse lemma: it converts between generator-side and closure-side reasoning with a single rewrite.",
+      "source_exp_id": "8b794f31",
+      "source_path": "result_future_directions",
+      "domains": [
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:04:45.209416+00:00"
+    },
+    {
+      "id": "fd_0206",
+      "title": "The core operator",
+      "description": "(`emlCore`) provides a canonical \"minimal content\" map that can be refined with additional algebraic hypotheses.",
+      "source_exp_id": "8b794f31",
+      "source_path": "result_future_directions",
+      "domains": [
+        "EML",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:04:45.212590+00:00"
     }
   ],
   "pruned": [
