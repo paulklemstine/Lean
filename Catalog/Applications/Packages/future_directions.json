@@ -1425,7 +1425,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "5c40cde4",
       "timestamp": "2026-05-17T20:28:09.924569+00:00"
     },
@@ -3121,6 +3121,278 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T00:04:30.984206+00:00"
+    },
+    {
+      "id": "fd_0170",
+      "title": "Decompose the encoding",
+      "description": "into two parts: the quantized integer list (n·k bits) and the residual errors (bounded by ε, requiring ≈ n·⌈log(1/ε)⌉ bits each).",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.882157+00:00"
+    },
+    {
+      "id": "fd_0171",
+      "title": "Use the triangle inequality",
+      "description": "to show that the total description length is additive in the two components.",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.886222+00:00"
+    },
+    {
+      "id": "fd_0172",
+      "title": "Connect to existing `compressor_gives_complexity_bound`",
+      "description": "by constructing an explicit compressor that stores both the quantized and residual parts.\n\n### Cross-Domain Consequences\n\n- **Signal processing**: Formalizes the quantization noise model as a complexity-theoretic statement.\n- **Machine learning**: Quantization-aware training can be understood as minimizing affine distortion subject to model constraints.\n- **Telecommunications**: Connects to Lloyd-Max quantization theory through the geometric lens.\n\n---\n\n## Direction 2: Affine Distortion and MDL via Closure Operators\n\n### Theorem Statement\n\n```lean\nstructure AffineClosureOperator where\n  closure : List ℚ → Set (List ℚ)\n  idempotent : ∀ xs ∈ closure xs₀, closure xs = closure xs₀\n  contains : ∀ xs₀, xs₀ ∈ closure xs₀\n  monotone : ∀ xs₀ xs₁, (∀ x ∈ xs₀, x ∈ xs₁) → closure xs₀ ⊆ closure xs₁\n\nth",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Tropical",
+        "EML",
+        "Bridges",
+        "MachineLearning",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.890795+00:00"
+    },
+    {
+      "id": "fd_0173",
+      "title": "Define the affine closure",
+      "description": "as the set of all lists sharing the same (a, b, k) quantization parameters.",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.894378+00:00"
+    },
+    {
+      "id": "fd_0174",
+      "title": "Bound the model length",
+      "description": "(encoding a, b, k) and data length (the quantized list).\n\n### Cross-Domain Consequences\n\n- **Statistical learning**: Geometric model classes for regression with formal complexity guarantees.\n- **Bayesian inference**: Affine distortion as a geometric prior with MDL interpretation.\n- **Data mining**: Automated detection of affinely regular subsets in large datasets.\n\n---\n\n## Direction 3: Higher-Dimensional Affine Distortion\n\n### Theorem Statement\n\n```lean\ndef VectorAffineEncodable (xs : List (Fin d → ℚ)) (k : ℕ) : Prop :=\n  ∃ A : Matrix (Fin d) (Fin d) ℚ, ∃ b : Fin d → ℚ,\n    0 < A.det ∧\n    ∀ x ∈ xs, ∃ n : Fin d → ℕ, (∀ i, n i < 2^k) ∧\n      ∀ i, (A *ᵥ x + b) i = ↑(n i)\n\ntheorem vector_affine_gives_code_bound (d : ℕ) (xs : List (Fin d → ℚ)) (k : ℕ) :\n    VectorAffineEncodable xs k →\n    ∃ c",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Bridges",
+        "MachineLearning",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.899280+00:00"
+    },
+    {
+      "id": "fd_0175",
+      "title": "Define vector affine encodability",
+      "description": "using matrix multiplication for the affine map.",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.902359+00:00"
+    },
+    {
+      "id": "fd_0176",
+      "title": "Prove the code length bound",
+      "description": "by counting bits: n·d·k for the quantized vectors, d²·k for the matrix entries.",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.905326+00:00"
+    },
+    {
+      "id": "fd_0177",
+      "title": "Prove permutation invariance",
+      "description": "(same proof as 1D: membership is permutation-invariant).",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.908126+00:00"
+    },
+    {
+      "id": "fd_0178",
+      "title": "Connect to lattice coding theory",
+      "description": "by showing the quantized outputs form a sublattice of ℤ^d.\n\n### Cross-Domain Consequences\n\n- **Dimensionality reduction**: Affine distortion in high dimensions relates to Johnson-Lindenstrauss-type embeddings.\n- **Crystallography**: Crystal structures are points on lattices; affine encodability captures this.\n- **Computer vision**: Point cloud compression via affine normalization with certified bounds.\n\n---\n\n## Direction 4: Affine Structure Detection as a Certified Compressor\n\n### Theorem Statement\n\n```lean\nstructure CertifiedAffineCompressor where\n  compress : List ℚ → List Bool\n  decompress : List Bool → List ℚ\n  lossless : ∀ xs, decompress (compress xs) = xs\n  length_bound : ∀ xs k, RationalAffineEncodable xs k →\n    (compress xs).length ≤ xs.length * k + 3 * k\n\ntheorem certified_affine",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Cryptography",
+        "Bridges",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.912447+00:00"
+    },
+    {
+      "id": "fd_0179",
+      "title": "Constructively encode",
+      "description": "the affine parameters (a, b as rationals using continued fraction encoding) and the quantized integers (binary encoding).",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.915527+00:00"
+    },
+    {
+      "id": "fd_0180",
+      "title": "Define the decoder",
+      "description": "that recovers xs from (a, b, k, quantized list).",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.918401+00:00"
+    },
+    {
+      "id": "fd_0181",
+      "title": "Verify losslessness",
+      "description": "from the affine encoding/decoding equations.",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.921249+00:00"
+    },
+    {
+      "id": "fd_0182",
+      "title": "Bound the output length",
+      "description": "using the code length theorem.\n5. Use Lean's `Decidable` instances and computable functions to make the algorithm extractable.\n\n### Cross-Domain Consequences\n\n- **Verified software**: Provably correct compression for safety-critical systems (avionics, medical).\n- **Reproducible science**: Certified lossless compression of scientific data with mathematical guarantees.\n- **Formal methods**: Demonstration that proof extraction produces practically useful algorithms.\n\n---\n\n## Direction 5: Affine Distortion and Finite Entropy Rate for Streams\n\n### Theorem Statement\n\n```lean\ndef StreamAffineDistortion (f : ℕ → ℚ) (window : ℕ) : ℕ → ℕ :=\n  fun t => minimumBitBudget (List.ofFn (fun i : Fin window => f (t + i)))\n\ntheorem bounded_stream_distortion_gives_entropy_rate\n    (f : ℕ → ℚ) (window k : ℕ) :\n",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.925632+00:00"
+    },
+    {
+      "id": "fd_0183",
+      "title": "Sum the bounds",
+      "description": "to get a total code length proportional to T.",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.928954+00:00"
+    },
+    {
+      "id": "fd_0184",
+      "title": "Divide by T",
+      "description": "to obtain the per-symbol entropy rate.\n5. For overlapping windows, use a sliding window argument with amortization.",
+      "source_exp_id": "5c40cde4",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T00:04:40.931981+00:00"
     }
   ],
   "pruned": [
