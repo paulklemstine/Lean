@@ -993,8 +993,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "55fcd589",
       "timestamp": "2026-05-18T10:17:17.101442+00:00"
     },
     {
@@ -1088,6 +1088,31 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T10:17:17.106124+00:00"
+    },
+    {
+      "id": "fd_0060",
+      "title": "This document outlines 5 concrete next steps at breakthrough level, opened by th",
+      "description": "# Future Directions: Closure-Theoretic Cryptography\n\nThis document outlines 5 concrete next steps at breakthrough level, opened by the formalization of cryptographic closure hulls as Moore families with norm-bounded security invariants.\n\n---\n\n## 1. Probabilistic and Entropy-Based Secure Closure Systems\n\n**Hypothesis:** The deterministic predicate `SecureKeySpace red B S` can be lifted to a probabilistic setting where the norm bound is replaced by a tail-bound condition: instead of requiring `‖v‖ ≤ B` for all `v ∈ S`, require that a random variable `X` supported on `S` satisfies `Pr[‖X‖ > B] ≤ ε` for a negligible function `ε(λ)` of a security parameter `λ`.\n\n**Proof Strategy:**\n- Define `ProbSecureKeySpace red B ε μ S` where `μ` is a probability measure on `S` and `ε` bounds the tail probability.\n- Show that the family of probabilistically secure key spaces is closed under convex combinations (not just intersections), yielding a richer closure structure.\n- Prove that the deterministic Moore-family theorem embeds as the `ε = 0` special case.\n- Formalize a probabilistic closure operator and show it satisfies a weakened idempotence property (up to negligible error).\n\n**Cross-Domain Connections:** This connects to Rényi entropy bounds in lattice cryptography (used in LWE security proofs), smoothing lemmas for discrete Gaussians, and the leftover hash lemma. The closure operator becomes an abstraction of the \"noise flooding\" technique used in fully homomorphic encryption.\n\n**Concrete Target:** Formalize the statement that if `red` is a lattice basis reduction algorithm and `μ` is the discrete Gaussian distribution, the probabilistic secure closure of a seed lattice basis is contained in the smoothing parameter ball.\n\n---\n\n## 2. Galois Connections Between Attacker Knowledge and Secure Hulls\n\n**Hypothesis:** There exists a Galois connection between the lattice of \"attacker knowledge sets\" (ordered by inclusion) and the lattice of secure key spaces (ordered by reverse inclusion). The closure operator `secureClosure` is the lower adjoint, and the \"attack surface\" operator (mapping a secure key space to the set of distinguishable keys) is the upper adjoint.\n\n**Proof Strategy:**\n- Define `AttackSurface : Set V → Set V` as the complement of the secure hull in some ambient space, or as the set of vectors that can be distinguished from uniform by a bounded-resource adversary.\n- Prove `A ⊆ AttackSurface(S) ↔ secureClosure(A) ⊆ complement(S)` (the Galois connection adjunction).\n- Derive that the composition `AttackSurface ∘ secureClosure` is a closure operator on attacker knowledge, and `secureClosure ∘ AttackSurface` is an interior operator on key spaces.\n- Show that fixed points of the Galois connection correspond to \"cryptographically tight\" key spaces where every key is either certifiably secure or certifiably attackable.\n\n**Cross-Domain Connections:** This imports the Galois connection framework from abstract interpretation (Cousot & Cousot) into cryptographic security analysis. It also connects to the duality between indistinguishability and simulation in cryptographic proofs.\n\n**Concrete Target:** Formalize the Galois connection for the case where the attacker is a bounded-norm linear functional (modeling a lattice-based distinguisher) and the key space is a sublattice of `ℤ^n`.\n\n---\n\n## 3. Tropical and Min-Plus Secure Closures for Post-Quantum Primitives\n\n**Hypothesis:** Replacing the Euclidean norm `‖v‖` with the tropical (max-plus) norm `max_i |v_i|` or the min-plus norm `min_i |v_i|` yields closure systems with fundamentally different geometric properties, relevant to tropical cryptographic primitives where security relies on hardness of tropical linear algebra.\n\n**Proof Strategy:**\n- Instantiate `SecureKeySpace` with `V = Fin n → ℤ` and the sup-norm `‖v‖_∞ = max_i |v_i|`.\n- Show that tropical matrix multiplication `A ⊕ B` (where ⊕ is max-plus) preserves the sup-norm bound: if `‖v‖_∞ ≤ B` and `A` has bounded entries, then `‖A ⊕ v‖_∞",
+      "source_exp_id": "c01b10ca",
+      "source_path": "future_directions_md",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Cryptography",
+        "EML",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T10:18:10.707564+00:00"
     }
   ],
   "pruned": [

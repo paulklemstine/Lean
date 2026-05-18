@@ -4,10 +4,19 @@
       "id": "3_cryptographic_closure_hulls",
       "title": "Cryptographic Closure Hulls: Moore Families and Norm-Bounded Secure Key Spaces",
       "domain": "Cryptography / Abstract Algebra / Lattice Theory",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-05-18T10:18:08Z",
+      "hue": 91
+    },
+    {
+      "id": "algebraic_coding_theory_bch_and_reed_solomon",
+      "title": "Certified Algebraic Coding Theory: Reed-Solomon Distance, BCH Bounds, and Syndrome Decoding",
+      "domain": "Algebraic Coding Theory",
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
-      "date": "2026-05-18T10:18:08Z",
-      "hue": 92
+      "date": "2026-05-18T11:05:32Z",
+      "hue": 292
     }
   ],
   "edges": [],

@@ -1,0 +1,39 @@
+--- Defs.lean
++++ Defs.lean
+@@ -133,4 +165,36 @@
+   toLinkDiagram := unknotDiagram
+   sign := Fin.elim0
+ 
++/-! ## Adequacy -/
++
++/-- The number of loops in the all-A state -/
++def loopsA {n : ℕ} (D : LinkDiagram n) : ℕ :=
++  D.loops (fun _ => Smoothing.A)
++
++/-- The number of loops in the all-B state -/
++def loopsB {n : ℕ} (D : LinkDiagram n) : ℕ :=
++  D.loops (fun _ => Smoothing.B)
++
++/-- The maximum degree contributed by a state:
++    numAS(s) - numBS(s) + 2*(loops(s) - 1) -/
++noncomputable def stateMaxDeg {n : ℕ} (D : LinkDiagram n) (s : KState n) : ℤ :=
++  ↑(numAS n s) - ↑(numBS n s) + 2 * (↑(D.loops s) - 1)
++
++/-- A-adequate: the all-A state achieves a strictly higher max degree
++    than any other state. This ensures the leading coefficient of
++    the bracket is nonzero. -/
++def AAdequate {n : ℕ} (D : LinkDiagram n) : Prop :=
++  ∀ (s : KState n), s ≠ (fun _ => Smoothing.A) →
++    stateMaxDeg D s < stateMaxDeg D (fun _ => Smoothing.A)
++
++/-- B-adequate: the all-B state achieves a strictly lower min degree. -/
++def BAdequate {n : ℕ} (D : LinkDiagram n) : Prop :=
++  ∀ (s : KState n), s ≠ (fun _ => Smoothing.B) →
++    -(stateMaxDeg D s) < -(stateMaxDeg D (fun _ => Smoothing.B))
++
++/-- Adequate = both A-adequate and B-adequate.
++    All reduced alternating diagrams are adequate. -/
++def Adequate {n : ℕ} (D : LinkDiagram n) : Prop :=
++  AAdequate D ∧ BAdequate D
++
+ 

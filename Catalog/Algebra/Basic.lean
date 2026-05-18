@@ -1,166 +1,100 @@
 /-
-Copyright (c) 2025 Harmonic. All rights reserved.
+  # BCH Codes and the BCH Bound
 
-# Orbit Cost: Triangle inequality for symmetry-reduced transport costs
-
-## Overview
-
-Given a cost function `Wc : α → α → ℝ` satisfying a triangle inequality, and a group `G`
-acting on `α` by `Wc`-isometries, define the **orbit cost**:
-
-  `orbitCost Wc μ ν := ⨅_{g ∈ G} Wc(μ, g • ν)`
-
-We prove that this quotient cost again satisfies a triangle inequality.
-
-The proof is driven by **composability of near-optimal alignments**: if `g₁` nearly aligns
-`ν` to `μ` and `g₂` nearly aligns `ρ` to `ν`, then `g₁ * g₂` nearly aligns `ρ` to `μ`.
-
-## Mathematical significance
-
-This theorem establishes a general **descent principle**: triangle inequalities descend
-through isometric group quotienting. It is the formal seed for:
-- quotient optimal transport / symmetry-reduced Wasserstein geometry,
-- orbit pseudometrics and moduli-space geometry,
-- equivariant metric learning with certified metric structure,
-- canonicalization-free comparison of structured objects (graphs, point clouds, molecules).
+  BCH codes are characterized by vanishing of syndromes at consecutive
+  powers of a primitive root of unity. The BCH bound establishes that
+  such codes have minimum distance at least δ.
 -/
 
 import Mathlib
+import CodingTheory.Hamming
 
-namespace OrbitCost
+open Polynomial Finset CodingTheory
 
-/-! ## Definition of orbit cost -/
+noncomputable section
 
-/-- The **orbit cost** of two elements `μ` and `ν` under a group action is the infimum
-of `Wc μ (g • ν)` over all group elements `g : G`. This quotients out the symmetry
-of the group action, producing a cost that is invariant under the action on the
-second argument. -/
-noncomputable def orbitCost
-    (G : Type*) {α : Type*} [Group G] [MulAction G α]
-    (Wc : α → α → ℝ) (μ ν : α) : ℝ :=
-  iInf (fun (g : G) => Wc μ (g • ν))
+namespace CodingTheory
 
-/-! ## Helper lemmas -/
+/-- Syndrome of a vector c with respect to root α. -/
+def bchSyndrome {K : Type*} [CommRing K] {n : ℕ}
+    (α : K) (b : ℕ) (c : Fin n → K) (j : ℕ) : K :=
+  ∑ i : Fin n, c i * α ^ ((b + j) * i.val)
 
-/-
-The orbit cost is at most the cost for any specific group element.
--/
-theorem orbitCost_le_candidate
-    (G : Type*) {α : Type*} [Group G] [MulAction G α]
-    (Wc : α → α → ℝ) (μ ν : α) (g : G)
-    (hbd : BddBelow (Set.range fun (g : G) => Wc μ (g • ν))) :
-    orbitCost G Wc μ ν ≤ Wc μ (g • ν) := by
-  exact ciInf_le hbd g
+/-- BCH parity check: syndromes 0 to δ-2 vanish. -/
+def bchParityCheck {K : Type*} [CommRing K] {n : ℕ}
+    (α : K) (b δ : ℕ) (c : Fin n → K) : Prop :=
+  ∀ j : ℕ, j < δ - 1 → bchSyndrome α b c j = 0
 
 /-
-**Composition lemma** (the algebraic heart):
-  `Wc μ ((g₁ * g₂) • ρ) ≤ Wc μ (g₁ • ν) + Wc ν (g₂ • ρ)`.
+**BCH Bound**: The Hamming weight of any nonzero vector satisfying
+the BCH parity check conditions is at least δ.
 
-This works by using the triangle inequality with midpoint `g₁ • ν`, then rewriting
-`Wc (g₁ • ν) ((g₁ * g₂) • ρ)` via invariance as `Wc ν (g₂ • ρ)`.
+**Proof sketch**: Suppose c ≠ 0 has weight s < δ. Let i₁, …, iₛ be the
+support positions and set xₗ = α^(iₗ), wₗ = c(iₗ) · α^(b·iₗ). The
+parity check conditions give ∑ wₗ · xₗ^j = 0 for j = 0, …, s-1.
+This is a homogeneous Vandermonde system. Since the xₗ are distinct
+(by hα_inj), the Vandermonde matrix is invertible, forcing w = 0.
+But wₗ ≠ 0 (since c(iₗ) ≠ 0 and α^(b·iₗ) ≠ 0 when α ≠ 0),
+giving a contradiction.
 -/
-theorem comp_candidate_bound
-    {G α : Type*} [Group G] [MulAction G α]
-    (Wc : α → α → ℝ)
-    (htri : ∀ x y z : α, Wc x z ≤ Wc x y + Wc y z)
-    (hinv : ∀ (x y : α) (g : G), Wc (g • x) (g • y) = Wc x y)
-    (μ ν ρ : α) (g₁ g₂ : G) :
-    Wc μ ((g₁ * g₂) • ρ) ≤ Wc μ (g₁ • ν) + Wc ν (g₂ • ρ) := by
-  convert htri μ ( g₁ • ν ) ( ( g₁ * g₂ ) • ρ ) using 1;
-  simp +decide [ mul_smul, hinv ]
+theorem bch_bound {K : Type*} [Field K] [DecidableEq K] {n δ : ℕ}
+    (α : K) (b : ℕ)
+    (hα_ne : α ≠ 0)
+    (hα_inj : ∀ i j : Fin n, α ^ i.val = α ^ j.val → i = j)
+    (_hδ : δ ≤ n + 1)
+    (c : Fin n → K)
+    (hc : bchParityCheck α b δ c) :
+    c = 0 ∨ hammingWt c ≥ δ := by
+  -- By contrapositive: push_neg to get hne : c ≠ 0 and hs : hammingWt c < δ.
+  by_contra h
+  push_neg at h
+  obtain ⟨hne, hs⟩ := h;
+  -- Let S = Finset.univ.filter (fun i => c i ≠ 0). So S.card = hammingWt c = s < δ.
+  set S := Finset.univ.filter (fun i => c i ≠ 0)
+  have hS_card : S.card < δ := by
+    exact hs;
+  -- Use Finset.orderEmbOfFin to index S by Fin s.
+  obtain ⟨e, he⟩ : ∃ e : Fin S.card → Fin n, Function.Injective e ∧ ∀ i, e i ∈ S := by
+    exact ⟨ fun i => S.orderEmbOfFin rfl i, by simp +decide [ Function.Injective ], fun i => S.orderEmbOfFin_mem rfl _ ⟩;
+  -- Define $w$ and $x$ as in the provided solution.
+  set w : Fin S.card → K := fun ℓ => c (e ℓ) * α ^ (b * (e ℓ).val)
+  set x : Fin S.card → K := fun ℓ => α ^ (e ℓ).val;
+  -- The equations become: for each j < s, ∑ ℓ : Fin s, w ℓ * (x ℓ)^j = 0.
+  have h_eq : ∀ j : Fin S.card, ∑ ℓ : Fin S.card, w ℓ * (x ℓ) ^ (j : ℕ) = 0 := by
+    intro j
+    have h_eq_j : ∑ i ∈ S, c i * α ^ ((b + j.val) * i.val) = 0 := by
+      have h_eq_j : ∑ i : Fin n, c i * α ^ ((b + j.val) * i.val) = 0 := by
+        exact hc _ ( Nat.lt_of_lt_of_le j.2 ( Nat.le_sub_one_of_lt hS_card ) );
+      rw [ ← h_eq_j, Finset.sum_filter_of_ne ] ; aesop;
+    have h_eq_j : ∑ i ∈ S, c i * α ^ ((b + j.val) * i.val) = ∑ ℓ : Fin S.card, c (e ℓ) * α ^ ((b + j.val) * (e ℓ).val) := by
+      have h_eq_j : ∑ i ∈ S, c i * α ^ ((b + j.val) * i.val) = ∑ i ∈ Finset.image e Finset.univ, c i * α ^ ((b + j.val) * i.val) := by
+        rw [ Finset.eq_of_subset_of_card_le ( Finset.image_subset_iff.mpr fun i _ => he.2 i ) ( by rw [ Finset.card_image_of_injective _ he.1, Finset.card_fin ] ) ];
+      rw [ h_eq_j, Finset.sum_image <| by tauto ];
+    convert h_eq_j.symm.trans ‹∑ i ∈ S, c i * α ^ ( ( b + j.val ) * i.val ) = 0› using 2 ; ring;
+  -- This is a homogeneous Vandermonde system. Since the xₗ are distinct (by hα_inj), the Vandermonde matrix is invertible, forcing w = 0.
+  have h_vandermonde : Matrix.det (Matrix.of (fun (i j : Fin S.card) => x j ^ (i : ℕ))) ≠ 0 := by
+    erw [ Matrix.det_transpose, Matrix.det_vandermonde ];
+    simp +decide [ Finset.prod_eq_zero_iff, sub_eq_zero ];
+    exact fun i j hij => fun h => hij.ne <| he.1 <| hα_inj _ _ h.symm;
+  -- Since the Vandermonde matrix is invertible, the only solution to the system is $w = 0$.
+  have h_w_zero : w = 0 := by
+    have h_w_zero : Matrix.mulVec (Matrix.of (fun (i j : Fin S.card) => x j ^ (i : ℕ))) w = 0 := by
+      exact funext fun i => by simpa [ Matrix.mulVec, dotProduct, mul_comm ] using h_eq i;
+    exact Matrix.eq_zero_of_mulVec_eq_zero h_vandermonde h_w_zero;
+  simp +zetaDelta at *;
+  exact he.2 ⟨ 0, Finset.card_pos.mpr ⟨ Classical.choose ( Function.ne_iff.mp hne ), Finset.mem_filter.mpr ⟨ Finset.mem_univ _, Classical.choose_spec ( Function.ne_iff.mp hne ) ⟩ ⟩ ⟩ ( by simpa [ hα_ne ] using congr_fun h_w_zero ⟨ 0, Finset.card_pos.mpr ⟨ Classical.choose ( Function.ne_iff.mp hne ), Finset.mem_filter.mpr ⟨ Finset.mem_univ _, Classical.choose_spec ( Function.ne_iff.mp hne ) ⟩ ⟩ ⟩ )
 
-/-
-For any `ε > 0`, there exists a group element `g` achieving cost within `ε`
-of the orbit cost (ε-near-minimizer).
--/
-theorem exists_near_minimizer
-    (G : Type*) {α : Type*} [Group G] [MulAction G α]
-    (Wc : α → α → ℝ) (μ ν : α) :
-    ∀ ε : ℝ, 0 < ε → ∃ g : G, Wc μ (g • ν) < orbitCost G Wc μ ν + ε := by
-  intro ε hε;
-  convert exists_lt_of_ciInf_lt ( show InfSet.sInf ( Set.range fun g : G => Wc μ ( g • ν ) ) < InfSet.sInf ( Set.range fun g : G => Wc μ ( g • ν ) ) + ε from lt_add_of_pos_right _ hε ) using 1
+/-- The BCH bound as a minimum distance statement. -/
+theorem bch_min_distance {K : Type*} [Field K] [DecidableEq K] {n δ : ℕ}
+    (α : K) (b : ℕ)
+    (hα_ne : α ≠ 0)
+    (hα_inj : ∀ i j : Fin n, α ^ i.val = α ^ j.val → i = j)
+    (hδ : δ ≤ n + 1)
+    (c : Fin n → K)
+    (hc : bchParityCheck α b δ c) (hne : c ≠ 0) :
+    hammingWt c ≥ δ :=
+  (bch_bound α b hα_ne hα_inj hδ c hc).resolve_left hne
 
-/-! ## Main theorem -/
+end CodingTheory
 
-/-
-**Orbit-cost triangle inequality.**
-
-If `Wc` satisfies a triangle inequality and `G` acts by `Wc`-isometries, then the
-orbit cost `orbitCost Wc` also satisfies a triangle inequality:
-
-  `orbitCost Wc μ ρ ≤ orbitCost Wc μ ν + orbitCost Wc ν ρ`
-
-The proof uses ε-near-optimal witnesses and the composition lemma.
--/
-theorem orbitCost_triangle
-    (G : Type*) {α : Type*} [Group G] [MulAction G α]
-    (Wc : α → α → ℝ)
-    (htri : ∀ x y z : α, Wc x z ≤ Wc x y + Wc y z)
-    (hinv : ∀ (x y : α) (g : G), Wc (g • x) (g • y) = Wc x y)
-    (hbd : ∀ μ ν : α, BddBelow (Set.range fun (g : G) => Wc μ (g • ν))) :
-    ∀ μ ν ρ : α, orbitCost G Wc μ ρ ≤ orbitCost G Wc μ ν + orbitCost G Wc ν ρ := by
-  intro μ ν ρ;
-  refine' le_of_forall_pos_le_add fun ε εpos => _;
-  -- Use the existence of near-optimal witnesses to find $g₁$ and $g₂$ such that $Wc μ (g₁ • ν) < orbitCost G Wc μ ν + ε / 2$ and $Wc ν (g₂ • ρ) < orbitCost G Wc ν ρ + ε / 2$.
-  obtain ⟨g₁, hg₁⟩ : ∃ g₁ : G, Wc μ (g₁ • ν) < orbitCost G Wc μ ν + ε / 2 := by
-    exact exists_near_minimizer G Wc μ ν ( ε / 2 ) ( half_pos εpos )
-  obtain ⟨g₂, hg₂⟩ : ∃ g₂ : G, Wc ν (g₂ • ρ) < orbitCost G Wc ν ρ + ε / 2 := by
-    exact exists_near_minimizer G Wc ν ρ ( ε / 2 ) ( half_pos εpos );
-  refine' le_trans ( orbitCost_le_candidate G Wc μ ρ ( g₁ * g₂ ) ( hbd μ ρ ) ) _;
-  linarith [ comp_candidate_bound Wc htri hinv μ ν ρ g₁ g₂ ]
-
-/-! ## Concrete instantiation: finite group action -/
-
-/-
-For finite groups, the orbit cost range is automatically bounded below.
--/
-theorem orbitCost_bddBelow_of_fintype
-    (G : Type*) {α : Type*} [Group G] [Fintype G] [MulAction G α]
-    (Wc : α → α → ℝ) (μ ν : α) :
-    BddBelow (Set.range fun (g : G) => Wc μ (g • ν)) := by
-  exact Set.finite_range _ |> Set.Finite.bddBelow
-
-/-
-**Triangle inequality for orbit cost under finite group actions.**
-This version eliminates the `BddBelow` hypothesis entirely.
--/
-theorem orbitCost_triangle_fintype
-    (G : Type*) {α : Type*} [Group G] [Fintype G] [MulAction G α]
-    (Wc : α → α → ℝ)
-    (htri : ∀ x y z : α, Wc x z ≤ Wc x y + Wc y z)
-    (hinv : ∀ (x y : α) (g : G), Wc (g • x) (g • y) = Wc x y) :
-    ∀ μ ν ρ : α, orbitCost G Wc μ ρ ≤ orbitCost G Wc μ ν + orbitCost G Wc ν ρ := by
-  apply orbitCost_triangle;
-  · exact htri;
-  · exact hinv;
-  · exact fun μ ν => Set.finite_range _ |> Set.Finite.bddBelow
-
-/-! ## Orbit cost equivariance properties -/
-
-/-
-The orbit cost is invariant under the group action on the second argument.
--/
-theorem orbitCost_smul_right
-    (G : Type*) {α : Type*} [Group G] [MulAction G α]
-    (Wc : α → α → ℝ) (μ ν : α) (h : G) :
-    orbitCost G Wc μ (h • ν) = orbitCost G Wc μ ν := by
-  unfold orbitCost
-  rw [← Equiv.iInf_comp (Equiv.mulRight h)]
-  simp +decide [← mul_smul]
-  exact Equiv.iInf_congr (Equiv.mulRight (h * h)) fun g => by simp +decide [mul_assoc]
-
-/-! ## Pseudometric structure -/
-
-/-
-If `Wc` is reflexive and nonnegative, then `orbitCost Wc μ μ = 0`.
--/
-theorem orbitCost_self
-    (G : Type*) {α : Type*} [Group G] [MulAction G α]
-    (Wc : α → α → ℝ) (μ : α)
-    (hrefl : ∀ x : α, Wc x x = 0)
-    (hnn : ∀ x y : α, 0 ≤ Wc x y)
-    (hbd : BddBelow (Set.range fun (g : G) => Wc μ (g • μ))) :
-    orbitCost G Wc μ μ = 0 := by
-  exact le_antisymm ( ciInf_le hbd 1 |> le_trans <| by simp +decide [ hrefl ] ) ( le_ciInf fun g => hnn _ _ )
-
-end OrbitCost
+end
