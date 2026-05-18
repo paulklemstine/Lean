@@ -1719,7 +1719,7 @@ class PiAgentClient:
 
         Philosophy: Give Aristotle the direction and context, not a script.
         Let it decide what to prove, how deep to go, and what artifacts to produce.
-        The only hard requirement is FUTURE_DIRECTIONS.md — it drives the next cycle.
+        The only hard requirement is FUTURE_DIRECTIONS.md with 3-5 testable scientific hypotheses — it drives the next cycle.
         """
         refs = catalog_references or concept.catalog_references or []
 

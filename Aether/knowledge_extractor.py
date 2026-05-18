@@ -528,8 +528,13 @@ DELIVERABLE 4 — Python Code: Demos, Algorithms
 ────────────────────────────────────────────────────────────────────────────
 DELIVERABLE 5 — FUTURE_DIRECTIONS.md  (MANDATORY — drives next cycle)
 ────────────────────────────────────────────────────────────────────────────
-The MOST IMPORTANT deliverable. Structured roadmap of breakthrough
-research opportunities opened by this work. See detailed spec below.
+The MOST IMPORTANT deliverable. Every research cycle MUST produce a
+FUTURE_DIRECTIONS.md that identifies 3-5 specific, testable scientific
+hypotheses. Each direction must be a falsifiable claim or conjecture that
+can be proved, disproved, or tested — not a vague "we could explore X."
+Format: "Conjecture: [precise statement]. Test: [what would confirm or
+refute it]. Impact: [what this would enable if true]." Every hypothesis
+should be daring enough to matter and specific enough to fail.
 
 ────────────────────────────────────────────────────────────────────────────
 DELIVERABLE 6 — JSON Data Package  →  PACKAGE.json
