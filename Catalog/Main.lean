@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1258 of the highest-quality
+A curated collection of 1276 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1258
+Total files: 1276
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -566,11 +566,17 @@ import FINAL.Computation.Bifurcation
 import FINAL.Computation.BinarySearch
 import FINAL.Computation.BranchingPrograms
 import FINAL.Computation.Circuits
+import FINAL.Computation.ClosureCompressionOptimality
 import FINAL.Computation.CollatzTropical
 import FINAL.Computation.CollatzTropicalContraction
+import FINAL.Computation.Compression
+import FINAL.Computation.CompressionMonad
+import FINAL.Computation.Dijkstra
+import FINAL.Computation.DivergenceTheory
 import FINAL.Computation.Entropy
 import FINAL.Computation.EntropyBridge
 import FINAL.Computation.ExpIrrational
+import FINAL.Computation.FactoringEnergyLandscape
 import FINAL.Computation.FiveDreams
 import FINAL.Computation.FutureResearchTheorems
 import FINAL.Computation.GravityOracle
@@ -598,6 +604,7 @@ import FINAL.Computation.QuantumBerggrenWalk
 import FINAL.Computation.RectStillLife
 import FINAL.Computation.ResearchQuestions
 import FINAL.Computation.Resolution
+import FINAL.Computation.ReversibleTropicalMachine
 import FINAL.Computation.ReversibleTropicalThermodynamics
 import FINAL.Computation.SearchInfoIsomorphism
 import FINAL.Computation.SearchTheory
@@ -611,6 +618,7 @@ import FINAL.Computation.TropicalAmortizedExamples
 import FINAL.Computation.TropicalCompression
 import FINAL.Computation.TropicalCompressionDuality
 import FINAL.Computation.TropicalLossyCompression
+import FINAL.Computation.TropicalThermodynamicComplexity
 import FINAL.Computation.TurboQuantAnalysis
 import FINAL.Computation.UniversalOracleTeam
 import FINAL.Core.ParentDescent
@@ -652,6 +660,7 @@ import FINAL.Cryptography.LeftoverHash
 import FINAL.Cryptography.MLLFormula
 import FINAL.Cryptography.MinDistance
 import FINAL.Cryptography.MinimumDistance
+import FINAL.Cryptography.MooreClosure
 import FINAL.Cryptography.NoetherianCertification
 import FINAL.Cryptography.OneWay
 import FINAL.Cryptography.PadicCryptoHardness
@@ -679,6 +688,7 @@ import FINAL.Cryptography.TropicalQuadraticSieveExact
 import FINAL.Cryptography.TropicalRSA
 import FINAL.Cryptography.TropicalSmoothnessScore
 import FINAL.Cryptography.TropicalZKCommitments
+import FINAL.Cryptography.TropicalZeroKnowledge
 import FINAL.EML.ANRApproximation
 import FINAL.EML.AdvancedTheorems
 import FINAL.EML.AdvancedTheory
@@ -691,6 +701,7 @@ import FINAL.EML.CWApprox
 import FINAL.EML.ClosureOperator
 import FINAL.EML.CompactRetractApprox
 import FINAL.EML.Complexity
+import FINAL.EML.ComputationalExtraction
 import FINAL.EML.ConvexRetraction
 import FINAL.EML.Core
 import FINAL.EML.DeepApprox
@@ -734,6 +745,7 @@ import FINAL.EML.PhotonResearchRound3
 import FINAL.EML.PhotonResearchRound4
 import FINAL.EML.PhotonicFrontier
 import FINAL.EML.PolyhedronCodomain
+import FINAL.EML.ProductApproximation
 import FINAL.EML.PythagoreanBridge
 import FINAL.EML.PythagoreanBridgeResearch
 import FINAL.EML.QDF_FiveDirections
@@ -752,6 +764,7 @@ import FINAL.EML.TrainingDynamics
 import FINAL.EML.TransferLearningBounds
 import FINAL.EML.UltrametricCertifiedRobustness
 import FINAL.EML.UnifiedCompression
+import FINAL.EML.UniversalApproximation
 import FINAL.EML.V14Research
 import FINAL.EML.V15Research
 import FINAL.EML.V16Research
@@ -831,6 +844,7 @@ import FINAL.Logic.VoiceLeadingCostN
 import FINAL.Logic.VoiceLeadingGeometry
 import FINAL.MachineLearning.ActivationNerveCosheafRobustness
 import FINAL.MachineLearning.AdjointAutoencoder
+import FINAL.MachineLearning.AetherStressTesting
 import FINAL.MachineLearning.AlgebraicCausalInference
 import FINAL.MachineLearning.AlgebraicNeuralArchitecture
 import FINAL.MachineLearning.Applications
@@ -852,6 +866,7 @@ import FINAL.MachineLearning.ClosureNetworks
 import FINAL.MachineLearning.ClosureTheoreticML
 import FINAL.MachineLearning.ClosureUniversalApproximation
 import FINAL.MachineLearning.Coboundary
+import FINAL.MachineLearning.CommitmentProtocol
 import FINAL.MachineLearning.CompilationCompression
 import FINAL.MachineLearning.Compositionality
 import FINAL.MachineLearning.ConceptualDependencyCriticalPath
@@ -877,6 +892,7 @@ import FINAL.MachineLearning.LLMSingleMatMul
 import FINAL.MachineLearning.LSEConvergence
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LoopFoundations
+import FINAL.MachineLearning.MaxPlusRepresenter
 import FINAL.MachineLearning.MinMax
 import FINAL.MachineLearning.MulticlassMargin
 import FINAL.MachineLearning.NNCompilationTheory
@@ -887,6 +903,7 @@ import FINAL.MachineLearning.OrdinalResearchGovernance
 import FINAL.MachineLearning.PadicCramerRao
 import FINAL.MachineLearning.PhotonEpistemicBridge
 import FINAL.MachineLearning.PhotonNetworks
+import FINAL.MachineLearning.PluralityRobust
 import FINAL.MachineLearning.PresheafIdentifiability
 import FINAL.MachineLearning.ProfileDepthGap
 import FINAL.MachineLearning.PromptOptimization
@@ -903,6 +920,7 @@ import FINAL.MachineLearning.SpectralBounds
 import FINAL.MachineLearning.Stability
 import FINAL.MachineLearning.TheoremA
 import FINAL.MachineLearning.TheoremNoveltyCertification
+import FINAL.MachineLearning.TropKME
 import FINAL.MachineLearning.TropicalAdversarialRegularization
 import FINAL.MachineLearning.TropicalAdversarialTraining
 import FINAL.MachineLearning.TropicalAttentionRobustness

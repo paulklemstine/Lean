@@ -993,7 +993,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "55fcd589",
       "timestamp": "2026-05-18T10:17:17.101442+00:00"
     },
@@ -1268,6 +1268,27 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T13:01:00.472657+00:00"
+    },
+    {
+      "id": "fd_0069",
+      "title": "Create a team to conduct research, brainstorm hypotheses, run experiments, valid",
+      "description": "# Future Directions: Research Ordinal Depth\n\n## Team Directive\n\nCreate a team to conduct research, brainstorm hypotheses, run experiments, validate data, update knowledge base and iterate forever. Each future direction below is specific enough for a team to pick up and pursue with clear hypotheses, proof strategies, and cross-domain connections.\n\n---\n\n## 1. Ordinal Collapse Thresholds for Oracle Research\n\n**Conjecture**: For every bounded-branching oracle strategy class with branching factor `k`, there exists a least ordinal `β(k)` such that every realized research object with branching bound `k` has `researchDepth < β(k)`.\n\n**Precise Statement**: Define a family of research objects `R(k, n)` parameterized by branching factor `k` and height `n`. Then:\n- For each `k`, the set `{ researchDepth(A) | BranchingBound k A ∧ HeightBound n A, n ∈ ℕ }` is bounded by `ω` (the first infinite ordinal).\n- For unbounded branching with fixed height, the supremum of achievable depths equals `ω · (n+1)`.\n- Characterize `β(k)` as a function of the branching bound.\n\n**Test**: \n1. Formalize strategy classes for small `k = 1, 2, 3`.\n2. Compute candidate upper bounds using the `natDepth_height_bound` theorem.\n3. Either prove uniform boundedness or construct families that approach the bound.\n4. Connect to `query_strategy_output_bound`: does the 2^k output bound from oracle complexity translate to a tighter ordinal bound?\n\n**Proof Strategy**: Use the `natDepth_eq_researchDepth` theorem to reduce ordinal questions to computable natural-number bounds. The key insight is that for finitely branching objects, all depths are natural numbers, so `β(k)` should be `ω` for any finite `k`.\n\n**Cross-Domain Connections**: \n- Query complexity (oracle branching → depth bounds)\n- Kolmogorov complexity (description length → depth bounds)\n- Ramsey theory (unavoidable depth patterns in large enough structures)\n\n---\n\n## 2. Strict Depth Growth Under Iterated Bootstrap\n\n**Conjecture**: If `A` is any research object with positive depth, then the sequence `n ↦ researchDepth(bootstrapIter n A)` is strictly increasing for all `n`, and the depth grows exactly linearly: `researchDepth(bootstrapIter n A) = researchDepth(A) + n`.\n\n**Status**: PROVED in the current development (`bootstrapIter_depth` and `bootstrapIter_strict_increasing`).\n\n**Extended Conjecture**: Define a *generalized bootstrap* operator `gboot(f, A)` where `f` is a monotone function on research objects (not just the successor-taking `bootstrap`). Then:\n- If `f` is non-idempotent in the sense of `DynamicalProofComplexity`, the sequence `n ↦ researchDepth(f^[n](A))` is strictly increasing.\n- The growth rate of depth under `f` characterizes the \"acceleration\" of `f` as a research operator.\n- Classify bootstrap operators by their ordinal growth rate: constant additive = linear research, multiplicative = polynomial research, exponential = super-polynomial research.\n\n**Test**: \n1. Define `gboot` as a structure with a `ResearchObject → ResearchObject` field satisfying monotonicity.\n2. Prove strict growth for the standard bootstrap (already done).\n3. Define composition-bootstrap: `compBoot(A) = compose(A, A)`, which doubles depth. Prove depth grows as `2^n · d₀`.\n4. Search for a bootstrap operator with super-exponential growth.\n5. Connect to `nontrivial_depth_one_implies_not_idempotent`: prove that any depth-preserving operator must be idempotent.\n\n**Cross-Domain Connections**:\n- Dynamical systems (Lyapunov exponents as ordinal growth rates)\n- Fixed-point theory (non-idempotence ↔ non-trivial dynamics)\n- Self-referential systems (Gödel numbering as a bootstrap operation)\n\n---\n\n## 3. Holographic Bound on Proof Corpora\n\n**Conjecture**: For dependency graphs with separator size at most `s` (in the graph-theoretic sense), the research depth is bounded by a function polynomial in `s`, independent of total node count.\n\n**Precise Statement**: Define the *separator size* `sep(A)` of a research object as the minimum number of nod",
+      "source_exp_id": "55fcd589",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Bridges",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T13:03:56.305224+00:00"
     }
   ],
   "pruned": [
