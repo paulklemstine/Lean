@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1427 of the highest-quality
+A curated collection of 1435 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1427
+Total files: 1435
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -39,6 +39,7 @@ import FINAL.Algebra.Core
 import FINAL.Algebra.CosmicBootstrap
 import FINAL.Algebra.Covering
 import FINAL.Algebra.CrystallizerFrontier
+import FINAL.Algebra.DeepConnections
 import FINAL.Algebra.DeepOpenProblems
 import FINAL.Algebra.Defs
 import FINAL.Algebra.Depth
@@ -67,6 +68,7 @@ import FINAL.Algebra.Freivalds
 import FINAL.Algebra.FreivaldsBridge
 import FINAL.Algebra.FreivaldsSchwartzZippel
 import FINAL.Algebra.FreivaldsVerification
+import FINAL.Algebra.FrontierResearch
 import FINAL.Algebra.FutureExploration
 import FINAL.Algebra.GaloisObstruction
 import FINAL.Algebra.GenesisOracle
@@ -86,6 +88,7 @@ import FINAL.Algebra.IOFExplorations
 import FINAL.Algebra.IdempotentCongruenceBasis
 import FINAL.Algebra.IdempotentHilbertBasis
 import FINAL.Algebra.IdempotentLensing
+import FINAL.Algebra.IharaZeta
 import FINAL.Algebra.InsideOutFactor
 import FINAL.Algebra.InsideOutResearch
 import FINAL.Algebra.IntegerDiffraction
@@ -120,6 +123,7 @@ import FINAL.Algebra.NuclearAlgebra
 import FINAL.Algebra.NullstellensatzPIT
 import FINAL.Algebra.NumberLineOracle
 import FINAL.Algebra.Observable
+import FINAL.Algebra.OctonionicTropicalApplications
 import FINAL.Algebra.OpenDirections
 import FINAL.Algebra.OpenQuestions
 import FINAL.Algebra.OpenQuestions_2
@@ -147,6 +151,7 @@ import FINAL.Algebra.RamanujanOpenProblems
 import FINAL.Algebra.Reciprocity
 import FINAL.Algebra.RiemannConnection
 import FINAL.Algebra.Robustness
+import FINAL.Algebra.RootBound
 import FINAL.Algebra.RotaBaxter
 import FINAL.Algebra.SchwartzZippel
 import FINAL.Algebra.SchwartzZippelBridge
@@ -177,6 +182,7 @@ import FINAL.Algebra.TwoEyesNextSteps
 import FINAL.Algebra.UltrametricCondNeg
 import FINAL.Algebra.UnifyingTheory
 import FINAL.Algebra.UniswapV4Hooks
+import FINAL.Algebra.UnityIsomorphism
 import FINAL.Algebra.UniversalParentInverse
 import FINAL.Algebra.UniversalTranslator
 import FINAL.Algebra.Valuations
@@ -991,6 +997,7 @@ import FINAL.MachineLearning.GroupTheory
 import FINAL.MachineLearning.HexGeometry
 import FINAL.MachineLearning.IdempotentAggregation
 import FINAL.MachineLearning.LLMSingleMatMul
+import FINAL.MachineLearning.LSEBound
 import FINAL.MachineLearning.LSEConvergence
 import FINAL.MachineLearning.LegendreGapReduction
 import FINAL.MachineLearning.LoebGeneralization
@@ -1004,6 +1011,7 @@ import FINAL.MachineLearning.NeuralCompilationTeams
 import FINAL.MachineLearning.NeuralSheafCohomology
 import FINAL.MachineLearning.OrdinalResearchGovernance
 import FINAL.MachineLearning.PadicCramerRao
+import FINAL.MachineLearning.Parity
 import FINAL.MachineLearning.PhotonEpistemicBridge
 import FINAL.MachineLearning.PhotonNetworks
 import FINAL.MachineLearning.PluralityRobust
