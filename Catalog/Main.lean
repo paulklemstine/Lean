@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1383 of the highest-quality
+A curated collection of 1395 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1383
+Total files: 1395
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -733,19 +733,24 @@ import FINAL.EML.AdvancedTheory
 import FINAL.EML.AdversarialRobustness
 import FINAL.EML.AlgebraicMaxClosure
 import FINAL.EML.AlignmentSafetyTheory
+import FINAL.EML.ApproximationBounds
 import FINAL.EML.AutoMLTheory
 import FINAL.EML.Basic
 import FINAL.EML.CWApprox
+import FINAL.EML.CausalInferenceTheory
+import FINAL.EML.CausalRepresentationTheory
 import FINAL.EML.ClosureOperator
 import FINAL.EML.CompactRetractApprox
 import FINAL.EML.Complexity
 import FINAL.EML.ComputationalExtraction
+import FINAL.EML.ConvergenceGuarantees
 import FINAL.EML.ConvexRetraction
 import FINAL.EML.Core
 import FINAL.EML.DeepApprox
 import FINAL.EML.DeepComposition
 import FINAL.EML.DepthEfficiency
 import FINAL.EML.DiagonalPhaseTransition
+import FINAL.EML.DistillationTheory
 import FINAL.EML.Dvir
 import FINAL.EML.EMLAdvancedML
 import FINAL.EML.EMLCryptographicML
@@ -764,6 +769,7 @@ import FINAL.EML.EMLv19Core
 import FINAL.EML.EMLv8Advanced
 import FINAL.EML.EMLv8Core
 import FINAL.EML.ExtendedTheory
+import FINAL.EML.FederatedLearningTheory
 import FINAL.EML.FreivaldsAmplification
 import FINAL.EML.FutureResearch
 import FINAL.EML.FutureTheorems
@@ -775,7 +781,10 @@ import FINAL.EML.L2SheafRobustness
 import FINAL.EML.LatticeTreeCorrespondence
 import FINAL.EML.MagicSquare
 import FINAL.EML.MaxPlusStoneWeierstrass
+import FINAL.EML.MetaPrediction
 import FINAL.EML.ModularForms
+import FINAL.EML.MultiModalTheory
+import FINAL.EML.NeuralArchitectureTheory
 import FINAL.EML.NewTheorems
 import FINAL.EML.OISCC
 import FINAL.EML.OpenQuestions
@@ -788,6 +797,7 @@ import FINAL.EML.PythagoreanBridge
 import FINAL.EML.PythagoreanBridgeResearch
 import FINAL.EML.QDF_FiveDirections
 import FINAL.EML.QuantumDensityEstimation
+import FINAL.EML.QuantumSignal
 import FINAL.EML.RamanujanFrontiers2
 import FINAL.EML.RepulsorTheory
 import FINAL.EML.RepulsorTheoryExtended
@@ -827,6 +837,8 @@ import FINAL.Geometry.NonAbelianGauge
 import FINAL.Geometry.OvalArrangement
 import FINAL.Geometry.PadicMobius
 import FINAL.Geometry.PhotonEventGraph
+import FINAL.Geometry.QuantumGravityErrorCorrection
+import FINAL.Geometry.QuotientSpaces
 import FINAL.Geometry.RamanujanFrontiers
 import FINAL.Geometry.TropicalTransversality
 import FINAL.Geometry.UnifiedLightTheory
