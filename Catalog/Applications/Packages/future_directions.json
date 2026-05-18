@@ -963,8 +963,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "3bbbe003",
       "timestamp": "2026-05-17T18:48:26.949133+00:00"
     },
     {
@@ -3373,7 +3373,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "74c4c009",
       "timestamp": "2026-05-18T00:04:40.928954+00:00"
     },
@@ -3881,6 +3881,149 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T01:05:01.496678+00:00"
+    },
+    {
+      "id": "fd_0211",
+      "title": "1. Subadditive Horizon Law (Fekete-Type Asymptotics)",
+      "description": "**Theorem Statement:**\n```lean\ntheorem subadditive_horizon_law (L : ℕ → ℝ)\n    (hL : ∀ T₁ T₂, L (T₁ + T₂) ≤ L T₁ + L T₂)\n    (hL_nonneg : ∀ T, 0 ≤ L T) :\n    ∃ r : ℝ, Tendsto (fun T => L T / T) atTop (𝓝 r)\n```\n\n**Proof Strategy:**\nApply Fekete's subadditive lemma: if `L` is subadditive and nonneg, then `L(T)/T` converges to `inf { L(n)/n | n ≥ 1 }`. The proof proceeds by showing the sequence `L(n)/n` is eventually bounded below, then using the subadditivity to show it is a Cauchy sequence. Mathlib's `Filter.Tendsto` and `Real.iInf` machinery should suffice.\n\n**Cross-Domain Connection:**\nThis connects entropy rates in information theory (Shannon's theorem on the limit of `H(X₁,...,Xₙ)/n`) to amortized complexity in algorithm analysis and to the thermodynamic limit in statistical mechanics w",
+      "source_exp_id": "74c4c009",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Physics",
+        "Bridges",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:21:14.691851+00:00"
+    },
+    {
+      "id": "fd_0212",
+      "title": "2. Weighted / Non-Uniform Extensive Bounds",
+      "description": "**Theorem Statement:**\n```lean\ntheorem weighted_extensive_bound\n    (T : ℕ) (ℓ w : ℕ → ℝ)\n    (h : ∀ t < T, ℓ t ≤ w t) :\n    ∑ t in Finset.range T, ℓ t ≤ ∑ t in Finset.range T, w t\n```\n\nAlready captured by our pointwise comparison, but the interesting extension is:\n\n```lean\ntheorem weighted_average_bound\n    (T : ℕ) (hT : 0 < T) (ℓ w : ℕ → ℝ)\n    (h : ∀ t < T, ℓ t ≤ w t) :\n    (∑ t in Finset.range T, ℓ t) / T ≤ (∑ t in Finset.range T, w t) / T\n```\n\n**Proof Strategy:**\nDivide both sides of the pointwise sum comparison by `T` (using `div_le_div_of_nonneg_right`). The key lemma is monotonicity of division by a positive constant.\n\n**Cross-Domain Connection:**\nModels nonstationary coding (time-varying channel capacity), energy budgets in physics (varying Hamiltonian), and adaptive learning rate",
+      "source_exp_id": "74c4c009",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Physics",
+        "Bridges",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:21:14.698626+00:00"
+    },
+    {
+      "id": "fd_0213",
+      "title": "3. Asymptotic Average-Length Theorem",
+      "description": "**Theorem Statement:**\n```lean\ntheorem average_length_bound\n    (T : ℕ) (hT : 0 < T) (C : ℝ) (ℓ : ℕ → ℝ)\n    (hℓ : ∀ t < T, ℓ t ≤ C) :\n    (∑ t in Finset.range T, ℓ t) / T ≤ C\n```\n\n**Proof Strategy:**\nFrom `total_real_length_le_horizon_mul_bound`, we have `∑ ℓ ≤ T * C`. Dividing by `T > 0` gives `(∑ ℓ)/T ≤ C`. Use `div_le_iff` and the horizon bound.\n\n**Cross-Domain Connection:**\n- Information theory: Shannon entropy rate as the limit of average code length\n- Amortized analysis: average cost per operation bounded by worst-case\n- Persistence: average barcode lifetime bounded by maximum feature lifetime\n- ML: average per-sample certification cost\n\n---",
+      "source_exp_id": "74c4c009",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Analysis",
+        "Combinatorics",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:21:14.705104+00:00"
+    },
+    {
+      "id": "fd_0214",
+      "title": "4. Tropical Semiring Analogue (Max-Plus Composition)",
+      "description": "**Theorem Statement:**\n```lean\ntheorem tropical_max_bound\n    (T : ℕ) (C : ℝ) (ℓ : ℕ → ℝ)\n    (hℓ : ∀ t < T, ℓ t ≤ C)\n    (hT : 0 < T) :\n    Finset.sup' (Finset.range T) (by positivity) ℓ ≤ C\n```\n\n**Proof Strategy:**\nUse `Finset.sup'_le` and the pointwise bound. The tropical (max-plus) version says that if each component is bounded, the max is bounded — a different but complementary extensivity principle.\n\n**Cross-Domain Connection:**\n- Tropical geometry: bounds on valuations under composition\n- Shortest-path problems: max edge weight bounds total path weight\n- Neural networks: max activation bound across layers\n- Proof complexity: max proof-step length bounds\n\n---",
+      "source_exp_id": "74c4c009",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Tropical",
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:21:14.711372+00:00"
+    },
+    {
+      "id": "fd_0215",
+      "title": "5. Matrix/Network Complexity Accumulation",
+      "description": "**Theorem Statement:**\n```lean\ntheorem layerwise_complexity_bound\n    (L : ℕ) (d : ℕ) (cost : Fin L → ℕ) (C : ℕ)\n    (hC : ∀ l, cost l ≤ C) :\n    ∑ l : Fin L, cost l ≤ L * C\n```\n\n**Proof Strategy:**\nConvert `Fin L` sum to `Finset.range L` sum via `Finset.sum_fin_eq_sum_range`, then apply `total_length_le_horizon_mul_bound`.\n\n**Cross-Domain Connection:**\n- Neural network verification: per-layer certificate cost → total verification budget\n- Matrix factorization: per-factor complexity → total decomposition cost\n- Categorical compositionality: per-morphism description length → total diagram complexity\n- Circuit complexity: per-gate cost → total circuit size\n\n---",
+      "source_exp_id": "74c4c009",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Combinatorics",
+        "Bridges",
+        "MachineLearning",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:21:14.717997+00:00"
+    },
+    {
+      "id": "fd_0216",
+      "title": "Team A: Foundations",
+      "description": "- Formalize Fekete's subadditive lemma in full generality\n- Extend to superadditive sequences (dual bounds)\n- Connect to Mathlib's `Filter.Tendsto` and `asymptotics` libraries",
+      "source_exp_id": "74c4c009",
+      "source_path": "result_future_directions",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:21:14.722855+00:00"
+    },
+    {
+      "id": "fd_0217",
+      "title": "Team B: Applications",
+      "description": "- Instantiate against specific coding theorems (Huffman, arithmetic coding)\n- Apply to neural network verification pipelines\n- Connect to persistent homology computation bounds",
+      "source_exp_id": "74c4c009",
+      "source_path": "result_future_directions",
+      "domains": [
+        "NumberTheory",
+        "Topology",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T01:21:14.727667+00:00"
     }
   ],
   "pruned": [
