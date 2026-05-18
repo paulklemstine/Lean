@@ -495,8 +495,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.76,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "603d10a3",
       "timestamp": "2026-05-18T10:17:17.081520+00:00"
     },
     {
@@ -549,8 +549,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "96e3cd6c",
       "timestamp": "2026-05-18T10:17:17.082966+00:00"
     },
     {
@@ -768,7 +768,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T10:17:17.090444+00:00"
     },
@@ -787,7 +787,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.83,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T10:17:17.091163+00:00"
     },
@@ -975,8 +975,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "969a1aa9",
       "timestamp": "2026-05-18T10:17:17.100523+00:00"
     },
     {
@@ -1191,6 +1191,44 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T11:06:28.605908+00:00"
+    },
+    {
+      "id": "fd_0065",
+      "title": "This document outlines 5 concrete breakthrough next steps building on our formal",
+      "description": "# Future Directions: Formalized Proof Complexity\n\nThis document outlines 5 concrete breakthrough next steps building on our formalized theory of resolution, width lower bounds, and proof system separation.\n\n---\n\n## 1. Full Ben-Sasson–Wigderson Width-Size Inequality\n\n### Exact Theorem Statement\n\n```lean\ntheorem resolution_size_lower_of_width\n    {ν : Type} [Fintype ν] [DecidableEq ν]\n    (F : CNF ν) (w₀ w : ℕ)\n    (hw₀ : ∀ C ∈ F, C.card ≤ w₀)\n    (hw : ∀ t : ResTree F ∅, w ≤ t.maxWidth) :\n    ∀ t : ResTree F ∅,\n      2 ^ ((w - w₀) ^ 2 / (4 * Fintype.card ν)) ≤ t.size\n```\n\n### Proof Strategy\n\nThe BSW argument works via random restrictions:\n1. Choose a random partial assignment ρ that sets each variable independently with probability 1 - p (for appropriate p).\n2. Show that the restricted proof F|_ρ has expected width at most w₀ + p·n.\n3. If the original proof is short (size s), the restricted proof has few clauses.\n4. A proof with few clauses and low width has width ≤ w₀ + O(√(s·log s / n)).\n5. Setting p appropriately and using the width lower bound gives s ≥ 2^(Ω((w-w₀)²/n)).\n\n### Required New Definitions\n\n- Random restrictions on CNF formulas and proof trees\n- Restricted proof tree construction\n- Width of a proof tree under restriction\n- Probabilistic argument formalization (expected value over restrictions)\n\n### Cross-Domain Significance\n\nThis would be the first machine-verified super-polynomial lower bound in proof complexity. Combined with our PHP width lower bound, it would yield a formal proof that PHP requires exponential-size resolution proofs — the Haken theorem via the BSW route. This connects to information theory (random restrictions as compression) and probability (expected value arguments in formal proofs).\n\n---\n\n## 2. Tseitin Formula Lower Bounds via Expansion\n\n### Exact Theorem Statement\n\n```lean\ndef TseitinCNF (G : SimpleGraph V) [DecidableEq V] [Fintype V]\n    (charge : V → ZMod 2) : CNF (V × V) := ...\n\ntheorem tseitin_resolution_width_lb\n    (G : SimpleGraph V) [DecidableEq V] [Fintype V]\n    (charge : V → ZMod 2)\n    (h_odd : ∑ v, charge v ≠ 0)\n    (h_expand : ∀ S : Finset V, S.card ≤ Fintype.card V / 2 →\n      (G.neighborFinset S).card ≥ expansion_constant * S.card) :\n    ∀ t : ResTree (TseitinCNF G charge) ∅,\n      expansion_constant * (Fintype.card V / 4) ≤ t.maxWidth\n```\n\n### Proof Strategy\n\n1. Define Tseitin formulas: for each vertex v with neighbors u₁,...,uₖ, add clauses encoding x_{v,u₁} ⊕ ... ⊕ x_{v,uₖ} = charge(v).\n2. Show unsatisfiability when the sum of charges is odd (parity argument).\n3. Use the expansion property: any small set S of vertices has many neighbors.\n4. Show that narrow clauses (width < expansion * |V|/4) can be satisfied by suitable partial assignments that respect the Tseitin structure locally.\n5. Conclude width lower bound via the satisfiability argument.\n\n### Required New Definitions\n\n- Tseitin formula encoding (XOR constraints as CNF)\n- Graph expansion constant\n- Boundary and neighborhood in SimpleGraph\n- Partial assignments respecting local parity\n\n### Cross-Domain Significance\n\nTseitin formulas on expander graphs are a cornerstone of proof complexity. This would connect our framework to spectral graph theory (expansion implies hardness), coding theory (parity check matrices), and cryptography (hash function hardness). It would also demonstrate the generality of our resolution infrastructure beyond PHP.\n\n---\n\n## 3. CDCL Performance Theorem\n\n### Exact Theorem Statement\n\n```lean\n/-- A CDCL run is a sequence of decisions, unit propagations, and clause learning steps. -/\nstructure CDCLRun (F : CNF ν) where\n  decisions : List (ν × Bool)\n  learned_clauses : List (Clause ν)\n  all_learned_derivable : ∀ C ∈ learned_clauses, ResDerives F C\n\n/-- CDCL derives a resolution refutation. -/\ntheorem cdcl_implements_resolution (F : CNF ν) (run : CDCLRun F)\n    (h_unsat : run.derives_contradiction) :\n    ResDerives F ∅\n\n/-- CDCL on PHP must learn a wide clause. -/\ntheorem cdcl_php_learns_wide_cla",
+      "source_exp_id": "88c262b3",
+      "source_path": "future_directions_md",
+      "domains": [
+        "Probability",
+        "Bridges",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T11:06:58.422467+00:00"
+    },
+    {
+      "id": "fd_0066",
+      "title": "Arithmetic Echoes in Cellular Automata via Zeta-Rationality",
+      "description": "Conjecture: There exists a nontrivial class of one-dimensional nearest-neighbor cellular automata over finite alphabets for which the Artin-Mazur zeta function of the induced shift-dynamical system is rational if and only if the language of spacetime diagrams has subquadratic proof complexity in a fixed bounded arithmetic theory. Test: Define the spacetime language and its associated proof system, compute or estimate zeta functions for representative automata (linear, permutative, reversible, Rule 110-like, nilpotent), and measure whether rationality coincides with short proof certificates while irrationality or natural-boundary behavior coincides with provable lower bounds on proof length. A single counterexample in either direction refutes the conjecture. Impact: This would create a concrete bridge between symbolic dynamics, arithmetic complexity, and formal proof theory, potentially yielding a new invariant that predicts when dynamical systems admit compressible mathematical explanations.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Dynamical Systems",
+        "Proof Complexity"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-18T11:07:04.607321+00:00"
     }
   ],
   "pruned": [
