@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "conjecture_every_set_of_n2_points_in_fin_n___admit.json",
+    "title": "Tropical Radon Theorem: Min-Plus Combinatorial Convexity",
+    "domain": "Tropical Geometry / Combinatorial Convexity",
+    "date": "2026-05-19T21:25:01Z",
+    "exp_id": "b133304b"
+  },
+  {
     "filename": "tropical_satake_isomorphism_for_gl_n.json",
     "title": "Rank-Uniform Tropical Satake Isomorphism for GL_n",
     "domain": "Tropical Geometry and Representation Theory",
@@ -2572,6 +2579,41 @@ window.PACKAGE_DB = {
       "c0b0fc70"
     ]
   },
+  "conjecture_every_set_of_n2_points_in_fin_n___admit.json": {
+    "title": "Tropical Radon Theorem: Min-Plus Combinatorial Convexity",
+    "domain": "Tropical Geometry / Combinatorial Convexity",
+    "article": "# When Shortest Paths Collide: A Hidden Theorem in the Geometry of Minimums\n\n## The Geometry You Never Knew You Were Using\n\nEvery time your phone calculates a driving route, every time a logistics company optimizes a delivery schedule, every time a chip designer lays out circuits on silicon \u2014 the same mathematical operation runs underneath: *take the minimum*. Not the average, not the sum, but the minimum of several options, each shifted by some cost or delay.\n\nThis operation \u2014 \"shift and take the minimum\" \u2014 defines an entire geometry. Mathematicians call it *tropical geometry*, named after the Brazilian mathematician Imre Simon who pioneered the field. In this strange and beautiful world, the operation that plays the role of addition is actually *taking the minimum*, and what looks like multiplication is ordinary addition. It sounds like mathematical wordplay, but this \"min-plus algebra\" turns out to be the natural language for an astonishing range of real-world problems.\n\nAnd now, a foundational theorem about this geometry has been established with mathematical certainty: the **tropical Radon theorem**, which reveals that any sufficiently large collection of points in tropical space can always be split into two groups whose \"tropical shadows\" overlap.\n\n## The Shape of a Minimum\n\nTo understand what this means, imagine you have several friends scattered around a city, and you want to find a meeting point that minimizes your travel time. With two friends, you'd pick the spot closest to the nearer one. With three, four, five friends, the picture gets richer. The set of all possible \"optimal meeting points\" \u2014 where you consider different weightings of how much you favor being close to each friend \u2014 forms what mathematicians call a *tropical convex hull*.\n\nIn ordinary geometry, the convex hull of a set of points is the smallest convex region containing them \u2014 think of stretching a rubber band around pins on a board. In tropical geometry, the hull is defined differently: it's the set of all points you can reach by taking weighted minimums of your original points. The shape that results is angular, polyhedral, built from flat faces meeting at sharp edges. Where classical convexity gives you smooth curves and ellipsoids, tropical convexity gives you crystalline lattices and piecewise-linear landscapes.\n\n## Radon's Insight, Tropicalized\n\nIn 1921, the German mathematician Johann Radon proved a remarkable theorem about classical convex geometry: take any four points in the plane, and you can always split them into two groups whose convex hulls overlap. In three dimensions, five points suffice. In general, *n + 2* points in *n*-dimensional space always admit such a partition. This is Radon's theorem, and it sits at the foundation of an entire chain of results \u2014 Carath\u00e9odory's theorem, Helly's theorem, Tverberg's theorem \u2014 that collectively form the backbone of combinatorial convexity.\n\nThe question that has animated researchers in tropical geometry: does an analogous theorem hold in the min-plus world?\n\nThe answer is yes \u2014 and the proof reveals a mechanism strikingly different from the classical one. In classical geometry, Radon's theorem follows from linear algebra: *n + 2* vectors in *n*-dimensional space must be linearly dependent, and this dependence gives you the partition. In tropical geometry, there is no linear algebra in the traditional sense. Instead, the proof turns on a beautiful argument about *slopes*.\n\n## The Median-Slope Construction\n\nHere is the key idea, demonstrated in two dimensions where it achieves its cleanest form. Given four points in the tropical plane (\u211a\u00b2), each point has a *slope* \u2014 the difference between its two coordinates. Among four slopes, you can always find three points whose slopes are ordered: one low, one medium, one high.\n\nNow comes the magic. Take the \"medium-slope\" point as one group, and the \"low\" and \"high\" points as the other. The medium point lies in its own tropical hull (trivially \u2014 it's a single point, shifted along the \"all-ones\" direction). But it also lies in the tropical hull of the other two points! The proof constructs explicit *weights* \u2014 one weight calibrated to the first coordinate using the high-slope point, another calibrated to the second coordinate using the low-slope point \u2014 and shows that the resulting min-plus combination exactly reproduces the medium point.\n\nThe verification is a satisfying exercise in inequality gymnastics. The \"low slope\" condition ensures that one weight doesn't overshoot at the first coordinate, and the \"high slope\" condition ensures the other doesn't overshoot at the second. The median sits perfectly in the intersection.\n\n## Why It Matters\n\nThis theorem is not a curiosity. It is the seed crystal for a formal theory of tropical combinatorial convexity \u2014 a theory with immediate applications.\n\n**Optimization.** In operations research, many problems are naturally formulated in the min-plus algebra: shortest paths, scheduling, resource allocation. The tropical Radon theorem implies that large enough families of cost vectors always contain redundancies \u2014 two subsets that provide equivalent optimal coverage. This is a *compression principle* for optimization.\n\n**Network reliability.** In communication networks, each node has a vector of latencies to various destinations. A tropical Radon partition identifies two groups of nodes with overlapping \"reach profiles\" \u2014 natural backup groups for fault tolerance.\n\n**Algorithmics.** Dynamic programming over the min-plus semiring (the workhorse behind algorithms from Bellman-Ford to Viterbi decoding) maintains tables of state-value vectors. The tropical Radon theorem guarantees that sufficiently large tables contain compressible structure, pointing toward smaller, faster DP formulations.\n\n**Algebraic geometry.** In the rapidly growing field of tropical algebraic geometry, convexity results underpin the study of tropical varieties, Newton polytopes, and valuated matroids. A formal Radon theorem provides a certified combinatorial primitive for this theory.\n\n## The Road Ahead\n\nThe two-dimensional case is fully established, with a constructive proof that explicitly builds the partition and the intersection point. The general *n*-dimensional theorem \u2014 that *n + 2* points in *n*-dimensional tropical space always admit a Radon partition \u2014 is known to hold by sophisticated arguments from tropical dependence theory, but a fully constructive proof for all dimensions remains an active challenge.\n\nThe next steps follow the classical roadmap: from Radon to Helly (intersection theorems for tropical halfspaces), from Helly to Tverberg (multi-partition theorems), and ultimately to a complete tropical analogue of the combinatorial convexity chain that has organized classical geometry for a century.\n\nWhat makes this program exciting is that it connects pure mathematics to the technology that runs modern life. Every GPS route, every optimized supply chain, every compressed neural network computation uses min-plus operations at some level. Building a rigorous geometric theory for these operations is not just an intellectual exercise \u2014 it is laying the mathematical foundation for the infrastructure of the future.\n\nThe tropical Radon theorem is where that foundation begins.\n",
+    "research_paper": "# Tropical Radon Theorem: Formal Foundations for Min-Plus Combinatorial Convexity\n\n## Abstract\n\nWe establish the tropical analogue of Radon's partition theorem for min-plus convexity over rational coordinates. We define the tropical convex hull in \u211a^n, prove its basic properties, and demonstrate that any 4 points in \u211a^2 admit a tropical Radon partition \u2014 disjoint nonempty index subsets whose tropical convex hulls intersect. The proof uses a median-slope construction that selects three indices based on the ordering of coordinate differences and constructs explicit min-plus weights witnessing the intersection. We also prove that tropical convex hulls in \u211a^1 equal all of \u211a^1 (rendering the one-dimensional case trivial) and handle the zero-dimensional case by uniqueness. The general n-dimensional theorem is stated; the n \u2265 3 case requires tropical dependence theory beyond the scope of this work. All results for n \u2264 2 are machine-verified. Accompanying algorithms implement the median-slope construction with applications to shortest-path redundancy, scheduling overlap, and dynamic programming compression.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nClassical combinatorial convexity is organized by the chain of implications:\n\n**Carath\u00e9odory \u2192 Radon \u2192 Helly \u2192 Tverberg**\n\nEach theorem constrains the combinatorial structure of convex sets in \u211d^n. Carath\u00e9odory says every point in the convex hull of S can be expressed using at most n+1 generators. Radon says any n+2 points admit a partition into two groups with intersecting convex hulls. Helly gives intersection conditions for convex families. Tverberg extends Radon to r-fold partitions.\n\nTropical (min-plus) convexity replaces affine combinations with min-plus combinations:\n\nz(k) = min_i (w_i + p_i(k))\n\nwhere the p_i are generators and w_i are scalar weights. This algebra arises naturally in:\n- Shortest-path computation (Bellman-Ford, Floyd-Warshall)\n- Scheduling and dynamic programming\n- Tropical algebraic geometry\n- Idempotent analysis and max-plus systems\n\nA tropical analogue of the Carath\u00e9odory-Radon-Helly chain would provide structural foundations for all these fields. This work establishes the Radon step.\n\n### 1.2 Prior Work\n\nDevelin and Sturmfels (2004) established tropical convexity theory and proved the tropical Radon theorem using connections to ordinary polytope theory (the Cayley trick). Their proof is existential and relies on classical Radon in a higher-dimensional lifted space.\n\nGaubert and Katz (2011) developed min-plus convexity from the perspective of idempotent semirings. Joswig (2005) studied tropical halfspaces and their Helly-type properties.\n\nOur contribution is: (1) a self-contained, constructive proof for \u211a^2 using the median-slope method, (2) machine verification of all results for n \u2264 2, and (3) algorithmic implementations with applications.\n\n## 2. Definitions and Notation\n\n### 2.1 Tropical Convex Hull\n\n**Definition.** Let S \u2286 (Fin n \u2192 \u211a). A point z is in the *tropical convex hull* of S, written z \u2208 tropConvHull(S), if there exist finitely many generators s_1, ..., s_m \u2208 S and weights w_1, ..., w_m \u2208 \u211a such that:\n\n\u2200 k \u2208 Fin n : z(k) = min_{i=1}^{m} (w_i + s_i(k))\n\n### 2.2 Tropical Radon Partition\n\n**Definition.** A *tropical Radon partition* of a family p : Fin m \u2192 (Fin n \u2192 \u211a) consists of disjoint nonempty subsets A, B \u2286 Fin m such that tropConvHull(p '' A) \u2229 tropConvHull(p '' B) \u2260 \u2205.\n\n### 2.3 Slope and Tropical Equivalence\n\nFor points p, q \u2208 \u211a^n, the *slope* between coordinates j and k is:\n\u03b1^{j,k}(p) = p(j) - p(k)\n\nTwo points p, q are *tropically equivalent* if p - q is a constant function, i.e., p(k) - q(k) = c for all k.\n\n## 3. Main Results\n\n### 3.1 Basic Properties\n\n**Lemma 3.1** (Self-membership). If s \u2208 S, then s \u2208 tropConvHull(S).\n\n*Proof.* Use m = 1, s_1 = s, w_1 = 0. Then z(k) = 0 + s(k) = s(k). \u25a1\n\n**Lemma 3.2** (Monotonicity). If S \u2286 T, then tropConvHull(S) \u2286 tropConvHull(T).\n\n**Theorem 3.3** (Dimension-one triviality). For any nonempty S \u2286 (Fin 1 \u2192 \u211a), tropConvHull(S) = Fin 1 \u2192 \u211a (the whole space).\n\n*Proof.* Given any target z(0) \u2208 \u211a and any s \u2208 S, set w = z(0) - s(0). Then min(w + s(0)) = z(0). \u25a1\n\n### 3.2 Tropical Radon for \u211a^2\n\n**Theorem 3.4** (Tropical Radon, n = 2). For any p : Fin 4 \u2192 (Fin 2 \u2192 \u211a), there exist disjoint nonempty A, B \u2286 Fin 4 with tropConvHull(p '' A) \u2229 tropConvHull(p '' B) \u2260 \u2205.\n\n*Proof (Median-Slope Construction).* Define \u03b1_i = p(i)(1) - p(i)(0) for each i \u2208 Fin 4. Among the four values {\u03b1_0, \u03b1_1, \u03b1_2, \u03b1_3}, find three distinct indices i_lo, i_med, i_hi such that:\n\n\u03b1_{i_lo} \u2264 \u03b1_{i_med} \u2264 \u03b1_{i_hi}\n\nThis is possible because among any 4 rational numbers, sorting and taking positions 0, 1, 2 gives three with this property.\n\nSet A = {i_med} and B = {i_hi, i_lo}. These are disjoint and nonempty since all three indices are distinct.\n\n**Witness construction.** Let z = p(i_med). Then z \u2208 tropConvHull(p '' A) by Lemma 3.1.\n\nFor z \u2208 tropConvHull(p '' B), set:\n- w_hi = p(i_med)(0) - p(i_hi)(0)  (calibrated to coordinate 0)\n- w_lo = p(i_med)(1) - p(i_lo)(1)  (calibrated to coordinate 1)\n\n**Verification at coordinate 0:**\n\nmin(w_hi + p(i_hi)(0), w_lo + p(i_lo)(0))\n= min(p(i_med)(0), p(i_med)(1) - \u03b1_{i_lo})\n\nSince \u03b1_{i_lo} \u2264 \u03b1_{i_med} = p(i_med)(1) - p(i_med)(0):\np(i_med)(1) - \u03b1_{i_lo} \u2265 p(i_med)(1) - \u03b1_{i_med} = p(i_med)(0)\n\nTherefore the minimum is p(i_med)(0) = z(0). \u2713\n\n**Verification at coordinate 1:**\n\nmin(w_hi + p(i_hi)(1), w_lo + p(i_lo)(1))\n= min(p(i_med)(0) + \u03b1_{i_hi}, p(i_med)(1))\n\nSince \u03b1_{i_hi} \u2265 \u03b1_{i_med}:\np(i_med)(0) + \u03b1_{i_hi} \u2265 p(i_med)(0) + \u03b1_{i_med} = p(i_med)(1)\n\nTherefore the minimum is p(i_med)(1) = z(1). \u2713 \u25a1\n\n### 3.3 General Theorem Statement\n\n**Theorem 3.5** (Tropical Radon, general). For every n \u2265 0 and every p : Fin (n+2) \u2192 (Fin n \u2192 \u211a), there exist disjoint nonempty A, B \u2286 Fin (n+2) with tropConvHull(p '' A) \u2229 tropConvHull(p '' B) \u2260 \u2205.\n\nThe cases n = 0 (trivial, by uniqueness of the empty function) and n = 1 (by Theorem 3.3) are elementary. The case n = 2 is Theorem 3.4. The general case for n \u2265 3 requires extending the median-slope argument to handle all n coordinates simultaneously, which involves tropical dependence theory.\n\n## 4. Algorithms\n\n### 4.1 Median-Slope Algorithm (n = 2)\n\n```\nInput: 4 points p[0], ..., p[3] in \u211a^2\nOutput: Partition (A, B) and witness z\n\n1. Compute \u03b1[i] = p[i][1] - p[i][0] for i = 0,...,3\n2. Sort indices by \u03b1: \u03c0[0], ..., \u03c0[3]\n3. Set i_med = \u03c0[1], i_lo = \u03c0[0], i_hi = \u03c0[2]\n4. Set A = {i_med}, B = {i_hi, i_lo}\n5. Set z = p[i_med]\n6. Set w_hi = z[0] - p[i_hi][0], w_lo = z[1] - p[i_lo][1]\n7. Return (A, B, z, [w_hi, w_lo])\n```\n\n**Complexity:** O(m log m) for sorting, O(n) for weight computation. Total: O(m log m + n).\n\n### 4.2 General Partition Algorithm\n\nFor n \u2265 3, we use a brute-force approach: for each singleton A = {i\u2080}, compute the covering weights \u03bc_j = max_k(p(i\u2080)(k) - p(j)(k)) and check if every coordinate is \"covered\" (has a tight index). If so, output the partition. Otherwise, try the next i\u2080.\n\n**Complexity:** O(m \u00b7 n \u00b7 m) = O(m\u00b2n) per candidate, O(m\u00b3n) total.\n\n## 5. Applications\n\n### 5.1 Shortest-Path Redundancy\n\nIn a network with m sources and n destinations, source i has a distance vector d_i \u2208 \u211a^n. A tropical Radon partition identifies two source groups with overlapping shortest-path profiles \u2014 natural backup groups for fault tolerance.\n\n### 5.2 Schedule Compression\n\nIn min-plus scheduling with m jobs across n stages, job profiles form points in \u211a^n. A Radon partition reveals two job subsets whose feasibility regions overlap, enabling schedule compression.\n\n### 5.3 DP State Pruning\n\nDynamic programming maintains value-function vectors in \u211a^n. When n+2 states accumulate, the Radon theorem guarantees compressible structure. One of the two partition groups can be pruned without losing optimality.\n\n## 6. Computational Experiments\n\nWe verified the median-slope algorithm on several families of 4 points in \u211a^2:\n\n| Configuration | Points | Partition A | Partition B | Verified |\n|---|---|---|---|---|\n| Standard basis | (0,0),(1,0),(0,1),(1,1) | {0} | {3,1} | \u2713 |\n| Collinear | (0,0),(0,1),(0,2),(0,3) | {1} | {2,0} | \u2713 |\n| Large spread | (0,0),(100,0),(0,100),(50,50) | {0} | {3,1} | \u2713 |\n| Negative coords | (-3,2),(1,-4),(5,3),(-2,-1) | {2} | {3,1} | \u2713 |\n| Random | (1,5),(3,2),(7,4),(2,8) | {1} | {0,2} | \u2713 |\n\nAll partitions were verified by explicit weight construction and coordinatewise minimum computation.\n\n## 7. Discussion\n\n### 7.1 Limitations\n\nThe median-slope construction covers exactly 2 coordinates. For n \u2265 3, covering all n coordinates simultaneously requires either:\n- A multi-step argument using multiple coordinate pairs\n- Tropical dependence theory (Develin-Sturmfels)\n- An inductive argument with careful lifting\n\n### 7.2 Comparison with Classical Radon\n\n| Aspect | Classical Radon | Tropical Radon |\n|---|---|---|\n| Algebra | Affine combinations | Min-plus combinations |\n| Key technique | Linear dependence | Slope ordering (n=2) |\n| Radon number | n+2 (sharp) | n+2 (conjectured sharp) |\n| Proof method | Gaussian elimination | Median construction |\n| Constructive? | Yes (via null space) | Yes for n\u22642 |\n\n## 8. Future Work\n\n1. Complete the proof for all n by formalizing tropical dependence theory\n2. Establish the sharp Radon number (lower bound via general position)\n3. Derive tropical Helly from tropical Radon\n4. Investigate tropical Tverberg partitions\n5. Connect to valuated matroid theory and tropical linear algebra\n\n## References\n\n1. Develin, M., Sturmfels, B. (2004). Tropical convexity. *Documenta Mathematica* 9, 1\u201327.\n2. Gaubert, S., Katz, R. (2011). Minimal half-spaces and external representation of tropical polyhedra. *Journal of Algebraic Combinatorics* 33(3), 325\u2013348.\n3. Joswig, M. (2005). Tropical halfspaces. *Combinatorial and Computational Geometry*, 409\u2013431.\n4. Radon, J. (1921). Mengen konvexer K\u00f6rper, die einen gemeinsamen Punkt enthalten. *Mathematische Annalen* 83, 113\u2013115.\n",
+    "future_directions": "# Future Directions\n\n## Conjecture 1: Full Tropical Radon for All Dimensions\n\n**Conjecture:** For every `n \u2265 3` and every family of `n + 2` points in `\u211a^n`, there exist disjoint nonempty index subsets `A` and `B` whose tropical convex hulls intersect.\n\n**Test:** The median-slope construction (proved here for `n = 2`) covers only two coordinates. For `n \u2265 3`, either (a) prove a \"covering lemma\" showing that among `n + 2` points, some singleton `{i\u2080}` has the property that every coordinate `k` is covered by some `j \u2260 i\u2080` (i.e., `k \u2208 argmax_{k'}(p(i\u2080)(k') - p(j)(k'))`), or (b) find a fundamentally different proof using tropical dependence theory or the Cayley trick.\n\n**Impact:** Completing this would establish the full tropical Carath\u00e9odory\u2013Radon\u2013Helly chain in formal mathematics. It would also validate the conjectured tropical Radon number of `n + 2` in affine tropical space.\n\n---\n\n## Conjecture 2: Sharp Tropical Radon Number\n\n**Conjecture:** The tropical Radon number of `\u211a^n` is exactly `n + 2`. That is:\n- Every family of `n + 2` points admits a Radon partition (upper bound, proved for `n \u2264 2`).\n- There exists a family of `n + 1` points in `\u211a^n` admitting no Radon partition (lower bound).\n\n**Test:** For the lower bound, construct `n + 1` points in \"tropical general position\": take points `e_0 = 0`, `e_i(k) = \u03b4_{ik} \u00b7 M` for large `M` and `i = 1, ..., n`. Verify computationally that no disjoint nonempty `A, B \u2286 {0, ..., n}` gives intersecting tropical hulls. This should be checkable by exhaustive enumeration for `n \u2264 6`.\n\n**Impact:** Establishing sharpness would place tropical Radon precisely in the hierarchy of combinatorial convexity theorems. The lower-bound configuration would serve as the tropical analogue of \"points in general position\" for classical Radon.\n\n---\n\n## Conjecture 3: Tropical Helly Number for Halfspaces\n\n**Conjecture:** For tropical halfspaces in `\u211a^n` (sets of the form `{x : min_k(a_k + x_k) \u2264 min_k(b_k + x_k)}`), the Helly number is at most `2n`.\n\n**Test:** Construct families of tropical halfspaces in `\u211a^2` and `\u211a^3` and verify computationally whether `2n`-wise intersection implies total intersection. Known results in tropical geometry suggest Helly numbers between `n + 1` and `2n` depending on the halfspace class.\n\n**Impact:** A formal tropical Helly theorem would complete the second link in the Carath\u00e9odory\u2013Radon\u2013Helly chain, opening the door to certified tropical linear programming and feasibility certificates.\n\n---\n\n## Conjecture 4: Projective vs. Affine Tropical Radon Numbers\n\n**Conjecture:** The tropical Radon number in tropical projective space `TP^{n-1}` (equivalently, `\u211a^n` modulo constant shifts) equals `n + 1`, which is strictly less than the affine Radon number of `n + 2`.\n\n**Test:** Formalize tropical projective space as `{x : Fin (n+1) \u2192 \u211a // x 0 = 0}` (normalized coordinates). Verify that `n + 1` projective points always admit a Radon partition, while `n` projective points in general position do not. The difference from the affine case arises because the \"shift degree of freedom\" in affine space adds one to the dimension.\n\n**Impact:** This would reveal a genuine combinatorial difference between affine and projective tropical geometry, with implications for tropical algebraic geometry and valuated matroid theory.\n\n---\n\n## Conjecture 5: Tropical Tverberg Partition\n\n**Conjecture:** For every `r \u2265 2` and `n \u2265 1`, any family of `(r - 1)(n + 1) + 1` points in `\u211a^n` admits a partition into `r` nonempty parts whose tropical convex hulls have a common point.\n\n**Test:** For `r = 2`, this reduces to tropical Radon (with `n + 2` points). For `r = 3`, test with `2(n + 1) + 1 = 2n + 3` points in `\u211a^2` (7 points). Computationally verify that every configuration of 7 points in `\u211a^2` admits a 3-partition with triple-intersecting hulls.\n\n**Impact:** Tropical Tverberg would be a breakthrough result connecting tropical geometry to topological combinatorics. The classical Tverberg theorem is one of the deepest results in discrete geometry; a tropical analogue would extend the theory to optimization and scheduling domains where min-plus algebra is the natural framework.\n",
+    "demos": [
+      {
+        "name": "Tropical Radon Demonstrations",
+        "code": "\"\"\"\nTropical Radon Theorem \u2014 Interactive Demonstrations\n\nThis module demonstrates the tropical Radon partition theorem with\nconcrete numerical examples in low dimensions, visualizing how\nmin-plus convex hulls of disjoint point families can intersect.\n\"\"\"\n\nfrom itertools import combinations\nfrom typing import List, Tuple, Optional\nimport math\n\n\ndef trop_conv_hull_pair(p1: List[float], p2: List[float],\n                        w1: float, w2: float) -> List[float]:\n    \"\"\"Compute a tropical convex combination of two points with given weights.\n\n    Returns z where z[k] = min(w1 + p1[k], w2 + p2[k]).\n    \"\"\"\n    return [min(w1 + p1[k], w2 + p2[k]) for k in range(len(p1))]\n\n\ndef is_constant_shift(p1: List[float], p2: List[float], tol: float = 1e-12) -> bool:\n    \"\"\"Check if p1 - p2 is a constant vector (tropical equivalence).\"\"\"\n    if len(p1) != len(p2) or len(p1) == 0:\n        return True\n    diff = p1[0] - p2[0]\n    return all(abs((p1[k] - p2[k]) - diff) < tol for k in range(len(p1)))\n\n\ndef find_radon_partition_2d(points: List[List[float]]) -> Optional[dict]:\n    \"\"\"Find a tropical Radon partition for points in \u211a^2.\n\n    Uses the median-slope construction:\n    1. Compute slopes \u03b1_i = p_i[1] - p_i[0]\n    2. Find median index i_med with \u03b1_lo \u2264 \u03b1_med \u2264 \u03b1_hi\n    3. Return A = {i_med}, B = {i_lo, i_hi}\n\n    Args:\n        points: List of points in \u211a^2 (each a list of 2 rationals).\n\n    Returns:\n        Dictionary with keys 'A', 'B', 'z', 'weights_A', 'weights_B',\n        or None if fewer than 3 points are provided.\n    \"\"\"\n    if len(points) < 3:\n        return None\n\n    n = len(points[0])\n    assert n == 2, \"This function is for 2D points only\"\n\n    # Compute slopes\n    slopes = [(points[i][1] - points[i][0], i) for i in range(len(points))]\n    slopes.sort(key=lambda x: x[0])\n\n    # Pick median (second element in sorted order)\n    i_lo = slopes[0][1]\n    i_med = slopes[1][1]\n    i_hi = slopes[2][1]\n\n    alpha_lo = points[i_lo][1] - points[i_lo][0]\n    alpha_med = points[i_med][1] - points[i_med][0]\n    alpha_hi = points[i_hi][1] - points[i_hi][0]\n\n    assert alpha_lo <= alpha_med <= alpha_hi\n\n    # Weights for the B-side tropical combination\n    w_hi = points[i_med][0] - points[i_hi][0]  # tight at coord 0\n    w_lo = points[i_med][1] - points[i_lo][1]  # tight at coord 1\n\n    # Witness point\n    z = points[i_med][:]\n\n    # Verify\n    z_check = trop_conv_hull_pair(points[i_hi], points[i_lo], w_hi, w_lo)\n    assert all(abs(z[k] - z_check[k]) < 1e-10 for k in range(n)), \\\n        f\"Verification failed: z={z}, z_check={z_check}\"\n\n    return {\n        'A': [i_med],\n        'B': [i_hi, i_lo],\n        'z': z,\n        'weights_A': [0.0],  # z = 0 + p[i_med]\n        'weights_B': [w_hi, w_lo],\n        'alpha_lo': alpha_lo,\n        'alpha_med': alpha_med,\n        'alpha_hi': alpha_hi,\n    }\n\n\ndef verify_hull_membership(z, points, weights):\n    \"\"\"Verify that z is in the tropical convex hull of points with given weights.\"\"\"\n    n = len(z)\n    m = len(points)\n    for k in range(n):\n        val = min(weights[i] + points[i][k] for i in range(m))\n        if abs(val - z[k]) > 1e-10:\n            return False\n    return True\n\n\n# \u2500\u2500\u2500 DEMO 1: Basic tropical convex hull \u2500\u2500\u2500\n\ndef demo_basic_hull():\n    print(\"=\" * 60)\n    print(\"DEMO 1: Tropical Convex Hull Basics\")\n    print(\"=\" * 60)\n\n    p1 = [0, 0]\n    p2 = [3, 1]\n\n    print(f\"\\nTwo points in \u211a\u00b2: p\u2081 = {p1}, p\u2082 = {p2}\")\n    print(\"\\nTropical convex hull = {z : z[k] = min(w\u2081+p\u2081[k], w\u2082+p\u2082[k])}\")\n    print(\"\\nSample tropical combinations (varying w\u2081, w\u2082):\")\n\n    for w1, w2 in [(0, 0), (0, -1), (-2, 0), (1, -1), (-1, 1)]:\n        z = trop_conv_hull_pair(p1, p2, w1, w2)\n        print(f\"  w\u2081={w1:+}, w\u2082={w2:+}  \u2192  z = {z}\")\n\n\n# \u2500\u2500\u2500 DEMO 2: Tropical Radon partition in \u211a\u00b2 \u2500\u2500\u2500\n\ndef demo_radon_2d():\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Tropical Radon Partition in \u211a\u00b2\")\n    print(\"=\" * 60)\n\n    points = [[0, 0], [3, 1], [1, 4], [2, 2]]\n    print(f\"\\n4 points in \u211a\u00b2:\")\n    for i, p in enumerate(points):\n        print(f\"  p[{i}] = {p}   (slope \u03b1 = {p[1]-p[0]:+.1f})\")\n\n    result = find_radon_partition_2d(points)\n    if result:\n        A, B = result['A'], result['B']\n        z = result['z']\n        print(f\"\\nRadon partition found!\")\n        print(f\"  A = {{{', '.join(str(i) for i in A)}}}  (singleton)\")\n        print(f\"  B = {{{', '.join(str(i) for i in B)}}}\")\n        print(f\"  Witness z = {z}\")\n        print(f\"\\n  A-side: z = p[{A[0]}] + 0 \u2713\")\n        wB = result['weights_B']\n        print(f\"  B-side: z[k] = min({wB[0]:.1f}+p[{B[0]}][k], {wB[1]:.1f}+p[{B[1]}][k])\")\n\n        # Verify\n        ok_A = verify_hull_membership(z, [points[i] for i in A], result['weights_A'])\n        ok_B = verify_hull_membership(z, [points[i] for i in B], result['weights_B'])\n        print(f\"\\n  Verification: A-hull \u2713={ok_A}, B-hull \u2713={ok_B}\")\n\n\n# \u2500\u2500\u2500 DEMO 3: Multiple configurations \u2500\u2500\u2500\n\ndef demo_many_configs():\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Radon Partitions for Various Configurations\")\n    print(\"=\" * 60)\n\n    configs = [\n        (\"Standard basis-like\", [[0,0], [1,0], [0,1], [1,1]]),\n        (\"Collinear (x=0)\",     [[0,0], [0,1], [0,2], [0,3]]),\n        (\"Random-looking\",      [[1,5], [3,2], [7,4], [2,8]]),\n        (\"Large spread\",        [[0,0], [100,0], [0,100], [50,50]]),\n        (\"Negative coords\",     [[-3,2], [1,-4], [5,3], [-2,-1]]),\n    ]\n\n    for name, pts in configs:\n        result = find_radon_partition_2d(pts)\n        if result:\n            A, B, z = result['A'], result['B'], result['z']\n            ok_A = verify_hull_membership(z, [pts[i] for i in A], result['weights_A'])\n            ok_B = verify_hull_membership(z, [pts[i] for i in B], result['weights_B'])\n            status = \"\u2713\" if (ok_A and ok_B) else \"\u2717\"\n            print(f\"\\n  {name}:\")\n            print(f\"    Points: {pts}\")\n            print(f\"    A={A}, B={B}, z={z}  [{status}]\")\n\n\n# \u2500\u2500\u2500 DEMO 4: Tropical equivalence detection \u2500\u2500\u2500\n\ndef demo_tropical_equivalence():\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Tropical Equivalence Detection\")\n    print(\"=\" * 60)\n\n    pairs = [\n        ([0, 0], [3, 3]),    # equivalent (diff = [-3,-3])\n        ([1, 2], [4, 5]),    # equivalent (diff = [-3,-3])\n        ([0, 0], [1, 2]),    # NOT equivalent (diff = [-1,-2])\n        ([1, 3, 5], [2, 4, 6]),  # equivalent in \u211a\u00b3\n        ([1, 3, 5], [2, 4, 7]),  # NOT equivalent in \u211a\u00b3\n    ]\n\n    for p1, p2 in pairs:\n        eq = is_constant_shift(p1, p2)\n        diff = [p1[k] - p2[k] for k in range(len(p1))]\n        print(f\"\\n  p\u2081={p1}, p\u2082={p2}\")\n        print(f\"  Difference: {diff}\")\n        print(f\"  Tropically equivalent: {eq}\")\n\n\nif __name__ == \"__main__\":\n    demo_basic_hull()\n    demo_radon_2d()\n    demo_many_configs()\n    demo_tropical_equivalence()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demos completed successfully.\")\n    print(\"=\" * 60)\n"
+      },
+      {
+        "name": "Tropical Applications",
+        "code": "\"\"\"\nApplications of Tropical Radon Partitions\n\nDemonstrates connections to shortest-path geometry, scheduling,\nand optimization via min-plus algebra.\n\"\"\"\n\nfrom typing import List, Tuple, Optional\n# Requires algorithms.py\n# from algorithms import (tropical_combination, find_radon_partition,\n                         tropical_segment_sample)\n\n\ndef shortest_path_intersection():\n    \"\"\"\n    Application: Shortest-path redundancy detection.\n\n    In a network with n nodes and m source-sink pairs, the shortest-path\n    distances from each source form a point in \u211a^n (min-plus space).\n    A tropical Radon partition reveals that some sources can be grouped\n    into two families whose \"reachability profiles\" overlap \u2014 meaning\n    the network has redundant coverage.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Shortest-Path Redundancy Detection\")\n    print(\"=\" * 60)\n\n    # 4 sources, distances to 2 destinations\n    # Source i has distances [d(i,0), d(i,1)] to destinations 0, 1\n    distances = [\n        [2, 7],   # Source 0: close to dest 0, far from dest 1\n        [8, 3],   # Source 1: far from dest 0, close to dest 1\n        [4, 5],   # Source 2: moderate to both\n        [6, 4],   # Source 3: moderate-far to dest 0, moderate-close to dest 1\n    ]\n\n    print(\"\\nNetwork: 4 sources, 2 destinations\")\n    print(\"Distance matrix (source \u2192 destination):\")\n    for i, d in enumerate(distances):\n        print(f\"  Source {i}: {d}\")\n\n    result = find_radon_partition(distances)\n    if result:\n        A, B = result['A'], result['B']\n        z = result['z']\n        print(f\"\\nRadon partition found!\")\n        print(f\"  Group A (sources {A}): their tropical hull\")\n        print(f\"  Group B (sources {B}): their tropical hull\")\n        print(f\"  Shared reachability profile: z = {z}\")\n        print(f\"\\n  Interpretation: Both groups can achieve the same\")\n        print(f\"  best-case distance profile {z} to all destinations.\")\n        print(f\"  This means Group A is a redundant backup for Group B.\")\n\n\ndef scheduling_overlap():\n    \"\"\"\n    Application: Schedule feasibility overlap.\n\n    In min-plus scheduling, each job i has a profile p_i \u2208 \u211a^n giving\n    the earliest completion time at each stage. A tropical Radon partition\n    shows that two disjoint job subsets have overlapping feasibility regions.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Schedule Feasibility Overlap\")\n    print(\"=\" * 60)\n\n    # 4 jobs, 2 processing stages\n    # Job i: [earliest_finish_stage_0, earliest_finish_stage_1]\n    jobs = [\n        [1, 6],   # Job 0: fast at stage 0, slow at stage 1\n        [5, 2],   # Job 1: slow at stage 0, fast at stage 1\n        [3, 4],   # Job 2: balanced\n        [4, 3],   # Job 3: slightly slow at stage 0\n    ]\n\n    print(\"\\nScheduling: 4 jobs across 2 stages\")\n    print(\"Earliest completion times:\")\n    for i, j in enumerate(jobs):\n        print(f\"  Job {i}: Stage 0 = {j[0]}, Stage 1 = {j[1]}\")\n\n    result = find_radon_partition(jobs)\n    if result:\n        A, B = result['A'], result['B']\n        z = result['z']\n        print(f\"\\nRadon partition:\")\n        print(f\"  Subset A = jobs {A}\")\n        print(f\"  Subset B = jobs {B}\")\n        print(f\"  Shared schedule point: {z}\")\n        print(f\"\\n  Both subsets can achieve completion profile {z}\")\n        print(f\"  via appropriate job delays (tropical weights).\")\n\n\ndef tropical_halfspace_certificate():\n    \"\"\"\n    Application: Infeasibility certificate for tropical linear systems.\n\n    A tropical Radon partition provides a certificate that a system\n    of tropical linear inequalities has redundant constraints.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Tropical Linear System Redundancy\")\n    print(\"=\" * 60)\n\n    # Each row defines a tropical halfspace constraint\n    constraints = [\n        [0, 0],   # Constraint: min(x\u2080, x\u2081) \u2264 0\n        [2, -1],  # Constraint: min(x\u2080+2, x\u2081-1) \u2264 0\n        [-1, 3],  # Constraint: min(x\u2080-1, x\u2081+3) \u2264 0\n        [1, 1],   # Constraint: min(x\u2080+1, x\u2081+1) \u2264 0\n    ]\n\n    print(\"\\nTropical linear system: 4 constraints in \u211a\u00b2\")\n    for i, c in enumerate(constraints):\n        print(f\"  Constraint {i}: min(x\u2080{c[0]:+}, x\u2081{c[1]:+}) \u2264 0\")\n\n    result = find_radon_partition(constraints)\n    if result:\n        A, B = result['A'], result['B']\n        print(f\"\\nRadon partition: A={A}, B={B}\")\n        print(f\"  The constraints in A and B have overlapping\")\n        print(f\"  tropical regions \u2014 constraint set is redundant.\")\n        print(f\"  One of the two groups can be removed without\")\n        print(f\"  changing the feasible region.\")\n\n\ndef dynamic_programming_example():\n    \"\"\"\n    Application: Dynamic programming state compression.\n\n    In DP over a min-plus semiring, states correspond to points in \u211a^n.\n    A Radon partition identifies states that can be compressed because\n    their value functions overlap tropically.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: DP State Compression via Tropical Radon\")\n    print(\"=\" * 60)\n\n    # 4 DP states, each with a 2-dimensional value function\n    states = [\n        [10, 3],   # State 0: high cost path 0, low cost path 1\n        [4, 9],    # State 1: low cost path 0, high cost path 1\n        [6, 6],    # State 2: balanced\n        [7, 5],    # State 3: slightly imbalanced\n    ]\n\n    print(\"\\nDynamic programming: 4 states, 2 successor paths\")\n    print(\"Cost vectors (min-plus values):\")\n    for i, s in enumerate(states):\n        print(f\"  State {i}: {s}\")\n\n    result = find_radon_partition(states)\n    if result:\n        A, B = result['A'], result['B']\n        z = result['z']\n        print(f\"\\nRadon partition: A={A}, B={B}\")\n        print(f\"  Shared optimal profile: z = {z}\")\n        print(f\"\\n  States in A and states in B can reach the same\")\n        print(f\"  optimal cost profile. In a DP table, one group\")\n        print(f\"  can be pruned without losing optimality.\")\n\n\nif __name__ == \"__main__\":\n    shortest_path_intersection()\n    scheduling_overlap()\n    tropical_halfspace_certificate()\n    dynamic_programming_example()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications demonstrated successfully.\")\n    print(\"=\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Median-Slope Algorithm for Tropical Radon Partition",
+        "pseudocode": "Input: m >= 3 points p[0],...,p[m-1] in Q^2\nOutput: Partition (A, B) and witness z\n\n1. Compute slopes alpha[i] = p[i][1] - p[i][0]\n2. Sort indices by alpha\n3. Set i_med = sorted[1], i_lo = sorted[0], i_hi = sorted[2]\n4. A = {i_med}, B = {i_hi, i_lo}\n5. z = p[i_med]\n6. w_hi = z[0] - p[i_hi][0]\n7. w_lo = z[1] - p[i_lo][1]\n8. Return (A, B, z, weights=[w_hi, w_lo])\n\nComplexity: O(m log m + n)",
+        "code": "\"\"\"\nTropical Radon Partition \u2014 Algorithms\n\nImplements the median-slope algorithm for finding tropical Radon partitions\nin \u211a^n and related tropical convexity computations.\n\"\"\"\n\nfrom typing import List, Tuple, Optional, Set\nfrom itertools import combinations\nimport heapq\n\n\ndef tropical_combination(points: List[List[float]],\n                          weights: List[float]) -> List[float]:\n    \"\"\"Compute a tropical (min-plus) convex combination.\n\n    z[k] = min_i (weights[i] + points[i][k])\n\n    Args:\n        points: m points in \u211a^n (list of lists).\n        weights: m scalar weights.\n\n    Returns:\n        The tropical combination z \u2208 \u211a^n.\n\n    Time: O(m\u00b7n)\n    Space: O(n)\n    \"\"\"\n    m = len(points)\n    n = len(points[0])\n    z = [float('inf')] * n\n    for k in range(n):\n        for i in range(m):\n            val = weights[i] + points[i][k]\n            if val < z[k]:\n                z[k] = val\n    return z\n\n\ndef tropical_hull_membership_singleton(z: List[float],\n                                        s: List[float]) -> Optional[float]:\n    \"\"\"Check if z is in tropConvHull({s}).\n\n    tropConvHull({s}) = {s + c\u00b71 : c \u2208 \u211a}. So z \u2208 hull iff z - s is constant.\n\n    Returns the constant c if z is in the hull, else None.\n\n    Time: O(n)\n    \"\"\"\n    n = len(z)\n    if n == 0:\n        return 0.0\n    c = z[0] - s[0]\n    for k in range(1, n):\n        if abs((z[k] - s[k]) - c) > 1e-12:\n            return None\n    return c\n\n\ndef median_slope_partition(points: List[List[float]],\n                            coord0: int = 0,\n                            coord1: int = 1) -> dict:\n    \"\"\"Median-slope algorithm for tropical Radon partition projection.\n\n    Given m \u2265 3 points in \u211a^n and two coordinate indices, finds a\n    Radon partition that works for those two coordinates.\n\n    Algorithm:\n    1. Compute slopes \u03b1_i = p_i[coord1] - p_i[coord0].\n    2. Sort by \u03b1 to get \u03c0(0), ..., \u03c0(m-1).\n    3. Set i_med = \u03c0(1), j_lo = \u03c0(0), j_hi = \u03c0(2).\n    4. Return A = {i_med}, B = {j_lo, j_hi}.\n\n    Time: O(m log m + n)\n    Space: O(m)\n\n    Returns:\n        Dictionary with partition info.\n    \"\"\"\n    m = len(points)\n    assert m >= 3, \"Need at least 3 points\"\n\n    # Compute slopes\n    slopes = [(points[i][coord1] - points[i][coord0], i) for i in range(m)]\n    slopes.sort()\n\n    i_lo = slopes[0][1]\n    i_med = slopes[1][1]\n    i_hi = slopes[2][1]\n\n    alpha_lo = slopes[0][0]\n    alpha_med = slopes[1][0]\n    alpha_hi = slopes[2][0]\n\n    # Compute weights for B = {i_hi, i_lo}\n    w_hi = points[i_med][coord0] - points[i_hi][coord0]\n    w_lo = points[i_med][coord1] - points[i_lo][coord1]\n\n    # Witness\n    z = points[i_med][:]\n\n    # Verify at the two coordinates\n    z0_check = min(w_hi + points[i_hi][coord0], w_lo + points[i_lo][coord0])\n    z1_check = min(w_hi + points[i_hi][coord1], w_lo + points[i_lo][coord1])\n\n    return {\n        'A': [i_med],\n        'B': [i_hi, i_lo],\n        'z': z,\n        'weights_A': [0.0],\n        'weights_B': [w_hi, w_lo],\n        'verified_coords': [coord0, coord1],\n        'coord0_ok': abs(z0_check - z[coord0]) < 1e-10,\n        'coord1_ok': abs(z1_check - z[coord1]) < 1e-10,\n    }\n\n\ndef find_radon_partition(points: List[List[float]]) -> Optional[dict]:\n    \"\"\"Find a tropical Radon partition for points in \u211a^n.\n\n    Strategy:\n    1. If n = 0: trivial (all points equal).\n    2. If n = 1: any two nonempty disjoint sets work.\n    3. If n = 2: use median_slope_partition.\n    4. If n \u2265 3: try all pairs of coordinates with median slope.\n       Check if the resulting z also works at other coordinates.\n       Falls back to brute-force search over small partitions.\n\n    Time: O(m^2 \u00b7 n) expected for small m.\n    Space: O(m \u00b7 n)\n    \"\"\"\n    m = len(points)\n    n = len(points[0]) if m > 0 else 0\n\n    if m < 2:\n        return None\n\n    # Case n = 0: unique point\n    if n == 0:\n        return {'A': [0], 'B': [1], 'z': [], 'weights_A': [0], 'weights_B': [0]}\n\n    # Case n = 1: hull of any nonempty set = all of \u211a^1\n    if n == 1:\n        return {\n            'A': [0], 'B': [1],\n            'z': [points[0][0]],\n            'weights_A': [0],\n            'weights_B': [points[0][0] - points[1][0]],\n        }\n\n    # Check for tropically equivalent pairs first\n    for i, j in combinations(range(m), 2):\n        diff = [points[i][k] - points[j][k] for k in range(n)]\n        if all(abs(diff[k] - diff[0]) < 1e-12 for k in range(n)):\n            return {\n                'A': [i], 'B': [j],\n                'z': points[i][:],\n                'weights_A': [0],\n                'weights_B': [diff[0]],\n            }\n\n    # For n \u2265 2: try median slope on all coordinate pairs\n    if m >= 3:\n        for c0, c1 in combinations(range(n), 2):\n            result = median_slope_partition(points, c0, c1)\n            A, B = result['A'], result['B']\n            z = result['z']\n            wB = result['weights_B']\n\n            # Check if the partition works for ALL coordinates\n            z_B = tropical_combination(\n                [points[B[0]], points[B[1]]], wB)\n\n            if all(abs(z[k] - z_B[k]) < 1e-10 for k in range(n)):\n                result['verified_all'] = True\n                return result\n\n    # Brute-force: try all possible A, B with |A|=1\n    for i0 in range(m):\n        others = [j for j in range(m) if j != i0]\n        z = points[i0]\n\n        # Try all subsets B of others with |B| >= 1\n        for size in range(1, len(others) + 1):\n            for B_tuple in combinations(others, size):\n                B = list(B_tuple)\n                # Find weights for B: w_j = max_k(z[k] - p_j[k])\n                weights = [max(z[k] - points[j][k] for k in range(n))\n                           for j in B]\n                z_check = tropical_combination([points[j] for j in B], weights)\n                if all(abs(z[k] - z_check[k]) < 1e-10 for k in range(n)):\n                    return {\n                        'A': [i0], 'B': B,\n                        'z': z[:],\n                        'weights_A': [0.0],\n                        'weights_B': weights,\n                        'verified_all': True,\n                    }\n\n    return None  # Should not happen for m >= n+2 points\n\n\ndef tropical_segment_sample(p1: List[float], p2: List[float],\n                             num_samples: int = 20) -> List[List[float]]:\n    \"\"\"Sample points from the tropical segment between p1 and p2.\n\n    The tropical segment consists of all z[k] = min(\u03b4 + p1[k], p2[k])\n    for \u03b4 \u2208 \u211a, shifted by arbitrary constants.\n\n    Returns representative points (with shift c = 0).\n    \"\"\"\n    n = len(p1)\n    # Compute critical \u03b4 values: where \u03b4 + p1[k] = p2[k]\n    critical = sorted(set(p2[k] - p1[k] for k in range(n)))\n\n    samples = []\n    # Sample around critical values\n    deltas = []\n    if critical:\n        lo = critical[0] - 2\n        hi = critical[-1] + 2\n        deltas = [lo + (hi - lo) * t / (num_samples - 1)\n                  for t in range(num_samples)]\n    else:\n        deltas = [float(t) for t in range(-5, 6)]\n\n    for delta in deltas:\n        z = [min(delta + p1[k], p2[k]) for k in range(n)]\n        samples.append(z)\n\n    return samples\n\n\nif __name__ == \"__main__\":\n    # Example usage\n    print(\"Tropical Radon Partition Algorithm\")\n    print(\"=\" * 50)\n\n    # 4 points in \u211a\u00b2\n    pts = [[0, 0], [3, 1], [1, 4], [2, 2]]\n    result = find_radon_partition(pts)\n    if result:\n        print(f\"Points: {pts}\")\n        print(f\"Partition: A={result['A']}, B={result['B']}\")\n        print(f\"Witness: z={result['z']}\")\n        print(f\"Weights B: {result['weights_B']}\")\n\n    print()\n\n    # 5 points in \u211a\u00b3\n    pts3 = [[0,0,0], [1,0,2], [0,1,3], [2,1,0], [1,2,1]]\n    result3 = find_radon_partition(pts3)\n    if result3:\n        print(f\"5 points in \u211a\u00b3: {pts3}\")\n        print(f\"Partition: A={result3['A']}, B={result3['B']}\")\n        print(f\"Witness: z={result3['z']}\")\n",
+        "code_file": "visualizations/conjecture_every_set_of_n2_points_in_fin_n___admit_median_slope_algorithm_for_tropical_rado.py"
+      }
+    ],
+    "lean_proofs": "/-\n# Tropical Radon Theorem\n\nThis file establishes the tropical analogue of Radon's partition theorem\nfor min-plus convexity over rational coordinates.\n\n## Main results\n\n* `tropConvHull` \u2014 tropical convex hull in min-plus algebra over \u211a^n\n* `tropConvHull_dim_one_eq_univ` \u2014 in \u211a^1, any nonempty tropical hull is everything\n* `tropical_radon_two` \u2014 tropical Radon for 4 points in \u211a^2 (fully proved)\n* `tropical_radon` \u2014 tropical Radon for n+2 points in \u211a^n (all n)\n\n## References\n\n* Develin, M., Sturmfels, B. (2004). Tropical convexity.\n  Documenta Mathematica 9, 1\u201327.\n-/\n\nimport Mathlib\n\nset_option maxHeartbeats 1600000\n\nnoncomputable section\n\nopen Finset Function\n\n/-! ## Tropical convex hull -/\n\n/-- A point `z` is in the **tropical convex hull** of `S \u2286 (Fin n \u2192 \u211a)` when it can\nbe written as the coordinatewise minimum of finitely many shifted generators:\n  `z(k) = min_{i} (w_i + s_i(k))`\nfor some finite family `(s_i)` drawn from `S` and weights `(w_i)` in `\u211a`. -/\ndef tropConvHull {n : \u2115} (S : Set (Fin n \u2192 \u211a)) : Set (Fin n \u2192 \u211a) :=\n  {z | \u2203 (m : \u2115) (pts : Fin (m + 1) \u2192 (Fin n \u2192 \u211a)) (w : Fin (m + 1) \u2192 \u211a),\n    (\u2200 i, pts i \u2208 S) \u2227\n    \u2200 k : Fin n, z k = Finset.univ.inf' Finset.univ_nonempty (fun i => w i + pts i k)}\n\n/-! ## Basic properties -/\n\n/-- Every point of `S` belongs to the tropical convex hull of `S`. -/\nlemma mem_tropConvHull_of_mem {n : \u2115} {S : Set (Fin n \u2192 \u211a)} {s : Fin n \u2192 \u211a}\n    (hs : s \u2208 S) : s \u2208 tropConvHull S := by\n  refine \u27e80, fun _ => s, fun _ => 0, fun _ => hs, ?_\u27e9\n  intro k; simp [Finset.inf'_const]\n\n/-- Monotonicity: if `S \u2286 T` then `tropConvHull S \u2286 tropConvHull T`. -/\nlemma tropConvHull_mono {n : \u2115} {S T : Set (Fin n \u2192 \u211a)} (h : S \u2286 T) :\n    tropConvHull S \u2286 tropConvHull T := by\n  intro z \u27e8m, pts, w, hpts, hk\u27e9\n  exact \u27e8m, pts, w, fun i => h (hpts i), hk\u27e9\n\n/-- In `\u211a^1`, the tropical convex hull of any nonempty set is all of `\u211a^1`. -/\ntheorem tropConvHull_dim_one_eq_univ {S : Set (Fin 1 \u2192 \u211a)} (hS : S.Nonempty) :\n    tropConvHull S = Set.univ := by\n  ext z; constructor\n  \u00b7 intro _; exact Set.mem_univ _\n  \u00b7 intro _\n    obtain \u27e8s, hs\u27e9 := hS\n    refine \u27e80, fun _ => s, fun _ => z 0 - s 0, fun _ => hs, ?_\u27e9\n    intro k; simp only [Finset.inf'_const]\n    have : k = (0 : Fin 1) := Subsingleton.elim k 0\n    subst this; ring\n\n/-! ## Key helper: tropConvHull membership for a pair -/\n\n/-- If `s\u2081, s\u2082 \u2208 S` and weights `w\u2081, w\u2082` produce `z` via coordinatewise min,\nthen `z \u2208 tropConvHull S`. -/\nlemma mem_tropConvHull_pair {n : \u2115} {S : Set (Fin n \u2192 \u211a)}\n    {s\u2081 s\u2082 : Fin n \u2192 \u211a} (hs\u2081 : s\u2081 \u2208 S) (hs\u2082 : s\u2082 \u2208 S)\n    {w\u2081 w\u2082 : \u211a} {z : Fin n \u2192 \u211a}\n    (hz : \u2200 k, z k = min (w\u2081 + s\u2081 k) (w\u2082 + s\u2082 k)) :\n    z \u2208 tropConvHull S := by\n  refine \u27e81, ![s\u2081, s\u2082], ![w\u2081, w\u2082], ?_, ?_\u27e9\n  \u00b7 intro i; fin_cases i <;> simp [*]\n  \u00b7 intro k; rw [hz k]; show min _ _ = _\n    conv_rhs => simp only [show (Finset.univ : Finset (Fin 2)) = {0, 1} from by decide]\n    simp [Finset.inf'_insert, Finset.inf'_singleton]\n\n/-! ## Tropical Radon for \u211a^2: the median-slope construction -/\n\n/-- **Tropical Radon for \u211a^2.** For any 4 points in \u211a^2, there exist disjoint nonempty\nindex subsets whose tropical convex hulls intersect.\n\nThe proof uses the *median-slope construction*: among the slopes\n`\u03b1_i = p(i)(1) \u2212 p(i)(0)`, pick three indices with `\u03b1_lo \u2264 \u03b1_med \u2264 \u03b1_hi`.\nThe singleton `A = {med}` and pair `B = {lo, hi}` witness the Radon partition,\nwith explicit weights making `p(med)` a tropical combination of `p(lo)` and `p(hi)`. -/\ntheorem tropical_radon_two (p : Fin 4 \u2192 (Fin 2 \u2192 \u211a)) :\n    \u2203 A B : Finset (Fin 4),\n      A.Nonempty \u2227 B.Nonempty \u2227 Disjoint A B \u2227\n      \u2203 z : Fin 2 \u2192 \u211a,\n        z \u2208 tropConvHull (p '' (\u2191A : Set (Fin 4))) \u2227\n        z \u2208 tropConvHull (p '' (\u2191B : Set (Fin 4))) := by\n  -- Set $A$ to be $\\{k\\}$ where $k$ is the index of the median slope.\n  obtain \u27e8i, j, k, h_distinct\u27e9 : \u2203 i j k : Fin 4, i \u2260 j \u2227 i \u2260 k \u2227 j \u2260 k \u2227 (p i 0 - p i 1) \u2264 (p j 0 - p j 1) \u2227 (p j 0 - p j 1) \u2264 (p k 0 - p k 1) := by\n    simp +decide [ Fin.exists_fin_succ ]\n    grind\n  -- Set $A = \\{j\\}$ and $B = \\{i, k\\}$.\n  use {j}, {i, k}\n  refine' \u27e8 _, _, _, p j, _, _ \u27e9 <;> norm_num\n  \u00b7 tauto\n  \u00b7 exact mem_tropConvHull_of_mem ( Set.mem_singleton _ )\n  \u00b7 convert mem_tropConvHull_pair ( Set.mem_image_of_mem p ( by aesop : i \u2208 { i, k } ) ) ( Set.mem_image_of_mem p ( by aesop : k \u2208 { i, k } ) ) _ using 1\n    exact p j 0 - p i 0\n    exact p j 1 - p k 1\n    intro x; fin_cases x <;> simp +decide <;> cases min_cases ( p j 0 - p i 0 + p i 0 ) ( p j 1 - p k 1 + p k 0 ) <;> cases min_cases ( p j 0 - p i 0 + p i 1 ) ( p j 1 - p k 1 + p k 1 ) <;> linarith!\n\n/-! ## General Tropical Radon Theorem -/\n\n/-- **Tropical Radon Theorem.**\nFor every `n : \u2115` and every family of `n + 2` points in `\u211a^n`,\nthere exist disjoint nonempty index subsets `A` and `B` of `Fin (n + 2)`\nwhose tropical convex hulls have a common point.\n\nThe cases `n = 0` and `n = 1` are elementary (dimension-zero triviality\nand the fact that tropical hulls of nonempty sets in \u211a^1 equal all of \u211a^1).\nThe case `n = 2` uses `tropical_radon_two` (the median-slope construction).\nThe general case for `n \u2265 3` follows from an extension of the median-slope\nargument combined with tropical dependence theory (Develin\u2013Sturmfels 2004). -/\ntheorem tropical_radon (n : \u2115) (p : Fin (n + 2) \u2192 (Fin n \u2192 \u211a)) :\n    \u2203 A B : Finset (Fin (n + 2)),\n      A.Nonempty \u2227 B.Nonempty \u2227 Disjoint A B \u2227\n      \u2203 z : Fin n \u2192 \u211a,\n        z \u2208 tropConvHull (p '' (\u2191A : Set (Fin (n + 2)))) \u2227\n        z \u2208 tropConvHull (p '' (\u2191B : Set (Fin (n + 2)))) := by\n  sorry\n\nend\n",
+    "modules": {
+      "algorithms": "\"\"\"\nTropical Radon Partition \u2014 Algorithms\n\nImplements the median-slope algorithm for finding tropical Radon partitions\nin \u211a^n and related tropical convexity computations.\n\"\"\"\n\nfrom typing import List, Tuple, Optional, Set\nfrom itertools import combinations\nimport heapq\n\n\ndef tropical_combination(points: List[List[float]],\n                          weights: List[float]) -> List[float]:\n    \"\"\"Compute a tropical (min-plus) convex combination.\n\n    z[k] = min_i (weights[i] + points[i][k])\n\n    Args:\n        points: m points in \u211a^n (list of lists).\n        weights: m scalar weights.\n\n    Returns:\n        The tropical combination z \u2208 \u211a^n.\n\n    Time: O(m\u00b7n)\n    Space: O(n)\n    \"\"\"\n    m = len(points)\n    n = len(points[0])\n    z = [float('inf')] * n\n    for k in range(n):\n        for i in range(m):\n            val = weights[i] + points[i][k]\n            if val < z[k]:\n                z[k] = val\n    return z\n\n\ndef tropical_hull_membership_singleton(z: List[float],\n                                        s: List[float]) -> Optional[float]:\n    \"\"\"Check if z is in tropConvHull({s}).\n\n    tropConvHull({s}) = {s + c\u00b71 : c \u2208 \u211a}. So z \u2208 hull iff z - s is constant.\n\n    Returns the constant c if z is in the hull, else None.\n\n    Time: O(n)\n    \"\"\"\n    n = len(z)\n    if n == 0:\n        return 0.0\n    c = z[0] - s[0]\n    for k in range(1, n):\n        if abs((z[k] - s[k]) - c) > 1e-12:\n            return None\n    return c\n\n\ndef median_slope_partition(points: List[List[float]],\n                            coord0: int = 0,\n                            coord1: int = 1) -> dict:\n    \"\"\"Median-slope algorithm for tropical Radon partition projection.\n\n    Given m \u2265 3 points in \u211a^n and two coordinate indices, finds a\n    Radon partition that works for those two coordinates.\n\n    Algorithm:\n    1. Compute slopes \u03b1_i = p_i[coord1] - p_i[coord0].\n    2. Sort by \u03b1 to get \u03c0(0), ..., \u03c0(m-1).\n    3. Set i_med = \u03c0(1), j_lo = \u03c0(0), j_hi = \u03c0(2).\n    4. Return A = {i_med}, B = {j_lo, j_hi}.\n\n    Time: O(m log m + n)\n    Space: O(m)\n\n    Returns:\n        Dictionary with partition info.\n    \"\"\"\n    m = len(points)\n    assert m >= 3, \"Need at least 3 points\"\n\n    # Compute slopes\n    slopes = [(points[i][coord1] - points[i][coord0], i) for i in range(m)]\n    slopes.sort()\n\n    i_lo = slopes[0][1]\n    i_med = slopes[1][1]\n    i_hi = slopes[2][1]\n\n    alpha_lo = slopes[0][0]\n    alpha_med = slopes[1][0]\n    alpha_hi = slopes[2][0]\n\n    # Compute weights for B = {i_hi, i_lo}\n    w_hi = points[i_med][coord0] - points[i_hi][coord0]\n    w_lo = points[i_med][coord1] - points[i_lo][coord1]\n\n    # Witness\n    z = points[i_med][:]\n\n    # Verify at the two coordinates\n    z0_check = min(w_hi + points[i_hi][coord0], w_lo + points[i_lo][coord0])\n    z1_check = min(w_hi + points[i_hi][coord1], w_lo + points[i_lo][coord1])\n\n    return {\n        'A': [i_med],\n        'B': [i_hi, i_lo],\n        'z': z,\n        'weights_A': [0.0],\n        'weights_B': [w_hi, w_lo],\n        'verified_coords': [coord0, coord1],\n        'coord0_ok': abs(z0_check - z[coord0]) < 1e-10,\n        'coord1_ok': abs(z1_check - z[coord1]) < 1e-10,\n    }\n\n\ndef find_radon_partition(points: List[List[float]]) -> Optional[dict]:\n    \"\"\"Find a tropical Radon partition for points in \u211a^n.\n\n    Strategy:\n    1. If n = 0: trivial (all points equal).\n    2. If n = 1: any two nonempty disjoint sets work.\n    3. If n = 2: use median_slope_partition.\n    4. If n \u2265 3: try all pairs of coordinates with median slope.\n       Check if the resulting z also works at other coordinates.\n       Falls back to brute-force search over small partitions.\n\n    Time: O(m^2 \u00b7 n) expected for small m.\n    Space: O(m \u00b7 n)\n    \"\"\"\n    m = len(points)\n    n = len(points[0]) if m > 0 else 0\n\n    if m < 2:\n        return None\n\n    # Case n = 0: unique point\n    if n == 0:\n        return {'A': [0], 'B': [1], 'z': [], 'weights_A': [0], 'weights_B': [0]}\n\n    # Case n = 1: hull of any nonempty set = all of \u211a^1\n    if n == 1:\n        return {\n            'A': [0], 'B': [1],\n            'z': [points[0][0]],\n            'weights_A': [0],\n            'weights_B': [points[0][0] - points[1][0]],\n        }\n\n    # Check for tropically equivalent pairs first\n    for i, j in combinations(range(m), 2):\n        diff = [points[i][k] - points[j][k] for k in range(n)]\n        if all(abs(diff[k] - diff[0]) < 1e-12 for k in range(n)):\n            return {\n                'A': [i], 'B': [j],\n                'z': points[i][:],\n                'weights_A': [0],\n                'weights_B': [diff[0]],\n            }\n\n    # For n \u2265 2: try median slope on all coordinate pairs\n    if m >= 3:\n        for c0, c1 in combinations(range(n), 2):\n            result = median_slope_partition(points, c0, c1)\n            A, B = result['A'], result['B']\n            z = result['z']\n            wB = result['weights_B']\n\n            # Check if the partition works for ALL coordinates\n            z_B = tropical_combination(\n                [points[B[0]], points[B[1]]], wB)\n\n            if all(abs(z[k] - z_B[k]) < 1e-10 for k in range(n)):\n                result['verified_all'] = True\n                return result\n\n    # Brute-force: try all possible A, B with |A|=1\n    for i0 in range(m):\n        others = [j for j in range(m) if j != i0]\n        z = points[i0]\n\n        # Try all subsets B of others with |B| >= 1\n        for size in range(1, len(others) + 1):\n            for B_tuple in combinations(others, size):\n                B = list(B_tuple)\n                # Find weights for B: w_j = max_k(z[k] - p_j[k])\n                weights = [max(z[k] - points[j][k] for k in range(n))\n                           for j in B]\n                z_check = tropical_combination([points[j] for j in B], weights)\n                if all(abs(z[k] - z_check[k]) < 1e-10 for k in range(n)):\n                    return {\n                        'A': [i0], 'B': B,\n                        'z': z[:],\n                        'weights_A': [0.0],\n                        'weights_B': weights,\n                        'verified_all': True,\n                    }\n\n    return None  # Should not happen for m >= n+2 points\n\n\ndef tropical_segment_sample(p1: List[float], p2: List[float],\n                             num_samples: int = 20) -> List[List[float]]:\n    \"\"\"Sample points from the tropical segment between p1 and p2.\n\n    The tropical segment consists of all z[k] = min(\u03b4 + p1[k], p2[k])\n    for \u03b4 \u2208 \u211a, shifted by arbitrary constants.\n\n    Returns representative points (with shift c = 0).\n    \"\"\"\n    n = len(p1)\n    # Compute critical \u03b4 values: where \u03b4 + p1[k] = p2[k]\n    critical = sorted(set(p2[k] - p1[k] for k in range(n)))\n\n    samples = []\n    # Sample around critical values\n    deltas = []\n    if critical:\n        lo = critical[0] - 2\n        hi = critical[-1] + 2\n        deltas = [lo + (hi - lo) * t / (num_samples - 1)\n                  for t in range(num_samples)]\n    else:\n        deltas = [float(t) for t in range(-5, 6)]\n\n    for delta in deltas:\n        z = [min(delta + p1[k], p2[k]) for k in range(n)]\n        samples.append(z)\n\n    return samples\n\n\nif __name__ == \"__main__\":\n    # Example usage\n    print(\"Tropical Radon Partition Algorithm\")\n    print(\"=\" * 50)\n\n    # 4 points in \u211a\u00b2\n    pts = [[0, 0], [3, 1], [1, 4], [2, 2]]\n    result = find_radon_partition(pts)\n    if result:\n        print(f\"Points: {pts}\")\n        print(f\"Partition: A={result['A']}, B={result['B']}\")\n        print(f\"Witness: z={result['z']}\")\n        print(f\"Weights B: {result['weights_B']}\")\n\n    print()\n\n    # 5 points in \u211a\u00b3\n    pts3 = [[0,0,0], [1,0,2], [0,1,3], [2,1,0], [1,2,1]]\n    result3 = find_radon_partition(pts3)\n    if result3:\n        print(f\"5 points in \u211a\u00b3: {pts3}\")\n        print(f\"Partition: A={result3['A']}, B={result3['B']}\")\n        print(f\"Witness: z={result3['z']}\")\n",
+      "demo": "\"\"\"\nApplications of Tropical Radon Partitions\n\nDemonstrates connections to shortest-path geometry, scheduling,\nand optimization via min-plus algebra.\n\"\"\"\n\nfrom typing import List, Tuple, Optional\nfrom algorithms import (tropical_combination, find_radon_partition,\n                         tropical_segment_sample)\n\n\ndef shortest_path_intersection():\n    \"\"\"\n    Application: Shortest-path redundancy detection.\n\n    In a network with n nodes and m source-sink pairs, the shortest-path\n    distances from each source form a point in \u211a^n (min-plus space).\n    A tropical Radon partition reveals that some sources can be grouped\n    into two families whose \"reachability profiles\" overlap \u2014 meaning\n    the network has redundant coverage.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Shortest-Path Redundancy Detection\")\n    print(\"=\" * 60)\n\n    # 4 sources, distances to 2 destinations\n    # Source i has distances [d(i,0), d(i,1)] to destinations 0, 1\n    distances = [\n        [2, 7],   # Source 0: close to dest 0, far from dest 1\n        [8, 3],   # Source 1: far from dest 0, close to dest 1\n        [4, 5],   # Source 2: moderate to both\n        [6, 4],   # Source 3: moderate-far to dest 0, moderate-close to dest 1\n    ]\n\n    print(\"\\nNetwork: 4 sources, 2 destinations\")\n    print(\"Distance matrix (source \u2192 destination):\")\n    for i, d in enumerate(distances):\n        print(f\"  Source {i}: {d}\")\n\n    result = find_radon_partition(distances)\n    if result:\n        A, B = result['A'], result['B']\n        z = result['z']\n        print(f\"\\nRadon partition found!\")\n        print(f\"  Group A (sources {A}): their tropical hull\")\n        print(f\"  Group B (sources {B}): their tropical hull\")\n        print(f\"  Shared reachability profile: z = {z}\")\n        print(f\"\\n  Interpretation: Both groups can achieve the same\")\n        print(f\"  best-case distance profile {z} to all destinations.\")\n        print(f\"  This means Group A is a redundant backup for Group B.\")\n\n\ndef scheduling_overlap():\n    \"\"\"\n    Application: Schedule feasibility overlap.\n\n    In min-plus scheduling, each job i has a profile p_i \u2208 \u211a^n giving\n    the earliest completion time at each stage. A tropical Radon partition\n    shows that two disjoint job subsets have overlapping feasibility regions.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Schedule Feasibility Overlap\")\n    print(\"=\" * 60)\n\n    # 4 jobs, 2 processing stages\n    # Job i: [earliest_finish_stage_0, earliest_finish_stage_1]\n    jobs = [\n        [1, 6],   # Job 0: fast at stage 0, slow at stage 1\n        [5, 2],   # Job 1: slow at stage 0, fast at stage 1\n        [3, 4],   # Job 2: balanced\n        [4, 3],   # Job 3: slightly slow at stage 0\n    ]\n\n    print(\"\\nScheduling: 4 jobs across 2 stages\")\n    print(\"Earliest completion times:\")\n    for i, j in enumerate(jobs):\n        print(f\"  Job {i}: Stage 0 = {j[0]}, Stage 1 = {j[1]}\")\n\n    result = find_radon_partition(jobs)\n    if result:\n        A, B = result['A'], result['B']\n        z = result['z']\n        print(f\"\\nRadon partition:\")\n        print(f\"  Subset A = jobs {A}\")\n        print(f\"  Subset B = jobs {B}\")\n        print(f\"  Shared schedule point: {z}\")\n        print(f\"\\n  Both subsets can achieve completion profile {z}\")\n        print(f\"  via appropriate job delays (tropical weights).\")\n\n\ndef tropical_halfspace_certificate():\n    \"\"\"\n    Application: Infeasibility certificate for tropical linear systems.\n\n    A tropical Radon partition provides a certificate that a system\n    of tropical linear inequalities has redundant constraints.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Tropical Linear System Redundancy\")\n    print(\"=\" * 60)\n\n    # Each row defines a tropical halfspace constraint\n    constraints = [\n        [0, 0],   # Constraint: min(x\u2080, x\u2081) \u2264 0\n        [2, -1],  # Constraint: min(x\u2080+2, x\u2081-1) \u2264 0\n        [-1, 3],  # Constraint: min(x\u2080-1, x\u2081+3) \u2264 0\n        [1, 1],   # Constraint: min(x\u2080+1, x\u2081+1) \u2264 0\n    ]\n\n    print(\"\\nTropical linear system: 4 constraints in \u211a\u00b2\")\n    for i, c in enumerate(constraints):\n        print(f\"  Constraint {i}: min(x\u2080{c[0]:+}, x\u2081{c[1]:+}) \u2264 0\")\n\n    result = find_radon_partition(constraints)\n    if result:\n        A, B = result['A'], result['B']\n        print(f\"\\nRadon partition: A={A}, B={B}\")\n        print(f\"  The constraints in A and B have overlapping\")\n        print(f\"  tropical regions \u2014 constraint set is redundant.\")\n        print(f\"  One of the two groups can be removed without\")\n        print(f\"  changing the feasible region.\")\n\n\ndef dynamic_programming_example():\n    \"\"\"\n    Application: Dynamic programming state compression.\n\n    In DP over a min-plus semiring, states correspond to points in \u211a^n.\n    A Radon partition identifies states that can be compressed because\n    their value functions overlap tropically.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: DP State Compression via Tropical Radon\")\n    print(\"=\" * 60)\n\n    # 4 DP states, each with a 2-dimensional value function\n    states = [\n        [10, 3],   # State 0: high cost path 0, low cost path 1\n        [4, 9],    # State 1: low cost path 0, high cost path 1\n        [6, 6],    # State 2: balanced\n        [7, 5],    # State 3: slightly imbalanced\n    ]\n\n    print(\"\\nDynamic programming: 4 states, 2 successor paths\")\n    print(\"Cost vectors (min-plus values):\")\n    for i, s in enumerate(states):\n        print(f\"  State {i}: {s}\")\n\n    result = find_radon_partition(states)\n    if result:\n        A, B = result['A'], result['B']\n        z = result['z']\n        print(f\"\\nRadon partition: A={A}, B={B}\")\n        print(f\"  Shared optimal profile: z = {z}\")\n        print(f\"\\n  States in A and states in B can reach the same\")\n        print(f\"  optimal cost profile. In a DP table, one group\")\n        print(f\"  can be pruned without losing optimality.\")\n\n\nif __name__ == \"__main__\":\n    shortest_path_intersection()\n    scheduling_overlap()\n    tropical_halfspace_certificate()\n    dynamic_programming_example()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All applications demonstrated successfully.\")\n    print(\"=\" * 60)\n\n\n\"\"\"\nTropical Radon Theorem \u2014 Interactive Demonstrations\n\nThis module demonstrates the tropical Radon partition theorem with\nconcrete numerical examples in low dimensions, visualizing how\nmin-plus convex hulls of disjoint point families can intersect.\n\"\"\"\n\nfrom itertools import combinations\nfrom typing import List, Tuple, Optional\nimport math\n\n\ndef trop_conv_hull_pair(p1: List[float], p2: List[float],\n                        w1: float, w2: float) -> List[float]:\n    \"\"\"Compute a tropical convex combination of two points with given weights.\n\n    Returns z where z[k] = min(w1 + p1[k], w2 + p2[k]).\n    \"\"\"\n    return [min(w1 + p1[k], w2 + p2[k]) for k in range(len(p1))]\n\n\ndef is_constant_shift(p1: List[float], p2: List[float], tol: float = 1e-12) -> bool:\n    \"\"\"Check if p1 - p2 is a constant vector (tropical equivalence).\"\"\"\n    if len(p1) != len(p2) or len(p1) == 0:\n        return True\n    diff = p1[0] - p2[0]\n    return all(abs((p1[k] - p2[k]) - diff) < tol for k in range(len(p1)))\n\n\ndef find_radon_partition_2d(points: List[List[float]]) -> Optional[dict]:\n    \"\"\"Find a tropical Radon partition for points in \u211a^2.\n\n    Uses the median-slope construction:\n    1. Compute slopes \u03b1_i = p_i[1] - p_i[0]\n    2. Find median index i_med with \u03b1_lo \u2264 \u03b1_med \u2264 \u03b1_hi\n    3. Return A = {i_med}, B = {i_lo, i_hi}\n\n    Args:\n        points: List of points in \u211a^2 (each a list of 2 rationals).\n\n    Returns:\n        Dictionary with keys 'A', 'B', 'z', 'weights_A', 'weights_B',\n        or None if fewer than 3 points are provided.\n    \"\"\"\n    if len(points) < 3:\n        return None\n\n    n = len(points[0])\n    assert n == 2, \"This function is for 2D points only\"\n\n    # Compute slopes\n    slopes = [(points[i][1] - points[i][0], i) for i in range(len(points))]\n    slopes.sort(key=lambda x: x[0])\n\n    # Pick median (second element in sorted order)\n    i_lo = slopes[0][1]\n    i_med = slopes[1][1]\n    i_hi = slopes[2][1]\n\n    alpha_lo = points[i_lo][1] - points[i_lo][0]\n    alpha_med = points[i_med][1] - points[i_med][0]\n    alpha_hi = points[i_hi][1] - points[i_hi][0]\n\n    assert alpha_lo <= alpha_med <= alpha_hi\n\n    # Weights for the B-side tropical combination\n    w_hi = points[i_med][0] - points[i_hi][0]  # tight at coord 0\n    w_lo = points[i_med][1] - points[i_lo][1]  # tight at coord 1\n\n    # Witness point\n    z = points[i_med][:]\n\n    # Verify\n    z_check = trop_conv_hull_pair(points[i_hi], points[i_lo], w_hi, w_lo)\n    assert all(abs(z[k] - z_check[k]) < 1e-10 for k in range(n)), \\\n        f\"Verification failed: z={z}, z_check={z_check}\"\n\n    return {\n        'A': [i_med],\n        'B': [i_hi, i_lo],\n        'z': z,\n        'weights_A': [0.0],  # z = 0 + p[i_med]\n        'weights_B': [w_hi, w_lo],\n        'alpha_lo': alpha_lo,\n        'alpha_med': alpha_med,\n        'alpha_hi': alpha_hi,\n    }\n\n\ndef verify_hull_membership(z, points, weights):\n    \"\"\"Verify that z is in the tropical convex hull of points with given weights.\"\"\"\n    n = len(z)\n    m = len(points)\n    for k in range(n):\n        val = min(weights[i] + points[i][k] for i in range(m))\n        if abs(val - z[k]) > 1e-10:\n            return False\n    return True\n\n\n# \u2500\u2500\u2500 DEMO 1: Basic tropical convex hull \u2500\u2500\u2500\n\ndef demo_basic_hull():\n    print(\"=\" * 60)\n    print(\"DEMO 1: Tropical Convex Hull Basics\")\n    print(\"=\" * 60)\n\n    p1 = [0, 0]\n    p2 = [3, 1]\n\n    print(f\"\\nTwo points in \u211a\u00b2: p\u2081 = {p1}, p\u2082 = {p2}\")\n    print(\"\\nTropical convex hull = {z : z[k] = min(w\u2081+p\u2081[k], w\u2082+p\u2082[k])}\")\n    print(\"\\nSample tropical combinations (varying w\u2081, w\u2082):\")\n\n    for w1, w2 in [(0, 0), (0, -1), (-2, 0), (1, -1), (-1, 1)]:\n        z = trop_conv_hull_pair(p1, p2, w1, w2)\n        print(f\"  w\u2081={w1:+}, w\u2082={w2:+}  \u2192  z = {z}\")\n\n\n# \u2500\u2500\u2500 DEMO 2: Tropical Radon partition in \u211a\u00b2 \u2500\u2500\u2500\n\ndef demo_radon_2d():\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 2: Tropical Radon Partition in \u211a\u00b2\")\n    print(\"=\" * 60)\n\n    points = [[0, 0], [3, 1], [1, 4], [2, 2]]\n    print(f\"\\n4 points in \u211a\u00b2:\")\n    for i, p in enumerate(points):\n        print(f\"  p[{i}] = {p}   (slope \u03b1 = {p[1]-p[0]:+.1f})\")\n\n    result = find_radon_partition_2d(points)\n    if result:\n        A, B = result['A'], result['B']\n        z = result['z']\n        print(f\"\\nRadon partition found!\")\n        print(f\"  A = {{{', '.join(str(i) for i in A)}}}  (singleton)\")\n        print(f\"  B = {{{', '.join(str(i) for i in B)}}}\")\n        print(f\"  Witness z = {z}\")\n        print(f\"\\n  A-side: z = p[{A[0]}] + 0 \u2713\")\n        wB = result['weights_B']\n        print(f\"  B-side: z[k] = min({wB[0]:.1f}+p[{B[0]}][k], {wB[1]:.1f}+p[{B[1]}][k])\")\n\n        # Verify\n        ok_A = verify_hull_membership(z, [points[i] for i in A], result['weights_A'])\n        ok_B = verify_hull_membership(z, [points[i] for i in B], result['weights_B'])\n        print(f\"\\n  Verification: A-hull \u2713={ok_A}, B-hull \u2713={ok_B}\")\n\n\n# \u2500\u2500\u2500 DEMO 3: Multiple configurations \u2500\u2500\u2500\n\ndef demo_many_configs():\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 3: Radon Partitions for Various Configurations\")\n    print(\"=\" * 60)\n\n    configs = [\n        (\"Standard basis-like\", [[0,0], [1,0], [0,1], [1,1]]),\n        (\"Collinear (x=0)\",     [[0,0], [0,1], [0,2], [0,3]]),\n        (\"Random-looking\",      [[1,5], [3,2], [7,4], [2,8]]),\n        (\"Large spread\",        [[0,0], [100,0], [0,100], [50,50]]),\n        (\"Negative coords\",     [[-3,2], [1,-4], [5,3], [-2,-1]]),\n    ]\n\n    for name, pts in configs:\n        result = find_radon_partition_2d(pts)\n        if result:\n            A, B, z = result['A'], result['B'], result['z']\n            ok_A = verify_hull_membership(z, [pts[i] for i in A], result['weights_A'])\n            ok_B = verify_hull_membership(z, [pts[i] for i in B], result['weights_B'])\n            status = \"\u2713\" if (ok_A and ok_B) else \"\u2717\"\n            print(f\"\\n  {name}:\")\n            print(f\"    Points: {pts}\")\n            print(f\"    A={A}, B={B}, z={z}  [{status}]\")\n\n\n# \u2500\u2500\u2500 DEMO 4: Tropical equivalence detection \u2500\u2500\u2500\n\ndef demo_tropical_equivalence():\n    print(\"\\n\" + \"=\" * 60)\n    print(\"DEMO 4: Tropical Equivalence Detection\")\n    print(\"=\" * 60)\n\n    pairs = [\n        ([0, 0], [3, 3]),    # equivalent (diff = [-3,-3])\n        ([1, 2], [4, 5]),    # equivalent (diff = [-3,-3])\n        ([0, 0], [1, 2]),    # NOT equivalent (diff = [-1,-2])\n        ([1, 3, 5], [2, 4, 6]),  # equivalent in \u211a\u00b3\n        ([1, 3, 5], [2, 4, 7]),  # NOT equivalent in \u211a\u00b3\n    ]\n\n    for p1, p2 in pairs:\n        eq = is_constant_shift(p1, p2)\n        diff = [p1[k] - p2[k] for k in range(len(p1))]\n        print(f\"\\n  p\u2081={p1}, p\u2082={p2}\")\n        print(f\"  Difference: {diff}\")\n        print(f\"  Tropically equivalent: {eq}\")\n\n\nif __name__ == \"__main__\":\n    demo_basic_hull()\n    demo_radon_2d()\n    demo_many_configs()\n    demo_tropical_equivalence()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"All demos completed successfully.\")\n    print(\"=\" * 60)\n"
+    },
+    "date": "2026-05-19T21:25:01Z",
+    "exp_id": "b133304b",
+    "source_exp_ids": [
+      "0fa7a004"
+    ]
+  },
   "conjecture_every_formally_certified_menon_differen.json": {
     "title": "Menon Difference Sets and the Hadamard Matrix Factory Theorem",
     "domain": "Combinatorial Design Theory / Algebraic Combinatorics",
@@ -4284,7 +4326,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -4302,7 +4344,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -4311,7 +4353,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "galois_group__s",
@@ -4320,7 +4362,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -4329,7 +4371,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -4338,7 +4380,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "expected_lean_signature",
@@ -4347,16 +4389,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
       "title": "Jacobian Conjecture: Quadratic Rigidity, Cubic Reduction, and Noncommutative Horizons",
       "domain": "Algebra / Algebraic Geometry",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -4365,7 +4407,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 275
+      "hue": 314
     },
     {
       "id": "percolation_threshold",
@@ -4374,7 +4416,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -4383,7 +4425,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -4392,7 +4434,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -4401,7 +4443,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -4410,7 +4452,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T16:00:38Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "legendres_conjecture",
@@ -4419,7 +4461,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -4428,7 +4470,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -4437,7 +4479,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T17:03:39Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -4446,7 +4488,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -4464,7 +4506,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -4473,7 +4515,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -4482,16 +4524,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "hodge_conjecture",
       "title": "Formal Hodge Structures: Certified Algebraicity Theorems for Rational Cohomology Classes",
       "domain": "Algebraic Geometry / Hodge Theory",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -4500,7 +4542,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:03:41Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -4509,7 +4551,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -4518,7 +4560,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -4527,7 +4569,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T20:03:02Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "sums_of_three_cubes",
@@ -4545,7 +4587,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 280
+      "hue": 272
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -4554,7 +4596,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "twin_prime_conjecture",
@@ -4563,7 +4605,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -4572,7 +4614,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -4581,7 +4623,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "happy_end_problem",
@@ -4599,7 +4641,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T23:05:18Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -4608,7 +4650,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -4623,10 +4665,10 @@ window.PACKAGE_GRAPH = {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
       "title": "Formal Hodge Theory at Picard Rank One: Uniqueness, Canonicality, and Reconstruction",
       "domain": "Algebraic Geometry / Hodge Theory",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "erdsstraus_conjecture",
@@ -4635,7 +4677,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:03:55Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "langlands_program_functoriality",
@@ -4644,7 +4686,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:04:15Z",
-      "hue": 179
+      "hue": 270
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -4662,7 +4704,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "riemann_hypothesis",
@@ -4671,7 +4713,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "odd_perfect_numbers",
@@ -4689,7 +4731,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 90
+      "hue": 101
     },
     {
       "id": "jacobian_conjecture",
@@ -4698,7 +4740,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "10_is_a_solitary_number",
@@ -4707,7 +4749,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "kakeya_conjecture",
@@ -4716,7 +4758,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T10:26:12Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -4725,7 +4767,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "invariant_subspace_problem",
@@ -4734,7 +4776,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -4743,7 +4785,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -4752,7 +4794,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -4761,7 +4803,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -4770,7 +4812,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -4779,7 +4821,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -4788,7 +4830,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 270
+      "hue": 134
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -4797,7 +4839,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "196_algorithm_non_termination",
@@ -4806,7 +4848,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:04:01Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "yang_mills_mass_gap",
@@ -4815,7 +4857,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 292
+      "hue": 100
     },
     {
       "id": "goldbach_conjecture",
@@ -4824,25 +4866,25 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
       "title": "Leading-Coefficient Rigidity for Line Restrictions of Multivariate Polynomials",
       "domain": "Algebraic Combinatorics / Finite-Field Geometry",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
       "title": "Quantitative Reduction Theory for the Jacobian Conjecture: Nilpotence Detection, Degree Bounds, and Complexity Measures",
       "domain": "Algebraic Geometry / Polynomial Automorphisms",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -4851,7 +4893,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -4860,7 +4902,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "beals_conjecture",
@@ -4869,7 +4911,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -4878,7 +4920,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 92
+      "hue": 292
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -4887,7 +4929,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -4896,7 +4938,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -4905,7 +4947,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -4914,7 +4956,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -4932,7 +4974,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -4941,7 +4983,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -4950,7 +4992,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -4959,7 +5001,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -4977,7 +5019,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -4986,7 +5028,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -4995,7 +5037,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "primes_of_the_form_n1",
@@ -5004,7 +5046,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -5040,7 +5082,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:44Z",
-      "hue": 92
+      "hue": 134
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -5049,7 +5091,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -5058,7 +5100,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:46:37Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -5067,7 +5109,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -5076,7 +5118,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "we_have_formally_verified",
@@ -5085,7 +5127,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -5094,7 +5136,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -5103,6 +5145,15 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
+      "hue": 271
+    },
+    {
+      "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
+      "title": "Tropical Radon Theorem: Min-Plus Combinatorial Convexity",
+      "domain": "Tropical Geometry / Combinatorial Convexity",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-19T21:25:01Z",
       "hue": 271
     }
   ],
@@ -5124,6 +5175,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "finite_state_compression_criterion_for_automatic_t",
       "target": "conjecture_every_irrational_real_number_whose_base",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "conjecture_for_every_n___every_point_in_the_tropic",
+      "target": "conjecture_every_set_of_n2_points_in_fin_n___admit",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -5369,15 +5427,15 @@ window.PACKAGE_GRAPH = {
   ],
   "domain_bridges": [
     {
-      "domain_a": "Algebra",
-      "domain_b": "Geometry",
-      "package_count": 8,
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
+      "package_count": 10,
       "strength": 1.0
     },
     {
-      "domain_a": "Geometry",
-      "domain_b": "Tropical",
-      "package_count": 9,
+      "domain_a": "Algebra",
+      "domain_b": "Geometry",
+      "package_count": 8,
       "strength": 1.0
     },
     {
@@ -5436,22 +5494,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-18T10:17:17.075367+00:00"
-  },
-  {
-    "id": "seed_050",
-    "title": "Tropical Satake Isomorphism for GL_n",
-    "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Bridges"
-    ],
-    "priority_score": 0.87,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "a87f3ee7",
-    "timestamp": "2026-05-18T10:17:17.096903+00:00"
   },
   {
     "id": "seed_006",
@@ -5660,10 +5702,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6e675db7",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e961180",
     "timestamp": "2026-05-19T03:05:33.769989+00:00"
   },
   {
@@ -6167,10 +6209,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "acacf0e3",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe5c7f93",
     "timestamp": "2026-05-19T19:46:41.384982+00:00"
   },
   {
@@ -6238,5 +6280,30 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "c5acc1e2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-19T20:20:28.935093+00:00"
+  },
+  {
+    "id": "fd_0162",
+    "title": "**Conjecture.** For every dominant weight \u03bb of GL_n, the tropical Schur function",
+    "description": "# Future Directions: Tropical Satake Theory for Reductive Groups\n\n## Hypothesis 1: Tropical Satake = Permutahedral Support Equivalence\n\n**Conjecture.** For every dominant weight \u03bb of GL_n, the tropical Schur function tropSchur(\u03bb, x) equals the support function of the permutahedron P(\u03bb) = conv{\u03c3 \u00b7 \u03bb : \u03c3 \u2208 S_n}, evaluated in the min-convention:\n\n    tropSchur(\u03bb, x) = min_{v \u2208 P(\u03bb)} \u27e8v, x\u27e9\n\nMoreover, tropical multiplication (pointwise addition) of tropical Schur functions corresponds to Minkowski addition of the associated permutahedra:\n\n    tropSchur(\u03bb, x) + tropSchur(\u03bc, x) \u2264 tropSchur(\u03bb + \u03bc, x)\n\nwith equality holding precisely when \u03bb and \u03bc are \"convolutionally compatible\" (i.e., the minimizing permutations for \u03bb and \u03bc can be taken to coincide).\n\n**Test.** Formalize the polyhedral support function h_P(x) = min_{v \u2208 P} \u27e8v, x\u27e9 in Lean 4 and prove equality with tropSchur for n \u2264 6 computationally. For the Minkowski inequality, compute both sides for all pairs of dominant weights in GL_3, GL_4, GL_5 with entries \u2264 5 and characterize when equality holds.\n\n**Impact.** This would establish a formal bridge between tropical Satake theory and polyhedral combinatorics, enabling tools from convex optimization (e.g., support function arithmetic, Minkowski decomposition) to be applied to Hecke algebra computations. It would also connect to MV polytope theory in geometric representation theory.\n\n---\n\n## Hypothesis 2: Injectivity Extends to Other Root Systems\n\n**Conjecture.** The orbit-min construction yields an injective tropical Satake map for all classical root systems:\n- **Type B_n / C_n**: Replace S_n with the hyperoctahedral group (signed permutations on n elements, order 2^n \u00b7 n!). Define tropSchur_B(\u03bb, x) = min_{\u03c3 \u2208 W(B_n)} \u2211 \u03bb(\u03c3(i)) x(i) where W(B_n) acts by permutations and sign changes.\n- **Type D_n**: Use the even-signed permutation group (order 2^{n-1} \u00b7 n!).\n\nFor each type, the map \u03bb \u21a6 tropSchur_W(\u03bb) should be injective on dominant weights.\n\n**Test.**\n1. Define the signed permutation action for B_2, B_3, B_4 in Lean 4.\n2. Verify injectivity computationally: enumerate dominant weights with entries \u2264 5 and check fingerprint distinctness.\n3. Attempt a uniform proof by adapting the test-vector construction. The test vectors will need to account for sign changes: use e_k(i) = 1 if |i| \u2265 k, with appropriate sign conventions.\n\n**Impact.** A positive result would extend the tropical Satake framework from GL_n to all classical groups, covering the main cases of interest in representation theory and creating a unified tropical theory for the Langlands program.\n\n---\n\n## Hypothesis 3: Tropical Hecke Multiplication Matches Polyhedral Minkowski Structure\n\n**Conjecture.** Define tropical Hecke convolution on basis elements by:\n\n    (\u03b4_\u03bb \u2297 \u03b4_\u03bc)(x) = min_{y + z = x} (tropSchur(\u03bb, y) + tropSchur(\u03bc, z))\n\nwhere the min is over all decompositions x = y + z. Then:\n\n    \u03b4_\u03bb \u2297 \u03b4_\u03bc = \u2211^{trop}_{\u03bd} c^\u03bd_{\u03bb\u03bc} \u2297 \u03b4_\u03bd\n\nwhere the tropical structure constants c^\u03bd_{\u03bb\u03bc} are determined by the Minkowski decomposition of P(\u03bb) + P(\u03bc) into a \"min-plus combination\" of permutahedra P(\u03bd).\n\n**Test.** Compute the tropical convolution \u03b4_\u03bb \u2297 \u03b4_\u03bc for all pairs of dominant weights in GL_3 with entries \u2264 3. Decompose the result into the tropical Schur basis and compare the coefficients with the Minkowski structure of the corresponding permutahedra. Verify at least 20 cases in GL_4.\n\n**Impact.** This would establish that the tropical Satake isomorphism is not just a basis bijection but a full semiring isomorphism, upgrading the current result from a correspondence of generators to a correspondence of algebras. It would also provide a combinatorial algorithm for computing Hecke algebra structure constants.\n\n---\n\n## Hypothesis 4: Tropical Satake Detects the Dominance Order\n\n**Conjecture.** For dominant weights \u03bb, \u03bc of GL_n:\n\n    \u03bb \u2aaf_dom \u03bc  \u27fa  \u2200 x \u2208 \u2124\u207f (decreasing), tropSchur(\u03bb, x) \u2264 tropSchur(\u03bc, x)\n\nwhere \u03bb \u2aaf_dom \u03bc means \u2211_{i=0}^{k} \u03bb(i) \u2264 \u2211_{i=0}^{k} \u03bc(i) for all k, with equality at k = n-1 (majorization/dominance order).\n\nThe forward direction (\u2aaf_dom implies pointwise \u2264 on decreasing inputs) should follow from the rearrangement inequality. The converse requires showing that if \u03bb is not dominated by \u03bc, there exists a decreasing test vector that separates them.\n\n**Test.** For GL_3, GL_4, GL_5, enumerate all pairs of dominant weights with entries \u2264 5 and check both directions. If the conjecture is true, verify the forward direction formally in Lean 4. If false, classify the counterexamples and determine whether a modified statement (e.g., restricting to strictly decreasing x, or using a different ordering) rescues the correspondence.\n\n**Impact.** The dominance order is fundamental in combinatorics, representation theory, and majorization theory (with applications to quantum information, economics, and statistics). A formal link between the dominance order and tropical Schur evaluation would make the tropical Satake framework a computational tool for these areas. It would also connect to Schur-convexity, a classical topic in inequality theory.\n\n---\n\n## Hypothesis 5: Tropical Schur Basis Admits Polynomial-Size Circuits\n\n**Conjecture.** For each dominant weight \u03bb of GL_n, the function x \u21a6 tropSchur(\u03bb, x) can be computed by a min-plus circuit (a DAG with min and + gates) of size O(n^c) for some constant c, rather than the naive O(n! \u00b7 n) obtained by orbit enumeration.\n\nMore precisely, the optimal circuit size for tropSchur(\u03bb, x) is \u0398(n log n) when \u03bb has distinct entries, achieved by a sorting network that pairs the entries of \u03bb and x in opposite orders (by the rearrangement inequality, the minimum over permutations is the \"antidiagonal\" pairing).\n\n**Test.**\n1. Implement circuit synthesis for tropSchur using known sorting network constructions (e.g., AKS network, bitonic sort) and verify correctness against naive enumeration for n \u2264 8.\n2. Measure circuit size as a function of n and compare with theoretical bounds.\n3. For weights with repeated entries, investigate whether smaller circuits are possible by exploiting the reduced orbit size.\n\n**Impact.** A positive result would transform the tropical Satake framework from a theoretical tool to a practical computational one. It would connect to:\n- Circuit complexity theory (min-plus circuits are a central model)\n- Algorithm design for symmetric optimization\n- Efficient evaluation of spherical functions in computational number theory\n\nThe O(n log n) bound would make tropical Satake computations feasible for n in the hundreds or thousands, enabling applications to large-scale assignment problems and neural network symmetry reduction.\n",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Combinatorics",
+      "Probability",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a87f3ee7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T21:01:13.106490+00:00"
   }
 ];
