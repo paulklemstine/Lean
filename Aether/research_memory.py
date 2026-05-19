@@ -31,6 +31,8 @@ class ExperimentRecord:
     proof_quality: str = ""  # "trivial", "substantial", "partial"
     retry_of: str = ""       # parent exp_id if this is a retry
     retry_count: int = 0     # how many retries for this concept
+    quality_score: float = 0.0  # composite quality from evaluate()
+    quality_detail: Optional[Dict] = None  # 8-axis QualityScore breakdown
 
 
 class ResearchMemory:
@@ -68,6 +70,8 @@ class ResearchMemory:
                         proof_quality=data.get("proof_quality", ""),
                         retry_of=data.get("retry_of", ""),
                         retry_count=data.get("retry_count", 0),
+                        quality_score=data.get("quality_score", 0.0),
+                        quality_detail=data.get("quality_detail"),
                     )
                     self._cache.append(record)
                     self._titles.add(record.concept_title.lower())
@@ -96,6 +100,8 @@ class ResearchMemory:
                 "proof_quality": record.proof_quality,
                 "retry_of": record.retry_of,
                 "retry_count": record.retry_count,
+                "quality_score": record.quality_score,
+                "quality_detail": record.quality_detail,
             }) + "\n")
 
     def has_been_explored(self, title: str, description: str) -> bool:
@@ -548,13 +554,15 @@ class FutureDirectionsManager:
         return available[:limit]
 
     def select_direction_weighted(
-        self, domain_filter: Optional[str] = None
+        self, domain_filter: Optional[str] = None,
+        recent_domain_quality: Optional[Dict[str, float]] = None,
+        catalog_analyzer=None,
     ) -> Optional[FutureDirection]:
-        """Select a direction from a probability distribution weighted by priority_score.
+        """Select a direction weighted by computed quality score (not just priority).
 
-        Higher priority directions are more likely to be selected, but lower-priority
-        directions still have a chance. The sampling probability for each direction is
-        proportional to its priority_score.
+        Domains with recent high-quality results get boosted via outcome_bonus.
+        Domains with recent low-quality results get penalized.
+        No forced breadth — quality signal guides selection.
         """
         available = [d for d in self._directions if d.status == "available"]
         if domain_filter:
@@ -562,7 +570,11 @@ class FutureDirectionsManager:
         if not available:
             return None
         import random
-        weights = [d.priority_score for d in available]
+        scores = [self._compute_quality_score(d, recent_domain_quality, catalog_analyzer) for d in available]
+        total = sum(scores)
+        if total == 0:
+            return random.choice(available)
+        weights = [s / total for s in scores]
         return random.choices(available, weights=weights, k=1)[0]
 
     def mark_direction_consumed(self, direction_id: str, exp_id: str) -> None:
@@ -611,8 +623,54 @@ class FutureDirectionsManager:
             if d.id == direction_id:
                 d.status = "available"
                 d.consumed_by_exp_id = ""
-                break
-        self._save()
+
+    def adjust_direction_quality_feedback(
+        self, domain: str, quality_score: float, proof_quality: str
+    ) -> None:
+        """Adjust priority of future directions based on quality feedback.
+
+        Domains with poor results get their directions deprioritized;
+        domains with good results get a boost. This creates a feedback loop
+        from evaluation back to direction selection.
+        """
+        domain_lower = domain.lower()
+        adjusted = 0
+        for d in self._directions:
+            if d.status != "available":
+                continue
+            # Check if this direction's domains overlap with the result domain
+            dir_domains_lower = " ".join(d.domains).lower()
+            if domain_lower not in dir_domains_lower and domain_lower not in d.title.lower():
+                continue
+            if quality_score < 0.3:
+                d.priority_score = max(0.05, d.priority_score - 0.15)
+                adjusted += 1
+            elif quality_score > 0.7:
+                d.priority_score = min(1.0, d.priority_score + 0.10)
+                adjusted += 1
+        if adjusted:
+            self._save()
+            print(f"[FD-Manager] Quality feedback: {domain} q={quality_score:.2f} "
+                  f"adjusted {adjusted} directions")
+
+    def get_recent_domain_quality(self, n: int = 10, memory: 'ResearchMemory' = None) -> Dict[str, float]:
+        """Return average quality per domain from the last n experiments.
+
+        Used by select_direction_weighted to boost/penalize domains.
+        Requires a ResearchMemory instance to access experiment history.
+        """
+        if memory is None:
+            return {}
+        recent = memory._cache[-n:] if hasattr(memory, '_cache') and memory._cache else []
+        if not recent:
+            return {}
+        domain_scores: Dict[str, List[float]] = {}
+        for r in recent:
+            q = getattr(r, 'quality_score', 0.0)
+            if r.domain not in domain_scores:
+                domain_scores[r.domain] = []
+            domain_scores[r.domain].append(q)
+        return {d: sum(scores) / len(scores) for d, scores in domain_scores.items()}
 
     def get_direction_for_exp(self, exp_id: str) -> Optional[FutureDirection]:
         """Find the direction being researched by a given experiment."""
@@ -673,15 +731,73 @@ class FutureDirectionsManager:
 
     # ── Quality Scoring & Pruning ──
 
-    @staticmethod
-    def _compute_quality_score(direction: FutureDirection) -> float:
+    def _estimate_novelty(self, direction: FutureDirection, catalog_analyzer=None) -> float:
+        """Estimate novelty by checking how many similar theorems exist in the catalog.
+
+        More overlap = less novel = lower score. Completely novel topics score high.
+        Falls back to direction.priority_score if no catalog analyzer available.
+        """
+        if catalog_analyzer is None:
+            return direction.priority_score
+
+        try:
+            domain = direction.domains[0] if direction.domains else "Unknown"
+            domain_files = []
+            # Try to get files for the direction's domain
+            if hasattr(catalog_analyzer, '_summaries_cache'):
+                for path, summary in catalog_analyzer._summaries_cache.items():
+                    if hasattr(summary, 'domain') and summary.domain and domain.lower() in summary.domain.lower():
+                        domain_files.append(summary)
+
+            # Count theorems with overlapping keywords
+            keywords = set(direction.title.lower().split() + direction.description.lower().split())
+            # Filter out common stop words
+            stop_words = {"the", "a", "an", "and", "or", "of", "for", "in", "to", "is", "are",
+                          "by", "with", "from", "that", "this", "it", "as", "be", "can", "we"}
+            keywords = keywords - stop_words
+
+            overlap = 0
+            for f in domain_files:
+                decls_lower = " ".join(getattr(f, 'declarations', [])).lower()
+                if any(k in decls_lower for k in keywords):
+                    overlap += 1
+
+            if overlap == 0:
+                return 0.85  # completely novel — high potential
+            elif overlap < 3:
+                return 0.75  # some grounding — good
+            elif overlap < 10:
+                return 0.55  # well-trodden area
+            else:
+                return 0.35  # heavily mined — discourage
+        except Exception:
+            return direction.priority_score
+
+    def _compute_quality_score(
+        self, direction: FutureDirection, recent_domain_quality: Optional[Dict[str, float]] = None,
+        catalog_analyzer=None
+    ) -> float:
         """Compute a composite quality score for a direction.
 
-        Weights: priority 35%, source 20%, domains 15%, description 10%,
-                 strategy 10%, freshness 10%, plus fun bonus.
+        Weights: novelty 20%, outcome_bonus 15%, source 20%, domains 15%,
+                 description 10%, strategy 10%, freshness 10%, plus fun bonus.
+        Novelty is estimated from catalog overlap when available.
+        The outcome_bonus rewards domains with recent high-quality results
+        and penalizes domains that have been producing trivial work.
         """
-        # priority_score: already 0-1
-        priority = direction.priority_score
+        # novelty: estimated from catalog overlap (replaces hardcoded priority)
+        novelty = self._estimate_novelty(direction, catalog_analyzer)
+
+        # outcome_bonus: learn from recent experiment quality in this domain
+        outcome_bonus = 0.5  # neutral default
+        if recent_domain_quality:
+            domain_matches = [
+                q for d, q in recent_domain_quality.items()
+                if d.lower() in " ".join(direction.domains).lower()
+                or d.lower() in direction.title.lower()
+            ]
+            if domain_matches:
+                outcome_bonus = sum(domain_matches) / len(domain_matches)
 
         # source_bonus: seed directions are higher quality
         if direction.source_path == "seed:manual_v2":
@@ -724,7 +840,8 @@ class FutureDirectionsManager:
         fun_bonus = 0.05 if "Speculative" in direction.domains else 0.0
 
         return (
-            0.35 * priority
+            0.20 * novelty
+            + 0.15 * outcome_bonus
             + 0.20 * source_bonus
             + 0.15 * domain_richness
             + 0.10 * description_depth

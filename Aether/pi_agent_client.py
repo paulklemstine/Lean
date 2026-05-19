@@ -947,7 +947,7 @@ class PiAgentClient:
         recent_history_str = ""
         if recent_history:
             recent_history_str = "\n".join(
-                f"- [{r.get('quality', 'unknown')}] {r.get('domain', 'unknown')}: {r.get('concept_title', 'unknown')}"
+                f"- [{r.get('quality', 'unknown')}] score={r.get('quality_score', 0.0):.2f} {r.get('domain', 'unknown')}: {r.get('concept_title', 'unknown')}"
                 for r in recent_history
             )
             
@@ -991,6 +991,12 @@ class PiAgentClient:
 
             ## What to Avoid (these failed or were trivial)
             {exclusion if exclusion else "First cycle — no exclusions."}
+
+            AVOID these anti-patterns in your direction selection:
+            - Re-proving known results with minor notation changes
+            - Enumerating properties of small finite structures (native_decide proofs)
+            - Re-formulating the same framework in yet another domain without new mathematical content
+            - Defining structures that are isomorphic to existing ones with renamed fields
 
             ## Additional Context
             {research_context[:500] if research_context else "Cold start."}
@@ -1751,13 +1757,23 @@ class PiAgentClient:
             focused_context = self.catalog_analyzer.build_focused_context(
                 domain=concept.domain,
                 concept_description=concept.concept_description,
-                max_theorems=5,
+                max_theorems=15,
             )
 
-        # Build reference section (limited to 3 most relevant files)
+        # Build reference section (limited to 5 most relevant files, preferring deep proofs)
         ref_section = ""
         if refs and self.catalog_analyzer:
-            ref_section = self.catalog_analyzer.build_catalog_context_string(refs[:3])
+            # Prefer files with deep proofs (induction, rcases, etc.) over native_decide-heavy files
+            prioritized_refs = []
+            shallow_refs = []
+            for ref in refs:
+                if self.catalog_analyzer.is_deep_proof(ref):
+                    prioritized_refs.append(ref)
+                else:
+                    shallow_refs.append(ref)
+            # Use deep-proof refs first, then shallow refs as fallback
+            selected_refs = prioritized_refs[:5] if prioritized_refs else shallow_refs[:3]
+            ref_section = self.catalog_analyzer.build_catalog_context_string(selected_refs)
         elif catalog_context:
             ref_section = catalog_context[:3000]
 
@@ -1772,6 +1788,32 @@ class PiAgentClient:
         }
 
         mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
+
+        # Depth Requirements: reject trivial mathematics
+        depth_requirements = textwrap.dedent("""\
+            ## Depth Requirements (MANDATORY)
+
+            Your output must satisfy ALL of these:
+
+            1. **NO trivial proofs**: Do NOT prove statements by `native_decide`, `decide`,
+               `norm_num`, or `rfl` unless the statement itself is genuinely important.
+               If the only proof tactic is enumeration, the theorem is not worth formalizing.
+
+            2. **At least 3 theorems with deep proof tactics**: Your file must contain at
+               least 3 theorems proven using induction, rcases, by_contra, field_simp,
+               or multi-step calc reasoning.
+
+            3. **Novel definitions**: Define at least one new mathematical structure or concept
+               that does not already exist in the Catalog. Check the catalog references to
+               confirm novelty.
+
+            4. **Cross-domain connections**: Include at least one theorem that connects your
+               domain to a different mathematical domain (e.g., number theory + tropical
+               geometry, algebra + physics).
+
+            5. **Conjecture with testable prediction**: State at least one falsifiable
+               conjecture with a clear computational test that could disprove it.
+        """)
 
         # Build the streamlined prompt
         lean_section = ""
@@ -1794,6 +1836,8 @@ class PiAgentClient:
             ## Assignment: {concept.title}
 
             {mode_line}
+
+            {depth_requirements}
 
             ### Research Direction
             {concept.concept_description}
@@ -1875,13 +1919,20 @@ class PiAgentClient:
         if use_enriched:
             cleaned = self._strip_llm_preamble(raw)
             if cleaned and len(cleaned) > 100:
-                catalog_section_text = ""
-                if "### Catalog Reference Files" in direct_prompt:
-                    idx = direct_prompt.find("### Catalog Reference Files")
-                    catalog_section_text = "\n\n" + direct_prompt[idx:]
+                # Validate that enrichment contains actual mathematical content
+                math_markers = ['theorem', 'lemma', 'def ', 'instance ', 'inductive ', 'structure ']
+                has_math = any(m in cleaned for m in math_markers)
+                has_strategy = any(s in cleaned.lower() for s in ['proof strategy', 'approach', 'key insight', 'induction', 'construction', 'contrapositive', 'witness'])
+                if has_math or has_strategy:
+                    catalog_section_text = ""
+                    if "### Catalog Reference Files" in direct_prompt:
+                        idx = direct_prompt.find("### Catalog Reference Files")
+                        catalog_section_text = "\n\n" + direct_prompt[idx:]
 
-                enriched_prompt = cleaned + catalog_section_text
-                return enriched_prompt
+                    enriched_prompt = cleaned + catalog_section_text
+                    return enriched_prompt
+                else:
+                    print("[Pi-Agent] Enrichment lacked mathematical content, using direct prompt")
 
         print(f"[Pi-Agent] Using direct prompt (enrichment {'failed' if raw and 'TIMEOUT' in raw else 'returned insufficient content'})")
         return direct_prompt
@@ -1952,8 +2003,9 @@ class PiAgentClient:
             "analysis": str
         }
         """
-        # Truncate very long results for the LLM
-        lean_preview = result_lean[:3000] if len(result_lean) > 3000 else result_lean
+        # Truncate very long results for the LLM — smart truncation that preserves
+        # theorem signatures, sorry locations, and deep tactic proofs
+        lean_preview = self._smart_truncate(result_lean, max_chars=3000)
 
         # Quick heuristic pre-check
         if self._is_trivially_obvious(lean_preview):
@@ -2035,6 +2087,31 @@ class PiAgentClient:
                 "confidence": 0.4,
                 "analysis": "Fallback heuristic: no theorems found.",
             }
+
+    def _smart_truncate(self, lean_source: str, max_chars: int = 3000) -> str:
+        """Truncate Lean source while preserving theorem signatures, sorry locations,
+        and deep tactic proofs. Important lines are always kept even if total
+        exceeds max_chars; unimportant lines are dropped first."""
+        if len(lean_source) <= max_chars:
+            return lean_source
+
+        lines = lean_source.split('\n')
+        kept = []
+        current_len = 0
+        # Lines that must always be preserved
+        important_prefixes = ('theorem ', 'lemma ', 'def ', 'instance ', 'structure ', 'inductive ')
+        important_keywords = ('sorry', 'induction', 'rcases', 'by_contra', 'calc', 'by_cases')
+
+        for line in lines:
+            is_important = (
+                line.strip().startswith(important_prefixes)
+                or any(kw in line for kw in important_keywords)
+            )
+            if is_important or current_len + len(line) + 1 <= max_chars:
+                kept.append(line)
+                current_len += len(line) + 1
+
+        return '\n'.join(kept)
 
     def _is_trivially_obvious(self, lean_source: str) -> bool:
         """Quick heuristic check for obviously trivial results.
@@ -2211,7 +2288,7 @@ class PiAgentClient:
         Returns dict with domain, subdirectory, target_path,
         is_complete_proof, confidence, reason.
         """
-        source_preview = lean_source[:3000] if len(lean_source) > 3000 else lean_source
+        source_preview = self._smart_truncate(lean_source, max_chars=3000)
 
         # Get domain files for context
         domain_files = ""

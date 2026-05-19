@@ -12,6 +12,15 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
+# Tactics considered "interesting" (non-trivial proof effort) — shared with quality_evaluator
+DEEP_TACTICS = {
+    "induction", "rcases", "obtain", "by_contra", "by_cases",
+    "omega", "linarith", "nlinarith", "field_simp", "ring_nf",
+    "push_cast", "norm_cast", "ext", "funext", "conv",
+    "calc", "have", "suffices", "refine", "apply",
+    "exact", "constructor", "cases", "match",
+}
+
 
 @dataclass
 class CatalogFileSummary:
@@ -305,13 +314,16 @@ class CatalogAnalyzer:
         self,
         domain: str,
         concept_description: str,
-        max_theorems: int = 5,
+        max_theorems: int = 15,
     ) -> str:
         """Build focused context: the N most relevant theorem signatures for a concept.
 
         Instead of dumping all 2,700 files into the prompt, this extracts specific
         theorem/lemma signatures that are most relevant to the concept Pi is pursuing.
         Pi uses this to write precise prompts that reference existing work.
+
+        Prefers files with deep proof tactics (induction, rcases, etc.) and penalizes
+        files dominated by native_decide/decide (computational enumeration proofs).
 
         Returns a structured string like:
             Existing theorems you can build on:
@@ -331,12 +343,26 @@ class CatalogAnalyzer:
             # Base score: domain match
             domain_score = 3.0 if summary.domain.lower() == domain.lower() else 0.0
 
+            # Deep proof preference: boost files with deep tactics, penalize native_decide
+            deep_bonus = 0.0
+            try:
+                src = self.catalog_root / summary.relative_path
+                content = src.read_text(encoding="utf-8", errors="replace")
+                deep_tactic_count = sum(1 for t in DEEP_TACTICS if t in content)
+                shallow_tactic_count = content.count("native_decide") + content.count("\nby decide")
+                if deep_tactic_count >= 3:
+                    deep_bonus += 0.5 * min(deep_tactic_count / 10, 1.0)
+                if shallow_tactic_count > deep_tactic_count:
+                    deep_bonus -= 0.3  # penalize native_decide-heavy files
+            except Exception:
+                pass
+
             for decl in summary.declarations:
                 decl_lower = decl.lower()
                 # Keyword overlap between concept description and declaration name
                 decl_words = set(re.findall(r'[a-z]{3,}', decl_lower))
                 overlap = len(desc_words & decl_words)
-                score = domain_score + overlap * 2.0
+                score = domain_score + overlap * 2.0 + deep_bonus
 
                 # Bonus for theorem/lemma names (vs definitions)
                 if any(kw in decl_lower for kw in ('theorem', 'lemma', 'bound', 'ineq')):
@@ -386,6 +412,21 @@ class CatalogAnalyzer:
 
         header = "Existing theorems you can build on:\n"
         return header + "\n".join(results)
+
+    def is_deep_proof(self, relative_path: str) -> bool:
+        """Check if a .lean file contains deep proof tactics (not just native_decide/decide).
+
+        Used to preferentially select files with genuine mathematical depth as
+        context for Aristotle's prompts.
+        """
+        try:
+            src = self.catalog_root / relative_path
+            content = src.read_text(encoding="utf-8", errors="replace")
+            deep_count = sum(1 for t in DEEP_TACTICS if t in content)
+            shallow_count = content.count("native_decide") + content.count("\nby decide")
+            return deep_count > shallow_count and deep_count >= 2
+        except Exception:
+            return False
 
     def collect_future_directions(self, limit: int = 10) -> str:
         """Collect Aristotle's FUTURE_DIRECTIONS reports from previous cycles.

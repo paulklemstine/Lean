@@ -524,7 +524,7 @@ class TestQualityScore:
             domains=["Tropical", "Algebra", "Physics"],
             priority_score=0.95, proof_strategy="induction on degree",
         )
-        score = FutureDirectionsManager._compute_quality_score(d)
+        score = fd_manager._compute_quality_score(d)
         assert score >= 0.80, f"Seed direction scored {score}, expected >= 0.80"
 
     def test_auto_parsed_direction_scores_lower(self, fd_manager):
@@ -535,7 +535,7 @@ class TestQualityScore:
             domains=["Bridges"],
             priority_score=0.65,
         )
-        score = FutureDirectionsManager._compute_quality_score(d)
+        score = fd_manager._compute_quality_score(d)
         assert score < 0.50, f"Low-quality auto-parsed scored {score}, expected < 0.50"
 
     def test_speculative_gets_fun_bonus(self, fd_manager):
@@ -553,8 +553,8 @@ class TestQualityScore:
             domains=["Tropical"],
             priority_score=0.75,
         )
-        score_spec = FutureDirectionsManager._compute_quality_score(d_spec)
-        score_nospec = FutureDirectionsManager._compute_quality_score(d_nospec)
+        score_spec = fd_manager._compute_quality_score(d_spec)
+        score_nospec = fd_manager._compute_quality_score(d_nospec)
         assert score_spec > score_nospec, "Speculative should score higher due to fun bonus"
 
     def test_proof_strategy_boosts_score(self, fd_manager):
@@ -572,7 +572,7 @@ class TestQualityScore:
             domains=["Tropical"],
             priority_score=0.80,
         )
-        assert FutureDirectionsManager._compute_quality_score(d_with) > FutureDirectionsManager._compute_quality_score(d_without)
+        assert fd_manager._compute_quality_score(d_with) > fd_manager._compute_quality_score(d_without)
 
     def test_freshness_decays(self, fd_manager):
         from datetime import datetime, timezone, timedelta
@@ -588,7 +588,7 @@ class TestQualityScore:
             domains=["Tropical"], priority_score=0.80,
             timestamp=(datetime.now(timezone.utc) - timedelta(days=60)).isoformat(),
         )
-        assert FutureDirectionsManager._compute_quality_score(d_fresh) > FutureDirectionsManager._compute_quality_score(d_stale)
+        assert fd_manager._compute_quality_score(d_fresh) > fd_manager._compute_quality_score(d_stale)
 
     def test_empty_domains_scores_low(self, fd_manager):
         d = FutureDirection(
@@ -596,7 +596,7 @@ class TestQualityScore:
             source_exp_id="exp_001", source_path="result_future_directions",
             domains=[], priority_score=0.80,
         )
-        score = FutureDirectionsManager._compute_quality_score(d)
+        score = fd_manager._compute_quality_score(d)
         assert score < 0.60, f"Empty domains scored {score}, expected < 0.60"
 
 

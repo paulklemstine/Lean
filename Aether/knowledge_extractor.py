@@ -75,6 +75,7 @@ class ResearchJob:
     result_json_package: Optional[str] = None
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
+    quality_detail: Optional[Any] = None  # 8-axis QualityScore from quality_evaluator
     sorry_count: int = 0
     theorem_count: int = 0
     error_message: Optional[str] = None
@@ -253,12 +254,18 @@ class KnowledgeExtractor:
 
         # Build history from memory
         recent_history = []
-        for rec in self.memory._cache[-5:]:
+        low_quality_domains = set()
+        for rec in self.memory._cache[-20:]:
             recent_history.append({
                 'concept_title': rec.concept_title,
                 'domain': rec.domain,
                 'quality': rec.proof_quality,
+                'quality_score': getattr(rec, 'quality_score', 0.0),
             })
+            # Track domains that produced trivial results
+            qs = getattr(rec, 'quality_score', 0.0)
+            if qs < 0.3:
+                low_quality_domains.add(rec.domain)
 
         # Inflight concepts (to avoid repeating requests)
         inflight_concepts = [j.concept.title for j in self.inflight.values()] if hasattr(self, 'inflight') and self.inflight else []
@@ -268,10 +275,12 @@ class KnowledgeExtractor:
         source_exp_ids = []
         from research_memory import FutureDirectionsManager
         fd_manager = FutureDirectionsManager(self.workspace)
+        # Get recent domain quality for quality-guided selection
+        recent_domain_quality = fd_manager.get_recent_domain_quality(n=10, memory=self.memory)
         # Try domain-filtered selection first, fall back to unfiltered
-        best_dir = fd_manager.select_direction_weighted(domain_filter=loop_result['domain'])
+        best_dir = fd_manager.select_direction_weighted(domain_filter=loop_result['domain'], recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer)
         if not best_dir:
-            best_dir = fd_manager.select_direction_weighted()
+            best_dir = fd_manager.select_direction_weighted(recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer)
 
         if best_dir:
             fd_manager.mark_direction_consumed(best_dir.id, job_id)
@@ -290,10 +299,14 @@ class KnowledgeExtractor:
                 key_references=[],
             )
         else:
+            # Add quality feedback context to guide away from low-quality domains
+            quality_context = ""
+            if low_quality_domains:
+                quality_context = f"\n\nRecent low-quality domains (avoid similar concepts): {', '.join(sorted(low_quality_domains))}"
             concept = self.pi_agent.select_research_direction(
                 domains=domains_with_context,
                 recent_history=recent_history,
-                research_context=discoveries_prompt,
+                research_context=discoveries_prompt + quality_context,
                 inflight_concepts=inflight_concepts,
             )
 
@@ -976,8 +989,8 @@ Research mode: {concept.research_mode}
         )
         job.quality_assessment = qa
 
-        # Compute the composite score
-        job.quality_score = self.autoresearch.evaluate_concept_quality(
+        # Compute the heuristic composite score
+        heuristic_score = self.autoresearch.evaluate_concept_quality(
             concept_title=job.concept.title,
             concept_domain=job.concept.domain,
             quality_assessment=qa,
@@ -990,8 +1003,33 @@ Research mode: {concept.research_mode}
             advances_open_problem=job.concept.research_mode == "sorry_fill" and job.sorry_count == 0,
         )
 
+        # 8-axis structural quality evaluation
+        from quality_evaluator import QualityEvaluator
+        qeval = QualityEvaluator(pi_agent=self.pi_agent, catalog_root=self.catalog_root)
+        try:
+            # Collect existing theorem titles for novelty comparison
+            existing_titles = set()
+            if hasattr(self, 'catalog_analyzer') and self.catalog_analyzer:
+                for s in self.catalog_analyzer._summaries_cache.get('all', []):
+                    existing_titles.update(s.declarations)
+
+            qscore = qeval.evaluate(
+                lean_source=job.result_lean,
+                result_dir=job.project_dir if hasattr(job, 'project_dir') and job.project_dir else None,
+                concept_title=job.concept.title,
+                concept_description=job.concept.concept_description,
+                existing_titles=existing_titles,
+            )
+            job.quality_detail = qscore
+            # Blend heuristic and structural scores equally
+            job.quality_score = 0.5 * heuristic_score + 0.5 * qscore.composite
+        except Exception as e:
+            print(f"[Evaluate] Warning: QualityEvaluator failed, using heuristic only: {e}")
+            job.quality_score = heuristic_score
+
         print(f"[Evaluate] quality={qa.get('quality','?')}, score={job.quality_score:.3f}, "
-              f"sorries={job.sorry_count}, theorems={job.theorem_count}")
+              f"sorries={job.sorry_count}, theorems={job.theorem_count}"
+              + (f", depth={job.quality_detail.proof_depth:.2f}" if hasattr(job, 'quality_detail') and job.quality_detail else ""))
 
         return job
 
@@ -2047,7 +2085,7 @@ Research mode: {concept.research_mode}
         import datetime
         status = "success" if job.quality_score > 0 else "trivial_rejected"
         proof_quality = "substantial" if job.quality_score >= 0.8 else ("partial" if job.quality_score > 0 else "trivial")
-        
+
         record = ExperimentRecord(
             exp_id=job.job_id,
             domain=job.concept.domain,
@@ -2057,9 +2095,23 @@ Research mode: {concept.research_mode}
             files_produced=job.theorem_count,
             timestamp=datetime.datetime.now().isoformat(),
             prompt_text=job.prompt,
-            proof_quality=proof_quality
+            proof_quality=proof_quality,
+            quality_score=job.quality_score,
+            quality_detail=job.quality_detail.to_dict() if hasattr(job, 'quality_detail') and job.quality_detail else None,
         )
         self.memory.record(record)
+
+        # Quality feedback: adjust future direction priorities based on results
+        try:
+            from research_memory import FutureDirectionsManager
+            fd_manager = FutureDirectionsManager(self.workspace)
+            fd_manager.adjust_direction_quality_feedback(
+                domain=job.concept.domain,
+                quality_score=job.quality_score,
+                proof_quality=proof_quality,
+            )
+        except Exception as e:
+            print(f"[Commit] Warning: quality feedback failed: {e}")
 
         # Log to autoresearch
         self.autoresearch.log_result(
@@ -2128,7 +2180,7 @@ Research mode: {concept.research_mode}
                 from research_memory import FutureDirectionsManager, FutureDirection
                 fd_manager = FutureDirectionsManager(self.workspace)
                 fd_added = 0
-                # Add the FUTURE_DIRECTIONS.md as a single whole-file direction
+                # Extract future directions text from results
                 fd_text = None
                 # Try result_future_directions first
                 if job.result_future_directions and len(job.result_future_directions) > 50:
@@ -2153,28 +2205,35 @@ Research mode: {concept.research_mode}
                         except Exception:
                             pass
                 if fd_text:
-                    # Generate a title from the first meaningful line
-                    title_line = ""
-                    for line in fd_text.split("\n"):
-                        line = line.strip()
-                        if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
-                            title_line = line[:80]
-                            break
-                    if not title_line:
-                        title_line = f"Future directions from cycle {job.job_id[:8]}"
-                    fd = FutureDirection(
-                        id=f"fd_{len(fd_manager._directions):04d}",
-                        title=title_line,
-                        description=fd_text,
+                    # Parse into individual structured directions (not one monolithic blob)
+                    fd_added = fd_manager.add_directions_from_text(
+                        text=fd_text,
                         source_exp_id=job.job_id,
-                        source_path="future_directions_md",
-                        domains=fd_manager._infer_domains(fd_text),
-                        depth_estimate=3,
-                        priority_score=0.75,
+                        source_path=str(job.project_dir) if job.project_dir else "unknown",
                     )
-                    fd_manager.add_direction(fd)
-                    fd_added = 1
-                    print(f"[Cycle] Added future directions as single entry from cycle {job.job_id}")
+                    if fd_added == 0:
+                        # Fallback: if structured parsing finds nothing, add as single entry
+                        title_line = ""
+                        for line in fd_text.split("\n"):
+                            line = line.strip()
+                            if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
+                                title_line = line[:80]
+                                break
+                        if not title_line:
+                            title_line = f"Future directions from cycle {job.job_id[:8]}"
+                        fd = FutureDirection(
+                            id=f"fd_{len(fd_manager._directions):04d}",
+                            title=title_line,
+                            description=fd_text,
+                            source_exp_id=job.job_id,
+                            source_path="future_directions_md",
+                            domains=fd_manager._infer_domains(fd_text),
+                            depth_estimate=3,
+                            priority_score=0.75,
+                        )
+                        fd_manager.add_direction(fd)
+                        fd_added = 1
+                    print(f"[Cycle] Added {fd_added} future direction(s) from cycle {job.job_id}")
                 else:
                     print(f"[Cycle] No future directions found for cycle {job.job_id}")
                 # Mark the consumed direction as completed
@@ -2258,7 +2317,7 @@ Research mode: {concept.research_mode}
                         try:
                             from research_memory import FutureDirectionsManager, FutureDirection
                             fd_manager = FutureDirectionsManager(self.workspace)
-                            # Add FUTURE_DIRECTIONS.md as a single whole-file direction
+                            # Extract future directions text from results
                             fd_text = None
                             if job.result_future_directions and len(job.result_future_directions) > 50:
                                 fd_text = job.result_future_directions
@@ -2280,26 +2339,35 @@ Research mode: {concept.research_mode}
                                     except Exception:
                                         pass
                             if fd_text:
-                                title_line = ""
-                                for line in fd_text.split("\n"):
-                                    line = line.strip()
-                                    if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
-                                        title_line = line[:80]
-                                        break
-                                if not title_line:
-                                    title_line = f"Future directions from cycle {job.job_id[:8]}"
-                                fd = FutureDirection(
-                                    id=f"fd_{len(fd_manager._directions):04d}",
-                                    title=title_line,
-                                    description=fd_text,
+                                # Parse into individual structured directions
+                                fd_added = fd_manager.add_directions_from_text(
+                                    text=fd_text,
                                     source_exp_id=job.job_id,
-                                    source_path="future_directions_md",
-                                    domains=fd_manager._infer_domains(fd_text),
-                                    depth_estimate=3,
-                                    priority_score=0.75,
+                                    source_path=str(job.project_dir) if job.project_dir else "unknown",
                                 )
-                                fd_manager.add_direction(fd)
-                                print(f"[Continuous] Added future directions as single entry from cycle {job.job_id}")
+                                if fd_added == 0:
+                                    # Fallback: if structured parsing finds nothing, add as single entry
+                                    title_line = ""
+                                    for line in fd_text.split("\n"):
+                                        line = line.strip()
+                                        if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
+                                            title_line = line[:80]
+                                            break
+                                    if not title_line:
+                                        title_line = f"Future directions from cycle {job.job_id[:8]}"
+                                    fd = FutureDirection(
+                                        id=f"fd_{len(fd_manager._directions):04d}",
+                                        title=title_line,
+                                        description=fd_text,
+                                        source_exp_id=job.job_id,
+                                        source_path="future_directions_md",
+                                        domains=fd_manager._infer_domains(fd_text),
+                                        depth_estimate=3,
+                                        priority_score=0.75,
+                                    )
+                                    fd_manager.add_direction(fd)
+                                    fd_added = 1
+                                print(f"[Continuous] Added {fd_added} future direction(s) from cycle {job.job_id}")
                             else:
                                 print(f"[Continuous] No future directions found for cycle {job.job_id}")
                             for d in fd_manager._directions:
