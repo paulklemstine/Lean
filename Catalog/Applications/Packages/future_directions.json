@@ -3035,7 +3035,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "b133304b",
       "timestamp": "2026-05-19T16:49:23.334141+00:00"
     },
@@ -3236,8 +3236,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "9c6b1e7b",
       "timestamp": "2026-05-19T19:00:24.952731+00:00"
     },
     {
@@ -3445,6 +3445,29 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T21:01:13.106490+00:00"
+    },
+    {
+      "id": "fd_0163",
+      "title": "**Conjecture:** For every `n ≥ 3` and every family of `n + 2` points in `ℚ^n`, t",
+      "description": "# Future Directions\n\n## Conjecture 1: Full Tropical Radon for All Dimensions\n\n**Conjecture:** For every `n ≥ 3` and every family of `n + 2` points in `ℚ^n`, there exist disjoint nonempty index subsets `A` and `B` whose tropical convex hulls intersect.\n\n**Test:** The median-slope construction (proved here for `n = 2`) covers only two coordinates. For `n ≥ 3`, either (a) prove a \"covering lemma\" showing that among `n + 2` points, some singleton `{i₀}` has the property that every coordinate `k` is covered by some `j ≠ i₀` (i.e., `k ∈ argmax_{k'}(p(i₀)(k') - p(j)(k'))`), or (b) find a fundamentally different proof using tropical dependence theory or the Cayley trick.\n\n**Impact:** Completing this would establish the full tropical Carathéodory–Radon–Helly chain in formal mathematics. It would also validate the conjectured tropical Radon number of `n + 2` in affine tropical space.\n\n---\n\n## Conjecture 2: Sharp Tropical Radon Number\n\n**Conjecture:** The tropical Radon number of `ℚ^n` is exactly `n + 2`. That is:\n- Every family of `n + 2` points admits a Radon partition (upper bound, proved for `n ≤ 2`).\n- There exists a family of `n + 1` points in `ℚ^n` admitting no Radon partition (lower bound).\n\n**Test:** For the lower bound, construct `n + 1` points in \"tropical general position\": take points `e_0 = 0`, `e_i(k) = δ_{ik} · M` for large `M` and `i = 1, ..., n`. Verify computationally that no disjoint nonempty `A, B ⊆ {0, ..., n}` gives intersecting tropical hulls. This should be checkable by exhaustive enumeration for `n ≤ 6`.\n\n**Impact:** Establishing sharpness would place tropical Radon precisely in the hierarchy of combinatorial convexity theorems. The lower-bound configuration would serve as the tropical analogue of \"points in general position\" for classical Radon.\n\n---\n\n## Conjecture 3: Tropical Helly Number for Halfspaces\n\n**Conjecture:** For tropical halfspaces in `ℚ^n` (sets of the form `{x : min_k(a_k + x_k) ≤ min_k(b_k + x_k)}`), the Helly number is at most `2n`.\n\n**Test:** Construct families of tropical halfspaces in `ℚ^2` and `ℚ^3` and verify computationally whether `2n`-wise intersection implies total intersection. Known results in tropical geometry suggest Helly numbers between `n + 1` and `2n` depending on the halfspace class.\n\n**Impact:** A formal tropical Helly theorem would complete the second link in the Carathéodory–Radon–Helly chain, opening the door to certified tropical linear programming and feasibility certificates.\n\n---\n\n## Conjecture 4: Projective vs. Affine Tropical Radon Numbers\n\n**Conjecture:** The tropical Radon number in tropical projective space `TP^{n-1}` (equivalently, `ℚ^n` modulo constant shifts) equals `n + 1`, which is strictly less than the affine Radon number of `n + 2`.\n\n**Test:** Formalize tropical projective space as `{x : Fin (n+1) → ℚ // x 0 = 0}` (normalized coordinates). Verify that `n + 1` projective points always admit a Radon partition, while `n` projective points in general position do not. The difference from the affine case arises because the \"shift degree of freedom\" in affine space adds one to the dimension.\n\n**Impact:** This would reveal a genuine combinatorial difference between affine and projective tropical geometry, with implications for tropical algebraic geometry and valuated matroid theory.\n\n---\n\n## Conjecture 5: Tropical Tverberg Partition\n\n**Conjecture:** For every `r ≥ 2` and `n ≥ 1`, any family of `(r - 1)(n + 1) + 1` points in `ℚ^n` admits a partition into `r` nonempty parts whose tropical convex hulls have a common point.\n\n**Test:** For `r = 2`, this reduces to tropical Radon (with `n + 2` points). For `r = 3`, test with `2(n + 1) + 1 = 2n + 3` points in `ℚ^2` (7 points). Computationally verify that every configuration of 7 points in `ℚ^2` admits a 3-partition with triple-intersecting hulls.\n\n**Impact:** Tropical Tverberg would be a breakthrough result connecting tropical geometry to topological combinatorics. The classical Tverberg theorem is one of the deepest results in discrete geometry; a tropical analogue would extend the theory to optimization and scheduling domains where min-plus algebra is the natural framework.\n",
+      "source_exp_id": "b133304b",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Topology",
+        "Tropical",
+        "Algebra",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T21:25:04.828249+00:00"
     }
   ],
   "pruned": [

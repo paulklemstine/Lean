@@ -1,39 +1,41 @@
 /-
 Copyright (c) 2025. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
 
-# Beal Conjecture: Definitions and Core Statements
+# Beal Obstruction Theory: Core Definitions
 
-This file provides the formal definitions for the obstruction theory
-around Beal's conjecture:
-- The formal statement of Beal's conjecture
-- An abstract ABC-statement schema
-- Notation for the Mathlib radical (`UniqueFactorizationMonoid.radical`)
+This file provides the foundational definitions for the residue-based
+obstruction theory for Beal-type Diophantine equations.
+
+## Main Definitions
+
+- `PrimitiveResidueSolution N x y z` — existence of unit-valued residue
+  solutions to `a^x + b^y ≡ c^z (mod N)`
+
+## Design
+
+`PrimitiveResidueSolution` uses `ZMod N` and the `IsUnit` predicate,
+which captures coprimality to the modulus. This interfaces cleanly
+with Mathlib's CRT infrastructure (`ZMod.chineseRemainder`).
 -/
 import Mathlib
 
-open Finset Nat UniqueFactorizationMonoid
+open Finset Nat
 
-/-! ## Beal's Conjecture: formal statement -/
+/-! ## Primitive Residue Solutions -/
 
-/-- **Beal's Conjecture** (formal statement):
-For all positive integers `A, B, C` and exponents `x, y, z > 2`,
-if `A^x + B^y = C^z`, then `A, B, C` share a common prime factor. -/
-def BealConjecture : Prop :=
-  ∀ A B C x y z : ℕ,
-    0 < A → 0 < B → 0 < C →
-    2 < x → 2 < y → 2 < z →
-    A ^ x + B ^ y = C ^ z →
-    ∃ p : ℕ, Nat.Prime p ∧ p ∣ A ∧ p ∣ B ∧ p ∣ C
+/-- **Primitive Residue Solution**: there exist units `a, b, c` in `ZMod N`
+satisfying `a^x + b^y = c^z`.
 
-/-! ## ABC Conjecture: formal schema -/
+"Primitive" means all three residues are required to be units (coprime to N).
+This captures the essential structure: if a pairwise coprime solution to
+`A^x + B^y = C^z` exists over ℤ with `gcd(ABC, N) = 1`, it projects to
+a primitive residue solution mod N. -/
+def PrimitiveResidueSolution (N x y z : ℕ) : Prop :=
+  ∃ a b c : ZMod N, IsUnit a ∧ IsUnit b ∧ IsUnit c ∧ a ^ x + b ^ y = c ^ z
 
-/-- An **ABC-style hypothesis** at strength `1 + ε`:
-For all coprime positive `a, b, c` with `a + b = c`,
-we have `c ≤ rad(abc)^(1 + ε)`. -/
-def ABCStatement (ε : ℝ) : Prop :=
-  ∀ a b c : ℕ,
-    0 < a → 0 < b → 0 < c →
-    Nat.Coprime a b →
-    a + b = c →
-    (c : ℝ) ≤ ((radical (a * b * c) : ℕ) : ℝ) ^ (1 + ε)
+/-- In the trivial ring `ZMod 1`, every equation holds, so primitive residue
+solutions always exist. -/
+theorem primitiveResidueSolution_mod_one (x y z : ℕ) :
+    PrimitiveResidueSolution 1 x y z :=
+  ⟨0, 0, 0, isUnit_of_subsingleton _, isUnit_of_subsingleton _,
+   isUnit_of_subsingleton _, Subsingleton.elim _ _⟩
