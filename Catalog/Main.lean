@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1530 of the highest-quality
+A curated collection of 1532 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1530
+Total files: 1532
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -43,6 +43,7 @@ import FINAL.Algebra.CrystallizerFrontier
 import FINAL.Algebra.DeepConnections
 import FINAL.Algebra.DeepOpenProblems
 import FINAL.Algebra.Defs
+import FINAL.Algebra.DegreeTheory
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Derivability
 import FINAL.Algebra.DescartesInvariance
@@ -121,6 +122,7 @@ import FINAL.Algebra.NewExplorations
 import FINAL.Algebra.NewHypotheses
 import FINAL.Algebra.NewResults
 import FINAL.Algebra.NewtonIdempotent
+import FINAL.Algebra.NilpotenceTheory
 import FINAL.Algebra.Nilpotent
 import FINAL.Algebra.NuclearAlgebra
 import FINAL.Algebra.NullstellensatzPIT
