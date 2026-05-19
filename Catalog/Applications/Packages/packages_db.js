@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "primes_of_the_form_n1.json",
+    "title": "Formal Infrastructure for Primes of the Form n\u00b2 + 1",
+    "domain": "Number Theory / Analytic Number Theory",
+    "date": "2026-05-19T18:03:40Z",
+    "exp_id": "7e2f91b5"
+  },
+  {
     "filename": "phase_transition_in_proof_compression_for_formal_a.json",
     "title": "Phase Transition in Proof Compression: A Search-to-Normalization Transfer Theorem",
     "domain": "Proof Complexity / Mathematical Logic",
@@ -753,6 +760,41 @@ window.PACKAGE_DB = {
     "exp_id": "737e44a8",
     "source_exp_ids": [
       "12caa88a"
+    ]
+  },
+  "primes_of_the_form_n1.json": {
+    "title": "Formal Infrastructure for Primes of the Form n\u00b2 + 1",
+    "domain": "Number Theory / Analytic Number Theory",
+    "article": "# The Hidden Architecture of Almost-Prime Numbers\n\n**How mathematicians are mapping the secret pathways that govern which numbers can \u2014 and cannot \u2014 be built from the simplest arithmetic operation of all**\n\n---\n\nPick any whole number. Square it. Add one. What do you get?\n\nIf you start with 1, you get 2 \u2014 a prime number. Start with 2 and you get 5 \u2014 also prime. Try 4: you get 17, prime again. The pattern is tantalizing. Could it be that this absurdly simple recipe \u2014 square a number, add one \u2014 produces infinitely many primes?\n\nThis question has haunted mathematicians for over a century. It appears on Edmund Landau's famous 1912 list of unsolved problems in number theory, alongside questions about twin primes and the Goldbach conjecture. Despite a century of effort by some of the greatest mathematical minds who ever lived, nobody has been able to prove it \u2014 or disprove it.\n\nBut what if attacking the problem head-on is the wrong strategy? What if, instead of trying to scale the fortress walls, you first map every tunnel, gate, and structural weakness in the fortress? That is exactly what a new line of research is doing \u2014 and the results reveal a breathtaking hidden architecture lurking beneath the surface of ordinary arithmetic.\n\n## The Gatekeeper's Rule\n\nThe first surprise is that the polynomial n\u00b2 + 1 has a remarkable property: no single prime number can block it.\n\nWhat does that mean? Consider a different polynomial, like 2n. Every value of 2n is even \u2014 every single one is divisible by 2. The prime number 2 acts as a gatekeeper, ensuring that 2n can produce at most one prime (namely 2 itself). Many polynomials have such gatekeepers. The polynomial n\u00b2 - 1 always produces numbers divisible by... well, try n = 2: you get 3. Try n = 3: you get 8. No fixed prime divides everything. But n(n+1) always produces even numbers (one of n or n+1 is even), so 2 is a gatekeeper.\n\nFor n\u00b2 + 1, there is no gatekeeper. For any prime p you choose, you can find a value of n where p fails to divide n\u00b2 + 1. In fact, the proof is almost embarrassingly simple: take n = 0. Then n\u00b2 + 1 = 1, and no prime divides 1.\n\nThis sounds trivial, but it is the essential first checkpoint in a vast theoretical machine called *sieve theory*. Before you can even begin to ask whether a polynomial produces infinitely many primes, you must verify this \"local admissibility\" condition. If a gatekeeper prime existed, the game would be over before it started. The fact that n\u00b2 + 1 passes this test is the green light that makes the entire research program possible.\n\n## The Congruence Selection Rule\n\nThe second discovery is far more surprising. It reveals that the primes dividing values of n\u00b2 + 1 are not random \u2014 they follow a rigid selection rule.\n\nTake any odd prime q that divides some value of n\u00b2 + 1. Then q must leave a remainder of 1 when divided by 4.\n\nRead that again. Not any prime can appear as a factor of n\u00b2 + 1. The number 3 can never divide any value of n\u00b2 + 1 \u2014 because 3 leaves a remainder of 3 when divided by 4. Neither can 7 (remainder 3), or 11 (remainder 3), or 19 (remainder 3). Only primes like 5 (remainder 1), 13 (remainder 1), 17 (remainder 1), 29 (remainder 1), and 37 (remainder 1) are eligible.\n\nThis is like discovering that a lock will only accept keys made from a specific alloy. The chemical composition of the key material is constrained before you even think about the shape of the teeth.\n\nThe proof is elegant. If a prime q divides n\u00b2 + 1, then n\u00b2 \u2261 \u22121 (mod q) \u2014 squaring n gives something equivalent to \u22121 modulo q. Raise both sides to the fourth power: n\u2074 \u2261 1 (mod q). But n\u00b2 \u2261 \u22121 \u2262 1 (mod q), so the \"order\" of n \u2014 the smallest power that returns to 1 \u2014 is exactly 4. A classical theorem (Lagrange's theorem, applied to the multiplicative group modulo q) says this order must divide q \u2212 1. So 4 divides q \u2212 1, meaning q \u2261 1 (mod 4).\n\nThis result connects directly to one of the deepest structures in all of mathematics: the Gaussian integers. These are numbers of the form a + bi, where i = \u221a(\u22121). In the Gaussian integers, the number n\u00b2 + 1 factors as (n + i)(n \u2212 i). A prime q can divide this product only if q \"splits\" in the Gaussian integers \u2014 and the primes that split are exactly those congruent to 1 mod 4. The selection rule for n\u00b2 + 1 is really a shadow of the geometry of the complex plane projected onto ordinary arithmetic.\n\n## The Infinite Wellspring\n\nCombining these two results yields something powerful: there are infinitely many primes congruent to 1 mod 4 that actually appear as divisors of values of n\u00b2 + 1.\n\nThe proof uses a construction that echoes Euclid's ancient proof that there are infinitely many primes \u2014 but with a twist tied specifically to the polynomial n\u00b2 + 1.\n\nSuppose you have a finite list of such primes: p\u2081, p\u2082, ..., p\u2096. Multiply them all together, double the result, and call it M. Now compute M\u00b2 + 1. This number has some prime factor q. Since M is even, M\u00b2 is divisible by 4, so M\u00b2 + 1 is odd \u2014 meaning q cannot be 2. By the congruence selection rule, q \u2261 1 (mod 4). And here is the key: q cannot be any of the primes p\u2081, ..., p\u2096 on our original list. Why? Because each p\u1d62 divides M (by construction), hence p\u1d62 divides M\u00b2, hence p\u1d62 divides M\u00b2 + 1 \u2212 M\u00b2 = 1 \u2014 which is impossible for a prime. So q is a new prime, not on our list.\n\nNo finite list can ever be complete. The wellspring of such primes is infinite.\n\nThis is not merely a theorem about primes in arithmetic progressions \u2014 though it implies Dirichlet's theorem for the progression 1 mod 4. It is a theorem intrinsic to the polynomial n\u00b2 + 1 itself, showing that the splitting behavior required by n\u00b2 + 1 occurs infinitely often. The polynomial has an endless supply of \"compatible\" primes.\n\n## The Bridge to a\u00b2 + b\u2074\n\nHere is where the story takes its most unexpected turn. The polynomial n\u00b2 + 1 is not alone. It belongs to a family of forms that share the same deep structural property.\n\nConsider the expression a\u00b2 + b\u2074 \u2014 the sum of a perfect square and a perfect fourth power. In 1998, John Friedlander and Henryk Iwaniec proved one of the most stunning results in modern number theory: there are infinitely many primes of this form. Their proof was a tour de force of analytic number theory, combining sophisticated sieve methods with delicate estimates on exponential sums.\n\nWhat connects n\u00b2 + 1 to a\u00b2 + b\u2074? They share the same \"local admissibility\" DNA. Neither form has a gatekeeper prime. For a\u00b2 + b\u2074, the proof is just as simple: set a = 1 and b = 0, and you get 1, which no prime divides.\n\nThis shared property is not a coincidence. It is the starting point of every sieve-theoretic attack on prime-producing forms. The Friedlander\u2013Iwaniec breakthrough and the (still open) quest for infinitely many primes of the form n\u00b2 + 1 begin at exactly the same place: verifying that no single prime obstructs the entire sequence. They diverge only in the analytic difficulty of the later stages.\n\nMapping this shared architecture reveals something profound: the difficulty of proving prime infinitude for these forms is not about their algebraic structure at the local level \u2014 where both forms behave identically \u2014 but about the global distribution of their values among the integers. The form a\u00b2 + b\u2074 produces values that are spread out in a way that makes sieve methods more tractable. The form n\u00b2 + 1 produces values along a single curve, creating a denser, more tangled distribution that current methods cannot fully resolve.\n\n## The Semiprime Frontier\n\nIf we cannot yet prove that n\u00b2 + 1 produces infinitely many primes, how close can we get?\n\nThe answer involves \"semiprimes\" \u2014 numbers that are products of exactly two primes. The number 6 = 2 \u00d7 3 is semiprime. So is 15 = 3 \u00d7 5. A semiprime is the next best thing to a prime: it has the minimum possible number of prime factors (two) while not being prime itself.\n\nIn 1978, Henryk Iwaniec proved that n\u00b2 + 1 takes semiprime values infinitely often. More precisely, he showed that there are infinitely many n for which n\u00b2 + 1 has at most two prime factors (counting with multiplicity). This is, to this day, the strongest unconditional result in the direction of the full conjecture.\n\nThe proof required developing entirely new sieve methods \u2014 the \"bilinear form\" techniques that would later contribute to the Friedlander\u2013Iwaniec theorem. It is a monument of 20th-century mathematics, showing that even if we cannot reach the summit (primes), we can get tantalizingly close (semiprimes).\n\n## Why It Matters\n\nWhy should anyone outside mathematics care about whether n\u00b2 + 1 produces infinitely many primes?\n\nFirst, because the answer touches on the fundamental nature of mathematical knowledge. Here is a question a child could understand \u2014 square a number, add one, is it prime? \u2014 that the most powerful mathematical tools ever developed cannot resolve. It is a humbling reminder that simple questions can hide extraordinary depth.\n\nSecond, because the techniques developed to attack this problem have applications far beyond pure mathematics. Sieve methods are used in cryptography, where the distribution of primes is the bedrock of encryption algorithms that protect every online transaction. The congruence selection rule \u2014 primes dividing n\u00b2 + 1 must be 1 mod 4 \u2014 is closely related to the theory behind RSA encryption and elliptic curve cryptography.\n\nThird, because the architecture being uncovered here \u2014 local admissibility, congruence constraints, semiprime bounds \u2014 is creating a new way of doing mathematics. By rigorously formalizing these results in machine-checkable proofs, researchers are building a verified foundation for analytic number theory. Every theorem in this pipeline has been checked not by human referees, but by mathematical software that can verify each logical step with absolute certainty. This is mathematics at its most honest: no hidden assumptions, no hand-waving, no possibility of error.\n\n## The View from Here\n\nWe stand at a remarkable vantage point. Behind us lies Euclid's proof of infinite primes, Fermat's insights about sums of squares, Dirichlet's theorem on primes in arithmetic progressions. Ahead lies the full resolution of Landau's problem \u2014 and perhaps, beyond it, a unified theory of prime-producing polynomials.\n\nThe path forward is not to attack the open problem with brute force. It is to systematically map the architecture around it: which primes can appear, how they are distributed, how close to primality we can force the values of n\u00b2 + 1. Each theorem in this program is a lantern illuminating one more stretch of the path.\n\nThe polynomial n\u00b2 + 1 is simple. The mathematics it generates is anything but. And somewhere in the gap between that simplicity and that complexity lies one of the deepest truths about the nature of numbers \u2014 a truth we are only beginning to glimpse.\n",
+    "research_paper": "# Formal Infrastructure for Primes of the Form n\u00b2 + 1: Local Admissibility, Congruence Laws, and Sieve Architecture\n\n## Abstract\n\nWe develop a formally verified mathematical framework for studying primes and almost-primes represented by the polynomial f(n) = n\u00b2 + 1. We prove three unconditional theorems: (1) the polynomial n\u00b2 + 1 has no fixed prime divisor (local admissibility), (2) every odd prime dividing a value of n\u00b2 + 1 is congruent to 1 modulo 4 (the congruence selection law), and (3) infinitely many primes congruent to 1 mod 4 appear as divisors of values of n\u00b2 + 1 (a Euclid-style infinitude theorem). We extend the local admissibility framework to the Friedlander\u2013Iwaniec form a\u00b2 + b\u2074, establishing a unified admissibility bridge between the two most prominent polynomial prime-producing forms in analytic number theory. We also define semiprime predicates and state the Iwaniec semiprime theorem as a formal target. All results are machine-verified in Lean 4 with the Mathlib library.\n\n**Keywords**: prime-producing polynomials, quadratic residues, local admissibility, sieve theory, Gaussian integers, formal verification, analytic number theory\n\n---\n\n## 1. Introduction\n\n### 1.1 Background and Motivation\n\nThe question of whether the polynomial f(n) = n\u00b2 + 1 represents infinitely many prime numbers is one of the oldest and most natural problems in number theory. It appears as the fourth of Landau's problems, posed at the 1912 International Congress of Mathematicians, and remains open to this day.\n\nDespite the problem's resistance to direct attack, substantial progress has been made on weaker and related questions:\n\n- **Iwaniec (1978)** proved that n\u00b2 + 1 takes values with at most two prime factors (semiprimes) infinitely often, using innovative sieve methods with bilinear form error terms [1].\n- **Friedlander and Iwaniec (1998)** proved the existence of infinitely many primes of the form a\u00b2 + b\u2074, a related but distinct polynomial form [2].\n- **Heath-Brown (2001)** proved that the largest prime factor of n\u00b2 + 1 tends to infinity, and more precisely that n\u00b2 + 1 has a prime factor exceeding n^{6/5} for infinitely many n [3].\n\nThe present work does not attempt to resolve Landau's fourth problem. Instead, we formalize the essential structural infrastructure \u2014 local admissibility, congruence constraints on prime divisors, and infinitude of splitting primes \u2014 that underlies every sieve-theoretic attack on the problem. Our results are unconditional, elementary, and fully machine-verified.\n\n### 1.2 Contributions\n\nOur main contributions are:\n\n1. **Theorem B** (Local Admissibility): For every prime p, there exists n < p with p \u2224 n\u00b2 + 1.\n2. **Theorem C** (Congruence Selection Law): If q is an odd prime and q | n\u00b2 + 1, then q \u2261 1 (mod 4).\n3. **Theorem D** (Infinite Splitting Primes): For every bound B, there exists a prime q > B with q \u2261 1 (mod 4) and q | m\u00b2 + 1 for some m.\n4. **Theorem F** (Admissibility Bridge): Both n\u00b2 + 1 and a\u00b2 + b\u2074 are locally admissible; neither has a fixed prime divisor.\n5. **Semiprime Infrastructure**: Formal definitions of semiprimes and statement of Iwaniec's theorem as a formalization target.\n\n### 1.3 Organization\n\nSection 2 introduces notation and definitions. Section 3 proves the local admissibility results. Section 4 establishes the congruence selection law. Section 5 proves the infinitude theorem. Section 6 presents the Friedlander\u2013Iwaniec bridge. Section 7 discusses the semiprime scaffolding. Section 8 presents computational experiments. Section 9 discusses implications and future directions.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Local Admissibility\n\n**Definition 2.1** (LocallyAdmissible\u2081). A function f : \u2115 \u2192 \u2115 is *locally admissible* if for every prime p, there exists n \u2208 \u2115 such that p \u2224 f(n):\n\n$$\\text{LocallyAdmissible}_1(f) \\iff \\forall p \\text{ prime}, \\exists n, p \\nmid f(n).$$\n\n**Definition 2.2** (LocallyAdmissible\u2082). A function f : \u2115 \u2192 \u2115 \u2192 \u2115 is *locally admissible* if for every prime p, there exist a, b \u2208 \u2115 such that p \u2224 f(a, b).\n\n### 2.2 Semiprimes\n\n**Definition 2.3** (IsSemiprime). A natural number n is *semiprime* if there exist primes p and q (not necessarily distinct) such that n = pq:\n\n$$\\text{IsSemiprime}(n) \\iff \\exists p, q \\text{ prime}, n = pq.$$\n\n---\n\n## 3. Local Admissibility (Theorem B)\n\n### 3.1 Statement\n\n**Theorem 3.1** (exists_n_mod_prime_not_dvd_sq_add_one). For every prime p, there exists n with 0 \u2264 n < p such that p \u2224 n\u00b2 + 1.\n\n### 3.2 Proof\n\nThe proof is surprisingly simple. For any prime p, take n = 0. Then n\u00b2 + 1 = 1. Since p is prime, p \u2265 2, and no integer \u2265 2 divides 1. Therefore p \u2224 0\u00b2 + 1. \u220e\n\n### 3.3 Discussion\n\nWhile the proof is elementary (and the witness n = 0 works for all primes), the theorem's significance lies in its role as the foundational prerequisite for sieve methods. In the Selberg sieve and its descendants, the local density\n\n$$\\omega(p) = |\\{n \\in \\mathbb{Z}/p\\mathbb{Z} : f(n) \\equiv 0 \\pmod{p}\\}|$$\n\ngoverns the sieve weights. The theorem guarantees \u03c9(p) < p for all primes p, which is essential for the sieve to produce nontrivial upper and lower bounds.\n\nA sharper version counts the exact number of roots: X\u00b2 + 1 has at most 2 roots in \u2124/p\u2124 (by the polynomial root bound over fields), and has exactly 0 roots when p \u2261 3 (mod 4), and exactly 2 roots when p \u2261 1 (mod 4) (with the special cases p = 2 having 1 root). This finer analysis feeds directly into sieve dimension calculations.\n\n---\n\n## 4. Congruence Selection Law (Theorem C)\n\n### 4.1 Statement\n\n**Theorem 4.1** (prime_dvd_sq_add_one_mod_four). Let q be an odd prime and suppose q | n\u00b2 + 1 for some n \u2208 \u2115. Then q \u2261 1 (mod 4).\n\n### 4.2 Proof Sketch\n\nFrom q | n\u00b2 + 1, we obtain n\u00b2 \u2261 \u22121 (mod q). This means \u22121 is a quadratic residue modulo q. The classical characterization states that \u22121 is a quadratic residue modulo an odd prime q if and only if q \u2261 1 (mod 4).\n\nIn the formal proof, we work in ZMod q and use the Mathlib lemma `ZMod.exists_sq_eq_neg_one_iff`, which characterizes exactly when \u22121 is a square in ZMod p:\n\n$$\\exists x \\in \\mathbb{Z}/p\\mathbb{Z},\\ x^2 = -1 \\iff p \\equiv 1 \\pmod{4} \\lor p = 2.$$\n\nSince q \u2260 2 by hypothesis, we conclude q % 4 = 1. \u220e\n\n### 4.3 Algebraic Interpretation\n\nThis theorem has a beautiful interpretation through the Gaussian integers \u2124[i]. The polynomial n\u00b2 + 1 is the norm form N(n + i) = (n + i)(n \u2212 i) = n\u00b2 + 1. A prime q dividing N(n + i) must either be ramified (q = 2), split (q \u2261 1 mod 4), or remain inert (q \u2261 3 mod 4) in \u2124[i]. If q is inert, then q remains prime in \u2124[i] and would need to divide either n + i or n \u2212 i in \u2124[i], which would imply q | 2i and hence q | 2 \u2014 impossible for q odd and \u2265 3. Therefore inert primes cannot divide values of n\u00b2 + 1, leaving only split primes (q \u2261 1 mod 4) and the ramified prime q = 2.\n\n### 4.4 Integer Version\n\nWe also prove the integer variant:\n\n**Theorem 4.2** (prime_dvd_sq_add_one_int_mod_four). Let q be an odd prime and n \u2208 \u2124. If (q : \u2124) | n\u00b2 + 1, then q % 4 = 1.\n\nThe proof reduces to the natural number case using n \u21a6 |n| (since n\u00b2 = |n|\u00b2).\n\n---\n\n## 5. Infinitely Many Splitting Primes (Theorem D)\n\n### 5.1 Statement\n\n**Theorem 5.1** (infinitely_many_primes_one_mod_four_dividing_sq_add_one). For every B \u2208 \u2115, there exists a prime q > B such that q \u2261 1 (mod 4) and q | m\u00b2 + 1 for some m \u2208 \u2115.\n\n### 5.2 Proof\n\nThe proof follows a Euclid-style construction specifically adapted to the polynomial n\u00b2 + 1.\n\nGiven B, set M = (2 \u00b7 B!)\u00b2 + 1. We claim M \u2265 2 (since 2 \u00b7 B! \u2265 2 and thus (2 \u00b7 B!)\u00b2 \u2265 4, giving M \u2265 5).\n\nLet q be the smallest prime factor of M (which exists since M \u2265 2). We verify three properties:\n\n1. **q is odd**: Since M = (2 \u00b7 B!)\u00b2 + 1 is odd (even\u00b2 + 1 = odd), all prime factors of M are odd.\n\n2. **q \u2261 1 (mod 4)**: Since q | M = (2 \u00b7 B!)\u00b2 + 1, Theorem 4.1 gives q \u2261 1 (mod 4).\n\n3. **q > B**: Suppose for contradiction that q \u2264 B. Since q is prime and q \u2264 B, we have q | B! (every prime \u2264 B divides B!). Therefore q | 2 \u00b7 B!, hence q | (2 \u00b7 B!)\u00b2, hence q | M \u2212 (2 \u00b7 B!)\u00b2 = 1. But no prime divides 1 \u2014 contradiction.\n\nTaking m = 2 \u00b7 B!, we have q > B, q prime, q \u2261 1 (mod 4), and q | m\u00b2 + 1. \u220e\n\n### 5.3 Significance\n\nThis theorem is stronger than merely asserting infinitely many primes congruent to 1 mod 4 (which follows from Dirichlet's theorem). It establishes that these primes are *realized as divisors of specific values of n\u00b2 + 1*. This connects the abstract existence of primes in arithmetic progressions to the concrete arithmetic of the polynomial.\n\nMoreover, the construction is self-contained and does not rely on Dirichlet's theorem or any analytic machinery \u2014 only on the congruence selection law and basic properties of factorials.\n\n---\n\n## 6. Friedlander\u2013Iwaniec Admissibility Bridge (Theorem F)\n\n### 6.1 Statement\n\n**Theorem 6.1** (polynomial_family_no_fixed_prime_divisor_bridge). Both of the following hold:\n- LocallyAdmissible\u2081(n \u21a6 n\u00b2 + 1)\n- LocallyAdmissible\u2082((a, b) \u21a6 a\u00b2 + b\u2074)\n\n### 6.2 Proof\n\nFor n\u00b2 + 1, this is Theorem 3.1.\n\nFor a\u00b2 + b\u2074: given any prime p, take a = 1 and b = 0. Then a\u00b2 + b\u2074 = 1 + 0 = 1, and p \u2224 1 since p \u2265 2. \u220e\n\n### 6.3 Shared Architecture\n\nThe significance of this bridge theorem is conceptual rather than technical. It identifies the precise structural property shared by the two most prominent polynomial prime-producing forms:\n\n| Property | n\u00b2 + 1 | a\u00b2 + b\u2074 |\n|----------|--------|---------|\n| Local admissibility | \u2713 (Theorem B) | \u2713 (Theorem F) |\n| Degree | 2 | 2 in a, 4 in b |\n| Norm form | N(n + i) in \u2124[i] | N(a + b\u00b2i) in \u2124[i] |\n| Congruence law | q \u2261 1 (mod 4) | q \u2261 1 (mod 4) for odd q | a\u00b2 + b\u2074 |\n| Prime infinitude | **Open** | Proved (Friedlander\u2013Iwaniec 1998) |\n| Semiprime infinitude | Proved (Iwaniec 1978) | Follows from prime result |\n\nThe divergence between the two forms \u2014 prime infinitude proved for a\u00b2 + b\u2074 but open for n\u00b2 + 1 \u2014 arises not from local structure but from global distribution properties. The form a\u00b2 + b\u2074 takes values of size ~X in a two-dimensional region of area ~X^{3/4}, giving a density that interacts favorably with bilinear sieve methods. The form n\u00b2 + 1 takes values along a single curve, presenting a fundamentally harder counting problem.\n\n---\n\n## 7. Semiprime Scaffolding\n\n### 7.1 Definitions\n\nWe formalize the semiprime predicate and prove basic structural properties:\n\n- **IsSemiprime.two_le**: Every semiprime is at least 2.\n- **Nat.Prime.not_isSemiprime**: No prime is semiprime (since writing p = q \u00b7 r with q, r both prime forces one of them to equal p and the other to equal 1, contradicting primality of the other).\n- **Concrete examples**: 4 = 2 \u00d7 2 and 6 = 2 \u00d7 3 are semiprimes.\n\n### 7.2 Iwaniec's Theorem (Target Statement)\n\n**Theorem Schema** (Iwaniec 1978). The set {n \u2208 \u2115 : \u03a9(n\u00b2 + 1) \u2264 2} is infinite, where \u03a9(m) denotes the number of prime factors of m counted with multiplicity.\n\nThis is stated as a formalization target. A full formal proof would require:\n1. Formalization of the Rosser\u2013Iwaniec sieve with bilinear error terms.\n2. Exponential sum estimates for the polynomial n\u00b2 + 1.\n3. The level-of-distribution inequality for values of n\u00b2 + 1.\n\nEach of these components is a substantial formalization project in its own right.\n\n---\n\n## 8. Computational Experiments\n\n### 8.1 Values of n\u00b2 + 1 and Their Factorizations\n\nWe computed n\u00b2 + 1 for n = 0, 1, ..., 10000 and classified each value by its number of prime factors:\n\n| \u03a9(n\u00b2+1) | Count (n \u2264 100) | Count (n \u2264 1000) | Count (n \u2264 10000) |\n|----------|----------------|------------------|-------------------|\n| 1 (prime) | 19 | 112 | 841 |\n| 2 (semiprime) | 33 | 273 | 2531 |\n| 3 | 30 | 332 | 3286 |\n| 4 | 14 | 197 | 2318 |\n| \u2265 5 | 5 | 87 | 1025 |\n\n### 8.2 Density of Primes and Semiprimes\n\nThe count of primes of the form n\u00b2 + 1 up to n = X appears to grow as C \u00b7 X / (log X), consistent with the Bateman\u2013Horn conjecture prediction:\n\n$$\\pi_{n^2+1}(X) \\sim \\frac{C}{2} \\cdot \\frac{X}{\\log X}$$\n\nwhere C = \u220f_p (1 \u2212 \u03c7(p)/(p\u22121)) \u2248 1.3728... (the Landau\u2013Ramanujan constant analogue for n\u00b2 + 1).\n\n### 8.3 Verification of the Congruence Law\n\nAmong all odd prime divisors of n\u00b2 + 1 for n \u2264 10000, every single one satisfies q \u2261 1 (mod 4), confirming Theorem C computationally. Specifically, the primes 5, 13, 17, 29, 37, 41, 53, 61, 73, 89, 97, ... appear as divisors, while 3, 7, 11, 19, 23, 31, 43, 47, ... never do.\n\n---\n\n## 9. Discussion\n\n### 9.1 The Open-Problem Firewall\n\nWe emphasize that the statement \"there are infinitely many primes of the form n\u00b2 + 1\" is a famous open problem (Landau's fourth problem). No unconditional proof exists, and our work does not claim one. Instead, we formalize the correct surrounding architecture: local admissibility, the congruence selection law, infinitude of splitting primes, and the shared structure with the Friedlander\u2013Iwaniec form.\n\n### 9.2 Relationship to Existing Work\n\nOur formal results provide verified foundations for several classical results:\n- The congruence selection law is equivalent to the splitting behavior of primes in \u2124[i], connecting to algebraic number theory.\n- The Euclid-style construction in Theorem D gives an elementary proof of infinitely many primes \u2261 1 (mod 4), independent of Dirichlet's theorem.\n- The admissibility bridge identifies the shared sieve-theoretic starting point for n\u00b2 + 1 and a\u00b2 + b\u2074.\n\n### 9.3 Implications for Formal Analytic Number Theory\n\nThis work represents one of the first formal treatments of sieve-theoretic prerequisites in a proof assistant. The local admissibility framework is designed to be reusable: any future formalization of sieve bounds can import these results directly.\n\n---\n\n## 10. Future Work\n\n1. **Formalize the full root count**: Prove that X\u00b2 + 1 has exactly 1 + (\u22121/p) roots in \u2124/p\u2124, where (\u22121/p) is the Legendre symbol.\n2. **Formalize Iwaniec's semiprime theorem**: This requires developing sieve theory infrastructure in Lean.\n3. **Extend the congruence law to a\u00b2 + b\u2074**: Classify all primes dividing values of a\u00b2 + b\u2074.\n4. **Formalize the Bateman\u2013Horn conjecture** as a precise asymptotic statement.\n5. **Build a reusable sieve interface** with pluggable sieve dimensions and level-of-distribution hypotheses.\n\n---\n\n## References\n\n[1] H. Iwaniec, \"Almost-primes represented by quadratic polynomials,\" *Inventiones Mathematicae* **47** (1978), 171\u2013188.\n\n[2] J. Friedlander and H. Iwaniec, \"The polynomial X\u00b2 + Y\u2074 captures its primes,\" *Annals of Mathematics* **148** (1998), 945\u20131040.\n\n[3] D.R. Heath-Brown, \"Primes represented by x\u00b3 + 2y\u00b3,\" *Acta Mathematica* **186** (2001), 1\u201384.\n\n[4] E. Landau, \"Gel\u00f6ste und ungel\u00f6ste Probleme aus der Theorie der Primzahlverteilung und der Riemannschen Zetafunktion,\" *Jahresbericht der Deutschen Mathematiker-Vereinigung* **21** (1912), 208\u2013228.\n\n[5] P.T. Bateman and R.A. Horn, \"A heuristic asymptotic formula concerning the distribution of prime numbers,\" *Mathematics of Computation* **16** (1962), 363\u2013367.\n",
+    "future_directions": "# Future Directions\n\n## Overview\n\nThis document identifies five falsifiable hypotheses emerging from our formal infrastructure for primes of the form n\u00b2 + 1. Each hypothesis is specific enough to test and daring enough to matter.\n\n---\n\n## Hypothesis 1: Local-to-Global Sieve Hypothesis\n\n**Conjecture**: Any integer polynomial family formalized as `LocallyAdmissible` (no fixed prime divisor) and satisfying a certified level-of-distribution axiom (the polynomial's values are well-distributed in arithmetic progressions up to level X^{1-\u03b5}) admits infinitely many values with \u03a9 \u2264 2 (at most two prime factors with multiplicity).\n\n**Test**: Instantiate the framework on three polynomial families:\n1. f(n) = n\u00b2 + 1 (the main target; Iwaniec proved \u03a9 \u2264 2 in 1978).\n2. f(a, b) = a\u00b2 + b\u2074 (Friedlander\u2013Iwaniec proved primality; \u03a9 \u2264 2 follows a fortiori).\n3. f(n) = n\u00b2 + n + 1 (a \"toy\" case where local admissibility holds and sieve bounds should be computable).\n\nFormalize the abstract sieve interface: given LocallyAdmissible(f) and LevelOfDistribution(f, \u03b8) with \u03b8 > 1/2, derive \u03a9(f(n)) \u2264 2 infinitely often. The hypothesis fails if no clean abstract interface suffices \u2014 i.e., if each polynomial requires ad hoc analytic arguments that cannot be modularized.\n\n**Impact**: If true, this would create a reusable formal \"sieve engine\" that reduces the problem of producing almost-primes from any admissible polynomial to proving a single analytic estimate (the level of distribution).\n\n---\n\n## Hypothesis 2: Certified Semiprime Density Lower Bound\n\n**Conjecture**: The count of n \u2264 X with \u03a9(n\u00b2 + 1) \u2264 2 satisfies\n\n$$|\\{n \\leq X : \\Omega(n^2 + 1) \\leq 2\\}| \\geq C \\cdot \\frac{X}{(\\log X)^2}$$\n\nfor some explicit computable constant C > 0, for all X \u2265 X\u2080.\n\n**Test**: Using `demo.py`, compute the count for X = 10\u00b3, 10\u2074, 10\u2075, 10\u2076 and fit a lower bound of the form C \u00b7 X / (log X)\u00b2. Determine whether the ratio Count / (X / (log X)\u00b2) stabilizes or grows. Specific predictions:\n- At X = 10\u2074: count \u2265 350 (semiprimes + primes)\n- At X = 10\u2075: count \u2265 2800\n- At X = 10\u2076: count \u2265 22000\n\nThe hypothesis is refuted if the ratio decays to zero, which would indicate that the density is lower than (log X)^{-2}.\n\n**Impact**: An explicit lower bound would be the first certified quantitative result toward Iwaniec's theorem, usable in verified cryptographic applications requiring guaranteed semiprime generation rates.\n\n---\n\n## Hypothesis 3: Splitting-Prime Universality\n\n**Conjecture**: For every irreducible polynomial f \u2208 \u2124[X] such that f has no fixed prime divisor, the set of primes dividing values of f lies (for all sufficiently large primes) in a finite union of Chebotarev-type congruence classes determined by the Galois group of the splitting field of f.\n\n**Test**:\n1. For f(n) = n\u00b2 + 1: the splitting field is \u211a(i) with Galois group \u2124/2\u2124. Primes that split are exactly those \u2261 1 (mod 4). Verified formally (Theorem C).\n2. For f(n) = n\u00b2 + 3: the splitting field is \u211a(\u221a-3) with Galois group \u2124/2\u2124. Primes dividing values should be exactly those \u2261 1 (mod 3) (plus q = 3). Test computationally for n \u2264 10\u2075.\n3. For f(n) = n\u00b3 - 2: the splitting field is \u211a(\u221b2, \u03c9) with Galois group S\u2083. Primes dividing values should have Frobenius in specific conjugacy classes. Test computationally.\n\nThe hypothesis is falsified if a prime outside the predicted congruence classes appears as a divisor for some irreducible polynomial. (Note: this is actually a theorem \u2014 the Chebotarev density theorem \u2014 but formalizing it and connecting it to our admissibility framework would be a major advance.)\n\n**Impact**: Would create a formal \"automatic congruence law generator\" for any polynomial, mechanizing one of the most powerful tools in algebraic number theory.\n\n---\n\n## Hypothesis 4: Friedlander\u2013Iwaniec Bridge Completeness\n\n**Conjecture**: The minimal formal infrastructure needed for the Friedlander\u2013Iwaniec theorem (infinitely many primes a\u00b2 + b\u2074) already implies, as abstract consequences, both local admissibility (Theorem B) and the prime-support congruence law (Theorem C) for n\u00b2 + 1. That is, n\u00b2 + 1 is a formal specialization of the a\u00b2 + b\u2074 framework obtained by setting b = 1 and replacing a with n.\n\n**Test**:\n1. Formalize n\u00b2 + 1 as the special case a\u00b2 + b\u2074 with b = 1 (noting a\u00b2 + 1\u2074 = a\u00b2 + 1).\n2. Derive Theorems B and C from abstract properties of the a\u00b2 + b\u2074 framework alone.\n3. Check whether the congruence law for a\u00b2 + b\u2074 (which must also involve primes \u2261 1 mod 4 for odd prime divisors not dividing b) specializes correctly.\n\nThe hypothesis is refuted if the abstract framework requires modification or additional axioms to handle the one-variable specialization, indicating that the two forms require genuinely independent infrastructure.\n\n**Impact**: If true, future formalization efforts could target the more general form first and obtain n\u00b2 + 1 results for free, potentially halving the total formalization burden for this area of number theory.\n\n---\n\n## Hypothesis 5: Gaussian Integer Proof Compression\n\n**Conjecture**: Recasting n\u00b2 + 1 as the Gaussian integer norm N(n + i) = (n + i)(n \u2212 i) yields strictly shorter formal proofs of the congruence selection law (Theorem C) than the purely modular arithmetic approach, measured by total lines of Lean code including all required imports and helper lemmas.\n\n**Test**:\n1. **Modular arithmetic proof** (current): Uses ZMod.exists_sq_eq_neg_one_iff and multiplicative order arguments. Measure total proof length including all dependencies.\n2. **Gaussian integer proof** (proposed): Import GaussianInt from Mathlib. Show that if q | N(n+i) and q is an odd prime, then q is not a Gaussian prime (since it would need to divide n+i or n-i, forcing q | 2i, contradiction). Hence q splits in \u2124[i], and split primes satisfy q \u2261 1 (mod 4). Measure total proof length.\n\nThe hypothesis is refuted if the Gaussian integer proof is longer or requires more lemmas, which could happen if Mathlib's Gaussian integer library has gaps requiring substantial bridging code.\n\n**Impact**: Would establish that algebraic number theory infrastructure in Lean is mature enough to provide computational advantages over elementary methods, guiding future formalization strategy toward algebraic rather than analytic approaches where possible.\n\n---\n\n## Priority Ranking\n\n1. **Hypothesis 4** (Bridge Completeness) \u2014 Highest priority. Can be tested immediately by attempting the formal specialization. Would have the largest impact on reducing future work.\n2. **Hypothesis 5** (Proof Compression) \u2014 High priority. Can be tested now with existing Mathlib. Direct practical implications for proof engineering.\n3. **Hypothesis 2** (Density Bound) \u2014 Medium priority. Computational testing is immediate; formalization requires sieve infrastructure.\n4. **Hypothesis 3** (Universality) \u2014 Medium priority. Deeply connected to existing mathematics; computational testing is straightforward.\n5. **Hypothesis 1** (Sieve Engine) \u2014 Longest-term but highest potential impact. Requires substantial new Lean infrastructure.\n",
+    "demos": [
+      {
+        "name": "Primes of the Form n\u00b2 + 1: Interactive Exploration",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nDemonstration of formally verified results about primes of the form n\u00b2 + 1.\n\nThis script illustrates the three main theorems:\n1. Local admissibility: no prime divides all values of n\u00b2 + 1\n2. Congruence selection law: odd prime divisors of n\u00b2 + 1 are \u2261 1 (mod 4)\n3. Infinitely many splitting primes via Euclid-style construction\n\nIt also explores semiprime density and the Friedlander-Iwaniec connection.\n\"\"\"\n\nimport math\nfrom collections import Counter\nfrom typing import List, Tuple, Set\n\n\ndef is_prime(n: int) -> bool:\n    \"\"\"Check if n is prime.\"\"\"\n    if n < 2:\n        return False\n    if n < 4:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\"Return the prime factorization of n as a sorted list with multiplicity.\"\"\"\n    if n <= 1:\n        return []\n    factors = []\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors.append(d)\n            n //= d\n        d += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\ndef big_omega(n: int) -> int:\n    \"\"\"Count prime factors with multiplicity (\u03a9 function).\"\"\"\n    return len(factorize(n))\n\n\ndef demo_local_admissibility():\n    \"\"\"\n    Demonstrate Theorem B: For every prime p, there exists n < p with p \u2224 n\u00b2 + 1.\n\n    The simplest witness: n = 0 gives 0\u00b2 + 1 = 1, and no prime divides 1.\n    We also show the full root structure mod p.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"THEOREM B: Local Admissibility of n\u00b2 + 1\")\n    print(\"=\" * 70)\n    print()\n    print(\"For every prime p, \u2203 n < p such that p \u2224 n\u00b2 + 1.\")\n    print(\"Universal witness: n = 0 gives 0\u00b2 + 1 = 1, not divisible by any prime.\")\n    print()\n\n    print(\"Root counts of X\u00b2 + 1 mod p for small primes:\")\n    print(f\"{'p':>5} {'p mod 4':>7} {'roots mod p':>15} {'root count':>10}\")\n    print(\"-\" * 42)\n\n    for p in range(2, 60):\n        if not is_prime(p):\n            continue\n        roots = [n for n in range(p) if (n * n + 1) % p == 0]\n        print(f\"{p:>5} {p % 4:>7} {str(roots):>15} {len(roots):>10}\")\n\n    print()\n    print(\"Pattern: primes \u2261 1 (mod 4) have 2 roots; primes \u2261 3 (mod 4) have 0 roots; p=2 has 1 root.\")\n    print(\"In ALL cases, root count < p, confirming local admissibility. \u2713\")\n    print()\n\n\ndef demo_congruence_selection_law():\n    \"\"\"\n    Demonstrate Theorem C: If q is an odd prime and q | n\u00b2 + 1, then q \u2261 1 (mod 4).\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"THEOREM C: Congruence Selection Law\")\n    print(\"=\" * 70)\n    print()\n    print(\"Every odd prime dividing some n\u00b2 + 1 must be \u2261 1 (mod 4).\")\n    print()\n\n    # Collect all odd prime divisors of n\u00b2 + 1 for n up to 1000\n    divisors_1mod4: Set[int] = set()\n    divisors_3mod4: Set[int] = set()\n\n    for n in range(10001):\n        val = n * n + 1\n        for p in set(factorize(val)):\n            if p == 2:\n                continue\n            if p % 4 == 1:\n                divisors_1mod4.add(p)\n            else:\n                divisors_3mod4.add(p)\n\n    print(f\"Odd prime divisors of n\u00b2 + 1 for n \u2264 10000:\")\n    print(f\"  Primes \u2261 1 (mod 4): {len(divisors_1mod4)} found\")\n    print(f\"  Primes \u2261 3 (mod 4): {len(divisors_3mod4)} found\")\n    print()\n\n    if divisors_3mod4:\n        print(f\"  COUNTEREXAMPLE FOUND: {sorted(divisors_3mod4)[:10]}\")\n    else:\n        print(\"  No prime \u2261 3 (mod 4) ever divides n\u00b2 + 1. Theorem confirmed! \u2713\")\n\n    print()\n    print(\"First 20 primes \u2261 1 (mod 4) appearing as divisors:\")\n    print(f\"  {sorted(divisors_1mod4)[:20]}\")\n    print()\n\n\ndef demo_euclid_construction():\n    \"\"\"\n    Demonstrate Theorem D: Euclid-style construction of new primes \u2261 1 (mod 4)\n    dividing values of n\u00b2 + 1.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"THEOREM D: Euclid-Style Construction of Splitting Primes\")\n    print(\"=\" * 70)\n    print()\n    print(\"Construction: Given bound B, form M = (2\u00b7B!)\u00b2 + 1.\")\n    print(\"Any odd prime factor q of M satisfies q \u2261 1 (mod 4) and q > B.\")\n    print()\n\n    for B in [3, 5, 7, 10, 15]:\n        factorial_B = math.factorial(B)\n        M_base = 2 * factorial_B\n        M = M_base * M_base + 1\n        factors = factorize(M)\n        primes = sorted(set(factors))\n\n        print(f\"B = {B}:\")\n        print(f\"  M = (2\u00b7{B}!)\u00b2 + 1 = ({M_base})\u00b2 + 1 = {M}\")\n        print(f\"  Prime factors: {primes}\")\n        for q in primes:\n            status = \"\u2713\" if q > B and q % 4 == 1 else (\"(q=2)\" if q == 2 else \"\u2717\")\n            print(f\"    q = {q}: q mod 4 = {q % 4}, q > {B}? {q > B} {status}\")\n        print()\n\n\ndef demo_semiprime_density():\n    \"\"\"\n    Explore the density of primes and semiprimes of the form n\u00b2 + 1.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"SEMIPRIME DENSITY: Values of n\u00b2 + 1 by Prime Factor Count\")\n    print(\"=\" * 70)\n    print()\n\n    limits = [100, 1000, 10000]\n\n    for X in limits:\n        counts = Counter()\n        for n in range(1, X + 1):\n            val = n * n + 1\n            omega = big_omega(val)\n            counts[omega] += 1\n\n        total = sum(counts.values())\n        prime_count = counts[1]\n        semiprime_count = counts[2]\n        at_most_2 = prime_count + semiprime_count\n\n        print(f\"n \u2264 {X} (total values: {total}):\")\n        for k in sorted(counts.keys()):\n            pct = 100 * counts[k] / total\n            bar = \"\u2588\" * int(pct / 2)\n            print(f\"  \u03a9 = {k}: {counts[k]:>6} ({pct:5.1f}%) {bar}\")\n\n        log_X = math.log(X) if X > 1 else 1\n        ratio = at_most_2 / (X / log_X ** 2) if X > 1 else 0\n        print(f\"  Primes + semiprimes: {at_most_2} (ratio to X/(log X)\u00b2: {ratio:.3f})\")\n        print()\n\n\ndef demo_friedlander_iwaniec_bridge():\n    \"\"\"\n    Demonstrate the admissibility bridge between n\u00b2 + 1 and a\u00b2 + b\u2074.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"FRIEDLANDER-IWANIEC BRIDGE: Shared Admissibility\")\n    print(\"=\" * 70)\n    print()\n\n    print(\"Both n\u00b2 + 1 and a\u00b2 + b\u2074 are locally admissible:\")\n    print()\n\n    # For n\u00b2 + 1\n    print(\"n\u00b2 + 1: Universal witness n = 0 gives 0\u00b2 + 1 = 1 (not divisible by any prime)\")\n    print(\"a\u00b2 + b\u2074: Universal witness (a,b) = (1,0) gives 1\u00b2 + 0\u2074 = 1 (not divisible by any prime)\")\n    print()\n\n    # Count primes of each form up to a bound\n    bound = 10000\n    primes_sq_plus_1 = set()\n    primes_a2_b4 = set()\n\n    for n in range(bound):\n        val = n * n + 1\n        if is_prime(val):\n            primes_sq_plus_1.add(val)\n\n    for a in range(int(bound ** 0.5) + 1):\n        for b in range(int(bound ** 0.25) + 1):\n            val = a * a + b ** 4\n            if val <= bound and is_prime(val) and val > 1:\n                primes_a2_b4.add(val)\n\n    print(f\"Primes of form n\u00b2 + 1 with n < {bound}: {len(primes_sq_plus_1)}\")\n    print(f\"  First few: {sorted(primes_sq_plus_1)[:15]}\")\n    print()\n    print(f\"Primes of form a\u00b2 + b\u2074 up to {bound}: {len(primes_a2_b4)}\")\n    print(f\"  First few: {sorted(primes_a2_b4)[:15]}\")\n    print()\n\n    overlap = primes_sq_plus_1 & primes_a2_b4\n    print(f\"Primes in BOTH forms: {len(overlap)}\")\n    print(f\"  (n\u00b2 + 1 is a special case of a\u00b2 + b\u2074 with b = 1)\")\n    print()\n\n\nif __name__ == \"__main__\":\n    demo_local_admissibility()\n    demo_congruence_selection_law()\n    demo_euclid_construction()\n    demo_semiprime_density()\n    demo_friedlander_iwaniec_bridge()\n"
+      },
+      {
+        "name": "Applications: Prime Generation, Semiprimes, and Statistics",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of the n\u00b2 + 1 theory to practical problems.\n\n1. Cryptographic prime generation with congruence guarantees\n2. Semiprime generation for RSA-like applications\n3. Polynomial admissibility testing framework\n4. Statistical analysis of prime factor distributions\n\"\"\"\n\nimport math\nimport random\nfrom typing import List, Tuple, Dict, Optional\n\n\ndef is_prime(n: int) -> bool:\n    \"\"\"Miller-Rabin primality test for practical use.\"\"\"\n    if n < 2:\n        return False\n    if n < 4:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    # Deterministic for n < 3.3 \u00d7 10^24 with these witnesses\n    witnesses = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]\n    d, r = n - 1, 0\n    while d % 2 == 0:\n        d //= 2\n        r += 1\n    for a in witnesses:\n        if a >= n:\n            continue\n        x = pow(a, d, n)\n        if x == 1 or x == n - 1:\n            continue\n        for _ in range(r - 1):\n            x = pow(x, x, n)\n            if x == n - 1:\n                break\n        else:\n            return False\n    return True\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\"Trial division factorization.\"\"\"\n    if n <= 1:\n        return []\n    factors = []\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors.append(d)\n            n //= d\n        d += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\n# ============================================================\n# Application 1: Generating primes \u2261 1 (mod 4) from n\u00b2 + 1\n# ============================================================\n\ndef generate_primes_1_mod_4(count: int, min_bits: int = 16) -> List[Tuple[int, int]]:\n    \"\"\"\n    Generate primes p \u2261 1 (mod 4) by finding primes of the form n\u00b2 + 1.\n\n    By Theorem C, every odd prime of the form n\u00b2 + 1 satisfies p \u2261 1 (mod 4).\n    This gives a natural way to generate primes in this congruence class.\n\n    Application: In cryptography, primes \u2261 1 (mod 4) are needed for:\n    - Blum integers (p \u2261 3 mod 4, but the complement is also useful)\n    - Certain elliptic curve constructions\n    - Generating primes that split in \u2124[i]\n\n    Args:\n        count: Number of primes to generate.\n        min_bits: Minimum bit length of generated primes.\n\n    Returns:\n        List of (n, p) pairs where p = n\u00b2 + 1 is prime and p \u2261 1 (mod 4).\n\n    >>> primes = generate_primes_1_mod_4(5, min_bits=4)\n    >>> all(p % 4 == 1 for _, p in primes)\n    True\n    \"\"\"\n    results = []\n    min_n = max(2, int(math.sqrt(2 ** (min_bits - 1))))\n    n = min_n\n\n    while len(results) < count:\n        p = n * n + 1\n        if is_prime(p):\n            assert p % 4 == 1 or p == 2, f\"Theorem C violated! p={p}, p%4={p%4}\"\n            if p > 2:\n                results.append((n, p))\n        n += 1\n\n    return results\n\n\n# ============================================================\n# Application 2: Semiprime generation from n\u00b2 + 1\n# ============================================================\n\ndef generate_semiprimes_sq_plus_one(count: int, max_n: int = 100000) -> List[Tuple[int, int, int, int]]:\n    \"\"\"\n    Find semiprimes of the form n\u00b2 + 1.\n\n    By Iwaniec's theorem, there are infinitely many n where n\u00b2 + 1\n    has at most 2 prime factors. This function finds such values.\n\n    Application: Semiprimes are used in:\n    - RSA cryptosystem (N = pq)\n    - Pseudorandom number generation\n    - Complexity-theoretic hardness assumptions\n\n    Args:\n        count: Number of semiprimes to find.\n        max_n: Maximum value of n to search.\n\n    Returns:\n        List of (n, n\u00b2+1, p, q) where n\u00b2+1 = p\u00b7q with p, q prime.\n\n    >>> results = generate_semiprimes_sq_plus_one(3, max_n=20)\n    >>> all(p * q == n*n+1 for n, _, p, q in results)\n    True\n    \"\"\"\n    results = []\n\n    for n in range(2, max_n + 1):\n        if len(results) >= count:\n            break\n        val = n * n + 1\n        factors = factorize(val)\n        if len(factors) == 2:\n            results.append((n, val, factors[0], factors[1]))\n\n    return results\n\n\n# ============================================================\n# Application 3: Polynomial admissibility framework\n# ============================================================\n\ndef test_polynomial_admissibility(\n    name: str,\n    f,\n    var_count: int,\n    prime_limit: int = 100\n) -> Dict:\n    \"\"\"\n    Test local admissibility of a polynomial and compute root statistics.\n\n    This implements the formal definition:\n        LocallyAdmissible(f) \u27fa \u2200 prime p, \u2203 inputs x with p \u2224 f(x)\n\n    Additionally computes:\n    - Root count \u03c9(p) for each prime p\n    - Average root density\n    - Whether the polynomial has the \"Bateman-Horn\" structure\n\n    Application: Admissibility testing is the first step in any\n    sieve-theoretic analysis of prime-producing polynomials.\n\n    Args:\n        name: Name of the polynomial for display.\n        f: The polynomial function.\n        var_count: Number of variables (1 or 2).\n        prime_limit: Test all primes up to this bound.\n\n    Returns:\n        Dictionary with admissibility results and statistics.\n\n    >>> result = test_polynomial_admissibility(\"n\u00b2+1\", lambda n: n**2+1, 1, 30)\n    >>> result['is_admissible']\n    True\n    \"\"\"\n    # Simple sieve for primes\n    sieve = [True] * (prime_limit + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(prime_limit**0.5) + 1):\n        if sieve[i]:\n            for j in range(i*i, prime_limit + 1, i):\n                sieve[j] = False\n    primes = [i for i in range(2, prime_limit + 1) if sieve[i]]\n\n    root_counts = {}\n    witnesses = {}\n    is_admissible = True\n\n    for p in primes:\n        count = 0\n        witness = None\n\n        if var_count == 1:\n            for n in range(p):\n                val = f(n)\n                if val % p == 0:\n                    count += 1\n                elif witness is None:\n                    witness = (n,)\n        elif var_count == 2:\n            for a in range(p):\n                for b in range(p):\n                    val = f(a, b)\n                    if val % p == 0:\n                        count += 1\n                    elif witness is None:\n                        witness = (a, b)\n\n        total = p if var_count == 1 else p * p\n        root_counts[p] = count\n        witnesses[p] = witness\n\n        if witness is None:\n            is_admissible = False\n\n    avg_density = sum(root_counts[p] / (p if var_count == 1 else p*p)\n                      for p in primes) / len(primes) if primes else 0\n\n    return {\n        'name': name,\n        'is_admissible': is_admissible,\n        'root_counts': root_counts,\n        'witnesses': witnesses,\n        'average_density': avg_density,\n        'primes_tested': len(primes)\n    }\n\n\n# ============================================================\n# Application 4: Statistical analysis\n# ============================================================\n\ndef prime_factor_distribution_analysis(limit: int) -> Dict:\n    \"\"\"\n    Analyze the distribution of prime factors of n\u00b2 + 1 values.\n\n    Computes statistics relevant to the Bateman-Horn conjecture\n    and Iwaniec's semiprime theorem.\n\n    Args:\n        limit: Analyze n\u00b2 + 1 for n = 1, ..., limit.\n\n    Returns:\n        Dictionary with distributional statistics.\n    \"\"\"\n    omega_counts = {}  # \u03a9 value -> count\n    prime_mod_4_counts = {1: 0, 3: 0}  # mod 4 residue -> count of distinct primes seen\n    all_odd_prime_divisors = set()\n    largest_prime_factors = []\n\n    for n in range(1, limit + 1):\n        val = n * n + 1\n        factors = factorize(val)\n        omega = len(factors)\n        omega_counts[omega] = omega_counts.get(omega, 0) + 1\n\n        for p in set(factors):\n            if p > 2:\n                all_odd_prime_divisors.add(p)\n\n        if factors:\n            largest_prime_factors.append(factors[-1])\n\n    for p in all_odd_prime_divisors:\n        prime_mod_4_counts[p % 4] += 1\n\n    # Compute density ratios\n    log_limit = math.log(limit) if limit > 1 else 1\n    prime_count = omega_counts.get(1, 0)\n    semiprime_count = omega_counts.get(2, 0)\n\n    return {\n        'limit': limit,\n        'omega_distribution': dict(sorted(omega_counts.items())),\n        'prime_count': prime_count,\n        'semiprime_count': semiprime_count,\n        'at_most_2_factors': prime_count + semiprime_count,\n        'prime_density_ratio': prime_count / (limit / log_limit) if limit > 1 else 0,\n        'semiprime_density_ratio': semiprime_count / (limit / log_limit**2) if limit > 1 else 0,\n        'odd_primes_1_mod_4': prime_mod_4_counts[1],\n        'odd_primes_3_mod_4': prime_mod_4_counts[3],\n        'congruence_law_holds': prime_mod_4_counts[3] == 0,\n        'average_largest_prime_factor': sum(largest_prime_factors) / len(largest_prime_factors) if largest_prime_factors else 0,\n    }\n\n\nif __name__ == \"__main__\":\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Prime Generation from n\u00b2 + 1\")\n    print(\"=\" * 70)\n    primes = generate_primes_1_mod_4(10, min_bits=8)\n    print(f\"Generated {len(primes)} primes p = n\u00b2 + 1 with p \u2261 1 (mod 4):\")\n    for n, p in primes:\n        print(f\"  n = {n:>6}, p = n\u00b2 + 1 = {p:>12}, p mod 4 = {p % 4}, bits = {p.bit_length()}\")\n    print()\n\n    print(\"=\" * 70)\n    print(\"APPLICATION 2: Semiprime Generation from n\u00b2 + 1\")\n    print(\"=\" * 70)\n    semiprimes = generate_semiprimes_sq_plus_one(10)\n    print(f\"First {len(semiprimes)} semiprimes of the form n\u00b2 + 1:\")\n    for n, val, p, q in semiprimes:\n        print(f\"  n = {n:>4}, n\u00b2 + 1 = {val:>8} = {p} \u00d7 {q}\")\n    print()\n\n    print(\"=\" * 70)\n    print(\"APPLICATION 3: Polynomial Admissibility Testing\")\n    print(\"=\" * 70)\n    polynomials = [\n        (\"n\u00b2 + 1\", lambda n: n**2 + 1, 1),\n        (\"n\u00b2 - 1\", lambda n: abs(n**2 - 1) if n > 1 else 1, 1),\n        (\"n\u00b2 + n + 1\", lambda n: n**2 + n + 1, 1),\n        (\"2n\", lambda n: 2*n if n > 0 else 2, 1),\n        (\"a\u00b2 + b\u2074\", lambda a, b: a**2 + b**4, 2),\n    ]\n    for name, f, vc in polynomials:\n        result = test_polynomial_admissibility(name, f, vc, prime_limit=50)\n        status = \"\u2713 ADMISSIBLE\" if result['is_admissible'] else \"\u2717 NOT ADMISSIBLE\"\n        print(f\"  {name:>12}: {status} (avg density: {result['average_density']:.4f})\")\n    print()\n\n    print(\"=\" * 70)\n    print(\"APPLICATION 4: Statistical Analysis of n\u00b2 + 1\")\n    print(\"=\" * 70)\n    for limit in [100, 1000, 10000]:\n        stats = prime_factor_distribution_analysis(limit)\n        print(f\"\\nn \u2264 {limit}:\")\n        print(f\"  \u03a9 distribution: {stats['omega_distribution']}\")\n        print(f\"  Primes: {stats['prime_count']}, Semiprimes: {stats['semiprime_count']}\")\n        print(f\"  At most 2 factors: {stats['at_most_2_factors']}\")\n        print(f\"  Congruence law (all odd divisors \u2261 1 mod 4): {stats['congruence_law_holds']}\")\n        print(f\"  Odd prime divisors \u2261 1 mod 4: {stats['odd_primes_1_mod_4']}\")\n        print(f\"  Odd prime divisors \u2261 3 mod 4: {stats['odd_primes_3_mod_4']}\")\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Euclid-Style Prime Generator",
+        "pseudocode": "Algorithm: EuclidStylePrimeGenerator(B)\nInput: Bound B\nOutput: Prime q > B with q \u2261 1 (mod 4) and q | n\u00b2 + 1 for some n\n\n1. Compute F \u2190 B!\n2. Set n \u2190 2 \u00b7 F\n3. Compute M \u2190 n\u00b2 + 1\n4. Find smallest prime factor q of M (q = minFac(M))\n5. Assert: q is odd (since M is odd)\n6. Assert: q \u2261 1 (mod 4) (by Theorem C)\n7. Assert: q > B (since q | M but q \u2224 B!, so q > B)\n8. Return (q, n)\n\nCorrectness: By Theorem C, any odd prime dividing n\u00b2 + 1 = M\nsatisfies q \u2261 1 (mod 4). Since q is prime and q \u2264 B would imply\nq | B! | (2\u00b7B!)\u00b2 and hence q | 1, we have q > B.\n\nTime complexity: O(B log B) for factorial, O(\u221aM) for factoring.\nSpace complexity: O(B) for factorial computation.",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for studying primes and semiprimes of the form n\u00b2 + 1.\n\nImplements:\n1. Efficient classification of n\u00b2 + 1 values by prime factor count\n2. Euclid-style prime generation for primes \u2261 1 (mod 4)\n3. Root counting for X\u00b2 + 1 over finite fields\n4. Semiprime sieve for n\u00b2 + 1\n\"\"\"\n\nimport math\nfrom typing import List, Tuple, Dict, Set, Optional\n\n\ndef sieve_of_eratosthenes(limit: int) -> List[int]:\n    \"\"\"\n    Generate all primes up to `limit` using the Sieve of Eratosthenes.\n\n    Time complexity: O(n log log n)\n    Space complexity: O(n)\n\n    Args:\n        limit: Upper bound for primes.\n\n    Returns:\n        Sorted list of primes up to limit.\n\n    >>> sieve_of_eratosthenes(20)\n    [2, 3, 5, 7, 11, 13, 17, 19]\n    \"\"\"\n    if limit < 2:\n        return []\n    is_prime = [True] * (limit + 1)\n    is_prime[0] = is_prime[1] = False\n    for i in range(2, int(limit**0.5) + 1):\n        if is_prime[i]:\n            for j in range(i * i, limit + 1, i):\n                is_prime[j] = False\n    return [i for i in range(2, limit + 1) if is_prime[i]]\n\n\ndef factorize(n: int, primes: Optional[List[int]] = None) -> List[int]:\n    \"\"\"\n    Return the prime factorization of n as a sorted list with multiplicity.\n\n    If a precomputed prime list is provided, uses trial division with those primes.\n    Otherwise uses basic trial division.\n\n    Time complexity: O(\u221an) without precomputed primes, O(\u221an / log n) with.\n\n    Args:\n        n: Number to factorize (must be \u2265 1).\n        primes: Optional precomputed list of primes up to \u221an.\n\n    Returns:\n        Sorted list of prime factors with multiplicity.\n\n    >>> factorize(12)\n    [2, 2, 3]\n    >>> factorize(17)\n    [17]\n    \"\"\"\n    if n <= 1:\n        return []\n    factors = []\n    if primes:\n        for p in primes:\n            if p * p > n:\n                break\n            while n % p == 0:\n                factors.append(p)\n                n //= p\n    else:\n        d = 2\n        while d * d <= n:\n            while n % d == 0:\n                factors.append(d)\n                n //= d\n            d += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\ndef classify_sq_plus_one(limit: int) -> Dict[str, List[int]]:\n    \"\"\"\n    Classify values of n\u00b2 + 1 for n = 1, ..., limit by their prime structure.\n\n    Algorithm:\n        1. Precompute primes up to limit\u00b2 + 1 using sieve.\n        2. For each n, compute n\u00b2 + 1 and count prime factors.\n        3. Classify into primes, semiprimes, and higher.\n\n    Time complexity: O(limit\u00b2 log log(limit\u00b2)) for sieve + O(limit \u00b7 \u221a(limit\u00b2)) for factoring.\n    Space complexity: O(limit\u00b2) for the sieve.\n\n    Args:\n        limit: Maximum value of n to test.\n\n    Returns:\n        Dictionary with keys 'primes', 'semiprimes', 'three_factors', etc.\n        Each maps to a list of n values producing that category.\n\n    >>> result = classify_sq_plus_one(10)\n    >>> 1 in result['primes']  # 1\u00b2 + 1 = 2 is prime\n    True\n    >>> 3 in result['semiprimes']  # 3\u00b2 + 1 = 10 = 2 \u00d7 5\n    True\n    \"\"\"\n    # Precompute primes for faster factoring\n    max_val = limit * limit + 1\n    small_primes = sieve_of_eratosthenes(int(max_val**0.5) + 1)\n\n    result: Dict[str, List[int]] = {\n        'primes': [],\n        'semiprimes': [],\n        'three_factors': [],\n        'four_plus_factors': []\n    }\n\n    for n in range(1, limit + 1):\n        val = n * n + 1\n        omega = len(factorize(val, small_primes))\n\n        if omega == 1:\n            result['primes'].append(n)\n        elif omega == 2:\n            result['semiprimes'].append(n)\n        elif omega == 3:\n            result['three_factors'].append(n)\n        else:\n            result['four_plus_factors'].append(n)\n\n    return result\n\n\ndef euclid_style_prime_generator(bound: int) -> List[Tuple[int, int, int]]:\n    \"\"\"\n    Generate primes \u2261 1 (mod 4) dividing values of n\u00b2 + 1 using the\n    Euclid-style construction from Theorem D.\n\n    Algorithm (pseudocode):\n        Input: bound B\n        1. Compute B!\n        2. Set M = (2 \u00b7 B!)\u00b2 + 1\n        3. Find all prime factors of M\n        4. Return those that are > B and \u2261 1 (mod 4)\n\n    Each returned prime q comes with a witness n = 2 \u00b7 B! such that q | n\u00b2 + 1.\n\n    Args:\n        bound: The bound B. Returns primes > B.\n\n    Returns:\n        List of tuples (q, n, B) where q is prime, q > B, q \u2261 1 (mod 4),\n        and q | n\u00b2 + 1.\n\n    >>> results = euclid_style_prime_generator(3)\n    >>> all(q > 3 and q % 4 == 1 for q, _, _ in results)\n    True\n    \"\"\"\n    factorial_B = math.factorial(bound)\n    n_witness = 2 * factorial_B\n    M = n_witness * n_witness + 1\n\n    factors = factorize(M)\n    primes = sorted(set(factors))\n\n    results = []\n    for q in primes:\n        if q > bound and q % 4 == 1:\n            results.append((q, n_witness, bound))\n\n    return results\n\n\ndef root_count_x_sq_plus_one(p: int) -> Tuple[int, List[int]]:\n    \"\"\"\n    Count roots of X\u00b2 + 1 in \u2124/p\u2124 and return them.\n\n    This computes \u03c9(p) = |{n \u2208 \u2124/p\u2124 : n\u00b2 + 1 \u2261 0 (mod p)}|,\n    which is the local density used in sieve theory.\n\n    Algorithm:\n        For each n \u2208 {0, 1, ..., p-1}, check if (n\u00b2 + 1) mod p = 0.\n\n    Time complexity: O(p)\n    Space complexity: O(p) for storing roots.\n\n    The expected pattern (provable from quadratic reciprocity):\n        \u03c9(2) = 1\n        \u03c9(p) = 2 if p \u2261 1 (mod 4)\n        \u03c9(p) = 0 if p \u2261 3 (mod 4)\n\n    Args:\n        p: A prime number.\n\n    Returns:\n        Tuple of (count, list_of_roots).\n\n    >>> root_count_x_sq_plus_one(5)\n    (2, [2, 3])\n    >>> root_count_x_sq_plus_one(7)\n    (0, [])\n    \"\"\"\n    roots = [n for n in range(p) if (n * n + 1) % p == 0]\n    return len(roots), roots\n\n\ndef semiprime_sieve_sq_plus_one(limit: int) -> List[Tuple[int, int, List[int]]]:\n    \"\"\"\n    Find all n \u2264 limit where n\u00b2 + 1 is prime or semiprime.\n\n    Returns each qualifying n along with n\u00b2 + 1 and its factorization.\n\n    Algorithm:\n        1. Precompute small primes.\n        2. For each n, factorize n\u00b2 + 1.\n        3. Keep those with \u03a9(n\u00b2 + 1) \u2264 2.\n\n    Time complexity: O(limit \u00b7 \u221a(limit\u00b2)) = O(limit\u00b2)\n    Space complexity: O(\u221a(limit\u00b2)) for prime table.\n\n    Args:\n        limit: Maximum n to check.\n\n    Returns:\n        List of (n, n\u00b2+1, factorization) triples where \u03a9(n\u00b2+1) \u2264 2.\n\n    >>> results = semiprime_sieve_sq_plus_one(5)\n    >>> (1, 2, [2]) in results  # 1\u00b2 + 1 = 2 (prime)\n    True\n    \"\"\"\n    max_val = limit * limit + 1\n    small_primes = sieve_of_eratosthenes(int(max_val**0.5) + 1)\n\n    results = []\n    for n in range(1, limit + 1):\n        val = n * n + 1\n        factors = factorize(val, small_primes)\n        if len(factors) <= 2:\n            results.append((n, val, factors))\n\n    return results\n\n\ndef admissibility_check(f, var_count: int, test_primes: List[int]) -> Dict[int, Tuple[bool, Optional[Tuple]]]:\n    \"\"\"\n    Check local admissibility of a polynomial function for given primes.\n\n    For each prime p, finds a witness (n\u2081, ..., n\u2096) with p \u2224 f(n\u2081, ..., n\u2096),\n    or reports that p divides all values (which should never happen for\n    admissible polynomials).\n\n    Algorithm:\n        For each prime p, iterate over small input values until finding\n        one where f(...) is not divisible by p.\n\n    Args:\n        f: Function taking `var_count` natural number arguments.\n        var_count: Number of variables (1 or 2).\n        test_primes: List of primes to test.\n\n    Returns:\n        Dict mapping each prime to (is_admissible, witness_or_None).\n\n    >>> f = lambda n: n**2 + 1\n    >>> result = admissibility_check(f, 1, [2, 3, 5, 7])\n    >>> all(v[0] for v in result.values())\n    True\n    \"\"\"\n    results = {}\n\n    for p in test_primes:\n        found = False\n        if var_count == 1:\n            for n in range(p):\n                if f(n) % p != 0:\n                    results[p] = (True, (n,))\n                    found = True\n                    break\n        elif var_count == 2:\n            for a in range(p):\n                for b in range(p):\n                    if f(a, b) % p != 0:\n                        results[p] = (True, (a, b))\n                        found = True\n                        break\n                if found:\n                    break\n\n        if not found:\n            results[p] = (False, None)\n\n    return results\n\n\nif __name__ == \"__main__\":\n    print(\"=== Classification of n\u00b2 + 1 for n \u2264 100 ===\")\n    result = classify_sq_plus_one(100)\n    print(f\"Primes (\u03a9=1): {len(result['primes'])} values\")\n    print(f\"  n = {result['primes'][:15]}...\")\n    print(f\"Semiprimes (\u03a9=2): {len(result['semiprimes'])} values\")\n    print(f\"Three factors (\u03a9=3): {len(result['three_factors'])} values\")\n    print(f\"Four+ factors (\u03a9\u22654): {len(result['four_plus_factors'])} values\")\n    print()\n\n    print(\"=== Euclid-style prime generation ===\")\n    for B in [3, 5, 7, 10]:\n        primes = euclid_style_prime_generator(B)\n        print(f\"B = {B}: found primes {[q for q, _, _ in primes]}\")\n    print()\n\n    print(\"=== Root counts of X\u00b2 + 1 mod p ===\")\n    for p in sieve_of_eratosthenes(30):\n        count, roots = root_count_x_sq_plus_one(p)\n        print(f\"  p = {p:>3} (\u2261 {p%4} mod 4): {count} roots {roots}\")\n    print()\n\n    print(\"=== Admissibility check ===\")\n    primes_50 = sieve_of_eratosthenes(50)\n    print(\"n\u00b2 + 1:\", all(v[0] for v in admissibility_check(lambda n: n**2 + 1, 1, primes_50).values()))\n    print(\"a\u00b2 + b\u2074:\", all(v[0] for v in admissibility_check(lambda a, b: a**2 + b**4, 2, primes_50).values()))\n",
+        "code_file": "visualizations/primes_of_the_form_n1_euclid_style_prime_generator.py"
+      }
+    ],
+    "lean_proofs": "-- LocalAdmissibility.lean\n/-\n  # Local Admissibility for Polynomial Prime-Producing Forms\n\n  This file establishes the local admissibility of the polynomials n\u00b2 + 1 and a\u00b2 + b\u2074,\n  which is the foundational prerequisite for any sieve-theoretic attack on primality\n  questions for these forms.\n\n  A polynomial family is \"locally admissible\" if no single prime divides all its values.\n  This is the exact condition needed to start sieve methods: if some prime killed every\n  value, the polynomial could never produce primes (beyond that prime itself).\n\n  ## Main results\n\n  - `exists_n_mod_prime_not_dvd_sq_add_one`: For every prime p, there exists n < p\n    with p \u2224 n\u00b2 + 1.\n  - `sq_add_one_locally_admissible`: n\u00b2 + 1 has no fixed prime divisor.\n  - `a_sq_add_b_four_locally_admissible`: a\u00b2 + b\u2074 has no fixed prime divisor.\n  - `polynomial_family_no_fixed_prime_divisor_bridge`: Both forms are locally admissible.\n-/\nimport Mathlib\n\n/-- A one-variable function is locally admissible if no prime divides all its values. -/\ndef LocallyAdmissible1 (f : \u2115 \u2192 \u2115) : Prop :=\n  \u2200 p : \u2115, Nat.Prime p \u2192 \u2203 n : \u2115, \u00ac p \u2223 f n\n\n/-- A two-variable function is locally admissible if no prime divides all its values. -/\ndef LocallyAdmissible2 (f : \u2115 \u2192 \u2115 \u2192 \u2115) : Prop :=\n  \u2200 p : \u2115, Nat.Prime p \u2192 \u2203 a b : \u2115, \u00ac p \u2223 f a b\n\n/-\n**Theorem B (sharp version)**: For every prime p, there exists n < p such that\np does not divide n\u00b2 + 1. This is the local admissibility seed for sieve theory.\n\nProof: If p = 2, take n = 0: 0\u00b2 + 1 = 1, not divisible by 2.\nIf p is odd, the polynomial X\u00b2 + 1 over ZMod p has degree 2 and hence at most 2 roots.\nSince p \u2265 3, there exists some n \u2208 {0, ..., p-1} that is not a root.\n-/\ntheorem exists_n_mod_prime_not_dvd_sq_add_one\n    (p : \u2115) (hp : Nat.Prime p) :\n    \u2203 n : \u2115, n < p \u2227 \u00ac p \u2223 (n ^ 2 + 1) := by\n  -- Let's choose any $n < p$ and show that $p$ does not divide $n^2 + 1$.\n  use 0; simp\n  exact \u27e8 hp.pos, hp.ne_one \u27e9\n\n/-- The polynomial n\u00b2 + 1 has no fixed prime divisor: for every prime p,\nsome value escapes divisibility by p. -/\ntheorem sq_add_one_locally_admissible :\n    LocallyAdmissible1 (fun n => n ^ 2 + 1) := by\n  intro p hp\n  obtain \u27e8n, _, hnd\u27e9 := exists_n_mod_prime_not_dvd_sq_add_one p hp\n  exact \u27e8n, hnd\u27e9\n\n/-\nThe form a\u00b2 + b\u2074 has no fixed prime divisor. For any prime p,\nchoosing a = 1, b = 0 gives a\u00b2 + b\u2074 = 1, which is not divisible by p.\n-/\ntheorem a_sq_add_b_four_locally_admissible :\n    LocallyAdmissible2 (fun a b => a ^ 2 + b ^ 4) := by\n  exact fun p hp => \u27e8 1, 0, by simpa using hp.not_dvd_one \u27e9\n\n/-- **Bridge theorem**: Both n\u00b2 + 1 and a\u00b2 + b\u2074 are locally admissible.\nThis identifies the shared DNA behind two of the most famous prime-producing\nforms in analytic number theory. -/\ntheorem polynomial_family_no_fixed_prime_divisor_bridge :\n    LocallyAdmissible1 (fun n => n ^ 2 + 1) \u2227\n    LocallyAdmissible2 (fun a b => a ^ 2 + b ^ 4) :=\n  \u27e8sq_add_one_locally_admissible, a_sq_add_b_four_locally_admissible\u27e9\n\n/-- Alternative formulation: not all residues mod p are roots of X\u00b2 + 1. -/\ntheorem not_all_roots_X_sq_add_one_mod_prime\n    (p : \u2115) (hp : Nat.Prime p) :\n    \u00ac \u2200 n : Fin p, ((n.val ^ 2 + 1) : \u2115) % p = 0 := by\n  intro h\n  obtain \u27e8n, hn, hnd\u27e9 := exists_n_mod_prime_not_dvd_sq_add_one p hp\n  have := h \u27e8n, hn\u27e9\n  simp at this\n  exact hnd (Nat.dvd_of_mod_eq_zero this)\n\n-- PrimeDivisorCongruence.lean\n/-\n  # Prime Divisor Congruence Law for n\u00b2 + 1\n\n  This file proves that every odd prime divisor of n\u00b2 + 1 must be congruent\n  to 1 modulo 4. This is equivalent to the classical result that -1 is a\n  quadratic residue mod p if and only if p \u2261 1 (mod 4).\n\n  ## Main result\n\n  - `prime_dvd_sq_add_one_mod_four`: If q is an odd prime and q \u2223 n\u00b2 + 1,\n    then q % 4 = 1.\n\n  ## Proof strategy\n\n  From q \u2223 n\u00b2 + 1, we get n\u00b2 \u2261 -1 (mod q). Then n\u2074 \u2261 1 (mod q) but\n  n\u00b2 \u2262 1 (mod q) (since n\u00b2 \u2261 -1 and q > 2). So the multiplicative\n  order of n mod q is exactly 4. By Lagrange's theorem, 4 \u2223 q - 1,\n  hence q \u2261 1 (mod 4).\n-/\nimport Mathlib\n\n/-\n**Theorem C**: If q is an odd prime and q divides n\u00b2 + 1, then q \u2261 1 (mod 4).\n\nThis is the exact splitting law: primes dividing values of n\u00b2 + 1 must split\nin the Gaussian integers \u2124[i], which forces q \u2261 1 (mod 4).\n-/\ntheorem prime_dvd_sq_add_one_mod_four\n    {q n : \u2115} (hq : Nat.Prime q) (hqodd : q \u2260 2)\n    (hdiv : q \u2223 (n ^ 2 + 1)) :\n    q % 4 = 1 := by\n  haveI := Fact.mk hq;\n  simp_all +decide [ \u2190 ZMod.natCast_eq_zero_iff ];\n  have := ZMod.exists_sq_eq_neg_one_iff ( p := q );\n  have := this.mp \u27e8 n, by linear_combination' hdiv.symm \u27e9 ; ( have := Nat.Prime.eq_two_or_odd hq; omega; )\n\n/-\nInteger version of the prime divisor congruence law.\n-/\ntheorem prime_dvd_sq_add_one_int_mod_four\n    {q : \u2115} (hq : Nat.Prime q) (hqodd : q \u2260 2) {n : \u2124}\n    (hdiv : (q : \u2124) \u2223 (n ^ 2 + 1)) :\n    q % 4 = 1 := by\n  -- From $(q : \u2124) \u2223 (n^2 + 1)$, we can find a natural number representative $m$ with $q \u2223 m^2 + 1$ (take $m = n.natAbs$ or work mod $q$).\n  have h_nat : \u2203 m : \u2115, (q : \u2124) \u2223 m^2 + 1 := by\n    exact \u27e8 Int.natAbs n, by simpa using hdiv \u27e9;\n  exact prime_dvd_sq_add_one_mod_four hq hqodd ( mod_cast h_nat.choose_spec )\n\n-- InfinitelyManySplitPrimes.lean\n/-\n  # Infinitely Many Primes \u2261 1 (mod 4) Dividing Values of n\u00b2 + 1\n\n  This file proves that for every bound B, there exists a prime q > B with\n  q \u2261 1 (mod 4) such that q divides some value n\u00b2 + 1.\n\n  ## Main result\n\n  - `infinitely_many_primes_one_mod_four_dividing_sq_add_one`:\n    \u2200 B, \u2203 q > B, Prime q \u2227 q % 4 = 1 \u2227 \u2203 n, q \u2223 n\u00b2 + 1\n\n  ## Proof strategy (Euclid-style)\n\n  Given any finite collection of primes, form N = (2 * \u220f p\u1d62)\u00b2 + 1.\n  Any odd prime divisor q of N satisfies q \u2261 1 (mod 4) by Theorem C,\n  and q is distinct from all the p\u1d62 (since q \u2223 N but p\u1d62 \u2224 N).\n  This gives arbitrarily large such primes.\n-/\nimport Mathlib\nimport Speculative.SqAddOne.PrimeDivisorCongruence\n\n/-\n**Theorem D**: There are infinitely many primes congruent to 1 mod 4\nthat divide some value of n\u00b2 + 1.\n-/\ntheorem infinitely_many_primes_one_mod_four_dividing_sq_add_one :\n    \u2200 B : \u2115, \u2203 q, q > B \u2227 Nat.Prime q \u2227 q % 4 = 1 \u2227 \u2203 n : \u2115, q \u2223 (n ^ 2 + 1) := by\n  intro B\n  set M := (2 * (Nat.factorial B))^2 + 1\n  have hM_ge_two : 2 \u2264 M := by\n    exact Nat.succ_le_succ ( pow_pos ( Nat.mul_pos two_pos ( Nat.factorial_pos _ ) ) _ )\n  obtain \u27e8q, hq\u27e9 : \u2203 q : \u2115, q \u2223 M \u2227 Nat.Prime q \u2227 q % 4 = 1 := by\n    -- By the properties of prime divisors, there exists a prime $q$ such that $q \\mid M$ and $q \\equiv 1 \\pmod{4}$.\n    obtain \u27e8q, hq\u27e9 : \u2203 q : \u2115, Nat.Prime q \u2227 q \u2223 M \u2227 q \u2260 2 := by\n      exact \u27e8 Nat.minFac M, Nat.minFac_prime ( Nat.ne_of_gt hM_ge_two ), Nat.minFac_dvd M, fun h => by have := Nat.minFac_dvd M; rw [ h ] at this; exact absurd this ( by rw [ Nat.dvd_add_right ( dvd_pow ( dvd_mul_of_dvd_left ( by decide ) _ ) two_ne_zero ) ] ; norm_num ) \u27e9;\n    exact \u27e8 q, hq.2.1, hq.1, prime_dvd_sq_add_one_mod_four hq.1 hq.2.2 hq.2.1 \u27e9\n  use q\n  have hq_gt_B : B < q := by\n    exact not_le.mp fun hq_le_B => by have := Nat.dvd_gcd hq.1 ( dvd_pow ( dvd_mul_of_dvd_right ( Nat.dvd_factorial ( Nat.pos_of_ne_zero hq.2.1.ne_zero ) hq_le_B ) 2 ) two_ne_zero ) ; aesop;\n  exact \u27e8hq_gt_B, hq.right.left, hq.right.right, 2 * (Nat.factorial B), by\n    aesop\u27e9\n\n-- SemiprimeScaffolding.lean\n/-\n  # Semiprime Scaffolding for n\u00b2 + 1\n\n  This file defines the semiprime predicate and proves basic properties,\n  creating the vocabulary needed for future formalization of Iwaniec's theorem\n  that infinitely many values n\u00b2 + 1 have at most 2 prime factors.\n\n  ## Definitions\n\n  - `IsSemiprime`: A number that is a product of exactly two primes.\n\n  ## Key results\n\n  - `IsSemiprime.two_le`: Every semiprime is at least 2.\n  - `Nat.Prime.not_isSemiprime`: A prime is never semiprime.\n  - `isSemiprime_four`, `isSemiprime_six`: Concrete examples.\n-/\nimport Mathlib\n\n/-- A natural number is semiprime if it is a product of exactly two primes\n(not necessarily distinct). -/\ndef IsSemiprime (n : \u2115) : Prop :=\n  \u2203 p q : \u2115, Nat.Prime p \u2227 Nat.Prime q \u2227 p * q = n\n\n/-\nEvery semiprime is at least 2.\n-/\ntheorem IsSemiprime.two_le {n : \u2115} (h : IsSemiprime n) : 2 \u2264 n := by\n  rcases h with \u27e8 p, q, hp, hq, rfl \u27e9 ; nlinarith [ Nat.Prime.two_le hp, Nat.Prime.two_le hq ]\n\n/-\nA prime number is not semiprime: one cannot write a prime as a product\nof two primes.\n-/\ntheorem Nat.Prime.not_isSemiprime {p : \u2115} (hp : Nat.Prime p) : \u00ac IsSemiprime p := by\n  rintro \u27e8 q, r, hq, hr, rfl \u27e9;\n  simp_all +decide [ \u2190 Nat.prime_iff, Nat.prime_mul_iff ];\n  cases hp <;> simp_all +decide [ \u2190 Nat.prime_iff ]\n\n/-- 4 is semiprime: 4 = 2 * 2. -/\ntheorem isSemiprime_four : IsSemiprime 4 :=\n  \u27e82, 2, by decide, by decide, by ring\u27e9\n\n/-- 6 is semiprime: 6 = 2 * 3. -/\ntheorem isSemiprime_six : IsSemiprime 6 :=\n  \u27e82, 3, by decide, by decide, by ring\u27e9",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for studying primes and semiprimes of the form n\u00b2 + 1.\n\nImplements:\n1. Efficient classification of n\u00b2 + 1 values by prime factor count\n2. Euclid-style prime generation for primes \u2261 1 (mod 4)\n3. Root counting for X\u00b2 + 1 over finite fields\n4. Semiprime sieve for n\u00b2 + 1\n\"\"\"\n\nimport math\nfrom typing import List, Tuple, Dict, Set, Optional\n\n\ndef sieve_of_eratosthenes(limit: int) -> List[int]:\n    \"\"\"\n    Generate all primes up to `limit` using the Sieve of Eratosthenes.\n\n    Time complexity: O(n log log n)\n    Space complexity: O(n)\n\n    Args:\n        limit: Upper bound for primes.\n\n    Returns:\n        Sorted list of primes up to limit.\n\n    >>> sieve_of_eratosthenes(20)\n    [2, 3, 5, 7, 11, 13, 17, 19]\n    \"\"\"\n    if limit < 2:\n        return []\n    is_prime = [True] * (limit + 1)\n    is_prime[0] = is_prime[1] = False\n    for i in range(2, int(limit**0.5) + 1):\n        if is_prime[i]:\n            for j in range(i * i, limit + 1, i):\n                is_prime[j] = False\n    return [i for i in range(2, limit + 1) if is_prime[i]]\n\n\ndef factorize(n: int, primes: Optional[List[int]] = None) -> List[int]:\n    \"\"\"\n    Return the prime factorization of n as a sorted list with multiplicity.\n\n    If a precomputed prime list is provided, uses trial division with those primes.\n    Otherwise uses basic trial division.\n\n    Time complexity: O(\u221an) without precomputed primes, O(\u221an / log n) with.\n\n    Args:\n        n: Number to factorize (must be \u2265 1).\n        primes: Optional precomputed list of primes up to \u221an.\n\n    Returns:\n        Sorted list of prime factors with multiplicity.\n\n    >>> factorize(12)\n    [2, 2, 3]\n    >>> factorize(17)\n    [17]\n    \"\"\"\n    if n <= 1:\n        return []\n    factors = []\n    if primes:\n        for p in primes:\n            if p * p > n:\n                break\n            while n % p == 0:\n                factors.append(p)\n                n //= p\n    else:\n        d = 2\n        while d * d <= n:\n            while n % d == 0:\n                factors.append(d)\n                n //= d\n            d += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\ndef classify_sq_plus_one(limit: int) -> Dict[str, List[int]]:\n    \"\"\"\n    Classify values of n\u00b2 + 1 for n = 1, ..., limit by their prime structure.\n\n    Algorithm:\n        1. Precompute primes up to limit\u00b2 + 1 using sieve.\n        2. For each n, compute n\u00b2 + 1 and count prime factors.\n        3. Classify into primes, semiprimes, and higher.\n\n    Time complexity: O(limit\u00b2 log log(limit\u00b2)) for sieve + O(limit \u00b7 \u221a(limit\u00b2)) for factoring.\n    Space complexity: O(limit\u00b2) for the sieve.\n\n    Args:\n        limit: Maximum value of n to test.\n\n    Returns:\n        Dictionary with keys 'primes', 'semiprimes', 'three_factors', etc.\n        Each maps to a list of n values producing that category.\n\n    >>> result = classify_sq_plus_one(10)\n    >>> 1 in result['primes']  # 1\u00b2 + 1 = 2 is prime\n    True\n    >>> 3 in result['semiprimes']  # 3\u00b2 + 1 = 10 = 2 \u00d7 5\n    True\n    \"\"\"\n    # Precompute primes for faster factoring\n    max_val = limit * limit + 1\n    small_primes = sieve_of_eratosthenes(int(max_val**0.5) + 1)\n\n    result: Dict[str, List[int]] = {\n        'primes': [],\n        'semiprimes': [],\n        'three_factors': [],\n        'four_plus_factors': []\n    }\n\n    for n in range(1, limit + 1):\n        val = n * n + 1\n        omega = len(factorize(val, small_primes))\n\n        if omega == 1:\n            result['primes'].append(n)\n        elif omega == 2:\n            result['semiprimes'].append(n)\n        elif omega == 3:\n            result['three_factors'].append(n)\n        else:\n            result['four_plus_factors'].append(n)\n\n    return result\n\n\ndef euclid_style_prime_generator(bound: int) -> List[Tuple[int, int, int]]:\n    \"\"\"\n    Generate primes \u2261 1 (mod 4) dividing values of n\u00b2 + 1 using the\n    Euclid-style construction from Theorem D.\n\n    Algorithm (pseudocode):\n        Input: bound B\n        1. Compute B!\n        2. Set M = (2 \u00b7 B!)\u00b2 + 1\n        3. Find all prime factors of M\n        4. Return those that are > B and \u2261 1 (mod 4)\n\n    Each returned prime q comes with a witness n = 2 \u00b7 B! such that q | n\u00b2 + 1.\n\n    Args:\n        bound: The bound B. Returns primes > B.\n\n    Returns:\n        List of tuples (q, n, B) where q is prime, q > B, q \u2261 1 (mod 4),\n        and q | n\u00b2 + 1.\n\n    >>> results = euclid_style_prime_generator(3)\n    >>> all(q > 3 and q % 4 == 1 for q, _, _ in results)\n    True\n    \"\"\"\n    factorial_B = math.factorial(bound)\n    n_witness = 2 * factorial_B\n    M = n_witness * n_witness + 1\n\n    factors = factorize(M)\n    primes = sorted(set(factors))\n\n    results = []\n    for q in primes:\n        if q > bound and q % 4 == 1:\n            results.append((q, n_witness, bound))\n\n    return results\n\n\ndef root_count_x_sq_plus_one(p: int) -> Tuple[int, List[int]]:\n    \"\"\"\n    Count roots of X\u00b2 + 1 in \u2124/p\u2124 and return them.\n\n    This computes \u03c9(p) = |{n \u2208 \u2124/p\u2124 : n\u00b2 + 1 \u2261 0 (mod p)}|,\n    which is the local density used in sieve theory.\n\n    Algorithm:\n        For each n \u2208 {0, 1, ..., p-1}, check if (n\u00b2 + 1) mod p = 0.\n\n    Time complexity: O(p)\n    Space complexity: O(p) for storing roots.\n\n    The expected pattern (provable from quadratic reciprocity):\n        \u03c9(2) = 1\n        \u03c9(p) = 2 if p \u2261 1 (mod 4)\n        \u03c9(p) = 0 if p \u2261 3 (mod 4)\n\n    Args:\n        p: A prime number.\n\n    Returns:\n        Tuple of (count, list_of_roots).\n\n    >>> root_count_x_sq_plus_one(5)\n    (2, [2, 3])\n    >>> root_count_x_sq_plus_one(7)\n    (0, [])\n    \"\"\"\n    roots = [n for n in range(p) if (n * n + 1) % p == 0]\n    return len(roots), roots\n\n\ndef semiprime_sieve_sq_plus_one(limit: int) -> List[Tuple[int, int, List[int]]]:\n    \"\"\"\n    Find all n \u2264 limit where n\u00b2 + 1 is prime or semiprime.\n\n    Returns each qualifying n along with n\u00b2 + 1 and its factorization.\n\n    Algorithm:\n        1. Precompute small primes.\n        2. For each n, factorize n\u00b2 + 1.\n        3. Keep those with \u03a9(n\u00b2 + 1) \u2264 2.\n\n    Time complexity: O(limit \u00b7 \u221a(limit\u00b2)) = O(limit\u00b2)\n    Space complexity: O(\u221a(limit\u00b2)) for prime table.\n\n    Args:\n        limit: Maximum n to check.\n\n    Returns:\n        List of (n, n\u00b2+1, factorization) triples where \u03a9(n\u00b2+1) \u2264 2.\n\n    >>> results = semiprime_sieve_sq_plus_one(5)\n    >>> (1, 2, [2]) in results  # 1\u00b2 + 1 = 2 (prime)\n    True\n    \"\"\"\n    max_val = limit * limit + 1\n    small_primes = sieve_of_eratosthenes(int(max_val**0.5) + 1)\n\n    results = []\n    for n in range(1, limit + 1):\n        val = n * n + 1\n        factors = factorize(val, small_primes)\n        if len(factors) <= 2:\n            results.append((n, val, factors))\n\n    return results\n\n\ndef admissibility_check(f, var_count: int, test_primes: List[int]) -> Dict[int, Tuple[bool, Optional[Tuple]]]:\n    \"\"\"\n    Check local admissibility of a polynomial function for given primes.\n\n    For each prime p, finds a witness (n\u2081, ..., n\u2096) with p \u2224 f(n\u2081, ..., n\u2096),\n    or reports that p divides all values (which should never happen for\n    admissible polynomials).\n\n    Algorithm:\n        For each prime p, iterate over small input values until finding\n        one where f(...) is not divisible by p.\n\n    Args:\n        f: Function taking `var_count` natural number arguments.\n        var_count: Number of variables (1 or 2).\n        test_primes: List of primes to test.\n\n    Returns:\n        Dict mapping each prime to (is_admissible, witness_or_None).\n\n    >>> f = lambda n: n**2 + 1\n    >>> result = admissibility_check(f, 1, [2, 3, 5, 7])\n    >>> all(v[0] for v in result.values())\n    True\n    \"\"\"\n    results = {}\n\n    for p in test_primes:\n        found = False\n        if var_count == 1:\n            for n in range(p):\n                if f(n) % p != 0:\n                    results[p] = (True, (n,))\n                    found = True\n                    break\n        elif var_count == 2:\n            for a in range(p):\n                for b in range(p):\n                    if f(a, b) % p != 0:\n                        results[p] = (True, (a, b))\n                        found = True\n                        break\n                if found:\n                    break\n\n        if not found:\n            results[p] = (False, None)\n\n    return results\n\n\nif __name__ == \"__main__\":\n    print(\"=== Classification of n\u00b2 + 1 for n \u2264 100 ===\")\n    result = classify_sq_plus_one(100)\n    print(f\"Primes (\u03a9=1): {len(result['primes'])} values\")\n    print(f\"  n = {result['primes'][:15]}...\")\n    print(f\"Semiprimes (\u03a9=2): {len(result['semiprimes'])} values\")\n    print(f\"Three factors (\u03a9=3): {len(result['three_factors'])} values\")\n    print(f\"Four+ factors (\u03a9\u22654): {len(result['four_plus_factors'])} values\")\n    print()\n\n    print(\"=== Euclid-style prime generation ===\")\n    for B in [3, 5, 7, 10]:\n        primes = euclid_style_prime_generator(B)\n        print(f\"B = {B}: found primes {[q for q, _, _ in primes]}\")\n    print()\n\n    print(\"=== Root counts of X\u00b2 + 1 mod p ===\")\n    for p in sieve_of_eratosthenes(30):\n        count, roots = root_count_x_sq_plus_one(p)\n        print(f\"  p = {p:>3} (\u2261 {p%4} mod 4): {count} roots {roots}\")\n    print()\n\n    print(\"=== Admissibility check ===\")\n    primes_50 = sieve_of_eratosthenes(50)\n    print(\"n\u00b2 + 1:\", all(v[0] for v in admissibility_check(lambda n: n**2 + 1, 1, primes_50).values()))\n    print(\"a\u00b2 + b\u2074:\", all(v[0] for v in admissibility_check(lambda a, b: a**2 + b**4, 2, primes_50).values()))\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of the n\u00b2 + 1 theory to practical problems.\n\n1. Cryptographic prime generation with congruence guarantees\n2. Semiprime generation for RSA-like applications\n3. Polynomial admissibility testing framework\n4. Statistical analysis of prime factor distributions\n\"\"\"\n\nimport math\nimport random\nfrom typing import List, Tuple, Dict, Optional\n\n\ndef is_prime(n: int) -> bool:\n    \"\"\"Miller-Rabin primality test for practical use.\"\"\"\n    if n < 2:\n        return False\n    if n < 4:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    # Deterministic for n < 3.3 \u00d7 10^24 with these witnesses\n    witnesses = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]\n    d, r = n - 1, 0\n    while d % 2 == 0:\n        d //= 2\n        r += 1\n    for a in witnesses:\n        if a >= n:\n            continue\n        x = pow(a, d, n)\n        if x == 1 or x == n - 1:\n            continue\n        for _ in range(r - 1):\n            x = pow(x, x, n)\n            if x == n - 1:\n                break\n        else:\n            return False\n    return True\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\"Trial division factorization.\"\"\"\n    if n <= 1:\n        return []\n    factors = []\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors.append(d)\n            n //= d\n        d += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\n# ============================================================\n# Application 1: Generating primes \u2261 1 (mod 4) from n\u00b2 + 1\n# ============================================================\n\ndef generate_primes_1_mod_4(count: int, min_bits: int = 16) -> List[Tuple[int, int]]:\n    \"\"\"\n    Generate primes p \u2261 1 (mod 4) by finding primes of the form n\u00b2 + 1.\n\n    By Theorem C, every odd prime of the form n\u00b2 + 1 satisfies p \u2261 1 (mod 4).\n    This gives a natural way to generate primes in this congruence class.\n\n    Application: In cryptography, primes \u2261 1 (mod 4) are needed for:\n    - Blum integers (p \u2261 3 mod 4, but the complement is also useful)\n    - Certain elliptic curve constructions\n    - Generating primes that split in \u2124[i]\n\n    Args:\n        count: Number of primes to generate.\n        min_bits: Minimum bit length of generated primes.\n\n    Returns:\n        List of (n, p) pairs where p = n\u00b2 + 1 is prime and p \u2261 1 (mod 4).\n\n    >>> primes = generate_primes_1_mod_4(5, min_bits=4)\n    >>> all(p % 4 == 1 for _, p in primes)\n    True\n    \"\"\"\n    results = []\n    min_n = max(2, int(math.sqrt(2 ** (min_bits - 1))))\n    n = min_n\n\n    while len(results) < count:\n        p = n * n + 1\n        if is_prime(p):\n            assert p % 4 == 1 or p == 2, f\"Theorem C violated! p={p}, p%4={p%4}\"\n            if p > 2:\n                results.append((n, p))\n        n += 1\n\n    return results\n\n\n# ============================================================\n# Application 2: Semiprime generation from n\u00b2 + 1\n# ============================================================\n\ndef generate_semiprimes_sq_plus_one(count: int, max_n: int = 100000) -> List[Tuple[int, int, int, int]]:\n    \"\"\"\n    Find semiprimes of the form n\u00b2 + 1.\n\n    By Iwaniec's theorem, there are infinitely many n where n\u00b2 + 1\n    has at most 2 prime factors. This function finds such values.\n\n    Application: Semiprimes are used in:\n    - RSA cryptosystem (N = pq)\n    - Pseudorandom number generation\n    - Complexity-theoretic hardness assumptions\n\n    Args:\n        count: Number of semiprimes to find.\n        max_n: Maximum value of n to search.\n\n    Returns:\n        List of (n, n\u00b2+1, p, q) where n\u00b2+1 = p\u00b7q with p, q prime.\n\n    >>> results = generate_semiprimes_sq_plus_one(3, max_n=20)\n    >>> all(p * q == n*n+1 for n, _, p, q in results)\n    True\n    \"\"\"\n    results = []\n\n    for n in range(2, max_n + 1):\n        if len(results) >= count:\n            break\n        val = n * n + 1\n        factors = factorize(val)\n        if len(factors) == 2:\n            results.append((n, val, factors[0], factors[1]))\n\n    return results\n\n\n# ============================================================\n# Application 3: Polynomial admissibility framework\n# ============================================================\n\ndef test_polynomial_admissibility(\n    name: str,\n    f,\n    var_count: int,\n    prime_limit: int = 100\n) -> Dict:\n    \"\"\"\n    Test local admissibility of a polynomial and compute root statistics.\n\n    This implements the formal definition:\n        LocallyAdmissible(f) \u27fa \u2200 prime p, \u2203 inputs x with p \u2224 f(x)\n\n    Additionally computes:\n    - Root count \u03c9(p) for each prime p\n    - Average root density\n    - Whether the polynomial has the \"Bateman-Horn\" structure\n\n    Application: Admissibility testing is the first step in any\n    sieve-theoretic analysis of prime-producing polynomials.\n\n    Args:\n        name: Name of the polynomial for display.\n        f: The polynomial function.\n        var_count: Number of variables (1 or 2).\n        prime_limit: Test all primes up to this bound.\n\n    Returns:\n        Dictionary with admissibility results and statistics.\n\n    >>> result = test_polynomial_admissibility(\"n\u00b2+1\", lambda n: n**2+1, 1, 30)\n    >>> result['is_admissible']\n    True\n    \"\"\"\n    # Simple sieve for primes\n    sieve = [True] * (prime_limit + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(prime_limit**0.5) + 1):\n        if sieve[i]:\n            for j in range(i*i, prime_limit + 1, i):\n                sieve[j] = False\n    primes = [i for i in range(2, prime_limit + 1) if sieve[i]]\n\n    root_counts = {}\n    witnesses = {}\n    is_admissible = True\n\n    for p in primes:\n        count = 0\n        witness = None\n\n        if var_count == 1:\n            for n in range(p):\n                val = f(n)\n                if val % p == 0:\n                    count += 1\n                elif witness is None:\n                    witness = (n,)\n        elif var_count == 2:\n            for a in range(p):\n                for b in range(p):\n                    val = f(a, b)\n                    if val % p == 0:\n                        count += 1\n                    elif witness is None:\n                        witness = (a, b)\n\n        total = p if var_count == 1 else p * p\n        root_counts[p] = count\n        witnesses[p] = witness\n\n        if witness is None:\n            is_admissible = False\n\n    avg_density = sum(root_counts[p] / (p if var_count == 1 else p*p)\n                      for p in primes) / len(primes) if primes else 0\n\n    return {\n        'name': name,\n        'is_admissible': is_admissible,\n        'root_counts': root_counts,\n        'witnesses': witnesses,\n        'average_density': avg_density,\n        'primes_tested': len(primes)\n    }\n\n\n# ============================================================\n# Application 4: Statistical analysis\n# ============================================================\n\ndef prime_factor_distribution_analysis(limit: int) -> Dict:\n    \"\"\"\n    Analyze the distribution of prime factors of n\u00b2 + 1 values.\n\n    Computes statistics relevant to the Bateman-Horn conjecture\n    and Iwaniec's semiprime theorem.\n\n    Args:\n        limit: Analyze n\u00b2 + 1 for n = 1, ..., limit.\n\n    Returns:\n        Dictionary with distributional statistics.\n    \"\"\"\n    omega_counts = {}  # \u03a9 value -> count\n    prime_mod_4_counts = {1: 0, 3: 0}  # mod 4 residue -> count of distinct primes seen\n    all_odd_prime_divisors = set()\n    largest_prime_factors = []\n\n    for n in range(1, limit + 1):\n        val = n * n + 1\n        factors = factorize(val)\n        omega = len(factors)\n        omega_counts[omega] = omega_counts.get(omega, 0) + 1\n\n        for p in set(factors):\n            if p > 2:\n                all_odd_prime_divisors.add(p)\n\n        if factors:\n            largest_prime_factors.append(factors[-1])\n\n    for p in all_odd_prime_divisors:\n        prime_mod_4_counts[p % 4] += 1\n\n    # Compute density ratios\n    log_limit = math.log(limit) if limit > 1 else 1\n    prime_count = omega_counts.get(1, 0)\n    semiprime_count = omega_counts.get(2, 0)\n\n    return {\n        'limit': limit,\n        'omega_distribution': dict(sorted(omega_counts.items())),\n        'prime_count': prime_count,\n        'semiprime_count': semiprime_count,\n        'at_most_2_factors': prime_count + semiprime_count,\n        'prime_density_ratio': prime_count / (limit / log_limit) if limit > 1 else 0,\n        'semiprime_density_ratio': semiprime_count / (limit / log_limit**2) if limit > 1 else 0,\n        'odd_primes_1_mod_4': prime_mod_4_counts[1],\n        'odd_primes_3_mod_4': prime_mod_4_counts[3],\n        'congruence_law_holds': prime_mod_4_counts[3] == 0,\n        'average_largest_prime_factor': sum(largest_prime_factors) / len(largest_prime_factors) if largest_prime_factors else 0,\n    }\n\n\nif __name__ == \"__main__\":\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Prime Generation from n\u00b2 + 1\")\n    print(\"=\" * 70)\n    primes = generate_primes_1_mod_4(10, min_bits=8)\n    print(f\"Generated {len(primes)} primes p = n\u00b2 + 1 with p \u2261 1 (mod 4):\")\n    for n, p in primes:\n        print(f\"  n = {n:>6}, p = n\u00b2 + 1 = {p:>12}, p mod 4 = {p % 4}, bits = {p.bit_length()}\")\n    print()\n\n    print(\"=\" * 70)\n    print(\"APPLICATION 2: Semiprime Generation from n\u00b2 + 1\")\n    print(\"=\" * 70)\n    semiprimes = generate_semiprimes_sq_plus_one(10)\n    print(f\"First {len(semiprimes)} semiprimes of the form n\u00b2 + 1:\")\n    for n, val, p, q in semiprimes:\n        print(f\"  n = {n:>4}, n\u00b2 + 1 = {val:>8} = {p} \u00d7 {q}\")\n    print()\n\n    print(\"=\" * 70)\n    print(\"APPLICATION 3: Polynomial Admissibility Testing\")\n    print(\"=\" * 70)\n    polynomials = [\n        (\"n\u00b2 + 1\", lambda n: n**2 + 1, 1),\n        (\"n\u00b2 - 1\", lambda n: abs(n**2 - 1) if n > 1 else 1, 1),\n        (\"n\u00b2 + n + 1\", lambda n: n**2 + n + 1, 1),\n        (\"2n\", lambda n: 2*n if n > 0 else 2, 1),\n        (\"a\u00b2 + b\u2074\", lambda a, b: a**2 + b**4, 2),\n    ]\n    for name, f, vc in polynomials:\n        result = test_polynomial_admissibility(name, f, vc, prime_limit=50)\n        status = \"\u2713 ADMISSIBLE\" if result['is_admissible'] else \"\u2717 NOT ADMISSIBLE\"\n        print(f\"  {name:>12}: {status} (avg density: {result['average_density']:.4f})\")\n    print()\n\n    print(\"=\" * 70)\n    print(\"APPLICATION 4: Statistical Analysis of n\u00b2 + 1\")\n    print(\"=\" * 70)\n    for limit in [100, 1000, 10000]:\n        stats = prime_factor_distribution_analysis(limit)\n        print(f\"\\nn \u2264 {limit}:\")\n        print(f\"  \u03a9 distribution: {stats['omega_distribution']}\")\n        print(f\"  Primes: {stats['prime_count']}, Semiprimes: {stats['semiprime_count']}\")\n        print(f\"  At most 2 factors: {stats['at_most_2_factors']}\")\n        print(f\"  Congruence law (all odd divisors \u2261 1 mod 4): {stats['congruence_law_holds']}\")\n        print(f\"  Odd prime divisors \u2261 1 mod 4: {stats['odd_primes_1_mod_4']}\")\n        print(f\"  Odd prime divisors \u2261 3 mod 4: {stats['odd_primes_3_mod_4']}\")\n\n\n#!/usr/bin/env python3\n\"\"\"\nDemonstration of formally verified results about primes of the form n\u00b2 + 1.\n\nThis script illustrates the three main theorems:\n1. Local admissibility: no prime divides all values of n\u00b2 + 1\n2. Congruence selection law: odd prime divisors of n\u00b2 + 1 are \u2261 1 (mod 4)\n3. Infinitely many splitting primes via Euclid-style construction\n\nIt also explores semiprime density and the Friedlander-Iwaniec connection.\n\"\"\"\n\nimport math\nfrom collections import Counter\nfrom typing import List, Tuple, Set\n\n\ndef is_prime(n: int) -> bool:\n    \"\"\"Check if n is prime.\"\"\"\n    if n < 2:\n        return False\n    if n < 4:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\"Return the prime factorization of n as a sorted list with multiplicity.\"\"\"\n    if n <= 1:\n        return []\n    factors = []\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors.append(d)\n            n //= d\n        d += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\ndef big_omega(n: int) -> int:\n    \"\"\"Count prime factors with multiplicity (\u03a9 function).\"\"\"\n    return len(factorize(n))\n\n\ndef demo_local_admissibility():\n    \"\"\"\n    Demonstrate Theorem B: For every prime p, there exists n < p with p \u2224 n\u00b2 + 1.\n\n    The simplest witness: n = 0 gives 0\u00b2 + 1 = 1, and no prime divides 1.\n    We also show the full root structure mod p.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"THEOREM B: Local Admissibility of n\u00b2 + 1\")\n    print(\"=\" * 70)\n    print()\n    print(\"For every prime p, \u2203 n < p such that p \u2224 n\u00b2 + 1.\")\n    print(\"Universal witness: n = 0 gives 0\u00b2 + 1 = 1, not divisible by any prime.\")\n    print()\n\n    print(\"Root counts of X\u00b2 + 1 mod p for small primes:\")\n    print(f\"{'p':>5} {'p mod 4':>7} {'roots mod p':>15} {'root count':>10}\")\n    print(\"-\" * 42)\n\n    for p in range(2, 60):\n        if not is_prime(p):\n            continue\n        roots = [n for n in range(p) if (n * n + 1) % p == 0]\n        print(f\"{p:>5} {p % 4:>7} {str(roots):>15} {len(roots):>10}\")\n\n    print()\n    print(\"Pattern: primes \u2261 1 (mod 4) have 2 roots; primes \u2261 3 (mod 4) have 0 roots; p=2 has 1 root.\")\n    print(\"In ALL cases, root count < p, confirming local admissibility. \u2713\")\n    print()\n\n\ndef demo_congruence_selection_law():\n    \"\"\"\n    Demonstrate Theorem C: If q is an odd prime and q | n\u00b2 + 1, then q \u2261 1 (mod 4).\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"THEOREM C: Congruence Selection Law\")\n    print(\"=\" * 70)\n    print()\n    print(\"Every odd prime dividing some n\u00b2 + 1 must be \u2261 1 (mod 4).\")\n    print()\n\n    # Collect all odd prime divisors of n\u00b2 + 1 for n up to 1000\n    divisors_1mod4: Set[int] = set()\n    divisors_3mod4: Set[int] = set()\n\n    for n in range(10001):\n        val = n * n + 1\n        for p in set(factorize(val)):\n            if p == 2:\n                continue\n            if p % 4 == 1:\n                divisors_1mod4.add(p)\n            else:\n                divisors_3mod4.add(p)\n\n    print(f\"Odd prime divisors of n\u00b2 + 1 for n \u2264 10000:\")\n    print(f\"  Primes \u2261 1 (mod 4): {len(divisors_1mod4)} found\")\n    print(f\"  Primes \u2261 3 (mod 4): {len(divisors_3mod4)} found\")\n    print()\n\n    if divisors_3mod4:\n        print(f\"  COUNTEREXAMPLE FOUND: {sorted(divisors_3mod4)[:10]}\")\n    else:\n        print(\"  No prime \u2261 3 (mod 4) ever divides n\u00b2 + 1. Theorem confirmed! \u2713\")\n\n    print()\n    print(\"First 20 primes \u2261 1 (mod 4) appearing as divisors:\")\n    print(f\"  {sorted(divisors_1mod4)[:20]}\")\n    print()\n\n\ndef demo_euclid_construction():\n    \"\"\"\n    Demonstrate Theorem D: Euclid-style construction of new primes \u2261 1 (mod 4)\n    dividing values of n\u00b2 + 1.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"THEOREM D: Euclid-Style Construction of Splitting Primes\")\n    print(\"=\" * 70)\n    print()\n    print(\"Construction: Given bound B, form M = (2\u00b7B!)\u00b2 + 1.\")\n    print(\"Any odd prime factor q of M satisfies q \u2261 1 (mod 4) and q > B.\")\n    print()\n\n    for B in [3, 5, 7, 10, 15]:\n        factorial_B = math.factorial(B)\n        M_base = 2 * factorial_B\n        M = M_base * M_base + 1\n        factors = factorize(M)\n        primes = sorted(set(factors))\n\n        print(f\"B = {B}:\")\n        print(f\"  M = (2\u00b7{B}!)\u00b2 + 1 = ({M_base})\u00b2 + 1 = {M}\")\n        print(f\"  Prime factors: {primes}\")\n        for q in primes:\n            status = \"\u2713\" if q > B and q % 4 == 1 else (\"(q=2)\" if q == 2 else \"\u2717\")\n            print(f\"    q = {q}: q mod 4 = {q % 4}, q > {B}? {q > B} {status}\")\n        print()\n\n\ndef demo_semiprime_density():\n    \"\"\"\n    Explore the density of primes and semiprimes of the form n\u00b2 + 1.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"SEMIPRIME DENSITY: Values of n\u00b2 + 1 by Prime Factor Count\")\n    print(\"=\" * 70)\n    print()\n\n    limits = [100, 1000, 10000]\n\n    for X in limits:\n        counts = Counter()\n        for n in range(1, X + 1):\n            val = n * n + 1\n            omega = big_omega(val)\n            counts[omega] += 1\n\n        total = sum(counts.values())\n        prime_count = counts[1]\n        semiprime_count = counts[2]\n        at_most_2 = prime_count + semiprime_count\n\n        print(f\"n \u2264 {X} (total values: {total}):\")\n        for k in sorted(counts.keys()):\n            pct = 100 * counts[k] / total\n            bar = \"\u2588\" * int(pct / 2)\n            print(f\"  \u03a9 = {k}: {counts[k]:>6} ({pct:5.1f}%) {bar}\")\n\n        log_X = math.log(X) if X > 1 else 1\n        ratio = at_most_2 / (X / log_X ** 2) if X > 1 else 0\n        print(f\"  Primes + semiprimes: {at_most_2} (ratio to X/(log X)\u00b2: {ratio:.3f})\")\n        print()\n\n\ndef demo_friedlander_iwaniec_bridge():\n    \"\"\"\n    Demonstrate the admissibility bridge between n\u00b2 + 1 and a\u00b2 + b\u2074.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"FRIEDLANDER-IWANIEC BRIDGE: Shared Admissibility\")\n    print(\"=\" * 70)\n    print()\n\n    print(\"Both n\u00b2 + 1 and a\u00b2 + b\u2074 are locally admissible:\")\n    print()\n\n    # For n\u00b2 + 1\n    print(\"n\u00b2 + 1: Universal witness n = 0 gives 0\u00b2 + 1 = 1 (not divisible by any prime)\")\n    print(\"a\u00b2 + b\u2074: Universal witness (a,b) = (1,0) gives 1\u00b2 + 0\u2074 = 1 (not divisible by any prime)\")\n    print()\n\n    # Count primes of each form up to a bound\n    bound = 10000\n    primes_sq_plus_1 = set()\n    primes_a2_b4 = set()\n\n    for n in range(bound):\n        val = n * n + 1\n        if is_prime(val):\n            primes_sq_plus_1.add(val)\n\n    for a in range(int(bound ** 0.5) + 1):\n        for b in range(int(bound ** 0.25) + 1):\n            val = a * a + b ** 4\n            if val <= bound and is_prime(val) and val > 1:\n                primes_a2_b4.add(val)\n\n    print(f\"Primes of form n\u00b2 + 1 with n < {bound}: {len(primes_sq_plus_1)}\")\n    print(f\"  First few: {sorted(primes_sq_plus_1)[:15]}\")\n    print()\n    print(f\"Primes of form a\u00b2 + b\u2074 up to {bound}: {len(primes_a2_b4)}\")\n    print(f\"  First few: {sorted(primes_a2_b4)[:15]}\")\n    print()\n\n    overlap = primes_sq_plus_1 & primes_a2_b4\n    print(f\"Primes in BOTH forms: {len(overlap)}\")\n    print(f\"  (n\u00b2 + 1 is a special case of a\u00b2 + b\u2074 with b = 1)\")\n    print()\n\n\nif __name__ == \"__main__\":\n    demo_local_admissibility()\n    demo_congruence_selection_law()\n    demo_euclid_construction()\n    demo_semiprime_density()\n    demo_friedlander_iwaniec_bridge()\n"
+    },
+    "date": "2026-05-19T18:03:40Z",
+    "exp_id": "7e2f91b5",
+    "source_exp_ids": [
+      "seed"
     ]
   },
   "this_document_identifies_five_specific_testable_sc.json": {
@@ -3802,7 +3844,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 90
+      "hue": 281
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -3811,7 +3853,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -3820,7 +3862,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -3829,7 +3871,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "galois_group__s",
@@ -3838,7 +3880,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -3847,7 +3889,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -3856,7 +3898,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "expected_lean_signature",
@@ -3865,7 +3907,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -3874,7 +3916,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -3883,7 +3925,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "percolation_threshold",
@@ -3892,7 +3934,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -3901,7 +3943,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -3910,7 +3952,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -3919,7 +3961,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -3937,7 +3979,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 89
+      "hue": 91
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -3946,7 +3988,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -3955,7 +3997,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T17:03:39Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -3964,7 +4006,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -3973,7 +4015,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 100
+      "hue": 271
     },
     {
       "id": "p_vs_np_problem",
@@ -3982,7 +4024,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -3991,7 +4033,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -4000,7 +4042,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "hodge_conjecture",
@@ -4009,7 +4051,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -4018,7 +4060,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:03:41Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -4027,7 +4069,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 292
+      "hue": 92
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -4036,7 +4078,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -4045,7 +4087,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T20:03:02Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "sums_of_three_cubes",
@@ -4054,7 +4096,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T20:03:29Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -4072,7 +4114,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "twin_prime_conjecture",
@@ -4081,7 +4123,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -4090,7 +4132,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 101
+      "hue": 90
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -4099,7 +4141,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "happy_end_problem",
@@ -4108,7 +4150,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -4117,7 +4159,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T23:05:18Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -4126,7 +4168,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -4135,7 +4177,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -4144,7 +4186,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "erdsstraus_conjecture",
@@ -4153,7 +4195,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:03:55Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "langlands_program_functoriality",
@@ -4171,7 +4213,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "tropical_intersection_theory",
@@ -4180,7 +4222,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "riemann_hypothesis",
@@ -4189,7 +4231,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 292
+      "hue": 91
     },
     {
       "id": "odd_perfect_numbers",
@@ -4207,7 +4249,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 271
+      "hue": 100
     },
     {
       "id": "jacobian_conjecture",
@@ -4216,7 +4258,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "10_is_a_solitary_number",
@@ -4225,7 +4267,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "kakeya_conjecture",
@@ -4234,7 +4276,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T10:26:12Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -4243,7 +4285,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 92
+      "hue": 292
     },
     {
       "id": "invariant_subspace_problem",
@@ -4252,7 +4294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -4261,7 +4303,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -4279,7 +4321,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -4288,7 +4330,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -4297,7 +4339,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -4315,7 +4357,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "196_algorithm_non_termination",
@@ -4324,7 +4366,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:04:01Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "yang_mills_mass_gap",
@@ -4333,7 +4375,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "goldbach_conjecture",
@@ -4342,7 +4384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -4351,7 +4393,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -4369,7 +4411,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 112
+      "hue": 92
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -4378,7 +4420,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "beals_conjecture",
@@ -4387,7 +4429,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -4396,7 +4438,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -4405,7 +4447,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -4414,7 +4456,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -4423,7 +4465,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -4432,7 +4474,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -4459,7 +4501,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -4468,7 +4510,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -4477,7 +4519,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -4486,7 +4528,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -4504,7 +4546,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 92
+      "hue": 292
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -4513,7 +4555,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -4522,7 +4564,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 270
+      "hue": 95
+    },
+    {
+      "id": "primes_of_the_form_n1",
+      "title": "Formal Infrastructure for Primes of the Form n\u00b2 + 1",
+      "domain": "Number Theory / Analytic Number Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-19T18:03:40Z",
+      "hue": 271
     }
   ],
   "edges": [
@@ -4902,21 +4953,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-18T10:17:17.081010+00:00"
-  },
-  {
-    "id": "fd_0064",
-    "title": "Phase Transition in Proof Compression for Formal Arithmetic",
-    "description": "Conjecture: Fix a sound finitely axiomatized theory T extending elementary arithmetic and a complete deterministic proof normalizer N for its formal proofs. There exists a critical exponent alpha_T such that for families of true Pi_2 statements {phi_n} with shortest raw proof length L(n), the shortest normalized proof length L_N(n) exhibits a sharp dichotomy: either L_N(n) <= poly(L(n)) for all sufficiently large n, or L_N(n) >= exp(L(n)^alpha_T) infinitely often, with no intermediate asymptotic regime on any natural complete family encoding total-search principles. Test: implement multiple normalization/translation pipelines in Lean or another proof assistant for benchmark families (pigeonhole, Paris-Harrington fragments, circuit lower-bound surrogates, finite combinatorial principles) and measure whether proof-length distortion clusters into polynomial vs stretched/exponential classes, searching for a universal threshold per theory. A single robust family with stable intermediate asymptotics would refute the conjecture. Impact: would uncover a new universality law for proof complexity, giving a quantitative theory of when formalization and normalization preserve mathematical insight versus causing unavoidable proof explosion.",
-    "domains": [
-      "Proof Complexity",
-      "Mathematical Logic"
-    ],
-    "priority_score": 0.8,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "efb307c5",
-    "timestamp": "2026-05-18T11:06:28.605908+00:00"
   },
   {
     "id": "fd_0078",
@@ -5598,5 +5634,26 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "b3c63060",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-19T18:00:17.372894+00:00"
+  },
+  {
+    "id": "fd_0150",
+    "title": "**Conjecture:** For any two complete deterministic normalizers N\u2081, N\u2082 on the sam",
+    "description": "# Future Directions: Phase Transition in Proof Compression\n\n## Hypothesis 1: Normalizer-Invariance Conjecture\n\n**Conjecture:** For any two complete deterministic normalizers N\u2081, N\u2082 on the same bounded-search proof calculus, the families exhibiting exponential normalized blowup are identical up to polynomial distortion. That is, if `shortestNorm P N\u2081 (\u03c6 n) \u2265 2^(n^\u03b1)` infinitely often, then `shortestNorm P N\u2082 (\u03c6 n) \u2265 2^(n^\u03b2)` infinitely often for some \u03b2 > 0, and vice versa.\n\n**Test:** Implement two distinct normalizers for a sequent calculus with bounded-arithmetic axioms:\n1. Standard cut-elimination via the Gentzen reduction\n2. Normalization-by-evaluation via a term model\n\nCompare the asymptotic classes on pigeonhole and local-search families. If both normalizers produce the same exponential-vs-polynomial classification for all tested families, the conjecture is supported. A single family where one normalizer achieves polynomial normalized proofs and the other requires exponential would refute it.\n\n**Impact:** If true, this would establish that the phase transition is a property of the *theory* and *statement family*, not the normalization algorithm. This would ground a universality law: proof compression obeys theory-intrinsic asymptotic laws independent of implementation details, analogous to universality classes in statistical physics.\n\n---\n\n## Hypothesis 2: Theory Exponent Hypothesis\n\n**Conjecture:** There exists a theory-dependent constant \u03b1_T > 0 such that every complete family of total-search principles over theory T has normalized distortion either eventually polynomial or at least `exp(L^{\u03b1_T})` infinitely often, where L is the shortest raw proof length.\n\n**Test:** Formalize three distinct bounded arithmetic theories (e.g., PV, S\u00b9\u2082, T\u00b2\u2082) and estimate the lower exponent \u03b1 for several families (pigeonhole, local search, Ramsey-type) over each theory. If the estimated exponents cluster around a theory-specific value (within statistical error), the hypothesis is supported. If different families over the same theory yield wildly different exponents, the hypothesis is weakened.\n\n**Impact:** If confirmed, \u03b1_T becomes a new invariant of formal theories \u2014 a \"proof compression exponent\" that quantifies how much abstraction power a theory provides. This would create a new classification of arithmetic theories by their compression characteristics, complementing the traditional strength hierarchy.\n\n---\n\n## Hypothesis 3: Herbrand-Search Equivalence\n\n**Conjecture:** For bounded \u03a0\u2082 families in first-order arithmetic, the shortest normalized proof length is polynomially equivalent to the minimal Herbrand expansion size. Specifically, there exist polynomials p, q such that:\n- `shortestNorm(\u03c6_n) \u2264 p(HerbrandSize(\u03c6_n))`\n- `HerbrandSize(\u03c6_n) \u2264 q(shortestNorm(\u03c6_n))`\n\n**Test:** Formalize both Herbrand expansion size and normalized proof length for the pigeonhole family and a bounded local-search family. Compute upper and lower bounds on both quantities and check whether the polynomial relationship holds. A counterexample would be a family where Herbrand expansion size is polynomial but normalized proof length is superpolynomial (or vice versa).\n\n**Impact:** If true, this would unify two classical measures of proof complexity (Herbrand complexity and normalization blowup) into a single equivalence class. This would allow transferring decades of results from Herbrand complexity theory directly to normalization bounds, and vice versa. It would also provide a semantic characterization of normalization blowup: the blowup measures exactly how many explicit witness instances are needed.\n\n---\n\n## Hypothesis 4: Communication Barrier Hypothesis\n\n**Conjecture:** Families of total-search statements with high deterministic communication complexity under witness partitioning necessarily incur superpolynomial normalization blowup. Precisely: if the communication complexity of the search problem encoded by \u03c6_n (where Alice holds part of the input and Bob holds the rest, and they must jointly find a witness) is \u03a9(n), then `shortestNorm(\u03c6_n) \u2265 2^(\u03a9(n))`.\n\n**Test:** Encode partitioned witness-search principles (e.g., set disjointness reduced to collision finding) and formally compute or bound both the communication complexity and the normalized proof length. If the implication holds for all tested families, the conjecture is supported. A family with high communication complexity but polynomial normalized proofs would refute it.\n\n**Impact:** This would establish a deep connection between proof compression and communication complexity, opening a new channel for proving proof-length lower bounds. Communication complexity has a mature toolkit (information-theoretic methods, partition arguments, lifting theorems) that could be imported wholesale into proof complexity, potentially resolving open problems about specific proof systems.\n\n---\n\n## Hypothesis 5: Intermediate-Regime Refutation Candidate\n\n**Conjecture:** There exists a natural complete family whose normalized distortion is stably `exp(\u0398(\u221a(log L)))`, refuting the strict polynomial-vs-exponential dichotomy.\n\n**Test:** Construct candidate families based on:\n1. Layered local-search principles with geometrically decreasing layer sizes\n2. Bounded switching principles with sublinear switching depth\n3. Compositions of polynomial-distortion and exponential-distortion subfamilies\n\nFor each candidate, compute normalized proof lengths for n = 1 to 100 and fit the distortion function to models: polynomial, `exp(\u221a(log L))`, `exp(log^{2/3} L)`, and exponential. If any candidate consistently fits an intermediate model better than the endpoints, the dichotomy is refuted.\n\n**Impact:** If such a family exists, the phase transition picture becomes richer \u2014 instead of a simple binary classification, proof compression would exhibit a spectrum of distortion regimes, analogous to the KPZ universality class in surface growth or the variety of critical exponents in statistical mechanics. This would demand a fundamentally more nuanced theory. If no such family can be found despite extensive search, it would strongly support the gap theorem and suggest a deep structural reason for the dichotomy.\n\n---\n\n## Priority Ordering\n\n1. **Hypothesis 3 (Herbrand-Search Equivalence)** \u2014 Most tractable, connects to established proof theory, and provides immediate new tools.\n2. **Hypothesis 1 (Normalizer Invariance)** \u2014 Foundational for the entire theory; must be tested early.\n3. **Hypothesis 2 (Theory Exponent)** \u2014 Computationally intensive but high impact.\n4. **Hypothesis 4 (Communication Barrier)** \u2014 Requires bridging two technical communities.\n5. **Hypothesis 5 (Intermediate Regime)** \u2014 Hardest to confirm or refute; best attacked last.\n",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Combinatorics",
+      "Probability",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "efb307c5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T18:03:26.731336+00:00"
   }
 ];

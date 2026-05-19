@@ -4,7 +4,7 @@ import Mathlib
 # Formal Meta-Complexity: Core Definitions
 
 Definitions for Hamming weight, symmetric Boolean functions, KW witnesses,
-threshold functions, and majority functions on the Boolean cube `Fin n → Bool`.
+threshold functions, and majority functions.
 -/
 
 noncomputable section
@@ -37,9 +37,13 @@ instance {n : ℕ} (f : BoolVec n → Bool) : Fintype (KWWitness f) :=
 
 /-! ## Symmetric Boolean functions -/
 
-/-- A Boolean function is symmetric if its output depends only on the Hamming weight. -/
+/-- A Boolean function is symmetric if its output depends only on the Hamming weight
+of the input. -/
 def IsSymmetric {n : ℕ} (f : BoolVec n → Bool) : Prop :=
   ∀ x y : BoolVec n, hammingWeight x = hammingWeight y → f x = f y
+
+/-- A symmetric Boolean function on `n` variables, bundled with the symmetry proof. -/
+def SymmetricBoolFn (n : ℕ) := { f : BoolVec n → Bool // IsSymmetric f }
 
 /-! ## Layers -/
 
@@ -47,18 +51,32 @@ def IsSymmetric {n : ℕ} (f : BoolVec n → Bool) : Prop :=
 def layer (n k : ℕ) : Finset (BoolVec n) :=
   Finset.univ.filter (fun x => hammingWeight x = k)
 
+/-- The true layer: vectors in the Hamming layer of weight `k` where `f` is true. -/
+def trueLayer {n : ℕ} (f : BoolVec n → Bool) (k : ℕ) : Finset (BoolVec n) :=
+  (layer n k).filter (fun x => f x = true)
+
+/-- The false layer: vectors in the Hamming layer of weight `k` where `f` is false. -/
+def falseLayer {n : ℕ} (f : BoolVec n → Bool) (k : ℕ) : Finset (BoolVec n) :=
+  (layer n k).filter (fun x => f x = false)
+
 /-! ## Threshold and majority functions -/
 
-/-- The threshold function: `thresholdFn n t x = true` iff `hammingWeight x ≥ t`. -/
+/-- The threshold function: `thresholdFn n t x = true` iff the Hamming weight of `x`
+is at least `t`. -/
 def thresholdFn (n t : ℕ) : BoolVec n → Bool :=
   fun x => decide (t ≤ hammingWeight x)
 
-/-- The majority function. -/
+/-- The majority function: `majorityFn n x = true` iff at least `⌈n/2⌉` coordinates
+are true. -/
 def majorityFn (n : ℕ) : BoolVec n → Bool :=
   thresholdFn n ((n + 1) / 2)
 
 theorem thresholdFn_symmetric (n t : ℕ) : IsSymmetric (thresholdFn n t) := by
-  intro x y hxy; simp [thresholdFn, hxy]
+  intro x y hxy
+  simp [thresholdFn, hxy]
+
+theorem majorityFn_symmetric (n : ℕ) : IsSymmetric (majorityFn n) :=
+  thresholdFn_symmetric n _
 
 /-! ## Number of differing coordinates -/
 
@@ -66,53 +84,24 @@ theorem thresholdFn_symmetric (n t : ℕ) : IsSymmetric (thresholdFn n t) := by
 def differSet {n : ℕ} (x y : BoolVec n) : Finset (Fin n) :=
   Finset.univ.filter (fun i => x i ≠ y i)
 
-/-- Coordinates where x is true and y is false. -/
-def trueToFalse {n : ℕ} (x y : BoolVec n) : Finset (Fin n) :=
-  Finset.univ.filter (fun i => x i = true ∧ y i = false)
-
-/-- Coordinates where x is false and y is true. -/
-def falseToTrue {n : ℕ} (x y : BoolVec n) : Finset (Fin n) :=
-  Finset.univ.filter (fun i => x i = false ∧ y i = true)
-
-/-- The number of differing coordinates equals the sum of one-sided disagreements. -/
-theorem differSet_card_eq {n : ℕ} (x y : BoolVec n) :
-    (differSet x y).card = (trueToFalse x y).card + (falseToTrue x y).card := by
-  unfold differSet trueToFalse falseToTrue
+theorem differSet_card_eq_dist {n : ℕ} (x y : BoolVec n) :
+    (differSet x y).card =
+      (Finset.univ.filter (fun i => x i = true ∧ y i = false)).card +
+      (Finset.univ.filter (fun i => x i = false ∧ y i = true)).card := by
+  unfold differSet
   rw [show (Finset.univ.filter (fun i => x i ≠ y i)) =
     (Finset.univ.filter (fun i => x i = true ∧ y i = false)) ∪
     (Finset.univ.filter (fun i => x i = false ∧ y i = true)) from by
     ext i; simp; cases x i <;> cases y i <;> simp]
   rw [Finset.card_union_of_disjoint]
-  exact Finset.disjoint_filter.mpr (by intro i _ ⟨h1, _⟩ ⟨h3, _⟩; simp_all)
+  exact Finset.disjoint_filter.mpr (by intro i _ ⟨h1, h2⟩ ⟨h3, _⟩; simp_all)
 
-/-- The number of `true→false` minus `false→true` disagreements equals
-    the weight difference. -/
-theorem trueToFalse_sub_falseToTrue {n : ℕ} (x y : BoolVec n) :
-    (trueToFalse x y).card = hammingWeight x - (Finset.univ.filter fun i => x i = true ∧ y i = true).card := by
-  unfold trueToFalse hammingWeight
-  have : (Finset.univ.filter fun i => x i = true) =
-    (Finset.univ.filter fun i => x i = true ∧ y i = true) ∪
-    (Finset.univ.filter fun i => x i = true ∧ y i = false) := by
-    ext i; simp; cases y i <;> simp
-  rw [this, Finset.card_union_of_disjoint (by
-    exact Finset.disjoint_filter.mpr (by intro i _ ⟨_, h1⟩ ⟨_, h2⟩; simp_all))]
-  omega
+/-! ## Universal upper bound -/
 
-/-! ## Fiber counting definitions -/
-
-/-- The per-fiber witness count from the "true→false" orientation.
-    For a fixed coordinate, there are `C(n-1,k-1)` vectors of weight k with that
-    coordinate true, and `C(n-1,l)` vectors of weight l with it false. -/
-def fiberTF (n k l : ℕ) : ℕ :=
-  if k = 0 then 0 else n * Nat.choose (n - 1) (k - 1) * Nat.choose (n - 1) l
-
-/-- The per-fiber witness count from the "false→true" orientation. -/
-def fiberFT (n k l : ℕ) : ℕ :=
-  if l = 0 then 0 else n * Nat.choose (n - 1) k * Nat.choose (n - 1) (l - 1)
-
-/-- The total per-fiber witness count: the number of triples (x,y,i) with
-    |x|=k, |y|=l, x_i≠y_i. -/
-def fiberTotal (n k l : ℕ) : ℕ := fiberTF n k l + fiberFT n k l
+/-- Each true/false pair contributes at most `n` witness coordinates. -/
+theorem card_differSet_le {n : ℕ} (x y : BoolVec n) :
+    (differSet x y).card ≤ n := by
+  exact le_trans (Finset.card_filter_le _ _) (by simp)
 
 end MetaComplexity
 
