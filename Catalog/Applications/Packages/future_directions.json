@@ -2901,7 +2901,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "94f79e2d",
       "timestamp": "2026-05-19T15:54:11.448835+00:00"
     },
