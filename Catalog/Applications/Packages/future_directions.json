@@ -441,8 +441,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "7e2f91b5",
       "timestamp": "2026-05-18T10:17:17.079999+00:00"
     },
     {
@@ -2447,7 +2447,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "ff0359d2",
       "timestamp": "2026-05-19T10:26:47.554271+00:00"
     },
@@ -3058,6 +3058,30 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T17:00:28.528098+00:00"
+    },
+    {
+      "id": "fd_0146",
+      "title": "**Conjecture:** For a compact operator $K$ on an infinite-dimensional Banach spa",
+      "description": "# Future Directions\n\n## Hypothesis A: Full Bidirectional Fredholm Alternative\n\n**Conjecture:** For a compact operator $K$ on an infinite-dimensional Banach space, $I - K$ is surjective if and only if $I - K$ is injective.\n\n**Lean formalization target:**\n```lean\ntheorem IsCompactOperator.surjective_iff_injective_one_sub\n    {𝕜 E : Type*} [RCLike 𝕜] [NormedAddCommGroup E] [NormedSpace 𝕜 E]\n    [CompleteSpace E] {K : E →L[𝕜] E} (hK : IsCompactOperator K)\n    (hinfin : ¬FiniteDimensional 𝕜 E) :\n    Surjective (1 - K : E →L[𝕜] E) ↔ Injective (1 - K : E →L[𝕜] E)\n```\n\n**Test:** Formalize both directions. The forward direction (surjective ⟹ injective) requires applying the existing result to the Banach space adjoint $K^*$, using the fact that:\n- $K$ compact implies $K^*$ compact (needs formalization of adjoint compactness)\n- $I - K$ surjective iff $I - K^*$ injective (from duality theory)\n\n**Impact:** Completes the Fredholm Alternative. Together with the existing result, packages as a single `iff` theorem. Opens the door to the full Riesz-Schauder theory.\n\n---\n\n## Hypothesis B: Nonzero Spectrum of Compact Operators is Discrete\n\n**Conjecture:** If $K$ is a compact operator on an infinite-dimensional Banach space, then:\n1. Every nonzero $\\lambda \\in \\text{spectrum}(K)$ is an eigenvalue of $K$\n2. Each nonzero eigenvalue has finite-dimensional eigenspace\n3. The set of nonzero eigenvalues is at most countable with accumulation only at $0$\n\n**Lean formalization target:**\n```lean\ntheorem IsCompactOperator.eigenspace_finiteDimensional\n    {𝕜 E : Type*} [RCLike 𝕜] [NormedAddCommGroup E] [NormedSpace 𝕜 E]\n    [CompleteSpace E] {K : E →L[𝕜] E} (hK : IsCompactOperator K)\n    {λ : 𝕜} (hλ : λ ≠ 0)\n    (hinfin : ¬FiniteDimensional 𝕜 E) :\n    FiniteDimensional 𝕜 (LinearMap.ker (λ • (1 : E →L[𝕜] E) - K).toLinearMap)\n```\n\n**Test:** \n- Prove finite-dimensionality of each nonzero eigenspace\n- Prove that nonzero spectral values are isolated points of the spectrum\n- Both should follow from the Fredholm Alternative applied to $\\lambda^{-1}K$\n\n**Impact:** Establishes the Riesz-Schauder spectral theorem for compact operators. This is the foundation for spectral decomposition and functional calculus of compact operators.\n\n---\n\n## Hypothesis C: Atkinson Prototype — Fredholm Index Zero\n\n**Conjecture:** For a compact operator $K$, the operator $I - K$ is Fredholm of index zero, i.e., $\\dim \\ker(I - K) = \\dim \\text{coker}(I - K) < \\infty$.\n\n**Lean formalization target:**\n```lean\n-- First, define a minimal Fredholm predicate\nstructure IsFredholm {𝕜 E F : Type*} [RCLike 𝕜]\n    [NormedAddCommGroup E] [NormedSpace 𝕜 E]\n    [NormedAddCommGroup F] [NormedSpace 𝕜 F]\n    (T : E →L[𝕜] F) : Prop where\n  closedRange : IsClosed (Set.range T)\n  finiteDimKer : FiniteDimensional 𝕜 (LinearMap.ker T.toLinearMap)\n  finiteDimCoker : FiniteDimensional 𝕜 (E ⧸ LinearMap.range T.toLinearMap)\n\ntheorem IsCompactOperator.isFredholm_one_sub\n    {𝕜 E : Type*} [RCLike 𝕜] [NormedAddCommGroup E] [NormedSpace 𝕜 E]\n    [CompleteSpace E] {K : E →L[𝕜] E} (hK : IsCompactOperator K) :\n    IsFredholm (1 - K : E →L[𝕜] E)\n\ntheorem IsCompactOperator.index_zero_one_sub\n    {𝕜 E : Type*} [RCLike 𝕜] [NormedAddCommGroup E] [NormedSpace 𝕜 E]\n    [CompleteSpace E] {K : E →L[𝕜] E} (hK : IsCompactOperator K) :\n    Module.finrank 𝕜 (LinearMap.ker (1 - K : E →L[𝕜] E).toLinearMap) =\n    Module.finrank 𝕜 (E ⧸ LinearMap.range (1 - K : E →L[𝕜] E).toLinearMap)\n```\n\n**Test:**\n- Define `IsFredholm` as a structure with closed range, finite-dimensional kernel, and finite-dimensional cokernel\n- Prove $I - K$ is Fredholm\n- Prove the index (dim ker - dim coker) equals zero\n- The kernel and cokernel dimension equality can be proved using the descending chain argument or the quotient space argument\n\n**Impact:** This is the prototype for general Fredholm index theory. Once established, extends to: stability of index under compact perturbations, Atkinson's theorem (invertible modulo compacts iff Fredholm), and eventually connections to K-theory and the Atiyah-Singer index theorem.\n\n---\n\n## Hypothesis D: Compact Operator Invariant Subspace Theorem\n\n**Conjecture:** A nonzero compact operator on a complex infinite-dimensional Banach space has a nontrivial closed invariant subspace.\n\n**Lean formalization target:**\n```lean\ntheorem IsCompactOperator.exists_invariantSubspace\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E]\n    {K : E →L[ℂ] E} (hK : IsCompactOperator K) (hne : K ≠ 0)\n    (hinfin : ¬FiniteDimensional ℂ E) :\n    ∃ V : Submodule ℂ E, V ≠ ⊥ ∧ V ≠ ⊤ ∧ IsClosed (V : Set E) ∧\n      ∀ x ∈ V, K x ∈ V\n```\n\n**Test:**\n- First prove that $K$ has a nonzero eigenvalue (using spectral theory from Hypothesis B)\n- The eigenspace is a nontrivial closed invariant subspace\n- For the complex case, existence of eigenvalues follows from the analytic Fredholm theorem\n\n**Impact:** This is a special case of the Lomonosov invariant subspace theorem. It demonstrates that spectral theory for compact operators produces geometric structure (invariant subspaces). Bridges to invariant subspace theory and provides the compact-operator beachhead into one of the major open problems in operator theory.\n\n---\n\n## Hypothesis E: Spectral Projections for Normal Compact Operators\n\n**Conjecture:** For a normal compact operator $T$ on a Hilbert space, clopen subsets of the spectrum yield reducing orthogonal projections via the continuous functional calculus.\n\n**Lean formalization target:**\n```lean\ntheorem NormalCompactOperator.spectral_projection\n    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]\n    {T : H →L[ℂ] H} (hT : IsCompactOperator T) (hN : T.IsNormal)\n    {λ : ℂ} (hλ : λ ∈ spectrum ℂ T) (hλ_ne : λ ≠ 0) :\n    ∃ P : H →L[ℂ] H,\n      IsIdempotentElem P ∧\n      (∀ x, ⟪P x, (1 - P) x⟫_ℂ = 0) ∧\n      (∀ x, T (P x) = P (T x)) ∧\n      LinearMap.range P.toLinearMap = LinearMap.ker (T - λ • 1 : H →L[ℂ] H).toLinearMap\n```\n\n**Test:**\n- For each isolated nonzero eigenvalue $\\lambda$ of a normal compact operator, construct the spectral projection onto $\\ker(T - \\lambda I)$\n- Prove it is an orthogonal projection (idempotent and self-adjoint)\n- Prove it commutes with $T$\n- Prove its range is exactly the $\\lambda$-eigenspace\n\n**Impact:** This connects compact operator theory to the continuous functional calculus and spectral measures. It provides the foundation for:\n- Spectral decomposition of compact normal operators\n- Mercer's theorem for positive integral operators\n- Connections to quantum mechanics (observable theory)\n- The compact-operator approach to invariant subspaces for normal operators\n",
+      "source_exp_id": "ff0359d2",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Tropical",
+        "Physics",
+        "Bridges",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T17:03:37.507027+00:00"
     }
   ],
   "pruned": [
