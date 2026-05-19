@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1571 of the highest-quality
+A curated collection of 1572 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1571
+Total files: 1572
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -1555,6 +1555,7 @@ import FINAL.Tropical.TropicalTrapdoor
 import FINAL.Tropical.TropicalTrapdoorResearch
 import FINAL.Tropical.TropicalTrapdoorReversal
 import FINAL.Tropical.TropicalTypeTheory
+import FINAL.Tropical.TropicalUniversality
 import FINAL.Tropical.TropicalUpperHalfPlane
 import FINAL.Tropical.TropicalVerticalComposition
 import FINAL.Tropical.TropicalViTFormalization

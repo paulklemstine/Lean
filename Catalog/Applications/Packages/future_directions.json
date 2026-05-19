@@ -317,7 +317,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.037349+00:00"
     },
@@ -335,7 +335,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.037720+00:00"
     },
@@ -371,7 +371,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.78,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.038493+00:00"
     },
@@ -389,7 +389,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.038913+00:00"
     },
@@ -495,7 +495,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.76,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.042196+00:00"
     },
@@ -730,8 +730,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "90e5ed6e",
       "timestamp": "2026-05-19T23:11:32.050434+00:00"
     },
     {
@@ -749,7 +749,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.051118+00:00"
     },
@@ -768,7 +768,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.051738+00:00"
     },
@@ -787,7 +787,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.83,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.052382+00:00"
     },
@@ -805,7 +805,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.053040+00:00"
     },
@@ -862,7 +862,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.055350+00:00"
     },
@@ -1030,7 +1030,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.066245+00:00"
     },
@@ -1067,7 +1067,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.77,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.069644+00:00"
     },
@@ -1085,7 +1085,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.72,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.071012+00:00"
     },
@@ -1180,7 +1180,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.78,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.077303+00:00"
     },
@@ -1199,7 +1199,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.76,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.078648+00:00"
     },
@@ -1218,7 +1218,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.74,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.079893+00:00"
     },
@@ -1351,7 +1351,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.089843+00:00"
     },
@@ -1408,7 +1408,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.095702+00:00"
     },
@@ -1430,6 +1430,112 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.097358+00:00"
+    },
+    {
+      "id": "fd_0078",
+      "title": "Hypothesis 3",
+      "description": "(Ray class cardinality engine) — most immediately testable, builds directly on current work, has computational verification path.",
+      "source_exp_id": "fe5c7f93",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/fe5c7f93",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:21:24.881559+00:00"
+    },
+    {
+      "id": "fd_0079",
+      "title": "Hypothesis 1",
+      "description": "(Artin map prototype) — highest mathematical impact, but depends on Mathlib's cyclotomic infrastructure.",
+      "source_exp_id": "fe5c7f93",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/fe5c7f93",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:21:24.883719+00:00"
+    },
+    {
+      "id": "fd_0080",
+      "title": "Hypothesis 5",
+      "description": "(Conductor sensitivity) — concrete and falsifiable, good validation of the exact sequence framework.",
+      "source_exp_id": "fe5c7f93",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/fe5c7f93",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:21:24.885573+00:00"
+    },
+    {
+      "id": "fd_0081",
+      "title": "Hypothesis 4",
+      "description": "(Capitulation criterion / Herbrand quotient) — fundamental but requires group action cohomology infrastructure.",
+      "source_exp_id": "fe5c7f93",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/fe5c7f93",
+      "domains": [
+        "Topology",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:21:24.888114+00:00"
+    },
+    {
+      "id": "fd_0082",
+      "title": "Hypothesis 2",
+      "description": "(Transfer-corestriction comparison) — conceptually important but depends on group cohomology API not yet in Mathlib.",
+      "source_exp_id": "fe5c7f93",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/fe5c7f93",
+      "domains": [
+        "Topology",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:21:24.890087+00:00"
+    },
+    {
+      "id": "fd_0083",
+      "title": "Persistent Galois Signatures of Prime Families",
+      "description": "Conjecture: For each primitive irreducible polynomial f(x) in Z[x] with positive leading coefficient, there exists a finite Galois-theoretic feature vector extracted from the Frobenius action on the etale cohomology of the family f(x)-t whose persistent homology barcode predicts the secondary term and oscillation profile of the counting function #{n <= X : f(n) prime} up to o(X/(log X)^2), and distinguishes non-equivalent prime-producing families with identical Bateman-Horn main term. Test: Compute these Galois-persistence invariants for explicit families such as x^2+1, x^2+x+41, x^3+2, and compare whether families with the same Bateman-Horn constant but different observed bias/oscillation exhibit different barcodes; refute by finding statistically indistinguishable prime-counting oscillations for families with provably distinct invariants, or identical invariants for families with measurably different secondary behavior. Impact: This would create a new bridge between arithmetic statistics, etale/Galois data, and topological data analysis, potentially yielding a structural theory of lower-order terms in prime-producing polynomial counts beyond Bateman-Horn.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Number Theory",
+        "Algebraic Geometry",
+        "Topological Data Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:21:35.649338+00:00"
     }
   ],
   "pruned": [
