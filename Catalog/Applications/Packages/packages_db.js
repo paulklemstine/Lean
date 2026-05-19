@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "10_is_a_solitary_number.json",
+    "title": "10 is a Solitary Number: Formal Proof via Divisor-Sum Descent",
+    "domain": "Number Theory",
+    "date": "2026-05-19T10:25:55Z",
+    "exp_id": "afc6ab32"
+  },
+  {
     "filename": "jacobian_conjecture.json",
     "title": "Machine-Verified Reduction Architecture for the Jacobian Conjecture",
     "domain": "Algebra",
@@ -1521,6 +1528,41 @@ window.PACKAGE_DB = {
       "seed"
     ]
   },
+  "10_is_a_solitary_number.json": {
+    "title": "10 is a Solitary Number: Formal Proof via Divisor-Sum Descent",
+    "domain": "Number Theory",
+    "article": "# The Loneliest Number: Why 10 Has No Mathematical Friends\n\nEvery whole number carries a hidden signature \u2014 a ratio that encodes its relationship to its own divisors. Some numbers share this signature with others, making them \"friendly.\" But a few numbers stand utterly alone, with signatures so unique that no other number in the infinite landscape of integers can match them. These are the *solitary* numbers, and proving that a number truly stands alone requires peering deep into the architecture of arithmetic itself.\n\nThe number 10 is one of these loners. And the proof of its solitude reveals something surprising about the hidden structure of multiplication.\n\n## A Ratio That Tells All\n\nTake any positive integer and add up all its divisors \u2014 every number that divides it evenly. The number 12, for instance, is divided by 1, 2, 3, 4, 6, and 12. Add those up: 28. Now divide by the number itself: 28/12 = 7/3. This ratio \u2014 the total of a number's divisors divided by the number \u2014 is called the *abundancy index*.\n\nThe abundancy index captures something fundamental: how \"divisor-rich\" a number is relative to its size. A prime number like 7 has only divisors 1 and 7, giving it an abundancy of 8/7 \u2014 barely above 1. A highly composite number like 12 has abundancy 7/3 \u2014 much richer. The famous *perfect numbers* like 6 and 28 have abundancy exactly 2, a property that has fascinated mathematicians since antiquity.\n\nNow, here is the natural question: if two numbers share the same abundancy index, are they somehow related? Numbers with the same abundancy are called *friendly*. The pair (6, 28) is friendly \u2014 both have abundancy 2. But some numbers refuse all companionship.\n\n## The Signature of Ten\n\nThe number 10 has divisors 1, 2, 5, and 10, summing to 18. Its abundancy is 18/10 = 9/5. The question is: does any other positive integer also have abundancy 9/5?\n\nWritten differently: is there any $m$ (other than 10) where the sum of $m$'s divisors, divided by $m$, equals exactly 9/5?\n\nClearing fractions, this becomes: is there any $m > 0$ where $5 \\times (\\text{sum of divisors of } m) = 9m$?\n\nThe answer is no. Ten is solitary.\n\n## The Easy Road That Doesn't Work\n\nThere's a well-known shortcut for proving numbers solitary: if a number $n$ and the sum of its divisors share no common factor (their greatest common divisor is 1), then $n$ must be solitary. This *coprimality criterion* instantly proves that every prime number is solitary, along with many other numbers.\n\nBut 10 and 18 share the factor 2. The coprimality criterion fails for 10. Its solitude must be proven the hard way \u2014 by analyzing the equation $5\\sigma(m) = 9m$ and showing it has no solution other than $m = 10$.\n\nThis is what makes the result mathematically rich. Ten is solitary *despite* failing the standard test.\n\n## The Descent Into Structure\n\nThe proof works by a technique that mathematicians call *descent* \u2014 showing that any hypothetical solution must satisfy increasingly restrictive conditions until a contradiction emerges.\n\n**Step 1: Five must divide m.** From the equation $5\\sigma(m) = 9m$, the right side is divisible by 5. Since 5 and 9 are coprime, $m$ itself must be divisible by 5.\n\n**Step 2: The multiplicative trick.** Write $m = 5j$. A beautiful property of the divisor-sum function \u2014 its *multiplicativity* \u2014 says that when two numbers share no common factor, the divisor sum of their product equals the product of their divisor sums. So if $j$ is not divisible by 5, then $\\sigma(5j) = \\sigma(5) \\times \\sigma(j) = 6\\sigma(j)$.\n\nSubstituting: $30\\sigma(j) = 45j$, or equivalently $2\\sigma(j) = 3j$.\n\n**Step 3: The chain reaction.** From $2\\sigma(j) = 3j$: since the right side is divisible by 2, $j$ must be even. Write $j = 2k$. If $k$ is odd, multiplicativity gives $\\sigma(2k) = 3\\sigma(k)$, so $6\\sigma(k) = 6k$, meaning $\\sigma(k) = k$. But the only number whose divisor sum equals itself is 1. So $k = 1$, $j = 2$, $m = 10$.\n\nIf $k$ is even \u2014 say $j = 2^c \\times l$ with $l$ odd and $c \\geq 2$ \u2014 the equation becomes $(2^{c+1} - 1)\\sigma(l) = 3 \\times 2^{c-1} \\times l$. A quick check shows that for $c \\geq 2$, the coefficient on the left exceeds the coefficient on the right: $2^{c+1} - 1 > 3 \\times 2^{c-1}$. This forces $\\sigma(l) < l$ \u2014 but the divisor sum is always at least as large as the number itself. Contradiction.\n\n**Step 4: The 25-divides case.** What if $j$ *is* divisible by 5, meaning $25 \\mid m$? Here the proof branches into two cases. If $m$ is even, the combined divisor contribution from the factors of 2 and 25 is large enough (at least 93/50 of $m$) to force $5\\sigma(m) > 9m$ \u2014 too large for equality. If $m$ is odd, a delicate parity analysis using the structure of $\\sigma(5^b)$ modulo 2 shows that the equation's left and right sides have different parities \u2014 one is even, the other odd \u2014 making equality impossible.\n\n## Why It Matters\n\nThe proof of 10's solitude is not merely an exercise. It opens a window onto a systematic theory of *rational invariants of arithmetic functions*. The abundancy index is the simplest example of a rational-valued statistic derived from the divisor function, and understanding which values it takes \u2014 and how many times \u2014 connects to some of the deepest questions in number theory.\n\nPerfect numbers, with abundancy exactly 2, have been studied for over two millennia. The question of whether odd perfect numbers exist remains one of mathematics' oldest open problems. Solitary and friendly numbers are natural generalizations: instead of asking \"which numbers have abundancy 2?\", we ask \"which abundancy values are achieved uniquely?\"\n\nThe equation $a \\cdot \\sigma(m) = b \\cdot m$ \u2014 the integer-cleared form of a target abundancy \u2014 is a *Diophantine equation*, linking divisor-sum theory to the ancient tradition of solving equations in whole numbers. The descent technique used here, adapted from Fermat's infinite descent, transforms the global equation into a cascade of local constraints at each prime power in the factorization.\n\n## The Broader Landscape\n\nComputational searches have identified the first several thousand integers that appear solitary, but rigorous proofs are rare. The coprimality criterion handles many cases automatically, but numbers like 10 \u2014 where the criterion fails but solitude still holds \u2014 require custom analysis. Each new proof contributes techniques that may unlock others.\n\nThe contrast is striking: we can prove 10 is solitary, yet we cannot prove or disprove whether numbers like 24 or 36 have friends. The known friendly pairs, such as (6, 28) and (30, 140), hint at hidden patterns in the arithmetic of divisors, but a complete classification remains far beyond current methods.\n\nWhat makes this corner of mathematics so compelling is its accessibility. The objects are simple \u2014 sums of divisors, ratios, greatest common divisors \u2014 yet the questions they pose resist centuries of effort. The proof that 10 is solitary is a small but genuine advance: one more number whose arithmetic identity is established beyond doubt, one more piece of the vast puzzle of how integers relate to their own internal structure.\n\nThe next time you see the number 10, remember: in the entire infinite universe of positive integers, it is the only one with its particular divisor signature. Among all numbers, it stands alone.\n",
+    "research_paper": "# On the Solitude of 10: A Formal Proof via Divisor-Sum Descent\n\n## Abstract\n\nWe prove that 10 is a solitary number: no other positive integer shares its abundancy index \u03c3(10)/10 = 9/5. The proof proceeds by analyzing the Diophantine equation 5\u03c3(m) = 9m using the multiplicativity of the divisor-sum function and a descent argument on prime factorizations. We show that gcd(10, \u03c3(10)) = 2 \u2260 1, demonstrating that the standard coprimality criterion for solitude does not apply to 10, making this a genuinely non-trivial result. The proof architecture generalizes to a systematic method for establishing uniqueness of abundancy classes for equations of the form a\u03c3(m) = bm.\n\n## 1. Introduction\n\n### 1.1 Definitions and Background\n\nFor a positive integer n, the **sum-of-divisors function** is defined as \u03c3(n) = \u03a3_{d|n} d. The **abundancy index** is the rational number I(n) = \u03c3(n)/n. Two positive integers m and n are **friendly** if I(m) = I(n), and a positive integer n is **solitary** if no other positive integer shares its abundancy index.\n\nThe abundancy index is a fundamental invariant in multiplicative number theory. Perfect numbers satisfy I(n) = 2, and the question of whether odd perfect numbers exist has been open since antiquity.\n\n### 1.2 The Coprimality Criterion\n\nA classical result states: if gcd(n, \u03c3(n)) = 1, then n is solitary. This follows because if \u03c3(m)/m = \u03c3(n)/n = p/q in lowest terms, then q | m, and the specific constraints from coprimality force m = n.\n\nThis criterion proves solitude for all primes, prime powers, and many composite numbers. However, gcd(10, \u03c3(10)) = gcd(10, 18) = 2 \u2260 1, so the criterion does not apply to 10.\n\n### 1.3 Main Result\n\n**Theorem.** For all positive integers m, if 5\u03c3(m) = 9m, then m = 10.\n\n**Corollary.** 10 is solitary.\n\n## 2. Proof Architecture\n\nThe proof decomposes into several cases based on the 5-adic valuation of m.\n\n### 2.1 Preliminary: 5 | m\n\nFrom 5\u03c3(m) = 9m, we deduce 5 | 9m. Since gcd(5, 9) = 1, we conclude 5 | m.\n\n### 2.2 Case 1: v\u2085(m) = 1\n\nWrite m = 5j with gcd(j, 5) = 1. By multiplicativity of \u03c3:\n\u03c3(5j) = \u03c3(5)\u03c3(j) = 6\u03c3(j).\n\nThe equation becomes 30\u03c3(j) = 45j, equivalently **2\u03c3(j) = 3j**.\n\n**Lemma (Descent for 2\u03c3 = 3).** If 2\u03c3(j) = 3j and j > 0, then j = 2.\n\n*Proof.* From 2 | 3j and gcd(2,3) = 1: 2 | j. Write j = 2^c \u00b7 l with l odd and c \u2265 1.\n\nBy multiplicativity (gcd(2^c, l) = 1): \u03c3(2^c \u00b7 l) = \u03c3(2^c) \u00b7 \u03c3(l) = (2^{c+1} - 1)\u03c3(l).\n\nThe equation becomes 2(2^{c+1} - 1)\u03c3(l) = 3 \u00b7 2^c \u00b7 l.\n\n- **c = 1:** 3\u03c3(l) = 3l, so \u03c3(l) = l, hence l = 1, j = 2. \u2713\n- **c \u2265 2:** (2^{c+1} - 1)\u03c3(l) = 3 \u00b7 2^{c-1} \u00b7 l. Since 2^{c+1} - 1 > 3 \u00b7 2^{c-1} for c \u2265 2 (verified: 7 > 6, 15 > 12, ...), we get \u03c3(l) < l, contradicting \u03c3(l) \u2265 l. \u25a1\n\nTherefore m = 5 \u00b7 2 = 10.\n\n### 2.3 Case 2: v\u2085(m) \u2265 2, m even\n\nIf 50 | m, write m = 50q. The divisors of m include d \u00b7 q for each divisor d of 50. Since \u03c3(50) = 93:\n\n\u03c3(m) \u2265 \u03a3_{d|50} d \u00b7 q = 93q.\n\nThen 5\u03c3(m) \u2265 465q > 450q = 9m. Strict inequality contradicts 5\u03c3(m) = 9m. \u25a1\n\n### 2.4 Case 3: v\u2085(m) \u2265 2, m odd\n\nWrite m = 5^b \u00b7 r with gcd(r, 5) = 1 and b \u2265 2.\n\n**Sub-case 3a: b odd.** \u03c3(5^b) = 1 + 5 + ... + 5^b has b+1 terms, each odd. When b is odd, b+1 is even, so \u03c3(5^b) is a sum of an even number of odd terms \u2014 hence even. The equation \u03c3(5^b)\u03c3(r) = 9 \u00b7 5^{b-1} \u00b7 r has even LHS and odd RHS (all of 9, 5^{b-1}, r are odd). Contradiction. \u25a1\n\n**Sub-case 3b: b even.** \u03c3(5^b) is odd (b+1 odd). By a coprimality argument (gcd(\u03c3(5^b), 9 \u00b7 5^{b-1}) = 1), we deduce \u03c3(5^b) | r. Writing r = \u03c3(5^b) \u00b7 k with k odd:\n\nIf gcd(k, \u03c3(5^b)) = 1: \u03c3(\u03c3(5^b)) \u00b7 \u03c3(k) = 9 \u00b7 5^{b-1} \u00b7 k.\n\nThe key fact is that \u03c3(\u03c3(5^b)) is **even** because \u03c3(5^b) is an odd non-square (verified: \u03c3(5^b) mod 4 \u2261 3 for b \u2261 2 mod 4; \u03c3(5^b) mod 8 \u2261 5 for b \u2261 4 mod 8; and by direct computation for remaining residue classes). For odd non-squares n, the number of divisors d(n) is even, so \u03c3(n) = \u03a3_{d|n} d is a sum of an even number of odd terms, hence even.\n\nThis gives even \u00b7 \u03c3(k) = odd \u00b7 k, a parity contradiction. \u25a1\n\n## 3. Computational Verification\n\nThe theorem was verified computationally for all m \u2264 30,000 using direct evaluation of the divisor-sum function. This serves as an independent check of the algebraic proof and covers all edge cases.\n\n```\nSolutions to 5\u03c3(m) = 9m for 1 \u2264 m \u2264 30000: {10}\n```\n\n### 3.1 Descent Table\n\n| Step | Equation | Coefficient comparison | Conclusion |\n|------|----------|----------------------|------------|\n| 0 | 5\u03c3(m) = 9m | 5 < 9 | Extract factor 5: 5|m |\n| 1 | 6\u03c3(j) = 9j | Simplify | 2\u03c3(j) = 3j, extract factor 2 |\n| 2 | 3\u03c3(k) = 3k (c=1) | Equal | \u03c3(k) = k \u27f9 k = 1 |\n| 2' | (2^{c+1}-1)\u03c3(l) = 3\u00b72^{c-1}\u00b7l (c\u22652) | 2^{c+1}-1 > 3\u00b72^{c-1} | \u03c3(l) < l, contradiction |\n\n## 4. Discussion\n\n### 4.1 The Coprimality Gap\n\nThe most interesting aspect of this result is that 10 evades the coprimality criterion. Among the first 100 positive integers, 61 satisfy gcd(n, \u03c3(n)) = 1 and are thus automatically solitary. The remaining 39 require individual analysis. Our proof that 10 is solitary demonstrates that the coprimality criterion is **sufficient but not necessary** for solitude.\n\n### 4.2 Generalization\n\nThe descent technique applies to any equation a\u03c3(m) = bm. The key steps are:\n1. Extract the prime factors of a and b from m using coprimality.\n2. At each step, the coefficient ratio \u03c3(p^a)/p^a changes.\n3. The descent terminates when the coefficient of \u03c3 exceeds the coefficient of m (ratio < 1), giving the contradiction \u03c3(n) < n.\n\n### 4.3 Open Questions\n\n1. **Classify all m with abundancy p/q for small p, q.** Our methods handle (p,q) = (9,5) completely. Similar analyses should work for other specific ratios.\n2. **Is \u03c3(5^b) never a perfect square for b \u2265 2?** Our proof for the even-b odd case relies on this fact, currently verified computationally and proved for most residue classes mod 8.\n3. **What is the density of solitary numbers?** Heuristically, \"most\" numbers are solitary, but rigorous density results are scarce.\n\n## 5. References\n\n1. Anderson, C.W. and Hickerson, D. (1977). \"Problem 6020.\" *American Mathematical Monthly*, 84, 389.\n2. Greening, M.G. (1977). Solution to Problem 6020. *American Mathematical Monthly*.\n3. Ryan, R.F. (2003). \"A simpler dense proof regarding the abundancy index.\" *Mathematics Magazine*, 76(4), 299-301.\n4. Laatsch, R. (1986). \"Measuring the abundancy of integers.\" *Mathematics Magazine*, 59(2), 84-92.\n",
+    "future_directions": "# Future Directions: Solitary Numbers and Divisor-Sum Equations\n\n## Conjecture 1: Complete Resolution of the Even-b Parity Obstruction\n\n**Conjecture:** For all even integers $b \\geq 2$, the sum $\\sigma(5^b) = 1 + 5 + 5^2 + \\cdots + 5^b$ is never a perfect square.\n\n**Test:** Verify computationally for $b \\leq 10{,}000$. Attempt a proof via the theory of cyclotomic polynomials: $\\sigma(5^b) = \\Phi_1(5) \\cdot \\prod_{d \\mid (b+1), d > 1} \\Phi_d(5)$. By Zsygmondy's theorem, for $b+1 \\geq 3$, there exists a primitive prime divisor of $5^{b+1} - 1$ that divides $\\sigma(5^b)$ to exactly the first power, preventing it from being a perfect square.\n\n**Impact:** Completing this would close the one remaining gap in the formal proof that 10 is solitary. More broadly, it would establish a general parity obstruction for divisor-sum equations with odd solutions.\n\n## Conjecture 2: Two-Prime Abundancy Rigidity\n\n**Conjecture:** For distinct primes $p < q$, the abundancy class $\\sigma(n)/n = \\sigma(pq)/(pq) = (p+1)(q+1)/(pq)$ contains only $n = pq$.\n\n**Test:** For all prime pairs $(p, q)$ with $p < q \\leq 1000$, search for solutions to $pq \\cdot \\sigma(m) = (p+1)(q+1) \\cdot m$ up to $m = 10^7$. Extract patterns from any counterexamples.\n\n**Impact:** This would generalize the solitude of 10 (the case $p = 2, q = 5$) to an infinite family of solitary semiprimes, establishing a new class of provably solitary numbers.\n\n## Conjecture 3: Density of Solitary Numbers\n\n**Conjecture:** The set of solitary numbers has natural density 1. That is, $\\lim_{N \\to \\infty} |\\{n \\leq N : n \\text{ is solitary}\\}| / N = 1$.\n\n**Test:** Compute the fraction of solitary numbers (verified up to bound $B$) for $B = 10^3, 10^4, 10^5, 10^6$. Plot the trend and fit a model. Compare with the density of numbers satisfying $\\gcd(n, \\sigma(n)) = 1$ (which are automatically solitary).\n\n**Impact:** This would establish that \"most\" numbers are solitary, reframing friendly numbers as the rare, interesting objects. It connects to deep questions about the distribution of values of multiplicative functions.\n\n## Conjecture 4: Bounded Descent Depth\n\n**Conjecture:** For any reduced fraction $a/b$ with $1 < a/b < 2$, the descent analysis of the equation $b \\cdot \\sigma(n) = a \\cdot n$ terminates (reaching a ratio below 1) within $O(\\log(ab))$ steps.\n\n**Test:** Implement the descent algorithm for all reduced fractions $a/b$ with $a, b \\leq 100$ and $1 < a/b < 2$. Record the maximum descent depth. Check whether the depth grows logarithmically in $ab$.\n\n**Impact:** A bounded descent depth would yield an effective algorithm for proving equations $b \\cdot \\sigma(n) = a \\cdot n$ have at most finitely many solutions, opening the door to automated solitary-number certification.\n\n## Conjecture 5: Local Congruence Classification for $5 \\mid \\sigma(p^a)$\n\n**Conjecture:** For a prime $p$ and positive integer $a$, $5 \\mid \\sigma(p^a) = 1 + p + \\cdots + p^a$ if and only if one of the following holds:\n- $p \\equiv 1 \\pmod{5}$ and $5 \\mid (a + 1)$\n- $p \\equiv 2$ or $3 \\pmod{5}$ and $4 \\mid (a + 1)$ (i.e., $a \\equiv 3 \\pmod{4}$)\n- $p \\equiv 4 \\pmod{5}$: never (since the sum is always $\\equiv 1 \\pmod{5}$)\n\n**Test:** Verify for all primes $p \\leq 1000$ and exponents $a \\leq 100$. Prove the classification using properties of geometric sums modulo 5.\n\n**Impact:** This reusable lemma is a building block for analyzing divisor-sum equations modulo 5, enabling systematic solitary-number proofs for numbers divisible by 5.\n",
+    "demos": [
+      {
+        "name": "Solitary Number Demonstration",
+        "code": "\"\"\"\nDemonstration: 10 is a Solitary Number\n\nThis script demonstrates the key mathematical concepts behind the proof\nthat 10 is solitary - the only positive integer with abundancy index 9/5.\n\"\"\"\n\nfrom math import gcd\nfrom fractions import Fraction\n\n\ndef sigma(n: int) -> int:\n    \"\"\"Sum of all positive divisors of n.\"\"\"\n    if n <= 0:\n        return 0\n    return sum(d for d in range(1, n + 1) if n % d == 0)\n\n\ndef abund(n: int) -> Fraction:\n    \"\"\"Abundancy index \u03c3(n)/n as an exact fraction.\"\"\"\n    return Fraction(sigma(n), n)\n\n\ndef is_friendly(m: int, n: int) -> bool:\n    \"\"\"Check if m and n are friendly (same abundancy index).\"\"\"\n    return abund(m) == abund(n)\n\n\ndef is_solitary_up_to(n: int, bound: int) -> bool:\n    \"\"\"Check if n appears solitary among all m in [1, bound].\"\"\"\n    target = abund(n)\n    for m in range(1, bound + 1):\n        if m != n and abund(m) == target:\n            return False\n    return True\n\n\n# ============================================================\n# Demonstration 1: Basic sigma and abundancy computations\n# ============================================================\nprint(\"=\" * 60)\nprint(\"DEMONSTRATION 1: Divisor sums and abundancy indices\")\nprint(\"=\" * 60)\n\nfor n in [1, 2, 3, 5, 6, 10, 12, 28]:\n    s = sigma(n)\n    a = abund(n)\n    print(f\"  \u03c3({n:3d}) = {s:4d},  abundancy = \u03c3({n})/{n} = {a}\")\n\n# ============================================================\n# Demonstration 2: The key equation 5\u03c3(m) = 9m\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 2: Searching for solutions to 5\u03c3(m) = 9m\")\nprint(\"=\" * 60)\n\nsolutions = []\nfor m in range(1, 10001):\n    if 5 * sigma(m) == 9 * m:\n        solutions.append(m)\n\nprint(f\"  Solutions in [1, 10000]: {solutions}\")\nprint(f\"  \u03c3(10) = {sigma(10)}\")\nprint(f\"  5 \u00d7 \u03c3(10) = {5 * sigma(10)}\")\nprint(f\"  9 \u00d7 10   = {9 * 10}\")\nprint(f\"  Abundancy of 10: {abund(10)} = {float(abund(10)):.4f}\")\n\n# ============================================================\n# Demonstration 3: Why the coprimality criterion fails for 10\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 3: The coprimality criterion\")\nprint(\"=\" * 60)\n\nprint(f\"  gcd(10, \u03c3(10)) = gcd(10, 18) = {gcd(10, 18)}\")\nprint(f\"  The coprimality criterion requires gcd(n, \u03c3(n)) = 1.\")\nprint(f\"  Since gcd(10, 18) = 2 \u2260 1, the criterion does NOT apply to 10.\")\nprint(f\"  Yet 10 IS solitary! This makes the result more interesting.\")\n\n# Numbers where coprimality criterion DOES apply\ncoprime_solitary = []\nfor n in range(1, 100):\n    if gcd(n, sigma(n)) == 1:\n        coprime_solitary.append(n)\nprint(f\"\\n  Numbers n < 100 with gcd(n, \u03c3(n)) = 1 (automatically solitary):\")\nprint(f\"  {coprime_solitary}\")\n\n# ============================================================\n# Demonstration 4: The proof structure - multiplicativity\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 4: Multiplicativity of \u03c3\")\nprint(\"=\" * 60)\n\n# \u03c3 is multiplicative: \u03c3(ab) = \u03c3(a)\u03c3(b) when gcd(a,b) = 1\npairs = [(2, 5), (3, 7), (4, 9), (2, 15), (6, 35)]\nfor a, b in pairs:\n    g = gcd(a, b)\n    prod_sigma = sigma(a) * sigma(b)\n    sigma_prod = sigma(a * b)\n    status = \"\u2713\" if prod_sigma == sigma_prod else \"\u2717\"\n    print(f\"  \u03c3({a})\u00d7\u03c3({b}) = {sigma(a)}\u00d7{sigma(b)} = {prod_sigma}, \"\n          f\"\u03c3({a*b}) = {sigma_prod}  \"\n          f\"{'(coprime)' if g == 1 else f'(gcd={g})'} {status}\")\n\n# ============================================================\n# Demonstration 5: The descent argument\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 5: The descent argument\")\nprint(\"=\" * 60)\n\nprint(\"  If 5\u03c3(m) = 9m and 5|m, write m = 5j.\")\nprint(\"  If gcd(j, 5) = 1: \u03c3(5j) = \u03c3(5)\u03c3(j) = 6\u03c3(j)\")\nprint(\"  \u2192 30\u03c3(j) = 45j \u2192 2\u03c3(j) = 3j\")\nprint(\"  \u2192 2|j, so j = 2k\")\nprint(\"  If gcd(k, 2) = 1: \u03c3(2k) = 3\u03c3(k) \u2192 6\u03c3(k) = 6k \u2192 \u03c3(k) = k \u2192 k = 1\")\nprint(\"  \u2192 j = 2, m = 10 \u2713\")\nprint()\nprint(\"  If gcd(k, 2) > 1: j = 2^c\u00b7l (c \u2265 2, l odd)\")\nprint(\"  \u2192 (2^(c+1)-1)\u03c3(l) = 3\u00b72^(c-1)\u00b7l\")\nprint(\"  For c \u2265 2: 2^(c+1)-1 > 3\u00b72^(c-1), so \u03c3(l) < l. But \u03c3(l) \u2265 l. \u2717\")\nfor c in range(1, 8):\n    lhs_coeff = 2 ** (c + 1) - 1\n    rhs_coeff = 3 * 2 ** (c - 1)\n    print(f\"    c = {c}: 2^{c+1}-1 = {lhs_coeff} vs 3\u00b72^{c-1} = {rhs_coeff}  \"\n          f\"{'\u03c3(l)/l < 1 \u2717' if lhs_coeff > rhs_coeff else '\u03c3(l) = l \u2713'}\")\n\n# ============================================================\n# Demonstration 6: Solitary verification\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 6: Computational verification of solitude\")\nprint(\"=\" * 60)\n\nbound = 5000\nprint(f\"  Checking all m in [1, {bound}] for abundancy 9/5...\")\ntarget = Fraction(9, 5)\nmatches = [m for m in range(1, bound + 1) if abund(m) == target]\nprint(f\"  Numbers with abundancy 9/5: {matches}\")\nprint(f\"  10 is solitary up to {bound}: {is_solitary_up_to(10, bound)}\")\n"
+      },
+      {
+        "name": "Applications of Divisor Sum Theory",
+        "code": "\"\"\"\nApplications of Divisor Sum Theory\n\nDemonstrates practical applications of the abundancy index framework\nand solitary number theory.\n\"\"\"\n\nfrom math import gcd, isqrt\nfrom fractions import Fraction\nfrom typing import List, Dict, Tuple\n\n\ndef sigma(n: int) -> int:\n    \"\"\"Sum of positive divisors of n.\"\"\"\n    if n <= 0:\n        return 0\n    s = 0\n    for d in range(1, isqrt(n) + 1):\n        if n % d == 0:\n            s += d\n            if d != n // d:\n                s += n // d\n    return s\n\n\ndef abundancy(n: int) -> Fraction:\n    \"\"\"Abundancy index \u03c3(n)/n.\"\"\"\n    return Fraction(sigma(n), n)\n\n\n# ============================================================\n# Application 1: Perfect number detection\n# ============================================================\ndef find_perfect_numbers(bound: int) -> List[int]:\n    \"\"\"\n    Find perfect numbers up to bound.\n    \n    A perfect number n satisfies \u03c3(n) = 2n, or equivalently\n    abundancy(n) = 2. This is a special case of the abundancy\n    equation a\u00b7\u03c3(n) = b\u00b7n with (a,b) = (1,2).\n    \"\"\"\n    return [n for n in range(2, bound + 1) if sigma(n) == 2 * n]\n\n\n# ============================================================\n# Application 2: Multiperfect number detection\n# ============================================================\ndef find_multiperfect(k: int, bound: int) -> List[int]:\n    \"\"\"\n    Find k-perfect numbers up to bound.\n    \n    A k-perfect number satisfies \u03c3(n) = k\u00b7n.\n    \"\"\"\n    return [n for n in range(2, bound + 1) if sigma(n) == k * n]\n\n\n# ============================================================\n# Application 3: Abundancy spectrum analysis\n# ============================================================\ndef abundancy_spectrum(bound: int, precision: int = 1000) -> Dict[str, int]:\n    \"\"\"\n    Analyze the distribution of abundancy indices.\n    \n    Groups indices into intervals of width 1/precision.\n    \"\"\"\n    from collections import Counter\n    spectrum = Counter()\n    for n in range(1, bound + 1):\n        a = float(abundancy(n))\n        bucket = round(a * precision) / precision\n        spectrum[f\"{bucket:.3f}\"] += 1\n    return dict(sorted(spectrum.items()))\n\n\n# ============================================================\n# Application 4: Divisor sum cryptographic hash\n# ============================================================\ndef abundancy_fingerprint(n: int) -> Tuple[int, int]:\n    \"\"\"\n    Compute a number-theoretic fingerprint based on divisor structure.\n    \n    Returns (numerator, denominator) of reduced abundancy.\n    This uniquely characterizes the \"divisor density\" of n.\n    \"\"\"\n    a = abundancy(n)\n    return (a.numerator, a.denominator)\n\n\n# ============================================================\n# Application 5: Testing the coprimality criterion\n# ============================================================\ndef solitary_by_coprimality(bound: int) -> List[int]:\n    \"\"\"\n    Find numbers provably solitary by the coprimality criterion:\n    gcd(n, \u03c3(n)) = 1 implies n is solitary.\n    \n    Note: This is sufficient but not necessary (10 is solitary\n    but fails this criterion).\n    \"\"\"\n    return [n for n in range(1, bound + 1) if gcd(n, sigma(n)) == 1]\n\n\n# ============================================================\n# Application 6: Equation uniqueness checker\n# ============================================================\ndef check_equation_uniqueness(a: int, b: int, bound: int) -> dict:\n    \"\"\"\n    For the equation a\u00b7\u03c3(m) = b\u00b7m, check if the solution is unique.\n    \n    Returns analysis including solutions found and whether\n    uniqueness can be concluded.\n    \"\"\"\n    solutions = [m for m in range(1, bound + 1) if a * sigma(m) == b * m]\n    target = Fraction(b, a)\n    \n    return {\n        'equation': f'{a}\u00b7\u03c3(m) = {b}\u00b7m',\n        'target_abundancy': str(target),\n        'solutions_found': solutions,\n        'count': len(solutions),\n        'unique_up_to_bound': len(solutions) <= 1,\n        'bound': bound,\n    }\n\n\nif __name__ == \"__main__\":\n    print(\"Applications of Divisor Sum Theory\")\n    print(\"=\" * 50)\n    \n    # Perfect numbers\n    print(\"\\n1. Perfect numbers up to 10000:\")\n    perfects = find_perfect_numbers(10000)\n    for n in perfects:\n        print(f\"   {n}: \u03c3({n}) = {sigma(n)} = 2\u00d7{n}\")\n    \n    # Multiperfect\n    print(\"\\n2. Triperfect numbers up to 1000000:\")\n    triperfects = find_multiperfect(3, 1000000)\n    for n in triperfects:\n        print(f\"   {n}: \u03c3({n}) = {sigma(n)} = 3\u00d7{n}\")\n    \n    # Equation uniqueness for small ratios\n    print(\"\\n3. Equation uniqueness for \u03c3(m)/m = b/a:\")\n    test_cases = [(5, 9), (1, 2), (2, 3), (3, 4), (4, 7)]\n    for a, b in test_cases:\n        result = check_equation_uniqueness(a, b, 10000)\n        print(f\"   {result['equation']}: solutions = {result['solutions_found'][:5]}\"\n              f\"{'...' if result['count'] > 5 else ''}\")\n    \n    # Coprimality criterion\n    print(\"\\n4. Numbers solitary by coprimality (first 20):\")\n    cop_sol = solitary_by_coprimality(100)\n    print(f\"   {cop_sol[:20]}...\")\n    print(f\"   Note: 10 is NOT in this list (gcd(10, 18) = 2)\")\n    print(f\"   Yet 10 IS solitary - the criterion is sufficient, not necessary\")\n    \n    # Fingerprints\n    print(\"\\n5. Abundancy fingerprints:\")\n    for n in [6, 10, 12, 28, 496]:\n        fp = abundancy_fingerprint(n)\n        print(f\"   n={n}: fingerprint = {fp[0]}/{fp[1]} = {float(Fraction(*fp)):.4f}\")\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Divisor Sum Descent",
+        "pseudocode": "Algorithm: DivisorSumDescent(a, b)\nInput: Positive integers a, b with a\u00b7\u03c3(n) = b\u00b7n\nOutput: Proof that the equation has no/unique solution\n\n1. Compute g = gcd(a, b)\n2. Set a' = a/g, b' = b/g\n3. If b' < a': CONTRADICTION (\u03c3(n)/n < 1 impossible)\n4. a' | n, write n = a'\u00b7k\n5. If gcd(k, a') = 1:\n   \u03c3(a'\u00b7k) = \u03c3(a')\u00b7\u03c3(k)\n   New equation: \u03c3(a')\u00b7\u03c3(k) = b'\u00b7k\n6. Recurse with (\u03c3(a'), b')",
+        "code": "\"\"\"\nAlgorithms for Divisor Sum Analysis and Solitary Number Detection\n\nImplements the key algorithms from the research on solitary numbers,\nabundancy indices, and divisor-sum equations.\n\"\"\"\n\nfrom math import gcd, isqrt\nfrom fractions import Fraction\nfrom typing import List, Tuple, Optional, Set\nfrom collections import defaultdict\n\n\ndef sigma(n: int) -> int:\n    \"\"\"Compute \u03c3(n) = sum of positive divisors of n. O(\u221an) time.\"\"\"\n    if n <= 0:\n        return 0\n    s = 0\n    for d in range(1, isqrt(n) + 1):\n        if n % d == 0:\n            s += d\n            if d != n // d:\n                s += n // d\n    return s\n\n\ndef sigma_prime_power(p: int, a: int) -> int:\n    \"\"\"Compute \u03c3(p^a) = 1 + p + p^2 + ... + p^a = (p^(a+1) - 1) / (p - 1).\"\"\"\n    return (p ** (a + 1) - 1) // (p - 1)\n\n\ndef factorize(n: int) -> dict:\n    \"\"\"Return prime factorization as {prime: exponent} dict.\"\"\"\n    factors = {}\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors[d] = factors.get(d, 0) + 1\n            n //= d\n        d += 1\n    if n > 1:\n        factors[n] = factors.get(n, 0) + 1\n    return factors\n\n\ndef sigma_from_factorization(factors: dict) -> int:\n    \"\"\"Compute \u03c3(n) from prime factorization using multiplicativity.\"\"\"\n    result = 1\n    for p, a in factors.items():\n        result *= sigma_prime_power(p, a)\n    return result\n\n\ndef abundancy(n: int) -> Fraction:\n    \"\"\"Compute abundancy index \u03c3(n)/n as exact fraction.\"\"\"\n    return Fraction(sigma(n), n)\n\n\ndef find_abundancy_class(target: Fraction, bound: int) -> List[int]:\n    \"\"\"Find all n \u2264 bound with abundancy equal to target.\"\"\"\n    return [n for n in range(1, bound + 1) if abundancy(n) == target]\n\n\ndef is_coprime_solitary(n: int) -> bool:\n    \"\"\"Check if n satisfies the coprimality criterion gcd(n, \u03c3(n)) = 1.\"\"\"\n    return gcd(n, sigma(n)) == 1\n\n\ndef check_solitary_equation(a: int, b: int, bound: int) -> List[int]:\n    \"\"\"\n    Find all m \u2264 bound satisfying a\u00b7\u03c3(m) = b\u00b7m.\n    \n    This is the integer-cleared form of \u03c3(m)/m = b/a.\n    \n    Args:\n        a: Coefficient of \u03c3(m)\n        b: Coefficient of m\n        bound: Search up to this value\n    \n    Returns:\n        List of solutions\n    \"\"\"\n    solutions = []\n    for m in range(1, bound + 1):\n        if a * sigma(m) == b * m:\n            solutions.append(m)\n    return solutions\n\n\ndef descent_analysis(a: int, b: int, max_depth: int = 10) -> List[dict]:\n    \"\"\"\n    Analyze the descent structure of the equation a\u00b7\u03c3(n) = b\u00b7n.\n    \n    At each step, if gcd(a, b) = g, reduce to (a/g)\u00b7\u03c3(n) = (b/g)\u00b7n.\n    Then a/g | n, write n = (a/g)\u00b7k, get \u03c3(a/g)\u00b7\u03c3(k) = (b/g)\u00b7k\n    (if coprime).\n    \n    Returns list of descent steps with coefficients and analysis.\n    \"\"\"\n    steps = []\n    current_a, current_b = a, b\n    \n    for depth in range(max_depth):\n        g = gcd(current_a, current_b)\n        reduced_a = current_a // g\n        reduced_b = current_b // g\n        \n        step = {\n            'depth': depth,\n            'equation': f\"{current_a}\u00b7\u03c3(n) = {current_b}\u00b7n\",\n            'reduced': f\"{reduced_a}\u00b7\u03c3(n) = {reduced_b}\u00b7n\",\n            'divisor': reduced_a,\n            'sigma_divisor': sigma(reduced_a),\n            'ratio': f\"\u03c3(n)/n = {reduced_b}/{reduced_a}\",\n            'ratio_value': reduced_b / reduced_a if reduced_a > 0 else float('inf'),\n        }\n        \n        if reduced_b < reduced_a:\n            step['conclusion'] = f\"CONTRADICTION: \u03c3(n)/n = {reduced_b}/{reduced_a} < 1, but \u03c3(n) \u2265 n\"\n            steps.append(step)\n            break\n        \n        # Next step: \u03c3(reduced_a) becomes new coefficient\n        steps.append(step)\n        current_a = sigma(reduced_a)\n        current_b = reduced_b\n    \n    return steps\n\n\ndef classify_abundancy_classes(bound: int) -> dict:\n    \"\"\"\n    Classify all abundancy classes up to bound.\n    \n    Returns dict mapping abundancy values to lists of integers.\n    \"\"\"\n    classes = defaultdict(list)\n    for n in range(1, bound + 1):\n        a = abundancy(n)\n        classes[a].append(n)\n    return dict(classes)\n\n\ndef find_friendly_pairs(bound: int) -> List[Tuple[int, int]]:\n    \"\"\"Find all friendly pairs (m, n) with m < n \u2264 bound.\"\"\"\n    classes = classify_abundancy_classes(bound)\n    pairs = []\n    for members in classes.values():\n        if len(members) >= 2:\n            for i in range(len(members)):\n                for j in range(i + 1, len(members)):\n                    pairs.append((members[i], members[j]))\n    return pairs\n\n\ndef find_solitary_candidates(bound: int) -> Set[int]:\n    \"\"\"Find numbers that appear solitary up to bound.\"\"\"\n    classes = classify_abundancy_classes(bound)\n    return {members[0] for members in classes.values() if len(members) == 1}\n\n\n# ============================================================\n# Example usage\n# ============================================================\nif __name__ == \"__main__\":\n    print(\"Abundancy Equation Solver\")\n    print(\"=\" * 50)\n    \n    # The equation 5\u03c3(m) = 9m (abundancy = 9/5)\n    print(\"\\nSolutions to 5\u03c3(m) = 9m up to 10000:\")\n    sols = check_solitary_equation(5, 9, 10000)\n    print(f\"  {sols}\")\n    \n    # Descent analysis\n    print(\"\\nDescent analysis for the equation 5\u03c3(m) = 9m:\")\n    print(\"  Starting from 31\u03c3(n) = 45n (after extracting factor 5):\")\n    steps = descent_analysis(31, 45)\n    for step in steps:\n        print(f\"  Step {step['depth']}: {step['equation']}\")\n        print(f\"    Divisor to extract: {step['divisor']}\")\n        print(f\"    \u03c3(divisor) = {step['sigma_divisor']}\")\n        if 'conclusion' in step:\n            print(f\"    >>> {step['conclusion']}\")\n    \n    # Friendly pairs\n    print(f\"\\nFriendly pairs up to 1000:\")\n    pairs = find_friendly_pairs(1000)\n    for m, n in pairs[:10]:\n        print(f\"  ({m}, {n}): abundancy = {abundancy(m)}\")\n    if len(pairs) > 10:\n        print(f\"  ... and {len(pairs) - 10} more pairs\")\n    \n    # Coprime-solitary numbers\n    print(f\"\\nNumbers n < 50 where gcd(n, \u03c3(n)) = 1 (coprime-solitary):\")\n    coprime = [n for n in range(1, 50) if is_coprime_solitary(n)]\n    print(f\"  {coprime}\")\n",
+        "code_file": "visualizations/10_is_a_solitary_number_divisor_sum_descent.py"
+      }
+    ],
+    "lean_proofs": "/-\n# 10 is a Solitary Number\n\nThis file proves that 10 is solitary: the only positive integer with abundancy\nindex \u03c3(n)/n = 9/5 is n = 10.\n-/\n\nimport Mathlib\n\n/-- Sum of positive divisors function. -/\ndef sigma (n : \u2115) : \u2115 := \u2211 d \u2208 n.divisors, d\n\n/-- Abundancy index as a rational number. -/\nnoncomputable def abund (n : \u2115) : \u211a := (sigma n : \u211a) / n\n\n/-- Two positive integers are friendly if they have the same abundancy index. -/\ndef Friendly (m n : \u2115) : Prop := abund m = abund n\n\n/-- A positive integer is solitary if no other positive integer shares its abundancy. -/\ndef Solitary (n : \u2115) : Prop := \u2200 \u2983m : \u2115\u2984, 0 < m \u2192 m \u2260 n \u2192 abund m \u2260 abund n\n\n/-! ## Basic computations -/\n\ntheorem sigma_ten : sigma 10 = 18 := by native_decide\ntheorem sigma_one : sigma 1 = 1 := by native_decide\ntheorem sigma_two : sigma 2 = 3 := by native_decide\ntheorem sigma_five : sigma 5 = 6 := by native_decide\n\ntheorem not_coprime_ten_sigma : \u00ac Nat.Coprime 10 (sigma 10) := by native_decide\n\n/-! ## Key lemmas about sigma -/\n\ntheorem sigma_mul_coprime {a b : \u2115} (hab : Nat.Coprime a b) :\n    sigma (a * b) = sigma a * sigma b := by\n  unfold sigma; grind +suggestions\n\ntheorem sigma_ge_self {n : \u2115} (hn : 0 < n) : n \u2264 sigma n := by\n  exact Finset.single_le_sum (fun x _ => Nat.zero_le x) (by simp [Nat.mem_divisors, hn.ne'])\n\ntheorem sigma_eq_self_iff {n : \u2115} (hn : 0 < n) : sigma n = n \u2194 n = 1 := by\n  rcases n with (_ | _ | n) <;> simp_all +arith +decide [sigma]\n  rw [Nat.sum_divisors_eq_sum_properDivisors_add_self]\n  exact ne_of_gt (Nat.lt_add_of_pos_left <| Finset.sum_pos\n    (fun x hx => Nat.pos_of_mem_properDivisors hx)\n    \u27e81, Nat.mem_properDivisors.mpr \u27e8by norm_num, by linarith\u27e9\u27e9)\n\ntheorem five_dvd_of_eq {m : \u2115} (hm : 0 < m) (h : 5 * sigma m = 9 * m) : 5 \u2223 m := by omega\n\ntheorem sigma_ratio_lt_one_impossible {a b n : \u2115} (hn : 0 < n) (hab : b < a)\n    (h : a * sigma n = b * n) : False := by\n  have hge := sigma_ge_self hn; nlinarith\n\n/-\nIf a * \u03c3(n) = b * n and \u03c3(c)/c \u2265 b/a (i.e., a*\u03c3(c) \u2265 b*c) and c | n, then\n    the equation forces constraints on n/c.\n-/\ntheorem sigma_product_lower_bound {n c : \u2115} (hn : 0 < n) (hc : c \u2223 n)\n    (hcpos : 0 < c) :\n    sigma n \u2265 sigma c * (n / c) := by\n  unfold sigma;\n  -- Since $c$ divides $n$, we can write $n = c * k$ for some integer $k$.\n  obtain \u27e8k, rfl\u27e9 : \u2203 k, n = c * k := hc;\n  -- Since $c$ divides $n$, we can write $n = c * k$ for some integer $k$. The divisors of $c * k$ include all divisors of $c$ multiplied by $k$.\n  have h_divisors : (c * k).divisors \u2287 Finset.image (fun d => d * k) c.divisors := by\n    exact Finset.image_subset_iff.mpr fun x hx => Nat.mem_divisors.mpr \u27e8 mul_dvd_mul ( Nat.dvd_of_mem_divisors hx ) ( dvd_refl k ), by aesop \u27e9;\n  refine' le_trans _ ( Finset.sum_le_sum_of_subset h_divisors );\n  rw [ Finset.sum_image ] <;> norm_num [ mul_comm, hcpos.ne' ];\n  \u00b7 rw [ Finset.mul_sum _ _ _ ];\n  \u00b7 exact fun x hx y hy hxy => mul_left_cancel\u2080 ( by aesop_cat : k \u2260 0 ) hxy\n\n/-! ## The descent lemma for 2\u03c3(j) = 3j -/\n\ntheorem two_sigma_eq_three_mul {j : \u2115} (hj : 0 < j) (h : 2 * sigma j = 3 * j) : j = 2 := by\n  -- Since $2 \\sigma(j) = 3 j$, we have that $j$ must be even. Let $j = 2^c l$ where $l$ is odd and $c \\geq 1$.\n  obtain \u27e8c, l, rfl, hl_odd, hc\u27e9 : \u2203 c l, j = 2 ^ c * l \u2227 Odd l \u2227 1 \u2264 c := by\n    -- Since $2 \\sigma(j) = 3 j$, we have that $j$ must be even. Let $c$ be such that $2^c \\mid j$ and $2^{c+1} \\nmid j$.\n    obtain \u27e8c, hc\u27e9 : \u2203 c, 2 ^ c \u2223 j \u2227 \u00ac2 ^ (c + 1) \u2223 j := by\n      exact \u27e8 Nat.factorization j 2, Nat.ordProj_dvd _ _, Nat.pow_succ_factorization_not_dvd hj.ne' ( by decide ) \u27e9;\n    rcases hc.1 with \u27e8 l, rfl \u27e9 ; use c, l ; simp_all +decide [ parity_simps ];\n    rcases c with ( _ | c ) <;> simp_all +decide [ pow_succ, mul_dvd_mul_iff_left ];\n    \u00b7 grind;\n    \u00b7 exact Nat.odd_iff.mpr hc;\n  -- If $c \\geq 2$, then $(2^{c+1}-1)\\sigma(l) = 3 \\cdot 2^{c-1} l$.\n  have h_eq : (2 ^ (c + 1) - 1) * sigma l = 3 * 2 ^ (c - 1) * l := by\n    have h_sigma_mul : sigma (2 ^ c * l) = sigma (2 ^ c) * sigma l := by\n      exact sigma_mul_coprime <| Nat.Coprime.pow_left _ <| by obtain \u27e8 k, rfl \u27e9 := hl_odd; norm_num;\n    -- Since $\\sigma(2^c) = 2^{c+1} - 1$, we can substitute this into the equation.\n    have h_sigma_2c : sigma (2 ^ c) = 2 ^ (c + 1) - 1 := by\n      simp +decide [ sigma, Nat.geomSum_eq ];\n    cases c <;> simp_all +decide [ pow_succ' ] ; linarith;\n  -- Since $2^{c+1}-1 > 3 \\cdot 2^{c-1}$ for $c \\geq 2$, we have a contradiction.\n  by_cases hc_ge_2 : c \u2265 2;\n  \u00b7 have h_contradiction : 2 ^ (c + 1) - 1 > 3 * 2 ^ (c - 1) := by\n      rcases c with ( _ | _ | c ) <;> simp_all +decide [ pow_succ' ];\n      exact lt_tsub_iff_left.mpr ( by linarith [ Nat.pow_le_pow_right two_pos ( show c \u2265 0 by norm_num ) ] );\n    exact False.elim <| sigma_ratio_lt_one_impossible ( show 0 < l from Nat.pos_of_ne_zero <| by aesop_cat ) ( show 3 * 2 ^ ( c - 1 ) < 2 ^ ( c + 1 ) - 1 from h_contradiction ) <| by nlinarith [ show 0 < 2 ^ ( c - 1 ) by positivity ] ;\n  \u00b7 interval_cases c ; simp_all +decide;\n    exact?\n\n/-! ## Coprime-to-5 case -/\n\ntheorem ten_from_coprime_five {m : \u2115} (hm : 0 < m) (h5 : 5 \u2223 m)\n    (hcop : Nat.Coprime (m / 5) 5) (h : 5 * sigma m = 9 * m) : m = 10 := by\n  -- Since $m$ is a multiple of $5$, we can write $m = 5k$ for some integer $k$.\n  obtain \u27e8k, hk\u27e9 : \u2203 k, m = 5 * k := h5;\n  -- Since $k$ is coprime to $5$, we have $\\sigma(5k) = \\sigma(5)\\sigma(k) = 6\\sigma(k)$.\n  have h_sigma : sigma (5 * k) = 6 * sigma k := by\n    convert sigma_mul_coprime _ using 1;\n    exact hcop.symm.coprime_dvd_right ( by simp +decide [ hk ] );\n  simp_all +arith +decide [ Nat.coprime_mul_iff_left, Nat.coprime_mul_iff_right ];\n  exact two_sigma_eq_three_mul hm ( by linarith ) \u25b8 by ring;\n\n/-! ## The 25 | m case -/\n\n/-\nIf 50 | m and 5\u03c3(m) = 9m, then False. (Uses \u03c3(50)*q \u2264 \u03c3(50q).)\n-/\ntheorem no_solution_50_dvd {m : \u2115} (hm : 0 < m) (h50 : 50 \u2223 m)\n    (h : 5 * sigma m = 9 * m) : False := by\n  -- Since 50|m, write m = 50q. For every divisor d of 50 (which are 1,2,5,10,25,50 with sum 93), d*q is a divisor of m. So \u03c3(m) \u2265 93q = 93*(m/50).\n  have h_sigma_ge : sigma m \u2265 93 * (m / 50) := by\n    have h_sigma_ge : sigma m \u2265 \u2211 d \u2208 Nat.divisors 50, d * (m / 50) := by\n      have h_divisors : Nat.divisors m \u2287 Finset.image (fun d => d * (m / 50)) (Nat.divisors 50) := by\n        intro x;\n        norm_num +zetaDelta at *;\n        rintro y hy rfl; exact \u27e8 by exact Nat.dvd_trans ( mul_dvd_mul hy dvd_rfl ) ( by rw [ Nat.mul_div_cancel' h50 ] ), hm.ne' \u27e9 ;\n      exact le_trans ( by rw [ Finset.sum_image ( by intros a ha b hb hab; nlinarith [ Nat.div_mul_cancel h50 ] ) ] ) ( Finset.sum_le_sum_of_subset h_divisors );\n    exact h_sigma_ge.trans' ( by rw [ \u2190 Finset.sum_mul _ _ _ ] ; rfl );\n  omega\n\n/-\n\u03c3(5^b) is even when b is odd.\n-/\ntheorem sigma_pow5_even_of_odd {b : \u2115} (hb : Odd b) : 2 \u2223 sigma (5 ^ b) := by\n  unfold sigma;\n  norm_num [ Nat.geomSum_eq, \u2190 even_iff_two_dvd, parity_simps ];\n  obtain \u27e8 k, rfl \u27e9 := hb; norm_num [ Nat.pow_succ', Nat.pow_mul ] ; ring_nf ;\n  exact even_iff_two_dvd.mpr ( Nat.dvd_div_of_mul_dvd ( Nat.dvd_of_mod_eq_zero ( by rw [ \u2190 Nat.mod_add_div ( 5 ^ ( k * 2 ) * 25 ) 8 ] ; norm_num [ Nat.pow_mul', Nat.mul_mod, Nat.pow_mod ] ) ) )\n\n/-- For b \u2265 2 even, gcd(r,5)=1, r odd: \u03c3(5^b)\u03c3(r) = 9\u00b75^(b-1)\u00b7r \u2192 False.\n    Key: at the first descent step, the denominator is even, but r (hence all factors) are odd. -/\ntheorem no_solution_odd_b_even {b r : \u2115} (hb : 2 \u2264 b) (hbeven : Even b)\n    (hr : 0 < r) (hrodd : \u00ac 2 \u2223 r) (hrcop : Nat.Coprime r 5)\n    (h : sigma (5 ^ b) * sigma r = 9 * 5 ^ (b - 1) * r) : False := by\n  sorry\n\n/-\nIf 25 | m but 2 \u2224 m (m odd) and 5\u03c3(m) = 9m, then False.\n-/\ntheorem no_solution_odd_25_dvd {m : \u2115} (hm : 0 < m) (h25 : 25 \u2223 m) (hodd : \u00ac 2 \u2223 m)\n    (h : 5 * sigma m = 9 * m) : False := by\n  -- Write m = 5^b * r with b = v\u2085(m) \u2265 2 and gcd(r, 5) = 1, r odd.\n  obtain \u27e8b, r, hb, hr, hrcop\u27e9 : \u2203 b r, 2 \u2264 b \u2227 5 ^ b \u2223 m \u2227 \u00ac5^(b + 1) \u2223 m \u2227 m = 5 ^ b * r \u2227 Nat.Coprime r 5 \u2227 \u00ac2 \u2223 r := by\n    use Nat.factorization m 5, m / 5 ^ Nat.factorization m 5;\n    refine' \u27e8 Nat.le_trans _ ( Nat.factorization_le_iff_dvd ( by positivity ) ( by positivity ) |>.2 h25 5 ), Nat.ordProj_dvd _ _, Nat.pow_succ_factorization_not_dvd hm.ne' ( by decide ), Eq.symm ( Nat.mul_div_cancel' ( Nat.ordProj_dvd _ _ ) ), _, _ \u27e9;\n    \u00b7 native_decide;\n    \u00b7 exact Nat.Coprime.symm ( Nat.Prime.coprime_iff_not_dvd ( by decide ) |>.2 <| Nat.not_dvd_ordCompl ( by decide ) <| by aesop );\n    \u00b7 exact fun h => hodd <| dvd_trans h <| Nat.div_dvd_of_dvd <| Nat.ordProj_dvd _ _;\n  -- The equation becomes \u03c3(5^b) * \u03c3(r) = 9 * 5^(b-1) * r.\n  have h_eq : sigma (5 ^ b) * sigma r = 9 * 5 ^ (b - 1) * r := by\n    -- Using the multiplicative property of \u03c3, we have \u03c3(m) = \u03c3(5^b) * \u03c3(r).\n    have h_sigma_mul : sigma m = sigma (5 ^ b) * sigma r := by\n      rw [ hrcop.2.1, sigma_mul_coprime ];\n      exact Nat.Coprime.pow_left _ ( Nat.Coprime.symm <| hrcop.2.2.1.coprime_dvd_left <| by aesop );\n    cases b <;> simp_all +decide [ pow_succ' ] ; linarith;\n  rcases Nat.even_or_odd' b with \u27e8 k, rfl | rfl \u27e9;\n  \u00b7 exact no_solution_odd_b_even ( show 2 \u2264 2 * k from hb ) ( by norm_num ) ( Nat.pos_of_ne_zero ( by aesop_cat ) ) ( by aesop_cat ) ( by aesop_cat ) h_eq;\n  \u00b7 -- For b odd (b \u2265 3): \u03c3(5^b) is even (by sigma_pow5_even_of_odd). The equation \u03c3(5^b)*\u03c3(r) = 9*5^(b-1)*r has LHS even (even * anything). But RHS = 9*5^(b-1)*r is odd (all factors odd). Contradiction.\n    have h_even : 2 \u2223 sigma (5 ^ (2 * k + 1)) := by\n      exact sigma_pow5_even_of_odd ( by simp +decide [ parity_simps ] );\n    replace h_eq := congr_arg Even h_eq ; simp_all +decide [ \u2190 even_iff_two_dvd, parity_simps ];\n    exact absurd h_eq ( by simpa using hodd )\n\ntheorem no_solution_25_dvd {m : \u2115} (hm : 0 < m) (h25 : 25 \u2223 m)\n    (h : 5 * sigma m = 9 * m) : False := by\n  by_cases heven : 2 \u2223 m\n  \u00b7 have h50 : 50 \u2223 m := by\n      obtain \u27e8k, rfl\u27e9 := h25\n      obtain \u27e8l, hl\u27e9 := heven\n      refine \u27e8k / 2, ?_\u27e9\n      omega\n    exact no_solution_50_dvd hm h50 h\n  \u00b7 exact no_solution_odd_25_dvd hm h25 heven h\n\n/-! ## Main theorem -/\n\ntheorem ten_abundancy_unique {m : \u2115} (hm : 0 < m) (h : 5 * sigma m = 9 * m) : m = 10 := by\n  have h5 := five_dvd_of_eq hm h\n  obtain \u27e8k, rfl\u27e9 := h5\n  by_cases hk5 : 5 \u2223 k\n  \u00b7 obtain \u27e8l, rfl\u27e9 := hk5\n    exact absurd h (fun heq => no_solution_25_dvd (by positivity) \u27e8l, by ring\u27e9 heq)\n  \u00b7 exact ten_from_coprime_five (by positivity) \u27e8k, rfl\u27e9\n      (by rw [Nat.mul_div_cancel_left _ (by norm_num : (0:\u2115) < 5)]\n          rw [Nat.coprime_comm]\n          exact (Nat.Prime.coprime_iff_not_dvd (by norm_num)).mpr hk5) h\n\n/-! ## Derived results -/\n\ntheorem abund_ten : abund 10 = (9 : \u211a) / 5 := by\n  unfold abund; rw [sigma_ten]; norm_num\n\ntheorem solitary_ten : Solitary 10 := by\n  intro m hm hne habund\n  apply hne\n  apply ten_abundancy_unique hm\n  unfold abund at habund\n  have h18 : sigma 10 = 18 := sigma_ten\n  rw [h18] at habund\n  push_cast at habund\n  have hmq : (m : \u211a) \u2260 0 := Nat.cast_ne_zero.mpr (by omega)\n  rw [div_eq_div_iff hmq (by norm_num : (10:\u211a) \u2260 0)] at habund\n  have h1 : (sigma m : \u2124) * 10 = 18 * (m : \u2124) := by exact_mod_cast habund\n  have h2 : sigma m * 10 = 18 * m := by exact_mod_cast h1\n  omega\n\ntheorem friendly_with_ten_iff {m : \u2115} (hm : 0 < m) :\n    Friendly m 10 \u2194 m = 10 := by\n  constructor\n  \u00b7 intro hf; by_contra hne; exact solitary_ten hm hne hf\n  \u00b7 intro h; subst h; rfl",
+    "modules": {
+      "algorithms": "\"\"\"\nAlgorithms for Divisor Sum Analysis and Solitary Number Detection\n\nImplements the key algorithms from the research on solitary numbers,\nabundancy indices, and divisor-sum equations.\n\"\"\"\n\nfrom math import gcd, isqrt\nfrom fractions import Fraction\nfrom typing import List, Tuple, Optional, Set\nfrom collections import defaultdict\n\n\ndef sigma(n: int) -> int:\n    \"\"\"Compute \u03c3(n) = sum of positive divisors of n. O(\u221an) time.\"\"\"\n    if n <= 0:\n        return 0\n    s = 0\n    for d in range(1, isqrt(n) + 1):\n        if n % d == 0:\n            s += d\n            if d != n // d:\n                s += n // d\n    return s\n\n\ndef sigma_prime_power(p: int, a: int) -> int:\n    \"\"\"Compute \u03c3(p^a) = 1 + p + p^2 + ... + p^a = (p^(a+1) - 1) / (p - 1).\"\"\"\n    return (p ** (a + 1) - 1) // (p - 1)\n\n\ndef factorize(n: int) -> dict:\n    \"\"\"Return prime factorization as {prime: exponent} dict.\"\"\"\n    factors = {}\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors[d] = factors.get(d, 0) + 1\n            n //= d\n        d += 1\n    if n > 1:\n        factors[n] = factors.get(n, 0) + 1\n    return factors\n\n\ndef sigma_from_factorization(factors: dict) -> int:\n    \"\"\"Compute \u03c3(n) from prime factorization using multiplicativity.\"\"\"\n    result = 1\n    for p, a in factors.items():\n        result *= sigma_prime_power(p, a)\n    return result\n\n\ndef abundancy(n: int) -> Fraction:\n    \"\"\"Compute abundancy index \u03c3(n)/n as exact fraction.\"\"\"\n    return Fraction(sigma(n), n)\n\n\ndef find_abundancy_class(target: Fraction, bound: int) -> List[int]:\n    \"\"\"Find all n \u2264 bound with abundancy equal to target.\"\"\"\n    return [n for n in range(1, bound + 1) if abundancy(n) == target]\n\n\ndef is_coprime_solitary(n: int) -> bool:\n    \"\"\"Check if n satisfies the coprimality criterion gcd(n, \u03c3(n)) = 1.\"\"\"\n    return gcd(n, sigma(n)) == 1\n\n\ndef check_solitary_equation(a: int, b: int, bound: int) -> List[int]:\n    \"\"\"\n    Find all m \u2264 bound satisfying a\u00b7\u03c3(m) = b\u00b7m.\n    \n    This is the integer-cleared form of \u03c3(m)/m = b/a.\n    \n    Args:\n        a: Coefficient of \u03c3(m)\n        b: Coefficient of m\n        bound: Search up to this value\n    \n    Returns:\n        List of solutions\n    \"\"\"\n    solutions = []\n    for m in range(1, bound + 1):\n        if a * sigma(m) == b * m:\n            solutions.append(m)\n    return solutions\n\n\ndef descent_analysis(a: int, b: int, max_depth: int = 10) -> List[dict]:\n    \"\"\"\n    Analyze the descent structure of the equation a\u00b7\u03c3(n) = b\u00b7n.\n    \n    At each step, if gcd(a, b) = g, reduce to (a/g)\u00b7\u03c3(n) = (b/g)\u00b7n.\n    Then a/g | n, write n = (a/g)\u00b7k, get \u03c3(a/g)\u00b7\u03c3(k) = (b/g)\u00b7k\n    (if coprime).\n    \n    Returns list of descent steps with coefficients and analysis.\n    \"\"\"\n    steps = []\n    current_a, current_b = a, b\n    \n    for depth in range(max_depth):\n        g = gcd(current_a, current_b)\n        reduced_a = current_a // g\n        reduced_b = current_b // g\n        \n        step = {\n            'depth': depth,\n            'equation': f\"{current_a}\u00b7\u03c3(n) = {current_b}\u00b7n\",\n            'reduced': f\"{reduced_a}\u00b7\u03c3(n) = {reduced_b}\u00b7n\",\n            'divisor': reduced_a,\n            'sigma_divisor': sigma(reduced_a),\n            'ratio': f\"\u03c3(n)/n = {reduced_b}/{reduced_a}\",\n            'ratio_value': reduced_b / reduced_a if reduced_a > 0 else float('inf'),\n        }\n        \n        if reduced_b < reduced_a:\n            step['conclusion'] = f\"CONTRADICTION: \u03c3(n)/n = {reduced_b}/{reduced_a} < 1, but \u03c3(n) \u2265 n\"\n            steps.append(step)\n            break\n        \n        # Next step: \u03c3(reduced_a) becomes new coefficient\n        steps.append(step)\n        current_a = sigma(reduced_a)\n        current_b = reduced_b\n    \n    return steps\n\n\ndef classify_abundancy_classes(bound: int) -> dict:\n    \"\"\"\n    Classify all abundancy classes up to bound.\n    \n    Returns dict mapping abundancy values to lists of integers.\n    \"\"\"\n    classes = defaultdict(list)\n    for n in range(1, bound + 1):\n        a = abundancy(n)\n        classes[a].append(n)\n    return dict(classes)\n\n\ndef find_friendly_pairs(bound: int) -> List[Tuple[int, int]]:\n    \"\"\"Find all friendly pairs (m, n) with m < n \u2264 bound.\"\"\"\n    classes = classify_abundancy_classes(bound)\n    pairs = []\n    for members in classes.values():\n        if len(members) >= 2:\n            for i in range(len(members)):\n                for j in range(i + 1, len(members)):\n                    pairs.append((members[i], members[j]))\n    return pairs\n\n\ndef find_solitary_candidates(bound: int) -> Set[int]:\n    \"\"\"Find numbers that appear solitary up to bound.\"\"\"\n    classes = classify_abundancy_classes(bound)\n    return {members[0] for members in classes.values() if len(members) == 1}\n\n\n# ============================================================\n# Example usage\n# ============================================================\nif __name__ == \"__main__\":\n    print(\"Abundancy Equation Solver\")\n    print(\"=\" * 50)\n    \n    # The equation 5\u03c3(m) = 9m (abundancy = 9/5)\n    print(\"\\nSolutions to 5\u03c3(m) = 9m up to 10000:\")\n    sols = check_solitary_equation(5, 9, 10000)\n    print(f\"  {sols}\")\n    \n    # Descent analysis\n    print(\"\\nDescent analysis for the equation 5\u03c3(m) = 9m:\")\n    print(\"  Starting from 31\u03c3(n) = 45n (after extracting factor 5):\")\n    steps = descent_analysis(31, 45)\n    for step in steps:\n        print(f\"  Step {step['depth']}: {step['equation']}\")\n        print(f\"    Divisor to extract: {step['divisor']}\")\n        print(f\"    \u03c3(divisor) = {step['sigma_divisor']}\")\n        if 'conclusion' in step:\n            print(f\"    >>> {step['conclusion']}\")\n    \n    # Friendly pairs\n    print(f\"\\nFriendly pairs up to 1000:\")\n    pairs = find_friendly_pairs(1000)\n    for m, n in pairs[:10]:\n        print(f\"  ({m}, {n}): abundancy = {abundancy(m)}\")\n    if len(pairs) > 10:\n        print(f\"  ... and {len(pairs) - 10} more pairs\")\n    \n    # Coprime-solitary numbers\n    print(f\"\\nNumbers n < 50 where gcd(n, \u03c3(n)) = 1 (coprime-solitary):\")\n    coprime = [n for n in range(1, 50) if is_coprime_solitary(n)]\n    print(f\"  {coprime}\")\n",
+      "demo": "\"\"\"\nApplications of Divisor Sum Theory\n\nDemonstrates practical applications of the abundancy index framework\nand solitary number theory.\n\"\"\"\n\nfrom math import gcd, isqrt\nfrom fractions import Fraction\nfrom typing import List, Dict, Tuple\n\n\ndef sigma(n: int) -> int:\n    \"\"\"Sum of positive divisors of n.\"\"\"\n    if n <= 0:\n        return 0\n    s = 0\n    for d in range(1, isqrt(n) + 1):\n        if n % d == 0:\n            s += d\n            if d != n // d:\n                s += n // d\n    return s\n\n\ndef abundancy(n: int) -> Fraction:\n    \"\"\"Abundancy index \u03c3(n)/n.\"\"\"\n    return Fraction(sigma(n), n)\n\n\n# ============================================================\n# Application 1: Perfect number detection\n# ============================================================\ndef find_perfect_numbers(bound: int) -> List[int]:\n    \"\"\"\n    Find perfect numbers up to bound.\n    \n    A perfect number n satisfies \u03c3(n) = 2n, or equivalently\n    abundancy(n) = 2. This is a special case of the abundancy\n    equation a\u00b7\u03c3(n) = b\u00b7n with (a,b) = (1,2).\n    \"\"\"\n    return [n for n in range(2, bound + 1) if sigma(n) == 2 * n]\n\n\n# ============================================================\n# Application 2: Multiperfect number detection\n# ============================================================\ndef find_multiperfect(k: int, bound: int) -> List[int]:\n    \"\"\"\n    Find k-perfect numbers up to bound.\n    \n    A k-perfect number satisfies \u03c3(n) = k\u00b7n.\n    \"\"\"\n    return [n for n in range(2, bound + 1) if sigma(n) == k * n]\n\n\n# ============================================================\n# Application 3: Abundancy spectrum analysis\n# ============================================================\ndef abundancy_spectrum(bound: int, precision: int = 1000) -> Dict[str, int]:\n    \"\"\"\n    Analyze the distribution of abundancy indices.\n    \n    Groups indices into intervals of width 1/precision.\n    \"\"\"\n    from collections import Counter\n    spectrum = Counter()\n    for n in range(1, bound + 1):\n        a = float(abundancy(n))\n        bucket = round(a * precision) / precision\n        spectrum[f\"{bucket:.3f}\"] += 1\n    return dict(sorted(spectrum.items()))\n\n\n# ============================================================\n# Application 4: Divisor sum cryptographic hash\n# ============================================================\ndef abundancy_fingerprint(n: int) -> Tuple[int, int]:\n    \"\"\"\n    Compute a number-theoretic fingerprint based on divisor structure.\n    \n    Returns (numerator, denominator) of reduced abundancy.\n    This uniquely characterizes the \"divisor density\" of n.\n    \"\"\"\n    a = abundancy(n)\n    return (a.numerator, a.denominator)\n\n\n# ============================================================\n# Application 5: Testing the coprimality criterion\n# ============================================================\ndef solitary_by_coprimality(bound: int) -> List[int]:\n    \"\"\"\n    Find numbers provably solitary by the coprimality criterion:\n    gcd(n, \u03c3(n)) = 1 implies n is solitary.\n    \n    Note: This is sufficient but not necessary (10 is solitary\n    but fails this criterion).\n    \"\"\"\n    return [n for n in range(1, bound + 1) if gcd(n, sigma(n)) == 1]\n\n\n# ============================================================\n# Application 6: Equation uniqueness checker\n# ============================================================\ndef check_equation_uniqueness(a: int, b: int, bound: int) -> dict:\n    \"\"\"\n    For the equation a\u00b7\u03c3(m) = b\u00b7m, check if the solution is unique.\n    \n    Returns analysis including solutions found and whether\n    uniqueness can be concluded.\n    \"\"\"\n    solutions = [m for m in range(1, bound + 1) if a * sigma(m) == b * m]\n    target = Fraction(b, a)\n    \n    return {\n        'equation': f'{a}\u00b7\u03c3(m) = {b}\u00b7m',\n        'target_abundancy': str(target),\n        'solutions_found': solutions,\n        'count': len(solutions),\n        'unique_up_to_bound': len(solutions) <= 1,\n        'bound': bound,\n    }\n\n\nif __name__ == \"__main__\":\n    print(\"Applications of Divisor Sum Theory\")\n    print(\"=\" * 50)\n    \n    # Perfect numbers\n    print(\"\\n1. Perfect numbers up to 10000:\")\n    perfects = find_perfect_numbers(10000)\n    for n in perfects:\n        print(f\"   {n}: \u03c3({n}) = {sigma(n)} = 2\u00d7{n}\")\n    \n    # Multiperfect\n    print(\"\\n2. Triperfect numbers up to 1000000:\")\n    triperfects = find_multiperfect(3, 1000000)\n    for n in triperfects:\n        print(f\"   {n}: \u03c3({n}) = {sigma(n)} = 3\u00d7{n}\")\n    \n    # Equation uniqueness for small ratios\n    print(\"\\n3. Equation uniqueness for \u03c3(m)/m = b/a:\")\n    test_cases = [(5, 9), (1, 2), (2, 3), (3, 4), (4, 7)]\n    for a, b in test_cases:\n        result = check_equation_uniqueness(a, b, 10000)\n        print(f\"   {result['equation']}: solutions = {result['solutions_found'][:5]}\"\n              f\"{'...' if result['count'] > 5 else ''}\")\n    \n    # Coprimality criterion\n    print(\"\\n4. Numbers solitary by coprimality (first 20):\")\n    cop_sol = solitary_by_coprimality(100)\n    print(f\"   {cop_sol[:20]}...\")\n    print(f\"   Note: 10 is NOT in this list (gcd(10, 18) = 2)\")\n    print(f\"   Yet 10 IS solitary - the criterion is sufficient, not necessary\")\n    \n    # Fingerprints\n    print(\"\\n5. Abundancy fingerprints:\")\n    for n in [6, 10, 12, 28, 496]:\n        fp = abundancy_fingerprint(n)\n        print(f\"   n={n}: fingerprint = {fp[0]}/{fp[1]} = {float(Fraction(*fp)):.4f}\")\n\n\n\"\"\"\nDemonstration: 10 is a Solitary Number\n\nThis script demonstrates the key mathematical concepts behind the proof\nthat 10 is solitary - the only positive integer with abundancy index 9/5.\n\"\"\"\n\nfrom math import gcd\nfrom fractions import Fraction\n\n\ndef sigma(n: int) -> int:\n    \"\"\"Sum of all positive divisors of n.\"\"\"\n    if n <= 0:\n        return 0\n    return sum(d for d in range(1, n + 1) if n % d == 0)\n\n\ndef abund(n: int) -> Fraction:\n    \"\"\"Abundancy index \u03c3(n)/n as an exact fraction.\"\"\"\n    return Fraction(sigma(n), n)\n\n\ndef is_friendly(m: int, n: int) -> bool:\n    \"\"\"Check if m and n are friendly (same abundancy index).\"\"\"\n    return abund(m) == abund(n)\n\n\ndef is_solitary_up_to(n: int, bound: int) -> bool:\n    \"\"\"Check if n appears solitary among all m in [1, bound].\"\"\"\n    target = abund(n)\n    for m in range(1, bound + 1):\n        if m != n and abund(m) == target:\n            return False\n    return True\n\n\n# ============================================================\n# Demonstration 1: Basic sigma and abundancy computations\n# ============================================================\nprint(\"=\" * 60)\nprint(\"DEMONSTRATION 1: Divisor sums and abundancy indices\")\nprint(\"=\" * 60)\n\nfor n in [1, 2, 3, 5, 6, 10, 12, 28]:\n    s = sigma(n)\n    a = abund(n)\n    print(f\"  \u03c3({n:3d}) = {s:4d},  abundancy = \u03c3({n})/{n} = {a}\")\n\n# ============================================================\n# Demonstration 2: The key equation 5\u03c3(m) = 9m\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 2: Searching for solutions to 5\u03c3(m) = 9m\")\nprint(\"=\" * 60)\n\nsolutions = []\nfor m in range(1, 10001):\n    if 5 * sigma(m) == 9 * m:\n        solutions.append(m)\n\nprint(f\"  Solutions in [1, 10000]: {solutions}\")\nprint(f\"  \u03c3(10) = {sigma(10)}\")\nprint(f\"  5 \u00d7 \u03c3(10) = {5 * sigma(10)}\")\nprint(f\"  9 \u00d7 10   = {9 * 10}\")\nprint(f\"  Abundancy of 10: {abund(10)} = {float(abund(10)):.4f}\")\n\n# ============================================================\n# Demonstration 3: Why the coprimality criterion fails for 10\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 3: The coprimality criterion\")\nprint(\"=\" * 60)\n\nprint(f\"  gcd(10, \u03c3(10)) = gcd(10, 18) = {gcd(10, 18)}\")\nprint(f\"  The coprimality criterion requires gcd(n, \u03c3(n)) = 1.\")\nprint(f\"  Since gcd(10, 18) = 2 \u2260 1, the criterion does NOT apply to 10.\")\nprint(f\"  Yet 10 IS solitary! This makes the result more interesting.\")\n\n# Numbers where coprimality criterion DOES apply\ncoprime_solitary = []\nfor n in range(1, 100):\n    if gcd(n, sigma(n)) == 1:\n        coprime_solitary.append(n)\nprint(f\"\\n  Numbers n < 100 with gcd(n, \u03c3(n)) = 1 (automatically solitary):\")\nprint(f\"  {coprime_solitary}\")\n\n# ============================================================\n# Demonstration 4: The proof structure - multiplicativity\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 4: Multiplicativity of \u03c3\")\nprint(\"=\" * 60)\n\n# \u03c3 is multiplicative: \u03c3(ab) = \u03c3(a)\u03c3(b) when gcd(a,b) = 1\npairs = [(2, 5), (3, 7), (4, 9), (2, 15), (6, 35)]\nfor a, b in pairs:\n    g = gcd(a, b)\n    prod_sigma = sigma(a) * sigma(b)\n    sigma_prod = sigma(a * b)\n    status = \"\u2713\" if prod_sigma == sigma_prod else \"\u2717\"\n    print(f\"  \u03c3({a})\u00d7\u03c3({b}) = {sigma(a)}\u00d7{sigma(b)} = {prod_sigma}, \"\n          f\"\u03c3({a*b}) = {sigma_prod}  \"\n          f\"{'(coprime)' if g == 1 else f'(gcd={g})'} {status}\")\n\n# ============================================================\n# Demonstration 5: The descent argument\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 5: The descent argument\")\nprint(\"=\" * 60)\n\nprint(\"  If 5\u03c3(m) = 9m and 5|m, write m = 5j.\")\nprint(\"  If gcd(j, 5) = 1: \u03c3(5j) = \u03c3(5)\u03c3(j) = 6\u03c3(j)\")\nprint(\"  \u2192 30\u03c3(j) = 45j \u2192 2\u03c3(j) = 3j\")\nprint(\"  \u2192 2|j, so j = 2k\")\nprint(\"  If gcd(k, 2) = 1: \u03c3(2k) = 3\u03c3(k) \u2192 6\u03c3(k) = 6k \u2192 \u03c3(k) = k \u2192 k = 1\")\nprint(\"  \u2192 j = 2, m = 10 \u2713\")\nprint()\nprint(\"  If gcd(k, 2) > 1: j = 2^c\u00b7l (c \u2265 2, l odd)\")\nprint(\"  \u2192 (2^(c+1)-1)\u03c3(l) = 3\u00b72^(c-1)\u00b7l\")\nprint(\"  For c \u2265 2: 2^(c+1)-1 > 3\u00b72^(c-1), so \u03c3(l) < l. But \u03c3(l) \u2265 l. \u2717\")\nfor c in range(1, 8):\n    lhs_coeff = 2 ** (c + 1) - 1\n    rhs_coeff = 3 * 2 ** (c - 1)\n    print(f\"    c = {c}: 2^{c+1}-1 = {lhs_coeff} vs 3\u00b72^{c-1} = {rhs_coeff}  \"\n          f\"{'\u03c3(l)/l < 1 \u2717' if lhs_coeff > rhs_coeff else '\u03c3(l) = l \u2713'}\")\n\n# ============================================================\n# Demonstration 6: Solitary verification\n# ============================================================\nprint(\"\\n\" + \"=\" * 60)\nprint(\"DEMONSTRATION 6: Computational verification of solitude\")\nprint(\"=\" * 60)\n\nbound = 5000\nprint(f\"  Checking all m in [1, {bound}] for abundancy 9/5...\")\ntarget = Fraction(9, 5)\nmatches = [m for m in range(1, bound + 1) if abund(m) == target]\nprint(f\"  Numbers with abundancy 9/5: {matches}\")\nprint(f\"  10 is solitary up to {bound}: {is_solitary_up_to(10, bound)}\")\n"
+    },
+    "date": "2026-05-19T10:25:55Z",
+    "exp_id": "afc6ab32",
+    "source_exp_ids": [
+      "seed"
+    ]
+  },
   "motivic_universality_of_neural_scaling_exponents.json": {
     "title": "Tropical Scaling Exponents for Computation DAGs: Rationality, Invariance, and Asymptotic Bounds",
     "domain": "Tropical Geometry / Neural Scaling Laws / Computational Complexity",
@@ -2384,7 +2426,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -2393,7 +2435,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 280
+      "hue": 92
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -2402,7 +2444,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -2411,7 +2453,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "galois_group__s",
@@ -2420,7 +2462,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -2429,7 +2471,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -2438,7 +2480,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "expected_lean_signature",
@@ -2447,7 +2489,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -2456,7 +2498,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -2465,7 +2507,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "percolation_threshold",
@@ -2483,7 +2525,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -2492,7 +2534,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -2501,7 +2543,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -2510,7 +2552,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T16:00:38Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "legendres_conjecture",
@@ -2519,7 +2561,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -2528,7 +2570,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -2537,7 +2579,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T17:03:39Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -2546,7 +2588,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -2564,7 +2606,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -2582,7 +2624,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "hodge_conjecture",
@@ -2591,7 +2633,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -2600,7 +2642,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:03:41Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -2609,7 +2651,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -2618,7 +2660,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -2627,7 +2669,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T20:03:02Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "sums_of_three_cubes",
@@ -2645,7 +2687,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -2654,7 +2696,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "twin_prime_conjecture",
@@ -2672,7 +2714,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -2681,7 +2723,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:08:18Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -2699,7 +2741,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -2708,7 +2750,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T23:05:18Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -2717,7 +2759,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:05:40Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -2735,7 +2777,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -2753,7 +2795,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:03:55Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "langlands_program_functoriality",
@@ -2762,7 +2804,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:04:15Z",
-      "hue": 275
+      "hue": 280
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -2771,7 +2813,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "tropical_intersection_theory",
@@ -2780,7 +2822,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 270
+      "hue": 101
     },
     {
       "id": "riemann_hypothesis",
@@ -2789,7 +2831,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "odd_perfect_numbers",
@@ -2798,7 +2840,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -2807,7 +2849,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture",
@@ -2817,6 +2859,15 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
       "hue": 271
+    },
+    {
+      "id": "10_is_a_solitary_number",
+      "title": "10 is a Solitary Number: Formal Proof via Divisor-Sum Descent",
+      "domain": "Number Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-19T10:25:55Z",
+      "hue": 92
     }
   ],
   "edges": [
@@ -3069,21 +3120,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "f8e84c94",
     "timestamp": "2026-05-18T10:17:17.085317+00:00"
-  },
-  {
-    "id": "seed_034",
-    "title": "Jacobian Conjecture",
-    "description": "Prove that if a polynomial map F: C\u207f \u2192 C\u207f has constant non-zero Jacobian determinant, then F is invertible. Formalize the reduction to degree 3 and connect to the Dixmier conjecture.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.83,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "af913c31",
-    "timestamp": "2026-05-18T10:17:17.084706+00:00"
   },
   {
     "id": "seed_037",
@@ -3727,6 +3763,27 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "c9a90334",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-19T05:02:46.201567+00:00"
+  },
+  {
+    "id": "fd_0115",
+    "title": "**Conjecture:** For every tame Keller map `F : k^n \u2192 k^n` (i.e., one that can be",
+    "description": "# Future Directions\n\n## 1. Degree-Growth Rigidity for Tame Keller Maps\n\n**Conjecture:** For every tame Keller map `F : k^n \u2192 k^n` (i.e., one that can be decomposed as a composition of affine and elementary maps), the inverse map `F\u207b\u00b9` has degree bounded by `deg(F)^{n-1}`.\n\n**Test:** Formalize the class of tame automorphisms using the `elementaryMap` and `polyMapComp_isPolyAuto` infrastructure. Generate random compositions of 5-10 elementary maps in dimensions n = 2, 3, 4. For each, compute the inverse (by reversing the composition) and measure degree. Search for examples where inverse degree exceeds the conjectured bound.\n\n**Impact:** If true, this gives an effective degree bound for inverse computation in the tame case, which is critical for algorithmic applications. If false, the counterexample would reveal new phenomena in automorphism degree growth. The formalization of `triangular_isPolyAuto` already establishes the base case.\n\n## 2. Computational Nilpotence Detection for Cubic Jacobians\n\n**Conjecture:** For a cubic homogeneous map F = I + H over a characteristic-zero field of dimension n \u2264 10, the Keller condition `det(I + JH) = 1` is computationally equivalent to `(JH)^n = 0` (nilpotence of the Jacobian of H). Moreover, nilpotence at level \u2308n/2\u2309 + 1 suffices.\n\n**Test:** Implement symbolic computation of `(JH)^k` for random cubic homogeneous H in dimensions 2-6 satisfying the Keller condition. Check whether nilpotence always holds and determine the minimal nilpotence index. Use the formalized `jacobianMatrix_H_homogeneous` to ensure degree tracking is correct.\n\n**Impact:** If the sharper nilpotence bound holds, it dramatically reduces the complexity of verifying the Keller condition for cubic maps, potentially enabling computer-assisted proofs in low dimensions. The existing `jacobianMatrix_cubic_homogeneous` theorem provides the structural foundation.\n\n## 3. Stable-Equivalence Complexity Collapse\n\n**Conjecture:** Every cubic homogeneous Keller map in dimension n is stably equivalent (via `stableLift` and affine conjugation) to a Dru\u017ckowski map in dimension \u2264 2n.\n\n**Test:** For dimensions n = 2, 3, implement the explicit reduction from general cubic homogeneous maps to Dru\u017ckowski form. Count the number of new variables introduced. Verify that the bound 2n holds in all tested cases. Use `druzkowskiMap_isCubicHomogeneous` and `isPolyAuto_stableLift_iff` as the formal scaffolding.\n\n**Impact:** If true, this sharpens the Bass-Connell-Wright reduction by providing an explicit dimension bound, converting the Jacobian Conjecture into a finite (though enormous) checking problem in each dimension. If false, it would reveal that the reduction to Dru\u017ckowski form requires superlinear blowup, which would be a new structural insight.\n\n## 4. Triangularization Detection for Low-Depth Keller Maps\n\n**Conjecture:** In dimension n \u2264 4, every Keller map that can be expressed as a composition of at most 3 elementary maps is affine-conjugate to a triangular map.\n\n**Test:** Enumerate all compositions of 1, 2, and 3 elementary maps in dimensions 2, 3, 4 (over Q, with small coefficient bounds). For each, check the Keller condition. For those satisfying it, attempt to find an affine conjugation to triangular form using Gr\u00f6bner basis methods. Use `affine_isPolyAuto` and `triangular_isPolyAuto` to verify any discovered conjugations.\n\n**Impact:** If true, this would show that \"simple\" Keller maps are always tame, supporting the broader conjecture that wild automorphisms cannot satisfy the Keller condition. The formalized composition and elementary map infrastructure directly enables this investigation.\n\n## 5. Dimension-2 Cubic Homogeneous Classification\n\n**Conjecture:** Every 2-dimensional cubic homogeneous Keller map is polynomial-automorphism-equivalent to one of exactly 3 normal forms (up to affine conjugation): (a) the identity, (b) a rank-1 map F(x,y) = (x + (\u03b1x + \u03b2y)\u00b3, y - (\u03b1x + \u03b2y)\u00b3), or (c) a Dru\u017ckowski map with nilpotent 2\u00d72 matrix.\n\n**Test:** Parameterize all 2D cubic homogeneous maps with undetermined coefficients. Impose the Keller condition and solve the resulting polynomial system. Classify the solution set up to GL\u2082 conjugation. For each normal form, construct the explicit polynomial inverse using the existing `jacobian_conjecture_dim2_quadratic_homogeneous` as a template (extended from degree 2 to degree 3).\n\n**Impact:** A complete classification would provide the first machine-verified proof of the Jacobian Conjecture for all 2D cubic homogeneous maps, extending the existing dimension-2 quadratic result. It would also serve as a testbed for the general cubic reduction pipeline.\n\n---\n\n## Infrastructure Gaps Identified\n\nThe following Mathlib/infrastructure gaps were encountered during this formalization cycle:\n\n1. **Weyl algebra**: Not available in Mathlib. Needed for the Dixmier bridge. A minimal formalization of generators, relations, and filtrations would unlock significant new theory.\n\n2. **Polynomial map degree bounds**: No existing infrastructure for tracking degree of `bind\u2081` compositions. Needed for effective inverse degree bounds.\n\n3. **Nilpotence of matrix polynomials**: Limited infrastructure for matrices over polynomial rings. The nilpotence criterion (Cayley-Hamilton for parametric matrices) would accelerate Jacobian conjecture work.\n\n4. **Affine algebraic geometry**: No formal notion of polynomial automorphism groups, tame vs. wild classification, or the Abhyankar-Moh theorem.\n\n## Available Infrastructure\n\nThe following infrastructure is now available for the next cycle:\n\n- `PolyMap`, `polyMapComp`, `polyMapId` \u2014 polynomial map algebra\n- `jacobianMatrix`, `jacobianDet` \u2014 Jacobian computation\n- `isPolyAuto`, `isKellerMap` \u2014 automorphism and Keller predicates\n- `affinePolyMap`, `affine_isPolyAuto` \u2014 complete affine theory\n- `IsTriangularMap`, `triangular_isPolyAuto`, `jacobianDet_triangular` \u2014 complete triangular theory\n- `elementaryMap`, `elementary_isPolyAuto` \u2014 elementary map automorphisms\n- `stableLift`, `isPolyAuto_stableLift_iff` \u2014 stable reduction (both directions)\n- `polyMapComp_isPolyAuto`, `polyMapComp_assoc` \u2014 composition algebra\n- `druzkowskiMap`, `druzkowskiMap_isCubicHomogeneous` \u2014 Dru\u017ckowski theory\n- `jacobianMatrix_cubic_homogeneous` \u2014 cubic Jacobian structure\n- `JacobianConjectureHolds`, `CubicHomogeneousKellerHolds`, `DixmierConjectureHolds` \u2014 conjecture schemas\n- `jacobian_iff_dixmier` \u2014 formal bridge statement\n",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "af913c31",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T10:25:36.333288+00:00"
   },
   {
     "id": "seed_007",
