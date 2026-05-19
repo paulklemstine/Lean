@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1562 of the highest-quality
+A curated collection of 1563 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1562
+Total files: 1563
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -1323,6 +1323,7 @@ import FINAL.Tropical.BellmanFord
 import FINAL.Tropical.BerggrenSatakeCorrespondence
 import FINAL.Tropical.BerggrenShellMesh
 import FINAL.Tropical.BerggrenTropicalBridge
+import FINAL.Tropical.Bernstein
 import FINAL.Tropical.Bezout
 import FINAL.Tropical.BlockDiagonal
 import FINAL.Tropical.BlockGluing

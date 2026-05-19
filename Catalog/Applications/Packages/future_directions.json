@@ -2990,7 +2990,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "35263d0f",
       "timestamp": "2026-05-19T16:37:33.569340+00:00"
     },
@@ -3143,8 +3143,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "f0bc4b5d",
       "timestamp": "2026-05-19T18:00:17.372894+00:00"
     },
     {
@@ -3468,6 +3468,28 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T21:25:04.828249+00:00"
+    },
+    {
+      "id": "fd_0164",
+      "title": "Building on the formally verified parity census law, symmetry transfer formula, ",
+      "description": "# Future Directions: Formal Additive Prime Decomposition Theory\n\n## Overview\n\nBuilding on the formally verified parity census law, symmetry transfer formula, multiplicity lower bounds, and weak Chen decompositions, we identify five falsifiable hypotheses for the next research cycle.\n\n---\n\n## Hypothesis 1: Mod-m Parity Census Generalization\n\n**Conjecture:** For any prime *p* and any positive integer *m*, the count of *p*s in a prime decomposition satisfies a mod-*m* constraint determined by the target sum, the arity, and the residues of the other primes modulo *m*.\n\n**Precise statement:** For any list *L* of primes and any prime *q*,\n```\ncount_q(L) ≡ f(sum(L), |L|, q) (mod q-1)\n```\nwhere f is a specific function depending on the residue of `sum(L)` modulo q and the length.\n\n**Lean-facing sketch:**\n```lean\ntheorem count_prime_mod_residue (L : List ℕ) (q : ℕ) (hq : Nat.Prime q)\n    (hprime : ∀ x ∈ L, Nat.Prime x) :\n    (L.count q) % (q - 1) = <explicit_formula> % (q - 1)\n```\n\n**Test:** Verify computationally for q = 3, 5, 7 and all prime decompositions of n up to 200. Check whether the formula holds universally.\n\n**Falsifier:** A single prime decomposition where the count of q violates the predicted residue class.\n\n**Impact:** Would establish a family of conservation laws indexed by primes, with the parity census as the q=2 base case. Opens connections to cyclotomic theory and character sums.\n\n---\n\n## Hypothesis 2: Multiplicity Threshold Function\n\n**Conjecture:** Define N(c) as the smallest integer such that every even n ≥ N(c) has at least c ordered Goldbach representations. The function N(c) is well-defined for all c ≥ 1 and satisfies N(c) = O(c² log²c).\n\n**Precise statement:**\n- N(1) = 4 (every even n ≥ 4 has ≥ 1 representation, by Goldbach)\n- N(2) = 8 (proved in this paper for n ≤ 500)\n- N(3) ≤ 14 (conjectured)\n- N(4) ≤ 20 (conjectured)\n\n**Lean-facing sketch:**\n```lean\ntheorem goldbach_multiplicity_ge_three :\n    ∀ n ∈ Finset.Icc 14 2000, Even n → 3 ≤ (goldbachWits n).card\n\ntheorem goldbach_multiplicity_ge_four :\n    ∀ n ∈ Finset.Icc 20 2000, Even n → 4 ≤ (goldbachWits n).card\n```\n\n**Test:** Compute N(c) for c = 1, ..., 20 by exhaustive search up to n = 10000. Fit the growth rate and test against the O(c² log²c) prediction.\n\n**Falsifier:** Finding that N(c) grows faster than c² log²c, or that N(c) is undefined for some c (i.e., the minimum count dips below c infinitely often).\n\n**Impact:** Would provide a quantitative \"phase diagram\" for Goldbach multiplicities, connecting finite combinatorics to the Hardy-Littlewood asymptotic prediction.\n\n---\n\n## Hypothesis 3: Diagonal Density Zero Conjecture\n\n**Conjecture:** Among even numbers n ≥ 4, the density of n with a diagonal Goldbach representation (n = p + p for some prime p) is exactly the density of primes in [2, n/2], which tends to zero.\n\n**Precise statement:** \n```\nlim_{N→∞} |{n ≤ N : n even, ∃ p prime, n = 2p}| / |{n ≤ N : n even}| = 0\n```\n\nEquivalently, the proportion of even numbers with |Diag(n)| = 1 tends to zero, so for \"most\" even numbers, the symmetry transfer law simplifies to |Ord(n)| = 2·|Unord(n)|.\n\n**Lean-facing sketch:**\n```lean\ntheorem diagonal_proportion_bounded (N : ℕ) :\n    (Finset.Icc 2 N |>.filter (fun n => Even n ∧ \n      (goldbachWitnessesDiag (2 * n)).card = 1)).card ≤ \n    (Finset.Icc 2 N |>.filter Nat.Prime).card\n```\n\n**Test:** Compute the diagonal proportion for N = 100, 1000, 10000, 100000 and verify monotonic decrease.\n\n**Falsifier:** The proportion stabilizing at a positive constant.\n\n**Impact:** Would formalize the sense in which \"generic\" Goldbach decompositions have exact 2:1 ordered-to-unordered ratio, with deviations only at prime half-points.\n\n---\n\n## Hypothesis 4: Semiprime-Enhanced Multiplicity\n\n**Conjecture:** The number of weak Chen decompositions of even n grows at least linearly in n, even though the number of Goldbach decompositions grows only as n/ln²(n).\n\n**Precise statement:** There exists a constant C > 0 such that for all even n ≥ 4,\n```\n|WeakChenWitnesses(n)| ≥ C · n / ln(n)\n```\n\n**Lean-facing sketch:**\n```lean\ndef weakChenWitnesses (n : ℕ) : Finset (ℕ × ℕ) :=\n  (Finset.range (n+1) ×ˢ Finset.range (n+1)).filter\n    (fun ps => Nat.Prime ps.1 ∧ (Nat.Prime ps.2 ∨ Semiprime ps.2) ∧ ps.1 + ps.2 = n)\n\n-- Bounded version:\ntheorem weak_chen_multiplicity_lower_bound :\n    ∀ n ∈ Finset.Icc 10 1000, Even n → \n      n / 10 ≤ (weakChenWitnesses n).card\n```\n\n**Test:** Compute |WeakChenWitnesses(n)| / (n / ln(n)) for even n up to 10000. Check if the ratio stays bounded below by a positive constant.\n\n**Falsifier:** The ratio tending to zero, indicating sub-linear growth.\n\n**Impact:** Would quantify the advantage of the semiprime relaxation layer, showing that almost-prime decompositions are not just slightly more abundant but fundamentally denser than exact-prime decompositions.\n\n---\n\n## Hypothesis 5: Generating Function Coefficient Identity\n\n**Conjecture:** Define the prime polynomial P_N(x) = Σ_{p prime, p ≤ N} x^p. Then for k ≥ 1 and n ≤ N, the coefficient of x^n in P_N(x)^k equals the number of ordered k-tuples of primes at most N summing to n.\n\n**Precise statement:**\n```\n[x^n] P_N(x)^k = |{(p₁,...,pₖ) : all pᵢ prime, all pᵢ ≤ N, Σpᵢ = n}|\n```\n\n**Lean-facing sketch:**\n```lean\ndef primePoly (N : ℕ) : Polynomial ℕ :=\n  ∑ p ∈ (Finset.range (N+1)).filter Nat.Prime, Polynomial.X ^ p\n\ntheorem coeff_prime_poly_pow (N k n : ℕ) (hn : n ≤ N) :\n    (primePoly N ^ k).coeff n = \n    ((Finset.range (N+1) ^ k).filter (fun t => \n      (∀ i, Nat.Prime (t i)) ∧ ∑ i, t i = n)).card\n```\n\n**Test:** Verify computationally for N = 50, k = 1, 2, 3, and all n ≤ N by comparing polynomial coefficient extraction with direct tuple enumeration.\n\n**Falsifier:** A mismatch between the polynomial coefficient and the tuple count for any (N, k, n).\n\n**Impact:** Would establish a formal bridge between combinatorial counting of prime decompositions and algebraic coefficient extraction, opening the door to circle-method formalization. This is the foundational identity that connects additive prime theory to generating function theory.\n\n---\n\n## Priority Ordering\n\n1. **Hypothesis 2** (Multiplicity Thresholds) — directly extends our proved multiplicity lower bound with concrete computational targets.\n2. **Hypothesis 1** (Mod-m Census) — extends the parity census law, our strongest structural result, to a richer family.\n3. **Hypothesis 5** (Generating Function) — foundational algebraic identity, likely provable by induction on k.\n4. **Hypothesis 3** (Diagonal Density) — connects to prime number theorem; may require Mathlib PNT infrastructure.\n5. **Hypothesis 4** (Semiprime Multiplicity) — most ambitious; likely requires analytic estimates.\n\nEach hypothesis is designed to be falsifiable by concrete computation and to drive the next cycle of formal proof development.\n",
+      "source_exp_id": "35263d0f",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T22:00:28.161351+00:00"
     }
   ],
   "pruned": [
