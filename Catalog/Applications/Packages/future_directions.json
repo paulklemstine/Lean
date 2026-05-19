@@ -1801,7 +1801,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T19:04:16.520918+00:00"
     },
@@ -1920,7 +1920,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T21:00:32.152361+00:00"
     },
@@ -1970,7 +1970,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T21:03:58.759393+00:00"
     },
@@ -2539,7 +2539,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "1da62d7b",
       "timestamp": "2026-05-19T12:32:13.672255+00:00"
     },
@@ -2732,8 +2732,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "81c2630f",
       "timestamp": "2026-05-19T14:39:44.381998+00:00"
     },
     {
@@ -2880,6 +2880,48 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T15:46:30.098725+00:00"
+    },
+    {
+      "id": "fd_0138",
+      "title": "**Conjecture:** Every formally certified Menon difference set yields a Hadamard ",
+      "description": "# Future Directions: Paley-Hadamard Design Factory\n\n## Hypothesis 1: Menon Lift Hypothesis\n\n**Conjecture:** Every formally certified Menon difference set yields a Hadamard matrix through the generic sign-matrix Gram theorem (`differenceSet_sign_gram`), with no new matrix algebra lemmas required.\n\n**Test:** Instantiate on the smallest nontrivial Menon parameter set (16, 6, 2). The Menon difference set in ℤ/16ℤ (or a suitable abelian group of order 16) should satisfy `IsDifferenceSet D 16 6 2`, and the sign-matrix Gram identity should immediately yield a 16×16 matrix with `A * Aᵀ = 16 • I + 0 • J = 16I`, certifying a Hadamard matrix.\n\n**Pass/Fail Criterion:** The theorem `differenceSet_sign_gram` applied to a Menon (16,6,2) difference set produces the Hadamard identity without any additional lemma, and `native_decide` confirms the concrete instance.\n\n**Impact if true:** This would demonstrate that the difference-set infrastructure is genuinely reusable: Hadamard matrices from Menon constructions (which arise from group rings and character theory) flow through exactly the same formal pipeline as Paley constructions, with zero additional proof effort. This validates the \"certified factory\" concept.\n\n---\n\n## Hypothesis 2: Singer-to-Projective-Plane Hypothesis\n\n**Conjecture:** The generic difference-set incidence Gram identity (`differenceSet_incidence_gram`) is sufficient to derive the incidence axioms of a finite projective plane from Singer parameters in a machine-checked proof.\n\n**Test:** Starting from the Singer (7,3,1) difference set (already certified as `singer_7_3_1`), prove that the incidence matrix satisfies:\n1. Every pair of distinct \"points\" shares exactly λ = 1 \"line.\"\n2. Every pair of distinct \"lines\" shares exactly 1 \"point.\"\n3. Each line contains k = 3 points; each point lies on k = 3 lines.\n\nThese are the axioms of the Fano plane PG(2,2).\n\n**Pass/Fail Criterion:** A theorem of the form\n```\ntheorem singer_yields_fano_plane (D : Finset (ZMod 7)) (hD : IsDifferenceSet D 7 3 1) :\n  IsProjectivePlaneIncidence (differenceSetIncidenceMatrix D)\n```\ncompiles without sorry.\n\n**Impact if true:** This creates a formal bridge from number theory (Singer's theorem on cyclic difference sets) to finite geometry (projective planes). It would be the first machine-verified derivation of a projective plane from character-theoretic data, connecting algebra, combinatorics, and geometry in a single certified pipeline.\n\n---\n\n## Hypothesis 3: Finite-Field Character Abstraction Hypothesis\n\n**Conjecture:** A single quadratic-character API over arbitrary finite fields (not just prime fields) suffices to derive both the Paley graph strongly regular parameters and the Paley Type II Hadamard family, using the same core correlation lemma.\n\n**Test:** Formalize the quadratic character correlation identity\n```\n∑ₜ χ(t - a) · χ(t - b) = q - 2  if a = b (and a ≠ 0)\n                        = -1     if a ≠ b\n```\nover `K : Type` with `[Field K] [Fintype K]`, then derive:\n- The Paley graph SRG parameters for q = 13 (prime field).\n- The Hadamard identity for q = 9 (non-prime field, GF(3²)).\n\nBoth should follow from the same lemma with no case-splitting on primality.\n\n**Pass/Fail Criterion:** A single `quadChar_correlation` lemma parameterized by `[Field K] [Fintype K]` (not `[Fact p.Prime]`) produces both results. The q = 9 case does not require any lemma not also used for q = 13.\n\n**Impact if true:** This would prove that the finite-field abstraction barrier has been genuinely crossed. Currently, most formalized number-theoretic results are locked to prime fields (ZMod p). Lifting to arbitrary finite fields would open:\n- Paley Type II for q = 25, 49, 121, ... (all prime squares with q ≡ 1 mod 4)\n- An infinite certified Hadamard family beyond anything achievable with prime-only methods\n- Reusable character infrastructure for future Gauss/Jacobi sum formalization\n\n---\n\n## Hypothesis 4: Spectral Transfer Hypothesis\n\n**Conjecture:** Every certified difference-set sign matrix yields a certified two- or three-eigenvalue adjacency operator after an explicit normalization, with eigenvalues computable from the (v, k, λ) parameters alone.\n\n**Test:** For each of the following difference sets:\n- Singer (7, 3, 1): eigenvalues of A should be {6, −1} (two-eigenvalue, i.e., complete bipartite-like).\n- Paley residues in F₁₃ (13, 6, 2): eigenvalues of A should be {6, (−1 ± √13)/2} (three-eigenvalue SRG spectrum).\n- Menon (16, 6, 2): eigenvalues of A should be {6, −2} (two-eigenvalue Hadamard).\n\nVerify that the sign-matrix Gram identity immediately implies the eigenvalue structure.\n\n**Pass/Fail Criterion:** A theorem of the form\n```\ntheorem differenceSet_eigenvalues (hD : IsDifferenceSet D v k lam) :\n  ∀ μ, IsEigenvalue (differenceSetSignMatrix D) μ →\n    μ = ... ∨ μ = ... ∨ μ = ...\n```\ncompiles using only `differenceSet_sign_gram` and standard spectral theory.\n\n**Impact if true:** This would formally connect combinatorial design theory to spectral graph theory in a single pipeline. Every new difference set automatically produces a certified spectral decomposition, enabling:\n- Formal proofs of expansion properties (Cheeger inequality applications)\n- Certified eigenvalue bounds for pseudorandom constructions\n- Machine-verified spectral analysis of combinatorial objects\n\n---\n\n## Hypothesis 5: Kronecker Coverage Hypothesis\n\n**Conjecture:** Combining Paley Type II certification (orders 12, 20, 28, ...) with Sylvester (powers of 2) and Kronecker product closure raises the formally certified Hadamard-order coverage to at least 80% of all multiples of 4 up to N = 1000.\n\n**Test:** Write an executable Lean or Python checker that:\n1. Starts with certified base orders: {1, 2, 4, 8, 12, 16, 20, 24, 28, ...}\n2. Closes under multiplication (Kronecker product preserves Hadamard property)\n3. Counts how many multiples of 4 up to N = 1000 are covered\n\nThe current Python computation shows 78.0% coverage at N = 1000.\n\n**Pass/Fail Criterion:** The coverage exceeds 80% at N = 1000 and exceeds 65% at N = 10,000.\n\n**Impact if true:** This would demonstrate that the Paley + Sylvester + Kronecker pipeline is practically sufficient for certifying the vast majority of known Hadamard orders. It would also identify exactly which orders require additional constructions (e.g., the Williamson, Turyn, or Goethals-Seidel methods), producing an explicit \"gap list\" that drives the next round of formalization.\n\n**Additional prediction:** The gap at N = 92 (the smallest multiple of 4 not covered by known simple constructions) would appear prominently, confirming it as the critical frontier for Hadamard matrix existence theory.\n",
+      "source_exp_id": "1da62d7b",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T15:54:11.448835+00:00"
+    },
+    {
+      "id": "fd_0139",
+      "title": "Prime-Sensitive Spectral Collapse in Collatz Transfer Operators",
+      "description": "Conjecture: There exists an explicit weighted transfer operator L acting on a Hilbert space of arithmetic observables for the accelerated Collatz map such that, after restricting to observables twisted by Dirichlet characters mod q, the second spectral radius is strictly less than 1 for every q if and only if every positive integer has finite total stopping time. Test: Construct finite-rank certified discretizations of L on character-twisted subspaces for increasing moduli q and resolution; confirmation would be uniform spectral gaps bounded away from 1 together with a rigorously convergent approximation scheme, while refutation would be a character twist or limiting subsequence whose second spectral radius tends to 1 or exceeds the predicted bound. Impact: This would convert Collatz from an orbit-by-orbit problem into a spectral/arithmetic criterion, linking dynamical systems, operator theory, and analytic number theory, and could create a new general method for proving termination of arithmetic dynamical processes via modular harmonic analysis.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Spectral Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T15:54:19.149722+00:00"
     }
   ],
   "pruned": [
