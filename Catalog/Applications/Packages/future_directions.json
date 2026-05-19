@@ -1652,8 +1652,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "f1ae931c",
       "timestamp": "2026-05-18T17:04:29.886121+00:00"
     },
     {
@@ -1994,7 +1994,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "5b96ab4e",
       "timestamp": "2026-05-18T23:00:35.977652+00:00"
     },
@@ -2568,6 +2568,30 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T12:36:30.438928+00:00"
+    },
+    {
+      "id": "fd_0125",
+      "title": "**Conjecture**: An enriched tree constructor with ordinal-indexed children reali",
+      "description": "# Future Directions: Ordinal Collapse Theory\n\n## Falsifiable Scientific Hypotheses\n\n### Hypothesis 1: Completeness to ε₀\n\n**Conjecture**: An enriched tree constructor with ordinal-indexed children realizes all ordinals below ε₀ = sup{ω, ω^ω, ω^(ω^ω), ...}, the proof-theoretic ordinal of Peano arithmetic.\n\n**Test**: Define an iterated exponential tower:\n```\nomegaTowerTree : ℕ → InfBranchTree\nomegaTowerTree 0 = omegaPowTree 1  -- ω\nomegaTowerTree (n+1) = node (fun k => mulByNat (omegaTowerTree n) k)\n```\nProve `rank(omegaTowerTree n)` equals the n-th iterated exponential tower ω↑↑n. Then define `epsilonZeroTree = node (fun n => omegaTowerTree n)` and prove `rank(epsilonZeroTree) = ε₀`.\n\n**Likely obstruction**: The CNF representation must be generalized to *hereditary* Cantor normal form, where exponents are themselves ordinals in CNF. The bookkeeping for nested CNF terms and their tree realizations requires a mutual recursion between ordinal evaluation and tree construction that may not terminate in the current framework.\n\n**Impact**: Would establish tree-theoretic semantics for the entire proof-theoretic hierarchy of first-order arithmetic, connecting ordinal collapse theory to Gentzen's consistency proof.\n\n---\n\n### Hypothesis 2: CNF Uniqueness / Normal-Form Injectivity\n\n**Conjecture**: For strictly descending exponent lists with positive coefficients, `cnfValue L₁ = cnfValue L₂` implies `L₁ = L₂`. That is, the CNF evaluation function is injective on valid normal forms.\n\n**Test**: First prove injectivity for single-term lists (`cnfValue [(a₁,n₁)] = cnfValue [(a₂,n₂)] → a₁ = a₂ ∧ n₁ = n₂`), then extend by induction on list length. The key step is showing that the leading term of a CNF determines the ordinal's Cantor normal form uniquely.\n\n**Likely obstruction**: Requires either importing Mathlib's ordinal CNF theory (if available) or reconstructing the uniqueness proof from scratch. The main difficulty is showing that ω^n₁ · a₁ + β = ω^n₂ · a₂ + γ implies n₁ = n₂ and a₁ = a₂ when n₁ ≥ n₂ and the remainder terms have smaller leading exponents. This uses ordinal division, which may not be directly available.\n\n**Impact**: Would upgrade the realizability theorem from a surjection (every CNF ordinal has a tree) to a bijection (the tree assignment is canonical), enabling certified ordinal comparison by tree structure.\n\n---\n\n### Hypothesis 3: Monotone Limit-Rank Synthesis Schema\n\n**Conjecture**: For any monotone ℕ-indexed sequence of trees t₀, t₁, t₂, ... with rank(tₙ) < rank(tₙ₊₁), the tree `node(fun n => tₙ)` has rank exactly `sup_n rank(tₙ)`. That is, the node constructor with a monotone child sequence realizes the ordinal supremum.\n\n**Test**: Verify for three specific families:\n1. `tₙ = chain(n)`: rank(node ...) should equal ω. (Already proved as omegaTree.)\n2. `tₙ = omegaPowTree(n)`: rank should equal ω^ω. (Already proved.)\n3. `tₙ = cnfTree([(1, n), (n, 0)])`: rank should equal sup_n (ω^n + n).\n\nThe general proof would show:\n```\nsup_n succ(rank(tₙ)) = sup_n rank(tₙ)\n```\nwhenever the sequence is cofinal below a limit ordinal.\n\n**Likely obstruction**: The identity `sup_n succ(αₙ) = sup_n αₙ` holds when sup_n αₙ is a limit ordinal, but the proof requires showing that monotonicity of the original sequence implies the supremum is a limit (or handling the successor case separately). This is a standard ordinal fact but may require careful formalization.\n\n**Impact**: Would provide a reusable schema for constructing trees with arbitrary limit ordinal ranks, reducing all future limit-stage proofs to verification of monotonicity and supremum computation.\n\n---\n\n### Hypothesis 4: Ordinal Rank as a Complete Invariant for Recursive Evaluation Traces\n\n**Conjecture**: For a suitable class of recursive programs (e.g., primitive recursive functions with an ordinal termination measure below ω^ω), the tree rank of the evaluation trace equals the ordinal termination measure.\n\n**Test**: Define a simple recursive evaluator:\n```\ndef evalTrace : Program → Input → InfBranchTree\n```\nthat records the tree of recursive calls made during evaluation. Prove that for programs with termination measure α ∈ CNF:\n```\nrank(evalTrace p x) ≤ α\n```\nand that equality is achieved for some worst-case input.\n\n**Likely obstruction**: Defining a sufficiently general `Program` type and `evalTrace` function that is both meaningful and tractable for formalization. The trace tree must be well-founded by construction, which requires the program's termination to be proved as a precondition.\n\n**Impact**: Would establish a formal bridge between ordinal analysis (a branch of mathematical logic) and program analysis (a branch of computer science), with trees as the mediating structure.\n\n---\n\n### Hypothesis 5: Collapse/Realizability Duality — Resource-Bounded Ordinal Spectra\n\n**Conjecture**: The structural parameters controlling the finite branching collapse (`natDepth ≤ 2^height`) determine sharp bounds on which CNF ordinals are realizable by trees with bounded branching or bounded local complexity.\n\nSpecifically: a tree with branching bounded by b at each node and height bounded by h can realize ordinals up to exactly b^h (as a natural number), and conversely, realizing ordinal ω^n requires unbounded branching (already known) but also specific patterns of branching growth. The ordinal spectrum of a resource-bounded tree class is:\n```\nSpec(b, h) = {rank(t) : t has branching ≤ b, height ≤ h} = [0, b^h]\n```\nFor unbounded branching with bounded height h:\n```\nSpec(∞, h) = [0, h] ⊂ ω\n```\n(by the universal collapse theorem).\n\n**Test**: Prove the exact characterization `Spec(b, h) = [0, b^h]` for finitely branching trees, and then characterize the transition to transfinite spectra as branching and height constraints are relaxed. Show that `Spec(∞, ∞) ⊇ [0, ω^ω]` (the current result) and conjecture `Spec(∞, ∞) = Ord` (all ordinals are realizable).\n\n**Likely obstruction**: The lower bound (constructing trees achieving specific ranks within resource bounds) requires careful combinatorial arguments. The upper bound for finite branching may require König's lemma or compactness arguments.\n\n**Impact**: Would establish a complete classification of \"which ordinals can be built with which resources,\" turning ordinal realizability into a resource-bounded complexity theory for transfinite structures.\n",
+      "source_exp_id": "5b96ab4e",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T12:47:44.785955+00:00"
     }
   ],
   "pruned": [
