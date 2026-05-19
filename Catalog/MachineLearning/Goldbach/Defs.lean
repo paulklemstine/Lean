@@ -18,7 +18,6 @@ and representation counts.
 * `HasGoldbachDecomposition` — existential Goldbach property
 * `OddVinogradovTriple` — decomposition into three primes
 * `HasOddVinogradovDecomposition` — existential ternary Goldbach property
-* `ChenPair`, `HasChenDecomposition` — prime + semiprime decomposition
 * `PrimeOrSemiprime`, `HasWeakChenDecomposition` — relaxed Chen-type decomposition
 * `goldbachWitnesses` — computable finset of all Goldbach pairs for `n`
 * `goldbachCount` — the number of ordered Goldbach representations
@@ -41,15 +40,6 @@ a sum of two primes. -/
 def HasGoldbachDecomposition (n : ℕ) : Prop :=
   ∃ p q : ℕ, GoldbachPair n p q
 
-/-- `ChenPair n p s` asserts that `p` is prime, `s` is semiprime, and `p + s = n`. -/
-def ChenPair (n p s : ℕ) : Prop :=
-  Nat.Prime p ∧ IsSemiprime s ∧ p + s = n
-
-/-- A natural number has a Chen decomposition if it can be written as
-a sum of a prime and a semiprime. -/
-def HasChenDecomposition (n : ℕ) : Prop :=
-  ∃ p s : ℕ, ChenPair n p s
-
 /-- `OddVinogradovTriple n a b c` asserts that `a`, `b`, `c` are primes summing to `n`. -/
 def OddVinogradovTriple (n a b c : ℕ) : Prop :=
   Nat.Prime a ∧ Nat.Prime b ∧ Nat.Prime c ∧ a + b + c = n
@@ -59,8 +49,7 @@ a sum of three primes. -/
 def HasOddVinogradovDecomposition (n : ℕ) : Prop :=
   ∃ a b c : ℕ, OddVinogradovTriple n a b c
 
-/-- A number is either prime or semiprime. This is used for weak Chen-type
-decompositions where the second summand need not be strictly semiprime. -/
+/-- A number is either prime or semiprime. -/
 def PrimeOrSemiprime (n : ℕ) : Prop :=
   Nat.Prime n ∨ IsSemiprime n
 
@@ -68,9 +57,6 @@ def PrimeOrSemiprime (n : ℕ) : Prop :=
 either prime or semiprime. -/
 def HasWeakChenDecomposition (n : ℕ) : Prop :=
   ∃ p s : ℕ, Nat.Prime p ∧ PrimeOrSemiprime s ∧ p + s = n
-
-/-- The finset of primes up to `n`. -/
-def primeCandidates (n : ℕ) : Finset ℕ := (Finset.range (n + 1)).filter Nat.Prime
 
 /-- The finset of all ordered pairs `(p, q)` of primes with `p + q = n`. -/
 def goldbachWitnesses (n : ℕ) : Finset (ℕ × ℕ) :=
@@ -84,5 +70,35 @@ noncomputable def goldbachCount (n : ℕ) : ℕ := (goldbachWitnesses n).card
 instance (n : ℕ) : DecidablePred (fun pq : ℕ × ℕ =>
     Nat.Prime pq.1 ∧ Nat.Prime pq.2 ∧ pq.1 + pq.2 = n) :=
   fun _ => inferInstance
+
+/-- `IsSemiprime` is decidable by bounded search over factor pairs. -/
+instance isSemiprimeDecidable (n : ℕ) : Decidable (IsSemiprime n) :=
+  decidable_of_iff
+    (∃ a ∈ Finset.range (n + 1), ∃ b ∈ Finset.range (n + 1),
+      Nat.Prime a ∧ Nat.Prime b ∧ a * b = n)
+    ⟨fun ⟨a, _, b, _, ha, hb, hab⟩ => ⟨a, b, ha, hb, hab⟩,
+     fun ⟨a, b, ha, hb, hab⟩ => ⟨a, Finset.mem_range.mpr (by
+        have := ha.pos; nlinarith [hb.pos]),
+      b, Finset.mem_range.mpr (by
+        have := hb.pos; nlinarith [ha.pos]),
+      ha, hb, hab⟩⟩
+
+/-- `PrimeOrSemiprime` is decidable. -/
+instance primeOrSemiprimeDecidable (n : ℕ) : Decidable (PrimeOrSemiprime n) :=
+  show Decidable (Nat.Prime n ∨ IsSemiprime n) from inferInstance
+
+/-- `HasWeakChenDecomposition` is decidable by bounded search. -/
+instance hasWeakChenDecompositionDecidable (n : ℕ) :
+    Decidable (HasWeakChenDecomposition n) :=
+  decidable_of_iff
+    (∃ p ∈ Finset.range (n + 1), ∃ s ∈ Finset.range (n + 1),
+      Nat.Prime p ∧ PrimeOrSemiprime s ∧ p + s = n)
+    ⟨fun ⟨p, _, s, _, hp, hs, hps⟩ => ⟨p, s, hp, hs, hps⟩,
+     fun ⟨p, s, hp, hs, hps⟩ => ⟨p, Finset.mem_range.mpr (by omega),
+      s, Finset.mem_range.mpr (by omega), hp, hs, hps⟩⟩
+
+/-- `IsPrimeTripleSum n a b c` asserts that `a`, `b`, `c` are primes summing to `n`. -/
+def IsPrimeTripleSum (n a b c : ℕ) : Prop :=
+  Nat.Prime a ∧ Nat.Prime b ∧ Nat.Prime c ∧ a + b + c = n
 
 end Goldbach
