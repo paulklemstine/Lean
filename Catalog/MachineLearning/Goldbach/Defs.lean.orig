@@ -18,7 +18,6 @@ and representation counts.
 * `HasGoldbachDecomposition` — existential Goldbach property
 * `OddVinogradovTriple` — decomposition into three primes
 * `HasOddVinogradovDecomposition` — existential ternary Goldbach property
-* `ChenPair`, `HasChenDecomposition` — prime + semiprime decomposition
 * `PrimeOrSemiprime`, `HasWeakChenDecomposition` — relaxed Chen-type decomposition
 * `goldbachWitnesses` — computable finset of all Goldbach pairs for `n`
 * `goldbachCount` — the number of ordered Goldbach representations
@@ -41,15 +40,6 @@ a sum of two primes. -/
 def HasGoldbachDecomposition (n : ℕ) : Prop :=
   ∃ p q : ℕ, GoldbachPair n p q
 
-/-- `ChenPair n p s` asserts that `p` is prime, `s` is semiprime, and `p + s = n`. -/
-def ChenPair (n p s : ℕ) : Prop :=
-  Nat.Prime p ∧ IsSemiprime s ∧ p + s = n
-
-/-- A natural number has a Chen decomposition if it can be written as
-a sum of a prime and a semiprime. -/
-def HasChenDecomposition (n : ℕ) : Prop :=
-  ∃ p s : ℕ, ChenPair n p s
-
 /-- `OddVinogradovTriple n a b c` asserts that `a`, `b`, `c` are primes summing to `n`. -/
 def OddVinogradovTriple (n a b c : ℕ) : Prop :=
   Nat.Prime a ∧ Nat.Prime b ∧ Nat.Prime c ∧ a + b + c = n
@@ -59,8 +49,7 @@ a sum of three primes. -/
 def HasOddVinogradovDecomposition (n : ℕ) : Prop :=
   ∃ a b c : ℕ, OddVinogradovTriple n a b c
 
-/-- A number is either prime or semiprime. This is used for weak Chen-type
-decompositions where the second summand need not be strictly semiprime. -/
+/-- A number is either prime or semiprime. -/
 def PrimeOrSemiprime (n : ℕ) : Prop :=
   Nat.Prime n ∨ IsSemiprime n
 
@@ -68,9 +57,6 @@ def PrimeOrSemiprime (n : ℕ) : Prop :=
 either prime or semiprime. -/
 def HasWeakChenDecomposition (n : ℕ) : Prop :=
   ∃ p s : ℕ, Nat.Prime p ∧ PrimeOrSemiprime s ∧ p + s = n
-
-/-- The finset of primes up to `n`. -/
-def primeCandidates (n : ℕ) : Finset ℕ := (Finset.range (n + 1)).filter Nat.Prime
 
 /-- The finset of all ordered pairs `(p, q)` of primes with `p + q = n`. -/
 def goldbachWitnesses (n : ℕ) : Finset (ℕ × ℕ) :=
