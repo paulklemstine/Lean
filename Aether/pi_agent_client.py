@@ -100,6 +100,10 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
        algorithms (not just existence proofs), computational pipelines (not just
        single theorems), and applications (not just abstract theory). A certified
        robustness algorithm is worth more than a standalone inequality proof.
+       Every cycle MUST produce: (1) Lean 4 proofs, (2) a verified algorithm or
+       computational method, (3) a Python demo (demo.py) that demonstrates the
+       result interactively, (4) a Scientific American-style article (ARTICLE.md)
+       explaining the discovery to a broad audience.
 
     9. FUTURE_DIRECTIONS ARE MANDATORY OUTPUT: Every research cycle MUST produce
        a FUTURE_DIRECTIONS.md that identifies 3-5 specific, testable scientific
@@ -109,7 +113,24 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
        refute it]. Impact: [what this would enable if true]." Every hypothesis
        should be daring enough to matter and specific enough to fail.
 
-    10. CATALOG AS A LIVING ORGANISM: The catalog is not a museum of past results.
+    10. FUTURE_DIRECTIONS.MD MUST BE STANDALONE: The FUTURE_DIRECTIONS.md is not
+        just a list of ideas — it is a standalone research roadmap that will steer
+        future research rounds without access to this cycle's code or results. Each
+        direction must be self-contained: anyone reading ONLY the FUTURE_DIRECTIONS.md
+        must understand the problem, the conjecture, the test, and why it matters.
+        Include enough mathematical context and definitions that a fresh researcher
+        can pick up any direction and start working on it immediately.
+
+    11. RESEARCH_PAPER.MD MUST BE STANDALONE: The RESEARCH_PAPER.md is not a summary
+        of this cycle — it is a standalone scientific document that will be used to
+        steer future research rounds without access to this cycle's Lean code. It must
+        contain: a clear problem statement, the mathematical context and definitions,
+        the main results (theorems with proof sketches), a discussion of what the
+        results mean and why they matter, and explicit open questions. A researcher
+        who reads ONLY the research paper must be able to understand what was discovered
+        and what to investigate next.
+
+    11. CATALOG AS A LIVING ORGANISM: The catalog is not a museum of past results.
         It is a living ecosystem. Analyze it for: under-explored domains (many
         declarations but few deep theorems), unexpected structural similarities
         across domains, and "orphan" results that could be the seed of entirely
@@ -192,10 +213,18 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
        opens, what applications it enables, and what follow-on work it makes possible.
        This isn't academic padding — it directs the next cycle.
 
-    5. DEMAND FUTURE_DIRECTIONS: Every brief must explicitly request that Aristotle
-       produce a structured FUTURE_DIRECTIONS.md with 3-5 testable scientific
-       hypotheses. Each must be a falsifiable conjecture with a clear test, not
-       a vague exploration suggestion. This is how the system does real science.
+    5. DEMAND ALL MANDATORY DELIVERABLES: Every brief must explicitly request
+       that Aristotle produce ALL of:
+       (a) A structured FUTURE_DIRECTIONS.md with 3-5 testable scientific hypotheses —
+           each a falsifiable conjecture with a clear test, not a vague exploration.
+       (b) A RESEARCH_PAPER.md that is a STANDALONE scientific document — someone
+           reading ONLY this paper (no access to the code) must understand what was
+           discovered, why it matters, and what to investigate next.
+       (c) An ARTICLE.md written in Scientific American style — engaging, accessible,
+           explaining the discovery to a broad audience.
+       (d) A verified algorithm or computational method (not just a theorem statement).
+       (e) A demo.py that demonstrates the result interactively.
+       This is how the system does real science: hypothesize → experiment → analyze → repeat.
 
     6. CHOOSE THE RIGHT MODE AND BE BOLD:
         - "sorry_fill": Use when filling existing sorry placeholders. Provide the
@@ -302,6 +331,10 @@ _QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
       AND cryptography, Pythagorean triples AND quantum computing)
     - +0.10: Produces a high-quality FUTURE_DIRECTIONS.md with 3+ testable scientific
       hypotheses (falsifiable conjectures with clear tests, not vague "explore X")
+    - +0.10: Produces a standalone RESEARCH_PAPER.md (problem statement, context,
+      results, discussion, open questions — usable without access to code)
+    - +0.05: Produces a standalone ARTICLE.md (Scientific American style — engaging,
+      accessible, broad audience)
 
     You MUST respond with valid JSON only: {"quality": "trivial|partial|substantial",
     "should_retry": bool, "retry_strategy": "...", "confidence": 0.0-1.0,
@@ -1747,7 +1780,7 @@ class PiAgentClient:
 
         Philosophy: Give Aristotle the direction and context, not a script.
         Let it decide what to prove, how deep to go, and what artifacts to produce.
-        The only hard requirement is FUTURE_DIRECTIONS.md with 3-5 testable scientific hypotheses — it drives the next cycle.
+        All key deliverables are mandatory: Lean 4 proofs, FUTURE_DIRECTIONS.md (standalone research roadmap with 3-5 testable hypotheses, self-contained so future cycles can use it without this cycle's code), RESEARCH_PAPER.md (standalone scientific document — self-contained, readable without the Lean code), ARTICLE.md (Scientific American style), algorithm, and demo.py.
         """
         refs = catalog_references or concept.catalog_references or []
 
@@ -1784,7 +1817,7 @@ class PiAgentClient:
             "counterexample": "Find a counterexample to the conjecture, or prove it true if it holds.",
             "sorry_fill": "Fill ALL sorry placeholders. Do NOT change theorem statements.",
             "discover": "Survey the territory. Propose testable hypotheses — conjectures that can be confirmed or refuted. Prove what you can, disprove what you can't. FUTURE_DIRECTIONS.md must contain falsifiable hypotheses, not vague explorations.",
-            "team": "Create a team to conduct research, brainstorm hypotheses, run experiments, validate data, update knowledge base and iterate forever.",
+            "team": "Lead a research science team: (1) Hypothesis Team brainstorms falsifiable conjectures, (2) Experiment Team proves/disproves them in Lean 4, (3) Analysis Team examines what survived and what failed, (4) Iteration Lead proposes next hypotheses. Science is a loop: hypothesize → experiment → analyze → repeat. Each cycle advances the frontier.",
         }
 
         mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
@@ -1861,12 +1894,33 @@ class PiAgentClient:
             or structural induction. Connect to at least one other domain for impact.
 
             ### Team Directive
-            Create a team to conduct research, brainstorm testable hypotheses,
-            run experiments to confirm or refute them, validate data,
-            update knowledge base and iterate forever.
+            You are not a lone researcher — you are LEADING a research science team.
+            Organize your team into roles:
 
-            Required: Lean 4 proofs, FUTURE_DIRECTIONS.md
-            Optional: ARTICLE.md, RESEARCH_PAPER.md, demo.py
+            1. **Hypothesis Team**: Brainstorm 3-5 bold, falsifiable hypotheses.
+               Each must be a precise conjecture that can be proved or disproved.
+            2. **Experiment Team**: Design and run Lean 4 experiments to test each
+               hypothesis. Prove theorems, find counterexamples, compute examples.
+            3. **Analysis Team**: Examine results. Which hypotheses survived? Which
+               failed? What does each failure teach? Update the knowledge base.
+            4. **Iteration Lead**: Based on analysis, propose the NEXT round of
+               hypotheses. Science is a loop: hypothesize → experiment → analyze →
+               repeat. Each cycle must advance the frontier.
+
+            The team operates as a self-improving science engine. Each round builds
+            on the last. Failed hypotheses are as valuable as successful ones — they
+            constrain the search space and reveal structure.
+
+            Required: Lean 4 proofs, FUTURE_DIRECTIONS.md, RESEARCH_PAPER.md,
+                      ARTICLE.md (Scientific American style), algorithm, demo.py
+            Optional: (none — all key deliverables are mandatory)
+
+            FUTURE_DIRECTIONS.md MUST be a standalone research roadmap. It will be
+            used to steer future research rounds WITHOUT access to this cycle's code.
+            Each direction must be self-contained: include enough mathematical context,
+            definitions, and motivation that a fresh researcher can pick up any
+            direction and start working on it immediately. Do NOT assume the reader
+            has seen your Lean code.
 
             FUTURE_DIRECTIONS.md is critical — it drives the next research cycle.
             Each direction must be a testable scientific hypothesis: a precise,
