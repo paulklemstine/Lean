@@ -14,7 +14,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.95,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "0feff236",
       "timestamp": "2026-05-18T10:17:17.070823+00:00"
     },
@@ -1850,8 +1850,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "e1538404",
       "timestamp": "2026-05-18T20:03:10.669396+00:00"
     },
     {
@@ -2662,6 +2662,28 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T13:04:24.896671+00:00"
+    },
+    {
+      "id": "fd_0129",
+      "title": "This document identifies five falsifiable scientific hypotheses arising from",
+      "description": "# Future Directions: Formal Additive Prime Decomposition Theory\n\nThis document identifies five falsifiable scientific hypotheses arising from\nour formalization of Goldbach-type additive prime decompositions.  Each\nconjecture is precise enough to confirm or refute computationally or\nproof-theoretically.\n\n---\n\n## Hypothesis 1: Goldbach Count Lower Bound\n\n**Conjecture.** For every even integer $n \\geq 8$, the ordered Goldbach\nrepresentation count satisfies $r_2(n) \\geq 2$.\n\n**Why it matters.** If true, this implies that Goldbach decompositions are\nnever \"barely\" achievable for $n \\geq 8$—there is always structural\nredundancy.  This separates $n = 4$ (which has $r_2(4) = 1$, only $2+2$)\nand $n = 6$ ($r_2(6) = 1$, only $3+3$) from the rest.\n\n**How to test.** Compute `goldbachCount n` for all even $n$ in $[8, B]$ for\nincreasing bounds $B$.  Our infrastructure already supports this via\n`goldbachWitnesses`.  Extend native_decide verification to $B = 10\\,000$ or\nbeyond.\n\n**Falsifier.** An even $n \\geq 8$ with `goldbachCount n < 2`.\n\n---\n\n## Hypothesis 2: Weak Chen Prevalence\n\n**Conjecture.** Every even integer $n \\geq 4$ admits a weak Chen\ndecomposition: $n = p + s$ where $p$ is prime and $s$ is either prime or\nsemiprime.\n\n**Why it matters.** Chen's theorem (1966) establishes this for all\nsufficiently large even numbers; this hypothesis extends it to *all* even\n$n \\geq 4$.  A formal proof would close the gap between Chen's asymptotic\nresult and a universal statement.\n\n**How to test.** Extend the `HasWeakChenDecomposition` decidability\ninfrastructure (analogous to our `HasGoldbachDecomposition` decidability\ninstance) and verify computationally up to a large bound.\n\n**Falsifier.** An explicit even $n \\geq 4$ with no prime + (prime-or-semiprime)\ndecomposition.\n\n---\n\n## Hypothesis 3: Parity Regularity of Witnesses\n\n**Conjecture.** For every even $n > 4$ and every Goldbach pair $(p, q)$ with\n$p + q = n$, both $p$ and $q$ are odd.\n\n**Why it matters.** We have *proved* this as\n`goldbach_pair_even_gt_four_both_odd`.  The hypothesis is already a theorem.\nThe future direction is to extend this parity analysis to ternary\ndecompositions: for odd $n > 5$, classify which triples $(a, b, c)$ of\nprimes summing to $n$ can include the prime $2$, and prove that at most one\nof $a, b, c$ can be $2$.\n\n**How to test.** Formalize and prove a ternary parity-forcing theorem\nanalogous to the binary one.\n\n**Falsifier.** A ternary decomposition of an odd $n > 7$ where two of the\nthree primes are $2$—this should be impossible since $2 + 2 = 4$ is even,\ncontradicting the odd residual.\n\n---\n\n## Hypothesis 4: Convolution Growth Heuristic\n\n**Conjecture.** The average Goldbach count over even integers up to $B$,\n$$\\bar{r}_2(B) = \\frac{1}{B/2} \\sum_{\\substack{n \\leq B \\\\ n \\text{ even}}} r_2(n),$$\ngrows at least as fast as $C \\cdot B / (\\log B)^2$ for some constant $C > 0$.\n\n**Why it matters.** The Hardy–Littlewood conjecture predicts\n$r_2(n) \\sim 2 C_2 \\cdot n / (\\log n)^2 \\cdot \\prod_{p | n, p > 2} (p-1)/(p-2)$\nwhere $C_2$ is the twin-prime constant.  The averaged version should be\nmore tractable and formalizable.\n\n**How to test.** Compute $\\bar{r}_2(B)$ at dyadic scales\n$B = 10^3, 10^4, 10^5, \\ldots$ and fit the growth exponent.\n\n**Falsifier.** Sub-threshold growth: $\\bar{r}_2(B) = o(B / (\\log B)^2)$\nacross tested scales.\n\n---\n\n## Hypothesis 5: Ternary-from-Binary Transfer Robustness\n\n**Conjecture.** If binary Goldbach is verified on $[4, B]$ (i.e., every even\n$n$ in that range has a Goldbach decomposition), then ternary Goldbach holds\non the odd numbers in $[7, B + 3]$.\n\n**Why it matters.** We proved `binary_goldbach_implies_ternary` as a\nuniversal conditional.  This hypothesis asserts that the *finite* verified\nrange transfers cleanly, with explicit boundary control.  Formally verifying\nthe transfer on finite intervals creates a certified pipeline: verify binary\nGoldbach by computation → automatically certify ternary Goldbach on a\ncorresponding range.\n\n**How to test.** Formalize a bounded version of the transfer theorem:\n```\ntheorem binary_implies_ternary_bounded (B : ℕ) :\n  (∀ n ∈ Finset.Icc 4 B, Even n → HasGoldbachDecomposition n) →\n  ∀ n ∈ Finset.Icc 7 (B + 3), Odd n → HasOddVinogradovDecomposition n\n```\nThen verify computationally for $B = 1000, 10000, \\ldots$\n\n**Falsifier.** A boundary case where the transfer fails—an odd $n$ in\n$[7, B+3]$ that requires a binary decomposition outside $[4, B]$.  This\nshould not happen by the proof structure, but the formal verification\nconfirms it.\n\n---\n\n## Summary of Research Priorities\n\n| Priority | Hypothesis | Effort | Impact |\n|----------|-----------|--------|--------|\n| 1 | Ternary transfer (H5) | Low | Certified pipeline |\n| 2 | Weak Chen prevalence (H2) | Medium | Universal Chen |\n| 3 | Count lower bound (H1) | Medium | Structural redundancy |\n| 4 | Convolution growth (H4) | High | Hardy–Littlewood bridge |\n| 5 | Ternary parity (H3) | Low | Complete parity theory |\n\nThe most impactful next step is to extend the decidability infrastructure to\nChen-type and ternary decompositions, then computationally verify the\nprevalence hypotheses on large intervals.\n",
+      "source_exp_id": "0feff236",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T13:14:34.052177+00:00"
     }
   ],
   "pruned": [
