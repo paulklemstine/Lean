@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1499 of the highest-quality
+A curated collection of 1500 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1499
+Total files: 1500
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -1283,6 +1283,7 @@ import FINAL.Tropical.ComplexityTransfer
 import FINAL.Tropical.CompositionalBound
 import FINAL.Tropical.ComputationalHybrid
 import FINAL.Tropical.ContinuousComparison
+import FINAL.Tropical.Convexity
 import FINAL.Tropical.Core
 import FINAL.Tropical.Corollaries
 import FINAL.Tropical.CriticalCurves
