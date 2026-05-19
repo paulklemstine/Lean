@@ -1,6 +1,6 @@
 --- Theorems.lean
 +++ Theorems.lean
-@@ -156,4 +194,15 @@
+@@ -156,4 +156,15 @@
    rw [hasGoldbachDecomposition_iff_witnesses_nonempty]
    exact Finset.card_pos
  

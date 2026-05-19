@@ -584,8 +584,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "fbcfabdf",
       "timestamp": "2026-05-18T10:17:17.084091+00:00"
     },
     {
@@ -2824,7 +2824,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "4070fa0d",
       "timestamp": "2026-05-19T15:26:20.112458+00:00"
     },
@@ -2993,6 +2993,27 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T16:37:33.569340+00:00"
+    },
+    {
+      "id": "fd_0143",
+      "title": "**Conjecture:** There exists a modulus N ≤ 10⁶ such that `PrimitiveResidueSoluti",
+      "description": "# Future Directions: Falsifiable Hypotheses for Beal Obstruction Theory\n\n## Hypothesis 1: Finite Covering Hypothesis for Signature (3, 3, 3)\n\n**Conjecture:** There exists a modulus N ≤ 10⁶ such that `PrimitiveResidueSolution N 3 3 3` is false (i.e., no triple of units modulo N satisfies a³ + b³ ≡ c³ (mod N)).\n\n**Test:** Exhaustive enumeration of primitive residue solutions for each N from 2 to 10⁶. For each N, compute φ(N)³ and check all unit triples.\n\n**Current evidence:** Already confirmed for N = 2, 4, 7, 8, 9, 13, 16 (small moduli). The conjecture predicts these are not isolated — there exist many such obstructing moduli, possibly including large primes.\n\n**Refutation criterion:** If exhaustive computation shows that every prime p ≤ 10⁶ admits at least one primitive residue solution for (3,3,3), the hypothesis (in its prime form) is refuted. Note: composite moduli may still provide obstructions via CRT.\n\n**Impact if true:** Provides an unconditional computational certificate proving that no coprime cube sum A³ + B³ = C³ exists among integers coprime to N, without invoking Fermat's Last Theorem.\n\n---\n\n## Hypothesis 2: CRT Compression Efficiency Hypothesis\n\n**Conjecture:** For pairwise coprime moduli M₁, …, Mₖ with N = ∏ Mᵢ, the following equivalence holds:\n\nPrimitiveResidueSolution(N, x, y, z) ⟺ ∀ i, PrimitiveResidueSolution(Mᵢ, x, y, z)\n\nThat is, a primitive solution modulo the product exists if and only if primitive solutions exist modulo each factor.\n\n**Test:** \n- The forward direction (product → factors) follows from the CRT divisor inheritance theorem already proved.\n- The reverse direction (factors → product) requires a careful CRT reconstruction. Formalize this as a theorem, or find a counterexample.\n\n**Refutation criterion:** Exhibit pairwise coprime M₁, M₂ and a signature (x,y,z) such that PrimitiveResidueSolution holds for both M₁ and M₂ individually but NOT for M₁ · M₂. This would occur if the CRT-lifted solutions fail the coprimality-to-modulus condition at the product level.\n\n**Subtlety:** The coprimality-to-N condition makes this nontrivial. A unit modulo M₁ and a unit modulo M₂ give a unit modulo M₁·M₂ (by CRT), so the reverse direction should hold for the primitive predicate. The key question is whether the algebraic interaction between the coprimality and congruence conditions introduces unexpected obstructions.\n\n**Impact if true:** Establishes that obstruction searching can be fully decomposed into independent local computations at prime-power moduli, dramatically reducing computational cost.\n\n---\n\n## Hypothesis 3: Linear ABC Threshold Hypothesis\n\n**Conjecture:** There exists a universal constant α ≤ 3 such that IntAbcBound(K) implies no primitive Beal solution for all exponents x, y, z > αK.\n\n**Current status:** We have proved α = 3 works (threshold 3K + 1). The question is whether this is optimal.\n\n**Test:** \n- Attempt to prove the theorem with threshold 2K + 1 instead of 3K + 1.\n- The bottleneck is the bound A · B · C < C^(3z). If the effective exponent can be reduced to 2z (using A ≤ C^(z-1) from A^x < C^z and x ≥ 2), the threshold drops.\n\n**Refutation criterion:** Prove that the argument structure necessarily requires α ≥ 3. Specifically, show that for K = 1, the threshold cannot be reduced below 4 (i.e., IntAbcBound(1) does NOT imply absence of solutions with exponents (3,3,3)). This can be checked by exhibiting a model of IntAbcBound(1) that admits a coprime (3,3,3)-solution, or by proving that the 3K bound is tight.\n\n**Impact if true:** Sharpens the ABC-Beal connection, extending the forbidden region in exponent space by ~50%.\n\n---\n\n## Hypothesis 4: Reciprocal-Bound Sharpness Hypothesis\n\n**Conjecture:** IntAbcBound(K) and the condition K(1/x + 1/y + 1/z) < 1 together imply no primitive Beal solution to A^x + B^y = C^z, WITHOUT any auxiliary power-amplification.\n\n**Mathematical content:** This would give non-uniform bounds: for K = 2, the condition 2(1/3 + 1/3 + 1/3) = 2 > 1, so (3,3,3) is NOT excluded; but 2(1/4 + 1/4 + 1/4) = 1.5 > 1, so (4,4,4) is also not excluded; while 2(1/3 + 1/4 + 1/8) = 2·(37/96) ≈ 0.77 < 1, so (3,4,8) IS excluded.\n\n**Test:** Formalize the proof over ℚ or ℝ. The key step is deriving A ≤ C^(z/x), B ≤ C^(z/y), C ≤ C^(z/z) from the Beal equation, giving ABC ≤ C^(z(1/x+1/y+1/z)). Combined with C^z ≤ (ABC)^K = (ABC)^K, this yields C^z ≤ C^(Kz(1/x+1/y+1/z)), contradicting K(1/x+1/y+1/z) < 1.\n\n**Subtlety:** The bound A ≤ C^(z/x) requires working with non-integer exponents, which is harder to formalize. The integer-clearing approach multiplies through by xyz, working with C^(xyz) instead.\n\n**Refutation criterion:** Identify a specific step in the proof that requires a strictly stronger bound than C^(z/x), making the reciprocal condition insufficient without amplification.\n\n**Impact if true:** Gives a much more refined forbidden region in exponent space, excluding many asymmetric signatures that the uniform bound misses.\n\n---\n\n## Hypothesis 5: Obstruction Universality for Weighted Equations\n\n**Conjecture:** The residue-covering framework extends from A^x + B^y = C^z to equations of the form A^p + B^q = D · C^r with a fixed integer coefficient D ≥ 1.\n\n**Precise statement:** Define\n\n```\nWeightedResidueSolution(N, D, p, q, r) :=\n  ∃ a b c ∈ {0,...,N-1},\n    gcd(a,N) = gcd(b,N) = gcd(c,N) = 1 ∧\n    (a^p + b^q) mod N = (D · c^r) mod N\n```\n\nThen: if ¬WeightedResidueSolution(N, D, p, q, r), then no coprime-to-N solution to A^p + B^q = D · C^r exists.\n\n**Test:** Prove the analogue of the Residue Obstruction Theorem for the weighted predicate. The proof should be identical — the coefficient D is absorbed into the modular arithmetic.\n\n**Refutation criterion:** Find a coefficient D and signature (p,q,r) for which the weighted predicate introduces a formal obstacle not present in the unweighted case. (This seems unlikely — the theorem should generalize directly.)\n\n**Impact if true:** Extends the obstruction framework to a much broader class of Diophantine equations, including twisted Fermat equations, Catalan-type equations, and S-unit equations with fixed coefficients.\n\n---\n\n## Priority Ranking\n\n1. **Hypothesis 4** (Reciprocal bound) — highest mathematical impact; would give the sharpest known conditional result.\n2. **Hypothesis 2** (CRT compression) — essential infrastructure for practical certificate generation.\n3. **Hypothesis 5** (Universality) — broadest generalization; likely straightforward to prove.\n4. **Hypothesis 3** (Linear threshold) — interesting but may require fundamentally new ideas.\n5. **Hypothesis 1** (Finite covering) — primarily computational; useful for benchmarking but less theoretical depth.\n",
+      "source_exp_id": "4070fa0d",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Algebra",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T16:46:19.478976+00:00"
     }
   ],
   "pruned": [

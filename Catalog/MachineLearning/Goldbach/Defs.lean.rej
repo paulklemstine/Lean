@@ -1,6 +1,6 @@
 --- Defs.lean
 +++ Defs.lean
-@@ -85,34 +99,4 @@
+@@ -85,34 +85,4 @@
      Nat.Prime pq.1 ∧ Nat.Prime pq.2 ∧ pq.1 + pq.2 = n) :=
    fun _ => inferInstance
  
