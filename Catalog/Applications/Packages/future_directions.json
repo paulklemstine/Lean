@@ -32,8 +32,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.95,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "15ad4255",
       "timestamp": "2026-05-18T10:17:17.071129+00:00"
     },
     {
@@ -227,8 +227,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "216ddf58",
       "timestamp": "2026-05-18T10:17:17.074253+00:00"
     },
     {
@@ -620,8 +620,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "f8e84c94",
       "timestamp": "2026-05-18T10:17:17.085317+00:00"
     },
     {
@@ -900,8 +900,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "bd30cd57",
       "timestamp": "2026-05-18T10:17:17.096903+00:00"
     },
     {
@@ -1580,7 +1580,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "6c426c79",
       "timestamp": "2026-05-18T17:00:48.029745+00:00"
     },
@@ -1727,8 +1727,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "8ebdf703",
       "timestamp": "2026-05-18T18:03:33.182949+00:00"
     },
     {
@@ -2210,6 +2210,30 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T01:04:17.149152+00:00"
+    },
+    {
+      "id": "fd_0110",
+      "title": "The formally verified theorems in this cycle — closed-form for A^n, sharp quadra",
+      "description": "# Future Directions: Berggren Dynamics and Arithmetic Geometry\n\n## Overview\n\nThe formally verified theorems in this cycle — closed-form for A^n, sharp quadratic lower bound, depth-optimal minimality, and modular preservation — establish the foundation for a quantitative dynamical theory of the Berggren semigroup. The following hypotheses identify the next frontiers, each falsifiable and each connecting to deeper mathematics.\n\n---\n\n## Hypothesis 1: Exact Second-Extremal Path\n\n**Conjecture**: Among all words of length n ≥ 2, the word C·A^(n-1) yields the second-smallest hypotenuse:\n\n$$\\text{second-min}_{|w|=n} c(w) = c(C \\cdot A^{n-1}).$$\n\n**Precise claim**: c(C·A^(n-1)) = 4n² + 8n + 5 for all n ≥ 1, and this is the unique second minimizer.\n\n**Test**:\n- Compute c(C·A^(n-1)) for n = 1,...,20 and verify the closed form.\n- Exhaustively check that no other word of length n ≤ 10 achieves a smaller hypotenuse except A^n.\n- Verify the closed form by deriving the recurrence for the C-then-A^(n-1) branch.\n\n**Expected failure mode**: The conjecture might fail if some mixed word (e.g., A^k·C·A^(n-k-1)) produces a smaller hypotenuse for specific n. Computational evidence to depth 8 supports the conjecture.\n\n**Impact**: Would complete the extremal landscape of the Berggren tree, identifying both the optimal and near-optimal paths. Connects to the theory of geodesics on hyperbolic surfaces.\n\n---\n\n## Hypothesis 2: Finite-Quotient Mixing\n\n**Conjecture**: For every odd modulus m coprime to 30, the Berggren modular graph on the reachable orbit S_m is strongly connected and aperiodic.\n\n**Precise claim**: The directed multigraph G_m = (S_m, E_m) where (x, y) ∈ E_m iff y = g(x) mod m for some generator g, is strongly connected and has gcd of cycle lengths equal to 1.\n\n**Test**:\n- Compute G_m for all odd m ≤ 100 coprime to 30.\n- Check strong connectivity by BFS from every vertex.\n- Check aperiodicity by computing gcd of all cycle lengths.\n- Identify the smallest m (if any) where the conjecture fails.\n\n**Expected failure mode**: Might fail for m divisible by small primes related to the Berggren matrices' discriminant. Could also fail for specific m where the orbit decomposes into multiple components.\n\n**Impact**: Strong connectivity + aperiodicity is the hypothesis needed for finite-state Markov chain convergence, which would give modular equidistribution: μ_n(x) → 1/|S_m| as n → ∞.\n\n---\n\n## Hypothesis 3: Spectral Gap Uniformity\n\n**Conjecture**: There exists a universal constant δ > 0 such that for every squarefree odd modulus m, the second-largest eigenvalue modulus of the normalized transition operator on S_m satisfies |λ₂| ≤ 1 - δ.\n\n**Precise claim**: With the transition matrix P_m = A_m/3 (where A_m is the adjacency matrix of G_m), the eigenvalues λ₁ ≥ |λ₂| ≥ ... satisfy |λ₂| ≤ 1 - δ for a fixed δ > 0 independent of m.\n\n**Test**:\n- Compute the spectrum of P_m for squarefree odd m ≤ 200.\n- Plot |λ₂| as a function of m.\n- Check whether |λ₂| appears bounded away from 1 or approaches 1.\n\n**Expected failure mode**: The spectral gap might shrink to 0 as m → ∞ (which would not contradict equidistribution but would slow the rate). This is related to the property of the Berggren semigroup generating an expander family, which is a deep open question.\n\n**Impact**: A uniform spectral gap would imply *quantitative* equidistribution with rate O((1-δ)^n), connecting Berggren dynamics to expander theory and the Bourgain-Gamburd method.\n\n---\n\n## Hypothesis 4: Asymptotic Letter Frequency Rigidity\n\n**Conjecture**: Any infinite word w₁w₂w₃... over {A, B, C} that achieves asymptotically minimal hypotenuse growth (c_n ~ 2n²) must have letter frequency concentrated on A:\n\n$$\\lim_{n \\to \\infty} \\frac{|\\{i \\leq n : w_i = A\\}|}{n} = 1.$$\n\n**Precise claim**: If c(w₁...wₙ) = 2n² + o(n²), then the proportion of non-A letters in w₁...wₙ tends to 0.\n\n**Test**:\n- For periodic words (e.g., (AB)^k, (AC)^k), compute the quadratic coefficient of c and verify it exceeds 2.\n- For random words with fixed A-frequency p, compute the expected quadratic coefficient as a function of p.\n- Check whether the quadratic coefficient is minimized at p = 1 (all A's).\n\n**Expected failure mode**: It might be that some infinite words with positive B or C frequency still achieve quadratic coefficient 2. This would require the \"slow\" letters to be placed at positions where they contribute minimally, which seems impossible given the uniform +2 lower bound on min-leg growth.\n\n**Impact**: Would establish a strong rigidity result: the symbolic dynamics of the Berggren tree has a unique \"slowest trajectory\" up to asymptotic equivalence.\n\n---\n\n## Hypothesis 5: Modular Orbit Saturation for Primes p ≡ 1 (mod 4)\n\n**Conjecture**: For every prime p ≡ 1 (mod 4), the reachable orbit S_p equals the full primitive light-cone component containing (3,4,5) in (ℤ/pℤ)³.\n\n**Precise claim**: Define the primitive light cone mod p as L_p = {(a,b,c) ∈ (ℤ/pℤ)³ : a²+b² = c², c ≠ 0}. Then S_p = L_p^+ for one of the two connected components L_p^+ of L_p.\n\n**Test**:\n- For primes p ≡ 1 (mod 4) with p ≤ 100, compute S_p and L_p.\n- Check whether |S_p| = |L_p|/2 (which would mean S_p fills exactly one component).\n- For primes p ≡ 3 (mod 4), check whether the structure differs.\n\n**Expected failure mode**: The orbit might not fill the full component for primes where the Berggren semigroup generates a proper subgroup of the orthogonal group mod p. This would indicate additional arithmetic obstructions beyond the Pythagorean relation.\n\n**Impact**: Full saturation would be the finite-quotient input needed for an affine sieve approach to counting Pythagorean triples with restricted prime factorization patterns. This connects directly to the Bourgain-Gamburd-Sarnak program.\n\n---\n\n## Cross-Cutting Themes\n\nAll five hypotheses share a common structure: they ask whether the *algebraic symmetry* of the Berggren semigroup (its Lorentz group structure, its freeness) translates into *analytical uniformity* (equidistribution, spectral gaps, orbit saturation) in finite quotients. This is the central question of thin-group arithmetic dynamics, and the Berggren tree is the simplest nontrivial example where it can be studied with full formal rigor.\n\nThe computational infrastructure developed in this cycle — modular orbit computation, spectral analysis, certified enumeration — provides the tools needed to test each hypothesis. The formal verification framework ensures that any proved result is trustworthy at the highest possible standard.\n",
+      "source_exp_id": "6c426c79",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Physics",
+        "Pythagorean",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T01:04:30.981334+00:00"
     }
   ],
   "pruned": [
