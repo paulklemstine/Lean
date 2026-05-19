@@ -1553,8 +1553,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "0f21be19",
       "timestamp": "2026-05-18T16:02:03.975948+00:00"
     },
     {
@@ -2681,7 +2681,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "43f46456",
       "timestamp": "2026-05-19T13:14:34.052177+00:00"
     },
@@ -2970,6 +2970,29 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T16:26:19.493818+00:00"
+    },
+    {
+      "id": "fd_0142",
+      "title": "This document identifies five falsifiable scientific hypotheses emerging from",
+      "description": "# Future Directions: Formal Additive Prime Decomposition Theory\n\n## Overview\n\nThis document identifies five falsifiable scientific hypotheses emerging from\nour formalization of Goldbach-type additive prime decompositions. Each conjecture\nis precise enough to confirm or refute computationally or proof-theoretically.\n\n---\n\n## Hypothesis 1: Universal Goldbach Multiplicity Lower Bound\n\n**Conjecture:** For every even integer n ≥ 8, the ordered Goldbach representation\ncount satisfies r₂(n) ≥ 2. Equivalently, 4 = 2+2 and 6 = 3+3 are the only even\nnumbers with a unique ordered Goldbach representation.\n\n**Precise statement:**\n```\n∀ n : ℕ, 8 ≤ n → Even n → 2 ≤ (goldbachWitnesses n).card\n```\n\n**Test:** Extend the certified verification (currently [8, 100]) to [8, 10⁵] using\noptimized native computation. A structural proof may be possible by combining:\n(1) the symmetry argument (if p ≠ q then (p,q) and (q,p) are distinct), with\n(2) the parity theorem (both primes are odd for n > 4), and\n(3) finite case analysis on the diagonal cases (n = 2p with p prime).\n\n**Falsifier:** An even n ≥ 8 with r₂(n) < 2 (i.e., n = 2p with p prime and\nno other Goldbach pair exists).\n\n**Impact:** This would upgrade Goldbach from an existence result to a multiplicity\nrigidity theorem—the first formal proof that the prime self-convolution never\nattains its minimal nontrivial value beyond threshold.\n\n---\n\n## Hypothesis 2: k-ary Parity Census Law\n\n**Conjecture:** For any k-ary prime decomposition a₁ + a₂ + ⋯ + aₖ = n, the\nnumber of summands equal to 2 satisfies:\n\n  #{i : aᵢ = 2} ≡ n + k (mod 2)\n\nThat is, the count of 2s has the same parity as n + k.\n\n**Precise statement (k = 4):**\n```\n∀ n a b c d : ℕ, Prime a → Prime b → Prime c → Prime d →\n  a + b + c + d = n →\n  (count_twos [a,b,c,d]) % 2 = (n + 4) % 2\n```\n\nwhich simplifies to: the count of 2s has the same parity as n.\n\n**Test:** Verify computationally for k = 4, 5, 6 on ranges [1, 1000].\nProve structurally by induction on k using the parity of odd primes.\n\n**Falsifier:** A k-ary prime decomposition where the count of 2s violates\nthe predicted parity constraint.\n\n**Impact:** This would establish a universal parity conservation law for additive\nprime decompositions of arbitrary arity—a structural theorem that constrains all\nprime decompositions simultaneously, analogous to charge conservation in physics.\n\n---\n\n## Hypothesis 3: Weak Chen Prevalence with Explicit Bounds\n\n**Conjecture:** Every even integer n ≥ 4 admits a weak Chen decomposition\nn = p + s where p is prime and s is either prime or semiprime. Moreover, the\nnumber of such decompositions grows at least linearly in n.\n\n**Precise statement:**\n```\n∀ n : ℕ, 4 ≤ n → Even n → HasWeakChenDecomposition n\n```\n\n**Test:** Extend the certified verification (currently [4, 100]) to [4, 10⁴]\nusing the decidability pipeline. Separately, count weak Chen witnesses for each\neven n and verify growth trends. Compare with pure Goldbach counts to quantify\nthe \"safety net\" provided by semiprimes.\n\n**Falsifier:** An even n ≥ 4 with no prime + (prime-or-semiprime) decomposition.\n\n**Impact:** A verified weak Chen prevalence theorem would be a formal shadow of\nChen's theorem—not asymptotic but explicit and witness-bearing. It would create\ninfrastructure for formal sieve theory and demonstrate that semiprimes provide\ngenuine additive redundancy beyond primes alone.\n\n---\n\n## Hypothesis 4: Convolution Growth and Average Monotonicity\n\n**Conjecture:** The average Goldbach count over even integers up to B,\n```\n  avg_r₂(B) = (1/⌊B/2⌋) · Σ_{even n ≤ B} r₂(n)\n```\nis eventually nondecreasing in B.\n\n**Precise certified version:**\n```\n∀ B₁ B₂ : ℕ, 8 ≤ B₁ → B₁ ≤ B₂ → B₂ ≤ 10000 →\n  B₂ * (Σ_{even n ≤ B₁} r₂(n)) ≤ B₁ * (Σ_{even n ≤ B₂} r₂(n))\n```\n(denominator-cleared to avoid rationals)\n\n**Test:** Compute avg_r₂(B) for B = 100, 200, ..., 10000 and verify monotonicity.\nIf monotonicity fails at some point, identify the smallest B where it fails and\ncharacterize the local \"dip.\" Use the convolution identity\nr₂(n) = (1_P * 1_P)(n) to study whether spectral properties of the prime\nindicator explain the growth.\n\n**Falsifier:** A pair B₁ < B₂ in the tested range with avg_r₂(B₂) < avg_r₂(B₁).\n\n**Impact:** Certified monotonicity of average Goldbach counts would be a\nprototype for machine-checked experimental analytic number theory. It would\nconnect the convolution identity to growth phenomena and provide formal evidence\nfor the Hardy-Littlewood asymptotic r₂(n) ~ C · n / (log n)².\n\n---\n\n## Hypothesis 5: Bounded Witness Transport Between Consecutive Even Numbers\n\n**Conjecture:** For every even n ∈ [8, B], there exist Goldbach witnesses\n(p, n-p) for n and (p', n+2-p') for n+2 with |p - p'| ≤ K, where K is\na universal constant (conjectured to be ≤ 30 based on computational evidence).\n\n**Precise statement:**\n```\ndef HasNearbyGoldbachTransfer (n K : ℕ) : Prop :=\n  ∃ p q p' q' : ℕ,\n    Prime p ∧ Prime q ∧ Prime p' ∧ Prime q' ∧\n    p + q = n ∧ p' + q' = n + 2 ∧\n    |p' - p| ≤ K ∧ |q' - q| ≤ K\n\n∀ n, 8 ≤ n → n + 2 ≤ B → Even n → HasNearbyGoldbachTransfer n K\n```\n\n**Test:** Compute the minimum transport gap for all consecutive even pairs\nin [8, 10000]. Determine the empirical distribution of minimum gaps and\nidentify the optimal K. Verify the finite theorem for the discovered K.\n\n**Falsifier:** An even n in the tested range where no witness of n matches\nany witness of n+2 within the claimed bound K.\n\n**Impact:** This would reframe Goldbach theory dynamically, showing that\ndecompositions vary \"continuously\" across the even lattice. It would define\na Goldbach witness transport graph with edges representing bounded perturbation,\nopening connections to graph connectivity, expansion, and topological persistence.\n\n---\n\n## Implementation Priorities\n\n1. **Prove Hypothesis 2** for k = 4 structurally (extends our k = 3 results)\n2. **Extend certified ranges** for Hypotheses 1, 3, and 4 using optimized computation\n3. **Build witness transport infrastructure** for Hypothesis 5\n4. **Develop convolution algebra** for Hypothesis 4 (Fourier-analytic approach)\n5. **Connect to Hardy-Littlewood heuristics** through formal asymptotic estimates\n\n---\n\n## Methodology\n\nAll hypotheses should be tested via:\n1. **Computational exploration** in Python to discover patterns and bounds\n2. **Formal statement** in Lean 4 with precise types\n3. **Certified computation** using `native_decide` for finite ranges\n4. **Structural proof** where possible, using parity, symmetry, and convolution\n5. **Documentation** of results in the formal library with cross-references\n",
+      "source_exp_id": "43f46456",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Topology",
+        "Probability",
+        "Cryptography",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T16:37:33.569340+00:00"
     }
   ],
   "pruned": [

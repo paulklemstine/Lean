@@ -1,0 +1,18 @@
+--- Theorems.lean
++++ Theorems.lean
+@@ -156,4 +194,15 @@
+   rw [hasGoldbachDecomposition_iff_witnesses_nonempty]
+   exact Finset.card_pos
+ 
++/-! ## Vinogradov schema -/
++
++/-- Schema for the ternary Goldbach theorem (Vinogradov–Helfgott).
++The analytic core is isolated as a hypothesis; this shows how future
++formalization of the circle method can plug into the formal framework. -/
++theorem vinogradov_schema
++    (N : ℕ)
++    (hAnalytic : ∀ n : ℕ, Odd n → n ≥ N → HasOddVinogradovDecomposition n) :
++    ∀ n : ℕ, Odd n → n ≥ N → HasOddVinogradovDecomposition n :=
++  hAnalytic
++
+ 

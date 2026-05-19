@@ -1,0 +1,37 @@
+--- Defs.lean
++++ Defs.lean
+@@ -85,34 +99,4 @@
+     Nat.Prime pq.1 ∧ Nat.Prime pq.2 ∧ pq.1 + pq.2 = n) :=
+   fun _ => inferInstance
+ 
+-/-- `IsSemiprime` is decidable by bounded search over factor pairs. -/
+-instance isSemiprimeDecidable (n : ℕ) : Decidable (IsSemiprime n) :=
+-  decidable_of_iff
+-    (∃ a ∈ Finset.range (n + 1), ∃ b ∈ Finset.range (n + 1),
+-      Nat.Prime a ∧ Nat.Prime b ∧ a * b = n)
+-    ⟨fun ⟨a, _, b, _, ha, hb, hab⟩ => ⟨a, b, ha, hb, hab⟩,
+-     fun ⟨a, b, ha, hb, hab⟩ => ⟨a, Finset.mem_range.mpr (by
+-        have := ha.pos; nlinarith [hb.pos]),
+-      b, Finset.mem_range.mpr (by
+-        have := hb.pos; nlinarith [ha.pos]),
+-      ha, hb, hab⟩⟩
+-
+-/-- `PrimeOrSemiprime` is decidable. -/
+-instance primeOrSemiprimeDecidable (n : ℕ) : Decidable (PrimeOrSemiprime n) :=
+-  show Decidable (Nat.Prime n ∨ IsSemiprime n) from inferInstance
+-
+-/-- `HasWeakChenDecomposition` is decidable by bounded search. -/
+-instance hasWeakChenDecompositionDecidable (n : ℕ) :
+-    Decidable (HasWeakChenDecomposition n) :=
+-  decidable_of_iff
+-    (∃ p ∈ Finset.range (n + 1), ∃ s ∈ Finset.range (n + 1),
+-      Nat.Prime p ∧ PrimeOrSemiprime s ∧ p + s = n)
+-    ⟨fun ⟨p, _, s, _, hp, hs, hps⟩ => ⟨p, s, hp, hs, hps⟩,
+-     fun ⟨p, s, hp, hs, hps⟩ => ⟨p, Finset.mem_range.mpr (by omega),
+-      s, Finset.mem_range.mpr (by omega), hp, hs, hps⟩⟩
+-
+-/-- `IsPrimeTripleSum n a b c` asserts that `a`, `b`, `c` are primes summing to `n`. -/
+-def IsPrimeTripleSum (n a b c : ℕ) : Prop :=
+-  Nat.Prime a ∧ Nat.Prime b ∧ Nat.Prime c ∧ a + b + c = n
+-
+ 
