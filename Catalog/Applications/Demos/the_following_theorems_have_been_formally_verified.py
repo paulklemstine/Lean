@@ -1,526 +1,567 @@
 #!/usr/bin/env python3
 """
-Ordinal Collapse Theory — Applications
+applications.py — Real-world applications of ordinal tree compilation.
 
-Demonstrates real-world applications of the ordinal collapse theorems:
-1. Termination certificates for recursive programs
-2. Complexity classification of nested computations
-3. Proof-theoretic ordinal estimation
+Demonstrates how ordinal-indexed trees arise in:
+1. Termination proofs for recursive programs
+2. Complexity classification of rewrite systems
+3. Well-founded recursion depth measurement
 """
 
 from __future__ import annotations
-from dataclasses import dataclass
 from typing import List, Tuple, Optional
-import math
+from algorithms import CNFOrdinal, compile_cnf, fundamental_sequence
 
 
-# ============================================================
-# Application 1: Termination Certificates
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════════
+# APPLICATION 1: Termination Analysis via Ordinal Ranking
+# ═══════════════════════════════════════════════════════════════════════
 
-def termination_rank(program_description: str) -> Tuple[str, str]:
+class TerminationAnalyzer:
+    """Analyze termination of recursive programs using ordinal ranking functions.
+    
+    For a recursive function with k nested loops/recursions, the termination
+    complexity can be bounded by an ordinal in CNF. The tree realization
+    provides a concrete witness that the recursion is well-founded.
+    
+    Example: A function with triple-nested recursion where:
+    - Outer loop decreases a counter bounded by n
+    - Middle loop resets to ω at each outer step
+    - Inner loop is bounded by m
+    has termination ordinal ω^2·n + ω·m or similar.
     """
-    Assign an ordinal rank to a recursive program structure,
-    proving termination via well-founded descent.
     
-    The ordinal collapse theorems guarantee:
-    - Simple loops: rank < ω (finite, collapses to ℕ)
-    - Nested recursion of depth d: rank ≤ ω^d
-    - Each recursive call must decrease the ordinal
-    
-    Returns: (rank_expression, explanation)
-    """
-    patterns = {
-        "simple_loop": (
-            "n (finite)",
-            "Simple loop with counter n. Rank = n < ω. "
-            "Termination by descent in ℕ."
-        ),
-        "binary_divide": (
-            "2·log₂(n)",
-            "Binary search / divide-and-conquer. Height = log n, "
-            "depth ≤ 2^log(n) = n. Terminates in at most n steps."
-        ),
-        "nested_loop": (
-            "ω",
-            "Nested loop: outer controls inner. Rank = ω. "
-            "Each outer iteration resets inner, total steps unbounded "
-            "but ordinal ω guarantees termination."
-        ),
-        "doubly_nested": (
-            "ω²",
-            "Doubly nested recursion. Rank = ω². "
-            "Three nesting levels: outer resets middle, middle resets inner. "
-            "Ordinal descent: ω²·a + ω·b + c decreases lexicographically."
-        ),
-        "ackermann": (
-            "ω^ω",
-            "Ackermann-style recursion. Nesting depth is itself variable. "
-            "Rank = ω^ω. This is where finite constructor grammars "
-            "reach their boundary."
-        ),
-    }
-    
-    if program_description in patterns:
-        return patterns[program_description]
-    return ("unknown", "Program structure not recognized.")
-
-
-# ============================================================
-# Application 2: Complexity Classification
-# ============================================================
-
-@dataclass
-class ComputationStructure:
-    """Describes the structure of a computation."""
-    name: str
-    nesting_depth: int
-    branching: str  # "finite", "countable", "uncountable"
-    height_bound: Optional[int]
-    
-    def classify(self) -> str:
+    @staticmethod
+    def analyze_simple_loop(bound: int) -> CNFOrdinal:
+        """Simple loop: for i in range(bound). Terminates in ≤ bound steps.
+        
+        Termination ordinal: bound (finite).
         """
-        Classify the ordinal complexity using the phase diagram.
+        return CNFOrdinal.finite(bound)
+    
+    @staticmethod 
+    def analyze_nested_loop(outer: int, inner: int) -> CNFOrdinal:
+        """Nested loop: outer loop bound × inner loop bound.
         
-        Phase transitions (formally verified):
-          - Finite branching → rank < ω (always)
-          - Countable + bounded height n → rank ≤ n
-          - Countable + unbounded height → rank = ω^d for nesting depth d
+        Termination ordinal: outer * inner (still finite).
         """
-        if self.branching == "finite":
-            if self.height_bound is not None:
-                max_depth = 2 ** self.height_bound
-                return (f"FINITE COLLAPSE: rank < ω, "
-                        f"depth ≤ {max_depth} = 2^{self.height_bound}")
-            return "FINITE COLLAPSE: rank < ω (any finite branching)"
+        return CNFOrdinal.finite(outer * inner)
+    
+    @staticmethod
+    def analyze_recursive_descent(depth: int) -> CNFOrdinal:
+        """Recursive function that decreases an ordinal argument.
         
-        elif self.branching == "countable":
-            if self.height_bound is not None:
-                return (f"UNIVERSAL COLLAPSE: rank ≤ {self.height_bound} < ω "
-                        f"(bounded height forces finite rank)")
-            d = self.nesting_depth
-            return f"ORDINAL LADDER: rank = ω^{d} (nesting depth {d})"
+        Example: Ackermann-like function with recursion depth bounded by ω^depth.
+        """
+        return CNFOrdinal.omega_power(depth)
+    
+    @staticmethod
+    def analyze_multi_level_recursion(levels: List[Tuple[int, int]]) -> CNFOrdinal:
+        """Multi-level recursion with different nesting depths.
         
-        return "BEYOND ω^ω: uncountable branching or unbounded nesting"
+        levels: [(count, depth), ...] where each level has 'count' recursive
+        calls at nesting 'depth'.
+        
+        Returns the termination ordinal in CNF.
+        """
+        return CNFOrdinal.from_cnf_list(levels)
 
 
-def demonstrate_classifications():
-    """Show the complexity classification in action."""
-    examples = [
-        ComputationStructure("Linear search", 1, "finite", 1),
-        ComputationStructure("Binary search", 1, "finite", 10),
-        ComputationStructure("Balanced tree traversal", 0, "finite", 20),
-        ComputationStructure("Recursive descent parser", 2, "finite", None),
-        ComputationStructure("BFS with bounded depth", 1, "countable", 5),
-        ComputationStructure("Unbounded BFS", 1, "countable", None),
-        ComputationStructure("Nested fixed-point", 2, "countable", None),
-        ComputationStructure("Triple-nested iteration", 3, "countable", None),
-        ComputationStructure("Ackermann recursion", 0, "countable", None),
+def demo_termination():
+    """Demonstrate termination analysis."""
+    print("=" * 65)
+    print("APPLICATION 1: Termination Analysis")
+    print("=" * 65)
+    print()
+    
+    analyzer = TerminationAnalyzer()
+    
+    # Simple examples
+    programs = [
+        ("Simple counter loop (n=100)", 
+         analyzer.analyze_simple_loop(100)),
+        ("Nested loop (10 × 20)", 
+         analyzer.analyze_nested_loop(10, 20)),
+        ("Single recursive descent",
+         analyzer.analyze_recursive_descent(1)),
+        ("Double recursive descent (Ackermann-like)",
+         analyzer.analyze_recursive_descent(2)),
+        ("Triple recursive descent",
+         analyzer.analyze_recursive_descent(3)),
+        ("Multi-level: 2×ω³ + 3×ω + 5 iterations",
+         analyzer.analyze_multi_level_recursion([(2, 3), (3, 1), (5, 0)])),
     ]
     
-    print("Complexity Classification via Ordinal Collapse")
-    print("=" * 70)
-    print()
-    for ex in examples:
-        print(f"  {ex.name}:")
-        print(f"    Branching: {ex.branching}, "
-              f"Height bound: {ex.height_bound or 'none'}, "
-              f"Nesting: {ex.nesting_depth}")
-        print(f"    → {ex.classify()}")
+    for desc, ordinal in programs:
+        tree = compile_cnf([(c, e) for e, c in ordinal.terms] if ordinal.terms else [])
+        print(f"  {desc}")
+        print(f"    Termination ordinal: {ordinal}")
+        print(f"    Tree realization: {tree}")
+        print(f"    Is finite? {ordinal.is_finite()}")
         print()
 
 
-# ============================================================
-# Application 3: Proof-Theoretic Ordinals
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════════
+# APPLICATION 2: Rewrite System Complexity Classification
+# ═══════════════════════════════════════════════════════════════════════
 
-def proof_system_analysis():
-    """
-    Demonstrate the connection to proof-theoretic ordinals.
+class RewriteSystem:
+    """A simple term rewriting system with ordinal complexity measure.
     
-    In proof theory, the ordinal of a formal system measures the
-    supremum of provably well-founded orderings. Our results
-    provide constructive witnesses:
+    Each rewrite rule decreases the ordinal rank of the term.
+    The maximum rank gives the worst-case number of rewrite steps.
+    """
     
-    - PRA (Primitive Recursive Arithmetic): ordinal ω^ω
-      → Our omegaPowTree(n) for each n < ω provides witnesses
+    def __init__(self, name: str, rules: List[str], complexity: CNFOrdinal):
+        self.name = name
+        self.rules = rules
+        self.complexity = complexity
     
-    - PA (Peano Arithmetic): ordinal ε₀ = sup_n ω↑↑n
-      → Requires iterating our construction transfinitely
-    """
-    print("Proof-Theoretic Ordinal Analysis")
-    print("=" * 70)
-    print()
-    print("Connection to formal systems:")
-    print()
-    print("  System          | Proof-Theoretic Ordinal | Our Construction")
-    print("  " + "-" * 60)
-    print("  Bounded arith.  | ω^k (fixed k)           | omegaPowTree(k)")
-    print("  PRA             | ω^ω                     | sup_k omegaPowTree(k)")
-    print("  PA (Peano)      | ε₀ = lim ω↑↑n           | requires transfinite iter.")
-    print("  ATR₀            | Γ₀                      | beyond current theory")
-    print()
-    print("Key insight: Our balanced tree extremizer (depth = 2^height)")
-    print("mirrors the subrecursive hierarchy where functions of")
-    print("bounded height correspond to bounded primitive recursion.")
-    print()
-    print("The ordinal ladder ω, ω², ω³, ... provides constructive")
-    print("ranking functions for each level of nested recursion,")
-    print("which can serve as termination measures in verified software.")
+    def describe(self) -> str:
+        lines = [f"  System: {self.name}"]
+        lines.append(f"  Rules:")
+        for rule in self.rules:
+            lines.append(f"    {rule}")
+        lines.append(f"  Complexity ordinal: {self.complexity}")
+        lines.append(f"  Classification: {self._classify()}")
+        return "\n".join(lines)
+    
+    def _classify(self) -> str:
+        if self.complexity.is_finite():
+            return "PRIMITIVE RECURSIVE (finite bound)"
+        exp = self.complexity.leading_exponent()
+        if exp == 1:
+            return "MULTIPLY RECURSIVE (ω-level)"
+        elif exp == 2:
+            return "DOUBLY RECURSIVE (ω²-level)"
+        elif exp < 10:
+            return f"LEVEL-{exp} RECURSIVE (ω^{exp}-level)"
+        else:
+            return f"HIGHLY RECURSIVE (ω^{exp}-level)"
 
 
-# ============================================================
-# Application 4: Derivation Height in Rewriting Systems
-# ============================================================
-
-def rewriting_application():
-    """
-    Show how ordinal ranks provide bounds on derivation sequences
-    in term rewriting systems.
-    """
-    print("Derivation Height in Term Rewriting")
-    print("=" * 70)
-    print()
-    print("A term rewriting system (TRS) terminates iff there exists")
-    print("a well-founded ordering on terms such that each rewrite rule")
-    print("decreases the ordering.")
-    print()
-    print("Our results provide the ranking functions:")
+def demo_rewrite_systems():
+    """Demonstrate complexity classification of rewrite systems."""
+    print("=" * 65)
+    print("APPLICATION 2: Rewrite System Complexity Classification")
+    print("=" * 65)
     print()
     
-    trs_examples = [
-        ("f(s(x)) → f(x)", "ω", 
-         "Linear recursion: rank decreases by 1 each step"),
-        ("f(x,s(y)) → f(s(x),y)", "ω·2",
-         "Two-counter system: rank = ω·x + y"),
-        ("f(s(x),y) → f(y,x)", "ω²",
-         "Mutual recursion: rank = ω²·(size) + ω·x + y"),
-        ("f(x,y,s(z)) → f(g(x),h(y),z)", "ω³",
-         "Triple nesting: each argument interacts"),
+    systems = [
+        RewriteSystem(
+            "Bubble Sort",
+            ["swap(x,y) → (y,x) if x > y"],
+            CNFOrdinal.finite(100)  # n² for n=10
+        ),
+        RewriteSystem(
+            "String Rewriting (length-decreasing)",
+            ["ab → a", "ba → b"],
+            CNFOrdinal.omega_power(1)
+        ),
+        RewriteSystem(
+            "Hydra Game (2-level)",
+            ["cut head → grow k new heads at parent"],
+            CNFOrdinal.omega_power(2)
+        ),
+        RewriteSystem(
+            "Goodstein sequences (base-k)",
+            ["subtract 1 in hereditary base-k, change to base-(k+1)"],
+            CNFOrdinal.from_cnf_list([(1, 3)])
+        ),
+        RewriteSystem(
+            "Extended rewrite with CNF bound",
+            ["f(s(x),y) → f(x, g(y))", "g(s(x)) → g(x)·g(x)"],
+            CNFOrdinal.from_cnf_list([(2, 3), (1, 1), (5, 0)])
+        ),
     ]
     
-    print(f"  {'Rule':<30} {'Rank':<8} {'Explanation'}")
-    print("  " + "-" * 65)
-    for rule, rank, explanation in trs_examples:
-        print(f"  {rule:<30} {rank:<8} {explanation}")
-    
+    for system in systems:
+        print(system.describe())
+        print()
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# APPLICATION 3: Hierarchical Complexity Measure
+# ═══════════════════════════════════════════════════════════════════════
+
+def complexity_hierarchy():
+    """Show how ordinals create a natural complexity hierarchy."""
+    print("=" * 65)
+    print("APPLICATION 3: Ordinal Complexity Hierarchy")
+    print("=" * 65)
     print()
-    print("The exact height-depth law tells us: if the rewrite system")
-    print("has derivation tree height ≤ h, then the maximum derivation")
-    print("length is at most 2^h steps. This is tight (balanced trees).")
+    print("  Each ordinal α defines a complexity class C(α):")
+    print("  C(α) = functions whose recursion depth is bounded by α")
+    print()
+    
+    levels = [
+        (CNFOrdinal.finite(1), "Constant-time operations"),
+        (CNFOrdinal.finite(10), "Bounded iteration (≤10 steps)"),
+        (CNFOrdinal.omega_power(1), "Primitive recursive (single recursion)"),
+        (CNFOrdinal.from_cnf_list([(2, 1)]), "Double recursion (ω·2 steps)"),
+        (CNFOrdinal.omega_power(2), "Doubly nested recursion (ω² steps)"),
+        (CNFOrdinal.omega_power(3), "Triply nested recursion (ω³ steps)"),
+        (CNFOrdinal.from_cnf_list([(1, 3), (2, 1), (5, 0)]),
+         "Mixed: ω³ + ω·2 + 5 step bound"),
+    ]
+    
+    print("  ┌──────────────────┬────────────────────────────────────────┐")
+    print("  │  Ordinal         │  Complexity Class                      │")
+    print("  ├──────────────────┼────────────────────────────────────────┤")
+    for ordinal, desc in levels:
+        ord_str = str(ordinal).ljust(16)
+        print(f"  │  {ord_str}│  {desc.ljust(38)}│")
+    print("  └──────────────────┴────────────────────────────────────────┘")
+    print()
+    print("  KEY THEOREM: Every ordinal in this hierarchy is realized by")
+    print("  a concrete tree, providing a WITNESS for the complexity bound.")
+    print()
+    print("  The ordinal ω^ω serves as the boundary of this classification:")
+    print("  it is the supremum of all finite-exponent complexity levels.")
+    print()
 
 
-# ============================================================
-# Main
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════════
+# APPLICATION 4: Fundamental Sequence Enumeration
+# ═══════════════════════════════════════════════════════════════════════
+
+def demo_fundamental_sequences():
+    """Show how fundamental sequences provide constructive access to limits."""
+    print("=" * 65)
+    print("APPLICATION 4: Fundamental Sequences — Constructive Limits")
+    print("=" * 65)
+    print()
+    print("  Every limit ordinal α has a fundamental sequence α[0] < α[1] < ...")
+    print("  with sup{α[n]} = α. This gives constructive access to limits.")
+    print()
+    
+    examples = [
+        ("ω", CNFOrdinal.omega_power(1)),
+        ("ω·2", CNFOrdinal.from_cnf_list([(2, 1)])),
+        ("ω²", CNFOrdinal.omega_power(2)),
+        ("ω² + ω", CNFOrdinal.from_cnf_list([(1, 2), (1, 1)])),
+        ("ω³", CNFOrdinal.omega_power(3)),
+    ]
+    
+    for name, alpha in examples:
+        print(f"  {name}[n]:")
+        for n in range(6):
+            try:
+                val = fundamental_sequence(alpha, n)
+                print(f"    [{n}] = {val}")
+            except ValueError:
+                print(f"    [{n}] = (not a limit ordinal)")
+                break
+        print()
+    
+    print("  In tree terms: the child tree at index n of a limit-ordinal")
+    print("  tree has rank α[n], providing a concrete witness for each")
+    print("  approximation stage.")
+    print()
+
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("ORDINAL COLLAPSE THEORY — APPLICATIONS")
-    print("=" * 70)
-    print()
-    
-    # Application 1: Termination
-    print("APPLICATION 1: Termination Certificates")
-    print("-" * 70)
-    for prog in ["simple_loop", "nested_loop", "doubly_nested", "ackermann"]:
-        rank, explanation = termination_rank(prog)
-        print(f"  {prog}: rank = {rank}")
-        print(f"    {explanation}")
-        print()
-    
-    # Application 2: Classification
-    print()
-    demonstrate_classifications()
-    
-    # Application 3: Proof theory
-    print()
-    proof_system_analysis()
-    
-    # Application 4: Rewriting
-    print()
-    rewriting_application()
-    
-    print()
-    print("=" * 70)
-    print("All applications demonstrate the practical utility of")
-    print("ordinal collapse theory as a classification framework")
-    print("for computational complexity and termination analysis.")
-    print("=" * 70)
+    demo_termination()
+    demo_rewrite_systems()
+    complexity_hierarchy()
+    demo_fundamental_sequences()
 
 
 #!/usr/bin/env python3
 """
-Ordinal Collapse Theory — Demonstration
+demo.py — Concrete demonstrations of Cantor Normal Form realizability
+and ordinal tree constructions.
 
-Concrete numerical examples illustrating the main theorems:
-1. Exact Height-Depth Law: natDepth ≤ 2^height, with equality at balanced trees
-2. Ordinal Ladder: Rank computations for ω^n tree constructions
+Shows how infinite-branching trees encode ordinals via their rank function,
+and demonstrates the CNF-to-tree compilation pipeline.
 """
 
 from __future__ import annotations
-from dataclasses import dataclass
 import sys
-
 sys.setrecursionlimit(5000)
 
-# ============================================================
-# Part 1: Research Objects and the Exact Height-Depth Law
-# ============================================================
+# ─── Symbolic ordinal arithmetic ──────────────────────────────────────
+# We work symbolically since actual tree ranks are transfinite ordinals.
 
-@dataclass
-class ResearchObject:
-    """A finitely described research structure (tree)."""
-    pass
-
-@dataclass
-class Atom(ResearchObject):
-    label: int
-
-@dataclass
-class Compose(ResearchObject):
-    left: ResearchObject
-    right: ResearchObject
-
-@dataclass
-class Bootstrap(ResearchObject):
-    inner: ResearchObject
-
-@dataclass
-class OracleNode(ResearchObject):
-    children: list[ResearchObject]
-
-
-def nat_depth(obj: ResearchObject) -> int:
-    """Computable natural-number depth of a research object."""
-    if isinstance(obj, Atom):
-        return 1
-    elif isinstance(obj, Compose):
-        return nat_depth(obj.left) + nat_depth(obj.right)
-    elif isinstance(obj, Bootstrap):
-        return nat_depth(obj.inner) + 1
-    elif isinstance(obj, OracleNode):
-        if not obj.children:
-            return 0
-        return max(nat_depth(c) + 1 for c in obj.children)
-    raise TypeError(f"Unknown type: {type(obj)}")
-
-
-def height(obj: ResearchObject) -> int:
-    """Tree height of a research object."""
-    if isinstance(obj, Atom):
-        return 0
-    elif isinstance(obj, Compose):
-        return max(height(obj.left), height(obj.right)) + 1
-    elif isinstance(obj, Bootstrap):
-        return height(obj.inner) + 1
-    elif isinstance(obj, OracleNode):
-        if not obj.children:
-            return 1
-        return max(height(c) for c in obj.children) + 1
-    raise TypeError(f"Unknown type: {type(obj)}")
-
-
-def balanced_tree(n: int) -> ResearchObject:
-    """Canonical depth-maximizer: balanced binary tree of height n."""
-    if n == 0:
-        return Atom(0)
-    sub = balanced_tree(n - 1)
-    return Compose(sub, sub)
-
-
-def bootstrap_chain(n: int) -> ResearchObject:
-    """Chain of n bootstraps on an atom."""
-    obj = Atom(0)
-    for _ in range(n):
-        obj = Bootstrap(obj)
-    return obj
-
-
-def wide_oracle(k: int) -> ResearchObject:
-    """Oracle node with k identical atom children."""
-    return OracleNode([Atom(i) for i in range(k)])
-
-
-print("=" * 70)
-print("DEMO 1: Exact Height-Depth Law — natDepth ≤ 2^height")
-print("=" * 70)
-print()
-
-print("Theorem: For every research object R, natDepth(R) ≤ 2^height(R).")
-print("Moreover, balanced binary trees achieve equality.\n")
-
-print(f"{'Object':<35} {'Height':>7} {'Depth':>7} {'2^h':>7} {'Tight?':>7}")
-print("-" * 70)
-
-examples = [
-    ("atom(0)", Atom(0)),
-    ("bootstrap(atom(0))", Bootstrap(Atom(0))),
-    ("compose(atom, atom)", Compose(Atom(0), Atom(1))),
-    ("oracle(3 atoms)", wide_oracle(3)),
-    ("balanced_tree(3)", balanced_tree(3)),
-    ("balanced_tree(5)", balanced_tree(5)),
-    ("balanced_tree(8)", balanced_tree(8)),
-    ("bootstrap_chain(5)", bootstrap_chain(5)),
-    ("compose(bt(2), atom)", Compose(balanced_tree(2), Atom(0))),
-    ("oracle(bt(2), bt(2))", OracleNode([balanced_tree(2), balanced_tree(2)])),
-]
-
-for name, obj in examples:
-    h = height(obj)
-    d = nat_depth(obj)
-    bound = 2 ** h
-    tight = "YES" if d == bound else ""
-    assert d <= bound, f"VIOLATION: {name} has depth {d} > 2^{h} = {bound}"
-    print(f"{name:<35} {h:>7} {d:>7} {bound:>7} {tight:>7}")
-
-print()
-print("✓ All objects satisfy natDepth ≤ 2^height")
-print("✓ Balanced trees achieve exact equality: natDepth = 2^height")
-print()
-
-# Show the extremal growth
-print("Extremal depth growth (balanced binary trees):")
-for n in range(11):
-    print(f"  height {n:>2}: natDepth = {2**n:>5} = 2^{n}")
-
-
-# ============================================================
-# Part 2: Ordinal Ladder — Symbolic Rank Computations
-# ============================================================
-
-print()
-print("=" * 70)
-print("DEMO 2: Ordinal Ladder — Trees of rank ω^n")
-print("=" * 70)
-print()
-
-# We use symbolic ordinals for demonstration
-class OrdinalExpr:
-    """Symbolic ordinal expression for display purposes."""
-    pass
-
-class OrdNat(OrdinalExpr):
-    def __init__(self, n: int):
-        self.n = n
+class Ordinal:
+    """Symbolic ordinal in Cantor normal form below ω^ω.
+    
+    Represented as a list of (coefficient, exponent) pairs in strictly
+    descending exponent order, with positive coefficients.
+    CNF: a_k·ω^{n_k} + ... + a_1·ω^{n_1} + a_0·ω^{n_0}
+    """
+    def __init__(self, terms=None):
+        # terms: list of (coeff, exp) with exp strictly decreasing, coeff > 0
+        self.terms = terms or []
+    
+    @staticmethod
+    def zero():
+        return Ordinal([])
+    
+    @staticmethod
+    def finite(n: int):
+        if n == 0:
+            return Ordinal.zero()
+        return Ordinal([(n, 0)])
+    
+    @staticmethod
+    def omega_pow(n: int, coeff: int = 1):
+        if coeff == 0:
+            return Ordinal.zero()
+        return Ordinal([(coeff, n)])
+    
+    @staticmethod
+    def from_cnf(terms: list):
+        """Create from [(coeff, exp), ...] in descending exp order."""
+        return Ordinal([(c, e) for c, e in terms if c > 0])
+    
     def __repr__(self):
-        return str(self.n)
+        if not self.terms:
+            return "0"
+        parts = []
+        for coeff, exp in self.terms:
+            if exp == 0:
+                parts.append(str(coeff))
+            elif exp == 1:
+                if coeff == 1:
+                    parts.append("ω")
+                else:
+                    parts.append(f"ω·{coeff}")
+            else:
+                if coeff == 1:
+                    parts.append(f"ω^{exp}")
+                else:
+                    parts.append(f"ω^{exp}·{coeff}")
+        return " + ".join(parts)
+    
+    def __eq__(self, other):
+        if not isinstance(other, Ordinal):
+            return False
+        return self.terms == other.terms
+    
+    def add(self, other: 'Ordinal') -> 'Ordinal':
+        """Ordinal addition (not commutative!).
+        self + other: other's high terms absorb self's low terms."""
+        if not other.terms:
+            return self
+        if not self.terms:
+            return other
+        # Find the highest exponent in other
+        other_max_exp = other.terms[0][1]
+        # Keep only terms from self with exponent > other_max_exp
+        kept = [(c, e) for c, e in self.terms if e > other_max_exp]
+        # If self has a term with same exponent as other's leading term, add coefficients
+        self_same = [(c, e) for c, e in self.terms if e == other_max_exp]
+        if self_same:
+            new_coeff = self_same[0][0] + other.terms[0][0]
+            result = kept + [(new_coeff, other_max_exp)] + other.terms[1:]
+        else:
+            result = kept + other.terms
+        return Ordinal(result)
+    
+    def mul_nat(self, k: int) -> 'Ordinal':
+        """Multiply by natural number k (on the right).
+        α·k = α + α + ... + α (k times)."""
+        if k == 0 or not self.terms:
+            return Ordinal.zero()
+        if k == 1:
+            return self
+        # ω^n · a · k: the leading term's coefficient gets multiplied
+        # Lower terms are absorbed if leading exp > 0
+        lead_coeff, lead_exp = self.terms[0]
+        if lead_exp == 0:
+            # Finite ordinal * k
+            return Ordinal.finite(lead_coeff * k)
+        # For ω^n·a + lower: (ω^n·a + lower)·k = ω^n·(a·k) 
+        # because lower terms get absorbed by the next copy's ω^n
+        return Ordinal([(lead_coeff * k, lead_exp)])
 
-class OrdOmega(OrdinalExpr):
-    def __repr__(self):
-        return "ω"
 
-class OrdPow(OrdinalExpr):
-    def __init__(self, base: OrdinalExpr, exp: OrdinalExpr):
-        self.base = base
-        self.exp = exp
-    def __repr__(self):
-        if isinstance(self.exp, OrdNat) and self.exp.n == 1:
-            return repr(self.base)
-        return f"{self.base}^{self.exp}"
-
-class OrdMul(OrdinalExpr):
-    def __init__(self, left: OrdinalExpr, right: OrdinalExpr):
-        self.left = left
-        self.right = right
-    def __repr__(self):
-        return f"{self.left}·{self.right}"
-
-class OrdAdd(OrdinalExpr):
-    def __init__(self, left: OrdinalExpr, right: OrdinalExpr):
-        self.left = left
-        self.right = right
-    def __repr__(self):
-        return f"{self.left} + {self.right}"
+def cnf_value(terms: list) -> Ordinal:
+    """Compute the ordinal value of a CNF list [(coeff, exp), ...]."""
+    result = Ordinal.zero()
+    # Process from right to left (lowest terms first)
+    for coeff, exp in reversed(terms):
+        term = Ordinal.omega_pow(exp).mul_nat(coeff)
+        result = term.add(result)
+    return result
 
 
-print("Chain ranks (computable):")
-for n in range(8):
-    print(f"  chain({n}).rank = {n}")
+# ─── Demonstrations ───────────────────────────────────────────────────
 
-print()
-print("Ordinal addition on trees (addByPattern):")
-print("  Theorem: rank(addByPattern(pattern, base)) = rank(base) + rank(pattern)")
-print()
-print("  Examples (with finite-rank patterns):")
-for p, b in [(2, 3), (0, 5), (4, 1), (10, 7)]:
-    print(f"    addByPattern(chain({p}), chain({b})).rank = {b} + {p} = {b + p}")
+def demo_finite_ordinals():
+    """Demonstrate finite ordinal realization."""
+    print("=" * 65)
+    print("DEMO 1: Finite ordinals via chain trees")
+    print("=" * 65)
+    print()
+    print("  chain(n) = node(fun _ => chain(n-1)), with chain(0) = leaf")
+    print("  rank(chain(n)) = n")
+    print()
+    for n in range(8):
+        print(f"  chain({n}): rank = {Ordinal.finite(n)}")
+    print()
 
-print()
-print("Ordinal multiplication on trees (mulByPattern):")
-print("  Theorem: rank(mulByPattern(pattern, k)) = rank(pattern) · k")
-print()
-for pat_rank in [1, 3, 5]:
-    print(f"  pattern = chain({pat_rank}), rank = {pat_rank}:")
-    for k in range(1, 6):
-        print(f"    mulByPattern(chain({pat_rank}), {k}).rank = {pat_rank} · {k} = {pat_rank * k}")
 
-print()
-print("=" * 70)
-print("THE ORDINAL POWER TOWER: rank(omegaPowTree(n)) = ω^n")
-print("=" * 70)
-print()
+def demo_ordinal_addition():
+    """Demonstrate ordinal addition via prepend."""
+    print("=" * 65)
+    print("DEMO 2: Ordinal addition via prepend")
+    print("=" * 65)
+    print()
+    print("  THEOREM: rank(prepend(s, t)) = rank(s) + rank(t)")
+    print()
+    
+    examples = [
+        ("chain(3)", "chain(4)", Ordinal.finite(3), Ordinal.finite(4)),
+        ("chain(0)", "chain(5)", Ordinal.finite(0), Ordinal.finite(5)),
+        ("omegaPowTree(1)", "chain(3)", Ordinal.omega_pow(1), Ordinal.finite(3)),
+        ("omegaPowTree(2)", "omegaPowTree(1)", Ordinal.omega_pow(2), Ordinal.omega_pow(1)),
+    ]
+    for s_name, t_name, s_rank, t_rank in examples:
+        result = s_rank.add(t_rank)
+        print(f"  prepend({s_name}, {t_name})")
+        print(f"    rank = {s_rank} + {t_rank} = {result}")
+        print()
 
-print("Construction:")
-print("  omegaPowTree(0) = chain(1)                     rank = 1 = ω⁰")
-print("  omegaPowTree(1) = node(k ↦ mulByPattern(T₀,k)) rank = ω = ω¹")
-print("  omegaPowTree(2) = node(k ↦ mulByPattern(T₁,k)) rank = ω² = ω·ω")
-print("  omegaPowTree(n) = node(k ↦ mulByPattern(Tₙ₋₁,k)) rank = ωⁿ")
-print()
 
-print("Why this works — the key argument:")
-print()
-print("For omegaPowTree(n+1):")
-print("  • k-th child = mulByPattern(omegaPowTree(n), k)")
-print("  • rank of k-th child = ω^n · k")
-print("  • rank of tree = sup_k (ω^n · k + 1)")
-print()
-print("  Upper bound: ω^n · k + 1 ≤ ω^n · (k+1) ≤ ω^(n+1)")
-print("  Lower bound: For any α < ω^(n+1) = ω^n · ω,")
-print("    ∃ k such that α < ω^n · k ≤ ω^n · k + 1 ≤ sup")
-print("  Therefore: sup_k (ω^n · k + 1) = ω^(n+1)")
-print()
+def demo_ordinal_multiplication():
+    """Demonstrate ordinal multiplication by naturals."""
+    print("=" * 65)
+    print("DEMO 3: Ordinal multiplication via mulByNat")
+    print("=" * 65)
+    print()
+    print("  THEOREM: rank(mulByNat(t, k)) = rank(t) * k")
+    print()
+    
+    examples = [
+        ("chain(3)", 4, Ordinal.finite(3)),
+        ("omegaPowTree(1)", 5, Ordinal.omega_pow(1)),
+        ("omegaPowTree(2)", 3, Ordinal.omega_pow(2)),
+        ("omegaPowTree(3)", 2, Ordinal.omega_pow(3)),
+    ]
+    for t_name, k, t_rank in examples:
+        result = t_rank.mul_nat(k)
+        print(f"  mulByNat({t_name}, {k})")
+        print(f"    rank = {t_rank} * {k} = {result}")
+        print()
 
-print("Child rank table for omegaPowTree(2) [rank = ω²]:")
-print(f"  {'k':<5} {'rank of k-th child':<25} {'symbolic'}")
-print("  " + "-" * 50)
-for k in range(8):
-    print(f"  {k:<5} {'ω·' + str(k):<25} = {k} copies of ω")
 
-print()
-print("Child rank table for omegaPowTree(3) [rank = ω³]:")
-print(f"  {'k':<5} {'rank of k-th child':<25} {'symbolic'}")
-print("  " + "-" * 50)
-for k in range(8):
-    print(f"  {k:<5} {'ω²·' + str(k):<25} = {k} copies of ω²")
+def demo_omega_powers():
+    """Demonstrate ω^n tree construction."""
+    print("=" * 65)
+    print("DEMO 4: Ordinal power trees — omegaPowTree(n) has rank ω^n")
+    print("=" * 65)
+    print()
+    print("  THEOREM: rank(omegaPowTree(n)) = ω^n")
+    print()
+    print("  Construction:")
+    print("    omegaPowTree(0) = node(fun _ => leaf)        rank = 1 = ω^0")
+    print("    omegaPowTree(n+1) = node(fun k => mulByNat(omegaPowTree(n), k))")
+    print()
+    
+    for n in range(7):
+        rank = Ordinal.omega_pow(n)
+        print(f"  omegaPowTree({n}): rank = {rank}")
+        if n <= 3:
+            print(f"    Children: ", end="")
+            child_ranks = []
+            for k in range(5):
+                cr = Ordinal.omega_pow(n - 1).mul_nat(k) if n > 0 else Ordinal.finite(0)
+                child_ranks.append(str(cr))
+            print(", ".join(child_ranks) + ", ...")
+    print()
 
-print()
-print("=" * 70)
-print("PHASE TRANSITION DIAGRAM")
-print("=" * 70)
-print()
-print("  Branching     Height      Maximum Rank")
-print("  " + "-" * 50)
-print("  Finite        Any         < ω  (collapses to ℕ)")
-print("  Countable     Bounded n   ≤ n  (universal collapse)")
-print("  Countable     Unbounded   = ω  (first escape)")
-print("  Nested × 2    Unbounded   = ω² (first power)")
-print("  Nested × n    Unbounded   = ωⁿ (ordinal ladder)")
-print()
-print("This is a genuine phase diagram: the ordinal complexity of a tree")
-print("is determined by two parameters — branching width and nesting depth.")
-print("The exact boundaries are now formally verified.")
-print()
 
-print("=" * 70)
-print("SUMMARY OF ALL FORMALLY VERIFIED THEOREMS")
-print("=" * 70)
-print()
-print("New results (this work):")
-print("  1. natDepth(R) ≤ 2^height(R)        [exact upper bound]")
-print("  2. ∃R. height(R)=n ∧ depth(R)=2^n   [sharpness]")
-print("  3. rank(addByPattern(s,t)) = rank(t) + rank(s)")
-print("  4. rank(mulByPattern(s,k)) = rank(s) · k")
-print("  5. rank(omegaPowTree(n)) = ω^n       [ordinal ladder]")
-print("  6. ∃t. rank(t) = ω^n for all n       [existence]")
-print("  7. ∃t. rank(t) = ω²                  [concrete milestone]")
+def demo_cnf():
+    """Demonstrate CNF tree construction."""
+    print("=" * 65)
+    print("DEMO 5: Cantor Normal Form realizability")
+    print("=" * 65)
+    print()
+    print("  THEOREM: rank(cnfTree(L)) = cnfValue(L) for ALL lists L")
+    print()
+    print("  cnfValue([(a₁,n₁), (a₂,n₂), ...]) = ω^n₁·a₁ + ω^n₂·a₂ + ...")
+    print()
+    
+    examples = [
+        [(2, 3), (5, 2), (3, 1), (7, 0)],
+        [(1, 2), (1, 0)],
+        [(42, 1)],
+        [(1, 5)],
+        [(17, 0)],
+        [(3, 4), (1, 2), (2, 1)],
+        [(1, 3), (1, 2), (1, 1), (1, 0)],
+    ]
+    
+    for terms in examples:
+        val = cnf_value(terms)
+        print(f"  cnfTree({terms})")
+        print(f"    rank = {val}")
+        print()
+
+
+def demo_omega_to_omega():
+    """Demonstrate the ω^ω tree."""
+    print("=" * 65)
+    print("DEMO 6: The ω^ω tree — first limit-stage realization")
+    print("=" * 65)
+    print()
+    print("  THEOREM: rank(omegaToOmegaTree) = ω^ω")
+    print()
+    print("  omegaToOmegaTree = node(fun n => omegaPowTree(n))")
+    print()
+    print("  Children enumerate the entire ω^n hierarchy:")
+    for n in range(8):
+        print(f"    child[{n}] = omegaPowTree({n}), rank = {Ordinal.omega_pow(n)}")
+    print(f"    ...")
+    print()
+    print("  rank = sup{{ω^0, ω^1, ω^2, ω^3, ...}} = ω^ω")
+    print()
+    print("  This is the FIRST true limit-stage object:")
+    print("  • Not a successor of any previously realized ordinal")
+    print("  • Requires infinitely many construction stages to enumerate")
+    print("  • Demonstrates transfinite convergence of tree complexity")
+    print()
+
+
+def demo_coverage_map():
+    """Show the complete ordinal coverage below ω^ω."""
+    print("=" * 65)
+    print("DEMO 7: Complete ordinal coverage below ω^ω")
+    print("=" * 65)
+    print()
+    print("  Every ordinal below ω^ω has a unique Cantor Normal Form:")
+    print("    α = ω^{n_k}·a_k + ω^{n_{k-1}}·a_{k-1} + ... + ω^{n_0}·a_0")
+    print("  where n_k > n_{k-1} > ... > n_0 and all a_i > 0.")
+    print()
+    print("  Our construction provides a TREE for each such ordinal:")
+    print()
+    print("  ┌────────────────────────────────────────────────────────┐")
+    print("  │  Ordinal                │  Tree Constructor            │")
+    print("  ├────────────────────────────────────────────────────────┤")
+    print("  │  0                      │  leaf                        │")
+    print("  │  n (finite)             │  cnfTree([(n,0)])            │")
+    print("  │  ω                      │  omegaPowTree(1)             │")
+    print("  │  ω·k + m               │  cnfTree([(k,1),(m,0)])      │")
+    print("  │  ω²                     │  omegaPowTree(2)             │")
+    print("  │  ω²·a + ω·b + c        │  cnfTree([(a,2),(b,1),(c,0)])│")
+    print("  │  ω^n                    │  omegaPowTree(n)             │")
+    print("  │  general CNF            │  cnfTree(terms)              │")
+    print("  │  ω^ω                    │  omegaToOmegaTree            │")
+    print("  └────────────────────────────────────────────────────────┘")
+    print()
+    print("  KEY INSIGHT: The tree calculus is not merely representing")
+    print("  isolated ordinals — it provides a complete NOTATION SYSTEM")
+    print("  for all ordinals in the initial segment [0, ω^ω].")
+    print()
+
+
+if __name__ == "__main__":
+    demo_finite_ordinals()
+    demo_ordinal_addition()
+    demo_ordinal_multiplication()
+    demo_omega_powers()
+    demo_cnf()
+    demo_omega_to_omega()
+    demo_coverage_map()
