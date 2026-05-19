@@ -2755,7 +2755,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "883d7af5",
       "timestamp": "2026-05-19T14:49:42.326038+00:00"
     },
@@ -3256,8 +3256,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "20938654",
       "timestamp": "2026-05-19T19:03:30.050601+00:00"
     },
     {
@@ -3606,6 +3606,111 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T22:26:39.595346+00:00"
+    },
+    {
+      "id": "fd_0170",
+      "title": "Hypothesis 1 (Dependency-path nilpotence)",
+      "description": "— Most immediately testable. Already proved for chains; extending to DAGs would be a clean induction argument.",
+      "source_exp_id": "883d7af5",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/883d7af5",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:00:32.299048+00:00"
+    },
+    {
+      "id": "fd_0171",
+      "title": "Hypothesis 4 (Rigidity of extremizers)",
+      "description": "— High mathematical value. The $n = 2$ case should be tractable and would validate the approach.",
+      "source_exp_id": "883d7af5",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/883d7af5",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:00:32.316659+00:00"
+    },
+    {
+      "id": "fd_0172",
+      "title": "Hypothesis 2 (Newton-polytope inversion)",
+      "description": "— Connects to tropical geometry. Verifiable computationally for all triangular maps.",
+      "source_exp_id": "883d7af5",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/883d7af5",
+      "domains": [
+        "Tropical",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:00:32.333672+00:00"
+    },
+    {
+      "id": "fd_0173",
+      "title": "Hypothesis 5 (Keller compression)",
+      "description": "— Already partially refuted; the corrected version is the real target.",
+      "source_exp_id": "883d7af5",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/883d7af5",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:00:32.350371+00:00"
+    },
+    {
+      "id": "fd_0174",
+      "title": "Hypothesis 3 (Circuit lower bounds)",
+      "description": "— Requires new infrastructure (arithmetic circuit formalization) but has strong connections to complexity theory.",
+      "source_exp_id": "883d7af5",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/883d7af5",
+      "domains": [
+        "NumberTheory",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:00:32.366160+00:00"
+    },
+    {
+      "id": "fd_0175",
+      "title": "p-adic Entropy Rigidity for Digit-Local Integer Dynamical Systems",
+      "description": "Conjecture: Let T: Z_p -> Z_p be any 1-Lipschitz map whose nth output digit depends on only finitely many input digits with a uniform finite radius (equivalently, a digit-local p-adic transducer map). Then the topological entropy of T is always log(lambda) for an algebraic integer lambda determined by the spectral radius of a finite substitution/automaton matrix canonically extracted from the digit-dependency graph of T; in particular, transcendental entropy values cannot occur in this class. Test: Build the canonical automaton/matrix for broad families of examples (carryless maps, affine maps with carry, reverse-and-add variants, cellular-automaton-induced maps, rational maps with good reduction when digit-local), compute entropy numerically from orbit-growth and compare to log of the matrix spectral radius. A single verified counterexample with entropy not matching any such algebraic log refutes the conjecture. Impact: This would create a unifying entropy theory for arithmetic dynamics, linking p-adic dynamics, automata, symbolic dynamics, and renormalization, and would give a computable invariant for classifying integer dynamical systems by complexity phase.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "p-adic Dynamics",
+        "Symbolic Dynamics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:00:41.498445+00:00"
     }
   ],
   "pruned": [
