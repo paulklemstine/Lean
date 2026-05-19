@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1533 of the highest-quality
+A curated collection of 1535 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1533
+Total files: 1535
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -1018,6 +1018,7 @@ import FINAL.MachineLearning.Compositionality
 import FINAL.MachineLearning.CompressionPipeline
 import FINAL.MachineLearning.ConceptualDependencyCriticalPath
 import FINAL.MachineLearning.Conditional
+import FINAL.MachineLearning.Congruence
 import FINAL.MachineLearning.ConvergenceTheory
 import FINAL.MachineLearning.Core
 import FINAL.MachineLearning.CrystallizationTheory
@@ -1046,6 +1047,7 @@ import FINAL.MachineLearning.Generalization
 import FINAL.MachineLearning.GraphDistance
 import FINAL.MachineLearning.GravityAI
 import FINAL.MachineLearning.GroupTheory
+import FINAL.MachineLearning.Growth
 import FINAL.MachineLearning.HexGeometry
 import FINAL.MachineLearning.IdempotentAggregation
 import FINAL.MachineLearning.InferenceArithmetic
