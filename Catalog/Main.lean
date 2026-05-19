@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1549 of the highest-quality
+A curated collection of 1550 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1549
+Total files: 1550
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -1228,6 +1228,7 @@ import FINAL.Pythagorean.BerggrenDynamics
 import FINAL.Pythagorean.BerggrenDynamicsArithmetic
 import FINAL.Pythagorean.BerggrenExpanderDynamics
 import FINAL.Pythagorean.BerggrenExpanderTheory
+import FINAL.Pythagorean.BerggrenExtremal
 import FINAL.Pythagorean.BerggrenFareyCorrespondence
 import FINAL.Pythagorean.BerggrenFiniteSpectral
 import FINAL.Pythagorean.BerggrenGaussian
