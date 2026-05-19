@@ -2852,8 +2852,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "a1a6e2cb",
       "timestamp": "2026-05-19T15:43:32.490965+00:00"
     },
     {
@@ -2919,7 +2919,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "1dba0a08",
       "timestamp": "2026-05-19T15:54:19.149722+00:00"
     },
@@ -3324,6 +3324,50 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T19:46:41.384982+00:00"
+    },
+    {
+      "id": "fd_0158",
+      "title": "The spectral collapse framework for Collatz termination opens several concrete r",
+      "description": "# Future Directions: Arithmetic Spectral Dynamics\n\n## Overview\n\nThe spectral collapse framework for Collatz termination opens several concrete research directions. Each hypothesis below is stated precisely enough to be confirmed or refuted through computation, formal proof, or counterexample construction.\n\n---\n\n## Hypothesis 1: Uniform Twisted Gap Hypothesis\n\n**Conjecture.** There exist constants $s > 0$ and $\\delta > 0$ such that for every modulus $q \\geq 2$ and every nontrivial Dirichlet character $\\chi \\bmod q$, the twisted transfer operator satisfies\n$$\\rho(L_{s,\\chi}) \\leq 1 - \\delta.$$\n\n**Test.** For each prime $q \\leq 1000$, construct certified finite-rank approximations $A(q, N, \\chi)$ of $L_{s,\\chi}$ at increasing resolutions $N = 10^3, 10^4, 10^5$. Compute spectral radii with rigorous interval arithmetic error bounds. If $\\rho(A(q,N,\\chi)) + \\varepsilon(q,N)$ remains bounded below 1 uniformly in $q$ and $\\chi$, this supports the hypothesis.\n\n**Refutation.** Exhibit a sequence $(q_i, \\chi_i)$ of primes and nontrivial characters such that certified lower bounds on $\\rho(L_{s,\\chi_i})$ approach 1 as $i \\to \\infty$. This would indicate a modular resonance obstruction to spectral collapse.\n\n**Impact.** If true, this is equivalent to the Collatz conjecture via the spectral-collapse bridge theorem. It would reduce the Collatz conjecture to a certified numerical verification problem, analogous to how the Kepler conjecture was reduced to linear programming bounds.\n\n---\n\n## Hypothesis 2: Prime Resonance Obstruction Hypothesis\n\n**Conjecture.** If the uniform twisted gap hypothesis fails, then there exist a prime power modulus $p^k$ and a primitive character $\\chi \\bmod p^k$ such that the dominant eigenvector of the twisted transition matrix concentrates on a single \"residue tower\" — a sequence of residue classes related by the Collatz map.\n\n**Test.** For each prime $p \\leq 50$ and $k \\leq 5$, compute the dominant eigenvector of $L_{s,\\chi}$ on the congruence quotient mod $p^k$. Measure its entropy and localization length. If localization increases with $k$, this supports the conjecture.\n\n**Refutation.** Demonstrate that for all $(p, k, \\chi)$, the dominant eigenvectors become uniformly delocalized as $k$ grows. This would indicate that no single residue tower can sustain a spectral obstruction.\n\n**Impact.** If true, this identifies the precise arithmetic structure that prevents spectral collapse and suggests targeted algebraic techniques (e.g., $p$-adic analysis on towers) to overcome it.\n\n---\n\n## Hypothesis 3: Finite Quotient Sufficiency Hypothesis\n\n**Conjecture.** The spectral gap of the twisted transfer operator on the congruence quotient mod $2^a q$ stabilizes as $a \\to \\infty$: there exists $a_0 = a_0(q, \\chi)$ such that for all $a \\geq a_0$,\n$$|\\rho(L_{s,\\chi}^{(a)}) - \\rho(L_{s,\\chi})| \\leq C \\cdot 2^{-a/2}$$\nwhere $L_{s,\\chi}^{(a)}$ is the finite quotient operator.\n\n**Test.** Prove monotone error bounds: for each $(q, \\chi)$, verify that the sequence $\\rho(L_{s,\\chi}^{(a)})$ is eventually monotone decreasing in $a$, with exponentially decaying increments. The formal framework already provides the `certified_matrix_gap` theorem for controlling approximation errors.\n\n**Refutation.** Exhibit $(q, \\chi)$ where the spectral radii oscillate or diverge as $a$ increases. This would indicate that the 2-adic structure introduces instabilities not captured by finite quotients.\n\n**Impact.** If true, this reduces the infinite-dimensional spectral gap problem to a finite sequence of certified matrix computations, giving a roadmap for computer-assisted proof of the Collatz conjecture.\n\n---\n\n## Hypothesis 4: Renormalized Orbit Measure Hypothesis\n\n**Conjecture.** Every nonterminating orbit (if one exists) of the accelerated Collatz map would produce a nonzero invariant distribution for the adjoint transfer operator $L_s^*$. More precisely, the weak-* limit of the occupation measures\n$$\\mu_K = \\frac{1}{K} \\sum_{j=0}^{K-1} \\delta_{T^j(n)}$$\nwould be a nontrivial $L_s^*$-invariant measure on odd positives.\n\n**Test.** Formalize the extraction of invariant measures from hypothetical infinite orbits using the `periodic_from_nontermination` theorem (already proved) and its infinite-dimensional generalization. Show that any such measure, when projected to character sectors, must have nonzero mass in at least one nontrivial sector.\n\n**Refutation.** Prove that occupation measures of any orbit necessarily dissipate (have no weak-* limit point that is nonzero) — this would mean the contrapositive argument fails and a different proof strategy is needed.\n\n**Impact.** This is the key step in the contrapositive proof architecture: nontermination → invariant measure → spectral obstruction → contradiction with gap hypothesis. Resolving this hypothesis would either complete the spectral-collapse proof or identify a fundamental limitation of the approach.\n\n---\n\n## Hypothesis 5: Arithmetic Universality Hypothesis\n\n**Conjecture.** The spectral collapse criterion extends to the generalized family of maps\n$$T_{a,b,p}(n) = \\frac{an + b}{p^{\\nu_p(an+b)}}$$\nfor any $a, b, p$ with $\\gcd(a, p) = 1$ and $b > 0$. Specifically: all orbits of $T_{a,b,p}$ terminate if and only if the twisted transfer operators in all nontrivial character sectors have spectral radius $< 1$.\n\n**Test.** Formalize the generalized preimage operator and reproduce the spectral implication for $(a,b,p) = (5,1,2)$, $(7,1,2)$, and $(3,1,3)$. The `no_nontrivial_periodic_implies_termination` and `contracting_matrix_no_periodic_vector` theorems generalize immediately. Check whether the spectral radii correctly predict known behavior (e.g., $5x+1$ has nonterminating orbits, so its spectral gap should fail).\n\n**Refutation.** Find a map $T_{a,b,p}$ with known nonterminating orbits but where all finite twisted quotient matrices have spectral gaps. This would mean the spectral criterion is not equivalent to termination in the general case.\n\n**Impact.** If true, this establishes **arithmetic spectral dynamics** as a general framework for analyzing termination of integer rewriting systems, with applications to:\n- Euclidean algorithm variants\n- Affine congruential stopping problems\n- $p$-adic dynamical systems\n- Cryptographic mixing analysis\n\n---\n\n## Priority Ordering\n\n1. **Hypothesis 3** (Finite Quotient Sufficiency) — most directly actionable and formalizable\n2. **Hypothesis 1** (Uniform Twisted Gap) — the core conjecture, but hardest to verify\n3. **Hypothesis 5** (Arithmetic Universality) — broadest impact, provides calibration cases\n4. **Hypothesis 4** (Renormalized Orbit Measure) — deepest mathematically, requires measure theory\n5. **Hypothesis 2** (Prime Resonance Obstruction) — most informative if the approach fails\n",
+      "source_exp_id": "1dba0a08",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Cryptography",
+        "Bridges",
+        "Algebra",
+        "MachineLearning",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T20:00:12.872742+00:00"
+    },
+    {
+      "id": "fd_0159",
+      "title": "Universality of Carry Propagation as a Renormalization Invariant in Integer Dyna",
+      "description": "Conjecture: For any integer dynamical system on base-b expansions generated by a finite composition of addition, multiplication by fixed integers, floor division by fixed integers, and digitwise affine maps, there exists a coarse-graining scale k such that the induced carry-propagation process on length-k digit blocks flows under renormalization to one of finitely many universality classes, each characterized by a rational critical exponent governing the tail distribution of carry-chain lengths. Test: Define families of such systems (including reverse-and-add, multiplicative persistence maps, digit-sum maps, and modular recurrence maps), compute empirical carry-chain distributions under successive block coarse-grainings, and check whether normalized tails converge to a finite catalog with architecture-independent exponents; refute by exhibiting a family with nonconvergent or continuously varying exponents. Impact: This would create a new invariant linking automata theory, arithmetic dynamics, and statistical physics, enabling classification of digit-based algorithms and potentially explaining why many unrelated number-theoretic processes exhibit similar phase-transition behavior.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Automata Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T20:00:20.589753+00:00"
     }
   ],
   "pruned": [
