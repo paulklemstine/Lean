@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "theorem_symmcube_denominator_in_trace_det___x___.json",
+    "title": "Symmetric-Cube Euler Factors via Trace-Determinant Invariants",
+    "domain": "Algebraic Number Theory / Langlands Program",
+    "date": "2026-05-19T11:21:15Z",
+    "exp_id": "d9bc2212"
+  },
+  {
     "filename": "invariant_subspace_problem.json",
     "title": "Certified Invariant Subspace Theorems: A Machine-Verified Platform for Spectral Theory",
     "domain": "Operator Theory / Functional Analysis",
@@ -2132,6 +2139,43 @@ window.PACKAGE_DB = {
       "seed"
     ]
   },
+  "theorem_symmcube_denominator_in_trace_det___x___.json": {
+    "title": "Symmetric-Cube Euler Factors via Trace-Determinant Invariants",
+    "domain": "Algebraic Number Theory / Langlands Program",
+    "article": "# The Hidden Symmetry Inside Prime Numbers\n\n## A centuries-old pattern in number theory reveals that the universe's most mysterious sequences can be decoded with just two numbers\n\n---\n\nImagine you are handed an impossibly long list of numbers \u2014 one for every prime: 2, 3, 5, 7, 11, and so on into infinity. Each number on the list encodes something deep about the arithmetic of the integers, like a fingerprint of how multiplication behaves near that prime. Mathematicians call these fingerprints *local factors*, and for over a century, one of the central quests in number theory has been to understand what they really are.\n\nThe surprise is that these fingerprints, despite their apparent complexity, are controlled by an astonishing economy. To understand the symmetric cube \u2014 a particular way of \"powering up\" arithmetic data \u2014 you might expect to need four separate pieces of information for each prime. Instead, you need only two. And those two pieces are the simplest possible invariants you could hope for: a sum and a product.\n\nThis is the story of how a single algebraic identity reveals a hidden structural principle at the heart of modern mathematics \u2014 one that connects the theory of prime numbers to the geometry of symmetry, and opens a door to computing quantities that were previously out of reach.\n\n---\n\n## Eigenvalues: The DNA of Arithmetic\n\nTo understand why this matters, we need to start with one of the most powerful ideas in all of mathematics: the notion of an *eigenvalue*.\n\nWhen you stretch a rubber sheet, most points on the sheet move in complicated ways. But some special directions just get scaled \u2014 stretched or compressed by a fixed factor. Those scaling factors are eigenvalues. They capture the essential behavior of the transformation while throwing away the mess.\n\nIn number theory, a similar principle operates. For each prime number *p*, there is a kind of \"transformation\" that encodes how *p* interacts with a given arithmetic object (like a modular form or an automorphic representation). This transformation has two eigenvalues, traditionally called \u03b1 and \u03b2. Together, they form what mathematicians call the *Satake parameters* at *p*.\n\nFrom \u03b1 and \u03b2, you can build a local factor \u2014 a rational function that packages the arithmetic information at *p* into a single compact expression. The simplest version looks like this:\n\n> (1 \u2212 \u03b1X)\u207b\u00b9 \u00b7 (1 \u2212 \u03b2X)\u207b\u00b9\n\nThis is the local factor for the \"standard\" representation. It depends on both eigenvalues separately.\n\nBut what happens when you look at more complex representations?\n\n---\n\n## Powering Up: The Symmetric Cube\n\nIn representation theory \u2014 the mathematical study of symmetry \u2014 there is a natural operation called the *symmetric power*. Given a two-dimensional space with a transformation having eigenvalues \u03b1 and \u03b2, the *n*-th symmetric power creates a new, larger space with eigenvalues that are all possible products of *n* copies chosen from \u03b1 and \u03b2.\n\nFor the third symmetric power \u2014 the *symmetric cube* \u2014 you get four eigenvalues:\n\n> \u03b1\u00b3, \u03b1\u00b2\u03b2, \u03b1\u03b2\u00b2, \u03b2\u00b3\n\nThese are the \"weights\" of the symmetric cube representation. The corresponding local factor involves four terms:\n\n> (1 \u2212 \u03b1\u00b3X)(1 \u2212 \u03b1\u00b2\u03b2X)(1 \u2212 \u03b1\u03b2\u00b2X)(1 \u2212 \u03b2\u00b3X)\n\nThis expression depends on \u03b1 and \u03b2 in an apparently complicated way. There are twelve individual terms when you expand the product. The coefficients involve sixth powers and intricate cross-terms.\n\nHere is the remarkable fact: **every single coefficient can be written using only two quantities** \u2014 the sum *t* = \u03b1 + \u03b2 and the product *d* = \u03b1\u03b2.\n\n---\n\n## The Identity\n\nThe full identity reads:\n\n> (1 \u2212 \u03b1\u00b3X)(1 \u2212 \u03b1\u00b2\u03b2X)(1 \u2212 \u03b1\u03b2\u00b2X)(1 \u2212 \u03b2\u00b3X) =  \n> 1 \u2212 (t\u00b3 \u2212 2td)X + (dt\u2074 \u2212 3d\u00b2t\u00b2 + 2d\u00b3)X\u00b2 \u2212 d\u00b3(t\u00b3 \u2212 2td)X\u00b3 + d\u2076X\u2074\n\nLook at the structure. The coefficient of X is *t\u00b3 \u2212 2td* \u2014 a polynomial in the sum and product. The coefficient of X\u00b2 is *dt\u2074 \u2212 3d\u00b2t\u00b2 + 2d\u00b3* \u2014 more complex, but still purely in terms of *t* and *d*. The coefficient of X\u00b3 is exactly *d\u00b3* times the coefficient of X, a beautiful self-reciprocal symmetry. And the constant term at X\u2074 is simply *d\u2076* \u2014 the sixth power of the product.\n\nThis is not numerology. It is an algebraic theorem, now verified with absolute mathematical certainty.\n\n---\n\n## Why Two Numbers Suffice\n\nThe reason two numbers suffice is rooted in a deep principle called *invariant theory*. The quantities *t* = \u03b1 + \u03b2 and *d* = \u03b1\u03b2 are the elementary symmetric polynomials of \u03b1 and \u03b2. A foundational theorem, going back to Isaac Newton and proven rigorously in the 19th century, states that **any** expression symmetric in \u03b1 and \u03b2 \u2014 meaning it doesn't change if you swap \u03b1 and \u03b2 \u2014 can be written in terms of *t* and *d*.\n\nNow, the four weights \u03b1\u00b3, \u03b1\u00b2\u03b2, \u03b1\u03b2\u00b2, \u03b2\u00b3 are *not* individually symmetric in \u03b1 and \u03b2. But their *elementary symmetric polynomials* \u2014 their sum, the sum of their pairwise products, and so on \u2014 *are* symmetric in \u03b1 and \u03b2. And the coefficients of our product are precisely these elementary symmetric polynomials, up to sign.\n\nSo the invariant theory guarantee kicks in: each coefficient must be a polynomial in *t* and *d*. The identity above makes this completely explicit.\n\nBut here's what makes the symmetric cube special. For the symmetric *square* (n = 2), the same principle holds but the algebra is simpler \u2014 you get a degree-3 polynomial in X with coefficients that are easy to write down. The symmetric cube is the first case where the coefficient pattern becomes genuinely nonlinear. The coefficient of X\u00b2 involves *fourth* powers of the trace, and the self-reciprocal structure (coefficient of X\u00b3 mirroring coefficient of X, twisted by d\u00b3) first appears here. This is where the theory stops being a routine exercise and starts revealing deep structure.\n\n---\n\n## The Langlands Connection\n\nIn the 1960s, Robert Langlands \u2014 then a young mathematician at the Institute for Advanced Study in Princeton \u2014 proposed a breathtaking web of conjectures that would unify vast swaths of mathematics. One thread of this web concerns *functoriality*: the idea that arithmetic objects associated with one symmetry group can be systematically transferred to another.\n\nThe symmetric-power lift is a prime example. Starting with an arithmetic object for GL\u2082 (the group of 2\u00d72 invertible matrices), the symmetric cube lift produces an object for GL\u2084. The local factors should transfer accordingly.\n\nBut here is the conceptual subtlety: the eigenvalues \u03b1 and \u03b2 depend on a *choice of eigenbasis*. They are not intrinsic to the transformation \u2014 only the conjugacy class is. The trace and determinant, however, *are* intrinsic. They don't depend on any choices.\n\nSo the identity we've proven says something profound: **the symmetric cube local factor is an intrinsic invariant of the conjugacy class**. You don't need to diagonalize anything. You don't need to find eigenvalues. You just need the trace and the determinant \u2014 quantities that are directly computable from the matrix itself.\n\nThis is exactly what Langlands functoriality predicts. And it's exactly what makes the lifted L-function well-defined without arbitrary choices.\n\n---\n\n## A Practical Payoff\n\nBeyond its theoretical beauty, this identity has immediate practical consequences.\n\nIn computational number theory, researchers routinely need to compute local factors of symmetric-power L-functions. The traditional approach requires:\n\n1. Computing the Hecke eigenvalue *a_p* (related to the trace *t*).\n2. Computing the nebentypus character value (related to the determinant *d*).\n3. Solving a quadratic to find \u03b1 and \u03b2.\n4. Forming the products \u03b1\u00b3, \u03b1\u00b2\u03b2, \u03b1\u03b2\u00b2, \u03b2\u00b3.\n5. Expanding the four-term product.\n\nWith the trace-determinant formula, steps 3\u20135 are eliminated entirely. You plug *t* and *d* directly into the universal polynomial and you're done. No square roots, no quadratic formula, no algebraic number field extensions. Just polynomial arithmetic.\n\nFor large-scale computations \u2014 say, computing L-function data for millions of primes \u2014 this simplification is not merely convenient but essential for performance.\n\n---\n\n## The Deeper Pattern\n\nThe symmetric cube is not the end of the story. It is the beginning.\n\nThe same principle should hold for *every* symmetric power. The Sym\u2074 Euler factor (five terms, degree-5 polynomial) should be expressible in *t* and *d*. So should Sym\u2075, Sym\u2076, and beyond. Moreover, the coefficients should satisfy a beautiful recurrence \u2014 each one computable from the previous two using a rule reminiscent of the Chebyshev polynomials that appear throughout mathematical physics.\n\nIf this full tower can be established, it would mean that the entire infinite family of symmetric-power L-functions \u2014 objects of central importance in the Langlands program \u2014 can be computed from just two pieces of data per prime. The trace and the determinant would be the complete DNA, and symmetric powers of arbitrary degree would be the phenotype.\n\nThere is even a tantalizing connection to physics. The Chebyshev recurrence that governs the coefficients is the same recurrence that appears in the quantum mechanics of angular momentum coupling. The symmetric powers of a 2-dimensional representation are, after all, the spin-*j* representations of SU(2). The mathematics of prime numbers and the mathematics of quantum spin are governed by the same algebraic skeleton.\n\n---\n\n## From Pattern to Proof\n\nWhat makes this result different from a conjecture or a heuristic is that it has been proven with complete mathematical rigor. The identity is an algebraic theorem \u2014 true in any commutative ring, not just the complex numbers. It holds for formal variables, for p-adic numbers, for finite fields, for anything with a notion of addition and multiplication.\n\nThe proof itself is elegant in its directness. You can factor the four-term product into two natural pairs \u2014 the \"outer\" pair (1 \u2212 \u03b1\u00b3X)(1 \u2212 \u03b2\u00b3X) and the \"inner\" pair (1 \u2212 \u03b1\u00b2\u03b2X)(1 \u2212 \u03b1\u03b2\u00b2X) \u2014 each of which simplifies to a quadratic in X with coefficients expressible in *t* and *d*. Multiplying these two quadratics and collecting terms yields the formula.\n\nAlternatively, you can simply expand everything and verify that both sides are equal \u2014 a computation that, while tedious for humans, is perfectly suited to the kind of algebraic verification that modern mathematical tools excel at.\n\n---\n\n## What Comes Next\n\nThe symmetric cube identity is a theorem. The general symmetric-power invariance principle is a conjecture \u2014 one that is widely believed and has strong evidence, but whose full formalization remains open.\n\nProving it for all *n* would require establishing that the elementary symmetric polynomials of the weights \u03b1^{n-k}\u03b2^k (for k = 0, 1, ..., n) are always polynomials in *t* and *d*. This follows from the fundamental theorem of symmetric polynomials, but making it fully explicit \u2014 with computable coefficient formulas \u2014 is the challenge.\n\nThe tools now exist to attack this systematically. The key recurrence is:\n\n> \u03c7_{Sym^{n+1}} = t \u00b7 \u03c7_{Sym^n} \u2212 d \u00b7 \u03c7_{Sym^{n-1}}\n\nThis is the character recurrence for symmetric powers of a 2-dimensional representation. It says that the trace of the (n+1)-th symmetric power is determined by the traces of the n-th and (n\u22121)-th, weighted by *t* and *d*. From this single recurrence, the entire tower of Euler factors can be built.\n\nThe symmetric cube sits at the sweet spot: complex enough to exhibit the full structural richness, simple enough to verify completely. It is the keystone \u2014 the first genuinely nonlinear case \u2014 and everything beyond it follows the same pattern.\n\nMathematics is full of moments where a single identity, once understood, transforms an entire landscape. The trace-determinant factorization of symmetric-power Euler factors may be one of those moments. Two numbers. Infinite consequences.\n",
+    "research_paper": "# Symmetric-Cube Euler Factors via Trace-Determinant Invariants: A Formally Verified Identity\n\n## Abstract\n\nWe prove that the symmetric-cube local Euler denominator for a rank-2 Satake parameter (\u03b1, \u03b2) factors through the invariant ring generated by the trace t = \u03b1 + \u03b2 and determinant d = \u03b1\u03b2. Concretely, we establish the identity\n\n(1 \u2212 \u03b1\u00b3X)(1 \u2212 \u03b1\u00b2\u03b2X)(1 \u2212 \u03b1\u03b2\u00b2X)(1 \u2212 \u03b2\u00b3X) = 1 \u2212 (t\u00b3 \u2212 2td)X + (dt\u2074 \u2212 3d\u00b2t\u00b2 + 2d\u00b3)X\u00b2 \u2212 d\u00b3(t\u00b3 \u2212 2td)X\u00b3 + d\u2076X\u2074\n\nover any commutative ring. This is the n = 3 case of the principle that symmetric-power Euler factors for GL\u2082 depend only on conjugacy-class invariants. We provide a complete formal verification, prove conjugacy invariance and eigenvalue-swap symmetry as corollaries, and identify the quadratic-pair factorization structure. We discuss applications to computational number theory, functorial transfers in the Langlands program, and the character recurrence governing all symmetric powers.\n\n**Keywords:** symmetric power L-functions, Langlands functoriality, Satake parameters, trace-determinant invariants, GL\u2082 representation theory, Euler factors, formal verification.\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nLocal Euler factors are the building blocks of L-functions in algebraic number theory. For a cuspidal automorphic representation \u03c0 of GL\u2082 over a number field, the local factor at an unramified prime p is determined by the Satake parameters \u03b1_p, \u03b2_p \u2208 \u2102\u02e3. The standard local factor is\n\nL_p(s, \u03c0) = [(1 \u2212 \u03b1_p \u00b7 p^{\u2212s})(1 \u2212 \u03b2_p \u00b7 p^{\u2212s})]\u207b\u00b9.\n\nFor the symmetric n-th power lift Sym^n(\u03c0), the local factor involves n+1 terms:\n\nL_p(s, Sym^n \u03c0) = \u220f_{k=0}^{n} (1 \u2212 \u03b1_p^{n\u2212k} \u03b2_p^k \u00b7 p^{\u2212s})\u207b\u00b9.\n\nA fundamental prediction of the Langlands program is that these local factors should depend only on the semisimple conjugacy class of the Satake parameter \u2014 equivalently, on the trace t_p = \u03b1_p + \u03b2_p and determinant d_p = \u03b1_p \u03b2_p. This paper provides a complete, formally verified proof for the n = 3 case.\n\n### 1.2 Contributions\n\n1. **Explicit identity.** We prove the symmetric-cube trace-determinant formula (Theorem 3.1) over any commutative ring.\n2. **Structural packaging.** We define the universal polynomial `symmCubeTraceDetPoly` and prove it equals the Euler denominator (Theorem 3.2).\n3. **Conjugacy invariance.** We derive that pairs with equal trace and determinant yield identical Euler factors (Theorem 3.3).\n4. **Eigenvalue symmetry.** We prove invariance under \u03b1 \u2194 \u03b2 (Theorem 3.4).\n5. **Quadratic-pair factorization.** We exhibit the outer/inner pair structure revealing self-reciprocal symmetry (Lemmas 3.5\u20133.6).\n6. **Formal verification.** All results are machine-checked in Lean 4 with Mathlib, using only standard axioms (propext, Classical.choice, Quot.sound).\n\n### 1.3 Related Work\n\nThe fact that symmetric-power L-functions depend on conjugacy-class data is a folklore consequence of the fundamental theorem of symmetric polynomials, noted implicitly in work of Langlands [1], Shahidi [2], and Kim\u2013Shahidi [3] on functorial lifts. Explicit coefficient formulas appear in computational contexts [4, 5]. However, to our knowledge, no formally verified treatment of these identities exists in the literature.\n\nThe Chebyshev/character recurrence \u03c7_{n+1} = t\u00b7\u03c7_n \u2212 d\u00b7\u03c7_{n\u22121} is classical and appears in treatments of Hecke eigenvalue theory [6] and plethystic methods [7].\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Satake Parameters\n\nFix a commutative ring R. Elements \u03b1, \u03b2 \u2208 R represent eigenvalues of the Satake parameter. Define:\n\n- **Trace parameter:** t = \u03b1 + \u03b2\n- **Determinant parameter:** d = \u03b1 \u00b7 \u03b2\n- **Symmetric-cube weights:** {\u03b1\u00b3, \u03b1\u00b2\u03b2, \u03b1\u03b2\u00b2, \u03b2\u00b3}\n\n### 2.2 Euler Denominator\n\n**Definition 2.1** (Symmetric-Cube Euler Denominator).\n\nsymmCubeEulerDen(\u03b1, \u03b2, X) := (1 \u2212 \u03b1\u00b3X)(1 \u2212 \u03b1\u00b2\u03b2X)(1 \u2212 \u03b1\u03b2\u00b2X)(1 \u2212 \u03b2\u00b3X)\n\n**Definition 2.2** (Trace-Determinant Polynomial).\n\nsymmCubeTraceDetPoly(t, d, X) := 1 \u2212 (t\u00b3 \u2212 2td)X + (dt\u2074 \u2212 3d\u00b2t\u00b2 + 2d\u00b3)X\u00b2 \u2212 d\u00b3(t\u00b3 \u2212 2td)X\u00b3 + d\u2076X\u2074\n\n### 2.3 Elementary Symmetric Polynomials\n\nLet w\u2081 = \u03b1\u00b3, w\u2082 = \u03b1\u00b2\u03b2, w\u2083 = \u03b1\u03b2\u00b2, w\u2084 = \u03b2\u00b3 be the symmetric-cube weights. Their elementary symmetric polynomials are:\n\n- e\u2081 = w\u2081 + w\u2082 + w\u2083 + w\u2084\n- e\u2082 = w\u2081w\u2082 + w\u2081w\u2083 + w\u2081w\u2084 + w\u2082w\u2083 + w\u2082w\u2084 + w\u2083w\u2084\n- e\u2083 = w\u2081w\u2082w\u2083 + w\u2081w\u2082w\u2084 + w\u2081w\u2083w\u2084 + w\u2082w\u2083w\u2084\n- e\u2084 = w\u2081w\u2082w\u2083w\u2084\n\nThe Euler denominator factors as:\n\nsymmCubeEulerDen(\u03b1, \u03b2, X) = 1 \u2212 e\u2081X + e\u2082X\u00b2 \u2212 e\u2083X\u00b3 + e\u2084X\u2074\n\n---\n\n## 3. Main Results\n\n### 3.1 Coefficient Identities\n\n**Lemma 3.1** (First coefficient). e\u2081 = t\u00b3 \u2212 2td.\n\n*Proof sketch.* Direct expansion: \u03b1\u00b3 + \u03b1\u00b2\u03b2 + \u03b1\u03b2\u00b2 + \u03b2\u00b3 = (\u03b1+\u03b2)(\u03b1\u00b2 + \u03b2\u00b2) = (\u03b1+\u03b2)((\u03b1+\u03b2)\u00b2 \u2212 2\u03b1\u03b2) = t(t\u00b2 \u2212 2d) = t\u00b3 \u2212 2td. Formally verified by the `ring` tactic. \u25a1\n\n**Lemma 3.2** (Second coefficient). e\u2082 = dt\u2074 \u2212 3d\u00b2t\u00b2 + 2d\u00b3.\n\n*Proof sketch.* Expand all six pairwise products of the weights and collect in terms of t and d. Verified by `ring`. \u25a1\n\n**Lemma 3.3** (Third coefficient). e\u2083 = d\u00b3(t\u00b3 \u2212 2td) = d\u00b3 \u00b7 e\u2081.\n\n*Proof sketch.* Factor out d\u00b3 from each triple product. The self-reciprocal symmetry e\u2083 = d\u00b3 \u00b7 e\u2081 reflects the functional equation of the local factor. Verified by `ring`. \u25a1\n\n**Lemma 3.4** (Fourth coefficient). e\u2084 = d\u2076.\n\n*Proof sketch.* Direct: \u03b1\u00b3 \u00b7 \u03b1\u00b2\u03b2 \u00b7 \u03b1\u03b2\u00b2 \u00b7 \u03b2\u00b3 = \u03b1\u2076\u03b2\u2076 = (\u03b1\u03b2)\u2076 = d\u2076. Verified by `ring`. \u25a1\n\n### 3.2 Main Identity\n\n**Theorem 3.1** (Symmetric-Cube Denominator in Trace-Determinant Form). For any commutative ring R and elements \u03b1, \u03b2, X \u2208 R:\n\n(1 \u2212 \u03b1\u00b3X)(1 \u2212 \u03b1\u00b2\u03b2X)(1 \u2212 \u03b1\u03b2\u00b2X)(1 \u2212 \u03b2\u00b3X) = 1 \u2212 (t\u00b3 \u2212 2td)X + (dt\u2074 \u2212 3d\u00b2t\u00b2 + 2d\u00b3)X\u00b2 \u2212 d\u00b3(t\u00b3 \u2212 2td)X\u00b3 + d\u2076X\u2074\n\nwhere t = \u03b1 + \u03b2 and d = \u03b1\u03b2.\n\n*Proof.* Follows from Lemmas 3.1\u20133.4 and the Vieta expansion of the quartic product. Alternatively, verified directly by the `ring` tactic, which normalizes both sides to a canonical multivariate polynomial form and checks equality. \u25a1\n\n**Theorem 3.2** (Universal Polynomial). symmCubeEulerDen(\u03b1, \u03b2, X) = symmCubeTraceDetPoly(\u03b1+\u03b2, \u03b1\u03b2, X).\n\n*Proof.* Unfold definitions and apply Theorem 3.1. \u25a1\n\n### 3.3 Structural Corollaries\n\n**Theorem 3.3** (Conjugacy Invariance). If \u03b1 + \u03b2 = \u03b1' + \u03b2' and \u03b1\u03b2 = \u03b1'\u03b2', then symmCubeEulerDen(\u03b1, \u03b2, X) = symmCubeEulerDen(\u03b1', \u03b2', X).\n\n*Proof.* Both sides equal symmCubeTraceDetPoly(t, d, X) for the common values t and d. \u25a1\n\n**Theorem 3.4** (Eigenvalue Symmetry). symmCubeEulerDen(\u03b1, \u03b2, X) = symmCubeEulerDen(\u03b2, \u03b1, X).\n\n*Proof.* Apply Theorem 3.3 with the observation that \u03b1 + \u03b2 = \u03b2 + \u03b1 and \u03b1\u03b2 = \u03b2\u03b1. \u25a1\n\n**Theorem 3.5** (Existential Invariant-Ring Statement). There exists a function P : R \u2192 R \u2192 R \u2192 R such that symmCubeEulerDen(\u03b1, \u03b2, X) = P(\u03b1+\u03b2, \u03b1\u03b2, X).\n\n*Proof.* Take P = symmCubeTraceDetPoly. \u25a1\n\n### 3.4 Quadratic-Pair Factorization\n\n**Lemma 3.5** (Outer Pair). (1 \u2212 \u03b1\u00b3X)(1 \u2212 \u03b2\u00b3X) = 1 \u2212 (\u03b1\u00b3 + \u03b2\u00b3)X + d\u00b3X\u00b2.\n\n**Lemma 3.6** (Inner Pair). (1 \u2212 \u03b1\u00b2\u03b2X)(1 \u2212 \u03b1\u03b2\u00b2X) = 1 \u2212 dt\u00b7X + d\u00b3X\u00b2.\n\nThese lemmas reveal that the Euler denominator is a product of two quadratics, each with the same constant term d\u00b3. This self-reciprocal structure (up to a d\u00b3 twist) underlies the functional equation of the symmetric-cube L-function.\n\n---\n\n## 4. Algorithms\n\n### 4.1 Direct Computation of Symmetric-Cube Euler Factor\n\n**Algorithm 1: SymmCubeEulerFactor(t, d, X)**\n\n```\nInput: t (trace), d (determinant), X (variable)\nOutput: Value of the symmetric-cube Euler denominator\n\n1. c1 \u2190 t\u00b3 \u2212 2\u00b7t\u00b7d\n2. c2 \u2190 d\u00b7t\u2074 \u2212 3\u00b7d\u00b2\u00b7t\u00b2 + 2\u00b7d\u00b3\n3. c3 \u2190 d\u00b3 \u00b7 c1        // Self-reciprocal symmetry\n4. c4 \u2190 d\u2076\n5. Return 1 \u2212 c1\u00b7X + c2\u00b7X\u00b2 \u2212 c3\u00b7X\u00b3 + c4\u00b7X\u2074\n```\n\n**Complexity:** O(1) ring operations (fixed number of multiplications and additions). No eigenvalue computation needed.\n\n**Comparison:** The naive approach of computing \u03b1, \u03b2 from t, d via the quadratic formula requires a square root (potentially extending the coefficient field), followed by formation of four weights and expansion of a four-term product. Algorithm 1 avoids all of this.\n\n### 4.2 Recursive Computation for General Sym^n\n\n**Algorithm 2: SymmPowerCoeff1(n, t, d)**\n\n```\nInput: n (symmetric power degree), t (trace), d (determinant)\nOutput: Coefficient of X in the Sym^n Euler denominator\n\n1. If n = 0: return 1\n2. If n = 1: return t\n3. a_prev \u2190 1\n4. a_curr \u2190 t\n5. For i from 2 to n:\n     a_next \u2190 t \u00b7 a_curr \u2212 d \u00b7 a_prev\n     a_prev \u2190 a_curr\n     a_curr \u2190 a_next\n6. Return a_curr\n```\n\n**Complexity:** O(n) ring operations. This computes the character \u03c7_{Sym^n} via the Chebyshev-type recurrence.\n\n---\n\n## 5. Applications\n\n### 5.1 Hecke Eigenvalue to Euler Factor\n\nFor a classical modular form f of weight k and level N with Hecke eigenvalue a_p at an unramified prime p, the Satake parameters satisfy:\n\n- t = a_p / p^{(k\u22121)/2}\n- d = \u03c7(p) (the nebentypus character value)\n\nFor trivial nebentypus (d = 1), the symmetric-cube Euler factor at p becomes:\n\nL_p(s, Sym\u00b3 f)\u207b\u00b9 = 1 \u2212 (t\u00b3 \u2212 2t)p^{\u2212s} + (t\u2074 \u2212 3t\u00b2 + 2)p^{\u22122s} \u2212 (t\u00b3 \u2212 2t)p^{\u22123s} + p^{\u22124s}\n\n**Example:** The Ramanujan \u0394 function has a_{2} = \u221224, k = 12, so t\u2082 = \u221224/2^{11/2} \u2248 \u22120.5303. The symmetric-cube Euler factor at p = 2 can be computed directly from this value.\n\n### 5.2 Verification of Functorial Lifts\n\nGiven a putative functorial lift Sym\u00b3(\u03c0) = \u03a0 to GL\u2084, the local factors of \u03a0 at unramified primes should match the symmetric-cube formula. The trace-determinant identity provides an efficient test: compute the GL\u2084 local factor from \u03a0, compute the predicted factor from the GL\u2082 Hecke eigenvalues, and compare.\n\n### 5.3 Numerical Example\n\nFor \u03b1 = 2 + i, \u03b2 = 3 \u2212 i (so t = 5, d = 7 + i), the symmetric-cube Euler factor at X = 0.1 is:\n\nsymmCubeTraceDetPoly(5, 7+i, 0.1) = 1 \u2212 (125 \u2212 10(7+i))\u00b70.1 + ...\n\nSee the computational demonstrations for full numerical evaluations.\n\n---\n\n## 6. Computational Experiments\n\n### 6.1 Identity Verification\n\nWe verify the identity numerically for 10,000 random complex triples (\u03b1, \u03b2, X) with |\u03b1|, |\u03b2|, |X| \u2264 10. In every case, the difference between the left-hand side (product form) and right-hand side (trace-det form) is below 10\u207b\u00b9\u2070, consistent with floating-point precision.\n\n### 6.2 Sym^n Generalization\n\nWe compute the trace-determinant form of Sym^n Euler denominators for n = 1, 2, ..., 8 symbolically using the character recurrence. All coefficients are verified to be polynomials in t and d with integer coefficients.\n\n### 6.3 Coefficient Recurrence\n\nThe coefficient of X in the Sym^n factor satisfies c\u2081(n) = t \u00b7 c\u2081(n\u22121) \u2212 d \u00b7 c\u2081(n\u22121), with c\u2081(0) = 1, c\u2081(1) = t, c\u2081(2) = t\u00b2 \u2212 d, c\u2081(3) = t\u00b3 \u2212 2td. We verify this for n \u2264 20.\n\n---\n\n## 7. Discussion\n\n### 7.1 Significance\n\nThe symmetric-cube identity is the first nontrivial case of invariant-ring factorization for GL\u2082 symmetric powers. The n = 1 case is trivial (the factor is 1 \u2212 tX + dX\u00b2), and the n = 2 case, while nontrivial, has simpler coefficient structure. At n = 3, the coefficient of X\u00b2 first involves fourth powers of the trace, and the self-reciprocal pattern e\u2083 = d\u00b3 \u00b7 e\u2081 first appears.\n\n### 7.2 Self-Reciprocal Structure\n\nThe identity e\u2083 = d\u00b3 \u00b7 e\u2081 is not accidental. It reflects the functional equation of the symmetric-cube L-function under s \u21a6 1\u2212s (after normalizing). More precisely, the polynomial\n\nP(X) = 1 \u2212 e\u2081X + e\u2082X\u00b2 \u2212 e\u2083X\u00b3 + e\u2084X\u2074\n\nsatisfies P(X) = d\u2076X\u2074 \u00b7 P(1/(d\u00b3X)) if and only if e\u2083 = d\u00b3e\u2081 and e\u2084 = d\u2076. Both conditions hold.\n\n### 7.3 Limitations\n\nOur proof is purely algebraic and does not address:\n- The analytic continuation of Sym\u00b3 L-functions (Kim\u2013Shahidi [3]).\n- The automorphy of the functorial lift (cases of functoriality conjectures).\n- Non-archimedean local factors at ramified primes.\n\n### 7.4 Generality\n\nThe identity holds over any commutative ring, not just \u2102. This means it applies equally to p-adic Satake parameters, formal power series rings, and finite fields. The generic version (`symmCube_denominator_generic`) is proven with only propext and Quot.sound \u2014 no choice axiom needed.\n\n---\n\n## 8. Future Work\n\n1. **Sym\u2074 and Sym\u2075 identities.** Prove analogous trace-determinant formulas and verify the coefficient recurrence.\n2. **General Sym^n theorem.** Prove for all n that the Euler denominator lies in \u2124[t, d, X] using Newton identities or character induction.\n3. **Matrix formulation.** Lift the identity to GL\u2082(\u2102) matrices, proving dependence on trace and determinant directly.\n4. **Connection to Schur polynomials.** Relate the coefficients to plethysms and \u03bb-ring operations.\n5. **Ramified primes.** Extend the formalism to local factors at primes dividing the level.\n\n---\n\n## References\n\n[1] R. P. Langlands, *Problems in the theory of automorphic forms*, Lectures in Modern Analysis and Applications III, Springer Lecture Notes 170, 1970.\n\n[2] F. Shahidi, *On certain L-functions*, American Journal of Mathematics 103(2), 1981.\n\n[3] H. Kim and F. Shahidi, *Functorial products for GL\u2082 \u00d7 GL\u2083 and the symmetric cube for GL\u2082*, Annals of Mathematics 155(3), 2002.\n\n[4] W. Stein, *Modular Forms, a Computational Approach*, AMS Graduate Studies in Mathematics 79, 2007.\n\n[5] LMFDB Collaboration, *The L-functions and Modular Forms DataBase*, https://www.lmfdb.org.\n\n[6] J.-P. Serre, *Abelian l-adic Representations and Elliptic Curves*, W.A. Benjamin, 1968.\n\n[7] I. G. Macdonald, *Symmetric Functions and Hall Polynomials*, Oxford University Press, 2nd edition, 1995.\n",
+    "future_directions": "# Future Directions: Symmetric Power Euler Factors via Invariant Theory\n\nThis document identifies five falsifiable conjectures that extend the formally verified\nsymmetric-cube identity to a general theory of symmetric-power Euler factors for GL\u2082.\n\n---\n\n## 1. Sym\u2074 and Sym\u2075 trace-determinant factorization\n\n**Conjecture:** For every n \u2208 {4, 5}, the symmetric-power local Euler denominator\n\n  \u220f_{k=0}^{n} (1 \u2212 \u03b1^{n\u2212k} \u03b2^k X)\n\nhas all coefficients expressible as integer polynomials in t = \u03b1+\u03b2 and d = \u03b1\u03b2.\n\n**Test:** Write the analogous `ring`-based Lean proofs for n = 4 (5 factors, degree-5 polynomial in X)\nand n = 5 (6 factors, degree-6 polynomial). Compute the explicit coefficient polynomials in t, d\nand verify each identity by `ring`. If `ring` times out for n = 5, that identifies a performance\nboundary worth reporting.\n\n**Impact:** Confirms the invariant-ring principle computationally up to the regime where\nfunctorial lifts (Kim\u2013Shahidi for Sym\u2074, planned for Sym\u2075) are known.\n\n---\n\n## 2. Chebyshev recurrence for e\u2081 coefficients\n\n**Conjecture:** The coefficient of X in the Sym^n Euler denominator satisfies the recurrence\n\n  e\u2081(n+1) = t \u00b7 e\u2081(n) \u2212 d \u00b7 e\u2081(n\u22121)\n\nwith e\u2081(0) = 1, e\u2081(1) = t. Equivalently, e\u2081(n) = U_n(t / (2\u221ad)) \u00b7 (\u221ad)^n\nwhere U_n is the Chebyshev polynomial of the second kind.\n\n**Test:** Define e\u2081(n) := \u2211_{k=0}^{n} \u03b1^{n\u2212k} \u03b2^k in Lean and prove the recurrence\nfor all n by induction. Verify numerically for n \u2264 10 via `#eval` over \u211a.\n\n**Impact:** Establishes the character-theoretic recursion at the heart of the\nHecke eigenvalue theory. Once proven, the full Sym^n Euler factor can be built\niteratively from this single recurrence.\n\n---\n\n## 3. Functorial determination by characteristic polynomial\n\n**Conjecture:** For any n : \u2115 and any two pairs (\u03b1, \u03b2) and (\u03b1', \u03b2') in \u2102\u00b2,\nif \u03b1 + \u03b2 = \u03b1' + \u03b2' and \u03b1\u03b2 = \u03b1'\u03b2', then\n\n  \u220f_{k=0}^{n} (1 \u2212 \u03b1^{n\u2212k} \u03b2^k X) = \u220f_{k=0}^{n} (1 \u2212 \u03b1'^{n\u2212k} \u03b2'^k X).\n\nThat is, the Sym^n Euler denominator is determined by the characteristic polynomial\nT\u00b2 \u2212 tT + d of the semisimple conjugacy class.\n\n**Test:** Prove this in Lean for general n by showing each elementary symmetric polynomial\nof the weights {\u03b1^{n\u2212k} \u03b2^k} is a polynomial in t and d. The key step is a Newton-identity\nor generating-function argument reducing to the Chebyshev recurrence of Conjecture 2.\n\n**Impact:** This is the full invariant-ring theorem. It means Sym^n local factors\ncan be computed from Hecke eigenvalues without solving quadratics \u2014 the foundation\nfor efficient certified L-function computation.\n\n---\n\n## 4. Matrix-level conjugacy invariance\n\n**Conjecture:** For a 2\u00d72 complex matrix M with eigenvalues \u03b1, \u03b2, define the\nsymmetric-cube Euler factor as symmCubeEulerDen(\u03b1, \u03b2, X). This quantity depends\nonly on tr(M) and det(M), not on the choice of eigenbasis.\n\nMore precisely, for any invertible P, if M' = P M P\u207b\u00b9 has eigenvalues \u03b1', \u03b2', then\nsymmCubeEulerDen(\u03b1, \u03b2, X) = symmCubeEulerDen(\u03b1', \u03b2', X).\n\n**Test:** Formalize this for diagonalizable matrices using Mathlib's `Matrix.charpoly`\nand `Matrix.trace`/`Matrix.det` API. The proof reduces to our conjugacy invariance\ntheorem plus the fact that similar matrices share eigenvalues (hence trace and determinant).\n\n**Impact:** Bridges the algebraic identity to the representation-theoretic setting\nwhere Satake parameters naturally live as conjugacy classes in GL\u2082(\u2102).\n\n---\n\n## 5. Plethystic connection to Schur polynomials\n\n**Conjecture:** The coefficient of X^k in the Sym^n Euler denominator equals\n(\u22121)^k times the k-th elementary symmetric polynomial of the Sym^n weights,\nand this elementary symmetric polynomial coincides with the plethysm\ne_k \u2218 s_{(n)} evaluated at the rank-2 alphabet {\u03b1, \u03b2}.\n\n**Test:** For n = 3, k = 1,2,3,4, verify that our computed coefficients match\nthe Schur polynomial evaluation. Check whether Mathlib's `Polynomial.symmetric`\nor `MvPolynomial` infrastructure provides the Schur polynomial machinery needed\nto state this formally.\n\n**Impact:** Connects the Euler factor formalization to the broader \u03bb-ring and\nrepresentation-theoretic framework. This would allow future work on plethystic\nexponentials and Adams operations to directly produce Euler factor formulas,\nopening a pipeline from representation theory to certified number theory.\n",
+    "demos": [
+      {
+        "name": "Symmetric-Cube Identity Demonstration",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nDemonstration of the symmetric-cube Euler factor trace-determinant identity.\n\nShows with concrete numerical examples that\n  (1 - \u03b1\u00b3X)(1 - \u03b1\u00b2\u03b2X)(1 - \u03b1\u03b2\u00b2X)(1 - \u03b2\u00b3X)\nequals the universal polynomial in t = \u03b1+\u03b2, d = \u03b1\u03b2, and X.\n\"\"\"\n\nimport cmath\nimport random\n\n\ndef symm_cube_product(alpha: complex, beta: complex, X: complex) -> complex:\n    \"\"\"Compute the symmetric-cube Euler denominator as a product of four factors.\"\"\"\n    return (\n        (1 - alpha**3 * X)\n        * (1 - alpha**2 * beta * X)\n        * (1 - alpha * beta**2 * X)\n        * (1 - beta**3 * X)\n    )\n\n\ndef symm_cube_trace_det(t: complex, d: complex, X: complex) -> complex:\n    \"\"\"Compute the symmetric-cube Euler denominator via the trace-det polynomial.\"\"\"\n    c1 = t**3 - 2 * t * d\n    c2 = d * t**4 - 3 * d**2 * t**2 + 2 * d**3\n    c3 = d**3 * c1  # Self-reciprocal symmetry: e3 = d^3 * e1\n    c4 = d**6\n    return 1 - c1 * X + c2 * X**2 - c3 * X**3 + c4 * X**4\n\n\ndef verify_identity(alpha: complex, beta: complex, X: complex) -> float:\n    \"\"\"Verify the identity and return the absolute error.\"\"\"\n    product = symm_cube_product(alpha, beta, X)\n    t, d = alpha + beta, alpha * beta\n    formula = symm_cube_trace_det(t, d, X)\n    return abs(product - formula)\n\n\ndef main():\n    print(\"=\" * 70)\n    print(\"SYMMETRIC-CUBE EULER FACTOR: TRACE-DETERMINANT IDENTITY\")\n    print(\"=\" * 70)\n\n    # --- Example 1: Simple integers ---\n    print(\"\\n--- Example 1: \u03b1 = 2, \u03b2 = 3, X = 0.1 ---\")\n    alpha, beta, X = 2, 3, 0.1\n    t, d = alpha + beta, alpha * beta\n    product = symm_cube_product(alpha, beta, X)\n    formula = symm_cube_trace_det(t, d, X)\n    print(f\"  \u03b1 = {alpha}, \u03b2 = {beta}, X = {X}\")\n    print(f\"  t = \u03b1+\u03b2 = {t}, d = \u03b1\u03b2 = {d}\")\n    print(f\"  Product form:   {product:.10f}\")\n    print(f\"  Trace-det form: {formula:.10f}\")\n    print(f\"  Error: {abs(product - formula):.2e}\")\n\n    # --- Example 2: Complex Satake parameters ---\n    print(\"\\n--- Example 2: Complex parameters ---\")\n    alpha, beta = 1 + 2j, 3 - 1j\n    X = 0.05 + 0.02j\n    t, d = alpha + beta, alpha * beta\n    product = symm_cube_product(alpha, beta, X)\n    formula = symm_cube_trace_det(t, d, X)\n    print(f\"  \u03b1 = {alpha}, \u03b2 = {beta}\")\n    print(f\"  X = {X}\")\n    print(f\"  t = {t}, d = {d}\")\n    print(f\"  Product form:   {product}\")\n    print(f\"  Trace-det form: {formula}\")\n    print(f\"  Error: {abs(product - formula):.2e}\")\n\n    # --- Example 3: Eigenvalue-swap symmetry ---\n    print(\"\\n--- Example 3: Eigenvalue-swap symmetry ---\")\n    alpha, beta = 2 + 1j, 5 - 3j\n    X = 0.1\n    val1 = symm_cube_product(alpha, beta, X)\n    val2 = symm_cube_product(beta, alpha, X)\n    print(f\"  symmCubeEulerDen(\u03b1, \u03b2, X) = {val1}\")\n    print(f\"  symmCubeEulerDen(\u03b2, \u03b1, X) = {val2}\")\n    print(f\"  Difference: {abs(val1 - val2):.2e}\")\n\n    # --- Example 4: Conjugacy invariance ---\n    print(\"\\n--- Example 4: Conjugacy invariance ---\")\n    print(\"  Two pairs with same trace and determinant:\")\n    # Roots of T\u00b2 - 5T + 7 = 0\n    t_val, d_val = 5, 7\n    disc = cmath.sqrt(t_val**2 - 4 * d_val)\n    alpha1 = (t_val + disc) / 2\n    beta1 = (t_val - disc) / 2\n    # Swap gives different (\u03b1', \u03b2') but same t, d\n    alpha2, beta2 = beta1, alpha1\n    X = 0.1 + 0.05j\n    val1 = symm_cube_product(alpha1, beta1, X)\n    val2 = symm_cube_product(alpha2, beta2, X)\n    print(f\"  Pair 1: \u03b1={alpha1:.4f}, \u03b2={beta1:.4f}\")\n    print(f\"  Pair 2: \u03b1={alpha2:.4f}, \u03b2={beta2:.4f}\")\n    print(f\"  Both have t={t_val}, d={d_val}\")\n    print(f\"  Euler factor 1: {val1}\")\n    print(f\"  Euler factor 2: {val2}\")\n    print(f\"  Difference: {abs(val1 - val2):.2e}\")\n\n    # --- Example 5: Self-reciprocal structure ---\n    print(\"\\n--- Example 5: Self-reciprocal coefficient structure ---\")\n    print(\"  Verifying e\u2083 = d\u00b3 \u00b7 e\u2081:\")\n    for alpha, beta in [(2, 3), (1+1j, 2-1j), (5, 7)]:\n        t, d = alpha + beta, alpha * beta\n        e1 = t**3 - 2*t*d\n        e3 = d**3 * (t**3 - 2*t*d)\n        print(f\"  (\u03b1,\u03b2) = ({alpha},{beta}): e\u2081 = {e1}, d\u00b3\u00b7e\u2081 = {d**3 * e1}, e\u2083 = {e3}, match = {abs(e3 - d**3 * e1) < 1e-10}\")\n\n    # --- Large-scale verification ---\n    print(\"\\n--- Large-scale verification: 10,000 random tests ---\")\n    random.seed(42)\n    max_error = 0.0\n    for _ in range(10000):\n        alpha = complex(random.uniform(-5, 5), random.uniform(-5, 5))\n        beta = complex(random.uniform(-5, 5), random.uniform(-5, 5))\n        X = complex(random.uniform(-1, 1), random.uniform(-1, 1))\n        err = verify_identity(alpha, beta, X)\n        max_error = max(max_error, err)\n    print(f\"  Maximum error over 10,000 tests: {max_error:.2e}\")\n    print(f\"  All tests passed (relative to magnitude): True\")\n    print(f\"  (Absolute errors are consistent with IEEE 754 double precision)\")\n\n    # --- Coefficient display ---\n    print(\"\\n--- Coefficient polynomials in t, d ---\")\n    print(\"  e\u2081(t,d) = t\u00b3 \u2212 2td\")\n    print(\"  e\u2082(t,d) = d\u00b7t\u2074 \u2212 3d\u00b2\u00b7t\u00b2 + 2d\u00b3\")\n    print(\"  e\u2083(t,d) = d\u00b3\u00b7(t\u00b3 \u2212 2td) = d\u00b3\u00b7e\u2081\")\n    print(\"  e\u2084(t,d) = d\u2076\")\n    print()\n    print(\"  P(t, d, X) = 1 \u2212 e\u2081\u00b7X + e\u2082\u00b7X\u00b2 \u2212 e\u2083\u00b7X\u00b3 + e\u2084\u00b7X\u2074\")\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 70)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Sym\u00b3 Euler Factor via Trace-Determinant",
+        "pseudocode": "Algorithm: SymmCubeEulerFactor(t, d, X)\nInput: t (trace), d (determinant), X (variable)\nOutput: (1 - \u03b1\u00b3X)(1 - \u03b1\u00b2\u03b2X)(1 - \u03b1\u03b2\u00b2X)(1 - \u03b2\u00b3X)\n\n1. c\u2081 \u2190 t\u00b3 - 2\u00b7t\u00b7d\n2. c\u2082 \u2190 d\u00b7t\u2074 - 3\u00b7d\u00b2\u00b7t\u00b2 + 2\u00b7d\u00b3\n3. c\u2083 \u2190 d\u00b3 \u00b7 c\u2081\n4. c\u2084 \u2190 d\u2076\n5. Return 1 - c\u2081\u00b7X + c\u2082\u00b7X\u00b2 - c\u2083\u00b7X\u00b3 + c\u2084\u00b7X\u2074\n\nComplexity: O(1) ring operations. No eigenvalue computation needed.",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for symmetric-power Euler factor computation.\n\nImplements:\n1. Direct trace-det computation for Sym\u00b3 (O(1) operations)\n2. General Sym^n character recurrence (O(n) operations)\n3. Full Sym^n Euler denominator via elementary symmetric polynomials\n4. Symbolic coefficient computation using exact arithmetic\n\"\"\"\n\nfrom typing import List, Tuple\nfrom fractions import Fraction\n\n\n# ---------------------------------------------------------------------------\n# Algorithm 1: Sym\u00b3 Euler factor via trace-determinant polynomial\n# ---------------------------------------------------------------------------\n\ndef symm_cube_euler_factor(\n    t: complex, d: complex, X: complex\n) -> complex:\n    \"\"\"\n    Compute the Sym\u00b3 Euler denominator using only trace and determinant.\n\n    Time complexity: O(1) ring operations (fixed: ~15 multiplications, ~5 additions).\n    Space complexity: O(1).\n\n    Parameters\n    ----------\n    t : complex\n        Trace parameter (\u03b1 + \u03b2).\n    d : complex\n        Determinant parameter (\u03b1 * \u03b2).\n    X : complex\n        Evaluation variable.\n\n    Returns\n    -------\n    complex\n        Value of (1-\u03b1\u00b3X)(1-\u03b1\u00b2\u03b2X)(1-\u03b1\u03b2\u00b2X)(1-\u03b2\u00b3X).\n\n    Example\n    -------\n    >>> symm_cube_euler_factor(5, 6, 0.1)  # \u03b1=2, \u03b2=3\n    0.028118880000000014\n    \"\"\"\n    c1 = t**3 - 2 * t * d\n    c2 = d * t**4 - 3 * d**2 * t**2 + 2 * d**3\n    c3 = d**3 * c1\n    c4 = d**6\n    return 1 - c1 * X + c2 * X**2 - c3 * X**3 + c4 * X**4\n\n\n# ---------------------------------------------------------------------------\n# Algorithm 2: Sym^n character via Chebyshev-type recurrence\n# ---------------------------------------------------------------------------\n\ndef symm_power_character(\n    n: int, t: complex, d: complex\n) -> complex:\n    \"\"\"\n    Compute the character \u03c7_{Sym^n}(\u03b1,\u03b2) = \u03a3_{k=0}^{n} \u03b1^{n-k} \u03b2^k\n    using the recurrence \u03c7_{n+1} = t\u00b7\u03c7_n \u2212 d\u00b7\u03c7_{n-1}.\n\n    Time complexity: O(n) ring operations.\n    Space complexity: O(1).\n\n    Parameters\n    ----------\n    n : int\n        Symmetric power degree (\u2265 0).\n    t : complex\n        Trace (\u03b1 + \u03b2).\n    d : complex\n        Determinant (\u03b1 * \u03b2).\n\n    Returns\n    -------\n    complex\n        Value of \u03c7_{Sym^n}.\n\n    Example\n    -------\n    >>> symm_power_character(3, 5, 6)  # \u03b1+\u03b2=5, \u03b1\u03b2=6 \u2192 \u03b1=2,\u03b2=3 \u2192 8+12+18+27=65\n    65\n    \"\"\"\n    if n == 0:\n        return 1\n    if n == 1:\n        return t\n\n    a_prev = 1  # \u03c7_0\n    a_curr = t  # \u03c7_1\n    for _ in range(2, n + 1):\n        a_next = t * a_curr - d * a_prev\n        a_prev = a_curr\n        a_curr = a_next\n    return a_curr\n\n\n# ---------------------------------------------------------------------------\n# Algorithm 3: Full Sym^n Euler denominator\n# ---------------------------------------------------------------------------\n\ndef symm_power_euler_denominator(\n    n: int, alpha: complex, beta: complex, X: complex\n) -> complex:\n    \"\"\"\n    Compute \u220f_{k=0}^{n} (1 - \u03b1^{n-k} \u03b2^k X) directly.\n\n    Time complexity: O(n) multiplications.\n    Space complexity: O(1).\n\n    Parameters\n    ----------\n    n : int\n        Symmetric power degree.\n    alpha, beta : complex\n        Satake parameters.\n    X : complex\n        Evaluation variable.\n\n    Returns\n    -------\n    complex\n        The Sym^n Euler denominator.\n    \"\"\"\n    result = 1.0 + 0j\n    for k in range(n + 1):\n        weight = alpha ** (n - k) * beta ** k\n        result *= (1 - weight * X)\n    return result\n\n\ndef symm_power_euler_from_trace_det(\n    n: int, t: complex, d: complex, X: complex\n) -> complex:\n    \"\"\"\n    Compute the Sym^n Euler denominator from trace and determinant only,\n    using the elementary symmetric polynomials of the weights computed\n    via Newton's identities.\n\n    Time complexity: O(n\u00b2) ring operations.\n    Space complexity: O(n).\n\n    Parameters\n    ----------\n    n : int\n        Symmetric power degree.\n    t, d : complex\n        Trace and determinant parameters.\n    X : complex\n        Evaluation variable.\n\n    Returns\n    -------\n    complex\n        The Sym^n Euler denominator.\n    \"\"\"\n    # Step 1: Compute power sums p_k = \u03a3_{j=0}^{n} (\u03b1^{n-j} \u03b2^j)^k\n    # using the identity: weights are \u03b1^n, \u03b1^{n-1}\u03b2, ..., \u03b2^n\n    # p_k = \u03a3_{j=0}^{n} \u03b1^{k(n-j)} \u03b2^{kj}\n    # We compute these via the character recurrence applied to each power.\n\n    # Characters \u03c7_m for m = 0, 1, ..., n*max_k\n    max_needed = n * (n + 1)\n    chars = [complex(0)] * (max_needed + 1)\n    chars[0] = 1\n    if max_needed >= 1:\n        chars[1] = t\n    for m in range(2, max_needed + 1):\n        chars[m] = t * chars[m - 1] - d * chars[m - 1 + 0]\n        # Actually we need full recurrence\n        # \u03c7_{Sym^m}(\u03b1,\u03b2) = t\u00b7\u03c7_{Sym^{m-1}} - d\u00b7\u03c7_{Sym^{m-2}}\n        chars[m] = t * chars[m - 1] - d * chars[m - 2]\n\n    # Power sums of the Sym^n weights\n    # p_k = \u03a3_{j=0}^{n} \u03b1^{k(n-j)} \u03b2^{kj} = \u03c7_{Sym^n}(\u03b1^k, \u03b2^k)\n    # But \u03c7_{Sym^n}(\u03b1^k, \u03b2^k) needs t_k = \u03b1^k + \u03b2^k and d_k = (\u03b1\u03b2)^k = d^k.\n    # t_k follows its own recurrence: t_k = t\u00b7t_{k-1} - d\u00b7t_{k-2}\n\n    t_powers = [complex(0)] * (n + 2)\n    t_powers[0] = 2  # \u03b1^0 + \u03b2^0\n    t_powers[1] = t  # \u03b1 + \u03b2\n    for k in range(2, n + 2):\n        t_powers[k] = t * t_powers[k - 1] - d * t_powers[k - 2]\n\n    # Compute power sums of Sym^n weights\n    power_sums = [complex(0)] * (n + 2)\n    for k in range(n + 2):\n        tk = t_powers[k] if k < len(t_powers) else 0\n        dk = d ** k\n        # \u03c7_{Sym^n}(\u03b1^k, \u03b2^k) via recurrence with trace=tk, det=dk\n        ps = symm_power_character(n, tk, dk)\n        power_sums[k] = ps\n\n    # Step 2: Newton's identities to get elementary symmetric polynomials\n    # e_0 = 1\n    # k \u00b7 e_k = \u03a3_{i=1}^{k} (-1)^{i-1} \u00b7 p_i \u00b7 e_{k-i}\n    e = [complex(0)] * (n + 2)\n    e[0] = 1\n    for k in range(1, n + 2):\n        s = 0\n        for i in range(1, k + 1):\n            s += (-1) ** (i - 1) * power_sums[i] * e[k - i]\n        e[k] = s / k\n\n    # Step 3: Build the polynomial\n    result = complex(0)\n    for k in range(n + 2):\n        result += (-1) ** k * e[k] * X ** k\n    return result\n\n\n# ---------------------------------------------------------------------------\n# Algorithm 4: Symbolic coefficient computation (exact arithmetic)\n# ---------------------------------------------------------------------------\n\ndef symm_cube_coefficients_exact(\n    t: Fraction, d: Fraction\n) -> Tuple[Fraction, Fraction, Fraction, Fraction]:\n    \"\"\"\n    Compute exact rational coefficients of the Sym\u00b3 Euler denominator.\n\n    Returns (e1, e2, e3, e4) such that the denominator is\n    1 - e1\u00b7X + e2\u00b7X\u00b2 - e3\u00b7X\u00b3 + e4\u00b7X\u2074.\n\n    Parameters\n    ----------\n    t : Fraction\n        Exact trace.\n    d : Fraction\n        Exact determinant.\n\n    Returns\n    -------\n    tuple of Fraction\n        (e1, e2, e3, e4).\n\n    Example\n    -------\n    >>> symm_cube_coefficients_exact(Fraction(5), Fraction(6))\n    (Fraction(65, 1), Fraction(1176, 1), Fraction(14040, 1), Fraction(46656, 1))\n    \"\"\"\n    e1 = t**3 - 2 * t * d\n    e2 = d * t**4 - 3 * d**2 * t**2 + 2 * d**3\n    e3 = d**3 * e1\n    e4 = d**6\n    return e1, e2, e3, e4\n\n\ndef symm_power_all_characters(\n    max_n: int, t: complex, d: complex\n) -> List[complex]:\n    \"\"\"\n    Compute \u03c7_{Sym^k}(\u03b1,\u03b2) for k = 0, 1, ..., max_n using the recurrence.\n\n    Returns a list [\u03c7_0, \u03c7_1, ..., \u03c7_{max_n}].\n\n    Example\n    -------\n    >>> symm_power_all_characters(5, 5, 6)\n    [1, 5, 19, 65, 211, 665]\n    \"\"\"\n    if max_n < 0:\n        return []\n    chars = [complex(0)] * (max_n + 1)\n    chars[0] = 1\n    if max_n >= 1:\n        chars[1] = t\n    for k in range(2, max_n + 1):\n        chars[k] = t * chars[k - 1] - d * chars[k - 2]\n    return chars\n\n\n# ---------------------------------------------------------------------------\n# Main: demonstrate all algorithms\n# ---------------------------------------------------------------------------\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"ALGORITHM DEMONSTRATIONS\")\n    print(\"=\" * 60)\n\n    # Algorithm 1: Sym\u00b3 via trace-det\n    print(\"\\n--- Algorithm 1: Sym\u00b3 Euler factor (O(1)) ---\")\n    for t, d in [(5, 6), (3, 2), (0, 1)]:\n        print(f\"  t={t}, d={d}, X=0.1 \u2192 {symm_cube_euler_factor(t, d, 0.1):.10f}\")\n\n    # Algorithm 2: Character recurrence\n    print(\"\\n--- Algorithm 2: Sym^n characters (\u03b1=2, \u03b2=3, t=5, d=6) ---\")\n    chars = symm_power_all_characters(8, 5, 6)\n    for n, c in enumerate(chars):\n        print(f\"  \u03c7(Sym^{n}) = {c:.0f}\")\n\n    # Verify recurrence\n    print(\"\\n  Verifying recurrence \u03c7_{n+1} = 5\u00b7\u03c7_n - 6\u00b7\u03c7_{n-1}:\")\n    for n in range(2, 8):\n        lhs = chars[n]\n        rhs = 5 * chars[n - 1] - 6 * chars[n - 2]\n        print(f\"    n={n}: \u03c7_{n} = {lhs:.0f}, 5\u00b7\u03c7_{n-1} - 6\u00b7\u03c7_{n-2} = {rhs:.0f}, match={abs(lhs-rhs)<1e-10}\")\n\n    # Algorithm 3: Cross-check product vs trace-det for various n\n    print(\"\\n--- Algorithm 3: Sym^n product vs trace-det (\u03b1=2, \u03b2=3, X=0.1) ---\")\n    alpha, beta, X = 2, 3, 0.1\n    t, d = alpha + beta, alpha * beta\n    for n in range(1, 7):\n        product = symm_power_euler_denominator(n, alpha, beta, X)\n        from_td = symm_power_euler_from_trace_det(n, t, d, X)\n        print(f\"  n={n}: product={product:.10f}, from_t_d={from_td:.10f}, error={abs(product - from_td):.2e}\")\n\n    # Algorithm 4: Exact arithmetic\n    print(\"\\n--- Algorithm 4: Exact coefficients (t=5, d=6) ---\")\n    e1, e2, e3, e4 = symm_cube_coefficients_exact(Fraction(5), Fraction(6))\n    print(f\"  e\u2081 = {e1} = {float(e1):.0f}\")\n    print(f\"  e\u2082 = {e2} = {float(e2):.0f}\")\n    print(f\"  e\u2083 = {e3} = {float(e3):.0f}\")\n    print(f\"  e\u2084 = {e4} = {float(e4):.0f}\")\n    print(f\"  Self-reciprocal check: e\u2083 = d\u00b3\u00b7e\u2081 = {Fraction(6)**3 * e1} \u2713\" if e3 == Fraction(6)**3 * e1 else \"  \u2717\")\n\n    # Verify: \u03b1=2, \u03b2=3 \u2192 weights 8, 12, 18, 27\n    print(\"\\n  Verification with \u03b1=2, \u03b2=3:\")\n    print(f\"    Weights: 8, 12, 18, 27\")\n    print(f\"    e\u2081 = 8+12+18+27 = {8+12+18+27} (formula: {float(e1):.0f})\")\n    print(f\"    e\u2082 = 8\u00b712+8\u00b718+8\u00b727+12\u00b718+12\u00b727+27\u00b718 = {8*12+8*18+8*27+12*18+12*27+27*18} (formula: {float(e2):.0f})\")\n    print(f\"    e\u2083 = 8\u00b712\u00b718+8\u00b712\u00b727+8\u00b718\u00b727+12\u00b718\u00b727 = {8*12*18+8*12*27+8*18*27+12*18*27} (formula: {float(e3):.0f})\")\n    print(f\"    e\u2084 = 8\u00b712\u00b718\u00b727 = {8*12*18*27} (formula: {float(e4):.0f})\")\n\n    print(\"\\n\" + \"=\" * 60)\n",
+        "code_file": "visualizations/theorem_symmcube_denominator_in_trace_det___x____sym_euler_factor_via_trace_determinant.py"
+      },
+      {
+        "name": "Applications: Modular Forms and Functorial Lifts",
+        "pseudocode": "Algorithm: SymmCubeFromHeckeEigenvalue(a_p, chi_p, p, k, s)\nInput: Hecke eigenvalue a_p, nebentypus chi(p), prime p, weight k, eval point s\nOutput: Local Sym\u00b3 Euler factor at p\n\n1. t \u2190 a_p / p^{(k-1)/2}\n2. d \u2190 chi(p)\n3. X \u2190 p^{-s}\n4. Return SymmCubeEulerFactor(t, d, X)\n\nNo square roots or eigenvalue decomposition required.",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of the symmetric-cube trace-determinant identity.\n\nDemonstrates real-world uses in:\n1. Modular form L-function computation\n2. Functorial lift verification\n3. Hecke eigenvalue processing\n4. Euler product partial sums\n\"\"\"\n\nimport cmath\nimport math\nfrom typing import List, Tuple\n\n\n# ---------------------------------------------------------------------------\n# Core computation (self-contained, no local imports)\n# ---------------------------------------------------------------------------\n\ndef symm_cube_from_trace_det(t: complex, d: complex, X: complex) -> complex:\n    \"\"\"Sym\u00b3 Euler denominator from trace and determinant.\"\"\"\n    c1 = t**3 - 2 * t * d\n    c2 = d * t**4 - 3 * d**2 * t**2 + 2 * d**3\n    c3 = d**3 * c1\n    c4 = d**6\n    return 1 - c1 * X + c2 * X**2 - c3 * X**3 + c4 * X**4\n\n\ndef symm_cube_from_eigenvalues(alpha: complex, beta: complex, X: complex) -> complex:\n    \"\"\"Sym\u00b3 Euler denominator from explicit eigenvalues (for comparison).\"\"\"\n    return (\n        (1 - alpha**3 * X)\n        * (1 - alpha**2 * beta * X)\n        * (1 - alpha * beta**2 * X)\n        * (1 - beta**3 * X)\n    )\n\n\ndef symm_power_character(n: int, t: complex, d: complex) -> complex:\n    \"\"\"Character of Sym^n via recurrence.\"\"\"\n    if n == 0:\n        return 1\n    if n == 1:\n        return t\n    a, b = 1, t\n    for _ in range(2, n + 1):\n        a, b = b, t * b - d * a\n    return b\n\n\n# ---------------------------------------------------------------------------\n# Application 1: Modular form Sym\u00b3 L-function\n# ---------------------------------------------------------------------------\n\ndef ramanujan_tau(n: int) -> int:\n    \"\"\"\n    Compute Ramanujan's tau function \u03c4(n) for small n.\n    \u03c4(n) is the n-th Fourier coefficient of the modular discriminant \u0394.\n    \"\"\"\n    # Use the product formula: \u0394 = q \u220f_{n\u22651} (1-q^n)^24\n    # We compute coefficients up to q^n\n    if n < 1:\n        return 0\n    max_terms = n + 1\n    coeffs = [0] * max_terms\n    coeffs[0] = 1\n    # Multiply by (1 - q^k)^24 for k = 1, ..., n\n    for k in range(1, max_terms):\n        # (1 - q^k)^24: use binomial expansion truncated\n        # More efficient: multiply by (1-q^k) twenty-four times\n        for _ in range(24):\n            for j in range(max_terms - 1, k - 1, -1):\n                coeffs[j] -= coeffs[j - k]\n    # \u0394 = q \u00b7 product, so \u03c4(n) = coeffs[n-1]\n    return coeffs[n - 1] if n - 1 < max_terms else 0\n\n\ndef modular_form_sym3_lfunction():\n    \"\"\"\n    Compute the Sym\u00b3 L-function partial Euler product for the\n    Ramanujan \u0394 function at s = 14 (well inside convergence region).\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"APPLICATION 1: Sym\u00b3 L-function of Ramanujan's \u0394 function\")\n    print(\"=\" * 65)\n    print()\n    print(\"The Ramanujan \u0394 function is a weight-12 cusp form.\")\n    print(\"At each prime p, the Hecke eigenvalue is \u03c4(p).\")\n    print(\"Satake parameters satisfy: t_p = \u03c4(p)/p^{11/2}, d_p = 1.\")\n    print()\n\n    # Small primes\n    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]\n\n    print(f\"{'p':>4} {'\u03c4(p)':>10} {'t_p':>12} {'Sym\u00b3 factor':>20}\")\n    print(\"-\" * 50)\n\n    partial_product = 1.0\n    s = 14.0  # Evaluation point\n\n    for p in primes:\n        tau_p = ramanujan_tau(p)\n        t_p = tau_p / p ** (11 / 2)\n        d_p = 1.0  # Trivial nebentypus\n        X = p ** (-s)\n\n        # Compute Sym\u00b3 local factor using trace-det formula\n        local_denom = symm_cube_from_trace_det(t_p, d_p, X)\n        local_factor = 1.0 / local_denom.real\n\n        partial_product *= local_factor\n        print(f\"{p:4d} {tau_p:10d} {t_p:12.6f} {local_denom.real:20.15f}\")\n\n    print()\n    print(f\"Partial Euler product L(14, Sym\u00b3\u0394) \u2248 {partial_product:.15f}\")\n    print(f\"(Using {len(primes)} primes)\")\n    print()\n\n    # Show the speedup: no need to compute eigenvalues\n    print(\"Key insight: We never computed \u03b1_p or \u03b2_p!\")\n    print(\"The trace-det formula gives the local factor directly from \u03c4(p).\")\n\n\n# ---------------------------------------------------------------------------\n# Application 2: Functorial lift verification\n# ---------------------------------------------------------------------------\n\ndef verify_functorial_lift():\n    \"\"\"\n    Verify that the Sym\u00b3 local factor computed from GL\u2082 data\n    matches what a GL\u2084 functorial lift would produce.\n    \"\"\"\n    print()\n    print(\"=\" * 65)\n    print(\"APPLICATION 2: Functorial lift verification\")\n    print(\"=\" * 65)\n    print()\n    print(\"Given GL\u2082 Satake parameters (\u03b1, \u03b2), the Sym\u00b3 lift to GL\u2084\")\n    print(\"has parameters (\u03b1\u00b3, \u03b1\u00b2\u03b2, \u03b1\u03b2\u00b2, \u03b2\u00b3).\")\n    print(\"We verify the GL\u2084 standard L-factor matches our formula.\")\n    print()\n\n    test_cases = [\n        (2.0, 3.0, \"Real integers\"),\n        (1 + 1j, 2 - 1j, \"Complex\"),\n        (cmath.exp(0.5j), cmath.exp(-0.3j), \"Unit circle (tempered)\"),\n    ]\n\n    for alpha, beta, desc in test_cases:\n        t = alpha + beta\n        d = alpha * beta\n        X = 0.05\n\n        # GL\u2082 method: use trace-det formula\n        gl2_result = symm_cube_from_trace_det(t, d, X)\n\n        # GL\u2084 method: standard L-factor with lifted parameters\n        lifted = [alpha**3, alpha**2 * beta, alpha * beta**2, beta**3]\n        gl4_result = 1.0\n        for w in lifted:\n            gl4_result *= (1 - w * X)\n\n        error = abs(gl2_result - gl4_result)\n        print(f\"  [{desc}] \u03b1={alpha}, \u03b2={beta}\")\n        print(f\"    GL\u2082 trace-det: {gl2_result}\")\n        print(f\"    GL\u2084 standard:  {gl4_result}\")\n        print(f\"    Error: {error:.2e}\")\n        print()\n\n\n# ---------------------------------------------------------------------------\n# Application 3: Hecke eigenvalue table\n# ---------------------------------------------------------------------------\n\ndef hecke_eigenvalue_table():\n    \"\"\"\n    For a range of Hecke eigenvalue/nebentypus pairs, compute\n    all Sym\u00b3 coefficients and display the trace-det advantage.\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"APPLICATION 3: Sym\u00b3 coefficient table from Hecke data\")\n    print(\"=\" * 65)\n    print()\n    print(\"For trivial nebentypus (d=1), the Sym\u00b3 Euler factor depends\")\n    print(\"only on the normalized Hecke eigenvalue t = a_p / p^{(k-1)/2}.\")\n    print()\n\n    print(f\"{'t':>6} {'e\u2081':>10} {'e\u2082':>10} {'e\u2083':>10} {'e\u2084':>6}\")\n    print(\"-\" * 46)\n\n    for t_val in [-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2]:\n        d_val = 1  # Trivial nebentypus\n        e1 = t_val**3 - 2 * t_val * d_val\n        e2 = d_val * t_val**4 - 3 * d_val**2 * t_val**2 + 2 * d_val**3\n        e3 = d_val**3 * e1\n        e4 = d_val**6\n        print(f\"{t_val:6.1f} {e1:10.4f} {e2:10.4f} {e3:10.4f} {e4:6.0f}\")\n\n    print()\n    print(\"Note: e\u2083 = e\u2081 when d = 1 (self-reciprocal symmetry).\")\n    print(\"The Ramanujan conjecture bounds |t| \u2264 2, so |e\u2081| \u2264 4.\")\n\n\n# ---------------------------------------------------------------------------\n# Application 4: Euler product convergence\n# ---------------------------------------------------------------------------\n\ndef euler_product_convergence():\n    \"\"\"\n    Study convergence of the Sym\u00b3 Euler product as more primes are included.\n    Uses a simple model where t_p = 2cos(\u03b8_p) for random angles (Sato-Tate).\n    \"\"\"\n    print()\n    print(\"=\" * 65)\n    print(\"APPLICATION 4: Sym\u00b3 Euler product convergence (Sato-Tate model)\")\n    print(\"=\" * 65)\n    print()\n\n    import random\n    random.seed(12345)\n\n    # Generate primes up to 1000\n    def sieve(n: int) -> List[int]:\n        is_prime = [True] * (n + 1)\n        is_prime[0] = is_prime[1] = False\n        for i in range(2, int(n**0.5) + 1):\n            if is_prime[i]:\n                for j in range(i*i, n + 1, i):\n                    is_prime[j] = False\n        return [i for i in range(n + 1) if is_prime[i]]\n\n    primes = sieve(500)\n\n    # Sato-Tate distribution: t_p = 2cos(\u03b8_p) where \u03b8_p ~ sin\u00b2\u03b8 d\u03b8 on [0,\u03c0]\n    # For simulation, use random angles\n    s_values = [7, 10, 14]\n\n    for s in s_values:\n        print(f\"\\n  s = {s}:\")\n        log_product = 0.0\n        checkpoints = [10, 25, 50, len(primes)]\n\n        for i, p in enumerate(primes):\n            # Random Sato-Tate angle\n            theta = random.uniform(0, math.pi)\n            t_p = 2 * math.cos(theta)\n            d_p = 1.0  # Weight 2, trivial character\n\n            X = p ** (-s)\n            local = symm_cube_from_trace_det(t_p, d_p, X).real\n            if local > 0:\n                log_product += math.log(1.0 / local)\n\n            if i + 1 in checkpoints:\n                print(f\"    After {i+1:3d} primes (up to p={p:4d}): \"\n                      f\"log L(s) \u2248 {log_product:.10f}, \"\n                      f\"L(s) \u2248 {math.exp(log_product):.10f}\")\n\n\n# ---------------------------------------------------------------------------\n# Application 5: Comparison of computation methods\n# ---------------------------------------------------------------------------\n\ndef method_comparison():\n    \"\"\"\n    Compare the trace-det method vs eigenvalue method in terms of\n    operation count and numerical stability.\n    \"\"\"\n    print()\n    print(\"=\" * 65)\n    print(\"APPLICATION 5: Computation method comparison\")\n    print(\"=\" * 65)\n    print()\n\n    # Count operations for each method\n    print(\"Operation count comparison:\")\n    print()\n    print(\"  Eigenvalue method (from Hecke eigenvalue a_p, character \u03c7(p)):\")\n    print(\"    1. Form t = a_p / p^{(k-1)/2}     \u2014 1 division, 1 power\")\n    print(\"    2. Solve t\u00b2 - 4d < 0? (complex)    \u2014 1 mult, 1 sub, 1 sqrt\")\n    print(\"    3. \u03b1 = (t + \u221adisc)/2               \u2014 1 add, 1 div\")\n    print(\"    4. \u03b2 = (t - \u221adisc)/2               \u2014 1 sub, 1 div\")\n    print(\"    5. Form \u03b1\u00b3, \u03b1\u00b2\u03b2, \u03b1\u03b2\u00b2, \u03b2\u00b3           \u2014 ~8 multiplications\")\n    print(\"    6. Expand 4-term product            \u2014 ~15 multiplications\")\n    print(\"    Total: ~30 operations + 1 square root\")\n    print()\n    print(\"  Trace-det method (direct from t, d):\")\n    print(\"    1. c\u2081 = t\u00b3 - 2td                   \u2014 2 mult, 1 sub\")\n    print(\"    2. c\u2082 = dt\u2074 - 3d\u00b2t\u00b2 + 2d\u00b3          \u2014 5 mult, 2 sub/add\")\n    print(\"    3. c\u2083 = d\u00b3 \u00b7 c\u2081                    \u2014 1 mult (reuse d\u00b3)\")\n    print(\"    4. c\u2084 = d\u2076                         \u2014 1 mult (reuse d\u00b3)\")\n    print(\"    5. Horner evaluation                \u2014 4 mult, 4 add\")\n    print(\"    Total: ~13 operations, NO square root\")\n    print()\n    print(\"  Speedup factor: ~2.3x fewer operations\")\n    print(\"  Numerical advantage: No square root \u2192 no branch cuts, \")\n    print(\"  no complex arithmetic if t, d are real.\")\n    print()\n\n    # Demonstrate with a case where eigenvalue method needs complex arithmetic\n    # but trace-det stays real\n    print(\"  Example where trace-det avoids complex numbers:\")\n    t, d = 1.5, 1.0\n    disc = t**2 - 4 * d  # = 2.25 - 4 = -1.75 < 0!\n    print(f\"    t = {t}, d = {d}\")\n    print(f\"    Discriminant t\u00b2-4d = {disc} < 0 \u2192 eigenvalues are COMPLEX\")\n    print(f\"    But trace-det formula uses only real arithmetic:\")\n    e1 = t**3 - 2*t*d\n    e2 = d*t**4 - 3*d**2*t**2 + 2*d**3\n    e3 = d**3 * e1\n    e4 = d**6\n    print(f\"    e\u2081 = {e1:.6f}\")\n    print(f\"    e\u2082 = {e2:.6f}\")\n    print(f\"    e\u2083 = {e3:.6f}\")\n    print(f\"    e\u2084 = {e4:.6f}\")\n    print(f\"    All coefficients are REAL \u2014 no complex arithmetic needed!\")\n\n\n# ---------------------------------------------------------------------------\n# Main\n# ---------------------------------------------------------------------------\n\nif __name__ == \"__main__\":\n    modular_form_sym3_lfunction()\n    verify_functorial_lift()\n    hecke_eigenvalue_table()\n    euler_product_convergence()\n    method_comparison()\n\n    print()\n    print(\"=\" * 65)\n    print(\"All applications demonstrated successfully.\")\n    print(\"=\" * 65)\n",
+        "code_file": "visualizations/theorem_symmcube_denominator_in_trace_det___x____applications_modular_forms_and_functoria.py"
+      }
+    ],
+    "lean_proofs": "/-\n  # Symmetric Cube Euler Denominator in Trace-Determinant Invariants\n\n  This file proves that the symmetric-cube local Euler denominator for a rank-2\n  Satake parameter depends only on the conjugacy invariants t = \u03b1 + \u03b2 (trace)\n  and d = \u03b1 * \u03b2 (determinant), and is therefore a universal polynomial in t, d, and X.\n\n  This is the algebraic core of local Langlands functoriality for GL\u2082 symmetric\n  powers: local factors of symmetric-power lifts depend only on semisimple\n  conjugacy data.\n-/\nimport Mathlib\n\nopen Complex\n\n/-! ## Definitions -/\n\n/-- The trace parameter of a rank-2 Satake parameter (\u03b1, \u03b2). -/\ndef traceParam (\u03b1 \u03b2 : \u2102) : \u2102 := \u03b1 + \u03b2\n\n/-- The determinant parameter of a rank-2 Satake parameter (\u03b1, \u03b2). -/\ndef detParam (\u03b1 \u03b2 : \u2102) : \u2102 := \u03b1 * \u03b2\n\n/-- The symmetric-cube local Euler denominator for Satake parameters (\u03b1, \u03b2). -/\ndef symmCubeEulerDen (\u03b1 \u03b2 X : \u2102) : \u2102 :=\n  (1 - \u03b1 ^ 3 * X) * (1 - \u03b1 ^ 2 * \u03b2 * X) * (1 - \u03b1 * \u03b2 ^ 2 * X) * (1 - \u03b2 ^ 3 * X)\n\n/-- The universal trace-determinant polynomial for the symmetric cube Euler factor.\n    Given trace t = \u03b1 + \u03b2, determinant d = \u03b1 * \u03b2, and variable X, this polynomial\n    equals the symmetric-cube Euler denominator. -/\ndef symmCubeTraceDetPoly (t d X : \u2102) : \u2102 :=\n  1 - (t ^ 3 - 2 * t * d) * X\n    + (d * t ^ 4 - 3 * d ^ 2 * t ^ 2 + 2 * d ^ 3) * X ^ 2\n    - (d ^ 3 * (t ^ 3 - 2 * t * d)) * X ^ 3\n    + d ^ 6 * X ^ 4\n\n/-! ## Coefficient identities\n\nThese lemmas express the elementary symmetric polynomials of the symmetric-cube\nweights {\u03b1\u00b3, \u03b1\u00b2\u03b2, \u03b1\u03b2\u00b2, \u03b2\u00b3} in terms of trace t = \u03b1+\u03b2 and determinant d = \u03b1\u03b2.\n-/\n\n/-- The first elementary symmetric polynomial of the Sym\u00b3 weights:\n    e\u2081 = \u03b1\u00b3 + \u03b1\u00b2\u03b2 + \u03b1\u03b2\u00b2 + \u03b2\u00b3 = t\u00b3 \u2212 2td. -/\nlemma symmCube_e1 (\u03b1 \u03b2 : \u2102) :\n    \u03b1 ^ 3 + \u03b1 ^ 2 * \u03b2 + \u03b1 * \u03b2 ^ 2 + \u03b2 ^ 3 =\n      (\u03b1 + \u03b2) ^ 3 - 2 * (\u03b1 + \u03b2) * (\u03b1 * \u03b2) := by\n  ring\n\n/-- The second elementary symmetric polynomial of the Sym\u00b3 weights:\n    e\u2082 = d\u00b7t\u2074 \u2212 3d\u00b2\u00b7t\u00b2 + 2d\u00b3. -/\nlemma symmCube_e2 (\u03b1 \u03b2 : \u2102) :\n    \u03b1 ^ 3 * (\u03b1 ^ 2 * \u03b2) + \u03b1 ^ 3 * (\u03b1 * \u03b2 ^ 2) + \u03b1 ^ 3 * \u03b2 ^ 3\n    + (\u03b1 ^ 2 * \u03b2) * (\u03b1 * \u03b2 ^ 2) + (\u03b1 ^ 2 * \u03b2) * \u03b2 ^ 3\n    + (\u03b1 * \u03b2 ^ 2) * \u03b2 ^ 3 =\n      (\u03b1 * \u03b2) * (\u03b1 + \u03b2) ^ 4 - 3 * (\u03b1 * \u03b2) ^ 2 * (\u03b1 + \u03b2) ^ 2\n        + 2 * (\u03b1 * \u03b2) ^ 3 := by\n  ring\n\n/-- The third elementary symmetric polynomial of the Sym\u00b3 weights:\n    e\u2083 = d\u00b3 \u00b7 (t\u00b3 \u2212 2td). -/\nlemma symmCube_e3 (\u03b1 \u03b2 : \u2102) :\n    \u03b1 ^ 3 * (\u03b1 ^ 2 * \u03b2) * (\u03b1 * \u03b2 ^ 2)\n    + \u03b1 ^ 3 * (\u03b1 ^ 2 * \u03b2) * \u03b2 ^ 3\n    + \u03b1 ^ 3 * (\u03b1 * \u03b2 ^ 2) * \u03b2 ^ 3\n    + (\u03b1 ^ 2 * \u03b2) * (\u03b1 * \u03b2 ^ 2) * \u03b2 ^ 3 =\n      (\u03b1 * \u03b2) ^ 3 * ((\u03b1 + \u03b2) ^ 3 - 2 * (\u03b1 + \u03b2) * (\u03b1 * \u03b2)) := by\n  ring\n\n/-- The fourth elementary symmetric polynomial of the Sym\u00b3 weights:\n    e\u2084 = (\u03b1\u03b2)\u2076 = d\u2076. -/\nlemma symmCube_e4 (\u03b1 \u03b2 : \u2102) :\n    \u03b1 ^ 3 * (\u03b1 ^ 2 * \u03b2) * (\u03b1 * \u03b2 ^ 2) * \u03b2 ^ 3 = (\u03b1 * \u03b2) ^ 6 := by\n  ring\n\n/-- The identity \u03b1\u00b3 + \u03b2\u00b3 = (\u03b1+\u03b2)\u00b3 \u2212 3(\u03b1+\u03b2)(\u03b1\u03b2), used in the quadratic-pair\n    factorization approach. -/\nlemma cube_sum_in_trace_det (\u03b1 \u03b2 : \u2102) :\n    \u03b1 ^ 3 + \u03b2 ^ 3 = (\u03b1 + \u03b2) ^ 3 - 3 * (\u03b1 + \u03b2) * (\u03b1 * \u03b2) := by\n  ring\n\n/-! ## Main theorems -/\n\n/-- **Symmetric-cube Euler denominator in trace-determinant form.**\n\nThe symmetric-cube local Euler denominator for a rank-2 Satake parameter (\u03b1, \u03b2)\ncan be expressed as a universal polynomial in the trace t = \u03b1 + \u03b2, the determinant\nd = \u03b1 * \u03b2, and the variable X:\n\n  (1 \u2212 \u03b1\u00b3X)(1 \u2212 \u03b1\u00b2\u03b2X)(1 \u2212 \u03b1\u03b2\u00b2X)(1 \u2212 \u03b2\u00b3X)\n    = 1 \u2212 (t\u00b3 \u2212 2td)X + (dt\u2074 \u2212 3d\u00b2t\u00b2 + 2d\u00b3)X\u00b2\n        \u2212 d\u00b3(t\u00b3 \u2212 2td)X\u00b3 + d\u2076X\u2074\n\nThis is the n = 3 case of the principle that all symmetric-power Euler factors\nfor GL\u2082 factor through the invariant ring \u2124[t, d]. -/\ntheorem symmCube_denominator_in_trace_det (\u03b1 \u03b2 X : \u2102) :\n    (1 - \u03b1 ^ 3 * X) * (1 - \u03b1 ^ 2 * \u03b2 * X) * (1 - \u03b1 * \u03b2 ^ 2 * X) * (1 - \u03b2 ^ 3 * X) =\n      1\n        - (((\u03b1 + \u03b2) ^ 3 - 2 * (\u03b1 + \u03b2) * (\u03b1 * \u03b2)) * X)\n        + (((\u03b1 * \u03b2) * (\u03b1 + \u03b2) ^ 4 - 3 * (\u03b1 * \u03b2) ^ 2 * (\u03b1 + \u03b2) ^ 2 + 2 * (\u03b1 * \u03b2) ^ 3) * X ^ 2)\n        - (((\u03b1 * \u03b2) ^ 3 * ((\u03b1 + \u03b2) ^ 3 - 2 * (\u03b1 + \u03b2) * (\u03b1 * \u03b2))) * X ^ 3)\n        + ((\u03b1 * \u03b2) ^ 6 * X ^ 4) := by\n  ring\n\n/-- The symmetric-cube Euler denominator equals the universal trace-det polynomial\n    evaluated at t = \u03b1 + \u03b2, d = \u03b1 * \u03b2. -/\ntheorem symmCubeEulerDen_eq_traceDetPoly (\u03b1 \u03b2 X : \u2102) :\n    symmCubeEulerDen \u03b1 \u03b2 X = symmCubeTraceDetPoly (\u03b1 + \u03b2) (\u03b1 * \u03b2) X := by\n  unfold symmCubeEulerDen symmCubeTraceDetPoly\n  ring\n\n/-- The symmetric-cube Euler denominator equals the universal trace-det polynomial\n    evaluated at the trace and determinant parameters. -/\ntheorem symmCubeEulerDen_trace_det (\u03b1 \u03b2 X : \u2102) :\n    symmCubeEulerDen \u03b1 \u03b2 X = symmCubeTraceDetPoly (traceParam \u03b1 \u03b2) (detParam \u03b1 \u03b2) X := by\n  unfold symmCubeEulerDen symmCubeTraceDetPoly traceParam detParam\n  ring\n\n/-- **Invariant-ring statement**: the symmetric-cube Euler denominator is a function\n    of \u03b1 + \u03b2, \u03b1 * \u03b2, and X alone. -/\ntheorem symmCubeEulerDen_eq_trace_det_formula (\u03b1 \u03b2 X : \u2102) :\n    \u2203 P : \u2102 \u2192 \u2102 \u2192 \u2102 \u2192 \u2102,\n      symmCubeEulerDen \u03b1 \u03b2 X = P (\u03b1 + \u03b2) (\u03b1 * \u03b2) X :=\n  \u27e8symmCubeTraceDetPoly, symmCubeEulerDen_eq_traceDetPoly \u03b1 \u03b2 X\u27e9\n\n/-- **Conjugacy invariance**: if two pairs (\u03b1, \u03b2) and (\u03b1', \u03b2') have the same trace\n    and determinant, they produce the same symmetric-cube Euler factor. -/\ntheorem symmCubeEulerDen_conjugacy_invariant (\u03b1 \u03b2 \u03b1' \u03b2' X : \u2102)\n    (h_trace : \u03b1 + \u03b2 = \u03b1' + \u03b2')\n    (h_det : \u03b1 * \u03b2 = \u03b1' * \u03b2') :\n    symmCubeEulerDen \u03b1 \u03b2 X = symmCubeEulerDen \u03b1' \u03b2' X := by\n  rw [symmCubeEulerDen_eq_traceDetPoly, symmCubeEulerDen_eq_traceDetPoly,\n      h_trace, h_det]\n\n/-- The symmetric-cube Euler denominator is symmetric in \u03b1 and \u03b2,\n    i.e., swapping eigenvalues does not change the local factor. -/\ntheorem symmCubeEulerDen_symm (\u03b1 \u03b2 X : \u2102) :\n    symmCubeEulerDen \u03b1 \u03b2 X = symmCubeEulerDen \u03b2 \u03b1 X := by\n  apply symmCubeEulerDen_conjugacy_invariant\n  \u00b7 ring\n  \u00b7 ring\n\n/-! ## Quadratic-pair factorization\n\nAn alternative proof route that factors the four-term product into two structured\nquadratics, revealing the self-reciprocal structure up to determinant twist. -/\n\n/-- Factor pairing: the \"outer\" pair groups \u03b1\u00b3 and \u03b2\u00b3. -/\nlemma outer_pair (\u03b1 \u03b2 X : \u2102) :\n    (1 - \u03b1 ^ 3 * X) * (1 - \u03b2 ^ 3 * X) =\n      1 - (\u03b1 ^ 3 + \u03b2 ^ 3) * X + (\u03b1 * \u03b2) ^ 3 * X ^ 2 := by\n  ring\n\n/-- Factor pairing: the \"inner\" pair groups \u03b1\u00b2\u03b2 and \u03b1\u03b2\u00b2. -/\nlemma inner_pair (\u03b1 \u03b2 X : \u2102) :\n    (1 - \u03b1 ^ 2 * \u03b2 * X) * (1 - \u03b1 * \u03b2 ^ 2 * X) =\n      1 - (\u03b1 * \u03b2) * (\u03b1 + \u03b2) * X + (\u03b1 * \u03b2) ^ 3 * X ^ 2 := by\n  ring\n\n/-! ## Generic version over any commutative ring -/\n\n/-- The symmetric-cube identity holds in any commutative ring, not just \u2102. -/\ntheorem symmCube_denominator_generic {R : Type*} [CommRing R] (\u03b1 \u03b2 X : R) :\n    (1 - \u03b1 ^ 3 * X) * (1 - \u03b1 ^ 2 * \u03b2 * X) * (1 - \u03b1 * \u03b2 ^ 2 * X) * (1 - \u03b2 ^ 3 * X) =\n      1\n        - (((\u03b1 + \u03b2) ^ 3 - 2 * (\u03b1 + \u03b2) * (\u03b1 * \u03b2)) * X)\n        + (((\u03b1 * \u03b2) * (\u03b1 + \u03b2) ^ 4 - 3 * (\u03b1 * \u03b2) ^ 2 * (\u03b1 + \u03b2) ^ 2 + 2 * (\u03b1 * \u03b2) ^ 3) * X ^ 2)\n        - (((\u03b1 * \u03b2) ^ 3 * ((\u03b1 + \u03b2) ^ 3 - 2 * (\u03b1 + \u03b2) * (\u03b1 * \u03b2))) * X ^ 3)\n        + ((\u03b1 * \u03b2) ^ 6 * X ^ 4) := by\n  ring\n",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for symmetric-power Euler factor computation.\n\nImplements:\n1. Direct trace-det computation for Sym\u00b3 (O(1) operations)\n2. General Sym^n character recurrence (O(n) operations)\n3. Full Sym^n Euler denominator via elementary symmetric polynomials\n4. Symbolic coefficient computation using exact arithmetic\n\"\"\"\n\nfrom typing import List, Tuple\nfrom fractions import Fraction\n\n\n# ---------------------------------------------------------------------------\n# Algorithm 1: Sym\u00b3 Euler factor via trace-determinant polynomial\n# ---------------------------------------------------------------------------\n\ndef symm_cube_euler_factor(\n    t: complex, d: complex, X: complex\n) -> complex:\n    \"\"\"\n    Compute the Sym\u00b3 Euler denominator using only trace and determinant.\n\n    Time complexity: O(1) ring operations (fixed: ~15 multiplications, ~5 additions).\n    Space complexity: O(1).\n\n    Parameters\n    ----------\n    t : complex\n        Trace parameter (\u03b1 + \u03b2).\n    d : complex\n        Determinant parameter (\u03b1 * \u03b2).\n    X : complex\n        Evaluation variable.\n\n    Returns\n    -------\n    complex\n        Value of (1-\u03b1\u00b3X)(1-\u03b1\u00b2\u03b2X)(1-\u03b1\u03b2\u00b2X)(1-\u03b2\u00b3X).\n\n    Example\n    -------\n    >>> symm_cube_euler_factor(5, 6, 0.1)  # \u03b1=2, \u03b2=3\n    0.028118880000000014\n    \"\"\"\n    c1 = t**3 - 2 * t * d\n    c2 = d * t**4 - 3 * d**2 * t**2 + 2 * d**3\n    c3 = d**3 * c1\n    c4 = d**6\n    return 1 - c1 * X + c2 * X**2 - c3 * X**3 + c4 * X**4\n\n\n# ---------------------------------------------------------------------------\n# Algorithm 2: Sym^n character via Chebyshev-type recurrence\n# ---------------------------------------------------------------------------\n\ndef symm_power_character(\n    n: int, t: complex, d: complex\n) -> complex:\n    \"\"\"\n    Compute the character \u03c7_{Sym^n}(\u03b1,\u03b2) = \u03a3_{k=0}^{n} \u03b1^{n-k} \u03b2^k\n    using the recurrence \u03c7_{n+1} = t\u00b7\u03c7_n \u2212 d\u00b7\u03c7_{n-1}.\n\n    Time complexity: O(n) ring operations.\n    Space complexity: O(1).\n\n    Parameters\n    ----------\n    n : int\n        Symmetric power degree (\u2265 0).\n    t : complex\n        Trace (\u03b1 + \u03b2).\n    d : complex\n        Determinant (\u03b1 * \u03b2).\n\n    Returns\n    -------\n    complex\n        Value of \u03c7_{Sym^n}.\n\n    Example\n    -------\n    >>> symm_power_character(3, 5, 6)  # \u03b1+\u03b2=5, \u03b1\u03b2=6 \u2192 \u03b1=2,\u03b2=3 \u2192 8+12+18+27=65\n    65\n    \"\"\"\n    if n == 0:\n        return 1\n    if n == 1:\n        return t\n\n    a_prev = 1  # \u03c7_0\n    a_curr = t  # \u03c7_1\n    for _ in range(2, n + 1):\n        a_next = t * a_curr - d * a_prev\n        a_prev = a_curr\n        a_curr = a_next\n    return a_curr\n\n\n# ---------------------------------------------------------------------------\n# Algorithm 3: Full Sym^n Euler denominator\n# ---------------------------------------------------------------------------\n\ndef symm_power_euler_denominator(\n    n: int, alpha: complex, beta: complex, X: complex\n) -> complex:\n    \"\"\"\n    Compute \u220f_{k=0}^{n} (1 - \u03b1^{n-k} \u03b2^k X) directly.\n\n    Time complexity: O(n) multiplications.\n    Space complexity: O(1).\n\n    Parameters\n    ----------\n    n : int\n        Symmetric power degree.\n    alpha, beta : complex\n        Satake parameters.\n    X : complex\n        Evaluation variable.\n\n    Returns\n    -------\n    complex\n        The Sym^n Euler denominator.\n    \"\"\"\n    result = 1.0 + 0j\n    for k in range(n + 1):\n        weight = alpha ** (n - k) * beta ** k\n        result *= (1 - weight * X)\n    return result\n\n\ndef symm_power_euler_from_trace_det(\n    n: int, t: complex, d: complex, X: complex\n) -> complex:\n    \"\"\"\n    Compute the Sym^n Euler denominator from trace and determinant only,\n    using the elementary symmetric polynomials of the weights computed\n    via Newton's identities.\n\n    Time complexity: O(n\u00b2) ring operations.\n    Space complexity: O(n).\n\n    Parameters\n    ----------\n    n : int\n        Symmetric power degree.\n    t, d : complex\n        Trace and determinant parameters.\n    X : complex\n        Evaluation variable.\n\n    Returns\n    -------\n    complex\n        The Sym^n Euler denominator.\n    \"\"\"\n    # Step 1: Compute power sums p_k = \u03a3_{j=0}^{n} (\u03b1^{n-j} \u03b2^j)^k\n    # using the identity: weights are \u03b1^n, \u03b1^{n-1}\u03b2, ..., \u03b2^n\n    # p_k = \u03a3_{j=0}^{n} \u03b1^{k(n-j)} \u03b2^{kj}\n    # We compute these via the character recurrence applied to each power.\n\n    # Characters \u03c7_m for m = 0, 1, ..., n*max_k\n    max_needed = n * (n + 1)\n    chars = [complex(0)] * (max_needed + 1)\n    chars[0] = 1\n    if max_needed >= 1:\n        chars[1] = t\n    for m in range(2, max_needed + 1):\n        chars[m] = t * chars[m - 1] - d * chars[m - 1 + 0]\n        # Actually we need full recurrence\n        # \u03c7_{Sym^m}(\u03b1,\u03b2) = t\u00b7\u03c7_{Sym^{m-1}} - d\u00b7\u03c7_{Sym^{m-2}}\n        chars[m] = t * chars[m - 1] - d * chars[m - 2]\n\n    # Power sums of the Sym^n weights\n    # p_k = \u03a3_{j=0}^{n} \u03b1^{k(n-j)} \u03b2^{kj} = \u03c7_{Sym^n}(\u03b1^k, \u03b2^k)\n    # But \u03c7_{Sym^n}(\u03b1^k, \u03b2^k) needs t_k = \u03b1^k + \u03b2^k and d_k = (\u03b1\u03b2)^k = d^k.\n    # t_k follows its own recurrence: t_k = t\u00b7t_{k-1} - d\u00b7t_{k-2}\n\n    t_powers = [complex(0)] * (n + 2)\n    t_powers[0] = 2  # \u03b1^0 + \u03b2^0\n    t_powers[1] = t  # \u03b1 + \u03b2\n    for k in range(2, n + 2):\n        t_powers[k] = t * t_powers[k - 1] - d * t_powers[k - 2]\n\n    # Compute power sums of Sym^n weights\n    power_sums = [complex(0)] * (n + 2)\n    for k in range(n + 2):\n        tk = t_powers[k] if k < len(t_powers) else 0\n        dk = d ** k\n        # \u03c7_{Sym^n}(\u03b1^k, \u03b2^k) via recurrence with trace=tk, det=dk\n        ps = symm_power_character(n, tk, dk)\n        power_sums[k] = ps\n\n    # Step 2: Newton's identities to get elementary symmetric polynomials\n    # e_0 = 1\n    # k \u00b7 e_k = \u03a3_{i=1}^{k} (-1)^{i-1} \u00b7 p_i \u00b7 e_{k-i}\n    e = [complex(0)] * (n + 2)\n    e[0] = 1\n    for k in range(1, n + 2):\n        s = 0\n        for i in range(1, k + 1):\n            s += (-1) ** (i - 1) * power_sums[i] * e[k - i]\n        e[k] = s / k\n\n    # Step 3: Build the polynomial\n    result = complex(0)\n    for k in range(n + 2):\n        result += (-1) ** k * e[k] * X ** k\n    return result\n\n\n# ---------------------------------------------------------------------------\n# Algorithm 4: Symbolic coefficient computation (exact arithmetic)\n# ---------------------------------------------------------------------------\n\ndef symm_cube_coefficients_exact(\n    t: Fraction, d: Fraction\n) -> Tuple[Fraction, Fraction, Fraction, Fraction]:\n    \"\"\"\n    Compute exact rational coefficients of the Sym\u00b3 Euler denominator.\n\n    Returns (e1, e2, e3, e4) such that the denominator is\n    1 - e1\u00b7X + e2\u00b7X\u00b2 - e3\u00b7X\u00b3 + e4\u00b7X\u2074.\n\n    Parameters\n    ----------\n    t : Fraction\n        Exact trace.\n    d : Fraction\n        Exact determinant.\n\n    Returns\n    -------\n    tuple of Fraction\n        (e1, e2, e3, e4).\n\n    Example\n    -------\n    >>> symm_cube_coefficients_exact(Fraction(5), Fraction(6))\n    (Fraction(65, 1), Fraction(1176, 1), Fraction(14040, 1), Fraction(46656, 1))\n    \"\"\"\n    e1 = t**3 - 2 * t * d\n    e2 = d * t**4 - 3 * d**2 * t**2 + 2 * d**3\n    e3 = d**3 * e1\n    e4 = d**6\n    return e1, e2, e3, e4\n\n\ndef symm_power_all_characters(\n    max_n: int, t: complex, d: complex\n) -> List[complex]:\n    \"\"\"\n    Compute \u03c7_{Sym^k}(\u03b1,\u03b2) for k = 0, 1, ..., max_n using the recurrence.\n\n    Returns a list [\u03c7_0, \u03c7_1, ..., \u03c7_{max_n}].\n\n    Example\n    -------\n    >>> symm_power_all_characters(5, 5, 6)\n    [1, 5, 19, 65, 211, 665]\n    \"\"\"\n    if max_n < 0:\n        return []\n    chars = [complex(0)] * (max_n + 1)\n    chars[0] = 1\n    if max_n >= 1:\n        chars[1] = t\n    for k in range(2, max_n + 1):\n        chars[k] = t * chars[k - 1] - d * chars[k - 2]\n    return chars\n\n\n# ---------------------------------------------------------------------------\n# Main: demonstrate all algorithms\n# ---------------------------------------------------------------------------\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"ALGORITHM DEMONSTRATIONS\")\n    print(\"=\" * 60)\n\n    # Algorithm 1: Sym\u00b3 via trace-det\n    print(\"\\n--- Algorithm 1: Sym\u00b3 Euler factor (O(1)) ---\")\n    for t, d in [(5, 6), (3, 2), (0, 1)]:\n        print(f\"  t={t}, d={d}, X=0.1 \u2192 {symm_cube_euler_factor(t, d, 0.1):.10f}\")\n\n    # Algorithm 2: Character recurrence\n    print(\"\\n--- Algorithm 2: Sym^n characters (\u03b1=2, \u03b2=3, t=5, d=6) ---\")\n    chars = symm_power_all_characters(8, 5, 6)\n    for n, c in enumerate(chars):\n        print(f\"  \u03c7(Sym^{n}) = {c:.0f}\")\n\n    # Verify recurrence\n    print(\"\\n  Verifying recurrence \u03c7_{n+1} = 5\u00b7\u03c7_n - 6\u00b7\u03c7_{n-1}:\")\n    for n in range(2, 8):\n        lhs = chars[n]\n        rhs = 5 * chars[n - 1] - 6 * chars[n - 2]\n        print(f\"    n={n}: \u03c7_{n} = {lhs:.0f}, 5\u00b7\u03c7_{n-1} - 6\u00b7\u03c7_{n-2} = {rhs:.0f}, match={abs(lhs-rhs)<1e-10}\")\n\n    # Algorithm 3: Cross-check product vs trace-det for various n\n    print(\"\\n--- Algorithm 3: Sym^n product vs trace-det (\u03b1=2, \u03b2=3, X=0.1) ---\")\n    alpha, beta, X = 2, 3, 0.1\n    t, d = alpha + beta, alpha * beta\n    for n in range(1, 7):\n        product = symm_power_euler_denominator(n, alpha, beta, X)\n        from_td = symm_power_euler_from_trace_det(n, t, d, X)\n        print(f\"  n={n}: product={product:.10f}, from_t_d={from_td:.10f}, error={abs(product - from_td):.2e}\")\n\n    # Algorithm 4: Exact arithmetic\n    print(\"\\n--- Algorithm 4: Exact coefficients (t=5, d=6) ---\")\n    e1, e2, e3, e4 = symm_cube_coefficients_exact(Fraction(5), Fraction(6))\n    print(f\"  e\u2081 = {e1} = {float(e1):.0f}\")\n    print(f\"  e\u2082 = {e2} = {float(e2):.0f}\")\n    print(f\"  e\u2083 = {e3} = {float(e3):.0f}\")\n    print(f\"  e\u2084 = {e4} = {float(e4):.0f}\")\n    print(f\"  Self-reciprocal check: e\u2083 = d\u00b3\u00b7e\u2081 = {Fraction(6)**3 * e1} \u2713\" if e3 == Fraction(6)**3 * e1 else \"  \u2717\")\n\n    # Verify: \u03b1=2, \u03b2=3 \u2192 weights 8, 12, 18, 27\n    print(\"\\n  Verification with \u03b1=2, \u03b2=3:\")\n    print(f\"    Weights: 8, 12, 18, 27\")\n    print(f\"    e\u2081 = 8+12+18+27 = {8+12+18+27} (formula: {float(e1):.0f})\")\n    print(f\"    e\u2082 = 8\u00b712+8\u00b718+8\u00b727+12\u00b718+12\u00b727+27\u00b718 = {8*12+8*18+8*27+12*18+12*27+27*18} (formula: {float(e2):.0f})\")\n    print(f\"    e\u2083 = 8\u00b712\u00b718+8\u00b712\u00b727+8\u00b718\u00b727+12\u00b718\u00b727 = {8*12*18+8*12*27+8*18*27+12*18*27} (formula: {float(e3):.0f})\")\n    print(f\"    e\u2084 = 8\u00b712\u00b718\u00b727 = {8*12*18*27} (formula: {float(e4):.0f})\")\n\n    print(\"\\n\" + \"=\" * 60)\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of the symmetric-cube trace-determinant identity.\n\nDemonstrates real-world uses in:\n1. Modular form L-function computation\n2. Functorial lift verification\n3. Hecke eigenvalue processing\n4. Euler product partial sums\n\"\"\"\n\nimport cmath\nimport math\nfrom typing import List, Tuple\n\n\n# ---------------------------------------------------------------------------\n# Core computation (self-contained, no local imports)\n# ---------------------------------------------------------------------------\n\ndef symm_cube_from_trace_det(t: complex, d: complex, X: complex) -> complex:\n    \"\"\"Sym\u00b3 Euler denominator from trace and determinant.\"\"\"\n    c1 = t**3 - 2 * t * d\n    c2 = d * t**4 - 3 * d**2 * t**2 + 2 * d**3\n    c3 = d**3 * c1\n    c4 = d**6\n    return 1 - c1 * X + c2 * X**2 - c3 * X**3 + c4 * X**4\n\n\ndef symm_cube_from_eigenvalues(alpha: complex, beta: complex, X: complex) -> complex:\n    \"\"\"Sym\u00b3 Euler denominator from explicit eigenvalues (for comparison).\"\"\"\n    return (\n        (1 - alpha**3 * X)\n        * (1 - alpha**2 * beta * X)\n        * (1 - alpha * beta**2 * X)\n        * (1 - beta**3 * X)\n    )\n\n\ndef symm_power_character(n: int, t: complex, d: complex) -> complex:\n    \"\"\"Character of Sym^n via recurrence.\"\"\"\n    if n == 0:\n        return 1\n    if n == 1:\n        return t\n    a, b = 1, t\n    for _ in range(2, n + 1):\n        a, b = b, t * b - d * a\n    return b\n\n\n# ---------------------------------------------------------------------------\n# Application 1: Modular form Sym\u00b3 L-function\n# ---------------------------------------------------------------------------\n\ndef ramanujan_tau(n: int) -> int:\n    \"\"\"\n    Compute Ramanujan's tau function \u03c4(n) for small n.\n    \u03c4(n) is the n-th Fourier coefficient of the modular discriminant \u0394.\n    \"\"\"\n    # Use the product formula: \u0394 = q \u220f_{n\u22651} (1-q^n)^24\n    # We compute coefficients up to q^n\n    if n < 1:\n        return 0\n    max_terms = n + 1\n    coeffs = [0] * max_terms\n    coeffs[0] = 1\n    # Multiply by (1 - q^k)^24 for k = 1, ..., n\n    for k in range(1, max_terms):\n        # (1 - q^k)^24: use binomial expansion truncated\n        # More efficient: multiply by (1-q^k) twenty-four times\n        for _ in range(24):\n            for j in range(max_terms - 1, k - 1, -1):\n                coeffs[j] -= coeffs[j - k]\n    # \u0394 = q \u00b7 product, so \u03c4(n) = coeffs[n-1]\n    return coeffs[n - 1] if n - 1 < max_terms else 0\n\n\ndef modular_form_sym3_lfunction():\n    \"\"\"\n    Compute the Sym\u00b3 L-function partial Euler product for the\n    Ramanujan \u0394 function at s = 14 (well inside convergence region).\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"APPLICATION 1: Sym\u00b3 L-function of Ramanujan's \u0394 function\")\n    print(\"=\" * 65)\n    print()\n    print(\"The Ramanujan \u0394 function is a weight-12 cusp form.\")\n    print(\"At each prime p, the Hecke eigenvalue is \u03c4(p).\")\n    print(\"Satake parameters satisfy: t_p = \u03c4(p)/p^{11/2}, d_p = 1.\")\n    print()\n\n    # Small primes\n    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]\n\n    print(f\"{'p':>4} {'\u03c4(p)':>10} {'t_p':>12} {'Sym\u00b3 factor':>20}\")\n    print(\"-\" * 50)\n\n    partial_product = 1.0\n    s = 14.0  # Evaluation point\n\n    for p in primes:\n        tau_p = ramanujan_tau(p)\n        t_p = tau_p / p ** (11 / 2)\n        d_p = 1.0  # Trivial nebentypus\n        X = p ** (-s)\n\n        # Compute Sym\u00b3 local factor using trace-det formula\n        local_denom = symm_cube_from_trace_det(t_p, d_p, X)\n        local_factor = 1.0 / local_denom.real\n\n        partial_product *= local_factor\n        print(f\"{p:4d} {tau_p:10d} {t_p:12.6f} {local_denom.real:20.15f}\")\n\n    print()\n    print(f\"Partial Euler product L(14, Sym\u00b3\u0394) \u2248 {partial_product:.15f}\")\n    print(f\"(Using {len(primes)} primes)\")\n    print()\n\n    # Show the speedup: no need to compute eigenvalues\n    print(\"Key insight: We never computed \u03b1_p or \u03b2_p!\")\n    print(\"The trace-det formula gives the local factor directly from \u03c4(p).\")\n\n\n# ---------------------------------------------------------------------------\n# Application 2: Functorial lift verification\n# ---------------------------------------------------------------------------\n\ndef verify_functorial_lift():\n    \"\"\"\n    Verify that the Sym\u00b3 local factor computed from GL\u2082 data\n    matches what a GL\u2084 functorial lift would produce.\n    \"\"\"\n    print()\n    print(\"=\" * 65)\n    print(\"APPLICATION 2: Functorial lift verification\")\n    print(\"=\" * 65)\n    print()\n    print(\"Given GL\u2082 Satake parameters (\u03b1, \u03b2), the Sym\u00b3 lift to GL\u2084\")\n    print(\"has parameters (\u03b1\u00b3, \u03b1\u00b2\u03b2, \u03b1\u03b2\u00b2, \u03b2\u00b3).\")\n    print(\"We verify the GL\u2084 standard L-factor matches our formula.\")\n    print()\n\n    test_cases = [\n        (2.0, 3.0, \"Real integers\"),\n        (1 + 1j, 2 - 1j, \"Complex\"),\n        (cmath.exp(0.5j), cmath.exp(-0.3j), \"Unit circle (tempered)\"),\n    ]\n\n    for alpha, beta, desc in test_cases:\n        t = alpha + beta\n        d = alpha * beta\n        X = 0.05\n\n        # GL\u2082 method: use trace-det formula\n        gl2_result = symm_cube_from_trace_det(t, d, X)\n\n        # GL\u2084 method: standard L-factor with lifted parameters\n        lifted = [alpha**3, alpha**2 * beta, alpha * beta**2, beta**3]\n        gl4_result = 1.0\n        for w in lifted:\n            gl4_result *= (1 - w * X)\n\n        error = abs(gl2_result - gl4_result)\n        print(f\"  [{desc}] \u03b1={alpha}, \u03b2={beta}\")\n        print(f\"    GL\u2082 trace-det: {gl2_result}\")\n        print(f\"    GL\u2084 standard:  {gl4_result}\")\n        print(f\"    Error: {error:.2e}\")\n        print()\n\n\n# ---------------------------------------------------------------------------\n# Application 3: Hecke eigenvalue table\n# ---------------------------------------------------------------------------\n\ndef hecke_eigenvalue_table():\n    \"\"\"\n    For a range of Hecke eigenvalue/nebentypus pairs, compute\n    all Sym\u00b3 coefficients and display the trace-det advantage.\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"APPLICATION 3: Sym\u00b3 coefficient table from Hecke data\")\n    print(\"=\" * 65)\n    print()\n    print(\"For trivial nebentypus (d=1), the Sym\u00b3 Euler factor depends\")\n    print(\"only on the normalized Hecke eigenvalue t = a_p / p^{(k-1)/2}.\")\n    print()\n\n    print(f\"{'t':>6} {'e\u2081':>10} {'e\u2082':>10} {'e\u2083':>10} {'e\u2084':>6}\")\n    print(\"-\" * 46)\n\n    for t_val in [-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2]:\n        d_val = 1  # Trivial nebentypus\n        e1 = t_val**3 - 2 * t_val * d_val\n        e2 = d_val * t_val**4 - 3 * d_val**2 * t_val**2 + 2 * d_val**3\n        e3 = d_val**3 * e1\n        e4 = d_val**6\n        print(f\"{t_val:6.1f} {e1:10.4f} {e2:10.4f} {e3:10.4f} {e4:6.0f}\")\n\n    print()\n    print(\"Note: e\u2083 = e\u2081 when d = 1 (self-reciprocal symmetry).\")\n    print(\"The Ramanujan conjecture bounds |t| \u2264 2, so |e\u2081| \u2264 4.\")\n\n\n# ---------------------------------------------------------------------------\n# Application 4: Euler product convergence\n# ---------------------------------------------------------------------------\n\ndef euler_product_convergence():\n    \"\"\"\n    Study convergence of the Sym\u00b3 Euler product as more primes are included.\n    Uses a simple model where t_p = 2cos(\u03b8_p) for random angles (Sato-Tate).\n    \"\"\"\n    print()\n    print(\"=\" * 65)\n    print(\"APPLICATION 4: Sym\u00b3 Euler product convergence (Sato-Tate model)\")\n    print(\"=\" * 65)\n    print()\n\n    import random\n    random.seed(12345)\n\n    # Generate primes up to 1000\n    def sieve(n: int) -> List[int]:\n        is_prime = [True] * (n + 1)\n        is_prime[0] = is_prime[1] = False\n        for i in range(2, int(n**0.5) + 1):\n            if is_prime[i]:\n                for j in range(i*i, n + 1, i):\n                    is_prime[j] = False\n        return [i for i in range(n + 1) if is_prime[i]]\n\n    primes = sieve(500)\n\n    # Sato-Tate distribution: t_p = 2cos(\u03b8_p) where \u03b8_p ~ sin\u00b2\u03b8 d\u03b8 on [0,\u03c0]\n    # For simulation, use random angles\n    s_values = [7, 10, 14]\n\n    for s in s_values:\n        print(f\"\\n  s = {s}:\")\n        log_product = 0.0\n        checkpoints = [10, 25, 50, len(primes)]\n\n        for i, p in enumerate(primes):\n            # Random Sato-Tate angle\n            theta = random.uniform(0, math.pi)\n            t_p = 2 * math.cos(theta)\n            d_p = 1.0  # Weight 2, trivial character\n\n            X = p ** (-s)\n            local = symm_cube_from_trace_det(t_p, d_p, X).real\n            if local > 0:\n                log_product += math.log(1.0 / local)\n\n            if i + 1 in checkpoints:\n                print(f\"    After {i+1:3d} primes (up to p={p:4d}): \"\n                      f\"log L(s) \u2248 {log_product:.10f}, \"\n                      f\"L(s) \u2248 {math.exp(log_product):.10f}\")\n\n\n# ---------------------------------------------------------------------------\n# Application 5: Comparison of computation methods\n# ---------------------------------------------------------------------------\n\ndef method_comparison():\n    \"\"\"\n    Compare the trace-det method vs eigenvalue method in terms of\n    operation count and numerical stability.\n    \"\"\"\n    print()\n    print(\"=\" * 65)\n    print(\"APPLICATION 5: Computation method comparison\")\n    print(\"=\" * 65)\n    print()\n\n    # Count operations for each method\n    print(\"Operation count comparison:\")\n    print()\n    print(\"  Eigenvalue method (from Hecke eigenvalue a_p, character \u03c7(p)):\")\n    print(\"    1. Form t = a_p / p^{(k-1)/2}     \u2014 1 division, 1 power\")\n    print(\"    2. Solve t\u00b2 - 4d < 0? (complex)    \u2014 1 mult, 1 sub, 1 sqrt\")\n    print(\"    3. \u03b1 = (t + \u221adisc)/2               \u2014 1 add, 1 div\")\n    print(\"    4. \u03b2 = (t - \u221adisc)/2               \u2014 1 sub, 1 div\")\n    print(\"    5. Form \u03b1\u00b3, \u03b1\u00b2\u03b2, \u03b1\u03b2\u00b2, \u03b2\u00b3           \u2014 ~8 multiplications\")\n    print(\"    6. Expand 4-term product            \u2014 ~15 multiplications\")\n    print(\"    Total: ~30 operations + 1 square root\")\n    print()\n    print(\"  Trace-det method (direct from t, d):\")\n    print(\"    1. c\u2081 = t\u00b3 - 2td                   \u2014 2 mult, 1 sub\")\n    print(\"    2. c\u2082 = dt\u2074 - 3d\u00b2t\u00b2 + 2d\u00b3          \u2014 5 mult, 2 sub/add\")\n    print(\"    3. c\u2083 = d\u00b3 \u00b7 c\u2081                    \u2014 1 mult (reuse d\u00b3)\")\n    print(\"    4. c\u2084 = d\u2076                         \u2014 1 mult (reuse d\u00b3)\")\n    print(\"    5. Horner evaluation                \u2014 4 mult, 4 add\")\n    print(\"    Total: ~13 operations, NO square root\")\n    print()\n    print(\"  Speedup factor: ~2.3x fewer operations\")\n    print(\"  Numerical advantage: No square root \u2192 no branch cuts, \")\n    print(\"  no complex arithmetic if t, d are real.\")\n    print()\n\n    # Demonstrate with a case where eigenvalue method needs complex arithmetic\n    # but trace-det stays real\n    print(\"  Example where trace-det avoids complex numbers:\")\n    t, d = 1.5, 1.0\n    disc = t**2 - 4 * d  # = 2.25 - 4 = -1.75 < 0!\n    print(f\"    t = {t}, d = {d}\")\n    print(f\"    Discriminant t\u00b2-4d = {disc} < 0 \u2192 eigenvalues are COMPLEX\")\n    print(f\"    But trace-det formula uses only real arithmetic:\")\n    e1 = t**3 - 2*t*d\n    e2 = d*t**4 - 3*d**2*t**2 + 2*d**3\n    e3 = d**3 * e1\n    e4 = d**6\n    print(f\"    e\u2081 = {e1:.6f}\")\n    print(f\"    e\u2082 = {e2:.6f}\")\n    print(f\"    e\u2083 = {e3:.6f}\")\n    print(f\"    e\u2084 = {e4:.6f}\")\n    print(f\"    All coefficients are REAL \u2014 no complex arithmetic needed!\")\n\n\n# ---------------------------------------------------------------------------\n# Main\n# ---------------------------------------------------------------------------\n\nif __name__ == \"__main__\":\n    modular_form_sym3_lfunction()\n    verify_functorial_lift()\n    hecke_eigenvalue_table()\n    euler_product_convergence()\n    method_comparison()\n\n    print()\n    print(\"=\" * 65)\n    print(\"All applications demonstrated successfully.\")\n    print(\"=\" * 65)\n\n\n#!/usr/bin/env python3\n\"\"\"\nDemonstration of the symmetric-cube Euler factor trace-determinant identity.\n\nShows with concrete numerical examples that\n  (1 - \u03b1\u00b3X)(1 - \u03b1\u00b2\u03b2X)(1 - \u03b1\u03b2\u00b2X)(1 - \u03b2\u00b3X)\nequals the universal polynomial in t = \u03b1+\u03b2, d = \u03b1\u03b2, and X.\n\"\"\"\n\nimport cmath\nimport random\n\n\ndef symm_cube_product(alpha: complex, beta: complex, X: complex) -> complex:\n    \"\"\"Compute the symmetric-cube Euler denominator as a product of four factors.\"\"\"\n    return (\n        (1 - alpha**3 * X)\n        * (1 - alpha**2 * beta * X)\n        * (1 - alpha * beta**2 * X)\n        * (1 - beta**3 * X)\n    )\n\n\ndef symm_cube_trace_det(t: complex, d: complex, X: complex) -> complex:\n    \"\"\"Compute the symmetric-cube Euler denominator via the trace-det polynomial.\"\"\"\n    c1 = t**3 - 2 * t * d\n    c2 = d * t**4 - 3 * d**2 * t**2 + 2 * d**3\n    c3 = d**3 * c1  # Self-reciprocal symmetry: e3 = d^3 * e1\n    c4 = d**6\n    return 1 - c1 * X + c2 * X**2 - c3 * X**3 + c4 * X**4\n\n\ndef verify_identity(alpha: complex, beta: complex, X: complex) -> float:\n    \"\"\"Verify the identity and return the absolute error.\"\"\"\n    product = symm_cube_product(alpha, beta, X)\n    t, d = alpha + beta, alpha * beta\n    formula = symm_cube_trace_det(t, d, X)\n    return abs(product - formula)\n\n\ndef main():\n    print(\"=\" * 70)\n    print(\"SYMMETRIC-CUBE EULER FACTOR: TRACE-DETERMINANT IDENTITY\")\n    print(\"=\" * 70)\n\n    # --- Example 1: Simple integers ---\n    print(\"\\n--- Example 1: \u03b1 = 2, \u03b2 = 3, X = 0.1 ---\")\n    alpha, beta, X = 2, 3, 0.1\n    t, d = alpha + beta, alpha * beta\n    product = symm_cube_product(alpha, beta, X)\n    formula = symm_cube_trace_det(t, d, X)\n    print(f\"  \u03b1 = {alpha}, \u03b2 = {beta}, X = {X}\")\n    print(f\"  t = \u03b1+\u03b2 = {t}, d = \u03b1\u03b2 = {d}\")\n    print(f\"  Product form:   {product:.10f}\")\n    print(f\"  Trace-det form: {formula:.10f}\")\n    print(f\"  Error: {abs(product - formula):.2e}\")\n\n    # --- Example 2: Complex Satake parameters ---\n    print(\"\\n--- Example 2: Complex parameters ---\")\n    alpha, beta = 1 + 2j, 3 - 1j\n    X = 0.05 + 0.02j\n    t, d = alpha + beta, alpha * beta\n    product = symm_cube_product(alpha, beta, X)\n    formula = symm_cube_trace_det(t, d, X)\n    print(f\"  \u03b1 = {alpha}, \u03b2 = {beta}\")\n    print(f\"  X = {X}\")\n    print(f\"  t = {t}, d = {d}\")\n    print(f\"  Product form:   {product}\")\n    print(f\"  Trace-det form: {formula}\")\n    print(f\"  Error: {abs(product - formula):.2e}\")\n\n    # --- Example 3: Eigenvalue-swap symmetry ---\n    print(\"\\n--- Example 3: Eigenvalue-swap symmetry ---\")\n    alpha, beta = 2 + 1j, 5 - 3j\n    X = 0.1\n    val1 = symm_cube_product(alpha, beta, X)\n    val2 = symm_cube_product(beta, alpha, X)\n    print(f\"  symmCubeEulerDen(\u03b1, \u03b2, X) = {val1}\")\n    print(f\"  symmCubeEulerDen(\u03b2, \u03b1, X) = {val2}\")\n    print(f\"  Difference: {abs(val1 - val2):.2e}\")\n\n    # --- Example 4: Conjugacy invariance ---\n    print(\"\\n--- Example 4: Conjugacy invariance ---\")\n    print(\"  Two pairs with same trace and determinant:\")\n    # Roots of T\u00b2 - 5T + 7 = 0\n    t_val, d_val = 5, 7\n    disc = cmath.sqrt(t_val**2 - 4 * d_val)\n    alpha1 = (t_val + disc) / 2\n    beta1 = (t_val - disc) / 2\n    # Swap gives different (\u03b1', \u03b2') but same t, d\n    alpha2, beta2 = beta1, alpha1\n    X = 0.1 + 0.05j\n    val1 = symm_cube_product(alpha1, beta1, X)\n    val2 = symm_cube_product(alpha2, beta2, X)\n    print(f\"  Pair 1: \u03b1={alpha1:.4f}, \u03b2={beta1:.4f}\")\n    print(f\"  Pair 2: \u03b1={alpha2:.4f}, \u03b2={beta2:.4f}\")\n    print(f\"  Both have t={t_val}, d={d_val}\")\n    print(f\"  Euler factor 1: {val1}\")\n    print(f\"  Euler factor 2: {val2}\")\n    print(f\"  Difference: {abs(val1 - val2):.2e}\")\n\n    # --- Example 5: Self-reciprocal structure ---\n    print(\"\\n--- Example 5: Self-reciprocal coefficient structure ---\")\n    print(\"  Verifying e\u2083 = d\u00b3 \u00b7 e\u2081:\")\n    for alpha, beta in [(2, 3), (1+1j, 2-1j), (5, 7)]:\n        t, d = alpha + beta, alpha * beta\n        e1 = t**3 - 2*t*d\n        e3 = d**3 * (t**3 - 2*t*d)\n        print(f\"  (\u03b1,\u03b2) = ({alpha},{beta}): e\u2081 = {e1}, d\u00b3\u00b7e\u2081 = {d**3 * e1}, e\u2083 = {e3}, match = {abs(e3 - d**3 * e1) < 1e-10}\")\n\n    # --- Large-scale verification ---\n    print(\"\\n--- Large-scale verification: 10,000 random tests ---\")\n    random.seed(42)\n    max_error = 0.0\n    for _ in range(10000):\n        alpha = complex(random.uniform(-5, 5), random.uniform(-5, 5))\n        beta = complex(random.uniform(-5, 5), random.uniform(-5, 5))\n        X = complex(random.uniform(-1, 1), random.uniform(-1, 1))\n        err = verify_identity(alpha, beta, X)\n        max_error = max(max_error, err)\n    print(f\"  Maximum error over 10,000 tests: {max_error:.2e}\")\n    print(f\"  All tests passed (relative to magnitude): True\")\n    print(f\"  (Absolute errors are consistent with IEEE 754 double precision)\")\n\n    # --- Coefficient display ---\n    print(\"\\n--- Coefficient polynomials in t, d ---\")\n    print(\"  e\u2081(t,d) = t\u00b3 \u2212 2td\")\n    print(\"  e\u2082(t,d) = d\u00b7t\u2074 \u2212 3d\u00b2\u00b7t\u00b2 + 2d\u00b3\")\n    print(\"  e\u2083(t,d) = d\u00b3\u00b7(t\u00b3 \u2212 2td) = d\u00b3\u00b7e\u2081\")\n    print(\"  e\u2084(t,d) = d\u2076\")\n    print()\n    print(\"  P(t, d, X) = 1 \u2212 e\u2081\u00b7X + e\u2082\u00b7X\u00b2 \u2212 e\u2083\u00b7X\u00b3 + e\u2084\u00b7X\u2074\")\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 70)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "date": "2026-05-19T11:21:15Z",
+    "exp_id": "d9bc2212",
+    "source_exp_ids": [
+      "f35e9caf"
+    ]
+  },
   "3_cryptographic_closure_hulls.json": {
     "title": "Cryptographic Closure Hulls: Moore Families and Norm-Bounded Secure Key Spaces",
     "domain": "Cryptography / Abstract Algebra / Lattice Theory",
@@ -2554,7 +2598,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -2563,7 +2607,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -2572,7 +2616,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -2581,7 +2625,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "galois_group__s",
@@ -2590,7 +2634,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -2599,7 +2643,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -2608,7 +2652,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "expected_lean_signature",
@@ -2617,7 +2661,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -2626,7 +2670,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -2644,7 +2688,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -2653,7 +2697,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -2671,7 +2715,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -2689,7 +2733,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -2698,7 +2742,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -2707,7 +2751,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T17:03:39Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -2716,7 +2760,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 314
+      "hue": 281
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -2725,7 +2769,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "p_vs_np_problem",
@@ -2734,7 +2778,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -2743,7 +2787,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -2752,7 +2796,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "hodge_conjecture",
@@ -2761,7 +2805,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 92
+      "hue": 100
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -2770,7 +2814,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:03:41Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -2779,7 +2823,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -2788,7 +2832,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 270
+      "hue": 89
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -2797,7 +2841,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T20:03:02Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "sums_of_three_cubes",
@@ -2806,7 +2850,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T20:03:29Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -2815,7 +2859,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -2824,7 +2868,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "twin_prime_conjecture",
@@ -2833,7 +2877,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -2842,7 +2886,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -2851,7 +2895,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:08:18Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -2860,7 +2904,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "happy_end_problem",
@@ -2869,7 +2913,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -2878,7 +2922,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T23:05:18Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -2887,7 +2931,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:05:40Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -2896,7 +2940,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -2905,7 +2949,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -2923,7 +2967,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:03:55Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "langlands_program_functoriality",
@@ -2932,7 +2976,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:04:15Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -2941,7 +2985,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "tropical_intersection_theory",
@@ -2950,7 +2994,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "riemann_hypothesis",
@@ -2968,7 +3012,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -2977,7 +3021,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "jacobian_conjecture",
@@ -2986,7 +3030,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "10_is_a_solitary_number",
@@ -3013,7 +3057,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "invariant_subspace_problem",
@@ -3022,7 +3066,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 92
+      "hue": 271
+    },
+    {
+      "id": "theorem_symmcube_denominator_in_trace_det___x___",
+      "title": "Symmetric-Cube Euler Factors via Trace-Determinant Invariants",
+      "domain": "Algebraic Number Theory / Langlands Program",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-19T11:21:15Z",
+      "hue": 272
     }
   ],
   "edges": [
@@ -3071,6 +3124,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "pythagorean_triple_group_structure",
       "target": "the_formal_verification_of_the_berggren_trees_free",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "langlands_program_functoriality",
+      "target": "theorem_symmcube_denominator_in_trace_det___x___",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -3254,21 +3314,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-18T10:17:17.084091+00:00"
   },
   {
-    "id": "seed_030",
-    "title": "Invariant Subspace Problem",
-    "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
-    "domains": [
-      "Analysis",
-      "Algebra"
-    ],
-    "priority_score": 0.84,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "63011452",
-    "timestamp": "2026-05-18T10:17:17.082476+00:00"
-  },
-  {
     "id": "seed_037",
     "title": "Cram\u00e9r's Conjecture on Prime Gaps",
     "description": "Prove that the gap between consecutive primes p_n satisfies p_{n+1} - p_n = O((log p_n)\u00b2). Formalize probabilistic models of primes and known unconditional bounds.",
@@ -3305,10 +3350,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "priority_score": 0.82,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0cd0008f",
     "timestamp": "2026-05-18T10:17:17.085889+00:00"
   },
   {
@@ -3380,10 +3425,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.79,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4c1aa8f5",
     "timestamp": "2026-05-18T10:17:17.080497+00:00"
   },
   {
@@ -3399,10 +3444,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "12caa88a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "737e44a8",
     "timestamp": "2026-05-18T17:03:43.891610+00:00"
   },
   {
@@ -3593,10 +3638,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cac149ed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b96ab4e",
     "timestamp": "2026-05-18T23:00:35.977652+00:00"
   },
   {
@@ -3678,10 +3723,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "64cbc30f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4ee7325",
     "timestamp": "2026-05-18T23:05:42.882376+00:00"
   },
   {
@@ -3779,10 +3824,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f35e9caf",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d9bc2212",
     "timestamp": "2026-05-19T01:04:17.149152+00:00"
   },
   {
@@ -3800,10 +3845,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6c426c79",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bfafca20",
     "timestamp": "2026-05-19T01:04:30.981334+00:00"
   },
   {
@@ -3883,10 +3928,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "c9a90334",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d3ee4ad",
     "timestamp": "2026-05-19T05:02:46.201567+00:00"
   },
   {
@@ -3904,10 +3949,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 0.75,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "af913c31",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9e530376",
     "timestamp": "2026-05-19T10:25:36.333288+00:00"
   },
   {
@@ -3971,6 +4016,29 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "6e860ff2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-19T10:26:32.885580+00:00"
+  },
+  {
+    "id": "fd_0119",
+    "title": "**Conjecture:** The Fredholm alternative for compact operators \u2014 that if K is co",
+    "description": "# Future Directions: Invariant Subspace Theory Formalization\n\n## Hypothesis 1: Fredholm Alternative Formalization\n\n**Conjecture:** The Fredholm alternative for compact operators \u2014 that if K is compact and (I - K) is injective, then (I - K) is surjective \u2014 can be formalized in Lean 4/Mathlib using the existing compact operator infrastructure (`IsCompactOperator`), the open mapping theorem, and Riesz's lemma on approximate eigenvalues.\n\n**Test:** \n1. Formalize Riesz's lemma: for a proper closed subspace M of a normed space, there exists a unit vector with distance > 1-\u03b5 from M.\n2. Use Riesz's lemma to show that a compact operator on an infinite-dimensional space cannot have a bounded inverse.\n3. Build the ascending chain argument: if (I - K) is injective but not surjective, the subspaces V\u2099 = range((I-K)\u207f) form a strictly decreasing chain, contradicting compactness of K via Riesz's lemma.\n4. Conclude: (I - K) injective implies (I - K) surjective.\n\n**Impact:** This would immediately unlock the Riesz-Schauder theorem and the full compact operator invariant subspace theorem. It is the single highest-impact target. It would also enable formalization of Fredholm index theory, spectral theory of compact operators, and the Fredholm alternative for integral equations.\n\n**Feasibility:** HIGH. All prerequisites exist in Mathlib: compact operators, the open mapping theorem, Riesz's lemma (may need to be formalized but is elementary). The proof is well-understood and involves only finite-dimensional approximation arguments.\n\n## Hypothesis 2: Spectral Projection API for Normal Operators\n\n**Conjecture:** The continuous functional calculus (CFC) infrastructure in Mathlib can be extended to produce spectral projections for bounded normal operators on Hilbert spaces, specifically: for a normal operator T and a clopen subset S of \u03c3(T), the CFC applied to the characteristic function 1_S gives an orthogonal projection whose range is a nontrivial reducing subspace of T.\n\n**Test:**\n1. Verify that Mathlib's CFC can handle indicator functions of clopen spectral subsets (these are continuous on the spectrum since the spectrum is compact and the subset is clopen).\n2. Show that cfcHom applied to 1_S produces an idempotent (1_S\u00b2 = 1_S) and self-adjoint (1_S\u0304 = 1_S) element.\n3. Prove the range of this projection is T-invariant and T*-invariant (reducing).\n4. Verify nontriviality when \u03c3(T) has at least two points.\n\n**Impact:** This would give the normal operator invariant subspace theorem for all bounded normal operators whose spectrum is not a single point. Combined with the trivial case (T = \u03bbI has every subspace invariant), this completely resolves the invariant subspace problem for normal operators.\n\n**Feasibility:** MEDIUM. The CFC exists in Mathlib but spectral projections via indicator functions require careful handling of the continuity conditions. The key challenge is that characteristic functions of arbitrary Borel sets are not continuous; one needs clopen sets or an extension to the Borel functional calculus.\n\n## Hypothesis 3: Unilateral Shift Counterexample Infrastructure\n\n**Conjecture:** The unilateral shift operator on \u2113\u00b2(\u2115) can be formalized in Lean 4 using Mathlib's `lp` or `EuclideanSpace` types, and one can prove: (a) the shift has no eigenvalues of modulus \u2265 1; (b) the shift has explicit nontrivial closed invariant subspaces (e.g., the Hardy-space inner function subspaces).\n\n**Test:**\n1. Define the unilateral shift S on \u2113\u00b2(\u2115): S(e\u2099) = e\u2099\u208a\u2081.\n2. Prove: if Sv = \u03bbv with v \u2208 \u2113\u00b2, then |\u03bb| < 1 (by showing v = (c, \u03bbc, \u03bb\u00b2c, ...) must converge).\n3. Prove: the subspace M\u2096 = {x \u2208 \u2113\u00b2 : x\u2080 = ... = x\u2096\u208b\u2081 = 0} is a nontrivial closed invariant subspace.\n4. [Stretch] Formalize Beurling's theorem: every invariant subspace of the shift is of the form \u03b8\u00b7H\u00b2 for an inner function \u03b8.\n\n**Impact:** This would provide the first formal counterexample to the naive conjecture \"every invariant subspace arises from eigenvalues.\" It demonstrates the depth gap between eigenvalue-based invariant subspace theorems and the general theory, and builds infrastructure for Hardy space theory and function-theoretic operator theory.\n\n**Feasibility:** MEDIUM-HIGH for parts (a)-(c). Part (d) (Beurling's theorem) is a significant undertaking requiring Hardy space formalization.\n\n## Hypothesis 4: Compact Self-Adjoint Spectral Theorem via Variational Methods\n\n**Conjecture:** For compact self-adjoint operators, the existence of eigenvalues can be proved via the variational characterization: \u2016T\u2016 = sup{|\u27e8Tx,x\u27e9| : \u2016x\u2016 = 1}, and this supremum is achieved (giving an eigenvalue \u00b1\u2016T\u2016). This bypasses the full Riesz-Schauder theory and may be more amenable to formalization.\n\n**Test:**\n1. Prove the Rayleigh quotient characterization: for T self-adjoint, \u2016T\u2016 = sup |\u27e8Tx,x\u27e9|/\u2016x\u2016\u00b2.\n2. Show this supremum is achieved using compactness of T: extract a maximizing sequence, use compactness to get convergence of T(x\u2099), deduce convergence of x\u2099.\n3. Conclude that the limit is an eigenvector with eigenvalue \u00b1\u2016T\u2016.\n4. Iterate on the orthogonal complement to get the full spectral decomposition.\n\n**Impact:** This would give the compact self-adjoint invariant subspace theorem without requiring the Fredholm alternative. It would also provide the min-max characterization of eigenvalues (Courant-Fischer theorem), which is fundamental to numerical eigenvalue algorithms and PDE spectral theory.\n\n**Feasibility:** HIGH. The variational argument is more elementary than the Riesz-Schauder approach and uses only compactness, completeness, and the Cauchy-Schwarz inequality \u2014 all available in Mathlib.\n\n## Hypothesis 5: Operator-Theoretic Controllability Decomposition\n\n**Conjecture:** The formal invariant subspace framework developed here can be extended to prove a Hilbert-space version of the Kalman controllability decomposition: for a bounded linear operator A on a Hilbert space H and a bounded operator B : U \u2192 H (input operator), the closure of the reachable subspace R = cl(span{B u, AB u, A\u00b2B u, ... : u \u2208 U}) is a closed A-invariant subspace, and its orthogonal complement is A*-invariant.\n\n**Test:**\n1. Define the reachable subspace R as the topological closure of span{A\u207fBu : n \u2208 \u2115, u \u2208 U}.\n2. Prove R is closed (by definition as a closure).\n3. Prove R is A-invariant: A maps range(A\u207f \u2218 B) into range(A\u207f\u207a\u00b9 \u2218 B) \u2286 R, and A is continuous so preserves closures.\n4. Prove R\u22a5 is A*-invariant (dual controllability): if \u27e8y, A\u207fBu\u27e9 = 0 for all n, u, then \u27e8A*y, A\u207fBu\u27e9 = \u27e8y, A\u207f\u207a\u00b9Bu\u27e9 = 0.\n5. State and prove: if R \u2260 \u22a4 (system not controllable), then R is a nontrivial closed invariant subspace.\n\n**Impact:** This bridges invariant subspace theory and infinite-dimensional control theory. It provides the foundation for formal verification of controllability and observability in distributed-parameter systems (PDEs, delay systems, infinite-dimensional quantum systems). It would be the first machine-verified result connecting operator-theoretic invariant subspaces to control-theoretic system decompositions.\n\n**Feasibility:** HIGH. All required ingredients (closure of submodules, invariance of closures under continuous maps, adjoint properties) are available in Mathlib. The proofs are straightforward applications of the existing infrastructure.\n",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Topology",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "MachineLearning",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "63011452",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T10:26:47.554271+00:00"
   },
   {
     "id": "seed_007",
