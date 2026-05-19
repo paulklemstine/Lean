@@ -39,6 +39,10 @@ DOMAIN_KEYWORDS = {
     "Probability": ["random", "expectation", "variance", "distribution", "martingale"],
     "Tropical": ["tropical", "min_plus", "idempotent", "semiring"],
     "Cryptography": ["encryption", "signature", "hash", "lattice", "discrete_log"],
+    "EML": ["eml", "exp_log", "exponential_logarithmic", "emlneuron", "emlactivation", "single_operator"],
+    "MachineLearning": ["neural", "network", "perceptron", "attention", "training", "gradient", "backprop",
+                         "activation", "softmax", "loss", "overfitting", "regularization", "deep_learning"],
+    "Pythagorean": ["pythagorean", "berggren", "primitive_triple", "tree", "pell"],
 }
 
 
