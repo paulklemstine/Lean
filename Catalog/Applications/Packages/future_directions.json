@@ -2067,8 +2067,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "8df48578",
       "timestamp": "2026-05-18T23:05:21.332765+00:00"
     },
     {
@@ -2282,7 +2282,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "c005890c",
       "timestamp": "2026-05-19T03:05:53.583281+00:00"
     },
