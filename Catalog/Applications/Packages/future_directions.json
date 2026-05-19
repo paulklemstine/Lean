@@ -2207,7 +2207,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "d9bc2212",
       "timestamp": "2026-05-19T01:04:17.149152+00:00"
     },
@@ -2421,8 +2421,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "3f57c63d",
       "timestamp": "2026-05-19T10:26:32.885580+00:00"
     },
     {
@@ -2450,6 +2450,27 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T10:26:47.554271+00:00"
+    },
+    {
+      "id": "fd_0120",
+      "title": "This document identifies five falsifiable conjectures that extend the formally v",
+      "description": "# Future Directions: Symmetric Power Euler Factors via Invariant Theory\n\nThis document identifies five falsifiable conjectures that extend the formally verified\nsymmetric-cube identity to a general theory of symmetric-power Euler factors for GL₂.\n\n---\n\n## 1. Sym⁴ and Sym⁵ trace-determinant factorization\n\n**Conjecture:** For every n ∈ {4, 5}, the symmetric-power local Euler denominator\n\n  ∏_{k=0}^{n} (1 − α^{n−k} β^k X)\n\nhas all coefficients expressible as integer polynomials in t = α+β and d = αβ.\n\n**Test:** Write the analogous `ring`-based Lean proofs for n = 4 (5 factors, degree-5 polynomial in X)\nand n = 5 (6 factors, degree-6 polynomial). Compute the explicit coefficient polynomials in t, d\nand verify each identity by `ring`. If `ring` times out for n = 5, that identifies a performance\nboundary worth reporting.\n\n**Impact:** Confirms the invariant-ring principle computationally up to the regime where\nfunctorial lifts (Kim–Shahidi for Sym⁴, planned for Sym⁵) are known.\n\n---\n\n## 2. Chebyshev recurrence for e₁ coefficients\n\n**Conjecture:** The coefficient of X in the Sym^n Euler denominator satisfies the recurrence\n\n  e₁(n+1) = t · e₁(n) − d · e₁(n−1)\n\nwith e₁(0) = 1, e₁(1) = t. Equivalently, e₁(n) = U_n(t / (2√d)) · (√d)^n\nwhere U_n is the Chebyshev polynomial of the second kind.\n\n**Test:** Define e₁(n) := ∑_{k=0}^{n} α^{n−k} β^k in Lean and prove the recurrence\nfor all n by induction. Verify numerically for n ≤ 10 via `#eval` over ℚ.\n\n**Impact:** Establishes the character-theoretic recursion at the heart of the\nHecke eigenvalue theory. Once proven, the full Sym^n Euler factor can be built\niteratively from this single recurrence.\n\n---\n\n## 3. Functorial determination by characteristic polynomial\n\n**Conjecture:** For any n : ℕ and any two pairs (α, β) and (α', β') in ℂ²,\nif α + β = α' + β' and αβ = α'β', then\n\n  ∏_{k=0}^{n} (1 − α^{n−k} β^k X) = ∏_{k=0}^{n} (1 − α'^{n−k} β'^k X).\n\nThat is, the Sym^n Euler denominator is determined by the characteristic polynomial\nT² − tT + d of the semisimple conjugacy class.\n\n**Test:** Prove this in Lean for general n by showing each elementary symmetric polynomial\nof the weights {α^{n−k} β^k} is a polynomial in t and d. The key step is a Newton-identity\nor generating-function argument reducing to the Chebyshev recurrence of Conjecture 2.\n\n**Impact:** This is the full invariant-ring theorem. It means Sym^n local factors\ncan be computed from Hecke eigenvalues without solving quadratics — the foundation\nfor efficient certified L-function computation.\n\n---\n\n## 4. Matrix-level conjugacy invariance\n\n**Conjecture:** For a 2×2 complex matrix M with eigenvalues α, β, define the\nsymmetric-cube Euler factor as symmCubeEulerDen(α, β, X). This quantity depends\nonly on tr(M) and det(M), not on the choice of eigenbasis.\n\nMore precisely, for any invertible P, if M' = P M P⁻¹ has eigenvalues α', β', then\nsymmCubeEulerDen(α, β, X) = symmCubeEulerDen(α', β', X).\n\n**Test:** Formalize this for diagonalizable matrices using Mathlib's `Matrix.charpoly`\nand `Matrix.trace`/`Matrix.det` API. The proof reduces to our conjugacy invariance\ntheorem plus the fact that similar matrices share eigenvalues (hence trace and determinant).\n\n**Impact:** Bridges the algebraic identity to the representation-theoretic setting\nwhere Satake parameters naturally live as conjugacy classes in GL₂(ℂ).\n\n---\n\n## 5. Plethystic connection to Schur polynomials\n\n**Conjecture:** The coefficient of X^k in the Sym^n Euler denominator equals\n(−1)^k times the k-th elementary symmetric polynomial of the Sym^n weights,\nand this elementary symmetric polynomial coincides with the plethysm\ne_k ∘ s_{(n)} evaluated at the rank-2 alphabet {α, β}.\n\n**Test:** For n = 3, k = 1,2,3,4, verify that our computed coefficients match\nthe Schur polynomial evaluation. Check whether Mathlib's `Polynomial.symmetric`\nor `MvPolynomial` infrastructure provides the Schur polynomial machinery needed\nto state this formally.\n\n**Impact:** Connects the Euler factor formalization to the broader λ-ring and\nrepresentation-theoretic framework. This would allow future work on plethystic\nexponentials and Adams operations to directly produce Euler factor formulas,\nopening a pipeline from representation theory to certified number theory.\n",
+      "source_exp_id": "d9bc2212",
+      "source_path": "future_directions_md",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T11:21:18.806371+00:00"
     }
   ],
   "pruned": [
