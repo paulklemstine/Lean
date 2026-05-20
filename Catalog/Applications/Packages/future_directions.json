@@ -3133,23 +3133,6 @@
       "timestamp": "2026-05-20T04:04:51.078626+00:00"
     },
     {
-      "id": "fd_0166",
-      "title": "Conjecture 5: Universal Palindrome Avoidance for Carry-Dense Seeds",
-      "description": "**Precise Statement:** Define a number $n$ as *carry-dense* if the carry density (fraction of digit positions producing a carry in $n + \\mathrm{rev}(n)$) exceeds 0.6. Then every carry-dense number $n > 100$ with $n \\bmod 10 \\neq 0$ satisfies: $T(n)$ is also carry-dense.\n\n**Test:** Enumerate all carry-dense numbers up to $10^8$. For each, compute $T(n)$ and check its carry density. A single carry-dense $n$ whose image is not carry-dense refutes the conjecture.\n\n**Impact:** If true, this identifies a \"trapping region\" in the carry-density space. Combined with the observation that carry-dense numbers have high symmetry defect (due to frequent digit overflow), this would show that certain orbits are permanently trapped in a palindrome-avoiding region. This is the dynamical-systems approach to ",
-      "source_exp_id": "80496a50",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/80496a50",
-      "domains": [
-        "NumberTheory"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T04:04:51.088347+00:00"
-    },
-    {
       "id": "fd_0167",
       "title": "What would refute",
       "description": ": P_n^{(3)} bounded away from 1, which would require three permutations to all have correlated parity constraints beyond the simple product.\n\n**Impact**: This would establish a sharp threshold: two generators give probability 3/4 (due to parity), but three generators eliminate the parity obstruction (probability that all three are even is 1/8, but the parity constraint becomes less rigid) and achieve probability → 1. This has direct implications for randomized algorithms that use three random permutations as building blocks.\n\n---\n\n## Experimental Infrastructure Needed\n\nTo test these conjectures, the following computational tools are needed:",
@@ -3344,7 +3327,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "2eeb8e55",
       "timestamp": "2026-05-20T06:01:32.441299+00:00"
     },
@@ -4253,23 +4236,6 @@
       "timestamp": "2026-05-20T09:06:54.687692+00:00"
     },
     {
-      "id": "fd_0222",
-      "title": "Refutation criterion",
-      "description": "Find a parameter $c$ with escaping orbit and rigorously certifiable KL divergence bounded away from 0 (e.g., $D_{KL} > 0.01$ for all $N \\leq 10^4$). This would require showing that the log-mantissa distribution fails to equidistribute, possibly via a semiconjugacy to a monomial map.",
-      "source_exp_id": "7a3a7b1b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7a3a7b1b",
-      "domains": [
-        "Probability"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T09:07:22.284215+00:00"
-    },
-    {
       "id": "fd_0223",
       "title": "Conjecture 1: Exponential Resolution Lower Bound from Entropy Drop",
       "description": "**Conjecture:** For families of CNF formulas Φ₀, Φ₁, …, Φₙ on a fixed variable set with Mod(Φᵢ₊₁) ⊆ Mod(Φᵢ), there exists a universal constant C_R > 0 for resolution proofs over random-like or expansion-based formula families such that\n\n$$\\mathrm{ResLength}(\\Phi_n \\vdash \\Phi_m) \\geq 2^{C_R \\cdot (H(\\Phi_m) - H(\\Phi_n))}$$\n\nfor all m ≤ n.\n\n**Test:** Compute exact model counts and resolution proof lengths (or tree-like resolution lower bounds via game-theoretic methods) on:\n- Tseitin formulas over expander graphs with varying edge density\n- Random 3-SAT at clause densities from 1 to the threshold (~4.267)\n- Graph coloring CNFs for Erdős–Rényi graphs at varying edge probability\n- Horn formula strengthening chains\n\nA counterexample would be a family with large entropy drop but subexponential ",
@@ -4382,23 +4348,6 @@
       "timestamp": "2026-05-20T09:07:55.756020+00:00"
     },
     {
-      "id": "fd_0228",
-      "title": "Formal test:",
-      "description": "Prove in Lean using `sum_char_eq_zero` restricted to the subgroup (viewing $\\chi|_H$ as a character of $H$).",
-      "source_exp_id": "ac47644f",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ac47644f",
-      "domains": [
-        "Algebra"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T10:03:56.849055+00:00"
-    },
-    {
       "id": "fd_0230",
       "title": "Domain-complex:",
       "description": "Expressions where `log` arguments involve the variable `x` in ways that make positivity non-obvious.\n\nMeasure normalized sizes and fit growth models separately for each family.\n\n**Impact:** If confirmed, this identifies domain analysis (proving positivity of arguments to `log`) as the core computational bottleneck, suggesting that advances in automated positivity proving would directly translate to better EML normalization. This connects EML complexity to real algebraic geometry and semidefinite programming.\n\n---\n\n## Hypothesis 5: EML Compilation Preserves Straight-Line Program Complexity\n\n**Conjecture:** If a unary elementary function $f$ can be computed by a straight-line program (SLP) of length $L$ over the operations $\\{+, -, \\times, \\div, \\exp, \\log\\}$, then there exists an EML straig",
@@ -4420,40 +4369,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T10:04:27.235736+00:00"
-    },
-    {
-      "id": "fd_0231",
-      "title": "Hypothesis 2 (Sharing)",
-      "description": "— most immediately testable and likely to yield a clear positive or negative result",
-      "source_exp_id": "1f252cf0",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
-      "domains": [
-        "Algebra"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T10:04:27.241981+00:00"
-    },
-    {
-      "id": "fd_0233",
-      "title": "Hypothesis 1 (Polynomial normalization)",
-      "description": "— the central conjecture, hardest to resolve",
-      "source_exp_id": "1f252cf0",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
-      "domains": [
-        "NumberTheory"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T10:04:27.256521+00:00"
     },
     {
       "id": "fd_0234",
@@ -5078,6 +4993,111 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:03:48.370272+00:00"
+    },
+    {
+      "id": "fd_0263",
+      "title": "Conjecture 1: Tree Tensor Network Subtree-Cut Principle",
+      "description": "**Statement.** For a tree tensor network state on a tree graph T with n leaves, the integrated information rank (minimum flattening rank over all nontrivial bipartitions of the leaves) equals the minimum bond dimension over all single-edge cuts of T. Equivalently, the minimum is always achieved by a bipartition induced by removing a single edge of the tree.\n\n**Test.** Generate random tree tensor network states on binary trees with 8–16 leaves and bond dimensions in {2, 3, 4, 5}. For each instance, enumerate all 2^n − 2 nontrivial bipartitions, compute flattening ranks, and compare the global minimum with the minimum over the n−1 single-edge cuts of the tree. A single instance where a non-tree-edge bipartition achieves strictly smaller rank falsifies the conjecture.\n\n**Impact.** If true, th",
+      "source_exp_id": "2eeb8e55",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2eeb8e55",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Probability",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:15.890488+00:00"
+    },
+    {
+      "id": "fd_0264",
+      "title": "Conjecture 2: PEPS Min-Cut Obstruction",
+      "description": "**Statement.** For 2D Projected Entangled Pair States (PEPS) on an m × m square lattice, the min-cut principle *fails* generically: there exist bond-generic PEPS states for which the minimum flattening rank over all bipartitions is strictly less than the minimum single-edge-cut bond dimension. Moreover, the failure ratio grows polynomially in m.\n\n**Test.** Construct random PEPS on 3×3 and 4×4 grids with uniform bond dimension D ∈ {2, 3}. Compute flattening ranks for all nontrivial bipartitions (feasible for small grids) and compare with single-edge cuts. If the minimum over all bipartitions equals the minimum edge bond dimension for all instances, the conjecture is falsified. If failures are found, measure the failure ratio min_bipartition/min_edge and check for polynomial growth in m.\n\n**",
+      "source_exp_id": "2eeb8e55",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2eeb8e55",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Cryptography"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:15.900604+00:00"
+    },
+    {
+      "id": "fd_0265",
+      "title": "Conjecture 3: Quantitative Strictness Gap for Noncontiguous Cuts",
+      "description": "**Statement.** For a bond-generic MPS on n sites with uniform bond dimension D, every noncontiguous bipartition S satisfies flatRank(ψ, S) ≥ D², where D is the minimum bond dimension. That is, noncontiguous cuts are not just as good as contiguous cuts — they are *quadratically worse*, because they cross at least two edges and the rank factorizes multiplicatively through both bonds.\n\n**Test.** Generate random MPS with n = 6, d = 3, uniform D ∈ {2, 3, 4} across all internal bonds. For each noncontiguous bipartition S (which crosses at least 2 edges), compute flatRank(ψ, S) and check whether it is ≥ D². Run 1000 trials per configuration. A single instance with flatRank(ψ, S) < D² for a noncontiguous S falsifies the conjecture.\n\n**Impact.** If true, this would provide a quantitative separation",
+      "source_exp_id": "2eeb8e55",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2eeb8e55",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Probability",
+        "Physics",
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:15.911858+00:00"
+    },
+    {
+      "id": "fd_0266",
+      "title": "Conjecture 4: Min-Cut Principle for Causal Graphical Models",
+      "description": "**Statement.** The min-cut principle extends beyond quantum states to classical causal models. For any Bayesian network structured as a chain X₁ → X₂ → ⋯ → Xₙ, the \"integrated information\" (minimum mutual information across all bipartitions) equals the minimum single-bond mutual information I(Xₖ; Xₖ₊₁). The chain's Markov structure forces all correlations through sequential bonds, analogous to the MPS bond structure.\n\n**Test.** Sample random conditional probability tables for chain-structured Bayesian networks with n = 5–8 nodes and |Xᵢ| ∈ {2, 3, 4}. Compute mutual information I(X_S; X_{S^c}) for all nontrivial bipartitions S and compare the minimum with min_k I(Xₖ; Xₖ₊₁). Numerical equality (within tolerance) confirms; a strict gap falsifies.\n\n**Impact.** This would establish a bridge bet",
+      "source_exp_id": "2eeb8e55",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2eeb8e55",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Probability",
+        "Physics",
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:15.922401+00:00"
+    },
+    {
+      "id": "fd_0267",
+      "title": "Conjecture 5: Formal Verification of the Transfer Matrix Rank Equality",
+      "description": "**Statement.** For an MPS in left-canonical form up to bond k, the flattening rank across the prefix cut {0, …, k−1} equals exactly the bond dimension D_k. This requires formalizing the transfer matrix formalism in Lean 4: defining left-canonical MPS, showing that the transfer matrix from the left block has full column rank, and concluding that the flattening matrix has rank D_k.\n\n**Test.** Formalize the definition of left-canonical MPS tensors (each A_i satisfies Σ_s A_i^s† A_i^s = I) in Lean 4. State the theorem flatRank(ψ, {0,…,k-1}) = D_k under the left-canonical hypothesis. Attempt to prove it using Mathlib's linear algebra API. Success = a sorry-free proof compiles. Failure = identification of specific missing Mathlib infrastructure.\n\n**Impact.** This would complete the formal verifi",
+      "source_exp_id": "2eeb8e55",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2eeb8e55",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Physics",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:15.933324+00:00"
     }
   ],
   "pruned": [
@@ -5199,6 +5219,91 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T10:04:27.270829+00:00"
+    },
+    {
+      "id": "fd_0166",
+      "title": "Conjecture 5: Universal Palindrome Avoidance for Carry-Dense Seeds",
+      "description": "**Precise Statement:** Define a number $n$ as *carry-dense* if the carry density (fraction of digit positions producing a carry in $n + \\mathrm{rev}(n)$) exceeds 0.6. Then every carry-dense number $n > 100$ with $n \\bmod 10 \\neq 0$ satisfies: $T(n)$ is also carry-dense.\n\n**Test:** Enumerate all carry-dense numbers up to $10^8$. For each, compute $T(n)$ and check its carry density. A single carry-dense $n$ whose image is not carry-dense refutes the conjecture.\n\n**Impact:** If true, this identifies a \"trapping region\" in the carry-density space. Combined with the observation that carry-dense numbers have high symmetry defect (due to frequent digit overflow), this would show that certain orbits are permanently trapped in a palindrome-avoiding region. This is the dynamical-systems approach to ",
+      "source_exp_id": "80496a50",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/80496a50",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T04:04:51.088347+00:00"
+    },
+    {
+      "id": "fd_0222",
+      "title": "Refutation criterion",
+      "description": "Find a parameter $c$ with escaping orbit and rigorously certifiable KL divergence bounded away from 0 (e.g., $D_{KL} > 0.01$ for all $N \\leq 10^4$). This would require showing that the log-mantissa distribution fails to equidistribute, possibly via a semiconjugacy to a monomial map.",
+      "source_exp_id": "7a3a7b1b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7a3a7b1b",
+      "domains": [
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:07:22.284215+00:00"
+    },
+    {
+      "id": "fd_0228",
+      "title": "Formal test:",
+      "description": "Prove in Lean using `sum_char_eq_zero` restricted to the subgroup (viewing $\\chi|_H$ as a character of $H$).",
+      "source_exp_id": "ac47644f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ac47644f",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:03:56.849055+00:00"
+    },
+    {
+      "id": "fd_0231",
+      "title": "Hypothesis 2 (Sharing)",
+      "description": "— most immediately testable and likely to yield a clear positive or negative result",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.241981+00:00"
+    },
+    {
+      "id": "fd_0233",
+      "title": "Hypothesis 1 (Polynomial normalization)",
+      "description": "— the central conjecture, hardest to resolve",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.256521+00:00"
     }
   ]
 }
