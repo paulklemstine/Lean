@@ -3620,7 +3620,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:07:39.225675+00:00"
     },
@@ -3698,7 +3698,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:08:18.538744+00:00"
     },
@@ -3744,7 +3744,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:08:18.552980+00:00"
     },
@@ -3766,7 +3766,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:08:18.559040+00:00"
     },
@@ -3787,7 +3787,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "5aa96213",
       "timestamp": "2026-05-20T08:08:18.566956+00:00"
     },
@@ -4275,7 +4275,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T09:07:55.756020+00:00"
     },
@@ -5174,6 +5174,142 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:05:05.316658+00:00"
+    },
+    {
+      "id": "fd_0266",
+      "title": "Hypothesis 1: Resolution Bounded-Shrinkage Hypothesis",
+      "description": "**Conjecture:** Every width-*w* Resolution inference (resolving two clauses to produce a clause of width at most *w*) shrinks the satisfying assignment set by a factor of at most 2^w. Formally, if clause *C* is derived from clauses *C₁* and *C₂* by resolution, then:\n\n    |Mod(Γ ∪ {C})| ≥ |Mod(Γ)| / 2^w\n\nwhere Γ is the current clause set and *w* = width(C).\n\n**Test:** For n = 6, 8, 10 variables, enumerate all possible width-*w* resolvents of random 3-CNF formulas. For each resolvent, compute the exact model count before and after adding the clause. Check whether the shrinkage ratio |Mod(Γ)|/|Mod(Γ ∪ {C})| ≤ 2^w in all cases.\n\n**Impact:** If true, this would directly connect the bounded-shrinkage lower bound theorem to Resolution proof length, giving:\n\n    Resolution_length(φ → ψ) ≥ shrinkag",
+      "source_exp_id": "5aa96213",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5aa96213",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:05:38.142727+00:00"
+    },
+    {
+      "id": "fd_0267",
+      "title": "Hypothesis 2: Direct-Sum Hypothesis for Semantic Proof Burden",
+      "description": "**Conjecture:** For formulas φ₁ on variables {x₁,...,xₘ} and φ₂ on disjoint variables {y₁,...,yₙ}, the minimum derivation length in any bounded-shrinkage proof system satisfies:\n\n    L(φ₁ ∧ φ₂) ≥ L(φ₁) + L(φ₂) − O(1)\n\nwhere L(φ) denotes the minimum number of steps in a B-bounded shrinkage derivation from the full cube to Mod(φ).\n\n**Test:** For n = 4, 5, 6, enumerate all possible bounded-shrinkage derivation chains for simple constraint pairs (e.g., fixing *k* variables on disjoint blocks). Compute the minimum chain length for the product constraint and compare with the sum of individual minimum lengths.\n\nThe deficiency additivity theorem (deficiency_add_of_pow2) provides theoretical support: for power-of-2 model counts, the total deficiency is exactly additive. The question is whether this",
+      "source_exp_id": "5aa96213",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5aa96213",
+      "domains": [
+        "NumberTheory",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:05:38.154194+00:00"
+    },
+    {
+      "id": "fd_0268",
+      "title": "Hypothesis 3: Codimension-Realization Hypothesis",
+      "description": "**Conjecture:** Every exact codimension-*k* affine subcube of {0,1}ⁿ can be reached from the full cube by exactly *k* steps in a 2-bounded shrinkage system (B = 2), and this is optimal: no chain of fewer than *k* steps with B = 2 can reach any codimension-*k* subcube.\n\n**Test:** For n = 4, 5, 6 and each codimension k = 1, ..., n:\n1. Verify that the standard derivation (fixing one variable per step) achieves B = 2 in exactly *k* steps.\n2. Exhaustively search over all possible B = 2 bounded chains of length < *k* ending at any codimension-*k* subcube.\n3. Confirm that no shorter chain exists.\n\nThe length_lower_bound_of_bounded_shrink theorem gives k ≥ log₂(2ⁿ/2^{n−k}) = k, so the bound is tight. The question is whether the bound is achieved only by the standard variable-fixing chain or whethe",
+      "source_exp_id": "5aa96213",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5aa96213",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:05:38.346916+00:00"
+    },
+    {
+      "id": "fd_0269",
+      "title": "Hypothesis 4: Refutation Hypothesis for the Strong Conjecture",
+      "description": "**Conjecture (to be refuted):** There exists a family of formula pairs (φₙ, ψₙ) with ψₙ ⊨ φₙ such that:\n- Model-shrinkage distance d(φₙ, ψₙ) grows as Ω(n), but\n- Extended Frege proof length for ψₙ given φₙ grows as poly(n).\n\n**Test:** Search among extension-variable constructions. Specifically:\n1. Let φₙ be a tautology with 2ⁿ models (e.g., a trivially satisfiable formula on n variables).\n2. Let ψₙ be obtained by adding n independent unit clauses on fresh coordinates, giving |Mod(ψₙ)| = 1.\n3. Shrinkage distance is exactly n.\n4. Check whether Extended Frege can derive ψₙ from φₙ in O(n) steps using extension variables.\n\nIf Extended Frege can derive such a chain in O(n) steps (each introducing one extension variable and one unit clause), then each step shrinks by a factor of 2, and the bound",
+      "source_exp_id": "5aa96213",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5aa96213",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:05:38.358337+00:00"
+    },
+    {
+      "id": "fd_0270",
+      "title": "Hypothesis 5: Entropy-Barrier Hypothesis",
+      "description": "**Conjecture:** Any proof system P satisfying a *local data-processing inequality* — meaning each inference step can reduce the model-set entropy by at most C bits, for some system-dependent constant C — automatically admits semantic lower bounds:\n\n    proof_length_P(φ → ψ) ≥ (def(ψ) − def(φ)) / C\n\n**Test:** Formalize the notion of \"local data-processing inequality\" for toy proof systems:\n1. Define a proof system where each step adds one clause of bounded width w (Resolution-like).\n2. Verify that each step reduces ⌊log₂ |Mod|⌋ by at most w (this is the bounded-shrinkage hypothesis for Resolution).\n3. Apply the length lower bound theorem to derive the entropy-barrier bound.\n4. Compare with known Resolution lower bounds for specific formula families (pigeonhole principle, random k-CNF).\n\nExt",
+      "source_exp_id": "5aa96213",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5aa96213",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "MachineLearning",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:05:38.369161+00:00"
+    },
+    {
+      "id": "fd_0271",
+      "title": "Summary of Testable Predictions",
+      "description": "| # | Hypothesis | Predicted outcome | Key test | Falsifiable by |\n|---|-----------|-------------------|----------|----------------|\n| 1 | Resolution bounded-shrinkage | Shrinkage ≤ 2^w per step | Exact model counting for small n | Finding a width-w resolvent with shrinkage > 2^w |\n| 2 | Direct-sum | L(φ₁∧φ₂) ≥ L(φ₁)+L(φ₂)−O(1) | Brute-force chain search | Finding a product derivation shorter than sum |\n| 3 | Codimension-realization | Exactly k steps needed for codim-k | Exhaustive search for short chains | Finding a chain of length < k |\n| 4 | Strong conjecture refutation | Shrinkage ≫ proof length for some family | Extension-variable constructions | Proving shrinkage always bounds proof length |\n| 5 | Entropy barrier | def(ψ)−def(φ) / C bounds proof length | Formalize for Resolution, Fre",
+      "source_exp_id": "5aa96213",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5aa96213",
+      "domains": [
+        "NumberTheory",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:05:38.382277+00:00"
+    },
+    {
+      "id": "fd_0272",
+      "title": "Frobenius Echo Rigidity for Neural Critical Loci",
+      "description": "Conjecture: Let L(theta) be a polynomial loss with integer coefficients for a fixed architecture and finite integer dataset, and let X_p be the critical locus {grad L = 0} over F_p. If two such models M1, M2 have identical point counts |X_p(F_p)| for a set of primes p of natural density 1, then for all sufficiently large p they have identical zeta functions Z(X_p,t), hence the same l-adic cohomology dimensions and Frobenius trace statistics on their critical loci. Test: Compute critical loci for non-isomorphic model families with matched parameter counts, compare |X_p(F_p)| across many primes, and check whether agreement on a density-1 prime set forces agreement of full zeta functions; a counterexample is any pair with matching counts but different higher Frobenius data at infinitely many primes. Impact: This would reveal a hidden arithmetic universality class for optimization landscapes, giving a new invariant stronger than critical-point counting and linking neural loss geometry to arithmetic geometry and motive-like classification.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Geometry",
+        "Machine Learning Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:05:53.778760+00:00"
     }
   ],
   "pruned": [
