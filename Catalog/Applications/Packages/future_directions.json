@@ -50,8 +50,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "4f81c9a2",
       "timestamp": "2026-05-20T00:22:10.972518+00:00"
     },
     {
@@ -956,8 +956,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "f9a9cc28",
       "timestamp": "2026-05-20T00:22:11.002510+00:00"
     },
     {
@@ -1792,7 +1792,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "279b6db7",
       "timestamp": "2026-05-20T01:00:25.457998+00:00"
     },
@@ -2520,6 +2520,23 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T02:05:08.968810+00:00"
+    },
+    {
+      "id": "fd_0135",
+      "title": "Impact:",
+      "description": "Establishes that the p-adic scaling law is not merely a sufficient condition but is **tight** — the valuation-theoretic precision depth cannot be improved without additional structural assumptions.",
+      "source_exp_id": "279b6db7",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/279b6db7",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T02:05:35.245134+00:00"
     }
   ],
   "pruned": [
