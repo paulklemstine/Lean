@@ -1986,7 +1986,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "74e951a7",
       "timestamp": "2026-05-20T20:15:15.576197+00:00",
       "catalog_references": [],
