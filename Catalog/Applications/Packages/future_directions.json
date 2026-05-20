@@ -2693,7 +2693,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "76858596",
       "timestamp": "2026-05-20T03:08:58.160015+00:00"
     },
@@ -5855,6 +5855,24 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T18:17:19.457007+00:00"
+    },
+    {
+      "id": "fd_0302",
+      "title": "Tropical Phase Transition in p-adic Newton Polygons of Gradient Descent Jacobian",
+      "description": "Conjecture: Let L(theta) be a polynomial loss with integer coefficients, and let G_eta(theta)=theta-eta∇L(theta) be one step of gradient descent with rational step size eta. For a Zariski-open set of initial conditions theta_0 and for all sufficiently large primes p outside a finite exceptional set, the sequence of p-adic Newton polygons of the Jacobians D(G_eta^t)(theta_0) exhibits a universal two-regime behavior: after rescaling horizontal length by parameter dimension and vertical height by t, it converges either to a deterministic linear profile determined only by the multiset of valuations of Hessian eigenvalues at the attracting critical point, or fails to converge and instead shows periodic slope oscillation iff the orbit reduces modulo p to a nontrivial cycle. Test: Compute long gradient descent trajectories for families of integer polynomial losses, track Jacobian products along the orbit, form their p-adic Newton polygons across many large primes, and check whether convergence vs periodic oscillation matches exactly the eventual mod-p orbit type and whether the limiting profile is invariant across losses with the same local Hessian valuation data. A single counterexample with a wandering mod-p orbit but convergent oscillatory-free Newton polygons, or two systems with identical Hessian valuation data but different limiting profiles, refutes it. Impact: This would create a new arithmetic-dynamical invariant for optimization, linking local curvature, modular orbit structure, and non-Archimedean stability, and could reveal hidden universality classes of training dynamics invisible over the reals.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Optimization"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:18:00.033851+00:00"
     }
   ],
   "pruned": [
