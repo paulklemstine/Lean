@@ -353,8 +353,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "75564677",
       "timestamp": "2026-05-20T00:22:10.980099+00:00"
     },
     {
@@ -956,8 +956,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "in_progress",
-      "consumed_by_exp_id": "f9a9cc28",
+      "status": "available",
+      "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.002510+00:00"
     },
     {
@@ -1180,8 +1180,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.63,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "70a5c7c1",
       "timestamp": "2026-05-20T00:22:11.013875+00:00"
     },
     {
@@ -1655,8 +1655,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "8fd26e60",
       "timestamp": "2026-05-20T00:22:11.060061+00:00"
     },
     {
@@ -2381,7 +2381,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "4d7cdd64",
       "timestamp": "2026-05-20T02:04:42.915129+00:00"
     },
@@ -2882,8 +2882,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "6d83a777",
       "timestamp": "2026-05-20T04:03:49.234913+00:00"
     },
     {
@@ -3012,8 +3012,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "75decdae",
       "timestamp": "2026-05-20T04:04:18.175847+00:00"
     },
     {
