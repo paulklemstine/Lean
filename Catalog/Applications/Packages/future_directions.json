@@ -673,8 +673,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "14b65ec5",
       "timestamp": "2026-05-20T00:22:10.990029+00:00"
     },
     {
@@ -1275,8 +1275,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "c33bcff1",
       "timestamp": "2026-05-20T00:22:11.022060+00:00"
     },
     {
@@ -1884,8 +1884,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "1cf08f84",
       "timestamp": "2026-05-20T01:03:43.210379+00:00"
     },
     {
@@ -3806,7 +3806,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "6cf9b394",
       "timestamp": "2026-05-20T08:08:18.545901+00:00"
     },
@@ -4144,8 +4144,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "ffab0d73",
       "timestamp": "2026-05-20T09:06:24.944498+00:00"
     },
     {
@@ -4268,6 +4268,118 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T09:07:22.284215+00:00"
+    },
+    {
+      "id": "fd_0223",
+      "title": "Conjecture 1: Exponential Resolution Lower Bound from Entropy Drop",
+      "description": "**Conjecture:** For families of CNF formulas Φ₀, Φ₁, …, Φₙ on a fixed variable set with Mod(Φᵢ₊₁) ⊆ Mod(Φᵢ), there exists a universal constant C_R > 0 for resolution proofs over random-like or expansion-based formula families such that\n\n$$\\mathrm{ResLength}(\\Phi_n \\vdash \\Phi_m) \\geq 2^{C_R \\cdot (H(\\Phi_m) - H(\\Phi_n))}$$\n\nfor all m ≤ n.\n\n**Test:** Compute exact model counts and resolution proof lengths (or tree-like resolution lower bounds via game-theoretic methods) on:\n- Tseitin formulas over expander graphs with varying edge density\n- Random 3-SAT at clause densities from 1 to the threshold (~4.267)\n- Graph coloring CNFs for Erdős–Rényi graphs at varying edge probability\n- Horn formula strengthening chains\n\nA counterexample would be a family with large entropy drop but subexponential ",
+      "source_exp_id": "6cf9b394",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/6cf9b394",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:07:55.708168+00:00"
+    },
+    {
+      "id": "fd_0224",
+      "title": "Conjecture 2: Partition Function Phase Transitions Track Proof Hardness",
+      "description": "**Conjecture:** For the q-coloring partition function Z_q(G) on random graphs G(n, p), the phase transition in log Z_q / n (semantic entropy density) at the colorability threshold coincides with a phase transition in resolution proof complexity for the coloring CNF.\n\nMore precisely, let p_c(q) be the critical edge probability for q-colorability of G(n, p). Then:\n- For p < p_c(q) - ε: resolution proofs that \"q colorings exist\" have polynomial length.\n- For p > p_c(q) + ε: resolution refutations of q-colorability have length 2^{Ω(n)}, and the entropy drop from the empty graph to G is Θ(n).\n- The resolution complexity exponent is a monotone function of the entropy density drop.\n\n**Test:** For q = 3, 4, 5 and n = 20, 30, 50:\n1. Sample G(n, p) for p in a grid around p_c(q).\n2. Compute Z_q(G) ex",
+      "source_exp_id": "6cf9b394",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/6cf9b394",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Probability",
+        "Algebra",
+        "MachineLearning",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:07:55.724475+00:00"
+    },
+    {
+      "id": "fd_0225",
+      "title": "Conjecture 3: Learning-Theoretic Version Space Compression Bound",
+      "description": "**Conjecture:** In a PAC learning setting, the semantic entropy of the version space (set of hypotheses consistent with observed data) governs the sample complexity of further learning. Specifically, if S_m is the version space after m samples:\n\n$$H(S_m) - H(S_{m+k}) \\leq k \\cdot \\log_2(|X|)$$\n\nwhere |X| is the instance space size, and any learning algorithm that reduces the version space entropy by ΔH requires at least ΔH / log₂(|X|) additional samples.\n\n**Test:** For finite concept classes over Boolean domains:\n1. Enumerate exact version spaces for concept classes of size up to 2^20.\n2. Track version space entropy as samples arrive.\n3. Compare empirical sample complexity to the entropy lower bound.\n4. Test on decision lists, DNF formulas, and threshold functions.\n\nA refutation would be a",
+      "source_exp_id": "6cf9b394",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/6cf9b394",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "MachineLearning",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:07:55.737099+00:00"
+    },
+    {
+      "id": "fd_0226",
+      "title": "Conjecture 4: Monotone Circuit Depth from Entropy Chains",
+      "description": "**Conjecture:** For monotone Boolean functions f: {0,1}^n → {0,1}, the depth of any monotone circuit computing f is at least the maximum, over all input pairs (x, y) with f(x)=1 and f(y)=0, of the semantic entropy drop along any monotone path from x to y in the Boolean lattice, divided by log₂(fan-in).\n\nMore precisely, define the \"semantic entropy\" of a subcube as log₂ of the number of satisfying assignments in it. Then:\n\n$$\\mathrm{depth}(C) \\geq \\max_{x \\leq y, f(x) \\neq f(y)} \\frac{H(\\{z : z \\geq x, f(z)=1\\}) - H(\\{z : z \\geq y, f(z)=1\\})}{\\log_2(\\text{fan-in})}$$\n\n**Test:**\n1. For known hard monotone functions (e.g., clique detection, matching), compute the semantic entropy chain lengths.\n2. Compare to known monotone circuit depth lower bounds (Karchmer-Wigderson, Razborov-Alon-Boppana)",
+      "source_exp_id": "6cf9b394",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/6cf9b394",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Cryptography",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:07:55.747116+00:00"
+    },
+    {
+      "id": "fd_0227",
+      "title": "Conjecture 5: Tropical Entropy and Optimization Hardness",
+      "description": "**Conjecture:** The \"tropical semantic entropy\" of a linear programming relaxation—defined as the log-volume of the feasible polytope in the tropical semiring—lower bounds the number of pivoting steps in the simplex method. Specifically, for a family of LPs with decreasing tropical feasible volume under constraint addition:\n\n$$\\text{pivot steps} \\geq C \\cdot \\Delta H_{\\text{trop}}$$\n\nwhere ΔH_trop is the tropical entropy drop and C is a constant depending on the pivot rule.\n\n**Test:**\n1. Generate random LPs with n variables and increasing numbers of constraints.\n2. Compute tropical feasible volumes using tropical convex hull algorithms.\n3. Count simplex pivot steps under Bland's rule, largest-coefficient rule, and random pivot rule.\n4. Plot pivot count vs. tropical entropy drop for n = 10,",
+      "source_exp_id": "6cf9b394",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/6cf9b394",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Tropical",
+        "Algebra",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:07:55.756020+00:00"
     }
   ],
   "pruned": [
