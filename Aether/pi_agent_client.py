@@ -110,19 +110,19 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
 
     9. FUTURE_DIRECTIONS ARE MANDATORY OUTPUT: Every research cycle MUST produce
        a FUTURE_DIRECTIONS.md that identifies 3-5 specific, testable scientific
-       hypotheses. Each direction must be a falsifiable claim or conjecture that
-       can be proved, disproved, or tested — not a vague "we could explore X."
-       Format: "Conjecture: [precise statement]. Test: [what would confirm or
-       refute it]. Impact: [what this would enable if true]." Every hypothesis
-       should be daring enough to matter and specific enough to fail.
+       hypotheses, including 1-2 grand_challenge paradigm-shifting conjectures and
+       2-3 solid extensions building directly on Catalog theorems. Each direction
+       must use the structured format with explicit fields: Conjecture, Test, Impact,
+       Catalog References, Proof Strategy, Domain Bridges, Lineage, and Ambition.
+       Every hypothesis must be daring enough to matter and specific enough to fail.
 
-    10. FUTURE_DIRECTIONS.MD MUST BE STANDALONE: The FUTURE_DIRECTIONS.md is not
-        just a list of ideas — it is a standalone research roadmap that will steer
-        future research rounds without access to this cycle's code or results. Each
-        direction must be self-contained: anyone reading ONLY the FUTURE_DIRECTIONS.md
-        must understand the problem, the conjecture, the test, and why it matters.
-        Include enough mathematical context and definitions that a fresh researcher
-        can pick up any direction and start working on it immediately.
+    10. FUTURE_DIRECTIONS.MD MUST BE STANDALONE AND SYNTHESIZED: The
+        FUTURE_DIRECTIONS.md must begin with a ## Synthesis section that ties all
+        directions together, identifies unexpected cross-domain connections from
+        this cycle's discoveries, and explains how they connect to the broader
+        Catalog. Each direction must be self-contained with enough mathematical
+        context that a fresh researcher can pick it up immediately. Reference
+        specific Catalog theorems by file path (e.g., `Bridges.Basic.lean`).
 
     11. RESEARCH_PAPER.MD MUST BE STANDALONE: The RESEARCH_PAPER.md is not a summary
         of this cycle — it is a standalone scientific document that will be used to
@@ -1949,17 +1949,40 @@ class PiAgentClient:
             has seen your Lean code.
 
             FUTURE_DIRECTIONS.md is critical — it drives the next research cycle.
-            Each direction must be a testable scientific hypothesis: a precise,
-            falsifiable conjecture with a clear test that could confirm or refute it.
-            Format each as:
+            Begin with a ## Synthesis section tying all directions together and
+            identifying the most promising cross-domain connections from this cycle.
+            Then list 3-5 directions (1-2 grand_challenge + 2-3 extension) using:
 
-            ### [Direction Title]
+            ## Synthesis
+
+            [2-3 paragraphs tying all directions together. Identify the most promising
+            cross-domain connection from this cycle's discoveries. Explain how the
+            cycle's results relate to the broader Catalog. Highlight which direction
+            has the highest breakthrough potential and why.]
+
+            ---
+
+            ### Direction 1: [Title]
+
             **Conjecture**: A precise mathematical statement that can be proved or disproved.
-            **Test**: What specific experiment, calculation, or proof attempt would
-            confirm or refute this conjecture.
-            **Impact**: If true, what new territory does this open? If false, what
-            does the failure teach us?
-            **Cross-domain**: Which other domains could this connect to?
+            **Test**: What specific experiment, calculation, or proof attempt would confirm
+            or refute this conjecture.
+            **Impact**: If true, what new territory does this open? If false, what does
+            the failure teach us?
+            **Catalog References**: `Bridges.Basic.lean`, `Algebra.QuadraticForms.mordell`
+            (Use backtick-enclosed file paths or theorem names from the Catalog.)
+            **Proof Strategy**: Outline the key steps or approach. What mathematical
+            machinery is needed? What lemmas would need to be established first?
+            **Domain Bridges**: NumberTheory <-> Tropical, Algebra <-> Physics
+            (List domain pairs this connects, using the <-> connector.)
+            **Lineage**: Builds on fd_XXXX and discoveries from exp_XXXXXXXX_XXX
+            (Reference specific prior direction IDs or experiment IDs if known, or
+            describe which prior results this extends.)
+            **Ambition**: grand_challenge  (or: extension)
+
+            ---
+
+            [repeat for each direction]
 
             Do real science. Propose hypotheses that are bold enough to matter and
             specific enough to fail. Vague explorations like "study X further" or

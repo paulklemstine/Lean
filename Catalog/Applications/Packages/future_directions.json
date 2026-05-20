@@ -1853,24 +1853,6 @@
       "timestamp": "2026-05-20T01:03:43.202576+00:00"
     },
     {
-      "id": "fd_0100",
-      "title": "Hypothesis 2: Semiconjugacy Rigidity",
-      "description": "**Conjecture.** Persistent digit bias in the orbits of T_c occurs if and only if T_c is semiconjugate to a monomial map ±x^d via an integer-valued function φ satisfying φ(T_c(x)) = ±(φ(x))^d.\n\nFormally: PersistentDigitBias(c) ⟺ HasMonomialSemiconjugacy(c).\n\n**Test.** For each c ∈ {-100, ..., 100}:\n1. Compute leading-digit frequencies for primes p ≤ 10⁴ and n ≤ 20. Flag c as \"biased\" if the KL divergence from Benford exceeds 0.005.\n2. For each biased c, search for a semiconjugacy by testing polynomial candidates φ of degree ≤ 10 and checking the functional equation φ(x² + c) = ±(φ(x))^d modulo large primes.\n3. Verify: every biased c has a semiconjugacy, and every unbiased c does not.\n\n**Refutation criterion.** Finding a c with persistent digit bias but no semiconjugacy (or vice versa) falsi",
-      "source_exp_id": "20938654",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/20938654",
-      "domains": [
-        "NumberTheory",
-        "Algebra"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T01:03:43.206176+00:00"
-    },
-    {
       "id": "fd_0101",
       "title": "Hypothesis 3: Base-Invariance",
       "description": "**Conjecture.** If the leading digits of |T_c⁽ⁿ⁾(p)| satisfy Benford's law in some base b ≥ 2 that is multiplicatively independent of 2 (i.e., log b / log 2 ∉ ℚ), then they satisfy Benford's law in every such base.\n\n**Test.** For c ∈ {-10, ..., 10} and bases b ∈ {3, 5, 6, 7, 10, 11, 12, 15}:\n1. Compute leading-digit frequencies in each base for primes p ≤ 10⁴ and n ≤ 15.\n2. Compute KL divergence from the base-b Benford distribution for each (c, b) pair.\n3. Check whether all bases with log b / log 2 ∉ ℚ give qualitatively similar results.\n\n**Refutation criterion.** Finding a c and two multiplicatively independent bases b₁, b₂ (both independent of 2) such that Benford holds in b₁ but fails in b₂ would refute the hypothesis.\n\n**Impact.** Base-invariance is predicted by the equidistribution me",
@@ -1887,24 +1869,6 @@
       "status": "completed",
       "consumed_by_exp_id": "1cf08f84",
       "timestamp": "2026-05-20T01:03:43.210379+00:00"
-    },
-    {
-      "id": "fd_0102",
-      "title": "Hypothesis 4: Entropy-Rate Decay",
-      "description": "**Conjecture.** For generic c, the KL divergence between the empirical leading-digit distribution of {|T_c⁽ⁿ⁾(p)| : p ≤ X prime} and the Benford distribution decays exponentially in n:\n\n$$D_{KL}(P_n \\| B) \\le C_c \\cdot \\rho^n$$\n\nfor constants C_c > 0 and 0 < ρ < 1 depending on c but not on X (for X sufficiently large).\n\n**Test.** For c ∈ {0, 1, -1, 2, -2}:\n1. For each n = 1, ..., 25, compute the leading-digit distribution of |T_c⁽ⁿ⁾(p)| for all primes p ≤ 10⁵.\n2. Compute D_KL(P_n || B) for each n.\n3. Fit a model D_KL = C · ρⁿ and estimate ρ by linear regression of log(D_KL) vs. n.\n\n**Refutation criterion.** If D_KL does not decay exponentially (e.g., decays polynomially or oscillates) for any generic c, the hypothesis is falsified. Specifically, if the fitted ρ exceeds 0.99 for X = 10⁵, th",
-      "source_exp_id": "20938654",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/20938654",
-      "domains": [
-        "NumberTheory",
-        "Probability"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T01:03:43.215515+00:00"
     },
     {
       "id": "fd_0103",
@@ -2659,24 +2623,6 @@
       "timestamp": "2026-05-20T03:08:58.145710+00:00"
     },
     {
-      "id": "fd_0144",
-      "title": "Conjecture 3: Weighted Planar Packing Equivalence",
-      "description": "**Conjecture:** For every finite set $C \\subset S^2$ with pairwise geodesic distance $\\geq 2r$, the stereographic images $\\{x_i\\}$ satisfy the weighted disk packing condition: the disks $B(x_i, \\rho(r, x_i))$ are pairwise disjoint, where $\\rho(r, x) = \\tan(r) / \\lambda(x)$. Conversely, every such weighted disk packing in the plane lifts to a valid spherical cap packing.\n\n**Test:** For the 12 vertices of the icosahedron projected stereographically, verify computationally that the weighted exclusion disks are disjoint with $r = \\pi/6$. Then attempt to find 13 disks satisfying the weighted packing condition — failure confirms the bound.\n\n**Impact:** This establishes a complete dictionary between spherical packing and weighted planar packing, opening the door to applying planar disk-packing al",
-      "source_exp_id": "71236717",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/71236717",
-      "domains": [
-        "NumberTheory",
-        "Computation"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T03:08:58.150581+00:00"
-    },
-    {
       "id": "fd_0146",
       "title": "Conjecture 5: Curvature-Generalization to Constant-Curvature Spaces",
       "description": "**Conjecture:** An analogous conformal packing bound exists for the hyperbolic disk $\\mathbb{H}^n$ using the Poincaré disk model: the conformal factor $\\lambda_{\\mathbb{H}}(x) = 2/(1 - \\|x\\|^2)$ yields packing bounds of the form\n$$N_{\\mathbb{H}}(n, r) \\leq D_{\\mathbb{H}}(n, r) \\cdot \\frac{\\mathrm{vol}(\\text{domain})}{\\mathrm{capVol}_{\\mathbb{H}}(n, r)}$$\nwhere $D_{\\mathbb{H}}(n, r) = (2/\\cosh r)^n$ for geodesic balls of radius $r$ in $\\mathbb{H}^n$.\n\n**Test:** Implement the hyperbolic version with the Poincaré disk conformal factor. Compute bounds for hyperbolic disk packings with $n = 2$ and compare against known hyperbolic circle packing densities. The bound should recover the classical fact that hyperbolic space admits packings of arbitrarily high density (as curvature increases).\n\n**Im",
@@ -3028,24 +2974,6 @@
       "timestamp": "2026-05-20T04:04:51.058060+00:00"
     },
     {
-      "id": "fd_0163",
-      "title": "Conjecture 2: Modular Residue Obstruction for 196 Orbit",
-      "description": "**Precise Statement:** For all $k \\geq 1$, if $T^k(196)$ has an even number of digits, then $T^k(196) \\not\\equiv 0 \\pmod{11}$.\n\nCombined with our formally verified theorem that even-length palindromes must be divisible by 11, this would prove that no even-length palindrome ever appears in the 196 orbit.\n\n**Test:** Compute $T^k(196) \\bmod 11$ and the digit length for the first $10^7$ iterates. Check whether any even-length iterate has residue 0 mod 11. A single counterexample (an even-length iterate with $T^k(196) \\equiv 0 \\pmod{11}$) would refute this conjecture. Note: refutation would NOT mean a palindrome exists — only that this particular sieve fails.\n\n**Impact:** If true, this eliminates half of all potential palindrome formations (the even-length ones) from the 196 orbit, reducing the",
-      "source_exp_id": "80496a50",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/80496a50",
-      "domains": [
-        "NumberTheory",
-        "Logic"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T04:04:51.063904+00:00"
-    },
-    {
       "id": "fd_0165",
       "title": "Conjecture 4: Finite Signature Automaton for Non-Palindromicity",
       "description": "**Precise Statement:** There exists a finite set $S$ of digit signatures (each recording digit length modulo some period $p$, residues mod 9 and mod 11, and a carry parity bit) such that:\n1. The signature of 196 lies in $S$.\n2. $S$ is closed under the reverse-and-add transition.\n3. No signature in $S$ is compatible with being a palindrome.\n\n**Test:** For various choices of the period $p$ (e.g., $p = 2, 3, 4, 6$) and carry parity definitions, enumerate all reachable signatures from 196's initial signature under the induced transition relation. Check whether any reachable signature could correspond to a palindrome. If every explored closure contains a palindrome-compatible signature, refute this conjecture for that parameter choice.\n\n**Impact:** If true for some $p$, this would constitute a ",
@@ -3301,7 +3229,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T06:01:32.453859+00:00"
     },
@@ -3324,7 +3252,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T06:01:32.460520+00:00"
     },
@@ -3561,7 +3489,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T07:05:54.587942+00:00"
     },
@@ -4163,7 +4091,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T09:06:54.687692+00:00"
     },
@@ -4466,24 +4394,6 @@
       "timestamp": "2026-05-20T11:03:49.923159+00:00"
     },
     {
-      "id": "fd_0243",
-      "title": "Conjecture 3: Curvature Cascade for Bounded-Depth Approximants",
-      "description": "**Conjecture.** For $k \\ge 3$, the $k$-th derivative of $\\operatorname{iterExp}(k)$ at $x = 0$ satisfies:\n\n$$\\operatorname{iterExp}(k)^{(k)}(0) \\ge \\operatorname{iterExp}(k-1, 1)^2$$\n\nand any depth-$(k-1)$ EML expression $E$ satisfying $\\|E - \\operatorname{iterExp}(k)\\|_\\infty \\le \\varepsilon$ on $[0,1]$ must have $|E^{(k)}(0)| \\ge \\operatorname{iterExp}(k-1, 1)^2 - O(\\varepsilon)$.\n\n**Test.** Compute higher derivatives of $\\operatorname{iterExp}(k)$ symbolically (using automatic differentiation) and verify the lower bound. For shallow approximants, check whether they match the higher derivative growth.\n\n**Refutation.** If a smooth depth-$(k-1)$ approximant achieves small uniform error without large higher derivatives, the curvature cascade may not be the right invariant.\n\n**Impact.** High",
-      "source_exp_id": "ffab0d73",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ffab0d73",
-      "domains": [
-        "NumberTheory",
-        "EML"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T11:03:49.932646+00:00"
-    },
-    {
       "id": "fd_0244",
       "title": "Conjecture 4: Mixed Tower Hierarchy (Log-Exp Towers)",
       "description": "**Conjecture.** Define mixed towers:\n$$T_k^{\\text{mix}}(x) = \\underbrace{\\exp(\\log(\\exp(\\log(\\cdots x \\cdots))))}_{k \\text{ alternations}}$$\n\nThese simplify to polynomials or the identity on appropriate domains. In contrast, towers with repeated $\\exp$ (no $\\log$ cancellation) create genuine depth. The depth separation for $\\operatorname{iterExp}(k)$ persists even when the EML language is extended with $\\log$ nodes, because $\\log \\circ \\exp = \\text{id}$ only reduces effective depth — it cannot create the multiplicative derivative cascade of iterated exponentials.\n\n**Test.** Extend the EML syntax with $\\log$ nodes. Search for depth-$(k-1)$ expressions (with $\\log$) that approximate $\\operatorname{iterExp}(k)$. Verify that $\\log$ nodes do not help.\n\n**Refutation.** If adding $\\log$ allows a ",
@@ -4727,7 +4637,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:00:44.602614+00:00"
     },
@@ -4747,7 +4657,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:00:44.615140+00:00"
     },
@@ -4866,7 +4776,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "e43579d4",
       "timestamp": "2026-05-20T12:03:48.370272+00:00"
     },
@@ -5329,24 +5239,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:06:22.287815+00:00"
-    },
-    {
-      "id": "fd_0274",
-      "title": "Hypothesis 2: Exponential-in-Depth Constant Growth",
-      "description": "**Conjecture.** The constant `c₁(k)` in the lower bound grows at least exponentially in `k`:\nthere exists `α > 1` such that `c₁(k) ≥ α^k` for all `k ≥ 2`.\n\n**Test.** Estimate `c₁(k)` for `k = 2, 3, 4, 5` by computing best approximation errors\nat several sizes and fitting. Plot `log c₁(k)` vs `k`. If the plot is roughly linear\nwith positive slope, the hypothesis is supported.\n\n**Impact.** This would prove that not only does each new depth level create an\napproximation barrier, but the barrier grows exponentially with depth — a true\nhierarchy, not just a sequence of diminishing separations.\n\n---",
-      "source_exp_id": "e7f47f32",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e7f47f32",
-      "domains": [
-        "NumberTheory",
-        "MachineLearning"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T14:06:22.299021+00:00"
     },
     {
       "id": "fd_0277",
@@ -5861,26 +5753,6 @@
       "timestamp": "2026-05-20T18:19:01.660231+00:00"
     },
     {
-      "id": "fd_0307",
-      "title": "Conjecture 3: Multivariate Generalization (Tensor Rank One)",
-      "description": "**Conjecture.** A positive continuous function $f : (0,\\infty)^n \\to (0,\\infty)$ satisfies $f(x_1, \\ldots, x_n) = \\prod_{i=1}^n \\phi_i(x_i)$ for continuous positive $\\phi_i$ if and only if for every pair of coordinates $i \\neq j$ and every fixing of the remaining coordinates, the resulting bivariate function satisfies the cross-ratio identity.\n\n**Test.** Implement the trivariate case: test $f(x,y,z) = x^2 y^3 z$ (separable) and $f(x,y,z) = (x+y) z$ (non-separable in $x,y$ but separable in $(x,y)$ vs $z$). Verify that the pairwise cross-ratio test correctly detects which coordinate pairs interact.\n\n**Impact.** This would extend the theory from bivariate to arbitrary dimension, enabling tensor decomposition tests for multivariate positive kernels. It connects to Tucker decomposition and CP-r",
-      "source_exp_id": "df0960fe",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/df0960fe",
-      "domains": [
-        "NumberTheory",
-        "Analysis",
-        "Algebra",
-        "MachineLearning"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T18:19:01.671542+00:00"
-    },
-    {
       "id": "fd_0308",
       "title": "Conjecture 4: Information-Geometric Interpretation",
       "description": "**Conjecture.** The log interaction defect $D_f(x_1, x_2, y_1, y_2)$ is the exponential of a signed area in the Fisher information geometry of the exponential family generated by $f$. Specifically, if $f$ defines a bivariate exponential family $p_\\theta(x,y) \\propto f(x,y)^{\\theta}$, then the interaction defect equals $\\exp(\\theta^2 \\cdot A)$ where $A$ is the mixed Fisher curvature.\n\n**Test.** Compute the Fisher information matrix for parametric families of the form $f_\\theta(x,y) = (x^a y^b)^\\theta$ and $(x+y)^{2\\theta}$. Check whether the defect's dependence on $\\theta$ matches the predicted quadratic scaling via Fisher curvature.\n\n**Impact.** This would establish a deep connection between multiplicative separability and information geometry, showing that the interaction defect is not ju",
@@ -5897,7 +5769,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T18:19:01.683258+00:00"
     },
@@ -5918,7 +5790,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T18:19:01.694482+00:00"
     },
@@ -5939,6 +5811,122 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T18:19:18.070551+00:00"
+    },
+    {
+      "id": "fd_0306",
+      "title": "Hypothesis 1: Profile Rigidity Hypothesis",
+      "description": "**Conjecture.** For generic separable polynomial losses $L(\\theta) = \\sum_{i=1}^n f_i(\\theta_i)$ with integer coefficients, simple integral critical points, and pairwise distinct critical values, there exists a finite exceptional set $S$ of primes such that the family of finite-field critical-value profiles\n$$\\{ \\operatorname{critProfile}_p(L, \\cdot) \\}_{p \\notin S}$$\ndetermines the real Morse index histogram of $L$ up to finitely many ambiguities.\n\n**Test.** Enumerate all separable losses of degree $\\leq 6$ with coefficients in $\\{-3, \\ldots, 3\\}$ and $n \\leq 3$ variables. For each pair $(L_1, L_2)$:\n1. Compute exact real critical points and Morse indices.\n2. Compute mod-$p$ critical profiles for all primes $p \\leq 200$ not in the exceptional set.\n3. Check: if $L_1$ and $L_2$ have differe",
+      "source_exp_id": "e43579d4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e43579d4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:43.620344+00:00"
+    },
+    {
+      "id": "fd_0308",
+      "title": "Hypothesis 3: Convolution Universality Hypothesis",
+      "description": "**Conjecture.** In high dimension, normalized modular critical profiles of random separable losses converge to a universal distribution under additive convolution. Specifically, for $n \\to \\infty$ with each $f_i$ drawn from a fixed ensemble of degree-$d$ polynomials with random integer coefficients:\n$$\\frac{1}{\\sqrt{n}} \\left( \\operatorname{critProfile}_p(L, t) - \\mathbb{E}[\\operatorname{critProfile}_p(L, t)] \\right) \\xrightarrow{d} \\mathcal{N}(0, \\sigma^2_{d,p})$$\nfor a variance $\\sigma^2_{d,p}$ depending only on the degree and the prime.\n\n**Test.**\n1. Fix degree $d = 4$ and coefficient range $\\{-5, \\ldots, 5\\}$.\n2. For $n \\in \\{10, 50, 100, 500\\}$ and primes $p \\in \\{5, 7, 11, 13\\}$:\n   - Sample 1000 random separable losses.\n   - Compute critical profiles via convolution.\n   - Test norma",
+      "source_exp_id": "e43579d4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e43579d4",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:43.643099+00:00"
+    },
+    {
+      "id": "fd_0309",
+      "title": "Hypothesis 4: Near-Separable Robustness Hypothesis",
+      "description": "**Conjecture.** Small coupling perturbations of separable losses preserve modular profile stability for a positive density of primes. Precisely, if $L_0 = \\sum f_i(\\theta_i)$ is separable and $L_\\varepsilon = L_0 + \\varepsilon \\cdot g(\\theta)$ is a small perturbation by a polynomial $g$ of bounded degree, then for all but finitely many primes $p$:\n$$| \\#\\operatorname{Crit}(L_\\varepsilon; \\mathbb{F}_p) - \\#\\operatorname{Crit}(L_0; \\mathbb{F}_p) | \\leq C \\cdot \\deg(g)$$\nwhere $C$ is a constant depending on $L_0$ and $\\varepsilon$ but not on $p$.\n\n**Test.**\n1. Start with $L_0 = (x^4 - 2x^2) + (y^4 - 2y^2)$.\n2. Add perturbations $g = xy$, $g = x^2 y$, $g = xy^2$, scaled by $\\varepsilon \\in \\{0.1, 0.5, 1\\}$.\n3. For each perturbed loss (with rounded integer coefficients), compute mod-$p$ critica",
+      "source_exp_id": "e43579d4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e43579d4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:43.654963+00:00"
+    },
+    {
+      "id": "fd_0310",
+      "title": "Hypothesis 5: Hardness Proxy Hypothesis",
+      "description": "**Conjecture.** The variance of modular critical counts across primes correlates with numerical optimization difficulty over $\\mathbb{R}$. Specifically, define the *arithmetic ruggedness* of a loss $L$ as:\n$$\\operatorname{Rug}(L) = \\operatorname{Var}_{p \\leq P} \\left[ \\#\\operatorname{Crit}(L; \\mathbb{F}_p) \\right]$$\nfor a fixed prime bound $P$. Then for separable polynomial losses of bounded degree, $\\operatorname{Rug}(L)$ correlates positively with the number of gradient descent iterations required to reach a local minimum from a random initialization.\n\n**Test.**\n1. Generate 100 random separable losses of degree 4-6 in 5-10 variables.\n2. Compute $\\operatorname{Rug}(L)$ using primes up to $P = 100$.\n3. Run gradient descent from 50 random initializations per loss, recording iterations to co",
+      "source_exp_id": "e43579d4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e43579d4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:43.666470+00:00"
+    },
+    {
+      "id": "fd_0311",
+      "title": "Asymptotic Modular Determination Conjecture (Grand Conjecture)",
+      "description": "**Conjecture.** For generic separable polynomial losses with integer coefficients and simple integral critical points, there exists a finite exceptional set of primes $S$ such that the family of finite-field critical-value profiles $\\{\\operatorname{critProfile}_p(L, \\cdot)\\}_{p \\notin S}$ determines the real Morse index histogram up to finitely many ambiguities.\n\n**Computational Refutation Test.** Search over two distinct separable losses $L_1, L_2$ of bounded degree and coefficient size. Compute:\n- Exact real critical points and Morse indices.\n- Mod-$p$ critical profiles for many increasing good primes.\n\nThe conjecture is **refuted** if:\n1. $L_1$ and $L_2$ have different real Morse histograms, but\n2. Their mod-$p$ critical profiles agree for all tested good primes beyond some threshold.\n\n",
+      "source_exp_id": "e43579d4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e43579d4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:43.677899+00:00"
+    },
+    {
+      "id": "fd_0304",
+      "title": "Prime-to-Archimedean Resonance in Gradient Descent Escape Times",
+      "description": "Conjecture: Let L(theta) be a polynomial loss with integer coefficients having an isolated strict saddle at theta*=0 whose Hessian has at least one unstable eigenvalue lambda_u > 0 over R. For fixed rational step size eta with 0 < eta < 2/|lambda_max|, define T_eta(theta)=theta-eta∇L(theta). For each sufficiently large prime p not dividing the denominators, let E_p(r) be the median first-exit time from the p-adic ball ||theta||_p <= p^(-r) under iteration of T_eta, starting from uniformly random theta in that ball. Then as p→∞, the normalized quantity E_p(r)/(r/log_p|1-eta lambda_u|_p^{-1}) converges to 1 for a positive-density set of primes iff the real unstable manifold at theta*=0 is one-dimensional and nonresonant (no multiplicative relation among unstable eigenvalues of the linearization). Test: Compute exit-time statistics for explicit polynomial losses with controlled Hessian spectra, compare prime-by-prime p-adic escape times against real saddle data, and search for failures exactly when there are higher-dimensional or resonant unstable directions. Refutation occurs if the asymptotic holds in resonant/multidimensional cases or fails generically in the predicted nonresonant 1D case. Impact: This would create a concrete bridge between local optimization geometry over R and arithmetic dynamics over Q_p, giving a new invariant of loss landscapes detectable from modular computations and suggesting arithmetic diagnostics for saddle structure.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Optimization Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:20:03.447371+00:00"
     }
   ],
   "pruned": [
@@ -6458,6 +6446,166 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T17:05:16.548869+00:00"
+    },
+    {
+      "id": "fd_0100",
+      "title": "Hypothesis 2: Semiconjugacy Rigidity",
+      "description": "**Conjecture.** Persistent digit bias in the orbits of T_c occurs if and only if T_c is semiconjugate to a monomial map ±x^d via an integer-valued function φ satisfying φ(T_c(x)) = ±(φ(x))^d.\n\nFormally: PersistentDigitBias(c) ⟺ HasMonomialSemiconjugacy(c).\n\n**Test.** For each c ∈ {-100, ..., 100}:\n1. Compute leading-digit frequencies for primes p ≤ 10⁴ and n ≤ 20. Flag c as \"biased\" if the KL divergence from Benford exceeds 0.005.\n2. For each biased c, search for a semiconjugacy by testing polynomial candidates φ of degree ≤ 10 and checking the functional equation φ(x² + c) = ±(φ(x))^d modulo large primes.\n3. Verify: every biased c has a semiconjugacy, and every unbiased c does not.\n\n**Refutation criterion.** Finding a c with persistent digit bias but no semiconjugacy (or vice versa) falsi",
+      "source_exp_id": "20938654",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/20938654",
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:03:43.206176+00:00"
+    },
+    {
+      "id": "fd_0102",
+      "title": "Hypothesis 4: Entropy-Rate Decay",
+      "description": "**Conjecture.** For generic c, the KL divergence between the empirical leading-digit distribution of {|T_c⁽ⁿ⁾(p)| : p ≤ X prime} and the Benford distribution decays exponentially in n:\n\n$$D_{KL}(P_n \\| B) \\le C_c \\cdot \\rho^n$$\n\nfor constants C_c > 0 and 0 < ρ < 1 depending on c but not on X (for X sufficiently large).\n\n**Test.** For c ∈ {0, 1, -1, 2, -2}:\n1. For each n = 1, ..., 25, compute the leading-digit distribution of |T_c⁽ⁿ⁾(p)| for all primes p ≤ 10⁵.\n2. Compute D_KL(P_n || B) for each n.\n3. Fit a model D_KL = C · ρⁿ and estimate ρ by linear regression of log(D_KL) vs. n.\n\n**Refutation criterion.** If D_KL does not decay exponentially (e.g., decays polynomially or oscillates) for any generic c, the hypothesis is falsified. Specifically, if the fitted ρ exceeds 0.99 for X = 10⁵, th",
+      "source_exp_id": "20938654",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/20938654",
+      "domains": [
+        "NumberTheory",
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:03:43.215515+00:00"
+    },
+    {
+      "id": "fd_0144",
+      "title": "Conjecture 3: Weighted Planar Packing Equivalence",
+      "description": "**Conjecture:** For every finite set $C \\subset S^2$ with pairwise geodesic distance $\\geq 2r$, the stereographic images $\\{x_i\\}$ satisfy the weighted disk packing condition: the disks $B(x_i, \\rho(r, x_i))$ are pairwise disjoint, where $\\rho(r, x) = \\tan(r) / \\lambda(x)$. Conversely, every such weighted disk packing in the plane lifts to a valid spherical cap packing.\n\n**Test:** For the 12 vertices of the icosahedron projected stereographically, verify computationally that the weighted exclusion disks are disjoint with $r = \\pi/6$. Then attempt to find 13 disks satisfying the weighted packing condition — failure confirms the bound.\n\n**Impact:** This establishes a complete dictionary between spherical packing and weighted planar packing, opening the door to applying planar disk-packing al",
+      "source_exp_id": "71236717",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/71236717",
+      "domains": [
+        "NumberTheory",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T03:08:58.150581+00:00"
+    },
+    {
+      "id": "fd_0163",
+      "title": "Conjecture 2: Modular Residue Obstruction for 196 Orbit",
+      "description": "**Precise Statement:** For all $k \\geq 1$, if $T^k(196)$ has an even number of digits, then $T^k(196) \\not\\equiv 0 \\pmod{11}$.\n\nCombined with our formally verified theorem that even-length palindromes must be divisible by 11, this would prove that no even-length palindrome ever appears in the 196 orbit.\n\n**Test:** Compute $T^k(196) \\bmod 11$ and the digit length for the first $10^7$ iterates. Check whether any even-length iterate has residue 0 mod 11. A single counterexample (an even-length iterate with $T^k(196) \\equiv 0 \\pmod{11}$) would refute this conjecture. Note: refutation would NOT mean a palindrome exists — only that this particular sieve fails.\n\n**Impact:** If true, this eliminates half of all potential palindrome formations (the even-length ones) from the 196 orbit, reducing the",
+      "source_exp_id": "80496a50",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/80496a50",
+      "domains": [
+        "NumberTheory",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T04:04:51.063904+00:00"
+    },
+    {
+      "id": "fd_0243",
+      "title": "Conjecture 3: Curvature Cascade for Bounded-Depth Approximants",
+      "description": "**Conjecture.** For $k \\ge 3$, the $k$-th derivative of $\\operatorname{iterExp}(k)$ at $x = 0$ satisfies:\n\n$$\\operatorname{iterExp}(k)^{(k)}(0) \\ge \\operatorname{iterExp}(k-1, 1)^2$$\n\nand any depth-$(k-1)$ EML expression $E$ satisfying $\\|E - \\operatorname{iterExp}(k)\\|_\\infty \\le \\varepsilon$ on $[0,1]$ must have $|E^{(k)}(0)| \\ge \\operatorname{iterExp}(k-1, 1)^2 - O(\\varepsilon)$.\n\n**Test.** Compute higher derivatives of $\\operatorname{iterExp}(k)$ symbolically (using automatic differentiation) and verify the lower bound. For shallow approximants, check whether they match the higher derivative growth.\n\n**Refutation.** If a smooth depth-$(k-1)$ approximant achieves small uniform error without large higher derivatives, the curvature cascade may not be the right invariant.\n\n**Impact.** High",
+      "source_exp_id": "ffab0d73",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ffab0d73",
+      "domains": [
+        "NumberTheory",
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T11:03:49.932646+00:00"
+    },
+    {
+      "id": "fd_0274",
+      "title": "Hypothesis 2: Exponential-in-Depth Constant Growth",
+      "description": "**Conjecture.** The constant `c₁(k)` in the lower bound grows at least exponentially in `k`:\nthere exists `α > 1` such that `c₁(k) ≥ α^k` for all `k ≥ 2`.\n\n**Test.** Estimate `c₁(k)` for `k = 2, 3, 4, 5` by computing best approximation errors\nat several sizes and fitting. Plot `log c₁(k)` vs `k`. If the plot is roughly linear\nwith positive slope, the hypothesis is supported.\n\n**Impact.** This would prove that not only does each new depth level create an\napproximation barrier, but the barrier grows exponentially with depth — a true\nhierarchy, not just a sequence of diminishing separations.\n\n---",
+      "source_exp_id": "e7f47f32",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e7f47f32",
+      "domains": [
+        "NumberTheory",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:06:22.299021+00:00"
+    },
+    {
+      "id": "fd_0307",
+      "title": "Hypothesis 2: Quadratic Parity Hypothesis",
+      "description": "**Conjecture.** For diagonal quadratic losses $Q(\\theta) = \\sum_{i=1}^n \\varepsilon_i \\theta_i^2 + c_i \\theta_i + d$ with $\\varepsilon_i \\in \\{\\pm 1\\}$, the quadratic character signature\n$$\\operatorname{quadSignature}_p(Q) = \\chi_p(\\det \\operatorname{Hess}(Q))$$\nsatisfies\n$$\\operatorname{quadSignature}_p(Q) = \\chi_p(2)^n \\cdot \\chi_p((-1)^{\\operatorname{index}(Q)})$$\nfor all odd primes $p$ not dividing any coefficient. Furthermore, for primes in the residue class $p \\equiv 1 \\pmod{8}$ (where $\\chi_p(2) = 1$), the signature directly reads off $(-1)^{\\operatorname{index}}$.\n\n**Test.** \n1. Enumerate all $\\pm 1$ sign patterns $\\varepsilon$ for $n \\leq 10$.\n2. For each pattern and each odd prime $p \\leq 1000$, compute $\\chi_p(\\det \\operatorname{Hess})$ and compare with $\\chi_p(2)^n \\cdot \\chi_p",
+      "source_exp_id": "e43579d4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e43579d4",
+      "domains": [
+        "NumberTheory",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:43.631263+00:00"
+    },
+    {
+      "id": "fd_0312",
+      "title": "Short term (1-2 cycles)",
+      "description": "- Prove the full quadratic parity formula (Hypothesis 2) in Lean.\n- Extend prime stability from individual critical points to families (Theorem 3 from the proposal).\n- Implement efficient convolution-based profile computation for large primes.",
+      "source_exp_id": "e43579d4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e43579d4",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:43.687782+00:00"
+    },
+    {
+      "id": "fd_0313",
+      "title": "Medium term (3-5 cycles)",
+      "description": "- Formalize the theory for non-separable perturbations using resultant/discriminant machinery.\n- Connect to étale cohomology via Grothendieck-Lefschetz trace formulas.\n- Build a computational library for automated hardness classification.",
+      "source_exp_id": "e43579d4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e43579d4",
+      "domains": [
+        "Topology"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:43.697514+00:00"
     }
   ]
 }

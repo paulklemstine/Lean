@@ -248,6 +248,11 @@ class FutureDirection:
     timestamp: str = ""
     prune_reason: str = ""
     pruned_at: str = ""
+    # --- New fields for hybrid FUTURE_DIRECTIONS format ---
+    catalog_references: List[str] = field(default_factory=list)    # e.g. ["Bridges.Basic.lean", "Algebra.Advanced.berggren_isogeny"]
+    ambition_level: str = "extension"                             # "grand_challenge" or "extension"
+    lineage_refs: List[str] = field(default_factory=list)          # e.g. ["fd_0003", "exp_20250517_001"]
+    domain_bridges: List[str] = field(default_factory=list)        # e.g. ["NumberTheory <-> Tropical", "Algebra <-> Physics"]
 
     def to_dict(self) -> dict:
         return {
@@ -264,6 +269,10 @@ class FutureDirection:
             "status": self.status,
             "consumed_by_exp_id": self.consumed_by_exp_id,
             "timestamp": self.timestamp,
+            "catalog_references": self.catalog_references,
+            "ambition_level": self.ambition_level,
+            "lineage_refs": self.lineage_refs,
+            "domain_bridges": self.domain_bridges,
         }
 
     @classmethod
@@ -281,6 +290,7 @@ class FutureDirectionsManager:
         self._file = self.workspace / "future_directions.json"
         self._directions: List[FutureDirection] = []
         self._pruned: List[FutureDirection] = []
+        self._cycle_syntheses: Dict[str, str] = {}  # exp_id -> synthesis text
         self._load()
 
     def _load(self) -> None:
@@ -295,9 +305,11 @@ class FutureDirectionsManager:
             elif isinstance(data, dict):
                 self._directions = [FutureDirection.from_dict(d) for d in data.get("directions", [])]
                 self._pruned = [FutureDirection.from_dict(d) for d in data.get("pruned", [])]
+                self._cycle_syntheses = data.get("cycle_syntheses", {})
         except Exception:
             self._directions = []
             self._pruned = []
+            self._cycle_syntheses = {}
 
         # Recover stale in_progress directions whose jobs no longer exist
         self._recover_stale_directions()
@@ -345,10 +357,17 @@ class FutureDirectionsManager:
             json.dumps({
                 "directions": [d.to_dict() for d in self._directions],
                 "pruned": [d.to_dict() for d in self._pruned],
+                "cycle_syntheses": self._cycle_syntheses,
             }, indent=2, ensure_ascii=False),
             encoding="utf-8",
         )
         self._update_snapshot()
+
+    def store_synthesis(self, exp_id: str, synthesis_text: str) -> None:
+        """Store a cycle synthesis (from FUTURE_DIRECTIONS.md ## Synthesis section)."""
+        if synthesis_text and len(synthesis_text) > 20:
+            self._cycle_syntheses[exp_id] = synthesis_text
+            self._save()
 
     def _update_snapshot(self) -> None:
         """Write a display-friendly snapshot for CI/GitHub Pages consumption."""
@@ -398,42 +417,112 @@ class FutureDirectionsManager:
 
     def add_directions_from_text(
         self, text: str, source_exp_id: str, source_path: str
-    ) -> int:
+    ) -> tuple:
         """Parse a FUTURE_DIRECTIONS.md text and add structured directions.
 
-        Returns the number of directions added.
+        Returns (count_of_directions_added, synthesis_text).
         """
         import re
         added = 0
-        current_title = ""
-        current_body = ""
+        synthesis_text = ""
 
-        # Pattern 1: Bold-numbered sections like "1. **Title.** Description..."
-        for m in re.finditer(r'\d+\.\s+\*\*([^*]+?)\*\*\s*', text):
-            title = m.group(1).strip().rstrip(".")
-            # Capture description from end of bold marker to next numbered item
-            remaining = text[m.end():]
-            next_item = re.search(r'\n\s*\d+\.\s+\*\*', remaining)
-            if next_item:
-                desc = remaining[:next_item.start()].strip()
-            else:
-                end_match = re.search(r'\n\n(?!\s)', remaining)
-                desc = remaining[:end_match.start()].strip() if end_match else remaining.strip()
+        # ── Pattern 0: Structured hybrid format (### Direction N: with **Field**: entries) ──
+        structured_pattern = re.compile(
+            r'###\s+Direction\s+\d+\s*:\s*(.+?)\n(.*?)(?=\n###\s+Direction\s+\d+|\Z)',
+            re.DOTALL,
+        )
+        structured_matches = list(structured_pattern.finditer(text))
+        if structured_matches:
+            # Extract ## Synthesis section (everything before first Direction block)
+            synth_match = re.search(
+                r'^##\s+Synthesis\s*\n(.*?)(?=\n---|\n###\s+Direction)',
+                text, re.DOTALL | re.MULTILINE,
+            )
+            synthesis_text = synth_match.group(1).strip() if synth_match else ""
 
-            desc = desc[:800]
-            if len(desc) > 30:
+            for m in structured_matches:
+                title = m.group(1).strip()
+                body = m.group(2).strip()
+
+                conjecture = self._extract_bold_field(body, "Conjecture")
+                test = self._extract_bold_field(body, "Test")
+                impact = self._extract_bold_field(body, "Impact")
+                catalog_refs_raw = self._extract_bold_field(body, "Catalog References")
+                proof_strategy = self._extract_bold_field(body, "Proof Strategy")
+                domain_bridges_raw = self._extract_bold_field(body, "Domain Bridges")
+                lineage_raw = self._extract_bold_field(body, "Lineage")
+                ambition_raw = self._extract_bold_field(body, "Ambition")
+
+                # Build description from Conjecture + Test + Impact
+                desc_parts = []
+                if conjecture:
+                    desc_parts.append(f"Conjecture: {conjecture}")
+                if test:
+                    desc_parts.append(f"Test: {test}")
+                if impact:
+                    desc_parts.append(f"Impact: {impact}")
+                description = "\n\n".join(desc_parts) if desc_parts else body[:800]
+
+                # Parse catalog references: backtick-enclosed or comma-separated
+                catalog_references = re.findall(r'`([^`]+)`', catalog_refs_raw) or [
+                    c.strip() for c in catalog_refs_raw.split(",") if c.strip()
+                ] if catalog_refs_raw else []
+
+                # Parse domain bridges: "A <-> B" patterns
+                domain_bridges = re.findall(r'(\w+\s*<->\s*\w+)', domain_bridges_raw) or [
+                    b.strip() for b in domain_bridges_raw.split(",") if b.strip()
+                ] if domain_bridges_raw else []
+
+                # Parse lineage refs: fd_XXXX and exp_XXXXXXXX_XXX patterns
+                lineage_refs = re.findall(r'(fd_\d{4}|exp_\d{8}_\d{3})', lineage_raw)
+
+                # Determine ambition level
+                ambition_level = "grand_challenge" if "grand" in ambition_raw.lower() else "extension"
+
                 fd = FutureDirection(
                     id=f"fd_{len(self._directions):04d}",
-                    title=title,
-                    description=desc,
+                    title=title[:120],
+                    description=description[:1200],
                     source_exp_id=source_exp_id,
                     source_path=source_path,
-                    domains=self._infer_domains(title + " " + desc),
+                    domains=self._infer_domains(title + " " + description),
+                    proof_strategy=proof_strategy[:500] if proof_strategy else "",
                     depth_estimate=3,
-                    priority_score=0.75,
+                    priority_score=0.80,  # Higher default for structured format
+                    catalog_references=catalog_references,
+                    ambition_level=ambition_level,
+                    lineage_refs=lineage_refs,
+                    domain_bridges=domain_bridges,
                 )
                 self.add_direction(fd)
                 added += 1
+
+        # ── Pattern 1: Bold-numbered sections like "1. **Title.** Description..." ──
+        if added == 0:
+            for m in re.finditer(r'\d+\.\s+\*\*([^*]+?)\*\*\s*', text):
+                title = m.group(1).strip().rstrip(".")
+                remaining = text[m.end():]
+                next_item = re.search(r'\n\s*\d+\.\s+\*\*', remaining)
+                if next_item:
+                    desc = remaining[:next_item.start()].strip()
+                else:
+                    end_match = re.search(r'\n\n(?!\s)', remaining)
+                    desc = remaining[:end_match.start()].strip() if end_match else remaining.strip()
+
+                desc = desc[:800]
+                if len(desc) > 30:
+                    fd = FutureDirection(
+                        id=f"fd_{len(self._directions):04d}",
+                        title=title,
+                        description=desc,
+                        source_exp_id=source_exp_id,
+                        source_path=source_path,
+                        domains=self._infer_domains(title + " " + desc),
+                        depth_estimate=3,
+                        priority_score=0.75,
+                    )
+                    self.add_direction(fd)
+                    added += 1
 
         # Pattern 2: Markdown headers with research content
         if added == 0:
@@ -486,7 +575,15 @@ class FutureDirectionsManager:
         if len(self._directions) > DEFAULT_DIRECTION_CAP:
             self.prune_directions(cap=DEFAULT_DIRECTION_CAP)
 
-        return added
+        return (added, synthesis_text)
+
+    @staticmethod
+    def _extract_bold_field(body: str, field_name: str) -> str:
+        """Extract value after **Field Name**: from a direction body."""
+        import re
+        pattern = rf'\*\*{field_name}\*\*\s*:\s*(.*?)(?=\n\*\*|\Z)'
+        m = re.search(pattern, body, re.DOTALL)
+        return m.group(1).strip() if m else ""
 
     @staticmethod
     def _infer_domains(text: str) -> List[str]:
@@ -896,15 +993,27 @@ class FutureDirectionsManager:
         # fun_bonus: preserve speculative directions
         fun_bonus = 0.05 if "Speculative" in direction.domains else 0.0
 
+        # ambition_bonus: grand challenges are high-risk/high-reward
+        ambition_bonus = 1.0 if direction.ambition_level == "grand_challenge" else 0.5
+
+        # catalog_anchor_bonus: directions referencing specific Catalog theorems are more actionable
+        catalog_anchor_bonus = 1.0 if direction.catalog_references else 0.3
+
+        # bridge_bonus: cross-domain bridges add value (additive, up to ~0.15)
+        bridge_bonus = 0.05 * min(len(direction.domain_bridges), 3) if direction.domain_bridges else 0.0
+
         return (
-            0.20 * novelty
-            + 0.15 * outcome_bonus
-            + 0.20 * source_bonus
-            + 0.15 * domain_richness
+            0.18 * novelty
+            + 0.12 * outcome_bonus
+            + 0.18 * source_bonus
+            + 0.12 * domain_richness
             + 0.10 * description_depth
             + 0.10 * strategy_bonus
-            + 0.10 * freshness
+            + 0.08 * freshness
+            + 0.07 * ambition_bonus
+            + 0.05 * catalog_anchor_bonus
             + fun_bonus
+            + bridge_bonus
         )
 
     def prune_directions(

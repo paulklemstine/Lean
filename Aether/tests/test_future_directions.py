@@ -340,7 +340,7 @@ class TestParsingFutureDirectionsMD:
 
 3. **Sheaf Cohomology Robustness.** Prove that vanishing first sheaf cohomology on neural weight spaces implies certified L-infinity adversarial robustness bounds.
 """
-        added = fd_manager.add_directions_from_text(text, "exp_001", "result_future_directions")
+        added, synth = fd_manager.add_directions_from_text(text, "exp_001", "result_future_directions")
         assert added == 3
         titles = [d.title for d in fd_manager._directions]
         assert "Tropical Closure and Compression" in titles
@@ -356,7 +356,7 @@ Prove that the eigenvalue gap of tropical transfer matrices determines critical 
 Demonstrate that tropical convex hulls of neural firing patterns classify stimulus identities with provable margin bounds, establishing tropical geometry as a formal framework for neural coding theory and connecting to the combinatorial neural code literature.
 """
         fd_manager._directions = []
-        added = fd_manager.add_directions_from_text(text, "exp_002", "result_future_directions")
+        added, synth = fd_manager.add_directions_from_text(text, "exp_002", "result_future_directions")
         assert added == 2
 
     def test_parse_bullet_items(self, fd_manager):
@@ -365,15 +365,15 @@ Demonstrate that tropical convex hulls of neural firing patterns classify stimul
 - Show that the tropical value iteration for zero-sum games converges in at most n steps for n-player games, establishing tropical Nash equilibria as fixed points of min-plus operators
 """
         fd_manager._directions = []
-        added = fd_manager.add_directions_from_text(text, "exp_003", "result_future_directions")
+        added, synth = fd_manager.add_directions_from_text(text, "exp_003", "result_future_directions")
         assert added == 2
 
     def test_parse_empty_text(self, fd_manager):
-        added = fd_manager.add_directions_from_text("", "exp_004", "result_future_directions")
+        added, synth = fd_manager.add_directions_from_text("", "exp_004", "result_future_directions")
         assert added == 0
 
     def test_parse_short_text_no_match(self, fd_manager):
-        added = fd_manager.add_directions_from_text("No structured directions here.", "exp_005", "result")
+        added, synth = fd_manager.add_directions_from_text("No structured directions here.", "exp_005", "result")
         assert added == 0
 
     def test_domain_inference_from_parsed_text(self, fd_manager):
@@ -438,7 +438,7 @@ class TestEndToEnd:
         fd_manager.mark_direction_completed(best_dir.id)
 
         new_text = "1. **Tropical Circuit Lower Bounds.** Prove that min-plus circuits require super-polynomial size for parity computation, advancing P vs NP barriers."
-        added = fd_manager.add_directions_from_text(new_text, job_id, "result_future_directions")
+        added, synth = fd_manager.add_directions_from_text(new_text, job_id, "result_future_directions")
         assert added == 1
 
         new_dir = [d for d in fd_manager._directions if d.title.startswith("Tropical Circuit")][0]
@@ -788,3 +788,295 @@ class TestBackwardCompatibility:
         stats = fd_manager.get_stats()
         assert "pruned" in stats
         assert stats["pruned"] == 3
+
+# ── Test: Hybrid FUTURE_DIRECTIONS Format ──
+
+class TestHybridFormatParser:
+    """Test Pattern 0: structured hybrid format with ### Direction blocks."""
+
+    HYBRID_TEXT = """## Synthesis
+
+This cycle uncovered deep connections between tropical geometry and neural network
+robustness. The most promising direction is the tropical closure conjecture, which
+bridges Algebra and Tropical domains. The Berggren tree structure provides a natural
+framework for cryptographic applications.
+
+---
+
+### Direction 1: Tropical Closure and Compression
+
+**Conjecture**: The idempotent closure of a min-plus semiring yields a computable
+upper bound on Kolmogorov complexity for the underlying data.
+**Test**: Compute the closure for 3-element semirings and verify the bound holds
+against known Kolmogorov complexity values.
+**Impact**: Would establish tropical algebra as a fundamental tool for
+understanding computational complexity barriers.
+**Catalog References**: `Bridges.Basic.lean`, `Tropical.Transfer.lean`
+**Proof Strategy**: Define the closure operator on min-plus semirings, prove it
+is idempotent and computable, then establish the Kolmogorov bound via a
+constructive encoding argument.
+**Domain Bridges**: Algebra <-> Tropical, Computation <-> Tropical
+**Lineage**: Builds on fd_0001 and exp_20250517_001
+**Ambition**: grand_challenge
+
+---
+
+### Direction 2: Neural Robustness via Tropical Convexity
+
+**Conjecture**: Tropical convex hulls of neural firing patterns classify stimulus
+identities with provable margin bounds.
+**Test**: Compute tropical convex hulls for synthetic neural data and verify
+margin bounds match theoretical predictions.
+**Impact**: Establishes tropical geometry as a formal framework for neural coding.
+**Catalog References**: `MachineLearning.TropicalNet.lean`
+**Proof Strategy**: Construct the tropical convex hull of a neural code, then prove
+the margin bound using the tropical Perron-Frobenius theorem.
+**Domain Bridges**: MachineLearning <-> Tropical
+**Lineage**: Builds on fd_0003
+**Ambition**: extension
+
+---
+
+### Direction 3: Berggren Cryptographic Hash Extension
+
+**Conjecture**: The Berggren tree traversal provides a collision-resistant hash
+function when composed with the minor profile injection.
+**Test**: Implement the hash for depth-8 Berggren trees and run collision tests.
+**Impact**: Links Pythagorean triple theory to post-quantum cryptography.
+**Catalog References**: `Pythagorean.Berggren.Core.lean`, `Cryptography.MinimalTrapdoor.lean`
+**Proof Strategy**: Extend the minor profile injection proof to show collision
+resistance under the standard cryptographic assumptions.
+**Domain Bridges**: Pythagorean <-> Cryptography
+**Lineage**: Builds on fd_0005
+**Ambition**: extension
+"""
+
+    def test_parse_hybrid_format(self, fd_manager):
+        fd_manager._directions = []
+        added, synthesis = fd_manager.add_directions_from_text(
+            self.HYBRID_TEXT, "exp_hybrid_001", "result_future_directions"
+        )
+        assert added == 3
+        assert len(synthesis) > 50  # Synthesis was extracted
+        assert "tropical geometry" in synthesis.lower()
+
+        # Check first direction
+        d1 = fd_manager._directions[0]
+        assert "Tropical Closure" in d1.title
+        assert d1.ambition_level == "grand_challenge"
+        assert d1.proof_strategy != ""
+        assert "idempotent" in d1.proof_strategy.lower()
+        assert "Bridges.Basic.lean" in d1.catalog_references
+        assert "Algebra <-> Tropical" in d1.domain_bridges or any(
+            "Algebra" in b and "Tropical" in b for b in d1.domain_bridges
+        )
+        assert "fd_0001" in d1.lineage_refs
+
+    def test_hybrid_ambition_levels(self, fd_manager):
+        fd_manager._directions = []
+        added, _ = fd_manager.add_directions_from_text(
+            self.HYBRID_TEXT, "exp_hybrid_002", "result_future_directions"
+        )
+        assert added == 3
+        ambitions = [d.ambition_level for d in fd_manager._directions]
+        assert ambitions.count("grand_challenge") == 1
+        assert ambitions.count("extension") == 2
+
+    def test_hybrid_catalog_references(self, fd_manager):
+        fd_manager._directions = []
+        added, _ = fd_manager.add_directions_from_text(
+            self.HYBRID_TEXT, "exp_hybrid_003", "result_future_directions"
+        )
+        assert added == 3
+        d3 = fd_manager._directions[2]  # Berggren direction
+        assert "Pythagorean.Berggren.Core.lean" in d3.catalog_references
+        assert "Cryptography.MinimalTrapdoor.lean" in d3.catalog_references
+
+    def test_hybrid_synthesis_storage(self, fd_manager):
+        fd_manager._directions = []
+        _, synthesis = fd_manager.add_directions_from_text(
+            self.HYBRID_TEXT, "exp_synth_001", "result_future_directions"
+        )
+        fd_manager.store_synthesis("exp_synth_001", synthesis)
+        assert "exp_synth_001" in fd_manager._cycle_syntheses
+        assert "tropical" in fd_manager._cycle_syntheses["exp_synth_001"].lower()
+
+    def test_fallback_still_works(self, fd_manager):
+        """Old format should still parse correctly, new fields get defaults."""
+        fd_manager._directions = []
+        old_text = """
+1. **Tropical Min-Plus Automata.** Prove a Myhill-Nerode theorem for min-plus
+weighted languages over tropical semirings with finite index.
+2. **Neural Code Classification.** Demonstrate that tropical convex hulls of
+neural firing patterns classify stimulus identities with provable margin bounds.
+"""
+        added, synthesis = fd_manager.add_directions_from_text(
+            old_text, "exp_old_001", "result_future_directions"
+        )
+        assert added == 2
+        assert synthesis == ""  # No synthesis section in old format
+        d = fd_manager._directions[0]
+        assert d.ambition_level == "extension"  # Default
+        assert d.catalog_references == []  # Default
+        assert d.lineage_refs == []  # Default
+        assert d.domain_bridges == []  # Default
+
+    def test_empty_synthesis_graceful(self, fd_manager):
+        """Hybrid format with no synthesis should still parse directions."""
+        fd_manager._directions = []
+        text_no_synth = """
+### Direction 1: Simple Test
+
+**Conjecture**: A test conjecture.
+**Test**: A test test.
+**Impact**: A test impact.
+**Catalog References**: `Test.File.lean`
+**Proof Strategy**: Direct proof.
+**Domain Bridges**: Test <-> Test
+**Lineage**: Builds on fd_0001
+**Ambition**: extension
+"""
+        added, synthesis = fd_manager.add_directions_from_text(
+            text_no_synth, "exp_nosynth_001", "result_future_directions"
+        )
+        assert added == 1
+        assert synthesis == ""  # No synthesis section
+
+
+class TestNewDataclassFields:
+    """Test the 4 new FutureDirection fields and backward compatibility."""
+
+    def test_new_fields_with_defaults(self):
+        fd = FutureDirection(
+            id="test_001", title="Test", description="Test desc",
+            source_exp_id="exp_001", source_path="test",
+        )
+        assert fd.catalog_references == []
+        assert fd.ambition_level == "extension"
+        assert fd.lineage_refs == []
+        assert fd.domain_bridges == []
+
+    def test_new_fields_populated(self):
+        fd = FutureDirection(
+            id="test_002", title="Test", description="Test desc",
+            source_exp_id="exp_001", source_path="test",
+            catalog_references=["Bridges.Basic.lean", "Algebra.Advanced.berggren"],
+            ambition_level="grand_challenge",
+            lineage_refs=["fd_0001", "exp_20250517_001"],
+            domain_bridges=["Algebra <-> Tropical", "Computation <-> Physics"],
+        )
+        assert fd.catalog_references == ["Bridges.Basic.lean", "Algebra.Advanced.berggren"]
+        assert fd.ambition_level == "grand_challenge"
+        assert fd.lineage_refs == ["fd_0001", "exp_20250517_001"]
+        assert fd.domain_bridges == ["Algebra <-> Tropical", "Computation <-> Physics"]
+
+    def test_roundtrip_serialization(self):
+        fd = FutureDirection(
+            id="test_003", title="Test Roundtrip", description="Test desc",
+            source_exp_id="exp_001", source_path="test",
+            catalog_references=["Foo.lean"],
+            ambition_level="grand_challenge",
+            lineage_refs=["fd_0042"],
+            domain_bridges=["Algebra <-> Physics"],
+        )
+        d = fd.to_dict()
+        assert d["catalog_references"] == ["Foo.lean"]
+        assert d["ambition_level"] == "grand_challenge"
+        fd2 = FutureDirection.from_dict(d)
+        assert fd2.catalog_references == ["Foo.lean"]
+        assert fd2.ambition_level == "grand_challenge"
+        assert fd2.lineage_refs == ["fd_0042"]
+        assert fd2.domain_bridges == ["Algebra <-> Physics"]
+
+    def test_backward_compat_old_json(self):
+        """Old JSON without new fields should load with defaults."""
+        old_data = {
+            "id": "test_old",
+            "title": "Old Direction",
+            "description": "From old format",
+            "source_exp_id": "exp_old",
+            "source_path": "old_format",
+            "domains": ["Algebra"],
+            "priority_score": 0.75,
+        }
+        fd = FutureDirection.from_dict(old_data)
+        assert fd.catalog_references == []
+        assert fd.ambition_level == "extension"
+        assert fd.lineage_refs == []
+        assert fd.domain_bridges == []
+
+
+class TestQualityScoringNewFactors:
+    """Test ambition_bonus, catalog_anchor_bonus, and bridge_bonus."""
+
+    def test_grand_challenge_scores_higher_than_extension(self, fd_manager):
+        """A grand_challenge direction should score higher than an extension
+        with all other factors equal."""
+        fd_manager._directions = []
+        d_gc = FutureDirection(
+            id="gc_001", title="Grand Challenge Test",
+            description="A test grand challenge direction with enough length to pass description depth thresholds.",
+            source_exp_id="exp_001", source_path="seed:manual_v2",
+            domains=["Algebra", "Physics", "Tropical"],
+            proof_strategy="Construct a proof via direct verification",
+            ambition_level="grand_challenge",
+            catalog_references=["Bridges.Basic.lean"],
+            domain_bridges=["Algebra <-> Tropical"],
+        )
+        d_ext = FutureDirection(
+            id="ext_001", title="Extension Test",
+            description="A test extension direction with enough length to pass description depth thresholds.",
+            source_exp_id="exp_001", source_path="seed:manual_v2",
+            domains=["Algebra", "Physics", "Tropical"],
+            proof_strategy="Construct a proof via direct verification",
+            ambition_level="extension",
+            catalog_references=["Bridges.Basic.lean"],
+            domain_bridges=["Algebra <-> Tropical"],
+        )
+        score_gc = fd_manager._compute_quality_score(d_gc)
+        score_ext = fd_manager._compute_quality_score(d_ext)
+        assert score_gc > score_ext, f"grand_challenge ({score_gc}) should score higher than extension ({score_ext})"
+
+    def test_catalog_anchor_boosts_score(self, fd_manager):
+        """Directions with catalog references should score higher."""
+        fd_manager._directions = []
+        d_with_refs = FutureDirection(
+            id="ref_001", title="With Catalog Refs",
+            description="A direction with catalog references for grounding.",
+            source_exp_id="exp_001", source_path="result_future_directions",
+            domains=["Algebra"],
+            catalog_references=["Bridges.Basic.lean"],
+        )
+        d_without_refs = FutureDirection(
+            id="noref_001", title="Without Catalog Refs",
+            description="A direction without catalog references.",
+            source_exp_id="exp_001", source_path="result_future_directions",
+            domains=["Algebra"],
+            catalog_references=[],
+        )
+        score_with = fd_manager._compute_quality_score(d_with_refs)
+        score_without = fd_manager._compute_quality_score(d_without_refs)
+        assert score_with > score_without
+
+    def test_domain_bridge_bonus(self, fd_manager):
+        """More domain bridges should increase score."""
+        fd_manager._directions = []
+        d_many_bridges = FutureDirection(
+            id="br_001", title="Many Bridges",
+            description="A direction with many cross-domain bridges.",
+            source_exp_id="exp_001", source_path="seed:manual_v2",
+            domains=["Algebra", "Tropical", "Physics"],
+            proof_strategy="Use algebraic methods",
+            domain_bridges=["Algebra <-> Tropical", "Tropical <-> Physics", "Algebra <-> Physics"],
+        )
+        d_few_bridges = FutureDirection(
+            id="br_002", title="Few Bridges",
+            description="A direction with fewer cross-domain bridges.",
+            source_exp_id="exp_001", source_path="seed:manual_v2",
+            domains=["Algebra", "Tropical", "Physics"],
+            proof_strategy="Use algebraic methods",
+            domain_bridges=["Algebra <-> Tropical"],
+        )
+        score_many = fd_manager._compute_quality_score(d_many_bridges)
+        score_few = fd_manager._compute_quality_score(d_few_bridges)
+        assert score_many > score_few

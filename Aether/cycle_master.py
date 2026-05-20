@@ -886,21 +886,25 @@ class CycleMaster:
                             try:
                                 fd_content = fd_file.read_text(encoding="utf-8", errors="replace")
                                 if len(fd_content) > 100:
-                                    added = fd_manager.add_directions_from_text(
+                                    added, synthesis = fd_manager.add_directions_from_text(
                                         fd_content, exp_id, str(fd_file)
                                     )
                                     if added:
                                         fd_added += added
+                                    if synthesis:
+                                        fd_manager.store_synthesis(exp_id, synthesis)
                             except Exception:
                                 pass
                 # Fallback: use result_future_directions from knowledge extraction
                 if fd_added == 0 and hasattr(job, 'result_future_directions') and job.result_future_directions:
                     try:
-                        added = fd_manager.add_directions_from_text(
+                        added, synthesis = fd_manager.add_directions_from_text(
                             job.result_future_directions, exp_id, "result_future_directions"
                         )
                         if added:
                             fd_added += added
+                        if synthesis:
+                            fd_manager.store_synthesis(exp_id, synthesis)
                     except Exception:
                         pass
                 # Fallback: use the JSON package's future_directions field
@@ -910,11 +914,13 @@ class CycleMaster:
                         pkg = _json.loads(job.result_json_package)
                         fd_text = pkg.get("future_directions", "")
                         if fd_text and len(fd_text) > 100:
-                            added = fd_manager.add_directions_from_text(
+                            added, synthesis = fd_manager.add_directions_from_text(
                                 fd_text, exp_id, "json_package"
                             )
                             if added:
                                 fd_added += added
+                            if synthesis:
+                                fd_manager.store_synthesis(exp_id, synthesis)
                     except Exception:
                         pass
                 if fd_added > 0:
@@ -1291,11 +1297,13 @@ class CycleMaster:
                 for fd_file in extract_dir.rglob("FUTURE_DIRECTIONS.md"):
                     content = fd_file.read_text(encoding="utf-8", errors="replace")
                     if len(content) > 100:
-                        added = fd_manager.add_directions_from_text(
+                        added, synthesis = fd_manager.add_directions_from_text(
                             content, exp_id, f"free_exploration:{exp_id}"
                         )
                         if added:
                             print(f"[FREE] Added {added} new research directions from free exploration")
+                        if synthesis:
+                            fd_manager.store_synthesis(exp_id, synthesis)
 
             # Integrate if worth it
             if self.quality_evaluator.is_worth_integrating(quality_score):

@@ -543,11 +543,15 @@ DELIVERABLE 5 — FUTURE_DIRECTIONS.md  (MANDATORY — drives next cycle)
 ────────────────────────────────────────────────────────────────────────────
 The MOST IMPORTANT deliverable. Every research cycle MUST produce a
 FUTURE_DIRECTIONS.md that identifies 3-5 specific, testable scientific
-hypotheses. Each direction must be a falsifiable claim or conjecture that
-can be proved, disproved, or tested — not a vague "we could explore X."
-Format: "Conjecture: [precise statement]. Test: [what would confirm or
-refute it]. Impact: [what this would enable if true]." Every hypothesis
-should be daring enough to matter and specific enough to fail.
+hypotheses, including 1-2 grand_challenge paradigm-shifting conjectures
+and 2-3 solid extensions building directly on Catalog theorems.
+MUST begin with a ## Synthesis section tying all directions together.
+Each direction must use the structured format with explicit fields:
+**Conjecture**, **Test**, **Impact**, **Catalog References**,
+**Proof Strategy**, **Domain Bridges**, **Lineage**, **Ambition**.
+Reference specific Catalog theorems by file path. Every hypothesis
+must be daring enough to matter and specific enough to fail.
+
 
 ────────────────────────────────────────────────────────────────────────────
 DELIVERABLE 6 — JSON Data Package  →  PACKAGE.json
@@ -2206,7 +2210,7 @@ Research mode: {concept.research_mode}
                             pass
                 if fd_text:
                     # Parse into individual structured directions (not one monolithic blob)
-                    fd_added = fd_manager.add_directions_from_text(
+                    fd_added, _synth = fd_manager.add_directions_from_text(
                         text=fd_text,
                         source_exp_id=job.job_id,
                         source_path=str(job.project_dir) if job.project_dir else "unknown",
@@ -2340,7 +2344,7 @@ Research mode: {concept.research_mode}
                                         pass
                             if fd_text:
                                 # Parse into individual structured directions
-                                fd_added = fd_manager.add_directions_from_text(
+                                fd_added, _synth = fd_manager.add_directions_from_text(
                                     text=fd_text,
                                     source_exp_id=job.job_id,
                                     source_path=str(job.project_dir) if job.project_dir else "unknown",
