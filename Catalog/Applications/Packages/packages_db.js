@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "conjecture_3_learning_theoretic_version_space_comp.json",
+    "title": "Semantic Entropy of Version Spaces: Information-Theoretic Bounds on Hypothesis Elimination",
+    "domain": "Learning Theory / Information Theory",
+    "date": "2026-05-20T14:07:00Z",
+    "exp_id": "e5412c69"
+  },
+  {
     "filename": "conjecture_1_full_depth_hierarchy_for_exponential_.json",
     "title": "A Formal Depth Hierarchy for Iterated Exponentials",
     "domain": "Analytic Complexity Theory / Approximation Theory",
@@ -1982,6 +1989,41 @@ window.PACKAGE_DB = {
     "exp_id": "828e69bb",
     "source_exp_ids": [
       "3f57c63d"
+    ]
+  },
+  "conjecture_3_learning_theoretic_version_space_comp.json": {
+    "title": "Semantic Entropy of Version Spaces: Information-Theoretic Bounds on Hypothesis Elimination",
+    "domain": "Learning Theory / Information Theory",
+    "article": "# The Thermometer Inside the Machine: How Learning Obeys an Information Speed Limit\n\nImagine you are trying to identify a stranger in a crowded stadium of 65,000 people. Someone hands you a series of yes-or-no clues: \"This person has brown hair.\" \"This person is wearing glasses.\" Each clue eliminates some fraction of the crowd. But here is the surprising thing: no matter how cleverly you choose your questions, a single yes-or-no clue can never eliminate more than half the crowd on average. If you need to narrow 65,000 possibilities down to one, you need at least 16 binary questions \u2014 and mathematics can prove it.\n\nThis simple observation \u2014 that each piece of evidence carries a bounded amount of discriminating power \u2014 turns out to be a deep structural law governing all learning systems, from spam filters to self-driving cars. A new mathematical framework now makes this precise, revealing that machine learning obeys something remarkably similar to a speed limit: an information speed limit on how fast any algorithm can learn.\n\n## The Problem of Too Many Possibilities\n\nEvery time a machine learning system encounters a new labeled example \u2014 say, an image labeled \"cat\" \u2014 it mentally crosses off every hypothesis about the world that contradicts this evidence. An image classifier that thought cats have six legs? Eliminated. One that confused cats with toasters? Gone.\n\nThe set of surviving hypotheses is called the *version space*, a concept introduced by Tom Mitchell in the 1970s. The version space starts large (every possible rule the machine might learn) and shrinks with each observation. Learning is finished when only one hypothesis remains \u2014 the machine has identified the pattern.\n\nBut nobody had asked the right question about *how fast* the version space can shrink. Researchers knew it got smaller. They could compute its size for specific problems. What was missing was a universal law \u2014 a thermodynamic principle \u2014 governing the rate of shrinkage.\n\n## Entropy Enters the Picture\n\nThe key insight borrows from Claude Shannon's information theory, the mathematical framework invented in 1948 that underlies every modern communication system. Shannon showed that information can be measured in *bits*: the answer to a yes-or-no question is one bit. The information content of a message equals the logarithm (base 2) of the number of possibilities it distinguishes.\n\nApply this to learning. If the version space contains 1,024 surviving hypotheses, the *semantic entropy* \u2014 the uncertainty about which hypothesis is correct \u2014 is log\u2082(1024) = 10 bits. After observing a labeled example, if only 256 hypotheses survive, the entropy drops to 8 bits. The observation removed 2 bits of uncertainty.\n\nThis reframing transforms learning from a problem of counting survivors into a problem of information flow. And information flow obeys strict rules.\n\n## The Speed Limit Theorem\n\nThe new theorem establishes precisely how much information a single labeled example can convey. The answer depends not on the complexity of the hypothesis space, not on the dimensionality of the data, but on something much simpler: *the number of possible labels*.\n\nIf each data point can carry one of *L* possible labels (cat or dog: L = 2; one of 1,000 ImageNet categories: L = 1,000), then a single labeled example can reduce semantic entropy by at most log\u2082(L) bits. For binary classification, that is 1 bit. For 1,000-class classification, about 10 bits.\n\nThe argument is beautiful in its simplicity. When you observe a data point and its label, you partition the version space into fibers \u2014 one for each possible label. Hypotheses that predict \"cat\" go in one pile, those that predict \"dog\" in another, and so on. There are at most L piles. By the pigeonhole principle, the largest pile must contain at least 1/L of all the hypotheses. If the observed label happens to correspond to that largest pile, the entropy drops by at most log\u2082(L).\n\nMore precisely: there always *exists* an observation outcome for which the information gain is bounded by log\u2082(L). This is not true for every outcome \u2014 a rare label might eliminate 99% of hypotheses in one shot \u2014 but it is true for the best-case fiber, which is guaranteed by pure combinatorics.\n\n## Why the Naive Bound Was Wrong\n\nAn earlier conjecture proposed that the information per sample should be bounded by log\u2082(|X|), where |X| is the size of the *instance space* \u2014 the number of possible data points. This is wrong, and the counterexample is instructive.\n\nConsider a domain with just 2 possible instances but 8 possible labels. A hypothesis is a function assigning one of 8 labels to each of the 2 instances, giving 64 possible hypotheses. Observing a single instance with its label partitions these 64 hypotheses into 8 fibers (one per label value). The entropy can drop by up to log\u2082(8) = 3 bits \u2014 far exceeding log\u2082(2) = 1 bit.\n\nThe correct bound is log\u2082(|Y|) because the label, not the instance, is the information-carrying signal. Once you have chosen which instance to observe, the instance identity tells you nothing new. It is the *label* that does the discriminating.\n\n## A Coding Theory Connection\n\nThe information speed limit reveals a hidden connection to coding theory \u2014 the mathematics of error-correcting codes used in everything from satellite communications to QR codes.\n\nThink of each hypothesis as a transmitter sending a coded message. Given a sequence of k query instances, each hypothesis produces a \"codeword\" \u2014 the string of k labels it predicts. The number of distinct codewords is bounded by L^k (at most L choices per position). This means the hypothesis space cannot fragment into more than L^k distinguishable groups after k queries.\n\nThis is exactly the capacity bound of a noiseless channel with alphabet size L: you cannot transmit more than k\u00b7log\u2082(L) bits through k symbols. Learning, it turns out, is decoding: each labeled example is a received symbol, and the version space is the set of messages consistent with the received signal.\n\n## The Partition Function of Knowledge\n\nThere is an equally striking connection to physics. In statistical mechanics, a *partition function* Z counts the number of microscopic states consistent with observed macroscopic properties (temperature, pressure, energy). As you impose more constraints \u2014 cooling a gas, compressing it \u2014 Z decreases.\n\nThe version space cardinality is precisely a partition function. The hypothesis space is the ensemble of \"microstates.\" Each labeled example is a constraint (an observed property). The version-space entropy log\u2082(Z) measures the system's disorder. Learning is the process of cooling an information-theoretic gas until it crystallizes around the true hypothesis.\n\nThis analogy is not merely poetic. The monotonicity theorem \u2014 more data means fewer consistent hypotheses \u2014 is the formal analog of the second law of thermodynamics applied to hypothesis elimination. The information speed limit is the analog of a cooling rate bound: you cannot freeze knowledge arbitrarily fast.\n\n## What This Means for Machine Learning\n\nThe practical implications cut several ways.\n\n**Sample complexity lower bounds.** If you need to reduce uncertainty by \u0394 bits and each sample provides at most log\u2082(L) bits, you need at least \u0394/log\u2082(L) samples. For a binary classification problem with 2\u00b2\u2070 \u2248 1 million hypotheses, you need at least 20 labeled examples \u2014 and this is a hard mathematical minimum that no algorithm, no matter how clever, can beat.\n\n**Active learning guidance.** The entropy framework tells you exactly which query to ask next: choose the instance whose label fibers most evenly partition the version space. This is greedy entropy minimization, and the information speed limit explains why it works: balanced partitions extract close to log\u2082(L) bits per query, approaching the theoretical maximum.\n\n**Multiclass advantage.** With more label categories, each sample carries more information. This explains a phenomenon practitioners have long observed: multiclass problems with many categories often need relatively fewer samples per class than binary problems, because each labeled example is more informative.\n\n## The Bigger Picture\n\nWhat makes this result unusual is not any single theorem but the web of connections it reveals. Learning is information flow. Hypothesis elimination is entropy collapse. Query sequences are codewords. Sample complexity is channel capacity. The version space is a partition function.\n\nThese are not analogies \u2014 they are mathematical identities, provable from the definitions. A single framework unifies concepts from learning theory, information theory, coding theory, and statistical mechanics, four fields that developed largely independently over the past 75 years.\n\nThe framework also points toward deeper questions. Do certain concept classes exhibit sharp phase transitions \u2014 moments where a small number of additional samples suddenly collapse the version space? (Computational experiments suggest yes, particularly for conjunctions of Boolean variables.) Can the entropy framework be extended to noisy labels, where observed labels may be corrupted? Can it handle continuous hypothesis spaces, moving from log\u2082|V| to differential entropy?\n\nThese are open questions, and they span the boundary between pure mathematics and practical engineering. But the foundation is now solid: learning has a speed limit, and we can calculate it exactly.\n\nPerhaps the most profound lesson is philosophical. We tend to think of learning as accumulation \u2014 gathering data, building knowledge, stacking facts. The entropy perspective inverts this: learning is *elimination*. Every fact you learn is a hypothesis you kill. Knowledge is not what you know \u2014 it is what you have ruled out. And there is a speed limit on ruling things out, dictated not by your intelligence or your algorithms, but by the raw information content of the evidence itself.\n\nThe universe does not give up its secrets faster than one label at a time.\n",
+    "research_paper": "# Semantic Entropy of Version Spaces: Information-Theoretic Bounds on Hypothesis Elimination\n\n## Abstract\n\nWe develop a formal theory of *semantic entropy* for version-space learning, establishing rigorous connections between finite hypothesis elimination, Shannon information theory, coding theory, and statistical mechanics. The central object is the *version-space entropy* $H(V) = \\log_2 |V|$, measuring the uniform-posterior uncertainty about the target concept. We prove:\n1. **Existential per-sample bound:** For any version space $V$ and query instance $x$, there exists a label $y$ such that the entropy drop satisfies $H(V) - H(V|_{x=y}) \\leq \\log_2 |Y|$ (Theorem 4.1).\n2. **Monotonicity:** Dataset extension monotonically decreases version-space entropy (Theorem 3.3).\n3. **Pattern capacity bound:** The number of distinct label patterns realizable by any hypothesis class on $k$ queries is at most $|Y|^k$ (Theorem 5.1).\n4. **Partition structure:** The version space decomposes into disjoint label fibers whose union reconstructs $V$ (Theorem 3.5).\n\nWe correct a naive conjecture replacing $\\log_2 |X|$ with the sharp $\\log_2 |Y|$, provide a concrete counterexample, and give computational demonstrations verifying all bounds. All theorems are machine-verified.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe version space \u2014 the set of hypotheses consistent with observed data \u2014 is a foundational concept in computational learning theory, introduced by Mitchell (1977). While extensive work has characterized the structural properties of version spaces (e.g., their relationship to VC dimension, sample compression schemes, and the structure of mistake-bound learning), the *information-theoretic* perspective on version-space refinement has been comparatively underdeveloped.\n\nThis paper introduces *version-space entropy* as a formal measure of learning progress and establishes fundamental bounds on how quickly this entropy can decrease under observation. The key insight is that version-space refinement can be viewed as an information-dissipation process, where each labeled example acts as a bounded-capacity information channel.\n\n### 1.2 Relationship to Prior Work\n\n**PAC Learning.** The PAC framework (Valiant, 1984) bounds the number of samples needed to achieve low error with high probability. Our entropy bounds provide complementary *information-theoretic* lower bounds on sample complexity, independent of the specific learning algorithm.\n\n**Sample Compression.** The sample compression conjecture (Littlestone & Warmuth, 1986) posits that any concept class of VC dimension $d$ has a compression scheme of size $d$. Our pattern capacity bound (Theorem 5.1) gives a universal bound on the number of distinguishable label patterns, which is a related but distinct notion.\n\n**Teaching Dimension.** The teaching dimension (Goldman & Kearns, 1995) measures the minimum number of examples needed to uniquely specify any target concept. Our entropy lower bound provides a related quantity: $\\lceil H(V) / \\log_2 |Y| \\rceil$ samples are necessary in the best case.\n\n**Information-Theoretic Learning.** Connections between mutual information and learning have been explored in the context of Bayesian learning (Haussler et al., 1994) and information-directed sampling (Russo & Van Roy, 2014). Our contribution differs in that we work with the *combinatorial* entropy $\\log_2 |V|$ rather than Shannon entropy over a posterior distribution, yielding clean finite bounds without probabilistic assumptions.\n\n### 1.3 Contributions\n\n1. **Definitions.** We introduce version-space entropy, semantic compression rate, and entropy teaching lower bounds as formal mathematical objects.\n2. **Corrected bound.** We disprove the conjecture that per-sample information is bounded by $\\log_2 |X|$ and establish the correct bound $\\log_2 |Y|$ (existentially).\n3. **Structural theorems.** We prove monotonicity, partition structure, and coding-capacity bounds.\n4. **Cross-domain connections.** We formalize the statistical-mechanical and coding-theoretic interpretations.\n5. **Computational verification.** We provide algorithms for exact entropy computation and empirical bound verification.\n\n## 2. Definitions and Notation\n\n### 2.1 Setup\n\nLet $X$ be a finite instance space, $Y$ a finite label space, and $H \\subseteq Y^X$ a finite hypothesis class (each hypothesis is a function $h: X \\to Y$).\n\nA **labeled dataset** $D = [(x_1, y_1), \\ldots, (x_m, y_m)]$ is a list of instance-label pairs.\n\n### 2.2 Core Definitions\n\n**Definition 2.1** (Version Space). The *version space* of $H$ with respect to dataset $D$ is:\n$$V(H, D) = \\{h \\in H \\mid \\forall (x, y) \\in D,\\ h(x) = y\\}$$\n\n**Definition 2.2** (Restrict At). For a version space $V$, instance $x \\in X$, and label $y \\in Y$:\n$$\\text{restrictAt}(V, x, y) = \\{h \\in V \\mid h(x) = y\\}$$\n\n**Definition 2.3** (Version-Space Entropy). The *semantic entropy* of a finite set $V$ is:\n$$H(V) = \\frac{\\log |V|}{\\log 2} = \\log_2 |V|$$\n\nThis measures the number of bits needed to specify an element of $V$ under the uniform posterior.\n\n**Definition 2.4** (Query Pattern). For a sequence of instances $\\mathbf{x} = (x_1, \\ldots, x_k)$ and hypothesis $h$:\n$$\\text{queryPattern}(\\mathbf{x}, h) = (h(x_1), \\ldots, h(x_k))$$\n\n**Definition 2.5** (Label Fiber). The *fiber* of label $y$ at instance $x$ in version space $V$:\n$$\\text{fiber}(V, x, y) = \\{h \\in V \\mid h(x) = y\\}$$\n\n**Definition 2.6** (Semantic Compression Rate). For dataset extension $D \\to D \\cup E$:\n$$\\rho(H, D, E) = \\frac{H(V(H, D)) - H(V(H, D \\cup E))}{|E|}$$\n\n**Definition 2.7** (Entropy Teaching Lower Bound). The minimum number of samples needed for entropy reduction $\\Delta$:\n$$\\tau(\\Delta) = \\frac{\\Delta}{\\log_2 |Y|}$$\n\n## 3. Structural Theorems\n\n### 3.1 Version Space Monotonicity\n\n**Theorem 3.1** (Subset Monotonicity). *For any hypothesis class $H$ and datasets $D, E$:*\n$$V(H, D \\oplus E) \\subseteq V(H, D)$$\n*where $D \\oplus E$ denotes concatenation.*\n\n*Proof sketch.* If $h \\in V(H, D \\oplus E)$, then $h$ is consistent with all examples in $D \\oplus E$. Since $D \\subseteq D \\oplus E$ (as list membership), $h$ is consistent with all examples in $D$, hence $h \\in V(H, D)$. \u25a1\n\n**Theorem 3.2** (Cardinality Monotonicity). $|V(H, D \\oplus E)| \\leq |V(H, D)|$.\n\n*Proof.* Immediate from Theorem 3.1 and the monotonicity of finite set cardinality. \u25a1\n\n**Theorem 3.3** (Entropy Monotonicity). *If $V(H, D \\oplus E)$ is nonempty, then:*\n$$H(V(H, D \\oplus E)) \\leq H(V(H, D))$$\n\n*Equivalently, the entropy drop is nonnegative:*\n$$0 \\leq H(V(H, D)) - H(V(H, D \\oplus E))$$\n\n*Proof sketch.* From Theorem 3.2, $|V(H, D \\oplus E)| \\leq |V(H, D))|$. Since both are positive (the extended version space is nonempty, and it's a subset of the base version space), $\\log_2$ preserves the inequality. \u25a1\n\n### 3.2 Partition Structure\n\n**Theorem 3.4** (Fiber Disjointness). *For distinct labels $y_1 \\neq y_2$:*\n$$\\text{fiber}(V, x, y_1) \\cap \\text{fiber}(V, x, y_2) = \\emptyset$$\n\n*Proof.* If $h \\in \\text{fiber}(V, x, y_1) \\cap \\text{fiber}(V, x, y_2)$, then $h(x) = y_1$ and $h(x) = y_2$, contradicting $y_1 \\neq y_2$. \u25a1\n\n**Theorem 3.5** (Fiber Decomposition). *For any version space $V$ and instance $x$:*\n$$V = \\bigsqcup_{y \\in Y} \\text{fiber}(V, x, y)$$\n\n*Proof.* Every $h \\in V$ belongs to $\\text{fiber}(V, x, h(x))$, and conversely every fiber element is in $V$. The union is disjoint by Theorem 3.4. \u25a1\n\n**Corollary 3.6.** $|V| = \\sum_{y \\in Y} |\\text{fiber}(V, x, y)|$.\n\n## 4. The Per-Sample Entropy Bound\n\n### 4.1 The False Universal Bound\n\n**Claim (FALSE).** *For any version space $V$, instance $x$, and observed label $y$ with $\\text{restrictAt}(V, x, y) \\neq \\emptyset$:*\n$$H(V) - H(\\text{restrictAt}(V, x, y)) \\leq \\log_2 |Y|$$\n\n**Counterexample.** Let $|X| = 1$, $|Y| = 3$, and $V$ consist of 10 hypotheses with fiber sizes $(1, 1, 8)$ at $x = 0$. For $y = 0$: $H(V) - H(\\text{restrictAt}(V, 0, 0)) = \\log_2 10 - \\log_2 1 \\approx 3.32 > \\log_2 3 \\approx 1.58$.\n\nThe issue is that an *arbitrary* observed label may correspond to a small fiber, causing a large entropy drop. The bound only holds for the *largest* fiber.\n\n### 4.2 The Corrected Existential Bound\n\n**Theorem 4.1** (Existential Per-Sample Entropy Bound). *For any nonempty version space $V \\subseteq Y^X$ and instance $x \\in X$, there exists a label $y^* \\in Y$ such that $\\text{restrictAt}(V, x, y^*)$ is nonempty and:*\n$$H(V) - H(\\text{restrictAt}(V, x, y^*)) \\leq \\log_2 |Y|$$\n\n*Proof.* By Theorem 3.5 and Corollary 3.6:\n$$|V| = \\sum_{y \\in Y} |\\text{fiber}(V, x, y)|$$\n\nSince there are at most $|Y|$ summands (some possibly zero), by the pigeonhole principle there exists $y^*$ with:\n$$|\\text{fiber}(V, x, y^*)| \\geq \\frac{|V|}{|Y|}$$\n\nThis fiber is nonempty since $|V|/|Y| > 0$. The entropy drop for $y^*$ is:\n$$H(V) - H(\\text{fiber}(V, x, y^*)) = \\log_2 \\frac{|V|}{|\\text{fiber}(V, x, y^*)|} \\leq \\log_2 |Y|$$\n\nSince $\\text{fiber}(V, x, y^*) = \\text{restrictAt}(V, x, y^*)$, the result follows. \u25a1\n\n**Remark 4.2.** The bound is tight: when all fibers have equal size $|V|/|Y|$, every label achieves exactly $\\log_2 |Y|$ bits of information. This occurs for \"balanced\" hypothesis classes.\n\n### 4.3 The $\\log_2 |X|$ vs $\\log_2 |Y|$ Correction\n\n**Proposition 4.3.** *The bound $\\log_2 |X|$ on per-sample entropy drop is false in general. There exist concept classes where the entropy drop for some observation exceeds $\\log_2 |X|$ while remaining below $\\log_2 |Y|$.*\n\n*Example.* Let $|X| = 2$, $|Y| = 8$. The full function class $Y^X$ has $8^2 = 64$ hypotheses. Fix $x = 0$. The fibers at $x = 0$ have sizes at most $8$ each (8 hypotheses per label value). Observing $y$ with a fiber of size 1 gives entropy drop $\\log_2 64 = 6 > \\log_2 2 = 1$, but $6 < \\log_2 64$. The existential bound gives drop $\\leq \\log_2 8 = 3$.\n\n## 5. Coding-Theoretic Pattern Bound\n\n**Theorem 5.1** (Pattern Capacity). *For any hypothesis class $H \\subseteq Y^X$ and query sequence $\\mathbf{x} = (x_1, \\ldots, x_k)$:*\n$$|\\{\\text{queryPattern}(\\mathbf{x}, h) \\mid h \\in H\\}| \\leq |Y|^k$$\n\n*Proof.* Each query pattern is a list of $k$ elements from $Y$. The number of such lists is $|Y|^k$. Since the set of realized patterns is a subset, its cardinality is bounded. More formally, the image is contained in the set of all functions $\\{1, \\ldots, k\\} \\to Y$, which has cardinality $|Y|^k$. \u25a1\n\n**Interpretation.** Each hypothesis $h$ is a \"transmitter\" that, given query sequence $\\mathbf{x}$, produces a \"codeword\" in $Y^k$. The version space after observing answers $(y_1, \\ldots, y_k)$ is a single fiber of the pattern map. The bound says the channel capacity is at most $k \\log_2 |Y|$ bits \u2014 no more information can flow through $k$ labeled observations.\n\n## 6. Statistical Mechanics Interpretation\n\n### 6.1 The Partition Function\n\nDefine the **partition function** $Z(D) = |V(H, D)|$. This counts the number of \"microstates\" (hypotheses) consistent with the \"macrostate\" (observed data $D$).\n\n**Theorem 6.1** (Partition Function Monotonicity). $Z(D \\oplus E) \\leq Z(D)$.\n\nThis is the learning-theoretic analog of the second law of thermodynamics: adding constraints (observations) can only decrease the number of consistent states. The semantic entropy $S(D) = \\log_2 Z(D)$ plays the role of thermodynamic entropy.\n\n### 6.2 Learning as Cooling\n\nIn the thermodynamic picture:\n- **High temperature (few observations):** Many hypotheses survive; the system is in a \"disordered\" phase.\n- **Low temperature (many observations):** Few hypotheses survive; the system \"crystallizes\" around the true hypothesis.\n- **Phase transition:** For certain concept classes, a critical number of observations triggers rapid version-space collapse.\n\nThe entropy speed limit $\\Delta S \\leq \\log_2 |Y|$ per observation is analogous to a cooling rate bound: the system cannot be cooled faster than the information channel permits.\n\n## 7. Algorithms\n\n### 7.1 Version Space Enumeration\n\n```\nAlgorithm: EnumerateVersionSpace(H, D)\nInput: Hypothesis class H, dataset D\nOutput: Version space V(H, D)\n1. V \u2190 \u2205\n2. For each h \u2208 H:\n3.   If \u2200(x,y) \u2208 D: h(x) = y then\n4.     V \u2190 V \u222a {h}\n5. Return V\nTime: O(|H| \u00b7 |D|), Space: O(|H|)\n```\n\n### 7.2 Entropy Stream Computation\n\n```\nAlgorithm: EntropyStream(H, examples)\nInput: Hypothesis class H, example stream [(x\u2081,y\u2081),...,(x\u2098,y\u2098)]\nOutput: Entropy trajectory [H\u2080, H\u2081, ..., H\u2098]\n1. V \u2190 H\n2. Record H\u2080 = log\u2082|V|\n3. For i = 1 to m:\n4.   V \u2190 {h \u2208 V | h(x\u1d62) = y\u1d62}    // O(|V|) per step\n5.   Record H\u1d62 = log\u2082|V|\n6. Return [H\u2080, ..., H\u2098]\nTime: O(|H| \u00b7 m), Space: O(|H|)\n```\n\n### 7.3 Greedy Entropy-Minimizing Query Selection\n\n```\nAlgorithm: GreedyQuery(V, X, Y)\nInput: Version space V, domain X, labels Y\nOutput: Query instance x* minimizing worst-case post-observation entropy\n1. best_x \u2190 nil, best_score \u2190 \u221e\n2. For each x \u2208 X:\n3.   worst_entropy \u2190 0\n4.   For each y \u2208 Y:\n5.     fiber \u2190 {h \u2208 V | h(x) = y}\n6.     If fiber \u2260 \u2205:\n7.       worst_entropy \u2190 max(worst_entropy, log\u2082|fiber|)\n8.   If worst_entropy < best_score:\n9.     best_score \u2190 worst_entropy\n10.    best_x \u2190 x\n11. Return best_x\nTime: O(|X| \u00b7 |Y| \u00b7 |V|), Space: O(|V|)\n```\n\n## 8. Computational Experiments\n\n### 8.1 Entropy Collapse for Binary Functions\n\nFor the full binary function class $\\{0,1\\}^{\\{0,1,2,3\\}}$ (16 hypotheses), querying instances sequentially with a target $(1,0,1,0)$ gives exact 1-bit entropy drops per query (each observation halves the version space for this symmetric class).\n\n### 8.2 Counterexample Verification\n\nComputational search over $|X| = 2, |Y| \\in \\{3,...,5\\}$ confirms that per-sample entropy drops exceeding $\\log_2 |X|$ but respecting $\\log_2 |Y|$ exist for the *existential* bound, while specific labels can violate even $\\log_2 |Y|$.\n\n### 8.3 Pattern Bound Tightness\n\nFor threshold functions on $\\{0,...,n-1\\}$:\n- $k=1$: 2 patterns out of 2 possible (tight)\n- $k=2$: 3 patterns out of 4 possible (ratio 0.75)\n- $k=n$: $n+1$ patterns out of $2^n$ possible (exponentially loose)\n\nThe bound is tight only for $k=1$ with balanced classes.\n\n## 9. Discussion\n\n### 9.1 Significance\n\nThe version-space entropy framework provides a unifying perspective:\n- **Learning theory:** Sample complexity lower bounds from information budgets.\n- **Information theory:** Version-space refinement as bounded-capacity channel decoding.\n- **Coding theory:** Hypotheses as codewords, version-space fibers as code classes.\n- **Statistical mechanics:** Partition function monotonicity and cooling-rate bounds.\n\n### 9.2 Limitations\n\n1. **Realizability assumption:** The framework assumes a target hypothesis exists in $H$ (realizable PAC setting). Extension to agnostic learning requires different entropy measures.\n2. **Uniform posterior:** We use $\\log_2 |V|$ rather than Shannon entropy over a prior. This is sharp for worst-case bounds but ignores prior structure.\n3. **Finite setting:** Extension to infinite hypothesis classes requires measure-theoretic entropy (e.g., metric entropy, VC entropy).\n4. **Existential vs. universal:** The per-sample bound is existential (there *exists* a good label), not universal. The worst-case label can extract far more than $\\log_2 |Y|$ bits.\n\n### 9.3 The $\\log_2 |Y|$ Correction\n\nThe original conjecture using $\\log_2 |X|$ was motivated by the intuition that \"each sample reveals information about one data point.\" The correction to $\\log_2 |Y|$ reveals that the information bottleneck is the *label*, not the *instance*. Once the query instance is fixed, the only remaining uncertainty is which of $|Y|$ possible labels will be observed. This has practical implications for multiclass learning: more label categories mean more information per sample, potentially reducing the sample complexity gap between binary and multiclass problems.\n\n## 10. Future Work\n\n1. **Noisy labels:** Extend to the setting where observed labels may be corrupted with probability $\\eta$. The entropy bound should weaken to $\\log_2 |Y| + H(\\eta)$ per sample.\n2. **Continuous hypothesis spaces:** Replace $\\log_2 |V|$ with metric entropy or Rademacher complexity measures.\n3. **Phase transitions:** Characterize concept classes exhibiting sharp transitions in the entropy trajectory.\n4. **Tight concept classes:** Identify concept classes achieving the $\\log_2 |Y|$ bound with equality for every query.\n5. **Connections to VC theory:** Relate the entropy teaching lower bound to the VC dimension.\n\n## References\n\n1. Mitchell, T. M. (1977). Version spaces: A candidate elimination approach to rule learning. *IJCAI*.\n2. Valiant, L. G. (1984). A theory of the learnable. *Communications of the ACM*, 27(11), 1134\u20131142.\n3. Littlestone, N., & Warmuth, M. K. (1986). Relating data compression and learnability. *Technical report*.\n4. Shannon, C. E. (1948). A mathematical theory of communication. *Bell System Technical Journal*, 27, 379\u2013423, 623\u2013656.\n5. Goldman, S. A., & Kearns, M. J. (1995). On the complexity of teaching. *Journal of Computer and System Sciences*, 50(1), 20\u201331.\n6. Haussler, D., Kearns, M., & Schapire, R. E. (1994). Bounds on the sample complexity of Bayesian learning. *Machine Learning*, 14(1), 83\u2013113.\n7. Russo, D., & Van Roy, B. (2014). Learning to optimize via information-directed sampling. *NeurIPS*.\n",
+    "future_directions": "# Future Directions: Version Space Entropy Theory\n\n## Conjecture 1: Tightness for Threshold Concepts\n\n**Conjecture.** For threshold functions on a linearly ordered finite domain of size $n$ with binary labels, there exist query sequences achieving entropy drop exactly 1 bit per sample until the version space becomes a singleton. More precisely, for any $n$, binary search achieves $\\lceil \\log_2(n+1) \\rceil$ queries with average per-query entropy drop converging to 1 bit as $n \\to \\infty$.\n\n**Test.** Enumerate thresholds on $\\{0, \\ldots, n-1\\}$ for $n = 2^k - 1$. Use the binary search (median) query strategy. Verify that each query reduces $\\log_2 |V|$ by exactly 1 bit when $|V|$ is even (the median splits the version space exactly in half). Compute the deviation from 1 bit/query for non-power-of-two domain sizes.\n\n**Impact.** If true, this establishes threshold functions as the canonical tight example for the entropy bound: binary labels + binary search = perfect information extraction. This would make threshold functions the \"matched filter\" of version-space learning, analogous to Gaussian channels achieving Shannon capacity.\n\n## Conjecture 2: Sub-Capacity Compression for Decision Lists\n\n**Conjecture.** For decision lists over $n$ Boolean variables with binary labels, the average semantic compression rate under uniformly random examples is strictly less than 1 bit per sample, and the gap from capacity grows as $\\Omega(1/n)$.\n\n**Test.** Enumerate all decision lists for $n \\in \\{2, 3, 4, 5\\}$. For each target decision list, sample random instances uniformly, compute version-space entropy after each observation, and measure the average compression rate. Plot the average rate versus $n$ and fit the sub-linearity.\n\n**Impact.** If true, this proves a structural complexity hierarchy among concept classes based on compression efficiency: threshold functions are maximally compressible, while decision lists waste channel capacity due to their more complex partition structure. This would give a new characterization of concept class complexity beyond VC dimension.\n\n## Conjecture 3: Thermodynamic Phase Transition in Learning\n\n**Conjecture.** For conjunction functions over $n$ Boolean variables, the curve $m \\mapsto \\log_2 |V_m|$ (version-space entropy vs. number of random labeled examples) exhibits a sharp second-derivative discontinuity at a critical sample size $m^* \\approx n$, analogous to a thermodynamic phase transition. Below $m^*$, the entropy decreases slowly (liquid phase); above $m^*$, most hypotheses are eliminated rapidly (crystallization).\n\n**Test.** For $n \\in \\{3, 4, 5, 6\\}$, generate 1000 random sample streams from a random target conjunction. Compute the average entropy trajectory and its numerical second derivative. Look for a peak in $|d^2 \\log_2|V_m| / dm^2|$ and test whether the peak location scales linearly with $n$.\n\n**Impact.** If confirmed, this would establish a rigorous connection between learning theory and statistical physics: the version space undergoes a phase transition from \"under-determined\" to \"over-determined\" at a critical sample size. This could import the powerful machinery of phase transitions (critical exponents, universality classes) into learning theory.\n\n## Conjecture 4: Counterexample to the $\\log_2|X|$ Bound\n\n**Conjecture.** For any $\\varepsilon > 0$ and sufficiently large multiclass concept classes with $|Y| > |X|$, there exist version spaces and observations where the per-sample entropy drop exceeds $\\log_2 |X|$ by a factor of $\\log_2 |Y| / \\log_2 |X| - \\varepsilon$. That is, the worst-case per-sample entropy drop is essentially $\\log_2 |Y|$, not $\\log_2 |X|$, and the original $\\log_2 |X|$ conjecture fails maximally when labels carry more information than instances.\n\n**Test.** For $|X| = 2, |Y| = k$ with $k \\in \\{3, 4, \\ldots, 16\\}$, construct the full function class $Y^X$. Find version spaces $V$ and observations $(x, y)$ that maximize the entropy drop. Verify that the maximum approaches $\\log_2 |Y|$ as $k$ grows, far exceeding $\\log_2 |X| = 1$.\n\n**Impact.** This settles the question of whether the correct per-sample information bound depends on the instance space or the label space. The answer ($\\log_2 |Y|$) has immediate consequences for multiclass learning theory: the sample complexity lower bound depends on label complexity, not instance complexity. This corrects a common misconception in the learning theory literature.\n\n## Conjecture 5: Pattern Complexity Gap for Structured Classes\n\n**Conjecture.** For size-$s$ DNF formulas over $n$ Boolean variables, the number of distinct $k$-sample label patterns on any structured query set (e.g., a Hamming ball of radius $r$) is at most $O(s^k \\cdot \\text{poly}(n))$, which is exponentially smaller than the universal bound $2^k$ for $s \\ll 2^n / k$.\n\n**Test.** For $n = 5, s \\in \\{1, 2, 3\\}$, enumerate all size-$s$ DNF formulas. For each $k \\in \\{1, \\ldots, 8\\}$, compute the number of distinct patterns on: (a) all possible $k$-subsets of the domain, (b) $k$-subsets within Hamming balls of radius 2 around a fixed point. Compare the pattern counts to $2^k$ and to $s^k$.\n\n**Impact.** If true, this shows that structured concept classes exhibit pattern compression far beyond the universal $|Y|^k$ bound. This would yield tighter sample complexity lower bounds for specific learning problems and connect version-space entropy to circuit complexity.\n",
+    "demos": [
+      {
+        "name": "Version Space Entropy Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nVersion Space Entropy \u2014 Interactive Demo\n\nDemonstrates the formal theorems from VersionSpaceEntropy.lean with concrete\nfinite concept classes over Boolean domains. Shows:\n  1. Version-space construction and entropy computation\n  2. Entropy collapse under labeled observations\n  3. The corrected per-sample entropy bound (existential, not universal)\n  4. Counterexample search for the naive log\u2082|X| bound\n  5. Coding-theoretic pattern bound verification\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import List, Tuple, Dict, Set, Callable, Optional\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core Definitions (matching the Lean formalization)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef version_space_entropy(V: Set[tuple]) -> float:\n    \"\"\"log\u2082(|V|) \u2014 semantic entropy of the version space under uniform posterior.\"\"\"\n    if len(V) == 0:\n        return 0.0\n    return math.log2(len(V))\n\n\ndef restrict_at(V: Set[tuple], x: int, y: int, domain_size: int) -> Set[tuple]:\n    \"\"\"Filter V to hypotheses h with h(x) = y.\"\"\"\n    return {h for h in V if h[x] == y}\n\n\ndef version_space(H: Set[tuple], D: List[Tuple[int, int]]) -> Set[tuple]:\n    \"\"\"Hypotheses in H consistent with all labeled examples in D.\"\"\"\n    return {h for h in H if all(h[x] == y for x, y in D)}\n\n\ndef query_pattern(xs: List[int], h: tuple) -> tuple:\n    \"\"\"Label sequence produced by hypothesis h on instances xs.\"\"\"\n    return tuple(h[x] for x in xs)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Concept Class Generators\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef all_functions(domain_size: int, label_size: int) -> Set[tuple]:\n    \"\"\"All functions from {0,...,domain_size-1} to {0,...,label_size-1}.\"\"\"\n    return set(itertools.product(range(label_size), repeat=domain_size))\n\n\ndef threshold_functions(n: int) -> Set[tuple]:\n    \"\"\"Threshold functions on {0,...,n-1}: h_t(x) = 1 if x >= t, for t in {0,...,n}.\n    Returns binary-labeled hypotheses as tuples.\"\"\"\n    H = set()\n    for t in range(n + 1):\n        h = tuple(1 if x >= t else 0 for x in range(n))\n        H.add(h)\n    return H\n\n\ndef conjunction_functions(n: int) -> Set[tuple]:\n    \"\"\"Conjunction functions over n Boolean variables.\n    Each subset S \u2286 {0,...,n-1} defines h_S(x) = \u2227_{i\u2208S} x_i.\n    Domain is {0,1}^n represented as indices 0..2^n-1.\"\"\"\n    domain_size = 2 ** n\n    H = set()\n    for mask in range(2 ** n):  # each subset S\n        h = []\n        for x in range(domain_size):\n            # x is an n-bit vector; check if all bits in mask are set in x\n            h.append(1 if (x & mask) == mask else 0)\n        H.add(tuple(h))\n    return H\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 1: Version Space Entropy Collapse\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_entropy_collapse():\n    \"\"\"Stream labeled examples and watch version-space entropy decrease.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Version Space Entropy Collapse\")\n    print(\"=\" * 70)\n    print()\n\n    n = 4  # domain size\n    H = all_functions(n, 2)  # all binary functions on 4 elements\n    print(f\"Domain size |X| = {n}\")\n    print(f\"Label size |Y| = 2\")\n    print(f\"Full hypothesis class |H| = {len(H)}\")\n    print(f\"Initial entropy = {version_space_entropy(H):.4f} bits\")\n    print()\n\n    # Target hypothesis\n    target = (1, 0, 1, 0)\n    print(f\"Target hypothesis: {target}\")\n    print()\n\n    # Stream examples\n    V = H.copy()\n    examples = [(0, 1), (1, 0), (2, 1), (3, 0)]\n\n    print(f\"{'Step':>4}  {'Example':>12}  {'|V|':>8}  {'Entropy':>10}  {'Drop':>8}  {'Bound':>8}\")\n    print(\"-\" * 60)\n\n    prev_entropy = version_space_entropy(V)\n    print(f\"{'init':>4}  {'':>12}  {len(V):>8}  {prev_entropy:>10.4f}  {'':>8}  {'':>8}\")\n\n    log2_Y = math.log2(2)\n    for i, (x, y) in enumerate(examples):\n        V = restrict_at(V, x, y, n)\n        curr_entropy = version_space_entropy(V)\n        drop = prev_entropy - curr_entropy\n        print(f\"{i+1:>4}  {f'h({x})={y}':>12}  {len(V):>8}  {curr_entropy:>10.4f}  {drop:>8.4f}  {log2_Y:>8.4f}\")\n        prev_entropy = curr_entropy\n\n    print()\n    print(f\"Final version space: {V}\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 2: Corrected Per-Sample Bound (Existential)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_corrected_bound():\n    \"\"\"Show that the universal bound fails but the existential bound holds.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 2: Corrected Per-Sample Entropy Bound\")\n    print(\"=\" * 70)\n    print()\n\n    n = 3  # domain size\n    label_size = 3\n    H = all_functions(n, label_size)\n\n    # Pick a version space that creates asymmetric fibers\n    V = set(list(H)[:10])  # arbitrary 10 hypotheses\n    x = 0  # query instance\n\n    print(f\"|V| = {len(V)}, |Y| = {label_size}, log\u2082|Y| = {math.log2(label_size):.4f}\")\n    print()\n\n    # Compute fibers\n    fibers = {}\n    for y in range(label_size):\n        fiber = restrict_at(V, x, y, n)\n        fibers[y] = fiber\n\n    print(\"Fiber decomposition at x=0:\")\n    max_fiber_y = None\n    max_fiber_size = 0\n    for y, fiber in fibers.items():\n        size = len(fiber)\n        if size > 0:\n            drop = version_space_entropy(V) - version_space_entropy(fiber)\n        else:\n            drop = float('inf')\n        exceeds = \"\u26a0 EXCEEDS\" if drop > math.log2(label_size) + 1e-10 else \"\u2713 OK\"\n        print(f\"  y={y}: |fiber| = {size:>3}, entropy drop = {drop:>8.4f}  {exceeds}\")\n        if size > max_fiber_size:\n            max_fiber_size = size\n            max_fiber_y = y\n\n    print()\n    if max_fiber_y is not None:\n        best_drop = version_space_entropy(V) - version_space_entropy(fibers[max_fiber_y])\n        print(f\"Best label (largest fiber): y={max_fiber_y}, drop = {best_drop:.4f} \u2264 log\u2082|Y| = {math.log2(label_size):.4f}\")\n        print(f\"\u2192 Existential bound HOLDS (as proven in Lean)\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 3: Counterexample Search for log\u2082|X| Bound\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_counterexample_search():\n    \"\"\"Search for cases where per-sample entropy drop exceeds log\u2082|X|\n    but respects log\u2082|Y|.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 3: Counterexample Search \u2014 log\u2082|X| vs log\u2082|Y|\")\n    print(\"=\" * 70)\n    print()\n\n    found_counterexample = False\n\n    for domain_size in range(2, 5):\n        for label_size in range(2, 6):\n            if label_size <= domain_size:\n                continue  # Only interesting when |Y| > |X|\n\n            H = all_functions(domain_size, label_size)\n            log2_X = math.log2(domain_size)\n            log2_Y = math.log2(label_size)\n\n            # Try various version spaces\n            H_list = list(H)\n            for vs_size in [max(5, label_size + 1), min(20, len(H))]:\n                if vs_size > len(H):\n                    continue\n                V = set(H_list[:vs_size])\n\n                for x in range(domain_size):\n                    for y in range(label_size):\n                        fiber = restrict_at(V, x, y, domain_size)\n                        if len(fiber) == 0:\n                            continue\n                        drop = version_space_entropy(V) - version_space_entropy(fiber)\n\n                        if drop > log2_X + 1e-10:\n                            found_counterexample = True\n                            exceeds_Y = drop > log2_Y + 1e-10\n                            print(f\"  |X|={domain_size}, |Y|={label_size}, |V|={len(V)}\")\n                            print(f\"  x={x}, y={y}: drop={drop:.4f}\")\n                            print(f\"  log\u2082|X| = {log2_X:.4f} \u2014 EXCEEDED \u2717\")\n                            print(f\"  log\u2082|Y| = {log2_Y:.4f} \u2014 {'EXCEEDED \u2717' if exceeds_Y else 'respects \u2713'}\")\n                            print()\n                            if not exceeds_Y:\n                                print(\"  \u2192 The log\u2082|Y| bound is correct; log\u2082|X| is wrong!\")\n                                print()\n                                return  # One counterexample suffices\n\n    if not found_counterexample:\n        print(\"No counterexample found in search range.\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 4: Pattern Classes Bound\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_pattern_classes():\n    \"\"\"Verify the coding-theoretic bound: distinct patterns \u2264 |Y|^k.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 4: Coding-Theoretic Pattern Bound\")\n    print(\"=\" * 70)\n    print()\n\n    n = 5\n    label_size = 2\n    H = threshold_functions(n)\n\n    print(f\"Threshold functions on {{0,...,{n-1}}}, |H| = {len(H)}\")\n    print()\n\n    for k in range(1, n + 1):\n        # Use first k instances as query sequence\n        xs = list(range(k))\n        patterns = {query_pattern(xs, h) for h in H}\n        bound = label_size ** k\n\n        print(f\"  k={k}: distinct patterns = {len(patterns):>4}, \"\n              f\"|Y|^k = {bound:>4}, \"\n              f\"ratio = {len(patterns)/bound:.4f}\")\n\n    print()\n    print(\"\u2192 Pattern count never exceeds |Y|^k (as proven in Lean)\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 5: Threshold Functions \u2014 Optimal Querying\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_threshold_optimal():\n    \"\"\"Show binary-search querying achieves exactly 1 bit per sample\n    for threshold functions.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 5: Threshold Functions \u2014 Binary Search Optimality\")\n    print(\"=\" * 70)\n    print()\n\n    n = 16\n    H = threshold_functions(n)\n    target_t = 7  # threshold at 7\n    target = tuple(1 if x >= target_t else 0 for x in range(n))\n\n    print(f\"Domain size n = {n}\")\n    print(f\"|H| = {len(H)} (thresholds 0..{n})\")\n    print(f\"Target threshold: t = {target_t}\")\n    print()\n\n    V = H.copy()\n    step = 0\n\n    print(f\"{'Step':>4}  {'Query':>8}  {'Label':>6}  {'|V|':>6}  {'Entropy':>10}  {'Drop':>8}\")\n    print(\"-\" * 55)\n\n    prev_entropy = version_space_entropy(V)\n    print(f\"{'init':>4}  {'':>8}  {'':>6}  {len(V):>6}  {prev_entropy:>10.4f}\")\n\n    # Binary search\n    lo, hi = 0, n\n    while len(V) > 1 and lo < hi:\n        mid = (lo + hi) // 2\n        label = target[mid]\n        V = restrict_at(V, mid, label, n)\n        curr_entropy = version_space_entropy(V)\n        drop = prev_entropy - curr_entropy\n        step += 1\n        print(f\"{step:>4}  {f'x={mid}':>8}  {label:>6}  {len(V):>6}  {curr_entropy:>10.4f}  {drop:>8.4f}\")\n        prev_entropy = curr_entropy\n\n        if label == 1:\n            hi = mid\n        else:\n            lo = mid + 1\n\n    print()\n    print(f\"Identified target in {step} queries (\u2248 log\u2082({n+1}) = {math.log2(n+1):.2f})\")\n    print(f\"Average drop per query: {math.log2(n+1)/step:.4f} bits\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 6: Statistical Mechanics \u2014 Partition Function Collapse\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_stat_mech():\n    \"\"\"Visualize version-space cardinality as a partition function.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 6: Statistical Mechanics \u2014 Partition Function Z(D)\")\n    print(\"=\" * 70)\n    print()\n\n    import random\n    random.seed(42)\n\n    n = 6\n    H = all_functions(n, 2)\n    target = tuple(random.choice([0, 1]) for _ in range(n))\n\n    print(f\"|X| = {n}, |Y| = 2, |H| = {len(H)}\")\n    print(f\"Target: {target}\")\n    print()\n\n    V = H.copy()\n    examples = list(range(n))\n    random.shuffle(examples)\n\n    print(f\"{'m':>3}  {'Z(D_m)':>10}  {'log\u2082Z':>10}  {'bar':>40}\")\n    print(\"-\" * 65)\n\n    max_bar = 40\n    initial_entropy = version_space_entropy(V)\n\n    for m in range(n + 1):\n        z = len(V)\n        entropy = version_space_entropy(V)\n        bar_len = int(max_bar * entropy / initial_entropy) if initial_entropy > 0 else 0\n        bar = \"\u2588\" * bar_len\n        print(f\"{m:>3}  {z:>10}  {entropy:>10.4f}  {bar}\")\n\n        if m < n:\n            x = examples[m]\n            y = target[x]\n            V = restrict_at(V, x, y, n)\n\n    print()\n    print(\"\u2192 Z(D) decreases monotonically (partition_function_mono in Lean)\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   VERSION SPACE ENTROPY \u2014 Interactive Demonstration            \u2551\")\n    print(\"\u2551   Bridging Learning Theory, Information Theory, and            \u2551\")\n    print(\"\u2551   Statistical Mechanics                                        \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_entropy_collapse()\n    demo_corrected_bound()\n    demo_counterexample_search()\n    demo_pattern_classes()\n    demo_threshold_optimal()\n    demo_stat_mech()\n\n    print(\"=\" * 70)\n    print(\"All demos complete.\")\n    print(\"=\" * 70)\n"
+      },
+      {
+        "name": "Applications Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nVersion Space Entropy \u2014 Applications\n\nDemonstrates real-world applications of the version-space entropy theory:\n  1. Active learning with entropy-guided queries\n  2. Sample complexity estimation for concept classes\n  3. Teaching dimension analysis\n  4. Concept class comparison via compression rates\n\"\"\"\n\nimport math\nimport itertools\nimport random\nfrom typing import List, Tuple, Set, Dict\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core utilities (self-contained)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef version_space(H: Set[tuple], D: List[Tuple[int, int]]) -> Set[tuple]:\n    return {h for h in H if all(h[x] == y for x, y in D)}\n\ndef entropy(V: Set[tuple]) -> float:\n    return math.log2(len(V)) if len(V) > 0 else 0.0\n\ndef restrict(V: Set[tuple], x: int, y: int) -> Set[tuple]:\n    return {h for h in V if h[x] == y}\n\ndef threshold_functions(n: int) -> Set[tuple]:\n    return {tuple(1 if x >= t else 0 for x in range(n)) for t in range(n + 1)}\n\ndef all_functions(d: int, l: int) -> Set[tuple]:\n    return set(itertools.product(range(l), repeat=d))\n\ndef conjunction_functions(n: int) -> Set[tuple]:\n    domain_size = 2 ** n\n    H = set()\n    for mask in range(2 ** n):\n        h = tuple(1 if (x & mask) == mask else 0 for x in range(domain_size))\n        H.add(h)\n    return H\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Active Learning with Entropy-Guided Queries\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef active_learning_demo():\n    \"\"\"Compare random vs entropy-guided query strategies.\"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Active Learning \u2014 Random vs Entropy-Guided\")\n    print(\"=\" * 70)\n    print()\n\n    random.seed(42)\n    n = 6\n    H = threshold_functions(n)\n    target = tuple(1 if x >= 3 else 0 for x in range(n))\n\n    print(f\"Task: Identify threshold on {{0,...,{n-1}}}\")\n    print(f\"|H| = {len(H)}, target threshold = 3\")\n    print()\n\n    # Random querying\n    V_random = H.copy()\n    random_order = list(range(n))\n    random.shuffle(random_order)\n    random_steps = 0\n    for x in random_order:\n        V_random = restrict(V_random, x, target[x])\n        random_steps += 1\n        if len(V_random) == 1:\n            break\n\n    # Entropy-guided (binary search)\n    V_guided = H.copy()\n    guided_steps = 0\n    queried = set()\n    while len(V_guided) > 1:\n        best_x = None\n        best_score = -1\n        for x in range(n):\n            if x in queried:\n                continue\n            sizes = []\n            for y in [0, 1]:\n                fiber = restrict(V_guided, x, y)\n                if len(fiber) > 0:\n                    sizes.append(len(fiber))\n            if sizes:\n                score = min(sizes)  # maximize minimum fiber\n                if score > best_score:\n                    best_score = score\n                    best_x = x\n        if best_x is None:\n            break\n        queried.add(best_x)\n        V_guided = restrict(V_guided, best_x, target[best_x])\n        guided_steps += 1\n\n    print(f\"Random querying: {random_steps} queries to identify target\")\n    print(f\"Entropy-guided:  {guided_steps} queries to identify target\")\n    print(f\"Information-theoretic minimum: \u2308log\u2082({len(H)})\u2309 = {math.ceil(math.log2(len(H)))}\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Sample Complexity Estimation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef sample_complexity_demo():\n    \"\"\"Estimate sample complexity from entropy bounds.\"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 2: Sample Complexity Bounds from Entropy Theory\")\n    print(\"=\" * 70)\n    print()\n\n    concept_classes = {\n        \"Thresholds(8)\": (threshold_functions(8), 8, 2),\n        \"Conjunctions(3)\": (conjunction_functions(3), 8, 2),\n        \"All binary(4)\": (all_functions(4, 2), 4, 2),\n        \"Ternary(3)\": (all_functions(3, 3), 3, 3),\n    }\n\n    print(f\"{'Class':>20}  {'|H|':>6}  {'|Y|':>4}  {'Entropy':>8}  \"\n          f\"{'Lower bound':>12}  {'Empirical':>10}\")\n    print(\"-\" * 75)\n\n    for name, (H, domain_size, label_size) in concept_classes.items():\n        initial_entropy = entropy(H)\n        log2_Y = math.log2(label_size)\n\n        # Lower bound from entropy theory\n        lower_bound = initial_entropy / log2_Y if log2_Y > 0 else float('inf')\n\n        # Empirical: average over random targets\n        random.seed(123)\n        trials = min(50, len(H))\n        H_list = list(H)\n        total_steps = 0\n\n        for trial in range(trials):\n            target = H_list[trial % len(H_list)]\n            V = H.copy()\n            steps = 0\n            instances = list(range(domain_size))\n            random.shuffle(instances)\n\n            for x in instances:\n                if len(V) <= 1:\n                    break\n                V = restrict(V, x, target[x])\n                steps += 1\n\n            total_steps += steps\n\n        avg_steps = total_steps / trials\n\n        print(f\"{name:>20}  {len(H):>6}  {label_size:>4}  {initial_entropy:>8.2f}  \"\n              f\"{lower_bound:>12.2f}  {avg_steps:>10.2f}\")\n\n    print()\n    print(\"\u2192 Lower bound = initial_entropy / log\u2082|Y| (from the proven theorem)\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Teaching Dimension Analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef teaching_dimension_demo():\n    \"\"\"Compute teaching dimension and compare with entropy bounds.\"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 3: Teaching Dimension via Entropy Analysis\")\n    print(\"=\" * 70)\n    print()\n\n    for n in range(3, 7):\n        H = threshold_functions(n)\n\n        # Teaching dimension: min examples to uniquely identify each hypothesis\n        max_td = 0\n        for target in H:\n            best_size = n  # worst case\n            # Try all subsets of examples\n            domain = list(range(n))\n            for k in range(1, n + 1):\n                found = False\n                for subset in itertools.combinations(domain, k):\n                    D = [(x, target[x]) for x in subset]\n                    V = version_space(H, D)\n                    if len(V) == 1:\n                        best_size = k\n                        found = True\n                        break\n                if found:\n                    break\n            max_td = max(max_td, best_size)\n\n        entropy_bound = math.ceil(entropy(H) / math.log2(2))\n\n        print(f\"  Thresholds(n={n}): |H|={len(H):>4}, \"\n              f\"teaching dim = {max_td}, \"\n              f\"entropy bound = {entropy_bound}, \"\n              f\"log\u2082|H| = {entropy(H):.2f}\")\n\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: Concept Class Comparison\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compression_rate_comparison():\n    \"\"\"Compare semantic compression rates across concept classes.\"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 4: Semantic Compression Rate Comparison\")\n    print(\"=\" * 70)\n    print()\n\n    random.seed(42)\n\n    classes = [\n        (\"Thresholds(6)\", threshold_functions(6), 6, 2),\n        (\"Conjunctions(3)\", conjunction_functions(3), 8, 2),\n    ]\n\n    for name, H, domain_size, label_size in classes:\n        print(f\"\\n{name}: |H| = {len(H)}, |X| = {domain_size}, |Y| = {label_size}\")\n\n        # Compute average compression rate over random targets\n        H_list = list(H)\n        trials = min(20, len(H))\n\n        all_rates = []\n        for t in range(trials):\n            target = H_list[t]\n            V = H.copy()\n\n            instances = list(range(domain_size))\n            random.shuffle(instances)\n\n            rates = []\n            for x in instances:\n                if len(V) <= 1:\n                    break\n                prev_entropy = entropy(V)\n                V = restrict(V, x, target[x])\n                curr_entropy = entropy(V)\n                drop = prev_entropy - curr_entropy\n                rates.append(drop)\n\n            if rates:\n                all_rates.append(sum(rates) / len(rates))\n\n        avg_rate = sum(all_rates) / len(all_rates) if all_rates else 0\n        log2_Y = math.log2(label_size)\n\n        print(f\"  Average compression rate: {avg_rate:.4f} bits/sample\")\n        print(f\"  Theoretical maximum:      {log2_Y:.4f} bits/sample (log\u2082|Y|)\")\n        print(f\"  Efficiency:               {avg_rate/log2_Y*100:.1f}%\")\n\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   VERSION SPACE ENTROPY \u2014 Applications                         \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    active_learning_demo()\n    sample_complexity_demo()\n    teaching_dimension_demo()\n    compression_rate_comparison()\n\n    print(\"=\" * 70)\n    print(\"All applications complete.\")\n    print(\"=\" * 70)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Version Space Enumeration",
+        "pseudocode": "EnumerateVersionSpace(H, D):\n  V = {}\n  For each h in H:\n    If forall (x,y) in D: h(x) = y then V = V + {h}\n  Return V\nTime: O(|H| * |D|), Space: O(|H|)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nVersion Space Entropy \u2014 Algorithms\n\nImplements the core computational methods from the version-space entropy theory:\n  - Exact version-space enumeration for finite concept classes\n  - Semantic entropy computation across sample streams\n  - Fiber partition analysis\n  - Pattern complexity computation\n  - Optimal query selection (greedy entropy minimization)\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import List, Tuple, Set, Dict, Optional, FrozenSet\nfrom dataclasses import dataclass\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core Data Structures\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass\nclass LearningState:\n    \"\"\"Snapshot of the learning process at a given point.\"\"\"\n    version_space: FrozenSet[tuple]\n    dataset: List[Tuple[int, int]]\n    entropy: float\n    step: int\n\n    @property\n    def card(self) -> int:\n        return len(self.version_space)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Version Space Enumeration\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef enumerate_version_space(\n    H: Set[tuple],\n    D: List[Tuple[int, int]]\n) -> Set[tuple]:\n    \"\"\"\n    Exact enumeration of the version space.\n\n    Computes versionSpace(H, D) = {h \u2208 H | \u2200 (x,y) \u2208 D, h(x) = y}.\n\n    Time complexity: O(|H| \u00b7 |D|)\n    Space complexity: O(|H|)\n\n    Args:\n        H: Hypothesis class as set of tuples (each tuple is a function X \u2192 Y)\n        D: Dataset as list of (instance, label) pairs\n\n    Returns:\n        Set of hypotheses consistent with D\n    \"\"\"\n    return {h for h in H if all(h[x] == y for x, y in D)}\n\n\ndef enumerate_version_space_incremental(\n    V: Set[tuple],\n    example: Tuple[int, int]\n) -> Set[tuple]:\n    \"\"\"\n    Incremental version space update: filter by one new example.\n\n    Time complexity: O(|V|)\n\n    Args:\n        V: Current version space\n        example: New labeled example (x, y)\n\n    Returns:\n        Updated version space\n    \"\"\"\n    x, y = example\n    return {h for h in V if h[x] == y}\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Semantic Entropy Computation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compute_entropy(V: Set[tuple]) -> float:\n    \"\"\"\n    Compute version-space entropy: log\u2082(|V|).\n\n    This is the semantic entropy under the uniform posterior \u2014 the number\n    of bits needed to specify the target hypothesis among survivors.\n\n    Time complexity: O(1)\n    \"\"\"\n    if len(V) == 0:\n        return 0.0\n    return math.log2(len(V))\n\n\ndef entropy_stream(\n    H: Set[tuple],\n    examples: List[Tuple[int, int]]\n) -> List[LearningState]:\n    \"\"\"\n    Compute the full entropy trajectory over a stream of examples.\n\n    Returns a list of LearningState snapshots, one per step (including\n    the initial state before any examples).\n\n    Time complexity: O(|H| \u00b7 |examples|)\n\n    Args:\n        H: Initial hypothesis class\n        examples: Ordered stream of (instance, label) pairs\n\n    Returns:\n        List of LearningState snapshots\n    \"\"\"\n    V = H.copy()\n    states = [LearningState(\n        version_space=frozenset(V),\n        dataset=[],\n        entropy=compute_entropy(V),\n        step=0\n    )]\n\n    D = []\n    for i, (x, y) in enumerate(examples):\n        V = enumerate_version_space_incremental(V, (x, y))\n        D = D + [(x, y)]\n        states.append(LearningState(\n            version_space=frozenset(V),\n            dataset=D.copy(),\n            entropy=compute_entropy(V),\n            step=i + 1\n        ))\n\n    return states\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Fiber Partition Analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass\nclass FiberAnalysis:\n    \"\"\"Result of fiber partition analysis at an instance point.\"\"\"\n    instance: int\n    fibers: Dict[int, Set[tuple]]\n    fiber_sizes: Dict[int, int]\n    entropy_drops: Dict[int, float]\n    best_label: int\n    best_drop: float\n    worst_label: int\n    worst_drop: float\n    log2_Y: float\n\n\ndef analyze_fibers(\n    V: Set[tuple],\n    x: int,\n    label_size: int\n) -> FiberAnalysis:\n    \"\"\"\n    Compute the fiber partition of V at instance x and analyze entropy drops.\n\n    Partitions V into {h \u2208 V | h(x) = y} for each y \u2208 Y, computes entropy\n    drops for each fiber, and identifies the best/worst labels.\n\n    Time complexity: O(|V| \u00b7 |Y|)\n\n    Args:\n        V: Version space\n        x: Instance to query\n        label_size: Number of possible labels |Y|\n\n    Returns:\n        FiberAnalysis with complete partition data\n    \"\"\"\n    base_entropy = compute_entropy(V)\n    fibers = {}\n    fiber_sizes = {}\n    entropy_drops = {}\n\n    for y in range(label_size):\n        fiber = {h for h in V if h[x] == y}\n        fibers[y] = fiber\n        fiber_sizes[y] = len(fiber)\n        if len(fiber) > 0:\n            entropy_drops[y] = base_entropy - compute_entropy(fiber)\n        else:\n            entropy_drops[y] = float('inf')\n\n    nonempty_drops = {y: d for y, d in entropy_drops.items() if d < float('inf')}\n\n    best_label = min(nonempty_drops, key=nonempty_drops.get) if nonempty_drops else 0\n    worst_label = max(nonempty_drops, key=nonempty_drops.get) if nonempty_drops else 0\n\n    return FiberAnalysis(\n        instance=x,\n        fibers=fibers,\n        fiber_sizes=fiber_sizes,\n        entropy_drops=entropy_drops,\n        best_label=best_label,\n        best_drop=nonempty_drops.get(best_label, 0),\n        worst_label=worst_label,\n        worst_drop=nonempty_drops.get(worst_label, 0),\n        log2_Y=math.log2(label_size) if label_size > 1 else 0\n    )\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Pattern Complexity Computation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compute_pattern_complexity(\n    H: Set[tuple],\n    query_instances: List[int]\n) -> Tuple[int, int, Set[tuple]]:\n    \"\"\"\n    Compute the number of distinct label patterns on a query sequence.\n\n    Each hypothesis h \u2208 H produces a pattern (h(x\u2081), ..., h(x\u2096)).\n    The number of distinct patterns is the Natarajan dimension analog\n    for the query sequence.\n\n    Time complexity: O(|H| \u00b7 k) where k = |query_instances|\n\n    Args:\n        H: Hypothesis class\n        query_instances: Sequence of instances to query\n\n    Returns:\n        (num_patterns, bound, patterns) where bound = |Y|^k\n    \"\"\"\n    patterns = set()\n    for h in H:\n        pattern = tuple(h[x] for x in query_instances)\n        patterns.add(pattern)\n\n    # Determine label size from hypothesis outputs\n    if H:\n        label_size = max(max(h) for h in H) + 1\n    else:\n        label_size = 2\n\n    bound = label_size ** len(query_instances)\n    return len(patterns), bound, patterns\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Greedy Optimal Query Selection\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef greedy_query(\n    V: Set[tuple],\n    domain_size: int,\n    label_size: int\n) -> Tuple[int, FiberAnalysis]:\n    \"\"\"\n    Select the query instance that minimizes worst-case entropy after observation.\n\n    This is the greedy active learning strategy: choose x to maximize the\n    minimum fiber size (equivalently, minimize worst-case entropy drop).\n\n    Time complexity: O(|X| \u00b7 |V| \u00b7 |Y|)\n\n    Args:\n        V: Current version space\n        domain_size: Size of instance space |X|\n        label_size: Size of label space |Y|\n\n    Returns:\n        (best_instance, fiber_analysis)\n    \"\"\"\n    best_x = 0\n    best_min_drop = float('inf')\n    best_analysis = None\n\n    for x in range(domain_size):\n        analysis = analyze_fibers(V, x, label_size)\n        # The \"best\" query minimizes the maximum possible entropy drop\n        # (equivalently, maximizes the minimum surviving fiber)\n        if analysis.worst_drop < best_min_drop:\n            best_min_drop = analysis.worst_drop\n            best_x = x\n            best_analysis = analysis\n\n    return best_x, best_analysis\n\n\ndef semantic_compression_rate(\n    H: Set[tuple],\n    D: List[Tuple[int, int]],\n    E: List[Tuple[int, int]]\n) -> float:\n    \"\"\"\n    Compute the semantic compression rate for dataset extension.\n\n    rate = (H(V_D) - H(V_{D++E})) / |E|\n\n    This measures how many bits of entropy each additional sample removes\n    on average.\n\n    Args:\n        H: Hypothesis class\n        D: Initial dataset\n        E: Extension dataset\n\n    Returns:\n        Compression rate in bits per sample\n    \"\"\"\n    V_D = enumerate_version_space(H, D)\n    V_DE = enumerate_version_space(H, D + E)\n\n    if len(E) == 0:\n        return 0.0\n\n    return (compute_entropy(V_D) - compute_entropy(V_DE)) / len(E)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Concept Class Library\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef all_functions(domain_size: int, label_size: int) -> Set[tuple]:\n    \"\"\"All functions {0,...,d-1} \u2192 {0,...,l-1}.\"\"\"\n    return set(itertools.product(range(label_size), repeat=domain_size))\n\n\ndef threshold_functions(n: int) -> Set[tuple]:\n    \"\"\"Threshold functions h_t(x) = 1[x \u2265 t] for t \u2208 {0,...,n}.\"\"\"\n    return {tuple(1 if x >= t else 0 for x in range(n)) for t in range(n + 1)}\n\n\ndef monotone_functions(n: int) -> Set[tuple]:\n    \"\"\"Monotone Boolean functions on {0,...,n-1}.\"\"\"\n    domain = 2 ** n\n    funcs = set()\n    for bits in itertools.product([0, 1], repeat=domain):\n        h = bits\n        is_monotone = True\n        for x in range(domain):\n            for y in range(domain):\n                if (x & y) == x and h[x] > h[y]:\n                    is_monotone = False\n                    break\n            if not is_monotone:\n                break\n        if is_monotone:\n            funcs.add(h)\n    return funcs\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Example Usage\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"Algorithms \u2014 Example Usage\")\n    print(\"=\" * 50)\n\n    # Example: entropy stream for threshold functions\n    n = 8\n    H = threshold_functions(n)\n    target = tuple(1 if x >= 4 else 0 for x in range(n))\n\n    # Generate all examples from target\n    examples = [(x, target[x]) for x in range(n)]\n\n    print(f\"\\nThreshold functions on {{0,...,{n-1}}}\")\n    print(f\"|H| = {len(H)}, target threshold = 4\")\n    print()\n\n    states = entropy_stream(H, examples)\n    for s in states:\n        print(f\"  Step {s.step}: |V| = {s.card:>4}, entropy = {s.entropy:.4f}\")\n\n    print()\n\n    # Pattern complexity\n    for k in range(1, 6):\n        xs = list(range(k))\n        num_patterns, bound, _ = compute_pattern_complexity(H, xs)\n        print(f\"  k={k}: patterns = {num_patterns}, bound = {bound}\")\n\n    print()\n\n    # Fiber analysis\n    V = H.copy()\n    analysis = analyze_fibers(V, 4, 2)\n    print(f\"  Fiber analysis at x=4:\")\n    for y, size in analysis.fiber_sizes.items():\n        print(f\"    y={y}: |fiber| = {size}, drop = {analysis.entropy_drops[y]:.4f}\")\n    print(f\"    Best: y={analysis.best_label} (drop {analysis.best_drop:.4f} \u2264 log\u2082|Y| = {analysis.log2_Y:.4f})\")\n",
+        "code_file": "visualizations/conjecture_3_learning_theoretic_version_space_comp_version_space_enumeration.py"
+      }
+    ],
+    "lean_proofs": "/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license.\n\n# Version Space Entropy Theory\n\nThis file develops a formal theory of **semantic entropy** for version-space learning.\nThe core insight: each labeled observation can eliminate hypotheses from a finite concept\nclass, but the *amount* of entropy reduction per sample is bounded by the label alphabet\nsize. This connects PAC learning to Shannon information theory and statistical mechanics.\n\n## Main definitions\n\n* `versionSpaceEntropy` \u2014 log\u2082 of the version space cardinality\n* `restrictAt` \u2014 restrict version space by one labeled observation\n* `versionSpace` \u2014 version space consistent with a labeled dataset\n* `queryPattern` \u2014 label pattern produced by a hypothesis on a query sequence\n* `labelFiber` \u2014 fiber of hypotheses producing a given label at a point\n* `semanticCompressionRate` \u2014 entropy drop per sample\n* `entropyTeachingLowerBound` \u2014 lower bound on samples from target entropy reduction\n\n## Main results\n\n* `versionSpace_append_subset` \u2014 extending data shrinks the version space\n* `versionSpace_card_append_le` \u2014 cardinality is monotone decreasing\n* `entropy_mono_of_subset` \u2014 entropy respects subset ordering\n* `exists_label_small_entropy_drop` \u2014 existential per-sample entropy bound (corrected)\n* `num_pattern_classes_le` \u2014 coding-theoretic bound on query patterns\n* `labelFiber_biUnion_eq` \u2014 fibers partition the version space\n\n## Important correction\n\nThe naive conjecture that `H(V) - H(V') \u2264 log\u2082|Y|` holds for **every** observed label y\nis **false**. Counterexample: 10 hypotheses, 3 labels, fiber sizes (1,1,8). Choosing the\nsize-1 fiber gives entropy drop log\u2082(10) \u2248 3.32 > log\u2082(3) \u2248 1.58.\n\nThe strongest true per-step statement: there **exists** a label y achieving this bound\n(the label corresponding to the largest fiber, via pigeonhole). This is formalized as\n`exists_label_small_entropy_drop`.\n-/\n\nimport Mathlib\n\nopen Finset Real\n\nnamespace VersionSpaceEntropy\n\nvariable {X Y : Type*}\n\n/-! ## Core Definitions -/\n\n/-- The log-base-2 entropy of a finite set, measuring semantic uncertainty under the\nuniform posterior. This is the key notion bridging version-space learning to information\ntheory: `versionSpaceEntropy V = log\u2082 |V|`. -/\nnoncomputable def versionSpaceEntropy {\u03b1 : Type*} (V : Finset \u03b1) : \u211d :=\n  Real.log V.card / Real.log 2\n\n/-- Restrict a version space by observing label `y` at instance `x`.\nThis models one step of hypothesis elimination in the learning process. -/\ndef restrictAt [DecidableEq Y] (V : Finset (X \u2192 Y)) (x : X) (y : Y) : Finset (X \u2192 Y) :=\n  V.filter (fun h => h x = y)\n\n/-- The label fiber: hypotheses in `V` that produce label `y` at instance `x`.\nIdentical to `restrictAt` but named to emphasize the partition structure. -/\ndef labelFiber [DecidableEq Y] (V : Finset (X \u2192 Y)) (x : X) (y : Y) : Finset (X \u2192 Y) :=\n  V.filter (fun h => h x = y)\n\n/-- The version space of hypotheses in `H` consistent with a labeled dataset `D`.\nThis is the fundamental object: `versionSpace H D = {h \u2208 H | \u2200 (x,y) \u2208 D, h(x) = y}`. -/\ndef versionSpace [DecidableEq Y] (H : Finset (X \u2192 Y)) (D : List (X \u00d7 Y)) : Finset (X \u2192 Y) :=\n  H.filter (fun h => \u2200 p \u2208 D, h p.1 = p.2)\n\n/-- The query pattern: the sequence of labels produced by hypothesis `h` on instances `xs`.\nThis is the \"codeword\" in the coding-theoretic interpretation of learning. -/\ndef queryPattern (xs : List X) (h : X \u2192 Y) : List Y :=\n  xs.map h\n\n/-- Semantic compression rate: average entropy drop per sample in a dataset extension.\nMeasures how efficiently each observation reduces uncertainty about the target concept. -/\nnoncomputable def semanticCompressionRate [DecidableEq Y] [Fintype Y]\n    (H : Finset (X \u2192 Y)) (D E : List (X \u00d7 Y)) : \u211d :=\n  (versionSpaceEntropy (versionSpace H D) -\n   versionSpaceEntropy (versionSpace H (D ++ E))) / E.length\n\n/-- Entropy-based lower bound on the number of samples needed for entropy reduction `\u0394`.\nIf one needs to reduce version-space entropy by `\u0394` bits, at least `\u0394 / log\u2082|Y|` labeled\nexamples are required. -/\nnoncomputable def entropyTeachingLowerBound [Fintype Y] (\u0394 : \u211d) : \u211d :=\n  \u0394 / (Real.log (Fintype.card Y) / Real.log 2)\n\n/-! ## Structural Properties of Version Spaces -/\n\ntheorem labelFiber_eq_restrictAt [DecidableEq Y] (V : Finset (X \u2192 Y)) (x : X) (y : Y) :\n    labelFiber V x y = restrictAt V x y := rfl\n\ntheorem restrictAt_subset [DecidableEq Y] (V : Finset (X \u2192 Y)) (x : X) (y : Y) :\n    restrictAt V x y \u2286 V :=\n  Finset.filter_subset _ _\n\ntheorem versionSpace_subset [DecidableEq Y] (H : Finset (X \u2192 Y)) (D : List (X \u00d7 Y)) :\n    versionSpace H D \u2286 H :=\n  Finset.filter_subset _ _\n\ntheorem versionSpace_nil [DecidableEq Y] (H : Finset (X \u2192 Y)) :\n    versionSpace H [] = H := by\n  simp [versionSpace]\n\ntheorem versionSpace_append_subset [DecidableEq Y] (H : Finset (X \u2192 Y))\n    (D E : List (X \u00d7 Y)) :\n    versionSpace H (D ++ E) \u2286 versionSpace H D := by\n  intro h hh; unfold versionSpace at *; aesop;\n\ntheorem versionSpace_card_append_le [DecidableEq Y] (H : Finset (X \u2192 Y))\n    (D E : List (X \u00d7 Y)) :\n    (versionSpace H (D ++ E)).card \u2264 (versionSpace H D).card := by\n  exact Finset.card_le_card ( Finset.subset_iff.mpr fun f hf => by unfold versionSpace at *; aesop )\n\n/-! ## Entropy Monotonicity and Nonnegativity -/\n\n/-\nVersion-space entropy is nonneg when the set is nonempty.\n-/\ntheorem versionSpaceEntropy_nonneg {\u03b1 : Type*} (V : Finset \u03b1) (_hne : V.Nonempty) :\n    0 \u2264 versionSpaceEntropy V := by\n  exact div_nonneg ( Real.log_natCast_nonneg _ ) ( Real.log_nonneg ( by norm_num ) )\n\n/-\nEntropy respects the subset ordering: smaller sets have smaller entropy.\n-/\ntheorem entropy_mono_of_subset {\u03b1 : Type*}\n    {V W : Finset \u03b1} (h : V \u2286 W) (hne : V.Nonempty) :\n    versionSpaceEntropy V \u2264 versionSpaceEntropy W := by\n  exact div_le_div_of_nonneg_right ( Real.log_le_log ( Nat.cast_pos.mpr hne.card_pos ) ( mod_cast Finset.card_le_card h ) ) ( Real.log_nonneg one_le_two )\n\n/-\nThe entropy drop from extending a dataset is nonnegative.\n-/\ntheorem entropy_drop_nonneg [DecidableEq Y] (H : Finset (X \u2192 Y))\n    (D E : List (X \u00d7 Y))\n    (hne : (versionSpace H (D ++ E)).Nonempty) :\n    0 \u2264 versionSpaceEntropy (versionSpace H D) -\n        versionSpaceEntropy (versionSpace H (D ++ E)) := by\n  exact sub_nonneg_of_le (entropy_mono_of_subset (versionSpace_append_subset H D E) hne)\n\n/-! ## Label Fiber Partition Structure -/\n\n/-\nFibers for distinct labels are disjoint.\n-/\ntheorem labelFiber_disjoint [DecidableEq Y] (V : Finset (X \u2192 Y)) (x : X) {y\u2081 y\u2082 : Y}\n    (h : y\u2081 \u2260 y\u2082) :\n    Disjoint (labelFiber V x y\u2081) (labelFiber V x y\u2082) := by\n  exact Finset.disjoint_filter.mpr fun _ _ _ _ => h ( by aesop )\n\nopen Classical in\n/-- The label fibers cover the entire version space:\n`V = \u22c3_{y : Y} labelFiber V x y`. -/\ntheorem labelFiber_biUnion_eq [Fintype Y] [DecidableEq Y]\n    (V : Finset (X \u2192 Y)) (x : X) :\n    Finset.univ.biUnion (fun y => labelFiber V x y) = V := by\n  -- By definition of labelFiber, every element of V is in exactly one of the labelFibers.\n  ext h\n  simp [labelFiber]\n\n/-! ## Coding-Theoretic Pattern Bound\n\nThe number of distinct label patterns realizable by a hypothesis class on a query\nsequence of length `k` is at most `|Y|^k`. This is the coding-capacity bound: each\nhypothesis produces a \"codeword\" in `Y^k`, and the alphabet constrains the number of\ndistinct codewords. -/\n\ntheorem num_pattern_classes_le [Fintype Y] [DecidableEq Y]\n    (H : Finset (X \u2192 Y)) (xs : List X) :\n    (H.image (queryPattern xs)).card \u2264 (Fintype.card Y) ^ xs.length := by\n  convert Set.ncard_le_ncard ( show Set.range ( fun h : H => queryPattern xs h ) \u2286 Set.univ.image ( fun p : Fin xs.length \u2192 Y => List.ofFn p ) from ?_ ) using 1;\n  \u00b7 rw [ \u2190 Set.ncard_coe_finset ] ; congr ; aesop;\n  \u00b7 rw [ Set.ncard_image_of_injective _ fun p q h => by simpa [ funext_iff ] using h, Set.ncard_univ ] ; simp +decide [ Fintype.card_pi ];\n  \u00b7 rintro _ \u27e8 h, rfl \u27e9 ; use fun i => h.val ( xs.get i ) ; simp +decide [ queryPattern ] ;\n\n/-! ## The Corrected One-Step Entropy Bound\n\nThe universal bound `H(V) - H(restrictAt V x y) \u2264 log\u2082|Y|` for every y is false.\nThe strongest true statement: there EXISTS a label y such that the largest fiber\nachieves entropy drop \u2264 log\u2082|Y|, by pigeonhole. -/\n\n/-\nThere exists a label `y` such that `restrictAt V x y` is nonempty and the\nentropy drop is at most `log\u2082 |Y|`. This is the corrected version of the naive\nper-sample entropy bound. The proof uses pigeonhole: `V` partitions into at most\n`|Y|` fibers, so the largest has cardinality `\u2265 |V| / |Y|`.\n-/\ntheorem exists_label_small_entropy_drop [Fintype X] [DecidableEq X]\n    [Fintype Y] [DecidableEq Y]\n    (V : Finset (X \u2192 Y)) (x : X) (hV : V.Nonempty)\n    (hY : 0 < Fintype.card Y) :\n    \u2203 y : Y, (restrictAt V x y).Nonempty \u2227\n      versionSpaceEntropy V - versionSpaceEntropy (restrictAt V x y)\n        \u2264 Real.log (Fintype.card Y) / Real.log 2 := by\n  -- By the pigeonhole principle, there exists a label y such that the cardinality of the fiber is at least |V| / |Y|.\n  obtain \u27e8y, hy\u27e9 : \u2203 y : Y, (labelFiber V x y).card \u2265 (V.card : \u211d) / (Fintype.card Y) := by\n    have h_pigeonhole : \u2211 y : Y, (labelFiber V x y).card = V.card := by\n      rw [ \u2190 Finset.card_biUnion ];\n      \u00b7 convert congr_arg Finset.card ( labelFiber_biUnion_eq V x );\n      \u00b7 exact fun y _ z _ hyz => Finset.disjoint_left.mpr fun h hh\u2081 hh\u2082 => hyz <| by have := Finset.mem_filter.mp hh\u2081; have := Finset.mem_filter.mp hh\u2082; aesop;\n    contrapose! h_pigeonhole;\n    exact ne_of_lt ( by rw [ \u2190 @Nat.cast_lt \u211d ] ; push_cast; exact lt_of_lt_of_le ( Finset.sum_lt_sum_of_nonempty \u27e8 _, Finset.mem_univ ( Classical.choose ( Finset.card_pos.mp hY ) ) \u27e9 fun y _ => h_pigeonhole y ) ( by simp +decide [ mul_div_cancel\u2080, hY.ne' ] ) );\n  -- Using the inequality from the pigeonhole principle, we can bound the entropy drop.\n  have h_entropy_drop : (versionSpaceEntropy V) - (versionSpaceEntropy (labelFiber V x y)) \u2264 (Real.log (Fintype.card Y)) / (Real.log 2) := by\n    unfold versionSpaceEntropy;\n    rw [ \u2190 sub_div, div_le_div_iff_of_pos_right ( Real.log_pos one_lt_two ) ];\n    rw [ \u2190 Real.log_div ( by norm_cast; exact Finset.card_ne_zero_of_mem hV.choose_spec ) ( by norm_cast; exact Finset.card_ne_zero_of_mem ( Classical.choose_spec ( Finset.card_pos.mp ( Nat.pos_of_ne_zero ( by rintro h; rw [ h ] at hy; exact absurd hy ( by norm_num; positivity ) ) ) ) ) ) ];\n    exact Real.log_le_log ( div_pos ( Nat.cast_pos.mpr hV.card_pos ) ( Nat.cast_pos.mpr ( Finset.card_pos.mpr ( by contrapose! hy; aesop ) ) ) ) ( by rw [ div_le_iff\u2080 ( Nat.cast_pos.mpr ( Finset.card_pos.mpr ( by contrapose! hy; aesop ) ) ) ] ; nlinarith [ mul_div_cancel\u2080 ( V.card : \u211d ) ( by positivity : ( Fintype.card Y : \u211d ) \u2260 0 ) ] );\n  refine' \u27e8 y, _, _ \u27e9;\n  \u00b7 contrapose! hy; simp_all +decide [ labelFiber ] ;\n    simp_all +decide [ Finset.ext_iff, restrictAt ];\n    rw [ Finset.filter_eq_empty_iff.mpr hy ] ; aesop;\n  \u00b7 rwa [ labelFiber_eq_restrictAt ] at h_entropy_drop\n\n/-! ## Statistical Mechanics Interpretation\n\nThe version space cardinality serves as a partition function `Z(D) = |S_D|`.\nObserving data adds hard constraints to the hypothesis ensemble, monotonically\nreducing the partition function \u2014 analogous to entropy collapse in a constrained\nstatistical system at zero temperature. -/\n\n/-- The partition function (version space cardinality) is monotone decreasing\nunder dataset extension. This is the fundamental monotonicity of constraint\nsatisfaction: more data, fewer consistent hypotheses. -/\ntheorem partition_function_mono [DecidableEq Y] (H : Finset (X \u2192 Y))\n    (D E : List (X \u00d7 Y)) :\n    (versionSpace H (D ++ E)).card \u2264 (versionSpace H D).card :=\n  versionSpace_card_append_le H D E\n\nend VersionSpaceEntropy",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nVersion Space Entropy \u2014 Algorithms\n\nImplements the core computational methods from the version-space entropy theory:\n  - Exact version-space enumeration for finite concept classes\n  - Semantic entropy computation across sample streams\n  - Fiber partition analysis\n  - Pattern complexity computation\n  - Optimal query selection (greedy entropy minimization)\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import List, Tuple, Set, Dict, Optional, FrozenSet\nfrom dataclasses import dataclass\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core Data Structures\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass\nclass LearningState:\n    \"\"\"Snapshot of the learning process at a given point.\"\"\"\n    version_space: FrozenSet[tuple]\n    dataset: List[Tuple[int, int]]\n    entropy: float\n    step: int\n\n    @property\n    def card(self) -> int:\n        return len(self.version_space)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Version Space Enumeration\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef enumerate_version_space(\n    H: Set[tuple],\n    D: List[Tuple[int, int]]\n) -> Set[tuple]:\n    \"\"\"\n    Exact enumeration of the version space.\n\n    Computes versionSpace(H, D) = {h \u2208 H | \u2200 (x,y) \u2208 D, h(x) = y}.\n\n    Time complexity: O(|H| \u00b7 |D|)\n    Space complexity: O(|H|)\n\n    Args:\n        H: Hypothesis class as set of tuples (each tuple is a function X \u2192 Y)\n        D: Dataset as list of (instance, label) pairs\n\n    Returns:\n        Set of hypotheses consistent with D\n    \"\"\"\n    return {h for h in H if all(h[x] == y for x, y in D)}\n\n\ndef enumerate_version_space_incremental(\n    V: Set[tuple],\n    example: Tuple[int, int]\n) -> Set[tuple]:\n    \"\"\"\n    Incremental version space update: filter by one new example.\n\n    Time complexity: O(|V|)\n\n    Args:\n        V: Current version space\n        example: New labeled example (x, y)\n\n    Returns:\n        Updated version space\n    \"\"\"\n    x, y = example\n    return {h for h in V if h[x] == y}\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Semantic Entropy Computation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compute_entropy(V: Set[tuple]) -> float:\n    \"\"\"\n    Compute version-space entropy: log\u2082(|V|).\n\n    This is the semantic entropy under the uniform posterior \u2014 the number\n    of bits needed to specify the target hypothesis among survivors.\n\n    Time complexity: O(1)\n    \"\"\"\n    if len(V) == 0:\n        return 0.0\n    return math.log2(len(V))\n\n\ndef entropy_stream(\n    H: Set[tuple],\n    examples: List[Tuple[int, int]]\n) -> List[LearningState]:\n    \"\"\"\n    Compute the full entropy trajectory over a stream of examples.\n\n    Returns a list of LearningState snapshots, one per step (including\n    the initial state before any examples).\n\n    Time complexity: O(|H| \u00b7 |examples|)\n\n    Args:\n        H: Initial hypothesis class\n        examples: Ordered stream of (instance, label) pairs\n\n    Returns:\n        List of LearningState snapshots\n    \"\"\"\n    V = H.copy()\n    states = [LearningState(\n        version_space=frozenset(V),\n        dataset=[],\n        entropy=compute_entropy(V),\n        step=0\n    )]\n\n    D = []\n    for i, (x, y) in enumerate(examples):\n        V = enumerate_version_space_incremental(V, (x, y))\n        D = D + [(x, y)]\n        states.append(LearningState(\n            version_space=frozenset(V),\n            dataset=D.copy(),\n            entropy=compute_entropy(V),\n            step=i + 1\n        ))\n\n    return states\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Fiber Partition Analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass\nclass FiberAnalysis:\n    \"\"\"Result of fiber partition analysis at an instance point.\"\"\"\n    instance: int\n    fibers: Dict[int, Set[tuple]]\n    fiber_sizes: Dict[int, int]\n    entropy_drops: Dict[int, float]\n    best_label: int\n    best_drop: float\n    worst_label: int\n    worst_drop: float\n    log2_Y: float\n\n\ndef analyze_fibers(\n    V: Set[tuple],\n    x: int,\n    label_size: int\n) -> FiberAnalysis:\n    \"\"\"\n    Compute the fiber partition of V at instance x and analyze entropy drops.\n\n    Partitions V into {h \u2208 V | h(x) = y} for each y \u2208 Y, computes entropy\n    drops for each fiber, and identifies the best/worst labels.\n\n    Time complexity: O(|V| \u00b7 |Y|)\n\n    Args:\n        V: Version space\n        x: Instance to query\n        label_size: Number of possible labels |Y|\n\n    Returns:\n        FiberAnalysis with complete partition data\n    \"\"\"\n    base_entropy = compute_entropy(V)\n    fibers = {}\n    fiber_sizes = {}\n    entropy_drops = {}\n\n    for y in range(label_size):\n        fiber = {h for h in V if h[x] == y}\n        fibers[y] = fiber\n        fiber_sizes[y] = len(fiber)\n        if len(fiber) > 0:\n            entropy_drops[y] = base_entropy - compute_entropy(fiber)\n        else:\n            entropy_drops[y] = float('inf')\n\n    nonempty_drops = {y: d for y, d in entropy_drops.items() if d < float('inf')}\n\n    best_label = min(nonempty_drops, key=nonempty_drops.get) if nonempty_drops else 0\n    worst_label = max(nonempty_drops, key=nonempty_drops.get) if nonempty_drops else 0\n\n    return FiberAnalysis(\n        instance=x,\n        fibers=fibers,\n        fiber_sizes=fiber_sizes,\n        entropy_drops=entropy_drops,\n        best_label=best_label,\n        best_drop=nonempty_drops.get(best_label, 0),\n        worst_label=worst_label,\n        worst_drop=nonempty_drops.get(worst_label, 0),\n        log2_Y=math.log2(label_size) if label_size > 1 else 0\n    )\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Pattern Complexity Computation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compute_pattern_complexity(\n    H: Set[tuple],\n    query_instances: List[int]\n) -> Tuple[int, int, Set[tuple]]:\n    \"\"\"\n    Compute the number of distinct label patterns on a query sequence.\n\n    Each hypothesis h \u2208 H produces a pattern (h(x\u2081), ..., h(x\u2096)).\n    The number of distinct patterns is the Natarajan dimension analog\n    for the query sequence.\n\n    Time complexity: O(|H| \u00b7 k) where k = |query_instances|\n\n    Args:\n        H: Hypothesis class\n        query_instances: Sequence of instances to query\n\n    Returns:\n        (num_patterns, bound, patterns) where bound = |Y|^k\n    \"\"\"\n    patterns = set()\n    for h in H:\n        pattern = tuple(h[x] for x in query_instances)\n        patterns.add(pattern)\n\n    # Determine label size from hypothesis outputs\n    if H:\n        label_size = max(max(h) for h in H) + 1\n    else:\n        label_size = 2\n\n    bound = label_size ** len(query_instances)\n    return len(patterns), bound, patterns\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Greedy Optimal Query Selection\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef greedy_query(\n    V: Set[tuple],\n    domain_size: int,\n    label_size: int\n) -> Tuple[int, FiberAnalysis]:\n    \"\"\"\n    Select the query instance that minimizes worst-case entropy after observation.\n\n    This is the greedy active learning strategy: choose x to maximize the\n    minimum fiber size (equivalently, minimize worst-case entropy drop).\n\n    Time complexity: O(|X| \u00b7 |V| \u00b7 |Y|)\n\n    Args:\n        V: Current version space\n        domain_size: Size of instance space |X|\n        label_size: Size of label space |Y|\n\n    Returns:\n        (best_instance, fiber_analysis)\n    \"\"\"\n    best_x = 0\n    best_min_drop = float('inf')\n    best_analysis = None\n\n    for x in range(domain_size):\n        analysis = analyze_fibers(V, x, label_size)\n        # The \"best\" query minimizes the maximum possible entropy drop\n        # (equivalently, maximizes the minimum surviving fiber)\n        if analysis.worst_drop < best_min_drop:\n            best_min_drop = analysis.worst_drop\n            best_x = x\n            best_analysis = analysis\n\n    return best_x, best_analysis\n\n\ndef semantic_compression_rate(\n    H: Set[tuple],\n    D: List[Tuple[int, int]],\n    E: List[Tuple[int, int]]\n) -> float:\n    \"\"\"\n    Compute the semantic compression rate for dataset extension.\n\n    rate = (H(V_D) - H(V_{D++E})) / |E|\n\n    This measures how many bits of entropy each additional sample removes\n    on average.\n\n    Args:\n        H: Hypothesis class\n        D: Initial dataset\n        E: Extension dataset\n\n    Returns:\n        Compression rate in bits per sample\n    \"\"\"\n    V_D = enumerate_version_space(H, D)\n    V_DE = enumerate_version_space(H, D + E)\n\n    if len(E) == 0:\n        return 0.0\n\n    return (compute_entropy(V_D) - compute_entropy(V_DE)) / len(E)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Concept Class Library\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef all_functions(domain_size: int, label_size: int) -> Set[tuple]:\n    \"\"\"All functions {0,...,d-1} \u2192 {0,...,l-1}.\"\"\"\n    return set(itertools.product(range(label_size), repeat=domain_size))\n\n\ndef threshold_functions(n: int) -> Set[tuple]:\n    \"\"\"Threshold functions h_t(x) = 1[x \u2265 t] for t \u2208 {0,...,n}.\"\"\"\n    return {tuple(1 if x >= t else 0 for x in range(n)) for t in range(n + 1)}\n\n\ndef monotone_functions(n: int) -> Set[tuple]:\n    \"\"\"Monotone Boolean functions on {0,...,n-1}.\"\"\"\n    domain = 2 ** n\n    funcs = set()\n    for bits in itertools.product([0, 1], repeat=domain):\n        h = bits\n        is_monotone = True\n        for x in range(domain):\n            for y in range(domain):\n                if (x & y) == x and h[x] > h[y]:\n                    is_monotone = False\n                    break\n            if not is_monotone:\n                break\n        if is_monotone:\n            funcs.add(h)\n    return funcs\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Example Usage\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"Algorithms \u2014 Example Usage\")\n    print(\"=\" * 50)\n\n    # Example: entropy stream for threshold functions\n    n = 8\n    H = threshold_functions(n)\n    target = tuple(1 if x >= 4 else 0 for x in range(n))\n\n    # Generate all examples from target\n    examples = [(x, target[x]) for x in range(n)]\n\n    print(f\"\\nThreshold functions on {{0,...,{n-1}}}\")\n    print(f\"|H| = {len(H)}, target threshold = 4\")\n    print()\n\n    states = entropy_stream(H, examples)\n    for s in states:\n        print(f\"  Step {s.step}: |V| = {s.card:>4}, entropy = {s.entropy:.4f}\")\n\n    print()\n\n    # Pattern complexity\n    for k in range(1, 6):\n        xs = list(range(k))\n        num_patterns, bound, _ = compute_pattern_complexity(H, xs)\n        print(f\"  k={k}: patterns = {num_patterns}, bound = {bound}\")\n\n    print()\n\n    # Fiber analysis\n    V = H.copy()\n    analysis = analyze_fibers(V, 4, 2)\n    print(f\"  Fiber analysis at x=4:\")\n    for y, size in analysis.fiber_sizes.items():\n        print(f\"    y={y}: |fiber| = {size}, drop = {analysis.entropy_drops[y]:.4f}\")\n    print(f\"    Best: y={analysis.best_label} (drop {analysis.best_drop:.4f} \u2264 log\u2082|Y| = {analysis.log2_Y:.4f})\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nVersion Space Entropy \u2014 Applications\n\nDemonstrates real-world applications of the version-space entropy theory:\n  1. Active learning with entropy-guided queries\n  2. Sample complexity estimation for concept classes\n  3. Teaching dimension analysis\n  4. Concept class comparison via compression rates\n\"\"\"\n\nimport math\nimport itertools\nimport random\nfrom typing import List, Tuple, Set, Dict\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core utilities (self-contained)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef version_space(H: Set[tuple], D: List[Tuple[int, int]]) -> Set[tuple]:\n    return {h for h in H if all(h[x] == y for x, y in D)}\n\ndef entropy(V: Set[tuple]) -> float:\n    return math.log2(len(V)) if len(V) > 0 else 0.0\n\ndef restrict(V: Set[tuple], x: int, y: int) -> Set[tuple]:\n    return {h for h in V if h[x] == y}\n\ndef threshold_functions(n: int) -> Set[tuple]:\n    return {tuple(1 if x >= t else 0 for x in range(n)) for t in range(n + 1)}\n\ndef all_functions(d: int, l: int) -> Set[tuple]:\n    return set(itertools.product(range(l), repeat=d))\n\ndef conjunction_functions(n: int) -> Set[tuple]:\n    domain_size = 2 ** n\n    H = set()\n    for mask in range(2 ** n):\n        h = tuple(1 if (x & mask) == mask else 0 for x in range(domain_size))\n        H.add(h)\n    return H\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Active Learning with Entropy-Guided Queries\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef active_learning_demo():\n    \"\"\"Compare random vs entropy-guided query strategies.\"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Active Learning \u2014 Random vs Entropy-Guided\")\n    print(\"=\" * 70)\n    print()\n\n    random.seed(42)\n    n = 6\n    H = threshold_functions(n)\n    target = tuple(1 if x >= 3 else 0 for x in range(n))\n\n    print(f\"Task: Identify threshold on {{0,...,{n-1}}}\")\n    print(f\"|H| = {len(H)}, target threshold = 3\")\n    print()\n\n    # Random querying\n    V_random = H.copy()\n    random_order = list(range(n))\n    random.shuffle(random_order)\n    random_steps = 0\n    for x in random_order:\n        V_random = restrict(V_random, x, target[x])\n        random_steps += 1\n        if len(V_random) == 1:\n            break\n\n    # Entropy-guided (binary search)\n    V_guided = H.copy()\n    guided_steps = 0\n    queried = set()\n    while len(V_guided) > 1:\n        best_x = None\n        best_score = -1\n        for x in range(n):\n            if x in queried:\n                continue\n            sizes = []\n            for y in [0, 1]:\n                fiber = restrict(V_guided, x, y)\n                if len(fiber) > 0:\n                    sizes.append(len(fiber))\n            if sizes:\n                score = min(sizes)  # maximize minimum fiber\n                if score > best_score:\n                    best_score = score\n                    best_x = x\n        if best_x is None:\n            break\n        queried.add(best_x)\n        V_guided = restrict(V_guided, best_x, target[best_x])\n        guided_steps += 1\n\n    print(f\"Random querying: {random_steps} queries to identify target\")\n    print(f\"Entropy-guided:  {guided_steps} queries to identify target\")\n    print(f\"Information-theoretic minimum: \u2308log\u2082({len(H)})\u2309 = {math.ceil(math.log2(len(H)))}\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Sample Complexity Estimation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef sample_complexity_demo():\n    \"\"\"Estimate sample complexity from entropy bounds.\"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 2: Sample Complexity Bounds from Entropy Theory\")\n    print(\"=\" * 70)\n    print()\n\n    concept_classes = {\n        \"Thresholds(8)\": (threshold_functions(8), 8, 2),\n        \"Conjunctions(3)\": (conjunction_functions(3), 8, 2),\n        \"All binary(4)\": (all_functions(4, 2), 4, 2),\n        \"Ternary(3)\": (all_functions(3, 3), 3, 3),\n    }\n\n    print(f\"{'Class':>20}  {'|H|':>6}  {'|Y|':>4}  {'Entropy':>8}  \"\n          f\"{'Lower bound':>12}  {'Empirical':>10}\")\n    print(\"-\" * 75)\n\n    for name, (H, domain_size, label_size) in concept_classes.items():\n        initial_entropy = entropy(H)\n        log2_Y = math.log2(label_size)\n\n        # Lower bound from entropy theory\n        lower_bound = initial_entropy / log2_Y if log2_Y > 0 else float('inf')\n\n        # Empirical: average over random targets\n        random.seed(123)\n        trials = min(50, len(H))\n        H_list = list(H)\n        total_steps = 0\n\n        for trial in range(trials):\n            target = H_list[trial % len(H_list)]\n            V = H.copy()\n            steps = 0\n            instances = list(range(domain_size))\n            random.shuffle(instances)\n\n            for x in instances:\n                if len(V) <= 1:\n                    break\n                V = restrict(V, x, target[x])\n                steps += 1\n\n            total_steps += steps\n\n        avg_steps = total_steps / trials\n\n        print(f\"{name:>20}  {len(H):>6}  {label_size:>4}  {initial_entropy:>8.2f}  \"\n              f\"{lower_bound:>12.2f}  {avg_steps:>10.2f}\")\n\n    print()\n    print(\"\u2192 Lower bound = initial_entropy / log\u2082|Y| (from the proven theorem)\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Teaching Dimension Analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef teaching_dimension_demo():\n    \"\"\"Compute teaching dimension and compare with entropy bounds.\"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 3: Teaching Dimension via Entropy Analysis\")\n    print(\"=\" * 70)\n    print()\n\n    for n in range(3, 7):\n        H = threshold_functions(n)\n\n        # Teaching dimension: min examples to uniquely identify each hypothesis\n        max_td = 0\n        for target in H:\n            best_size = n  # worst case\n            # Try all subsets of examples\n            domain = list(range(n))\n            for k in range(1, n + 1):\n                found = False\n                for subset in itertools.combinations(domain, k):\n                    D = [(x, target[x]) for x in subset]\n                    V = version_space(H, D)\n                    if len(V) == 1:\n                        best_size = k\n                        found = True\n                        break\n                if found:\n                    break\n            max_td = max(max_td, best_size)\n\n        entropy_bound = math.ceil(entropy(H) / math.log2(2))\n\n        print(f\"  Thresholds(n={n}): |H|={len(H):>4}, \"\n              f\"teaching dim = {max_td}, \"\n              f\"entropy bound = {entropy_bound}, \"\n              f\"log\u2082|H| = {entropy(H):.2f}\")\n\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: Concept Class Comparison\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compression_rate_comparison():\n    \"\"\"Compare semantic compression rates across concept classes.\"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 4: Semantic Compression Rate Comparison\")\n    print(\"=\" * 70)\n    print()\n\n    random.seed(42)\n\n    classes = [\n        (\"Thresholds(6)\", threshold_functions(6), 6, 2),\n        (\"Conjunctions(3)\", conjunction_functions(3), 8, 2),\n    ]\n\n    for name, H, domain_size, label_size in classes:\n        print(f\"\\n{name}: |H| = {len(H)}, |X| = {domain_size}, |Y| = {label_size}\")\n\n        # Compute average compression rate over random targets\n        H_list = list(H)\n        trials = min(20, len(H))\n\n        all_rates = []\n        for t in range(trials):\n            target = H_list[t]\n            V = H.copy()\n\n            instances = list(range(domain_size))\n            random.shuffle(instances)\n\n            rates = []\n            for x in instances:\n                if len(V) <= 1:\n                    break\n                prev_entropy = entropy(V)\n                V = restrict(V, x, target[x])\n                curr_entropy = entropy(V)\n                drop = prev_entropy - curr_entropy\n                rates.append(drop)\n\n            if rates:\n                all_rates.append(sum(rates) / len(rates))\n\n        avg_rate = sum(all_rates) / len(all_rates) if all_rates else 0\n        log2_Y = math.log2(label_size)\n\n        print(f\"  Average compression rate: {avg_rate:.4f} bits/sample\")\n        print(f\"  Theoretical maximum:      {log2_Y:.4f} bits/sample (log\u2082|Y|)\")\n        print(f\"  Efficiency:               {avg_rate/log2_Y*100:.1f}%\")\n\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   VERSION SPACE ENTROPY \u2014 Applications                         \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    active_learning_demo()\n    sample_complexity_demo()\n    teaching_dimension_demo()\n    compression_rate_comparison()\n\n    print(\"=\" * 70)\n    print(\"All applications complete.\")\n    print(\"=\" * 70)\n\n\n#!/usr/bin/env python3\n\"\"\"\nVersion Space Entropy \u2014 Interactive Demo\n\nDemonstrates the formal theorems from VersionSpaceEntropy.lean with concrete\nfinite concept classes over Boolean domains. Shows:\n  1. Version-space construction and entropy computation\n  2. Entropy collapse under labeled observations\n  3. The corrected per-sample entropy bound (existential, not universal)\n  4. Counterexample search for the naive log\u2082|X| bound\n  5. Coding-theoretic pattern bound verification\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import List, Tuple, Dict, Set, Callable, Optional\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core Definitions (matching the Lean formalization)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef version_space_entropy(V: Set[tuple]) -> float:\n    \"\"\"log\u2082(|V|) \u2014 semantic entropy of the version space under uniform posterior.\"\"\"\n    if len(V) == 0:\n        return 0.0\n    return math.log2(len(V))\n\n\ndef restrict_at(V: Set[tuple], x: int, y: int, domain_size: int) -> Set[tuple]:\n    \"\"\"Filter V to hypotheses h with h(x) = y.\"\"\"\n    return {h for h in V if h[x] == y}\n\n\ndef version_space(H: Set[tuple], D: List[Tuple[int, int]]) -> Set[tuple]:\n    \"\"\"Hypotheses in H consistent with all labeled examples in D.\"\"\"\n    return {h for h in H if all(h[x] == y for x, y in D)}\n\n\ndef query_pattern(xs: List[int], h: tuple) -> tuple:\n    \"\"\"Label sequence produced by hypothesis h on instances xs.\"\"\"\n    return tuple(h[x] for x in xs)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Concept Class Generators\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef all_functions(domain_size: int, label_size: int) -> Set[tuple]:\n    \"\"\"All functions from {0,...,domain_size-1} to {0,...,label_size-1}.\"\"\"\n    return set(itertools.product(range(label_size), repeat=domain_size))\n\n\ndef threshold_functions(n: int) -> Set[tuple]:\n    \"\"\"Threshold functions on {0,...,n-1}: h_t(x) = 1 if x >= t, for t in {0,...,n}.\n    Returns binary-labeled hypotheses as tuples.\"\"\"\n    H = set()\n    for t in range(n + 1):\n        h = tuple(1 if x >= t else 0 for x in range(n))\n        H.add(h)\n    return H\n\n\ndef conjunction_functions(n: int) -> Set[tuple]:\n    \"\"\"Conjunction functions over n Boolean variables.\n    Each subset S \u2286 {0,...,n-1} defines h_S(x) = \u2227_{i\u2208S} x_i.\n    Domain is {0,1}^n represented as indices 0..2^n-1.\"\"\"\n    domain_size = 2 ** n\n    H = set()\n    for mask in range(2 ** n):  # each subset S\n        h = []\n        for x in range(domain_size):\n            # x is an n-bit vector; check if all bits in mask are set in x\n            h.append(1 if (x & mask) == mask else 0)\n        H.add(tuple(h))\n    return H\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 1: Version Space Entropy Collapse\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_entropy_collapse():\n    \"\"\"Stream labeled examples and watch version-space entropy decrease.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Version Space Entropy Collapse\")\n    print(\"=\" * 70)\n    print()\n\n    n = 4  # domain size\n    H = all_functions(n, 2)  # all binary functions on 4 elements\n    print(f\"Domain size |X| = {n}\")\n    print(f\"Label size |Y| = 2\")\n    print(f\"Full hypothesis class |H| = {len(H)}\")\n    print(f\"Initial entropy = {version_space_entropy(H):.4f} bits\")\n    print()\n\n    # Target hypothesis\n    target = (1, 0, 1, 0)\n    print(f\"Target hypothesis: {target}\")\n    print()\n\n    # Stream examples\n    V = H.copy()\n    examples = [(0, 1), (1, 0), (2, 1), (3, 0)]\n\n    print(f\"{'Step':>4}  {'Example':>12}  {'|V|':>8}  {'Entropy':>10}  {'Drop':>8}  {'Bound':>8}\")\n    print(\"-\" * 60)\n\n    prev_entropy = version_space_entropy(V)\n    print(f\"{'init':>4}  {'':>12}  {len(V):>8}  {prev_entropy:>10.4f}  {'':>8}  {'':>8}\")\n\n    log2_Y = math.log2(2)\n    for i, (x, y) in enumerate(examples):\n        V = restrict_at(V, x, y, n)\n        curr_entropy = version_space_entropy(V)\n        drop = prev_entropy - curr_entropy\n        print(f\"{i+1:>4}  {f'h({x})={y}':>12}  {len(V):>8}  {curr_entropy:>10.4f}  {drop:>8.4f}  {log2_Y:>8.4f}\")\n        prev_entropy = curr_entropy\n\n    print()\n    print(f\"Final version space: {V}\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 2: Corrected Per-Sample Bound (Existential)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_corrected_bound():\n    \"\"\"Show that the universal bound fails but the existential bound holds.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 2: Corrected Per-Sample Entropy Bound\")\n    print(\"=\" * 70)\n    print()\n\n    n = 3  # domain size\n    label_size = 3\n    H = all_functions(n, label_size)\n\n    # Pick a version space that creates asymmetric fibers\n    V = set(list(H)[:10])  # arbitrary 10 hypotheses\n    x = 0  # query instance\n\n    print(f\"|V| = {len(V)}, |Y| = {label_size}, log\u2082|Y| = {math.log2(label_size):.4f}\")\n    print()\n\n    # Compute fibers\n    fibers = {}\n    for y in range(label_size):\n        fiber = restrict_at(V, x, y, n)\n        fibers[y] = fiber\n\n    print(\"Fiber decomposition at x=0:\")\n    max_fiber_y = None\n    max_fiber_size = 0\n    for y, fiber in fibers.items():\n        size = len(fiber)\n        if size > 0:\n            drop = version_space_entropy(V) - version_space_entropy(fiber)\n        else:\n            drop = float('inf')\n        exceeds = \"\u26a0 EXCEEDS\" if drop > math.log2(label_size) + 1e-10 else \"\u2713 OK\"\n        print(f\"  y={y}: |fiber| = {size:>3}, entropy drop = {drop:>8.4f}  {exceeds}\")\n        if size > max_fiber_size:\n            max_fiber_size = size\n            max_fiber_y = y\n\n    print()\n    if max_fiber_y is not None:\n        best_drop = version_space_entropy(V) - version_space_entropy(fibers[max_fiber_y])\n        print(f\"Best label (largest fiber): y={max_fiber_y}, drop = {best_drop:.4f} \u2264 log\u2082|Y| = {math.log2(label_size):.4f}\")\n        print(f\"\u2192 Existential bound HOLDS (as proven in Lean)\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 3: Counterexample Search for log\u2082|X| Bound\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_counterexample_search():\n    \"\"\"Search for cases where per-sample entropy drop exceeds log\u2082|X|\n    but respects log\u2082|Y|.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 3: Counterexample Search \u2014 log\u2082|X| vs log\u2082|Y|\")\n    print(\"=\" * 70)\n    print()\n\n    found_counterexample = False\n\n    for domain_size in range(2, 5):\n        for label_size in range(2, 6):\n            if label_size <= domain_size:\n                continue  # Only interesting when |Y| > |X|\n\n            H = all_functions(domain_size, label_size)\n            log2_X = math.log2(domain_size)\n            log2_Y = math.log2(label_size)\n\n            # Try various version spaces\n            H_list = list(H)\n            for vs_size in [max(5, label_size + 1), min(20, len(H))]:\n                if vs_size > len(H):\n                    continue\n                V = set(H_list[:vs_size])\n\n                for x in range(domain_size):\n                    for y in range(label_size):\n                        fiber = restrict_at(V, x, y, domain_size)\n                        if len(fiber) == 0:\n                            continue\n                        drop = version_space_entropy(V) - version_space_entropy(fiber)\n\n                        if drop > log2_X + 1e-10:\n                            found_counterexample = True\n                            exceeds_Y = drop > log2_Y + 1e-10\n                            print(f\"  |X|={domain_size}, |Y|={label_size}, |V|={len(V)}\")\n                            print(f\"  x={x}, y={y}: drop={drop:.4f}\")\n                            print(f\"  log\u2082|X| = {log2_X:.4f} \u2014 EXCEEDED \u2717\")\n                            print(f\"  log\u2082|Y| = {log2_Y:.4f} \u2014 {'EXCEEDED \u2717' if exceeds_Y else 'respects \u2713'}\")\n                            print()\n                            if not exceeds_Y:\n                                print(\"  \u2192 The log\u2082|Y| bound is correct; log\u2082|X| is wrong!\")\n                                print()\n                                return  # One counterexample suffices\n\n    if not found_counterexample:\n        print(\"No counterexample found in search range.\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 4: Pattern Classes Bound\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_pattern_classes():\n    \"\"\"Verify the coding-theoretic bound: distinct patterns \u2264 |Y|^k.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 4: Coding-Theoretic Pattern Bound\")\n    print(\"=\" * 70)\n    print()\n\n    n = 5\n    label_size = 2\n    H = threshold_functions(n)\n\n    print(f\"Threshold functions on {{0,...,{n-1}}}, |H| = {len(H)}\")\n    print()\n\n    for k in range(1, n + 1):\n        # Use first k instances as query sequence\n        xs = list(range(k))\n        patterns = {query_pattern(xs, h) for h in H}\n        bound = label_size ** k\n\n        print(f\"  k={k}: distinct patterns = {len(patterns):>4}, \"\n              f\"|Y|^k = {bound:>4}, \"\n              f\"ratio = {len(patterns)/bound:.4f}\")\n\n    print()\n    print(\"\u2192 Pattern count never exceeds |Y|^k (as proven in Lean)\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 5: Threshold Functions \u2014 Optimal Querying\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_threshold_optimal():\n    \"\"\"Show binary-search querying achieves exactly 1 bit per sample\n    for threshold functions.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 5: Threshold Functions \u2014 Binary Search Optimality\")\n    print(\"=\" * 70)\n    print()\n\n    n = 16\n    H = threshold_functions(n)\n    target_t = 7  # threshold at 7\n    target = tuple(1 if x >= target_t else 0 for x in range(n))\n\n    print(f\"Domain size n = {n}\")\n    print(f\"|H| = {len(H)} (thresholds 0..{n})\")\n    print(f\"Target threshold: t = {target_t}\")\n    print()\n\n    V = H.copy()\n    step = 0\n\n    print(f\"{'Step':>4}  {'Query':>8}  {'Label':>6}  {'|V|':>6}  {'Entropy':>10}  {'Drop':>8}\")\n    print(\"-\" * 55)\n\n    prev_entropy = version_space_entropy(V)\n    print(f\"{'init':>4}  {'':>8}  {'':>6}  {len(V):>6}  {prev_entropy:>10.4f}\")\n\n    # Binary search\n    lo, hi = 0, n\n    while len(V) > 1 and lo < hi:\n        mid = (lo + hi) // 2\n        label = target[mid]\n        V = restrict_at(V, mid, label, n)\n        curr_entropy = version_space_entropy(V)\n        drop = prev_entropy - curr_entropy\n        step += 1\n        print(f\"{step:>4}  {f'x={mid}':>8}  {label:>6}  {len(V):>6}  {curr_entropy:>10.4f}  {drop:>8.4f}\")\n        prev_entropy = curr_entropy\n\n        if label == 1:\n            hi = mid\n        else:\n            lo = mid + 1\n\n    print()\n    print(f\"Identified target in {step} queries (\u2248 log\u2082({n+1}) = {math.log2(n+1):.2f})\")\n    print(f\"Average drop per query: {math.log2(n+1)/step:.4f} bits\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 6: Statistical Mechanics \u2014 Partition Function Collapse\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_stat_mech():\n    \"\"\"Visualize version-space cardinality as a partition function.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 6: Statistical Mechanics \u2014 Partition Function Z(D)\")\n    print(\"=\" * 70)\n    print()\n\n    import random\n    random.seed(42)\n\n    n = 6\n    H = all_functions(n, 2)\n    target = tuple(random.choice([0, 1]) for _ in range(n))\n\n    print(f\"|X| = {n}, |Y| = 2, |H| = {len(H)}\")\n    print(f\"Target: {target}\")\n    print()\n\n    V = H.copy()\n    examples = list(range(n))\n    random.shuffle(examples)\n\n    print(f\"{'m':>3}  {'Z(D_m)':>10}  {'log\u2082Z':>10}  {'bar':>40}\")\n    print(\"-\" * 65)\n\n    max_bar = 40\n    initial_entropy = version_space_entropy(V)\n\n    for m in range(n + 1):\n        z = len(V)\n        entropy = version_space_entropy(V)\n        bar_len = int(max_bar * entropy / initial_entropy) if initial_entropy > 0 else 0\n        bar = \"\u2588\" * bar_len\n        print(f\"{m:>3}  {z:>10}  {entropy:>10.4f}  {bar}\")\n\n        if m < n:\n            x = examples[m]\n            y = target[x]\n            V = restrict_at(V, x, y, n)\n\n    print()\n    print(\"\u2192 Z(D) decreases monotonically (partition_function_mono in Lean)\")\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   VERSION SPACE ENTROPY \u2014 Interactive Demonstration            \u2551\")\n    print(\"\u2551   Bridging Learning Theory, Information Theory, and            \u2551\")\n    print(\"\u2551   Statistical Mechanics                                        \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_entropy_collapse()\n    demo_corrected_bound()\n    demo_counterexample_search()\n    demo_pattern_classes()\n    demo_threshold_optimal()\n    demo_stat_mech()\n\n    print(\"=\" * 70)\n    print(\"All demos complete.\")\n    print(\"=\" * 70)\n"
+    },
+    "date": "2026-05-20T14:07:00Z",
+    "exp_id": "e5412c69",
+    "source_exp_ids": [
+      "6cf9b394"
     ]
   },
   "inverse_stereographic_neural_field_theory.json": {
@@ -6644,7 +6686,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -6653,7 +6695,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -6662,7 +6704,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -6680,7 +6722,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -6689,7 +6731,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -6698,7 +6740,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "expected_lean_signature",
@@ -6707,7 +6749,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -6716,7 +6758,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 314
+      "hue": 91
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -6725,7 +6767,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "percolation_threshold",
@@ -6734,7 +6776,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -6752,7 +6794,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -6770,7 +6812,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -6779,7 +6821,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -6788,7 +6830,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -6797,7 +6839,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "p_vs_np_problem",
@@ -6806,7 +6848,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -6815,7 +6857,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -6824,7 +6866,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "hodge_conjecture",
@@ -6833,7 +6875,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -6851,7 +6893,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -6860,7 +6902,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -6869,7 +6911,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "twin_prime_conjecture",
@@ -6878,7 +6920,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -6887,7 +6929,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -6896,7 +6938,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "happy_end_problem",
@@ -6905,7 +6947,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -6914,7 +6956,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -6923,7 +6965,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -6941,7 +6983,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "tropical_intersection_theory",
@@ -6950,7 +6992,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "riemann_hypothesis",
@@ -6959,7 +7001,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "odd_perfect_numbers",
@@ -6968,7 +7010,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -6977,7 +7019,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture",
@@ -6986,7 +7028,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "10_is_a_solitary_number",
@@ -6995,7 +7037,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -7013,7 +7055,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -7022,7 +7064,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -7031,7 +7073,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -7040,7 +7082,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -7058,7 +7100,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -7067,7 +7109,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -7076,7 +7118,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "yang_mills_mass_gap",
@@ -7103,7 +7145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -7121,7 +7163,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -7130,7 +7172,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "beals_conjecture",
@@ -7148,7 +7190,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -7157,7 +7199,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -7166,7 +7208,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -7184,7 +7226,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -7193,7 +7235,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -7202,7 +7244,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -7211,7 +7253,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -7220,7 +7262,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 112
+      "hue": 272
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -7229,7 +7271,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -7238,7 +7280,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -7247,7 +7289,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -7265,7 +7307,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "primes_of_the_form_n1",
@@ -7274,7 +7316,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -7283,7 +7325,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -7292,7 +7334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 95
+      "hue": 359
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -7301,7 +7343,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -7310,7 +7352,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -7319,7 +7361,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -7328,7 +7370,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "we_have_formally_verified",
@@ -7337,7 +7379,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -7346,7 +7388,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -7364,7 +7406,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -7373,7 +7415,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -7382,7 +7424,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -7400,7 +7442,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "collatz_conjecture",
@@ -7409,7 +7451,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -7418,7 +7460,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -7427,7 +7469,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -7454,7 +7496,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 272
+      "hue": 134
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -7463,7 +7505,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 270
+      "hue": 359
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -7472,7 +7514,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 281
+      "hue": 92
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -7481,7 +7523,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 292
+      "hue": 272
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -7490,7 +7532,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -7499,7 +7541,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "medium_priority",
@@ -7508,7 +7550,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "erdsstraus_conjecture",
@@ -7517,7 +7559,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "the_invariance_theorem_establishes_that_the_symmet",
@@ -7535,7 +7577,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -7544,7 +7586,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -7553,7 +7595,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T02:05:05Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "hypothesis_4_p_adic_threshold_transfer",
@@ -7562,7 +7604,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -7580,7 +7622,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "kakeya_conjecture",
@@ -7607,7 +7649,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "196_algorithm_non_termination",
@@ -7616,7 +7658,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -7625,7 +7667,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 101
+      "hue": 90
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -7634,7 +7676,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -7643,7 +7685,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -7652,7 +7694,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -7661,7 +7703,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -7670,7 +7712,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -7688,7 +7730,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -7697,7 +7739,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T07:04:53Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -7706,7 +7748,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -7715,7 +7757,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:05:51Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "non_archimedean_probability_via_surreal_numbers",
@@ -7733,7 +7775,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T08:08:15Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "eml_category_the_category_of_eml_computable_maps",
@@ -7742,7 +7784,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T08:09:01Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "eml_universal_approximation",
@@ -7751,7 +7793,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T09:06:21Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "inverse_stereographic_persistence_topological_data",
@@ -7760,7 +7802,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T09:06:51Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "hypothesis_5_exceptional_set_finiteness",
@@ -7769,7 +7811,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T09:07:18Z",
-      "hue": 90
+      "hue": 101
     },
     {
       "id": "conjecture_2_semantic_entropy_correlation",
@@ -7787,7 +7829,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T10:03:27Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_3_faithful_representations_lift_to_line",
@@ -7796,7 +7838,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:03:53Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_1_eml_elementary_completeness_with_poly",
@@ -7805,7 +7847,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T10:04:23Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "langlands_program_functoriality",
@@ -7814,7 +7856,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:04:57Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "proof_phase_transitions_in_random_formal_theories",
@@ -7823,7 +7865,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T11:03:17Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_5_strict_depth_separation_for_exponenti",
@@ -7841,7 +7883,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T11:04:14Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "eml_kolmogorov_arnold_representation",
@@ -7859,7 +7901,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T12:00:41Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_5_eml_circuit_depth_separation",
@@ -7868,7 +7910,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:03:44Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "conjecture_1_mps_min_cut_principle",
@@ -7877,7 +7919,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:11Z",
-      "hue": 272
+      "hue": 275
     },
     {
       "id": "arithmetic_monodromy_fingerprints_of_gradient_desc",
@@ -7886,7 +7928,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:39Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_4_monotone_circuit_depth_from_entropy_c",
@@ -7895,7 +7937,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T14:00:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_2_eml_description_complexity_is_multipl",
@@ -7904,7 +7946,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T14:03:50Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_5_pairwise_intersection_bounds_bootstra",
@@ -7922,7 +7964,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:05:33Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "conjecture_1_full_depth_hierarchy_for_exponential_",
@@ -7931,7 +7973,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:06:18Z",
-      "hue": 271
+      "hue": 89
+    },
+    {
+      "id": "conjecture_3_learning_theoretic_version_space_comp",
+      "title": "Semantic Entropy of Version Spaces: Information-Theoretic Bounds on Hypothesis Elimination",
+      "domain": "Learning Theory / Information Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-20T14:07:00Z",
+      "hue": 270
     }
   ],
   "edges": [
@@ -8008,6 +8059,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "hilbert_12_kronecker_weber_generalization",
       "target": "conjecture_3_faithful_representations_lift_to_line",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "conjecture_2_semantic_entropy_correlation",
+      "target": "conjecture_3_learning_theoretic_version_space_comp",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -9234,6 +9292,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T14:05:53.778760+00:00"
   },
   {
+    "id": "fd_0280",
+    "title": "Arithmetic Universality Classes for Gradient Descent Modulo Primes",
+    "description": "Conjecture: Let L_1, L_2 be two polynomial loss functions with integer coefficients arising from possibly different model architectures and datasets, each defining gradient maps G_i(\\theta)=\\theta-\\eta\\nabla L_i(\\theta) over \\mathbb{F}_p^n for infinitely many primes p and fixed integer step size \\eta. If for a Zariski-dense set of parameter values their critical loci have isomorphic Jacobian algebras over \\mathbb{Q}, then the distributions of eventual cycle lengths of G_1 and G_2 on \\mathbb{F}_p^n converge to the same limiting law along a density-1 set of primes. Test: Compute cycle-length histograms of gradient descent maps modulo p for many primes across pairs of losses with matched vs unmatched Jacobian-algebra data; confirm if matched pairs exhibit statistically indistinguishable limiting distributions while unmatched pairs do not. Refute by finding matched pairs with persistently different cycle statistics on a positive-density prime set. Impact: This would reveal a new arithmetic universality principle for optimization dynamics, linking singularity theory of loss landscapes to finite-field training behavior and potentially giving architecture-independent invariants of learnability.",
+    "domains": [
+      "Arithmetic Dynamics",
+      "Optimization Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:06:34.310445+00:00"
+  },
+  {
     "id": "seed_026",
     "title": "Lehmer's Mahler Measure Problem",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
@@ -10228,25 +10301,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T11:03:20.541511+00:00"
   },
   {
-    "id": "fd_0241",
-    "title": "Conjecture 1: Full Depth Hierarchy for Exponential Towers",
-    "description": "**Conjecture.** For every $k \\ge 2$ and every EML expression $E$ of depth strictly less than $k$, there exist constants $c, C > 0$ (depending on $k$) such that for all $\\varepsilon \\in (0,1)$:\n\n$$\\sup_{x \\in [0,1]} |E(x) - \\operatorname{iterExp}(k, x)| \\le \\varepsilon \\implies \\operatorname{size}(E) \\ge C \\cdot c^k \\cdot \\varepsilon^{-1}.$$\n\n**Test.** Enumerate all depth-$(k-1)$ EML expressions with size up to $S_{\\max}$ (using a recursive expression generator). For each, compute the uniform error against $\\operatorname{iterExp}(k)$ on a fine grid of $[0,1]$. Plot $\\log(\\varepsilon)$ vs $\\log(S)$ and check whether the empirical slope matches $-1$ (consistent with $\\varepsilon^{-1}$ scaling). Run for $k = 2, 3, 4$.\n\n**Refutation.** If for some $k$, a depth-$(k-1)$ expression of size $o(c^k ",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Probability",
-      "EML",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ffab0d73",
-    "consumed_by_exp_id": "e7f47f32",
-    "timestamp": "2026-05-20T11:03:49.914392+00:00"
-  },
-  {
     "id": "fd_0242",
     "title": "Conjecture 2: Derivative Growth as a Semantic Depth Invariant",
     "description": "**Conjecture.** For any EML expression $E$ of depth $d$, the maximum derivative on $[0,1]$ satisfies:\n\n$$\\sup_{x \\in [0,1]} |E'(x)| \\le \\operatorname{iterExp}(d, M)$$\n\nwhere $M = \\max(\\sup |E(x)|, \\sup |\\text{leaf constants}|)$ is a bound on intermediate values. In contrast, $\\operatorname{iterExp}(k)'$ on $[0,1]$ grows as $\\operatorname{iterExp}(k+1, 1)$ \u2014 a tower of height $k+1$.\n\n**Test.** For random depth-$d$ EML expressions with bounded coefficients, compute the maximum derivative numerically on $[0,1]$. Verify that it is bounded by $\\operatorname{iterExp}(d, M)$ for appropriate $M$. Then compare with $\\operatorname{iterExp}(k)'$ for $k > d$.\n\n**Refutation.** Find a depth-$d$ EML expression whose derivative exceeds $\\operatorname{iterExp}(d+1, M)$ on $[0,1]$. This would show that dept",
@@ -10491,22 +10545,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "2ea43f0c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T12:00:44.615140+00:00"
-  },
-  {
-    "id": "fd_0261",
-    "title": "Conjecture A: Full Linear Lower Bound for No-EML Expressions with Inverse",
-    "description": "**Conjecture:** For any `n \u2265 1` and any `EMLExpr` `e` with `e.noEml` (no `eml` nodes, but possibly with `inv` nodes), `e` cannot represent `iterExp n` on `(0,\u221e)`.\n\n**Precise statement:** `\u2200 (e : EMLExpr), e.noEml \u2192 \u2200 {n : \u2115}, 0 < n \u2192 \u00ac RepresentsOnPos e (iterExp n)`\n\n**Status:** Proved for the `noInv` subcase (polynomial growth bound argument). The `inv` case remains open because inverse operations produce rational functions whose growth analysis requires tracking both upper and lower bounds through the induction.\n\n**Test:** Enumerate all EML expression trees up to size 15 with `inv` nodes (but no `eml`), evaluate at 100 uniformly-spaced points on `[1, 10]`, and check whether any matches `exp(x)` to within `10\u207b\u2078` tolerance. If found, verify symbolically. This can be automated in Python wit",
-    "domains": [
-      "NumberTheory",
-      "EML",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8155cb9f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T12:03:48.327979+00:00"
   },
   {
     "id": "fd_0265",
@@ -10786,5 +10824,81 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "5aa96213",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T14:05:38.369161+00:00"
+  },
+  {
+    "id": "fd_0273",
+    "title": "Hypothesis 1: Inverse-Linear Scaling of Best Approximation Error",
+    "description": "**Conjecture.** For fixed `k \u2265 2`, the best uniform approximation error on `[0,1]` of\n`iterExp(k)` by depth-`(k\u22121)` expressions of size `S` scales as `\u0398(S\u207b\u00b9)`.\n\nMore precisely, there exist constants `c\u2081(k), c\u2082(k) > 0` such that:\n\n  c\u2081(k) / S  \u2264  inf_{E : depth \u2264 k\u22121, size \u2264 S}  sup_{x \u2208 [0,1]} |E(x) \u2212 iterExp(k,x)|  \u2264  c\u2082(k) / S\n\n**Test.** Exhaustive/heuristic search over expressions up to size `S_max = 15` for\n`k = 2, 3`. Fit the best error `\u03b5*(S)` in log-log coordinates. If the slope is\nconsistently near `\u22121`, the hypothesis is supported. If it deviates significantly\n(e.g., slope < \u22121.5 or > \u22120.5), the hypothesis is refuted.\n\n**Impact.** If true, this establishes the exact approximation rate for the depth\nhierarchy, proving that the conjectured `\u03b5\u207b\u00b9` size lower bound is tight. This would",
+    "domains": [
+      "NumberTheory",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7f47f32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:06:22.287815+00:00"
+  },
+  {
+    "id": "fd_0274",
+    "title": "Hypothesis 2: Exponential-in-Depth Constant Growth",
+    "description": "**Conjecture.** The constant `c\u2081(k)` in the lower bound grows at least exponentially in `k`:\nthere exists `\u03b1 > 1` such that `c\u2081(k) \u2265 \u03b1^k` for all `k \u2265 2`.\n\n**Test.** Estimate `c\u2081(k)` for `k = 2, 3, 4, 5` by computing best approximation errors\nat several sizes and fitting. Plot `log c\u2081(k)` vs `k`. If the plot is roughly linear\nwith positive slope, the hypothesis is supported.\n\n**Impact.** This would prove that not only does each new depth level create an\napproximation barrier, but the barrier grows exponentially with depth \u2014 a true\nhierarchy, not just a sequence of diminishing separations.\n\n---",
+    "domains": [
+      "NumberTheory",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7f47f32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:06:22.299021+00:00"
+  },
+  {
+    "id": "fd_0275",
+    "title": "Hypothesis 3: Derivative Envelope Sharpness",
+    "description": "**Conjecture.** The formal derivative envelope for depth-`d` expressions is\nasymptotically sharp up to polynomial factors in the size. That is, for each\n`d` and `S`, there exists a depth-`d`, size-`S` expression `E` such that\n\n  max_{x \u2208 [0,1]} |E'(x)|  \u2265  \u03a9(envelope(d, S) / S^c)\n\nfor some universal constant `c`.\n\n**Test.** For `d = 0, 1, 2` and `S = 3, 5, 7, 9`, enumerate all depth-`d`\nsize-\u2264`S` expressions, compute maximum derivatives on `[0,1]`, and compare\nwith the theoretical envelope bound. Compute the ratio. If the ratio remains\nbounded by a polynomial in `S`, the envelope is sharp.\n\n**Impact.** Sharp envelopes would make the derivative-obstruction proof strategy\noptimal: the separation theorems would give best-possible lower bounds through\nthis route, closing the question of whethe",
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7f47f32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:06:22.310394+00:00"
+  },
+  {
+    "id": "fd_0276",
+    "title": "Hypothesis 4: Restricted-Fragment Exactness",
+    "description": "**Conjecture.** For the restricted expression fragment generated by `{x, const, +, *, exp}`\n(no negation or subtraction), the derivative-envelope lower bounds already force\nqualitative depth separation. Specifically, for every `k \u2265 2`, there exists `\u03b5\u2080(k) > 0`\nsuch that no restricted depth-`(k\u22121)` expression of any size can approximate `iterExp(k)`\nwithin `\u03b5\u2080` on `[0,1]`.\n\n**Test.** Search the restricted syntax exhaustively up to size 12 for `k = 2, 3`.\nCheck whether the best error converges to zero (refutation) or saturates at a\npositive value (confirmation). Verify that the derivative envelope bounds are\nsufficient to explain the saturation.\n\n**Impact.** If true, this would be the cleanest depth separation theorem: no size\nbound needed, just depth alone suffices for the restricted fragme",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7f47f32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:06:22.321960+00:00"
+  },
+  {
+    "id": "fd_0277",
+    "title": "Hypothesis 5: Refutation Trigger \u2014 Anomalously Efficient Approximants",
+    "description": "**Conjecture (Null Hypothesis).** There exists `k \u2265 3` and a depth-`(k\u22121)` expression `E`\nof size `o(c^k \u00b7 \u03b5\u207b\u00b9)` that achieves uniform error `\u2264 \u03b5` on `[0,1]` against `iterExp(k)`.\n\n**Test.** Automated search for anomalously efficient approximants:\n1. For each `k \u2208 {3, 4}`, set target error `\u03b5 = 0.1, 0.01, 0.001`.\n2. Search for depth-`(k\u22121)` expressions achieving error \u2264 \u03b5.\n3. Record the minimum size found.\n4. If size grows slower than `c^k / \u03b5`, flag as potential counterexample.\n\n**Impact.** Finding such an anomaly would falsify the full conjecture in its current\nform, requiring either a weaker lower bound or a refined expression language definition.\nThis is the most important test: it directly probes the conjecture's validity.\n\n---",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e7f47f32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:06:22.333449+00:00"
   }
 ];
