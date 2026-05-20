@@ -25,9 +25,9 @@ DOMAIN_COLORS = {
     "MachineLearning": "#911eb4",# purple
     "Physics": "#f032e6",       # magenta
     "Pythagorean": "#aaffc3",   # mint
-    "Shared": "#dcbeff",        # lavender
+    "Shared": "#9370DB",         # medium purple (was lavender)
     "Speculative": "#fabed4",   # pink
-    "Tropical": "#469990",      # teal
+    "Tropical": "#9A6324",       # brown/sienna (was teal)
 }
 
 
