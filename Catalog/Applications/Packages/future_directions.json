@@ -1829,7 +1829,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "3765b821",
       "timestamp": "2026-05-20T01:00:34.858440+00:00"
     },
@@ -4522,6 +4522,110 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T10:04:27.270829+00:00"
+    },
+    {
+      "id": "fd_0236",
+      "title": "Conjecture 1: Minimal-Certificate Threshold Law",
+      "description": "**Precise statement.** Let $(M_m)_{m \\geq 1}$ be a sequence of monotone provability systems on axiom pools of size $n_m \\to \\infty$, each with a single target $t_m$. Suppose the minimal certificate size is $k_m$ and the number of minimal certificates is $N_m$. Then the $1/2$-threshold satisfies\n\n$$\np_{1/2}(t_m) \\;\\sim\\; N_m^{-1/k_m} \\quad \\text{as } m \\to \\infty.\n$$\n\n**Test.** Enumerate certificates in random Horn clause systems over $n$ variables with clause length $k$. Compute $p_{1/2}$ empirically by Monte Carlo sampling of random axiom subsets, and compare with $N^{-1/k}$ where $N$ is the number of minimum-size certificates. Vary $n \\in \\{10, 20, 50, 100\\}$ and $k \\in \\{2, 3, 4, 5\\}$.\n\n**Impact.** If confirmed, this provides a universal formula for the onset of provability in finite sy",
+      "source_exp_id": "3765b821",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3765b821",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T11:03:20.505376+00:00"
+    },
+    {
+      "id": "fd_0237",
+      "title": "Conjecture 2: Overlap Sharpness Dichotomy",
+      "description": "**Precise statement.** Define the *certificate overlap number* $\\Delta(M, t)$ as the maximum, over all pairs of distinct minimal certificates $C_1, C_2$ for $t$, of $|C_1 \\cap C_2|$. If $\\Delta(M_m, t_m) = o(k_m)$ and $N_m \\to \\infty$, then the provability transition has width $o(p_c)$ — i.e., the transition is *sharp*.\n\nConversely, if $\\Delta(M_m, t_m) / k_m \\to c > 0$, then the transition width is $\\Theta(p_c)$ — the transition is *coarse*.\n\n**Test.** Construct parameterized families:\n- *Low overlap:* $r$ disjoint certificates of size $k$ (overlap = 0). Measure transition width numerically.\n- *High overlap:* $r$ certificates sharing a common core of $\\lfloor k/2 \\rfloor$ axioms. Compare widths.\nFit transition curves to $\\Phi((p - p_c)/w)$ and extract width $w$.\n\n**Impact.** Establishes t",
+      "source_exp_id": "3765b821",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3765b821",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Algebra",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T11:03:20.516018+00:00"
+    },
+    {
+      "id": "fd_0238",
+      "title": "Conjecture 3: Universality Across Proof Formalisms",
+      "description": "**Precise statement.** Consider three families of finite proof systems with matched certificate statistics (same $k$, same $N$, same overlap $\\Delta$):\n1. Propositional Horn clause derivations.\n2. Bounded quantifier-free Presburger arithmetic.\n3. Equational logic over finite algebras.\n\nThen the rescaled provability curves $\\Pr_{p \\cdot p_c}[t \\text{ provable}]$ converge to the same limiting shape as the system size grows.\n\n**Test.** For each formalism, generate random instances with $n = 50$ axiom candidates, $k = 3$, and ~20 minimal certificates. Run 10,000 Monte Carlo trials per $p$-value. Plot rescaled curves and test for collapse onto a universal curve using Kolmogorov–Smirnov statistics.\n\n**Impact.** Would demonstrate that provability phase transitions are *formalism-independent*, dep",
+      "source_exp_id": "3765b821",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3765b821",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Algebra",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T11:03:20.525052+00:00"
+    },
+    {
+      "id": "fd_0239",
+      "title": "Conjecture 4: Axiom Pivotality Maximizes Discovery",
+      "description": "**Precise statement.** Define the *pivotality* of axiom $a$ for target $t$ at parameter $p$ as\n\n$$\n\\text{Piv}_p(a, t) = \\Pr_p[t \\text{ provable} \\mid a \\in A] - \\Pr_p[t \\text{ provable} \\mid a \\notin A].\n$$\n\nThen among all singleton axiom additions to a base theory, the axiom maximizing $\\sum_t \\text{Piv}_p(a, t)$ (summed over a target family) also maximizes the expected number of newly provable targets.\n\n**Test.** In a Horn clause system with 100 axiom candidates and 20 targets:\n1. Estimate pivotality of each axiom by Monte Carlo (10,000 samples).\n2. Compare the greedy pivotality-maximizing axiom selection against random selection and against an oracle that knows the optimal single addition.\n3. Measure regret (gap to oracle) across 100 random system instances.\n\n**Impact.** Provides a prin",
+      "source_exp_id": "3765b821",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3765b821",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T11:03:20.534018+00:00"
+    },
+    {
+      "id": "fd_0240",
+      "title": "Conjecture 5: Proof Susceptibility Peaks at Threshold",
+      "description": "**Precise statement.** Define the *proof susceptibility* as the derivative of the provability probability:\n\n$$\n\\chi_t(p) = \\frac{d}{dp} \\Pr_p[t \\text{ provable}].\n$$\n\nFor systems with $r$ disjoint certificates of size $k$, the susceptibility peak satisfies\n\n$$\n\\chi_t^{\\max} = \\Theta(k \\cdot r^{1-1/k})\n$$\n\nand occurs at $p^* = r^{-1/k}(1 + O(1/k))$.\n\n**Test.** For $k \\in \\{2, 3, 5, 10\\}$ and $r \\in \\{1, 5, 10, 50, 100\\}$:\n1. Compute exact derivative of $1 - (1-p^k)^r$ analytically.\n2. Verify peak location and height against the conjectured asymptotics.\n3. For non-disjoint certificate systems, numerically differentiate Monte Carlo estimates and compare peak location with the certificate-predicted threshold.\n\n**Impact.** Gives a quantitative prediction of where adding axioms has maximum lever",
+      "source_exp_id": "3765b821",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3765b821",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T11:03:20.541511+00:00"
     }
   ],
   "pruned": [

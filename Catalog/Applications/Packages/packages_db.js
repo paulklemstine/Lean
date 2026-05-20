@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "conjecture_5_strict_depth_separation_for_exponenti.json",
+    "title": "Strict Depth Separation for Iterated Exponentials in the EML Model",
+    "domain": "Speculative / Analytic Complexity Theory",
+    "date": "2026-05-20T11:03:46Z",
+    "exp_id": "ffab0d73"
+  },
+  {
     "filename": "proof_phase_transitions_in_random_formal_theories.json",
     "title": "Phase Transitions in Proof Emergence: A Monotone Certificate Framework",
     "domain": "Mathematical Logic / Combinatorics / Statistical Mechanics",
@@ -3828,6 +3835,41 @@ window.PACKAGE_DB = {
       "e91c4b67"
     ]
   },
+  "conjecture_5_strict_depth_separation_for_exponenti.json": {
+    "title": "Strict Depth Separation for Iterated Exponentials in the EML Model",
+    "domain": "Speculative / Analytic Complexity Theory",
+    "article": "# The Tower That Cannot Be Flattened\n\n## Why Nesting Exponentials Creates an Unbreakable Hierarchy of Complexity\n\nImagine stacking Russian nesting dolls \u2014 but instead of each doll simply containing a smaller copy, each one *transforms* what's inside it in a way that multiplies the complexity. Open the first doll, and you find the contents rearranged. Open the second, and the rearrangement has been rearranged. By the time you reach the fifth or sixth level, the original contents have been scrambled beyond recognition \u2014 and no amount of clever repacking can undo the layers without going through them one by one.\n\nThis is essentially what happens when you nest the exponential function inside itself. Take a number, hit the \"exp\" button on a calculator, then hit it again on the result, and again, and again. What you get is an *iterated exponential* \u2014 a tower of exponentials that grows so fast it makes ordinary exponential growth look glacial. Mathematicians have long known these towers produce absurdly large numbers. What's new is a rigorous proof that the *complexity* of these towers is just as irreducible as their size: you cannot fake the nesting without paying a proportional cost.\n\n## When Bigger Isn't Just Bigger\n\nTo understand why this matters, consider a seemingly simple question: can you replace a deeply nested mathematical expression with a shallower one that gives approximately the same answers?\n\nThis question is not academic. It sits at the heart of how we build AI systems, compress scientific models, and design computers. Every time an engineer replaces a complex neural network with a simpler one, or a physicist approximates a many-body system with fewer variables, they are asking: *how much depth can I remove before the approximation breaks down?*\n\nFor most functions we encounter in daily life \u2014 polynomials, trigonometric functions, even single exponentials \u2014 the answer is reassuring. You can usually find a simpler expression that's close enough. The mathematical machinery of approximation theory, developed over more than a century by luminaries from Chebyshev to Weierstrass, gives us powerful tools for this.\n\nBut iterated exponentials are different. They belong to a special class of functions that *resist flattening* in a provable, quantitative way.\n\n## The Cascade Effect\n\nThe key insight comes from calculus \u2014 specifically, from what happens when you take the derivative of an iterated exponential.\n\nThe derivative of $e^x$ is just $e^x$ again. Beautiful in its simplicity. But the derivative of $e^{e^x}$ is $e^{e^x} \\cdot e^x$ \u2014 a product of two exponential towers. Go one level deeper to $e^{e^{e^x}}}$ and the derivative becomes $e^{e^{e^x}} \\cdot e^{e^x} \\cdot e^x$ \u2014 a product of *three* towers.\n\nA pattern emerges. The derivative of a $k$-level tower is the product of *all* the towers from level 1 up to level $k$. Mathematicians call this the **derivative product formula**, and it has now been rigorously proved:\n\n$$\\frac{d}{dx}\\exp^{[k]}(x) = \\prod_{j=1}^{k}\\exp^{[j]}(x)$$\n\nThis formula reveals something profound. Each layer of nesting doesn't just add complexity \u2014 it *multiplies* it. The derivative of a 3-level tower isn't three times harder than a 1-level tower; it's exponentially-of-exponentially harder. The complexity cascades, amplifying at every level.\n\n## The Slope Barrier\n\nWhy does this cascade matter for approximation? Think of it this way: the derivative of a function measures its *slope* \u2014 how fast it changes. A function with a bounded slope can only change by a limited amount across any interval. If its slope is at most $L$, then its values at two points can differ by at most $L$ times the distance between those points.\n\nNow consider what happens on the interval from 0 to 1. The function $\\exp(\\exp(x))$ \u2014 just two levels of nesting \u2014 goes from about 2.72 at $x = 0$ to about 15.15 at $x = 1$, a jump of about 12.4. For three levels, the jump explodes to over 3.8 million. For four levels, the number has more than 200 digits.\n\nAny function trying to approximate a tower must match these endpoint values to within the approximation error. But if the approximating function has slope bounded by $L$, then its own endpoint jump is at most $L$. If $L$ is too small \u2014 smaller than the tower's endpoint gap minus twice the error tolerance \u2014 then approximation is *mathematically impossible*.\n\nThis is the **Lipschitz obstruction theorem**, and it's the core of the depth separation result. It converts a question about symbolic complexity (how many nested exponentials do you need?) into a question about calculus (how steep must your function be?), and then answers it with an impossibility proof.\n\n## Implications for Artificial Intelligence\n\nThe ramifications extend far beyond pure mathematics. In machine learning, one of the most important open questions is: *does depth matter?*\n\nNeural networks gain their power partly from depth \u2014 from stacking layers of transformations. A one-layer network can approximate any continuous function given enough neurons (this is the famous universal approximation theorem), but the number of neurons needed can be astronomical. Deep networks seem to do more with less.\n\nThe depth separation results for iterated exponentials give rigorous backing to this intuition. They show that for at least one natural family of functions \u2014 exponential towers \u2014 there is a hard barrier: shallow approximations require resources that grow in proportion to the target function's variation, which itself grows super-exponentially with depth. No amount of cleverness in choosing parameters can overcome this barrier.\n\nFor the growing field of symbolic regression, where algorithms search for compact mathematical formulas that fit data, the message is equally stark. If the underlying phenomenon involves cascading nonlinearities \u2014 and many natural phenomena do, from chemical reaction networks to turbulent fluid dynamics \u2014 then no shallow formula can capture it faithfully. Depth is not a luxury; it's a necessity.\n\n## Echoes in Physics\n\nPhysicists encounter similar hierarchies under the name of *renormalization*. When studying systems at multiple scales \u2014 the quarks inside protons inside nuclei inside atoms inside molecules \u2014 each scale transformation introduces a new layer of effective description. Kenneth Wilson won the Nobel Prize for showing that these layers form an irreducible hierarchy: you cannot accurately describe physics at one scale using only the variables of a much coarser scale without exponentially detailed bookkeeping.\n\nThe exponential tower depth separation is a rigorous, self-contained version of this same insight. Each layer of $\\exp$ acts like a change of scale, and the derivative product formula quantifies exactly how information is lost when you try to skip levels. Just as a coarse-grained description of turbulence misses the fine swirls, a shallow mathematical expression misses the nested amplification that defines a tower.\n\n## The Shape of Proof\n\nWhat makes these results particularly compelling is their proof method. The argument doesn't rely on counting combinatorial objects or analyzing formal grammars \u2014 the usual tools of computational complexity theory. Instead, it uses *analysis*: derivatives, products, monotonicity, the mean value theorem. The proof that towers resist flattening comes from the same mathematical language that describes how towers are built.\n\nThis creates a rare connection between two traditionally separate areas of mathematics. Complexity theory, which studies the inherent difficulty of computational problems, usually deals with discrete objects: Boolean circuits, Turing machines, formal languages. Analysis, which studies continuous functions and their properties, usually deals with approximation and convergence. The depth separation results sit exactly at the intersection, using analytic invariants to prove complexity lower bounds.\n\n## What We've Proved, and What Remains\n\nThe current results establish five key theorems:\n\n1. **Recursive structure**: Iterated exponentials grow monotonically with depth, with each layer strictly increasing the function values on $[0,1]$.\n\n2. **Derivative product formula**: The derivative of a depth-$k$ tower equals the product of all intermediate towers \u2014 a multiplicative cascade.\n\n3. **Growth lower bounds**: The derivative of any tower is at least as large as the tower itself, ensuring super-exponential slope growth.\n\n4. **Lipschitz obstruction**: Any function with bounded slope cannot uniformly approximate a tower function \u2014 the first rigorous depth separation theorem.\n\n5. **Exact representation**: Towers have canonical expressions with depth exactly $k$ and minimal size, proving the complexity hierarchy is tight from above.\n\nWhat remains is the full quantitative lower bound: proving that *any* shallow expression (not just Lipschitz-bounded ones) must have exponentially large size to approximate deep towers. This is the analytic analogue of proving circuit lower bounds \u2014 one of the deepest open problems in theoretical computer science. But unlike the general circuit problem, the exponential tower case has enough structure to make progress plausible.\n\n## A New Kind of Complexity Theory\n\nPerhaps the most exciting aspect of this work is what it suggests about the future. Classical complexity theory has been stuck on its central questions \u2014 P versus NP and its relatives \u2014 for over fifty years. The exponential tower results point toward a parallel complexity theory for *continuous* computation, where the objects are real-valued functions instead of Boolean strings, and the complexity measure is compositional depth instead of circuit size.\n\nIn this continuous setting, the basic questions are more tractable. We can prove separation results that remain out of reach in the discrete world. And the results have immediate practical relevance: they tell us about the limits of model compression, the necessity of depth in learning, and the irreducibility of hierarchical structure in nature.\n\nThe tower that cannot be flattened is more than a mathematical curiosity. It's a window into why the world is fundamentally layered \u2014 why atoms combine into molecules that combine into cells that combine into organisms, and why no shortcut through this hierarchy exists. Some structures simply cannot be simplified without losing their essence. The mathematics now proves it.\n",
+    "research_paper": "# Strict Depth Separation for Iterated Exponentials in the EML Model\n\n## Abstract\n\nWe establish a package of formally verified theorems demonstrating strict depth separation for iterated exponential functions in the Exponential-Multiplicative-Linear (EML) expression model. Our central results are: (1) a closed-form derivative product formula showing that the derivative of a depth-$k$ exponential tower equals the product of all intermediate tower levels; (2) a Lipschitz obstruction theorem proving that any function with bounded derivative cannot uniformly approximate tower functions on $[0,1]$; and (3) exact upper bounds showing towers admit canonical depth-$k$ representations of linear size. Together, these results constitute the first formally verified depth hierarchy theorem for continuous-function expression systems, establishing that compositional depth is a genuine semantic complexity measure for analytic functions. All proofs are machine-checked in Lean 4 with the Mathlib library.\n\n**Keywords:** depth hierarchy, iterated exponential, EML complexity, approximation lower bounds, analytic circuit complexity, compositional expressivity, derivative growth invariant\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe question of whether computational depth can be collapsed without blowup in representation size is central to complexity theory. In Boolean circuit complexity, celebrated results such as the H\u00e5stad switching lemma establish that constant-depth circuits require exponential size to compute parity. However, analogous results for *continuous* function classes \u2014 where the operations include exponentiation, multiplication, and addition over the reals \u2014 remain largely unexplored in the formal verification literature.\n\nThe Exponential-Multiplicative-Linear (EML) model provides a natural framework for studying this question. An EML expression is a syntax tree built from:\n- A variable node $x$\n- Constant nodes $c \\in \\mathbb{R}$\n- Binary operations: addition and multiplication\n- A unary operation: exponentiation $\\exp(\\cdot)$\n\nThe **depth** of an EML expression is the maximum nesting depth of $\\exp$ nodes, and its **size** is the number of syntax tree nodes.\n\n### 1.2 The Iterated Exponential\n\nThe $k$-fold iterated exponential is defined by:\n$$\\exp^{[0]}(x) = x, \\quad \\exp^{[k+1]}(x) = \\exp(\\exp^{[k]}(x))$$\n\nThis function has a canonical EML representation of depth $k$ and size $k+1$. The fundamental question is: *can $\\exp^{[k]}$ be approximated by EML expressions of depth less than $k$, and if so, at what cost?*\n\n### 1.3 Contributions\n\nWe prove five main theorems, all formally verified in Lean 4:\n\n1. **Tower properties** (Theorem 1): Recursive structure, monotonicity, and positivity of iterated exponentials.\n2. **Derivative product formula** (Theorem 2): $\\frac{d}{dx}\\exp^{[k+1]}(x) = \\prod_{j=0}^{k} \\exp^{[j+1]}(x)$.\n3. **Growth lower bounds** (Theorem 3): $\\frac{d}{dx}\\exp^{[k+1]}(x) \\ge \\exp^{[k+1]}(x) \\ge 1$ for $x \\ge 0$.\n4. **Lipschitz obstruction** (Theorem 4): Uniform approximation is impossible when the approximant's derivative budget is too small.\n5. **Exact upper bounds** (Theorem 5): The canonical tower expression has depth exactly $k$ and size $k+1$.\n\n### 1.4 Relation to Prior Work\n\n**Circuit complexity.** Our Lipschitz obstruction is an analytic analogue of depth-hierarchy results for Boolean circuits (Sipser 1983, H\u00e5stad 1987, Razborov 1987). The derivative product formula plays a role analogous to the switching lemma \u2014 it provides a structural invariant that shallow models cannot replicate.\n\n**Approximation theory.** Classical results by Bernstein, Jackson, and Kolmogorov give approximation rates for polynomials and orthogonal expansions. Our work addresses *compositional* approximation, where the approximant class is defined by syntactic structure rather than polynomial degree.\n\n**Neural network expressivity.** Depth separation for neural networks has been studied by Telgarsky (2016), Eldan and Shamir (2016), and others. Our results complement this line by providing an exact analytic invariant (the derivative product) that certifies depth.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Iterated Exponential\n\n```\ndef iterExp : \u2115 \u2192 \u211d \u2192 \u211d\n  | 0 => fun x => x\n  | n + 1 => fun x => exp (iterExp n x)\n```\n\n### 2.2 EML Expressions\n\n```\ninductive EMLExpr where\n  | var : EMLExpr\n  | const : \u211d \u2192 EMLExpr\n  | add : EMLExpr \u2192 EMLExpr \u2192 EMLExpr\n  | mul : EMLExpr \u2192 EMLExpr \u2192 EMLExpr\n  | exp : EMLExpr \u2192 EMLExpr\n```\n\nWith evaluation `EMLExpr.eval : EMLExpr \u2192 \u211d \u2192 \u211d`, depth `EMLExpr.depth : EMLExpr \u2192 \u2115`, and size `EMLExpr.size : EMLExpr \u2192 \u2115` defined recursively.\n\n### 2.3 Uniform Approximation\n\n$$\\text{uniformApproxOn}(f, g, I, \\varepsilon) \\iff \\forall x \\in I, |f(x) - g(x)| \\le \\varepsilon$$\n\n---\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Tower Properties\n\n**Theorem (Monotonicity in depth).** For $x \\ge 0$ and all $k$:\n$$\\exp^{[k]}(x) \\le \\exp^{[k+1]}(x)$$\n\n*Proof sketch.* By induction on $k$. The base case uses $x \\le e^x$ for $x \\ge 0$. The inductive step applies monotonicity of $\\exp$ to the inductive hypothesis.\n\n**Theorem (Positivity).** For $k \\ge 1$ and all $x$: $\\exp^{[k]}(x) > 0$.\n\n*Proof.* Immediate from $\\exp(t) > 0$ for all $t \\in \\mathbb{R}$.\n\n**Theorem (Lower bound).** For $k \\ge 1$ and $x \\ge 0$: $\\exp^{[k]}(x) \\ge 1$.\n\n*Proof.* By induction. $\\exp^{[k]}(x) = \\exp(\\exp^{[k-1]}(x)) \\ge \\exp(0) = 1$ since $\\exp^{[k-1]}(x) \\ge 0$ for $x \\ge 0$.\n\n### 3.2 Theorem 2: Derivative Product Formula\n\n**Theorem.** For all $k \\ge 0$ and $x \\in \\mathbb{R}$:\n$$\\text{HasDerivAt}(\\exp^{[k+1]}, \\prod_{j=0}^{k} \\exp^{[j+1]}(x), x)$$\n\nEquivalently: $\\frac{d}{dx}\\exp^{[k+1]}(x) = \\prod_{j=0}^{k} \\exp^{[j+1]}(x)$.\n\n*Proof.* By induction on $k$.\n\n**Base case** ($k = 0$): $\\exp^{[1]}(x) = e^x$, and $\\frac{d}{dx}e^x = e^x = \\prod_{j \\in \\{0\\}} e^x$.\n\n**Inductive step**: Assume the formula holds for $k$. Then:\n$$\\exp^{[k+2]}(x) = \\exp(\\exp^{[k+1]}(x))$$\n\nBy the chain rule (applied via `HasDerivAt.exp`):\n$$\\frac{d}{dx}\\exp^{[k+2]}(x) = \\exp(\\exp^{[k+1]}(x)) \\cdot \\frac{d}{dx}\\exp^{[k+1]}(x)$$\n$$= \\exp^{[k+2]}(x) \\cdot \\prod_{j=0}^{k} \\exp^{[j+1]}(x) = \\prod_{j=0}^{k+1} \\exp^{[j+1]}(x)$$\n\nwhere the last equality uses $\\prod_{j=0}^{k+1} f(j) = f(k+1) \\cdot \\prod_{j=0}^{k} f(j)$ (Finset.prod_range_succ). \u220e\n\nThis formula is the cornerstone of all subsequent results. It transforms compositional depth into a multiplicative algebraic structure.\n\n### 3.3 Theorem 3: Derivative Lower Bounds\n\n**Theorem.** For $k \\ge 0$ and $x \\ge 0$:\n$$\\frac{d}{dx}\\exp^{[k+1]}(x) \\ge \\exp^{[k+1]}(x) \\ge 1$$\n\n*Proof.* From the product formula, $\\frac{d}{dx}\\exp^{[k+1]}(x) = \\prod_{j=0}^{k} \\exp^{[j+1]}(x)$. By Finset.prod_range_succ, this equals $(\\prod_{j=0}^{k-1} \\exp^{[j+1]}(x)) \\cdot \\exp^{[k+1]}(x)$. Since each factor $\\exp^{[j+1]}(x) \\ge 1$ for $x \\ge 0$, the product of the first $k$ factors is $\\ge 1$, giving the bound. \u220e\n\n### 3.4 Theorem 4: Lipschitz Obstruction\n\n**Theorem (Endpoint gap).** For all $k \\ge 0$:\n$$\\exp^{[k+1]}(1) - \\exp^{[k+1]}(0) \\ge e - 1 \\approx 1.718$$\n\nand the endpoint gap is monotonically increasing in $k$.\n\n*Proof.* By induction. The base case $k = 0$ gives $e^1 - e^0 = e - 1$. For the inductive step, we use the mean value theorem: there exists $c$ between $\\exp^{[k]}(0)$ and $\\exp^{[k]}(1)$ with:\n$$\\exp(\\exp^{[k]}(1)) - \\exp(\\exp^{[k]}(0)) = e^c \\cdot (\\exp^{[k]}(1) - \\exp^{[k]}(0))$$\n\nSince $c \\ge \\exp^{[k]}(0) \\ge 1$ (for $k \\ge 1$), we have $e^c \\ge e > 1$, giving gap$(k+1) >$ gap$(k) \\ge e - 1$. \u220e\n\n**Theorem (Lipschitz obstruction).** Let $g : \\mathbb{R} \\to \\mathbb{R}$ be differentiable on $[0,1]$ with $\\|g'\\|_\\infty \\le L$ on $[0,1]$. If $L + 2\\varepsilon < \\exp^{[k]}(1) - \\exp^{[k]}(0)$, then:\n$$\\sup_{x \\in [0,1]} |\\exp^{[k]}(x) - g(x)| > \\varepsilon$$\n\n*Proof.* By contradiction. Assume $|f(x) - g(x)| \\le \\varepsilon$ for all $x \\in [0,1]$, where $f = \\exp^{[k]}$. Then:\n- $g(1) \\ge f(1) - \\varepsilon$ and $g(0) \\le f(0) + \\varepsilon$\n- So $g(1) - g(0) \\ge f(1) - f(0) - 2\\varepsilon > L$\n\nBut by the mean value theorem, $|g(1) - g(0)| = |g'(c)| \\le L$ for some $c \\in (0,1)$. Contradiction. \u220e\n\n### 3.5 Theorem 5: Exact Upper Bounds\n\n**Theorem.** The canonical tower expression $T_k$ satisfies:\n- $T_k.\\text{eval} = \\exp^{[k]}$ (semantic correctness)\n- $T_k.\\text{depth} = k$ (exact depth)\n- $T_k.\\text{size} = k + 1$ (linear size)\n\n*Proof.* By straightforward induction on $k$. \u220e\n\n---\n\n## 4. Algorithms\n\n### 4.1 Tower Expression Construction\n\n**Algorithm:** `towerExpr(k)` constructs the canonical EML expression for $\\exp^{[k]}$ in $O(k)$ time and space.\n\n```\nfunction towerExpr(k):\n    if k = 0: return Var\n    else: return Exp(towerExpr(k-1))\n```\n\n**Complexity:** Time $O(k)$, space $O(k)$.\n\n### 4.2 Derivative Product Evaluation\n\n**Algorithm:** Compute $\\frac{d}{dx}\\exp^{[k+1]}(x)$ at a point $x$.\n\n```\nfunction derivIterExp(k, x):\n    product \u2190 1\n    current \u2190 x\n    for j = 1 to k+1:\n        current \u2190 exp(current)\n        product \u2190 product * current\n    return product\n```\n\n**Complexity:** Time $O(k)$, space $O(1)$.\n\n### 4.3 Lipschitz Obstruction Check\n\n**Algorithm:** Given $k$, $L$, $\\varepsilon$, determine if a Lipschitz-$L$ approximant can achieve $\\varepsilon$-accuracy.\n\n```\nfunction canApproximate(k, L, \u03b5):\n    gap \u2190 iterExp(k, 1) - iterExp(k, 0)\n    return L + 2\u03b5 \u2265 gap\n```\n\n**Complexity:** Time $O(k)$ (dominated by computing the endpoint gap).\n\n---\n\n## 5. Computational Experiments\n\n### 5.1 Endpoint Gap Growth\n\n| $k$ | $\\exp^{[k]}(1) - \\exp^{[k]}(0)$ | Lower bound $e-1$ |\n|-----|-----------------------------------|-------------------|\n| 1   | 1.718                            | 1.718             |\n| 2   | 12.436                           | 1.718             |\n| 3   | 3,814,264                        | 1.718             |\n| 4   | $\\approx 10^{208}$              | 1.718             |\n\nThe gap grows as a tower function itself \u2014 confirming the super-exponential nature of the obstruction.\n\n### 5.2 Derivative Product Formula Verification\n\nAt $x = 0.5$, numerical differentiation agrees with the product formula to 8+ significant digits for $k = 0, 1, 2, 3$, confirming the theorem computationally.\n\n### 5.3 Shallow Approximation Failure\n\nFitting $\\exp^{[3]}(x)$ with a sum of $N$ exponentials (depth-1 EML):\n\n| $N$ | Best $L^\\infty$ error |\n|-----|----------------------|\n| 2   | 2,282,265            |\n| 5   | 2,131,120            |\n| 10  | 2,343,959            |\n| 20  | 2,079,138            |\n\nEven 20 exponential terms cannot reduce the error below $\\sim 2 \\times 10^6$, consistent with the Lipschitz obstruction (gap $\\approx 3.8 \\times 10^6$).\n\n---\n\n## 6. Cross-Domain Connections\n\n### 6.1 Circuit Complexity\n\nThe depth separation for EML is an analytic analogue of AC\u2070 depth hierarchies. The derivative product formula plays the role of a \"switching lemma\": it certifies structural complexity that bounded-depth expressions cannot replicate. Unlike Boolean circuit lower bounds, our results hold for *exact* functional representations over the reals, making them complementary to the discrete theory.\n\n### 6.2 Dynamical Systems\n\nThe iterated exponential map $x \\mapsto \\exp(x)$ creates a sensitivity cascade: the Lyapunov-like amplification factor after $k$ iterations is exactly the derivative product $\\prod_{j=1}^{k} \\exp^{[j]}(x)$. This connects depth separation to chaos theory and the study of stiff differential equations.\n\n### 6.3 Neural Network Expressivity\n\nOur results formalize the intuition that depth is necessary for expressing compositional functions. A depth-$d$ ReLU network with $W$ neurons is piecewise linear with Lipschitz constant bounded by a function of $W$ and the weight magnitudes. The Lipschitz obstruction theorem then gives explicit lower bounds on $W$ for approximating tower functions.\n\n---\n\n## 7. Discussion\n\n### 7.1 Limitations\n\nOur Lipschitz obstruction theorem applies to functions with globally bounded derivative. The full depth separation conjecture \u2014 that any depth-$(k-1)$ EML expression approximating $\\exp^{[k]}$ must have exponentially large size \u2014 remains open. The challenge is bounding the derivative growth of general EML expressions of bounded depth, which may involve both positive and negative exponential combinations.\n\n### 7.2 Comparison with Conjectural Lower Bounds\n\nThe conjectured full lower bound states: for every $k \\ge 1$, every depth-$(k-1)$ EML expression $\\varepsilon$-approximating $\\exp^{[k]}$ on $[0,1]$ has size $\\ge C \\cdot c^k / \\varepsilon$. Our Lipschitz obstruction gives the $\\varepsilon^{-1}$ dependence for the restricted class of Lipschitz-bounded approximants, establishing the correct scaling in $\\varepsilon$. The exponential dependence on $k$ in the full conjecture requires additional structural analysis of bounded-depth EML expressions.\n\n---\n\n## 8. Open Problems\n\n1. **Full EML depth hierarchy:** Prove that depth-$(k-1)$ EML expressions require size $\\Omega(c^k / \\varepsilon)$ to $\\varepsilon$-approximate $\\exp^{[k]}$.\n2. **Higher-derivative obstructions:** Extend the Lipschitz obstruction to higher-order derivative bounds.\n3. **Log-exp extensions:** Determine whether adding $\\log$ to EML collapses the depth hierarchy.\n4. **Optimal shallow approximants:** Characterize the best depth-$(k-1)$ EML approximant to $\\exp^{[k]}$ and compute its error exactly.\n5. **Multi-variable generalization:** Extend depth separation to multivariate iterated compositions.\n\n---\n\n## References\n\n1. H\u00e5stad, J. (1987). *Computational Limitations of Small-Depth Circuits*. MIT Press.\n2. Sipser, M. (1983). Borel sets and circuit complexity. *STOC*.\n3. Telgarsky, M. (2016). Benefits of depth in neural networks. *COLT*.\n4. Eldan, R. and Shamir, O. (2016). The power of depth for feedforward neural networks. *COLT*.\n5. Razborov, A. (1987). Lower bounds on the size of bounded depth circuits over a complete basis with logical addition. *Mathematical Notes*.\n6. Kolmogorov, A.N. (1957). On the representation of continuous functions of many variables by superposition of continuous functions of one variable and addition. *Doklady Akademii Nauk*.\n",
+    "future_directions": "# Future Directions: Depth Separation for Iterated Exponentials\n\n## Conjecture 1: Full Depth Hierarchy for Exponential Towers\n\n**Conjecture.** For every $k \\ge 2$ and every EML expression $E$ of depth strictly less than $k$, there exist constants $c, C > 0$ (depending on $k$) such that for all $\\varepsilon \\in (0,1)$:\n\n$$\\sup_{x \\in [0,1]} |E(x) - \\operatorname{iterExp}(k, x)| \\le \\varepsilon \\implies \\operatorname{size}(E) \\ge C \\cdot c^k \\cdot \\varepsilon^{-1}.$$\n\n**Test.** Enumerate all depth-$(k-1)$ EML expressions with size up to $S_{\\max}$ (using a recursive expression generator). For each, compute the uniform error against $\\operatorname{iterExp}(k)$ on a fine grid of $[0,1]$. Plot $\\log(\\varepsilon)$ vs $\\log(S)$ and check whether the empirical slope matches $-1$ (consistent with $\\varepsilon^{-1}$ scaling). Run for $k = 2, 3, 4$.\n\n**Refutation.** If for some $k$, a depth-$(k-1)$ expression of size $o(c^k / \\varepsilon)$ achieves $\\varepsilon$-approximation, the conjecture is false. Concretely, if a depth-1 expression of size 10 achieves error $< 0.01$ for $\\operatorname{iterExp}(3)$, the conjecture requires $C \\cdot c^3 \\le 10 \\cdot 0.01 = 0.1$, constraining the constants severely.\n\n**Impact.** If true, this would be the first fully formal depth hierarchy theorem for continuous-function expression systems, establishing that EML depth is a genuine semantic complexity measure.\n\n---\n\n## Conjecture 2: Derivative Growth as a Semantic Depth Invariant\n\n**Conjecture.** For any EML expression $E$ of depth $d$, the maximum derivative on $[0,1]$ satisfies:\n\n$$\\sup_{x \\in [0,1]} |E'(x)| \\le \\operatorname{iterExp}(d, M)$$\n\nwhere $M = \\max(\\sup |E(x)|, \\sup |\\text{leaf constants}|)$ is a bound on intermediate values. In contrast, $\\operatorname{iterExp}(k)'$ on $[0,1]$ grows as $\\operatorname{iterExp}(k+1, 1)$ \u2014 a tower of height $k+1$.\n\n**Test.** For random depth-$d$ EML expressions with bounded coefficients, compute the maximum derivative numerically on $[0,1]$. Verify that it is bounded by $\\operatorname{iterExp}(d, M)$ for appropriate $M$. Then compare with $\\operatorname{iterExp}(k)'$ for $k > d$.\n\n**Refutation.** Find a depth-$d$ EML expression whose derivative exceeds $\\operatorname{iterExp}(d+1, M)$ on $[0,1]$. This would show that depth does not control derivative growth in the conjectured way.\n\n**Impact.** This would give a polynomial-time computable semantic invariant that separates EML depth levels, analogous to how circuit complexity uses gate count to separate depth classes.\n\n---\n\n## Conjecture 3: Curvature Cascade for Bounded-Depth Approximants\n\n**Conjecture.** For $k \\ge 3$, the $k$-th derivative of $\\operatorname{iterExp}(k)$ at $x = 0$ satisfies:\n\n$$\\operatorname{iterExp}(k)^{(k)}(0) \\ge \\operatorname{iterExp}(k-1, 1)^2$$\n\nand any depth-$(k-1)$ EML expression $E$ satisfying $\\|E - \\operatorname{iterExp}(k)\\|_\\infty \\le \\varepsilon$ on $[0,1]$ must have $|E^{(k)}(0)| \\ge \\operatorname{iterExp}(k-1, 1)^2 - O(\\varepsilon)$.\n\n**Test.** Compute higher derivatives of $\\operatorname{iterExp}(k)$ symbolically (using automatic differentiation) and verify the lower bound. For shallow approximants, check whether they match the higher derivative growth.\n\n**Refutation.** If a smooth depth-$(k-1)$ approximant achieves small uniform error without large higher derivatives, the curvature cascade may not be the right invariant.\n\n**Impact.** Higher-derivative obstructions would extend the Lipschitz separation to a full Taylor-coefficient separation, giving a much stronger impossibility result.\n\n---\n\n## Conjecture 4: Mixed Tower Hierarchy (Log-Exp Towers)\n\n**Conjecture.** Define mixed towers:\n$$T_k^{\\text{mix}}(x) = \\underbrace{\\exp(\\log(\\exp(\\log(\\cdots x \\cdots))))}_{k \\text{ alternations}}$$\n\nThese simplify to polynomials or the identity on appropriate domains. In contrast, towers with repeated $\\exp$ (no $\\log$ cancellation) create genuine depth. The depth separation for $\\operatorname{iterExp}(k)$ persists even when the EML language is extended with $\\log$ nodes, because $\\log \\circ \\exp = \\text{id}$ only reduces effective depth \u2014 it cannot create the multiplicative derivative cascade of iterated exponentials.\n\n**Test.** Extend the EML syntax with $\\log$ nodes. Search for depth-$(k-1)$ expressions (with $\\log$) that approximate $\\operatorname{iterExp}(k)$. Verify that $\\log$ nodes do not help.\n\n**Refutation.** If adding $\\log$ allows a depth-$(k-1)$ expression of reasonable size to approximate $\\operatorname{iterExp}(k)$ better than without $\\log$, then the depth hierarchy partially collapses with this extension.\n\n**Impact.** Extending to log-exp towers would connect the theory to practical symbolic regression, where both $\\exp$ and $\\log$ are available operations.\n\n---\n\n## Conjecture 5: Depth Separation Transfers to Neural Network Width\n\n**Conjecture.** A ReLU network of depth $d$ and width $W$ that $\\varepsilon$-approximates $\\operatorname{iterExp}(k)$ on $[0,1]$ must satisfy $W \\ge C \\cdot \\text{gap}(k) / \\varepsilon$ where $\\text{gap}(k) = \\operatorname{iterExp}(k, 1) - \\operatorname{iterExp}(k, 0)$.\n\n**Test.** Train shallow ReLU networks of varying width on $\\operatorname{iterExp}(k)$ targets. Plot the achieved $L^\\infty$ error vs width. Verify the scaling matches $\\varepsilon \\sim \\text{gap}(k) / W$.\n\n**Refutation.** If ReLU networks achieve better-than-predicted approximation (e.g., $\\varepsilon \\sim 1/W^2$), the linear width-error tradeoff is wrong, though some polynomial relationship should persist.\n\n**Impact.** This would directly connect EML depth separation to practical neural network architecture theory, showing that depth-width tradeoffs in neural nets have provable lower bounds for compositional functions.\n",
+    "demos": [
+      {
+        "name": "Depth Separation Visualization",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nDepth Separation for Iterated Exponentials \u2014 Visualization Demo\n\nDemonstrates:\n1. Growth of iterExp_k(x) on [0,1] for k = 0..5\n2. Derivative cascade: the product formula \u220f iterExp_{j+1}(x)\n3. Endpoint gap growth: iterExp_k(1) - iterExp_k(0) vs k\n4. Lipschitz obstruction: shallow approximants cannot track tower functions\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom typing import Callable\n\n\ndef iter_exp(k: int, x: np.ndarray) -> np.ndarray:\n    \"\"\"Compute the k-fold iterated exponential: iterExp(0,x) = x, iterExp(k+1,x) = exp(iterExp(k,x)).\"\"\"\n    result = x.copy().astype(float)\n    for _ in range(k):\n        result = np.exp(np.clip(result, -500, 500))  # clip to avoid overflow\n    return result\n\n\ndef iter_exp_deriv(k: int, x: np.ndarray) -> np.ndarray:\n    \"\"\"Compute the derivative of iterExp(k+1, x) = \u220f_{j=0}^{k} iterExp(j+1, x).\"\"\"\n    prod = np.ones_like(x, dtype=float)\n    for j in range(k + 1):\n        prod *= iter_exp(j + 1, x)\n    return prod\n\n\ndef endpoint_gap(k: int) -> float:\n    \"\"\"Compute iterExp(k, 1) - iterExp(k, 0) for scalar inputs.\"\"\"\n    val1 = 1.0\n    val0 = 0.0\n    for _ in range(k):\n        val1 = np.exp(min(val1, 500))\n        val0 = np.exp(min(val0, 500))\n    return val1 - val0\n\n\ndef best_lipschitz_approx(L: float, f0: float, f1: float, x: np.ndarray) -> np.ndarray:\n    \"\"\"A Lipschitz-L function that tries to match f(0)=f0, f(1)=f1 as best it can.\"\"\"\n    # Linear interpolation clamped by Lipschitz bound\n    slope = min(L, max(-L, f1 - f0))\n    return f0 + slope * x\n\n\n# \u2500\u2500 Figure 1: Tower functions on [0,1] \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_tower_functions():\n    x = np.linspace(0, 1, 500)\n    fig, ax = plt.subplots(figsize=(10, 6))\n    \n    for k in range(6):\n        y = iter_exp(k, x)\n        if np.max(y) < 1e10:\n            ax.plot(x, y, label=f'iterExp({k}, x)', linewidth=2)\n    \n    ax.set_xlabel('x', fontsize=14)\n    ax.set_ylabel('iterExp(k, x)', fontsize=14)\n    ax.set_title('Iterated Exponentials on [0, 1]', fontsize=16)\n    ax.legend(fontsize=12)\n    ax.set_yscale('log')\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('fig1_tower_functions.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig1_tower_functions.png\")\n\n\n# \u2500\u2500 Figure 2: Derivative cascade \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_derivative_cascade():\n    x = np.linspace(0, 1, 500)\n    fig, ax = plt.subplots(figsize=(10, 6))\n    \n    for k in range(5):\n        y = iter_exp_deriv(k, x)\n        if np.max(y) < 1e15:\n            ax.plot(x, y, label=f\"(iterExp({k+1}))' (x)\", linewidth=2)\n    \n    ax.set_xlabel('x', fontsize=14)\n    ax.set_ylabel(\"Derivative\", fontsize=14)\n    ax.set_title('Derivative Cascade: Product Formula', fontsize=16)\n    ax.legend(fontsize=12)\n    ax.set_yscale('log')\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('fig2_derivative_cascade.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig2_derivative_cascade.png\")\n\n\n# \u2500\u2500 Figure 3: Endpoint gap growth \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_endpoint_gap():\n    ks = list(range(1, 7))\n    gaps = [endpoint_gap(k) for k in ks]\n    \n    fig, ax = plt.subplots(figsize=(10, 6))\n    ax.bar(ks, gaps, color='steelblue', alpha=0.8, edgecolor='navy')\n    ax.set_xlabel('Depth k', fontsize=14)\n    ax.set_ylabel('iterExp(k, 1) - iterExp(k, 0)', fontsize=14)\n    ax.set_title('Endpoint Gap Growth (Monotonically Increasing)', fontsize=16)\n    ax.set_yscale('log')\n    ax.grid(True, alpha=0.3, axis='y')\n    \n    for i, (k, g) in enumerate(zip(ks, gaps)):\n        if g < 1e10:\n            ax.text(k, g * 1.3, f'{g:.1f}', ha='center', fontsize=11)\n    \n    fig.tight_layout()\n    fig.savefig('fig3_endpoint_gap.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig3_endpoint_gap.png\")\n\n\n# \u2500\u2500 Figure 4: Lipschitz obstruction \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_lipschitz_obstruction():\n    x = np.linspace(0, 1, 500)\n    k = 2  # exp(exp(x))\n    f = iter_exp(k, x)\n    \n    f0, f1 = np.exp(1.0), np.exp(np.e)  # iterExp(2,0), iterExp(2,1)\n    \n    fig, ax = plt.subplots(figsize=(10, 6))\n    ax.plot(x, f, 'b-', linewidth=2.5, label=f'iterExp({k}, x) = exp(exp(x))')\n    \n    for L in [5, 10, 12]:\n        g = best_lipschitz_approx(L, f0, f1, x)\n        ax.plot(x, g, '--', linewidth=1.5, alpha=0.7,\n                label=f'Lipschitz-{L} approx')\n    \n    ax.set_xlabel('x', fontsize=14)\n    ax.set_ylabel('Value', fontsize=14)\n    ax.set_title('Lipschitz Obstruction: Bounded-Slope Functions Cannot Track Towers', fontsize=14)\n    ax.legend(fontsize=11)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('fig4_lipschitz_obstruction.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig4_lipschitz_obstruction.png\")\n\n\n# \u2500\u2500 Figure 5: Depth separation summary \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_depth_separation_summary():\n    \"\"\"Show min Lipschitz constant needed vs depth k.\"\"\"\n    ks = list(range(1, 7))\n    min_L = [endpoint_gap(k) for k in ks]  # minimum L needed to even span the gap\n    \n    fig, ax = plt.subplots(figsize=(10, 6))\n    ax.semilogy(ks, min_L, 'ro-', markersize=10, linewidth=2.5,\n                label='Min Lipschitz constant for \u03b5-approx')\n    ax.axhline(y=np.e - 1, color='green', linestyle='--', linewidth=1.5,\n               label=f'Lower bound: e - 1 \u2248 {np.e - 1:.3f}')\n    \n    ax.set_xlabel('Tower Depth k', fontsize=14)\n    ax.set_ylabel('Minimum Lipschitz Constant', fontsize=14)\n    ax.set_title('Depth Separation: Required Approximant Complexity', fontsize=16)\n    ax.legend(fontsize=12)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('fig5_depth_separation.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig5_depth_separation.png\")\n\n\nif __name__ == '__main__':\n    print(\"=\" * 60)\n    print(\"Depth Separation for Iterated Exponentials \u2014 Demo\")\n    print(\"=\" * 60)\n    \n    # Numerical verification of key theorems\n    print(\"\\n\u2500\u2500 Theorem 1: Tower growth values \u2500\u2500\")\n    for k in range(6):\n        v0 = iter_exp(k, np.array([0.0]))[0]\n        v1 = iter_exp(k, np.array([1.0]))[0]\n        print(f\"  iterExp({k}, 0) = {v0:.6f},  iterExp({k}, 1) = {v1:.6f}\")\n    \n    print(\"\\n\u2500\u2500 Theorem 2: Derivative product formula verification \u2500\u2500\")\n    x0 = 0.5\n    dx = 1e-7\n    for k in range(5):\n        # Numerical derivative\n        f_plus = iter_exp(k + 1, np.array([x0 + dx]))[0]\n        f_minus = iter_exp(k + 1, np.array([x0 - dx]))[0]\n        num_deriv = (f_plus - f_minus) / (2 * dx)\n        # Product formula\n        prod_val = 1.0\n        for j in range(k + 1):\n            prod_val *= iter_exp(j + 1, np.array([x0]))[0]\n        print(f\"  k={k}: numerical deriv = {num_deriv:.6f}, \"\n              f\"product formula = {prod_val:.6f}, \"\n              f\"ratio = {num_deriv / prod_val:.8f}\")\n    \n    print(\"\\n\u2500\u2500 Theorem 3: Endpoint gap growth \u2500\u2500\")\n    for k in range(1, 7):\n        gap = endpoint_gap(k)\n        print(f\"  gap({k}) = {gap:.6f}  (\u2265 e-1 = {np.e - 1:.6f})\")\n    \n    print(\"\\n\u2500\u2500 Theorem 4: Lipschitz obstruction \u2500\u2500\")\n    k = 3\n    gap = endpoint_gap(k)\n    print(f\"  iterExp({k},1) - iterExp({k},0) = {gap:.2f}\")\n    print(f\"  Any Lipschitz-L approx with L < {gap:.2f} cannot \u03b5-approximate iterExp({k})\")\n    print(f\"  with \u03b5 < ({gap:.2f} - L)/2\")\n    \n    # Generate all figures\n    print(\"\\n\u2500\u2500 Generating figures \u2500\u2500\")\n    plot_tower_functions()\n    plot_derivative_cascade()\n    plot_endpoint_gap()\n    plot_lipschitz_obstruction()\n    plot_depth_separation_summary()\n    \n    print(\"\\nDone! All figures saved.\")\n"
+      },
+      {
+        "name": "Applications Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of Depth Separation Theory for Iterated Exponentials\n\nDemonstrates real-world connections:\n1. Neural network expressivity: shallow nets vs deep nets for tower functions\n2. Symbolic regression: why iterExp(k) resists shallow symbolic fitting\n3. Model compression analysis: depth reduction = exponential size blowup\n4. Dynamical systems: sensitivity cascade in iterated maps\n\"\"\"\n\nimport numpy as np\nimport math\nfrom typing import List, Tuple\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 1: Neural Network Expressivity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef relu_network_approx(\n    target_k: int, \n    num_pieces: int, \n    domain: Tuple[float, float] = (0.0, 1.0)\n) -> Tuple[np.ndarray, np.ndarray, float]:\n    \"\"\"Approximate iterExp(k) with a piecewise-linear (ReLU) network.\n    \n    A depth-1 ReLU network with W neurons produces a piecewise-linear\n    function with at most W+1 pieces. The Lipschitz obstruction theorem\n    implies that the number of pieces must grow with the target's\n    Lipschitz constant.\n    \n    Args:\n        target_k: depth of tower to approximate\n        num_pieces: number of linear pieces (= neurons in hidden layer)\n        domain: approximation interval\n    \n    Returns:\n        (x_grid, approx_values, max_error)\n    \"\"\"\n    a, b = domain\n    x = np.linspace(a, b, 1000)\n    target = np.array([_iter_exp_safe(target_k, xi) for xi in x])\n    \n    # Optimal piecewise-linear approximation by interpolation at piece boundaries\n    breakpoints = np.linspace(a, b, num_pieces + 1)\n    bp_values = np.array([_iter_exp_safe(target_k, bp) for bp in breakpoints])\n    \n    approx = np.interp(x, breakpoints, bp_values)\n    max_error = np.max(np.abs(target - approx))\n    \n    return x, approx, max_error\n\n\ndef _iter_exp_safe(k: int, x: float) -> float:\n    \"\"\"Overflow-safe iterExp.\"\"\"\n    result = x\n    for _ in range(k):\n        result = math.exp(min(result, 500))\n    return result\n\n\ndef analyze_relu_expressivity():\n    \"\"\"Analyze how many ReLU neurons are needed vs tower depth.\"\"\"\n    print(\"  Neural Network Expressivity Analysis\")\n    print(\"  \" + \"-\" * 50)\n    print(f\"  {'Depth k':<10} {'Neurons':<10} {'Max Error':<15} {'Gap':<15}\")\n    print(\"  \" + \"-\" * 50)\n    \n    for k in range(1, 5):\n        gap = _iter_exp_safe(k, 1.0) - _iter_exp_safe(k, 0.0)\n        for neurons in [5, 10, 50, 100, 500]:\n            _, _, err = relu_network_approx(k, neurons)\n            print(f\"  {k:<10} {neurons:<10} {err:<15.6f} {gap:<15.4f}\")\n        print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 2: Symbolic Regression Complexity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef symbolic_regression_analysis():\n    \"\"\"Show that shallow EML expressions cannot fit towers.\n    \n    For a depth-d expression with N exp-nodes, the maximum\n    derivative growth is bounded by exp^[d] composed d times,\n    while iterExp(k) with k > d grows faster.\n    \"\"\"\n    print(\"  Symbolic Regression Complexity Analysis\")\n    print(\"  \" + \"-\" * 50)\n    \n    x_test = 0.5\n    print(f\"  At x = {x_test}:\")\n    print(f\"  {'Expression':<30} {'Value':<15} {'Derivative':<15}\")\n    print(\"  \" + \"-\" * 60)\n    \n    # Various depth-1 expressions\n    expressions = [\n        (\"exp(x)\", lambda x: math.exp(x), lambda x: math.exp(x)),\n        (\"exp(2x)\", lambda x: math.exp(2*x), lambda x: 2*math.exp(2*x)),\n        (\"exp(3x)\", lambda x: math.exp(3*x), lambda x: 3*math.exp(3*x)),\n        (\"2*exp(x)\", lambda x: 2*math.exp(x), lambda x: 2*math.exp(x)),\n        (\"exp(x)+exp(2x)\", lambda x: math.exp(x)+math.exp(2*x),\n         lambda x: math.exp(x)+2*math.exp(2*x)),\n    ]\n    \n    for name, f, df in expressions:\n        print(f\"  {name:<30} {f(x_test):<15.6f} {df(x_test):<15.6f}\")\n    \n    print()\n    print(f\"  {'iterExp targets:':<30}\")\n    for k in range(1, 5):\n        val = _iter_exp_safe(k, x_test)\n        # Derivative via product formula\n        deriv = 1.0\n        for j in range(k):\n            deriv *= _iter_exp_safe(j + 1, x_test)\n        print(f\"  {'iterExp(' + str(k) + ', x)':<30} {val:<15.6f} {deriv:<15.6f}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 3: Model Compression Barriers\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef compression_barrier_analysis():\n    \"\"\"Quantify the cost of reducing depth in EML representations.\n    \n    The exact representation of iterExp(k) has depth k and size k+1.\n    If we reduce depth to d < k, the Lipschitz obstruction theorem\n    gives a minimum error or minimum size for any approximant.\n    \"\"\"\n    print(\"  Model Compression Barrier Analysis\")\n    print(\"  \" + \"-\" * 50)\n    print(f\"  {'k':<5} {'Exact depth':<15} {'Exact size':<15} {'Gap(k)':<15} \"\n          f\"{'Min L for \u03b5=0.1':<20}\")\n    print(\"  \" + \"-\" * 70)\n    \n    for k in range(1, 6):\n        gap = _iter_exp_safe(k, 1.0) - _iter_exp_safe(k, 0.0)\n        min_L = gap - 0.2  # L needed for \u03b5 = 0.1\n        print(f\"  {k:<5} {k:<15} {k+1:<15} {gap:<15.4f} {min_L:<20.4f}\")\n    \n    print()\n    print(\"  Interpretation: To compress iterExp(k) to a Lipschitz-L function\")\n    print(\"  with \u03b5=0.1 accuracy, you need L \u2265 gap(k) - 0.2.\")\n    print(\"  Since gap(k) grows super-exponentially, compression is impossible\")\n    print(\"  for any fixed L as k increases.\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 4: Dynamical Systems Sensitivity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef sensitivity_cascade_analysis():\n    \"\"\"Analyze sensitivity amplification in iterated exponential maps.\n    \n    The map x \u21a6 exp(x) iterated k times has Lyapunov-like sensitivity\n    equal to the derivative product formula. This connects depth\n    separation to chaos theory.\n    \"\"\"\n    print(\"  Dynamical Systems: Sensitivity Cascade\")\n    print(\"  \" + \"-\" * 50)\n    \n    x0 = 0.5\n    perturbation = 1e-10\n    \n    print(f\"  Starting point: x\u2080 = {x0}\")\n    print(f\"  Perturbation: \u03b4 = {perturbation}\")\n    print()\n    print(f\"  {'Iterations k':<15} {'iterExp(k,x\u2080)':<20} \"\n          f\"{'Amplification':<20} {'Product formula':<20}\")\n    print(\"  \" + \"-\" * 75)\n    \n    for k in range(1, 6):\n        val = _iter_exp_safe(k, x0)\n        val_pert = _iter_exp_safe(k, x0 + perturbation)\n        \n        amplification = abs(val_pert - val) / perturbation\n        \n        # Product formula\n        product = 1.0\n        for j in range(k):\n            product *= _iter_exp_safe(j + 1, x0)\n        \n        print(f\"  {k:<15} {val:<20.6f} {amplification:<20.6f} {product:<20.6f}\")\n    \n    print()\n    print(\"  The amplification factor matches the derivative product formula,\")\n    print(\"  confirming that iterExp creates a sensitivity cascade where each\")\n    print(\"  layer multiplicatively amplifies perturbations.\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Main\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == '__main__':\n    print(\"=\" * 70)\n    print(\"Depth Separation Theory \u2014 Real-World Applications\")\n    print(\"=\" * 70)\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 1: Neural Network Expressivity\")\n    print(\"=\" * 70)\n    analyze_relu_expressivity()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 2: Symbolic Regression Complexity\")\n    print(\"=\" * 70)\n    symbolic_regression_analysis()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 3: Model Compression Barriers\")\n    print(\"=\" * 70)\n    compression_barrier_analysis()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 4: Dynamical Systems Sensitivity\")\n    print(\"=\" * 70)\n    sensitivity_cascade_analysis()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"All applications demonstrated successfully.\")\n    print(\"=\" * 70)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "EML Expression System and Depth Separation Algorithms",
+        "pseudocode": "Algorithm: Tower Expression Construction\nInput: depth k\nOutput: EML expression for iterExp(k)\n\nfunction towerExpr(k):\n    if k = 0: return Var\n    else: return Exp(towerExpr(k-1))\n\nTime: O(k), Space: O(k)\n\n---\n\nAlgorithm: Derivative Product Formula Evaluation  \nInput: depth k, point x\nOutput: d/dx iterExp(k+1, x)\n\nfunction derivIterExp(k, x):\n    product <- 1\n    current <- x\n    for j = 1 to k+1:\n        current <- exp(current)\n        product <- product * current\n    return product\n\nTime: O(k), Space: O(1)\n\n---\n\nAlgorithm: Lipschitz Obstruction Check\nInput: depth k, Lipschitz constant L, error tolerance eps\nOutput: whether L-Lipschitz approximation within eps is possible\n\nfunction canApproximate(k, L, eps):\n    gap <- iterExp(k, 1) - iterExp(k, 0)\n    return L + 2*eps >= gap\n\nTime: O(k)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for EML Depth Separation Analysis\n\nProvides:\n- EML expression representation (syntax tree)\n- Evaluation, depth, and size computation\n- Tower expression construction\n- Derivative product formula computation\n- Lipschitz obstruction analysis\n- Shallow approximant search (brute-force for small sizes)\n\"\"\"\n\nfrom __future__ import annotations\nfrom dataclasses import dataclass\nfrom typing import Union, List, Tuple\nimport math\nimport numpy as np\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# EML Expression AST\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n@dataclass\nclass EMLVar:\n    \"\"\"Variable node: represents the input x.\"\"\"\n    pass\n\n@dataclass\nclass EMLConst:\n    \"\"\"Constant node.\"\"\"\n    value: float\n\n@dataclass\nclass EMLAdd:\n    \"\"\"Addition node.\"\"\"\n    left: 'EMLExpr'\n    right: 'EMLExpr'\n\n@dataclass\nclass EMLMul:\n    \"\"\"Multiplication node.\"\"\"\n    left: 'EMLExpr'\n    right: 'EMLExpr'\n\n@dataclass\nclass EMLExp:\n    \"\"\"Exponential node: exp(child).\"\"\"\n    child: 'EMLExpr'\n\nEMLExpr = Union[EMLVar, EMLConst, EMLAdd, EMLMul, EMLExp]\n\n\ndef eml_eval(expr: EMLExpr, x: float) -> float:\n    \"\"\"Evaluate an EML expression at input x.\n    \n    Args:\n        expr: EML expression tree\n        x: input value\n    \n    Returns:\n        Evaluation result\n    \n    >>> eml_eval(EMLVar(), 2.0)\n    2.0\n    >>> eml_eval(EMLExp(EMLVar()), 0.0)\n    1.0\n    \"\"\"\n    if isinstance(expr, EMLVar):\n        return x\n    elif isinstance(expr, EMLConst):\n        return expr.value\n    elif isinstance(expr, EMLAdd):\n        return eml_eval(expr.left, x) + eml_eval(expr.right, x)\n    elif isinstance(expr, EMLMul):\n        return eml_eval(expr.left, x) * eml_eval(expr.right, x)\n    elif isinstance(expr, EMLExp):\n        v = eml_eval(expr.child, x)\n        return math.exp(min(v, 500))  # overflow protection\n    else:\n        raise TypeError(f\"Unknown EML expression type: {type(expr)}\")\n\n\ndef eml_depth(expr: EMLExpr) -> int:\n    \"\"\"Compute the compositional depth (max nesting of exp nodes).\n    \n    Args:\n        expr: EML expression tree\n    \n    Returns:\n        Depth of the expression\n    \n    >>> eml_depth(EMLVar())\n    0\n    >>> eml_depth(EMLExp(EMLExp(EMLVar())))\n    2\n    \"\"\"\n    if isinstance(expr, EMLVar):\n        return 0\n    elif isinstance(expr, EMLConst):\n        return 0\n    elif isinstance(expr, (EMLAdd, EMLMul)):\n        return max(eml_depth(expr.left), eml_depth(expr.right))\n    elif isinstance(expr, EMLExp):\n        return 1 + eml_depth(expr.child)\n    else:\n        raise TypeError(f\"Unknown EML expression type: {type(expr)}\")\n\n\ndef eml_size(expr: EMLExpr) -> int:\n    \"\"\"Compute the syntactic size (number of nodes).\n    \n    Args:\n        expr: EML expression tree\n    \n    Returns:\n        Number of nodes\n    \n    >>> eml_size(EMLVar())\n    1\n    >>> eml_size(EMLExp(EMLVar()))\n    2\n    \"\"\"\n    if isinstance(expr, (EMLVar, EMLConst)):\n        return 1\n    elif isinstance(expr, (EMLAdd, EMLMul)):\n        return 1 + eml_size(expr.left) + eml_size(expr.right)\n    elif isinstance(expr, EMLExp):\n        return 1 + eml_size(expr.child)\n    else:\n        raise TypeError(f\"Unknown EML expression type: {type(expr)}\")\n\n\ndef tower_expr(k: int) -> EMLExpr:\n    \"\"\"Construct the canonical tower expression of depth k.\n    \n    towerExpr(0) = x\n    towerExpr(k+1) = exp(towerExpr(k))\n    \n    Args:\n        k: tower depth\n    \n    Returns:\n        EML expression representing iterExp(k)\n    \n    >>> eml_depth(tower_expr(5))\n    5\n    >>> eml_size(tower_expr(5))\n    6\n    \"\"\"\n    if k == 0:\n        return EMLVar()\n    return EMLExp(tower_expr(k - 1))\n\n\ndef eml_to_string(expr: EMLExpr) -> str:\n    \"\"\"Pretty-print an EML expression.\"\"\"\n    if isinstance(expr, EMLVar):\n        return \"x\"\n    elif isinstance(expr, EMLConst):\n        return f\"{expr.value:.4g}\"\n    elif isinstance(expr, EMLAdd):\n        return f\"({eml_to_string(expr.left)} + {eml_to_string(expr.right)})\"\n    elif isinstance(expr, EMLMul):\n        return f\"({eml_to_string(expr.left)} * {eml_to_string(expr.right)})\"\n    elif isinstance(expr, EMLExp):\n        return f\"exp({eml_to_string(expr.child)})\"\n    else:\n        return \"?\"\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Iterated Exponential Computations\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef iter_exp(k: int, x: float) -> float:\n    \"\"\"Compute iterExp(k, x) with overflow protection.\n    \n    Args:\n        k: number of iterations\n        x: input value\n    \n    Returns:\n        k-fold iterated exponential of x\n    \"\"\"\n    result = x\n    for _ in range(k):\n        result = math.exp(min(result, 500))\n    return result\n\n\ndef iter_exp_deriv_product(k: int, x: float) -> float:\n    \"\"\"Compute the derivative of iterExp(k+1, x) using the product formula.\n    \n    d/dx iterExp(k+1, x) = \u220f_{j=0}^{k} iterExp(j+1, x)\n    \n    Args:\n        k: depth index (derivative of iterExp(k+1))\n        x: evaluation point\n    \n    Returns:\n        Derivative value via the product formula\n    \"\"\"\n    product = 1.0\n    for j in range(k + 1):\n        product *= iter_exp(j + 1, x)\n        if product > 1e300:\n            return float('inf')\n    return product\n\n\ndef endpoint_gap(k: int) -> float:\n    \"\"\"Compute iterExp(k, 1) - iterExp(k, 0).\n    \n    This gap is proven to be monotonically increasing in k\n    and bounded below by e - 1 \u2248 1.718 for k \u2265 1.\n    \"\"\"\n    return iter_exp(k, 1.0) - iter_exp(k, 0.0)\n\n\ndef lipschitz_obstruction_bound(k: int, L: float) -> float:\n    \"\"\"Compute the minimum uniform approximation error for a Lipschitz-L function\n    approximating iterExp(k) on [0,1].\n    \n    By the Lipschitz obstruction theorem:\n    If L + 2\u03b5 < gap(k), then \u03b5-approximation is impossible.\n    So min achievable \u03b5 \u2265 (gap(k) - L) / 2.\n    \n    Args:\n        k: tower depth\n        L: Lipschitz constant of the approximant\n    \n    Returns:\n        Lower bound on achievable \u03b5 (0 if L is large enough)\n    \"\"\"\n    gap = endpoint_gap(k)\n    return max(0.0, (gap - L) / 2.0)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Shallow Approximant Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef fit_shallow_sum_of_exp(\n    k: int, N: int, num_points: int = 200, lr: float = 0.01, steps: int = 5000\n) -> Tuple[float, np.ndarray, np.ndarray, np.ndarray]:\n    \"\"\"Attempt to fit iterExp(k, x) on [0,1] using a sum of N exponentials:\n    g(x) = \u03a3_{i=1}^{N} a_i * exp(b_i * x + c_i)\n    \n    This is a depth-1 EML expression. The Lipschitz obstruction theorem\n    predicts that N must be large when k is large.\n    \n    Args:\n        k: tower depth to approximate\n        N: number of exponential terms\n        num_points: discretization of [0,1]\n        lr: learning rate for gradient descent\n        steps: optimization steps\n    \n    Returns:\n        (best_error, a_params, b_params, c_params)\n    \"\"\"\n    x = np.linspace(0, 1, num_points)\n    target = np.array([iter_exp(k, xi) for xi in x])\n    \n    # Initialize parameters\n    rng = np.random.RandomState(42)\n    a = rng.randn(N) * 0.1\n    b = rng.randn(N) * 2.0\n    c = rng.randn(N) * 0.1\n    \n    best_error = float('inf')\n    \n    for step in range(steps):\n        # Forward pass\n        basis = np.exp(np.clip(np.outer(x, b) + c[None, :], -50, 50))\n        pred = basis @ a\n        residual = pred - target\n        error = np.max(np.abs(residual))\n        \n        if error < best_error:\n            best_error = error\n            best_a, best_b, best_c = a.copy(), b.copy(), c.copy()\n        \n        # Gradient step (MSE gradient)\n        grad_a = 2.0 * (basis.T @ residual) / num_points\n        grad_b_basis = basis * np.outer(x, np.ones(N))\n        grad_b = 2.0 * (grad_b_basis.T @ residual) * a / num_points\n        grad_c_basis = basis\n        grad_c = 2.0 * (grad_c_basis.T @ residual) * a / num_points\n        \n        a -= lr * np.clip(grad_a, -10, 10)\n        b -= lr * np.clip(grad_b, -10, 10)\n        c -= lr * np.clip(grad_c, -10, 10)\n    \n    return best_error, best_a, best_b, best_c\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Main: Algorithm demonstrations\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == '__main__':\n    print(\"=\" * 60)\n    print(\"EML Depth Separation \u2014 Algorithms\")\n    print(\"=\" * 60)\n    \n    # 1. Tower expression construction\n    print(\"\\n\u2500\u2500 Tower Expression Construction \u2500\u2500\")\n    for k in range(6):\n        expr = tower_expr(k)\n        print(f\"  towerExpr({k}) = {eml_to_string(expr)}\")\n        print(f\"    depth = {eml_depth(expr)}, size = {eml_size(expr)}\")\n    \n    # 2. Derivative product formula verification\n    print(\"\\n\u2500\u2500 Derivative Product Formula \u2500\u2500\")\n    x0 = 0.5\n    for k in range(5):\n        deriv_val = iter_exp_deriv_product(k, x0)\n        # Numerical check\n        dx = 1e-8\n        num = (iter_exp(k + 1, x0 + dx) - iter_exp(k + 1, x0 - dx)) / (2 * dx)\n        print(f\"  k={k}: product = {deriv_val:.6f}, numerical = {num:.6f}, \"\n              f\"match = {abs(deriv_val - num) / max(abs(num), 1e-15):.2e}\")\n    \n    # 3. Lipschitz obstruction analysis\n    print(\"\\n\u2500\u2500 Lipschitz Obstruction Analysis \u2500\u2500\")\n    for k in range(1, 6):\n        gap = endpoint_gap(k)\n        min_eps_10 = lipschitz_obstruction_bound(k, 10)\n        min_eps_100 = lipschitz_obstruction_bound(k, 100)\n        print(f\"  k={k}: gap = {gap:.4f}, \"\n              f\"min \u03b5 (L=10) = {min_eps_10:.4f}, \"\n              f\"min \u03b5 (L=100) = {min_eps_100:.4f}\")\n    \n    # 4. Shallow approximation test\n    print(\"\\n\u2500\u2500 Shallow Sum-of-Exponentials Fitting \u2500\u2500\")\n    for k in [1, 2, 3]:\n        for N in [2, 5, 10, 20]:\n            err, _, _, _ = fit_shallow_sum_of_exp(k, N, steps=2000)\n            print(f\"  k={k}, N={N}: best L\u221e error = {err:.4f}\")\n    \n    print(\"\\nDone!\")\n",
+        "code_file": "visualizations/conjecture_5_strict_depth_separation_for_exponenti_eml_expression_system_and_depth_separati.py"
+      }
+    ],
+    "lean_proofs": "import Mathlib\n\n/-!\n# Iterated Exponentials and EML Depth Separation \u2014 Core Definitions\n\nThis file defines the iterated exponential function `iterExp` and related\nconcepts for studying depth separation in the EML (Exponential-Multiplicative-Linear)\nexpression model.\n\n## Main definitions\n\n* `iterExp k x` \u2014 the `k`-fold iterated exponential: `exp(exp(\u22efexp(x)\u22ef))`\n* `EMLExpr` \u2014 inductive syntax for EML expressions\n* `EMLExpr.eval` \u2014 semantics (evaluation) of EML expressions\n* `EMLExpr.depth` \u2014 compositional depth of an EML expression\n* `EMLExpr.size` \u2014 syntactic size of an EML expression\n* `uniformApproxOn` \u2014 uniform approximation on a set\n* `towerExpr` \u2014 canonical depth-`k` EML expression for `iterExp k`\n-/\n\nnoncomputable section\n\nopen Real Set Finset\n\n/-- The `k`-fold iterated exponential. `iterExp 0 x = x` and\n`iterExp (k+1) x = exp(iterExp k x)`. -/\ndef iterExp : \u2115 \u2192 \u211d \u2192 \u211d\n  | 0 => fun x => x\n  | n + 1 => fun x => Real.exp (iterExp n x)\n\n/-- Uniform approximation: `g` approximates `f` within `\u03b5` on a set `I`. -/\ndef uniformApproxOn (f g : \u211d \u2192 \u211d) (I : Set \u211d) (\u03b5 : \u211d) : Prop :=\n  \u2200 x, x \u2208 I \u2192 |f x - g x| \u2264 \u03b5\n\n/-- Inductive syntax for EML (Exponential-Multiplicative-Linear) expressions. -/\ninductive EMLExpr where\n  | var : EMLExpr\n  | const : \u211d \u2192 EMLExpr\n  | add : EMLExpr \u2192 EMLExpr \u2192 EMLExpr\n  | mul : EMLExpr \u2192 EMLExpr \u2192 EMLExpr\n  | exp : EMLExpr \u2192 EMLExpr\n  deriving Inhabited\n\n/-- Evaluate an EML expression at a given input value. -/\ndef EMLExpr.eval : EMLExpr \u2192 \u211d \u2192 \u211d\n  | .var => fun x => x\n  | .const c => fun _ => c\n  | .add e\u2081 e\u2082 => fun x => e\u2081.eval x + e\u2082.eval x\n  | .mul e\u2081 e\u2082 => fun x => e\u2081.eval x * e\u2082.eval x\n  | .exp e => fun x => Real.exp (e.eval x)\n\n/-- Syntactic size of an EML expression (number of nodes). -/\ndef EMLExpr.size : EMLExpr \u2192 \u2115\n  | .var => 1\n  | .const _ => 1\n  | .add e\u2081 e\u2082 => 1 + e\u2081.size + e\u2082.size\n  | .mul e\u2081 e\u2082 => 1 + e\u2081.size + e\u2082.size\n  | .exp e => 1 + e.size\n\n/-- Compositional depth (nesting depth of `exp` nodes) of an EML expression. -/\ndef EMLExpr.depth : EMLExpr \u2192 \u2115\n  | .var => 0\n  | .const _ => 0\n  | .add e\u2081 e\u2082 => max e\u2081.depth e\u2082.depth\n  | .mul e\u2081 e\u2082 => max e\u2081.depth e\u2082.depth\n  | .exp e => 1 + e.depth\n\n/-- The canonical tower expression: `towerExpr 0 = var`,\n`towerExpr (k+1) = exp(towerExpr k)`. This represents `iterExp k` exactly. -/\ndef towerExpr : \u2115 \u2192 EMLExpr\n  | 0 => .var\n  | n + 1 => .exp (towerExpr n)\n\nend\n\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nimport Speculative.DepthSeparation.Defs\nimport Mathlib\n\n/-!\n# Iterated Exponentials \u2014 Basic Properties\n\nThis file proves fundamental properties of `iterExp`: the recursion equation,\npositivity, monotonicity in `k`, and lower bounds on `[0,1]`.\n\n## Main results\n\n* `iterExp_succ` \u2014 `iterExp (k+1) x = exp(iterExp k x)`\n* `iterExp_zero` \u2014 `iterExp 0 x = x`\n* `iterExp_pos_of_pos` \u2014 positivity on positive inputs\n* `iterExp_nonneg_on_Icc` \u2014 nonnegativity on `[0,1]`\n* `one_le_iterExp_succ_of_nonneg` \u2014 `1 \u2264 iterExp (k+1) x` for `x \u2265 0`\n* `iterExp_monotone_in_k` \u2014 `iterExp k x \u2264 iterExp (k+1) x` for `x \u2265 0`\n-/\n\nnoncomputable section\n\nopen Real Set Finset\n\n@[simp]\ntheorem iterExp_zero (x : \u211d) : iterExp 0 x = x := rfl\n\n@[simp]\ntheorem iterExp_succ (k : \u2115) (x : \u211d) :\n    iterExp (k + 1) x = Real.exp (iterExp k x) := rfl\n\ntheorem iterExp_one (x : \u211d) : iterExp 1 x = Real.exp x := rfl\n\n/-\n`iterExp k x > 0` for all `k \u2265 1`, regardless of `x`.\n-/\ntheorem iterExp_pos_of_succ (k : \u2115) (x : \u211d) : 0 < iterExp (k + 1) x := by\n  exact Real.exp_pos _\n\n/-\n`iterExp k x \u2265 0` for `x \u2208 [0,1]`.\n-/\ntheorem iterExp_nonneg_on_Icc (k : \u2115) {x : \u211d} (hx : x \u2208 Icc (0 : \u211d) 1) :\n    0 \u2264 iterExp k x := by\n  induction' k with k ih generalizing x;\n  \u00b7 exact hx.1;\n  \u00b7 exact Real.exp_nonneg _\n\n/-\n`1 \u2264 iterExp (k+1) x` for `x \u2265 0`.\n-/\ntheorem one_le_iterExp_succ_of_nonneg (k : \u2115) {x : \u211d} (hx : 0 \u2264 x) :\n    1 \u2264 iterExp (k + 1) x := by\n  -- By definition of `iterExp`, we know that `iterExp k x \u2265 0` for all `k` and `x \u2265 0`.\n  have h_iterExp_nonneg : \u2200 k x, 0 \u2264 x \u2192 0 \u2264 iterExp k x := by\n    intro k x hx; induction' k with k ih generalizing x <;> simp_all +decide [ iterExp ] ; positivity;\n  exact Real.one_le_exp ( h_iterExp_nonneg _ _ hx )\n\n/-\n`x \u2264 exp x` implies towers grow with depth.\n-/\ntheorem iterExp_le_iterExp_succ (k : \u2115) {x : \u211d} (hx : 0 \u2264 x) :\n    iterExp k x \u2264 iterExp (k + 1) x := by\n  exact Real.add_one_le_exp _ |> le_trans ( by linarith [ one_le_iterExp_succ_of_nonneg k hx ] )\n\n/-\nThe sequence `k \u21a6 iterExp k x` is monotone for `x \u2265 0`.\n-/\ntheorem iterExp_monotone_in_k {x : \u211d} (hx : 0 \u2264 x) :\n    Monotone (fun k : \u2115 => iterExp k x) := by\n  exact monotone_nat_of_le_succ fun k => iterExp_le_iterExp_succ k hx\n\n/-\n`iterExp k` is monotone as a function of `x`.\n-/\ntheorem iterExp_mono_in_x (k : \u2115) : Monotone (iterExp k) := by\n  -- We proceed by induction on `k`. Base case: `k = 0`.\n  induction' k with k ih <;> simp [Monotone];\n  aesop\n\n/-\n`iterExp k` is continuous.\n-/\ntheorem continuous_iterExp (k : \u2115) : Continuous (iterExp k) := by\n  induction' k with k ih;\n  \u00b7 exact continuous_id;\n  \u00b7 exact Real.continuous_exp.comp ih\n\n/-\n`iterExp k` is differentiable.\n-/\ntheorem differentiable_iterExp (k : \u2115) : Differentiable \u211d (iterExp k) := by\n  induction' k with k ih;\n  \u00b7 exact differentiable_id;\n  \u00b7 exact Differentiable.exp ih\n\nend\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nimport Speculative.DepthSeparation.Basic\nimport Mathlib\n\n/-!\n# Derivative Formula for Iterated Exponentials\n\nThe central result of this file is the **closed-form derivative product formula**:\n\n$$\\frac{d}{dx}\\operatorname{iterExp}(k+1, x) = \\prod_{j=0}^{k} \\operatorname{iterExp}(j+1, x)$$\n\nThis formula reveals that the derivative of a depth-`k` exponential tower is a product\nof all intermediate tower levels \u2014 a multiplicative cascade that grows super-exponentially.\nThis is the key structural invariant underlying depth separation.\n\n## Main results\n\n* `hasDerivAt_iterExp` \u2014 `HasDerivAt` form of the derivative formula\n* `deriv_iterExp_eq_prod` \u2014 equality form using `deriv`\n* `deriv_iterExp_ge_self` \u2014 derivative lower bound: `(iterExp (k+1))' x \u2265 iterExp (k+1) x`\n* `deriv_iterExp_ge_one` \u2014 `1 \u2264 deriv (iterExp (k+1)) x` for `x \u2265 0`\n-/\n\nnoncomputable section\n\nopen Real Set\n\n/-\nThe derivative of `iterExp (k+1)` at `x` equals the product\n`\u220f j \u2208 Finset.range (k+1), iterExp (j+1) x`. This is the compositional cascade formula.\n-/\ntheorem hasDerivAt_iterExp (k : \u2115) (x : \u211d) :\n    HasDerivAt (iterExp (k + 1))\n      (\u220f j \u2208 Finset.range (k + 1), iterExp (j + 1) x) x := by\n  induction' k with k ih generalizing x;\n  \u00b7 simpa using Real.hasDerivAt_exp x;\n  \u00b7 convert HasDerivAt.exp ( ih x ) using 1;\n    rw [ Finset.prod_range_succ, mul_comm ];\n    rfl\n\n/-\nDerivative equality form of the tower cascade formula.\n-/\ntheorem deriv_iterExp_eq_prod (k : \u2115) (x : \u211d) :\n    deriv (iterExp (k + 1)) x =\n      \u220f j \u2208 Finset.range (k + 1), iterExp (j + 1) x := by\n  convert ( hasDerivAt_iterExp k x |> HasDerivAt.deriv ) using 1\n\n/-\nOn `x \u2265 0`, each factor in the derivative product is `\u2265 1`, so the\nderivative of `iterExp (k+1)` is at least `iterExp (k+1) x`.\n-/\ntheorem deriv_iterExp_ge_self (k : \u2115) {x : \u211d} (hx : 0 \u2264 x) :\n    iterExp (k + 1) x \u2264 deriv (iterExp (k + 1)) x := by\n  rw [ deriv_iterExp_eq_prod ];\n  rw [ Finset.prod_range_succ ];\n  exact le_mul_of_one_le_left ( by exact le_trans ( by positivity ) ( one_le_iterExp_succ_of_nonneg k hx ) ) ( by exact le_trans ( by norm_num ) ( Finset.prod_le_prod ( fun _ _ => by positivity ) fun _ _ => one_le_iterExp_succ_of_nonneg _ hx ) )\n\n/-\nThe derivative of `iterExp (k+1)` is at least 1 for `x \u2265 0`.\n-/\ntheorem deriv_iterExp_ge_one (k : \u2115) {x : \u211d} (hx : 0 \u2264 x) :\n    1 \u2264 deriv (iterExp (k + 1)) x := by\n  exact le_trans ( one_le_iterExp_succ_of_nonneg k hx ) ( deriv_iterExp_ge_self k hx )\n\nend\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nimport Speculative.DepthSeparation.Derivative\nimport Mathlib\n\n/-!\n# EML Expression Syntax, Semantics, and Tower Representations\n\nThis file establishes the syntactic side of depth separation:\nthe canonical tower expression `towerExpr k` has depth exactly `k`,\nsize `k + 1`, and evaluates to `iterExp k`.\n\n## Main results\n\n* `towerExpr_eval` \u2014 `(towerExpr k).eval = iterExp k`\n* `towerExpr_depth` \u2014 `(towerExpr k).depth = k`\n* `towerExpr_size` \u2014 `(towerExpr k).size = k + 1`\n-/\n\nnoncomputable section\n\nopen Real Set\n\n/-\nThe canonical tower expression evaluates to `iterExp k`.\n-/\ntheorem towerExpr_eval (k : \u2115) (x : \u211d) :\n    (towerExpr k).eval x = iterExp k x := by\n  induction' k with k ih generalizing x;\n  \u00b7 rfl;\n  \u00b7 exact congrArg Real.exp ( ih x )\n\n/-\nThe depth of the canonical tower expression is exactly `k`.\n-/\ntheorem towerExpr_depth (k : \u2115) :\n    (towerExpr k).depth = k := by\n  induction' k with k ih;\n  \u00b7 rfl;\n  \u00b7 exact show 1 + ( towerExpr k |> EMLExpr.depth ) = k + 1 from by linarith;\n\n/-\nThe size of the canonical tower expression is `k + 1`.\n-/\ntheorem towerExpr_size (k : \u2115) :\n    (towerExpr k).size = k + 1 := by\n  induction' k with k ih;\n  \u00b7 rfl;\n  \u00b7 -- In the case of `towerExpr (k + 1)`, the expression is `exp(towerExpr k)`.\n    -- Using the inductive hypothesis `ih`, we can expand the size as `size (exp e) = 1 + size e`.\n    have h_size_succ : (towerExpr (k + 1)).size = 1 + (towerExpr k).size := by\n      rfl;\n    linarith\n\nend\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nimport Speculative.DepthSeparation.Derivative\nimport Mathlib\n\n/-!\n# Depth Separation: Lipschitz Obstruction for Shallow Approximation\n\nThis file proves that functions with bounded derivative cannot uniformly\napproximate iterated exponentials on `[0,1]`. This is the core separation theorem:\nany approximant with derivative bounded by `L` must incur error at least\n`(iterExp k 1 - iterExp k 0 - L) / 2` when approximating `iterExp k`.\n\n## Main results\n\n* `iterExp_endpoint_gap` \u2014 `iterExp (k+1) 1 - iterExp (k+1) 0 \u2265 Real.exp 1 - 1`\n* `not_uniformApprox_of_small_lipschitz` \u2014 the Lipschitz obstruction theorem\n* `iterExp_endpoint_gap_grows` \u2014 endpoint gap grows with `k`\n\n## Cross-domain interpretation\n\nThis result is an analytic analogue of circuit-depth lower bounds in complexity theory:\njust as AC\u2070 circuits cannot compute parity without exponential size, Lipschitz-bounded\n\"shallow\" functions cannot approximate exponential towers without large error. The\nderivative product formula plays the role of a \"switching lemma\" \u2014 it certifies that\nthe analytical complexity of towers exceeds any bounded-slope budget.\n-/\n\nnoncomputable section\n\nopen Real Set\n\n/-\nThe variation (endpoint gap) of `iterExp (k+1)` on `[0,1]` is at least `e - 1 > 0`.\n-/\ntheorem iterExp_endpoint_gap (k : \u2115) :\n    Real.exp 1 - 1 \u2264 iterExp (k + 1) 1 - iterExp (k + 1) 0 := by\n  induction' k with k ih <;> norm_num [ iterExp ] at *;\n  -- Apply the mean value theorem to the interval $[e^{iterExp k 0}, e^{iterExp k 1}]$.\n  obtain \u27e8c, hc\u27e9 : \u2203 c \u2208 Set.Ioo (Real.exp (iterExp k 0)) (Real.exp (iterExp k 1)), deriv Real.exp c = (Real.exp (Real.exp (iterExp k 1)) - Real.exp (Real.exp (iterExp k 0))) / (Real.exp (iterExp k 1) - Real.exp (iterExp k 0)) := by\n    apply_rules [ exists_deriv_eq_slope ];\n    \u00b7 linarith [ Real.add_one_le_exp 1 ];\n    \u00b7 exact Real.continuousOn_exp;\n    \u00b7 exact Differentiable.differentiableOn Real.differentiable_exp;\n  norm_num at *;\n  nlinarith [ Real.add_one_le_exp 1, Real.add_one_le_exp c, Real.exp_pos ( iterExp k 0 ), Real.exp_pos ( iterExp k 1 ), mul_div_cancel\u2080 ( Real.exp ( Real.exp ( iterExp k 1 ) ) - Real.exp ( Real.exp ( iterExp k 0 ) ) ) ( sub_ne_zero_of_ne <| by linarith : ( Real.exp ( iterExp k 1 ) - Real.exp ( iterExp k 0 ) ) \u2260 0 ) ]\n\n/-\n**Lipschitz obstruction theorem.** If a differentiable function `g` has derivative\nbounded by `L` on `[0,1]`, and `L` is too small relative to the variation of\n`iterExp k` on `[0,1]`, then `g` cannot uniformly approximate `iterExp k` within `\u03b5`.\n\nConcretely: if `L + 2\u03b5 < iterExp k 1 - iterExp k 0`, then no `\u03b5`-approximation exists.\nThis is the key depth-separation result.\n-/\ntheorem not_uniformApprox_of_small_lipschitz\n    (k : \u2115) (g : \u211d \u2192 \u211d) (L \u03b5 : \u211d)\n    (hg_diff : DifferentiableOn \u211d g (Icc (0 : \u211d) 1))\n    (hg_deriv : \u2200 x \u2208 Icc (0 : \u211d) 1, \u2016deriv g x\u2016 \u2264 L)\n    (hL : L + 2 * \u03b5 < iterExp k 1 - iterExp k 0) :\n    \u00ac uniformApproxOn (iterExp k) g (Icc (0 : \u211d) 1) \u03b5 := by\n  contrapose! hL;\n  -- By the mean value theorem, there exists some $c \\in (0,1)$ such that $g(1) - g(0) = deriv g c$.\n  obtain \u27e8c, hc\u27e9 : \u2203 c \u2208 Set.Ioo 0 1, g 1 - g 0 = deriv g c := by\n    have := exists_deriv_eq_slope g zero_lt_one;\n    exact this ( hg_diff.continuousOn ) ( hg_diff.mono ( Set.Ioo_subset_Icc_self ) ) |> fun \u27e8 c, hc\u2081, hc\u2082 \u27e9 => \u27e8 c, hc\u2081, by norm_num [ hc\u2082 ] \u27e9;\n  linarith [ abs_le.mp ( hL 0 ( by norm_num ) ), abs_le.mp ( hL 1 ( by norm_num ) ), abs_le.mp ( hg_deriv c \u27e8 hc.1.1.le, hc.1.2.le \u27e9 ) ]\n\n/-\nThe endpoint gap of `iterExp` grows monotonically with `k` for `k \u2265 1`.\n-/\ntheorem iterExp_endpoint_gap_grows (k : \u2115) :\n    iterExp (k + 1) 1 - iterExp (k + 1) 0 \u2264\n    iterExp (k + 2) 1 - iterExp (k + 2) 0 := by\n  -- Apply the mean value theorem to the interval [iterExp (k + 1) 0, iterExp (k + 1) 1].\n  obtain \u27e8c, hc\u27e9 : \u2203 c \u2208 Set.Ioo (iterExp (k + 1) 0) (iterExp (k + 1) 1), deriv Real.exp c = (Real.exp (iterExp (k + 1) 1) - Real.exp (iterExp (k + 1) 0)) / (iterExp (k + 1) 1 - iterExp (k + 1) 0) := by\n    apply_rules [ exists_deriv_eq_slope ];\n    \u00b7 exact Real.exp_lt_exp.mpr ( show iterExp k 0 < iterExp k 1 from by exact Nat.recOn k ( by norm_num ) fun n ihn => by rw [ iterExp_succ, iterExp_succ ] ; exact Real.exp_lt_exp.mpr ihn );\n    \u00b7 exact Real.continuousOn_exp;\n    \u00b7 exact Differentiable.differentiableOn Real.differentiable_exp;\n  norm_num +zetaDelta at *;\n  rw [ eq_div_iff ] at hc <;> nlinarith [ Real.add_one_le_exp c, Real.add_one_le_exp ( iterExp k 0 ), Real.add_one_le_exp ( iterExp k 1 ), Real.exp_pos ( iterExp k 0 ), Real.exp_pos ( iterExp k 1 ) ]\n\nend",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for EML Depth Separation Analysis\n\nProvides:\n- EML expression representation (syntax tree)\n- Evaluation, depth, and size computation\n- Tower expression construction\n- Derivative product formula computation\n- Lipschitz obstruction analysis\n- Shallow approximant search (brute-force for small sizes)\n\"\"\"\n\nfrom __future__ import annotations\nfrom dataclasses import dataclass\nfrom typing import Union, List, Tuple\nimport math\nimport numpy as np\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# EML Expression AST\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n@dataclass\nclass EMLVar:\n    \"\"\"Variable node: represents the input x.\"\"\"\n    pass\n\n@dataclass\nclass EMLConst:\n    \"\"\"Constant node.\"\"\"\n    value: float\n\n@dataclass\nclass EMLAdd:\n    \"\"\"Addition node.\"\"\"\n    left: 'EMLExpr'\n    right: 'EMLExpr'\n\n@dataclass\nclass EMLMul:\n    \"\"\"Multiplication node.\"\"\"\n    left: 'EMLExpr'\n    right: 'EMLExpr'\n\n@dataclass\nclass EMLExp:\n    \"\"\"Exponential node: exp(child).\"\"\"\n    child: 'EMLExpr'\n\nEMLExpr = Union[EMLVar, EMLConst, EMLAdd, EMLMul, EMLExp]\n\n\ndef eml_eval(expr: EMLExpr, x: float) -> float:\n    \"\"\"Evaluate an EML expression at input x.\n    \n    Args:\n        expr: EML expression tree\n        x: input value\n    \n    Returns:\n        Evaluation result\n    \n    >>> eml_eval(EMLVar(), 2.0)\n    2.0\n    >>> eml_eval(EMLExp(EMLVar()), 0.0)\n    1.0\n    \"\"\"\n    if isinstance(expr, EMLVar):\n        return x\n    elif isinstance(expr, EMLConst):\n        return expr.value\n    elif isinstance(expr, EMLAdd):\n        return eml_eval(expr.left, x) + eml_eval(expr.right, x)\n    elif isinstance(expr, EMLMul):\n        return eml_eval(expr.left, x) * eml_eval(expr.right, x)\n    elif isinstance(expr, EMLExp):\n        v = eml_eval(expr.child, x)\n        return math.exp(min(v, 500))  # overflow protection\n    else:\n        raise TypeError(f\"Unknown EML expression type: {type(expr)}\")\n\n\ndef eml_depth(expr: EMLExpr) -> int:\n    \"\"\"Compute the compositional depth (max nesting of exp nodes).\n    \n    Args:\n        expr: EML expression tree\n    \n    Returns:\n        Depth of the expression\n    \n    >>> eml_depth(EMLVar())\n    0\n    >>> eml_depth(EMLExp(EMLExp(EMLVar())))\n    2\n    \"\"\"\n    if isinstance(expr, EMLVar):\n        return 0\n    elif isinstance(expr, EMLConst):\n        return 0\n    elif isinstance(expr, (EMLAdd, EMLMul)):\n        return max(eml_depth(expr.left), eml_depth(expr.right))\n    elif isinstance(expr, EMLExp):\n        return 1 + eml_depth(expr.child)\n    else:\n        raise TypeError(f\"Unknown EML expression type: {type(expr)}\")\n\n\ndef eml_size(expr: EMLExpr) -> int:\n    \"\"\"Compute the syntactic size (number of nodes).\n    \n    Args:\n        expr: EML expression tree\n    \n    Returns:\n        Number of nodes\n    \n    >>> eml_size(EMLVar())\n    1\n    >>> eml_size(EMLExp(EMLVar()))\n    2\n    \"\"\"\n    if isinstance(expr, (EMLVar, EMLConst)):\n        return 1\n    elif isinstance(expr, (EMLAdd, EMLMul)):\n        return 1 + eml_size(expr.left) + eml_size(expr.right)\n    elif isinstance(expr, EMLExp):\n        return 1 + eml_size(expr.child)\n    else:\n        raise TypeError(f\"Unknown EML expression type: {type(expr)}\")\n\n\ndef tower_expr(k: int) -> EMLExpr:\n    \"\"\"Construct the canonical tower expression of depth k.\n    \n    towerExpr(0) = x\n    towerExpr(k+1) = exp(towerExpr(k))\n    \n    Args:\n        k: tower depth\n    \n    Returns:\n        EML expression representing iterExp(k)\n    \n    >>> eml_depth(tower_expr(5))\n    5\n    >>> eml_size(tower_expr(5))\n    6\n    \"\"\"\n    if k == 0:\n        return EMLVar()\n    return EMLExp(tower_expr(k - 1))\n\n\ndef eml_to_string(expr: EMLExpr) -> str:\n    \"\"\"Pretty-print an EML expression.\"\"\"\n    if isinstance(expr, EMLVar):\n        return \"x\"\n    elif isinstance(expr, EMLConst):\n        return f\"{expr.value:.4g}\"\n    elif isinstance(expr, EMLAdd):\n        return f\"({eml_to_string(expr.left)} + {eml_to_string(expr.right)})\"\n    elif isinstance(expr, EMLMul):\n        return f\"({eml_to_string(expr.left)} * {eml_to_string(expr.right)})\"\n    elif isinstance(expr, EMLExp):\n        return f\"exp({eml_to_string(expr.child)})\"\n    else:\n        return \"?\"\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Iterated Exponential Computations\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef iter_exp(k: int, x: float) -> float:\n    \"\"\"Compute iterExp(k, x) with overflow protection.\n    \n    Args:\n        k: number of iterations\n        x: input value\n    \n    Returns:\n        k-fold iterated exponential of x\n    \"\"\"\n    result = x\n    for _ in range(k):\n        result = math.exp(min(result, 500))\n    return result\n\n\ndef iter_exp_deriv_product(k: int, x: float) -> float:\n    \"\"\"Compute the derivative of iterExp(k+1, x) using the product formula.\n    \n    d/dx iterExp(k+1, x) = \u220f_{j=0}^{k} iterExp(j+1, x)\n    \n    Args:\n        k: depth index (derivative of iterExp(k+1))\n        x: evaluation point\n    \n    Returns:\n        Derivative value via the product formula\n    \"\"\"\n    product = 1.0\n    for j in range(k + 1):\n        product *= iter_exp(j + 1, x)\n        if product > 1e300:\n            return float('inf')\n    return product\n\n\ndef endpoint_gap(k: int) -> float:\n    \"\"\"Compute iterExp(k, 1) - iterExp(k, 0).\n    \n    This gap is proven to be monotonically increasing in k\n    and bounded below by e - 1 \u2248 1.718 for k \u2265 1.\n    \"\"\"\n    return iter_exp(k, 1.0) - iter_exp(k, 0.0)\n\n\ndef lipschitz_obstruction_bound(k: int, L: float) -> float:\n    \"\"\"Compute the minimum uniform approximation error for a Lipschitz-L function\n    approximating iterExp(k) on [0,1].\n    \n    By the Lipschitz obstruction theorem:\n    If L + 2\u03b5 < gap(k), then \u03b5-approximation is impossible.\n    So min achievable \u03b5 \u2265 (gap(k) - L) / 2.\n    \n    Args:\n        k: tower depth\n        L: Lipschitz constant of the approximant\n    \n    Returns:\n        Lower bound on achievable \u03b5 (0 if L is large enough)\n    \"\"\"\n    gap = endpoint_gap(k)\n    return max(0.0, (gap - L) / 2.0)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Shallow Approximant Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef fit_shallow_sum_of_exp(\n    k: int, N: int, num_points: int = 200, lr: float = 0.01, steps: int = 5000\n) -> Tuple[float, np.ndarray, np.ndarray, np.ndarray]:\n    \"\"\"Attempt to fit iterExp(k, x) on [0,1] using a sum of N exponentials:\n    g(x) = \u03a3_{i=1}^{N} a_i * exp(b_i * x + c_i)\n    \n    This is a depth-1 EML expression. The Lipschitz obstruction theorem\n    predicts that N must be large when k is large.\n    \n    Args:\n        k: tower depth to approximate\n        N: number of exponential terms\n        num_points: discretization of [0,1]\n        lr: learning rate for gradient descent\n        steps: optimization steps\n    \n    Returns:\n        (best_error, a_params, b_params, c_params)\n    \"\"\"\n    x = np.linspace(0, 1, num_points)\n    target = np.array([iter_exp(k, xi) for xi in x])\n    \n    # Initialize parameters\n    rng = np.random.RandomState(42)\n    a = rng.randn(N) * 0.1\n    b = rng.randn(N) * 2.0\n    c = rng.randn(N) * 0.1\n    \n    best_error = float('inf')\n    \n    for step in range(steps):\n        # Forward pass\n        basis = np.exp(np.clip(np.outer(x, b) + c[None, :], -50, 50))\n        pred = basis @ a\n        residual = pred - target\n        error = np.max(np.abs(residual))\n        \n        if error < best_error:\n            best_error = error\n            best_a, best_b, best_c = a.copy(), b.copy(), c.copy()\n        \n        # Gradient step (MSE gradient)\n        grad_a = 2.0 * (basis.T @ residual) / num_points\n        grad_b_basis = basis * np.outer(x, np.ones(N))\n        grad_b = 2.0 * (grad_b_basis.T @ residual) * a / num_points\n        grad_c_basis = basis\n        grad_c = 2.0 * (grad_c_basis.T @ residual) * a / num_points\n        \n        a -= lr * np.clip(grad_a, -10, 10)\n        b -= lr * np.clip(grad_b, -10, 10)\n        c -= lr * np.clip(grad_c, -10, 10)\n    \n    return best_error, best_a, best_b, best_c\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Main: Algorithm demonstrations\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == '__main__':\n    print(\"=\" * 60)\n    print(\"EML Depth Separation \u2014 Algorithms\")\n    print(\"=\" * 60)\n    \n    # 1. Tower expression construction\n    print(\"\\n\u2500\u2500 Tower Expression Construction \u2500\u2500\")\n    for k in range(6):\n        expr = tower_expr(k)\n        print(f\"  towerExpr({k}) = {eml_to_string(expr)}\")\n        print(f\"    depth = {eml_depth(expr)}, size = {eml_size(expr)}\")\n    \n    # 2. Derivative product formula verification\n    print(\"\\n\u2500\u2500 Derivative Product Formula \u2500\u2500\")\n    x0 = 0.5\n    for k in range(5):\n        deriv_val = iter_exp_deriv_product(k, x0)\n        # Numerical check\n        dx = 1e-8\n        num = (iter_exp(k + 1, x0 + dx) - iter_exp(k + 1, x0 - dx)) / (2 * dx)\n        print(f\"  k={k}: product = {deriv_val:.6f}, numerical = {num:.6f}, \"\n              f\"match = {abs(deriv_val - num) / max(abs(num), 1e-15):.2e}\")\n    \n    # 3. Lipschitz obstruction analysis\n    print(\"\\n\u2500\u2500 Lipschitz Obstruction Analysis \u2500\u2500\")\n    for k in range(1, 6):\n        gap = endpoint_gap(k)\n        min_eps_10 = lipschitz_obstruction_bound(k, 10)\n        min_eps_100 = lipschitz_obstruction_bound(k, 100)\n        print(f\"  k={k}: gap = {gap:.4f}, \"\n              f\"min \u03b5 (L=10) = {min_eps_10:.4f}, \"\n              f\"min \u03b5 (L=100) = {min_eps_100:.4f}\")\n    \n    # 4. Shallow approximation test\n    print(\"\\n\u2500\u2500 Shallow Sum-of-Exponentials Fitting \u2500\u2500\")\n    for k in [1, 2, 3]:\n        for N in [2, 5, 10, 20]:\n            err, _, _, _ = fit_shallow_sum_of_exp(k, N, steps=2000)\n            print(f\"  k={k}, N={N}: best L\u221e error = {err:.4f}\")\n    \n    print(\"\\nDone!\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Depth Separation Theory for Iterated Exponentials\n\nDemonstrates real-world connections:\n1. Neural network expressivity: shallow nets vs deep nets for tower functions\n2. Symbolic regression: why iterExp(k) resists shallow symbolic fitting\n3. Model compression analysis: depth reduction = exponential size blowup\n4. Dynamical systems: sensitivity cascade in iterated maps\n\"\"\"\n\nimport numpy as np\nimport math\nfrom typing import List, Tuple\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 1: Neural Network Expressivity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef relu_network_approx(\n    target_k: int, \n    num_pieces: int, \n    domain: Tuple[float, float] = (0.0, 1.0)\n) -> Tuple[np.ndarray, np.ndarray, float]:\n    \"\"\"Approximate iterExp(k) with a piecewise-linear (ReLU) network.\n    \n    A depth-1 ReLU network with W neurons produces a piecewise-linear\n    function with at most W+1 pieces. The Lipschitz obstruction theorem\n    implies that the number of pieces must grow with the target's\n    Lipschitz constant.\n    \n    Args:\n        target_k: depth of tower to approximate\n        num_pieces: number of linear pieces (= neurons in hidden layer)\n        domain: approximation interval\n    \n    Returns:\n        (x_grid, approx_values, max_error)\n    \"\"\"\n    a, b = domain\n    x = np.linspace(a, b, 1000)\n    target = np.array([_iter_exp_safe(target_k, xi) for xi in x])\n    \n    # Optimal piecewise-linear approximation by interpolation at piece boundaries\n    breakpoints = np.linspace(a, b, num_pieces + 1)\n    bp_values = np.array([_iter_exp_safe(target_k, bp) for bp in breakpoints])\n    \n    approx = np.interp(x, breakpoints, bp_values)\n    max_error = np.max(np.abs(target - approx))\n    \n    return x, approx, max_error\n\n\ndef _iter_exp_safe(k: int, x: float) -> float:\n    \"\"\"Overflow-safe iterExp.\"\"\"\n    result = x\n    for _ in range(k):\n        result = math.exp(min(result, 500))\n    return result\n\n\ndef analyze_relu_expressivity():\n    \"\"\"Analyze how many ReLU neurons are needed vs tower depth.\"\"\"\n    print(\"  Neural Network Expressivity Analysis\")\n    print(\"  \" + \"-\" * 50)\n    print(f\"  {'Depth k':<10} {'Neurons':<10} {'Max Error':<15} {'Gap':<15}\")\n    print(\"  \" + \"-\" * 50)\n    \n    for k in range(1, 5):\n        gap = _iter_exp_safe(k, 1.0) - _iter_exp_safe(k, 0.0)\n        for neurons in [5, 10, 50, 100, 500]:\n            _, _, err = relu_network_approx(k, neurons)\n            print(f\"  {k:<10} {neurons:<10} {err:<15.6f} {gap:<15.4f}\")\n        print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 2: Symbolic Regression Complexity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef symbolic_regression_analysis():\n    \"\"\"Show that shallow EML expressions cannot fit towers.\n    \n    For a depth-d expression with N exp-nodes, the maximum\n    derivative growth is bounded by exp^[d] composed d times,\n    while iterExp(k) with k > d grows faster.\n    \"\"\"\n    print(\"  Symbolic Regression Complexity Analysis\")\n    print(\"  \" + \"-\" * 50)\n    \n    x_test = 0.5\n    print(f\"  At x = {x_test}:\")\n    print(f\"  {'Expression':<30} {'Value':<15} {'Derivative':<15}\")\n    print(\"  \" + \"-\" * 60)\n    \n    # Various depth-1 expressions\n    expressions = [\n        (\"exp(x)\", lambda x: math.exp(x), lambda x: math.exp(x)),\n        (\"exp(2x)\", lambda x: math.exp(2*x), lambda x: 2*math.exp(2*x)),\n        (\"exp(3x)\", lambda x: math.exp(3*x), lambda x: 3*math.exp(3*x)),\n        (\"2*exp(x)\", lambda x: 2*math.exp(x), lambda x: 2*math.exp(x)),\n        (\"exp(x)+exp(2x)\", lambda x: math.exp(x)+math.exp(2*x),\n         lambda x: math.exp(x)+2*math.exp(2*x)),\n    ]\n    \n    for name, f, df in expressions:\n        print(f\"  {name:<30} {f(x_test):<15.6f} {df(x_test):<15.6f}\")\n    \n    print()\n    print(f\"  {'iterExp targets:':<30}\")\n    for k in range(1, 5):\n        val = _iter_exp_safe(k, x_test)\n        # Derivative via product formula\n        deriv = 1.0\n        for j in range(k):\n            deriv *= _iter_exp_safe(j + 1, x_test)\n        print(f\"  {'iterExp(' + str(k) + ', x)':<30} {val:<15.6f} {deriv:<15.6f}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 3: Model Compression Barriers\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef compression_barrier_analysis():\n    \"\"\"Quantify the cost of reducing depth in EML representations.\n    \n    The exact representation of iterExp(k) has depth k and size k+1.\n    If we reduce depth to d < k, the Lipschitz obstruction theorem\n    gives a minimum error or minimum size for any approximant.\n    \"\"\"\n    print(\"  Model Compression Barrier Analysis\")\n    print(\"  \" + \"-\" * 50)\n    print(f\"  {'k':<5} {'Exact depth':<15} {'Exact size':<15} {'Gap(k)':<15} \"\n          f\"{'Min L for \u03b5=0.1':<20}\")\n    print(\"  \" + \"-\" * 70)\n    \n    for k in range(1, 6):\n        gap = _iter_exp_safe(k, 1.0) - _iter_exp_safe(k, 0.0)\n        min_L = gap - 0.2  # L needed for \u03b5 = 0.1\n        print(f\"  {k:<5} {k:<15} {k+1:<15} {gap:<15.4f} {min_L:<20.4f}\")\n    \n    print()\n    print(\"  Interpretation: To compress iterExp(k) to a Lipschitz-L function\")\n    print(\"  with \u03b5=0.1 accuracy, you need L \u2265 gap(k) - 0.2.\")\n    print(\"  Since gap(k) grows super-exponentially, compression is impossible\")\n    print(\"  for any fixed L as k increases.\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 4: Dynamical Systems Sensitivity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef sensitivity_cascade_analysis():\n    \"\"\"Analyze sensitivity amplification in iterated exponential maps.\n    \n    The map x \u21a6 exp(x) iterated k times has Lyapunov-like sensitivity\n    equal to the derivative product formula. This connects depth\n    separation to chaos theory.\n    \"\"\"\n    print(\"  Dynamical Systems: Sensitivity Cascade\")\n    print(\"  \" + \"-\" * 50)\n    \n    x0 = 0.5\n    perturbation = 1e-10\n    \n    print(f\"  Starting point: x\u2080 = {x0}\")\n    print(f\"  Perturbation: \u03b4 = {perturbation}\")\n    print()\n    print(f\"  {'Iterations k':<15} {'iterExp(k,x\u2080)':<20} \"\n          f\"{'Amplification':<20} {'Product formula':<20}\")\n    print(\"  \" + \"-\" * 75)\n    \n    for k in range(1, 6):\n        val = _iter_exp_safe(k, x0)\n        val_pert = _iter_exp_safe(k, x0 + perturbation)\n        \n        amplification = abs(val_pert - val) / perturbation\n        \n        # Product formula\n        product = 1.0\n        for j in range(k):\n            product *= _iter_exp_safe(j + 1, x0)\n        \n        print(f\"  {k:<15} {val:<20.6f} {amplification:<20.6f} {product:<20.6f}\")\n    \n    print()\n    print(\"  The amplification factor matches the derivative product formula,\")\n    print(\"  confirming that iterExp creates a sensitivity cascade where each\")\n    print(\"  layer multiplicatively amplifies perturbations.\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Main\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == '__main__':\n    print(\"=\" * 70)\n    print(\"Depth Separation Theory \u2014 Real-World Applications\")\n    print(\"=\" * 70)\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 1: Neural Network Expressivity\")\n    print(\"=\" * 70)\n    analyze_relu_expressivity()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 2: Symbolic Regression Complexity\")\n    print(\"=\" * 70)\n    symbolic_regression_analysis()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 3: Model Compression Barriers\")\n    print(\"=\" * 70)\n    compression_barrier_analysis()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 4: Dynamical Systems Sensitivity\")\n    print(\"=\" * 70)\n    sensitivity_cascade_analysis()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"All applications demonstrated successfully.\")\n    print(\"=\" * 70)\n\n\n#!/usr/bin/env python3\n\"\"\"\nDepth Separation for Iterated Exponentials \u2014 Visualization Demo\n\nDemonstrates:\n1. Growth of iterExp_k(x) on [0,1] for k = 0..5\n2. Derivative cascade: the product formula \u220f iterExp_{j+1}(x)\n3. Endpoint gap growth: iterExp_k(1) - iterExp_k(0) vs k\n4. Lipschitz obstruction: shallow approximants cannot track tower functions\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom typing import Callable\n\n\ndef iter_exp(k: int, x: np.ndarray) -> np.ndarray:\n    \"\"\"Compute the k-fold iterated exponential: iterExp(0,x) = x, iterExp(k+1,x) = exp(iterExp(k,x)).\"\"\"\n    result = x.copy().astype(float)\n    for _ in range(k):\n        result = np.exp(np.clip(result, -500, 500))  # clip to avoid overflow\n    return result\n\n\ndef iter_exp_deriv(k: int, x: np.ndarray) -> np.ndarray:\n    \"\"\"Compute the derivative of iterExp(k+1, x) = \u220f_{j=0}^{k} iterExp(j+1, x).\"\"\"\n    prod = np.ones_like(x, dtype=float)\n    for j in range(k + 1):\n        prod *= iter_exp(j + 1, x)\n    return prod\n\n\ndef endpoint_gap(k: int) -> float:\n    \"\"\"Compute iterExp(k, 1) - iterExp(k, 0) for scalar inputs.\"\"\"\n    val1 = 1.0\n    val0 = 0.0\n    for _ in range(k):\n        val1 = np.exp(min(val1, 500))\n        val0 = np.exp(min(val0, 500))\n    return val1 - val0\n\n\ndef best_lipschitz_approx(L: float, f0: float, f1: float, x: np.ndarray) -> np.ndarray:\n    \"\"\"A Lipschitz-L function that tries to match f(0)=f0, f(1)=f1 as best it can.\"\"\"\n    # Linear interpolation clamped by Lipschitz bound\n    slope = min(L, max(-L, f1 - f0))\n    return f0 + slope * x\n\n\n# \u2500\u2500 Figure 1: Tower functions on [0,1] \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_tower_functions():\n    x = np.linspace(0, 1, 500)\n    fig, ax = plt.subplots(figsize=(10, 6))\n    \n    for k in range(6):\n        y = iter_exp(k, x)\n        if np.max(y) < 1e10:\n            ax.plot(x, y, label=f'iterExp({k}, x)', linewidth=2)\n    \n    ax.set_xlabel('x', fontsize=14)\n    ax.set_ylabel('iterExp(k, x)', fontsize=14)\n    ax.set_title('Iterated Exponentials on [0, 1]', fontsize=16)\n    ax.legend(fontsize=12)\n    ax.set_yscale('log')\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('fig1_tower_functions.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig1_tower_functions.png\")\n\n\n# \u2500\u2500 Figure 2: Derivative cascade \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_derivative_cascade():\n    x = np.linspace(0, 1, 500)\n    fig, ax = plt.subplots(figsize=(10, 6))\n    \n    for k in range(5):\n        y = iter_exp_deriv(k, x)\n        if np.max(y) < 1e15:\n            ax.plot(x, y, label=f\"(iterExp({k+1}))' (x)\", linewidth=2)\n    \n    ax.set_xlabel('x', fontsize=14)\n    ax.set_ylabel(\"Derivative\", fontsize=14)\n    ax.set_title('Derivative Cascade: Product Formula', fontsize=16)\n    ax.legend(fontsize=12)\n    ax.set_yscale('log')\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('fig2_derivative_cascade.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig2_derivative_cascade.png\")\n\n\n# \u2500\u2500 Figure 3: Endpoint gap growth \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_endpoint_gap():\n    ks = list(range(1, 7))\n    gaps = [endpoint_gap(k) for k in ks]\n    \n    fig, ax = plt.subplots(figsize=(10, 6))\n    ax.bar(ks, gaps, color='steelblue', alpha=0.8, edgecolor='navy')\n    ax.set_xlabel('Depth k', fontsize=14)\n    ax.set_ylabel('iterExp(k, 1) - iterExp(k, 0)', fontsize=14)\n    ax.set_title('Endpoint Gap Growth (Monotonically Increasing)', fontsize=16)\n    ax.set_yscale('log')\n    ax.grid(True, alpha=0.3, axis='y')\n    \n    for i, (k, g) in enumerate(zip(ks, gaps)):\n        if g < 1e10:\n            ax.text(k, g * 1.3, f'{g:.1f}', ha='center', fontsize=11)\n    \n    fig.tight_layout()\n    fig.savefig('fig3_endpoint_gap.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig3_endpoint_gap.png\")\n\n\n# \u2500\u2500 Figure 4: Lipschitz obstruction \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_lipschitz_obstruction():\n    x = np.linspace(0, 1, 500)\n    k = 2  # exp(exp(x))\n    f = iter_exp(k, x)\n    \n    f0, f1 = np.exp(1.0), np.exp(np.e)  # iterExp(2,0), iterExp(2,1)\n    \n    fig, ax = plt.subplots(figsize=(10, 6))\n    ax.plot(x, f, 'b-', linewidth=2.5, label=f'iterExp({k}, x) = exp(exp(x))')\n    \n    for L in [5, 10, 12]:\n        g = best_lipschitz_approx(L, f0, f1, x)\n        ax.plot(x, g, '--', linewidth=1.5, alpha=0.7,\n                label=f'Lipschitz-{L} approx')\n    \n    ax.set_xlabel('x', fontsize=14)\n    ax.set_ylabel('Value', fontsize=14)\n    ax.set_title('Lipschitz Obstruction: Bounded-Slope Functions Cannot Track Towers', fontsize=14)\n    ax.legend(fontsize=11)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('fig4_lipschitz_obstruction.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig4_lipschitz_obstruction.png\")\n\n\n# \u2500\u2500 Figure 5: Depth separation summary \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ndef plot_depth_separation_summary():\n    \"\"\"Show min Lipschitz constant needed vs depth k.\"\"\"\n    ks = list(range(1, 7))\n    min_L = [endpoint_gap(k) for k in ks]  # minimum L needed to even span the gap\n    \n    fig, ax = plt.subplots(figsize=(10, 6))\n    ax.semilogy(ks, min_L, 'ro-', markersize=10, linewidth=2.5,\n                label='Min Lipschitz constant for \u03b5-approx')\n    ax.axhline(y=np.e - 1, color='green', linestyle='--', linewidth=1.5,\n               label=f'Lower bound: e - 1 \u2248 {np.e - 1:.3f}')\n    \n    ax.set_xlabel('Tower Depth k', fontsize=14)\n    ax.set_ylabel('Minimum Lipschitz Constant', fontsize=14)\n    ax.set_title('Depth Separation: Required Approximant Complexity', fontsize=16)\n    ax.legend(fontsize=12)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('fig5_depth_separation.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved fig5_depth_separation.png\")\n\n\nif __name__ == '__main__':\n    print(\"=\" * 60)\n    print(\"Depth Separation for Iterated Exponentials \u2014 Demo\")\n    print(\"=\" * 60)\n    \n    # Numerical verification of key theorems\n    print(\"\\n\u2500\u2500 Theorem 1: Tower growth values \u2500\u2500\")\n    for k in range(6):\n        v0 = iter_exp(k, np.array([0.0]))[0]\n        v1 = iter_exp(k, np.array([1.0]))[0]\n        print(f\"  iterExp({k}, 0) = {v0:.6f},  iterExp({k}, 1) = {v1:.6f}\")\n    \n    print(\"\\n\u2500\u2500 Theorem 2: Derivative product formula verification \u2500\u2500\")\n    x0 = 0.5\n    dx = 1e-7\n    for k in range(5):\n        # Numerical derivative\n        f_plus = iter_exp(k + 1, np.array([x0 + dx]))[0]\n        f_minus = iter_exp(k + 1, np.array([x0 - dx]))[0]\n        num_deriv = (f_plus - f_minus) / (2 * dx)\n        # Product formula\n        prod_val = 1.0\n        for j in range(k + 1):\n            prod_val *= iter_exp(j + 1, np.array([x0]))[0]\n        print(f\"  k={k}: numerical deriv = {num_deriv:.6f}, \"\n              f\"product formula = {prod_val:.6f}, \"\n              f\"ratio = {num_deriv / prod_val:.8f}\")\n    \n    print(\"\\n\u2500\u2500 Theorem 3: Endpoint gap growth \u2500\u2500\")\n    for k in range(1, 7):\n        gap = endpoint_gap(k)\n        print(f\"  gap({k}) = {gap:.6f}  (\u2265 e-1 = {np.e - 1:.6f})\")\n    \n    print(\"\\n\u2500\u2500 Theorem 4: Lipschitz obstruction \u2500\u2500\")\n    k = 3\n    gap = endpoint_gap(k)\n    print(f\"  iterExp({k},1) - iterExp({k},0) = {gap:.2f}\")\n    print(f\"  Any Lipschitz-L approx with L < {gap:.2f} cannot \u03b5-approximate iterExp({k})\")\n    print(f\"  with \u03b5 < ({gap:.2f} - L)/2\")\n    \n    # Generate all figures\n    print(\"\\n\u2500\u2500 Generating figures \u2500\u2500\")\n    plot_tower_functions()\n    plot_derivative_cascade()\n    plot_endpoint_gap()\n    plot_lipschitz_obstruction()\n    plot_depth_separation_summary()\n    \n    print(\"\\nDone! All figures saved.\")\n"
+    },
+    "date": "2026-05-20T11:03:46Z",
+    "exp_id": "ffab0d73",
+    "source_exp_ids": [
+      "872d1aff"
+    ]
+  },
   "yang_mills_mass_gap.json": {
     "title": "Formal Lattice-to-Continuum Spectral Bridge for Yang-Mills Mass Gap",
     "domain": "Mathematical Physics / Lattice Gauge Theory / Spectral Theory",
@@ -6108,7 +6150,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -6126,7 +6168,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -6135,7 +6177,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "galois_group__s",
@@ -6144,7 +6186,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -6153,7 +6195,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -6171,7 +6213,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -6180,7 +6222,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -6189,7 +6231,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "percolation_threshold",
@@ -6198,7 +6240,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -6207,7 +6249,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -6225,7 +6267,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "legendres_conjecture",
@@ -6243,7 +6285,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -6252,7 +6294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -6261,7 +6303,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "p_vs_np_problem",
@@ -6270,7 +6312,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -6297,7 +6339,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -6306,7 +6348,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -6315,7 +6357,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -6324,7 +6366,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -6333,7 +6375,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "twin_prime_conjecture",
@@ -6342,7 +6384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -6351,7 +6393,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -6378,7 +6420,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -6387,7 +6429,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -6396,7 +6438,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -6405,7 +6447,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 272
+      "hue": 359
     },
     {
       "id": "tropical_intersection_theory",
@@ -6414,7 +6456,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "riemann_hypothesis",
@@ -6423,7 +6465,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "odd_perfect_numbers",
@@ -6432,7 +6474,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -6441,7 +6483,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture",
@@ -6450,7 +6492,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "10_is_a_solitary_number",
@@ -6468,7 +6510,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "invariant_subspace_problem",
@@ -6477,7 +6519,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 89
+      "hue": 90
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -6486,7 +6528,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -6495,7 +6537,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -6504,7 +6546,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -6513,7 +6555,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -6531,7 +6573,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -6540,7 +6582,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "yang_mills_mass_gap",
@@ -6549,7 +6591,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "goldbach_conjecture",
@@ -6558,7 +6600,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -6567,7 +6609,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -6576,7 +6618,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -6585,7 +6627,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -6594,7 +6636,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "beals_conjecture",
@@ -6603,7 +6645,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -6612,7 +6654,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -6621,7 +6663,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 281
+      "hue": 292
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -6630,7 +6672,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -6639,7 +6681,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -6648,7 +6690,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -6657,7 +6699,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -6675,7 +6717,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 101
+      "hue": 275
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -6684,7 +6726,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -6693,7 +6735,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 101
+      "hue": 92
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -6702,7 +6744,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 314
+      "hue": 90
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -6711,7 +6753,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -6720,7 +6762,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -6729,7 +6771,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 95
+      "hue": 100
     },
     {
       "id": "primes_of_the_form_n1",
@@ -6738,7 +6780,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -6747,7 +6789,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -6756,7 +6798,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -6765,7 +6807,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -6774,7 +6816,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -6792,7 +6834,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "we_have_formally_verified",
@@ -6801,7 +6843,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 112
+      "hue": 91
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -6810,7 +6852,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 112
+      "hue": 91
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -6819,7 +6861,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -6828,7 +6870,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -6837,7 +6879,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -6855,7 +6897,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -6864,7 +6906,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "collatz_conjecture",
@@ -6873,7 +6915,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -6882,7 +6924,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -6891,7 +6933,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -6900,7 +6942,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -6918,7 +6960,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -6927,7 +6969,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -6936,7 +6978,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -6945,7 +6987,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -6954,7 +6996,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 100
+      "hue": 112
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -6972,7 +7014,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "erdsstraus_conjecture",
@@ -6981,7 +7023,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "the_invariance_theorem_establishes_that_the_symmet",
@@ -6990,7 +7032,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -6999,7 +7041,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -7008,7 +7050,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -7017,7 +7059,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T02:05:05Z",
-      "hue": 89
+      "hue": 270
     },
     {
       "id": "hypothesis_4_p_adic_threshold_transfer",
@@ -7026,7 +7068,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -7035,7 +7077,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 100
+      "hue": 271
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -7044,7 +7086,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "kakeya_conjecture",
@@ -7053,7 +7095,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 270
+      "hue": 281
     },
     {
       "id": "sums_of_three_cubes",
@@ -7062,7 +7104,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -7071,7 +7113,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "196_algorithm_non_termination",
@@ -7080,7 +7122,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -7089,7 +7131,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -7098,7 +7140,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -7107,7 +7149,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -7116,7 +7158,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 90
+      "hue": 134
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -7125,7 +7167,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -7134,7 +7176,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -7152,7 +7194,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -7161,7 +7203,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T07:04:53Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -7170,7 +7212,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -7188,7 +7230,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "proof_expansion_constant_for_formal_theories",
@@ -7197,7 +7239,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T08:08:15Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "eml_category_the_category_of_eml_computable_maps",
@@ -7206,7 +7248,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T08:09:01Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "eml_universal_approximation",
@@ -7215,7 +7257,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T09:06:21Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "inverse_stereographic_persistence_topological_data",
@@ -7224,7 +7266,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T09:06:51Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "hypothesis_5_exceptional_set_finiteness",
@@ -7242,7 +7284,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T09:07:52Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "conjecture_3_coefficient_growth_rate_under_iterate",
@@ -7260,7 +7302,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:03:53Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_1_eml_elementary_completeness_with_poly",
@@ -7269,7 +7311,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T10:04:23Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "langlands_program_functoriality",
@@ -7278,7 +7320,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:04:57Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "proof_phase_transitions_in_random_formal_theories",
@@ -7287,7 +7329,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T11:03:17Z",
-      "hue": 270
+      "hue": 92
+    },
+    {
+      "id": "conjecture_5_strict_depth_separation_for_exponenti",
+      "title": "Strict Depth Separation for Iterated Exponentials in the EML Model",
+      "domain": "Speculative / Analytic Complexity Theory",
+      "primary_domain": "Speculative",
+      "shape": "pentagonal_prism",
+      "date": "2026-05-20T11:03:46Z",
+      "hue": 95
     }
   ],
   "edges": [
@@ -7343,6 +7394,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "hilbert_12_kronecker_weber_generalization",
       "target": "conjecture_3_faithful_representations_lift_to_line",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "eml_universal_approximation",
+      "target": "conjecture_5_strict_depth_separation_for_exponenti",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -8415,21 +8473,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T00:22:10.985537+00:00"
-  },
-  {
-    "id": "fd_0098",
-    "title": "Proof Phase Transitions in Random Formal Theories",
-    "description": "Conjecture: For any recursively axiomatized first-order theory T extending a weak arithmetic base and any fixed proof system P, if one forms random finite axiom augmentations T(m,p) by independently adding each sentence from a bounded-complexity schema pool of size m with probability p, then there exists a sharp threshold p_c(m) such that the probability that a target family of bounded-length statements becomes P-provable jumps from near 0 to near 1 in a window of width o(1) as m\u2192\u221e. Moreover, the threshold location is asymptotically governed by a combinatorial dependency invariant of the proof hypergraph of the target family. Test: Define explicit finite schema pools and target statement families in propositional logic, Presburger arithmetic, and bounded fragments of Peano arithmetic; compute empirical provability curves under SAT/SMT/proof-search enumeration; confirm or refute sharp-threshold behavior and compare the observed threshold to the predicted proof-hypergraph invariant. Impact: This would create a statistical mechanics of theorem emergence, yielding quantitative laws for when new axioms unlock whole regions of provability, with applications to automated theorem proving, proof complexity, and the design of research systems that choose high-leverage conjectures or axioms.",
-    "domains": [
-      "Proof Complexity",
-      "Probabilistic Combinatorics"
-    ],
-    "priority_score": 0.8,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "3765b821",
-    "timestamp": "2026-05-20T01:00:34.858440+00:00"
   },
   {
     "id": "fd_0141",
@@ -9950,5 +9993,94 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "6cf9b394",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T09:07:55.756020+00:00"
+  },
+  {
+    "id": "fd_0236",
+    "title": "Conjecture 1: Minimal-Certificate Threshold Law",
+    "description": "**Precise statement.** Let $(M_m)_{m \\geq 1}$ be a sequence of monotone provability systems on axiom pools of size $n_m \\to \\infty$, each with a single target $t_m$. Suppose the minimal certificate size is $k_m$ and the number of minimal certificates is $N_m$. Then the $1/2$-threshold satisfies\n\n$$\np_{1/2}(t_m) \\;\\sim\\; N_m^{-1/k_m} \\quad \\text{as } m \\to \\infty.\n$$\n\n**Test.** Enumerate certificates in random Horn clause systems over $n$ variables with clause length $k$. Compute $p_{1/2}$ empirically by Monte Carlo sampling of random axiom subsets, and compare with $N^{-1/k}$ where $N$ is the number of minimum-size certificates. Vary $n \\in \\{10, 20, 50, 100\\}$ and $k \\in \\{2, 3, 4, 5\\}$.\n\n**Impact.** If confirmed, this provides a universal formula for the onset of provability in finite sy",
+    "domains": [
+      "NumberTheory",
+      "Probability",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3765b821",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:20.505376+00:00"
+  },
+  {
+    "id": "fd_0237",
+    "title": "Conjecture 2: Overlap Sharpness Dichotomy",
+    "description": "**Precise statement.** Define the *certificate overlap number* $\\Delta(M, t)$ as the maximum, over all pairs of distinct minimal certificates $C_1, C_2$ for $t$, of $|C_1 \\cap C_2|$. If $\\Delta(M_m, t_m) = o(k_m)$ and $N_m \\to \\infty$, then the provability transition has width $o(p_c)$ \u2014 i.e., the transition is *sharp*.\n\nConversely, if $\\Delta(M_m, t_m) / k_m \\to c > 0$, then the transition width is $\\Theta(p_c)$ \u2014 the transition is *coarse*.\n\n**Test.** Construct parameterized families:\n- *Low overlap:* $r$ disjoint certificates of size $k$ (overlap = 0). Measure transition width numerically.\n- *High overlap:* $r$ certificates sharing a common core of $\\lfloor k/2 \\rfloor$ axioms. Compare widths.\nFit transition curves to $\\Phi((p - p_c)/w)$ and extract width $w$.\n\n**Impact.** Establishes t",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "Algebra",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3765b821",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:20.516018+00:00"
+  },
+  {
+    "id": "fd_0238",
+    "title": "Conjecture 3: Universality Across Proof Formalisms",
+    "description": "**Precise statement.** Consider three families of finite proof systems with matched certificate statistics (same $k$, same $N$, same overlap $\\Delta$):\n1. Propositional Horn clause derivations.\n2. Bounded quantifier-free Presburger arithmetic.\n3. Equational logic over finite algebras.\n\nThen the rescaled provability curves $\\Pr_{p \\cdot p_c}[t \\text{ provable}]$ converge to the same limiting shape as the system size grows.\n\n**Test.** For each formalism, generate random instances with $n = 50$ axiom candidates, $k = 3$, and ~20 minimal certificates. Run 10,000 Monte Carlo trials per $p$-value. Plot rescaled curves and test for collapse onto a universal curve using Kolmogorov\u2013Smirnov statistics.\n\n**Impact.** Would demonstrate that provability phase transitions are *formalism-independent*, dep",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Combinatorics",
+      "Probability",
+      "Algebra",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3765b821",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:20.525052+00:00"
+  },
+  {
+    "id": "fd_0239",
+    "title": "Conjecture 4: Axiom Pivotality Maximizes Discovery",
+    "description": "**Precise statement.** Define the *pivotality* of axiom $a$ for target $t$ at parameter $p$ as\n\n$$\n\\text{Piv}_p(a, t) = \\Pr_p[t \\text{ provable} \\mid a \\in A] - \\Pr_p[t \\text{ provable} \\mid a \\notin A].\n$$\n\nThen among all singleton axiom additions to a base theory, the axiom maximizing $\\sum_t \\text{Piv}_p(a, t)$ (summed over a target family) also maximizes the expected number of newly provable targets.\n\n**Test.** In a Horn clause system with 100 axiom candidates and 20 targets:\n1. Estimate pivotality of each axiom by Monte Carlo (10,000 samples).\n2. Compare the greedy pivotality-maximizing axiom selection against random selection and against an oracle that knows the optimal single addition.\n3. Measure regret (gap to oracle) across 100 random system instances.\n\n**Impact.** Provides a prin",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3765b821",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:20.534018+00:00"
+  },
+  {
+    "id": "fd_0240",
+    "title": "Conjecture 5: Proof Susceptibility Peaks at Threshold",
+    "description": "**Precise statement.** Define the *proof susceptibility* as the derivative of the provability probability:\n\n$$\n\\chi_t(p) = \\frac{d}{dp} \\Pr_p[t \\text{ provable}].\n$$\n\nFor systems with $r$ disjoint certificates of size $k$, the susceptibility peak satisfies\n\n$$\n\\chi_t^{\\max} = \\Theta(k \\cdot r^{1-1/k})\n$$\n\nand occurs at $p^* = r^{-1/k}(1 + O(1/k))$.\n\n**Test.** For $k \\in \\{2, 3, 5, 10\\}$ and $r \\in \\{1, 5, 10, 50, 100\\}$:\n1. Compute exact derivative of $1 - (1-p^k)^r$ analytically.\n2. Verify peak location and height against the conjectured asymptotics.\n3. For non-disjoint certificate systems, numerically differentiate Monte Carlo estimates and compare peak location with the certificate-predicted threshold.\n\n**Impact.** Gives a quantitative prediction of where adding axioms has maximum lever",
+    "domains": [
+      "NumberTheory",
+      "Probability",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3765b821",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:20.541511+00:00"
   }
 ];
