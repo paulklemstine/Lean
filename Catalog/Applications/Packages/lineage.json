@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T20:12:16Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "conjecture_4_riemannian_gradient_flow_convergence",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T20:12:59Z",
-      "hue": 92
+      "hue": 280
     },
     {
       "id": "conjecture_2_derivative_growth_as_a_semantic_depth",
@@ -25,7 +25,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T20:13:24Z",
-      "hue": 292
+      "hue": 270
     },
     {
       "id": "conjecture_4_log_linearization_characterizes_multi",
@@ -34,7 +34,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T20:13:42Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "prime_modular_morse_stability_for_neural_loss_land",
@@ -43,7 +43,16 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T20:14:03Z",
-      "hue": 90
+      "hue": 100
+    },
+    {
+      "id": "conjecture_4_multi_pole_chains_generate_lattice_rg",
+      "title": "Multi-Pole Chains Generate Lattice RG Maps: Cocycle Collapse and Emergent Semigroup Structure",
+      "domain": "Mathematical Physics / Renormalization Group Theory",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-20T20:14:27Z",
+      "hue": 92
     }
   ],
   "edges": [],
