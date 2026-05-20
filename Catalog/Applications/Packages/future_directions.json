@@ -1919,7 +1919,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "7a3a7b1b",
       "timestamp": "2026-05-20T01:03:43.220099+00:00"
     },
@@ -4251,6 +4251,23 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T09:06:54.687692+00:00"
+    },
+    {
+      "id": "fd_0222",
+      "title": "Refutation criterion",
+      "description": "Find a parameter $c$ with escaping orbit and rigorously certifiable KL divergence bounded away from 0 (e.g., $D_{KL} > 0.01$ for all $N \\leq 10^4$). This would require showing that the log-mantissa distribution fails to equidistribute, possibly via a semiconjugacy to a monomial map.",
+      "source_exp_id": "7a3a7b1b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7a3a7b1b",
+      "domains": [
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:07:22.284215+00:00"
     }
   ],
   "pruned": [
