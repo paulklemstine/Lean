@@ -513,8 +513,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "a01b36bc",
       "timestamp": "2026-05-20T00:22:10.984210+00:00"
     },
     {
@@ -2147,23 +2147,6 @@
       "timestamp": "2026-05-20T02:00:27.952468+00:00"
     },
     {
-      "id": "fd_0116",
-      "title": "Conjecture 4: Divisor-Scaled Coverage Density",
-      "description": "**Statement:** Define the \"coverage set\" C as the union of all multiples of integers covered by the even and mod-4≡3 families. Then the natural density of C among integers ≡ 1 (mod 4) exceeds 90%.\n\nMore precisely, among n ≡ 1 (mod 4) with n ≤ N, the fraction that can be written as n = k·m where m is even or m ≡ 3 (mod 4) exceeds 0.9 for all sufficiently large N.\n\n**Test:** For N = 10^5, enumerate all n ≡ 1 (mod 4) up to N. For each, check whether any divisor m of n satisfies m even or m ≡ 3 (mod 4), with m ≥ 2 and k = n/m ≥ 1. Compute the fraction covered.\n\n**Impact:** If the density is indeed very high, this would show that the scaling principle alone, combined with two simple seed families, resolves almost all cases. The remaining \"hard core\" of integers resisting all transfer methods wo",
-      "source_exp_id": "8aeabb51",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8aeabb51",
-      "domains": [
-        "NumberTheory"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T02:00:27.957110+00:00"
-    },
-    {
       "id": "fd_0117",
       "title": "Conjecture 5: Cubic Surface Geometry — Convex Hull Dimension",
       "description": "**Statement:** For every n ≥ 2 admitting at least 3 non-collinear ordered witnesses, the convex hull of the set {(x, y, z) : OrderedESWitness n x y z, x ≤ n²} has full dimension (dimension 2, as a subset of the surface) in ℝ³.\n\n**Test:** For n = 5, 7, 11, 13, enumerate all ordered witnesses with x, y, z ≤ n². Compute the convex hull of these integer points and check its dimension. If for any n the witnesses are collinear (dimension ≤ 1), the conjecture is refuted.\n\n**Impact:** Full-dimensional convex hulls would confirm that the solution surface has rich geometric structure, supporting approaches to the conjecture based on the geometry of numbers (e.g., Minkowski-type arguments for lattice points in convex bodies on cubic surfaces).\n\n---",
@@ -2659,23 +2642,6 @@
       "timestamp": "2026-05-20T03:01:41.317104+00:00"
     },
     {
-      "id": "fd_0142",
-      "title": "Conjecture 1: Second-Order Asymptotic Sharpness",
-      "description": "**Conjecture:** For fixed dimension $n$, the stereographic distortion bound satisfies\n$$\\frac{N(n,r) \\cdot \\mathrm{capVol}(n,r)}{\\mathrm{vol}(S^n)} = 1 + C_n r^2 + o(r^2) \\quad \\text{as } r \\to 0$$\nwhere $C_n = n(n+2)/12$ is the second-order coefficient arising from the Taylor expansion of the conformal factor over a cap of radius $r$.\n\n**Test:** For $n = 2$, compute $Q_2(r_k)$ numerically using the closed-form bound $8/(\\cos^2 r \\cdot (1 - \\cos r))$ for a sequence $r_k = \\pi/(6k)$ with $k = 1, 2, \\ldots, 100$. Fit the residual $(Q_2(r_k) - 1)/r_k^2$ and compare to the predicted $C_2 = 2/3$. Alternatively, compare against known spherical code databases (e.g., Neil Sloane's tables) for small $r$.\n\n**Impact:** If true, this establishes that stereographic transport is asymptotically optimal u",
-      "source_exp_id": "71236717",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/71236717",
-      "domains": [
-        "NumberTheory"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T03:08:58.141111+00:00"
-    },
-    {
       "id": "fd_0143",
       "title": "Conjecture 2: Dimension-2 Distortion Constant Improvement",
       "description": "**Conjecture:** The worst-case distortion factor $(2/\\cos r)^2$ in the $S^2$ bound can be replaced by the average distortion over the cap image:\n$$D_{\\mathrm{avg}}(r) = \\frac{1}{\\mathrm{area}(\\text{cap})} \\int_{\\text{cap}} \\frac{1}{\\lambda(x)^2} \\, d\\sigma < \\left(\\frac{2}{\\cos r}\\right)^2$$\nyielding a strictly tighter bound for all $0 < r < \\pi/2$.\n\n**Test:** Compute $D_{\\text{avg}}(r)$ numerically by integrating $(1 + \\|x\\|^2)^2/4$ over the stereographic image of a cap of radius $r$ centered at the south pole. Compare $D_{\\text{avg}}(r)$ to $(2/\\cos r)^2$ for $r \\in \\{0.1, 0.2, \\ldots, 1.5\\}$.\n\n**Impact:** This would give the tightest known conformal-chart-based bound for $S^2$ packing. The improvement factor grows with $r$, potentially making the bound competitive with Rankin-type estim",
@@ -2709,23 +2675,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T03:08:58.150581+00:00"
-    },
-    {
-      "id": "fd_0145",
-      "title": "Conjecture 4: Coding-Theoretic Transfer Bound",
-      "description": "**Conjecture:** For angular separations $\\theta \\in (\\pi/3, 2\\pi/3)$ on $S^2$, the stereographic bound $B_{\\text{stereo}}(2, \\theta/2)$ improves upon the naive volume (Gilbert-type) bound by a factor that is at most $(2/\\cos(\\theta/2))^2$ but at least $(4/3)$ for all $\\theta$ in this range. In particular, for the \"kissing number\" problem ($\\theta = \\pi/3$ on $S^2$), the stereographic bound gives $N \\leq 80$, which is within a factor of 7 of the true answer $N = 12$.\n\n**Test:** Compare the stereographic bound against the Rankin bound $N \\leq (n+1) \\cdot 2^{n/2}$ and the Kabatiansky-Levenshtein bound for $n = 2, 3, 4$ across a range of angular separations. Identify the regime where stereographic transport outperforms or complements these classical estimates.\n\n**Impact:** If the stereographic",
-      "source_exp_id": "71236717",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/71236717",
-      "domains": [
-        "NumberTheory"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T03:08:58.155202+00:00"
     },
     {
       "id": "fd_0146",
@@ -3095,23 +3044,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T04:04:51.063904+00:00"
-    },
-    {
-      "id": "fd_0164",
-      "title": "Conjecture 3: Symmetry Defect Growth Rate",
-      "description": "**Precise Statement:** Let $\\delta_k = \\mathrm{symmetryDefect}(\\mathrm{digits}_{10}(T^k(196)))$. Then there exists a constant $\\alpha > 0$ such that\n$$\\liminf_{k \\to \\infty} \\frac{\\delta_k}{\\log(T^k(196))} \\geq \\alpha.$$\n\nThat is, the symmetry defect grows at least logarithmically with the value.\n\n**Test:** Compute $\\delta_k$ and $\\log_{10}(T^k(196))$ for $k$ up to $10^5$. Plot $\\delta_k / \\log_{10}(T^k(196))$ and check if it stays bounded away from zero. If $\\delta_k / \\log_{10}(T^k(196)) \\to 0$, the conjecture is refuted.\n\n**Impact:** If true, this provides a quantitative lower bound on how far each iterate is from being a palindrome, growing with the iterate's size. This would be a Lyapunov-type certificate for non-termination: not only does the orbit never reach defect zero, but it sta",
-      "source_exp_id": "80496a50",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/80496a50",
-      "domains": [
-        "NumberTheory"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T04:04:51.071894+00:00"
     },
     {
       "id": "fd_0165",
@@ -3745,7 +3677,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "7ed44c20",
       "timestamp": "2026-05-20T08:07:49.732483+00:00"
     },
@@ -3896,8 +3828,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "fc6b3f4a",
       "timestamp": "2026-05-20T08:08:34.578561+00:00"
     },
     {
@@ -4990,8 +4922,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "4346710f",
       "timestamp": "2026-05-20T12:03:48.370272+00:00"
     },
     {
@@ -5058,27 +4990,6 @@
       "timestamp": "2026-05-20T12:04:15.911858+00:00"
     },
     {
-      "id": "fd_0266",
-      "title": "Conjecture 4: Min-Cut Principle for Causal Graphical Models",
-      "description": "**Statement.** The min-cut principle extends beyond quantum states to classical causal models. For any Bayesian network structured as a chain X₁ → X₂ → ⋯ → Xₙ, the \"integrated information\" (minimum mutual information across all bipartitions) equals the minimum single-bond mutual information I(Xₖ; Xₖ₊₁). The chain's Markov structure forces all correlations through sequential bonds, analogous to the MPS bond structure.\n\n**Test.** Sample random conditional probability tables for chain-structured Bayesian networks with n = 5–8 nodes and |Xᵢ| ∈ {2, 3, 4}. Compute mutual information I(X_S; X_{S^c}) for all nontrivial bipartitions S and compare the minimum with min_k I(Xₖ; Xₖ₊₁). Numerical equality (within tolerance) confirms; a strict gap falsifies.\n\n**Impact.** This would establish a bridge bet",
-      "source_exp_id": "2eeb8e55",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2eeb8e55",
-      "domains": [
-        "NumberTheory",
-        "Combinatorics",
-        "Probability",
-        "Physics",
-        "Bridges"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T12:04:15.922401+00:00"
-    },
-    {
       "id": "fd_0267",
       "title": "Conjecture 5: Formal Verification of the Transfer Matrix Rank Equality",
       "description": "**Statement.** For an MPS in left-canonical form up to bond k, the flattening rank across the prefix cut {0, …, k−1} equals exactly the bond dimension D_k. This requires formalizing the transfer matrix formalism in Lean 4: defining left-canonical MPS, showing that the transfer matrix from the left block has full column rank, and concluding that the flattening matrix has rank D_k.\n\n**Test.** Formalize the definition of left-canonical MPS tensors (each A_i satisfies Σ_s A_i^s† A_i^s = I) in Lean 4. State the theorem flatRank(ψ, {0,…,k-1}) = D_k under the left-canonical hypothesis. Attempt to prove it using Mathlib's linear algebra API. Success = a sorry-free proof compiles. Failure = identification of specific missing Mathlib infrastructure.\n\n**Impact.** This would complete the formal verifi",
@@ -5098,6 +5009,85 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:04:15.933324+00:00"
+    },
+    {
+      "id": "fd_0263",
+      "title": "Conjecture 1: Arithmetic Fingerprint Separation for Quartic Families",
+      "description": "**Conjecture:** Let $f_a(x) = x^4 - 2ax^2$ and $f_b(x) = x^4 - 2bx^2$ with $a, b \\in \\mathbb{Z} \\setminus \\{0\\}$. If $a/b$ is not a perfect square in $\\mathbb{Q}$, then there exist infinitely many odd primes $p$ for which the gradient descent maps $T(x) = x - f'(x)$ over $\\mathbb{F}_p$ have different fixed-point counts:\n$$\\#\\text{FixedPts}_p(f_a) \\neq \\#\\text{FixedPts}_p(f_b).$$\n\n**Test:** For primes $p \\leq B$ (starting with $B = 10^4$), compute fixed-point counts for both families. The conjecture predicts a separation rate stabilizing near $50\\%$ (governed by quadratic reciprocity). If the separation frequency drops to zero for large $B$, the conjecture is refuted.\n\n**Impact:** This would establish the first rigorous arithmetic invariant distinguishing optimization landscapes that are to",
+      "source_exp_id": "7ed44c20",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7ed44c20",
+      "domains": [
+        "NumberTheory",
+        "Topology",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:43.060736+00:00"
+    },
+    {
+      "id": "fd_0264",
+      "title": "Conjecture 2: Critical-Value Splitting Predicts Cycle-Length Distribution",
+      "description": "**Conjecture:** For generic integer polynomials $f, g$ of degree $d \\geq 3$ with distinct splitting fields for their critical-value polynomials (the polynomial whose roots are $f(c_i)$ for critical points $c_i$), the cycle-length distributions of the gradient step maps over $\\mathbb{F}_p$ differ for a positive density of primes.\n\n**Test:** For degree-4 polynomials, compute the splitting field of the critical-value polynomial over $\\mathbb{Q}$. For pairs with different Galois groups, compute cycle-length histograms of $T_{f,1}$ over $\\mathbb{F}_p$ for $p \\leq 10^3$. Compare distributions using Kolmogorov–Smirnov tests. If pairs with distinct Galois groups consistently show $p$-value $< 0.01$, the conjecture is supported.\n\n**Impact:** Would provide the first bridge from Galois theory of crit",
+      "source_exp_id": "7ed44c20",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7ed44c20",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Bridges",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:43.071106+00:00"
+    },
+    {
+      "id": "fd_0265",
+      "title": "Conjecture 3: Basin-Size Distribution Determines the Polynomial Up to Arithmetic",
+      "description": "**Conjecture:** Two polynomials $f, g \\in \\mathbb{Z}[X]$ of degree $d$ with the same basin-size distributions over $\\mathbb{F}_p$ for all but finitely many primes $p$ must satisfy: the splitting fields of $f'$ and $g'$ over $\\mathbb{Q}$ are isomorphic as Galois extensions.\n\n**Test:** Enumerate all monic integer polynomials of degree 4 with coefficients in $\\{-5, \\ldots, 5\\}$. For each pair, check if basin distributions match for all primes $p \\leq 200$. Among matching pairs, verify whether their derivative splitting fields are isomorphic (using PARI/GP or Sage). A single counterexample—matching basins but non-isomorphic splitting fields—refutes the conjecture.\n\n**Impact:** If true, this gives a dynamical characterization of arithmetic equivalence: optimization dynamics modulo primes fully ",
+      "source_exp_id": "7ed44c20",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7ed44c20",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:43.081088+00:00"
+    },
+    {
+      "id": "fd_0267",
+      "title": "Conjecture 5: p-Adic Convergence Rates of Gradient Descent Are Controlled by New",
+      "description": "**Conjecture:** For a polynomial $f \\in \\mathbb{Z}_p[X]$ and step size $\\eta \\in \\mathbb{Z}_p$, the $p$-adic convergence rate of gradient descent iterates $T^n(x_0)$ to a critical point $c$ is determined by the slopes of the Newton polygon of $f'(X) - f'(c)$ at $X = c$. Specifically, if the smallest slope of the Newton polygon is $\\lambda$, then $|T^n(x_0) - c|_p \\leq C \\cdot p^{-\\lambda n}$ for $x_0$ sufficiently close to $c$.\n\n**Test:** For the cubic family $f_a(x) = x^3 - ax$ over $\\mathbb{Z}_p$, compute Newton polygons of $f'(x) = 3x^2 - a$ at critical points $c = \\pm\\sqrt{a/3}$. Verify the convergence rate prediction by computing gradient iterates to high $p$-adic precision (e.g., mod $p^{100}$) and checking that the valuation $v_p(T^n(x_0) - c)$ grows linearly with slope $\\lambda$. F",
+      "source_exp_id": "7ed44c20",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7ed44c20",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Algebra",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:43.100653+00:00"
     }
   ],
   "pruned": [
@@ -5304,6 +5294,92 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T10:04:27.256521+00:00"
+    },
+    {
+      "id": "fd_0266",
+      "title": "Conjecture 4: Multivariate Fingerprint Separation via Hessian Discriminants",
+      "description": "**Conjecture:** For multivariate polynomial losses $f, g : \\mathbb{Z}^n \\to \\mathbb{Z}$ of total degree $d$, if the discriminants of the Hessian determinant polynomials $\\det(\\text{Hess}(f))$ and $\\det(\\text{Hess}(g))$ have different square-free parts, then the gradient descent functional graphs over $\\mathbb{F}_p^n$ have different cycle structures for infinitely many primes $p$.\n\n**Test:** Start with $n = 2$, $d = 3$. Compute Hessian discriminants symbolically. For families with distinct discriminants, enumerate $\\mathbb{F}_p^2$ for $p \\leq 100$ and compare functional graph invariants (number of fixed points, cycle lengths, connected components). Failure condition: if families with distinct Hessian discriminants show identical functional graph invariants for all tested primes.\n\n**Impact:*",
+      "source_exp_id": "7ed44c20",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7ed44c20",
+      "domains": [
+        "NumberTheory",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:04:43.091353+00:00"
+    },
+    {
+      "id": "fd_0116",
+      "title": "Conjecture 4: Divisor-Scaled Coverage Density",
+      "description": "**Statement:** Define the \"coverage set\" C as the union of all multiples of integers covered by the even and mod-4≡3 families. Then the natural density of C among integers ≡ 1 (mod 4) exceeds 90%.\n\nMore precisely, among n ≡ 1 (mod 4) with n ≤ N, the fraction that can be written as n = k·m where m is even or m ≡ 3 (mod 4) exceeds 0.9 for all sufficiently large N.\n\n**Test:** For N = 10^5, enumerate all n ≡ 1 (mod 4) up to N. For each, check whether any divisor m of n satisfies m even or m ≡ 3 (mod 4), with m ≥ 2 and k = n/m ≥ 1. Compute the fraction covered.\n\n**Impact:** If the density is indeed very high, this would show that the scaling principle alone, combined with two simple seed families, resolves almost all cases. The remaining \"hard core\" of integers resisting all transfer methods wo",
+      "source_exp_id": "8aeabb51",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8aeabb51",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T02:00:27.957110+00:00"
+    },
+    {
+      "id": "fd_0142",
+      "title": "Conjecture 1: Second-Order Asymptotic Sharpness",
+      "description": "**Conjecture:** For fixed dimension $n$, the stereographic distortion bound satisfies\n$$\\frac{N(n,r) \\cdot \\mathrm{capVol}(n,r)}{\\mathrm{vol}(S^n)} = 1 + C_n r^2 + o(r^2) \\quad \\text{as } r \\to 0$$\nwhere $C_n = n(n+2)/12$ is the second-order coefficient arising from the Taylor expansion of the conformal factor over a cap of radius $r$.\n\n**Test:** For $n = 2$, compute $Q_2(r_k)$ numerically using the closed-form bound $8/(\\cos^2 r \\cdot (1 - \\cos r))$ for a sequence $r_k = \\pi/(6k)$ with $k = 1, 2, \\ldots, 100$. Fit the residual $(Q_2(r_k) - 1)/r_k^2$ and compare to the predicted $C_2 = 2/3$. Alternatively, compare against known spherical code databases (e.g., Neil Sloane's tables) for small $r$.\n\n**Impact:** If true, this establishes that stereographic transport is asymptotically optimal u",
+      "source_exp_id": "71236717",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/71236717",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T03:08:58.141111+00:00"
+    },
+    {
+      "id": "fd_0145",
+      "title": "Conjecture 4: Coding-Theoretic Transfer Bound",
+      "description": "**Conjecture:** For angular separations $\\theta \\in (\\pi/3, 2\\pi/3)$ on $S^2$, the stereographic bound $B_{\\text{stereo}}(2, \\theta/2)$ improves upon the naive volume (Gilbert-type) bound by a factor that is at most $(2/\\cos(\\theta/2))^2$ but at least $(4/3)$ for all $\\theta$ in this range. In particular, for the \"kissing number\" problem ($\\theta = \\pi/3$ on $S^2$), the stereographic bound gives $N \\leq 80$, which is within a factor of 7 of the true answer $N = 12$.\n\n**Test:** Compare the stereographic bound against the Rankin bound $N \\leq (n+1) \\cdot 2^{n/2}$ and the Kabatiansky-Levenshtein bound for $n = 2, 3, 4$ across a range of angular separations. Identify the regime where stereographic transport outperforms or complements these classical estimates.\n\n**Impact:** If the stereographic",
+      "source_exp_id": "71236717",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/71236717",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T03:08:58.155202+00:00"
+    },
+    {
+      "id": "fd_0164",
+      "title": "Conjecture 3: Symmetry Defect Growth Rate",
+      "description": "**Precise Statement:** Let $\\delta_k = \\mathrm{symmetryDefect}(\\mathrm{digits}_{10}(T^k(196)))$. Then there exists a constant $\\alpha > 0$ such that\n$$\\liminf_{k \\to \\infty} \\frac{\\delta_k}{\\log(T^k(196))} \\geq \\alpha.$$\n\nThat is, the symmetry defect grows at least logarithmically with the value.\n\n**Test:** Compute $\\delta_k$ and $\\log_{10}(T^k(196))$ for $k$ up to $10^5$. Plot $\\delta_k / \\log_{10}(T^k(196))$ and check if it stays bounded away from zero. If $\\delta_k / \\log_{10}(T^k(196)) \\to 0$, the conjecture is refuted.\n\n**Impact:** If true, this provides a quantitative lower bound on how far each iterate is from being a palindrome, growing with the iterate's size. This would be a Lyapunov-type certificate for non-termination: not only does the orbit never reach defect zero, but it sta",
+      "source_exp_id": "80496a50",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/80496a50",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T04:04:51.071894+00:00"
     }
   ]
 }

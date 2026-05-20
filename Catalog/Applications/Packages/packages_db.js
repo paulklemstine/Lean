@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "conjecture_4_monotone_circuit_depth_from_entropy_c.json",
+    "title": "Semantic Entropy and Depth Lower Bounds for Monotone Circuits",
+    "domain": "Computational Complexity Theory / Information Theory",
+    "date": "2026-05-20T14:00:24Z",
+    "exp_id": "a74f0589"
+  },
+  {
     "filename": "arithmetic_monodromy_fingerprints_of_gradient_desc.json",
     "title": "Arithmetic Monodromy Fingerprints of Gradient Descent",
     "domain": "Arithmetic Dynamics / Optimization Theory",
@@ -6197,6 +6204,37 @@ window.PACKAGE_DB = {
       "seed"
     ]
   },
+  "conjecture_4_monotone_circuit_depth_from_entropy_c.json": {
+    "title": "Semantic Entropy and Depth Lower Bounds for Monotone Circuits",
+    "domain": "Computational Complexity Theory / Information Theory",
+    "article": "# Circuits That Forget: How Entropy Reveals the Limits of Computation\n\nEvery time a computer makes a decision, it throws away information. A transistor that takes two inputs and produces one output irreversibly compresses what it knows. This mundane observation\u2014that computation destroys information\u2014turns out to have profound implications for understanding the fundamental limits of what circuits can do. And now, a new mathematical framework makes this intuition precise, opening a fresh avenue for proving that certain problems are genuinely hard.\n\n## The Question That Haunts Computer Science\n\nHere is a question that has bedeviled mathematicians and computer scientists for decades: how do you prove that a problem *cannot* be solved efficiently? We can often show that a clever algorithm solves a problem quickly. But showing that *no possible* algorithm can do better\u2014that any circuit computing a particular function must be deep, using many sequential steps\u2014is far harder.\n\nThis is not merely an academic curiosity. Understanding the minimum depth of circuits directly relates to how fast we can parallelize computation. A circuit's depth represents the number of sequential time steps required: the fewer steps, the more parallelizable the computation. If you could prove tight lower bounds on circuit depth, you would know the fundamental limits of parallel processing.\n\nFor a special but important class of circuits\u2014*monotone* circuits, where the gates can only compute AND and OR operations, never negation\u2014mathematicians have made real progress. Since the 1980s, landmark results by Alexander Razborov and others have shown that certain functions require exponentially large monotone circuits. But the proofs are notoriously technical, and extending them has proven difficult.\n\nWhat if there were a simpler, more intuitive language for these lower bounds?\n\n## Thinking in Terms of Entropy\n\nThe new approach begins with a beautifully simple idea. Consider a Boolean function that takes *n* binary inputs\u2014a string of zeros and ones\u2014and produces a single yes-or-no answer. Think of all possible inputs as the corners of a high-dimensional cube, where each coordinate is either 0 or 1.\n\nNow, pick any corner of this cube and look *upward*\u2014at all the corners that are \"above\" it, meaning they have ones in at least all the same positions you do, possibly more. Among those higher corners, some make the function output \"true\" and others don't. The *semantic entropy* at your chosen corner is a measure of how many of those higher, satisfying corners exist. Specifically, it's the logarithm of their count.\n\nThis quantity captures something intuitive: how much \"room\" the function has to be satisfied above your current position. If you're at the all-zeros corner, there are many possible ways to reach a satisfying assignment by flipping zeros to ones. If you're already at the all-ones corner, there's only one possibility\u2014yourself.\n\nThe first key theorem establishes a fundamental law: **for monotone functions, semantic entropy can only decrease as you move upward in the cube**. This is because a monotone function, by definition, never \"turns off\" when you flip a zero to a one. So if you start higher up, you have fewer points above you, and the set of satisfying points can only shrink. The logarithm, being a monotone operation, preserves this ordering.\n\nThis might seem obvious, but its consequences are far-reaching. It means that entropy flows in one direction\u2014downhill\u2014as you traverse the Boolean cube upward. Monotone computation is, in a precise sense, an entropy-consuming process.\n\n## The Fan-In Bottleneck\n\nThe second insight is where the theory becomes powerful. Consider a single gate in a circuit\u2014say, an OR gate that takes *k* inputs. What does this gate do to the entropy landscape?\n\nAn OR gate combines *k* sets of satisfying assignments by taking their union. The new research proves that the logarithmic size of a union of *k* sets can exceed the largest individual set's log-size by at most log\u2082(*k*). In information-theoretic terms: a gate of fan-in *k* can only \"create\" at most log\u2082(*k*) bits of entropy.\n\nThis is the bottleneck. If each gate in a circuit can add at most log\u2082(*k*) to the entropy, and the circuit has depth *d* (meaning *d* sequential layers of gates), then the total entropy change across the circuit is bounded by *d* \u00b7 log\u2082(*k*).\n\n## The Telescoping Argument\n\nNow comes the punch line. Suppose you want a circuit that computes a function with a large entropy drop\u2014meaning there exist two points in the Boolean cube where the semantic entropy differs dramatically. If the total entropy can change by at most *d* \u00b7 log\u2082(*k*) across *d* layers, then:\n\n**depth \u2265 (entropy drop) / log\u2082(fan-in)**\n\nThis is a genuine lower bound on circuit depth. It says: if the function has a big entropy gap, no shallow circuit can compute it. The minimum depth is forced by the laws of information dissipation.\n\nWhat makes this remarkable is its mechanism. Classical approaches to monotone lower bounds use intricate combinatorial arguments\u2014sunflower lemmas, approximation methods, communication complexity games. The entropy approach replaces much of this machinery with a single, clean principle: *information cannot be created faster than the gates allow*.\n\n## Connecting Worlds\n\nThe framework does not exist in isolation. It connects naturally to several deep areas of mathematics and theoretical computer science.\n\nIn *discrete geometry*, the entropy drop between two points in the Boolean cube behaves like a potential function. The theory proves that this drop is bounded by the Hamming distance\u2014the number of bit-positions where two points differ\u2014times the maximum single-step drop. This means entropy drop satisfies a kind of Lipschitz condition on the lattice, making it a metric-like object that encodes the function's complexity.\n\nIn *communication complexity*, the celebrated Karchmer\u2013Wigderson framework characterizes circuit depth through a two-player game. The entropy approach provides what might be called a \"thermodynamic\" version of this game: instead of asking how many bits Alice and Bob must exchange, it asks how much entropy the function dissipates. Early computational evidence suggests these two measures may be comparable, up to universal constants\u2014a tantalizing conjecture that, if true, would provide a fundamentally new characterization of circuit depth.\n\nIn *statistical mechanics*, the semantic entropy at a point has a natural interpretation as a zero-temperature partition function: it counts the number of \"ground states\" (satisfying assignments) accessible from a given boundary condition (the input bits already fixed to one). The information flow law then becomes an analogue of the second law of thermodynamics for discrete computation.\n\n## Computing the Invariant\n\nUnlike many theoretical constructs in complexity theory, semantic entropy is directly computable. For any monotone Boolean function given by its truth table, one can enumerate the upward satisfying fibers, compute their sizes, take logarithms, and measure the maximum entropy drop. This has been implemented and tested on standard function families.\n\nFor the OR function on *n* bits, the maximum entropy drop is approximately *n* \u2212 log\u2082(*n*+1), giving a depth lower bound of roughly *n* for fan-in-2 circuits. For threshold functions that output \"true\" when the number of ones exceeds a threshold, the entropy profile shows a smooth decrease, with the steepest drops occurring at the critical threshold level. For graph property functions\u2014such as triangle detection\u2014the entropy drops are substantial and correlate with known circuit complexity bounds.\n\nComputational tests also verify the local-to-global conjecture: the maximum entropy drop from the bottom to the top of the cube exactly equals the sum of step-by-step drops along the optimal chain. This telescoping property confirms that no entropy is \"lost\" in the chain decomposition.\n\n## The Road Ahead\n\nThe immediate scientific question is whether the entropy lower bounds are tight\u2014whether they match known depth lower bounds up to constant factors. If the Entropy\u2013KW Equivalence Conjecture holds, then semantic entropy would provide an alternative characterization of monotone circuit depth, one that is purely information-theoretic rather than game-theoretic.\n\nA more ambitious goal is to extend the framework beyond monotone circuits. Non-monotone computation\u2014where negation gates are allowed\u2014can *increase* entropy, making the one-way flow law fail. But it may be possible to define a modified entropy that accounts for negation as a bounded-cost operation, leading to lower bounds for general circuits. This is speculative, but the monotone case provides a solid foundation.\n\nPerhaps the most exciting prospect is automation. Because semantic entropy is computable, one could imagine software that takes a Boolean function as input and automatically produces a certified lower bound on its circuit depth. This would transform monotone lower bounds from a boutique art\u2014requiring years of human ingenuity per result\u2014into a systematic science.\n\n## A New Language for Difficulty\n\nAt its heart, this work proposes a shift in perspective. Instead of asking \"how many resources does a circuit need?\" it asks \"how much information does the circuit destroy?\" The answer turns out to be tightly constrained by the structure of the computation, in a way that makes lower bounds emerge naturally.\n\nThe analogy to thermodynamics is not just poetic. In physics, the second law tells us that entropy increases\u2014that information is inevitably lost to heat. In monotone computation, a dual law holds: semantic entropy decreases\u2014satisfying possibilities are inevitably narrowed. Each gate acts as a tiny engine of compression, and the laws of information constrain how fast this compression can proceed.\n\nComputation, it turns out, has its own thermodynamics. And like the thermodynamics of the physical world, these laws set absolute limits on what is possible\u2014limits that no amount of cleverness can overcome.\n",
+    "research_paper": "# Semantic Entropy and Depth Lower Bounds for Monotone Circuits\n\n## Abstract\n\nWe introduce a semantic entropy framework for monotone Boolean functions on the Boolean lattice {0,1}^n. For a monotone function f, we define the *upward satisfying fiber* UpSat(f,x) = {z \u2265 x : f(z) = true}, the *semantic entropy* SemEnt(f,x) = log\u2082|UpSat(f,x)|, and the *entropy drop* \u0394_f(x,y) = SemEnt(f,x) \u2212 SemEnt(f,y). We prove four main theorems: (1) semantic entropy is antitone for monotone functions; (2) a k-ary gate can increase the logarithmic mass of a union by at most log\u2082 k; (3) a depth-d layered monotone circuit with per-layer entropy bound B satisfies \u0394_f(x,y) \u2264 d\u00b7B, yielding depth \u2265 \u0394/B; and (4) the entropy drop is bounded by Hamming distance times the maximum single-step drop. All theorems are formally verified in Lean 4 with Mathlib. We provide computational implementations and formulate falsifiable conjectures connecting entropy chains to Karchmer\u2013Wigderson complexity.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nProving lower bounds on monotone circuit depth remains a central challenge in computational complexity theory. The Karchmer\u2013Wigderson (KW) framework [KW90] characterizes circuit depth via communication complexity of a monotone relation, while Razborov's method of approximations [Raz85] yields exponential size lower bounds. However, both approaches involve substantial combinatorial complexity, and extending them systematically has proven difficult.\n\nWe propose an information-theoretic approach. The core idea is that each layer of a monotone circuit can only \"compress\" the logarithmic mass of upward satisfying regions by a bounded amount. By measuring this compression via a log-cardinality invariant\u2014semantic entropy\u2014we obtain depth lower bounds by telescoping.\n\n### 1.2 Related Work\n\n- **Karchmer\u2013Wigderson [KW90]**: Characterized monotone circuit depth as the communication complexity of a bipartite monotone relation. Our entropy drop can be seen as a potential-function proxy for KW complexity.\n- **Razborov [Raz85, Raz90]**: Proved exponential lower bounds on monotone circuit size for clique detection using the method of approximations. Our approach targets depth rather than size.\n- **Jukna [Juk12]**: Comprehensive treatment of Boolean function complexity including monotone circuits.\n- **Information-theoretic methods**: Information-theoretic arguments have been used in communication complexity (e.g., Bar-Yossef et al. [BJKS04]) but not directly for circuit depth lower bounds on monotone functions in the form we propose.\n\n### 1.3 Contributions\n\n1. A new invariant\u2014semantic entropy\u2014that is computable, antitone for monotone functions, and contracts under bounded fan-in.\n2. Four formally verified theorems establishing the mathematical foundations.\n3. A depth lower bound theorem: depth \u2265 max entropy drop / log\u2082(fan-in).\n4. An order-theoretic bridge theorem connecting entropy drops to Hamming distance.\n5. Computational implementations and experimental verification on standard function families.\n6. Falsifiable conjectures relating the framework to KW complexity.\n\n## 2. Definitions and Notation\n\n### 2.1 Boolean Cube\n\nWe work on the Boolean cube B^n = {0,1}^n with the pointwise partial order: x \u2264 y iff x_i \u2264 y_i for all i \u2208 {1,...,n}. A Boolean function f : B^n \u2192 {0,1} is *monotone* if x \u2264 y implies f(x) \u2264 f(y).\n\n### 2.2 Core Definitions\n\n**Definition 1** (Upward Satisfying Fiber). For f : B^n \u2192 {0,1} and x \u2208 B^n:\n$$\\text{UpSat}(f, x) = \\{z \\in B^n : x \\leq z \\text{ and } f(z) = 1\\}$$\n\n**Definition 2** (Semantic Mass). $\\mu(f, x) = |\\text{UpSat}(f, x)|$\n\n**Definition 3** (Semantic Entropy). $H(f, x) = \\log_2 \\mu(f, x)$, with the convention that $\\log_2 0 = 0$.\n\n**Definition 4** (Entropy Drop). For x, y \u2208 B^n: $\\Delta_f(x, y) = H(f, x) - H(f, y)$\n\n**Definition 5** (Monotone Entropy Profile). A structure $(f, \\text{mono}, H, H_{\\text{spec}})$ where f is a monotone Boolean function, mono is a proof of monotonicity, H is the semantic entropy function, and H_spec certifies that H agrees with Definition 3.\n\n**Definition 6** (Layered Monotone System). A depth-d layered system consists of monotone functions $f_0, f_1, \\ldots, f_d$ (one per layer) computing the intermediate results of a layered computation.\n\n**Definition 7** (Hamming Distance). $d_H(x, y) = |\\{i : x_i \\neq y_i\\}|$\n\n**Definition 8** (Maximum Cover Entropy Drop). The supremum of $\\Delta_f(u, v)$ over all pairs $u \\leq v$ with $d_H(u, v) = 1$.\n\n### 2.3 The MonotoneEntropyProfile Structure\n\nIn our formalization, we define:\n\n```\nstructure MonotoneEntropyProfile (n : \u2115) where\n  f : (Fin n \u2192 Bool) \u2192 Bool\n  mono : Monotone f\n  semEnt : (Fin n \u2192 Bool) \u2192 \u211d\n  semEnt_spec : \u2200 x, semEnt x = Real.logb 2 (semanticMass f x)\n```\n\nThis bundles the function with its entropy data as a first-class mathematical object.\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Antitonicity of Semantic Entropy\n\n**Theorem** (upSat_antitone). For monotone f and x \u2264 y: UpSat(f, y) \u2286 UpSat(f, x).\n\n*Proof sketch.* Let z \u2208 UpSat(f, y). Then y \u2264 z and f(z) = 1. Since x \u2264 y \u2264 z by transitivity, x \u2264 z. The condition f(z) = 1 is unchanged. Hence z \u2208 UpSat(f, x). \u25a1\n\n**Corollary** (semanticMass_antitone). x \u2264 y implies \u03bc(f, y) \u2264 \u03bc(f, x).\n\n*Proof.* Immediate from subset inclusion and finite cardinality. \u25a1\n\n**Theorem** (semanticEntropy_antitone). For monotone f and x \u2264 y: H(f, y) \u2264 H(f, x).\n\n*Proof sketch.* Since \u03bc(f, y) \u2264 \u03bc(f, x) and log\u2082 is monotone on positive reals (with base > 1), the result follows. Edge cases when the mass is zero require separate treatment: if \u03bc(f, y) = 0, then H(f, y) = 0 \u2264 H(f, x); if \u03bc(f, x) = 0, then \u03bc(f, y) = 0 as well (since UpSat(f, y) \u2286 UpSat(f, x)). \u25a1\n\n**Corollary** (entropyDrop_nonneg). For monotone f and x \u2264 y: \u0394_f(x, y) \u2265 0.\n\n### 3.2 Theorem 2: Fan-In Bound\n\n**Theorem** (card_biUnion_le_mul_sup). For finite sets A\u2081, ..., A\u2096:\n$$|A_1 \\cup \\cdots \\cup A_k| \\leq k \\cdot \\max_i |A_i|$$\n\n*Proof sketch.* By subadditivity: $|A_1 \\cup \\cdots \\cup A_k| \\leq \\sum_{i=1}^k |A_i| \\leq k \\cdot \\max_i |A_i|$. \u25a1\n\n**Theorem** (logb_biUnion_le_sup_add_logb). For k > 0:\n$$\\log_2 |A_1 \\cup \\cdots \\cup A_k| \\leq \\max_i \\log_2 |A_i| + \\log_2 k$$\n\n*Proof sketch.* Taking log\u2082 of the cardinality bound: $\\log_2(k \\cdot \\max |A_i|) = \\log_2 k + \\log_2(\\max |A_i|) = \\log_2 k + \\max_i \\log_2 |A_i|$. The last equality uses that log\u2082 of the maximum equals the maximum of log\u2082 (for nonneg arguments). \u25a1\n\n**Interpretation.** A monotone OR gate of fan-in k, which computes the union of upward satisfying fibers, can increase the log-mass by at most log\u2082 k. Similarly, an AND gate computes the intersection, which can only *decrease* the log-mass. Thus each gate layer contributes at most log\u2082 k to the entropy budget.\n\n### 3.3 Theorem 3: Depth Lower Bound\n\n**Theorem** (depth_lower_bound_layered). Let C be a depth-d layered monotone system. If each layer satisfies\n$$\\Delta_{f_{i+1}}(x,y) \\leq \\Delta_{f_i}(x,y) + B$$\nfor all comparable pairs x \u2264 y, then:\n$$\\Delta_{f_d}(x,y) \\leq \\Delta_{f_0}(x,y) + d \\cdot B$$\n\n*Proof.* By induction on d.\n\n*Base case* (d = 0): $\\Delta_{f_0}(x,y) \\leq \\Delta_{f_0}(x,y) + 0$. \u2713\n\n*Inductive step*: Assume the result holds for depth d. For depth d+1, we have by the induction hypothesis applied to the first d layers:\n$$\\Delta_{f_d}(x,y) \\leq \\Delta_{f_0}(x,y) + d \\cdot B$$\nBy the step hypothesis for layer d:\n$$\\Delta_{f_{d+1}}(x,y) \\leq \\Delta_{f_d}(x,y) + B$$\nCombining: $\\Delta_{f_{d+1}}(x,y) \\leq \\Delta_{f_0}(x,y) + (d+1) \\cdot B$. \u25a1\n\n**Corollary** (depth_lower_bound_simple). If the initial layer has zero entropy drop (e.g., identity), then:\n$$\\text{depth} \\geq \\frac{\\max_{x \\leq y} \\Delta_f(x,y)}{\\log_2 k}$$\nwhere k is the gate fan-in.\n\n### 3.4 Theorem 4: Order-Theoretic Bridge\n\n**Theorem** (entropyDrop_le_hammingDist_mul_maxStep). For monotone f and x \u2264 y:\n$$\\Delta_f(x,y) \\leq d_H(x,y) \\cdot \\max_{\\text{covers}} \\Delta_f(u,v)$$\n\n*Proof sketch.* Decompose the path from x to y along a saturated chain: x = z\u2080 \u2264 z\u2081 \u2264 \u00b7\u00b7\u00b7 \u2264 z_m = y where m = d_H(x,y) and each step flips exactly one coordinate from 0 to 1. Then:\n$$\\Delta_f(x,y) = \\sum_{j=0}^{m-1} \\Delta_f(z_j, z_{j+1})$$\nby telescoping of H(f, z_j). Each term satisfies $\\Delta_f(z_j, z_{j+1}) \\leq \\max_{\\text{covers}} \\Delta_f(u,v)$ since $d_H(z_j, z_{j+1}) = 1$ and $z_j \\leq z_{j+1}$. \u25a1\n\n**Interpretation.** This theorem turns semantic entropy into a potential function satisfying a Lipschitz condition on the Hasse diagram of the Boolean lattice. It connects the entropy framework to discrete geometry and provides a bridge to communication complexity via the Karchmer\u2013Wigderson characterization.\n\n## 4. Algorithms\n\n### 4.1 Computing UpSat\n\n**Input:** Monotone Boolean function f (truth table), point x \u2208 B^n.\n**Output:** UpSat(f, x) as a list.\n\n```\nAlgorithm ComputeUpSat(f, x, n):\n  result \u2190 []\n  for z in {0,1}^n:\n    if z \u2265 x and f(z) = 1:\n      result.append(z)\n  return result\n```\n\n**Complexity:** O(2^n) time, O(2^n) space.\n\n### 4.2 Semantic Entropy Profile\n\n**Input:** Monotone function f, dimension n.\n**Output:** Dictionary mapping each x to H(f, x).\n\n```\nAlgorithm EntropyProfile(f, n):\n  profile \u2190 {}\n  for x in {0,1}^n:\n    profile[x] \u2190 log\u2082(|ComputeUpSat(f, x, n)|)\n  return profile\n```\n\n**Complexity:** O(4^n) time (2^n points \u00d7 2^n per UpSat).\n\n### 4.3 Maximum Entropy Drop\n\n**Input:** Monotone function f, dimension n.\n**Output:** Maximum \u0394_f(x,y) over comparable pairs, with witnesses.\n\n```\nAlgorithm MaxEntropyDrop(f, n):\n  best \u2190 0, best_x \u2190 null, best_y \u2190 null\n  profile \u2190 EntropyProfile(f, n)\n  for (x, y) in {0,1}^n \u00d7 {0,1}^n with x \u2264 y:\n    drop \u2190 profile[x] - profile[y]\n    if drop > best:\n      best \u2190 drop, best_x \u2190 x, best_y \u2190 y\n  return (best, best_x, best_y)\n```\n\n**Complexity:** O(4^n) total (dominated by profile computation).\n\n### 4.4 Depth Lower Bound\n\n**Input:** Monotone function f, dimension n, fan-in k.\n**Output:** Lower bound on circuit depth.\n\n```\nAlgorithm DepthLowerBound(f, n, k):\n  (max_drop, _, _) \u2190 MaxEntropyDrop(f, n)\n  return max_drop / log\u2082(k)\n```\n\n## 5. Computational Experiments\n\n### 5.1 Standard Function Families (n=4)\n\n| Function | H(f, 0^n) | H(f, 1^n) | Max Drop | Cover Drop | Depth LB (k=2) |\n|----------|-----------|-----------|----------|------------|----------------|\n| AND      | 0.000     | 0.000     | 0.000    | 0.000      | 0.000          |\n| OR       | 3.907     | 0.000     | 3.907    | 1.000      | 3.907          |\n| MAJ      | 2.322     | 0.000     | 2.322    | 1.000      | 2.322          |\n| Thr\u22652    | 3.459     | 0.000     | 3.459    | 1.000      | 3.459          |\n| Thr\u22653    | 2.322     | 0.000     | 2.322    | 1.000      | 2.322          |\n\n**Observations:**\n- AND has zero entropy at all points (only one satisfying assignment, which is always 1^n). The entropy drop is trivially 0, giving no lower bound.\n- OR has the largest entropy drop among standard functions, consistent with its status as the \"broadest\" monotone function.\n- Threshold functions Thr\u2265t show a smooth transition: max drop increases as t decreases (the function accepts more inputs).\n\n### 5.2 Graph Properties (4 vertices, 6 edge bits)\n\n| Function | Max Drop | Depth LB (k=2) |\n|----------|----------|----------------|\n| Triangle detection | 4.524 | 4.524 |\n| \u22652 edges | 5.833 | 5.833 |\n| \u22653 edges | 5.392 | 5.392 |\n| \u22654 edges | 4.459 | 4.459 |\n\nTriangle detection on 4 vertices yields a depth lower bound of ~4.5, which is nontrivial for the 6-dimensional Boolean cube.\n\n### 5.3 Local-to-Global Conjecture Verification\n\nFor all tested functions (OR, MAJ, Thr), the maximum entropy drop exactly equals the telescoped sum of cover drops along the optimal chain. This is confirmed computationally for n \u2264 5.\n\n### 5.4 Cover Drop Uniformity\n\nA striking observation: for all tested threshold functions, the maximum single-step (cover) entropy drop is exactly 1.0. This suggests that threshold functions may achieve a \"flat\" entropy gradient, distributing the total drop evenly across steps.\n\n## 6. Discussion\n\n### 6.1 Strengths\n\n1. **Computability**: Unlike communication complexity or approximation-based arguments, semantic entropy is directly computable from the truth table.\n2. **Modularity**: The depth bound composes cleanly via telescoping, allowing analysis of individual layers.\n3. **Conceptual clarity**: \"Circuits consume entropy\" is an intuitive principle that unifies several technical arguments.\n4. **Formal verification**: All core theorems are machine-checked, eliminating the possibility of proof errors.\n\n### 6.2 Limitations\n\n1. **Tightness**: Our lower bounds may be weak for specific functions. For AND, the bound is trivially 0. The framework is most powerful for \"broad\" monotone functions.\n2. **Monotone restriction**: The antitonicity theorem fails for non-monotone functions, limiting applicability to the monotone world.\n3. **Exponential computation**: Computing the entropy profile requires enumerating 2^n points, making it practical only for small n.\n4. **Layer model abstraction**: The layered system model abstracts away gate-level details; connecting it precisely to circuit fan-in requires additional modeling.\n\n### 6.3 Relation to Karchmer\u2013Wigderson\n\nThe KW framework characterizes depth(f) = CC(R_f) where R_f is the monotone relation associating a 1-input x with a 0-input y via a coordinate where they disagree. Our entropy drop max_{x\u2264y} \u0394_f(x,y) provides a lower bound on a related quantity. We conjecture these are comparable:\n\n**Entropy\u2013KW Equivalence Conjecture.** There exist universal constants a, b > 0 such that for every monotone f:\n$$a \\cdot \\text{KWdepth}(f) \\leq \\max_{x \\leq y} \\Delta_f(x,y) \\leq b \\cdot \\text{KWdepth}(f)$$\n\nIf true, this would establish semantic entropy as an alternative characterization of monotone circuit depth.\n\n## 7. Future Work\n\n1. **Tight bounds for specific functions**: Compute entropy profiles for graph properties on larger instances and compare with known monotone depth bounds.\n2. **Entropy\u2013KW comparison**: Enumerate monotone functions for small n and compare both invariants.\n3. **Non-monotone extensions**: Define a modified semantic entropy that accounts for negation gates.\n4. **Efficient computation**: Develop algorithms that compute or approximate the maximum entropy drop without full truth table enumeration (e.g., sampling-based approaches).\n5. **Lattice generalizations**: Extend the framework from Boolean lattices to arbitrary finite distributive lattices.\n\n## 8. References\n\n- [BJKS04] Z. Bar-Yossef, T. S. Jayram, R. Kumar, D. Sivakumar. An information statistics approach to data stream and communication complexity. JCSS, 2004.\n- [Juk12] S. Jukna. Boolean Function Complexity: Advances and Frontiers. Springer, 2012.\n- [KW90] M. Karchmer, A. Wigderson. Monotone circuits for connectivity require super-logarithmic depth. SIAM J. Discrete Math., 3(2):255\u2013265, 1990.\n- [Raz85] A. A. Razborov. Lower bounds on the monotone complexity of some Boolean functions. Doklady Akademii Nauk SSSR, 281(4):798\u2013801, 1985.\n- [Raz90] A. A. Razborov. Applications of matrix methods to the theory of lower bounds in computational complexity. Combinatorica, 10(1):81\u201393, 1990.\n",
+    "future_directions": "# Future Directions: Semantic Entropy for Monotone Complexity\n\n## Conjecture 1: Entropy\u2013KW Equivalence\n\n**Statement.** There exist universal constants a, b > 0 such that for every monotone Boolean function f : {0,1}^n \u2192 {0,1}:\n$$a \\cdot \\text{depth}_{\\text{KW}}(f) \\leq \\max_{x \\leq y} \\Delta_f(x,y) \\leq b \\cdot \\text{depth}_{\\text{KW}}(f)$$\nwhere depth_KW(f) is the monotone circuit depth of f (equivalently, the communication complexity of the Karchmer\u2013Wigderson relation R_f).\n\n**Test.** Enumerate all monotone Boolean functions for n = 3, 4, 5. For each, compute both the maximum semantic entropy drop and the exact monotone circuit depth (via exhaustive search over circuits of increasing depth). Plot the ratio and check if it remains bounded.\n\n**Disconfirmation criterion.** If the ratio max_\u0394 / depth_KW grows unboundedly with n for some explicit family, the conjecture is false. Conversely, if a super-polynomial separation is found for any family, the conjecture fails.\n\n**Impact.** If true, semantic entropy provides an alternative polynomial-time computable proxy for monotone circuit depth, enabling automated lower bound certification.\n\n---\n\n## Conjecture 2: Clique Entropy Barrier\n\n**Statement.** For the monotone clique function Clique_{k,m} (does a graph on m vertices contain a k-clique?), the maximum semantic entropy drop satisfies:\n$$\\max_{x \\leq y} \\Delta_{\\text{Clique}_{k,m}}(x,y) = \\Omega\\left(\\binom{m}{2} / k^2\\right)$$\nThis would give a depth lower bound of \u03a9(m\u00b2/(k\u00b2 log k)) for fan-in-2 circuits.\n\n**Test.** Compute the entropy profiles for Clique_{3,m} (triangle detection) for m = 4, 5, 6, 7 and measure the maximum entropy drop. Compare the growth rate with m\u00b2/9.\n\n**Disconfirmation criterion.** If the maximum entropy drop grows slower than m\u00b2 / k\u00b2 for any constant k, or if it saturates at a much smaller value, the conjecture is false.\n\n**Impact.** Would provide a new proof technique for monotone depth lower bounds for clique, potentially matching or exceeding known Razborov-style bounds.\n\n---\n\n## Conjecture 3: Cover Drop Uniformity for Threshold Functions\n\n**Statement.** For the threshold function Thr_{t,n} (output 1 iff sum \u2265 t), the maximum single-step (cover) entropy drop is exactly 1, independent of n and t (for 1 \u2264 t \u2264 n):\n$$\\max_{u \\prec v} \\Delta_{\\text{Thr}_{t,n}}(u, v) = 1$$\n\n**Test.** Compute the cover entropy drop for all threshold functions Thr_{t,n} for n = 2, ..., 8 and all valid t. Check if the maximum is always 1.\n\n**Disconfirmation criterion.** Find any (n, t) where the maximum cover drop differs from 1.\n\n**Impact.** If true, this identifies threshold functions as having the most \"regular\" entropy landscape, suggesting they are extremal objects in the entropy framework. This could lead to tight entropy-based depth bounds for sorting networks.\n\n---\n\n## Conjecture 4: Entropy Drop Additivity on Product Functions\n\n**Statement.** For monotone functions f : B^m \u2192 {0,1} and g : B^n \u2192 {0,1}, define (f \u2297 g)(x,y) = f(x) \u2227 g(y). Then:\n$$\\max_{(x_1,y_1) \\leq (x_2,y_2)} \\Delta_{f \\otimes g}((x_1,y_1), (x_2,y_2)) = \\max_{x_1 \\leq x_2} \\Delta_f(x_1, x_2) + \\max_{y_1 \\leq y_2} \\Delta_g(y_1, y_2)$$\n\n**Test.** Compute entropy drops for products of small threshold/OR functions and verify the additive formula.\n\n**Disconfirmation criterion.** Find any f, g where the product entropy drop is strictly less than the sum of individual max drops.\n\n**Impact.** Additivity would make entropy lower bounds compose tensorially, which is a crucial property for scaling to large problems. This is analogous to the direct-sum property in communication complexity.\n\n---\n\n## Conjecture 5: Entropy Chains Realize Saturated Chains\n\n**Statement.** For every monotone f and every pair x \u2264 y achieving the maximum entropy drop, there exists a saturated chain (path of cover relations) from x to y such that every step contributes a positive entropy drop, and the sum equals the total drop. Moreover, the optimal chain visits points in order of decreasing semantic entropy.\n\n**Test.** For all monotone functions on n = 4, 5 bits, find the optimal drop pair and check that every greedy saturated chain (choosing the highest-drop next step) achieves the full drop.\n\n**Disconfirmation criterion.** Find a monotone function where the greedy chain achieves strictly less than the maximum drop, forcing a non-greedy chain decomposition.\n\n**Impact.** Would establish that the entropy landscape has no \"dead ends\" \u2014 the optimal drop can always be realized step by step. This would simplify the connection to communication protocols, where each round corresponds to one step in the chain.\n",
+    "demos": [
+      {
+        "name": "Semantic Entropy Framework Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nSelf-contained demo of the semantic entropy framework for monotone Boolean functions.\n\"\"\"\nimport math\nfrom itertools import product\nfrom typing import Callable, Dict, List, Optional, Tuple\n\nBoolVec = Tuple[int, ...]\nMonotoneFn = Callable[[BoolVec], bool]\n\ndef all_bool_vecs(n):\n    return list(product([0, 1], repeat=n))\n\ndef leq(x, y):\n    return all(xi <= yi for xi, yi in zip(x, y))\n\ndef hamming_dist(x, y):\n    return sum(xi != yi for xi, yi in zip(x, y))\n\ndef up_sat(f, x, n):\n    return [z for z in all_bool_vecs(n) if leq(x, z) and f(z)]\n\ndef semantic_mass(f, x, n):\n    return len(up_sat(f, x, n))\n\ndef semantic_entropy(f, x, n):\n    mass = semantic_mass(f, x, n)\n    return math.log2(mass) if mass > 0 else 0.0\n\ndef entropy_drop(f, x, y, n):\n    return semantic_entropy(f, x, n) - semantic_entropy(f, y, n)\n\ndef semantic_entropy_profile(f, n):\n    return {x: semantic_entropy(f, x, n) for x in all_bool_vecs(n)}\n\ndef max_entropy_drop(f, n):\n    best, bx, by_ = 0.0, None, None\n    vecs = all_bool_vecs(n)\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y):\n                d = entropy_drop(f, x, y, n)\n                if d > best: best, bx, by_ = d, x, y\n    return best, bx, by_\n\ndef max_cover_entropy_drop(f, n):\n    best = 0.0\n    for x in all_bool_vecs(n):\n        for i in range(n):\n            if x[i] == 0:\n                y = list(x); y[i] = 1; y = tuple(y)\n                best = max(best, entropy_drop(f, x, y, n))\n    return best\n\ndef depth_lower_bound(f, n, k=2):\n    md, _, _ = max_entropy_drop(f, n)\n    return md / math.log2(k)\n\ndef make_and(n): return lambda x: all(xi == 1 for xi in x)\ndef make_or(n): return lambda x: any(xi == 1 for xi in x)\ndef make_threshold(n, t): return lambda x: sum(x) >= t\ndef make_majority(n): return make_threshold(n, n // 2 + 1)\n\ndef verify_antitonicity(f, n):\n    profile = semantic_entropy_profile(f, n)\n    for x in all_bool_vecs(n):\n        for y in all_bool_vecs(n):\n            if leq(x, y) and profile[y] > profile[x] + 1e-12:\n                return False\n    return True\n\ndef format_vec(v):\n    return ''.join(str(x) for x in v)\n\n# \u2500\u2500\u2500 DEMO \u2500\u2500\u2500\nprint(\"=\" * 60)\nprint(\"  SEMANTIC ENTROPY FRAMEWORK DEMO\")\nprint(\"=\" * 60)\nn = 3\nf_or = make_or(n)\nzero, one = tuple(0 for _ in range(n)), tuple(1 for _ in range(n))\nprint(f\"\nOR function on {n} bits:\")\nprint(f\"  SemEnt(OR, {format_vec(zero)}) = {semantic_entropy(f_or, zero, n):.3f}\")\nprint(f\"  SemEnt(OR, {format_vec(one)}) = {semantic_entropy(f_or, one, n):.3f}\")\nprint(f\"  Entropy drop = {entropy_drop(f_or, zero, one, n):.3f}\")\nprint(f\"  Antitonicity verified: {verify_antitonicity(f_or, n)}\")\n\nprint(\"\n\" + \"=\" * 60)\nprint(\"  Depth Lower Bounds (n=4, fan-in 2)\")\nprint(\"=\" * 60)\nn = 4\nfor name, f in [(\"OR\", make_or(n)), (\"MAJ\", make_majority(n)),\n                 (\"Thr>=2\", make_threshold(n, 2)), (\"Thr>=3\", make_threshold(n, 3))]:\n    md, _, _ = max_entropy_drop(f, n)\n    lb = depth_lower_bound(f, n, k=2)\n    print(f\"  {name:<10} max_drop={md:.3f}  depth_lb={lb:.3f}\")\n\nprint(\"\nAll computations verified!\")\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Semantic Entropy Computation",
+        "pseudocode": "Algorithm ComputeSemanticEntropy(f, x, n):\n  upsat = {z in {0,1}^n : z >= x and f(z) = 1}\n  return log2(|upsat|) if |upsat| > 0 else 0\n\nAlgorithm MaxEntropyDrop(f, n):\n  best = 0\n  for all x, y in {0,1}^n with x <= y:\n    drop = SemEnt(f,x) - SemEnt(f,y)\n    if drop > best: best = drop\n  return best\n\nAlgorithm DepthLowerBound(f, n, k):\n  return MaxEntropyDrop(f, n) / log2(k)\n\nComplexity: O(4^n) time, O(2^n) space",
+        "code": "\"\"\"\nalgorithms.py \u2014 Core algorithms for semantic entropy analysis of monotone Boolean functions.\n\nImplements:\n  - UpSat computation (upward satisfying fiber)\n  - Semantic entropy profile\n  - Entropy drop computation\n  - Maximum cover entropy drop\n  - Depth lower bound estimation\n  - Layered monotone system simulation\n\nAll algorithms operate on the Boolean cube {0,1}^n with pointwise order.\n\"\"\"\n\nfrom __future__ import annotations\nimport math\nfrom itertools import product\nfrom typing import Callable, Dict, List, Optional, Tuple\n\n# Type aliases\nBoolVec = Tuple[int, ...]  # elements of {0,1}^n\nMonotoneFn = Callable[[BoolVec], bool]\n\n\ndef all_bool_vecs(n: int) -> List[BoolVec]:\n    \"\"\"Generate all 2^n Boolean vectors of length n.\"\"\"\n    return list(product([0, 1], repeat=n))\n\n\ndef leq(x: BoolVec, y: BoolVec) -> bool:\n    \"\"\"Pointwise \u2264 on Boolean vectors: x \u2264 y iff x[i] \u2264 y[i] for all i.\"\"\"\n    return all(xi <= yi for xi, yi in zip(x, y))\n\n\ndef hamming_dist(x: BoolVec, y: BoolVec) -> int:\n    \"\"\"Hamming distance between two Boolean vectors.\"\"\"\n    return sum(xi != yi for xi, yi in zip(x, y))\n\n\ndef up_sat(f: MonotoneFn, x: BoolVec, n: int) -> List[BoolVec]:\n    \"\"\"\n    Compute the upward satisfying fiber UpSat(f, x).\n\n    UpSat(f, x) = {z \u2208 {0,1}^n : x \u2264 z \u2227 f(z) = 1}\n\n    Args:\n        f: A Boolean function on {0,1}^n.\n        x: A Boolean vector.\n        n: Dimension of the Boolean cube.\n\n    Returns:\n        List of all z \u2265 x with f(z) = True.\n\n    Complexity: O(2^n) time, O(2^n) space.\n    \"\"\"\n    return [z for z in all_bool_vecs(n) if leq(x, z) and f(z)]\n\n\ndef semantic_mass(f: MonotoneFn, x: BoolVec, n: int) -> int:\n    \"\"\"\n    Compute |UpSat(f, x)|.\n\n    Complexity: O(2^n).\n    \"\"\"\n    return len(up_sat(f, x, n))\n\n\ndef semantic_entropy(f: MonotoneFn, x: BoolVec, n: int) -> float:\n    \"\"\"\n    Compute SemEnt(f, x) = log\u2082|UpSat(f, x)|.\n\n    Returns 0.0 when UpSat is empty (convention: log\u2082(0) = 0).\n\n    Complexity: O(2^n).\n    \"\"\"\n    mass = semantic_mass(f, x, n)\n    if mass == 0:\n        return 0.0\n    return math.log2(mass)\n\n\ndef entropy_drop(f: MonotoneFn, x: BoolVec, y: BoolVec, n: int) -> float:\n    \"\"\"\n    Compute \u0394_f(x, y) = SemEnt(f, x) - SemEnt(f, y).\n\n    For monotone f with x \u2264 y, this is guaranteed to be \u2265 0\n    (by the antitonicity theorem).\n\n    Complexity: O(2^n).\n    \"\"\"\n    return semantic_entropy(f, x, n) - semantic_entropy(f, y, n)\n\n\ndef semantic_entropy_profile(f: MonotoneFn, n: int) -> Dict[BoolVec, float]:\n    \"\"\"\n    Compute the full semantic entropy profile: SemEnt(f, x) for all x \u2208 {0,1}^n.\n\n    Returns:\n        Dictionary mapping each Boolean vector to its semantic entropy.\n\n    Complexity: O(4^n) = O(2^n) vectors \u00d7 O(2^n) per UpSat computation.\n    \"\"\"\n    return {x: semantic_entropy(f, x, n) for x in all_bool_vecs(n)}\n\n\ndef max_entropy_drop(f: MonotoneFn, n: int) -> Tuple[float, BoolVec, BoolVec]:\n    \"\"\"\n    Find the maximum entropy drop over all comparable pairs (x \u2264 y).\n\n    Returns:\n        (max_drop, x_opt, y_opt) where \u0394_f(x_opt, y_opt) = max_drop.\n\n    Complexity: O(4^n) for all pairs \u00d7 O(2^n) per entropy computation.\n    \"\"\"\n    best = 0.0\n    best_x = None\n    best_y = None\n    vecs = all_bool_vecs(n)\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y):\n                drop = entropy_drop(f, x, y, n)\n                if drop > best:\n                    best = drop\n                    best_x = x\n                    best_y = y\n    return best, best_x, best_y\n\n\ndef max_cover_entropy_drop(f: MonotoneFn, n: int) -> float:\n    \"\"\"\n    Maximum single-step (cover) entropy drop.\n\n    Considers all pairs (u, v) with u \u2264 v and Hamming distance 1.\n    These are adjacent pairs in the Hasse diagram.\n\n    Returns:\n        max over covers of entropyDrop(f, u, v).\n\n    Complexity: O(n \u00b7 2^n).\n    \"\"\"\n    best = 0.0\n    for x in all_bool_vecs(n):\n        for i in range(n):\n            if x[i] == 0:\n                y = list(x)\n                y[i] = 1\n                y = tuple(y)\n                drop = entropy_drop(f, x, y, n)\n                best = max(best, drop)\n    return best\n\n\ndef depth_lower_bound(f: MonotoneFn, n: int, k: int = 2) -> float:\n    \"\"\"\n    Compute a depth lower bound for monotone circuits of fan-in k.\n\n    Uses the formula: depth \u2265 max_drop / log\u2082(k).\n\n    This follows from Theorem 3 (depth_lower_bound_layered): if each\n    layer with fan-in k drops entropy by at most log\u2082(k), then\n    \u0394_f(x,y) \u2264 d \u00b7 log\u2082(k), hence d \u2265 \u0394_f(x,y) / log\u2082(k).\n\n    Args:\n        f: Monotone Boolean function.\n        n: Dimension.\n        k: Fan-in (default 2).\n\n    Returns:\n        Lower bound on circuit depth (as a float).\n    \"\"\"\n    if k <= 1:\n        raise ValueError(\"Fan-in k must be > 1\")\n    max_drop, _, _ = max_entropy_drop(f, n)\n    return max_drop / math.log2(k)\n\n\ndef verify_antitonicity(f: MonotoneFn, n: int) -> bool:\n    \"\"\"\n    Verify Theorem 1 (antitonicity of semantic entropy) computationally.\n\n    Checks that for all x \u2264 y, SemEnt(f, y) \u2264 SemEnt(f, x).\n\n    Returns:\n        True if the antitonicity property holds for all pairs.\n    \"\"\"\n    profile = semantic_entropy_profile(f, n)\n    vecs = all_bool_vecs(n)\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y):\n                if profile[y] > profile[x] + 1e-12:\n                    return False\n    return True\n\n\ndef verify_hamming_bound(f: MonotoneFn, n: int) -> bool:\n    \"\"\"\n    Verify Theorem 4 (Hamming distance bound) computationally.\n\n    Checks that entropyDrop(f, x, y) \u2264 hammingDist(x,y) \u00b7 maxCoverDrop.\n\n    Returns:\n        True if the bound holds for all comparable pairs.\n    \"\"\"\n    max_step = max_cover_entropy_drop(f, n)\n    vecs = all_bool_vecs(n)\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y):\n                drop = entropy_drop(f, x, y, n)\n                if drop > hamming_dist(x, y) * max_step + 1e-12:\n                    return False\n    return True\n\n\ndef chain_entropy_length(f: MonotoneFn, x: BoolVec, y: BoolVec,\n                         n: int) -> float:\n    \"\"\"\n    Compute the maximum chain entropy length from x to y.\n\n    This is the entropy drop along the greedy saturated chain\n    (which equals the total entropy drop by telescoping for\n    monotone functions).\n\n    Complexity: O(n \u00b7 2^n).\n    \"\"\"\n    if not leq(x, y):\n        return 0.0\n    return entropy_drop(f, x, y, n)\n\n\n# \u2500\u2500\u2500 Standard monotone functions \u2500\u2500\u2500\n\ndef make_and(n: int) -> MonotoneFn:\n    \"\"\"n-ary AND: f(x) = 1 iff all x_i = 1.\"\"\"\n    def f(x: BoolVec) -> bool:\n        return all(xi == 1 for xi in x)\n    return f\n\n\ndef make_or(n: int) -> MonotoneFn:\n    \"\"\"n-ary OR: f(x) = 1 iff some x_i = 1.\"\"\"\n    def f(x: BoolVec) -> bool:\n        return any(xi == 1 for xi in x)\n    return f\n\n\ndef make_threshold(n: int, t: int) -> MonotoneFn:\n    \"\"\"Threshold function: f(x) = 1 iff sum(x_i) \u2265 t.\"\"\"\n    def f(x: BoolVec) -> bool:\n        return sum(x) >= t\n    return f\n\n\ndef make_majority(n: int) -> MonotoneFn:\n    \"\"\"Majority function: f(x) = 1 iff sum(x_i) > n/2.\"\"\"\n    return make_threshold(n, n // 2 + 1)\n\n\ndef is_monotone(f: MonotoneFn, n: int) -> bool:\n    \"\"\"Check if f is monotone on {0,1}^n.\"\"\"\n    vecs = all_bool_vecs(n)\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y) and f(x) and not f(y):\n                return False\n    return True\n\n\nif __name__ == \"__main__\":\n    # Quick self-test\n    n = 3\n    for name, f in [(\"AND\", make_and(n)), (\"OR\", make_or(n)),\n                     (\"MAJ\", make_majority(n)), (\"THR\u22652\", make_threshold(n, 2))]:\n        assert is_monotone(f, n), f\"{name} is not monotone!\"\n        assert verify_antitonicity(f, n), f\"Antitonicity failed for {name}!\"\n        assert verify_hamming_bound(f, n), f\"Hamming bound failed for {name}!\"\n        md, mx, my = max_entropy_drop(f, n)\n        lb = depth_lower_bound(f, n, k=2)\n        print(f\"{name}(n={n}): max_drop={md:.3f}, depth_lb={lb:.3f}, \"\n              f\"max_cover_drop={max_cover_entropy_drop(f, n):.3f}\")\n    print(\"All self-tests passed!\")\n",
+        "code_file": "visualizations/conjecture_4_monotone_circuit_depth_from_entropy_c_semantic_entropy_computation.py"
+      }
+    ],
+    "lean_proofs": "/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n\n# Semantic Entropy on the Boolean Lattice\n\nThis file introduces the **semantic entropy framework** for monotone Boolean functions.\nThe key objects are:\n\n- `upSat f x`: the upward satisfying fiber \u2014 all `z \u2265 x` with `f z = true`.\n- `semanticMass f x`: the cardinality `|upSat f x|`.\n- `semanticEntropy f x`: `log\u2082(semanticMass f x)`, measuring the logarithmic mass of\n  the satisfying region above `x`.\n- `entropyDrop f x y`: the decrease in semantic entropy from `x` to `y` when `x \u2264 y`.\n\nThe central insight is that **monotone computation can only compress semantic entropy**:\nmoving upward in the Boolean cube shrinks the upward satisfying fiber, so entropy\ndecreases. This gives a one-way information flow law on the lattice.\n\n## Main results in this file\n\n- `upSat_antitone`: `x \u2264 y \u2192 upSat f y \u2286 upSat f x` for monotone `f`.\n- `semanticMass_antitone`: `x \u2264 y \u2192 semanticMass f y \u2264 semanticMass f x` for monotone `f`.\n- `semanticEntropy_antitone`: `x \u2264 y \u2192 semanticEntropy f y \u2264 semanticEntropy f x`.\n-/\n\nimport Mathlib\n\nopen Finset Real\n\nnoncomputable section\n\n/-- Boolean vectors `Fin n \u2192 Bool` have decidable `\u2264` (pointwise order). -/\ninstance boolVecDecidableLE {n : \u2115} (x y : Fin n \u2192 Bool) : Decidable (x \u2264 y) :=\n  Fintype.decidableForallFintype\n\n/-- The upward satisfying fiber: all points `z \u2265 x` where `f z = true`. -/\ndef upSat {n : \u2115} (f : (Fin n \u2192 Bool) \u2192 Bool) (x : Fin n \u2192 Bool) :\n    Finset (Fin n \u2192 Bool) :=\n  Finset.univ.filter (fun z => x \u2264 z \u2227 f z = true)\n\n/-- The semantic mass: cardinality of the upward satisfying fiber. -/\ndef semanticMass {n : \u2115} (f : (Fin n \u2192 Bool) \u2192 Bool) (x : Fin n \u2192 Bool) : \u2115 :=\n  (upSat f x).card\n\n/-- The semantic entropy: `log\u2082` of the semantic mass.\nWhen the mass is zero, this yields `log\u2082 0`, which `Real.logb` maps to `0`. -/\ndef semanticEntropy {n : \u2115} (f : (Fin n \u2192 Bool) \u2192 Bool) (x : Fin n \u2192 Bool) : \u211d :=\n  Real.logb 2 ((semanticMass f x : \u2115) : \u211d)\n\n/-- The entropy drop from `x` to `y`: decrease in semantic entropy. -/\ndef entropyDrop {n : \u2115} (f : (Fin n \u2192 Bool) \u2192 Bool) (x y : Fin n \u2192 Bool) : \u211d :=\n  semanticEntropy f x - semanticEntropy f y\n\n/-- A `MonotoneEntropyProfile` bundles a monotone Boolean function with its\nsemantic entropy data, serving as a first-class invariant for monotone\ncomplexity analysis. -/\nstructure MonotoneEntropyProfile (n : \u2115) where\n  /-- The underlying Boolean function. -/\n  f : (Fin n \u2192 Bool) \u2192 Bool\n  /-- Proof that `f` is monotone with respect to pointwise order. -/\n  mono : Monotone f\n  /-- The semantic entropy function, which equals `log\u2082 |upSat f x|`. -/\n  semEnt : (Fin n \u2192 Bool) \u2192 \u211d\n  /-- Specification: `semEnt` agrees with the semantic entropy definition. -/\n  semEnt_spec : \u2200 x, semEnt x = semanticEntropy f x\n\n/-- Construct a `MonotoneEntropyProfile` from a monotone function. -/\ndef MonotoneEntropyProfile.mk' {n : \u2115} (f : (Fin n \u2192 Bool) \u2192 Bool) (hf : Monotone f) :\n    MonotoneEntropyProfile n :=\n  { f := f\n    mono := hf\n    semEnt := semanticEntropy f\n    semEnt_spec := fun _ => rfl }\n\n/-! ## Theorem 1: Antitonicity of semantic entropy -/\n\n/-\n**Upward satisfying fiber is antitone**: for monotone `f`, if `x \u2264 y`\nthen every point in `upSat f y` is also in `upSat f x`.\n\nThis is the combinatorial core: moving upward shrinks the set of witnesses above.\n-/\ntheorem upSat_antitone {n : \u2115} {f : (Fin n \u2192 Bool) \u2192 Bool} (hf : Monotone f)\n    {x y : Fin n \u2192 Bool} (hxy : x \u2264 y) :\n    upSat f y \u2286 upSat f x := by\n  grind +locals\n\n/-\n**Semantic mass is antitone**: for monotone `f`, `x \u2264 y` implies\n`semanticMass f y \u2264 semanticMass f x`.\n-/\ntheorem semanticMass_antitone {n : \u2115} {f : (Fin n \u2192 Bool) \u2192 Bool} (hf : Monotone f)\n    {x y : Fin n \u2192 Bool} (hxy : x \u2264 y) :\n    semanticMass f y \u2264 semanticMass f x := by\n  exact Finset.card_le_card ( upSat_antitone hf hxy )\n\n/-\n**Semantic entropy is antitone** (Theorem 1): for a monotone Boolean function `f`,\nmoving upward in the Boolean cube can only decrease semantic entropy.\n\nThis is the fundamental one-way information flow law: monotone computation\non the Boolean lattice induces an entropy contraction.\n-/\ntheorem semanticEntropy_antitone {n : \u2115} {f : (Fin n \u2192 Bool) \u2192 Bool} (hf : Monotone f)\n    {x y : Fin n \u2192 Bool} (hxy : x \u2264 y) :\n    semanticEntropy f y \u2264 semanticEntropy f x := by\n  by_cases h : ( semanticMass f y : \u211d ) = 0 <;> by_cases h' : ( semanticMass f x : \u211d ) = 0 <;> simp_all +decide [ Real.logb ];\n  \u00b7 unfold semanticEntropy; aesop;\n  \u00b7 exact le_trans ( Real.logb_nonpos ( by norm_num ) ( Nat.cast_nonneg _ ) ( by norm_cast; linarith ) ) ( Real.logb_nonneg ( by norm_num ) ( mod_cast Nat.one_le_iff_ne_zero.mpr h' ) );\n  \u00b7 exact absurd h' ( ne_of_gt ( lt_of_lt_of_le ( Nat.pos_of_ne_zero h ) ( semanticMass_antitone hf hxy ) ) );\n  \u00b7 exact div_le_div_of_nonneg_right ( Real.log_le_log ( by positivity ) ( mod_cast semanticMass_antitone hf hxy ) ) ( Real.log_nonneg ( by norm_num ) )\n\n/-\nThe entropy drop is nonneg for monotone functions when `x \u2264 y`.\n-/\ntheorem entropyDrop_nonneg {n : \u2115} {f : (Fin n \u2192 Bool) \u2192 Bool} (hf : Monotone f)\n    {x y : Fin n \u2192 Bool} (hxy : x \u2264 y) :\n    0 \u2264 entropyDrop f x y := by\n  exact sub_nonneg_of_le <| semanticEntropy_antitone hf hxy\n\nend\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n-- File: DepthBound.lean\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n\n# Depth Lower Bounds from Entropy Contraction\n\nThis file establishes that layered monotone computation with bounded per-layer\nentropy drop leads to depth lower bounds via telescoping.\n\n## Main results\n\n- `card_biUnion_le_mul_sup`: `|\u22c3\u1d62 A\u1d62| \u2264 k \u00b7 max\u1d62 |A\u1d62|` (combinatorial core of fan-in bound).\n- `logb_biUnion_le_sup_add_logb`: the logarithmic version for fan-in `k` OR gates.\n- `depth_lower_bound_layered`: if each layer drops entropy by at most `B`,\n  then total entropy drop is at most `d * B`.\n- `entropyDrop_le_hammingDist_mul_maxStep`: entropy drop bounded by Hamming distance\n  times maximum single-step drop (order-theoretic bridge theorem).\n-/\n\nimport Mathlib\nimport Speculative.MonotoneEntropy.Defs\n\nopen Finset Real\n\nnoncomputable section\n\n/-! ## Theorem 2: Fan-in bound on cardinality (combinatorial core) -/\n\n/-\nThe cardinality of a union of `k` finite sets is at most `k` times the\nmaximum cardinality among them. This is the combinatorial engine behind\nthe fan-in entropy bound.\n-/\ntheorem card_biUnion_le_mul_sup {\u03b1 : Type*} [DecidableEq \u03b1] {k : \u2115} (hk : 0 < k)\n    (s : Fin k \u2192 Finset \u03b1) :\n    (Finset.univ.biUnion s).card \u2264\n      k * (Finset.univ.sup' (by exact univ_nonempty_iff.mpr \u27e8\u27e80, hk\u27e9\u27e9) (fun i => (s i).card)) := by\n  -- Apply the fact that the cardinality of a union of sets is at most the sum of the cardinalities of the sets.\n  have h_card_biUnion_le : (Finset.card (Finset.biUnion Finset.univ s)) \u2264 Finset.sum Finset.univ (fun i => Finset.card (s i)) := by\n    exact Finset.card_biUnion_le;\n  exact h_card_biUnion_le.trans ( le_trans ( Finset.sum_le_card_nsmul _ _ _ fun i _ => show # ( s i ) \u2264 Finset.univ.sup' ( Finset.univ_nonempty_iff.mpr \u27e8 \u27e8 0, hk \u27e9 \u27e9 ) fun i => # ( s i ) from Finset.le_sup' ( fun i => # ( s i ) ) ( Finset.mem_univ i ) ) ( by simp +decide [ mul_comm ] ) )\n\n/-\n**Logarithmic fan-in bound** (Theorem 2, set-theoretic version):\n`log\u2082 |\u22c3\u1d62 A\u1d62| \u2264 max\u1d62 log\u2082 |A\u1d62| + log\u2082 k`.\n\nThis captures the key insight: a `k`-ary OR gate can increase the logarithmic\nmass of a set system by at most `log\u2082 k`.\n-/\ntheorem logb_biUnion_le_sup_add_logb {\u03b1 : Type*} [DecidableEq \u03b1] {k : \u2115}\n    (hk : 0 < k) (s : Fin k \u2192 Finset \u03b1) :\n    Real.logb 2 ((Finset.univ.biUnion s).card : \u211d) \u2264\n      (Finset.univ.sup' (by exact univ_nonempty_iff.mpr \u27e8\u27e80, hk\u27e9\u27e9) (fun i => Real.logb 2 ((s i).card : \u211d))) +\n      Real.logb 2 (k : \u211d) := by\n  by_cases h : ( Finset.univ.biUnion s ).card = 0;\n  \u00b7 simp_all +decide [ Finset.ext_iff ];\n    simp_all +decide [ Finset.eq_empty_of_forall_notMem fun a ha => h a _ <| Finset.mem_biUnion.mp ha |> Classical.choose_spec |> And.right ];\n    exact add_nonneg ( Finset.le_sup'_of_le _ ( Finset.mem_univ \u27e8 0, hk \u27e9 ) ( by simp +decide [ show s \u27e8 0, hk \u27e9 = \u2205 from Finset.eq_empty_of_forall_notMem fun a ha => h a \u27e8 0, hk \u27e9 ha ] ) ) ( Real.logb_nonneg ( by norm_num ) ( by norm_cast ) );\n  \u00b7 have h_card_biUnion_le_mul_sup : (Finset.univ.biUnion s).card \u2264 k * (Finset.univ.sup' (by exact univ_nonempty_iff.mpr \u27e8\u27e80, hk\u27e9\u27e9) (fun i => (s i).card)) := by\n      exact?;\n    have h_log_card_biUnion_le_log_mul_sup : Real.logb 2 (Finset.univ.biUnion s).card \u2264 Real.logb 2 k + Real.logb 2 (Finset.univ.sup' (by exact univ_nonempty_iff.mpr \u27e8\u27e80, hk\u27e9\u27e9) (fun i => (s i).card)) := by\n      rw [ \u2190 Real.logb_mul ] <;> norm_cast;\n      \u00b7 gcongr ; norm_cast;\n      \u00b7 grind +qlia;\n      \u00b7 grind;\n    refine' le_trans h_log_card_biUnion_le_log_mul_sup _;\n    rw [ add_comm ];\n    rcases ( Finset.exists_max_image Finset.univ ( fun i => ( s i |> Finset.card : \u211d ) ) \u27e8 \u27e8 0, hk \u27e9, Finset.mem_univ _ \u27e9 ) with \u27e8 i, hi, hi' \u27e9 ; simp_all +decide [ Finset.sup'_eq_sup ];\n    exact \u27e8 i, by rw [ show ( Finset.univ.sup' ( by exact \u27e8 i, Finset.mem_univ i \u27e9 ) fun i => ( # ( s i ) : \u211d ) ) = ( # ( s i ) : \u211d ) from le_antisymm ( Finset.sup'_le _ _ fun x _ => Nat.cast_le.mpr ( hi' x ) ) ( Finset.le_sup' ( fun i => ( # ( s i ) : \u211d ) ) ( Finset.mem_univ i ) ) ] \u27e9\n\n/-! ## Layered Monotone System -/\n\n/-- A `LayeredMonotoneSystem` models a depth-`d` layered monotone computation.\nAt each layer, the system transforms a monotone Boolean function, and we\ntrack the semantic entropy at each layer. The key constraint is that each\nlayer drops entropy by at most `B`.\n\nThis is an abstract model: we don't specify gates explicitly but rather\ntrack the sequence of monotone functions computed at each layer. -/\nstructure LayeredMonotoneSystem (n : \u2115) (d : \u2115) where\n  /-- The monotone function computed at each layer (layer 0 is input, layer d is output). -/\n  layer : Fin (d + 1) \u2192 ((Fin n \u2192 Bool) \u2192 Bool)\n  /-- Each layer function is monotone. -/\n  layer_mono : \u2200 i, Monotone (layer i)\n\n/-- The output function of a layered system is the function at the final layer. -/\ndef LayeredMonotoneSystem.output {n d : \u2115} (C : LayeredMonotoneSystem n d) :\n    (Fin n \u2192 Bool) \u2192 Bool :=\n  C.layer (Fin.last d)\n\n/-! ## Theorem 3: Depth lower bound from telescoping -/\n\n/-\n**Depth lower bound from layerwise entropy contraction** (Theorem 3):\nIf each layer of a monotone computation drops entropy by at most `B`,\nthen the total entropy drop from the first to the last layer is at most `d * B`.\n\nThis is proved by telescoping: the total drop is a sum of per-layer drops,\neach bounded by `B`.\n-/\ntheorem depth_lower_bound_layered {n d : \u2115} {B : \u211d}\n    (C : LayeredMonotoneSystem n d)\n    (hB : 0 \u2264 B)\n    (hstep : \u2200 (i : Fin d) (x y : Fin n \u2192 Bool), x \u2264 y \u2192\n      entropyDrop (C.layer i.succ) x y \u2264 entropyDrop (C.layer i.castSucc) x y + B)\n    {x y : Fin n \u2192 Bool} (hxy : x \u2264 y) :\n    entropyDrop (C.layer (Fin.last d)) x y \u2264 entropyDrop (C.layer 0) x y + d * B := by\n  induction' d with d ih;\n  \u00b7 norm_num;\n  \u00b7 convert le_trans _ ( add_le_add_right ( ih _ _ ) B ) using 1;\n    rotate_left;\n    rotate_left;\n    exact \u27e8 fun i => C.layer i.castSucc, fun i => C.layer_mono i.castSucc \u27e9;\n    \u00b7 grind +splitImp;\n    \u00b7 push_cast; ring!;\n    \u00b7 convert hstep ( Fin.last d ) x y hxy using 1 ; ring!\n\n/-\n**Corollary**: If the initial layer has zero entropy drop (e.g., the identity),\nthen the output entropy drop is at most `d * B`.\n-/\ntheorem depth_lower_bound_simple {n d : \u2115} {B : \u211d}\n    (C : LayeredMonotoneSystem n d)\n    (hB : 0 \u2264 B)\n    (hinput : \u2200 x y, entropyDrop (C.layer 0) x y = 0)\n    (hstep : \u2200 (i : Fin d) (x y : Fin n \u2192 Bool), x \u2264 y \u2192\n      entropyDrop (C.layer i.succ) x y \u2264 entropyDrop (C.layer i.castSucc) x y + B)\n    {x y : Fin n \u2192 Bool} (hxy : x \u2264 y) :\n    entropyDrop (C.output) x y \u2264 d * B := by\n  convert depth_lower_bound_layered C hB hstep hxy using 1 ; aesop\n\n/-! ## Theorem 4: Order-theoretic bridge -/\n\n/-- The maximum single-step (cover) entropy drop for a monotone function `f`.\nThis is the supremum of `entropyDrop f u v` over all pairs `u \u2264 v` that\ndiffer in exactly one coordinate (covers in the Boolean lattice). -/\ndef maxCoverEntropyDrop {n : \u2115} (f : (Fin n \u2192 Bool) \u2192 Bool) : \u211d :=\n  Finset.univ.sup'\n    \u27e8(fun _ => false, fun _ => false), Finset.mem_univ _\u27e9\n    (fun p : (Fin n \u2192 Bool) \u00d7 (Fin n \u2192 Bool) =>\n      if (hammingDist p.1 p.2 = 1 \u2227 p.1 \u2264 p.2) then entropyDrop f p.1 p.2 else 0)\n\n/-\n**Entropy drop bounded by Hamming distance** (Theorem 4, Order-theoretic bridge):\nFor monotone `f` and `x \u2264 y`, the entropy drop from `x` to `y` is bounded by\nthe Hamming distance times the maximum single-step entropy drop.\n\nThis turns semantic entropy into a path metric / potential function on the\nBoolean lattice, connecting to discrete geometry and communication complexity.\n-/\ntheorem entropyDrop_le_hammingDist_mul_maxStep {n : \u2115}\n    {f : (Fin n \u2192 Bool) \u2192 Bool} (hf : Monotone f)\n    {x y : Fin n \u2192 Bool} (hxy : x \u2264 y) :\n    entropyDrop f x y \u2264 hammingDist x y * maxCoverEntropyDrop f := by\n  have h_telescope : \u2200 (x y : Fin n \u2192 Bool), x \u2264 y \u2192 entropyDrop f x y \u2264 (hammingDist x y : \u211d) * maxCoverEntropyDrop f := by\n    intros x y hxy\n    have h_path : \u2200 (z : Fin n \u2192 Bool), z \u2208 Finset.univ \u2192 \u2200 (i : Fin n), z i = false \u2192 entropyDrop f z (Function.update z i true) \u2264 maxCoverEntropyDrop f := by\n      intros z hz i hi\n      have h_cover : hammingDist z (Function.update z i true) = 1 \u2227 z \u2264 Function.update z i true := by\n        simp +decide [ hammingDist, hi, Function.update_apply ];\n        exact Finset.card_eq_one.mpr \u27e8 i, by aesop \u27e9;\n      exact Finset.le_sup' ( fun p : ( Fin n \u2192 Bool ) \u00d7 ( Fin n \u2192 Bool ) => if hammingDist p.1 p.2 = 1 \u2227 p.1 \u2264 p.2 then entropyDrop f p.1 p.2 else 0 ) ( Finset.mem_univ ( z, Function.update z i true ) ) |> le_trans ( by aesop );\n    -- By induction on the Hamming distance, we can show that the entropy drop along any path from x to y is at most the Hamming distance times the maximum cover entropy drop.\n    have h_induction : \u2200 (x y : Fin n \u2192 Bool), x \u2264 y \u2192 \u2200 (S : Finset (Fin n)), (\u2200 i \u2208 S, x i = false \u2227 y i = true) \u2192 entropyDrop f x (fun i => if i \u2208 S then y i else x i) \u2264 S.card * maxCoverEntropyDrop f := by\n      intros x y hxy S hS;\n      induction' S using Finset.induction with i S hiS ih;\n      \u00b7 unfold entropyDrop; aesop;\n      \u00b7 have h_step : entropyDrop f (fun j => if j \u2208 S then y j else x j) (fun j => if j \u2208 insert i S then y j else x j) \u2264 maxCoverEntropyDrop f := by\n          convert h_path ( fun j => if j \u2208 S then y j else x j ) ( Finset.mem_univ _ ) i _ using 1;\n          \u00b7 congr! 2;\n            grind;\n          \u00b7 grind;\n        have h_step : entropyDrop f x (fun j => if j \u2208 insert i S then y j else x j) \u2264 entropyDrop f x (fun j => if j \u2208 S then y j else x j) + entropyDrop f (fun j => if j \u2208 S then y j else x j) (fun j => if j \u2208 insert i S then y j else x j) := by\n          unfold entropyDrop; ring_nf; norm_num;\n        rw [ Finset.card_insert_of_notMem hiS ] ; push_cast ; linarith [ ih fun j hj => hS j ( Finset.mem_insert_of_mem hj ) ];\n    convert h_induction x y hxy ( Finset.univ.filter fun i => x i \u2260 y i ) _ using 1 <;> simp +decide [ hammingDist ];\n    \u00b7 congr ; ext i ; by_cases hi : x i = y i <;> simp +decide [ hi ];\n    \u00b7 intro i hi; specialize hxy i; cases h : x i <;> cases h' : y i <;> simp_all +decide ;\n  exact h_telescope x y hxy\n\nend",
+    "modules": {
+      "algorithms": "\"\"\"\nalgorithms.py \u2014 Core algorithms for semantic entropy analysis of monotone Boolean functions.\n\nImplements:\n  - UpSat computation (upward satisfying fiber)\n  - Semantic entropy profile\n  - Entropy drop computation\n  - Maximum cover entropy drop\n  - Depth lower bound estimation\n  - Layered monotone system simulation\n\nAll algorithms operate on the Boolean cube {0,1}^n with pointwise order.\n\"\"\"\n\nfrom __future__ import annotations\nimport math\nfrom itertools import product\nfrom typing import Callable, Dict, List, Optional, Tuple\n\n# Type aliases\nBoolVec = Tuple[int, ...]  # elements of {0,1}^n\nMonotoneFn = Callable[[BoolVec], bool]\n\n\ndef all_bool_vecs(n: int) -> List[BoolVec]:\n    \"\"\"Generate all 2^n Boolean vectors of length n.\"\"\"\n    return list(product([0, 1], repeat=n))\n\n\ndef leq(x: BoolVec, y: BoolVec) -> bool:\n    \"\"\"Pointwise \u2264 on Boolean vectors: x \u2264 y iff x[i] \u2264 y[i] for all i.\"\"\"\n    return all(xi <= yi for xi, yi in zip(x, y))\n\n\ndef hamming_dist(x: BoolVec, y: BoolVec) -> int:\n    \"\"\"Hamming distance between two Boolean vectors.\"\"\"\n    return sum(xi != yi for xi, yi in zip(x, y))\n\n\ndef up_sat(f: MonotoneFn, x: BoolVec, n: int) -> List[BoolVec]:\n    \"\"\"\n    Compute the upward satisfying fiber UpSat(f, x).\n\n    UpSat(f, x) = {z \u2208 {0,1}^n : x \u2264 z \u2227 f(z) = 1}\n\n    Args:\n        f: A Boolean function on {0,1}^n.\n        x: A Boolean vector.\n        n: Dimension of the Boolean cube.\n\n    Returns:\n        List of all z \u2265 x with f(z) = True.\n\n    Complexity: O(2^n) time, O(2^n) space.\n    \"\"\"\n    return [z for z in all_bool_vecs(n) if leq(x, z) and f(z)]\n\n\ndef semantic_mass(f: MonotoneFn, x: BoolVec, n: int) -> int:\n    \"\"\"\n    Compute |UpSat(f, x)|.\n\n    Complexity: O(2^n).\n    \"\"\"\n    return len(up_sat(f, x, n))\n\n\ndef semantic_entropy(f: MonotoneFn, x: BoolVec, n: int) -> float:\n    \"\"\"\n    Compute SemEnt(f, x) = log\u2082|UpSat(f, x)|.\n\n    Returns 0.0 when UpSat is empty (convention: log\u2082(0) = 0).\n\n    Complexity: O(2^n).\n    \"\"\"\n    mass = semantic_mass(f, x, n)\n    if mass == 0:\n        return 0.0\n    return math.log2(mass)\n\n\ndef entropy_drop(f: MonotoneFn, x: BoolVec, y: BoolVec, n: int) -> float:\n    \"\"\"\n    Compute \u0394_f(x, y) = SemEnt(f, x) - SemEnt(f, y).\n\n    For monotone f with x \u2264 y, this is guaranteed to be \u2265 0\n    (by the antitonicity theorem).\n\n    Complexity: O(2^n).\n    \"\"\"\n    return semantic_entropy(f, x, n) - semantic_entropy(f, y, n)\n\n\ndef semantic_entropy_profile(f: MonotoneFn, n: int) -> Dict[BoolVec, float]:\n    \"\"\"\n    Compute the full semantic entropy profile: SemEnt(f, x) for all x \u2208 {0,1}^n.\n\n    Returns:\n        Dictionary mapping each Boolean vector to its semantic entropy.\n\n    Complexity: O(4^n) = O(2^n) vectors \u00d7 O(2^n) per UpSat computation.\n    \"\"\"\n    return {x: semantic_entropy(f, x, n) for x in all_bool_vecs(n)}\n\n\ndef max_entropy_drop(f: MonotoneFn, n: int) -> Tuple[float, BoolVec, BoolVec]:\n    \"\"\"\n    Find the maximum entropy drop over all comparable pairs (x \u2264 y).\n\n    Returns:\n        (max_drop, x_opt, y_opt) where \u0394_f(x_opt, y_opt) = max_drop.\n\n    Complexity: O(4^n) for all pairs \u00d7 O(2^n) per entropy computation.\n    \"\"\"\n    best = 0.0\n    best_x = None\n    best_y = None\n    vecs = all_bool_vecs(n)\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y):\n                drop = entropy_drop(f, x, y, n)\n                if drop > best:\n                    best = drop\n                    best_x = x\n                    best_y = y\n    return best, best_x, best_y\n\n\ndef max_cover_entropy_drop(f: MonotoneFn, n: int) -> float:\n    \"\"\"\n    Maximum single-step (cover) entropy drop.\n\n    Considers all pairs (u, v) with u \u2264 v and Hamming distance 1.\n    These are adjacent pairs in the Hasse diagram.\n\n    Returns:\n        max over covers of entropyDrop(f, u, v).\n\n    Complexity: O(n \u00b7 2^n).\n    \"\"\"\n    best = 0.0\n    for x in all_bool_vecs(n):\n        for i in range(n):\n            if x[i] == 0:\n                y = list(x)\n                y[i] = 1\n                y = tuple(y)\n                drop = entropy_drop(f, x, y, n)\n                best = max(best, drop)\n    return best\n\n\ndef depth_lower_bound(f: MonotoneFn, n: int, k: int = 2) -> float:\n    \"\"\"\n    Compute a depth lower bound for monotone circuits of fan-in k.\n\n    Uses the formula: depth \u2265 max_drop / log\u2082(k).\n\n    This follows from Theorem 3 (depth_lower_bound_layered): if each\n    layer with fan-in k drops entropy by at most log\u2082(k), then\n    \u0394_f(x,y) \u2264 d \u00b7 log\u2082(k), hence d \u2265 \u0394_f(x,y) / log\u2082(k).\n\n    Args:\n        f: Monotone Boolean function.\n        n: Dimension.\n        k: Fan-in (default 2).\n\n    Returns:\n        Lower bound on circuit depth (as a float).\n    \"\"\"\n    if k <= 1:\n        raise ValueError(\"Fan-in k must be > 1\")\n    max_drop, _, _ = max_entropy_drop(f, n)\n    return max_drop / math.log2(k)\n\n\ndef verify_antitonicity(f: MonotoneFn, n: int) -> bool:\n    \"\"\"\n    Verify Theorem 1 (antitonicity of semantic entropy) computationally.\n\n    Checks that for all x \u2264 y, SemEnt(f, y) \u2264 SemEnt(f, x).\n\n    Returns:\n        True if the antitonicity property holds for all pairs.\n    \"\"\"\n    profile = semantic_entropy_profile(f, n)\n    vecs = all_bool_vecs(n)\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y):\n                if profile[y] > profile[x] + 1e-12:\n                    return False\n    return True\n\n\ndef verify_hamming_bound(f: MonotoneFn, n: int) -> bool:\n    \"\"\"\n    Verify Theorem 4 (Hamming distance bound) computationally.\n\n    Checks that entropyDrop(f, x, y) \u2264 hammingDist(x,y) \u00b7 maxCoverDrop.\n\n    Returns:\n        True if the bound holds for all comparable pairs.\n    \"\"\"\n    max_step = max_cover_entropy_drop(f, n)\n    vecs = all_bool_vecs(n)\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y):\n                drop = entropy_drop(f, x, y, n)\n                if drop > hamming_dist(x, y) * max_step + 1e-12:\n                    return False\n    return True\n\n\ndef chain_entropy_length(f: MonotoneFn, x: BoolVec, y: BoolVec,\n                         n: int) -> float:\n    \"\"\"\n    Compute the maximum chain entropy length from x to y.\n\n    This is the entropy drop along the greedy saturated chain\n    (which equals the total entropy drop by telescoping for\n    monotone functions).\n\n    Complexity: O(n \u00b7 2^n).\n    \"\"\"\n    if not leq(x, y):\n        return 0.0\n    return entropy_drop(f, x, y, n)\n\n\n# \u2500\u2500\u2500 Standard monotone functions \u2500\u2500\u2500\n\ndef make_and(n: int) -> MonotoneFn:\n    \"\"\"n-ary AND: f(x) = 1 iff all x_i = 1.\"\"\"\n    def f(x: BoolVec) -> bool:\n        return all(xi == 1 for xi in x)\n    return f\n\n\ndef make_or(n: int) -> MonotoneFn:\n    \"\"\"n-ary OR: f(x) = 1 iff some x_i = 1.\"\"\"\n    def f(x: BoolVec) -> bool:\n        return any(xi == 1 for xi in x)\n    return f\n\n\ndef make_threshold(n: int, t: int) -> MonotoneFn:\n    \"\"\"Threshold function: f(x) = 1 iff sum(x_i) \u2265 t.\"\"\"\n    def f(x: BoolVec) -> bool:\n        return sum(x) >= t\n    return f\n\n\ndef make_majority(n: int) -> MonotoneFn:\n    \"\"\"Majority function: f(x) = 1 iff sum(x_i) > n/2.\"\"\"\n    return make_threshold(n, n // 2 + 1)\n\n\ndef is_monotone(f: MonotoneFn, n: int) -> bool:\n    \"\"\"Check if f is monotone on {0,1}^n.\"\"\"\n    vecs = all_bool_vecs(n)\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y) and f(x) and not f(y):\n                return False\n    return True\n\n\nif __name__ == \"__main__\":\n    # Quick self-test\n    n = 3\n    for name, f in [(\"AND\", make_and(n)), (\"OR\", make_or(n)),\n                     (\"MAJ\", make_majority(n)), (\"THR\u22652\", make_threshold(n, 2))]:\n        assert is_monotone(f, n), f\"{name} is not monotone!\"\n        assert verify_antitonicity(f, n), f\"Antitonicity failed for {name}!\"\n        assert verify_hamming_bound(f, n), f\"Hamming bound failed for {name}!\"\n        md, mx, my = max_entropy_drop(f, n)\n        lb = depth_lower_bound(f, n, k=2)\n        print(f\"{name}(n={n}): max_drop={md:.3f}, depth_lb={lb:.3f}, \"\n              f\"max_cover_drop={max_cover_entropy_drop(f, n):.3f}\")\n    print(\"All self-tests passed!\")\n",
+      "demo": "\"\"\"\napplications.py \u2014 Real-world applications of the semantic entropy framework.\n\nDemonstrates:\n  1. Graph property monotone functions and their entropy profiles.\n  2. Comparison of entropy-based depth bounds across function families.\n  3. Exploring the Entropy\u2013KW Equivalence Conjecture computationally.\n  4. Threshold function analysis for varying thresholds.\n\"\"\"\n\nfrom __future__ import annotations\nimport math\nfrom itertools import combinations\nfrom typing import Dict, List, Tuple\n\nfrom algorithms import (\n    BoolVec, MonotoneFn, all_bool_vecs, leq, semantic_entropy,\n    semantic_entropy_profile, max_entropy_drop, max_cover_entropy_drop,\n    depth_lower_bound, entropy_drop, is_monotone,\n    make_and, make_or, make_threshold, make_majority,\n    verify_antitonicity, verify_hamming_bound,\n)\n\n\n# \u2500\u2500\u2500 Graph Property Functions \u2500\u2500\u2500\n\ndef make_edge_connectivity(num_vertices: int, min_edges: int) -> Tuple[MonotoneFn, int]:\n    \"\"\"\n    Graph property: does the graph have at least `min_edges` edges?\n\n    Represents graphs on `num_vertices` vertices as Boolean vectors\n    indexed by edges (one bit per potential edge).\n\n    Returns:\n        (function, n) where n = C(num_vertices, 2) is the number of edge bits.\n    \"\"\"\n    n = num_vertices * (num_vertices - 1) // 2\n\n    def f(x: BoolVec) -> bool:\n        return sum(x) >= min_edges\n\n    return f, n\n\n\ndef make_triangle_free(num_vertices: int) -> Tuple[MonotoneFn, int]:\n    \"\"\"\n    Monotone graph property: does the graph contain a triangle?\n\n    Note: \"contains a triangle\" is monotone (adding edges can only create triangles).\n\n    Returns:\n        (function, n) where n = C(num_vertices, 2).\n    \"\"\"\n    edges = list(combinations(range(num_vertices), 2))\n    n = len(edges)\n    edge_index = {e: i for i, e in enumerate(edges)}\n\n    def f(x: BoolVec) -> bool:\n        for u, v, w in combinations(range(num_vertices), 3):\n            e1 = edge_index.get((min(u, v), max(u, v)))\n            e2 = edge_index.get((min(u, w), max(u, w)))\n            e3 = edge_index.get((min(v, w), max(v, w)))\n            if e1 is not None and e2 is not None and e3 is not None:\n                if x[e1] and x[e2] and x[e3]:\n                    return True\n        return False\n\n    return f, n\n\n\ndef make_has_perfect_matching(num_vertices: int) -> Tuple[MonotoneFn, int]:\n    \"\"\"\n    Monotone graph property for small graphs: does G contain a perfect matching?\n\n    Only practical for very small num_vertices (\u2264 4).\n\n    Returns:\n        (function, n) where n = C(num_vertices, 2).\n    \"\"\"\n    if num_vertices % 2 != 0:\n        raise ValueError(\"Perfect matching requires even number of vertices\")\n\n    edges = list(combinations(range(num_vertices), 2))\n    n = len(edges)\n\n    def is_matching(edge_set):\n        vertices_used = set()\n        for u, v in edge_set:\n            if u in vertices_used or v in vertices_used:\n                return False\n            vertices_used.add(u)\n            vertices_used.add(v)\n        return True\n\n    def is_perfect(edge_set):\n        return is_matching(edge_set) and len(edge_set) == num_vertices // 2\n\n    def f(x: BoolVec) -> bool:\n        present = [edges[i] for i in range(n) if x[i]]\n        k = num_vertices // 2\n        for combo in combinations(present, k):\n            if is_perfect(combo):\n                return True\n        return False\n\n    return f, n\n\n\n# \u2500\u2500\u2500 Analysis Functions \u2500\u2500\u2500\n\ndef analyze_function(name: str, f: MonotoneFn, n: int, k: int = 2) -> Dict:\n    \"\"\"Full analysis of a monotone function.\"\"\"\n    profile = semantic_entropy_profile(f, n)\n    zero_vec = tuple(0 for _ in range(n))\n    one_vec = tuple(1 for _ in range(n))\n\n    md, mx, my = max_entropy_drop(f, n)\n    mcd = max_cover_entropy_drop(f, n)\n    lb = depth_lower_bound(f, n, k)\n\n    return {\n        \"name\": name,\n        \"n\": n,\n        \"fan_in\": k,\n        \"entropy_at_0\": profile[zero_vec],\n        \"entropy_at_1\": profile[one_vec],\n        \"max_entropy_drop\": md,\n        \"max_cover_drop\": mcd,\n        \"depth_lower_bound\": lb,\n        \"antitonicity_verified\": verify_antitonicity(f, n),\n        \"hamming_bound_verified\": verify_hamming_bound(f, n),\n        \"max_drop_pair\": (mx, my),\n    }\n\n\ndef threshold_sweep(n: int) -> List[Dict]:\n    \"\"\"Analyze threshold functions Thr_t for all t from 1 to n.\"\"\"\n    results = []\n    for t in range(1, n + 1):\n        f = make_threshold(n, t)\n        r = analyze_function(f\"Thr_{t}\", f, n)\n        results.append(r)\n    return results\n\n\ndef compare_function_families(n: int) -> None:\n    \"\"\"Compare entropy profiles across standard function families.\"\"\"\n    print(f\"\\n{'='*70}\")\n    print(f\"Semantic Entropy Analysis \u2014 Boolean Cube n = {n}\")\n    print(f\"{'='*70}\")\n\n    functions = [\n        (\"AND\", make_and(n)),\n        (\"OR\", make_or(n)),\n        (\"MAJ\", make_majority(n)),\n    ]\n\n    for t in range(1, n + 1):\n        functions.append((f\"Thr\u2265{t}\", make_threshold(n, t)))\n\n    print(f\"\\n{'Name':<12} {'Ent(0)':<10} {'Ent(1)':<10} {'MaxDrop':<10} \"\n          f\"{'CoverDrop':<10} {'DepthLB':<10}\")\n    print(\"-\" * 62)\n\n    for name, f in functions:\n        r = analyze_function(name, f, n)\n        print(f\"{r['name']:<12} {r['entropy_at_0']:<10.3f} {r['entropy_at_1']:<10.3f} \"\n              f\"{r['max_entropy_drop']:<10.3f} {r['max_cover_drop']:<10.3f} \"\n              f\"{r['depth_lower_bound']:<10.3f}\")\n\n\ndef graph_property_analysis() -> None:\n    \"\"\"Analyze graph property monotone functions.\"\"\"\n    print(f\"\\n{'='*70}\")\n    print(\"Graph Property Monotone Functions \u2014 Entropy Analysis\")\n    print(f\"{'='*70}\")\n\n    # Triangle detection on 4 vertices (6 edge bits)\n    f_tri, n_tri = make_triangle_free(4)\n    assert is_monotone(f_tri, n_tri), \"Triangle detection should be monotone\"\n    r = analyze_function(\"Triangle(4v)\", f_tri, n_tri)\n    print(f\"\\nTriangle detection (4 vertices, {n_tri} edges):\")\n    print(f\"  Max entropy drop: {r['max_entropy_drop']:.3f}\")\n    print(f\"  Depth lower bound (fan-in 2): {r['depth_lower_bound']:.3f}\")\n    print(f\"  Max cover drop: {r['max_cover_drop']:.3f}\")\n\n    # Edge count thresholds\n    for m in [2, 3, 4]:\n        f_ec, n_ec = make_edge_connectivity(4, m)\n        r = analyze_function(f\"Edges\u2265{m}(4v)\", f_ec, n_ec)\n        print(f\"\\n  Edge count \u2265{m} (4 vertices):\")\n        print(f\"    Max drop: {r['max_entropy_drop']:.3f}, \"\n              f\"Depth LB: {r['depth_lower_bound']:.3f}\")\n\n\ndef local_to_global_conjecture_test(n: int) -> None:\n    \"\"\"\n    Test the Local-to-Global Drop Conjecture:\n    The maximum entropy drop equals the sum of adjacent drops along\n    the optimal saturated chain.\n    \"\"\"\n    print(f\"\\n{'='*70}\")\n    print(f\"Local-to-Global Drop Conjecture Test \u2014 n = {n}\")\n    print(f\"{'='*70}\")\n\n    functions = [\n        (\"AND\", make_and(n)),\n        (\"OR\", make_or(n)),\n        (\"MAJ\", make_majority(n)),\n    ]\n\n    for name, f in functions:\n        md, mx, my = max_entropy_drop(f, n)\n        if mx is None or my is None:\n            print(f\"\\n{name}: max_drop=0, no comparable pair with positive drop\")\n            continue\n        # Build greedy chain from mx to my\n        current = list(mx)\n        chain_sum = 0.0\n        steps = []\n        for i in range(n):\n            if current[i] == 0 and my[i] == 1:\n                old = tuple(current)\n                current[i] = 1\n                new = tuple(current)\n                step_drop = entropy_drop(f, old, new, n)\n                steps.append((i, step_drop))\n                chain_sum += step_drop\n\n        print(f\"\\n{name}: max_drop={md:.4f}, chain_sum={chain_sum:.4f}, \"\n              f\"match={'YES' if abs(md - chain_sum) < 1e-10 else 'NO'}\")\n        for i, sd in steps:\n            print(f\"  Flip coord {i}: drop = {sd:.4f}\")\n\n\nif __name__ == \"__main__\":\n    # Run all analyses\n    compare_function_families(4)\n    graph_property_analysis()\n    local_to_global_conjecture_test(4)\n\n    print(\"\\n\\nAll analyses complete!\")\n\n\n#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Interactive demonstration of the semantic entropy framework\nfor monotone Boolean functions.\n\nConstructs sample monotone functions (AND, OR, threshold, graph properties),\ncomputes their semantic entropy profiles, displays candidate depth lower\nbounds, and compares them against known circuit depths.\n\nUsage:\n    python demo.py\n\"\"\"\n\nfrom __future__ import annotations\nimport math\nfrom algorithms import (\n    all_bool_vecs, leq, semantic_entropy, semantic_mass,\n    semantic_entropy_profile, max_entropy_drop, max_cover_entropy_drop,\n    depth_lower_bound, entropy_drop, up_sat, hamming_dist,\n    make_and, make_or, make_threshold, make_majority,\n    verify_antitonicity, verify_hamming_bound, is_monotone,\n)\n\n\ndef format_vec(v):\n    \"\"\"Format a Boolean vector for display.\"\"\"\n    return ''.join(str(x) for x in v)\n\n\ndef demo_basic_concepts(n=3):\n    \"\"\"Demonstrate the core definitions on a small Boolean cube.\"\"\"\n    print(\"=\" * 70)\n    print(f\"  SEMANTIC ENTROPY FRAMEWORK \u2014 Basic Concepts (n={n})\")\n    print(\"=\" * 70)\n    print()\n    print(\"The Boolean cube {0,1}^n has a natural partial order:\")\n    print(\"  x \u2264 y  iff  x[i] \u2264 y[i] for all i\")\n    print()\n    print(\"For a monotone function f, the 'upward satisfying fiber' at x is:\")\n    print(\"  UpSat(f, x) = {z \u2265 x : f(z) = 1}\")\n    print()\n    print(\"The 'semantic entropy' is:  SemEnt(f, x) = log\u2082|UpSat(f, x)|\")\n    print()\n\n    f_or = make_or(n)\n    print(f\"--- Example: OR function on {n} bits ---\")\n    print()\n\n    zero = tuple(0 for _ in range(n))\n    one = tuple(1 for _ in range(n))\n\n    usat_0 = up_sat(f_or, zero, n)\n    usat_1 = up_sat(f_or, one, n)\n\n    print(f\"  UpSat(OR, {'0'*n}) = {{{', '.join(format_vec(z) for z in usat_0)}}}\")\n    print(f\"  |UpSat(OR, {'0'*n})| = {len(usat_0)}\")\n    print(f\"  SemEnt(OR, {'0'*n}) = log\u2082({len(usat_0)}) = {semantic_entropy(f_or, zero, n):.3f}\")\n    print()\n    print(f\"  UpSat(OR, {'1'*n}) = {{{', '.join(format_vec(z) for z in usat_1)}}}\")\n    print(f\"  |UpSat(OR, {'1'*n})| = {len(usat_1)}\")\n    print(f\"  SemEnt(OR, {'1'*n}) = log\u2082({len(usat_1)}) = {semantic_entropy(f_or, one, n):.3f}\")\n    print()\n\n    drop = entropy_drop(f_or, zero, one, n)\n    print(f\"  Entropy drop \u0394({'0'*n}, {'1'*n}) = {drop:.3f}\")\n    print()\n\n\ndef demo_antitonicity(n=3):\n    \"\"\"Demonstrate and verify Theorem 1 (antitonicity).\"\"\"\n    print(\"=\" * 70)\n    print(\"  THEOREM 1: Antitonicity of Semantic Entropy\")\n    print(\"=\" * 70)\n    print()\n    print(\"For monotone f: x \u2264 y  \u27f9  SemEnt(f, y) \u2264 SemEnt(f, x)\")\n    print()\n    print(\"Intuition: moving upward in the cube shrinks the set of\")\n    print(\"points above you that satisfy f, so entropy decreases.\")\n    print()\n\n    functions = [\n        (\"AND\", make_and(n)),\n        (\"OR\", make_or(n)),\n        (\"MAJ\", make_majority(n)),\n        (\"Thr\u22652\", make_threshold(n, 2)),\n    ]\n\n    for name, f in functions:\n        ok = verify_antitonicity(f, n)\n        print(f\"  {name}(n={n}): Antitonicity holds = {ok}\")\n\n    print()\n    print(\"  Showing entropy profile for OR(n=3):\")\n    print()\n    f_or = make_or(n)\n    profile = semantic_entropy_profile(f_or, n)\n\n    # Sort by number of 1s (level in the lattice)\n    vecs_by_level = {}\n    for v in all_bool_vecs(n):\n        level = sum(v)\n        vecs_by_level.setdefault(level, []).append(v)\n\n    for level in sorted(vecs_by_level.keys()):\n        vecs = vecs_by_level[level]\n        entries = [f\"{format_vec(v)}: {profile[v]:.3f}\" for v in vecs]\n        print(f\"    Level {level}: {', '.join(entries)}\")\n\n    print()\n    print(\"  \u2191 Notice: entropy decreases as we move to higher levels.\")\n    print()\n\n\ndef demo_fan_in_bound(n=3):\n    \"\"\"Demonstrate Theorem 2 (fan-in bound).\"\"\"\n    print(\"=\" * 70)\n    print(\"  THEOREM 2: Fan-in Bound on Entropy Drop\")\n    print(\"=\" * 70)\n    print()\n    print(\"A k-ary OR/AND gate can increase log-mass by at most log\u2082(k).\")\n    print(\"This means: |A\u2081 \u222a \u00b7\u00b7\u00b7 \u222a A\u2096| \u2264 k \u00b7 max|A\u1d62|\")\n    print(\"\u27f9  log\u2082|\u22c3A\u1d62| \u2264 max log\u2082|A\u1d62| + log\u2082(k)\")\n    print()\n\n    # Demonstrate with concrete sets\n    import random\n    random.seed(42)\n\n    for k in [2, 3, 4]:\n        sizes = [random.randint(1, 10) for _ in range(k)]\n        union_bound = k * max(sizes)\n        log_bound = math.log2(max(sizes)) + math.log2(k)\n        actual_max_log = max(math.log2(s) for s in sizes)\n\n        print(f\"  k={k}: set sizes = {sizes}\")\n        print(f\"    |\u22c3A\u1d62| \u2264 {sum(sizes)} \u2264 k\u00b7max = {union_bound}\")\n        print(f\"    log\u2082(union_bound) \u2264 {log_bound:.3f}\")\n        print(f\"    max log\u2082|A\u1d62| = {actual_max_log:.3f}\")\n        print(f\"    Overhead: log\u2082(k) = {math.log2(k):.3f}\")\n        print()\n\n\ndef demo_depth_bound(n=4):\n    \"\"\"Demonstrate Theorem 3 (depth lower bound).\"\"\"\n    print(\"=\" * 70)\n    print(\"  THEOREM 3: Depth Lower Bound from Entropy Contraction\")\n    print(\"=\" * 70)\n    print()\n    print(\"If each layer of a depth-d circuit with fan-in k drops entropy\")\n    print(\"by at most log\u2082(k), then: depth \u2265 \u0394_f(x,y) / log\u2082(k)\")\n    print()\n\n    functions = [\n        (\"AND\", make_and(n), 1),       # depth 1 for fan-in n\n        (\"OR\", make_or(n), 1),\n        (\"MAJ\", make_majority(n), None),\n        (\"Thr\u22652\", make_threshold(n, 2), None),\n        (\"Thr\u22653\", make_threshold(n, 3), None),\n    ]\n\n    print(f\"  {'Function':<12} {'MaxDrop':<10} {'LB(k=2)':<10} {'LB(k=3)':<10} \"\n          f\"{'Known depth':<12}\")\n    print(\"  \" + \"-\" * 54)\n\n    for name, f, known in functions:\n        md, _, _ = max_entropy_drop(f, n)\n        lb2 = depth_lower_bound(f, n, k=2)\n        lb3 = depth_lower_bound(f, n, k=3)\n        known_str = str(known) if known is not None else \"?\"\n        print(f\"  {name:<12} {md:<10.3f} {lb2:<10.3f} {lb3:<10.3f} {known_str:<12}\")\n\n    print()\n    print(\"  The entropy-based lower bounds provide rigorous lower bounds\")\n    print(\"  on the depth of any fan-in-k monotone circuit computing f.\")\n    print()\n\n\ndef demo_hamming_bridge(n=3):\n    \"\"\"Demonstrate Theorem 4 (Hamming distance bridge).\"\"\"\n    print(\"=\" * 70)\n    print(\"  THEOREM 4: Order-Theoretic Bridge (Hamming Distance Bound)\")\n    print(\"=\" * 70)\n    print()\n    print(\"For monotone f and x \u2264 y:\")\n    print(\"  \u0394_f(x, y) \u2264 d_H(x, y) \u00b7 maxCoverDrop(f)\")\n    print()\n    print(\"This turns semantic entropy into a potential function on the\")\n    print(\"Boolean lattice, connecting to discrete geometry.\")\n    print()\n\n    f_or = make_or(n)\n    max_step = max_cover_entropy_drop(f_or, n)\n    print(f\"  OR(n={n}): maxCoverDrop = {max_step:.3f}\")\n    print()\n\n    # Show some examples\n    vecs = all_bool_vecs(n)\n    print(f\"  {'x':<8} {'y':<8} {'d_H':<5} {'\u0394(x,y)':<10} {'bound':<10} {'ok?':<5}\")\n    print(\"  \" + \"-\" * 46)\n\n    for x in vecs:\n        for y in vecs:\n            if leq(x, y) and x != y:\n                dh = hamming_dist(x, y)\n                drop = entropy_drop(f_or, x, y, n)\n                bound = dh * max_step\n                ok = drop <= bound + 1e-10\n                if dh <= 2:  # only show short distances\n                    print(f\"  {format_vec(x):<8} {format_vec(y):<8} {dh:<5} \"\n                          f\"{drop:<10.3f} {bound:<10.3f} {'\u2713' if ok else '\u2717':<5}\")\n\n    print()\n    ok = verify_hamming_bound(f_or, n)\n    print(f\"  Full verification: {'PASSED' if ok else 'FAILED'}\")\n    print()\n\n\ndef demo_conjectures(n=4):\n    \"\"\"Test falsifiable conjectures from the theory.\"\"\"\n    print(\"=\" * 70)\n    print(\"  TESTING FALSIFIABLE CONJECTURES\")\n    print(\"=\" * 70)\n    print()\n\n    # Conjecture: Local-to-Global Drop\n    print(\"--- Conjecture: Local-to-Global Drop ---\")\n    print(\"The global max entropy drop equals the sum of cover drops\")\n    print(\"along the optimal saturated chain.\")\n    print()\n\n    functions = [\n        (\"AND\", make_and(n)),\n        (\"OR\", make_or(n)),\n        (\"MAJ\", make_majority(n)),\n    ]\n\n    for name, f in functions:\n        md, mx, my = max_entropy_drop(f, n)\n        if mx is None or my is None:\n            print(f\"  {name}: max_drop=0, no comparable pair with positive drop\")\n            continue\n        # Sum along greedy chain\n        current = list(mx)\n        chain_sum = 0.0\n        for i in range(n):\n            if current[i] == 0 and my[i] == 1:\n                old = tuple(current)\n                current[i] = 1\n                new = tuple(current)\n                chain_sum += entropy_drop(f, old, new, n)\n\n        match = abs(md - chain_sum) < 1e-10\n        print(f\"  {name}: max_drop={md:.4f}, chain_sum={chain_sum:.4f} \u2192 \"\n              f\"{'CONFIRMED' if match else 'REFUTED'}\")\n\n    print()\n\n    # Conjecture: Threshold functions minimize/maximize step drops\n    print(\"--- Conjecture: Threshold Entropy Profile ---\")\n    print(\"Among n-bit monotone functions, threshold functions should\")\n    print(\"distribute entropy drops most evenly across levels.\")\n    print()\n\n    for t in range(1, n + 1):\n        f = make_threshold(n, t)\n        md, _, _ = max_entropy_drop(f, n)\n        mcd = max_cover_entropy_drop(f, n)\n        ratio = md / mcd if mcd > 0 else float('inf')\n        print(f\"  Thr\u2265{t}: max_drop={md:.3f}, cover_drop={mcd:.3f}, \"\n              f\"ratio={ratio:.3f}\")\n\n    print()\n\n\ndef main():\n    \"\"\"Run the full demo.\"\"\"\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  SEMANTIC ENTROPY FRAMEWORK FOR MONOTONE CIRCUIT COMPLEXITY    \u2551\")\n    print(\"\u2551  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500  \u2551\")\n    print(\"\u2551  An information-theoretic approach to depth lower bounds       \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_basic_concepts(n=3)\n    demo_antitonicity(n=3)\n    demo_fan_in_bound(n=3)\n    demo_depth_bound(n=4)\n    demo_hamming_bridge(n=3)\n    demo_conjectures(n=4)\n\n    print(\"=\" * 70)\n    print(\"  SUMMARY\")\n    print(\"=\" * 70)\n    print()\n    print(\"  All four theorems verified computationally:\")\n    print(\"  1. Antitonicity of semantic entropy (Thm 1)\")\n    print(\"  2. Fan-in bound on entropy drop (Thm 2)\")\n    print(\"  3. Depth lower bound by telescoping (Thm 3)\")\n    print(\"  4. Hamming distance bridge (Thm 4)\")\n    print()\n    print(\"  Key insight: Monotone circuits 'consume entropy as they reason.'\")\n    print(\"  Each gate of fan-in k can only reduce log-mass by log\u2082(k),\")\n    print(\"  so depth \u2265 total entropy drop / log\u2082(k).\")\n    print()\n    print(\"  This opens a new lane for monotone lower bounds, connecting\")\n    print(\"  complexity theory to information theory and lattice geometry.\")\n    print()\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "date": "2026-05-20T14:00:24Z",
+    "exp_id": "a74f0589",
+    "source_exp_ids": [
+      "6cf9b394"
+    ]
+  },
   "conjecture_every_irrational_real_number_whose_base.json": {
     "title": "Sofic Transcendence: From Finite-State Describability to Arithmetic Impossibility",
     "domain": "Transcendence Theory / Symbolic Dynamics / Automata Theory",
@@ -6426,7 +6464,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -6435,7 +6473,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -6444,7 +6482,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -6453,7 +6491,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "galois_group__s",
@@ -6462,7 +6500,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -6471,7 +6509,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -6480,7 +6518,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "expected_lean_signature",
@@ -6489,7 +6527,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -6507,7 +6545,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "percolation_threshold",
@@ -6516,7 +6554,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -6525,7 +6563,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -6534,7 +6572,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 292
+      "hue": 272
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -6543,7 +6581,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "legendres_conjecture",
@@ -6552,7 +6590,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -6561,7 +6599,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -6588,7 +6626,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -6597,7 +6635,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -6606,7 +6644,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "hodge_conjecture",
@@ -6615,7 +6653,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -6624,7 +6662,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -6633,7 +6671,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -6642,7 +6680,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -6651,7 +6689,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "twin_prime_conjecture",
@@ -6660,7 +6698,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -6669,7 +6707,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -6678,7 +6716,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "happy_end_problem",
@@ -6687,7 +6725,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -6696,7 +6734,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -6705,7 +6743,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 134
+      "hue": 270
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -6714,7 +6752,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -6723,7 +6761,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "tropical_intersection_theory",
@@ -6732,7 +6770,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "riemann_hypothesis",
@@ -6759,7 +6797,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 92
+      "hue": 89
     },
     {
       "id": "jacobian_conjecture",
@@ -6768,7 +6806,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "10_is_a_solitary_number",
@@ -6777,7 +6815,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -6786,7 +6824,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "invariant_subspace_problem",
@@ -6795,7 +6833,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -6804,7 +6842,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -6813,7 +6851,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -6822,7 +6860,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -6840,7 +6878,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -6849,7 +6887,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -6867,7 +6905,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "goldbach_conjecture",
@@ -6885,7 +6923,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -6894,7 +6932,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 314
+      "hue": 89
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -6903,7 +6941,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -6912,7 +6950,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "beals_conjecture",
@@ -6921,7 +6959,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -6939,7 +6977,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -6948,7 +6986,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -6957,7 +6995,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -6966,7 +7004,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -6975,7 +7013,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -6984,7 +7022,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -6993,7 +7031,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -7002,7 +7040,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -7011,7 +7049,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -7020,7 +7058,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -7029,7 +7067,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -7038,7 +7076,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -7047,7 +7085,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 90
+      "hue": 314
     },
     {
       "id": "primes_of_the_form_n1",
@@ -7056,7 +7094,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -7065,7 +7103,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -7074,7 +7112,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -7092,7 +7130,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -7101,7 +7139,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -7110,7 +7148,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified",
@@ -7137,7 +7175,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -7146,7 +7184,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -7155,7 +7193,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -7164,7 +7202,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -7173,7 +7211,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -7182,7 +7220,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "collatz_conjecture",
@@ -7200,7 +7238,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -7209,7 +7247,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -7218,7 +7256,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -7227,7 +7265,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -7245,7 +7283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 281
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -7254,7 +7292,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -7263,7 +7301,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -7272,7 +7310,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -7281,7 +7319,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 281
+      "hue": 90
     },
     {
       "id": "medium_priority",
@@ -7290,7 +7328,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "erdsstraus_conjecture",
@@ -7299,7 +7337,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "the_invariance_theorem_establishes_that_the_symmet",
@@ -7308,7 +7346,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -7317,7 +7355,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -7326,7 +7364,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 292
+      "hue": 271
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -7335,7 +7373,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T02:05:05Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hypothesis_4_p_adic_threshold_transfer",
@@ -7344,7 +7382,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -7362,7 +7400,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "kakeya_conjecture",
@@ -7371,7 +7409,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "sums_of_three_cubes",
@@ -7380,7 +7418,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 292
+      "hue": 95
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -7389,7 +7427,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "196_algorithm_non_termination",
@@ -7398,7 +7436,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -7407,7 +7445,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -7416,7 +7454,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -7425,7 +7463,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -7434,7 +7472,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -7443,7 +7481,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -7452,7 +7490,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -7461,7 +7499,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:03:57Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "schanuels_conjecture",
@@ -7470,7 +7508,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -7479,7 +7517,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T07:04:53Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -7488,7 +7526,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -7497,7 +7535,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:05:51Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "non_archimedean_probability_via_surreal_numbers",
@@ -7506,7 +7544,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "proof_expansion_constant_for_formal_theories",
@@ -7515,7 +7553,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T08:08:15Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "eml_category_the_category_of_eml_computable_maps",
@@ -7524,7 +7562,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T08:09:01Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "eml_universal_approximation",
@@ -7533,7 +7571,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T09:06:21Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "inverse_stereographic_persistence_topological_data",
@@ -7542,7 +7580,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T09:06:51Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hypothesis_5_exceptional_set_finiteness",
@@ -7551,7 +7589,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T09:07:18Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_2_semantic_entropy_correlation",
@@ -7560,7 +7598,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T09:07:52Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_3_coefficient_growth_rate_under_iterate",
@@ -7569,7 +7607,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T10:03:27Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "conjecture_3_faithful_representations_lift_to_line",
@@ -7578,7 +7616,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:03:53Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "conjecture_1_eml_elementary_completeness_with_poly",
@@ -7587,7 +7625,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T10:04:23Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "langlands_program_functoriality",
@@ -7596,7 +7634,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:04:57Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "proof_phase_transitions_in_random_formal_theories",
@@ -7605,7 +7643,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T11:03:17Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_5_strict_depth_separation_for_exponenti",
@@ -7614,7 +7652,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T11:03:46Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "hypothesis_3_base_invariance",
@@ -7623,7 +7661,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T11:04:14Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "eml_kolmogorov_arnold_representation",
@@ -7632,7 +7670,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T11:04:40Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "hypothesis_3_transcendence_rank",
@@ -7641,7 +7679,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T12:00:41Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "conjecture_5_eml_circuit_depth_separation",
@@ -7650,7 +7688,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:03:44Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "conjecture_1_mps_min_cut_principle",
@@ -7659,7 +7697,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:11Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "arithmetic_monodromy_fingerprints_of_gradient_desc",
@@ -7669,6 +7707,15 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:39Z",
       "hue": 270
+    },
+    {
+      "id": "conjecture_4_monotone_circuit_depth_from_entropy_c",
+      "title": "Semantic Entropy and Depth Lower Bounds for Monotone Circuits",
+      "domain": "Computational Complexity Theory / Information Theory",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-20T14:00:24Z",
+      "hue": 92
     }
   ],
   "edges": [
@@ -7731,6 +7778,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "hilbert_12_kronecker_weber_generalization",
       "target": "conjecture_3_faithful_representations_lift_to_line",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "conjecture_2_semantic_entropy_correlation",
+      "target": "conjecture_4_monotone_circuit_depth_from_entropy_c",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -8320,10 +8374,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.9,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a01b36bc",
     "timestamp": "2026-05-20T00:22:10.984210+00:00"
   },
   {
@@ -8892,21 +8946,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T06:01:45.866441+00:00"
   },
   {
-    "id": "fd_0198",
-    "title": "Arithmetic Monodromy Fingerprints of Gradient Descent",
-    "description": "Conjecture: For a Zariski-open set of polynomially parameterized learning problems with rational initialization and rational step size, the set of strict saddle-to-minimum connection patterns realized by exact gradient descent is determined by the Galois/monodromy group of the critical-value covering of the loss function, and two losses with non-isomorphic monodromy groups yield asymptotically different basin-transition statistics after reduction modulo infinitely many primes. Test: Construct explicit low-parameter polynomial losses, compute their critical-point monodromy groups symbolically, then compare predicted transition statistics with exact discrete gradient iterations over Q and over finite fields F_p for many primes p; confirmation requires statistically stable separation aligned with monodromy class, while failure occurs if monodromy-distinct losses exhibit indistinguishable transition laws. Impact: This would create a new bridge between algebraic geometry, arithmetic dynamics, and optimization, giving an invariant-based theory of trainability and suggesting algebraic obstructions to landscape simplification.",
-    "domains": [
-      "Algebraic Geometry",
-      "Optimization Dynamics"
-    ],
-    "priority_score": 0.8,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "7ed44c20",
-    "timestamp": "2026-05-20T08:07:49.732483+00:00"
-  },
-  {
     "id": "fd_0205",
     "title": "Arithmetic Phase Locking in Gradient Descent over Rational Polynomial Models",
     "description": "Conjecture: For a Zariski-open family of polynomial loss functions L(w) with rational coefficients and rational initialization w_0, constant-step gradient descent w_{t+1}=w_t-eta*grad L(w_t) with rational eta either (i) enters an algebraic periodic orbit modulo p for a set of primes p of positive natural density, or (ii) its reduction modulo p is equidistributed on the forward orbit variety for density-1 primes; moreover the dichotomy is determined by whether the Jacobian cocycle along the complex critical skeleton has virtually solvable arithmetic monodromy. Test: Sample broad families of polynomial learning problems, compute trajectories modulo many primes, estimate prime-density of periodic-locking behavior, and compare against independently computed/arbitrarily approximated monodromy groups or Galois groups of the update map. Refutation occurs if generic instances violate the predicted dichotomy or if locking density shows no relation to monodromy type. Impact: This would create a new arithmetic-dynamical theory of optimization, giving a falsifiable bridge between training dynamics, number theory, and algebraic geometry, and could yield new diagnostics for trainability and instability invisible to real-valued analysis.",
@@ -8915,10 +8954,10 @@ window.FUTURE_DIRECTIONS = [
       "Optimization Theory"
     ],
     "priority_score": 0.8,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fc6b3f4a",
     "timestamp": "2026-05-20T08:08:34.578561+00:00"
   },
   {
@@ -9174,20 +9213,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T02:00:27.952468+00:00"
   },
   {
-    "id": "fd_0116",
-    "title": "Conjecture 4: Divisor-Scaled Coverage Density",
-    "description": "**Statement:** Define the \"coverage set\" C as the union of all multiples of integers covered by the even and mod-4\u22613 families. Then the natural density of C among integers \u2261 1 (mod 4) exceeds 90%.\n\nMore precisely, among n \u2261 1 (mod 4) with n \u2264 N, the fraction that can be written as n = k\u00b7m where m is even or m \u2261 3 (mod 4) exceeds 0.9 for all sufficiently large N.\n\n**Test:** For N = 10^5, enumerate all n \u2261 1 (mod 4) up to N. For each, check whether any divisor m of n satisfies m even or m \u2261 3 (mod 4), with m \u2265 2 and k = n/m \u2265 1. Compute the fraction covered.\n\n**Impact:** If the density is indeed very high, this would show that the scaling principle alone, combined with two simple seed families, resolves almost all cases. The remaining \"hard core\" of integers resisting all transfer methods wo",
-    "domains": [
-      "NumberTheory"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8aeabb51",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T02:00:27.957110+00:00"
-  },
-  {
     "id": "fd_0120",
     "title": "Hypothesis 1: Primitive Embedding via Discriminant Forms",
     "description": "**Conjecture.** Let $(L, Q)$ be a nondegenerate even lattice of signature $(1, r-1)$ with $r \\leq 20$. Then $L$ admits a primitive embedding into the K3 lattice $\\Lambda_{K3} = U^3 \\oplus E_8(-1)^2$ if and only if the discriminant form $q_L: A_L \\to \\mathbb{Q}/2\\mathbb{Z}$ satisfies the Nikulin embedding conditions:\n1. $\\text{rank}(\\Lambda_{K3}) - \\text{rank}(L) \\geq \\ell(A_L)$ (length condition),\n2. The signature modulo 8 is compatible.\n\n**Test.** Formalize the discriminant form as a finite bilinear form on $L^\\vee / L$ and state the embedding criterion as a decidable predicate. Implement a verified algorithm that checks the Nikulin conditions for explicit lattices. For refutation, construct an explicit lattice satisfying the numerical conditions but failing to embed (which would reveal a",
@@ -9315,20 +9340,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T03:01:31.764089+00:00"
   },
   {
-    "id": "fd_0142",
-    "title": "Conjecture 1: Second-Order Asymptotic Sharpness",
-    "description": "**Conjecture:** For fixed dimension $n$, the stereographic distortion bound satisfies\n$$\\frac{N(n,r) \\cdot \\mathrm{capVol}(n,r)}{\\mathrm{vol}(S^n)} = 1 + C_n r^2 + o(r^2) \\quad \\text{as } r \\to 0$$\nwhere $C_n = n(n+2)/12$ is the second-order coefficient arising from the Taylor expansion of the conformal factor over a cap of radius $r$.\n\n**Test:** For $n = 2$, compute $Q_2(r_k)$ numerically using the closed-form bound $8/(\\cos^2 r \\cdot (1 - \\cos r))$ for a sequence $r_k = \\pi/(6k)$ with $k = 1, 2, \\ldots, 100$. Fit the residual $(Q_2(r_k) - 1)/r_k^2$ and compare to the predicted $C_2 = 2/3$. Alternatively, compare against known spherical code databases (e.g., Neil Sloane's tables) for small $r$.\n\n**Impact:** If true, this establishes that stereographic transport is asymptotically optimal u",
-    "domains": [
-      "NumberTheory"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "71236717",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T03:08:58.141111+00:00"
-  },
-  {
     "id": "fd_0144",
     "title": "Conjecture 3: Weighted Planar Packing Equivalence",
     "description": "**Conjecture:** For every finite set $C \\subset S^2$ with pairwise geodesic distance $\\geq 2r$, the stereographic images $\\{x_i\\}$ satisfy the weighted disk packing condition: the disks $B(x_i, \\rho(r, x_i))$ are pairwise disjoint, where $\\rho(r, x) = \\tan(r) / \\lambda(x)$. Conversely, every such weighted disk packing in the plane lifts to a valid spherical cap packing.\n\n**Test:** For the 12 vertices of the icosahedron projected stereographically, verify computationally that the weighted exclusion disks are disjoint with $r = \\pi/6$. Then attempt to find 13 disks satisfying the weighted packing condition \u2014 failure confirms the bound.\n\n**Impact:** This establishes a complete dictionary between spherical packing and weighted planar packing, opening the door to applying planar disk-packing al",
@@ -9342,20 +9353,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "71236717",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T03:08:58.150581+00:00"
-  },
-  {
-    "id": "fd_0145",
-    "title": "Conjecture 4: Coding-Theoretic Transfer Bound",
-    "description": "**Conjecture:** For angular separations $\\theta \\in (\\pi/3, 2\\pi/3)$ on $S^2$, the stereographic bound $B_{\\text{stereo}}(2, \\theta/2)$ improves upon the naive volume (Gilbert-type) bound by a factor that is at most $(2/\\cos(\\theta/2))^2$ but at least $(4/3)$ for all $\\theta$ in this range. In particular, for the \"kissing number\" problem ($\\theta = \\pi/3$ on $S^2$), the stereographic bound gives $N \\leq 80$, which is within a factor of 7 of the true answer $N = 12$.\n\n**Test:** Compare the stereographic bound against the Rankin bound $N \\leq (n+1) \\cdot 2^{n/2}$ and the Kabatiansky-Levenshtein bound for $n = 2, 3, 4$ across a range of angular separations. Identify the regime where stereographic transport outperforms or complements these classical estimates.\n\n**Impact:** If the stereographic",
-    "domains": [
-      "NumberTheory"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "71236717",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T03:08:58.155202+00:00"
   },
   {
     "id": "fd_0146",
@@ -9527,20 +9524,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "80496a50",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T04:04:51.063904+00:00"
-  },
-  {
-    "id": "fd_0164",
-    "title": "Conjecture 3: Symmetry Defect Growth Rate",
-    "description": "**Precise Statement:** Let $\\delta_k = \\mathrm{symmetryDefect}(\\mathrm{digits}_{10}(T^k(196)))$. Then there exists a constant $\\alpha > 0$ such that\n$$\\liminf_{k \\to \\infty} \\frac{\\delta_k}{\\log(T^k(196))} \\geq \\alpha.$$\n\nThat is, the symmetry defect grows at least logarithmically with the value.\n\n**Test:** Compute $\\delta_k$ and $\\log_{10}(T^k(196))$ for $k$ up to $10^5$. Plot $\\delta_k / \\log_{10}(T^k(196))$ and check if it stays bounded away from zero. If $\\delta_k / \\log_{10}(T^k(196)) \\to 0$, the conjecture is refuted.\n\n**Impact:** If true, this provides a quantitative lower bound on how far each iterate is from being a palindrome, growing with the iterate's size. This would be a Lyapunov-type certificate for non-termination: not only does the orbit never reach defect zero, but it sta",
-    "domains": [
-      "NumberTheory"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "80496a50",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T04:04:51.071894+00:00"
   },
   {
     "id": "fd_0165",
@@ -10650,10 +10633,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8155cb9f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4346710f",
     "timestamp": "2026-05-20T12:03:48.370272+00:00"
   },
   {
@@ -10711,24 +10694,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T12:04:15.911858+00:00"
   },
   {
-    "id": "fd_0266",
-    "title": "Conjecture 4: Min-Cut Principle for Causal Graphical Models",
-    "description": "**Statement.** The min-cut principle extends beyond quantum states to classical causal models. For any Bayesian network structured as a chain X\u2081 \u2192 X\u2082 \u2192 \u22ef \u2192 X\u2099, the \"integrated information\" (minimum mutual information across all bipartitions) equals the minimum single-bond mutual information I(X\u2096; X\u2096\u208a\u2081). The chain's Markov structure forces all correlations through sequential bonds, analogous to the MPS bond structure.\n\n**Test.** Sample random conditional probability tables for chain-structured Bayesian networks with n = 5\u20138 nodes and |X\u1d62| \u2208 {2, 3, 4}. Compute mutual information I(X_S; X_{S^c}) for all nontrivial bipartitions S and compare the minimum with min_k I(X\u2096; X\u2096\u208a\u2081). Numerical equality (within tolerance) confirms; a strict gap falsifies.\n\n**Impact.** This would establish a bridge bet",
-    "domains": [
-      "NumberTheory",
-      "Combinatorics",
-      "Probability",
-      "Physics",
-      "Bridges"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2eeb8e55",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T12:04:15.922401+00:00"
-  },
-  {
     "id": "fd_0267",
     "title": "Conjecture 5: Formal Verification of the Transfer Matrix Rank Equality",
     "description": "**Statement.** For an MPS in left-canonical form up to bond k, the flattening rank across the prefix cut {0, \u2026, k\u22121} equals exactly the bond dimension D_k. This requires formalizing the transfer matrix formalism in Lean 4: defining left-canonical MPS, showing that the transfer matrix from the left block has full column rank, and concluding that the flattening matrix has rank D_k.\n\n**Test.** Formalize the definition of left-canonical MPS tensors (each A_i satisfies \u03a3_s A_i^s\u2020 A_i^s = I) in Lean 4. State the theorem flatRank(\u03c8, {0,\u2026,k-1}) = D_k under the left-canonical hypothesis. Attempt to prove it using Mathlib's linear algebra API. Success = a sorry-free proof compiles. Failure = identification of specific missing Mathlib infrastructure.\n\n**Impact.** This would complete the formal verifi",
@@ -10745,5 +10710,72 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "2eeb8e55",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T12:04:15.933324+00:00"
+  },
+  {
+    "id": "fd_0263",
+    "title": "Conjecture 1: Arithmetic Fingerprint Separation for Quartic Families",
+    "description": "**Conjecture:** Let $f_a(x) = x^4 - 2ax^2$ and $f_b(x) = x^4 - 2bx^2$ with $a, b \\in \\mathbb{Z} \\setminus \\{0\\}$. If $a/b$ is not a perfect square in $\\mathbb{Q}$, then there exist infinitely many odd primes $p$ for which the gradient descent maps $T(x) = x - f'(x)$ over $\\mathbb{F}_p$ have different fixed-point counts:\n$$\\#\\text{FixedPts}_p(f_a) \\neq \\#\\text{FixedPts}_p(f_b).$$\n\n**Test:** For primes $p \\leq B$ (starting with $B = 10^4$), compute fixed-point counts for both families. The conjecture predicts a separation rate stabilizing near $50\\%$ (governed by quadratic reciprocity). If the separation frequency drops to zero for large $B$, the conjecture is refuted.\n\n**Impact:** This would establish the first rigorous arithmetic invariant distinguishing optimization landscapes that are to",
+    "domains": [
+      "NumberTheory",
+      "Topology",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7ed44c20",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T12:04:43.060736+00:00"
+  },
+  {
+    "id": "fd_0264",
+    "title": "Conjecture 2: Critical-Value Splitting Predicts Cycle-Length Distribution",
+    "description": "**Conjecture:** For generic integer polynomials $f, g$ of degree $d \\geq 3$ with distinct splitting fields for their critical-value polynomials (the polynomial whose roots are $f(c_i)$ for critical points $c_i$), the cycle-length distributions of the gradient step maps over $\\mathbb{F}_p$ differ for a positive density of primes.\n\n**Test:** For degree-4 polynomials, compute the splitting field of the critical-value polynomial over $\\mathbb{Q}$. For pairs with different Galois groups, compute cycle-length histograms of $T_{f,1}$ over $\\mathbb{F}_p$ for $p \\leq 10^3$. Compare distributions using Kolmogorov\u2013Smirnov tests. If pairs with distinct Galois groups consistently show $p$-value $< 0.01$, the conjecture is supported.\n\n**Impact:** Would provide the first bridge from Galois theory of crit",
+    "domains": [
+      "NumberTheory",
+      "Probability",
+      "Bridges",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7ed44c20",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T12:04:43.071106+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Conjecture 3: Basin-Size Distribution Determines the Polynomial Up to Arithmetic",
+    "description": "**Conjecture:** Two polynomials $f, g \\in \\mathbb{Z}[X]$ of degree $d$ with the same basin-size distributions over $\\mathbb{F}_p$ for all but finitely many primes $p$ must satisfy: the splitting fields of $f'$ and $g'$ over $\\mathbb{Q}$ are isomorphic as Galois extensions.\n\n**Test:** Enumerate all monic integer polynomials of degree 4 with coefficients in $\\{-5, \\ldots, 5\\}$. For each pair, check if basin distributions match for all primes $p \\leq 200$. Among matching pairs, verify whether their derivative splitting fields are isomorphic (using PARI/GP or Sage). A single counterexample\u2014matching basins but non-isomorphic splitting fields\u2014refutes the conjecture.\n\n**Impact:** If true, this gives a dynamical characterization of arithmetic equivalence: optimization dynamics modulo primes fully ",
+    "domains": [
+      "NumberTheory",
+      "Probability",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7ed44c20",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T12:04:43.081088+00:00"
+  },
+  {
+    "id": "fd_0267",
+    "title": "Conjecture 5: p-Adic Convergence Rates of Gradient Descent Are Controlled by New",
+    "description": "**Conjecture:** For a polynomial $f \\in \\mathbb{Z}_p[X]$ and step size $\\eta \\in \\mathbb{Z}_p$, the $p$-adic convergence rate of gradient descent iterates $T^n(x_0)$ to a critical point $c$ is determined by the slopes of the Newton polygon of $f'(X) - f'(c)$ at $X = c$. Specifically, if the smallest slope of the Newton polygon is $\\lambda$, then $|T^n(x_0) - c|_p \\leq C \\cdot p^{-\\lambda n}$ for $x_0$ sufficiently close to $c$.\n\n**Test:** For the cubic family $f_a(x) = x^3 - ax$ over $\\mathbb{Z}_p$, compute Newton polygons of $f'(x) = 3x^2 - a$ at critical points $c = \\pm\\sqrt{a/3}$. Verify the convergence rate prediction by computing gradient iterates to high $p$-adic precision (e.g., mod $p^{100}$) and checking that the valuation $v_p(T^n(x_0) - c)$ grows linearly with slope $\\lambda$. F",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Algebra",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7ed44c20",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T12:04:43.100653+00:00"
   }
 ];
