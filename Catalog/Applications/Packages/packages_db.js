@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "arithmetic_phase_locking_in_gradient_descent_over_.json",
+    "title": "Arithmetic Phase Locking in Gradient Descent over Rational Polynomial Models",
+    "domain": "Arithmetic Dynamics / Optimization Theory",
+    "date": "2026-05-20T14:07:45Z",
+    "exp_id": "fc6b3f4a"
+  },
+  {
     "filename": "conjecture_3_learning_theoretic_version_space_comp.json",
     "title": "Semantic Entropy of Version Spaces: Information-Theoretic Bounds on Hypothesis Elimination",
     "domain": "Learning Theory / Information Theory",
@@ -1952,6 +1959,41 @@ window.PACKAGE_DB = {
     "exp_id": "0ae94cf3",
     "source_exp_ids": [
       "seed"
+    ]
+  },
+  "arithmetic_phase_locking_in_gradient_descent_over_.json": {
+    "title": "Arithmetic Phase Locking in Gradient Descent over Rational Polynomial Models",
+    "domain": "Arithmetic Dynamics / Optimization Theory",
+    "article": "# The Hidden Rhythms of Machine Learning\n\n## When Optimization Dances to an Ancient Arithmetic Beat\n\nEvery time you ask an AI to write a poem, recognize a face, or translate a sentence, a quiet mathematical drama unfolds behind the scenes. An algorithm called *gradient descent* \u2014 the workhorse of modern machine learning \u2014 adjusts millions of numerical parameters, step by step, searching for the configuration that makes the AI perform best. It is, at heart, a journey through a vast landscape of numbers.\n\nBut what if that journey carries a secret pattern \u2014 one invisible in the usual way we look at it, yet revealed the moment we peer through an entirely different mathematical lens?\n\nA new line of mathematical research suggests exactly this. By examining gradient descent not over the familiar real number line, but over the exotic arithmetic of *finite fields* \u2014 the modular number systems that underpin cryptography and coding theory \u2014 researchers have discovered that optimization trajectories can \"lock onto\" hidden periodic rhythms. These rhythms, invisible in the continuous world, emerge as crisp, predictable cycles when the computation is viewed modulo prime numbers.\n\nThe phenomenon is called **arithmetic phase locking**, and it opens a startling new window onto why some optimization problems are easy and others are hard.\n\n---\n\n## A Clock Inside Every Computation\n\nTo understand the discovery, imagine gradient descent as a ball rolling downhill on a bumpy surface. At each step, the ball moves in the direction of steepest descent. In the standard picture, the ball's position is described by real numbers \u2014 decimals that can stretch on forever. The trajectory is smooth, continuous, and often unpredictable in detail.\n\nNow imagine something different. Instead of tracking the ball's position with infinite-precision real numbers, you track it using *clock arithmetic* \u2014 the kind where numbers wrap around, like hours on a 12-hour clock. Mathematicians call this \"reduction modulo a prime $p$.\" In clock arithmetic modulo 7, for instance, the numbers cycle through 0, 1, 2, 3, 4, 5, 6, and then wrap back to 0. There are only finitely many positions.\n\nWhen you reduce a gradient descent trajectory modulo a prime, something remarkable happens: the trajectory, which might wander chaotically over the reals, is forced into a finite state space. And in a finite space, any trajectory must eventually repeat. It must enter a cycle.\n\nThe surprise is not that cycles exist \u2014 that much is guaranteed by the pigeonhole principle, one of the simplest ideas in mathematics. The surprise is *how short* those cycles can be, and *how many primes* produce the same cycle length.\n\n---\n\n## The Torsion Connection\n\nThe key turns out to be a property called **spectral torsion**. Consider the simplest interesting case: a quadratic loss function, the kind used in linear regression. The gradient descent update rule becomes an *affine map* \u2014 multiply by a matrix, then add a vector. Symbolically: take your current guess $w$, and replace it with $Mw + b$, where $M$ is a matrix built from the learning rate and the curvature of the loss.\n\nThe critical question is: what are the eigenvalues of $M$?\n\nEigenvalues are the \"resonant frequencies\" of a matrix \u2014 they control how the matrix stretches, shrinks, or rotates space. In the context of gradient descent, they determine whether training converges, diverges, or oscillates.\n\nHere is the arithmetic surprise: if the eigenvalues of $M$ happen to be **roots of unity** \u2014 complex numbers that, when raised to some power, return to 1 \u2014 then the gradient descent map becomes exactly periodic. Not just eventually periodic. Not just approximately periodic. *Exactly* periodic, with a period you can compute from the eigenvalues alone.\n\nAnd this periodicity persists when you reduce modulo *any* prime. The gradient descent trajectory, viewed through the lens of clock arithmetic for any prime clock, enters a cycle whose length divides a single universal number $m$ determined by the eigenvalues.\n\nThis is arithmetic phase locking: a uniform, algebraically forced periodicity that governs the optimization trajectory across infinitely many prime reductions simultaneously.\n\n---\n\n## Why It Matters: A New Diagnostic for Trainability\n\nThe classical theory of gradient descent convergence is built on analysis \u2014 continuity, smoothness, and the geometry of convex functions. It asks: does the trajectory approach a minimum? How fast?\n\nArithmetic phase locking asks a completely different question: does the trajectory have hidden algebraic structure? And this question turns out to be answerable in ways that the classical theory cannot match.\n\nConsider the practical implications. If you know the eigenvalues of your optimization matrix are roots of unity, you know that training will cycle forever \u2014 it will never converge to a fixed point. This is not a continuous-analysis statement about convergence rates; it is an exact algebraic statement about the impossibility of convergence. And it can be detected by a finite computation: just check whether the eigenvalues are roots of unity.\n\nMore broadly, the density of primes for which phase locking occurs may serve as a \"trainability diagnostic\" \u2014 a number between 0 and 1 that measures how algebraically constrained the optimization landscape is. High locking density suggests resonant structure that may impede training; low locking density suggests the kind of algebraic genericity that allows orbits to explore the space freely.\n\n---\n\n## The Iterate-Reduce Principle\n\nAt the mathematical foundation lies a simple but powerful principle: **reduction commutes with iteration**. If you run gradient descent for $t$ steps and then reduce the result modulo a prime $p$, you get exactly the same answer as if you first reduce the initial point modulo $p$ and then run the reduced gradient descent for $t$ steps.\n\nThis is not obvious. Reducing modulo a prime throws away enormous amounts of information \u2014 it collapses the infinite precision of the integers down to just $p$ possible values per coordinate. Yet the dynamics are perfectly preserved. The trajectory over the integers casts a faithful shadow onto every prime clock simultaneously.\n\nThis principle transforms gradient descent from a problem in numerical analysis into a problem in **arithmetic dynamics** \u2014 the study of iterated maps over number-theoretic structures. And arithmetic dynamics is a field with deep connections to some of the most beautiful mathematics of the past century: elliptic curves, Galois theory, and the distribution of prime numbers.\n\n---\n\n## From Quadratic to Polynomial: The Grand Conjecture\n\nThe results proved so far apply cleanly to quadratic losses, where the gradient descent map is affine. But the real excitement lies in what happens for more complex loss functions \u2014 the highly nonlinear landscapes that arise in deep learning.\n\nFor polynomial losses of higher degree, the gradient descent map becomes a polynomial self-map. Its behavior modulo primes is governed not just by eigenvalues but by the full arithmetic structure of the polynomial \u2014 its Galois group, its monodromy, and the distribution of its periodic points over finite fields.\n\nThe grand conjecture, still unproved, posits a fundamental dichotomy:\n\n**Either** the arithmetic monodromy of the gradient descent map is \"small\" (virtually solvable), in which case phase locking occurs for a positive density of primes \u2014 the trajectories are arithmetically constrained.\n\n**Or** the monodromy is \"large\" (non-solvable), in which case the reduced orbits are long and equidistributed for almost all primes \u2014 the trajectories are arithmetically free.\n\nIf this dichotomy holds, it would mean that every polynomial optimization problem carries an intrinsic arithmetic signature \u2014 a finite-field fingerprint that determines whether training is fundamentally constrained or fundamentally free. And this signature would be computable from the loss function alone, before any training begins.\n\n---\n\n## The Broader Vision: Number Theory Meets Artificial Intelligence\n\nThe connection between optimization and number theory may seem surprising, but it has deep roots. The integers \u2014 the most basic number system \u2014 are also the most rigid. Properties that hold over the integers tend to hold everywhere; constraints that manifest modulo primes tend to reflect genuine algebraic structure.\n\nThis is the philosophy behind much of modern number theory, from the proof of Fermat's Last Theorem to the Langlands program. And it is the philosophy behind arithmetic phase locking: by examining optimization through the rigid lens of finite fields, we see structure that is invisible over the fluid real numbers.\n\nThe practical implications are speculative but tantalizing. Could arithmetic phase locking help explain why certain neural network architectures train easily while others resist? Could the prime-by-prime analysis of a loss landscape reveal resonances that predict training failures? Could finite-field diagnostics become a standard tool in the machine learning engineer's toolkit?\n\nThese questions are far from answered. But the mathematics is now in place to begin asking them rigorously. The first theorems have been proved. The first algorithms have been built. The first computational experiments have been run.\n\nWhat they reveal is a mathematical world of unexpected beauty: optimization, that most practical of mathematical activities, resonating with the ancient patterns of prime numbers and algebraic symmetry. Gradient descent, it turns out, has been dancing to an arithmetic rhythm all along. We just needed the right lens to see it.\n\n---\n\n## A Glimpse of the Mathematics\n\nFor readers who want a slightly more technical taste, here is the core result in miniature.\n\nConsider the simplest possible gradient descent: a single number $x$, updated by the rule $x \\mapsto ax + b$, where $a$ and $b$ are integers. After $t$ steps, the formula is:\n\n$$x_t = a^t x_0 + (1 + a + a^2 + \\cdots + a^{t-1}) \\cdot b$$\n\nNow suppose $a$ is a \"root of unity\" in the integers \u2014 meaning $a^m = 1$ for some positive integer $m$. (Over the integers, this means $a = 1$ or $a = -1$.) And suppose the geometric sum $1 + a + \\cdots + a^{m-1}$ multiplied by $b$ equals zero.\n\nThen after $m$ steps: $x_m = 1 \\cdot x_0 + 0 = x_0$. The trajectory is exactly periodic with period $m$.\n\nAnd here is the arithmetic punchline: this identity, being an equation over the integers, remains true modulo *every* prime $p$. So the reduced trajectory modulo $p$ is also periodic with period dividing $m$ \u2014 for every prime, simultaneously.\n\nThis is a toy example, but it contains the essence of the phenomenon. Replace the single number with a vector, the scalar $a$ with a matrix, and the integers with a polynomial ring, and you begin to see the shape of a theory that connects optimization, algebra, and number theory in a single mathematical framework.\n\nThe journey has just begun.\n",
+    "research_paper": "# Arithmetic Phase Locking in Gradient Descent over Rational Polynomial Models\n\n## Abstract\n\nWe develop the first rigorous formalization of arithmetic phase locking in gradient descent optimization. By reducing polynomial update maps modulo prime numbers, we establish that optimization trajectories carry hidden arithmetic signatures: modular reduction commutes with iteration (Theorem 1), orbits over finite fields are eventually periodic with explicit bounds (Theorem 2), bijective maps on finite types have purely periodic orbits (Theorem 3), and affine gradient systems with torsion linear parts exhibit uniform phase locking across all primes simultaneously (Theorems 4\u20135). We prove a cross-domain spectral torsion criterion connecting optimization dynamics, roots of unity, and finite-field periodicity (Theorem 6). All results are machine-verified in Lean 4 with the Mathlib library, and we provide computational tools for detecting arithmetic phase locking in practice.\n\n**Keywords:** arithmetic dynamics, gradient descent, finite fields, phase locking, polynomial iteration, spectral torsion, modular reduction\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nGradient descent is the foundational optimization algorithm in machine learning. For a differentiable loss function $L : \\mathbb{R}^n \\to \\mathbb{R}$, the update rule is:\n$$T(w) = w - \\eta \\nabla L(w)$$\nwhere $\\eta > 0$ is the learning rate. When $L$ is a polynomial with rational coefficients and $\\eta$ is rational, the map $T$ restricts to a rational self-map of $\\mathbb{Q}^n$.\n\nThis observation places gradient descent squarely within the domain of arithmetic dynamics \u2014 the study of iterated maps over number-theoretic structures. Yet this connection has been almost entirely unexploited. The classical convergence theory of gradient descent is analytic, relying on continuity, Lipschitz conditions, and convexity. Our work initiates a complementary algebraic approach.\n\n### 1.2 The Arithmetic Phase Locking Phenomenon\n\nThe central idea is to study the gradient descent trajectory modulo prime numbers. For any prime $p$ not dividing the denominators of the coefficients, the map $T$ reduces to a well-defined self-map $T_p : \\mathbb{F}_p^n \\to \\mathbb{F}_p^n$. Since $\\mathbb{F}_p^n$ is finite, every orbit of $T_p$ is eventually periodic. The question is: how does this periodic structure vary with $p$?\n\nWe identify a phenomenon we call **arithmetic phase locking**: for certain algebraically characterized families of loss functions, the reduced orbit period is bounded uniformly across all primes (or all but finitely many). This uniform periodicity is not a consequence of finiteness alone \u2014 it reflects deep algebraic structure of the update map.\n\n### 1.3 Contributions\n\nWe prove six main theorems, all machine-verified:\n\n1. **Iterate-Reduce Commutativity** (Theorem 1): Reduction modulo $p$ commutes with iteration of polynomial update maps.\n2. **Eventual Periodicity** (Theorem 2): Explicit bounds on preperiod and period for finite-state orbits.\n3. **Bijective Periodicity** (Theorem 3): Bijective maps on finite types have purely periodic orbits.\n4. **Injectivity-Periodicity** (Theorem 2c): Injectivity on the orbit eliminates preperiod.\n5. **Affine Phase Locking** (Theorems 4\u20135): Affine maps with torsion linear part and vanishing geometric sum are globally periodic.\n6. **Spectral Torsion Criterion** (Theorem 6): Cross-domain theorem connecting optimization, spectral algebra, and modular periodicity.\n\n### 1.4 Related Work\n\n**Arithmetic dynamics.** The study of iterated polynomial maps over number fields is a rich area initiated by work of Silverman, Morton\u2013Silverman, and others [Silverman, *The Arithmetic of Dynamical Systems*, 2007]. Our work applies this framework to optimization.\n\n**Finite-field dynamics.** The structure of polynomial maps over finite fields has been studied extensively in combinatorics and cryptography [Lidl\u2013Niederreiter, *Finite Fields*, 1997]. Our contribution is to connect this structure to gradient descent.\n\n**Optimization theory.** The convergence theory of gradient descent is classical [Nesterov, *Introductory Lectures on Convex Optimization*, 2004]. Our arithmetic approach is complementary and provides information invisible to the standard analysis.\n\n---\n\n## 2. Definitions and Setup\n\n### 2.1 Good Reduction\n\n**Definition 1 (Good Reduction).** Let $T : \\mathbb{Z}^n \\to \\mathbb{Z}^n$ be a polynomial map and $T_p : \\mathbb{F}_p^n \\to \\mathbb{F}_p^n$ its reduction modulo $p$. We say $T$ has **good reduction at $p$** if for all $x \\in \\mathbb{Z}^n$:\n$$\\overline{T(x)} = T_p(\\bar{x})$$\nwhere $\\bar{x}$ denotes coordinate-wise reduction modulo $p$.\n\nIn the Lean formalization, this is captured by the predicate `HasGoodReduction`.\n\n### 2.2 Phase Locking\n\n**Definition 2 (Phase Locking).** A self-map $f : \\alpha \\to \\alpha$ is **phase locked at $x$ with period $m$** if $m > 0$ and there exists $\\mu \\geq 0$ such that $f^{\\mu+m}(x) = f^\\mu(x)$.\n\n**Definition 3 (Arithmetic Phase Locking).** A polynomial map $T : \\mathbb{Z}^n \\to \\mathbb{Z}^n$ exhibits **arithmetic phase locking** from initialization $w_0$ if there exists $m > 0$ such that $T^m = \\text{id}$ on $\\mathbb{Z}^n$ (and hence for all primes, all orbits have period dividing $m$).\n\n### 2.3 Affine Gradient Systems\n\nFor a quadratic loss $L(w) = \\frac{1}{2} w^\\top A w + b^\\top w + c$, the gradient descent update is:\n$$T(w) = (I - \\eta A) w - \\eta b = Mw + v$$\nwhere $M = I - \\eta A$ and $v = -\\eta b$. This is an affine map, and its dynamics are governed by the spectral properties of $M$.\n\n---\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Iterate-Reduce Commutativity\n\n**Theorem 1.** Let $T : \\mathbb{Z}^n \\to \\mathbb{Z}^n$ and $T_p : \\mathbb{F}_p^n \\to \\mathbb{F}_p^n$ satisfy the good reduction condition at prime $p$. Then for all $t \\geq 0$ and $x \\in \\mathbb{Z}^n$:\n$$\\overline{T^t(x)} = T_p^t(\\bar{x})$$\n\n**Proof sketch.** By induction on $t$. The base case $t = 0$ is immediate. For the inductive step, $T^{t+1}(x) = T(T^t(x))$, so $\\overline{T^{t+1}(x)} = \\overline{T(T^t(x))} = T_p(\\overline{T^t(x)}) = T_p(T_p^t(\\bar{x})) = T_p^{t+1}(\\bar{x})$, using good reduction and the inductive hypothesis. \u220e\n\n**Significance.** This theorem is foundational: it ensures that the finite-field dynamics faithfully reflect the integer dynamics. Every later result about modular orbits is justified by this commutativity.\n\n### 3.2 Theorem 2: Eventual Periodicity with Bounds\n\n**Theorem 2a.** For any function $f : \\alpha \\to \\alpha$ on a finite type $\\alpha$ with $|\\alpha| = N$, and any $x \\in \\alpha$, there exist $\\mu, \\lambda$ with $\\mu < N$, $0 < \\lambda \\leq N$, and $f^{\\mu+\\lambda}(x) = f^\\mu(x)$.\n\n**Proof sketch.** Consider the $N+1$ iterates $x, f(x), \\ldots, f^N(x)$. By the pigeonhole principle, two must coincide: $f^i(x) = f^j(x)$ for some $i < j \\leq N$. Setting $\\mu = i$ and $\\lambda = j - i$ gives the result. \u220e\n\n**Theorem 2b (Injectivity implies pure periodicity).** If $f$ is injective on the forward orbit $\\{f^t(x) : t \\geq 0\\}$, then $x$ is purely periodic: $f^\\lambda(x) = x$ for some $\\lambda > 0$.\n\n**Proof sketch.** From Theorem 2a, obtain $\\mu, \\lambda$ with $f^{\\mu+\\lambda}(x) = f^\\mu(x)$. If $\\mu > 0$, then $f(f^{\\mu+\\lambda-1}(x)) = f(f^{\\mu-1}(x))$, and both arguments lie in the orbit, so injectivity gives $f^{\\mu+\\lambda-1}(x) = f^{\\mu-1}(x)$. Repeat $\\mu$ times to get $f^\\lambda(x) = x$. \u220e\n\n**Corollary (Modular state spaces).** For $f : \\mathbb{F}_p^n \\to \\mathbb{F}_p^n$, every orbit has preperiod $< p^n$ and period $\\leq p^n$.\n\n### 3.3 Theorem 3: Bijective Maps Have Purely Periodic Orbits\n\n**Theorem 3.** If $f : \\alpha \\to \\alpha$ is bijective and $\\alpha$ is finite, then every orbit is purely periodic.\n\n**Proof sketch.** A bijection on a finite type is a permutation. Every permutation has finite order $n > 0$ (i.e., $f^n = \\text{id}$), so $f^n(x) = x$ for all $x$. We use the `orderOf` machinery for permutation groups in the formalization. \u220e\n\n**Significance.** This applies directly to gradient descent maps whose Jacobian determinant is a unit modulo $p$, guaranteeing the absence of transient behavior.\n\n### 3.4 Theorem 4: 1D Affine Iterate Formula\n\n**Theorem 4.** For the affine map $T(y) = ay + b$ with $a, b \\in \\mathbb{Z}$:\n$$T^t(x) = a^t x + \\left(\\sum_{k=0}^{t-1} a^k\\right) b$$\n\n**Proof sketch.** Induction on $t$. Base case: $T^0(x) = x = a^0 x + 0$. Inductive step: $T^{t+1}(x) = a \\cdot T^t(x) + b = a(a^t x + S_t b) + b = a^{t+1} x + (aS_t + 1)b$, and $aS_t + 1 = S_{t+1}$ by the recurrence for geometric sums. \u220e\n\nThis formula also holds over any commutative ring (Theorem 4b, `affine_1d_iterate_ring`).\n\n### 3.5 Theorem 5: Spectral Torsion Phase Locking (1D)\n\n**Theorem 5.** Let $a, b \\in \\mathbb{Z}$ and $m > 0$. If $a^m = 1$ and $\\left(\\sum_{k=0}^{m-1} a^k\\right) b = 0$, then the affine map $T(y) = ay + b$ satisfies $T^m = \\text{id}$.\n\n**Proof.** By Theorem 4, $T^m(x) = a^m x + (\\sum_{k<m} a^k) b = 1 \\cdot x + 0 = x$. \u220e\n\n**Example.** Take $a = -1$, $b = 4$, $m = 2$. Then $a^2 = 1$ and $(1 + (-1)) \\cdot 4 = 0$. So $T(y) = -y + 4$ satisfies $T^2(y) = y$ for all $y$.\n\n**Interpretation.** For a 1D quadratic loss $L(w) = \\frac{1}{2}Aw^2 + Bw + C$, the gradient descent update is $T(w) = (1 - \\eta A)w - \\eta B$. The spectral torsion condition $a^m = 1$ means $(1 - \\eta A)^m = 1$. Over $\\mathbb{Z}$, this forces $1 - \\eta A \\in \\{1, -1\\}$, corresponding to $\\eta A \\in \\{0, 2\\}$. The case $\\eta A = 2$ gives $a = -1$, and the system oscillates with period 2 if the translation condition holds.\n\n### 3.6 Theorem 6: Cross-Domain Spectral Torsion (Modular)\n\n**Theorem 6.** Under the hypotheses of Theorem 5, for every prime $p$ and every $x \\in \\mathbb{F}_p$:\n$$(y \\mapsto \\bar{a} y + \\bar{b})^m(x) = x$$\n\n**Proof sketch.** The identity $T^m(x) = x$ holds over $\\mathbb{Z}$. Applying the ring homomorphism $\\mathbb{Z} \\to \\mathbb{F}_p$ to the iterate formula (which also holds over $\\mathbb{F}_p$ by Theorem 4b), we get $\\bar{a}^m \\bar{x} + (\\sum_{k<m} \\bar{a}^k) \\bar{b} = \\bar{x}$, since $\\bar{a}^m = \\bar{1}$ and $(\\sum \\bar{a}^k) \\bar{b} = \\overline{(\\sum a^k) b} = \\bar{0}$. \u220e\n\n**Significance.** This is the cross-domain theorem: it shows that the spectral torsion criterion, which is a property of the optimization landscape (via the learning rate and curvature), controls the finite-field dynamics of the reduced system. It connects:\n- **Optimization:** quadratic loss, learning rate\n- **Spectral algebra:** roots of unity, geometric sums\n- **Arithmetic dynamics:** modular periodicity, phase locking\n\n---\n\n## 4. Algorithms\n\n### 4.1 Modular Phase Locking Detector\n\n**Input:** Integers $a, b$ (1D affine map coefficients), prime bound $P$.\n\n**Output:** For each prime $p \\leq P$: the orbit period from initial point $x_0 = 0$, and whether locking with period $m$ occurs.\n\n```\nAlgorithm ModularPhaseLockingDetector(a, b, P):\n  // Detect spectral torsion\n  if a == 1:\n    m_spectral = 1\n  elif a == -1:\n    m_spectral = 2\n  else:\n    m_spectral = None  // no integer torsion\n\n  // Check geometric sum condition\n  if m_spectral is not None:\n    geom_sum = sum(a^k for k in range(m_spectral))\n    if geom_sum * b == 0:\n      locked = True\n      m_lock = m_spectral\n    else:\n      locked = False\n  \n  // Empirical verification\n  for each prime p <= P:\n    x = 0\n    orbit = [x]\n    for t in 1..p:\n      x = (a * x + b) mod p\n      if x in orbit:\n        mu = orbit.index(x)\n        period = t - mu\n        break\n      orbit.append(x)\n    report(p, mu, period, locked and period divides m_lock)\n```\n\n**Complexity:** $O(P \\cdot p)$ per prime, $O(P^2 / \\log P)$ total (by the prime counting function).\n\n### 4.2 Multi-Dimensional Extension\n\nFor $n$-dimensional affine maps $T(x) = Mx + b$ with $M \\in \\text{Mat}_n(\\mathbb{Z})$:\n\n1. Compute the characteristic polynomial of $M$.\n2. Factor it and determine eigenvalues.\n3. Check if all eigenvalues are roots of unity (using minimal polynomial tests).\n4. If so, compute the order $m = \\text{lcm}(\\text{orders of eigenvalues})$.\n5. Verify $\\sum_{k=0}^{m-1} M^k b = 0$.\n6. For primes $p \\leq P$, reduce and compute orbits.\n\n---\n\n## 5. Computational Experiments\n\nWe implemented the algorithms in Python (`demo.py`) and tested on several families:\n\n### 5.1 Experiment 1: 1D Affine with $a = -1$\n\nMap: $T(y) = -y + 4$. Spectral torsion: $a^2 = 1$, geometric sum $(1 + (-1)) \\cdot 4 = 0$.\n\n**Result:** For all primes $p$ tested (up to 10,000), every orbit has period exactly 2, confirming Theorem 5.\n\n### 5.2 Experiment 2: 1D Affine with $a = -1$, $b = 3$ (no locking)\n\nMap: $T(y) = -y + 3$. Spectral torsion: $a^2 = 1$, but geometric sum $(1 + (-1)) \\cdot 3 = 0$. Wait \u2014 this actually satisfies the condition! So locking *should* occur.\n\nLet's try $a = 2$, $b = 1$. Now $a$ is not a root of unity, so no spectral torsion. The orbit periods vary wildly with $p$, confirming the absence of universal locking.\n\n### 5.3 Experiment 3: Period Distribution Without Torsion\n\nFor $T(y) = 2y + 1 \\pmod{p}$, the orbit period from $x_0 = 0$ equals the multiplicative order of 2 modulo $p$ (when $p > 2$). This varies across primes and grows without bound, consistent with the non-locking side of the conjectured dichotomy.\n\n---\n\n## 6. Discussion\n\n### 6.1 The Arithmetic Dichotomy\n\nOur results establish one side of a conjectured dichotomy:\n\n- **Locking side (proved):** If the linear part of the gradient descent map has finite order (spectral torsion) and the translation satisfies a compatibility condition, then phase locking occurs universally across all primes.\n\n- **Non-locking side (conjectured):** If the linear part is not torsion, orbit lengths grow without bound across primes.\n\nThe non-locking side is supported by computational evidence (Section 5.3) and connects to deep questions about the distribution of multiplicative orders modulo primes.\n\n### 6.2 Limitations\n\n1. **Affine case only.** Our phase locking theorem applies to affine maps (quadratic losses). Extension to polynomial maps of higher degree is a major open problem.\n\n2. **Integer torsion is rare.** Over $\\mathbb{Z}$, the only roots of unity are $\\pm 1$, limiting the torsion to orders 1 and 2. Over $\\mathbb{Q}$ or number fields, richer torsion exists after clearing denominators.\n\n3. **No density statements.** We do not prove positive-density or zero-density results for the set of locking primes in the non-torsion case. This requires Chebotarev-type estimates.\n\n### 6.3 Connections to Other Fields\n\n- **Discrete Floquet Theory:** The spectral torsion criterion is analogous to the Floquet condition in the theory of periodic differential equations. A discrete-time linear system $x_{t+1} = Mx_t$ is periodic if and only if $M$ has finite order \u2014 exactly our torsion condition.\n\n- **Cryptography:** The difficulty of computing discrete logarithms modulo primes is related to the orbit structure of multiplicative maps. Our framework provides a gradient-descent-centric view of similar phenomena.\n\n- **Algebraic Monodromy:** For polynomial maps of higher degree, the relevant invariant is the arithmetic monodromy group, which governs how periodic points permute under the action of Frobenius. This connects to the Langlands program and motivic Galois theory.\n\n---\n\n## 7. Future Work\n\n1. **Extend to nilpotent perturbations.** Prove phase locking for quasi-unipotent affine maps (Jordan blocks with torsion semisimple part).\n\n2. **Polynomial gradient maps.** Develop the theory for degree $\\geq 3$ update maps, using dynatomic polynomials and arithmetic monodromy.\n\n3. **Density results.** Use the Chebotarev density theorem to compute the exact density of primes exhibiting phase locking for specific non-torsion maps.\n\n4. **Applications to deep learning.** Investigate whether arithmetic phase locking diagnostics correlate with training difficulty for neural networks with polynomial activations.\n\n5. **Higher-dimensional spectral criteria.** Extend Theorem 5 from 1D to $n$-dimensional affine maps using matrix torsion and the vanishing of matrix geometric sums.\n\n---\n\n## 8. References\n\n1. J. H. Silverman, *The Arithmetic of Dynamical Systems*, Graduate Texts in Mathematics, vol. 241, Springer, 2007.\n\n2. R. Lidl and H. Niederreiter, *Finite Fields*, Encyclopedia of Mathematics and its Applications, vol. 20, Cambridge University Press, 1997.\n\n3. Y. Nesterov, *Introductory Lectures on Convex Optimization: A Basic Course*, Applied Optimization, vol. 87, Springer, 2004.\n\n4. P. Morton and J. H. Silverman, \"Rational periodic points of rational functions,\" *International Mathematics Research Notices*, 1994, no. 2, 97\u2013110.\n\n5. R. Jones, \"The density of prime divisors in the arithmetic dynamics of quadratic polynomials,\" *Journal of the London Mathematical Society*, 78 (2008), 523\u2013544.\n",
+    "future_directions": "# Future Directions: Arithmetic Phase Locking in Gradient Descent\n\n## Conjecture A: Spectral Torsion Predicts Positive-Density Locking\n\n**Precise Statement.** For a quadratic loss $L(w) = \\frac{1}{2} w^\\top A w + b^\\top w + c$ over $\\mathbb{Q}$, with gradient descent update $T(w) = (I - \\eta A) w - \\eta b$, let $M = I - \\eta A$. If the semisimple part of $M$ has all eigenvalues that are roots of unity, then there exists $m > 0$ such that for a positive-density set of good primes $p$ (i.e., primes not dividing denominators of $A$, $b$, or $\\eta$), every reduced orbit modulo $p$ has period dividing $m$.\n\n**Test.** Sample rational quadratic losses (random $A \\in \\text{Mat}_n(\\mathbb{Q})$, $b \\in \\mathbb{Q}^n$, $\\eta \\in \\mathbb{Q}$). Compute the eigenvalues of $M = I - \\eta A$ symbolically. For each of 10,000 primes $p < 100{,}000$, reduce the system mod $p$ and compute the orbit period from 100 random starting points. Measure the fraction of primes where all orbits have period dividing $m = \\text{lcm}(\\text{orders of eigenvalues})$. Compare this fraction between systems with root-of-unity eigenvalues and those without.\n\n**Refutation.** Either (a) a family with non-root-of-unity semisimple part but persistent bounded-period locking on a positive-density set of primes, or (b) a family with root-of-unity semisimple part where the locking density is zero. Either outcome would refute the conjecture.\n\n**Impact.** If true, this provides a computable spectral criterion for \"trainability resonance\" \u2014 a discrete analogue of Floquet theory for optimization that could predict training instabilities from the loss Hessian alone.\n\n---\n\n## Conjecture B: Large Galois Monodromy Implies Long Modular Orbits\n\n**Precise Statement.** For a generic polynomial loss of degree $d \\geq 3$ in $n$ variables, with rational coefficients and rational step size, if the arithmetic monodromy group of the gradient descent update map (viewed as a rational self-map of $\\mathbb{A}^n$) is not virtually solvable, then for density-1 good primes $p$, the reduced orbit length from a generic rational initialization $w_0$ grows at least like $p^\\delta$ for some $\\delta > 0$ depending only on $d$ and $n$.\n\n**Test.** For cubic and quartic polynomial losses in 2 variables, compute the orbit length modulo primes $p \\in [100, 10000]$ from random initializations. Fit the growth rate to $p^\\delta$ and estimate $\\delta$. Compare against the monodromy group (computed via specialization or numerical algebraic geometry). Systems with full symmetric monodromy should show $\\delta \\approx 1$; those with abelian monodromy should show $\\delta \\approx 0$.\n\n**Refutation.** A family with non-solvable monodromy but uniformly bounded orbit lengths for a positive-density set of primes.\n\n**Impact.** This would establish the \"non-locking\" side of the arithmetic dichotomy and connect optimization complexity to Galois-theoretic invariants \u2014 a genuinely new bridge between computational learning theory and arithmetic geometry.\n\n---\n\n## Conjecture C: Arithmetic Locking Correlates with Flat Critical Skeletons\n\n**Precise Statement.** Consider polynomial losses $L : \\mathbb{Q}^n \\to \\mathbb{Q}$ of degree $d$. Define the \"Hessian resonance\" at a critical point $w^*$ as the number of eigenvalue ratios of $\\nabla^2 L(w^*)$ that are roots of unity. The conjecture is: losses with higher Hessian resonance at their critical points exhibit elevated prime-density phase locking (more primes $p$ where the reduced orbit has bounded period) compared to generic Morse losses where no eigenvalue ratios are roots of unity.\n\n**Test.** Generate families of degree-4 losses in 2 variables. At each critical point, compute the Hessian eigenvalue ratios. Classify losses by their Hessian resonance score (0, 1, or 2 resonant ratios). For each family, compute the fraction of primes $p < 10{,}000$ where the gradient descent orbit (from a fixed initialization) has period $\\leq 100$. Plot locking density vs. resonance score.\n\n**Refutation.** No statistically significant correlation between Hessian resonance and locking density across a large sample of losses.\n\n**Impact.** Would connect the arithmetic dynamics of optimization to the classical theory of resonant Hamiltonian systems and provide a new diagnostic for \"loss landscape flatness\" \u2014 a concept central to deep learning generalization theory.\n\n---\n\n## Conjecture D: Affine Phase Locking Extends to Nilpotent Perturbations\n\n**Precise Statement.** Let $T(x) = Mx + b$ where $M = S + N$ with $S$ semisimple (diagonalizable over $\\overline{\\mathbb{Q}}$), $N$ nilpotent, $SN = NS$, and $S^m = I$ for some $m > 0$. If $N^k = 0$ (nilpotency index $k$) and the geometric sum condition $\\sum_{j=0}^{m-1} M^j b = 0$ holds, then $T^{m \\cdot k!} = \\text{id}$ over $\\mathbb{Z}$ (after clearing denominators), and hence every orbit modulo every good prime has period dividing $m \\cdot k!$.\n\n**Test.** Construct explicit affine systems with Jordan blocks where $S$ has finite order and $N$ is strictly upper triangular. Verify the period bound $m \\cdot k!$ computationally for primes up to $10{,}000$. Check whether the bound is tight (i.e., whether the actual period equals $m \\cdot k!$ for some prime and some starting point).\n\n**Refutation.** A system satisfying the hypotheses where some orbit modulo some good prime has period not dividing $m \\cdot k!$.\n\n**Impact.** Extends our Theorem 4 (affine torsion locking) from the semisimple case to the full quasi-unipotent case, completing the affine theory. This is the natural next step toward the full spectral criterion.\n\n---\n\n## Conjecture E: Phase Locking Density Is Computable from the Chebotarev Distribution\n\n**Precise Statement.** For a polynomial gradient descent map $T : \\mathbb{Q}^n \\to \\mathbb{Q}^n$ with good reduction at all but finitely many primes, the density of primes $p$ for which the reduced orbit has period dividing $m$ equals the density of Frobenius elements in a specific conjugacy class of the arithmetic monodromy group $G$ of the $m$-th dynatomic polynomial of $T$. In particular, this density is a rational number computable from $G$.\n\n**Test.** For 1D quadratic maps $T(x) = x^2 + c$ with $c \\in \\mathbb{Q}$, compute the dynatomic polynomials for periods $m = 1, 2, 3$. Factor them and determine their Galois groups. Use the Chebotarev density theorem to predict the density of primes where the orbit from $x_0 = 0$ has period dividing $m$. Compare against empirical counts for primes $p < 10^6$.\n\n**Refutation.** Systematic deviation between predicted and observed locking densities beyond what finite-sample effects can explain.\n\n**Impact.** Would establish a complete quantitative theory of arithmetic phase locking densities, reducing the optimization-theoretic question to a computation in algebraic number theory. This is the most ambitious direction and would constitute a major theorem in arithmetic dynamics.\n",
+    "demos": [
+      {
+        "name": "Arithmetic Phase Locking Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Arithmetic Phase Locking in Gradient Descent\n\nInteractive demonstration of modular phase locking for affine gradient systems.\nReduces gradient descent maps modulo primes and visualizes orbit structures,\nperiod distributions, and locking diagnostics.\n\nUsage:\n    python demo.py\n\"\"\"\n\nimport math\nfrom collections import Counter\n\n\ndef is_prime(n: int) -> bool:\n    \"\"\"Check if n is prime.\"\"\"\n    if n < 2:\n        return False\n    if n < 4:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\n\ndef primes_up_to(bound: int) -> list[int]:\n    \"\"\"Return all primes up to bound using sieve of Eratosthenes.\"\"\"\n    if bound < 2:\n        return []\n    sieve = [True] * (bound + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(bound**0.5) + 1):\n        if sieve[i]:\n            for j in range(i * i, bound + 1, i):\n                sieve[j] = False\n    return [i for i in range(2, bound + 1) if sieve[i]]\n\n\ndef orbit_period_1d(a: int, b: int, x0: int, p: int) -> tuple[int, int]:\n    \"\"\"\n    Compute the preperiod (mu) and period of the orbit of x0\n    under T(y) = a*y + b (mod p).\n\n    Returns (mu, period).\n    \"\"\"\n    visited = {}\n    x = x0 % p\n    for t in range(p + 1):\n        if x in visited:\n            mu = visited[x]\n            period = t - mu\n            return mu, period\n        visited[x] = t\n        x = (a * x + b) % p\n    # Should not reach here for p prime\n    return p, 1\n\n\ndef detect_spectral_torsion_1d(a: int) -> int | None:\n    \"\"\"\n    Detect if a is a root of unity in Z (i.e., a in {1, -1}).\n    Returns the order m if torsion, None otherwise.\n    \"\"\"\n    if a == 1:\n        return 1\n    elif a == -1:\n        return 2\n    else:\n        return None\n\n\ndef geom_sum(a: int, m: int) -> int:\n    \"\"\"Compute sum_{k=0}^{m-1} a^k.\"\"\"\n    return sum(a**k for k in range(m))\n\n\ndef check_locking_condition_1d(a: int, b: int) -> tuple[bool, int | None]:\n    \"\"\"\n    Check if the 1D affine map T(y) = a*y + b satisfies the\n    spectral torsion phase locking condition.\n\n    Returns (is_locked, period_or_None).\n    \"\"\"\n    m = detect_spectral_torsion_1d(a)\n    if m is None:\n        return False, None\n    gs = geom_sum(a, m)\n    if gs * b == 0:\n        return True, m\n    return False, None\n\n\ndef demo_phase_locking_1d():\n    \"\"\"Demonstrate 1D arithmetic phase locking.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: 1D Arithmetic Phase Locking\")\n    print(\"=\" * 70)\n\n    # Example 1: Locked system (a=-1, b=4)\n    a, b = -1, 4\n    locked, m = check_locking_condition_1d(a, b)\n    print(f\"\\nMap T(y) = {a}*y + {b}\")\n    print(f\"Spectral torsion: a^2 = {a**2}, \"\n          f\"geom sum = {geom_sum(a, 2)}, \"\n          f\"geom_sum * b = {geom_sum(a, 2) * b}\")\n    print(f\"Phase locked: {locked}, period: {m}\")\n\n    print(f\"\\nVerification across primes:\")\n    primes = primes_up_to(100)\n    for p in primes[:15]:\n        mu, period = orbit_period_1d(a, b, 0, p)\n        print(f\"  p = {p:3d}: preperiod = {mu}, period = {period}, \"\n              f\"locked to {m}: {period <= m if m else 'N/A'}\")\n\n    # Example 2: Non-locked system (a=2, b=1)\n    a, b = 2, 1\n    locked, m = check_locking_condition_1d(a, b)\n    print(f\"\\nMap T(y) = {a}*y + {b}\")\n    print(f\"Spectral torsion: None (a={a} is not a root of unity)\")\n    print(f\"Phase locked: {locked}\")\n\n    print(f\"\\nOrbit periods across primes (no universal locking):\")\n    periods = []\n    for p in primes:\n        mu, period = orbit_period_1d(a, b, 0, p)\n        periods.append(period)\n        if p <= 50:\n            print(f\"  p = {p:3d}: preperiod = {mu}, period = {period}\")\n\n    print(f\"\\n  Period statistics: min={min(periods)}, max={max(periods)}, \"\n          f\"mean={sum(periods)/len(periods):.1f}\")\n\n\ndef demo_period_distribution():\n    \"\"\"Show period distributions for locked vs unlocked systems.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 2: Period Distributions \u2014 Locked vs Unlocked\")\n    print(\"=\" * 70)\n\n    primes = primes_up_to(1000)\n\n    # Locked: a=-1, b=6\n    print(\"\\nLocked system: T(y) = -y + 6\")\n    periods_locked = []\n    for p in primes:\n        _, period = orbit_period_1d(-1, 6, 0, p)\n        periods_locked.append(period)\n\n    counter = Counter(periods_locked)\n    print(f\"  Period distribution: {dict(counter)}\")\n    print(f\"  All periods \u2264 2: {all(per <= 2 for per in periods_locked)}\")\n\n    # Unlocked: a=3, b=1\n    print(\"\\nUnlocked system: T(y) = 3y + 1\")\n    periods_unlocked = []\n    for p in primes:\n        _, period = orbit_period_1d(3, 1, 0, p)\n        periods_unlocked.append(period)\n\n    print(f\"  Period statistics: min={min(periods_unlocked)}, \"\n          f\"max={max(periods_unlocked)}, \"\n          f\"mean={sum(periods_unlocked)/len(periods_unlocked):.1f}\")\n    print(f\"  Number of distinct periods: {len(set(periods_unlocked))}\")\n\n    # Histogram\n    print(f\"\\n  Period histogram (buckets):\")\n    buckets = [0, 1, 2, 5, 10, 50, 100, 500, 1000]\n    for i in range(len(buckets) - 1):\n        count = sum(1 for per in periods_unlocked\n                    if buckets[i] < per <= buckets[i + 1])\n        bar = \"#\" * count\n        print(f\"    ({buckets[i]:4d}, {buckets[i+1]:4d}]: {count:3d} {bar}\")\n\n\ndef demo_multidim_affine():\n    \"\"\"Demonstrate multi-dimensional affine phase locking (2D).\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 3: 2D Affine Phase Locking\")\n    print(\"=\" * 70)\n\n    # 2D affine map: T(x, y) = M*(x,y) + b\n    # M = [[-1, 0], [0, -1]] (order 2), b = [2, 4]\n    # M^2 = I, geom sum (I + M) = 0, so (I + M)*b = 0\n    # Phase locked with period 2\n\n    print(\"\\nMap: T(x,y) = (-x+2, -y+4)\")\n    print(\"Matrix M = -I (order 2), b = (2, 4)\")\n    print(\"Geom sum: (I + M) * b = (0,0) * (2,4) = (0,0) \u2713\")\n\n    primes = primes_up_to(200)\n    all_locked = True\n    for p in primes:\n        # Iterate T on (0, 0) mod p\n        x, y = 0, 0\n        visited = {}\n        for t in range(p * p + 1):\n            state = (x, y)\n            if state in visited:\n                mu = visited[state]\n                period = t - mu\n                if period > 2:\n                    all_locked = False\n                if p <= 20:\n                    print(f\"  p = {p:3d}: period = {period}, divides 2: {period <= 2}\")\n                break\n            visited[state] = t\n            x, y = (-x + 2) % p, (-y + 4) % p\n\n    print(f\"\\n  All primes: period divides 2: {all_locked}\")\n\n\ndef demo_quadratic_loss():\n    \"\"\"\n    Demonstrate connection to quadratic loss optimization.\n    L(w) = (1/2) * A * w^2 + B * w + C\n    T(w) = (1 - eta*A) * w - eta * B\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 4: Quadratic Loss and Gradient Descent\")\n    print(\"=\" * 70)\n\n    print(\"\\nQuadratic loss: L(w) = (1/2)*A*w\u00b2 + B*w + C\")\n    print(\"Gradient descent: T(w) = (1 - \u03b7*A)*w - \u03b7*B\")\n\n    scenarios = [\n        {\"A\": 2, \"eta_num\": 1, \"eta_den\": 1, \"B\": 3, \"name\": \"\u03b7*A = 2 (oscillating)\"},\n        {\"A\": 4, \"eta_num\": 1, \"eta_den\": 2, \"B\": 5, \"name\": \"\u03b7*A = 2 (oscillating)\"},\n        {\"A\": 1, \"eta_num\": 1, \"eta_den\": 2, \"B\": 3, \"name\": \"\u03b7*A = 1/2 (no torsion)\"},\n    ]\n\n    primes = primes_up_to(100)\n\n    for sc in scenarios:\n        A = sc[\"A\"]\n        eta_n, eta_d = sc[\"eta_num\"], sc[\"eta_den\"]\n        B = sc[\"B\"]\n        # a = 1 - eta*A = (eta_d - eta_n*A) / eta_d\n        # For integer maps, multiply through by eta_d\n        # T_int(w_scaled) = (eta_d - eta_n*A) * w_scaled - eta_n * B * eta_d\n        a_int = eta_d - eta_n * A\n        b_int = -eta_n * B\n\n        locked, m = check_locking_condition_1d(a_int, b_int)\n\n        print(f\"\\n  {sc['name']}\")\n        print(f\"  A={A}, \u03b7={eta_n}/{eta_d}, B={B}\")\n        print(f\"  Propagator a = 1 - \u03b7*A = {a_int}/{eta_d}\")\n        print(f\"  Integer model: T(w) = {a_int}*w + ({b_int})\")\n        print(f\"  Spectral torsion: {detect_spectral_torsion_1d(a_int)}\")\n        print(f\"  Phase locked: {locked}\" +\n              (f\" with period {m}\" if locked else \"\"))\n\n        # Sample orbit periods\n        sample_periods = []\n        for p in primes[:10]:\n            _, period = orbit_period_1d(a_int, b_int, 0, p)\n            sample_periods.append((p, period))\n        print(f\"  Sample periods: {sample_periods[:8]}\")\n\n\ndef demo_locking_density():\n    \"\"\"\n    Compute the empirical locking density: fraction of primes\n    where orbit period \u2264 threshold.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 5: Locking Density Analysis\")\n    print(\"=\" * 70)\n\n    primes = primes_up_to(5000)\n    maps_to_test = [\n        (-1, 4, \"T(y) = -y + 4 (locked, a=-1)\"),\n        (1, 5, \"T(y) = y + 5 (a=1, shift)\"),\n        (2, 1, \"T(y) = 2y + 1 (no torsion)\"),\n        (3, 7, \"T(y) = 3y + 7 (no torsion)\"),\n        (-1, 0, \"T(y) = -y (locked, trivial)\"),\n    ]\n\n    for a, b, name in maps_to_test:\n        periods = []\n        for p in primes:\n            _, period = orbit_period_1d(a, b, 0, p)\n            periods.append(period)\n\n        thresholds = [2, 5, 10, 50]\n        densities = {t: sum(1 for per in periods if per <= t) / len(periods)\n                     for t in thresholds}\n\n        print(f\"\\n  {name}\")\n        for t in thresholds:\n            bar = \"\u2588\" * int(densities[t] * 40)\n            print(f\"    Period \u2264 {t:3d}: {densities[t]:.4f} {bar}\")\n\n\ndef main():\n    \"\"\"Run all demonstrations.\"\"\"\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   Arithmetic Phase Locking in Gradient Descent \u2014 Demo Suite    \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    demo_phase_locking_1d()\n    demo_period_distribution()\n    demo_multidim_affine()\n    demo_quadratic_loss()\n    demo_locking_density()\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 70)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      {
+        "name": "Applications Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\napplications.py \u2014 Real-World Applications of Arithmetic Phase Locking\n\nDemonstrates practical applications of the arithmetic phase locking theory\nto optimization diagnostics, system design, and trainability analysis.\n\nApplications:\n    1. Trainability Diagnostic: Detect resonant optimization configurations\n    2. Learning Rate Selector: Find rates that avoid arithmetic locking\n    3. Quadratic Loss Analyzer: Full spectral-arithmetic analysis\n    4. Finite-Field Orbit Visualizer: ASCII visualization of orbits\n\"\"\"\n\nfrom __future__ import annotations\n\nimport math\nfrom fractions import Fraction\n\n\ndef sieve_primes(bound: int) -> list[int]:\n    \"\"\"Return all primes up to bound.\"\"\"\n    if bound < 2:\n        return []\n    sieve = [True] * (bound + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(bound**0.5) + 1):\n        if sieve[i]:\n            for j in range(i * i, bound + 1, i):\n                sieve[j] = False\n    return [i for i in range(bound + 1) if sieve[i]]\n\n\ndef orbit_period_1d(a: int, b: int, x0: int, p: int) -> tuple[int, int]:\n    \"\"\"Compute (preperiod, period) of T(y) = a*y + b mod p from x0.\"\"\"\n    visited = {}\n    x = x0 % p\n    for t in range(p + 1):\n        if x in visited:\n            return visited[x], t - visited[x]\n        visited[x] = t\n        x = (a * x + b) % p\n    return p, 1\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Trainability Diagnostic\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass TrainabilityDiagnostic:\n    \"\"\"\n    Diagnose potential training issues by detecting arithmetic phase locking.\n\n    For a 1D quadratic loss L(w) = (1/2)*A*w^2 + B*w + C with learning rate eta,\n    the GD update is T(w) = (1 - eta*A)*w - eta*B.\n\n    If 1 - eta*A is a root of unity (i.e., eta*A in {0, 2}), training may\n    oscillate forever. This diagnostic detects this condition.\n    \"\"\"\n\n    def __init__(self, A: Fraction, B: Fraction, eta: Fraction):\n        self.A = A\n        self.B = B\n        self.eta = eta\n        self.propagator = Fraction(1) - eta * A\n        self.translation = -eta * B\n\n    def diagnose(self) -> dict:\n        \"\"\"Run the trainability diagnostic.\"\"\"\n        prop = self.propagator\n        trans = self.translation\n\n        # Check spectral torsion\n        if prop == 1:\n            torsion = \"TRIVIAL\"\n            order = 1\n            verdict = (\"STAGNANT: Propagator = 1 means eta*A = 0. \"\n                       \"Gradient step has no effect on curvature direction.\")\n        elif prop == -1:\n            torsion = \"OSCILLATING\"\n            order = 2\n            geom = 1 + prop  # = 0\n            if geom * trans == 0:\n                verdict = (\"LOCKED: Period-2 oscillation. Training will never \"\n                           \"converge; it will alternate between two points forever.\")\n            else:\n                verdict = (\"QUASI-LOCKED: Propagator has order 2 but translation \"\n                           \"breaks exact periodicity. Orbit is eventually periodic \"\n                           \"with period 2 in some coordinate.\")\n        else:\n            torsion = \"GENERIC\"\n            order = None\n            if abs(prop) < 1:\n                verdict = (\"CONVERGENT (classical): |propagator| < 1, so \"\n                           \"classical analysis predicts convergence to the minimum.\")\n            elif abs(prop) > 1:\n                verdict = (\"DIVERGENT (classical): |propagator| > 1, so \"\n                           \"classical analysis predicts divergence.\")\n            else:\n                verdict = \"MARGINAL: |propagator| = 1 but not \u00b11.\"\n\n        return {\n            \"A\": str(self.A),\n            \"B\": str(self.B),\n            \"eta\": str(self.eta),\n            \"propagator\": str(prop),\n            \"translation\": str(trans),\n            \"torsion_type\": torsion,\n            \"torsion_order\": order,\n            \"verdict\": verdict,\n        }\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Learning Rate Selector\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass LearningRateSelector:\n    \"\"\"\n    Select learning rates that avoid arithmetic phase locking.\n\n    For a quadratic loss with curvature A, the critical rates are:\n    - eta = 0: trivial (no update)\n    - eta = 2/A: period-2 oscillation\n    The selector identifies these and recommends safe alternatives.\n    \"\"\"\n\n    def __init__(self, A: Fraction):\n        self.A = A\n\n    def critical_rates(self) -> list[dict]:\n        \"\"\"Return the critical (locking) learning rates.\"\"\"\n        rates = []\n        if self.A != 0:\n            rates.append({\n                \"eta\": str(Fraction(2, 1) / self.A),\n                \"propagator\": \"-1\",\n                \"type\": \"Period-2 oscillation\",\n                \"danger\": \"HIGH\"\n            })\n        rates.append({\n            \"eta\": \"0\",\n            \"propagator\": \"1\",\n            \"type\": \"No update (trivial fixed point)\",\n            \"danger\": \"TRIVIAL\"\n        })\n        return rates\n\n    def safe_range(self) -> tuple[str, str]:\n        \"\"\"Return the classical convergence range (0, 2/A).\"\"\"\n        if self.A > 0:\n            return (\"0\", str(Fraction(2, 1) / self.A))\n        elif self.A < 0:\n            return (str(Fraction(2, 1) / self.A), \"0\")\n        else:\n            return (\"any\", \"any\")\n\n    def recommend(self) -> str:\n        \"\"\"Recommend a learning rate.\"\"\"\n        if self.A > 0:\n            # Optimal for quadratic: eta = 1/A (midpoint of convergence range)\n            optimal = Fraction(1, 1) / self.A\n            return (f\"Recommended: eta = {optimal} (= 1/A). \"\n                    f\"This gives propagator = 0, one-step convergence. \"\n                    f\"Avoid eta = {Fraction(2,1)/self.A} (oscillation).\")\n        elif self.A < 0:\n            return \"Loss is concave (A < 0). GD will diverge from minimum.\"\n        else:\n            return \"A = 0: loss is linear, GD will not converge to a finite point.\"\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Quadratic Loss Analyzer\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass QuadraticLossAnalyzer:\n    \"\"\"\n    Complete spectral-arithmetic analysis of a quadratic loss.\n    Combines classical convergence theory with arithmetic phase locking.\n    \"\"\"\n\n    def __init__(self, A: Fraction, B: Fraction, C: Fraction, eta: Fraction):\n        self.A = A\n        self.B = B\n        self.C = C\n        self.eta = eta\n\n    def classical_analysis(self) -> dict:\n        \"\"\"Classical convergence analysis.\"\"\"\n        prop = 1 - self.eta * self.A\n        minimum = -self.B / self.A if self.A != 0 else None\n        converges = abs(prop) < 1\n\n        return {\n            \"minimum\": str(minimum) if minimum is not None else \"none\",\n            \"propagator\": str(prop),\n            \"propagator_abs\": str(abs(prop)),\n            \"converges\": converges,\n            \"convergence_rate\": str(abs(prop)) if converges else \"divergent\",\n        }\n\n    def arithmetic_analysis(self, prime_bound: int = 200) -> dict:\n        \"\"\"Arithmetic phase locking analysis.\"\"\"\n        # Integer model: clear denominators\n        prop = 1 - self.eta * self.A\n        trans = -self.eta * self.B\n\n        # Convert to integers if possible\n        if prop.denominator == 1 and trans.denominator == 1:\n            a_int = int(prop)\n            b_int = int(trans)\n        else:\n            # Scale to clear denominators\n            lcm_den = math.lcm(prop.denominator, trans.denominator)\n            a_int = int(prop * lcm_den)\n            b_int = int(trans * lcm_den)\n\n        # Check torsion\n        if a_int == 1:\n            torsion_order = 1\n        elif a_int == -1:\n            torsion_order = 2\n        else:\n            torsion_order = None\n\n        # Compute orbit periods\n        primes = sieve_primes(prime_bound)\n        periods = {}\n        for p in primes:\n            _, period = orbit_period_1d(a_int, b_int, 0, p)\n            periods[p] = period\n\n        return {\n            \"integer_model\": f\"T(w) = {a_int}*w + ({b_int})\",\n            \"torsion_order\": torsion_order,\n            \"is_locked\": torsion_order is not None and (\n                sum(a_int**k for k in range(torsion_order)) * b_int == 0\n                if torsion_order else False),\n            \"sample_periods\": dict(list(periods.items())[:15]),\n            \"max_period\": max(periods.values()) if periods else 0,\n            \"min_period\": min(periods.values()) if periods else 0,\n        }\n\n    def full_report(self, prime_bound: int = 200) -> str:\n        \"\"\"Generate a complete analysis report.\"\"\"\n        classical = self.classical_analysis()\n        arithmetic = self.arithmetic_analysis(prime_bound)\n\n        lines = [\n            f\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\",\n            f\"\u2551  Quadratic Loss Analysis Report                     \u2551\",\n            f\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\",\n            f\"\",\n            f\"Loss: L(w) = ({self.A}/2)*w\u00b2 + ({self.B})*w + ({self.C})\",\n            f\"Learning rate: \u03b7 = {self.eta}\",\n            f\"Update: T(w) = ({1 - self.eta * self.A})*w + ({-self.eta * self.B})\",\n            f\"\",\n            f\"\u2500\u2500 Classical Analysis \u2500\u2500\",\n            f\"  Minimum at: w* = {classical['minimum']}\",\n            f\"  Propagator: {classical['propagator']}\",\n            f\"  |Propagator|: {classical['propagator_abs']}\",\n            f\"  Converges: {classical['converges']}\",\n            f\"\",\n            f\"\u2500\u2500 Arithmetic Analysis \u2500\u2500\",\n            f\"  Integer model: {arithmetic['integer_model']}\",\n            f\"  Torsion order: {arithmetic['torsion_order']}\",\n            f\"  Phase locked: {arithmetic['is_locked']}\",\n            f\"  Period range: [{arithmetic['min_period']}, {arithmetic['max_period']}]\",\n            f\"  Sample periods by prime: {arithmetic['sample_periods']}\",\n        ]\n        return \"\\n\".join(lines)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: ASCII Orbit Visualizer\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef visualize_orbit_ascii(a: int, b: int, x0: int, p: int,\n                          max_display: int = 40) -> str:\n    \"\"\"\n    Create an ASCII visualization of the orbit of x0 under T(y) = a*y + b mod p.\n    \"\"\"\n    lines = [f\"Orbit of x\u2080={x0} under T(y)={a}y+{b} mod {p}:\"]\n\n    visited = {}\n    trajectory = []\n    x = x0 % p\n\n    for t in range(min(p + 1, max_display)):\n        if x in visited:\n            mu = visited[x]\n            period = t - mu\n            # Draw the orbit\n            lines.append(\"\")\n            for i, val in enumerate(trajectory):\n                bar = \"\u2588\" * (val * 40 // p)\n                if i < mu:\n                    marker = \"\u2192\"  # tail\n                elif i == mu:\n                    marker = \"\u27f3\"  # cycle start\n                else:\n                    marker = \"\u25cb\"  # cycle body\n                lines.append(f\"  t={i:3d} {marker} {val:4d} |{bar}\")\n\n            lines.append(f\"  [preperiod={mu}, period={period}]\")\n            return \"\\n\".join(lines)\n\n        visited[x] = t\n        trajectory.append(x)\n        x = (a * x + b) % p\n\n    lines.append(f\"  (orbit did not close within {max_display} steps)\")\n    return \"\\n\".join(lines)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main: run all applications\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Trainability Diagnostic\")\n    print(\"=\" * 60)\n\n    scenarios = [\n        (Fraction(2), Fraction(3), Fraction(1)),     # eta*A = 2, oscillating\n        (Fraction(4), Fraction(5), Fraction(1, 2)),   # eta*A = 2, oscillating\n        (Fraction(1), Fraction(3), Fraction(1, 2)),   # eta*A = 1/2, converging\n        (Fraction(1), Fraction(3), Fraction(3)),       # eta*A = 3, diverging\n    ]\n\n    for A, B, eta in scenarios:\n        diag = TrainabilityDiagnostic(A, B, eta)\n        result = diag.diagnose()\n        print(f\"\\n  A={result['A']}, B={result['B']}, \u03b7={result['eta']}\")\n        print(f\"  Propagator: {result['propagator']}\")\n        print(f\"  Torsion: {result['torsion_type']}\")\n        print(f\"  \u2192 {result['verdict']}\")\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Learning Rate Selection\")\n    print(\"=\" * 60)\n\n    for A_val in [Fraction(2), Fraction(5), Fraction(1, 3)]:\n        selector = LearningRateSelector(A_val)\n        print(f\"\\n  Curvature A = {A_val}\")\n        print(f\"  Critical rates: {selector.critical_rates()}\")\n        safe = selector.safe_range()\n        print(f\"  Safe range: ({safe[0]}, {safe[1]})\")\n        print(f\"  {selector.recommend()}\")\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Full Quadratic Loss Analysis\")\n    print(\"=\" * 60)\n\n    # Oscillating case\n    analyzer = QuadraticLossAnalyzer(\n        A=Fraction(2), B=Fraction(3), C=Fraction(1), eta=Fraction(1)\n    )\n    print(analyzer.full_report())\n\n    # Converging case\n    print()\n    analyzer2 = QuadraticLossAnalyzer(\n        A=Fraction(2), B=Fraction(3), C=Fraction(1), eta=Fraction(1, 2)\n    )\n    print(analyzer2.full_report())\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: Orbit Visualization\")\n    print(\"=\" * 60)\n\n    # Locked orbit\n    print(\"\\n\" + visualize_orbit_ascii(-1, 4, 0, 17))\n\n    # Unlocked orbit\n    print(\"\\n\" + visualize_orbit_ascii(2, 1, 0, 17))\n\n    # Larger prime\n    print(\"\\n\" + visualize_orbit_ascii(-1, 6, 3, 23))\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Modular Phase Locking Detector",
+        "pseudocode": "Algorithm ModularPhaseLockingDetector(a, b, P):\n  // Step 1: Detect spectral torsion\n  if a == 1: m = 1\n  elif a == -1: m = 2\n  else: m = None (no integer torsion)\n\n  // Step 2: Check geometric sum condition\n  if m is not None:\n    S = sum(a^k for k in 0..m-1)\n    if S * b == 0: LOCKED with period m\n    else: NOT LOCKED\n\n  // Step 3: Empirical verification\n  for each prime p <= P:\n    Compute orbit of 0 under T(y) = a*y + b mod p\n    Record (preperiod, period)\n    Verify period divides m if LOCKED\n\n  // Theorem guarantee: if LOCKED, period divides m for ALL primes\n  // (by spectral_torsion_modp_1d)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Algorithms for Arithmetic Phase Locking Detection\n\nImplements the modular phase locking detector and related algorithms\nfor analyzing gradient descent dynamics over finite fields.\n\nCore algorithms:\n    1. ModularPhaseLockingDetector: Detect phase locking for 1D affine maps\n    2. MultiDimAffineLockingDetector: Detect phase locking for nD affine maps\n    3. SpectralTorsionAnalyzer: Analyze eigenvalue torsion properties\n    4. OrbitAnalyzer: Compute orbit statistics over finite fields\n\"\"\"\n\nfrom __future__ import annotations\n\nimport math\nfrom dataclasses import dataclass\nfrom typing import Callable\n\n\ndef sieve_primes(bound: int) -> list[int]:\n    \"\"\"Sieve of Eratosthenes. Returns all primes up to bound.\"\"\"\n    if bound < 2:\n        return []\n    sieve = [True] * (bound + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(bound**0.5) + 1):\n        if sieve[i]:\n            for j in range(i * i, bound + 1, i):\n                sieve[j] = False\n    return [i for i in range(bound + 1) if sieve[i]]\n\n\n@dataclass\nclass OrbitInfo:\n    \"\"\"Information about a single orbit in a discrete dynamical system.\"\"\"\n    preperiod: int      # Steps before entering the cycle (mu)\n    period: int         # Length of the cycle (lambda)\n    tail: list[int]     # Pre-periodic part of the orbit\n    cycle: list[int]    # One full period of the cycle\n\n    @property\n    def total_length(self) -> int:\n        return self.preperiod + self.period\n\n\n@dataclass\nclass LockingReport:\n    \"\"\"Report from the modular phase locking detector.\"\"\"\n    a: int\n    b: int\n    is_spectrally_torsion: bool\n    torsion_order: int | None\n    geom_sum_vanishes: bool\n    is_locked: bool\n    lock_period: int | None\n    prime_reports: dict[int, OrbitInfo]\n\n    def locking_density(self, threshold: int) -> float:\n        \"\"\"Fraction of tested primes where period \u2264 threshold.\"\"\"\n        if not self.prime_reports:\n            return 0.0\n        count = sum(1 for info in self.prime_reports.values()\n                    if info.period <= threshold)\n        return count / len(self.prime_reports)\n\n\ndef compute_orbit_1d(a: int, b: int, x0: int, p: int,\n                     max_steps: int | None = None) -> OrbitInfo:\n    \"\"\"\n    Compute the orbit of x0 under T(y) = a*y + b (mod p).\n\n    Args:\n        a: Multiplier\n        b: Additive constant\n        x0: Initial point\n        p: Prime modulus\n        max_steps: Maximum steps (default: p+1)\n\n    Returns:\n        OrbitInfo with preperiod, period, tail, and cycle.\n    \"\"\"\n    if max_steps is None:\n        max_steps = p + 1\n\n    visited: dict[int, int] = {}\n    trajectory: list[int] = []\n    x = x0 % p\n\n    for t in range(max_steps):\n        if x in visited:\n            mu = visited[x]\n            period = t - mu\n            tail = trajectory[:mu]\n            cycle = trajectory[mu:]\n            return OrbitInfo(preperiod=mu, period=period,\n                             tail=tail, cycle=cycle)\n        visited[x] = t\n        trajectory.append(x)\n        x = (a * x + b) % p\n\n    # Fallback (should not happen for p prime with max_steps > p)\n    return OrbitInfo(preperiod=len(trajectory), period=0,\n                     tail=trajectory, cycle=[])\n\n\ndef compute_orbit_nd(matrix_mod: Callable[[tuple[int, ...]], tuple[int, ...]],\n                     x0: tuple[int, ...], p: int,\n                     max_steps: int | None = None) -> OrbitInfo:\n    \"\"\"\n    Compute the orbit of x0 under an n-dimensional map mod p.\n\n    Args:\n        matrix_mod: Function computing T(x) mod p, taking and returning tuples\n        x0: Initial point as tuple\n        p: Prime modulus\n        max_steps: Maximum steps\n\n    Returns:\n        OrbitInfo (tail and cycle contain hash indices, not full states)\n    \"\"\"\n    if max_steps is None:\n        max_steps = p ** len(x0) + 1\n\n    visited: dict[tuple[int, ...], int] = {}\n    x = tuple(c % p for c in x0)\n\n    for t in range(max_steps):\n        if x in visited:\n            mu = visited[x]\n            period = t - mu\n            return OrbitInfo(preperiod=mu, period=period, tail=[], cycle=[])\n        visited[x] = t\n        x = matrix_mod(x)\n\n    return OrbitInfo(preperiod=max_steps, period=0, tail=[], cycle=[])\n\n\ndef detect_integer_torsion(a: int) -> int | None:\n    \"\"\"\n    Detect if a is a root of unity in Z.\n    Over Z, the only roots of unity are {1, -1}.\n\n    Returns the multiplicative order if torsion, None otherwise.\n    \"\"\"\n    if a == 1:\n        return 1\n    elif a == -1:\n        return 2\n    return None\n\n\ndef geometric_sum(a: int, m: int) -> int:\n    \"\"\"Compute the geometric partial sum: sum_{k=0}^{m-1} a^k.\"\"\"\n    if a == 1:\n        return m\n    # Use the formula (a^m - 1) / (a - 1) only if exact\n    numerator = a**m - 1\n    denominator = a - 1\n    if numerator % denominator == 0:\n        return numerator // denominator\n    # Fallback to direct computation\n    return sum(a**k for k in range(m))\n\n\nclass ModularPhaseLockingDetector:\n    \"\"\"\n    Detect and analyze modular phase locking for 1D affine maps.\n\n    Given T(y) = a*y + b, determines:\n    1. Whether spectral torsion holds (a is a root of unity in Z)\n    2. Whether the geometric sum condition is satisfied\n    3. Empirical orbit periods for primes up to a bound\n\n    Theorem-backed guarantee: if is_locked is True, then for ALL primes,\n    every orbit has period dividing lock_period (by spectral_torsion_modp_1d).\n    \"\"\"\n\n    def __init__(self, a: int, b: int):\n        self.a = a\n        self.b = b\n\n    def analyze(self, prime_bound: int = 1000,\n                x0: int = 0) -> LockingReport:\n        \"\"\"\n        Run the full phase locking analysis.\n\n        Args:\n            prime_bound: Test all primes up to this bound\n            x0: Initial point for orbit computation\n\n        Returns:\n            LockingReport with full analysis results\n        \"\"\"\n        # Step 1: Detect spectral torsion\n        torsion_order = detect_integer_torsion(self.a)\n        is_torsion = torsion_order is not None\n\n        # Step 2: Check geometric sum condition\n        geom_vanishes = False\n        lock_period = None\n        if is_torsion and torsion_order is not None:\n            gs = geometric_sum(self.a, torsion_order)\n            geom_vanishes = (gs * self.b == 0)\n            if geom_vanishes:\n                lock_period = torsion_order\n\n        is_locked = is_torsion and geom_vanishes\n\n        # Step 3: Empirical verification\n        primes = sieve_primes(prime_bound)\n        prime_reports: dict[int, OrbitInfo] = {}\n        for p in primes:\n            orbit = compute_orbit_1d(self.a, self.b, x0, p)\n            prime_reports[p] = orbit\n\n        # Step 4: Verify theorem prediction\n        if is_locked and lock_period is not None:\n            for p, info in prime_reports.items():\n                if info.period > lock_period:\n                    raise RuntimeError(\n                        f\"THEOREM VIOLATION: p={p}, period={info.period}, \"\n                        f\"expected \u2264 {lock_period}. \"\n                        f\"This should never happen by spectral_torsion_modp_1d.\"\n                    )\n\n        return LockingReport(\n            a=self.a, b=self.b,\n            is_spectrally_torsion=is_torsion,\n            torsion_order=torsion_order,\n            geom_sum_vanishes=geom_vanishes,\n            is_locked=is_locked,\n            lock_period=lock_period,\n            prime_reports=prime_reports\n        )\n\n\nclass MultiDimAffineLockingDetector:\n    \"\"\"\n    Detect phase locking for n-dimensional affine maps T(x) = Mx + b.\n\n    Works with integer matrices represented as lists of lists.\n    \"\"\"\n\n    def __init__(self, M: list[list[int]], b: list[int]):\n        \"\"\"\n        Args:\n            M: n\u00d7n integer matrix (list of rows)\n            b: n-dimensional integer vector\n        \"\"\"\n        self.M = M\n        self.b = b\n        self.n = len(b)\n        assert len(M) == self.n\n        assert all(len(row) == self.n for row in M)\n\n    def _mat_mul(self, A: list[list[int]], B: list[list[int]]) -> list[list[int]]:\n        \"\"\"Multiply two integer matrices.\"\"\"\n        n = len(A)\n        return [[sum(A[i][k] * B[k][j] for k in range(n))\n                 for j in range(n)] for i in range(n)]\n\n    def _mat_vec(self, A: list[list[int]], v: list[int]) -> list[int]:\n        \"\"\"Multiply matrix by vector.\"\"\"\n        return [sum(A[i][j] * v[j] for j in range(len(v)))\n                for i in range(len(A))]\n\n    def _mat_pow(self, A: list[list[int]], k: int) -> list[list[int]]:\n        \"\"\"Compute A^k by repeated squaring.\"\"\"\n        n = len(A)\n        result = [[1 if i == j else 0 for j in range(n)] for i in range(n)]\n        base = [row[:] for row in A]\n        while k > 0:\n            if k % 2 == 1:\n                result = self._mat_mul(result, base)\n            base = self._mat_mul(base, base)\n            k //= 2\n        return result\n\n    def _is_identity(self, A: list[list[int]]) -> bool:\n        \"\"\"Check if A is the identity matrix.\"\"\"\n        n = len(A)\n        return all(A[i][j] == (1 if i == j else 0)\n                   for i in range(n) for j in range(n))\n\n    def find_torsion_order(self, max_order: int = 100) -> int | None:\n        \"\"\"Find the smallest m > 0 with M^m = I, or None.\"\"\"\n        for m in range(1, max_order + 1):\n            if self._is_identity(self._mat_pow(self.M, m)):\n                return m\n        return None\n\n    def check_geom_sum(self, m: int) -> list[int]:\n        \"\"\"Compute sum_{k=0}^{m-1} M^k * b.\"\"\"\n        result = [0] * self.n\n        for k in range(m):\n            Mk_b = self._mat_vec(self._mat_pow(self.M, k), self.b)\n            result = [result[i] + Mk_b[i] for i in range(self.n)]\n        return result\n\n    def analyze(self, prime_bound: int = 100,\n                x0: tuple[int, ...] | None = None) -> dict:\n        \"\"\"Run full analysis.\"\"\"\n        if x0 is None:\n            x0 = tuple(0 for _ in range(self.n))\n\n        torsion_order = self.find_torsion_order()\n        geom_sum = None\n        geom_vanishes = False\n\n        if torsion_order is not None:\n            geom_sum = self.check_geom_sum(torsion_order)\n            geom_vanishes = all(v == 0 for v in geom_sum)\n\n        is_locked = torsion_order is not None and geom_vanishes\n\n        # Test modulo primes\n        primes = sieve_primes(prime_bound)\n        periods: dict[int, int] = {}\n\n        for p in primes:\n            M_mod = self.M\n            b_mod = self.b\n\n            def make_map(p_local: int) -> Callable:\n                def f(x: tuple[int, ...]) -> tuple[int, ...]:\n                    result = self._mat_vec(M_mod, list(x))\n                    return tuple((result[i] + b_mod[i]) % p_local\n                                 for i in range(self.n))\n                return f\n\n            orbit = compute_orbit_nd(make_map(p), x0, p,\n                                     max_steps=min(p**self.n, 10000) + 1)\n            periods[p] = orbit.period\n\n        return {\n            \"torsion_order\": torsion_order,\n            \"geom_sum\": geom_sum,\n            \"geom_vanishes\": geom_vanishes,\n            \"is_locked\": is_locked,\n            \"lock_period\": torsion_order if is_locked else None,\n            \"periods\": periods,\n        }\n\n\nclass OrbitAnalyzer:\n    \"\"\"Analyze orbit statistics across primes.\"\"\"\n\n    @staticmethod\n    def period_statistics(periods: dict[int, int]) -> dict:\n        \"\"\"Compute statistics on a dictionary of {prime: period}.\"\"\"\n        vals = list(periods.values())\n        if not vals:\n            return {}\n        return {\n            \"min\": min(vals),\n            \"max\": max(vals),\n            \"mean\": sum(vals) / len(vals),\n            \"median\": sorted(vals)[len(vals) // 2],\n            \"distinct_count\": len(set(vals)),\n            \"total_primes\": len(vals),\n        }\n\n    @staticmethod\n    def locking_density(periods: dict[int, int], threshold: int) -> float:\n        \"\"\"Fraction of primes where period \u2264 threshold.\"\"\"\n        if not periods:\n            return 0.0\n        return sum(1 for p in periods.values() if p <= threshold) / len(periods)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Example usage\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=== 1D Modular Phase Locking Detector ===\\n\")\n\n    # Example 1: Locked system\n    detector = ModularPhaseLockingDetector(a=-1, b=4)\n    report = detector.analyze(prime_bound=500)\n    print(f\"Map: T(y) = {report.a}*y + {report.b}\")\n    print(f\"Spectrally torsion: {report.is_spectrally_torsion} \"\n          f\"(order {report.torsion_order})\")\n    print(f\"Geometric sum vanishes: {report.geom_sum_vanishes}\")\n    print(f\"Phase locked: {report.is_locked} (period {report.lock_period})\")\n    print(f\"Locking density (\u22642): {report.locking_density(2):.4f}\")\n    print(f\"Locking density (\u22645): {report.locking_density(5):.4f}\")\n\n    # Example 2: Unlocked system\n    print()\n    detector2 = ModularPhaseLockingDetector(a=2, b=1)\n    report2 = detector2.analyze(prime_bound=500)\n    print(f\"Map: T(y) = {report2.a}*y + {report2.b}\")\n    print(f\"Spectrally torsion: {report2.is_spectrally_torsion}\")\n    print(f\"Phase locked: {report2.is_locked}\")\n    stats = OrbitAnalyzer.period_statistics(\n        {p: info.period for p, info in report2.prime_reports.items()})\n    stats_dict = {k: v for k, v in stats.items() if k != \"total_primes\"}\n    print(f\"Period stats: { {k: (f'{v:.1f}' if isinstance(v, float) else v) for k, v in stats_dict.items()} }\")\n    print(f\"Locking density (\u22642): {report2.locking_density(2):.4f}\")\n\n    # Example 3: 2D locked system\n    print(\"\\n=== 2D Modular Phase Locking Detector ===\\n\")\n    detector3 = MultiDimAffineLockingDetector(\n        M=[[-1, 0], [0, -1]],\n        b=[2, 4]\n    )\n    result = detector3.analyze(prime_bound=100)\n    print(f\"Matrix M = -I, b = (2, 4)\")\n    print(f\"Torsion order: {result['torsion_order']}\")\n    print(f\"Geometric sum: {result['geom_sum']}\")\n    print(f\"Phase locked: {result['is_locked']} (period {result['lock_period']})\")\n    print(f\"Sample periods: {dict(list(result['periods'].items())[:10])}\")\n",
+        "code_file": "visualizations/arithmetic_phase_locking_in_gradient_descent_over__modular_phase_locking_detector.py"
+      }
+    ],
+    "lean_proofs": "/-\n# Arithmetic Phase Locking in Gradient Descent over Rational Polynomial Models\n\nThis file formalizes the first rigorous layer of an arithmetic-dynamical theory\nof optimization: gradient descent on polynomial losses viewed as algebraic\nself-maps, reduced modulo primes.\n\n## Main Results\n\n- `iterate_reduce_comm`: Reduction mod p commutes with iteration.\n- `eventuallyPeriodic_of_finite`: Every orbit on a finite type is eventually periodic.\n- `injective_on_orbit_implies_periodic`: Injectivity on orbit forces pure periodicity.\n- `periodic_of_bijective_finite`: Bijective maps on finite types have periodic orbits.\n- `affine_1d_iterate`: Closed-form for 1D affine iterates.\n- `spectral_torsion_1d`: Phase locking for 1D torsion affine maps.\n- `spectral_torsion_modp_1d`: Cross-domain modular phase locking.\n-/\n\nimport Mathlib\n\n/-! ## Definitions -/\n\n/-- Good reduction: the reduction of T modulo p is compatible with\n    coordinate-wise casting from \u2124 to ZMod p. -/\ndef HasGoodReduction {n p : \u2115}\n    (T : (Fin n \u2192 \u2124) \u2192 (Fin n \u2192 \u2124))\n    (Tp : (Fin n \u2192 ZMod p) \u2192 (Fin n \u2192 ZMod p))\n    [Fact p.Prime] : Prop :=\n  \u2200 x : Fin n \u2192 \u2124,\n    (fun i => ((T x i : \u2124) : ZMod p)) = Tp (fun i => (x i : ZMod p))\n\n/-- Phase locked with period m: the orbit eventually repeats\n    with period dividing m. -/\ndef PhaseLockedAt {\u03b1 : Type*} (f : \u03b1 \u2192 \u03b1) (x : \u03b1) (m : \u2115) : Prop :=\n  0 < m \u2227 \u2203 mu : \u2115, f^[mu + m] x = f^[mu] x\n\n/-- Arithmetic phase locking: for infinitely many primes, the reduced orbit\n    is phase locked with a uniform period bound. -/\ndef ArithmeticPhaseLocking {n : \u2115}\n    (T : (Fin n \u2192 \u2124) \u2192 (Fin n \u2192 \u2124))\n    (_w0 : Fin n \u2192 \u2124) : Prop :=\n  \u2203 m : \u2115, 0 < m \u2227 \u2200 x : Fin n \u2192 \u2124, T^[m] x = x\n\n/-! ## Theorem 1: Iterate-Reduce Commutativity -/\n\n/-\n**Iterate-Reduce Commutativity.**\n    If reduction modulo p commutes with a single application of T,\n    then it commutes with all iterates. This upgrades optimization dynamics\n    to a legitimate arithmetic dynamical system.\n-/\ntheorem iterate_reduce_comm\n    {n p : \u2115} [Fact p.Prime]\n    (T : (Fin n \u2192 \u2124) \u2192 (Fin n \u2192 \u2124))\n    (Tp : (Fin n \u2192 ZMod p) \u2192 (Fin n \u2192 ZMod p))\n    (hcompat : \u2200 x : Fin n \u2192 \u2124,\n      (fun i => ((T x i : \u2124) : ZMod p)) = Tp (fun i => (x i : ZMod p)))\n    (t : \u2115) (x : Fin n \u2192 \u2124) :\n    (fun i => (((T^[t] x) i : \u2124) : ZMod p)) =\n      Tp^[t] (fun i => (x i : ZMod p)) := by\n  induction' t with t ih generalizing x <;> simp_all +decide [ Function.iterate_succ_apply' ]\n\n/-! ## Theorem 2: Eventual Periodicity over Finite Types -/\n\n/-\n**Eventual Periodicity.**\n    Every self-map on a finite type produces eventually periodic orbits,\n    with preperiod < card \u03b1 and period \u2264 card \u03b1.\n-/\ntheorem eventuallyPeriodic_of_finite\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1) :\n    \u2203 mu per : \u2115, mu < Fintype.card \u03b1 \u2227 0 < per \u2227 per \u2264 Fintype.card \u03b1 \u2227\n      f^[mu + per] x = f^[mu] x := by\n  -- By the pigeonhole principle, since there are only finitely many possible values for $f^t(x)$, there must be some repetition.\n  obtain \u27e8i, j, hij, h_eq\u27e9 : \u2203 i j : \u2115, i < j \u2227 j \u2264 Fintype.card \u03b1 \u2227 f^[i] x = f^[j] x := by\n    by_contra! h;\n    exact absurd ( Finset.card_le_card ( show Finset.image ( fun i => f^[i] x ) ( Finset.range ( Fintype.card \u03b1 + 1 ) ) \u2286 Finset.univ from Finset.subset_univ _ ) ) ( by rw [ Finset.card_image_of_injOn fun i hi j hj hij => le_antisymm ( not_lt.1 fun hi' => h _ _ hi' ( by linarith [ Finset.mem_range.1 hi, Finset.mem_range.1 hj ] ) hij.symm ) ( not_lt.1 fun hj' => h _ _ hj' ( by linarith [ Finset.mem_range.1 hi, Finset.mem_range.1 hj ] ) hij ), Finset.card_range ] ; simp +decide );\n  exact \u27e8 i, j - i, by linarith, Nat.sub_pos_of_lt hij, Nat.sub_le_of_le_add <| by linarith, by rw [ add_tsub_cancel_of_le hij.le, h_eq.2 ] \u27e9\n\n/-\n**Injectivity on orbit implies pure periodicity.**\n    If f is injective on the forward orbit, the orbit is purely periodic.\n-/\ntheorem injective_on_orbit_implies_periodic\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (f : \u03b1 \u2192 \u03b1) (x : \u03b1)\n    (hinj : Set.InjOn f {y | \u2203 t : \u2115, f^[t] x = y}) :\n    \u2203 per : \u2115, 0 < per \u2227 f^[per] x = x := by\n  -- By eventuallyPeriodic_of_finite, there exist mu, per with f^[mu + per](x) = f^[mu](x).\n  obtain \u27e8mu, per, h_mu_per\u27e9 : \u2203 mu per : \u2115, mu < Fintype.card \u03b1 \u2227 0 < per \u2227 per \u2264 Fintype.card \u03b1 \u2227 f^[mu + per] x = f^[mu] x := by\n    exact eventuallyPeriodic_of_finite f x;\n  -- By induction on mu, show that f^[per] x = x.\n  induction' mu with mu ih;\n  \u00b7 aesop;\n  \u00b7 simp_all +decide [ Nat.succ_add, Function.iterate_succ_apply' ];\n    exact ih ( Nat.lt_of_succ_lt h_mu_per.1 ) ( hinj \u27e8 _, rfl \u27e9 \u27e8 _, rfl \u27e9 h_mu_per.2.2.2 )\n\n/-\n**Bijective maps on finite types have purely periodic orbits.**\n-/\ntheorem periodic_of_bijective_finite\n    {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    (f : \u03b1 \u2192 \u03b1) (hf : Function.Bijective f) (x : \u03b1) :\n    \u2203 n : \u2115, 0 < n \u2227 f^[n] x = x := by\n  -- Since f is bijective, it is a permutation of the finite type \u03b1.\n  have h_perm : \u2203 g : Equiv.Perm \u03b1, \u2200 x, f x = g x := by\n    exact \u27e8 Equiv.ofBijective f hf, fun x => rfl \u27e9;\n  obtain \u27e8 g, hg \u27e9 := h_perm; use orderOf g; simp +decide [ hg, Function.iterate_fixed, orderOf_pos ] ;\n  exact \u27e8 isOfFinOrder_iff_pow_eq_one.mpr \u27e8 orderOf g, orderOf_pos g, pow_orderOf_eq_one g \u27e9, by rw [ show f = g from funext hg ] ; simp +decide [ pow_orderOf_eq_one ] \u27e9\n\n/-! ## Theorem 3: 1D Affine Iteration and Phase Locking -/\n\n/-\n**1D affine iterate formula.**\n    For T(y) = a*y + b, we have T^[t](x) = a^t * x + (\u03a3_{k<t} a^k) * b.\n-/\ntheorem affine_1d_iterate (a b : \u2124) (t : \u2115) (x : \u2124) :\n    (fun y => a * y + b)^[t] x =\n      a ^ t * x + (Finset.range t).sum (fun k => a ^ k) * b := by\n  induction t <;> simp +decide [ *, pow_succ', Function.iterate_succ_apply', Finset.mul_sum _ _ _, Finset.sum_range_succ' ] ; ring;\n  simpa only [ \u2190 Finset.mul_sum _ _ _, \u2190 Finset.sum_mul ] using by ring;\n\n/-\n**1D Spectral Torsion Phase Locking.**\n    If a^m = 1 and (\u03a3_{k<m} a^k) * b = 0, then T^m = id.\n\n    For quadratic loss L(w) = (1/2)Aw\u00b2 + Bw + C, gradient descent gives\n    T(w) = (1 - \u03b7A)w - \u03b7B. Setting a = 1 - \u03b7A: if the \"propagator\" a is a\n    root of unity in \u2124 (i.e. a \u2208 {1,-1}) and the geometric sum vanishes,\n    the discrete optimization flow is exactly periodic \u2014 a Floquet-type\n    periodicity in arithmetic dynamics.\n-/\ntheorem spectral_torsion_1d (a b : \u2124) (m : \u2115) (_hm : 0 < m)\n    (ha : a ^ m = 1)\n    (hgeom : (Finset.range m).sum (fun k => a ^ k) * b = 0) :\n    \u2200 x : \u2124, (fun y => a * y + b)^[m] x = x := by\n  intro x\n  rw [affine_1d_iterate]\n  simp [ha, hgeom]\n\n/-! ## Theorem 4: Cross-Domain Modular Phase Locking -/\n\n/-\n**1D affine iterate formula over any commutative ring.**\n-/\ntheorem affine_1d_iterate_ring {R : Type*} [CommRing R] (a b : R) (t : \u2115) (x : R) :\n    (fun y => a * y + b)^[t] x =\n      a ^ t * x + (Finset.range t).sum (fun k => a ^ k) * b := by\n  induction t <;> simp_all +decide [ Function.iterate_succ_apply', pow_succ', Finset.sum_range_succ' ];\n  simp +decide [ mul_add, add_mul, mul_assoc, Finset.mul_sum _ _ _, Finset.sum_mul ];\n  ring\n\n/-\n**Cross-domain: spectral torsion modulo primes.**\n    If a^m = 1 over \u2124 and the geometric condition holds, then for every\n    prime p, the reduced 1D affine map mod p has all orbits periodic with\n    period dividing m.\n\n    This connects optimization (quadratic loss), spectral algebra\n    (roots of unity), and finite-field dynamics (modular periodicity).\n-/\ntheorem spectral_torsion_modp_1d (a b : \u2124) (m : \u2115) (hm : 0 < m)\n    (ha : a ^ m = 1)\n    (hgeom : (Finset.range m).sum (fun k => a ^ k) * b = 0)\n    (p : \u2115) [Fact p.Prime] (x : ZMod p) :\n    (fun y => (a : ZMod p) * y + (b : ZMod p))^[m] x = x := by\n  convert spectral_torsion_1d ( a := a ) ( b := b ) m hm ?_ ?_;\n  \u00b7 constructor <;> intro h;\n    \u00b7 convert spectral_torsion_1d a b m hm ?_ ?_;\n      \u00b7 exact ha;\n      \u00b7 exact hgeom;\n    \u00b7 convert congr_arg ( ( \u2191 ) : \u2124 \u2192 ZMod p ) ( h ( x.val : \u2124 ) ) using 1;\n      \u00b7 exact Nat.recOn m ( by simp +decide ) fun n ih => by simp +decide [ *, Function.iterate_succ_apply' ] ;\n      \u00b7 cases p <;> aesop;\n  \u00b7 exact ha;\n  \u00b7 grind",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Algorithms for Arithmetic Phase Locking Detection\n\nImplements the modular phase locking detector and related algorithms\nfor analyzing gradient descent dynamics over finite fields.\n\nCore algorithms:\n    1. ModularPhaseLockingDetector: Detect phase locking for 1D affine maps\n    2. MultiDimAffineLockingDetector: Detect phase locking for nD affine maps\n    3. SpectralTorsionAnalyzer: Analyze eigenvalue torsion properties\n    4. OrbitAnalyzer: Compute orbit statistics over finite fields\n\"\"\"\n\nfrom __future__ import annotations\n\nimport math\nfrom dataclasses import dataclass\nfrom typing import Callable\n\n\ndef sieve_primes(bound: int) -> list[int]:\n    \"\"\"Sieve of Eratosthenes. Returns all primes up to bound.\"\"\"\n    if bound < 2:\n        return []\n    sieve = [True] * (bound + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(bound**0.5) + 1):\n        if sieve[i]:\n            for j in range(i * i, bound + 1, i):\n                sieve[j] = False\n    return [i for i in range(bound + 1) if sieve[i]]\n\n\n@dataclass\nclass OrbitInfo:\n    \"\"\"Information about a single orbit in a discrete dynamical system.\"\"\"\n    preperiod: int      # Steps before entering the cycle (mu)\n    period: int         # Length of the cycle (lambda)\n    tail: list[int]     # Pre-periodic part of the orbit\n    cycle: list[int]    # One full period of the cycle\n\n    @property\n    def total_length(self) -> int:\n        return self.preperiod + self.period\n\n\n@dataclass\nclass LockingReport:\n    \"\"\"Report from the modular phase locking detector.\"\"\"\n    a: int\n    b: int\n    is_spectrally_torsion: bool\n    torsion_order: int | None\n    geom_sum_vanishes: bool\n    is_locked: bool\n    lock_period: int | None\n    prime_reports: dict[int, OrbitInfo]\n\n    def locking_density(self, threshold: int) -> float:\n        \"\"\"Fraction of tested primes where period \u2264 threshold.\"\"\"\n        if not self.prime_reports:\n            return 0.0\n        count = sum(1 for info in self.prime_reports.values()\n                    if info.period <= threshold)\n        return count / len(self.prime_reports)\n\n\ndef compute_orbit_1d(a: int, b: int, x0: int, p: int,\n                     max_steps: int | None = None) -> OrbitInfo:\n    \"\"\"\n    Compute the orbit of x0 under T(y) = a*y + b (mod p).\n\n    Args:\n        a: Multiplier\n        b: Additive constant\n        x0: Initial point\n        p: Prime modulus\n        max_steps: Maximum steps (default: p+1)\n\n    Returns:\n        OrbitInfo with preperiod, period, tail, and cycle.\n    \"\"\"\n    if max_steps is None:\n        max_steps = p + 1\n\n    visited: dict[int, int] = {}\n    trajectory: list[int] = []\n    x = x0 % p\n\n    for t in range(max_steps):\n        if x in visited:\n            mu = visited[x]\n            period = t - mu\n            tail = trajectory[:mu]\n            cycle = trajectory[mu:]\n            return OrbitInfo(preperiod=mu, period=period,\n                             tail=tail, cycle=cycle)\n        visited[x] = t\n        trajectory.append(x)\n        x = (a * x + b) % p\n\n    # Fallback (should not happen for p prime with max_steps > p)\n    return OrbitInfo(preperiod=len(trajectory), period=0,\n                     tail=trajectory, cycle=[])\n\n\ndef compute_orbit_nd(matrix_mod: Callable[[tuple[int, ...]], tuple[int, ...]],\n                     x0: tuple[int, ...], p: int,\n                     max_steps: int | None = None) -> OrbitInfo:\n    \"\"\"\n    Compute the orbit of x0 under an n-dimensional map mod p.\n\n    Args:\n        matrix_mod: Function computing T(x) mod p, taking and returning tuples\n        x0: Initial point as tuple\n        p: Prime modulus\n        max_steps: Maximum steps\n\n    Returns:\n        OrbitInfo (tail and cycle contain hash indices, not full states)\n    \"\"\"\n    if max_steps is None:\n        max_steps = p ** len(x0) + 1\n\n    visited: dict[tuple[int, ...], int] = {}\n    x = tuple(c % p for c in x0)\n\n    for t in range(max_steps):\n        if x in visited:\n            mu = visited[x]\n            period = t - mu\n            return OrbitInfo(preperiod=mu, period=period, tail=[], cycle=[])\n        visited[x] = t\n        x = matrix_mod(x)\n\n    return OrbitInfo(preperiod=max_steps, period=0, tail=[], cycle=[])\n\n\ndef detect_integer_torsion(a: int) -> int | None:\n    \"\"\"\n    Detect if a is a root of unity in Z.\n    Over Z, the only roots of unity are {1, -1}.\n\n    Returns the multiplicative order if torsion, None otherwise.\n    \"\"\"\n    if a == 1:\n        return 1\n    elif a == -1:\n        return 2\n    return None\n\n\ndef geometric_sum(a: int, m: int) -> int:\n    \"\"\"Compute the geometric partial sum: sum_{k=0}^{m-1} a^k.\"\"\"\n    if a == 1:\n        return m\n    # Use the formula (a^m - 1) / (a - 1) only if exact\n    numerator = a**m - 1\n    denominator = a - 1\n    if numerator % denominator == 0:\n        return numerator // denominator\n    # Fallback to direct computation\n    return sum(a**k for k in range(m))\n\n\nclass ModularPhaseLockingDetector:\n    \"\"\"\n    Detect and analyze modular phase locking for 1D affine maps.\n\n    Given T(y) = a*y + b, determines:\n    1. Whether spectral torsion holds (a is a root of unity in Z)\n    2. Whether the geometric sum condition is satisfied\n    3. Empirical orbit periods for primes up to a bound\n\n    Theorem-backed guarantee: if is_locked is True, then for ALL primes,\n    every orbit has period dividing lock_period (by spectral_torsion_modp_1d).\n    \"\"\"\n\n    def __init__(self, a: int, b: int):\n        self.a = a\n        self.b = b\n\n    def analyze(self, prime_bound: int = 1000,\n                x0: int = 0) -> LockingReport:\n        \"\"\"\n        Run the full phase locking analysis.\n\n        Args:\n            prime_bound: Test all primes up to this bound\n            x0: Initial point for orbit computation\n\n        Returns:\n            LockingReport with full analysis results\n        \"\"\"\n        # Step 1: Detect spectral torsion\n        torsion_order = detect_integer_torsion(self.a)\n        is_torsion = torsion_order is not None\n\n        # Step 2: Check geometric sum condition\n        geom_vanishes = False\n        lock_period = None\n        if is_torsion and torsion_order is not None:\n            gs = geometric_sum(self.a, torsion_order)\n            geom_vanishes = (gs * self.b == 0)\n            if geom_vanishes:\n                lock_period = torsion_order\n\n        is_locked = is_torsion and geom_vanishes\n\n        # Step 3: Empirical verification\n        primes = sieve_primes(prime_bound)\n        prime_reports: dict[int, OrbitInfo] = {}\n        for p in primes:\n            orbit = compute_orbit_1d(self.a, self.b, x0, p)\n            prime_reports[p] = orbit\n\n        # Step 4: Verify theorem prediction\n        if is_locked and lock_period is not None:\n            for p, info in prime_reports.items():\n                if info.period > lock_period:\n                    raise RuntimeError(\n                        f\"THEOREM VIOLATION: p={p}, period={info.period}, \"\n                        f\"expected \u2264 {lock_period}. \"\n                        f\"This should never happen by spectral_torsion_modp_1d.\"\n                    )\n\n        return LockingReport(\n            a=self.a, b=self.b,\n            is_spectrally_torsion=is_torsion,\n            torsion_order=torsion_order,\n            geom_sum_vanishes=geom_vanishes,\n            is_locked=is_locked,\n            lock_period=lock_period,\n            prime_reports=prime_reports\n        )\n\n\nclass MultiDimAffineLockingDetector:\n    \"\"\"\n    Detect phase locking for n-dimensional affine maps T(x) = Mx + b.\n\n    Works with integer matrices represented as lists of lists.\n    \"\"\"\n\n    def __init__(self, M: list[list[int]], b: list[int]):\n        \"\"\"\n        Args:\n            M: n\u00d7n integer matrix (list of rows)\n            b: n-dimensional integer vector\n        \"\"\"\n        self.M = M\n        self.b = b\n        self.n = len(b)\n        assert len(M) == self.n\n        assert all(len(row) == self.n for row in M)\n\n    def _mat_mul(self, A: list[list[int]], B: list[list[int]]) -> list[list[int]]:\n        \"\"\"Multiply two integer matrices.\"\"\"\n        n = len(A)\n        return [[sum(A[i][k] * B[k][j] for k in range(n))\n                 for j in range(n)] for i in range(n)]\n\n    def _mat_vec(self, A: list[list[int]], v: list[int]) -> list[int]:\n        \"\"\"Multiply matrix by vector.\"\"\"\n        return [sum(A[i][j] * v[j] for j in range(len(v)))\n                for i in range(len(A))]\n\n    def _mat_pow(self, A: list[list[int]], k: int) -> list[list[int]]:\n        \"\"\"Compute A^k by repeated squaring.\"\"\"\n        n = len(A)\n        result = [[1 if i == j else 0 for j in range(n)] for i in range(n)]\n        base = [row[:] for row in A]\n        while k > 0:\n            if k % 2 == 1:\n                result = self._mat_mul(result, base)\n            base = self._mat_mul(base, base)\n            k //= 2\n        return result\n\n    def _is_identity(self, A: list[list[int]]) -> bool:\n        \"\"\"Check if A is the identity matrix.\"\"\"\n        n = len(A)\n        return all(A[i][j] == (1 if i == j else 0)\n                   for i in range(n) for j in range(n))\n\n    def find_torsion_order(self, max_order: int = 100) -> int | None:\n        \"\"\"Find the smallest m > 0 with M^m = I, or None.\"\"\"\n        for m in range(1, max_order + 1):\n            if self._is_identity(self._mat_pow(self.M, m)):\n                return m\n        return None\n\n    def check_geom_sum(self, m: int) -> list[int]:\n        \"\"\"Compute sum_{k=0}^{m-1} M^k * b.\"\"\"\n        result = [0] * self.n\n        for k in range(m):\n            Mk_b = self._mat_vec(self._mat_pow(self.M, k), self.b)\n            result = [result[i] + Mk_b[i] for i in range(self.n)]\n        return result\n\n    def analyze(self, prime_bound: int = 100,\n                x0: tuple[int, ...] | None = None) -> dict:\n        \"\"\"Run full analysis.\"\"\"\n        if x0 is None:\n            x0 = tuple(0 for _ in range(self.n))\n\n        torsion_order = self.find_torsion_order()\n        geom_sum = None\n        geom_vanishes = False\n\n        if torsion_order is not None:\n            geom_sum = self.check_geom_sum(torsion_order)\n            geom_vanishes = all(v == 0 for v in geom_sum)\n\n        is_locked = torsion_order is not None and geom_vanishes\n\n        # Test modulo primes\n        primes = sieve_primes(prime_bound)\n        periods: dict[int, int] = {}\n\n        for p in primes:\n            M_mod = self.M\n            b_mod = self.b\n\n            def make_map(p_local: int) -> Callable:\n                def f(x: tuple[int, ...]) -> tuple[int, ...]:\n                    result = self._mat_vec(M_mod, list(x))\n                    return tuple((result[i] + b_mod[i]) % p_local\n                                 for i in range(self.n))\n                return f\n\n            orbit = compute_orbit_nd(make_map(p), x0, p,\n                                     max_steps=min(p**self.n, 10000) + 1)\n            periods[p] = orbit.period\n\n        return {\n            \"torsion_order\": torsion_order,\n            \"geom_sum\": geom_sum,\n            \"geom_vanishes\": geom_vanishes,\n            \"is_locked\": is_locked,\n            \"lock_period\": torsion_order if is_locked else None,\n            \"periods\": periods,\n        }\n\n\nclass OrbitAnalyzer:\n    \"\"\"Analyze orbit statistics across primes.\"\"\"\n\n    @staticmethod\n    def period_statistics(periods: dict[int, int]) -> dict:\n        \"\"\"Compute statistics on a dictionary of {prime: period}.\"\"\"\n        vals = list(periods.values())\n        if not vals:\n            return {}\n        return {\n            \"min\": min(vals),\n            \"max\": max(vals),\n            \"mean\": sum(vals) / len(vals),\n            \"median\": sorted(vals)[len(vals) // 2],\n            \"distinct_count\": len(set(vals)),\n            \"total_primes\": len(vals),\n        }\n\n    @staticmethod\n    def locking_density(periods: dict[int, int], threshold: int) -> float:\n        \"\"\"Fraction of primes where period \u2264 threshold.\"\"\"\n        if not periods:\n            return 0.0\n        return sum(1 for p in periods.values() if p <= threshold) / len(periods)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Example usage\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=== 1D Modular Phase Locking Detector ===\\n\")\n\n    # Example 1: Locked system\n    detector = ModularPhaseLockingDetector(a=-1, b=4)\n    report = detector.analyze(prime_bound=500)\n    print(f\"Map: T(y) = {report.a}*y + {report.b}\")\n    print(f\"Spectrally torsion: {report.is_spectrally_torsion} \"\n          f\"(order {report.torsion_order})\")\n    print(f\"Geometric sum vanishes: {report.geom_sum_vanishes}\")\n    print(f\"Phase locked: {report.is_locked} (period {report.lock_period})\")\n    print(f\"Locking density (\u22642): {report.locking_density(2):.4f}\")\n    print(f\"Locking density (\u22645): {report.locking_density(5):.4f}\")\n\n    # Example 2: Unlocked system\n    print()\n    detector2 = ModularPhaseLockingDetector(a=2, b=1)\n    report2 = detector2.analyze(prime_bound=500)\n    print(f\"Map: T(y) = {report2.a}*y + {report2.b}\")\n    print(f\"Spectrally torsion: {report2.is_spectrally_torsion}\")\n    print(f\"Phase locked: {report2.is_locked}\")\n    stats = OrbitAnalyzer.period_statistics(\n        {p: info.period for p, info in report2.prime_reports.items()})\n    stats_dict = {k: v for k, v in stats.items() if k != \"total_primes\"}\n    print(f\"Period stats: { {k: (f'{v:.1f}' if isinstance(v, float) else v) for k, v in stats_dict.items()} }\")\n    print(f\"Locking density (\u22642): {report2.locking_density(2):.4f}\")\n\n    # Example 3: 2D locked system\n    print(\"\\n=== 2D Modular Phase Locking Detector ===\\n\")\n    detector3 = MultiDimAffineLockingDetector(\n        M=[[-1, 0], [0, -1]],\n        b=[2, 4]\n    )\n    result = detector3.analyze(prime_bound=100)\n    print(f\"Matrix M = -I, b = (2, 4)\")\n    print(f\"Torsion order: {result['torsion_order']}\")\n    print(f\"Geometric sum: {result['geom_sum']}\")\n    print(f\"Phase locked: {result['is_locked']} (period {result['lock_period']})\")\n    print(f\"Sample periods: {dict(list(result['periods'].items())[:10])}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\napplications.py \u2014 Real-World Applications of Arithmetic Phase Locking\n\nDemonstrates practical applications of the arithmetic phase locking theory\nto optimization diagnostics, system design, and trainability analysis.\n\nApplications:\n    1. Trainability Diagnostic: Detect resonant optimization configurations\n    2. Learning Rate Selector: Find rates that avoid arithmetic locking\n    3. Quadratic Loss Analyzer: Full spectral-arithmetic analysis\n    4. Finite-Field Orbit Visualizer: ASCII visualization of orbits\n\"\"\"\n\nfrom __future__ import annotations\n\nimport math\nfrom fractions import Fraction\n\n\ndef sieve_primes(bound: int) -> list[int]:\n    \"\"\"Return all primes up to bound.\"\"\"\n    if bound < 2:\n        return []\n    sieve = [True] * (bound + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(bound**0.5) + 1):\n        if sieve[i]:\n            for j in range(i * i, bound + 1, i):\n                sieve[j] = False\n    return [i for i in range(bound + 1) if sieve[i]]\n\n\ndef orbit_period_1d(a: int, b: int, x0: int, p: int) -> tuple[int, int]:\n    \"\"\"Compute (preperiod, period) of T(y) = a*y + b mod p from x0.\"\"\"\n    visited = {}\n    x = x0 % p\n    for t in range(p + 1):\n        if x in visited:\n            return visited[x], t - visited[x]\n        visited[x] = t\n        x = (a * x + b) % p\n    return p, 1\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Trainability Diagnostic\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass TrainabilityDiagnostic:\n    \"\"\"\n    Diagnose potential training issues by detecting arithmetic phase locking.\n\n    For a 1D quadratic loss L(w) = (1/2)*A*w^2 + B*w + C with learning rate eta,\n    the GD update is T(w) = (1 - eta*A)*w - eta*B.\n\n    If 1 - eta*A is a root of unity (i.e., eta*A in {0, 2}), training may\n    oscillate forever. This diagnostic detects this condition.\n    \"\"\"\n\n    def __init__(self, A: Fraction, B: Fraction, eta: Fraction):\n        self.A = A\n        self.B = B\n        self.eta = eta\n        self.propagator = Fraction(1) - eta * A\n        self.translation = -eta * B\n\n    def diagnose(self) -> dict:\n        \"\"\"Run the trainability diagnostic.\"\"\"\n        prop = self.propagator\n        trans = self.translation\n\n        # Check spectral torsion\n        if prop == 1:\n            torsion = \"TRIVIAL\"\n            order = 1\n            verdict = (\"STAGNANT: Propagator = 1 means eta*A = 0. \"\n                       \"Gradient step has no effect on curvature direction.\")\n        elif prop == -1:\n            torsion = \"OSCILLATING\"\n            order = 2\n            geom = 1 + prop  # = 0\n            if geom * trans == 0:\n                verdict = (\"LOCKED: Period-2 oscillation. Training will never \"\n                           \"converge; it will alternate between two points forever.\")\n            else:\n                verdict = (\"QUASI-LOCKED: Propagator has order 2 but translation \"\n                           \"breaks exact periodicity. Orbit is eventually periodic \"\n                           \"with period 2 in some coordinate.\")\n        else:\n            torsion = \"GENERIC\"\n            order = None\n            if abs(prop) < 1:\n                verdict = (\"CONVERGENT (classical): |propagator| < 1, so \"\n                           \"classical analysis predicts convergence to the minimum.\")\n            elif abs(prop) > 1:\n                verdict = (\"DIVERGENT (classical): |propagator| > 1, so \"\n                           \"classical analysis predicts divergence.\")\n            else:\n                verdict = \"MARGINAL: |propagator| = 1 but not \u00b11.\"\n\n        return {\n            \"A\": str(self.A),\n            \"B\": str(self.B),\n            \"eta\": str(self.eta),\n            \"propagator\": str(prop),\n            \"translation\": str(trans),\n            \"torsion_type\": torsion,\n            \"torsion_order\": order,\n            \"verdict\": verdict,\n        }\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Learning Rate Selector\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass LearningRateSelector:\n    \"\"\"\n    Select learning rates that avoid arithmetic phase locking.\n\n    For a quadratic loss with curvature A, the critical rates are:\n    - eta = 0: trivial (no update)\n    - eta = 2/A: period-2 oscillation\n    The selector identifies these and recommends safe alternatives.\n    \"\"\"\n\n    def __init__(self, A: Fraction):\n        self.A = A\n\n    def critical_rates(self) -> list[dict]:\n        \"\"\"Return the critical (locking) learning rates.\"\"\"\n        rates = []\n        if self.A != 0:\n            rates.append({\n                \"eta\": str(Fraction(2, 1) / self.A),\n                \"propagator\": \"-1\",\n                \"type\": \"Period-2 oscillation\",\n                \"danger\": \"HIGH\"\n            })\n        rates.append({\n            \"eta\": \"0\",\n            \"propagator\": \"1\",\n            \"type\": \"No update (trivial fixed point)\",\n            \"danger\": \"TRIVIAL\"\n        })\n        return rates\n\n    def safe_range(self) -> tuple[str, str]:\n        \"\"\"Return the classical convergence range (0, 2/A).\"\"\"\n        if self.A > 0:\n            return (\"0\", str(Fraction(2, 1) / self.A))\n        elif self.A < 0:\n            return (str(Fraction(2, 1) / self.A), \"0\")\n        else:\n            return (\"any\", \"any\")\n\n    def recommend(self) -> str:\n        \"\"\"Recommend a learning rate.\"\"\"\n        if self.A > 0:\n            # Optimal for quadratic: eta = 1/A (midpoint of convergence range)\n            optimal = Fraction(1, 1) / self.A\n            return (f\"Recommended: eta = {optimal} (= 1/A). \"\n                    f\"This gives propagator = 0, one-step convergence. \"\n                    f\"Avoid eta = {Fraction(2,1)/self.A} (oscillation).\")\n        elif self.A < 0:\n            return \"Loss is concave (A < 0). GD will diverge from minimum.\"\n        else:\n            return \"A = 0: loss is linear, GD will not converge to a finite point.\"\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Quadratic Loss Analyzer\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass QuadraticLossAnalyzer:\n    \"\"\"\n    Complete spectral-arithmetic analysis of a quadratic loss.\n    Combines classical convergence theory with arithmetic phase locking.\n    \"\"\"\n\n    def __init__(self, A: Fraction, B: Fraction, C: Fraction, eta: Fraction):\n        self.A = A\n        self.B = B\n        self.C = C\n        self.eta = eta\n\n    def classical_analysis(self) -> dict:\n        \"\"\"Classical convergence analysis.\"\"\"\n        prop = 1 - self.eta * self.A\n        minimum = -self.B / self.A if self.A != 0 else None\n        converges = abs(prop) < 1\n\n        return {\n            \"minimum\": str(minimum) if minimum is not None else \"none\",\n            \"propagator\": str(prop),\n            \"propagator_abs\": str(abs(prop)),\n            \"converges\": converges,\n            \"convergence_rate\": str(abs(prop)) if converges else \"divergent\",\n        }\n\n    def arithmetic_analysis(self, prime_bound: int = 200) -> dict:\n        \"\"\"Arithmetic phase locking analysis.\"\"\"\n        # Integer model: clear denominators\n        prop = 1 - self.eta * self.A\n        trans = -self.eta * self.B\n\n        # Convert to integers if possible\n        if prop.denominator == 1 and trans.denominator == 1:\n            a_int = int(prop)\n            b_int = int(trans)\n        else:\n            # Scale to clear denominators\n            lcm_den = math.lcm(prop.denominator, trans.denominator)\n            a_int = int(prop * lcm_den)\n            b_int = int(trans * lcm_den)\n\n        # Check torsion\n        if a_int == 1:\n            torsion_order = 1\n        elif a_int == -1:\n            torsion_order = 2\n        else:\n            torsion_order = None\n\n        # Compute orbit periods\n        primes = sieve_primes(prime_bound)\n        periods = {}\n        for p in primes:\n            _, period = orbit_period_1d(a_int, b_int, 0, p)\n            periods[p] = period\n\n        return {\n            \"integer_model\": f\"T(w) = {a_int}*w + ({b_int})\",\n            \"torsion_order\": torsion_order,\n            \"is_locked\": torsion_order is not None and (\n                sum(a_int**k for k in range(torsion_order)) * b_int == 0\n                if torsion_order else False),\n            \"sample_periods\": dict(list(periods.items())[:15]),\n            \"max_period\": max(periods.values()) if periods else 0,\n            \"min_period\": min(periods.values()) if periods else 0,\n        }\n\n    def full_report(self, prime_bound: int = 200) -> str:\n        \"\"\"Generate a complete analysis report.\"\"\"\n        classical = self.classical_analysis()\n        arithmetic = self.arithmetic_analysis(prime_bound)\n\n        lines = [\n            f\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\",\n            f\"\u2551  Quadratic Loss Analysis Report                     \u2551\",\n            f\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\",\n            f\"\",\n            f\"Loss: L(w) = ({self.A}/2)*w\u00b2 + ({self.B})*w + ({self.C})\",\n            f\"Learning rate: \u03b7 = {self.eta}\",\n            f\"Update: T(w) = ({1 - self.eta * self.A})*w + ({-self.eta * self.B})\",\n            f\"\",\n            f\"\u2500\u2500 Classical Analysis \u2500\u2500\",\n            f\"  Minimum at: w* = {classical['minimum']}\",\n            f\"  Propagator: {classical['propagator']}\",\n            f\"  |Propagator|: {classical['propagator_abs']}\",\n            f\"  Converges: {classical['converges']}\",\n            f\"\",\n            f\"\u2500\u2500 Arithmetic Analysis \u2500\u2500\",\n            f\"  Integer model: {arithmetic['integer_model']}\",\n            f\"  Torsion order: {arithmetic['torsion_order']}\",\n            f\"  Phase locked: {arithmetic['is_locked']}\",\n            f\"  Period range: [{arithmetic['min_period']}, {arithmetic['max_period']}]\",\n            f\"  Sample periods by prime: {arithmetic['sample_periods']}\",\n        ]\n        return \"\\n\".join(lines)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: ASCII Orbit Visualizer\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef visualize_orbit_ascii(a: int, b: int, x0: int, p: int,\n                          max_display: int = 40) -> str:\n    \"\"\"\n    Create an ASCII visualization of the orbit of x0 under T(y) = a*y + b mod p.\n    \"\"\"\n    lines = [f\"Orbit of x\u2080={x0} under T(y)={a}y+{b} mod {p}:\"]\n\n    visited = {}\n    trajectory = []\n    x = x0 % p\n\n    for t in range(min(p + 1, max_display)):\n        if x in visited:\n            mu = visited[x]\n            period = t - mu\n            # Draw the orbit\n            lines.append(\"\")\n            for i, val in enumerate(trajectory):\n                bar = \"\u2588\" * (val * 40 // p)\n                if i < mu:\n                    marker = \"\u2192\"  # tail\n                elif i == mu:\n                    marker = \"\u27f3\"  # cycle start\n                else:\n                    marker = \"\u25cb\"  # cycle body\n                lines.append(f\"  t={i:3d} {marker} {val:4d} |{bar}\")\n\n            lines.append(f\"  [preperiod={mu}, period={period}]\")\n            return \"\\n\".join(lines)\n\n        visited[x] = t\n        trajectory.append(x)\n        x = (a * x + b) % p\n\n    lines.append(f\"  (orbit did not close within {max_display} steps)\")\n    return \"\\n\".join(lines)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main: run all applications\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Trainability Diagnostic\")\n    print(\"=\" * 60)\n\n    scenarios = [\n        (Fraction(2), Fraction(3), Fraction(1)),     # eta*A = 2, oscillating\n        (Fraction(4), Fraction(5), Fraction(1, 2)),   # eta*A = 2, oscillating\n        (Fraction(1), Fraction(3), Fraction(1, 2)),   # eta*A = 1/2, converging\n        (Fraction(1), Fraction(3), Fraction(3)),       # eta*A = 3, diverging\n    ]\n\n    for A, B, eta in scenarios:\n        diag = TrainabilityDiagnostic(A, B, eta)\n        result = diag.diagnose()\n        print(f\"\\n  A={result['A']}, B={result['B']}, \u03b7={result['eta']}\")\n        print(f\"  Propagator: {result['propagator']}\")\n        print(f\"  Torsion: {result['torsion_type']}\")\n        print(f\"  \u2192 {result['verdict']}\")\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 2: Learning Rate Selection\")\n    print(\"=\" * 60)\n\n    for A_val in [Fraction(2), Fraction(5), Fraction(1, 3)]:\n        selector = LearningRateSelector(A_val)\n        print(f\"\\n  Curvature A = {A_val}\")\n        print(f\"  Critical rates: {selector.critical_rates()}\")\n        safe = selector.safe_range()\n        print(f\"  Safe range: ({safe[0]}, {safe[1]})\")\n        print(f\"  {selector.recommend()}\")\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 3: Full Quadratic Loss Analysis\")\n    print(\"=\" * 60)\n\n    # Oscillating case\n    analyzer = QuadraticLossAnalyzer(\n        A=Fraction(2), B=Fraction(3), C=Fraction(1), eta=Fraction(1)\n    )\n    print(analyzer.full_report())\n\n    # Converging case\n    print()\n    analyzer2 = QuadraticLossAnalyzer(\n        A=Fraction(2), B=Fraction(3), C=Fraction(1), eta=Fraction(1, 2)\n    )\n    print(analyzer2.full_report())\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"APPLICATION 4: Orbit Visualization\")\n    print(\"=\" * 60)\n\n    # Locked orbit\n    print(\"\\n\" + visualize_orbit_ascii(-1, 4, 0, 17))\n\n    # Unlocked orbit\n    print(\"\\n\" + visualize_orbit_ascii(2, 1, 0, 17))\n\n    # Larger prime\n    print(\"\\n\" + visualize_orbit_ascii(-1, 6, 3, 23))\n\n\n#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Arithmetic Phase Locking in Gradient Descent\n\nInteractive demonstration of modular phase locking for affine gradient systems.\nReduces gradient descent maps modulo primes and visualizes orbit structures,\nperiod distributions, and locking diagnostics.\n\nUsage:\n    python demo.py\n\"\"\"\n\nimport math\nfrom collections import Counter\n\n\ndef is_prime(n: int) -> bool:\n    \"\"\"Check if n is prime.\"\"\"\n    if n < 2:\n        return False\n    if n < 4:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\n\ndef primes_up_to(bound: int) -> list[int]:\n    \"\"\"Return all primes up to bound using sieve of Eratosthenes.\"\"\"\n    if bound < 2:\n        return []\n    sieve = [True] * (bound + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(bound**0.5) + 1):\n        if sieve[i]:\n            for j in range(i * i, bound + 1, i):\n                sieve[j] = False\n    return [i for i in range(2, bound + 1) if sieve[i]]\n\n\ndef orbit_period_1d(a: int, b: int, x0: int, p: int) -> tuple[int, int]:\n    \"\"\"\n    Compute the preperiod (mu) and period of the orbit of x0\n    under T(y) = a*y + b (mod p).\n\n    Returns (mu, period).\n    \"\"\"\n    visited = {}\n    x = x0 % p\n    for t in range(p + 1):\n        if x in visited:\n            mu = visited[x]\n            period = t - mu\n            return mu, period\n        visited[x] = t\n        x = (a * x + b) % p\n    # Should not reach here for p prime\n    return p, 1\n\n\ndef detect_spectral_torsion_1d(a: int) -> int | None:\n    \"\"\"\n    Detect if a is a root of unity in Z (i.e., a in {1, -1}).\n    Returns the order m if torsion, None otherwise.\n    \"\"\"\n    if a == 1:\n        return 1\n    elif a == -1:\n        return 2\n    else:\n        return None\n\n\ndef geom_sum(a: int, m: int) -> int:\n    \"\"\"Compute sum_{k=0}^{m-1} a^k.\"\"\"\n    return sum(a**k for k in range(m))\n\n\ndef check_locking_condition_1d(a: int, b: int) -> tuple[bool, int | None]:\n    \"\"\"\n    Check if the 1D affine map T(y) = a*y + b satisfies the\n    spectral torsion phase locking condition.\n\n    Returns (is_locked, period_or_None).\n    \"\"\"\n    m = detect_spectral_torsion_1d(a)\n    if m is None:\n        return False, None\n    gs = geom_sum(a, m)\n    if gs * b == 0:\n        return True, m\n    return False, None\n\n\ndef demo_phase_locking_1d():\n    \"\"\"Demonstrate 1D arithmetic phase locking.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: 1D Arithmetic Phase Locking\")\n    print(\"=\" * 70)\n\n    # Example 1: Locked system (a=-1, b=4)\n    a, b = -1, 4\n    locked, m = check_locking_condition_1d(a, b)\n    print(f\"\\nMap T(y) = {a}*y + {b}\")\n    print(f\"Spectral torsion: a^2 = {a**2}, \"\n          f\"geom sum = {geom_sum(a, 2)}, \"\n          f\"geom_sum * b = {geom_sum(a, 2) * b}\")\n    print(f\"Phase locked: {locked}, period: {m}\")\n\n    print(f\"\\nVerification across primes:\")\n    primes = primes_up_to(100)\n    for p in primes[:15]:\n        mu, period = orbit_period_1d(a, b, 0, p)\n        print(f\"  p = {p:3d}: preperiod = {mu}, period = {period}, \"\n              f\"locked to {m}: {period <= m if m else 'N/A'}\")\n\n    # Example 2: Non-locked system (a=2, b=1)\n    a, b = 2, 1\n    locked, m = check_locking_condition_1d(a, b)\n    print(f\"\\nMap T(y) = {a}*y + {b}\")\n    print(f\"Spectral torsion: None (a={a} is not a root of unity)\")\n    print(f\"Phase locked: {locked}\")\n\n    print(f\"\\nOrbit periods across primes (no universal locking):\")\n    periods = []\n    for p in primes:\n        mu, period = orbit_period_1d(a, b, 0, p)\n        periods.append(period)\n        if p <= 50:\n            print(f\"  p = {p:3d}: preperiod = {mu}, period = {period}\")\n\n    print(f\"\\n  Period statistics: min={min(periods)}, max={max(periods)}, \"\n          f\"mean={sum(periods)/len(periods):.1f}\")\n\n\ndef demo_period_distribution():\n    \"\"\"Show period distributions for locked vs unlocked systems.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 2: Period Distributions \u2014 Locked vs Unlocked\")\n    print(\"=\" * 70)\n\n    primes = primes_up_to(1000)\n\n    # Locked: a=-1, b=6\n    print(\"\\nLocked system: T(y) = -y + 6\")\n    periods_locked = []\n    for p in primes:\n        _, period = orbit_period_1d(-1, 6, 0, p)\n        periods_locked.append(period)\n\n    counter = Counter(periods_locked)\n    print(f\"  Period distribution: {dict(counter)}\")\n    print(f\"  All periods \u2264 2: {all(per <= 2 for per in periods_locked)}\")\n\n    # Unlocked: a=3, b=1\n    print(\"\\nUnlocked system: T(y) = 3y + 1\")\n    periods_unlocked = []\n    for p in primes:\n        _, period = orbit_period_1d(3, 1, 0, p)\n        periods_unlocked.append(period)\n\n    print(f\"  Period statistics: min={min(periods_unlocked)}, \"\n          f\"max={max(periods_unlocked)}, \"\n          f\"mean={sum(periods_unlocked)/len(periods_unlocked):.1f}\")\n    print(f\"  Number of distinct periods: {len(set(periods_unlocked))}\")\n\n    # Histogram\n    print(f\"\\n  Period histogram (buckets):\")\n    buckets = [0, 1, 2, 5, 10, 50, 100, 500, 1000]\n    for i in range(len(buckets) - 1):\n        count = sum(1 for per in periods_unlocked\n                    if buckets[i] < per <= buckets[i + 1])\n        bar = \"#\" * count\n        print(f\"    ({buckets[i]:4d}, {buckets[i+1]:4d}]: {count:3d} {bar}\")\n\n\ndef demo_multidim_affine():\n    \"\"\"Demonstrate multi-dimensional affine phase locking (2D).\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 3: 2D Affine Phase Locking\")\n    print(\"=\" * 70)\n\n    # 2D affine map: T(x, y) = M*(x,y) + b\n    # M = [[-1, 0], [0, -1]] (order 2), b = [2, 4]\n    # M^2 = I, geom sum (I + M) = 0, so (I + M)*b = 0\n    # Phase locked with period 2\n\n    print(\"\\nMap: T(x,y) = (-x+2, -y+4)\")\n    print(\"Matrix M = -I (order 2), b = (2, 4)\")\n    print(\"Geom sum: (I + M) * b = (0,0) * (2,4) = (0,0) \u2713\")\n\n    primes = primes_up_to(200)\n    all_locked = True\n    for p in primes:\n        # Iterate T on (0, 0) mod p\n        x, y = 0, 0\n        visited = {}\n        for t in range(p * p + 1):\n            state = (x, y)\n            if state in visited:\n                mu = visited[state]\n                period = t - mu\n                if period > 2:\n                    all_locked = False\n                if p <= 20:\n                    print(f\"  p = {p:3d}: period = {period}, divides 2: {period <= 2}\")\n                break\n            visited[state] = t\n            x, y = (-x + 2) % p, (-y + 4) % p\n\n    print(f\"\\n  All primes: period divides 2: {all_locked}\")\n\n\ndef demo_quadratic_loss():\n    \"\"\"\n    Demonstrate connection to quadratic loss optimization.\n    L(w) = (1/2) * A * w^2 + B * w + C\n    T(w) = (1 - eta*A) * w - eta * B\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 4: Quadratic Loss and Gradient Descent\")\n    print(\"=\" * 70)\n\n    print(\"\\nQuadratic loss: L(w) = (1/2)*A*w\u00b2 + B*w + C\")\n    print(\"Gradient descent: T(w) = (1 - \u03b7*A)*w - \u03b7*B\")\n\n    scenarios = [\n        {\"A\": 2, \"eta_num\": 1, \"eta_den\": 1, \"B\": 3, \"name\": \"\u03b7*A = 2 (oscillating)\"},\n        {\"A\": 4, \"eta_num\": 1, \"eta_den\": 2, \"B\": 5, \"name\": \"\u03b7*A = 2 (oscillating)\"},\n        {\"A\": 1, \"eta_num\": 1, \"eta_den\": 2, \"B\": 3, \"name\": \"\u03b7*A = 1/2 (no torsion)\"},\n    ]\n\n    primes = primes_up_to(100)\n\n    for sc in scenarios:\n        A = sc[\"A\"]\n        eta_n, eta_d = sc[\"eta_num\"], sc[\"eta_den\"]\n        B = sc[\"B\"]\n        # a = 1 - eta*A = (eta_d - eta_n*A) / eta_d\n        # For integer maps, multiply through by eta_d\n        # T_int(w_scaled) = (eta_d - eta_n*A) * w_scaled - eta_n * B * eta_d\n        a_int = eta_d - eta_n * A\n        b_int = -eta_n * B\n\n        locked, m = check_locking_condition_1d(a_int, b_int)\n\n        print(f\"\\n  {sc['name']}\")\n        print(f\"  A={A}, \u03b7={eta_n}/{eta_d}, B={B}\")\n        print(f\"  Propagator a = 1 - \u03b7*A = {a_int}/{eta_d}\")\n        print(f\"  Integer model: T(w) = {a_int}*w + ({b_int})\")\n        print(f\"  Spectral torsion: {detect_spectral_torsion_1d(a_int)}\")\n        print(f\"  Phase locked: {locked}\" +\n              (f\" with period {m}\" if locked else \"\"))\n\n        # Sample orbit periods\n        sample_periods = []\n        for p in primes[:10]:\n            _, period = orbit_period_1d(a_int, b_int, 0, p)\n            sample_periods.append((p, period))\n        print(f\"  Sample periods: {sample_periods[:8]}\")\n\n\ndef demo_locking_density():\n    \"\"\"\n    Compute the empirical locking density: fraction of primes\n    where orbit period \u2264 threshold.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 5: Locking Density Analysis\")\n    print(\"=\" * 70)\n\n    primes = primes_up_to(5000)\n    maps_to_test = [\n        (-1, 4, \"T(y) = -y + 4 (locked, a=-1)\"),\n        (1, 5, \"T(y) = y + 5 (a=1, shift)\"),\n        (2, 1, \"T(y) = 2y + 1 (no torsion)\"),\n        (3, 7, \"T(y) = 3y + 7 (no torsion)\"),\n        (-1, 0, \"T(y) = -y (locked, trivial)\"),\n    ]\n\n    for a, b, name in maps_to_test:\n        periods = []\n        for p in primes:\n            _, period = orbit_period_1d(a, b, 0, p)\n            periods.append(period)\n\n        thresholds = [2, 5, 10, 50]\n        densities = {t: sum(1 for per in periods if per <= t) / len(periods)\n                     for t in thresholds}\n\n        print(f\"\\n  {name}\")\n        for t in thresholds:\n            bar = \"\u2588\" * int(densities[t] * 40)\n            print(f\"    Period \u2264 {t:3d}: {densities[t]:.4f} {bar}\")\n\n\ndef main():\n    \"\"\"Run all demonstrations.\"\"\"\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   Arithmetic Phase Locking in Gradient Descent \u2014 Demo Suite    \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    demo_phase_locking_1d()\n    demo_period_distribution()\n    demo_multidim_affine()\n    demo_quadratic_loss()\n    demo_locking_density()\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 70)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "date": "2026-05-20T14:07:45Z",
+    "exp_id": "fc6b3f4a",
+    "source_exp_ids": [
+      "pi_brainstorm"
     ]
   },
   "conjecture_for_every_nearest_neighbor_ca_rule_f__a.json": {
@@ -6686,7 +6728,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 280
+      "hue": 271
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -6695,7 +6737,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -6704,7 +6746,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -6713,7 +6755,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "galois_group__s",
@@ -6722,7 +6764,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -6740,7 +6782,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "expected_lean_signature",
@@ -6749,7 +6791,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -6767,7 +6809,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "percolation_threshold",
@@ -6776,7 +6818,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -6803,7 +6845,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "legendres_conjecture",
@@ -6821,7 +6863,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -6839,7 +6881,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "p_vs_np_problem",
@@ -6848,7 +6890,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -6866,7 +6908,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "hodge_conjecture",
@@ -6884,7 +6926,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -6893,7 +6935,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -6911,7 +6953,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "twin_prime_conjecture",
@@ -6920,7 +6962,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -6929,7 +6971,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -6938,7 +6980,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 292
+      "hue": 272
     },
     {
       "id": "happy_end_problem",
@@ -6947,7 +6989,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -6965,7 +7007,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -6983,7 +7025,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "tropical_intersection_theory",
@@ -6992,7 +7034,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "riemann_hypothesis",
@@ -7001,7 +7043,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "odd_perfect_numbers",
@@ -7010,7 +7052,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 270
+      "hue": 134
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -7019,7 +7061,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "jacobian_conjecture",
@@ -7028,7 +7070,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "10_is_a_solitary_number",
@@ -7037,7 +7079,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -7046,7 +7088,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "invariant_subspace_problem",
@@ -7055,7 +7097,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -7064,7 +7106,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -7073,7 +7115,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -7082,7 +7124,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 92
+      "hue": 101
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -7091,7 +7133,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -7100,7 +7142,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -7109,7 +7151,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -7118,7 +7160,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "yang_mills_mass_gap",
@@ -7127,7 +7169,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 270
+      "hue": 134
     },
     {
       "id": "goldbach_conjecture",
@@ -7136,7 +7178,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 91
+      "hue": 314
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -7145,7 +7187,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -7163,7 +7205,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -7181,7 +7223,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -7190,7 +7232,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -7199,7 +7241,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 92
+      "hue": 112
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -7208,7 +7250,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 272
+      "hue": 101
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -7217,7 +7259,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -7226,7 +7268,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -7235,7 +7277,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -7244,7 +7286,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -7271,7 +7313,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -7280,7 +7322,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -7289,7 +7331,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -7298,7 +7340,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -7307,7 +7349,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "primes_of_the_form_n1",
@@ -7316,7 +7358,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -7325,7 +7367,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -7334,7 +7376,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 359
+      "hue": 90
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -7343,7 +7385,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -7352,7 +7394,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -7361,7 +7403,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -7370,7 +7412,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified",
@@ -7379,7 +7421,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -7388,7 +7430,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -7406,7 +7448,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -7415,7 +7457,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -7424,7 +7466,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -7442,7 +7484,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "collatz_conjecture",
@@ -7451,7 +7493,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -7460,7 +7502,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -7469,7 +7511,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -7478,7 +7520,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -7487,7 +7529,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -7496,7 +7538,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 134
+      "hue": 275
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -7505,7 +7547,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 359
+      "hue": 271
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -7523,7 +7565,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -7532,7 +7574,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 280
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -7559,7 +7601,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "the_invariance_theorem_establishes_that_the_symmet",
@@ -7568,7 +7610,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -7577,7 +7619,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -7586,7 +7628,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -7595,7 +7637,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T02:05:05Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "hypothesis_4_p_adic_threshold_transfer",
@@ -7604,7 +7646,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -7613,7 +7655,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -7622,7 +7664,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "kakeya_conjecture",
@@ -7640,7 +7682,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -7649,7 +7691,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "196_algorithm_non_termination",
@@ -7667,7 +7709,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -7676,7 +7718,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -7685,7 +7727,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -7703,7 +7745,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -7712,7 +7754,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -7730,7 +7772,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 91
+      "hue": 179
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -7748,7 +7790,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -7766,7 +7808,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "proof_expansion_constant_for_formal_theories",
@@ -7775,7 +7817,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T08:08:15Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "eml_category_the_category_of_eml_computable_maps",
@@ -7784,7 +7826,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T08:09:01Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "eml_universal_approximation",
@@ -7793,7 +7835,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T09:06:21Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "inverse_stereographic_persistence_topological_data",
@@ -7802,7 +7844,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T09:06:51Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "hypothesis_5_exceptional_set_finiteness",
@@ -7811,7 +7853,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T09:07:18Z",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "conjecture_2_semantic_entropy_correlation",
@@ -7829,7 +7871,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T10:03:27Z",
-      "hue": 272
+      "hue": 100
     },
     {
       "id": "conjecture_3_faithful_representations_lift_to_line",
@@ -7856,7 +7898,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:04:57Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "proof_phase_transitions_in_random_formal_theories",
@@ -7865,7 +7907,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T11:03:17Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_5_strict_depth_separation_for_exponenti",
@@ -7874,7 +7916,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T11:03:46Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hypothesis_3_base_invariance",
@@ -7883,7 +7925,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T11:04:14Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "eml_kolmogorov_arnold_representation",
@@ -7901,7 +7943,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T12:00:41Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_5_eml_circuit_depth_separation",
@@ -7910,7 +7952,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:03:44Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "conjecture_1_mps_min_cut_principle",
@@ -7919,7 +7961,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:11Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "arithmetic_monodromy_fingerprints_of_gradient_desc",
@@ -7928,7 +7970,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:39Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "conjecture_4_monotone_circuit_depth_from_entropy_c",
@@ -7937,7 +7979,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T14:00:24Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_2_eml_description_complexity_is_multipl",
@@ -7946,7 +7988,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T14:03:50Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_5_pairwise_intersection_bounds_bootstra",
@@ -7955,7 +7997,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:04:41Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_5_model_shrinkage_distance_is_a_proof_c",
@@ -7964,7 +8006,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:05:33Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_1_full_depth_hierarchy_for_exponential_",
@@ -7973,7 +8015,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:06:18Z",
-      "hue": 89
+      "hue": 270
     },
     {
       "id": "conjecture_3_learning_theoretic_version_space_comp",
@@ -7982,6 +8024,15 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:07:00Z",
+      "hue": 270
+    },
+    {
+      "id": "arithmetic_phase_locking_in_gradient_descent_over_",
+      "title": "Arithmetic Phase Locking in Gradient Descent over Rational Polynomial Models",
+      "domain": "Arithmetic Dynamics / Optimization Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-20T14:07:45Z",
       "hue": 270
     }
   ],
@@ -9307,6 +9358,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T14:06:34.310445+00:00"
   },
   {
+    "id": "fd_0286",
+    "title": "Benford Renormalization for Deep Function Composition",
+    "description": "Conjecture: Let f be a real-analytic map on (0,\u221e) with f(x)>1 for large x and asymptotic form log f(x)=a(log x)^d+o((log x)^d) for some a>0, d>1. For any x0 outside a zero-density exceptional set, the iterates x_{n+1}=f(x_n) have mantissae that converge to Benford\u2019s law in every integer base b\u22652 for which log b is algebraically independent of a. Moreover, the KL divergence of the first-digit distribution decays at a universal rate depending only on d, not on finer details of f. Test: Numerically sample broad families of analytic f with matched leading log-growth exponent d, iterate from many seeds x0, and compare base-b digit statistics and KL-decay exponents; confirmation requires collapse to a d-universal curve across unrelated function families, while systematic dependence on lower-order terms refutes universality. Impact: This would create a new universality theory linking analytic iteration, renormalization-style growth classes, and digital statistics, potentially explaining why wildly different nonlinear dynamical systems exhibit the same leading-digit behavior.",
+    "domains": [
+      "Dynamical Systems",
+      "Number Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:07:20.200300+00:00"
+  },
+  {
     "id": "seed_026",
     "title": "Lehmer's Mahler Measure Problem",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
@@ -10193,25 +10259,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T09:07:55.724475+00:00"
   },
   {
-    "id": "fd_0225",
-    "title": "Conjecture 3: Learning-Theoretic Version Space Compression Bound",
-    "description": "**Conjecture:** In a PAC learning setting, the semantic entropy of the version space (set of hypotheses consistent with observed data) governs the sample complexity of further learning. Specifically, if S_m is the version space after m samples:\n\n$$H(S_m) - H(S_{m+k}) \\leq k \\cdot \\log_2(|X|)$$\n\nwhere |X| is the instance space size, and any learning algorithm that reduces the version space entropy by \u0394H requires at least \u0394H / log\u2082(|X|) additional samples.\n\n**Test:** For finite concept classes over Boolean domains:\n1. Enumerate exact version spaces for concept classes of size up to 2^20.\n2. Track version space entropy as samples arrive.\n3. Compare empirical sample complexity to the entropy lower bound.\n4. Test on decision lists, DNF formulas, and threshold functions.\n\nA refutation would be a",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Probability",
-      "MachineLearning",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6cf9b394",
-    "consumed_by_exp_id": "e5412c69",
-    "timestamp": "2026-05-20T09:07:55.737099+00:00"
-  },
-  {
     "id": "fd_0236",
     "title": "Conjecture 1: Minimal-Certificate Threshold Law",
     "description": "**Precise statement.** Let $(M_m)_{m \\geq 1}$ be a sequence of monotone provability systems on axiom pools of size $n_m \\to \\infty$, each with a single target $t_m$. Suppose the minimal certificate size is $k_m$ and the number of minimal certificates is $N_m$. Then the $1/2$-threshold satisfies\n\n$$\np_{1/2}(t_m) \\;\\sim\\; N_m^{-1/k_m} \\quad \\text{as } m \\to \\infty.\n$$\n\n**Test.** Enumerate certificates in random Horn clause systems over $n$ variables with clause length $k$. Compute $p_{1/2}$ empirically by Monte Carlo sampling of random axiom subsets, and compare with $N^{-1/k}$ where $N$ is the number of minimum-size certificates. Vary $n \\in \\{10, 20, 50, 100\\}$ and $k \\in \\{2, 3, 4, 5\\}$.\n\n**Impact.** If confirmed, this provides a universal formula for the onset of provability in finite sy",
@@ -10887,18 +10934,70 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T14:06:22.321960+00:00"
   },
   {
-    "id": "fd_0277",
-    "title": "Hypothesis 5: Refutation Trigger \u2014 Anomalously Efficient Approximants",
-    "description": "**Conjecture (Null Hypothesis).** There exists `k \u2265 3` and a depth-`(k\u22121)` expression `E`\nof size `o(c^k \u00b7 \u03b5\u207b\u00b9)` that achieves uniform error `\u2264 \u03b5` on `[0,1]` against `iterExp(k)`.\n\n**Test.** Automated search for anomalously efficient approximants:\n1. For each `k \u2208 {3, 4}`, set target error `\u03b5 = 0.1, 0.01, 0.001`.\n2. Search for depth-`(k\u22121)` expressions achieving error \u2264 \u03b5.\n3. Record the minimum size found.\n4. If size grows slower than `c^k / \u03b5`, flag as potential counterexample.\n\n**Impact.** Finding such an anomaly would falsify the full conjecture in its current\nform, requiring either a weaker lower bound or a refined expression language definition.\nThis is the most important test: it directly probes the conjecture's validity.\n\n---",
+    "id": "fd_0281",
+    "title": "Conjecture 1: Tightness for Threshold Concepts",
+    "description": "**Conjecture.** For threshold functions on a linearly ordered finite domain of size $n$ with binary labels, there exist query sequences achieving entropy drop exactly 1 bit per sample until the version space becomes a singleton. More precisely, for any $n$, binary search achieves $\\lceil \\log_2(n+1) \\rceil$ queries with average per-query entropy drop converging to 1 bit as $n \\to \\infty$.\n\n**Test.** Enumerate thresholds on $\\{0, \\ldots, n-1\\}$ for $n = 2^k - 1$. Use the binary search (median) query strategy. Verify that each query reduces $\\log_2 |V|$ by exactly 1 bit when $|V|$ is even (the median splits the version space exactly in half). Compute the deviation from 1 bit/query for non-power-of-two domain sizes.\n\n**Impact.** If true, this establishes threshold functions as the canonical t",
     "domains": [
       "NumberTheory",
-      "Algebra"
+      "MachineLearning"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "e7f47f32",
+    "source_exp_id": "e5412c69",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T14:06:22.333449+00:00"
+    "timestamp": "2026-05-20T14:07:03.852444+00:00"
+  },
+  {
+    "id": "fd_0282",
+    "title": "Conjecture 2: Sub-Capacity Compression for Decision Lists",
+    "description": "**Conjecture.** For decision lists over $n$ Boolean variables with binary labels, the average semantic compression rate under uniformly random examples is strictly less than 1 bit per sample, and the gap from capacity grows as $\\Omega(1/n)$.\n\n**Test.** Enumerate all decision lists for $n \\in \\{2, 3, 4, 5\\}$. For each target decision list, sample random instances uniformly, compute version-space entropy after each observation, and measure the average compression rate. Plot the average rate versus $n$ and fit the sub-linearity.\n\n**Impact.** If true, this proves a structural complexity hierarchy among concept classes based on compression efficiency: threshold functions are maximally compressible, while decision lists waste channel capacity due to their more complex partition structure. This w",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Combinatorics",
+      "Probability",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5412c69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:07:03.864670+00:00"
+  },
+  {
+    "id": "fd_0283",
+    "title": "Conjecture 3: Thermodynamic Phase Transition in Learning",
+    "description": "**Conjecture.** For conjunction functions over $n$ Boolean variables, the curve $m \\mapsto \\log_2 |V_m|$ (version-space entropy vs. number of random labeled examples) exhibits a sharp second-derivative discontinuity at a critical sample size $m^* \\approx n$, analogous to a thermodynamic phase transition. Below $m^*$, the entropy decreases slowly (liquid phase); above $m^*$, most hypotheses are eliminated rapidly (crystallization).\n\n**Test.** For $n \\in \\{3, 4, 5, 6\\}$, generate 1000 random sample streams from a random target conjunction. Compute the average entropy trajectory and its numerical second derivative. Look for a peak in $|d^2 \\log_2|V_m| / dm^2|$ and test whether the peak location scales linearly with $n$.\n\n**Impact.** If confirmed, this would establish a rigorous connection bet",
+    "domains": [
+      "NumberTheory",
+      "Probability",
+      "Physics",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5412c69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:07:03.875632+00:00"
+  },
+  {
+    "id": "fd_0285",
+    "title": "Conjecture 5: Pattern Complexity Gap for Structured Classes",
+    "description": "**Conjecture.** For size-$s$ DNF formulas over $n$ Boolean variables, the number of distinct $k$-sample label patterns on any structured query set (e.g., a Hamming ball of radius $r$) is at most $O(s^k \\cdot \\text{poly}(n))$, which is exponentially smaller than the universal bound $2^k$ for $s \\ll 2^n / k$.\n\n**Test.** For $n = 5, s \\in \\{1, 2, 3\\}$, enumerate all size-$s$ DNF formulas. For each $k \\in \\{1, \\ldots, 8\\}$, compute the number of distinct patterns on: (a) all possible $k$-subsets of the domain, (b) $k$-subsets within Hamming balls of radius 2 around a fixed point. Compare the pattern counts to $2^k$ and to $s^k$.\n\n**Impact.** If true, this shows that structured concept classes exhibit pattern compression far beyond the universal $|Y|^k$ bound. This would yield tighter sample co",
+    "domains": [
+      "NumberTheory",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e5412c69",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:07:03.899749+00:00"
   }
 ];

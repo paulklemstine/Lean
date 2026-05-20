@@ -4231,7 +4231,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "e5412c69",
       "timestamp": "2026-05-20T09:07:55.737099+00:00"
     },
@@ -5398,7 +5398,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:06:22.333449+00:00"
     },
@@ -5455,6 +5455,122 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:06:34.310445+00:00"
+    },
+    {
+      "id": "fd_0281",
+      "title": "Conjecture 1: Tightness for Threshold Concepts",
+      "description": "**Conjecture.** For threshold functions on a linearly ordered finite domain of size $n$ with binary labels, there exist query sequences achieving entropy drop exactly 1 bit per sample until the version space becomes a singleton. More precisely, for any $n$, binary search achieves $\\lceil \\log_2(n+1) \\rceil$ queries with average per-query entropy drop converging to 1 bit as $n \\to \\infty$.\n\n**Test.** Enumerate thresholds on $\\{0, \\ldots, n-1\\}$ for $n = 2^k - 1$. Use the binary search (median) query strategy. Verify that each query reduces $\\log_2 |V|$ by exactly 1 bit when $|V|$ is even (the median splits the version space exactly in half). Compute the deviation from 1 bit/query for non-power-of-two domain sizes.\n\n**Impact.** If true, this establishes threshold functions as the canonical t",
+      "source_exp_id": "e5412c69",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e5412c69",
+      "domains": [
+        "NumberTheory",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:07:03.852444+00:00"
+    },
+    {
+      "id": "fd_0282",
+      "title": "Conjecture 2: Sub-Capacity Compression for Decision Lists",
+      "description": "**Conjecture.** For decision lists over $n$ Boolean variables with binary labels, the average semantic compression rate under uniformly random examples is strictly less than 1 bit per sample, and the gap from capacity grows as $\\Omega(1/n)$.\n\n**Test.** Enumerate all decision lists for $n \\in \\{2, 3, 4, 5\\}$. For each target decision list, sample random instances uniformly, compute version-space entropy after each observation, and measure the average compression rate. Plot the average rate versus $n$ and fit the sub-linearity.\n\n**Impact.** If true, this proves a structural complexity hierarchy among concept classes based on compression efficiency: threshold functions are maximally compressible, while decision lists waste channel capacity due to their more complex partition structure. This w",
+      "source_exp_id": "e5412c69",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e5412c69",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:07:03.864670+00:00"
+    },
+    {
+      "id": "fd_0283",
+      "title": "Conjecture 3: Thermodynamic Phase Transition in Learning",
+      "description": "**Conjecture.** For conjunction functions over $n$ Boolean variables, the curve $m \\mapsto \\log_2 |V_m|$ (version-space entropy vs. number of random labeled examples) exhibits a sharp second-derivative discontinuity at a critical sample size $m^* \\approx n$, analogous to a thermodynamic phase transition. Below $m^*$, the entropy decreases slowly (liquid phase); above $m^*$, most hypotheses are eliminated rapidly (crystallization).\n\n**Test.** For $n \\in \\{3, 4, 5, 6\\}$, generate 1000 random sample streams from a random target conjunction. Compute the average entropy trajectory and its numerical second derivative. Look for a peak in $|d^2 \\log_2|V_m| / dm^2|$ and test whether the peak location scales linearly with $n$.\n\n**Impact.** If confirmed, this would establish a rigorous connection bet",
+      "source_exp_id": "e5412c69",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e5412c69",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Physics",
+        "MachineLearning",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:07:03.875632+00:00"
+    },
+    {
+      "id": "fd_0284",
+      "title": "Conjecture 4: Counterexample to the $\\log_2|X|$ Bound",
+      "description": "**Conjecture.** For any $\\varepsilon > 0$ and sufficiently large multiclass concept classes with $|Y| > |X|$, there exist version spaces and observations where the per-sample entropy drop exceeds $\\log_2 |X|$ by a factor of $\\log_2 |Y| / \\log_2 |X| - \\varepsilon$. That is, the worst-case per-sample entropy drop is essentially $\\log_2 |Y|$, not $\\log_2 |X|$, and the original $\\log_2 |X|$ conjecture fails maximally when labels carry more information than instances.\n\n**Test.** For $|X| = 2, |Y| = k$ with $k \\in \\{3, 4, \\ldots, 16\\}$, construct the full function class $Y^X$. Find version spaces $V$ and observations $(x, y)$ that maximize the entropy drop. Verify that the maximum approaches $\\log_2 |Y|$ as $k$ grows, far exceeding $\\log_2 |X| = 1$.\n\n**Impact.** This settles the question of whet",
+      "source_exp_id": "e5412c69",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e5412c69",
+      "domains": [
+        "NumberTheory",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:07:03.886860+00:00"
+    },
+    {
+      "id": "fd_0285",
+      "title": "Conjecture 5: Pattern Complexity Gap for Structured Classes",
+      "description": "**Conjecture.** For size-$s$ DNF formulas over $n$ Boolean variables, the number of distinct $k$-sample label patterns on any structured query set (e.g., a Hamming ball of radius $r$) is at most $O(s^k \\cdot \\text{poly}(n))$, which is exponentially smaller than the universal bound $2^k$ for $s \\ll 2^n / k$.\n\n**Test.** For $n = 5, s \\in \\{1, 2, 3\\}$, enumerate all size-$s$ DNF formulas. For each $k \\in \\{1, \\ldots, 8\\}$, compute the number of distinct patterns on: (a) all possible $k$-subsets of the domain, (b) $k$-subsets within Hamming balls of radius 2 around a fixed point. Compare the pattern counts to $2^k$ and to $s^k$.\n\n**Impact.** If true, this shows that structured concept classes exhibit pattern compression far beyond the universal $|Y|^k$ bound. This would yield tighter sample co",
+      "source_exp_id": "e5412c69",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e5412c69",
+      "domains": [
+        "NumberTheory",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:07:03.899749+00:00"
+    },
+    {
+      "id": "fd_0286",
+      "title": "Benford Renormalization for Deep Function Composition",
+      "description": "Conjecture: Let f be a real-analytic map on (0,∞) with f(x)>1 for large x and asymptotic form log f(x)=a(log x)^d+o((log x)^d) for some a>0, d>1. For any x0 outside a zero-density exceptional set, the iterates x_{n+1}=f(x_n) have mantissae that converge to Benford’s law in every integer base b≥2 for which log b is algebraically independent of a. Moreover, the KL divergence of the first-digit distribution decays at a universal rate depending only on d, not on finer details of f. Test: Numerically sample broad families of analytic f with matched leading log-growth exponent d, iterate from many seeds x0, and compare base-b digit statistics and KL-decay exponents; confirmation requires collapse to a d-universal curve across unrelated function families, while systematic dependence on lower-order terms refutes universality. Impact: This would create a new universality theory linking analytic iteration, renormalization-style growth classes, and digital statistics, potentially explaining why wildly different nonlinear dynamical systems exhibit the same leading-digit behavior.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Dynamical Systems",
+        "Number Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:07:20.200300+00:00"
     }
   ],
   "pruned": [
