@@ -249,56 +249,61 @@
         }
 
         // Periodic refresh: check for new packages every 60 seconds
-        // Skip on file:// protocol (CORS blocks fetch on local files)
-        if (location.protocol !== 'file:') {
-            setInterval(async () => {
-                try {
-                    const response = await fetch('packages_db.js', { cache: 'no-store' });
-                    if (!response.ok) return;
-                    const text = await response.text();
-                    const prevCount = (window.PACKAGE_INDEX || []).length;
-                    const fn = new Function(text + '; return { INDEX: window.PACKAGE_INDEX, DB: window.PACKAGE_DB, GRAPH: window.PACKAGE_GRAPH, DIRECTIONS: window.FUTURE_DIRECTIONS };');
-                    const newData = fn();
-                    if (newData.INDEX && newData.INDEX.length > prevCount) {
-                        // Find which packages are new
-                        const prevFilenames = new Set((window.PACKAGE_INDEX || []).map(p => p.filename));
-                        const newFilenames = newData.INDEX.filter(p => !prevFilenames.has(p.filename)).map(p => p.filename);
+        // Works on both file:// (script-tag injection) and http:// (fetch)
+        setInterval(() => {
+            try {
+                // Snapshot current state before reload
+                const prevIndex = window.PACKAGE_INDEX ? [...window.PACKAGE_INDEX] : [];
+                const prevCount = prevIndex.length;
+                const prevEdges = (window.PACKAGE_GRAPH && window.PACKAGE_GRAPH.edges) ? [...window.PACKAGE_GRAPH.edges] : [];
+                const prevDirCount = (window.FUTURE_DIRECTIONS || []).length;
 
-                        window.PACKAGE_INDEX = newData.INDEX;
-                        window.PACKAGE_DB = newData.DB;
-                        window.Aether.packages = newData.INDEX;
-                        if (window.renderSidebar) window.renderSidebar(newData.INDEX);
+                const script = document.createElement('script');
+                script.src = 'packages_db.js?v=' + Date.now();
+                script.onload = () => {
+                    try {
+                        const newIndex = window.PACKAGE_INDEX || [];
+                        if (newIndex.length > prevCount) {
+                            const prevFilenames = new Set(prevIndex.map(p => p.filename));
+                            const newFilenames = newIndex.filter(p => !prevFilenames.has(p.filename)).map(p => p.filename);
 
-                        // Browser + in-app notification for new packages
-                        if (window.AetherNotifications && newFilenames.length > 0) {
-                            window.AetherNotifications.onNewPackages(newData.INDEX, newFilenames);
-                        }
+                            window.Aether.packages = newIndex;
+                            if (window.renderSidebar) window.renderSidebar(newIndex);
 
-                        if (newData.GRAPH && newData.GRAPH.nodes) {
-                            newData.GRAPH.nodes.forEach(n => {
-                                if (window.addGraphNode) window.addGraphNode(n);
-                            });
+                            // Browser + in-app notification for new packages
+                            if (window.AetherNotifications && newFilenames.length > 0) {
+                                window.AetherNotifications.onNewPackages(newIndex, newFilenames);
+                            }
+
+                            if (window.PACKAGE_GRAPH && window.PACKAGE_GRAPH.nodes) {
+                                window.PACKAGE_GRAPH.nodes.forEach(n => {
+                                    if (window.addGraphNode) window.addGraphNode(n);
+                                });
+                            }
                         }
-                    }
-                    if (newData.GRAPH && newData.GRAPH.edges && newData.GRAPH.edges.length > 0) {
-                        const newEdges = newData.GRAPH.edges.filter(e =>
-                            !(window.PACKAGE_GRAPH?.edges || []).some(oe => oe.source === e.source && oe.target === e.target)
-                        );
-                        if (newEdges.length > 0 && window.addGraphEdges) {
-                            window.addGraphEdges(newEdges);
+                        if (window.PACKAGE_GRAPH && window.PACKAGE_GRAPH.edges && window.PACKAGE_GRAPH.edges.length > 0) {
+                            const newEdges = window.PACKAGE_GRAPH.edges.filter(e =>
+                                !prevEdges.some(oe => oe.source === e.source && oe.target === e.target)
+                            );
+                            if (newEdges.length > 0 && window.addGraphEdges) {
+                                window.addGraphEdges(newEdges);
+                            }
                         }
-                        window.PACKAGE_GRAPH = newData.GRAPH;
+                        if (window.FUTURE_DIRECTIONS && window.FUTURE_DIRECTIONS.length >= prevDirCount) {
+                            if (window.populateDomainFilter) window.populateDomainFilter();
+                            if (window.Aether.directionsVisible && window.renderDirectionsView) window.renderDirectionsView();
+                        }
+                    } catch (err) {
+                        // Silently fail — refresh is best-effort
                     }
-                    if (newData.DIRECTIONS && newData.DIRECTIONS.length >= (window.FUTURE_DIRECTIONS || []).length) {
-                        window.FUTURE_DIRECTIONS = newData.DIRECTIONS;
-                        if (window.populateDomainFilter) window.populateDomainFilter();
-                        if (window.Aether.directionsVisible && window.renderDirectionsView) window.renderDirectionsView();
-                    }
-                } catch (err) {
-                    // Silently fail — refresh is best-effort
-                }
-            }, 60000);
-        }
+                    script.remove();
+                };
+                script.onerror = () => script.remove();
+                document.head.appendChild(script);
+            } catch (err) {
+                // Silently fail — refresh is best-effort
+            }
+        }, 60000);
 
         // Author popover
         const authorLink = document.getElementById('author-link');
