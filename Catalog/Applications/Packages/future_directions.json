@@ -2968,7 +2968,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "1f252cf0",
       "timestamp": "2026-05-20T04:04:18.159560+00:00"
     },
@@ -4397,6 +4397,131 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T10:03:56.849055+00:00"
+    },
+    {
+      "id": "fd_0229",
+      "title": "Domain-trivial:",
+      "description": "Expressions where every `log` wraps a syntactically positive subexpression.",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.227012+00:00"
+    },
+    {
+      "id": "fd_0230",
+      "title": "Domain-complex:",
+      "description": "Expressions where `log` arguments involve the variable `x` in ways that make positivity non-obvious.\n\nMeasure normalized sizes and fit growth models separately for each family.\n\n**Impact:** If confirmed, this identifies domain analysis (proving positivity of arguments to `log`) as the core computational bottleneck, suggesting that advances in automated positivity proving would directly translate to better EML normalization. This connects EML complexity to real algebraic geometry and semidefinite programming.\n\n---\n\n## Hypothesis 5: EML Compilation Preserves Straight-Line Program Complexity\n\n**Conjecture:** If a unary elementary function $f$ can be computed by a straight-line program (SLP) of length $L$ over the operations $\\{+, -, \\times, \\div, \\exp, \\log\\}$, then there exists an EML straig",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "EML",
+        "Algebra",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.235736+00:00"
+    },
+    {
+      "id": "fd_0231",
+      "title": "Hypothesis 2 (Sharing)",
+      "description": "— most immediately testable and likely to yield a clear positive or negative result",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.241981+00:00"
+    },
+    {
+      "id": "fd_0232",
+      "title": "Hypothesis 4 (Domain obstruction)",
+      "description": "— high impact, moderate difficulty",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.249830+00:00"
+    },
+    {
+      "id": "fd_0233",
+      "title": "Hypothesis 1 (Polynomial normalization)",
+      "description": "— the central conjecture, hardest to resolve",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.256521+00:00"
+    },
+    {
+      "id": "fd_0234",
+      "title": "Hypothesis 3 (Transcendence rank)",
+      "description": "— interesting structural insight",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.264443+00:00"
+    },
+    {
+      "id": "fd_0235",
+      "title": "Hypothesis 5 (SLP preservation)",
+      "description": "— connects to the broadest existing theory",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.270829+00:00"
     }
   ],
   "pruned": [
