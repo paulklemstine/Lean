@@ -1693,7 +1693,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "47aaf4e4",
       "timestamp": "2026-05-20T00:22:11.066001+00:00"
     },
@@ -4147,6 +4147,110 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T09:06:24.944498+00:00"
+    },
+    {
+      "id": "fd_0217",
+      "title": "Conjecture 1: Hemisphere Acceleration Hypothesis",
+      "description": "**Precise statement:** For a finite point cloud $X$ sampled uniformly from a spherical cap of angular radius $\\rho < \\pi/3$ on $S^n$, the bottleneck distance between the persistence diagram of the intrinsic spherical Rips filtration and the persistence diagram of the ordinary Euclidean Rips filtration on the stereographic projection $\\sigma(X)$ (with standard Euclidean metric, after rescaling by $2/(R^2+4)$ where $R = \\tan(\\rho/2)$) is bounded by $O(\\rho^3)$ as $\\rho \\to 0$.\n\n**Test:** Sample $N = 200$ points uniformly from spherical caps of angular radii $\\rho \\in \\{0.1, 0.2, 0.3, 0.5, 0.8, 1.0\\}$ on $S^2$. Compute both persistence diagrams (spherical geodesic Rips vs rescaled Euclidean Rips on stereographic coordinates). Measure bottleneck distance. Plot $d_B / \\rho^3$ as a function of $",
+      "source_exp_id": "47aaf4e4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/47aaf4e4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:06:54.655328+00:00"
+    },
+    {
+      "id": "fd_0218",
+      "title": "Conjecture 2: North-Pole Instability Threshold",
+      "description": "**Precise statement:** Let $X_t$ be a family of point clouds on $S^n \\setminus \\{N\\}$ where one point approaches the north pole at angular distance $\\delta_t \\to 0$. The condition number of the weighted distance matrix $D_{ij} = d_{\\mathrm{st}}(\\sigma(x_i), \\sigma(x_j))$ grows as $\\Theta(1/\\delta_t^2)$, and the Lipschitz constant of the persistence diagram (as a function of point positions) grows as $\\Theta(1/\\delta_t)$.\n\n**Test:** Fix $N = 50$ points on $S^2$ in a generic position. Move one point along a geodesic toward the north pole, with angular distances $\\delta \\in \\{0.5, 0.2, 0.1, 0.05, 0.02, 0.01\\}$. Compute the condition number of the weighted distance matrix and the local Lipschitz constant of the persistence diagram (by numerical differentiation). Plot both quantities against $1",
+      "source_exp_id": "47aaf4e4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/47aaf4e4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:06:54.664526+00:00"
+    },
+    {
+      "id": "fd_0219",
+      "title": "Conjecture 3: Chartwise Manifold Persistence via Atlas Patching",
+      "description": "**Precise statement:** For a compact Riemannian manifold $M$ admitting a finite conformal atlas $\\{(U_\\alpha, \\phi_\\alpha)\\}_{\\alpha=1}^k$ with overlap distortion bounded by $\\kappa$, the persistence diagram obtained by patching chartwise weighted filtrations (using the exact transported metric in each chart) is interleaved with the intrinsic geodesic persistence diagram with multiplicative constant at most $1 + C\\kappa$ for an explicit universal constant $C$.\n\n**Test:** Use $S^2$ with two stereographic charts (from north and south poles). Sample $N = 100$ points distributed across the sphere. Assign each point to the chart whose pole is farther away. Compute: (a) intrinsic geodesic persistence, (b) single-chart weighted persistence (choosing the better pole), (c) patched two-chart persist",
+      "source_exp_id": "47aaf4e4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/47aaf4e4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Topology",
+        "Algebra",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:06:54.671985+00:00"
+    },
+    {
+      "id": "fd_0220",
+      "title": "Conjecture 4: Conformal TDA Invariance for Möbius Transformations",
+      "description": "**Precise statement:** Let $T : S^n \\to S^n$ be a Möbius transformation (conformal diffeomorphism). Then the stereographic persistence diagrams of $X$ and $T(X)$ are identical, i.e., $\\mathrm{PH}_*(\\check{C}^{d_{\\mathrm{st}}}_\\bullet(\\sigma(X))) \\cong \\mathrm{PH}_*(\\check{C}^{d_{\\mathrm{st}}}_\\bullet(\\sigma(T(X))))$.\n\n**Test:** Generate random point clouds on $S^2$. Apply random Möbius transformations (generated as compositions of inversions). Compare persistence diagrams before and after. Since Möbius transformations preserve geodesic circles (though not geodesic distances), the persistence diagrams should be invariant when using the exact transported metric.\n\n**Disproof protocol:** Compute persistence diagrams for $X$ and $T(X)$ for multiple Möbius transformations. If any bottleneck dist",
+      "source_exp_id": "47aaf4e4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/47aaf4e4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:06:54.680682+00:00"
+    },
+    {
+      "id": "fd_0221",
+      "title": "Conjecture 5: Protein Orientation Separation via Weighted Stereographic Persiste",
+      "description": "**Precise statement:** For molecular orientation data on $S^2$ (e.g., bond angles, dihedral angle distributions), weighted stereographic persistence separates conformational classes (e.g., alpha-helix vs beta-sheet orientational signatures) with higher classification accuracy than either (a) naive Euclidean persistence on stereographic coordinates, or (b) persistence computed using chordal distance in the ambient $\\mathbb{R}^3$.\n\n**Test:** Generate synthetic orientation distributions on $S^2$ mimicking two conformational classes: (A) points clustered near a great circle (modeling alpha-helix backbone angles), (B) points clustered near two antipodal caps (modeling beta-sheet angles). For each distribution, compute: (i) spherical geodesic Rips persistence, (ii) weighted stereographic persist",
+      "source_exp_id": "47aaf4e4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/47aaf4e4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Topology",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T09:06:54.687692+00:00"
     }
   ],
   "pruned": [
