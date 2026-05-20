@@ -41,6 +41,9 @@ DOMAIN_DIRS = [
     "Pythagorean", "Shared", "Speculative", "Tropical",
 ]
 
+# The FINAL subdirectory contains vetted, high-quality catalog files
+FINAL_DIR = "FINAL"
+
 # Directories to skip during scan
 SKIP_DIRS = {
     "ResearchOutput", "Tools", ".lake", "lake-packages", "build",
@@ -428,6 +431,23 @@ class CatalogAnalyzer:
         except Exception:
             return False
 
+    def is_final_file(self, relative_path: str) -> bool:
+        """Check if a file is in the FINAL (vetted, high-quality) catalog directory."""
+        return relative_path.startswith(FINAL_DIR + "/") or relative_path.startswith(FINAL_DIR + "\\")
+
+    def get_final_files(self, domain: str = "") -> List[CatalogFileSummary]:
+        """Get all vetted FINAL catalog files, optionally filtered by domain."""
+        if self._summaries is None:
+            self.scan()
+        results = []
+        for s in self._summaries:
+            if not self.is_final_file(s.relative_path):
+                continue
+            if domain and s.domain != domain:
+                continue
+            results.append(s)
+        return results
+
     def collect_future_directions(self, limit: int = 10) -> str:
         """Collect Aristotle's FUTURE_DIRECTIONS reports from previous cycles.
 
@@ -651,12 +671,14 @@ class CatalogAnalyzer:
         return False
 
     def _infer_domain(self, rel_path: Path) -> str:
-        """Infer domain from the first directory component."""
+        """Infer domain from the first directory component (skipping FINAL if present)."""
         parts = rel_path.parts
-        if len(parts) > 1:
-            first_dir = parts[0]
-            if first_dir in DOMAIN_DIRS:
-                return first_dir
+        # Skip FINAL prefix: FINAL/Domain/File.lean -> Domain
+        start = 1 if parts and parts[0] == FINAL_DIR else 0
+        if len(parts) > start + 1:
+            domain_dir = parts[start]
+            if domain_dir in DOMAIN_DIRS:
+                return domain_dir
         return "Unknown"
 
     def detect_cross_domain_bridges(self) -> List[Dict]:

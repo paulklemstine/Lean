@@ -87,10 +87,13 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
 
     6. BUILD ON VERIFIED RESULTS AS LAUNCH PADS, NOT TREADMILLS: The catalog's
        ~48,000 declarations are not chores to extend — they are launch pads for
-       entirely new mathematical territory. Use tropical robustness as a foundation
-       for tropical information theory. Use Berggren factoring as a basis for
-       quantum number theory. Use EML closure as a doorway to universal approximation
-       in non-Archimedean analysis.
+       entirely new mathematical territory. The best results are in Catalog/FINAL/
+       — these are vetted, high-quality files that have passed quality review.
+       Use tropical robustness as a foundation for tropical information theory.
+       Use Berggren factoring as a basis for quantum number theory. Use EML closure
+       as a doorway to universal approximation in non-Archimedean analysis.
+       When referencing catalog files, prefer FINAL/ paths — they represent the
+       strongest foundations to build on.
 
     7. AVOID REPETITION AND INCREMENTALISM: If a concept is a small extension of
        something already in the catalog or inflight, skip it. We want NEW theorems,
@@ -134,7 +137,8 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
         It is a living ecosystem. Analyze it for: under-explored domains (many
         declarations but few deep theorems), unexpected structural similarities
         across domains, and "orphan" results that could be the seed of entirely
-        new research programs.
+        new research programs. The vetted, high-quality files live in Catalog/FINAL/
+        — prioritize these as references and building blocks.
 
     ## Dynamic Research Context
 
@@ -158,7 +162,8 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
     D. APPLICATIONS PIPELINE: Would this enable real-world applications (crypto,
        ML, quantum computing, physics)?
     E. CATALOG LEVERAGE: Does this exploit under-used catalog infrastructure
-       (many declarations but few deep theorems)?
+       (many declarations but few deep theorems)? Prefer building on
+       Catalog/FINAL/ files — these are vetted, high-quality results.
 
     Score each direction 0-1 on each criterion. The composite breakthrough score is:
       0.3*A + 0.25*B + 0.2*C + 0.15*D + 0.1*E
@@ -207,7 +212,8 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
        explain HOW to build on them. "Building on certified_radius_inequality from
        TropicalDegreeRobustness.lean, which gives r* = margin/(2Kd), extend the
        proof to multi-class by replacing the binary margin with the tropical
-       hypersurface arrangement."
+       hypersurface arrangement." Prefer FINAL/ catalog paths — they are vetted
+       and high-quality.
 
     4. EXPLAIN REVOLUTIONARY SIGNIFICANCE: Every brief must explain what field this
        opens, what applications it enables, and what follow-on work it makes possible.
@@ -1045,7 +1051,8 @@ class PiAgentClient:
             Be SPECIFIC and MATHEMATICAL. Don't say "explore X" — propose a
             falsifiable hypothesis: "Conjecture: X holds Y. Test: if Z then the
             conjecture fails. Impact: this would open field W." Reference specific
-            catalog theorems by name. Do real science — hypotheses that can fail.
+            catalog theorems by name, preferring files from Catalog/FINAL/ (vetted,
+            high-quality results). Do real science — hypotheses that can fail.
 
             Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "Conjecture: [precise falsifiable statement]. Test: [what confirms/refutes]. Impact: [what this enables]", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
         """)
@@ -1752,7 +1759,7 @@ class PiAgentClient:
         # Add catalog leverage
         if concept.catalog_references:
             refs_list = ", ".join(concept.catalog_references[:5])
-            assignment += f"\n\n**CATALOG INFRASTRUCTURE**: Build directly on: {refs_list}"
+            assignment += f"\n\n**CATALOG INFRASTRUCTURE**: Build directly on: {refs_list}\n(Files from Catalog/FINAL/ are vetted, high-quality — prioritize these as foundations.)"
 
         if concept.key_references:
             key_refs = ", ".join(str(r) for r in concept.key_references[:3])
@@ -1793,19 +1800,35 @@ class PiAgentClient:
                 max_theorems=15,
             )
 
-        # Build reference section (limited to 5 most relevant files, preferring deep proofs)
+        # Build reference section (limited to 5 most relevant files, preferring FINAL and deep proofs)
         ref_section = ""
         if refs and self.catalog_analyzer:
-            # Prefer files with deep proofs (induction, rcases, etc.) over native_decide-heavy files
-            prioritized_refs = []
-            shallow_refs = []
+            # Priority: FINAL+deep > FINAL > deep > shallow
+            final_deep = []
+            final_only = []
+            deep_only = []
+            shallow = []
             for ref in refs:
-                if self.catalog_analyzer.is_deep_proof(ref):
-                    prioritized_refs.append(ref)
+                is_final = self.catalog_analyzer.is_final_file(ref)
+                is_deep = self.catalog_analyzer.is_deep_proof(ref)
+                if is_final and is_deep:
+                    final_deep.append(ref)
+                elif is_final:
+                    final_only.append(ref)
+                elif is_deep:
+                    deep_only.append(ref)
                 else:
-                    shallow_refs.append(ref)
-            # Use deep-proof refs first, then shallow refs as fallback
-            selected_refs = prioritized_refs[:5] if prioritized_refs else shallow_refs[:3]
+                    shallow.append(ref)
+            selected_refs = (final_deep[:5] or final_only[:4] or deep_only[:3] or shallow[:3])
+            # If we have fewer than 3 FINAL refs, supplement with domain FINAL files
+            if len([r for r in selected_refs if self.catalog_analyzer.is_final_file(r)]) < 3 and self.catalog_analyzer:
+                domain = concept.domain or ""
+                final_files = self.catalog_analyzer.get_final_files(domain)
+                for ff in final_files:
+                    if ff.relative_path not in selected_refs:
+                        selected_refs.append(ff.relative_path)
+                    if len(selected_refs) >= 5:
+                        break
             ref_section = self.catalog_analyzer.build_catalog_context_string(selected_refs)
         elif catalog_context:
             ref_section = catalog_context[:3000]
@@ -1858,10 +1881,13 @@ class PiAgentClient:
         if theorem_context:
             theorem_section = f"\n### Previously Proved Theorems\n{theorem_context[:1000]}\n"
 
-        # Catalog references
+        # Catalog references — prioritize FINAL (vetted, high-quality) files
         catalog_section = ""
         if ref_section:
-            catalog_section = f"\n### Catalog Reference Files\n{ref_section}\n"
+            final_note = ""
+            if self.catalog_analyzer and any(self.catalog_analyzer.is_final_file(r) for r in selected_refs if isinstance(r, str)):
+                final_note = "\n(File paths starting with FINAL/ are vetted, high-quality catalog entries.)\n"
+            catalog_section = f"\n### Catalog Reference Files (Catalog/FINAL/ = vetted, high-quality)\n{final_note}{ref_section}\n"
         else:
             catalog_section = "\nNo specific files referenced. Use Mathlib and general knowledge.\n"
 
@@ -1887,7 +1913,7 @@ class PiAgentClient:
 
             You are Aristotle. Pursue this research direction deeply and originally.
             Discover what matters. Prove what you can. Define what needs defining.
-            Build on the catalog theorems referenced above.
+            Build on the catalog theorems referenced above (FINAL/ entries are vetted, high-quality — prioritize these).
 
             Use concrete types (Nat, Real, Finset, Matrix). Avoid trivial tautologies.
             If a direct proof fails, try the contrapositive, a constructive witness,
