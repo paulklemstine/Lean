@@ -50,7 +50,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "4f81c9a2",
       "timestamp": "2026-05-20T00:22:10.972518+00:00"
     },
@@ -956,7 +956,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.002510+00:00"
     },
@@ -1030,7 +1030,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.65,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.005953+00:00"
     },
@@ -1123,7 +1123,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.010435+00:00"
     },
@@ -1161,7 +1161,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.65,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.012667+00:00"
     },
@@ -1351,7 +1351,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.027291+00:00"
     },
@@ -1408,7 +1408,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.031235+00:00"
     },
@@ -1446,7 +1446,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.034403+00:00"
     },
@@ -1465,7 +1465,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.036060+00:00"
     },
@@ -1522,7 +1522,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.69,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.042677+00:00"
     },
@@ -3164,7 +3164,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T05:07:22.814850+00:00"
     },
@@ -3272,6 +3272,24 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T05:07:35.464824+00:00"
+    },
+    {
+      "id": "fd_0174",
+      "title": "Universality of Homological Stability Windows in Neural Tangent Complexes",
+      "description": "Conjecture: For fully-connected ReLU networks of depth L with width n trained by gradient flow on a fixed finite dataset in the lazy-training regime, there exists a simplicial complex K_t built functorially from neuron activation sign patterns over the dataset such that, as n -> infinity, the persistent homology barcode of K_t over any finite training-time window [0,T] converges in probability to a deterministic limit depending only on depth, initialization variance, and the empirical kernel spectrum of the dataset, not on microscopic parameter initialization. Test: Define K_t explicitly from co-activation/sign-pattern incidence, simulate ensembles across widths and random initializations, and check whether bottleneck distances between barcodes concentrate to 0 around a predicted limit while changing architecture class or kernel spectrum changes the limit. Refutation occurs if barcode laws remain initialization-sensitive at large width or fail to stabilize across widths. Impact: This would create a new topological universality class for deep learning dynamics, linking random matrix limits, persistent homology, and training theory, and could yield architecture-level invariants for optimization and generalization.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Topological Data Analysis",
+        "Machine Learning Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T05:08:16.088949+00:00"
     }
   ],
   "pruned": [

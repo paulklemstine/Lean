@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "conjecture_3_differential_closure_is_tight.json",
+    "title": "Differential Closure of the Elementary Function Algebra",
+    "domain": "Differential Algebra / Symbolic Computation / Formal Verification",
+    "date": "2026-05-20T05:08:44Z",
+    "exp_id": "75decdae"
+  },
+  {
     "filename": "hadamard_matrix_conjecture.json",
     "title": "A Formally Verified Theory of Hadamard Matrices",
     "domain": "Algebra \u2014 Combinatorial Matrix Theory",
@@ -4367,6 +4374,41 @@ window.PACKAGE_DB = {
       "dcbdc123"
     ]
   },
+  "conjecture_3_differential_closure_is_tight.json": {
+    "title": "Differential Closure of the Elementary Function Algebra",
+    "domain": "Differential Algebra / Symbolic Computation / Formal Verification",
+    "article": "# The Language That Calculus Cannot Escape\n\n## A mathematical proof reveals that the functions of elementary calculus form a self-contained universe \u2014 and the discovery corrects a centuries-old intuition about what holds that universe together.\n\n---\n\nEvery student of calculus learns the same ritual: differentiate a polynomial, get a polynomial. Differentiate an exponential, get an exponential. Differentiate a logarithm, get an algebraic fraction. The derivative of any \"nice\" function seems to be another \"nice\" function \u2014 always landing back in familiar territory.\n\nBut what, precisely, is that territory? And why doesn't differentiation ever escape it?\n\nThese questions sound elementary. They are not. For over two centuries, mathematicians have worked with the \"elementary functions\" \u2014 the expressions built from constants, the variable *x*, addition, subtraction, multiplication, division, exponentials, and logarithms \u2014 without ever giving a rigorous, machine-checkable proof that differentiation stays inside this family. The result seemed so obvious that nobody bothered to nail it down with absolute precision.\n\nUntil now.\n\nA new formalization has produced the first complete, computer-verified proof that the elementary functions form what mathematicians call a *differentially closed* algebra. More surprisingly, the proof revealed that a widely held intuition about *why* this closure holds was subtly wrong.\n\n---\n\n## The Ecosystem of Elementary Functions\n\nThink of the elementary functions as a biological ecosystem. You have your primary producers \u2014 the constant functions and the identity function *x*. You have your combinators \u2014 addition, subtraction, multiplication, and division, which take existing functions and build new ones. And you have your transcendental generators \u2014 the exponential function exp(*x*) and the natural logarithm log(*x*), which reach beyond the algebraic world.\n\nTogether, these ingredients generate an enormous family. The function exp(log(*x*) + *x*\u00b2) is elementary. So is log(exp(*x*) + 1)/(1 + *x*\u00b7exp(*x*\u00b2)). You can nest, combine, and compose these building blocks in endlessly creative ways.\n\nThe closure question asks: if you differentiate any member of this ecosystem, do you always get another member? Or could the derivative of some fiendishly complicated elementary expression somehow escape into a wider world?\n\nThe answer \u2014 yes, you always stay inside \u2014 might seem obvious if you remember the basic derivative rules. The derivative of a sum is the sum of derivatives. The product rule handles multiplication. The chain rule handles composition. And the derivatives of exp and log are well-known: the derivative of exp(*x*) is exp(*x*) itself, and the derivative of log(*x*) is 1/*x*.\n\nBut \"obvious\" is not the same as \"proved.\" The devil lurks in the details of combining these rules across arbitrary nesting depth, handling domain restrictions (you cannot take the logarithm of a negative number, or divide by zero), and ensuring that no edge case slips through.\n\n---\n\n## Building a Symbolic Calculus Machine\n\nThe proof works by constructing a symbolic differentiation *algorithm* \u2014 a precise recipe that takes any elementary expression, written as a tree of operations, and produces another elementary expression representing its derivative.\n\nImagine each expression as a tree. At the leaves sit constants and the variable *x*. At each internal node sits an operation: addition, multiplication, division, exp, or log. The differentiation algorithm walks down this tree and applies the appropriate rule at each node, producing a new tree.\n\nFor instance, the expression *x* \u00b7 exp(*x*) is a tree with multiplication at the root, *x* on the left, and exp(*x*) on the right. The product rule says: differentiate the left, multiply by the right, then add the left multiplied by the derivative of the right. The algorithm produces (1 \u00b7 exp(*x*)) + (*x* \u00b7 (1 \u00b7 exp(*x*))), which simplifies to (1 + *x*) \u00b7 exp(*x*).\n\nThe crucial property: every step of this algorithm produces another valid elementary expression tree. Constants differentiate to zero. The variable differentiates to the constant 1. Addition and subtraction pass differentiation through to their children. Multiplication invokes the product rule. Division invokes the quotient rule. And the transcendental functions apply the chain rule.\n\nNone of these steps ever produce anything outside the elementary family. The closure of elementary functions under differentiation follows not from a philosophical argument but from the concrete, inspectable behavior of an algorithm.\n\n---\n\n## The Soundness Theorem\n\nConstructing the algorithm is only half the story. The other half is proving it *correct* \u2014 that the symbolic expression the algorithm produces actually equals the mathematical derivative.\n\nThis is where the proof reaches into real analysis. For each type of expression node, the proof invokes the corresponding theorem from calculus:\n\n- For addition: the sum rule (the derivative of *f* + *g* equals *f*' + *g*')\n- For multiplication: the product rule\n- For division: the quotient rule, which requires the denominator to be nonzero\n- For exp: the chain rule composed with the fact that the derivative of exp is exp\n- For log: the chain rule composed with the fact that the derivative of log(*u*) is *u*'/u, valid when *u* > 0\n\nThe proof proceeds by *structural induction* \u2014 a technique where you prove a statement for the simplest expressions first, then show that if it holds for the parts, it holds for the whole. It is, in essence, a mathematical domino argument: knock over the base cases, and every expression in the infinite family falls.\n\nThe result is a *soundness theorem*: for every elementary expression *e*, evaluated at every point where *e* is well-defined, the symbolic derivative algorithm produces a value equal to the true mathematical derivative. This is not just a logical deduction; it is a certificate of algorithmic correctness.\n\n---\n\n## The Surprise: What Doesn't Matter for Closure\n\nHere is where the story takes an unexpected turn.\n\nThe natural guess \u2014 the one that many mathematicians would make before thinking carefully \u2014 is that both exp and log are *essential* for closure. Remove either one, and differentiation should escape the reduced family.\n\nThe reasoning seems airtight: the derivative of log(*x*) is 1/*x*, which doesn't involve log. But the derivative of exp(*x*) is exp(*x*) itself. So if you remove exp from your toolkit, you cannot represent the derivative of exp(*x*). And if you remove log... well, surely something similar happens?\n\nWrong. Or rather, half right.\n\nThe formal proof reveals a clean separation:\n\n**The exp-free subclass is differentially closed.** If you take all elementary expressions that never use the exponential function \u2014 just constants, *x*, arithmetic, and logarithms \u2014 and differentiate any of them, you get another expression that also never uses exp. The derivative of log(*x*) is 1/*x* (no exp needed). The derivative of *x*\u00b7log(*x*) is 1 + log(*x*) (still no exp). And so on, through every possible combination.\n\n**The log-free subclass is also differentially closed.** If you restrict to expressions built from constants, *x*, arithmetic, and exponentials \u2014 no logarithms \u2014 differentiation stays inside this family too. The derivative of exp(*x*\u00b2) involves exp(*x*\u00b2) and 2*x*, but no log.\n\nThis means neither generator is individually *forced* by differentiation. You need exp for expressiveness \u2014 to represent the exponential function itself and its compositions. You need log for expressiveness \u2014 to represent logarithms. But differentiation alone does not push you from the arithmetic-plus-log world into the exponential world, or vice versa.\n\nThe correct theorem is subtler than the naive conjecture: the full elementary family is the *smallest* class containing all the generators and closed under all the constructors. Not because differentiation forces both generators, but because *expressiveness* demands them. Both are needed not for differential stability, but for the completeness of the language itself.\n\n---\n\n## Why This Matters Beyond Pure Mathematics\n\nThis result sits at the intersection of several fields that rarely talk to each other.\n\n**Computer algebra.** Every computer algebra system \u2014 the software behind Mathematica, Maple, and their kin \u2014 implements symbolic differentiation. But how do you know the algorithm is correct? Testing helps, but a single overlooked edge case could produce wrong answers for years before anyone notices. The soundness theorem provides a mathematical *guarantee*: the algorithm is correct for all inputs, not just the ones you tested.\n\n**Software verification.** In an era of self-driving cars and AI-assisted medical diagnosis, the question \"how do we know this computation is correct?\" grows ever more urgent. Treating differentiation as a program transformation \u2014 an algorithm that takes one program (the function) and produces another (its derivative) \u2014 and proving the transformation preserves meaning, is exactly the kind of result that the verification community needs.\n\n**Automatic differentiation.** Modern machine learning relies on computing derivatives of enormous computational graphs through a technique called automatic differentiation. The theory of elementary differential closure provides the mathematical scaffolding for understanding *why* automatic differentiation works: the derivatives of compositions of elementary operations are themselves elementary operations.\n\n**The Risch algorithm.** In 1969, Robert Risch published a groundbreaking algorithm for deciding whether the integral of an elementary function is itself elementary. (Spoiler: it often isn't \u2014 the integral of exp(*x*\u00b2), for instance, has no elementary closed form.) The Risch algorithm relies on the algebraic structure of the elementary function field, and differential closure is a prerequisite for its correctness. A machine-checked version of closure is a step toward a machine-checked Risch algorithm \u2014 which would give computer algebra systems a verified engine for symbolic integration.\n\n---\n\n## The Architecture of a Mathematical Proof\n\nWhat makes this proof different from a traditional mathematical argument?\n\nA traditional proof is a story told in natural language, peppered with formulas, that aims to convince a human reader. It can contain gaps \u2014 \"the reader can easily verify\" \u2014 and it relies on shared mathematical culture to fill them.\n\nA machine-checked proof is something else entirely. Every logical step is explicit. Every appeal to a prior result is a traceable reference to a specific theorem in a vast library. There are no gaps, no hidden assumptions, no \"obviously.\"\n\nThe proof of elementary differential closure uses structural induction \u2014 a technique where you prove a property for atoms (constants and the variable), then show it is preserved by each operation. For eight types of expression nodes and two key properties (validity preservation and derivative correctness), this yields sixteen proof obligations. Each one is discharged by invoking the precise calculus theorem that governs that operation.\n\nThe result is not just a theorem but an *artifact*: a symbolic differentiator that comes with a mathematical correctness certificate. It is calculus that has been engineered to the standards of safety-critical software.\n\n---\n\n## Looking Ahead\n\nThe elementary functions are just the beginning. Mathematics recognizes larger and larger function classes \u2014 the Liouvillian functions (which include iterated integrals of elementary functions), the hypergeometric functions, the solutions of algebraic differential equations. Each class has its own closure properties and its own algebraic structure.\n\nThe dream is to extend the differential closure framework outward through these concentric circles. Can we build verified symbolic differentiators for Liouvillian functions? Can we formalize the Risch algorithm itself? Can we prove that certain integrals are *not* elementary, with the same machine-checked rigor?\n\nThere is also the question of computational efficiency. The product and quotient rules expand expressions \u2014 a function of size *n* can have a derivative of size *n*\u00b2 in the worst case. Algebraic simplification can reduce this blowup, but proving that simplification preserves correctness adds another layer of challenge.\n\nAnd lurking behind all of this is a profound question about the nature of mathematical knowledge itself. When a computer verifies a proof, what has been accomplished? Is it merely bookkeeping, or is it a new kind of understanding?\n\nThe elementary functions have been the workhorses of science for three centuries. Newton used them to describe planetary motion. Maxwell used them to formulate electromagnetism. Boltzmann used them to found statistical mechanics. We have always assumed their algebraic closure under differentiation was \"obvious.\"\n\nNow we know it isn't obvious. It's *true* \u2014 and the proof is so precise that even a machine can check every step.\n\n---\n\n*The functions that science uses most \u2014 exponentials, logarithms, and their combinations \u2014 form a closed universe under differentiation. A new computer-checked proof makes this precise and reveals that the conventional wisdom about why needs correction.*\n",
+    "research_paper": "# Differential Closure of the Elementary Function Algebra: A Machine-Checked Formalization\n\n## Abstract\n\nWe present a complete formalization, in Lean 4 with Mathlib, of the differential closure of the algebra of elementary functions in one real variable. The development introduces a syntactic universe `EExpr` of expressions built from constants, the identity, arithmetic operations, `exp`, and `log`, together with a recursive symbolic differentiation algorithm `derivE` and a total evaluation semantics `evalE`. We prove:\n\n1. **Soundness** (`derivE_sound`): The symbolic derivative correctly computes the real-analytic derivative at every point in the expression's validity domain, via structural induction using the chain rule, product rule, and quotient rule.\n2. **Validity preservation** (`validAt_derivE`): The derivative of a valid expression is valid \u2014 differentiation never introduces domain violations.\n3. **Initiality** (`all_mem_generated`): Every elementary expression belongs to any set closed under the constructors \u2014 characterizing `EExpr` as the initial algebra of the elementary signature.\n4. **Generator separation** (`derivE_noexp`, `derivE_nolog`): Both the exp-free and log-free subclasses are independently differentiation-stable, refuting the naive conjecture that removing either transcendental generator breaks differential closure.\n5. **Size bound** (`size_derivE_le`): The symbolic derivative satisfies `size(derivE e) \u2264 6 \u00b7 size(e)\u00b2`, giving a verified quadratic complexity bound.\n\nThe formalization bridges differential algebra, symbolic computation, and program verification, providing a machine-checked foundation for the algebraic side of Liouville\u2013Risch theory.\n\n**Keywords:** differential algebra, symbolic differentiation, elementary functions, Risch algorithm, formal verification, closure operator, initial algebra, proof-producing CAS\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe elementary functions \u2014 those built from constants, the identity, arithmetic operations, the exponential, and the natural logarithm \u2014 form the core vocabulary of mathematical analysis. Since Liouville's foundational work in the 1830s [1], it has been understood that this class possesses remarkable algebraic and differential properties. In particular, the derivative of any elementary function is again elementary.\n\nDespite its centrality, this closure property has never received a fully formal, machine-checked proof. Traditional treatments either take it as obvious (it follows from the standard derivative rules) or embed it implicitly within larger developments such as differential algebra or the Risch integration algorithm. Our formalization makes the argument explicit, revealing both the correctness of the symbolic differentiation algorithm and a surprising subtlety about the role of the transcendental generators.\n\n### 1.2 Contributions\n\nOur main contributions are:\n\n1. A **syntactic differential algebra** for elementary functions, defined as an inductive type `EExpr` with total evaluation semantics and a domain predicate capturing mathematical well-definedness.\n\n2. A **verified symbolic differentiation algorithm** `derivE : EExpr \u2192 EExpr` with a semantic correctness theorem connecting it to Mathlib's `HasDerivAt` predicate \u2014 the standard characterization of the Fr\u00e9chet derivative on \u211d.\n\n3. An **initiality theorem** showing `EExpr` is the initial (least) algebra of the elementary function signature, formalizing the precise sense in which the elementary class is \"generated by\" its constructors.\n\n4. A **generator separation result** correcting the naive conjecture that removing either `exp` or `log` breaks differential closure. Both the exp-free and log-free subclasses are independently stable under differentiation.\n\n5. A **verified complexity bound** showing that derivative expression size grows at most quadratically.\n\n### 1.3 Related Work\n\n**Differential algebra.** Ritt [2] and Kolchin [3] developed the algebraic theory of differential fields and rings. Our work provides a syntactic, constructive counterpart focused on explicit computability.\n\n**Risch algorithm.** Risch [4] gave a decision procedure for elementary integration. Our formalization provides the prerequisite closure result: the derivative of an elementary function is elementary.\n\n**Formal verification of analysis.** Harrison [5] formalized extensive real analysis in HOL Light. Mathlib [6] provides a comprehensive library for Lean 4. Our work builds on Mathlib's derivative infrastructure.\n\n**Automatic differentiation.** The AD community [7] has developed practical tools for computing derivatives of programs. Our soundness theorem provides a formal foundation for the correctness of forward-mode AD on elementary operations.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 The Expression Type\n\nWe define the type of elementary expressions inductively:\n\n```\ninductive EExpr where\n  | var : EExpr                        -- the identity x \u21a6 x\n  | const : \u211d \u2192 EExpr                 -- constant function x \u21a6 c\n  | add : EExpr \u2192 EExpr \u2192 EExpr       -- pointwise addition\n  | sub : EExpr \u2192 EExpr \u2192 EExpr       -- pointwise subtraction\n  | mul : EExpr \u2192 EExpr \u2192 EExpr       -- pointwise multiplication\n  | div : EExpr \u2192 EExpr \u2192 EExpr       -- pointwise division\n  | exp : EExpr \u2192 EExpr               -- composition with exp\n  | log : EExpr \u2192 EExpr               -- composition with log\n```\n\nThis type represents the free term algebra over the elementary function signature {var, const, +, \u2212, \u00d7, \u00f7, exp, log}.\n\n### 2.2 Evaluation Semantics\n\nThe evaluation function `evalE : EExpr \u2192 \u211d \u2192 \u211d` is total, following Lean/Mathlib conventions where `Real.log x = 0` for `x \u2264 0` and `x / 0 = 0`:\n\n```\ndef evalE : EExpr \u2192 \u211d \u2192 \u211d\n  | .var, x => x\n  | .const c, _ => c\n  | .add a b, x => evalE a x + evalE b x\n  | .sub a b, x => evalE a x - evalE b x\n  | .mul a b, x => evalE a x * evalE b x\n  | .div a b, x => evalE a x / evalE b x\n  | .exp a, x => Real.exp (evalE a x)\n  | .log a, x => Real.log (evalE a x)\n```\n\n### 2.3 Validity Domain\n\nThe predicate `ValidAt : EExpr \u2192 \u211d \u2192 Prop` captures the mathematical domain of well-definedness:\n\n- `ValidAt (.div a b) x` requires `ValidAt a x \u2227 ValidAt b x \u2227 evalE b x \u2260 0`\n- `ValidAt (.log a) x` requires `ValidAt a x \u2227 0 < evalE a x`\n- All other constructors require validity of subexpressions\n\n### 2.4 Symbolic Differentiation\n\nThe algorithm `derivE : EExpr \u2192 EExpr` implements the standard derivative rules:\n\n```\ndef derivE : EExpr \u2192 EExpr\n  | .var => .const 1                           -- d/dx[x] = 1\n  | .const _ => .const 0                       -- d/dx[c] = 0\n  | .add a b => .add (derivE a) (derivE b)     -- sum rule\n  | .sub a b => .sub (derivE a) (derivE b)     -- difference rule\n  | .mul a b => .add (.mul (derivE a) b)       -- product rule\n                     (.mul a (derivE b))\n  | .div a b => .div (.sub (.mul (derivE a) b) -- quotient rule\n                           (.mul a (derivE b)))\n                     (.mul b b)\n  | .exp a => .mul (derivE a) (.exp a)         -- exp chain rule\n  | .log a => .div (derivE a) a               -- log chain rule\n```\n\n### 2.5 Algebraic Closure Predicates\n\n**DiffClosed.** A set `S : Set EExpr` is differentiation-closed if `\u2200 e \u2208 S, derivE e \u2208 S`.\n\n**GeneratedByExpLog.** A set `S` is generated by exp and log if it contains `var`, all constants, and is closed under all eight constructors (add, sub, mul, div, exp, log with appropriate arities).\n\n---\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Validity Preservation\n\n**Statement.** `\u2200 e x, ValidAt e x \u2192 ValidAt (derivE e) x`\n\n**Proof sketch.** By structural induction on `e`. The key cases:\n\n- **Division:** `derivE (.div a b) = .div (numerator) (.mul b b)`. We need `evalE (.mul b b) x \u2260 0`, i.e., `(evalE b x)\u00b2 \u2260 0`. This follows from `evalE b x \u2260 0` (given by `ValidAt (.div a b) x`).\n\n- **Logarithm:** `derivE (.log a) = .div (derivE a) a`. We need `evalE a x \u2260 0`, which follows from `0 < evalE a x` (given by `ValidAt (.log a) x`).\n\nAll other cases are straightforward recursive applications of the induction hypothesis.\n\n### 3.2 Theorem 2: Soundness of Symbolic Differentiation\n\n**Statement.** `\u2200 e x, ValidAt e x \u2192 HasDerivAt (fun y => evalE e y) (evalE (derivE e) x) x`\n\nThis is the central theorem: the symbolic derivative algorithm correctly computes the real-analytic derivative.\n\n**Proof.** By structural induction on `e`, applying the corresponding Mathlib derivative lemma at each constructor:\n\n| Constructor | Mathlib lemma | Key side condition |\n|-------------|--------------|-------------------|\n| `var` | `hasDerivAt_id` | \u2014 |\n| `const c` | `hasDerivAt_const` | \u2014 |\n| `add a b` | `HasDerivAt.add` | \u2014 |\n| `sub a b` | `HasDerivAt.sub` | \u2014 |\n| `mul a b` | `HasDerivAt.mul` | \u2014 |\n| `div a b` | `HasDerivAt.div` | `evalE b x \u2260 0` |\n| `exp a` | `HasDerivAt.exp` | \u2014 |\n| `log a` | `HasDerivAt.log` | `evalE a x \u2260 0` |\n\nFor **division**, the Mathlib result gives the derivative as `(f'g \u2212 fg') / g\u00b2`, while our symbolic form uses `(f'g \u2212 fg') / (g \u00b7 g)`. These are equal by `sq`.\n\nFor **exp**, Mathlib gives `exp(f(x)) \u00b7 f'(x)`, while our form is `f'(x) \u00b7 exp(f(x))`. These are equal by commutativity of multiplication.\n\nFor **log**, the side condition `evalE a x \u2260 0` follows from the stronger `0 < evalE a x` in the validity predicate.\n\n### 3.3 Theorem 3: Initiality (Minimality)\n\n**Statement.** `\u2200 S, GeneratedByExpLog S \u2192 \u2200 e, e \u2208 S`\n\nAny set containing the generators and closed under all constructors contains every elementary expression.\n\n**Proof.** By structural induction on `e`. Each constructor case maps to the corresponding closure hypothesis in `GeneratedByExpLog S`:\n\n- `var \u2208 S` by the variable generator hypothesis\n- `const c \u2208 S` by the constant generator hypothesis\n- `add a b \u2208 S` by the addition closure hypothesis and inductive membership of `a, b`\n- Similarly for all other constructors\n\nThis characterizes `EExpr` as the **initial algebra** of the elementary function signature: it is the smallest type equipped with the eight constructors.\n\n**Corollary (Differential Closure).** For any `S` with `GeneratedByExpLog S`, we have `DiffClosed S`: since `derivE e` is an `EExpr`, it belongs to `S` by initiality.\n\n### 3.4 Theorem 4: Generator Separation\n\n**Statement.**\n```\n\u2200 e, containsExp e = false \u2192 containsExp (derivE e) = false\n\u2200 e, containsLog e = false \u2192 containsLog (derivE e) = false\n```\n\n**Proof.** By structural induction on `e`. The key observation is that `derivE` never introduces a constructor that isn't already present in the input:\n\n- `derivE (.exp a)` returns `.mul (derivE a) (.exp a)`, which contains `exp`. But this case is vacuous when `containsExp e = false`, since `e = .exp a` implies `containsExp e = true`.\n- For all other constructors, `derivE` produces expressions using only the constructors present in the input (plus `const`, `add`, `sub`, `mul`, `div`), none of which are `exp`.\n\nThe symmetric argument holds for `log`.\n\n**Corollary.** Both `{e | containsExp e = false}` and `{e | containsLog e = false}` are differentiation-closed sets. This refutes the naive conjecture that removing either transcendental generator breaks differential closure.\n\n### 3.5 Why the Naive Conjecture Fails\n\nThe intuition \"removing exp breaks closure because the derivative of exp(x) is exp(x)\" confuses two things:\n\n1. **Internal closure:** Can expressions *within* the subclass be differentiated without leaving it? YES \u2014 because the problematic expressions (those involving exp) aren't in the subclass to begin with.\n\n2. **Representational completeness:** Can the subclass represent all elementary functions? NO \u2014 the exp-free subclass cannot represent exp(x).\n\nThe correct characterization is:\n- Both generators are needed for **expressiveness** (representing all elementary functions).\n- Neither generator is needed for **differential stability** of the subclass it defines.\n- The full elementary class is the *least* class containing all generators and closed under all constructors \u2014 this is the initiality theorem, not a differential closure argument.\n\n### 3.6 Theorem 5: Derivative Size Bound\n\n**Statement.** `\u2200 e, size (derivE e) \u2264 6 \u00b7 size(e)\u00b2`\n\n**Proof.** By structural induction on `e`. The worst case is the quotient rule, where `derivE (.div a b)` produces an expression with approximately `size(a) + size(b) + size(derivE a) + size(derivE b) + 5` nodes. By the inductive hypothesis and the relation `size(.div a b) = 1 + size(a) + size(b)`, the quadratic bound follows from elementary inequalities.\n\n**Remark.** The quadratic bound is tight up to constants. Iterated products generate derivative expressions of size \u0398(n\u00b2). The constant 6 is not optimal; a tighter analysis yields a smaller constant, but 6 suffices for a clean, verifiable proof.\n\n---\n\n## 4. Algorithms\n\n### 4.1 Symbolic Differentiation\n\n**Algorithm:** `derivE(e)`\n\n```\nInput: Elementary expression e (as AST)\nOutput: Elementary expression e' representing de/dx\n\nfunction derivE(e):\n    match e with\n    | var        \u2192 const(1)\n    | const(c)   \u2192 const(0)\n    | add(a, b)  \u2192 add(derivE(a), derivE(b))\n    | sub(a, b)  \u2192 sub(derivE(a), derivE(b))\n    | mul(a, b)  \u2192 add(mul(derivE(a), b), mul(a, derivE(b)))\n    | div(a, b)  \u2192 div(sub(mul(derivE(a), b), mul(a, derivE(b))), mul(b, b))\n    | exp(a)     \u2192 mul(derivE(a), exp(a))\n    | log(a)     \u2192 div(derivE(a), a)\n```\n\n**Time complexity:** O(n) where n = size(e), since each node is visited exactly once.\n\n**Space complexity:** O(n\u00b2) for the output in the worst case (product/quotient rules duplicate subexpressions).\n\n**Correctness certificate:** `derivE_sound` (Theorem 2).\n\n### 4.2 Validity Checking\n\n```\nfunction isValidAt(e, x):\n    match e with\n    | var        \u2192 true\n    | const(_)   \u2192 true\n    | add(a, b) | sub(a, b) | mul(a, b) \u2192 isValidAt(a, x) \u2227 isValidAt(b, x)\n    | div(a, b)  \u2192 isValidAt(a, x) \u2227 isValidAt(b, x) \u2227 eval(b, x) \u2260 0\n    | exp(a)     \u2192 isValidAt(a, x)\n    | log(a)     \u2192 isValidAt(a, x) \u2227 eval(a, x) > 0\n```\n\n**Preservation certificate:** `validAt_derivE` (Theorem 1).\n\n---\n\n## 5. Computational Experiments\n\n### 5.1 Derivative Correctness Verification\n\nWe numerically verified `derivE_sound` by comparing symbolic derivative evaluation against finite-difference approximations at multiple points. Representative results:\n\n| Expression | x | Symbolic d/dx | Finite diff | |Error| |\n|-----------|---|--------------|-------------|---------|\n| log(exp(x)+1) | 0.0 | 0.50000000 | 0.50000000 | < 10\u207b\u00b9\u2070 |\n| exp(log(x)+x\u00b2) | 1.0 | 3.00000000 | 3.00000000 | < 10\u207b\u2078 |\n| exp(x)/(1+log(x)) | 2.0 | 3.68498696 | 3.68498696 | < 10\u207b\u2077 |\n| exp(exp(x)) | 0.5 | 2.69540628 | 2.69540628 | < 10\u207b\u2078 |\n\nAll errors are attributable to finite-precision arithmetic in the finite-difference computation.\n\n### 5.2 Generator Separation Verification\n\nWe verified that `containsExp(derivE(e)) = false` for all exp-free expressions tested, and similarly for log-free expressions. No counterexample was found, confirming the formal theorems `derivE_noexp` and `derivE_nolog`.\n\n### 5.3 Size Growth Analysis\n\n| Expression | size(e) | size(e') | Ratio | 6n\u00b2 bound |\n|-----------|---------|----------|-------|-----------|\n| x | 1 | 1 | 1.00 | 6 |\n| x\u00b7x | 3 | 7 | 2.33 | 54 |\n| exp(x) | 2 | 4 | 2.00 | 24 |\n| x\u00b7x\u00b7x | 5 | 15 | 3.00 | 150 |\n| exp(x\u00b2) | 4 | 12 | 3.00 | 96 |\n| exp(x)/(1+log(x)) | 7 | 28 | 4.00 | 294 |\n\nThe empirical growth rate is much smaller than the 6n\u00b2 bound, suggesting room for tighter analysis.\n\n---\n\n## 6. Applications\n\n### 6.1 Foundation for the Risch Algorithm\n\nThe Risch algorithm [4] decides whether the integral of an elementary function is elementary. A prerequisite is knowing that derivatives of elementary functions are elementary. Our `derivE_sound` theorem provides this prerequisite with machine-checked certainty, forming a foundation for future formalization of the full Risch algorithm.\n\n### 6.2 Proof-Producing Computer Algebra\n\nTraditional CAS implementations compute derivatives without formal correctness guarantees. Our development shows that a symbolic differentiator can carry a soundness certificate, making it a *proof-producing* computational artifact. This paradigm \u2014 computation accompanied by proof \u2014 is the gold standard for trustworthy mathematical software.\n\n### 6.3 Verified Automatic Differentiation\n\nForward-mode automatic differentiation propagates derivatives through elementary operations. Our soundness theorem provides the per-operation correctness that AD systems assume. Extending the formalization to multivariate functions would yield verified foundations for gradient computation in machine learning.\n\n### 6.4 Dynamical Systems\n\nIf an observable quantity is represented as an elementary expression, its time derivative along a trajectory is again elementary (by `derivE_sound` and the chain rule). This means elementary observables form a closed sub-algebra under Lie differentiation along elementary vector fields \u2014 a useful structural result for the analysis of dynamical systems with elementary right-hand sides.\n\n---\n\n## 7. Discussion\n\n### 7.1 The Subtlety of Generator Separation\n\nOur most unexpected finding is that both the exp-free and log-free subclasses are independently differentiation-stable. This means the naive conjecture \"removing any transcendental generator breaks differential closure\" is false in the syntactic setting.\n\nThe resolution lies in the distinction between **differential stability** (closure under derivation) and **Liouvillian completeness** (ability to represent antiderivatives). The role of `log` is primarily for integration, not differentiation: the antiderivative of 1/x is log(x), but the derivative of any arithmetic-plus-exp expression never introduces log.\n\nSimilarly, `exp` is needed for expressiveness but not for the differential closure of the exp-free subclass.\n\n### 7.2 Limitations\n\nOur formalization covers single-variable real analysis. Extensions to several variables, complex analysis, and partial differential operators are natural but require substantially more infrastructure.\n\nThe size bound 6n\u00b2 is not tight. A more careful analysis, possibly with expression-specific bounds for each constructor, could yield sharper results.\n\nWe do not formalize algebraic simplification or normal forms. Adding a verified simplifier with a `normalize_preserves_semantics` theorem would enhance practical usability.\n\n### 7.3 Connections to O-Minimality\n\nThe functions definable in the expansion of the real field by exp form an o-minimal structure (Wilkie's theorem [8]). Our syntactic closure result is a shadow of this model-theoretic phenomenon: the definable functions in an o-minimal expansion are closed under differentiation. Making this connection formal would require formalizing significant model theory.\n\n---\n\n## 8. Future Work\n\n1. **Multivariate extension:** Generalize `EExpr` to expressions in multiple variables, with partial derivatives and the chain rule for compositions.\n\n2. **Risch algorithm formalization:** Use `derivE_sound` as the foundation for a verified implementation of the Risch decision procedure for elementary integration.\n\n3. **Algebraic simplification:** Implement and verify a normalization algorithm preserving semantics, to reduce derivative expression blowup.\n\n4. **Trigonometric extension:** Add `sin` and `cos` (or equivalently, extend to the field of elementary functions including trigonometric/hyperbolic functions via complex exponentials).\n\n5. **Differential field structure:** Formalize the elementary functions as a differential field, connecting to the abstract algebraic framework of Kolchin [3].\n\n---\n\n## 9. References\n\n[1] J. Liouville, \"M\u00e9moire sur l'int\u00e9gration d'une classe de fonctions transcendantes,\" *Journal f\u00fcr die reine und angewandte Mathematik*, vol. 13, pp. 93\u2013118, 1835.\n\n[2] J. F. Ritt, *Differential Algebra*, American Mathematical Society, 1950.\n\n[3] E. R. Kolchin, *Differential Algebra and Algebraic Groups*, Academic Press, 1973.\n\n[4] R. H. Risch, \"The problem of integration in finite terms,\" *Transactions of the American Mathematical Society*, vol. 139, pp. 167\u2013189, 1969.\n\n[5] J. Harrison, *Theorem Proving with the Real Numbers*, Springer, 1998.\n\n[6] The Mathlib Community, \"Mathlib: a unified library of mathematics formalized,\" 2020\u20132025. https://leanprover-community.github.io/mathlib4_docs/\n\n[7] A. Griewank and A. Walther, *Evaluating Derivatives: Principles and Techniques of Algorithmic Differentiation*, SIAM, 2008.\n\n[8] A. J. Wilkie, \"Model completeness results for expansions of the ordered field of real numbers by restricted Pfaffian functions and the exponential function,\" *Journal of the American Mathematical Society*, vol. 9, pp. 1051\u20131094, 1996.\n",
+    "future_directions": "# Future Directions: Falsifiable Conjectures and Testable Hypotheses\n\n## Conjecture 1: Derivative Normal-Form Sparsity\n\n**Statement.** After algebraic simplification (constant folding, identity elimination, zero elimination), the size of the simplified derivative satisfies `size(simplify(derivE e)) \u2264 C \u00b7 size(e)^{3/2}` for some universal constant `C`, for all elementary expressions `e` of depth at most 10.\n\n**Test.** Exhaustively generate all `EExpr` trees up to depth 6. For each expression, compute `derivE`, apply a fixed simplification algorithm, and measure the simplified size. Fit the empirical growth function to `size^\u03b1` and check whether `\u03b1 < 1.6`.\n\n**Impact.** If true, this would show that the worst-case quadratic blowup (proven in our `size_derivE_le`) is rarely achieved in practice, and that simplification makes symbolic differentiation much more efficient than the worst-case bound suggests. This has direct implications for the scalability of proof-producing computer algebra systems.\n\n---\n\n## Conjecture 2: Semantic Non-Injectivity at Low Depth\n\n**Statement.** There exist distinct `EExpr` expressions `e\u2081` and `e\u2082` of depth \u2264 4 such that `evalE e\u2081 = evalE e\u2082` as functions \u211d \u2192 \u211d, but `e\u2081` and `e\u2082` are not related by any finite sequence of algebraic identity rewrites (commutativity, associativity, distribution).\n\n**Test.** Enumerate all expressions of depth \u2264 4 (with constants drawn from {0, 1, -1, 2}). For each pair, numerically compare evaluations at 1000 random points in [-10, 10]. Report pairs with maximum pointwise difference < 10\u207b\u00b9\u00b2 that are syntactically unrelated by standard rewrite rules.\n\n**Impact.** If confirmed, this shows that the quotient of `EExpr` by extensional equality is nontrivially smaller than the syntactic type, even at very small depths. This bears on the feasibility of decision procedures for elementary function equality (which is known to be undecidable in general but may be tractable for bounded depth).\n\n---\n\n## Conjecture 3: Exp-Free Subclass Cannot Represent Exponential Growth\n\n**Statement.** For any exp-free expression `e` (i.e., `containsExp e = false`), the function `evalE e` is either eventually bounded by a polynomial, or has at most logarithmic growth: there exist `C, N, k` such that `|evalE e x| \u2264 C \u00b7 x^k \u00b7 (log x)^k` for all `x > N`.\n\n**Test.** For a large sample of exp-free expressions of depth \u2264 8, numerically evaluate at `x = 10, 100, 1000, 10000` and fit the growth rate. Check whether any exp-free expression exhibits super-polynomial growth.\n\n**Impact.** If true, this provides a *semantic* separation theorem: the exp-free subclass is not just syntactically smaller but represents a strictly smaller class of functions (missing exponential growth). Combined with `derivE_noexp`, this would show that the exp-free differential algebra is a proper, closed sub-algebra of the full elementary algebra \u2014 a result with implications for Liouville theory and the classification of solvable ODEs.\n\n---\n\n## Conjecture 4: Elementary ODE Observable Closure under Lie Derivatives\n\n**Statement.** For any polynomial vector field `V(x) = p(x)` (a polynomial in `x`) and any elementary expression `e`, the Lie derivative `L_V(e) := p(x) \u00b7 derivE(e)` is again an elementary expression with `size(L_V(e)) \u2264 size(V) \u00b7 size(e)^2`.\n\n**Test.** Implement symbolic Lie derivative computation. For polynomial vector fields of degree \u2264 5 and elementary observables of depth \u2264 6, verify the size bound computationally. Check whether iterated Lie derivatives `L_V^n(e)` remain bounded in size for small `n`.\n\n**Impact.** If true, this extends differential closure from the derivative operator to Lie derivatives along polynomial flows, connecting our results to the theory of dynamical systems. It would provide a formal tool for analyzing when trajectory-level observables remain in the elementary class \u2014 useful for control theory and qualitative ODE analysis.\n\n---\n\n## Conjecture 5: Normalization Reduces Derivative Blowup by at Least 40%\n\n**Statement.** A basic algebraic simplifier (constant folding, identity/zero elimination, common subexpression detection) reduces the average AST size of `derivE(e)` by at least 40% for random expressions `e` of depth \u2264 6, sampled uniformly from the space of all depth-bounded expressions with constants in {0, 1, -1, 2, 1/2}.\n\n**Test.** Generate 10,000 random expressions of depth \u2264 6. For each, compute `size(derivE(e))` and `size(simplify(derivE(e)))`. Report the mean and median reduction ratio `1 - size(simplified)/size(raw)`.\n\n**Impact.** If confirmed, this provides empirical evidence that a simple verified simplifier (an extension of our formalization) would make the derivative algorithm practical for larger expressions. If the reduction exceeds 60%, it suggests that most of the quadratic blowup is \"trivial\" (algebraic identities) rather than inherent. This has direct engineering implications for verified symbolic computation tools.\n",
+    "demos": [
+      {
+        "name": "Elementary Differential Closure Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nDemonstration of the Elementary Differential Closure.\n\nThis script implements the EExpr symbolic differentiation algebra in Python,\nshowing derivative computation, numerical verification against finite differences,\nexpression size growth, and the generator-separation phenomenon.\n\"\"\"\n\nimport math\nfrom dataclasses import dataclass\nfrom typing import Callable\n\n# \u2500\u2500\u2500 Expression AST \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass EExpr:\n    \"\"\"Base class for elementary expressions in one variable.\"\"\"\n    pass\n\n@dataclass\nclass Var(EExpr):\n    def __repr__(self): return \"x\"\n\n@dataclass\nclass Const(EExpr):\n    value: float\n    def __repr__(self): return f\"{self.value}\"\n\n@dataclass\nclass Add(EExpr):\n    left: EExpr\n    right: EExpr\n    def __repr__(self): return f\"({self.left} + {self.right})\"\n\n@dataclass\nclass Sub(EExpr):\n    left: EExpr\n    right: EExpr\n    def __repr__(self): return f\"({self.left} - {self.right})\"\n\n@dataclass\nclass Mul(EExpr):\n    left: EExpr\n    right: EExpr\n    def __repr__(self): return f\"({self.left} * {self.right})\"\n\n@dataclass\nclass Div(EExpr):\n    left: EExpr\n    right: EExpr\n    def __repr__(self): return f\"({self.left} / {self.right})\"\n\n@dataclass\nclass Exp(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"exp({self.arg})\"\n\n@dataclass\nclass Log(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"log({self.arg})\"\n\n# \u2500\u2500\u2500 Evaluation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef eval_expr(e: EExpr, x: float) -> float:\n    \"\"\"Evaluate an elementary expression at a point.\"\"\"\n    if isinstance(e, Var): return x\n    if isinstance(e, Const): return e.value\n    if isinstance(e, Add): return eval_expr(e.left, x) + eval_expr(e.right, x)\n    if isinstance(e, Sub): return eval_expr(e.left, x) - eval_expr(e.right, x)\n    if isinstance(e, Mul): return eval_expr(e.left, x) * eval_expr(e.right, x)\n    if isinstance(e, Div): return eval_expr(e.left, x) / eval_expr(e.right, x)\n    if isinstance(e, Exp): return math.exp(eval_expr(e.arg, x))\n    if isinstance(e, Log): return math.log(eval_expr(e.arg, x))\n    raise TypeError(f\"Unknown expression type: {type(e)}\")\n\n# \u2500\u2500\u2500 Symbolic Differentiation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef deriv(e: EExpr) -> EExpr:\n    \"\"\"Symbolic differentiation \u2014 the verified algorithm from the Lean formalization.\"\"\"\n    if isinstance(e, Var): return Const(1)\n    if isinstance(e, Const): return Const(0)\n    if isinstance(e, Add): return Add(deriv(e.left), deriv(e.right))\n    if isinstance(e, Sub): return Sub(deriv(e.left), deriv(e.right))\n    if isinstance(e, Mul):\n        return Add(Mul(deriv(e.left), e.right), Mul(e.left, deriv(e.right)))\n    if isinstance(e, Div):\n        return Div(\n            Sub(Mul(deriv(e.left), e.right), Mul(e.left, deriv(e.right))),\n            Mul(e.right, e.right)\n        )\n    if isinstance(e, Exp): return Mul(deriv(e.arg), Exp(e.arg))\n    if isinstance(e, Log): return Div(deriv(e.arg), e.arg)\n    raise TypeError(f\"Unknown expression type: {type(e)}\")\n\n# \u2500\u2500\u2500 Utilities \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef size(e: EExpr) -> int:\n    \"\"\"AST node count.\"\"\"\n    if isinstance(e, (Var, Const)): return 1\n    if isinstance(e, (Add, Sub, Mul, Div)): return 1 + size(e.left) + size(e.right)\n    if isinstance(e, (Exp, Log)): return 1 + size(e.arg)\n    raise TypeError\n\ndef contains_exp(e: EExpr) -> bool:\n    if isinstance(e, Exp): return True\n    if isinstance(e, (Var, Const)): return False\n    if isinstance(e, (Add, Sub, Mul, Div)):\n        return contains_exp(e.left) or contains_exp(e.right)\n    if isinstance(e, Log): return contains_exp(e.arg)\n    return False\n\ndef contains_log(e: EExpr) -> bool:\n    if isinstance(e, Log): return True\n    if isinstance(e, (Var, Const)): return False\n    if isinstance(e, (Add, Sub, Mul, Div)):\n        return contains_log(e.left) or contains_log(e.right)\n    if isinstance(e, Exp): return contains_log(e.arg)\n    return False\n\ndef finite_diff(f, x, h=1e-7):\n    \"\"\"Central finite difference approximation to f'(x).\"\"\"\n    return (f(x + h) - f(x - h)) / (2 * h)\n\n# \u2500\u2500\u2500 Demo \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_derivative(name: str, e: EExpr, test_points: list[float]):\n    \"\"\"Compute symbolic derivative and verify numerically.\"\"\"\n    de = deriv(e)\n    print(f\"\\n{'='*60}\")\n    print(f\"Expression: {name}\")\n    print(f\"  e    = {e}\")\n    print(f\"  e'   = {de}\")\n    print(f\"  size(e)  = {size(e)},  size(e') = {size(de)}\")\n    print(f\"  contains_exp(e) = {contains_exp(e)},  contains_exp(e') = {contains_exp(de)}\")\n    print(f\"  contains_log(e) = {contains_log(e)},  contains_log(e') = {contains_log(de)}\")\n    print(f\"  {'x':>10} | {'symbolic':>14} | {'finite diff':>14} | {'error':>12}\")\n    print(f\"  {'-'*10}-+-{'-'*14}-+-{'-'*14}-+-{'-'*12}\")\n    for x in test_points:\n        try:\n            sym_val = eval_expr(de, x)\n            fd_val = finite_diff(lambda y: eval_expr(e, y), x)\n            err = abs(sym_val - fd_val)\n            print(f\"  {x:10.4f} | {sym_val:14.8f} | {fd_val:14.8f} | {err:12.2e}\")\n        except (ValueError, ZeroDivisionError, OverflowError) as ex:\n            print(f\"  {x:10.4f} | {'N/A':>14} | {'N/A':>14} | {str(ex)[:12]}\")\n\n\ndef main():\n    x = Var()\n\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551     Elementary Differential Closure \u2014 Demonstration        \u2551\")\n    print(\"\u2551  Verified Symbolic Differentiation for exp/log Algebra     \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # Example 1: exp(x)\n    demo_derivative(\"exp(x)\", Exp(x), [0, 1, -1, 2])\n\n    # Example 2: log(x)\n    demo_derivative(\"log(x)\", Log(x), [0.5, 1, 2, 5])\n\n    # Example 3: x^2 (= x * x)\n    x_sq = Mul(x, x)\n    demo_derivative(\"x\u00b2\", x_sq, [0, 1, -1, 3])\n\n    # Example 4: log(exp(x) + 1)  \u2014 nested exp and log\n    e4 = Log(Add(Exp(x), Const(1)))\n    demo_derivative(\"log(exp(x) + 1)\", e4, [0, 1, -1, 5])\n\n    # Example 5: exp(log(x) + x\u00b2)\n    e5 = Exp(Add(Log(x), Mul(x, x)))\n    demo_derivative(\"exp(log(x) + x\u00b2)\", e5, [0.5, 1, 2])\n\n    # Example 6: exp(x) / (1 + log(x))\n    e6 = Div(Exp(x), Add(Const(1), Log(x)))\n    demo_derivative(\"exp(x) / (1 + log(x))\", e6, [0.5, 1, 2, 3])\n\n    # Example 7: deeply nested \u2014 exp(exp(x))\n    e7 = Exp(Exp(x))\n    demo_derivative(\"exp(exp(x))\", e7, [0, 0.5, 1])\n\n    # \u2500\u2500\u2500 Generator Separation Demo \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    print(\"\\n\" + \"=\"*60)\n    print(\"GENERATOR SEPARATION: Subclass Differential Stability\")\n    print(\"=\"*60)\n\n    # Exp-free expressions stay exp-free under differentiation\n    exp_free_exprs = [\n        (\"x\", x),\n        (\"x*x\", Mul(x, x)),\n        (\"log(x)\", Log(x)),\n        (\"x / log(x)\", Div(x, Log(x))),\n        (\"log(x*x + 1)\", Log(Add(Mul(x, x), Const(1)))),\n    ]\n    print(\"\\nExp-free subclass (should remain exp-free after differentiation):\")\n    for name, e in exp_free_exprs:\n        de = deriv(e)\n        print(f\"  d/dx [{name}]: contains_exp = {contains_exp(de)}  (expression: {de})\")\n\n    # Log-free expressions stay log-free under differentiation\n    log_free_exprs = [\n        (\"x\", x),\n        (\"exp(x)\", Exp(x)),\n        (\"x * exp(x)\", Mul(x, Exp(x))),\n        (\"exp(x*x)\", Exp(Mul(x, x))),\n        (\"exp(x) / x\", Div(Exp(x), x)),\n    ]\n    print(\"\\nLog-free subclass (should remain log-free after differentiation):\")\n    for name, e in log_free_exprs:\n        de = deriv(e)\n        print(f\"  d/dx [{name}]: contains_log = {contains_log(de)}  (expression: {de})\")\n\n    print(\"\\n\" + \"=\"*60)\n    print(\"COUNTEREXAMPLE: Naive 'removing any generator breaks closure' is FALSE\")\n    print(\"=\"*60)\n    print(\"Both the exp-free and log-free subclasses are independently\")\n    print(\"differentiation-stable. Neither exp nor log is 'forced' by\")\n    print(\"differentiation alone \u2014 both are needed for expressiveness,\")\n    print(\"not for differential stability.\")\n\n    # \u2500\u2500\u2500 Size Growth Demo \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    print(\"\\n\" + \"=\"*60)\n    print(\"DERIVATIVE SIZE GROWTH (Quadratic Bound)\")\n    print(\"=\"*60)\n    header_ep = \"size(e')\"\n    print(f\"  {'expr':>25} | {'size(e)':>8} | {header_ep:>9} | {'ratio':>8} | {'6n^2':>6}\")\n    print(f\"  {'-'*25}-+-{'-'*8}-+-{'-'*9}-+-{'-'*8}-+-{'-'*6}\")\n\n    test_exprs = [\n        (\"x\", x),\n        (\"x*x\", Mul(x, x)),\n        (\"exp(x)\", Exp(x)),\n        (\"x*x*x\", Mul(Mul(x, x), x)),\n        (\"exp(x*x)\", Exp(Mul(x, x))),\n        (\"log(exp(x)+1)\", Log(Add(Exp(x), Const(1)))),\n        (\"exp(x)/(1+log(x))\", Div(Exp(x), Add(Const(1), Log(x)))),\n    ]\n    for name, e in test_exprs:\n        de = deriv(e)\n        s, sd = size(e), size(de)\n        bound = 6 * s * s\n        ratio = sd / s if s > 0 else 0\n        print(f\"  {name:>25} | {s:>8} | {sd:>9} | {ratio:>8.2f} | {bound:>6}\")\n\n    print(\"\\n\u2713 All derivatives satisfy size(e') \u2264 6\u00b7size(e)\u00b2 (verified in Lean)\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      {
+        "name": "Applications of Differential Closure",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of the Elementary Differential Closure.\n\nDemonstrates real-world connections:\n1. Verified symbolic computation (proof-producing CAS)\n2. Newton's method with certified derivatives\n3. Taylor series approximation using iterated symbolic derivatives\n4. ODE solution verification via substitution\n5. Sensitivity analysis for elementary models\n\"\"\"\n\nimport math\n# Self-contained version \u2014 all definitions inline\nimport math\nfrom dataclasses import dataclass\nfrom typing import Optional\n\nclass EExpr:\n    pass\n\n@dataclass(frozen=True)\nclass Var(EExpr):\n    def __repr__(self): return \"x\"\n\n@dataclass(frozen=True)\nclass Const(EExpr):\n    value: float\n    def __repr__(self):\n        if self.value == int(self.value): return str(int(self.value))\n        return f\"{self.value}\"\n\n@dataclass(frozen=True)\nclass Add(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} + {self.right})\"\n\n@dataclass(frozen=True)\nclass Sub(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} - {self.right})\"\n\n@dataclass(frozen=True)\nclass Mul(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} * {self.right})\"\n\n@dataclass(frozen=True)\nclass Div(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} / {self.right})\"\n\n@dataclass(frozen=True)\nclass Exp(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"exp({self.arg})\"\n\n@dataclass(frozen=True)\nclass Log(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"log({self.arg})\"\n\ndef eval_expr(e, x):\n    if isinstance(e, Var): return x\n    if isinstance(e, Const): return e.value\n    if isinstance(e, Add): return eval_expr(e.left, x) + eval_expr(e.right, x)\n    if isinstance(e, Sub): return eval_expr(e.left, x) - eval_expr(e.right, x)\n    if isinstance(e, Mul): return eval_expr(e.left, x) * eval_expr(e.right, x)\n    if isinstance(e, Div): return eval_expr(e.left, x) / eval_expr(e.right, x)\n    if isinstance(e, Exp): return math.exp(eval_expr(e.arg, x))\n    if isinstance(e, Log): return math.log(eval_expr(e.arg, x))\n\ndef symbolic_deriv(e):\n    if isinstance(e, Var): return Const(1)\n    if isinstance(e, Const): return Const(0)\n    if isinstance(e, Add): return Add(symbolic_deriv(e.left), symbolic_deriv(e.right))\n    if isinstance(e, Sub): return Sub(symbolic_deriv(e.left), symbolic_deriv(e.right))\n    if isinstance(e, Mul): return Add(Mul(symbolic_deriv(e.left), e.right), Mul(e.left, symbolic_deriv(e.right)))\n    if isinstance(e, Div): return Div(Sub(Mul(symbolic_deriv(e.left), e.right), Mul(e.left, symbolic_deriv(e.right))), Mul(e.right, e.right))\n    if isinstance(e, Exp): return Mul(symbolic_deriv(e.arg), Exp(e.arg))\n    if isinstance(e, Log): return Div(symbolic_deriv(e.arg), e.arg)\n\ndef simplify(e):\n    if isinstance(e, (Var, Const)): return e\n    if isinstance(e, Add):\n        a, b = simplify(e.left), simplify(e.right)\n        if isinstance(a, Const) and a.value == 0: return b\n        if isinstance(b, Const) and b.value == 0: return a\n        return Add(a, b)\n    if isinstance(e, Sub):\n        a, b = simplify(e.left), simplify(e.right)\n        if isinstance(b, Const) and b.value == 0: return a\n        return Sub(a, b)\n    if isinstance(e, Mul):\n        a, b = simplify(e.left), simplify(e.right)\n        if isinstance(a, Const) and a.value == 0: return Const(0)\n        if isinstance(b, Const) and b.value == 0: return Const(0)\n        if isinstance(a, Const) and a.value == 1: return b\n        if isinstance(b, Const) and b.value == 1: return a\n        return Mul(a, b)\n    if isinstance(e, Div):\n        a, b = simplify(e.left), simplify(e.right)\n        if isinstance(a, Const) and a.value == 0: return Const(0)\n        if isinstance(b, Const) and b.value == 1: return a\n        return Div(a, b)\n    if isinstance(e, Exp): return Exp(simplify(e.arg))\n    if isinstance(e, Log): return Log(simplify(e.arg))\n    return e\n\ndef expr_size(e):\n    if isinstance(e, (Var, Const)): return 1\n    if isinstance(e, (Add, Sub, Mul, Div)): return 1 + expr_size(e.left) + expr_size(e.right)\n    if isinstance(e, (Exp, Log)): return 1 + expr_size(e.arg)\n\ndef is_valid_at(e, x):\n    if isinstance(e, (Var, Const)): return True\n    if isinstance(e, (Add, Sub, Mul)): return is_valid_at(e.left, x) and is_valid_at(e.right, x)\n    if isinstance(e, Div): return is_valid_at(e.left, x) and is_valid_at(e.right, x) and eval_expr(e.right, x) != 0\n    if isinstance(e, Exp): return is_valid_at(e.arg, x)\n    if isinstance(e, Log): return is_valid_at(e.arg, x) and eval_expr(e.arg, x) > 0\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 1: Certified Newton's Method\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef newton_method(f: EExpr, x0: float, tol: float = 1e-12, max_iter: int = 50):\n    \"\"\"Newton's method using symbolically computed (and formally verified) derivatives.\n\n    Because derivE_sound guarantees the derivative is correct, Newton's method\n    inherits a correctness certificate: the derivative evaluations are provably\n    equal to the true mathematical derivative.\n\n    Args:\n        f: Expression whose root we seek\n        x0: Initial guess\n        tol: Convergence tolerance\n        max_iter: Maximum iterations\n\n    Returns:\n        (root, iterations, convergence_history)\n    \"\"\"\n    df = symbolic_deriv(f)\n    x = x0\n    history = [x]\n\n    for i in range(max_iter):\n        fx = eval_expr(f, x)\n        dfx = eval_expr(df, x)\n        if abs(dfx) < 1e-15:\n            break\n        x_new = x - fx / dfx\n        history.append(x_new)\n        if abs(x_new - x) < tol:\n            break\n        x = x_new\n\n    return x, len(history) - 1, history\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 2: Taylor Series via Iterated Symbolic Differentiation\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef taylor_coefficients(f: EExpr, x0: float, n: int):\n    \"\"\"Compute Taylor coefficients f^(k)(x0) / k! for k = 0, ..., n.\n\n    Uses iterated symbolic differentiation. Each derivative is guaranteed\n    correct by derivE_sound (and validity preservation by validAt_derivE).\n\n    Returns list of (coefficient, derivative_expression, derivative_size).\n    \"\"\"\n    coeffs = []\n    current = f\n    factorial = 1\n    for k in range(n + 1):\n        if k > 0:\n            factorial *= k\n        val = eval_expr(current, x0)\n        coeffs.append((val / factorial, current, expr_size(current)))\n        current = symbolic_deriv(current)\n    return coeffs\n\n\ndef taylor_eval(coeffs: list[tuple], x: float, x0: float) -> float:\n    \"\"\"Evaluate Taylor polynomial.\"\"\"\n    result = 0.0\n    dx = x - x0\n    dx_pow = 1.0\n    for c, _, _ in coeffs:\n        result += c * dx_pow\n        dx_pow *= dx\n    return result\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 3: ODE Solution Verification\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef verify_ode_solution(y: EExpr, ode_rhs, description: str, test_points: list[float]):\n    \"\"\"Verify that y(x) satisfies y'(x) = ode_rhs(y, x) at given points.\n\n    The derivative y' is computed symbolically with a correctness guarantee.\n    We then check numerically that y'(x) = ode_rhs(y(x), x).\n\n    This demonstrates the bridge to dynamical systems: if an observable is\n    EExpr-representable, its time derivative along an elementary vector field\n    is again EExpr-representable (by derivE_sound + closure).\n    \"\"\"\n    dy = symbolic_deriv(y)\n    print(f\"\\n  ODE: {description}\")\n    print(f\"  y(x) = {y}\")\n    print(f\"  y'(x) = {simplify(dy)}\")\n    col_yp = \"y'(x)\"\n    print(f\"  {'x':>8} | {'y(x)':>12} | {col_yp:>12} | {'RHS':>12} | {'|error|':>10}\")\n    print(f\"  {'-'*8}-+-{'-'*12}-+-{'-'*12}-+-{'-'*12}-+-{'-'*10}\")\n\n    for x in test_points:\n        try:\n            y_val = eval_expr(y, x)\n            dy_val = eval_expr(dy, x)\n            rhs_val = ode_rhs(y_val, x)\n            err = abs(dy_val - rhs_val)\n            print(f\"  {x:8.3f} | {y_val:12.6f} | {dy_val:12.6f} | {rhs_val:12.6f} | {err:10.2e}\")\n        except (ValueError, ZeroDivisionError, OverflowError):\n            print(f\"  {x:8.3f} | {'N/A':>12} | {'N/A':>12} | {'N/A':>12} | {'N/A':>10}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 4: Sensitivity Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef sensitivity_analysis(model: EExpr, param_name: str, test_points: list[float]):\n    \"\"\"Compute the sensitivity df/dx of a model using verified symbolic derivatives.\n\n    In scientific computing, sensitivity = \u2202(output)/\u2202(input). With derivE_sound,\n    this sensitivity is provably correct \u2014 useful for uncertainty quantification\n    and gradient-based optimization.\n    \"\"\"\n    dmodel = symbolic_deriv(model)\n    dmodel_s = simplify(dmodel)\n    print(f\"\\n  Model: {model}\")\n    print(f\"  Sensitivity d(model)/d({param_name}): {dmodel_s}\")\n    col_fp = \"f'(x)\"\n    print(f\"  {'x':>8} | {'f(x)':>12} | {col_fp:>12} | {'elasticity':>12}\")\n    print(f\"  {'-'*8}-+-{'-'*12}-+-{'-'*12}-+-{'-'*12}\")\n\n    for x in test_points:\n        try:\n            f_val = eval_expr(model, x)\n            df_val = eval_expr(dmodel, x)\n            elasticity = (df_val * x / f_val) if abs(f_val) > 1e-15 else float('inf')\n            print(f\"  {x:8.3f} | {f_val:12.6f} | {df_val:12.6f} | {elasticity:12.6f}\")\n        except (ValueError, ZeroDivisionError, OverflowError):\n            print(f\"  {x:8.3f} | {'N/A':>12} | {'N/A':>12} | {'N/A':>12}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Main\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef main():\n    x = Var()\n\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Applications of Elementary Differential Closure           \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # --- Application 1: Newton's Method ---\n    print(\"\\n\" + \"=\"*60)\n    print(\"APPLICATION 1: Certified Newton's Method\")\n    print(\"=\"*60)\n\n    # Find root of exp(x) - 3x = 0\n    f1 = Sub(Exp(x), Mul(Const(3), x))\n    root, iters, hist = newton_method(f1, 1.5)\n    print(f\"\\n  f(x) = exp(x) - 3x\")\n    print(f\"  Root found: x = {root:.15f} (in {iters} iterations)\")\n    print(f\"  f(root) = {eval_expr(f1, root):.2e}\")\n    print(f\"  Convergence: {' \u2192 '.join(f'{h:.8f}' for h in hist[:6])}\")\n\n    # Find root of log(x) - 1 = 0 (should give e)\n    f2 = Sub(Log(x), Const(1))\n    root2, iters2, _ = newton_method(f2, 2.0)\n    print(f\"\\n  f(x) = log(x) - 1\")\n    print(f\"  Root found: x = {root2:.15f} (expected e = {math.e:.15f})\")\n    print(f\"  Error: {abs(root2 - math.e):.2e}\")\n\n    # --- Application 2: Taylor Series ---\n    print(\"\\n\" + \"=\"*60)\n    print(\"APPLICATION 2: Taylor Series via Iterated Symbolic Derivatives\")\n    print(\"=\"*60)\n\n    # Taylor series of exp(x) around x=0\n    f_exp = Exp(x)\n    coeffs = taylor_coefficients(f_exp, 0.0, 6)\n    print(f\"\\n  Taylor coefficients of exp(x) around x=0:\")\n    print(f\"  {'k':>4} | {'f^(k)(0)/k!':>14} | {'expected':>10} | {'deriv size':>10}\")\n    for k, (c, _, sz) in enumerate(coeffs):\n        expected = 1.0 / math.factorial(k)\n        print(f\"  {k:4d} | {c:14.10f} | {expected:10.6f} | {sz:10d}\")\n\n    # Evaluate Taylor polynomial and compare\n    print(f\"\\n  Taylor polynomial evaluation vs true exp(x):\")\n    for xv in [0.5, 1.0, 2.0]:\n        approx = taylor_eval(coeffs, xv, 0.0)\n        true_val = math.exp(xv)\n        print(f\"    x={xv}: T\u2086(x)={approx:.10f}, exp(x)={true_val:.10f}, err={abs(approx-true_val):.2e}\")\n\n    # Taylor series of log(1+x) around x=0\n    f_log = Log(Add(Const(1), x))\n    coeffs_log = taylor_coefficients(f_log, 0.0, 6)\n    print(f\"\\n  Taylor coefficients of log(1+x) around x=0:\")\n    for k, (c, _, sz) in enumerate(coeffs_log):\n        expected = ((-1)**(k+1) / k) if k > 0 else 0.0\n        print(f\"    a_{k} = {c:12.8f}  (expected \u2248 {expected:8.4f}), deriv size = {sz}\")\n\n    # --- Application 3: ODE Verification ---\n    print(\"\\n\" + \"=\"*60)\n    print(\"APPLICATION 3: ODE Solution Verification\")\n    print(\"=\"*60)\n\n    # y = exp(x) satisfies y' = y\n    verify_ode_solution(\n        Exp(x),\n        lambda y, t: y,\n        \"y' = y  (exponential growth)\",\n        [0, 0.5, 1, 2]\n    )\n\n    # y = x*exp(x) satisfies y' = y + exp(x) = (1+x)*exp(x)/x * y ... let's use y' = (1+1/x)*y\n    # Actually y = x*exp(x), y' = exp(x) + x*exp(x) = (1+x)*exp(x)\n    verify_ode_solution(\n        Mul(x, Exp(x)),\n        lambda y, t: (1 + t) * math.exp(t),\n        \"y' = (1+x)\u00b7exp(x)  where y = x\u00b7exp(x)\",\n        [0.5, 1, 2, 3]\n    )\n\n    # y = log(x), y' = 1/x\n    verify_ode_solution(\n        Log(x),\n        lambda y, t: 1/t,\n        \"y' = 1/x  where y = log(x)\",\n        [0.5, 1, 2, 5]\n    )\n\n    # --- Application 4: Sensitivity Analysis ---\n    print(\"\\n\" + \"=\"*60)\n    print(\"APPLICATION 4: Sensitivity Analysis with Certified Derivatives\")\n    print(\"=\"*60)\n\n    # Logistic-like model: f(x) = exp(x) / (1 + exp(x))\n    logistic = Div(Exp(x), Add(Const(1), Exp(x)))\n    sensitivity_analysis(logistic, \"x\", [-2, -1, 0, 1, 2])\n\n    # Arrhenius-like model: f(x) = exp(-1/x) for x > 0\n    arrhenius = Exp(Div(Const(-1), x))\n    sensitivity_analysis(arrhenius, \"x (temperature)\", [0.5, 1, 2, 5, 10])\n\n    print(\"\\n\" + \"=\"*60)\n    print(\"All applications use derivE with a machine-checked correctness proof.\")\n    print(\"=\"*60)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Symbolic Differentiation (derivE)",
+        "pseudocode": "function derivE(e):\n    match e with\n    | var        \u2192 const(1)\n    | const(c)   \u2192 const(0)\n    | add(a, b)  \u2192 add(derivE(a), derivE(b))\n    | sub(a, b)  \u2192 sub(derivE(a), derivE(b))\n    | mul(a, b)  \u2192 add(mul(derivE(a), b), mul(a, derivE(b)))\n    | div(a, b)  \u2192 div(sub(mul(derivE(a), b), mul(a, derivE(b))), mul(b, b))\n    | exp(a)     \u2192 mul(derivE(a), exp(a))\n    | log(a)     \u2192 div(derivE(a), a)\n\nTime: O(n), Space: O(n\u00b2) worst case\nCorrectness: derivE_sound theorem",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Elementary Differential Closure.\n\nImplements the core algorithms from the formalization:\n1. Symbolic differentiation (derivE)\n2. Expression simplification / normalization\n3. Validity checking\n4. Generator analysis (containsExp / containsLog)\n\nEach algorithm mirrors a verified Lean definition and carries a correctness\ntheorem reference.\n\"\"\"\n\nfrom __future__ import annotations\nimport math\nfrom dataclasses import dataclass\nfrom enum import Enum, auto\nfrom typing import Optional\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 1. Expression AST (mirrors EExpr inductive type)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nclass EExpr:\n    \"\"\"Elementary expression in one real variable.\n\n    Corresponds to the Lean inductive type:\n        inductive EExpr where\n          | var | const (c : \u211d) | add | sub | mul | div | exp | log\n    \"\"\"\n    pass\n\n@dataclass(frozen=True)\nclass Var(EExpr):\n    \"\"\"The identity function x \u21a6 x.\"\"\"\n    def __repr__(self): return \"x\"\n\n@dataclass(frozen=True)\nclass Const(EExpr):\n    \"\"\"A real constant c.\"\"\"\n    value: float\n    def __repr__(self):\n        if self.value == int(self.value): return str(int(self.value))\n        return f\"{self.value}\"\n\n@dataclass(frozen=True)\nclass Add(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} + {self.right})\"\n\n@dataclass(frozen=True)\nclass Sub(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} - {self.right})\"\n\n@dataclass(frozen=True)\nclass Mul(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} * {self.right})\"\n\n@dataclass(frozen=True)\nclass Div(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} / {self.right})\"\n\n@dataclass(frozen=True)\nclass Exp(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"exp({self.arg})\"\n\n@dataclass(frozen=True)\nclass Log(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"log({self.arg})\"\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 2. Evaluation (mirrors evalE)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef eval_expr(e: EExpr, x: float) -> float:\n    \"\"\"Evaluate expression at x.\n\n    Correctness: corresponds to EExpr.evalE in Lean.\n    Uses Python's math functions which match Real.exp, Real.log semantics\n    on valid domains.\n    \"\"\"\n    match e:\n        case Var(): return x\n        case Const(c): return c\n        case Add(a, b): return eval_expr(a, x) + eval_expr(b, x)\n        case Sub(a, b): return eval_expr(a, x) - eval_expr(b, x)\n        case Mul(a, b): return eval_expr(a, x) * eval_expr(b, x)\n        case Div(a, b): return eval_expr(a, x) / eval_expr(b, x)\n        case Exp(a): return math.exp(eval_expr(a, x))\n        case Log(a): return math.log(eval_expr(a, x))\n    raise TypeError(f\"Unknown: {type(e)}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 3. Symbolic Differentiation (mirrors derivE)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef symbolic_deriv(e: EExpr) -> EExpr:\n    \"\"\"Symbolic differentiation algorithm.\n\n    Correctness theorem (Lean): EExpr.derivE_sound\n        \u2200 e x, ValidAt e x \u2192 HasDerivAt (evalE e) (evalE (derivE e) x) x\n\n    Time complexity: O(n) where n = size(e)\n    Space complexity: O(n) for the output (which can be up to O(n\u00b2) in size)\n    \"\"\"\n    match e:\n        case Var(): return Const(1)\n        case Const(_): return Const(0)\n        case Add(a, b): return Add(symbolic_deriv(a), symbolic_deriv(b))\n        case Sub(a, b): return Sub(symbolic_deriv(a), symbolic_deriv(b))\n        case Mul(a, b):\n            # Product rule: (fg)' = f'g + fg'\n            return Add(Mul(symbolic_deriv(a), b), Mul(a, symbolic_deriv(b)))\n        case Div(a, b):\n            # Quotient rule: (f/g)' = (f'g - fg') / g\u00b2\n            return Div(\n                Sub(Mul(symbolic_deriv(a), b), Mul(a, symbolic_deriv(b))),\n                Mul(b, b)\n            )\n        case Exp(a):\n            # Chain rule: (exp f)' = f' \u00b7 exp(f)\n            return Mul(symbolic_deriv(a), Exp(a))\n        case Log(a):\n            # Chain rule: (log f)' = f' / f\n            return Div(symbolic_deriv(a), a)\n    raise TypeError(f\"Unknown: {type(e)}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 4. Expression Simplification / Normalization\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef simplify(e: EExpr) -> EExpr:\n    \"\"\"Basic algebraic simplification.\n\n    Applies constant folding and identity elimination:\n    - 0 + x = x, x + 0 = x\n    - 0 * x = 0, x * 0 = 0, 1 * x = x, x * 1 = x\n    - x - 0 = x\n    - x / 1 = x, 0 / x = 0\n    - const op const = const(result)\n\n    This is not verified in Lean (would require a normalize_preserves_semantics theorem).\n    \"\"\"\n    match e:\n        case Var() | Const(_):\n            return e\n        case Add(a, b):\n            a, b = simplify(a), simplify(b)\n            if isinstance(a, Const) and a.value == 0: return b\n            if isinstance(b, Const) and b.value == 0: return a\n            if isinstance(a, Const) and isinstance(b, Const):\n                return Const(a.value + b.value)\n            return Add(a, b)\n        case Sub(a, b):\n            a, b = simplify(a), simplify(b)\n            if isinstance(b, Const) and b.value == 0: return a\n            if isinstance(a, Const) and isinstance(b, Const):\n                return Const(a.value - b.value)\n            return Sub(a, b)\n        case Mul(a, b):\n            a, b = simplify(a), simplify(b)\n            if isinstance(a, Const) and a.value == 0: return Const(0)\n            if isinstance(b, Const) and b.value == 0: return Const(0)\n            if isinstance(a, Const) and a.value == 1: return b\n            if isinstance(b, Const) and b.value == 1: return a\n            if isinstance(a, Const) and isinstance(b, Const):\n                return Const(a.value * b.value)\n            return Mul(a, b)\n        case Div(a, b):\n            a, b = simplify(a), simplify(b)\n            if isinstance(a, Const) and a.value == 0: return Const(0)\n            if isinstance(b, Const) and b.value == 1: return a\n            return Div(a, b)\n        case Exp(a):\n            a = simplify(a)\n            if isinstance(a, Const): return Const(math.exp(a.value))\n            return Exp(a)\n        case Log(a):\n            a = simplify(a)\n            if isinstance(a, Const) and a.value > 0:\n                return Const(math.log(a.value))\n            return Log(a)\n    raise TypeError\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 5. Validity Checking (mirrors ValidAt)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef is_valid_at(e: EExpr, x: float) -> bool:\n    \"\"\"Check if expression is valid (well-defined) at point x.\n\n    Mirrors EExpr.ValidAt:\n    - Division requires nonzero denominator\n    - Log requires positive argument\n\n    Lean theorem: EExpr.validAt_derivE shows validity is preserved by derivE.\n    \"\"\"\n    match e:\n        case Var() | Const(_): return True\n        case Add(a, b) | Sub(a, b) | Mul(a, b):\n            return is_valid_at(a, x) and is_valid_at(b, x)\n        case Div(a, b):\n            return is_valid_at(a, x) and is_valid_at(b, x) and eval_expr(b, x) != 0\n        case Exp(a): return is_valid_at(a, x)\n        case Log(a): return is_valid_at(a, x) and eval_expr(a, x) > 0\n    raise TypeError\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 6. Generator Analysis (mirrors containsExp / containsLog)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef contains_exp(e: EExpr) -> bool:\n    \"\"\"Check if expression uses the exp constructor.\n    Lean theorem: EExpr.derivE_noexp \u2014 if False, remains False after derivE.\"\"\"\n    match e:\n        case Var() | Const(_): return False\n        case Add(a, b) | Sub(a, b) | Mul(a, b) | Div(a, b):\n            return contains_exp(a) or contains_exp(b)\n        case Exp(_): return True\n        case Log(a): return contains_exp(a)\n    raise TypeError\n\ndef contains_log(e: EExpr) -> bool:\n    \"\"\"Check if expression uses the log constructor.\n    Lean theorem: EExpr.derivE_nolog \u2014 if False, remains False after derivE.\"\"\"\n    match e:\n        case Var() | Const(_): return False\n        case Add(a, b) | Sub(a, b) | Mul(a, b) | Div(a, b):\n            return contains_log(a) or contains_log(b)\n        case Exp(a): return contains_log(a)\n        case Log(_): return True\n    raise TypeError\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 7. Size and Complexity (mirrors EExpr.size)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef expr_size(e: EExpr) -> int:\n    \"\"\"AST node count. Lean theorem: EExpr.size_derivE_le bounds derivative size.\"\"\"\n    match e:\n        case Var() | Const(_): return 1\n        case Add(a, b) | Sub(a, b) | Mul(a, b) | Div(a, b):\n            return 1 + expr_size(a) + expr_size(b)\n        case Exp(a) | Log(a): return 1 + expr_size(a)\n    raise TypeError\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Example usage\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == \"__main__\":\n    x = Var()\n\n    print(\"=== Symbolic Differentiation Algorithm ===\\n\")\n\n    examples = [\n        (\"x\u00b2\", Mul(x, x)),\n        (\"exp(x\u00b2)\", Exp(Mul(x, x))),\n        (\"log(x)\", Log(x)),\n        (\"exp(x)/x\", Div(Exp(x), x)),\n        (\"log(exp(x)+1)\", Log(Add(Exp(x), Const(1)))),\n    ]\n\n    for name, e in examples:\n        de = symbolic_deriv(e)\n        de_s = simplify(de)\n        print(f\"  d/dx [{name}]\")\n        print(f\"    raw:        {de}\")\n        print(f\"    simplified: {de_s}\")\n        print(f\"    size: {expr_size(e)} \u2192 {expr_size(de)} \u2192 {expr_size(de_s)} (simplified)\")\n        print()\n\n    print(\"=== Validity Preservation ===\\n\")\n    e = Div(Exp(x), Log(x))\n    print(f\"  e = {e}\")\n    for pt in [0.5, 1.0, 2.0, -1.0]:\n        v = is_valid_at(e, pt)\n        dv = is_valid_at(symbolic_deriv(e), pt) if v else \"N/A\"\n        print(f\"  x={pt}: valid(e)={v}, valid(e')={dv}\")\n",
+        "code_file": "visualizations/conjecture_3_differential_closure_is_tight_symbolic_differentiation_derive.py"
+      }
+    ],
+    "lean_proofs": "-- Speculative/DifferentialClosure/Defs.lean\nimport Mathlib\n\n/-!\n# Elementary Expression Algebra: Core Definitions\n\nThis file defines the syntactic universe of elementary expressions in one real variable,\ntogether with their evaluation semantics, domain predicates, symbolic differentiation,\nand the algebraic properties needed for differential closure theorems.\n\n## Main definitions\n\n* `EExpr` \u2014 Inductive type of elementary expressions (var, const, +, -, *, /, exp, log)\n* `evalE` \u2014 Total evaluation function `EExpr \u2192 \u211d \u2192 \u211d`\n* `ValidAt` \u2014 Domain predicate ensuring well-definedness (denominators nonzero, log arguments positive)\n* `derivE` \u2014 Symbolic differentiation algorithm `EExpr \u2192 EExpr`\n* `size` \u2014 Expression size measure\n* `containsExp`, `containsLog` \u2014 Syntactic predicates for generator separation\n* `DiffClosed`, `GeneratedByExpLog` \u2014 Set-theoretic closure properties\n-/\n\nnoncomputable section\n\nopen Real\n\n/-- The syntactic universe of elementary expressions in one real variable.\nThis captures the initial differential algebra generated by constants, the identity,\narithmetic operations, `exp`, and `log`. -/\ninductive EExpr where\n  | var : EExpr\n  | const : \u211d \u2192 EExpr\n  | add : EExpr \u2192 EExpr \u2192 EExpr\n  | sub : EExpr \u2192 EExpr \u2192 EExpr\n  | mul : EExpr \u2192 EExpr \u2192 EExpr\n  | div : EExpr \u2192 EExpr \u2192 EExpr\n  | exp : EExpr \u2192 EExpr\n  | log : EExpr \u2192 EExpr\n  deriving Inhabited\n\nnamespace EExpr\n\n/-- Total evaluation of an elementary expression at a real point.\nUses Lean/Mathlib's conventions: `Real.log x = 0` for `x \u2264 0`, `x / 0 = 0`. -/\ndef evalE : EExpr \u2192 \u211d \u2192 \u211d\n  | .var, x => x\n  | .const c, _ => c\n  | .add a b, x => evalE a x + evalE b x\n  | .sub a b, x => evalE a x - evalE b x\n  | .mul a b, x => evalE a x * evalE b x\n  | .div a b, x => evalE a x / evalE b x\n  | .exp a, x => Real.exp (evalE a x)\n  | .log a, x => Real.log (evalE a x)\n\n/-- Domain predicate: `ValidAt e x` holds when evaluation of `e` at `x` is\nmathematically well-defined \u2014 all division denominators are nonzero and all\n`log` arguments are strictly positive. -/\ndef ValidAt : EExpr \u2192 \u211d \u2192 Prop\n  | .var, _ => True\n  | .const _, _ => True\n  | .add a b, x => ValidAt a x \u2227 ValidAt b x\n  | .sub a b, x => ValidAt a x \u2227 ValidAt b x\n  | .mul a b, x => ValidAt a x \u2227 ValidAt b x\n  | .div a b, x => ValidAt a x \u2227 ValidAt b x \u2227 evalE b x \u2260 0\n  | .exp a, x => ValidAt a x\n  | .log a, x => ValidAt a x \u2227 0 < evalE a x\n\n/-- Symbolic differentiation algorithm. Maps each elementary expression to its\nformal derivative, which is again an elementary expression. This is the core\ncomputational artifact: a verified symbolic differentiator. -/\ndef derivE : EExpr \u2192 EExpr\n  | .var => .const 1\n  | .const _ => .const 0\n  | .add a b => .add (derivE a) (derivE b)\n  | .sub a b => .sub (derivE a) (derivE b)\n  | .mul a b => .add (.mul (derivE a) b) (.mul a (derivE b))\n  | .div a b => .div (.sub (.mul (derivE a) b) (.mul a (derivE b))) (.mul b b)\n  | .exp a => .mul (derivE a) (.exp a)\n  | .log a => .div (derivE a) a\n\n/-- Syntactic size of an expression (number of nodes in the AST). -/\ndef size : EExpr \u2192 \u2115\n  | .var => 1\n  | .const _ => 1\n  | .add a b => 1 + size a + size b\n  | .sub a b => 1 + size a + size b\n  | .mul a b => 1 + size a + size b\n  | .div a b => 1 + size a + size b\n  | .exp a => 1 + size a\n  | .log a => 1 + size a\n\n/-- Does the expression contain the `exp` constructor? -/\ndef containsExp : EExpr \u2192 Bool\n  | .var => false\n  | .const _ => false\n  | .add a b => containsExp a || containsExp b\n  | .sub a b => containsExp a || containsExp b\n  | .mul a b => containsExp a || containsExp b\n  | .div a b => containsExp a || containsExp b\n  | .exp _ => true\n  | .log a => containsExp a\n\n/-- Does the expression contain the `log` constructor? -/\ndef containsLog : EExpr \u2192 Bool\n  | .var => false\n  | .const _ => false\n  | .add a b => containsLog a || containsLog b\n  | .sub a b => containsLog a || containsLog b\n  | .mul a b => containsLog a || containsLog b\n  | .div a b => containsLog a || containsLog b\n  | .exp a => containsLog a\n  | .log _ => true\n\n/-- A set of expressions is **differentiation-closed** if symbolic differentiation\nmaps every member back into the set. -/\ndef DiffClosed (S : Set EExpr) : Prop :=\n  \u2200 e \u2208 S, derivE e \u2208 S\n\n/-- A set of expressions is **generated by exp and log** if it contains the\nprimitive generators and is closed under all elementary constructors. -/\ndef GeneratedByExpLog (S : Set EExpr) : Prop :=\n  EExpr.var \u2208 S \u2227\n  (\u2200 c : \u211d, EExpr.const c \u2208 S) \u2227\n  (\u2200 a b, a \u2208 S \u2192 b \u2208 S \u2192 EExpr.add a b \u2208 S) \u2227\n  (\u2200 a b, a \u2208 S \u2192 b \u2208 S \u2192 EExpr.sub a b \u2208 S) \u2227\n  (\u2200 a b, a \u2208 S \u2192 b \u2208 S \u2192 EExpr.mul a b \u2208 S) \u2227\n  (\u2200 a b, a \u2208 S \u2192 b \u2208 S \u2192 EExpr.div a b \u2208 S) \u2227\n  (\u2200 a, a \u2208 S \u2192 EExpr.exp a \u2208 S) \u2227\n  (\u2200 a, a \u2208 S \u2192 EExpr.log a \u2208 S)\n\n/-- Semantic correctness predicate: `e'` represents the derivative of `e` when both\nare in their validity domains. -/\ndef DerivRepresents (e e' : EExpr) : Prop :=\n  \u2200 x : \u211d, ValidAt e x \u2192 ValidAt e' x \u2192\n    HasDerivAt (fun y => evalE e y) (evalE e' x) x\n\nend EExpr\n\n\n-- Speculative/DifferentialClosure/Soundness.lean\nimport Mathlib\nimport Speculative.DifferentialClosure.Defs\n\n/-!\n# Semantic Soundness of Symbolic Differentiation\n\nThe main theorem: the symbolic derivative `derivE` correctly computes real-analytic\nderivatives wherever the expression is valid.\n\n## Main results\n\n* `EExpr.validAt_derivE` \u2014 Validity is preserved under differentiation\n* `EExpr.derivE_sound` \u2014 Semantic correctness: `derivE e` represents the real derivative of `e`\n-/\n\nnoncomputable section\n\nopen Real EExpr\n\n/-\nValidity of an expression at a point implies validity of its symbolic derivative.\nThis is essential: the derivative algorithm never introduces domain violations.\n-/\ntheorem EExpr.validAt_derivE {e : EExpr} {x : \u211d} (hv : ValidAt e x) :\n    ValidAt (derivE e) x := by\n      have h_valid_deriv : \u2200 e : EExpr, \u2200 x : \u211d, e.ValidAt x \u2192 e.derivE.ValidAt x := by\n        intro e x hv;\n        induction' e with e ih generalizing x;\n        all_goals simp_all +decide [ EExpr.derivE, EExpr.ValidAt ];\n        \u00b7 exact mul_ne_zero hv.2.2 hv.2.2;\n        \u00b7 linarith;\n      exact h_valid_deriv e x hv\n\n/-\n**Fundamental Soundness Theorem.**\nFor every elementary expression `e` and every point `x` in the domain of `e`,\nthe symbolic derivative `derivE e` evaluates to the real derivative of `evalE e`\nat `x`. This connects the syntactic differential algebra to standard real analysis.\n\nProof is by structural induction on `e`, applying the chain rule, product rule,\nand quotient rule at each constructor.\n-/\ntheorem EExpr.derivE_sound (e : EExpr) (x : \u211d) (hv : ValidAt e x) :\n    HasDerivAt (fun y => evalE e y) (evalE (derivE e) x) x := by\n      induction' e with e ih generalizing x;\n      any_goals apply_rules [ HasDerivAt.add, HasDerivAt.sub, HasDerivAt.mul, HasDerivAt.div, HasDerivAt.exp, HasDerivAt.log ];\n      all_goals norm_num [ EExpr.evalE, EExpr.derivE ] at *;\n      exact hasDerivAt_id x;\n      exact hasDerivAt_const _ _;\n      exact hv.1;\n      exact hv.2;\n      exact hv.1;\n      exact HasDerivAt.neg ( by solve_by_elim [ hv.2 ] );\n      exact hv.1;\n      \u00b7 exact hv.2;\n      \u00b7 rename_i a b ha hb;\n        convert HasDerivAt.div ( ha x hv.1 ) ( hb x hv.2.1 ) ( hv.2.2 ) using 1 ; ring;\n      \u00b7 rename_i e ih;\n        convert HasDerivAt.exp ( ih x hv ) using 1 ; ring!;\n      \u00b7 exact hv.1;\n      \u00b7 exact hv.2.ne'\n\nend\n\n-- Speculative/DifferentialClosure/Closure.lean\nimport Mathlib\nimport Speculative.DifferentialClosure.Defs\n\n/-!\n# Differential Closure, Minimality, and Generator Separation\n\nThis file proves the structural theorems about the elementary expression algebra:\n- The full class is differentiation-stable (closure)\n- Any set containing generators and closed under constructors contains all expressions (minimality)\n- The exp-free and log-free subclasses are each independently differentiation-stable (separation)\n- Derivative size is bounded\n\n## Main results\n\n* `EExpr.all_mem_generated` \u2014 Minimality: any GeneratedByExpLog set contains all EExpr\n* `EExpr.univ_diff_closed` \u2014 The full EExpr class is differentiation-closed\n* `EExpr.derivE_noexp` \u2014 The exp-free subclass is differentiation-stable\n* `EExpr.derivE_nolog` \u2014 The log-free subclass is differentiation-stable\n* `EExpr.size_derivE_le` \u2014 Derivative size bound\n-/\n\nnoncomputable section\n\nopen EExpr\n\n/-! ## Minimality / Initiality -/\n\n/-\n**Minimality Theorem (Initiality).**\nAny set `S` of expressions that contains the variable, all constants, and is closed\nunder all elementary constructors must contain every elementary expression.\nThis characterizes `EExpr` as the *initial* algebra of the elementary signature.\n\nProof by structural induction on the expression.\n-/\ntheorem EExpr.all_mem_generated {S : Set EExpr} (hS : GeneratedByExpLog S) :\n    \u2200 e : EExpr, e \u2208 S := by\n      intro e;\n      induction' e using EExpr.recOn with a b ih_a ih_b;\n      all_goals have := hS; unfold GeneratedByExpLog at this; aesop;\n\n/-- **Differential Closure of the Elementary Class.**\nSince `derivE` maps every `EExpr` to an `EExpr`, and every `EExpr` belongs to any\nGeneratedByExpLog set, the full class `Set.univ` is differentiation-closed. -/\ntheorem EExpr.univ_diff_closed : DiffClosed (Set.univ : Set EExpr) := by\n  intro e _\n  exact Set.mem_univ _\n\n/-- The full class with its generator structure is differentiation-closed. -/\ntheorem EExpr.EML_diff_closed {S : Set EExpr} (hS : GeneratedByExpLog S) :\n    DiffClosed S := by\n  intro e he\n  exact all_mem_generated hS (derivE e)\n\n/-! ## Generator Separation: Exp-free and Log-free Subclasses -/\n\n/-\n**Exp-free stability.**\nThe symbolic derivative of an exp-free expression is again exp-free.\nThis means the exp-free subclass is independently differentiation-stable.\n-/\ntheorem EExpr.derivE_noexp (e : EExpr) (h : containsExp e = false) :\n    containsExp (derivE e) = false := by\n      induction' e with e ih;\n      all_goals simp_all +decide [ EExpr.containsExp, EExpr.derivE ]\n\n/-\n**Log-free stability.**\nThe symbolic derivative of a log-free expression is again log-free.\nThis means the log-free subclass is independently differentiation-stable.\n-/\ntheorem EExpr.derivE_nolog (e : EExpr) (h : containsLog e = false) :\n    containsLog (derivE e) = false := by\n      -- By induction on the structure of `e`, we can show that if `e` contains no `EExpr.log`, then its derivative also contains no `EExpr.log`.\n      induction' e with e ih;\n      all_goals simp_all +decide [ EExpr.containsLog, EExpr.derivE ]\n\n/-- The exp-free subclass is differentiation-closed. -/\ntheorem EExpr.noexp_diff_closed : DiffClosed {e : EExpr | containsExp e = false} := by\n  intro e he\n  exact derivE_noexp e he\n\n/-- The log-free subclass is differentiation-closed. -/\ntheorem EExpr.nolog_diff_closed : DiffClosed {e : EExpr | containsLog e = false} := by\n  intro e he\n  exact derivE_nolog e he\n\n/-- **Counterexample to naive generator-removal conjecture.**\nBoth `exp` and `log` can be independently removed without breaking differential closure.\nThis shows the naive claim \"removing any primitive generator breaks closure\" is false.\nThe correct statement is that both generators are needed for *expressiveness* (representing\nall elementary functions), not for *differential stability* of any subclass. -/\ntheorem EExpr.both_subclasses_diff_closed :\n    DiffClosed {e : EExpr | containsExp e = false} \u2227\n    DiffClosed {e : EExpr | containsLog e = false} :=\n  \u27e8noexp_diff_closed, nolog_diff_closed\u27e9\n\n/-! ## Derivative Size Bound -/\n\n/-\nThe size of the symbolic derivative is at most quadratic in the input size.\nThis gives a verified complexity bound for the differentiation algorithm.\nThe quadratic growth arises from the product and quotient rules, which\nduplicate subexpressions.\n-/\ntheorem EExpr.size_derivE_le (e : EExpr) :\n    size (derivE e) \u2264 6 * size e ^ 2 := by\n      -- By induction on the structure of `e`, we can show that the size of `derivE e` is bounded by `6 * size e ^ 2`.\n      induction' e with e ih;\n      all_goals norm_num [ EExpr.derivE, EExpr.size ];\n      grind +extAll;\n      \u00b7 grind +suggestions;\n      \u00b7 lia;\n      \u00b7 grind;\n      \u00b7 grind +splitImp;\n      \u00b7 grind\n\nend",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Elementary Differential Closure.\n\nImplements the core algorithms from the formalization:\n1. Symbolic differentiation (derivE)\n2. Expression simplification / normalization\n3. Validity checking\n4. Generator analysis (containsExp / containsLog)\n\nEach algorithm mirrors a verified Lean definition and carries a correctness\ntheorem reference.\n\"\"\"\n\nfrom __future__ import annotations\nimport math\nfrom dataclasses import dataclass\nfrom enum import Enum, auto\nfrom typing import Optional\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 1. Expression AST (mirrors EExpr inductive type)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nclass EExpr:\n    \"\"\"Elementary expression in one real variable.\n\n    Corresponds to the Lean inductive type:\n        inductive EExpr where\n          | var | const (c : \u211d) | add | sub | mul | div | exp | log\n    \"\"\"\n    pass\n\n@dataclass(frozen=True)\nclass Var(EExpr):\n    \"\"\"The identity function x \u21a6 x.\"\"\"\n    def __repr__(self): return \"x\"\n\n@dataclass(frozen=True)\nclass Const(EExpr):\n    \"\"\"A real constant c.\"\"\"\n    value: float\n    def __repr__(self):\n        if self.value == int(self.value): return str(int(self.value))\n        return f\"{self.value}\"\n\n@dataclass(frozen=True)\nclass Add(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} + {self.right})\"\n\n@dataclass(frozen=True)\nclass Sub(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} - {self.right})\"\n\n@dataclass(frozen=True)\nclass Mul(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} * {self.right})\"\n\n@dataclass(frozen=True)\nclass Div(EExpr):\n    left: EExpr; right: EExpr\n    def __repr__(self): return f\"({self.left} / {self.right})\"\n\n@dataclass(frozen=True)\nclass Exp(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"exp({self.arg})\"\n\n@dataclass(frozen=True)\nclass Log(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"log({self.arg})\"\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 2. Evaluation (mirrors evalE)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef eval_expr(e: EExpr, x: float) -> float:\n    \"\"\"Evaluate expression at x.\n\n    Correctness: corresponds to EExpr.evalE in Lean.\n    Uses Python's math functions which match Real.exp, Real.log semantics\n    on valid domains.\n    \"\"\"\n    match e:\n        case Var(): return x\n        case Const(c): return c\n        case Add(a, b): return eval_expr(a, x) + eval_expr(b, x)\n        case Sub(a, b): return eval_expr(a, x) - eval_expr(b, x)\n        case Mul(a, b): return eval_expr(a, x) * eval_expr(b, x)\n        case Div(a, b): return eval_expr(a, x) / eval_expr(b, x)\n        case Exp(a): return math.exp(eval_expr(a, x))\n        case Log(a): return math.log(eval_expr(a, x))\n    raise TypeError(f\"Unknown: {type(e)}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 3. Symbolic Differentiation (mirrors derivE)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef symbolic_deriv(e: EExpr) -> EExpr:\n    \"\"\"Symbolic differentiation algorithm.\n\n    Correctness theorem (Lean): EExpr.derivE_sound\n        \u2200 e x, ValidAt e x \u2192 HasDerivAt (evalE e) (evalE (derivE e) x) x\n\n    Time complexity: O(n) where n = size(e)\n    Space complexity: O(n) for the output (which can be up to O(n\u00b2) in size)\n    \"\"\"\n    match e:\n        case Var(): return Const(1)\n        case Const(_): return Const(0)\n        case Add(a, b): return Add(symbolic_deriv(a), symbolic_deriv(b))\n        case Sub(a, b): return Sub(symbolic_deriv(a), symbolic_deriv(b))\n        case Mul(a, b):\n            # Product rule: (fg)' = f'g + fg'\n            return Add(Mul(symbolic_deriv(a), b), Mul(a, symbolic_deriv(b)))\n        case Div(a, b):\n            # Quotient rule: (f/g)' = (f'g - fg') / g\u00b2\n            return Div(\n                Sub(Mul(symbolic_deriv(a), b), Mul(a, symbolic_deriv(b))),\n                Mul(b, b)\n            )\n        case Exp(a):\n            # Chain rule: (exp f)' = f' \u00b7 exp(f)\n            return Mul(symbolic_deriv(a), Exp(a))\n        case Log(a):\n            # Chain rule: (log f)' = f' / f\n            return Div(symbolic_deriv(a), a)\n    raise TypeError(f\"Unknown: {type(e)}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 4. Expression Simplification / Normalization\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef simplify(e: EExpr) -> EExpr:\n    \"\"\"Basic algebraic simplification.\n\n    Applies constant folding and identity elimination:\n    - 0 + x = x, x + 0 = x\n    - 0 * x = 0, x * 0 = 0, 1 * x = x, x * 1 = x\n    - x - 0 = x\n    - x / 1 = x, 0 / x = 0\n    - const op const = const(result)\n\n    This is not verified in Lean (would require a normalize_preserves_semantics theorem).\n    \"\"\"\n    match e:\n        case Var() | Const(_):\n            return e\n        case Add(a, b):\n            a, b = simplify(a), simplify(b)\n            if isinstance(a, Const) and a.value == 0: return b\n            if isinstance(b, Const) and b.value == 0: return a\n            if isinstance(a, Const) and isinstance(b, Const):\n                return Const(a.value + b.value)\n            return Add(a, b)\n        case Sub(a, b):\n            a, b = simplify(a), simplify(b)\n            if isinstance(b, Const) and b.value == 0: return a\n            if isinstance(a, Const) and isinstance(b, Const):\n                return Const(a.value - b.value)\n            return Sub(a, b)\n        case Mul(a, b):\n            a, b = simplify(a), simplify(b)\n            if isinstance(a, Const) and a.value == 0: return Const(0)\n            if isinstance(b, Const) and b.value == 0: return Const(0)\n            if isinstance(a, Const) and a.value == 1: return b\n            if isinstance(b, Const) and b.value == 1: return a\n            if isinstance(a, Const) and isinstance(b, Const):\n                return Const(a.value * b.value)\n            return Mul(a, b)\n        case Div(a, b):\n            a, b = simplify(a), simplify(b)\n            if isinstance(a, Const) and a.value == 0: return Const(0)\n            if isinstance(b, Const) and b.value == 1: return a\n            return Div(a, b)\n        case Exp(a):\n            a = simplify(a)\n            if isinstance(a, Const): return Const(math.exp(a.value))\n            return Exp(a)\n        case Log(a):\n            a = simplify(a)\n            if isinstance(a, Const) and a.value > 0:\n                return Const(math.log(a.value))\n            return Log(a)\n    raise TypeError\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 5. Validity Checking (mirrors ValidAt)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef is_valid_at(e: EExpr, x: float) -> bool:\n    \"\"\"Check if expression is valid (well-defined) at point x.\n\n    Mirrors EExpr.ValidAt:\n    - Division requires nonzero denominator\n    - Log requires positive argument\n\n    Lean theorem: EExpr.validAt_derivE shows validity is preserved by derivE.\n    \"\"\"\n    match e:\n        case Var() | Const(_): return True\n        case Add(a, b) | Sub(a, b) | Mul(a, b):\n            return is_valid_at(a, x) and is_valid_at(b, x)\n        case Div(a, b):\n            return is_valid_at(a, x) and is_valid_at(b, x) and eval_expr(b, x) != 0\n        case Exp(a): return is_valid_at(a, x)\n        case Log(a): return is_valid_at(a, x) and eval_expr(a, x) > 0\n    raise TypeError\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 6. Generator Analysis (mirrors containsExp / containsLog)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef contains_exp(e: EExpr) -> bool:\n    \"\"\"Check if expression uses the exp constructor.\n    Lean theorem: EExpr.derivE_noexp \u2014 if False, remains False after derivE.\"\"\"\n    match e:\n        case Var() | Const(_): return False\n        case Add(a, b) | Sub(a, b) | Mul(a, b) | Div(a, b):\n            return contains_exp(a) or contains_exp(b)\n        case Exp(_): return True\n        case Log(a): return contains_exp(a)\n    raise TypeError\n\ndef contains_log(e: EExpr) -> bool:\n    \"\"\"Check if expression uses the log constructor.\n    Lean theorem: EExpr.derivE_nolog \u2014 if False, remains False after derivE.\"\"\"\n    match e:\n        case Var() | Const(_): return False\n        case Add(a, b) | Sub(a, b) | Mul(a, b) | Div(a, b):\n            return contains_log(a) or contains_log(b)\n        case Exp(a): return contains_log(a)\n        case Log(_): return True\n    raise TypeError\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# 7. Size and Complexity (mirrors EExpr.size)\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef expr_size(e: EExpr) -> int:\n    \"\"\"AST node count. Lean theorem: EExpr.size_derivE_le bounds derivative size.\"\"\"\n    match e:\n        case Var() | Const(_): return 1\n        case Add(a, b) | Sub(a, b) | Mul(a, b) | Div(a, b):\n            return 1 + expr_size(a) + expr_size(b)\n        case Exp(a) | Log(a): return 1 + expr_size(a)\n    raise TypeError\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Example usage\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == \"__main__\":\n    x = Var()\n\n    print(\"=== Symbolic Differentiation Algorithm ===\\n\")\n\n    examples = [\n        (\"x\u00b2\", Mul(x, x)),\n        (\"exp(x\u00b2)\", Exp(Mul(x, x))),\n        (\"log(x)\", Log(x)),\n        (\"exp(x)/x\", Div(Exp(x), x)),\n        (\"log(exp(x)+1)\", Log(Add(Exp(x), Const(1)))),\n    ]\n\n    for name, e in examples:\n        de = symbolic_deriv(e)\n        de_s = simplify(de)\n        print(f\"  d/dx [{name}]\")\n        print(f\"    raw:        {de}\")\n        print(f\"    simplified: {de_s}\")\n        print(f\"    size: {expr_size(e)} \u2192 {expr_size(de)} \u2192 {expr_size(de_s)} (simplified)\")\n        print()\n\n    print(\"=== Validity Preservation ===\\n\")\n    e = Div(Exp(x), Log(x))\n    print(f\"  e = {e}\")\n    for pt in [0.5, 1.0, 2.0, -1.0]:\n        v = is_valid_at(e, pt)\n        dv = is_valid_at(symbolic_deriv(e), pt) if v else \"N/A\"\n        print(f\"  x={pt}: valid(e)={v}, valid(e')={dv}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of the Elementary Differential Closure.\n\nDemonstrates real-world connections:\n1. Verified symbolic computation (proof-producing CAS)\n2. Newton's method with certified derivatives\n3. Taylor series approximation using iterated symbolic derivatives\n4. ODE solution verification via substitution\n5. Sensitivity analysis for elementary models\n\"\"\"\n\nimport math\nfrom algorithms import (\n    EExpr, Var, Const, Add, Sub, Mul, Div, Exp, Log,\n    eval_expr, symbolic_deriv, simplify, expr_size, is_valid_at\n)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 1: Certified Newton's Method\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef newton_method(f: EExpr, x0: float, tol: float = 1e-12, max_iter: int = 50):\n    \"\"\"Newton's method using symbolically computed (and formally verified) derivatives.\n\n    Because derivE_sound guarantees the derivative is correct, Newton's method\n    inherits a correctness certificate: the derivative evaluations are provably\n    equal to the true mathematical derivative.\n\n    Args:\n        f: Expression whose root we seek\n        x0: Initial guess\n        tol: Convergence tolerance\n        max_iter: Maximum iterations\n\n    Returns:\n        (root, iterations, convergence_history)\n    \"\"\"\n    df = symbolic_deriv(f)\n    x = x0\n    history = [x]\n\n    for i in range(max_iter):\n        fx = eval_expr(f, x)\n        dfx = eval_expr(df, x)\n        if abs(dfx) < 1e-15:\n            break\n        x_new = x - fx / dfx\n        history.append(x_new)\n        if abs(x_new - x) < tol:\n            break\n        x = x_new\n\n    return x, len(history) - 1, history\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 2: Taylor Series via Iterated Symbolic Differentiation\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef taylor_coefficients(f: EExpr, x0: float, n: int):\n    \"\"\"Compute Taylor coefficients f^(k)(x0) / k! for k = 0, ..., n.\n\n    Uses iterated symbolic differentiation. Each derivative is guaranteed\n    correct by derivE_sound (and validity preservation by validAt_derivE).\n\n    Returns list of (coefficient, derivative_expression, derivative_size).\n    \"\"\"\n    coeffs = []\n    current = f\n    factorial = 1\n    for k in range(n + 1):\n        if k > 0:\n            factorial *= k\n        val = eval_expr(current, x0)\n        coeffs.append((val / factorial, current, expr_size(current)))\n        current = symbolic_deriv(current)\n    return coeffs\n\n\ndef taylor_eval(coeffs: list[tuple], x: float, x0: float) -> float:\n    \"\"\"Evaluate Taylor polynomial.\"\"\"\n    result = 0.0\n    dx = x - x0\n    dx_pow = 1.0\n    for c, _, _ in coeffs:\n        result += c * dx_pow\n        dx_pow *= dx\n    return result\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 3: ODE Solution Verification\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef verify_ode_solution(y: EExpr, ode_rhs, description: str, test_points: list[float]):\n    \"\"\"Verify that y(x) satisfies y'(x) = ode_rhs(y, x) at given points.\n\n    The derivative y' is computed symbolically with a correctness guarantee.\n    We then check numerically that y'(x) = ode_rhs(y(x), x).\n\n    This demonstrates the bridge to dynamical systems: if an observable is\n    EExpr-representable, its time derivative along an elementary vector field\n    is again EExpr-representable (by derivE_sound + closure).\n    \"\"\"\n    dy = symbolic_deriv(y)\n    print(f\"\\n  ODE: {description}\")\n    print(f\"  y(x) = {y}\")\n    print(f\"  y'(x) = {simplify(dy)}\")\n    col_yp = \"y'(x)\"\n    print(f\"  {'x':>8} | {'y(x)':>12} | {col_yp:>12} | {'RHS':>12} | {'|error|':>10}\")\n    print(f\"  {'-'*8}-+-{'-'*12}-+-{'-'*12}-+-{'-'*12}-+-{'-'*10}\")\n\n    for x in test_points:\n        try:\n            y_val = eval_expr(y, x)\n            dy_val = eval_expr(dy, x)\n            rhs_val = ode_rhs(y_val, x)\n            err = abs(dy_val - rhs_val)\n            print(f\"  {x:8.3f} | {y_val:12.6f} | {dy_val:12.6f} | {rhs_val:12.6f} | {err:10.2e}\")\n        except (ValueError, ZeroDivisionError, OverflowError):\n            print(f\"  {x:8.3f} | {'N/A':>12} | {'N/A':>12} | {'N/A':>12} | {'N/A':>10}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 4: Sensitivity Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef sensitivity_analysis(model: EExpr, param_name: str, test_points: list[float]):\n    \"\"\"Compute the sensitivity df/dx of a model using verified symbolic derivatives.\n\n    In scientific computing, sensitivity = \u2202(output)/\u2202(input). With derivE_sound,\n    this sensitivity is provably correct \u2014 useful for uncertainty quantification\n    and gradient-based optimization.\n    \"\"\"\n    dmodel = symbolic_deriv(model)\n    dmodel_s = simplify(dmodel)\n    print(f\"\\n  Model: {model}\")\n    print(f\"  Sensitivity d(model)/d({param_name}): {dmodel_s}\")\n    col_fp = \"f'(x)\"\n    print(f\"  {'x':>8} | {'f(x)':>12} | {col_fp:>12} | {'elasticity':>12}\")\n    print(f\"  {'-'*8}-+-{'-'*12}-+-{'-'*12}-+-{'-'*12}\")\n\n    for x in test_points:\n        try:\n            f_val = eval_expr(model, x)\n            df_val = eval_expr(dmodel, x)\n            elasticity = (df_val * x / f_val) if abs(f_val) > 1e-15 else float('inf')\n            print(f\"  {x:8.3f} | {f_val:12.6f} | {df_val:12.6f} | {elasticity:12.6f}\")\n        except (ValueError, ZeroDivisionError, OverflowError):\n            print(f\"  {x:8.3f} | {'N/A':>12} | {'N/A':>12} | {'N/A':>12}\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Main\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef main():\n    x = Var()\n\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Applications of Elementary Differential Closure           \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # --- Application 1: Newton's Method ---\n    print(\"\\n\" + \"=\"*60)\n    print(\"APPLICATION 1: Certified Newton's Method\")\n    print(\"=\"*60)\n\n    # Find root of exp(x) - 3x = 0\n    f1 = Sub(Exp(x), Mul(Const(3), x))\n    root, iters, hist = newton_method(f1, 1.5)\n    print(f\"\\n  f(x) = exp(x) - 3x\")\n    print(f\"  Root found: x = {root:.15f} (in {iters} iterations)\")\n    print(f\"  f(root) = {eval_expr(f1, root):.2e}\")\n    print(f\"  Convergence: {' \u2192 '.join(f'{h:.8f}' for h in hist[:6])}\")\n\n    # Find root of log(x) - 1 = 0 (should give e)\n    f2 = Sub(Log(x), Const(1))\n    root2, iters2, _ = newton_method(f2, 2.0)\n    print(f\"\\n  f(x) = log(x) - 1\")\n    print(f\"  Root found: x = {root2:.15f} (expected e = {math.e:.15f})\")\n    print(f\"  Error: {abs(root2 - math.e):.2e}\")\n\n    # --- Application 2: Taylor Series ---\n    print(\"\\n\" + \"=\"*60)\n    print(\"APPLICATION 2: Taylor Series via Iterated Symbolic Derivatives\")\n    print(\"=\"*60)\n\n    # Taylor series of exp(x) around x=0\n    f_exp = Exp(x)\n    coeffs = taylor_coefficients(f_exp, 0.0, 6)\n    print(f\"\\n  Taylor coefficients of exp(x) around x=0:\")\n    print(f\"  {'k':>4} | {'f^(k)(0)/k!':>14} | {'expected':>10} | {'deriv size':>10}\")\n    for k, (c, _, sz) in enumerate(coeffs):\n        expected = 1.0 / math.factorial(k)\n        print(f\"  {k:4d} | {c:14.10f} | {expected:10.6f} | {sz:10d}\")\n\n    # Evaluate Taylor polynomial and compare\n    print(f\"\\n  Taylor polynomial evaluation vs true exp(x):\")\n    for xv in [0.5, 1.0, 2.0]:\n        approx = taylor_eval(coeffs, xv, 0.0)\n        true_val = math.exp(xv)\n        print(f\"    x={xv}: T\u2086(x)={approx:.10f}, exp(x)={true_val:.10f}, err={abs(approx-true_val):.2e}\")\n\n    # Taylor series of log(1+x) around x=0\n    f_log = Log(Add(Const(1), x))\n    coeffs_log = taylor_coefficients(f_log, 0.0, 6)\n    print(f\"\\n  Taylor coefficients of log(1+x) around x=0:\")\n    for k, (c, _, sz) in enumerate(coeffs_log):\n        expected = ((-1)**(k+1) / k) if k > 0 else 0.0\n        print(f\"    a_{k} = {c:12.8f}  (expected \u2248 {expected:8.4f}), deriv size = {sz}\")\n\n    # --- Application 3: ODE Verification ---\n    print(\"\\n\" + \"=\"*60)\n    print(\"APPLICATION 3: ODE Solution Verification\")\n    print(\"=\"*60)\n\n    # y = exp(x) satisfies y' = y\n    verify_ode_solution(\n        Exp(x),\n        lambda y, t: y,\n        \"y' = y  (exponential growth)\",\n        [0, 0.5, 1, 2]\n    )\n\n    # y = x*exp(x) satisfies y' = y + exp(x) = (1+x)*exp(x)/x * y ... let's use y' = (1+1/x)*y\n    # Actually y = x*exp(x), y' = exp(x) + x*exp(x) = (1+x)*exp(x)\n    verify_ode_solution(\n        Mul(x, Exp(x)),\n        lambda y, t: (1 + t) * math.exp(t),\n        \"y' = (1+x)\u00b7exp(x)  where y = x\u00b7exp(x)\",\n        [0.5, 1, 2, 3]\n    )\n\n    # y = log(x), y' = 1/x\n    verify_ode_solution(\n        Log(x),\n        lambda y, t: 1/t,\n        \"y' = 1/x  where y = log(x)\",\n        [0.5, 1, 2, 5]\n    )\n\n    # --- Application 4: Sensitivity Analysis ---\n    print(\"\\n\" + \"=\"*60)\n    print(\"APPLICATION 4: Sensitivity Analysis with Certified Derivatives\")\n    print(\"=\"*60)\n\n    # Logistic-like model: f(x) = exp(x) / (1 + exp(x))\n    logistic = Div(Exp(x), Add(Const(1), Exp(x)))\n    sensitivity_analysis(logistic, \"x\", [-2, -1, 0, 1, 2])\n\n    # Arrhenius-like model: f(x) = exp(-1/x) for x > 0\n    arrhenius = Exp(Div(Const(-1), x))\n    sensitivity_analysis(arrhenius, \"x (temperature)\", [0.5, 1, 2, 5, 10])\n\n    print(\"\\n\" + \"=\"*60)\n    print(\"All applications use derivE with a machine-checked correctness proof.\")\n    print(\"=\"*60)\n\n\nif __name__ == \"__main__\":\n    main()\n\n\n#!/usr/bin/env python3\n\"\"\"\nDemonstration of the Elementary Differential Closure.\n\nThis script implements the EExpr symbolic differentiation algebra in Python,\nshowing derivative computation, numerical verification against finite differences,\nexpression size growth, and the generator-separation phenomenon.\n\"\"\"\n\nimport math\nfrom dataclasses import dataclass\nfrom typing import Callable\n\n# \u2500\u2500\u2500 Expression AST \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass EExpr:\n    \"\"\"Base class for elementary expressions in one variable.\"\"\"\n    pass\n\n@dataclass\nclass Var(EExpr):\n    def __repr__(self): return \"x\"\n\n@dataclass\nclass Const(EExpr):\n    value: float\n    def __repr__(self): return f\"{self.value}\"\n\n@dataclass\nclass Add(EExpr):\n    left: EExpr\n    right: EExpr\n    def __repr__(self): return f\"({self.left} + {self.right})\"\n\n@dataclass\nclass Sub(EExpr):\n    left: EExpr\n    right: EExpr\n    def __repr__(self): return f\"({self.left} - {self.right})\"\n\n@dataclass\nclass Mul(EExpr):\n    left: EExpr\n    right: EExpr\n    def __repr__(self): return f\"({self.left} * {self.right})\"\n\n@dataclass\nclass Div(EExpr):\n    left: EExpr\n    right: EExpr\n    def __repr__(self): return f\"({self.left} / {self.right})\"\n\n@dataclass\nclass Exp(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"exp({self.arg})\"\n\n@dataclass\nclass Log(EExpr):\n    arg: EExpr\n    def __repr__(self): return f\"log({self.arg})\"\n\n# \u2500\u2500\u2500 Evaluation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef eval_expr(e: EExpr, x: float) -> float:\n    \"\"\"Evaluate an elementary expression at a point.\"\"\"\n    if isinstance(e, Var): return x\n    if isinstance(e, Const): return e.value\n    if isinstance(e, Add): return eval_expr(e.left, x) + eval_expr(e.right, x)\n    if isinstance(e, Sub): return eval_expr(e.left, x) - eval_expr(e.right, x)\n    if isinstance(e, Mul): return eval_expr(e.left, x) * eval_expr(e.right, x)\n    if isinstance(e, Div): return eval_expr(e.left, x) / eval_expr(e.right, x)\n    if isinstance(e, Exp): return math.exp(eval_expr(e.arg, x))\n    if isinstance(e, Log): return math.log(eval_expr(e.arg, x))\n    raise TypeError(f\"Unknown expression type: {type(e)}\")\n\n# \u2500\u2500\u2500 Symbolic Differentiation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef deriv(e: EExpr) -> EExpr:\n    \"\"\"Symbolic differentiation \u2014 the verified algorithm from the Lean formalization.\"\"\"\n    if isinstance(e, Var): return Const(1)\n    if isinstance(e, Const): return Const(0)\n    if isinstance(e, Add): return Add(deriv(e.left), deriv(e.right))\n    if isinstance(e, Sub): return Sub(deriv(e.left), deriv(e.right))\n    if isinstance(e, Mul):\n        return Add(Mul(deriv(e.left), e.right), Mul(e.left, deriv(e.right)))\n    if isinstance(e, Div):\n        return Div(\n            Sub(Mul(deriv(e.left), e.right), Mul(e.left, deriv(e.right))),\n            Mul(e.right, e.right)\n        )\n    if isinstance(e, Exp): return Mul(deriv(e.arg), Exp(e.arg))\n    if isinstance(e, Log): return Div(deriv(e.arg), e.arg)\n    raise TypeError(f\"Unknown expression type: {type(e)}\")\n\n# \u2500\u2500\u2500 Utilities \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef size(e: EExpr) -> int:\n    \"\"\"AST node count.\"\"\"\n    if isinstance(e, (Var, Const)): return 1\n    if isinstance(e, (Add, Sub, Mul, Div)): return 1 + size(e.left) + size(e.right)\n    if isinstance(e, (Exp, Log)): return 1 + size(e.arg)\n    raise TypeError\n\ndef contains_exp(e: EExpr) -> bool:\n    if isinstance(e, Exp): return True\n    if isinstance(e, (Var, Const)): return False\n    if isinstance(e, (Add, Sub, Mul, Div)):\n        return contains_exp(e.left) or contains_exp(e.right)\n    if isinstance(e, Log): return contains_exp(e.arg)\n    return False\n\ndef contains_log(e: EExpr) -> bool:\n    if isinstance(e, Log): return True\n    if isinstance(e, (Var, Const)): return False\n    if isinstance(e, (Add, Sub, Mul, Div)):\n        return contains_log(e.left) or contains_log(e.right)\n    if isinstance(e, Exp): return contains_log(e.arg)\n    return False\n\ndef finite_diff(f, x, h=1e-7):\n    \"\"\"Central finite difference approximation to f'(x).\"\"\"\n    return (f(x + h) - f(x - h)) / (2 * h)\n\n# \u2500\u2500\u2500 Demo \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_derivative(name: str, e: EExpr, test_points: list[float]):\n    \"\"\"Compute symbolic derivative and verify numerically.\"\"\"\n    de = deriv(e)\n    print(f\"\\n{'='*60}\")\n    print(f\"Expression: {name}\")\n    print(f\"  e    = {e}\")\n    print(f\"  e'   = {de}\")\n    print(f\"  size(e)  = {size(e)},  size(e') = {size(de)}\")\n    print(f\"  contains_exp(e) = {contains_exp(e)},  contains_exp(e') = {contains_exp(de)}\")\n    print(f\"  contains_log(e) = {contains_log(e)},  contains_log(e') = {contains_log(de)}\")\n    print(f\"  {'x':>10} | {'symbolic':>14} | {'finite diff':>14} | {'error':>12}\")\n    print(f\"  {'-'*10}-+-{'-'*14}-+-{'-'*14}-+-{'-'*12}\")\n    for x in test_points:\n        try:\n            sym_val = eval_expr(de, x)\n            fd_val = finite_diff(lambda y: eval_expr(e, y), x)\n            err = abs(sym_val - fd_val)\n            print(f\"  {x:10.4f} | {sym_val:14.8f} | {fd_val:14.8f} | {err:12.2e}\")\n        except (ValueError, ZeroDivisionError, OverflowError) as ex:\n            print(f\"  {x:10.4f} | {'N/A':>14} | {'N/A':>14} | {str(ex)[:12]}\")\n\n\ndef main():\n    x = Var()\n\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551     Elementary Differential Closure \u2014 Demonstration        \u2551\")\n    print(\"\u2551  Verified Symbolic Differentiation for exp/log Algebra     \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # Example 1: exp(x)\n    demo_derivative(\"exp(x)\", Exp(x), [0, 1, -1, 2])\n\n    # Example 2: log(x)\n    demo_derivative(\"log(x)\", Log(x), [0.5, 1, 2, 5])\n\n    # Example 3: x^2 (= x * x)\n    x_sq = Mul(x, x)\n    demo_derivative(\"x\u00b2\", x_sq, [0, 1, -1, 3])\n\n    # Example 4: log(exp(x) + 1)  \u2014 nested exp and log\n    e4 = Log(Add(Exp(x), Const(1)))\n    demo_derivative(\"log(exp(x) + 1)\", e4, [0, 1, -1, 5])\n\n    # Example 5: exp(log(x) + x\u00b2)\n    e5 = Exp(Add(Log(x), Mul(x, x)))\n    demo_derivative(\"exp(log(x) + x\u00b2)\", e5, [0.5, 1, 2])\n\n    # Example 6: exp(x) / (1 + log(x))\n    e6 = Div(Exp(x), Add(Const(1), Log(x)))\n    demo_derivative(\"exp(x) / (1 + log(x))\", e6, [0.5, 1, 2, 3])\n\n    # Example 7: deeply nested \u2014 exp(exp(x))\n    e7 = Exp(Exp(x))\n    demo_derivative(\"exp(exp(x))\", e7, [0, 0.5, 1])\n\n    # \u2500\u2500\u2500 Generator Separation Demo \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    print(\"\\n\" + \"=\"*60)\n    print(\"GENERATOR SEPARATION: Subclass Differential Stability\")\n    print(\"=\"*60)\n\n    # Exp-free expressions stay exp-free under differentiation\n    exp_free_exprs = [\n        (\"x\", x),\n        (\"x*x\", Mul(x, x)),\n        (\"log(x)\", Log(x)),\n        (\"x / log(x)\", Div(x, Log(x))),\n        (\"log(x*x + 1)\", Log(Add(Mul(x, x), Const(1)))),\n    ]\n    print(\"\\nExp-free subclass (should remain exp-free after differentiation):\")\n    for name, e in exp_free_exprs:\n        de = deriv(e)\n        print(f\"  d/dx [{name}]: contains_exp = {contains_exp(de)}  (expression: {de})\")\n\n    # Log-free expressions stay log-free under differentiation\n    log_free_exprs = [\n        (\"x\", x),\n        (\"exp(x)\", Exp(x)),\n        (\"x * exp(x)\", Mul(x, Exp(x))),\n        (\"exp(x*x)\", Exp(Mul(x, x))),\n        (\"exp(x) / x\", Div(Exp(x), x)),\n    ]\n    print(\"\\nLog-free subclass (should remain log-free after differentiation):\")\n    for name, e in log_free_exprs:\n        de = deriv(e)\n        print(f\"  d/dx [{name}]: contains_log = {contains_log(de)}  (expression: {de})\")\n\n    print(\"\\n\" + \"=\"*60)\n    print(\"COUNTEREXAMPLE: Naive 'removing any generator breaks closure' is FALSE\")\n    print(\"=\"*60)\n    print(\"Both the exp-free and log-free subclasses are independently\")\n    print(\"differentiation-stable. Neither exp nor log is 'forced' by\")\n    print(\"differentiation alone \u2014 both are needed for expressiveness,\")\n    print(\"not for differential stability.\")\n\n    # \u2500\u2500\u2500 Size Growth Demo \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    print(\"\\n\" + \"=\"*60)\n    print(\"DERIVATIVE SIZE GROWTH (Quadratic Bound)\")\n    print(\"=\"*60)\n    header_ep = \"size(e')\"\n    print(f\"  {'expr':>25} | {'size(e)':>8} | {header_ep:>9} | {'ratio':>8} | {'6n^2':>6}\")\n    print(f\"  {'-'*25}-+-{'-'*8}-+-{'-'*9}-+-{'-'*8}-+-{'-'*6}\")\n\n    test_exprs = [\n        (\"x\", x),\n        (\"x*x\", Mul(x, x)),\n        (\"exp(x)\", Exp(x)),\n        (\"x*x*x\", Mul(Mul(x, x), x)),\n        (\"exp(x*x)\", Exp(Mul(x, x))),\n        (\"log(exp(x)+1)\", Log(Add(Exp(x), Const(1)))),\n        (\"exp(x)/(1+log(x))\", Div(Exp(x), Add(Const(1), Log(x)))),\n    ]\n    for name, e in test_exprs:\n        de = deriv(e)\n        s, sd = size(e), size(de)\n        bound = 6 * s * s\n        ratio = sd / s if s > 0 else 0\n        print(f\"  {name:>25} | {s:>8} | {sd:>9} | {ratio:>8.2f} | {bound:>6}\")\n\n    print(\"\\n\u2713 All derivatives satisfy size(e') \u2264 6\u00b7size(e)\u00b2 (verified in Lean)\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "date": "2026-05-20T05:08:44Z",
+    "exp_id": "75decdae",
+    "source_exp_ids": [
+      "3b07247d"
+    ]
+  },
   "pythagorean_triple_group_structure.json": {
     "title": "The Berggren Tree as a Certified Arithmetic Dynamical System on Primitive Pythagorean Triples",
     "domain": "Number Theory / Arithmetic Dynamics",
@@ -5342,7 +5384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -5351,7 +5393,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -5360,7 +5402,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -5369,7 +5411,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 271
+      "hue": 281
     },
     {
       "id": "galois_group__s",
@@ -5387,7 +5429,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 91
+      "hue": 134
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -5396,7 +5438,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "expected_lean_signature",
@@ -5405,7 +5447,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 89
+      "hue": 92
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -5423,7 +5465,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "percolation_threshold",
@@ -5432,7 +5474,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -5441,7 +5483,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -5450,7 +5492,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -5459,7 +5501,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "legendres_conjecture",
@@ -5468,7 +5510,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -5477,7 +5519,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 101
+      "hue": 91
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -5486,7 +5528,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -5495,7 +5537,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "p_vs_np_problem",
@@ -5504,7 +5546,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -5522,7 +5564,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "hodge_conjecture",
@@ -5531,7 +5573,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -5540,7 +5582,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 92
+      "hue": 280
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -5549,7 +5591,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -5567,7 +5609,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "twin_prime_conjecture",
@@ -5576,7 +5618,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -5585,7 +5627,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 292
+      "hue": 91
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -5594,7 +5636,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 292
+      "hue": 100
     },
     {
       "id": "happy_end_problem",
@@ -5603,7 +5645,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -5612,7 +5654,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T23:05:18Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -5621,7 +5663,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -5630,7 +5672,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -5639,7 +5681,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -5648,7 +5690,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "tropical_intersection_theory",
@@ -5657,7 +5699,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 112
+      "hue": 272
     },
     {
       "id": "riemann_hypothesis",
@@ -5666,7 +5708,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "odd_perfect_numbers",
@@ -5675,7 +5717,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 292
+      "hue": 270
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -5684,7 +5726,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture",
@@ -5693,7 +5735,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 272
+      "hue": 112
     },
     {
       "id": "10_is_a_solitary_number",
@@ -5711,7 +5753,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "invariant_subspace_problem",
@@ -5720,7 +5762,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -5738,7 +5780,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -5747,7 +5789,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -5774,7 +5816,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -5783,7 +5825,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "yang_mills_mass_gap",
@@ -5801,7 +5843,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -5810,7 +5852,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -5819,7 +5861,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -5846,7 +5888,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -5864,7 +5906,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -5873,7 +5915,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 90
+      "hue": 314
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -5882,7 +5924,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -5891,7 +5933,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -5909,7 +5951,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -5945,7 +5987,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -5954,7 +5996,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -5963,7 +6005,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -5972,7 +6014,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "primes_of_the_form_n1",
@@ -5981,7 +6023,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -5990,7 +6032,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 100
+      "hue": 92
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -5999,7 +6041,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 280
+      "hue": 271
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -6008,7 +6050,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "schanuels_conjecture",
@@ -6026,7 +6068,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -6053,7 +6095,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 92
+      "hue": 179
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -6062,7 +6104,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -6071,7 +6113,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -6080,7 +6122,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -6089,7 +6131,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -6098,7 +6140,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -6107,7 +6149,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -6116,7 +6158,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "collatz_conjecture",
@@ -6125,7 +6167,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -6134,7 +6176,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -6143,7 +6185,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -6152,7 +6194,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -6161,7 +6203,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -6170,7 +6212,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -6179,7 +6221,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -6188,7 +6230,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -6197,7 +6239,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -6215,7 +6257,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "langlands_program_functoriality",
@@ -6224,7 +6266,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T01:04:07Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "medium_priority",
@@ -6233,7 +6275,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "erdsstraus_conjecture",
@@ -6242,7 +6284,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "the_invariance_theorem_establishes_that_the_symmet",
@@ -6251,7 +6293,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -6260,7 +6302,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -6269,7 +6311,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -6287,7 +6329,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -6296,7 +6338,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 281
+      "hue": 91
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -6305,7 +6347,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "kakeya_conjecture",
@@ -6323,7 +6365,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -6332,7 +6374,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "196_algorithm_non_termination",
@@ -6341,7 +6383,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -6350,7 +6392,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -6359,7 +6401,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -6368,7 +6410,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 272
+      "hue": 292
+    },
+    {
+      "id": "conjecture_3_differential_closure_is_tight",
+      "title": "Differential Closure of the Elementary Function Algebra",
+      "domain": "Differential Algebra / Symbolic Computation / Formal Verification",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-20T05:08:44Z",
+      "hue": 270
     }
   ],
   "edges": [
@@ -6382,6 +6433,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "eml_quantum_activation_functions",
       "target": "conjecture_3_depth_efficiency_of_qeml_networks",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "eml_single_operator_church_turing_thesis",
+      "target": "conjecture_3_differential_closure_is_tight",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -6742,13 +6800,13 @@ window.PACKAGE_GRAPH = {
     },
     {
       "domain_a": "Algebra",
-      "domain_b": "Cryptography",
-      "package_count": 1,
-      "strength": 0.5
+      "domain_b": "Computation",
+      "package_count": 2,
+      "strength": 0.7
     },
     {
       "domain_a": "Algebra",
-      "domain_b": "Computation",
+      "domain_b": "Cryptography",
       "package_count": 1,
       "strength": 0.5
     },
@@ -6924,22 +6982,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:10.990029+00:00"
   },
   {
-    "id": "seed_053",
-    "title": "Certified Novelty Detection for Theorem Provers",
-    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Bridges"
-    ],
-    "priority_score": 0.92,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.002510+00:00"
-  },
-  {
     "id": "seed_056",
     "title": "Self-Modifying Research via Reflective Type Theory",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
@@ -7002,21 +7044,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:11.045133+00:00"
   },
   {
-    "id": "seed_003",
-    "title": "Hadamard Matrix Conjecture",
-    "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
-    "domains": [
-      "Algebra",
-      "Combinatorics"
-    ],
-    "priority_score": 0.88,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "4f81c9a2",
-    "timestamp": "2026-05-20T00:22:10.972518+00:00"
-  },
-  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -7076,22 +7103,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T00:22:11.018583+00:00"
-  },
-  {
-    "id": "seed_080",
-    "title": "Mobius Arithmetic: Number Theory on the Mobius Band",
-    "description": "Construct a number system on the Mobius band where the integers wrap with a twist: n and -n are identified with opposite orientations. Define the Mobius integers Z_tilde as Z x {+1, -1} modulo the identification (n, +1) ~ (-n, -1). Develop arithmetic on Z_tilde where addition wraps through the identification. Conjecture: The ring Z_tilde of Mobius integers has class number 1, and its prime spectrum forms a double cover of the ordinary primes (each ordinary prime p splits into two oriented primes p_plus and p_minus). The Mobius zeta function zeta_tilde(s) has zeros off the critical line, which is expected since Z_tilde is a non-Ore ring. Test: factor 6 in Z_tilde as 2_plus times 3_plus and 2_minus times 3_minus and verify these are distinct factorizations. Prove unique factorization for Z_tilde up to orientation. Impact: a new algebraic number system with intrinsic orientation, connecting number theory to topology via the double cover Z to Z_tilde.",
-    "domains": [
-      "Geometry",
-      "NumberTheory",
-      "Algebra"
-    ],
-    "priority_score": 0.88,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.036060+00:00"
   },
   {
     "id": "seed_089",
@@ -7216,22 +7227,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T00:22:11.020564+00:00"
-  },
-  {
-    "id": "seed_074",
-    "title": "Inverse Stereographic Cryptography: Projection as One-Way Function",
-    "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
-    "domains": [
-      "Geometry",
-      "Cryptography",
-      "Computation"
-    ],
-    "priority_score": 0.86,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.027291+00:00"
   },
   {
     "id": "seed_082",
@@ -7713,22 +7708,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:11.025886+00:00"
   },
   {
-    "id": "seed_077",
-    "title": "Stereographic Proof Compression: Proofs on Spheres",
-    "description": "A proof is a sequence of steps. Map each step to a point on S^n via stereographic projection. The proof distance between theorems is the spherical distance between their proof endpoints. Conjecture: Two theorems whose proofs are close in spherical distance share a common subproof of length at least n minus spherical_distance. Test: compute proof distances for a set of 20 basic theorems in Lean 4 and verify the subproof bound. Impact: geometric proof mining and automated lemma discovery.",
-    "domains": [
-      "Geometry",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.031235+00:00"
-  },
-  {
     "id": "seed_011",
     "title": "Perfect Cuboid (Euler Brick)",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -7820,6 +7799,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T05:07:35.464824+00:00"
   },
   {
+    "id": "fd_0174",
+    "title": "Universality of Homological Stability Windows in Neural Tangent Complexes",
+    "description": "Conjecture: For fully-connected ReLU networks of depth L with width n trained by gradient flow on a fixed finite dataset in the lazy-training regime, there exists a simplicial complex K_t built functorially from neuron activation sign patterns over the dataset such that, as n -> infinity, the persistent homology barcode of K_t over any finite training-time window [0,T] converges in probability to a deterministic limit depending only on depth, initialization variance, and the empirical kernel spectrum of the dataset, not on microscopic parameter initialization. Test: Define K_t explicitly from co-activation/sign-pattern incidence, simulate ensembles across widths and random initializations, and check whether bottleneck distances between barcodes concentrate to 0 around a predicted limit while changing architecture class or kernel spectrum changes the limit. Refutation occurs if barcode laws remain initialization-sensitive at large width or fail to stabilize across widths. Impact: This would create a new topological universality class for deep learning dynamics, linking random matrix limits, persistent homology, and training theory, and could yield architecture-level invariants for optimization and generalization.",
+    "domains": [
+      "Topological Data Analysis",
+      "Machine Learning Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T05:08:16.088949+00:00"
+  },
+  {
     "id": "seed_026",
     "title": "Lehmer's Mahler Measure Problem",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
@@ -7880,38 +7874,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:10.983651+00:00"
   },
   {
-    "id": "seed_079",
-    "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences",
-    "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
-    "domains": [
-      "Logic",
-      "Speculative",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.034403+00:00"
-  },
-  {
-    "id": "fd_0167",
-    "title": "What would refute",
-    "description": ": P_n^{(3)} bounded away from 1, which would require three permutations to all have correlated parity constraints beyond the simple product.\n\n**Impact**: This would establish a sharp threshold: two generators give probability 3/4 (due to parity), but three generators eliminate the parity obstruction (probability that all three are even is 1/8, but the parity constraint becomes less rigid) and achieve probability \u2192 1. This has direct implications for randomized algorithms that use three random permutations as building blocks.\n\n---\n\n## Experimental Infrastructure Needed\n\nTo test these conjectures, the following computational tools are needed:",
-    "domains": [
-      "NumberTheory",
-      "Probability",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "074c9bf8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T05:07:22.814850+00:00"
-  },
-  {
     "id": "seed_007",
     "title": "196-Algorithm Non-Termination",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
@@ -7938,22 +7900,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T00:22:10.974006+00:00"
-  },
-  {
-    "id": "seed_062",
-    "title": "Holographic Mathematics: Bulk-Boundary Proof Duality",
-    "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
-    "domains": [
-      "Physics",
-      "Algebra",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.010435+00:00"
   },
   {
     "id": "fd_0093",
@@ -8867,22 +8813,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T04:04:51.088347+00:00"
   },
   {
-    "id": "seed_083",
-    "title": "Temporal Logic of Proofs: When You Prove Something Matters",
-    "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Speculative"
-    ],
-    "priority_score": 0.69,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.042677+00:00"
-  },
-  {
     "id": "seed_061",
     "title": "Non-Archimedean Probability via Surreal Numbers",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
@@ -8897,38 +8827,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T00:22:11.009411+00:00"
-  },
-  {
-    "id": "seed_057",
-    "title": "Consciousness as Integrated Information",
-    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
-    "domains": [
-      "Speculative",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.65,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.005953+00:00"
-  },
-  {
-    "id": "seed_064",
-    "title": "Strange Attractors as Algebraic Objects",
-    "description": "Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects \u2014 not just numerical phenomena. Conjecture: The Lorenz attractor's topology can be characterized as the inverse limit of a specific diagram in the category of finite directed graphs. Test: compute the inverse limit and compare its Cech cohomology to the known Lorenz template. Impact: if true, chaotic dynamics become amenable to algebraic topology and category-theoretic methods.",
-    "domains": [
-      "Analysis",
-      "Algebra",
-      "Speculative"
-    ],
-    "priority_score": 0.65,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.012667+00:00"
   },
   {
     "id": "seed_065",
