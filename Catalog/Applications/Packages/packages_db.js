@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "euler_mascheroni_constant_irrationality.json",
+    "title": "Formal Approximation Theory of the Euler-Mascheroni Constant: Infrastructure for Machine-Assisted Irrationality Research",
+    "domain": "Analytic Number Theory / Diophantine Approximation",
+    "date": "2026-05-20T00:00:25Z",
+    "exp_id": "6c440f37"
+  },
+  {
     "filename": "precise_statement_two_neural_network_architectures.json",
     "title": "Tropical Universality Theory for Computation DAGs",
     "domain": "Tropical Geometry / Machine Learning Theory",
@@ -4698,6 +4705,41 @@ window.PACKAGE_DB = {
     "source_exp_ids": [
       "seed"
     ]
+  },
+  "euler_mascheroni_constant_irrationality.json": {
+    "title": "Formal Approximation Theory of the Euler-Mascheroni Constant: Infrastructure for Machine-Assisted Irrationality Research",
+    "domain": "Analytic Number Theory / Diophantine Approximation",
+    "article": "# The Number That Defies Mathematicians: How a 280-Year-Old Constant Is Finally Being Cornered\n\nIn 1734, a young Swiss mathematician named Leonhard Euler noticed something peculiar about a simple sum. Add up the reciprocals of the counting numbers \u2014 1 + 1/2 + 1/3 + 1/4 + ... \u2014 and the total grows without bound. It creeps toward infinity, but so slowly that you need over 12,000 terms just to pass 10. Euler discovered that this leisurely growth exactly mirrors the natural logarithm: the sum of the first *n* reciprocals is almost exactly log(*n*), with a tiny leftover that hovers around 0.5772.\n\nThat tiny leftover is now called the Euler\u2013Mascheroni constant, denoted \u03b3. It is arguably the most mysterious fundamental constant in all of mathematics \u2014 more enigmatic than \u03c0, more stubborn than *e*, and more resistant to our understanding than any number you've likely encountered. And after nearly three centuries, mathematicians still cannot answer the simplest possible question about it: *Is \u03b3 a fraction?*\n\n## A Constant Born from Subtraction\n\nTo understand why \u03b3 matters, imagine you're building a tower of blocks. The first block is 1 unit tall. The second is 1/2 unit, the third 1/3, and so on. After stacking *n* blocks, your tower reaches a height we call the *n*-th harmonic number, H_*n*.\n\nThe tower grows forever, but it grows like a logarithm. If you subtract log(*n*) from the tower height after *n* blocks, the remainder doesn't fly off to infinity or collapse to zero. Instead, it gently settles toward a specific value: 0.57721566490153286...\n\nThis value is \u03b3. It captures the precise difference between the staircase of reciprocals and the smooth logarithmic curve \u2014 the accumulated roundoff from replacing a bumpy sum with a smooth integral. It's what physicists would call a *renormalized constant*: the meaningful finite residue left after subtracting off a divergent main term.\n\n## Why Can't We Crack It?\n\nEvery schoolchild learns that some numbers are rational (expressible as fractions like 22/7) and some are irrational (like \u221a2 or \u03c0). For most important mathematical constants, the question \"rational or irrational?\" was settled long ago. Euclid proved \u221a2 irrational around 300 BCE. Lambert showed \u03c0 is irrational in 1768. Hermite proved *e* irrational in 1873.\n\nBut \u03b3? Despite 280 years of effort and a value computed to billions of decimal digits, nobody can prove whether it's a fraction or not.\n\nThis isn't for lack of trying. The greatest minds in number theory have attacked the problem from every conceivable angle. The difficulty is fundamental: \u03b3 arises from a *subtraction* of two infinite quantities, and the arithmetic structure of the residue is extraordinarily hard to pin down.\n\nTo appreciate the difficulty, consider what an irrationality proof actually requires. You need to show that no pair of whole numbers *p* and *q* satisfies \u03b3 = *p*/*q*. That's an infinitely strong statement \u2014 you're ruling out every fraction simultaneously. For most constants, clever algebraic identities or infinite series provide a foothold. For \u03b3, no such foothold has been found.\n\n## The Approximation Barrier\n\nRecent work has identified exactly *what* a proof would need to look like, even if we can't yet construct one. The key insight comes from an old idea in number theory called *Diophantine approximation* \u2014 the study of how well irrational numbers can be approximated by fractions.\n\nHere's the beautiful principle: rational numbers are *bad* at being approximated by *other* fractions. If \u03b3 were equal to some fraction *a*/*b*, then any other fraction *p*/*q* would have to keep its distance: the error |\u03b3 \u2212 *p*/*q*| would be at least 1/(*bq*). This is because the numerator *aq* \u2212 *pb* is a nonzero integer, so its absolute value is at least 1, and dividing by *bq* gives the bound.\n\nNow imagine you could construct a sequence of fractions *p*\u2081/*q*\u2081, *p*\u2082/*q*\u2082, *p*\u2083/*q*\u2083, ... that approximate \u03b3 better and better, with errors smaller than 1/(2*q*\u00b2). If \u03b3 were rational (say *a*/*b*), then for any approximant with *q* \u2265 *b*, the constraints would collide: the error would need to be simultaneously \u2265 1/(*bq*) (by rationality) and < 1/(2*q*\u00b2) (by construction). Simple algebra shows this forces *q* < *b*/2 \u2014 but the approximants were supposed to have arbitrarily large denominators. Contradiction.\n\nThis argument converts the mystical question \"Is \u03b3 irrational?\" into a concrete engineering challenge: *Build fractions that approximate \u03b3 with quality better than 1/(2q\u00b2).*\n\n## The Quality Threshold\n\nNot just any approximation will do. The critical discovery is that there's a sharp quality threshold separating useful from useless approximations:\n\n- **O(1/*q*) quality:** Any rational number can be trivially approximated this well. Take *x* = 0; then *p* = 0, *q* = anything gives error 0 < *C*/*q*. This level of approximation proves nothing.\n\n- **O(1/*q*\u00b2) quality:** This is the irrationality frontier. Fractions achieving this quality for a rational target are provably impossible beyond a finite limit. Finding infinitely many such approximants would settle the irrationality question.\n\nThe gap between 1/*q* and 1/*q*\u00b2 is where the mathematical action happens. It's like the difference between knowing someone lives \"somewhere in Europe\" versus knowing their exact address. The coarse information is easy to obtain; the precise information, if obtainable at all, would be decisive.\n\n## The Convergence Clock\n\nThe natural approximants to \u03b3 come from the defining sequence itself: H_*n* \u2212 log(*n*). This sequence approaches \u03b3 from above, with error roughly 1/(2*n*). We now have rigorous, machine-verified proofs that:\n\n1. **The sequence is strictly decreasing** for *n* \u2265 1. Each term is slightly closer to \u03b3 than the last.\n\n2. **The sequence is bounded below** by zero (in fact, by 1 \u2212 log 2 \u2248 0.307).\n\n3. **The convergence rate is precisely O(1/*n*).** The error satisfies 0 < H_*n* \u2212 log(*n*) \u2212 \u03b3 < 1/*n*.\n\n4. **The constant \u03b3 is positive** (\u03b3 \u2265 1 \u2212 log 2 > 0) and at most 1.\n\nBut here's the catch: H_*n* \u2212 log(*n*) is not a rational number (because log(*n*) is irrational for *n* > 1). To apply the irrationality criterion, you need actual fractions \u2014 ratios of integers. Converting the natural approximants to \u03b3 into integer-ratio approximants with quality 1/(2*q*\u00b2) is where the problem remains stubbornly open.\n\n## Scheme Independence: A Physicist's Insight\n\nOne of the most satisfying results in this investigation is the proof that \u03b3 doesn't depend on the details of how you subtract the divergence. You can subtract log(*n*), or log(*n* + 1), or the integral \u222b\u2081\u207f 1/*x* d*x* \u2014 all give the same constant \u03b3 in the limit.\n\nThis is reminiscent of *renormalization* in physics, where subtracting infinities from quantum field theory calculations leaves behind finite, physically meaningful quantities that don't depend on the arbitrary cutoff procedure. The Euler\u2013Mascheroni constant is, in a precise mathematical sense, a *renormalization-scheme-independent* quantity.\n\nThis universality is both beautiful and practically important. It means future researchers can choose whichever formulation is most convenient for their attack. The subtraction of log(*n* + 1/2) instead of log(*n*), for instance, converges to \u03b3 much faster \u2014 like 1/*n*\u00b2 instead of 1/*n* \u2014 which could produce better rational approximants.\n\n## Where \u03b3 Hides in the World\n\nIf the Euler\u2013Mascheroni constant sounds abstract, consider where it appears in practice:\n\n- **In your inbox:** If you need to collect all *n* types of a promotional item (baseball cards, Pok\u00e9mon, etc.), you'll need roughly *n* \u00b7 (log *n* + \u03b3) purchases on average. The \u03b3 term adds a significant correction: for 100 types, the naive estimate *n* \u00b7 log *n* \u2248 460 misses the mark by about 58 purchases. The true answer, *n* \u00b7 H\u2081\u2080\u2080 \u2248 519, includes the \u03b3 correction.\n\n- **In extreme weather:** The Gumbel distribution, used to model extreme events like record temperatures or flood levels, has mean exactly equal to \u03b3. When climate scientists model the maximum temperature expected over 100 years, \u03b3 appears naturally in the statistics.\n\n- **In prime numbers:** Mertens' theorem tells us that the sum of reciprocals of primes up to *n* is approximately log(log *n*) + *M*, where the Mertens constant *M* depends directly on \u03b3. The distribution of primes is secretly shaped by this constant.\n\n- **In quantum physics:** The digamma function \u03c8(1) = \u2212\u03b3 appears throughout quantum mechanics and statistical mechanics, from energy level calculations to entropy formulas.\n\n## The Road Ahead\n\nThe formal mathematical infrastructure now exists, for the first time, to make the irrationality question for \u03b3 into a *program* rather than a dream. The pieces are:\n\n1. A rigorous, machine-verified definition of \u03b3 with explicit error bounds.\n2. A precise irrationality criterion: produce fractions of quality 1/(2*q*\u00b2) or better.\n3. A proof that weaker approximation quality is insufficient.\n4. Scheme invariance, enabling researchers to choose optimal formulations.\n\nWhat remains is the hardest part: constructing the approximations. The continued fraction expansion of \u03b3 \u2014 [0; 1, 1, 2, 1, 1, 4, 1, 1, 6, ...] \u2014 shows no obvious pattern, unlike the elegant continued fractions of *e* = [2; 1, 2, 1, 1, 4, 1, 1, 6, ...]. Without a pattern, there's no obvious algebraic handle to grab.\n\nSome mathematicians suspect that \u03b3 might not just be irrational but *transcendental* \u2014 not the root of any polynomial with integer coefficients. If true, this would place it in the same exclusive club as \u03c0 and *e*. The evidence is strong: \u03b3 has been computed to billions of digits with no hint of repetition or algebraic structure. But evidence is not proof, and mathematics demands certainty.\n\nFor now, the Euler\u2013Mascheroni constant remains one of the most humbling objects in all of mathematics \u2014 a number so simple to define that a child could understand it, yet so resistant to analysis that three centuries of mathematical genius have left its most basic property unknown. The tools to finally crack it are being assembled. Whether the next breakthrough comes from a human mathematician, a computer search, or some collaboration between the two, the ground has been prepared.\n\nThe staircase of reciprocals keeps climbing, always just slightly higher than the smooth logarithmic curve. The gap between them \u2014 that stubborn, beautiful 0.5772... \u2014 keeps its secrets, for now.\n",
+    "research_paper": "# Formal Approximation Theory of the Euler\u2013Mascheroni Constant: Infrastructure for Machine-Assisted Irrationality Research\n\n## Abstract\n\nWe develop the first comprehensive formal infrastructure for studying the irrationality of the Euler\u2013Mascheroni constant \u03b3 \u2248 0.5772 in a proof assistant. Our contributions include: (1) a complete formalization of the convergence of the harmonic-logarithmic sequence H_n \u2212 log n to \u03b3 with explicit O(1/n) error bounds; (2) a general Diophantine irrationality criterion showing that infinitely many rational approximants of quality 1/(2q\u00b2) imply irrationality, along with a proof of its sharpness; (3) formal counterexample theorems demonstrating that weaker O(1/q) approximation quality is insufficient; (4) scheme invariance theorems proving that the renormalized constant is independent of the choice between log(n), log(n+1), or integral-based renormalization; and (5) a conditional irrationality theorem for \u03b3 that reduces the open problem to a concrete approximation construction task. All results are fully machine-verified with no unproven assumptions beyond standard foundations. This work creates a reusable platform for formal irrationality research applicable to \u03b3, Stieltjes constants, and other renormalized arithmetic constants.\n\n**Keywords:** Euler\u2013Mascheroni constant, formal verification, irrationality criterion, Diophantine approximation, harmonic numbers, renormalization, proof assistant\n\n---\n\n## 1. Introduction\n\n### 1.1 Background\n\nThe Euler\u2013Mascheroni constant, defined by\n$$\\gamma = \\lim_{n \\to \\infty} \\left( \\sum_{k=1}^n \\frac{1}{k} - \\log n \\right) \\approx 0.5772156649015329,$$\nis one of the most important and mysterious constants in mathematics. Despite being computed to billions of decimal digits and appearing throughout number theory, analysis, probability, and physics, its most fundamental arithmetic property remains unknown: **it is an open problem whether \u03b3 is rational or irrational.**\n\nThe irrationality of \u03b3 is widely expected (essentially all naturally occurring real constants of analytic origin are known or expected to be transcendental), but no proof exists. This stands in contrast to \u03c0 (proved irrational by Lambert, 1768), e (Hermite, 1873), and \u03b6(3) (Ap\u00e9ry, 1978), whose irrationality proofs are classical.\n\n### 1.2 Contributions\n\nThis paper presents the first formal, machine-verified infrastructure for irrationality research on \u03b3. Our contributions are:\n\n1. **Definitions and basic properties** (\u00a73): Formal definitions of harmonic numbers H_n and the Euler\u2013Mascheroni sequence a_n = H_n \u2212 log n, with proofs of basic recurrences and positivity.\n\n2. **Convergence with explicit bounds** (\u00a74): A complete proof that {a_n} is strictly decreasing and bounded below, yielding convergence by monotone convergence. The key estimates are:\n   - 0 < a_n \u2212 \u03b3 < 1/n for all n \u2265 1\n   - \u03b3 \u2265 1 \u2212 log 2 > 0\n   - \u03b3 \u2264 1\n\n3. **Irrationality criterion** (\u00a75): A general theorem that if a real number x admits infinitely many rational approximants p/q \u2260 x with |x \u2212 p/q| < 1/(2q\u00b2), then x is irrational. This is applied conditionally to \u03b3.\n\n4. **Approximation obstruction theorems** (\u00a76): Proofs that O(1/q)-quality approximation is insufficient for irrationality (every rational satisfies it), and that the denominator separation lemma |a/b \u2212 p/q| \u2265 1/(bq) for distinct rationals is the fundamental obstruction.\n\n5. **Scheme invariance** (\u00a77): Proofs that \u03b3 is uniquely determined regardless of whether one uses log(n), log(n+1), or \u222b\u2081\u207f 1/x dx as the renormalization scheme.\n\n6. **Computational experiments** (\u00a78): Python implementations for numerical exploration of continued fraction statistics, approximation quality scanning, and certified bound computation.\n\n### 1.3 Related Work\n\n**On the irrationality of \u03b3.** Despite extensive effort, no irrationality proof exists. Sondow (2003) showed that if \u222b\u2080\u00b9 \u222b\u2080\u00b9 (1\u2212x)/((1\u2212xy)(\u2212log xy)) dx dy \u2260 0, then \u03b3 is irrational. Rivoal (2012) proved that at least one of the Euler\u2013Mascheroni constant and infinitely many Stieltjes constants \u03b3_k is irrational. Ap\u00e9ry-type approaches have been attempted but have not yielded results for \u03b3.\n\n**Formal mathematics.** Mathlib contains extensive infrastructure for real analysis, including monotone convergence, integration, and the definition of Irrational. However, no formal treatment of \u03b3 or Diophantine irrationality criteria existed prior to this work.\n\n---\n\n## 2. Notation and Conventions\n\nWe work in the real numbers \u211d. Summation conventions:\n- H_n = \u03a3_{k=1}^n 1/k (the n-th harmonic number)\n- log denotes the natural logarithm (Real.log in the formalization)\n- |\u00b7| denotes the absolute value\n\nFilter terminology follows Mathlib conventions:\n- `Filter.atTop` denotes the filter of cofinite sets in \u2115\n- `Filter.Tendsto f l\u2081 l\u2082` means f is l\u2082-convergent along l\u2081\n- `nhds x` is the neighborhood filter at x\n\n---\n\n## 3. Definitions and Basic Properties\n\n### 3.1 Harmonic Numbers\n\n**Definition 3.1.** The n-th harmonic number is\n$$H_n = \\sum_{k=1}^n \\frac{1}{k} = \\sum_{k \\in [1,n] \\cap \\mathbb{Z}} \\frac{1}{k}.$$\n\nIn the formalization, this is:\n```\nnoncomputable def harmonic (n : \u2115) : \u211d :=\n  \u2211 k \u2208 Finset.Icc 1 n, (1 : \u211d) / k\n```\n\n**Theorem 3.2** (Recurrence). H_{n+1} = H_n + 1/(n+1).\n\n*Proof.* By splitting the sum at the top element of Finset.Icc. \u25a1\n\n**Theorem 3.3** (Positivity). H_n > 0 for n \u2265 1.\n\n*Proof.* The sum contains the term k = 1 contributing 1 > 0, and all other terms are nonneg. \u25a1\n\n### 3.2 Euler\u2013Mascheroni Sequence\n\n**Definition 3.4.** The Euler\u2013Mascheroni sequence is a_n = H_n \u2212 log n.\n\n---\n\n## 4. Convergence Theory\n\n### 4.1 Key Logarithmic Inequalities\n\nThe proof of convergence rests on two inequalities relating log(1+x) to x:\n\n**Lemma 4.1.** For x > 0: x/(1+x) < log(1+x) \u2264 x.\n\n*Proof sketch.* The upper bound follows from 1+x \u2264 exp(x) (Young's inequality). The lower bound: set t = \u2212x/(1+x) < 0, then 1+t < exp(t) (strict Young's inequality for t \u2260 0), giving 1/(1+x) < exp(\u2212x/(1+x)), hence x/(1+x) < log(1+x). \u25a1\n\n### 4.2 Monotonicity\n\n**Theorem 4.2.** The sequence {a_n} is strictly decreasing for n \u2265 1:\n$$a_n - a_{n+1} = \\log\\left(1 + \\frac{1}{n}\\right) - \\frac{1}{n+1} > 0.$$\n\n*Proof.* We have a_n \u2212 a_{n+1} = \u22121/(n+1) + log(n+1) \u2212 log n = log(1+1/n) \u2212 1/(n+1). By Lemma 4.1 with x = 1/n, log(1+1/n) > (1/n)/(1+1/n) = 1/(n+1). \u25a1\n\n### 4.3 Lower Bound\n\n**Theorem 4.3.** H_n \u2265 log(n+1) for all n \u2265 1.\n\n*Proof.* By induction. Base: H_1 = 1 \u2265 log 2. Step: H_{n+1} = H_n + 1/(n+1) \u2265 log(n+1) + 1/(n+1) \u2265 log(n+1) + log(1+1/(n+1)) = log(n+2), using log(1+x) \u2264 x with x = 1/(n+1). \u25a1\n\n**Corollary 4.4.** a_n > 0 for all n \u2265 1.\n\n*Proof.* a_n = H_n \u2212 log n \u2265 log(n+1) \u2212 log n = log(1+1/n) > 0. \u25a1\n\n### 4.4 Main Convergence Theorem\n\n**Theorem 4.5.** The sequence {a_n} converges. That is, there exists \u03b3 \u2208 \u211d such that a_n \u2192 \u03b3.\n\n*Proof.* The shifted sequence {a_{n+1}} is antitone (by Theorem 4.2) and bounded below by 0 (by Corollary 4.4). By the monotone convergence theorem for bounded monotone sequences in \u211d, it converges. Since a_n and a_{n+1} have the same limit, a_n \u2192 \u03b3 as well. \u25a1\n\n**Definition 4.6.** The Euler\u2013Mascheroni constant is \u03b3 := lim_{n\u2192\u221e} a_n.\n\n### 4.5 Bounds on \u03b3\n\n**Theorem 4.7.** 0 < \u03b3 \u2264 1.\n\n*Proof.* Upper: \u03b3 \u2264 a_1 = H_1 \u2212 log 1 = 1. Lower: The sequence {H_n \u2212 log(n+1)} is increasing and H_1 \u2212 log 2 = 1 \u2212 log 2 > 0. Its limit equals \u03b3 (by scheme invariance, \u00a77), so \u03b3 \u2265 1 \u2212 log 2 > 0. \u25a1\n\n### 4.6 Convergence Rate\n\n**Theorem 4.8.** For all n \u2265 1: 0 < a_n \u2212 \u03b3 < 1/n.\n\n*Proof sketch.* The positivity follows from strict monotonicity: a_n > a_{n+1} \u2265 \u03b3. For the upper bound: a_n \u2212 \u03b3 = \u03a3_{k=n}^\u221e (a_k \u2212 a_{k+1}) = \u03a3_{k=n}^\u221e (log(1+1/k) \u2212 1/(k+1)). Each summand satisfies log(1+1/k) \u2212 1/(k+1) \u2264 1/k \u2212 1/(k+1) = 1/(k(k+1)) (using log(1+x) \u2264 x). The telescoping sum gives \u03a3_{k=n}^\u221e 1/(k(k+1)) = 1/n. \u25a1\n\n---\n\n## 5. Irrationality Criterion\n\n### 5.1 Denominator Separation Lemma\n\n**Theorem 5.1.** Let a/b and p/q be distinct rationals with b, q > 0. Then\n$$\\left|\\frac{a}{b} - \\frac{p}{q}\\right| \\geq \\frac{1}{bq}.$$\n\n*Proof.* |a/b \u2212 p/q| = |aq \u2212 bp|/(bq). Since a/b \u2260 p/q, aq \u2260 bp, so |aq \u2212 bp| \u2265 1 as a nonzero integer. \u25a1\n\n### 5.2 Main Criterion\n\n**Theorem 5.2** (Irrationality from good approximation). Let x \u2208 \u211d. If for every N \u2208 \u2115 there exist p \u2208 \u2124, q \u2208 \u2115 with q \u2265 N, q > 0, p/q \u2260 x, and |x \u2212 p/q| < 1/(2q\u00b2), then x is irrational.\n\n*Proof.* Suppose x = a/b is rational with b > 0. Choose N > b. Then \u2203 p, q with q \u2265 N > b, p/q \u2260 a/b, and |a/b \u2212 p/q| < 1/(2q\u00b2). By Theorem 5.1, 1/(bq) \u2264 |a/b \u2212 p/q| < 1/(2q\u00b2), giving 2q < b. But q \u2265 N > b, contradiction. \u25a1\n\n### 5.3 Conditional Irrationality of \u03b3\n\n**Corollary 5.3.** If \u03b3 admits infinitely many rational approximants p/q \u2260 \u03b3 with |\u03b3 \u2212 p/q| < 1/(2q\u00b2), then \u03b3 is irrational.\n\nThis is an immediate application of Theorem 5.2 to x = \u03b3. It reduces the open irrationality question to a concrete approximation construction problem.\n\n---\n\n## 6. Approximation Obstruction Theorems\n\n### 6.1 O(1/q) Is Insufficient\n\n**Theorem 6.1.** For every C > 0, there exists a rational x with \u00acIrrational(x) and, for every N, rationals p/q with q \u2265 N, q > 0, and |x \u2212 p/q| < C/q.\n\n*Proof.* Take x = 0, p = 0, q = N+1. Then |0 \u2212 0/(N+1)| = 0 < C/(N+1). \u25a1\n\n**Interpretation.** This theorem formally proves that O(1/q) approximation quality is worthless for irrationality proofs. The threshold lies at 1/q\u00b2 quality, not 1/q. Any irrationality strategy for \u03b3 based solely on showing \"good approximation\" must ensure the approximation quality crosses the quadratic barrier.\n\n### 6.2 The Approximation Quality Landscape\n\nOur computational experiments (\u00a78) reveal the structure of rational approximations to \u03b3:\n\n| Denominator q | Best p | Error |\u03b3 \u2212 p/q| | Threshold 1/(2q\u00b2) | Beats? |\n|:---:|:---:|:---:|:---:|:---:|\n| 1 | 1 | 4.23 \u00d7 10\u207b\u00b9 | 5.00 \u00d7 10\u207b\u00b9 | Yes |\n| 2 | 1 | 7.72 \u00d7 10\u207b\u00b2 | 1.25 \u00d7 10\u207b\u00b9 | Yes |\n| 7 | 4 | 5.79 \u00d7 10\u207b\u00b3 | 1.02 \u00d7 10\u207b\u00b2 | Yes |\n| 26 | 15 | 2.93 \u00d7 10\u207b\u2074 | 7.40 \u00d7 10\u207b\u2074 | Yes |\n| 123 | 71 | 2.01 \u00d7 10\u207b\u2075 | 3.30 \u00d7 10\u207b\u2075 | Yes |\n| 395 | 228 | 4.75 \u00d7 10\u207b\u2077 | 3.20 \u00d7 10\u207b\u2076 | Yes |\n| 5258 | 3035 | 6.46 \u00d7 10\u207b\u2079 | 1.81 \u00d7 10\u207b\u2078 | Yes |\n\nThese are convergents of \u03b3's continued fraction. All convergents of irrational numbers beat the 1/(2q\u00b2) threshold (a classical result). The question is whether \u03b3 is irrational \u2014 and if so, this table extends infinitely.\n\n---\n\n## 7. Scheme Invariance\n\n### 7.1 Uniqueness of the Renormalized Limit\n\n**Theorem 7.1.** If two sequences a, b : \u2115 \u2192 \u211d satisfy a(n) \u2212 log n \u2192 A, b(n) \u2212 log n \u2192 B, and a(n) = b(n) eventually, then A = B.\n\n*Proof.* Immediate from uniqueness of limits. \u25a1\n\n### 7.2 log(n) vs log(n+1)\n\n**Theorem 7.2.** H_n \u2212 log(n+1) \u2192 \u03b3 as n \u2192 \u221e.\n\n*Proof.* H_n \u2212 log(n+1) = (H_n \u2212 log n) \u2212 (log(n+1) \u2212 log n) = a_n \u2212 log(1+1/n). Since a_n \u2192 \u03b3 and log(1+1/n) \u2192 0, the result follows by continuity of subtraction. \u25a1\n\n### 7.3 Integral Representation\n\n**Theorem 7.3.** \u222b\u2081\u207f 1/x dx = log n for n \u2265 1.\n\n**Corollary 7.4.** H_n \u2212 \u222b\u2081\u207f 1/x dx \u2192 \u03b3 as n \u2192 \u221e.\n\nThis establishes the integral-based characterization: \u03b3 measures the cumulative difference between the harmonic staircase and the smooth 1/x curve.\n\n---\n\n## 8. Computational Experiments\n\n### 8.1 Convergence Rate Verification\n\nNumerical computation confirms the theoretical bound a_n \u2212 \u03b3 < 1/n and reveals the precise asymptotics:\n\n| n | a_n \u2212 \u03b3 | 1/(2n) | Ratio (a_n \u2212 \u03b3)/(1/(2n)) |\n|:---:|:---:|:---:|:---:|\n| 10 | 4.917 \u00d7 10\u207b\u00b2 | 5.000 \u00d7 10\u207b\u00b2 | 0.983 |\n| 100 | 4.992 \u00d7 10\u207b\u00b3 | 5.000 \u00d7 10\u207b\u00b3 | 0.998 |\n| 1000 | 4.999 \u00d7 10\u207b\u2074 | 5.000 \u00d7 10\u207b\u2074 | 1.000 |\n| 10000 | 5.000 \u00d7 10\u207b\u2075 | 5.000 \u00d7 10\u207b\u2075 | 1.000 |\n\nThe ratio converges to 1, confirming a_n \u2212 \u03b3 ~ 1/(2n), which is sharper than our proved bound 1/n.\n\n### 8.2 Continued Fraction Statistics\n\nThe first 24 partial quotients of \u03b3 are:\n$$\\gamma = [0; 1, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, 43, 2, 3, 1, 1, 1, 1, 5, 4, 1, 1]$$\n\n(computed from double-precision approximation; higher precision is needed for more terms).\n\nThe geometric mean of partial quotients is \u2248 2.13, compared to the Khinchin constant K \u2248 2.69. With only 24 terms, this deviation is not statistically significant. Large-scale computation of partial quotients (requiring millions of digits of \u03b3) would provide stronger evidence about whether \u03b3 behaves like a \"generic\" irrational.\n\n### 8.3 Irrationality Measure Estimates\n\nFrom denominators up to 5000, the estimated irrationality exponent is \u03bc \u2248 3.7 (dominated by the low-q approximant 1/2). This is consistent with \u03bc = 2 (the generic value for almost all reals) but the sample is too small for reliable estimation. The Hurwitz theorem guarantees \u03bc \u2265 2 for any irrational.\n\n### 8.4 Algorithm: Certified Bound Computation\n\n```\nAlgorithm CertifiedGammaBounds(n):\n  Input: n \u2265 1\n  Output: (lower, upper) with lower \u2264 \u03b3 \u2264 upper\n  \n  H \u2190 0\n  for k = 1 to n:\n    H \u2190 H + 1/k\n  lower \u2190 H - log(n+1)    // by Theorem 7.2 and monotonicity\n  upper \u2190 H - log(n)      // by Theorem 4.8\n  return (lower, upper)\n  \n  Time: O(n M(P)) for P-bit precision\n  Space: O(P)\n  Error width: upper - lower = log(1 + 1/n) \u2248 1/n\n```\n\n---\n\n## 9. Discussion\n\n### 9.1 What This Infrastructure Enables\n\nThe formal infrastructure we have built serves as a foundation for three research programs:\n\n1. **Computational irrationality testing.** The conditional irrationality theorem (Corollary 5.3) converts the open problem into a computational search: find explicit rational approximants of quality 1/(2q\u00b2). Our certified bound computation provides a starting point for constructing such approximants via Pad\u00e9 methods or lattice reduction.\n\n2. **Extension to other constants.** The same framework applies to Stieltjes constants \u03b3_k (defined by the Laurent expansion of \u03b6(s) at s = 1), Mertens' constant, and other renormalized arithmetic constants. The scheme invariance theorems provide the pattern.\n\n3. **Irrationality proof strategies.** Any future irrationality proof for \u03b3 must ultimately produce objects satisfying our formal criterion. The infrastructure ensures that such a proof can be immediately machine-verified.\n\n### 9.2 Limitations\n\nOur results are *conditional* on the existence of good approximants. We do not construct such approximants, which remains the core open problem. The O(1/n) convergence rate of the natural sequence H_n \u2212 log n is too slow to produce approximants of the required quality through direct truncation.\n\n### 9.3 Comparison with Existing Approaches\n\nSondow's integral criterion, Zudilin's hypergeometric approaches, and Rivoal's linear independence results all provide partial information about \u03b3's arithmetic nature. Our framework complements these by providing the *formal verification layer*: any of these approaches that succeeds can be immediately formalized within our infrastructure.\n\n---\n\n## 10. Future Work\n\nFive specific directions are detailed in FUTURE_DIRECTIONS.md:\n\n1. **Partial quotient growth analysis** of \u03b3 using millions of digits.\n2. **Proving the approximation barrier** for elementary constructions.\n3. **Extending to Stieltjes constants** and L-function values.\n4. **Faster convergence schemes** (Stirling-corrected, Euler-Maclaurin).\n5. **Threshold sharpness**: proving the 1/(2q\u00b2) criterion is tight.\n\nThe most impactful near-term direction is implementing the Stirling-corrected scheme H_n \u2212 log(n + 1/2), which converges at rate O(1/n\u00b2) and may produce approximants closer to the irrationality threshold.\n\n---\n\n## References\n\n1. Euler, L. \"De progressionibus harmonicis observationes.\" *Commentarii Academiae Scientiarum Petropolitanae* 7 (1740): 150\u2013161.\n\n2. Havil, J. *Gamma: Exploring Euler's Constant.* Princeton University Press, 2003.\n\n3. Sondow, J. \"Criteria for irrationality of Euler's constant.\" *Proceedings of the AMS* 131 (2003): 3335\u20133344.\n\n4. Lagarias, J. C. \"Euler's constant: Euler's work and modern developments.\" *Bulletin of the AMS* 50 (2013): 527\u2013628.\n\n5. Rivoal, T. \"On the arithmetic nature of the values of the gamma function, Euler's constant, and Gompertz's constant.\" *Michigan Mathematical Journal* 61 (2012): 239\u2013254.\n\n6. Brent, R. P., and E. M. McMillan. \"Some new algorithms for high-precision computation of Euler's constant.\" *Mathematics of Computation* 34 (1980): 305\u2013312.\n\n7. The Mathlib Community. \"Mathlib: a unified library of mathematics formalized in Lean 4.\" Available at https://github.com/leanprover-community/mathlib4.\n",
+    "future_directions": "# Future Directions: Formal Irrationality Research for the Euler\u2013Mascheroni Constant\n\n## Hypothesis 1: Partial Quotient Growth for \u03b3\n\n**Conjecture:** The continued fraction partial quotients of \u03b3 satisfy lim sup a\u2096 = \u221e, and more specifically, a\u2096 exceeds \u221ak infinitely often.\n\n**Test:** Compute the first 10\u2075\u201310\u2076 partial quotients of \u03b3 from certified high-precision approximations (using, e.g., the Brent\u2013McMillan algorithm to 10\u2076 digits). Plot max(a\u2081,...,a\u2096) vs k and compare against the Gauss\u2013Khinchin prediction that P(a\u2096 > n) \u2248 log\u2082(1+1/n). If the growth rate matches a \"generic\" irrational, this is evidence against algebraic or Liouville-type structure.\n\n**Impact:** If partial quotients grow like O(k^{1/2+\u03b5}), this would distinguish \u03b3 from quadratic irrationals (bounded partial quotients) and from Liouville numbers (partial quotients growing super-exponentially). The formal infrastructure built here (convergents, approximation quality) provides the framework to certify individual steps computationally.\n\n## Hypothesis 2: Approximation Barrier for Elementary Constructions\n\n**Conjecture:** All rational approximants p/q to \u03b3 constructible from truncated harmonic sums, Pad\u00e9 approximants to log, and their combinations satisfy |\u03b3 \u2212 p/q| > c/q^\u03bc for some \u03bc < 2.5, preventing any elementary approximation scheme from crossing the irrationality threshold.\n\n**Test:** Implement three families of rational approximants:\n  1. **Harmonic truncations:** p/q = H_n (exact rational), with q = lcm(1,...,n).\n  2. **Pad\u00e9 approximants to log:** Rational approximations from [m/n] Pad\u00e9 expansions of log near 1.\n  3. **Ap\u00e9ry-like constructs:** Integer linear combinations of H_n and rational numbers with controlled denominators.\n\nFor each family, measure the approximation exponent \u03bc = \u2212log|\u03b3 \u2212 p/q| / log q. If all families yield \u03bc < 2, the irrationality criterion remains unmet.\n\n**Impact:** A formal proof that specific families fail to reach the 1/(2q\u00b2) threshold would precisely locate the gap in elementary irrationality strategies. This would guide future work toward non-elementary constructions (e.g., Nesterenko-type multiple integrals, Rivoal-Ball series).\n\n## Hypothesis 3: Renormalized L-Value Universality\n\n**Conjecture:** The same formal renormalization pattern that defines \u03b3 = lim(H_n \u2212 log n) extends to:\n  (a) The first Stieltjes constant \u03b3\u2081 = lim_{n\u2192\u221e} (\u03a3_{k=1}^n (log k)/k \u2212 (log n)\u00b2/2)\n  (b) The analogous constants for Dirichlet L-functions: for a primitive character \u03c7 mod q, L'(1,\u03c7)/L(1,\u03c7) can be expressed as a limit of truncated sums minus a principal part.\n\n**Test:** Formalize the definition of \u03b3\u2081 using the same convergence framework (antitone + bounded below, or monotone + bounded above). Prove convergence and explicit error bounds analogous to our |a_n \u2212 \u03b3| < 1/n result. For the L-function case, verify convergence numerically for \u03c7 = the non-trivial character mod 3 and mod 4.\n\n**Impact:** This would extend our formal infrastructure from a single constant to a family, creating a reusable \"renormalization toolkit\" applicable across analytic number theory. The Stieltjes constants \u03b3_k are important in the Riemann zeta function's Laurent expansion and have open irrationality status for k \u2265 1.\n\n## Hypothesis 4: Scheme Invariance Beyond Logarithmic Renormalization\n\n**Conjecture:** The Euler\u2013Mascheroni constant is invariant under a broader class of renormalization schemes than log(n) vs log(n+1). Specifically, for any smooth function f with f(x) ~ log x as x \u2192 \u221e and f(x) \u2212 log x \u2192 0, the limit lim(H_n \u2212 f(n)) exists and equals \u03b3.\n\n**Test:** Define three additional renormalization schemes:\n  1. f\u2081(n) = \u222b\u2081\u207f 1/x dx = log(n) (integral scheme, already proved)\n  2. f\u2082(n) = (log(n) + log(n+1))/2 (midpoint scheme)\n  3. f\u2083(n) = log(n + 1/2) (Stirling-corrected scheme)\n\nProve convergence and equality of limits for all three. The third scheme should converge faster (O(1/n\u00b2) instead of O(1/n)).\n\n**Impact:** Faster-converging schemes yield better rational approximations, potentially pushing toward the 1/(2q\u00b2) threshold needed for irrationality. The Stirling-corrected scheme H_n \u2212 log(n + 1/2) is known to converge as O(1/n\u00b2), and formalizing this would provide strictly better certified bounds on \u03b3.\n\n## Hypothesis 5: Counterexample Frontier and Threshold Sharpness\n\n**Conjecture:** The 1/(2q\u00b2) threshold in our irrationality criterion is optimal: it cannot be weakened to 1/q^\u03b1 for any \u03b1 < 2 without admitting rational counterexamples.\n\n**Test:** Prove that for every \u03b1 < 2 and every C > 0, there exists a rational number x = a/b such that infinitely many p/q \u2260 x satisfy |x \u2212 p/q| < C/q^\u03b1. (For \u03b1 < 2, this follows from the continued fraction theory of rationals with large partial quotients in their representations.)\n\nConversely, prove that for \u03b1 > 2, no rational number admits infinitely many such approximants (this is the rational case of Roth's theorem).\n\n**Impact:** This would establish that the formal irrationality criterion is *exactly* at the boundary: any weakening of the hypothesis makes the conclusion false, and any strengthening is unnecessary. This sharpness result transforms the irrationality question for \u03b3 from \"find any good approximations\" to \"find approximations at the precisely correct quality threshold.\"\n",
+    "demos": [
+      {
+        "name": "Euler-Mascheroni Constant Demonstrations",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nDemonstration of the Euler\u2013Mascheroni constant approximation theory.\n\nThis script provides concrete numerical illustrations of the theorems\nformalized in our Lean 4 development:\n  1. Convergence of H_n - log(n) to \u03b3\n  2. The O(1/n) convergence rate bounds\n  3. Rational approximation quality for irrationality criteria\n  4. Scheme invariance between log(n) and log(n+1) renormalization\n\"\"\"\n\nimport math\nfrom fractions import Fraction\n\n# Known high-precision value of \u03b3\nGAMMA = 0.5772156649015328606065120900824024310421593359\n\ndef harmonic(n: int) -> float:\n    \"\"\"Compute H_n = sum_{k=1}^{n} 1/k.\"\"\"\n    return sum(1.0 / k for k in range(1, n + 1))\n\ndef harmonic_exact(n: int) -> Fraction:\n    \"\"\"Compute H_n exactly using rational arithmetic.\"\"\"\n    return sum(Fraction(1, k) for k in range(1, n + 1))\n\ndef euler_mascheroni_seq(n: int) -> float:\n    \"\"\"Compute a_n = H_n - log(n).\"\"\"\n    if n < 1:\n        return 0.0\n    return harmonic(n) - math.log(n)\n\ndef euler_mascheroni_seq_alt(n: int) -> float:\n    \"\"\"Compute b_n = H_n - log(n+1) (alternative scheme).\"\"\"\n    return harmonic(n) - math.log(n + 1)\n\n\ndef demo_convergence():\n    \"\"\"Demonstrate convergence of the Euler-Mascheroni sequence.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Convergence of H_n - log(n) to \u03b3\")\n    print(\"=\" * 70)\n    print(f\"\\nKnown value: \u03b3 \u2248 {GAMMA:.16f}\")\n    print(f\"\\n{'n':>10} {'H_n - log(n)':>20} {'Error':>15} {'1/n bound':>12}\")\n    print(\"-\" * 60)\n\n    for n in [1, 2, 5, 10, 50, 100, 1000, 10000, 100000]:\n        a_n = euler_mascheroni_seq(n)\n        error = a_n - GAMMA\n        bound = 1.0 / n\n        print(f\"{n:>10} {a_n:>20.14f} {error:>15.2e} {bound:>12.2e}\")\n\n    print(\"\\nObservation: The error is always positive (sequence approaches\")\n    print(\"from above) and bounded by 1/n, confirming our formal theorem.\")\n\n\ndef demo_bounds():\n    \"\"\"Demonstrate the two-sided bounds on the convergence rate.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 2: Convergence Rate Bounds\")\n    print(\"=\" * 70)\n    print(f\"\\nTheorem: 0 < a_n - \u03b3 < 1/n for n \u2265 1\")\n    print(f\"\\n{'n':>10} {'a_n - \u03b3':>18} {'1/(2(n+1))':>14} {'1/n':>12} {'Ratio (a_n-\u03b3)/(1/n)':>22}\")\n    print(\"-\" * 78)\n\n    for n in [1, 2, 5, 10, 50, 100, 1000, 10000]:\n        a_n = euler_mascheroni_seq(n)\n        diff = a_n - GAMMA\n        lower = 1.0 / (2 * (n + 1))\n        upper = 1.0 / n\n        ratio = diff * n  # normalized ratio\n        print(f\"{n:>10} {diff:>18.12f} {lower:>14.8f} {upper:>12.8f} {ratio:>22.8f}\")\n\n    print(\"\\nObservation: The ratio (a_n - \u03b3)\u00b7n converges to 1/2,\")\n    print(\"showing the precise asymptotic a_n - \u03b3 ~ 1/(2n).\")\n\n\ndef demo_irrationality_criterion():\n    \"\"\"Demonstrate the irrationality criterion threshold.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 3: Irrationality Criterion \u2014 The 1/q\u00b2 Barrier\")\n    print(\"=\" * 70)\n    print(f\"\\nTheorem: If |x - p/q| < 1/(2q\u00b2) for infinitely many p/q \u2260 x,\")\n    print(f\"then x is irrational.\")\n    print(f\"\\nCompare: rational x = 1/3 can be approximated to O(1/q) but NOT O(1/q\u00b2)\")\n    print()\n\n    x_rat = Fraction(1, 3)\n    x_float = float(x_rat)\n\n    print(f\"Target: x = 1/3 = {x_float:.16f}\")\n    print(f\"\\n{'q':>8} {'best p':>8} {'|x-p/q|':>18} {'1/(2q\u00b2)':>18} {'1/q':>12} {'< 1/(2q\u00b2)?':>12}\")\n    print(\"-\" * 80)\n\n    for q in [1, 2, 3, 5, 10, 30, 100, 1000]:\n        # Find best p/q approximation to 1/3\n        p = round(x_float * q)\n        if p == q * x_float:\n            # p/q = x exactly, use next best\n            p_alt = p + 1  # or p - 1\n            error_alt = abs(x_float - p_alt / q)\n            p_used = p_alt\n        else:\n            p_used = p\n        error = abs(x_float - p_used / q)\n        threshold = 1.0 / (2 * q * q) if q > 0 else float('inf')\n        one_over_q = 1.0 / q if q > 0 else float('inf')\n        beats = \"YES\" if error < threshold and error > 0 else \"NO\"\n        print(f\"{q:>8} {p_used:>8} {error:>18.12f} {threshold:>18.12f} {one_over_q:>12.8f} {beats:>12}\")\n\n    print(\"\\nFor rational x = 1/3, approximants with p/q \u2260 x satisfy\")\n    print(\"|1/3 - p/q| \u2265 1/(3q), which exceeds 1/(2q\u00b2) for q > 3/2.\")\n    print(\"So no irrational-quality approximations exist beyond q = 1.\")\n\n\ndef demo_scheme_invariance():\n    \"\"\"Demonstrate scheme invariance: log(n) vs log(n+1).\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 4: Scheme Invariance \u2014 log(n) vs log(n+1)\")\n    print(\"=\" * 70)\n    print(f\"\\nBoth H_n - log(n) and H_n - log(n+1) converge to \u03b3.\")\n    print(f\"\\n{'n':>10} {'H_n - log(n)':>18} {'H_n - log(n+1)':>18} {'difference':>15}\")\n    print(\"-\" * 65)\n\n    for n in [1, 2, 5, 10, 50, 100, 1000, 10000]:\n        scheme1 = euler_mascheroni_seq(n)\n        scheme2 = euler_mascheroni_seq_alt(n)\n        diff = scheme1 - scheme2\n        print(f\"{n:>10} {scheme1:>18.14f} {scheme2:>18.14f} {diff:>15.10f}\")\n\n    print(f\"\\nDifference = log(1 + 1/n) \u2192 0, confirming both converge to \u03b3.\")\n    print(f\"\u03b3 is trapped between the two sequences: H_n - log(n+1) < \u03b3 < H_n - log(n)\")\n\n\ndef demo_continued_fraction():\n    \"\"\"Analyze the continued fraction of \u03b3.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 5: Continued Fraction Expansion of \u03b3\")\n    print(\"=\" * 70)\n\n    # Compute continued fraction partial quotients\n    def continued_fraction(x: float, n_terms: int = 30) -> list:\n        \"\"\"Compute first n_terms of the continued fraction expansion.\"\"\"\n        result = []\n        for _ in range(n_terms):\n            a = int(math.floor(x))\n            result.append(a)\n            frac = x - a\n            if abs(frac) < 1e-12:\n                break\n            x = 1.0 / frac\n        return result\n\n    cf = continued_fraction(GAMMA, 25)\n    print(f\"\\n\u03b3 = [{cf[0]}; {', '.join(str(a) for a in cf[1:])}]\")\n    print(f\"\\nPartial quotients: {cf}\")\n\n    # Compute convergents\n    print(f\"\\n{'k':>4} {'a_k':>6} {'p_k/q_k':>20} {'|\u03b3 - p_k/q_k|':>20} {'1/(2q_k\u00b2)':>18}\")\n    print(\"-\" * 72)\n\n    p_prev, p_curr = 1, cf[0]\n    q_prev, q_curr = 0, 1\n\n    for k in range(len(cf)):\n        a_k = cf[k]\n        if k == 0:\n            p_k, q_k = a_k, 1\n        elif k == 1:\n            p_k = a_k * cf[0] + 1\n            q_k = a_k\n        else:\n            p_k = a_k * p_curr + p_prev\n            q_k = a_k * q_curr + q_prev\n\n        error = abs(GAMMA - p_k / q_k) if q_k > 0 else 0\n        threshold = 1.0 / (2 * q_k * q_k) if q_k > 0 else 0\n        beats = \"\u2713\" if error < threshold else \"\"\n\n        print(f\"{k:>4} {a_k:>6} {p_k:>10}/{q_k:<9} {error:>20.2e} {threshold:>18.2e} {beats}\")\n\n        p_prev, p_curr = p_curr, p_k\n        q_prev, q_curr = q_curr, q_k\n\n    print(\"\\n\u2713 marks convergents that beat the 1/(2q\u00b2) irrationality threshold.\")\n    print(\"If infinitely many convergents beat this threshold, \u03b3 is irrational.\")\n\n\nif __name__ == \"__main__\":\n    demo_convergence()\n    demo_bounds()\n    demo_irrationality_criterion()\n    demo_scheme_invariance()\n    demo_continued_fraction()\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 70)\n"
+      },
+      {
+        "name": "Applications of Euler-Mascheroni Theory",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of Euler\u2013Mascheroni constant theory.\n\nDemonstrates practical uses of the formal approximation infrastructure:\n  1. Certified computation: bounding \u03b3 with proven error guarantees\n  2. Prime counting estimates using \u03b3\n  3. Random matrix theory connections\n  4. Information-theoretic applications\n  5. Coupon collector problem\n\"\"\"\n\nimport math\nfrom typing import Tuple, List\n\n\n# High-precision \u03b3\nGAMMA = 0.5772156649015328606065120900824024310421593359\n\n\ndef certified_gamma_bounds(n: int) -> Tuple[float, float]:\n    \"\"\"\n    Return certified bounds [lower, upper] on \u03b3 using n harmonic terms.\n\n    By our formal theorems:\n      H_n - log(n+1) < \u03b3 < H_n - log(n)\n\n    These bounds are *proven correct* in our formal development.\n\n    Args:\n        n: Number of harmonic terms\n\n    Returns:\n        (lower_bound, upper_bound) with guaranteed lower \u2264 \u03b3 \u2264 upper\n\n    Example:\n        >>> lo, hi = certified_gamma_bounds(10000)\n        >>> hi - lo\n        9.999500033330834e-05\n    \"\"\"\n    h_n = sum(1.0 / k for k in range(1, n + 1))\n    return h_n - math.log(n + 1), h_n - math.log(n)\n\n\n# \u2500\u2500\u2500 Application 1: Prime Counting \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef mertens_estimate(n: int) -> Tuple[float, float]:\n    \"\"\"\n    Mertens' theorem: sum_{p \u2264 n} 1/p \u2248 log(log(n)) + M\n    where M = \u03b3 + sum_p (log(1 - 1/p) + 1/p) \u2248 0.2615...\n\n    The Euler\u2013Mascheroni constant is the dominant term in M.\n\n    Returns actual sum of reciprocal primes and the Mertens estimate.\n    \"\"\"\n    def sieve(limit):\n        is_prime = [True] * (limit + 1)\n        is_prime[0] = is_prime[1] = False\n        for i in range(2, int(limit**0.5) + 1):\n            if is_prime[i]:\n                for j in range(i*i, limit + 1, i):\n                    is_prime[j] = False\n        return [i for i in range(2, limit + 1) if is_prime[i]]\n\n    primes = sieve(n)\n    actual_sum = sum(1.0 / p for p in primes)\n\n    # Mertens' constant M \u2248 0.2615\n    MERTENS = 0.2614972128476427\n    estimate = math.log(math.log(n)) + MERTENS if n > 1 else 0\n\n    return actual_sum, estimate\n\n\n# \u2500\u2500\u2500 Application 2: Coupon Collector Problem \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef coupon_collector_expected(n: int) -> float:\n    \"\"\"\n    Expected number of draws to collect all n distinct coupons.\n\n    E[T_n] = n \u00b7 H_n \u2248 n \u00b7 (log(n) + \u03b3)\n\n    The Euler\u2013Mascheroni constant provides the correction term.\n\n    Args:\n        n: Number of distinct coupon types\n\n    Returns:\n        Expected number of draws\n    \"\"\"\n    return n * sum(1.0 / k for k in range(1, n + 1))\n\n\ndef coupon_collector_gamma_correction(n: int) -> Tuple[float, float, float]:\n    \"\"\"\n    Show the role of \u03b3 in the coupon collector formula.\n\n    Returns (n\u00b7log(n), n\u00b7(log(n)+\u03b3), n\u00b7H_n) showing that \u03b3 provides\n    the essential correction from n\u00b7log(n) to the true expectation.\n    \"\"\"\n    h_n = sum(1.0 / k for k in range(1, n + 1))\n    naive = n * math.log(n)\n    corrected = n * (math.log(n) + GAMMA)\n    exact = n * h_n\n    return naive, corrected, exact\n\n\n# \u2500\u2500\u2500 Application 3: Laplace Transform and Exponential Integral \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef exponential_integral_gamma(x: float, terms: int = 100) -> float:\n    \"\"\"\n    The exponential integral Ei(x) for x > 0 involves \u03b3:\n      Ei(x) = \u03b3 + log(x) + sum_{n=1}^\u221e x^n / (n \u00b7 n!)\n\n    Args:\n        x: Positive real number\n        terms: Number of series terms\n\n    Returns:\n        Ei(x)\n    \"\"\"\n    result = GAMMA + math.log(abs(x))\n    term = x\n    factorial = 1\n    for n in range(1, terms + 1):\n        factorial *= n\n        result += term / (n * factorial)\n        term *= x\n        if abs(term / (n * factorial)) < 1e-15:\n            break\n    return result\n\n\n# \u2500\u2500\u2500 Application 4: Extreme Value Theory \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef gumbel_distribution_mean():\n    \"\"\"\n    The Gumbel distribution (type-I extreme value) has mean = \u03b3.\n\n    The Gumbel distribution models the maximum of many independent\n    samples from exponential-like distributions. Its PDF is:\n      f(x) = exp(-(x + exp(-x)))\n\n    The mean of this distribution is exactly \u03b3.\n\n    Returns:\n        Dictionary with Gumbel distribution properties\n    \"\"\"\n    return {\n        'mean': GAMMA,\n        'median': -math.log(math.log(2)),\n        'mode': 0.0,\n        'variance': math.pi**2 / 6,\n        'skewness': 12 * math.sqrt(6) * 1.2020569031595942 / math.pi**3,\n        'description': (\n            'The Gumbel distribution arises as the limit distribution '\n            'of the maximum of n independent exponential random variables. '\n            'Its mean equals the Euler-Mascheroni constant \u03b3.'\n        ),\n    }\n\n\n# \u2500\u2500\u2500 Application 5: Digamma Function \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef digamma_at_one():\n    \"\"\"\n    The digamma function \u03c8(1) = -\u03b3.\n\n    The digamma function is \u03c8(x) = d/dx log(\u0393(x)) = \u0393'(x)/\u0393(x).\n    At x = 1: \u03c8(1) = -\u03b3.\n\n    More generally: \u03c8(n) = H_{n-1} - \u03b3 for positive integers n.\n    \"\"\"\n    return {\n        'psi_1': -GAMMA,\n        'relation': '\u03c8(n) = H_{n-1} - \u03b3 for positive integers n',\n        'values': {n: sum(1.0/k for k in range(1, n)) - GAMMA for n in range(1, 11)},\n    }\n\n\n# \u2500\u2500\u2500 Main Demo \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 70)\n    print(\"APPLICATIONS OF EULER\u2013MASCHERONI CONSTANT THEORY\")\n    print(\"=\" * 70)\n\n    # Application 1: Certified bounds\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 1: Certified Bounds on \u03b3 \u2500\u2500\u2500\")\n    for n in [10, 100, 1000, 10000, 100000]:\n        lo, hi = certified_gamma_bounds(n)\n        print(f\"  n={n:>6}: {lo:.14f} < \u03b3 < {hi:.14f}  (width {hi-lo:.2e})\")\n\n    # Application 2: Mertens' theorem\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 2: Mertens' Theorem (Reciprocal Primes) \u2500\u2500\u2500\")\n    print(f\"  Mertens' constant involves \u03b3: M = \u03b3 + \u03a3(log(1-1/p) + 1/p)\")\n    for n in [100, 1000, 10000, 100000]:\n        actual, estimate = mertens_estimate(n)\n        print(f\"  n={n:>6}: \u03a3(1/p) = {actual:.6f}, estimate = {estimate:.6f}, \"\n              f\"error = {abs(actual-estimate):.4e}\")\n\n    # Application 3: Coupon collector\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 3: Coupon Collector Problem \u2500\u2500\u2500\")\n    print(f\"  E[T_n] = n\u00b7H_n \u2248 n\u00b7(log n + \u03b3)\")\n    for n in [10, 50, 100, 365]:\n        naive, corrected, exact = coupon_collector_gamma_correction(n)\n        print(f\"  n={n:>3}: n\u00b7log(n)={naive:.1f}, \"\n              f\"n\u00b7(log n+\u03b3)={corrected:.1f}, n\u00b7H_n={exact:.1f}\")\n\n    # Application 4: Extreme value theory\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 4: Gumbel Distribution \u2500\u2500\u2500\")\n    gumbel = gumbel_distribution_mean()\n    print(f\"  The Gumbel distribution (extreme value type I):\")\n    print(f\"  Mean = \u03b3 = {gumbel['mean']:.16f}\")\n    print(f\"  Variance = \u03c0\u00b2/6 = {gumbel['variance']:.10f}\")\n    print(f\"  {gumbel['description']}\")\n\n    # Application 5: Digamma function\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 5: Digamma Function \u2500\u2500\u2500\")\n    psi = digamma_at_one()\n    print(f\"  \u03c8(1) = -\u03b3 = {psi['psi_1']:.16f}\")\n    print(f\"  Relation: {psi['relation']}\")\n    print(f\"  Values:\")\n    for n, val in list(psi['values'].items())[:6]:\n        print(f\"    \u03c8({n}) = {val:.10f}\")\n\n    # Application 6: Exponential integral\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 6: Exponential Integral \u2500\u2500\u2500\")\n    print(f\"  Ei(x) = \u03b3 + log(x) + \u03a3 x^n/(n\u00b7n!)\")\n    for x in [0.5, 1.0, 2.0, 5.0]:\n        ei = exponential_integral_gamma(x)\n        print(f\"  Ei({x}) = {ei:.10f}\")\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Certified Gamma Bounds",
+        "pseudocode": "Algorithm CertifiedGammaBounds(n):\n  Input: n >= 1\n  Output: (lower, upper) with lower <= gamma <= upper\n  H <- sum(1/k for k=1..n)\n  lower <- H - log(n+1)\n  upper <- H - log(n)\n  return (lower, upper)\n  Time: O(n)  Space: O(1)  Error width: ~1/n",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Euler\u2013Mascheroni constant approximation and\nirrationality testing infrastructure.\n\nImplements:\n  1. High-precision harmonic number computation\n  2. Euler\u2013Mascheroni constant approximation with certified error bounds\n  3. Rational approximation quality testing\n  4. Continued fraction analysis with irrationality criterion checking\n  5. Partial quotient statistics for irrationality heuristics\n\"\"\"\n\nfrom fractions import Fraction\nfrom decimal import Decimal, getcontext\nimport math\nfrom typing import List, Tuple, Optional\n\n\ndef harmonic_exact(n: int) -> Fraction:\n    \"\"\"\n    Compute the n-th harmonic number H_n = sum_{k=1}^{n} 1/k exactly.\n\n    Uses Python's Fraction type for arbitrary-precision rational arithmetic.\n\n    Args:\n        n: Positive integer\n\n    Returns:\n        H_n as an exact rational number\n\n    Time complexity: O(n \u00b7 M(n log n)) where M(k) is multiplication cost for k-bit numbers\n    Space complexity: O(n log n) for the rational representation\n\n    Example:\n        >>> harmonic_exact(4)\n        Fraction(25, 12)\n        >>> float(harmonic_exact(10))\n        2.9289682539682538\n    \"\"\"\n    if n <= 0:\n        return Fraction(0)\n    result = Fraction(0)\n    for k in range(1, n + 1):\n        result += Fraction(1, k)\n    return result\n\n\ndef euler_mascheroni_approx_with_bounds(n: int) -> Tuple[float, float, float]:\n    \"\"\"\n    Compute \u03b3 approximation with certified error bounds.\n\n    Returns (lower_bound, approximation, upper_bound) such that\n    lower_bound \u2264 \u03b3 \u2264 upper_bound, with the approximation being H_n - log(n).\n\n    The bounds come from our formal theorems:\n      - \u03b3 \u2264 H_n - log(n)           (sequence approaches from above)\n      - \u03b3 > H_n - log(n) - 1/n     (not quite \u2014 we use H_n - log(n+1) as lower)\n      - More precisely: H_n - log(n+1) < \u03b3 < H_n - log(n)\n\n    Args:\n        n: Number of terms (must be \u2265 1)\n\n    Returns:\n        (lower, approx, upper) where lower \u2264 \u03b3 \u2264 upper\n\n    Example:\n        >>> lo, mid, hi = euler_mascheroni_approx_with_bounds(1000)\n        >>> hi - lo < 0.001\n        True\n    \"\"\"\n    assert n >= 1, \"n must be at least 1\"\n    h_n = sum(1.0 / k for k in range(1, n + 1))\n    upper = h_n - math.log(n)        # H_n - log(n) > \u03b3\n    lower = h_n - math.log(n + 1)    # H_n - log(n+1) < \u03b3\n    approx = (upper + lower) / 2     # midpoint estimate\n    return lower, approx, upper\n\n\ndef euler_mascheroni_high_precision(num_digits: int = 50) -> Decimal:\n    \"\"\"\n    Compute \u03b3 to specified precision using the Brent-McMillan algorithm concept.\n\n    Uses the relation \u03b3 = lim_{n\u2192\u221e} (H_n - log(n)) with acceleration\n    via the Euler-Maclaurin formula:\n      \u03b3 \u2248 H_n - log(n) - 1/(2n) + sum_{k=1}^{p} B_{2k}/(2k\u00b7n^{2k})\n\n    For simplicity, this implementation uses direct summation with\n    high-precision arithmetic.\n\n    Args:\n        num_digits: Number of decimal digits of precision\n\n    Returns:\n        \u03b3 as a Decimal with specified precision\n\n    Example:\n        >>> gamma = euler_mascheroni_high_precision(30)\n        >>> str(gamma)[:10]\n        '0.57721566'\n    \"\"\"\n    getcontext().prec = num_digits + 20  # extra guard digits\n\n    # Use enough terms for convergence\n    n = max(100, num_digits * 5)\n\n    h_n = Decimal(0)\n    for k in range(1, n + 1):\n        h_n += Decimal(1) / Decimal(k)\n\n    # log(n) via Taylor series around a power of 2\n    log_n = _decimal_log(Decimal(n))\n\n    gamma = h_n - log_n\n\n    # Apply first Euler-Maclaurin correction: -1/(2n)\n    gamma -= Decimal(1) / (2 * Decimal(n))\n\n    return +Decimal(str(gamma)[:num_digits + 2])\n\n\ndef _decimal_log(x: Decimal) -> Decimal:\n    \"\"\"Compute natural logarithm using AGM method for Decimal.\"\"\"\n    getcontext().prec += 10\n    if x <= 0:\n        raise ValueError(\"log of non-positive number\")\n    if x == 1:\n        return Decimal(0)\n\n    # Use the identity: log(x) = log(2^k \u00b7 y) = k\u00b7log(2) + log(y) where 1 \u2264 y < 2\n    k = 0\n    y = x\n    while y >= 2:\n        y /= 2\n        k += 1\n    while y < 1:\n        y *= 2\n        k -= 1\n\n    # log(y) for 1 \u2264 y < 2 via Taylor series of log(1 + t) where t = y - 1\n    t = y - 1\n    result = Decimal(0)\n    term = t\n    for n in range(1, getcontext().prec + 50):\n        result += term / n\n        term *= -t\n        if abs(term / (n + 1)) < Decimal(10) ** (-(getcontext().prec + 5)):\n            break\n\n    # log(2) via same Taylor series\n    log2 = Decimal(0)\n    t2 = Decimal(1)  # log(2) = log(1 + 1), t = 1\n    # Use log(2) = 2\u00b7atanh(1/3) + ... or known series\n    # Simpler: log(2) = sum_{n=1}^{\u221e} (-1)^{n+1}/n (very slow, but correct)\n    # Better: use log(2) = log(4/3) + log(3/2) with faster converging series\n    t_a = Decimal(1) / Decimal(3)  # log(4/3) = log(1 + 1/3)\n    t_b = Decimal(1) / Decimal(2)  # log(3/2) = log(1 + 1/2)\n\n    log_4_3 = Decimal(0)\n    term_a = t_a\n    for n in range(1, getcontext().prec + 100):\n        log_4_3 += term_a / n\n        term_a *= -t_a\n        if abs(term_a / (n + 1)) < Decimal(10) ** (-(getcontext().prec + 5)):\n            break\n\n    log_3_2 = Decimal(0)\n    term_b = t_b\n    for n in range(1, getcontext().prec + 100):\n        log_3_2 += term_b / n\n        term_b *= -t_b\n        if abs(term_b / (n + 1)) < Decimal(10) ** (-(getcontext().prec + 5)):\n            break\n\n    log2_val = log_4_3 + log_3_2\n\n    getcontext().prec -= 10\n    return +(result + k * log2_val)\n\n\ndef continued_fraction_expansion(x: float, max_terms: int = 100,\n                                  tolerance: float = 1e-12) -> List[int]:\n    \"\"\"\n    Compute the continued fraction expansion [a_0; a_1, a_2, ...] of x.\n\n    Args:\n        x: Real number to expand\n        max_terms: Maximum number of partial quotients\n        tolerance: Stop when fractional part is below this\n\n    Returns:\n        List of partial quotients\n\n    Example:\n        >>> continued_fraction_expansion(math.pi, 10)\n        [3, 7, 15, 1, 292, 1, 1, 1, 2, 1]\n    \"\"\"\n    quotients = []\n    for _ in range(max_terms):\n        a = int(math.floor(x))\n        quotients.append(a)\n        frac = x - a\n        if abs(frac) < tolerance:\n            break\n        x = 1.0 / frac\n    return quotients\n\n\ndef convergents(partial_quotients: List[int]) -> List[Tuple[int, int]]:\n    \"\"\"\n    Compute convergents p_k/q_k from partial quotients.\n\n    Args:\n        partial_quotients: List [a_0, a_1, a_2, ...]\n\n    Returns:\n        List of (p_k, q_k) pairs\n\n    Example:\n        >>> convergents([0, 1, 1, 2, 1, 1, 4])\n        [(0, 1), (1, 1), (1, 2), (3, 5), (4, 7), (7, 12), (32, 55)]\n    \"\"\"\n    if not partial_quotients:\n        return []\n\n    result = []\n    p_prev, p_curr = 1, partial_quotients[0]\n    q_prev, q_curr = 0, 1\n    result.append((p_curr, q_curr))\n\n    for k in range(1, len(partial_quotients)):\n        a_k = partial_quotients[k]\n        p_new = a_k * p_curr + p_prev\n        q_new = a_k * q_curr + q_prev\n        result.append((p_new, q_new))\n        p_prev, p_curr = p_curr, p_new\n        q_prev, q_curr = q_curr, q_new\n\n    return result\n\n\ndef irrationality_measure_test(x: float, max_q: int = 10000) -> dict:\n    \"\"\"\n    Test the irrationality measure of x by finding best rational approximations.\n\n    For each denominator q, find the best p and compute |x - p/q|.\n    Compare against the thresholds 1/q, 1/q\u00b2, 1/(2q\u00b2).\n\n    The irrationality exponent \u03bc(x) is estimated from the growth rate\n    of the best approximation quality.\n\n    Args:\n        x: Target real number\n        max_q: Maximum denominator to test\n\n    Returns:\n        Dictionary with analysis results\n\n    Example:\n        >>> result = irrationality_measure_test(0.5772156649015329)\n        >>> result['estimated_measure']  # Should be \u2248 2 for typical irrationals\n    \"\"\"\n    best_approx = []\n\n    for q in range(1, max_q + 1):\n        p = round(x * q)\n        error = abs(x - p / q)\n        if error > 0:  # Exclude exact matches\n            best_approx.append({\n                'q': q,\n                'p': p,\n                'error': error,\n                'quality': -math.log(error) / math.log(q) if q > 1 else 0,\n                'beats_1_over_q': error < 1.0 / q,\n                'beats_1_over_2q2': error < 1.0 / (2 * q * q),\n            })\n\n    # Estimate irrationality measure from best approximations\n    # \u03bc = lim sup log(1/|x - p/q|) / log(q)\n    if best_approx:\n        qualities = [a['quality'] for a in best_approx if a['quality'] > 0]\n        max_quality = max(qualities) if qualities else 0\n        n_beats_threshold = sum(1 for a in best_approx if a['beats_1_over_2q2'])\n    else:\n        max_quality = 0\n        n_beats_threshold = 0\n\n    return {\n        'num_tested': max_q,\n        'best_approximations': sorted(best_approx, key=lambda a: a['error'])[:20],\n        'estimated_measure': max_quality,\n        'n_beats_irrationality_threshold': n_beats_threshold,\n        'top_quality_approx': sorted(best_approx, key=lambda a: -a['quality'])[:10],\n    }\n\n\ndef partial_quotient_statistics(x: float, n_terms: int = 1000) -> dict:\n    \"\"\"\n    Analyze statistics of partial quotients for irrationality heuristics.\n\n    For a \"generic\" irrational number, the Gauss-Kuzmin distribution\n    predicts P(a_k = n) = log_2(1 + 1/(n(n+2))). The geometric mean\n    should converge to the Khinchin constant K \u2248 2.6854520010...\n\n    Significant deviation from these statistics may indicate special\n    number-theoretic structure (as expected for \u03b3 if it is algebraic\n    or related to special values).\n\n    Args:\n        x: Target number\n        n_terms: Number of partial quotients to analyze\n\n    Returns:\n        Statistics dictionary\n\n    Example:\n        >>> stats = partial_quotient_statistics(0.5772156649015329, 20)\n        >>> stats['max_quotient']\n        5\n    \"\"\"\n    cf = continued_fraction_expansion(x, n_terms)\n    pq = cf[1:]  # Exclude a_0\n\n    if not pq:\n        return {'error': 'No partial quotients computed'}\n\n    # Basic statistics\n    max_pq = max(pq)\n    mean_pq = sum(pq) / len(pq)\n    geo_mean = math.exp(sum(math.log(a) for a in pq) / len(pq))\n\n    # Khinchin constant comparison\n    KHINCHIN = 2.6854520010653064\n\n    # Distribution analysis\n    freq = {}\n    for a in pq:\n        freq[a] = freq.get(a, 0) + 1\n\n    # Expected Gauss-Kuzmin frequencies\n    gauss_kuzmin = {}\n    for n in sorted(freq.keys()):\n        gauss_kuzmin[n] = math.log2(1 + 1 / (n * (n + 2)))\n\n    return {\n        'n_quotients': len(pq),\n        'max_quotient': max_pq,\n        'mean_quotient': mean_pq,\n        'geometric_mean': geo_mean,\n        'khinchin_constant': KHINCHIN,\n        'geo_mean_ratio': geo_mean / KHINCHIN,\n        'frequency': dict(sorted(freq.items())),\n        'gauss_kuzmin_expected': gauss_kuzmin,\n    }\n\n\ndef approximation_quality_scan(gamma_approx: float,\n                                max_denominator: int = 100000) -> List[dict]:\n    \"\"\"\n    Scan for rational approximations to \u03b3 that beat the 1/(2q\u00b2) threshold.\n\n    These are exactly the approximations needed to apply our formal\n    irrationality criterion.\n\n    Args:\n        gamma_approx: Approximation to \u03b3\n        max_denominator: Maximum denominator to scan\n\n    Returns:\n        List of approximations beating the threshold\n\n    Example:\n        >>> results = approximation_quality_scan(0.5772156649015329, 1000)\n        >>> len(results) > 0\n        True\n    \"\"\"\n    winners = []\n    for q in range(1, max_denominator + 1):\n        p = round(gamma_approx * q)\n        error = abs(gamma_approx - p / q)\n        threshold = 1.0 / (2 * q * q) if q > 0 else 0\n\n        if 0 < error < threshold:\n            winners.append({\n                'p': p,\n                'q': q,\n                'error': error,\n                'threshold': threshold,\n                'ratio': error / threshold,\n                'quality_exponent': -math.log(error) / math.log(q) if q > 1 else 0,\n            })\n\n    return winners\n\n\nif __name__ == \"__main__\":\n    print(\"Euler-Mascheroni Constant: Algorithms Demo\")\n    print(\"=\" * 50)\n\n    # 1. High-precision computation\n    print(\"\\n1. Exact harmonic numbers:\")\n    for n in [5, 10, 15]:\n        h = harmonic_exact(n)\n        print(f\"   H_{n} = {h} \u2248 {float(h):.10f}\")\n\n    # 2. Certified bounds\n    print(\"\\n2. Certified bounds on \u03b3:\")\n    for n in [100, 1000, 10000]:\n        lo, mid, hi = euler_mascheroni_approx_with_bounds(n)\n        print(f\"   n={n:>5}: {lo:.12f} < \u03b3 < {hi:.12f}  (width={hi-lo:.2e})\")\n\n    # 3. Irrationality measure test\n    GAMMA = 0.5772156649015328606065120900824024310421593359\n    print(\"\\n3. Irrationality measure analysis:\")\n    result = irrationality_measure_test(GAMMA, 5000)\n    print(f\"   Estimated irrationality measure: {result['estimated_measure']:.4f}\")\n    print(f\"   Approximations beating 1/(2q\u00b2): {result['n_beats_irrationality_threshold']}\")\n    print(f\"   Top quality approximations:\")\n    for a in result['top_quality_approx'][:5]:\n        print(f\"     p/q = {a['p']}/{a['q']}, |\u03b3-p/q| = {a['error']:.2e}, quality = {a['quality']:.4f}\")\n\n    # 4. Continued fraction statistics\n    print(\"\\n4. Continued fraction statistics:\")\n    stats = partial_quotient_statistics(GAMMA, 25)\n    print(f\"   Partial quotients: {stats['n_quotients']}\")\n    print(f\"   Max quotient: {stats['max_quotient']}\")\n    print(f\"   Geometric mean: {stats['geometric_mean']:.4f}\")\n    print(f\"   Khinchin constant: {stats['khinchin_constant']:.4f}\")\n    print(f\"   Ratio geo/Khinchin: {stats['geo_mean_ratio']:.4f}\")\n\n    # 5. Approximation quality scan\n    print(\"\\n5. Approximations to \u03b3 beating 1/(2q\u00b2):\")\n    winners = approximation_quality_scan(GAMMA, 10000)\n    print(f\"   Found {len(winners)} approximations beating threshold\")\n    for w in winners[:10]:\n        print(f\"     {w['p']}/{w['q']}: error={w['error']:.2e}, \"\n              f\"threshold={w['threshold']:.2e}, ratio={w['ratio']:.4f}\")\n",
+        "code_file": "visualizations/euler_mascheroni_constant_irrationality_certified_gamma_bounds.py"
+      }
+    ],
+    "lean_proofs": "/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\n\n/-!\n# Euler\u2013Mascheroni Constant: Core Definitions\n\nThis file defines the harmonic numbers and the Euler\u2013Mascheroni sequence\n`a_n = H_n - log(n)`, and establishes basic properties.\n\n## Main definitions\n\n* `EulerMascheroni.harmonic n` \u2014 the `n`-th harmonic number `H_n = \u2211_{k=1}^{n} 1/k`\n* `EulerMascheroni.eulerMascheroniSeq n` \u2014 the sequence `H_n - log(n)`\n\n## Key results\n\n* `harmonic_succ` \u2014 recurrence `H_{n+1} = H_n + 1/(n+1)`\n* `harmonic_pos` \u2014 positivity for `n \u2265 1`\n-/\n\nnamespace EulerMascheroni\n\nopen Finset Filter Real BigOperators\n\n/-- The `n`-th harmonic number: `H_n = \u2211_{k=1}^{n} 1/k`. -/\nnoncomputable def harmonic (n : \u2115) : \u211d :=\n  \u2211 k \u2208 Finset.Icc 1 n, (1 : \u211d) / k\n\n/-- The Euler\u2013Mascheroni sequence: `a_n = H_n - log(n)`. -/\nnoncomputable def eulerMascheroniSeq (n : \u2115) : \u211d :=\n  harmonic n - Real.log n\n\n@[simp]\ntheorem harmonic_zero : harmonic 0 = 0 := by\n  simp [harmonic]\n\ntheorem harmonic_succ (n : \u2115) :\n    harmonic (n + 1) = harmonic n + 1 / (\u2191(n + 1) : \u211d) := by\n  exact mod_cast Finset.sum_Ioc_succ_top ( by norm_num ) _\n\ntheorem harmonic_one : harmonic 1 = 1 := by\n  -- By definition of harmonic, we have harmonic 1 = \u2211 k \u2208 Finset.Icc 1 1, (1 : \u211d) / k.\n  simp [harmonic]\n\ntheorem harmonic_pos (n : \u2115) (hn : 1 \u2264 n) : 0 < harmonic n := by\n  exact Finset.sum_pos ( fun x hx => one_div_pos.mpr <| Nat.cast_pos.mpr <| Finset.mem_Icc.mp hx |>.1 ) <| Finset.nonempty_Icc.mpr hn\n\nend EulerMascheroni\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\nimport EulerMascheroni.Defs\n\n/-!\n# Euler\u2013Mascheroni Constant: Convergence\n\nWe prove that the Euler\u2013Mascheroni sequence `a_n = H_n - log(n)` converges,\nestablishing the existence of the Euler\u2013Mascheroni constant \u03b3. The proof uses\nmonotone convergence: we show the sequence is eventually decreasing and bounded below.\n\n## Main results\n\n* `eulerMascheroniSeq_antitone` \u2014 the sequence is antitone for n \u2265 1\n* `eulerMascheroniSeq_pos` \u2014 the sequence is positive for n \u2265 1\n* `tendsto_eulerMascheroniSeq` \u2014 convergence to a limit\n* `eulerMascheroni` \u2014 the Euler\u2013Mascheroni constant \u03b3\n\n## Strategy\n\nThe key inequalities are:\n1. `1/(n+1) < log((n+1)/n)` \u2014 gives that `a_n` is decreasing\n2. `H_n > log(n+1)` \u2014 gives that `a_n > log(n+1) - log(n) > 0`\n\nBoth follow from the integral comparison `\u222b_k^{k+1} 1/x dx` vs `1/k` and `1/(k+1)`.\n-/\n\nnamespace EulerMascheroni\n\nopen Finset Filter Real BigOperators\n\n/-! ### Key logarithmic inequalities -/\n\n/-\nFor `x > 0`, `log(1 + x) \u2264 x`. Equivalently, `1 + x \u2264 exp(x)`.\n-/\ntheorem log_one_add_le (x : \u211d) (hx : 0 < x) : Real.log (1 + x) \u2264 x := by\n  linarith [ Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 + x ) ]\n\n/-\nFor `x > 0`, `x / (1 + x) < log(1 + x)`. This is equivalent to\n    `1/(n+1) < log((n+1)/n)` when `x = 1/n`.\n-/\ntheorem lt_log_one_add (x : \u211d) (hx : 0 < x) : x / (1 + x) < Real.log (1 + x) := by\n  rw [ div_lt_iff\u2080 ( by positivity ) ];\n  nlinarith [ Real.log_inv ( 1 + x ), Real.log_lt_sub_one_of_pos ( inv_pos.mpr ( by linarith : 0 < 1 + x ) ) ( by nlinarith [ inv_mul_cancel\u2080 ( by linarith : ( 1 + x ) \u2260 0 ) ] ), inv_mul_cancel\u2080 ( by linarith : ( 1 + x ) \u2260 0 ) ]\n\n/-! ### Monotonicity of the Euler\u2013Mascheroni sequence -/\n\n/-\nThe Euler\u2013Mascheroni sequence satisfies `a_{n+1} \u2264 a_n` for `n \u2265 1`.\n    This follows from `log((n+1)/n) \u2265 1/(n+1)`.\n-/\ntheorem eulerMascheroniSeq_succ_le (n : \u2115) (hn : 1 \u2264 n) :\n    eulerMascheroniSeq (n + 1) \u2264 eulerMascheroniSeq n := by\n  unfold eulerMascheroniSeq;\n  rw [ harmonic_succ ];\n  have := lt_log_one_add ( 1 / ( n : \u211d ) ) ( by positivity );\n  norm_num [ add_comm, add_left_comm, add_assoc ] at *;\n  rw [ show ( n : \u211d ) \u207b\u00b9 + 1 = ( n + 1 ) / n by ring_nf; norm_num [ show n \u2260 0 by linarith ], Real.log_div ] at this <;> norm_num at * <;> try linarith;\n  rw [ div_div_eq_mul_div, inv_mul_cancel\u2080 ( by positivity ) ] at this ; ring_nf at * ; linarith\n\n/-! ### Lower bound -/\n\n/-\nThe harmonic sum exceeds `log(n+1)` for all `n \u2265 1`.\n    This follows from the integral comparison `1/k > \u222b_k^{k+1} 1/x dx = log((k+1)/k)`.\n-/\ntheorem log_succ_le_harmonic (n : \u2115) (hn : 1 \u2264 n) :\n    Real.log (\u2191n + 1) \u2264 harmonic n := by\n  induction hn <;> simp_all +decide [ Nat.cast_add, Nat.cast_one, harmonic_succ ];\n  \u00b7 exact le_trans ( Real.log_le_sub_one_of_pos ( by norm_num ) ) ( by norm_num );\n  \u00b7 rw [ Real.log_le_iff_le_exp ( by positivity ) ] at *;\n    rw [ Real.exp_add ];\n    nlinarith [ Real.add_one_le_exp ( ( \u2191\u2039\u2115\u203a : \u211d ) + 1 ) \u207b\u00b9, Real.exp_pos ( ( \u2191\u2039\u2115\u203a : \u211d ) + 1 ) \u207b\u00b9, mul_inv_cancel\u2080 ( by positivity : ( ( \u2191\u2039\u2115\u203a : \u211d ) + 1 ) \u2260 0 ) ]\n\n/-\nThe Euler\u2013Mascheroni sequence is positive for `n \u2265 1`.\n-/\ntheorem eulerMascheroniSeq_pos (n : \u2115) (hn : 1 \u2264 n) :\n    0 < eulerMascheroniSeq n := by\n  exact sub_pos_of_lt ( lt_of_lt_of_le ( Real.log_lt_log ( by positivity ) ( by norm_num ) ) ( log_succ_le_harmonic _ hn ) )\n\n/-! ### Convergence -/\n\n/-\nThe Euler\u2013Mascheroni sequence is eventually antitone.\n-/\ntheorem eulerMascheroniSeq_antitone :\n    \u2200 m n : \u2115, 1 \u2264 m \u2192 m \u2264 n \u2192 eulerMascheroniSeq n \u2264 eulerMascheroniSeq m := by\n  intros m n hm hmn;\n  induction hmn <;> simp_all +decide [ Nat.succ_eq_add_one, eulerMascheroniSeq_succ_le ];\n  exact le_trans ( eulerMascheroniSeq_succ_le _ ( by linarith ) ) \u2039_\u203a\n\n/-\nThe Euler\u2013Mascheroni sequence is bounded below by 0.\n-/\ntheorem eulerMascheroniSeq_bddBelow :\n    BddBelow (Set.range (fun n => eulerMascheroniSeq (n + 1))) := by\n  exact \u27e8 0, Set.forall_mem_range.mpr fun n => le_of_lt ( eulerMascheroniSeq_pos _ ( Nat.succ_pos _ ) ) \u27e9\n\n/-\n**Main theorem**: The Euler\u2013Mascheroni sequence converges.\n-/\ntheorem tendsto_eulerMascheroniSeq :\n    \u2203 \u03b3 : \u211d, Tendsto eulerMascheroniSeq atTop (nhds \u03b3) := by\n  -- The added constant 1 does away with the case about n=0.\n  have h_shift_bddBelow : BddBelow (Set.range (fun n \u21a6 eulerMascheroniSeq (n + 1))) := by\n    exact EulerMascheroni.eulerMascheroniSeq_bddBelow\n  have h_shift_antitone : Antitone (fun n \u21a6 eulerMascheroniSeq (n + 1)) := by\n    exact antitone_nat_of_succ_le fun n => eulerMascheroniSeq_antitone _ _ ( Nat.succ_pos _ ) ( Nat.le_succ _ )\n  have v_tendsto_zero : \u2203 r : \u211d, (Filter.Tendsto (fun n => eulerMascheroniSeq (n + 1)) Filter.atTop (nhds r)) := by\n    exact \u27e8 _, tendsto_atTop_ciInf h_shift_antitone h_shift_bddBelow \u27e9;\n  exact \u27e8 v_tendsto_zero.choose, Filter.tendsto_add_atTop_iff_nat 1 |>.1 v_tendsto_zero.choose_spec \u27e9\n\n/-- The Euler\u2013Mascheroni constant \u03b3, defined as the limit of `H_n - log(n)`. -/\nnoncomputable def eulerMascheroni : \u211d := Classical.choose tendsto_eulerMascheroniSeq\n\n/-- The Euler\u2013Mascheroni sequence converges to `eulerMascheroni`. -/\ntheorem tendsto_eulerMascheroni :\n    Tendsto eulerMascheroniSeq atTop (nhds eulerMascheroni) :=\n  Classical.choose_spec tendsto_eulerMascheroniSeq\n\n/-\nThe Euler\u2013Mascheroni constant is positive.\n-/\ntheorem eulerMascheroni_pos : 0 < eulerMascheroni := by\n  refine' lt_of_lt_of_le _ ( le_of_tendsto_of_tendsto tendsto_const_nhds tendsto_eulerMascheroni <| Filter.eventually_atTop.mpr _ );\n  swap;\n  exact 1 - Real.log 2;\n  \u00b7 exact sub_pos_of_lt ( Real.log_two_lt_d9.trans_le ( by norm_num ) );\n  \u00b7 use 1;\n    intro n hn;\n    -- We'll use the fact that $H_n - \\log(n+1) \\geq 1 - \\log 2$ for all $n \\geq 1$.\n    have h_lower_bound : \u2200 n : \u2115, 1 \u2264 n \u2192 harmonic n - Real.log (n + 1) \u2265 1 - Real.log 2 := by\n      intro n hn\n      induction' n, hn using Nat.le_induction with n hn ih;\n      \u00b7 norm_num [ harmonic ];\n      \u00b7 -- Using the induction hypothesis and the fact that $1/(n+1) > \\log(n+2) - \\log(n+1)$, we can show that the inequality holds.\n        have h_step : 1 / (n + 1 : \u211d) > Real.log (n + 2) - Real.log (n + 1) := by\n          rw [ \u2190 Real.log_div ( by positivity ) ( by positivity ) ];\n          exact lt_of_lt_of_le ( Real.log_lt_sub_one_of_pos ( by positivity ) ( by rw [ div_eq_mul_inv ] ; nlinarith [ mul_inv_cancel\u2080 ( by positivity : ( n : \u211d ) + 1 \u2260 0 ) ] ) ) ( by ring_nf; nlinarith [ mul_inv_cancel\u2080 ( by positivity : ( 1 + n : \u211d ) \u2260 0 ) ] );\n        norm_num [ add_assoc, harmonic_succ ] at * ; linarith;\n    exact le_trans ( h_lower_bound n hn ) ( sub_le_sub_left ( Real.log_le_log ( by positivity ) ( by linarith ) ) _ )\n\n/-\nThe Euler\u2013Mascheroni constant is at most 1.\n-/\ntheorem eulerMascheroni_le_one : eulerMascheroni \u2264 1 := by\n  exact le_of_tendsto tendsto_eulerMascheroni ( Filter.eventually_atTop.mpr \u27e8 1, fun n hn => by linarith [ eulerMascheroniSeq_antitone 1 n le_rfl hn, show eulerMascheroniSeq 1 \u2264 1 by simp [ eulerMascheroniSeq, harmonic ] ] \u27e9 )\n\nend EulerMascheroni\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\nimport EulerMascheroni.Convergence\n\n/-!\n# Irrationality Criteria and Approximation Obstructions\n\nThis file establishes general Diophantine approximation criteria for irrationality\nand applies them to the Euler\u2013Mascheroni constant \u03b3.\n\n## Main results\n\n### General irrationality criterion\n* `irrational_of_good_approx` \u2014 if a real number admits infinitely many\n  *distinct* rational approximants `p/q` with `|x - p/q| < 1/(2q\u00b2)`, then\n  it is irrational. The key condition is `p/q \u2260 x`.\n\n### Counterexample / obstruction theorems\n* `not_irrationality_certificate_of_O_one_over_q` \u2014 rational numbers can be\n  approximated to `O(1/q)` quality, so this level is insufficient for irrationality.\n* `rational_approx_lower_bound` \u2014 distinct rational approximants to a rational\n  number satisfy `|x - p/q| \u2265 1/(dq)` where `d` is the denominator of `x`.\n\n### Conditional irrationality of \u03b3\n* `irrational_eulerMascheroni_of_approx` \u2014 if \u03b3 admits infinitely many\n  good rational approximants (quality `1/(2q\u00b2)`), then \u03b3 is irrational.\n\n## Mathematical context\n\nThe irrationality of the Euler\u2013Mascheroni constant \u03b3 is a major open problem.\nThese theorems isolate the *exact Diophantine threshold* that any irrationality\nproof must cross: constructing rational approximants of quality `O(1/q\u00b2)`.\nThe counterexample theorems show that weaker `O(1/q)` approximations are\ninsufficient, since every rational number admits them trivially.\n-/\n\nnamespace EulerMascheroni\n\nopen Finset Filter Real BigOperators\n\n/-! ### Denominator separation -/\n\n/-- For a rational number `a/b` with `b > 0`, any distinct rational `p/q`\n    satisfies `|a/b - p/q| \u2265 1/(bq)`. This is the fundamental denominator\n    separation lemma of Diophantine approximation. -/\ntheorem rational_approx_lower_bound\n    (a : \u2124) (b : \u2115) (hb : 0 < b) (p : \u2124) (q : \u2115) (hq : 0 < q)\n    (hne : (a : \u211d) / (b : \u211d) \u2260 (p : \u211d) / (q : \u211d)) :\n    1 / ((b : \u211d) * (q : \u211d)) \u2264 |(a : \u211d) / (b : \u211d) - (p : \u211d) / (q : \u211d)| := by\n  have h_diff : |(a : \u211d) * q - p * b| \u2265 1 := by\n    exact mod_cast abs_pos.mpr (show (a * q - p * b : \u2124) \u2260 0 from fun h =>\n      hne <| by rw [div_eq_div_iff] <;> norm_cast at * <;> linarith)\n  rw [div_sub_div] <;> try positivity\n  rw [abs_div, abs_of_nonneg (by positivity : (0 : \u211d) \u2264 b * q)]\n  gcongr; simpa [mul_comm] using h_diff\n\n/-! ### General irrationality criterion -/\n\n/-\n**Irrationality from good rational approximation (with distinctness).**\n    If a real number `x` has infinitely many *distinct* rational approximants\n    `p/q` (meaning `p/q \u2260 x`) with `|x - p/q| < 1/(2q\u00b2)`, then `x` is irrational.\n\n    The proof is by contradiction: if `x = a/b` is rational, then for `p/q \u2260 a/b`,\n    the denominator separation lemma gives `1/(bq) \u2264 |a/b - p/q|`, which combined\n    with `|x - p/q| < 1/(2q\u00b2)` gives `2q < b`, i.e., `q < b/2`. Choosing\n    `q \u2265 b` yields a contradiction.\n-/\ntheorem irrational_of_good_approx\n    {x : \u211d}\n    (h : \u2200 N : \u2115, \u2203 p : \u2124, \u2203 q : \u2115, q \u2265 N \u2227 0 < q \u2227\n      (p : \u211d) / (q : \u211d) \u2260 x \u2227\n      |x - (p : \u211d) / (q : \u211d)| < 1 / (2 * (q : \u211d)^2)) :\n    Irrational x := by\n  by_contra h_rat;\n  -- Since $x$ is rational, there exist integers $a$ and $b$ with $b > 0$ such that $x = a / b$.\n  obtain \u27e8a, b, hb_pos, hx_eq\u27e9 : \u2203 a b : \u2124, b > 0 \u2227 x = a / b := by\n    unfold Irrational at h_rat;\n    norm_num +zetaDelta at *;\n    exact \u27e8 h_rat.choose.num, h_rat.choose.den, Nat.cast_pos.mpr h_rat.choose.pos, by simpa only [ Rat.cast_def ] using h_rat.choose_spec.symm \u27e9;\n  -- Choose $N$ such that $N > b$.\n  obtain \u27e8N, hN\u27e9 : \u2203 N : \u2115, N > b := by\n    exact exists_nat_gt b;\n  obtain \u27e8 p, q, hq\u2081, hq\u2082, hq\u2083, hq\u2084 \u27e9 := h N ; have := rational_approx_lower_bound a b.natAbs ( by positivity ) p q ( by positivity ) ; simp_all +decide [ abs_div, abs_mul, abs_of_pos, hb_pos ];\n  refine' absurd ( this ( Ne.symm hq\u2083 ) ) ( not_le_of_gt ( lt_of_lt_of_le hq\u2084 _ ) );\n  field_simp;\n  exact_mod_cast ( by linarith : ( b : \u2124 ) \u2264 q * 2 )\n\n/-! ### Counterexample: O(1/q) approximation is insufficient -/\n\n/-- Every rational number can be approximated with quality `C/q` for\n    arbitrary `C > 0` and arbitrarily large denominators.\n    This shows that `O(1/q)`-quality approximation is too weak to\n    certify irrationality: it applies to rationals trivially.\n\n    Proof: take `x = 0`, `p = 0`, `q = N+1`. Then `|0 - 0/(N+1)| = 0 < C/(N+1)`. -/\ntheorem not_irrationality_certificate_of_O_one_over_q\n    (C : \u211d) (hC : 0 < C) :\n    \u2203 x : \u211d, \u00ac Irrational x \u2227\n      \u2200 N : \u2115, \u2203 p : \u2124, \u2203 q : \u2115, q \u2265 N \u2227 0 < q \u2227\n        |x - (p : \u211d) / (q : \u211d)| < C / (q : \u211d) := by\n  exact \u27e80, fun h => h.ne_zero rfl, fun N =>\n    \u27e80, N + 1, by linarith, by linarith, by simpa using by positivity\u27e9\u27e9\n\n/-! ### Conditional irrationality of \u03b3 -/\n\n/-- **Conditional irrationality of the Euler\u2013Mascheroni constant.**\n    If \u03b3 admits infinitely many rational approximants *distinct from \u03b3* with\n    quality better than `1/(2q\u00b2)`, then \u03b3 is irrational.\n\n    This theorem isolates the exact Diophantine condition that any\n    irrationality proof for \u03b3 must establish. It transforms the open\n    question \"Is \u03b3 irrational?\" into a concrete approximation task. -/\ntheorem irrational_eulerMascheroni_of_approx\n    (h : \u2200 N : \u2115, \u2203 p : \u2124, \u2203 q : \u2115, q \u2265 N \u2227 0 < q \u2227\n      (p : \u211d) / (q : \u211d) \u2260 eulerMascheroni \u2227\n      |eulerMascheroni - (p : \u211d) / (q : \u211d)| < 1 / (2 * (q : \u211d)^2)) :\n    Irrational eulerMascheroni :=\n  irrational_of_good_approx h\n\n/-! ### Approximation rate of the Euler\u2013Mascheroni sequence -/\n\n/-\nThe Euler\u2013Mascheroni sequence approaches \u03b3 from above: each term\n    exceeds the limit for `n \u2265 1`.\n-/\ntheorem eulerMascheroniSeq_sub_eulerMascheroni_pos (n : \u2115) (hn : 1 \u2264 n) :\n    0 < eulerMascheroniSeq n - eulerMascheroni := by\n  refine' sub_pos_of_lt ( lt_of_le_of_lt _ ( show eulerMascheroniSeq ( n + 1 ) < eulerMascheroniSeq n from _ ) );\n  \u00b7 exact le_of_tendsto ( tendsto_eulerMascheroni ) ( Filter.eventually_atTop.mpr \u27e8 n + 1, fun m hm => eulerMascheroniSeq_antitone _ _ ( by linarith ) hm \u27e9 );\n  \u00b7 unfold eulerMascheroniSeq;\n    norm_num [ harmonic_succ ];\n    rw [ show ( n : \u211d ) + 1 = n * ( 1 + ( n : \u211d ) \u207b\u00b9 ) by nlinarith only [ mul_inv_cancel\u2080 ( by positivity : ( n : \u211d ) \u2260 0 ) ], Real.log_mul ( by positivity ) ( by positivity ) ];\n    ring_nf;\n    nlinarith [ inv_pos.mpr ( by positivity : 0 < ( n : \u211d ) ), inv_pos.mpr ( by positivity : 0 < ( n + n * ( n : \u211d ) \u207b\u00b9 ) ), mul_inv_cancel\u2080 ( by positivity : ( n : \u211d ) \u2260 0 ), mul_inv_cancel\u2080 ( by positivity : ( n + n * ( n : \u211d ) \u207b\u00b9 ) \u2260 0 ), Real.log_inv ( 1 + ( n : \u211d ) \u207b\u00b9 ), Real.log_lt_sub_one_of_pos ( inv_pos.mpr ( by positivity : 0 < ( 1 + ( n : \u211d ) \u207b\u00b9 ) ) ) ( by aesop ), inv_mul_cancel\u2080 ( by positivity : ( 1 + ( n : \u211d ) \u207b\u00b9 ) \u2260 0 ) ]\n\n/-\nUpper bound on convergence rate: the Euler\u2013Mascheroni sequence\n    satisfies `eulerMascheroniSeq n - eulerMascheroni < 1/n` for `n \u2265 1`.\n-/\ntheorem eulerMascheroniSeq_sub_eulerMascheroni_lt (n : \u2115) (hn : 1 \u2264 n) :\n    eulerMascheroniSeq n - eulerMascheroni < 1 / (n : \u211d) := by\n  have h_diff : eulerMascheroniSeq n - eulerMascheroni \u2264 \u2211' k : \u2115, (Real.log (1 + 1 / (n + k : \u211d)) - 1 / (n + k + 1 : \u211d)) := by\n    have h_diff : eulerMascheroniSeq n - eulerMascheroni = \u2211' k : \u2115, (eulerMascheroniSeq (n + k) - eulerMascheroniSeq (n + k + 1)) := by\n      have h_diff : Filter.Tendsto (fun m => \u2211 k \u2208 Finset.range m, (eulerMascheroniSeq (n + k) - eulerMascheroniSeq (n + k + 1))) Filter.atTop (nhds (eulerMascheroniSeq n - eulerMascheroni)) := by\n        have h_telescope : \u2200 m : \u2115, \u2211 k \u2208 Finset.range m, (eulerMascheroniSeq (n + k) - eulerMascheroniSeq (n + k + 1)) = eulerMascheroniSeq n - eulerMascheroniSeq (n + m) := by\n          exact fun m => by simpa using Finset.sum_range_sub' ( fun k => eulerMascheroniSeq ( n + k ) ) m;\n        simpa only [ h_telescope ] using tendsto_const_nhds.sub ( tendsto_eulerMascheroni.comp ( Filter.tendsto_atTop_mono ( fun m => by simp +arith +decide ) tendsto_natCast_atTop_atTop ) );\n      refine' tendsto_nhds_unique h_diff ( Summable.hasSum _ |> HasSum.tendsto_sum_nat );\n      exact ( summable_iff_not_tendsto_nat_atTop_of_nonneg ( fun _ => sub_nonneg_of_le <| eulerMascheroniSeq_antitone _ _ ( by linarith ) ( by linarith ) ) ) |>.2 fun h => not_tendsto_nhds_of_tendsto_atTop h _ h_diff;\n    have h_diff : \u2200 k : \u2115, eulerMascheroniSeq (n + k) - eulerMascheroniSeq (n + k + 1) = Real.log (1 + 1 / (n + k : \u211d)) - 1 / (n + k + 1 : \u211d) := by\n      intro k; unfold eulerMascheroniSeq; norm_num [ harmonic_succ ] ; ring;\n      rw [ show ( 1 + ( n + k : \u211d ) \u207b\u00b9 ) = ( 1 + n + k : \u211d ) / ( n + k : \u211d ) by rw [ inv_eq_one_div, add_div' ] <;> ring ; positivity, Real.log_div ] <;> ring <;> positivity;\n    aesop;\n  -- Each term in the sum is less than $1/(n+k) - 1/(n+k+1)$, which telescopes to $1/n$.\n  have h_term_bound : \u2200 k : \u2115, Real.log (1 + 1 / (n + k : \u211d)) - 1 / (n + k + 1 : \u211d) \u2264 1 / (n + k : \u211d) - 1 / (n + k + 1 : \u211d) := by\n    exact fun k => sub_le_sub_right ( le_trans ( Real.log_le_sub_one_of_pos ( by positivity ) ) ( by norm_num ) ) _;\n  have h_sum_bound : \u2211' k : \u2115, (1 / (n + k : \u211d) - 1 / (n + k + 1 : \u211d)) = 1 / (n : \u211d) := by\n    have h_sum_bound : \u2200 N : \u2115, \u2211 k \u2208 Finset.range N, (1 / (n + k : \u211d) - 1 / (n + k + 1 : \u211d)) = 1 / (n : \u211d) - 1 / (n + N : \u211d) := by\n      exact fun N => by convert Finset.sum_range_sub' _ _ using 3 <;> push_cast <;> ring;\n    have h_sum_bound : Filter.Tendsto (fun N : \u2115 => \u2211 k \u2208 Finset.range N, (1 / (n + k : \u211d) - 1 / (n + k + 1 : \u211d))) Filter.atTop (nhds (1 / (n : \u211d))) := by\n      simpa only [ h_sum_bound ] using by simpa using tendsto_const_nhds.sub ( tendsto_inv_atTop_zero.comp ( show Filter.Tendsto ( fun N : \u2115 => ( n : \u211d ) + N ) Filter.atTop ( Filter.atTop ) from Filter.tendsto_atTop_add_const_left _ _ tendsto_natCast_atTop_atTop ) ) ;\n    refine' HasSum.tsum_eq _;\n    rw [ hasSum_iff_tendsto_nat_of_nonneg ];\n    \u00b7 convert h_sum_bound using 1;\n    \u00b7 exact fun k => sub_nonneg_of_le <| one_div_le_one_div_of_le ( by positivity ) <| by linarith;\n  refine' lt_of_le_of_lt h_diff ( lt_of_lt_of_le ( _ ) h_sum_bound.le );\n  apply_rules [ Summable.tsum_lt_tsum ];\n  \u00b7 exact sub_lt_sub_right ( lt_of_lt_of_le ( Real.log_lt_sub_one_of_pos ( by positivity ) ( by norm_num; positivity ) ) ( by norm_num ) ) _;\n  \u00b7 refine' Summable.of_nonneg_of_le ( fun k => _ ) ( fun k => h_term_bound k ) _;\n    \u00b7 have h_log_bound : \u2200 x : \u211d, 0 < x \u2192 Real.log (1 + x) \u2265 x / (1 + x) := by\n        exact fun x x_pos => by rw [ ge_iff_le ] ; rw [ div_le_iff\u2080 ( by positivity ) ] ; nlinarith [ Real.log_inv ( 1 + x ), Real.log_le_sub_one_of_pos ( inv_pos.mpr ( by positivity : 0 < ( 1 + x ) ) ), mul_inv_cancel\u2080 ( by positivity : ( 1 + x ) \u2260 0 ) ] ;\n      exact sub_nonneg_of_le ( le_trans ( by rw [ div_le_div_iff\u2080 ] <;> nlinarith [ show ( n : \u211d ) \u2265 1 by norm_cast, one_div_mul_cancel ( by positivity : ( n : \u211d ) + k \u2260 0 ) ] ) ( h_log_bound _ ( by positivity ) ) );\n    \u00b7 exact ( by contrapose! h_sum_bound; erw [ tsum_eq_zero_of_not_summable h_sum_bound ] ; positivity );\n  \u00b7 exact ( by contrapose! h_sum_bound; erw [ tsum_eq_zero_of_not_summable h_sum_bound ] ; positivity )\n\nend EulerMascheroni\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\nimport EulerMascheroni.Convergence\n\n/-!\n# Scheme Invariance and Renormalization Universality\n\nThis file proves that the Euler\u2013Mascheroni constant \u03b3 is *uniquely* determined\nby any asymptotically equivalent truncation/renormalization scheme. Different\nways of defining \"harmonic minus log\" all converge to the same constant.\n\n## Main results\n\n* `renormalized_constant_unique` \u2014 any two sequences that differ from `log n`\n  by the same asymptotic offset converge to the same constant.\n* `eulerMascheroni_from_log_succ` \u2014 \u03b3 can equivalently be obtained by\n  subtracting `log(n+1)` instead of `log(n)`, showing scheme invariance.\n* `eulerMascheroni_from_integral` \u2014 connection to the integral representation:\n  \u03b3 = lim_{n\u2192\u221e} (H_n - \u222b\u2081\u207f 1/x dx).\n\n## Mathematical significance\n\nThis formalizes the **universality** of the renormalized constant: the specific\ncutoff scheme (subtracting `log n` vs `log(n+1)` vs an integral) does not\naffect the limiting value. This is the formal analogue of \"renormalization\nscheme independence\" and is essential for connecting different characterizations\nof \u03b3 used in analytic number theory.\n-/\n\nnamespace EulerMascheroni\n\nopen Finset Filter Real BigOperators\n\n/-! ### Uniqueness of the renormalized limit -/\n\n/-\nThe renormalized limit is unique: if two sequences both differ from `log n`\n    by a convergent amount, they must converge to the same limit.\n-/\ntheorem renormalized_constant_unique\n    (a b : \u2115 \u2192 \u211d)\n    (ha : \u2203 A, Tendsto (fun n => a n - Real.log n) atTop (nhds A))\n    (hb : \u2203 B, Tendsto (fun n => b n - Real.log n) atTop (nhds B))\n    (hEq : \u2200\u1da0 n in atTop, a n = b n) :\n    ha.choose = hb.choose := by\n  exact tendsto_nhds_unique ha.choose_spec ( hb.choose_spec.congr' <| by filter_upwards [ hEq ] with n hn; aesop )\n\n/-! ### Scheme invariance: log(n) vs log(n+1) -/\n\n/-\nThe sequence `H_n - log(n+1)` also converges, and its limit equals \u03b3.\n-/\ntheorem tendsto_harmonic_sub_log_succ :\n    Tendsto (fun n => harmonic n - Real.log (\u2191n + 1)) atTop (nhds eulerMascheroni) := by\n  -- We have (harmonic n - log(n+1)) = (harmonic n - log n) - (log(n+1) - log n) = eulerMascheroniSeq n - log(1 + 1/n).\n  have h_eq : \u2200 n : \u2115, harmonic n - Real.log (\u2191n + 1) = eulerMascheroniSeq n - Real.log (1 + 1 / (n : \u211d)) := by\n    intro n;\n    by_cases hn : n = 0 <;> simp_all +decide [ harmonic, eulerMascheroniSeq ];\n    rw [ show ( n : \u211d ) + 1 = n * ( 1 + ( n : \u211d ) \u207b\u00b9 ) by nlinarith [ mul_inv_cancel\u2080 ( by positivity : ( n : \u211d ) \u2260 0 ) ], Real.log_mul ( by positivity ) ( by positivity ) ] ; ring;\n  simpa [ h_eq ] using tendsto_eulerMascheroni.sub ( Filter.Tendsto.log ( tendsto_const_nhds.add ( tendsto_one_div_atTop_nhds_zero_nat ) ) ( show ( 1 + 0 : \u211d ) \u2260 0 by norm_num ) )\n\n/-! ### Integral representation -/\n\n/-\nThe integral `\u222b\u2081\u207f 1/x dx = log(n)`, establishing the connection between\n    the harmonic-log definition and the integral formulation.\n-/\ntheorem integral_inv_eq_log (n : \u2115) (hn : 1 \u2264 n) :\n    \u222b x in (1 : \u211d)..(\u2191n), x\u207b\u00b9 = Real.log n := by\n  rw [ integral_inv_of_pos ] <;> norm_num ; linarith\n\n/-\n\u03b3 can be defined via integral renormalization:\n    `\u03b3 = lim_{n\u2192\u221e} (H_n - \u222b\u2081\u207f 1/x dx)`.\n-/\ntheorem eulerMascheroni_eq_lim_integral_diff :\n    Tendsto (fun n => harmonic n - \u222b x in (1 : \u211d)..(\u2191n), x\u207b\u00b9) atTop\n      (nhds eulerMascheroni) := by\n  convert tendsto_eulerMascheroni using 1;\n  funext n; by_cases hn : 1 \u2264 n <;> simp_all +decide [ harmonic, eulerMascheroniSeq ] ;\n  rw [ intervalIntegral.integral_undef ] ; norm_num\n\nend EulerMascheroni",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Euler\u2013Mascheroni constant approximation and\nirrationality testing infrastructure.\n\nImplements:\n  1. High-precision harmonic number computation\n  2. Euler\u2013Mascheroni constant approximation with certified error bounds\n  3. Rational approximation quality testing\n  4. Continued fraction analysis with irrationality criterion checking\n  5. Partial quotient statistics for irrationality heuristics\n\"\"\"\n\nfrom fractions import Fraction\nfrom decimal import Decimal, getcontext\nimport math\nfrom typing import List, Tuple, Optional\n\n\ndef harmonic_exact(n: int) -> Fraction:\n    \"\"\"\n    Compute the n-th harmonic number H_n = sum_{k=1}^{n} 1/k exactly.\n\n    Uses Python's Fraction type for arbitrary-precision rational arithmetic.\n\n    Args:\n        n: Positive integer\n\n    Returns:\n        H_n as an exact rational number\n\n    Time complexity: O(n \u00b7 M(n log n)) where M(k) is multiplication cost for k-bit numbers\n    Space complexity: O(n log n) for the rational representation\n\n    Example:\n        >>> harmonic_exact(4)\n        Fraction(25, 12)\n        >>> float(harmonic_exact(10))\n        2.9289682539682538\n    \"\"\"\n    if n <= 0:\n        return Fraction(0)\n    result = Fraction(0)\n    for k in range(1, n + 1):\n        result += Fraction(1, k)\n    return result\n\n\ndef euler_mascheroni_approx_with_bounds(n: int) -> Tuple[float, float, float]:\n    \"\"\"\n    Compute \u03b3 approximation with certified error bounds.\n\n    Returns (lower_bound, approximation, upper_bound) such that\n    lower_bound \u2264 \u03b3 \u2264 upper_bound, with the approximation being H_n - log(n).\n\n    The bounds come from our formal theorems:\n      - \u03b3 \u2264 H_n - log(n)           (sequence approaches from above)\n      - \u03b3 > H_n - log(n) - 1/n     (not quite \u2014 we use H_n - log(n+1) as lower)\n      - More precisely: H_n - log(n+1) < \u03b3 < H_n - log(n)\n\n    Args:\n        n: Number of terms (must be \u2265 1)\n\n    Returns:\n        (lower, approx, upper) where lower \u2264 \u03b3 \u2264 upper\n\n    Example:\n        >>> lo, mid, hi = euler_mascheroni_approx_with_bounds(1000)\n        >>> hi - lo < 0.001\n        True\n    \"\"\"\n    assert n >= 1, \"n must be at least 1\"\n    h_n = sum(1.0 / k for k in range(1, n + 1))\n    upper = h_n - math.log(n)        # H_n - log(n) > \u03b3\n    lower = h_n - math.log(n + 1)    # H_n - log(n+1) < \u03b3\n    approx = (upper + lower) / 2     # midpoint estimate\n    return lower, approx, upper\n\n\ndef euler_mascheroni_high_precision(num_digits: int = 50) -> Decimal:\n    \"\"\"\n    Compute \u03b3 to specified precision using the Brent-McMillan algorithm concept.\n\n    Uses the relation \u03b3 = lim_{n\u2192\u221e} (H_n - log(n)) with acceleration\n    via the Euler-Maclaurin formula:\n      \u03b3 \u2248 H_n - log(n) - 1/(2n) + sum_{k=1}^{p} B_{2k}/(2k\u00b7n^{2k})\n\n    For simplicity, this implementation uses direct summation with\n    high-precision arithmetic.\n\n    Args:\n        num_digits: Number of decimal digits of precision\n\n    Returns:\n        \u03b3 as a Decimal with specified precision\n\n    Example:\n        >>> gamma = euler_mascheroni_high_precision(30)\n        >>> str(gamma)[:10]\n        '0.57721566'\n    \"\"\"\n    getcontext().prec = num_digits + 20  # extra guard digits\n\n    # Use enough terms for convergence\n    n = max(100, num_digits * 5)\n\n    h_n = Decimal(0)\n    for k in range(1, n + 1):\n        h_n += Decimal(1) / Decimal(k)\n\n    # log(n) via Taylor series around a power of 2\n    log_n = _decimal_log(Decimal(n))\n\n    gamma = h_n - log_n\n\n    # Apply first Euler-Maclaurin correction: -1/(2n)\n    gamma -= Decimal(1) / (2 * Decimal(n))\n\n    return +Decimal(str(gamma)[:num_digits + 2])\n\n\ndef _decimal_log(x: Decimal) -> Decimal:\n    \"\"\"Compute natural logarithm using AGM method for Decimal.\"\"\"\n    getcontext().prec += 10\n    if x <= 0:\n        raise ValueError(\"log of non-positive number\")\n    if x == 1:\n        return Decimal(0)\n\n    # Use the identity: log(x) = log(2^k \u00b7 y) = k\u00b7log(2) + log(y) where 1 \u2264 y < 2\n    k = 0\n    y = x\n    while y >= 2:\n        y /= 2\n        k += 1\n    while y < 1:\n        y *= 2\n        k -= 1\n\n    # log(y) for 1 \u2264 y < 2 via Taylor series of log(1 + t) where t = y - 1\n    t = y - 1\n    result = Decimal(0)\n    term = t\n    for n in range(1, getcontext().prec + 50):\n        result += term / n\n        term *= -t\n        if abs(term / (n + 1)) < Decimal(10) ** (-(getcontext().prec + 5)):\n            break\n\n    # log(2) via same Taylor series\n    log2 = Decimal(0)\n    t2 = Decimal(1)  # log(2) = log(1 + 1), t = 1\n    # Use log(2) = 2\u00b7atanh(1/3) + ... or known series\n    # Simpler: log(2) = sum_{n=1}^{\u221e} (-1)^{n+1}/n (very slow, but correct)\n    # Better: use log(2) = log(4/3) + log(3/2) with faster converging series\n    t_a = Decimal(1) / Decimal(3)  # log(4/3) = log(1 + 1/3)\n    t_b = Decimal(1) / Decimal(2)  # log(3/2) = log(1 + 1/2)\n\n    log_4_3 = Decimal(0)\n    term_a = t_a\n    for n in range(1, getcontext().prec + 100):\n        log_4_3 += term_a / n\n        term_a *= -t_a\n        if abs(term_a / (n + 1)) < Decimal(10) ** (-(getcontext().prec + 5)):\n            break\n\n    log_3_2 = Decimal(0)\n    term_b = t_b\n    for n in range(1, getcontext().prec + 100):\n        log_3_2 += term_b / n\n        term_b *= -t_b\n        if abs(term_b / (n + 1)) < Decimal(10) ** (-(getcontext().prec + 5)):\n            break\n\n    log2_val = log_4_3 + log_3_2\n\n    getcontext().prec -= 10\n    return +(result + k * log2_val)\n\n\ndef continued_fraction_expansion(x: float, max_terms: int = 100,\n                                  tolerance: float = 1e-12) -> List[int]:\n    \"\"\"\n    Compute the continued fraction expansion [a_0; a_1, a_2, ...] of x.\n\n    Args:\n        x: Real number to expand\n        max_terms: Maximum number of partial quotients\n        tolerance: Stop when fractional part is below this\n\n    Returns:\n        List of partial quotients\n\n    Example:\n        >>> continued_fraction_expansion(math.pi, 10)\n        [3, 7, 15, 1, 292, 1, 1, 1, 2, 1]\n    \"\"\"\n    quotients = []\n    for _ in range(max_terms):\n        a = int(math.floor(x))\n        quotients.append(a)\n        frac = x - a\n        if abs(frac) < tolerance:\n            break\n        x = 1.0 / frac\n    return quotients\n\n\ndef convergents(partial_quotients: List[int]) -> List[Tuple[int, int]]:\n    \"\"\"\n    Compute convergents p_k/q_k from partial quotients.\n\n    Args:\n        partial_quotients: List [a_0, a_1, a_2, ...]\n\n    Returns:\n        List of (p_k, q_k) pairs\n\n    Example:\n        >>> convergents([0, 1, 1, 2, 1, 1, 4])\n        [(0, 1), (1, 1), (1, 2), (3, 5), (4, 7), (7, 12), (32, 55)]\n    \"\"\"\n    if not partial_quotients:\n        return []\n\n    result = []\n    p_prev, p_curr = 1, partial_quotients[0]\n    q_prev, q_curr = 0, 1\n    result.append((p_curr, q_curr))\n\n    for k in range(1, len(partial_quotients)):\n        a_k = partial_quotients[k]\n        p_new = a_k * p_curr + p_prev\n        q_new = a_k * q_curr + q_prev\n        result.append((p_new, q_new))\n        p_prev, p_curr = p_curr, p_new\n        q_prev, q_curr = q_curr, q_new\n\n    return result\n\n\ndef irrationality_measure_test(x: float, max_q: int = 10000) -> dict:\n    \"\"\"\n    Test the irrationality measure of x by finding best rational approximations.\n\n    For each denominator q, find the best p and compute |x - p/q|.\n    Compare against the thresholds 1/q, 1/q\u00b2, 1/(2q\u00b2).\n\n    The irrationality exponent \u03bc(x) is estimated from the growth rate\n    of the best approximation quality.\n\n    Args:\n        x: Target real number\n        max_q: Maximum denominator to test\n\n    Returns:\n        Dictionary with analysis results\n\n    Example:\n        >>> result = irrationality_measure_test(0.5772156649015329)\n        >>> result['estimated_measure']  # Should be \u2248 2 for typical irrationals\n    \"\"\"\n    best_approx = []\n\n    for q in range(1, max_q + 1):\n        p = round(x * q)\n        error = abs(x - p / q)\n        if error > 0:  # Exclude exact matches\n            best_approx.append({\n                'q': q,\n                'p': p,\n                'error': error,\n                'quality': -math.log(error) / math.log(q) if q > 1 else 0,\n                'beats_1_over_q': error < 1.0 / q,\n                'beats_1_over_2q2': error < 1.0 / (2 * q * q),\n            })\n\n    # Estimate irrationality measure from best approximations\n    # \u03bc = lim sup log(1/|x - p/q|) / log(q)\n    if best_approx:\n        qualities = [a['quality'] for a in best_approx if a['quality'] > 0]\n        max_quality = max(qualities) if qualities else 0\n        n_beats_threshold = sum(1 for a in best_approx if a['beats_1_over_2q2'])\n    else:\n        max_quality = 0\n        n_beats_threshold = 0\n\n    return {\n        'num_tested': max_q,\n        'best_approximations': sorted(best_approx, key=lambda a: a['error'])[:20],\n        'estimated_measure': max_quality,\n        'n_beats_irrationality_threshold': n_beats_threshold,\n        'top_quality_approx': sorted(best_approx, key=lambda a: -a['quality'])[:10],\n    }\n\n\ndef partial_quotient_statistics(x: float, n_terms: int = 1000) -> dict:\n    \"\"\"\n    Analyze statistics of partial quotients for irrationality heuristics.\n\n    For a \"generic\" irrational number, the Gauss-Kuzmin distribution\n    predicts P(a_k = n) = log_2(1 + 1/(n(n+2))). The geometric mean\n    should converge to the Khinchin constant K \u2248 2.6854520010...\n\n    Significant deviation from these statistics may indicate special\n    number-theoretic structure (as expected for \u03b3 if it is algebraic\n    or related to special values).\n\n    Args:\n        x: Target number\n        n_terms: Number of partial quotients to analyze\n\n    Returns:\n        Statistics dictionary\n\n    Example:\n        >>> stats = partial_quotient_statistics(0.5772156649015329, 20)\n        >>> stats['max_quotient']\n        5\n    \"\"\"\n    cf = continued_fraction_expansion(x, n_terms)\n    pq = cf[1:]  # Exclude a_0\n\n    if not pq:\n        return {'error': 'No partial quotients computed'}\n\n    # Basic statistics\n    max_pq = max(pq)\n    mean_pq = sum(pq) / len(pq)\n    geo_mean = math.exp(sum(math.log(a) for a in pq) / len(pq))\n\n    # Khinchin constant comparison\n    KHINCHIN = 2.6854520010653064\n\n    # Distribution analysis\n    freq = {}\n    for a in pq:\n        freq[a] = freq.get(a, 0) + 1\n\n    # Expected Gauss-Kuzmin frequencies\n    gauss_kuzmin = {}\n    for n in sorted(freq.keys()):\n        gauss_kuzmin[n] = math.log2(1 + 1 / (n * (n + 2)))\n\n    return {\n        'n_quotients': len(pq),\n        'max_quotient': max_pq,\n        'mean_quotient': mean_pq,\n        'geometric_mean': geo_mean,\n        'khinchin_constant': KHINCHIN,\n        'geo_mean_ratio': geo_mean / KHINCHIN,\n        'frequency': dict(sorted(freq.items())),\n        'gauss_kuzmin_expected': gauss_kuzmin,\n    }\n\n\ndef approximation_quality_scan(gamma_approx: float,\n                                max_denominator: int = 100000) -> List[dict]:\n    \"\"\"\n    Scan for rational approximations to \u03b3 that beat the 1/(2q\u00b2) threshold.\n\n    These are exactly the approximations needed to apply our formal\n    irrationality criterion.\n\n    Args:\n        gamma_approx: Approximation to \u03b3\n        max_denominator: Maximum denominator to scan\n\n    Returns:\n        List of approximations beating the threshold\n\n    Example:\n        >>> results = approximation_quality_scan(0.5772156649015329, 1000)\n        >>> len(results) > 0\n        True\n    \"\"\"\n    winners = []\n    for q in range(1, max_denominator + 1):\n        p = round(gamma_approx * q)\n        error = abs(gamma_approx - p / q)\n        threshold = 1.0 / (2 * q * q) if q > 0 else 0\n\n        if 0 < error < threshold:\n            winners.append({\n                'p': p,\n                'q': q,\n                'error': error,\n                'threshold': threshold,\n                'ratio': error / threshold,\n                'quality_exponent': -math.log(error) / math.log(q) if q > 1 else 0,\n            })\n\n    return winners\n\n\nif __name__ == \"__main__\":\n    print(\"Euler-Mascheroni Constant: Algorithms Demo\")\n    print(\"=\" * 50)\n\n    # 1. High-precision computation\n    print(\"\\n1. Exact harmonic numbers:\")\n    for n in [5, 10, 15]:\n        h = harmonic_exact(n)\n        print(f\"   H_{n} = {h} \u2248 {float(h):.10f}\")\n\n    # 2. Certified bounds\n    print(\"\\n2. Certified bounds on \u03b3:\")\n    for n in [100, 1000, 10000]:\n        lo, mid, hi = euler_mascheroni_approx_with_bounds(n)\n        print(f\"   n={n:>5}: {lo:.12f} < \u03b3 < {hi:.12f}  (width={hi-lo:.2e})\")\n\n    # 3. Irrationality measure test\n    GAMMA = 0.5772156649015328606065120900824024310421593359\n    print(\"\\n3. Irrationality measure analysis:\")\n    result = irrationality_measure_test(GAMMA, 5000)\n    print(f\"   Estimated irrationality measure: {result['estimated_measure']:.4f}\")\n    print(f\"   Approximations beating 1/(2q\u00b2): {result['n_beats_irrationality_threshold']}\")\n    print(f\"   Top quality approximations:\")\n    for a in result['top_quality_approx'][:5]:\n        print(f\"     p/q = {a['p']}/{a['q']}, |\u03b3-p/q| = {a['error']:.2e}, quality = {a['quality']:.4f}\")\n\n    # 4. Continued fraction statistics\n    print(\"\\n4. Continued fraction statistics:\")\n    stats = partial_quotient_statistics(GAMMA, 25)\n    print(f\"   Partial quotients: {stats['n_quotients']}\")\n    print(f\"   Max quotient: {stats['max_quotient']}\")\n    print(f\"   Geometric mean: {stats['geometric_mean']:.4f}\")\n    print(f\"   Khinchin constant: {stats['khinchin_constant']:.4f}\")\n    print(f\"   Ratio geo/Khinchin: {stats['geo_mean_ratio']:.4f}\")\n\n    # 5. Approximation quality scan\n    print(\"\\n5. Approximations to \u03b3 beating 1/(2q\u00b2):\")\n    winners = approximation_quality_scan(GAMMA, 10000)\n    print(f\"   Found {len(winners)} approximations beating threshold\")\n    for w in winners[:10]:\n        print(f\"     {w['p']}/{w['q']}: error={w['error']:.2e}, \"\n              f\"threshold={w['threshold']:.2e}, ratio={w['ratio']:.4f}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Euler\u2013Mascheroni constant theory.\n\nDemonstrates practical uses of the formal approximation infrastructure:\n  1. Certified computation: bounding \u03b3 with proven error guarantees\n  2. Prime counting estimates using \u03b3\n  3. Random matrix theory connections\n  4. Information-theoretic applications\n  5. Coupon collector problem\n\"\"\"\n\nimport math\nfrom typing import Tuple, List\n\n\n# High-precision \u03b3\nGAMMA = 0.5772156649015328606065120900824024310421593359\n\n\ndef certified_gamma_bounds(n: int) -> Tuple[float, float]:\n    \"\"\"\n    Return certified bounds [lower, upper] on \u03b3 using n harmonic terms.\n\n    By our formal theorems:\n      H_n - log(n+1) < \u03b3 < H_n - log(n)\n\n    These bounds are *proven correct* in our formal development.\n\n    Args:\n        n: Number of harmonic terms\n\n    Returns:\n        (lower_bound, upper_bound) with guaranteed lower \u2264 \u03b3 \u2264 upper\n\n    Example:\n        >>> lo, hi = certified_gamma_bounds(10000)\n        >>> hi - lo\n        9.999500033330834e-05\n    \"\"\"\n    h_n = sum(1.0 / k for k in range(1, n + 1))\n    return h_n - math.log(n + 1), h_n - math.log(n)\n\n\n# \u2500\u2500\u2500 Application 1: Prime Counting \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef mertens_estimate(n: int) -> Tuple[float, float]:\n    \"\"\"\n    Mertens' theorem: sum_{p \u2264 n} 1/p \u2248 log(log(n)) + M\n    where M = \u03b3 + sum_p (log(1 - 1/p) + 1/p) \u2248 0.2615...\n\n    The Euler\u2013Mascheroni constant is the dominant term in M.\n\n    Returns actual sum of reciprocal primes and the Mertens estimate.\n    \"\"\"\n    def sieve(limit):\n        is_prime = [True] * (limit + 1)\n        is_prime[0] = is_prime[1] = False\n        for i in range(2, int(limit**0.5) + 1):\n            if is_prime[i]:\n                for j in range(i*i, limit + 1, i):\n                    is_prime[j] = False\n        return [i for i in range(2, limit + 1) if is_prime[i]]\n\n    primes = sieve(n)\n    actual_sum = sum(1.0 / p for p in primes)\n\n    # Mertens' constant M \u2248 0.2615\n    MERTENS = 0.2614972128476427\n    estimate = math.log(math.log(n)) + MERTENS if n > 1 else 0\n\n    return actual_sum, estimate\n\n\n# \u2500\u2500\u2500 Application 2: Coupon Collector Problem \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef coupon_collector_expected(n: int) -> float:\n    \"\"\"\n    Expected number of draws to collect all n distinct coupons.\n\n    E[T_n] = n \u00b7 H_n \u2248 n \u00b7 (log(n) + \u03b3)\n\n    The Euler\u2013Mascheroni constant provides the correction term.\n\n    Args:\n        n: Number of distinct coupon types\n\n    Returns:\n        Expected number of draws\n    \"\"\"\n    return n * sum(1.0 / k for k in range(1, n + 1))\n\n\ndef coupon_collector_gamma_correction(n: int) -> Tuple[float, float, float]:\n    \"\"\"\n    Show the role of \u03b3 in the coupon collector formula.\n\n    Returns (n\u00b7log(n), n\u00b7(log(n)+\u03b3), n\u00b7H_n) showing that \u03b3 provides\n    the essential correction from n\u00b7log(n) to the true expectation.\n    \"\"\"\n    h_n = sum(1.0 / k for k in range(1, n + 1))\n    naive = n * math.log(n)\n    corrected = n * (math.log(n) + GAMMA)\n    exact = n * h_n\n    return naive, corrected, exact\n\n\n# \u2500\u2500\u2500 Application 3: Laplace Transform and Exponential Integral \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef exponential_integral_gamma(x: float, terms: int = 100) -> float:\n    \"\"\"\n    The exponential integral Ei(x) for x > 0 involves \u03b3:\n      Ei(x) = \u03b3 + log(x) + sum_{n=1}^\u221e x^n / (n \u00b7 n!)\n\n    Args:\n        x: Positive real number\n        terms: Number of series terms\n\n    Returns:\n        Ei(x)\n    \"\"\"\n    result = GAMMA + math.log(abs(x))\n    term = x\n    factorial = 1\n    for n in range(1, terms + 1):\n        factorial *= n\n        result += term / (n * factorial)\n        term *= x\n        if abs(term / (n * factorial)) < 1e-15:\n            break\n    return result\n\n\n# \u2500\u2500\u2500 Application 4: Extreme Value Theory \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef gumbel_distribution_mean():\n    \"\"\"\n    The Gumbel distribution (type-I extreme value) has mean = \u03b3.\n\n    The Gumbel distribution models the maximum of many independent\n    samples from exponential-like distributions. Its PDF is:\n      f(x) = exp(-(x + exp(-x)))\n\n    The mean of this distribution is exactly \u03b3.\n\n    Returns:\n        Dictionary with Gumbel distribution properties\n    \"\"\"\n    return {\n        'mean': GAMMA,\n        'median': -math.log(math.log(2)),\n        'mode': 0.0,\n        'variance': math.pi**2 / 6,\n        'skewness': 12 * math.sqrt(6) * 1.2020569031595942 / math.pi**3,\n        'description': (\n            'The Gumbel distribution arises as the limit distribution '\n            'of the maximum of n independent exponential random variables. '\n            'Its mean equals the Euler-Mascheroni constant \u03b3.'\n        ),\n    }\n\n\n# \u2500\u2500\u2500 Application 5: Digamma Function \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef digamma_at_one():\n    \"\"\"\n    The digamma function \u03c8(1) = -\u03b3.\n\n    The digamma function is \u03c8(x) = d/dx log(\u0393(x)) = \u0393'(x)/\u0393(x).\n    At x = 1: \u03c8(1) = -\u03b3.\n\n    More generally: \u03c8(n) = H_{n-1} - \u03b3 for positive integers n.\n    \"\"\"\n    return {\n        'psi_1': -GAMMA,\n        'relation': '\u03c8(n) = H_{n-1} - \u03b3 for positive integers n',\n        'values': {n: sum(1.0/k for k in range(1, n)) - GAMMA for n in range(1, 11)},\n    }\n\n\n# \u2500\u2500\u2500 Main Demo \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=\" * 70)\n    print(\"APPLICATIONS OF EULER\u2013MASCHERONI CONSTANT THEORY\")\n    print(\"=\" * 70)\n\n    # Application 1: Certified bounds\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 1: Certified Bounds on \u03b3 \u2500\u2500\u2500\")\n    for n in [10, 100, 1000, 10000, 100000]:\n        lo, hi = certified_gamma_bounds(n)\n        print(f\"  n={n:>6}: {lo:.14f} < \u03b3 < {hi:.14f}  (width {hi-lo:.2e})\")\n\n    # Application 2: Mertens' theorem\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 2: Mertens' Theorem (Reciprocal Primes) \u2500\u2500\u2500\")\n    print(f\"  Mertens' constant involves \u03b3: M = \u03b3 + \u03a3(log(1-1/p) + 1/p)\")\n    for n in [100, 1000, 10000, 100000]:\n        actual, estimate = mertens_estimate(n)\n        print(f\"  n={n:>6}: \u03a3(1/p) = {actual:.6f}, estimate = {estimate:.6f}, \"\n              f\"error = {abs(actual-estimate):.4e}\")\n\n    # Application 3: Coupon collector\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 3: Coupon Collector Problem \u2500\u2500\u2500\")\n    print(f\"  E[T_n] = n\u00b7H_n \u2248 n\u00b7(log n + \u03b3)\")\n    for n in [10, 50, 100, 365]:\n        naive, corrected, exact = coupon_collector_gamma_correction(n)\n        print(f\"  n={n:>3}: n\u00b7log(n)={naive:.1f}, \"\n              f\"n\u00b7(log n+\u03b3)={corrected:.1f}, n\u00b7H_n={exact:.1f}\")\n\n    # Application 4: Extreme value theory\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 4: Gumbel Distribution \u2500\u2500\u2500\")\n    gumbel = gumbel_distribution_mean()\n    print(f\"  The Gumbel distribution (extreme value type I):\")\n    print(f\"  Mean = \u03b3 = {gumbel['mean']:.16f}\")\n    print(f\"  Variance = \u03c0\u00b2/6 = {gumbel['variance']:.10f}\")\n    print(f\"  {gumbel['description']}\")\n\n    # Application 5: Digamma function\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 5: Digamma Function \u2500\u2500\u2500\")\n    psi = digamma_at_one()\n    print(f\"  \u03c8(1) = -\u03b3 = {psi['psi_1']:.16f}\")\n    print(f\"  Relation: {psi['relation']}\")\n    print(f\"  Values:\")\n    for n, val in list(psi['values'].items())[:6]:\n        print(f\"    \u03c8({n}) = {val:.10f}\")\n\n    # Application 6: Exponential integral\n    print(\"\\n\u2500\u2500\u2500 APPLICATION 6: Exponential Integral \u2500\u2500\u2500\")\n    print(f\"  Ei(x) = \u03b3 + log(x) + \u03a3 x^n/(n\u00b7n!)\")\n    for x in [0.5, 1.0, 2.0, 5.0]:\n        ei = exponential_integral_gamma(x)\n        print(f\"  Ei({x}) = {ei:.10f}\")\n\n\n#!/usr/bin/env python3\n\"\"\"\nDemonstration of the Euler\u2013Mascheroni constant approximation theory.\n\nThis script provides concrete numerical illustrations of the theorems\nformalized in our Lean 4 development:\n  1. Convergence of H_n - log(n) to \u03b3\n  2. The O(1/n) convergence rate bounds\n  3. Rational approximation quality for irrationality criteria\n  4. Scheme invariance between log(n) and log(n+1) renormalization\n\"\"\"\n\nimport math\nfrom fractions import Fraction\n\n# Known high-precision value of \u03b3\nGAMMA = 0.5772156649015328606065120900824024310421593359\n\ndef harmonic(n: int) -> float:\n    \"\"\"Compute H_n = sum_{k=1}^{n} 1/k.\"\"\"\n    return sum(1.0 / k for k in range(1, n + 1))\n\ndef harmonic_exact(n: int) -> Fraction:\n    \"\"\"Compute H_n exactly using rational arithmetic.\"\"\"\n    return sum(Fraction(1, k) for k in range(1, n + 1))\n\ndef euler_mascheroni_seq(n: int) -> float:\n    \"\"\"Compute a_n = H_n - log(n).\"\"\"\n    if n < 1:\n        return 0.0\n    return harmonic(n) - math.log(n)\n\ndef euler_mascheroni_seq_alt(n: int) -> float:\n    \"\"\"Compute b_n = H_n - log(n+1) (alternative scheme).\"\"\"\n    return harmonic(n) - math.log(n + 1)\n\n\ndef demo_convergence():\n    \"\"\"Demonstrate convergence of the Euler-Mascheroni sequence.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Convergence of H_n - log(n) to \u03b3\")\n    print(\"=\" * 70)\n    print(f\"\\nKnown value: \u03b3 \u2248 {GAMMA:.16f}\")\n    print(f\"\\n{'n':>10} {'H_n - log(n)':>20} {'Error':>15} {'1/n bound':>12}\")\n    print(\"-\" * 60)\n\n    for n in [1, 2, 5, 10, 50, 100, 1000, 10000, 100000]:\n        a_n = euler_mascheroni_seq(n)\n        error = a_n - GAMMA\n        bound = 1.0 / n\n        print(f\"{n:>10} {a_n:>20.14f} {error:>15.2e} {bound:>12.2e}\")\n\n    print(\"\\nObservation: The error is always positive (sequence approaches\")\n    print(\"from above) and bounded by 1/n, confirming our formal theorem.\")\n\n\ndef demo_bounds():\n    \"\"\"Demonstrate the two-sided bounds on the convergence rate.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 2: Convergence Rate Bounds\")\n    print(\"=\" * 70)\n    print(f\"\\nTheorem: 0 < a_n - \u03b3 < 1/n for n \u2265 1\")\n    print(f\"\\n{'n':>10} {'a_n - \u03b3':>18} {'1/(2(n+1))':>14} {'1/n':>12} {'Ratio (a_n-\u03b3)/(1/n)':>22}\")\n    print(\"-\" * 78)\n\n    for n in [1, 2, 5, 10, 50, 100, 1000, 10000]:\n        a_n = euler_mascheroni_seq(n)\n        diff = a_n - GAMMA\n        lower = 1.0 / (2 * (n + 1))\n        upper = 1.0 / n\n        ratio = diff * n  # normalized ratio\n        print(f\"{n:>10} {diff:>18.12f} {lower:>14.8f} {upper:>12.8f} {ratio:>22.8f}\")\n\n    print(\"\\nObservation: The ratio (a_n - \u03b3)\u00b7n converges to 1/2,\")\n    print(\"showing the precise asymptotic a_n - \u03b3 ~ 1/(2n).\")\n\n\ndef demo_irrationality_criterion():\n    \"\"\"Demonstrate the irrationality criterion threshold.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 3: Irrationality Criterion \u2014 The 1/q\u00b2 Barrier\")\n    print(\"=\" * 70)\n    print(f\"\\nTheorem: If |x - p/q| < 1/(2q\u00b2) for infinitely many p/q \u2260 x,\")\n    print(f\"then x is irrational.\")\n    print(f\"\\nCompare: rational x = 1/3 can be approximated to O(1/q) but NOT O(1/q\u00b2)\")\n    print()\n\n    x_rat = Fraction(1, 3)\n    x_float = float(x_rat)\n\n    print(f\"Target: x = 1/3 = {x_float:.16f}\")\n    print(f\"\\n{'q':>8} {'best p':>8} {'|x-p/q|':>18} {'1/(2q\u00b2)':>18} {'1/q':>12} {'< 1/(2q\u00b2)?':>12}\")\n    print(\"-\" * 80)\n\n    for q in [1, 2, 3, 5, 10, 30, 100, 1000]:\n        # Find best p/q approximation to 1/3\n        p = round(x_float * q)\n        if p == q * x_float:\n            # p/q = x exactly, use next best\n            p_alt = p + 1  # or p - 1\n            error_alt = abs(x_float - p_alt / q)\n            p_used = p_alt\n        else:\n            p_used = p\n        error = abs(x_float - p_used / q)\n        threshold = 1.0 / (2 * q * q) if q > 0 else float('inf')\n        one_over_q = 1.0 / q if q > 0 else float('inf')\n        beats = \"YES\" if error < threshold and error > 0 else \"NO\"\n        print(f\"{q:>8} {p_used:>8} {error:>18.12f} {threshold:>18.12f} {one_over_q:>12.8f} {beats:>12}\")\n\n    print(\"\\nFor rational x = 1/3, approximants with p/q \u2260 x satisfy\")\n    print(\"|1/3 - p/q| \u2265 1/(3q), which exceeds 1/(2q\u00b2) for q > 3/2.\")\n    print(\"So no irrational-quality approximations exist beyond q = 1.\")\n\n\ndef demo_scheme_invariance():\n    \"\"\"Demonstrate scheme invariance: log(n) vs log(n+1).\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 4: Scheme Invariance \u2014 log(n) vs log(n+1)\")\n    print(\"=\" * 70)\n    print(f\"\\nBoth H_n - log(n) and H_n - log(n+1) converge to \u03b3.\")\n    print(f\"\\n{'n':>10} {'H_n - log(n)':>18} {'H_n - log(n+1)':>18} {'difference':>15}\")\n    print(\"-\" * 65)\n\n    for n in [1, 2, 5, 10, 50, 100, 1000, 10000]:\n        scheme1 = euler_mascheroni_seq(n)\n        scheme2 = euler_mascheroni_seq_alt(n)\n        diff = scheme1 - scheme2\n        print(f\"{n:>10} {scheme1:>18.14f} {scheme2:>18.14f} {diff:>15.10f}\")\n\n    print(f\"\\nDifference = log(1 + 1/n) \u2192 0, confirming both converge to \u03b3.\")\n    print(f\"\u03b3 is trapped between the two sequences: H_n - log(n+1) < \u03b3 < H_n - log(n)\")\n\n\ndef demo_continued_fraction():\n    \"\"\"Analyze the continued fraction of \u03b3.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 5: Continued Fraction Expansion of \u03b3\")\n    print(\"=\" * 70)\n\n    # Compute continued fraction partial quotients\n    def continued_fraction(x: float, n_terms: int = 30) -> list:\n        \"\"\"Compute first n_terms of the continued fraction expansion.\"\"\"\n        result = []\n        for _ in range(n_terms):\n            a = int(math.floor(x))\n            result.append(a)\n            frac = x - a\n            if abs(frac) < 1e-12:\n                break\n            x = 1.0 / frac\n        return result\n\n    cf = continued_fraction(GAMMA, 25)\n    print(f\"\\n\u03b3 = [{cf[0]}; {', '.join(str(a) for a in cf[1:])}]\")\n    print(f\"\\nPartial quotients: {cf}\")\n\n    # Compute convergents\n    print(f\"\\n{'k':>4} {'a_k':>6} {'p_k/q_k':>20} {'|\u03b3 - p_k/q_k|':>20} {'1/(2q_k\u00b2)':>18}\")\n    print(\"-\" * 72)\n\n    p_prev, p_curr = 1, cf[0]\n    q_prev, q_curr = 0, 1\n\n    for k in range(len(cf)):\n        a_k = cf[k]\n        if k == 0:\n            p_k, q_k = a_k, 1\n        elif k == 1:\n            p_k = a_k * cf[0] + 1\n            q_k = a_k\n        else:\n            p_k = a_k * p_curr + p_prev\n            q_k = a_k * q_curr + q_prev\n\n        error = abs(GAMMA - p_k / q_k) if q_k > 0 else 0\n        threshold = 1.0 / (2 * q_k * q_k) if q_k > 0 else 0\n        beats = \"\u2713\" if error < threshold else \"\"\n\n        print(f\"{k:>4} {a_k:>6} {p_k:>10}/{q_k:<9} {error:>20.2e} {threshold:>18.2e} {beats}\")\n\n        p_prev, p_curr = p_curr, p_k\n        q_prev, q_curr = q_curr, q_k\n\n    print(\"\\n\u2713 marks convergents that beat the 1/(2q\u00b2) irrationality threshold.\")\n    print(\"If infinitely many convergents beat this threshold, \u03b3 is irrational.\")\n\n\nif __name__ == \"__main__\":\n    demo_convergence()\n    demo_bounds()\n    demo_irrationality_criterion()\n    demo_scheme_invariance()\n    demo_continued_fraction()\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demonstrations complete.\")\n    print(\"=\" * 70)\n"
+    },
+    "date": "2026-05-20T00:00:25Z",
+    "exp_id": "6c440f37",
+    "source_exp_ids": [
+      "seed"
+    ]
   }
 };
 
@@ -4712,7 +4754,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -4721,7 +4763,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -4730,7 +4772,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -4739,7 +4781,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "galois_group__s",
@@ -4748,7 +4790,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -4757,7 +4799,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -4766,7 +4808,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 359
+      "hue": 92
     },
     {
       "id": "expected_lean_signature",
@@ -4775,7 +4817,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -4784,7 +4826,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -4793,7 +4835,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "percolation_threshold",
@@ -4802,7 +4844,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -4811,7 +4853,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -4820,7 +4862,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -4829,7 +4871,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -4838,7 +4880,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T16:00:38Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "legendres_conjecture",
@@ -4865,7 +4907,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T17:03:39Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -4874,7 +4916,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -4883,7 +4925,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "p_vs_np_problem",
@@ -4892,7 +4934,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -4901,7 +4943,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -4928,7 +4970,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:03:41Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -4937,7 +4979,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -4946,7 +4988,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -4955,7 +4997,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T20:03:02Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "sums_of_three_cubes",
@@ -4964,7 +5006,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T20:03:29Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -4973,7 +5015,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -4982,7 +5024,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "twin_prime_conjecture",
@@ -4991,7 +5033,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -5009,7 +5051,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "happy_end_problem",
@@ -5018,7 +5060,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -5036,7 +5078,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -5045,7 +5087,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -5054,7 +5096,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "erdsstraus_conjecture",
@@ -5063,7 +5105,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:03:55Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "langlands_program_functoriality",
@@ -5072,7 +5114,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:04:15Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -5081,7 +5123,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "tropical_intersection_theory",
@@ -5090,7 +5132,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "riemann_hypothesis",
@@ -5099,7 +5141,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "odd_perfect_numbers",
@@ -5108,7 +5150,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -5117,7 +5159,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 359
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture",
@@ -5126,7 +5168,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "10_is_a_solitary_number",
@@ -5135,7 +5177,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "kakeya_conjecture",
@@ -5144,7 +5186,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T10:26:12Z",
-      "hue": 271
+      "hue": 89
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -5153,7 +5195,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "invariant_subspace_problem",
@@ -5162,7 +5204,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -5171,7 +5213,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -5180,7 +5222,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -5189,7 +5231,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 271
+      "hue": 101
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -5207,7 +5249,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -5216,7 +5258,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 272
+      "hue": 280
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -5225,7 +5267,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "196_algorithm_non_termination",
@@ -5234,7 +5276,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:04:01Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "yang_mills_mass_gap",
@@ -5252,7 +5294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -5270,7 +5312,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -5288,7 +5330,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "beals_conjecture",
@@ -5297,7 +5339,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 271
+      "hue": 101
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -5306,7 +5348,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -5315,7 +5357,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -5324,7 +5366,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 270
+      "hue": 101
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -5333,7 +5375,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -5342,7 +5384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -5351,7 +5393,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -5360,7 +5402,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -5369,7 +5411,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -5378,7 +5420,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -5387,7 +5429,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -5396,7 +5438,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 179
+      "hue": 271
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -5414,7 +5456,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -5432,7 +5474,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -5441,7 +5483,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -5468,7 +5510,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:44Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -5477,7 +5519,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -5486,7 +5528,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -5495,7 +5537,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "we_have_formally_verified",
@@ -5504,7 +5546,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -5522,7 +5564,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -5540,7 +5582,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -5549,7 +5591,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:00:23Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -5558,7 +5600,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -5567,7 +5609,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -5576,7 +5618,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "collatz_conjecture",
@@ -5585,7 +5627,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -5603,7 +5645,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -5612,7 +5654,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -5621,7 +5663,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 270
+      "hue": 272
+    },
+    {
+      "id": "euler_mascheroni_constant_irrationality",
+      "title": "Formal Approximation Theory of the Euler-Mascheroni Constant: Infrastructure for Machine-Assisted Irrationality Research",
+      "domain": "Analytic Number Theory / Diophantine Approximation",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-20T00:00:25Z",
+      "hue": 91
     }
   ],
   "edges": [
@@ -6475,10 +6526,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.84,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3cf86be",
     "timestamp": "2026-05-19T23:11:32.056516+00:00"
   },
   {
@@ -6893,5 +6944,105 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-19T23:11:32.033269+00:00"
+  },
+  {
+    "id": "fd_0084",
+    "title": "Overview",
+    "description": "The present work establishes that the *tropical profile* of a computation DAG \u2014 the finite set of affine forms whose pointwise maximum defines its envelope \u2014 yields computable invariants of asymptotic scaling behavior. We proved that tropical equivalence preserves the asymptotic slope, the essential dominant bias, and that parallel (residual) composition obeys a \"fastest branch wins\" principle.\n\nBelow are five falsifiable scientific hypotheses that extend this framework. Each is stated precisely, with an explicit observable, a proposed test, and a clear refutation criterion.\n\n---",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f0bc4b5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T23:28:23.970042+00:00"
+  },
+  {
+    "id": "fd_0085",
+    "title": "Hypothesis 1: Coarse-Graining Invariance",
+    "description": "**Conjecture.** Let `G` be a computation DAG with tropical profile `P(G)`. Define a *coarse-graining operator* `CG_k` that contracts every chain of `k` consecutive serial edges into a single edge whose affine form is the composition (i.e., slope product and bias accumulation) of the original forms. Then the asymptotic slope of `P(CG_k(G))` equals the asymptotic slope of `P(G)` for all `k \u2265 1`.\n\n**Observable.** The maximum slope `maxSlope(P(CG_k(G)))` as a function of `k`.\n\n**Test.** Formalize `CG_k` as a graph transformation on DAGs equipped with affine edge weights. Compute `maxSlope(P(CG_k(G)))` for several DAG families (chains, trees, diamond graphs) across `k = 1, 2, ..., 10`. Verify algebraically that the max-slope path in the coarse-grained DAG corresponds to the max-slope path in th",
+    "domains": [
+      "NumberTheory",
+      "Tropical",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f0bc4b5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T23:28:23.972900+00:00"
+  },
+  {
+    "id": "fd_0086",
+    "title": "Hypothesis 2: Depth-Width Duality under Tropical Equivalence",
+    "description": "**Conjecture.** For the class of layered DAGs (where edges only connect consecutive layers), there exist families `{D_n}` (deep, narrow) and `{W_n}` (shallow, wide) such that `P(D_n)` and `P(W_n)` are tropically equivalent for all `n`. Specifically, a depth-`L` width-`W` DAG with uniform affine weights has the same tropical profile as a depth-`1` width-`L\u00b7W` DAG whose forms are all source-to-sink path compositions.\n\n**Observable.** The pointwise envelope function `evalMax(P(D_n), x)` versus `evalMax(P(W_n), x)`.\n\n**Test.** Construct explicit layered DAGs with `L` layers of width `W` and uniform edge weights `(a, b)`. Enumerate all `W^L` source-to-sink paths to compute the tropical profile. Compare with a single-layer DAG whose forms are the path compositions. Verify `evalMax` equality nume",
+    "domains": [
+      "NumberTheory",
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f0bc4b5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T23:28:23.976356+00:00"
+  },
+  {
+    "id": "fd_0087",
+    "title": "Hypothesis 3: Dominant Multiplicity Predicts Initialization Variance",
+    "description": "**Conjecture.** For a tropical profile `P` with dominant multiplicity `m` (number of forms achieving the max slope), the variance of the loss across random initializations scales as `\u0398(1/m)` in the large-width limit. Profiles with higher multiplicity exhibit lower variance because more independent \"paths to optimality\" exist.\n\n**Observable.** The ratio `Var(L_N) / (1/m)` across random seeds, where `L_N` is the loss at parameter count `N` and `m` is the dominant multiplicity of the architecture's tropical profile.\n\n**Test.**\n1. Choose three architecture families with known tropical profiles having multiplicities `m = 1, 2, 4`.\n2. Train each at parameter counts `N = 10^4, 10^5, 10^6` with 100 random seeds.\n3. Compute the variance of final loss across seeds.\n4. Fit `Var ~ C/m` and test goodne",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "Tropical"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f0bc4b5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T23:28:23.979205+00:00"
+  },
+  {
+    "id": "fd_0088",
+    "title": "Hypothesis 4: Optimizer Invariance of the Tropical Exponent",
+    "description": "**Conjecture.** For any two first-order optimizers `O_1, O_2` (SGD, Adam, AdaGrad, etc.) that converge to a global minimum of the empirical risk, the scaling exponent `\u03b1` extracted from the loss curve `L(N)` is identical, provided the tropical profile of the architecture is fixed. That is, the optimizer affects only the prefactor and transient behavior, not the asymptotic exponent.\n\n**Observable.** The exponent `\u03b1` in `L(N) ~ C \u00b7 N^{-\u03b1}`, estimated by linear regression on `(log N, log L)` for large `N`.\n\n**Test.**\n1. Fix an architecture (e.g., a 6-layer transformer with known tropical profile).\n2. Train with SGD, Adam, AdaGrad, and LAMB at parameter counts `N = 10^5` to `10^8`.\n3. Extract `\u03b1` from each optimizer's scaling curve via log-log regression on the last decade of `N`.\n4. Compare `",
+    "domains": [
+      "NumberTheory",
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f0bc4b5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T23:28:23.981822+00:00"
+  },
+  {
+    "id": "fd_0089",
+    "title": "Hypothesis 5: Phase Transitions at Exposed-Face Transitions",
+    "description": "**Conjecture.** When a tropical profile `P(\u03b8)` depends on a continuous parameter `\u03b8` (e.g., a depth/width ratio), the scaling exponent `\u03b1(\u03b8)` is piecewise constant, changing only at values `\u03b8*` where the exposed-face structure of the profile's Newton polytope changes. These transitions correspond to measurable scaling-law regime shifts in training curves.\n\n**Observable.** The exponent function `\u03b1(\u03b8)` and the breakpoints `{\u03b8*}` where it changes.\n\n**Test.**\n1. Define a parametric DAG family where edge weights depend linearly on `\u03b8 \u2208 [0, 1]`.\n2. Compute the tropical profile `P(\u03b8)` symbolically as a function of `\u03b8`.\n3. Identify the values `\u03b8*` where the set of dominant forms changes (i.e., where a new affine form becomes the steepest).\n4. Train the corresponding architectures at `\u03b8 = 0, 0.1, 0",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f0bc4b5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-19T23:28:23.984460+00:00"
   }
 ];

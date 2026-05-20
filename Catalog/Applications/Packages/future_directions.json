@@ -881,8 +881,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "f3cf86be",
       "timestamp": "2026-05-19T23:11:32.056516+00:00"
     },
     {
@@ -1536,6 +1536,124 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:21:35.649338+00:00"
+    },
+    {
+      "id": "fd_0084",
+      "title": "Overview",
+      "description": "The present work establishes that the *tropical profile* of a computation DAG — the finite set of affine forms whose pointwise maximum defines its envelope — yields computable invariants of asymptotic scaling behavior. We proved that tropical equivalence preserves the asymptotic slope, the essential dominant bias, and that parallel (residual) composition obeys a \"fastest branch wins\" principle.\n\nBelow are five falsifiable scientific hypotheses that extend this framework. Each is stated precisely, with an explicit observable, a proposed test, and a clear refutation criterion.\n\n---",
+      "source_exp_id": "f0bc4b5d",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f0bc4b5d",
+      "domains": [
+        "Tropical",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:28:23.970042+00:00"
+    },
+    {
+      "id": "fd_0085",
+      "title": "Hypothesis 1: Coarse-Graining Invariance",
+      "description": "**Conjecture.** Let `G` be a computation DAG with tropical profile `P(G)`. Define a *coarse-graining operator* `CG_k` that contracts every chain of `k` consecutive serial edges into a single edge whose affine form is the composition (i.e., slope product and bias accumulation) of the original forms. Then the asymptotic slope of `P(CG_k(G))` equals the asymptotic slope of `P(G)` for all `k ≥ 1`.\n\n**Observable.** The maximum slope `maxSlope(P(CG_k(G)))` as a function of `k`.\n\n**Test.** Formalize `CG_k` as a graph transformation on DAGs equipped with affine edge weights. Compute `maxSlope(P(CG_k(G)))` for several DAG families (chains, trees, diamond graphs) across `k = 1, 2, ..., 10`. Verify algebraically that the max-slope path in the coarse-grained DAG corresponds to the max-slope path in th",
+      "source_exp_id": "f0bc4b5d",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f0bc4b5d",
+      "domains": [
+        "NumberTheory",
+        "Tropical",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:28:23.972900+00:00"
+    },
+    {
+      "id": "fd_0086",
+      "title": "Hypothesis 2: Depth-Width Duality under Tropical Equivalence",
+      "description": "**Conjecture.** For the class of layered DAGs (where edges only connect consecutive layers), there exist families `{D_n}` (deep, narrow) and `{W_n}` (shallow, wide) such that `P(D_n)` and `P(W_n)` are tropically equivalent for all `n`. Specifically, a depth-`L` width-`W` DAG with uniform affine weights has the same tropical profile as a depth-`1` width-`L·W` DAG whose forms are all source-to-sink path compositions.\n\n**Observable.** The pointwise envelope function `evalMax(P(D_n), x)` versus `evalMax(P(W_n), x)`.\n\n**Test.** Construct explicit layered DAGs with `L` layers of width `W` and uniform edge weights `(a, b)`. Enumerate all `W^L` source-to-sink paths to compute the tropical profile. Compare with a single-layer DAG whose forms are the path compositions. Verify `evalMax` equality nume",
+      "source_exp_id": "f0bc4b5d",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f0bc4b5d",
+      "domains": [
+        "NumberTheory",
+        "Tropical",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:28:23.976356+00:00"
+    },
+    {
+      "id": "fd_0087",
+      "title": "Hypothesis 3: Dominant Multiplicity Predicts Initialization Variance",
+      "description": "**Conjecture.** For a tropical profile `P` with dominant multiplicity `m` (number of forms achieving the max slope), the variance of the loss across random initializations scales as `Θ(1/m)` in the large-width limit. Profiles with higher multiplicity exhibit lower variance because more independent \"paths to optimality\" exist.\n\n**Observable.** The ratio `Var(L_N) / (1/m)` across random seeds, where `L_N` is the loss at parameter count `N` and `m` is the dominant multiplicity of the architecture's tropical profile.\n\n**Test.**\n1. Choose three architecture families with known tropical profiles having multiplicities `m = 1, 2, 4`.\n2. Train each at parameter counts `N = 10^4, 10^5, 10^6` with 100 random seeds.\n3. Compute the variance of final loss across seeds.\n4. Fit `Var ~ C/m` and test goodne",
+      "source_exp_id": "f0bc4b5d",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f0bc4b5d",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Tropical"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:28:23.979205+00:00"
+    },
+    {
+      "id": "fd_0088",
+      "title": "Hypothesis 4: Optimizer Invariance of the Tropical Exponent",
+      "description": "**Conjecture.** For any two first-order optimizers `O_1, O_2` (SGD, Adam, AdaGrad, etc.) that converge to a global minimum of the empirical risk, the scaling exponent `α` extracted from the loss curve `L(N)` is identical, provided the tropical profile of the architecture is fixed. That is, the optimizer affects only the prefactor and transient behavior, not the asymptotic exponent.\n\n**Observable.** The exponent `α` in `L(N) ~ C · N^{-α}`, estimated by linear regression on `(log N, log L)` for large `N`.\n\n**Test.**\n1. Fix an architecture (e.g., a 6-layer transformer with known tropical profile).\n2. Train with SGD, Adam, AdaGrad, and LAMB at parameter counts `N = 10^5` to `10^8`.\n3. Extract `α` from each optimizer's scaling curve via log-log regression on the last decade of `N`.\n4. Compare `",
+      "source_exp_id": "f0bc4b5d",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f0bc4b5d",
+      "domains": [
+        "NumberTheory",
+        "Tropical",
+        "Algebra",
+        "MachineLearning",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:28:23.981822+00:00"
+    },
+    {
+      "id": "fd_0089",
+      "title": "Hypothesis 5: Phase Transitions at Exposed-Face Transitions",
+      "description": "**Conjecture.** When a tropical profile `P(θ)` depends on a continuous parameter `θ` (e.g., a depth/width ratio), the scaling exponent `α(θ)` is piecewise constant, changing only at values `θ*` where the exposed-face structure of the profile's Newton polytope changes. These transitions correspond to measurable scaling-law regime shifts in training curves.\n\n**Observable.** The exponent function `α(θ)` and the breakpoints `{θ*}` where it changes.\n\n**Test.**\n1. Define a parametric DAG family where edge weights depend linearly on `θ ∈ [0, 1]`.\n2. Compute the tropical profile `P(θ)` symbolically as a function of `θ`.\n3. Identify the values `θ*` where the set of dominant forms changes (i.e., where a new affine form becomes the steepest).\n4. Train the corresponding architectures at `θ = 0, 0.1, 0",
+      "source_exp_id": "f0bc4b5d",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f0bc4b5d",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Tropical",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-19T23:28:23.984460+00:00"
     }
   ],
   "pruned": [
