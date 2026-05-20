@@ -730,7 +730,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:10.992716+00:00"
     },
@@ -749,7 +749,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:10.993503+00:00"
     },
@@ -805,7 +805,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:10.995602+00:00"
     },
@@ -1049,7 +1049,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.61,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.006774+00:00"
     },
@@ -1237,7 +1237,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.018583+00:00"
     },
@@ -2592,7 +2592,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T03:01:31.760130+00:00"
     },
@@ -2636,7 +2636,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T03:01:31.768704+00:00"
     },
@@ -3012,7 +3012,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "75decdae",
       "timestamp": "2026-05-20T04:04:18.175847+00:00"
     },
@@ -3290,6 +3290,24 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T05:08:16.088949+00:00"
+    },
+    {
+      "id": "fd_0175",
+      "title": "p-adic Shadow Rigidity for Integer Dynamical Systems",
+      "description": "Conjecture: Let f(x) be an integer polynomial of degree d >= 2 with gcd of coefficients 1, and suppose 0 is not eventually periodic modulo p for infinitely many primes p. Then there exists a set P of primes with positive natural density such that for every p in P, the forward orbit of 0 under f is p-adically equidistributed in Z_p with respect to Haar measure if and only if f is not linearly conjugate over Q to a monomial ±x^d or a Chebyshev polynomial ±T_d. Test: For broad families of polynomials, compute orbit distributions of 0 modulo p^k for growing p,k and compare empirical discrepancy against Haar equidistribution; search for exactly the exceptional conjugacy classes as counterexamples. A proof would require deriving a rigidity criterion from arboreal Galois representations or p-adic mixing, while a refutation would exhibit a non-exceptional polynomial with persistent non-equidistribution on a positive-density prime set. Impact: This would create a new arithmetic-dynamics universality principle linking local p-adic randomness, exceptional polynomial classification, and Galois/dynamical rigidity, with applications to pseudorandomness of polynomial iterates and local-global detection of special maps.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "p-adic Number Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T05:08:59.834912+00:00"
     }
   ],
   "pruned": [
