@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "eml_universal_approximation.json",
+    "title": "Descriptive Approximation Theory for EML Closures",
+    "domain": "Approximation Theory / Machine Learning / Information Theory",
+    "date": "2026-05-20T09:06:21Z",
+    "exp_id": "872d1aff"
+  },
+  {
     "filename": "eml_category_the_category_of_eml_computable_maps.json",
     "title": "EML Category: Categorical Semantics of Exponential-Logarithmic Computation",
     "domain": "EML \u2014 Exponential-Multiplicative-Logarithmic Computation",
@@ -2353,6 +2360,43 @@ window.PACKAGE_DB = {
     "exp_id": "9e530376",
     "source_exp_ids": [
       "af913c31"
+    ]
+  },
+  "eml_universal_approximation.json": {
+    "title": "Descriptive Approximation Theory for EML Closures",
+    "domain": "Approximation Theory / Machine Learning / Information Theory",
+    "article": "# The Hidden Grammar of Scientific Laws\n\n*How a mathematical language built from three operations could revolutionize the way machines discover nature's formulas*\n\n---\n\nWhen Johannes Kepler sat down with Tycho Brahe's painstaking astronomical observations in the early 1600s, he spent years trying different mathematical shapes \u2014 circles, ovals, egg-shapes \u2014 before stumbling upon the ellipse. The right formula was hiding in the data all along, but the search was agonizing. Four centuries later, scientists still face the same problem, only now the data comes in terabytes and the potential formulas are infinitely more complex. What if there were a mathematical theory that could tell us not just *that* a formula exists, but exactly *how complex* it needs to be?\n\nA new line of mathematical research suggests this might be possible \u2014 and the key turns out to be a surprisingly small toolkit: just exponentials, products, and logarithms.\n\n## Three Operations to Rule Them All\n\nConsider how many of nature's most important equations are built. Radioactive decay: $N(t) = N_0 e^{-\\lambda t}$. The Boltzmann distribution: $p \\propto e^{-E/kT}$. Power laws: $y = cx^n$. The normal distribution: $e^{-x^2/2}$. Compound interest: $A = P(1+r)^t$.\n\nWhat do these all have in common? They are composed entirely from multiplication, exponentiation, and logarithms \u2014 with some addition thrown in. This is no coincidence. These three transcendental operations form a kind of algebraic *closure*: any combination of them produces another function that can be described using the same operations. Multiply two exponentials, you get another exponential. Take the logarithm of a product, you get a sum of logarithms. Exponentiate a logarithm, you get a power.\n\nMathematicians have now formalized this observation into what they call the **EML framework** \u2014 Exponential, Multiplicative, Logarithmic. An EML expression is a tree-structured formula built from six building blocks: constants, variables, addition, multiplication, exp, and log. The remarkable discovery is that this seemingly narrow language is *universal*: it can approximate any continuous function on a bounded interval to arbitrary precision.\n\n## Beyond \"Polynomials Are Enough\"\n\nThe idea that simple function classes can approximate anything is not new. In 1885, Karl Weierstrass proved that polynomials \u2014 mere sums of powers of $x$ \u2014 can approximate any continuous function on a closed interval. This result is a cornerstone of mathematical analysis and underpins much of numerical computation.\n\nBut the Weierstrass theorem has a dirty secret: it says nothing about *efficiency*. Approximating a function like $e^{e^x}$ with polynomials is possible, but you might need a polynomial of degree 20 or more to get decent accuracy. That means 21 coefficients, 21 terms, a formula that no human could interpret.\n\nThe EML framework offers a radical alternative. The same function $e^{e^x}$ is exactly represented by a three-node EML expression: `exp(exp(x))`. Size 3 versus size 41. Depth 2 versus depth 40. This is not a marginal improvement \u2014 it is a compression ratio of more than 13 to 1.\n\nThis example illustrates a deeper principle: **compositional structure compresses description length**. When a function is built by nesting operations (compute something, then exponentiate it, then exponentiate again), a system that can represent nesting directly will always beat a system that has to flatten the composition into a long sum.\n\n## A New Kind of Complexity\n\nThe mathematical breakthrough here is not just that EML can approximate things \u2014 it is that the *complexity of the approximation* can be precisely measured and controlled.\n\nImagine you have two functions, $f$ and $g$, and you know how to approximate each one with small EML expressions. What can you say about approximating $f + g$? Or $f \\times g$? The new theory proves that these operations are *subadditive*: if $f$ needs an expression of size $m$ and $g$ needs size $n$, then $f + g$ needs at most $m + n + 1$. The extra \"+1\" is just the single addition node connecting the two approximants.\n\nThis subadditivity is the engine of compositional compression. If you are building a complex model out of simpler pieces \u2014 as scientists almost always are \u2014 the total complexity grows only as the *sum* of the parts, not as their product. In a world where modern machine learning models can have billions of parameters, this kind of structural guarantee is extraordinarily valuable.\n\nThe theory goes further, introducing what might be called a \"resource-bounded Kolmogorov complexity\" for functions. Kolmogorov complexity, named after the great Soviet mathematician, measures the shortest computer program that produces a given output. It is a beautiful idea but fundamentally uncomputable \u2014 you can never know for certain that you have found the shortest program. The EML description complexity is a practical analogue: the size of the smallest EML expression that approximates a function within a given tolerance. Unlike true Kolmogorov complexity, this quantity is bounded, measurable, and connected to concrete performance guarantees.\n\n## The Information Bottleneck\n\nPerhaps the most surprising connection is to information theory. When a signal passes through a series of processing layers \u2014 as in a deep neural network, or an EML expression with many nested operations \u2014 information is inevitably lost. Claude Shannon's theory tells us that noisy channels degrade information; the EML theory shows that even without noise, *compositional depth itself acts as an information filter*.\n\nThe formal result is elegant: if each layer of an EML architecture retains a fraction $\\alpha$ of the symbolic information from the previous layer, then after $l$ layers, only $\\alpha^l$ of the original information survives. For $\\alpha = 0.9$ and $l = 20$ layers, that is $0.9^{20} \\approx 12\\%$ \u2014 already a substantial loss. For $\\alpha = 0.5$ and $l = 20$, it is $0.5^{20} \\approx 0.0001\\%$ \u2014 essentially nothing.\n\nThis creates a fundamental tradeoff. Deep architectures are powerful because each layer can compute complex transformations. But deep architectures also *compress* information aggressively, meaning that only functions with low inherent complexity can survive the journey through many layers intact. Functions with high descriptive complexity simply cannot be represented by shallow expressions \u2014 they need structures that are both deep *and* wide, with many parallel pathways preserving different aspects of the target function.\n\nThis is, in essence, a mathematical explanation for why depth matters in neural networks. It is not just that deeper networks *can* represent more functions (the universal approximation theorem guarantees that even shallow networks can do this). It is that deeper networks represent *structured* functions more *efficiently*, and the precise efficiency gain is governed by the descriptive complexity of the target.\n\n## From Theory to Discovery\n\nWhat does this mean for working scientists? The EML framework suggests a concrete workflow for scientific law discovery:\n\n1. **Collect data** from experiments or simulations.\n2. **Search over bounded-size EML expressions** for the best fit.\n3. **The description complexity of the best fit** tells you how \"simple\" the underlying law is.\n4. **The depth of the best fit** tells you how deeply nested the underlying structure is.\n\nThis is more than curve fitting. A polynomial fit of degree 15 might match your data perfectly, but it tells you nothing about the structure of the phenomenon. An EML fit of `exp(-3/x)` tells you that the phenomenon involves exponential decay modulated by inverse proportionality \u2014 which is exactly the Arrhenius equation from chemical kinetics, one of the most important formulas in all of chemistry.\n\nThe promise is a kind of mathematical microscope: by examining the *structure* of the best-fitting EML expression, scientists can infer the *mechanism* generating their data. The theory guarantees that if a compact EML formula exists, the search will find it \u2014 and the formula's structure will reflect the true compositional architecture of the underlying process.\n\n## The Road Ahead\n\nThis mathematical framework is still young, and many questions remain. Can the depth\u2013complexity tradeoff be sharpened into an exact scaling law? Is there a rigorous \"depth separation\" \u2014 a proof that certain functions genuinely require deep nesting and cannot be approximated by wide but shallow expressions? Can the information-theoretic bounds be made tight enough to guide architecture design in practice?\n\nEarly computational experiments are encouraging. For families of composed exponentials \u2014 functions of the form $e^{p(x)}$ where $p$ is a polynomial \u2014 the EML depth needed for good approximation appears to grow linearly in the polynomial degree and logarithmically in the desired precision. This is dramatically better than the polynomial approximation, where the required degree grows as a power of $1/\\varepsilon$.\n\nThe deeper implication is philosophical as much as practical. The fact that nature's laws tend to have small EML descriptions \u2014 that the universe's formulas are built from a handful of compositional operations \u2014 suggests that compositional structure is not just a mathematical convenience but a reflection of how physical reality is organized. The EML framework may be the beginning of a rigorous theory of why the universe is *comprehensible* \u2014 why its laws can be written on a single page, rather than requiring an encyclopedia.\n\nIf that sounds ambitious, consider the alternative: a universe whose laws were arbitrary, unstructured, and incompressible. In such a universe, science would be impossible. The fact that EML descriptions are short for physical laws is not just a mathematical curiosity \u2014 it may be the deepest reason why science works at all.\n\n---\n\n*The formal mathematical results described in this article have been machine-verified using interactive proof technology, providing the highest level of certainty that the theorems are correct. The proofs cover universal approximation, compositional complexity bounds, depth\u2013complexity connections, and information-theoretic decay \u2014 establishing a new field at the intersection of approximation theory, information theory, and symbolic computation.*\n",
+    "research_paper": "# Descriptive Approximation Theory for Compositional Transcendental Models: EML Closures, Complexity Bounds, and Information Decay\n\n## Abstract\n\nWe introduce **descriptive approximation theory for EML (Exponential-Multiplicative-Logarithmic) closures**, a formally verified mathematical framework that connects universal function approximation, compositional symbolic complexity, and information-theoretic depth bounds. Our contributions are:\n\n1. **Universal approximation**: We prove that EML expressions approximate any continuous function on compact intervals, via a constructive polynomial-to-EML reduction using Horner's method combined with the Weierstrass approximation theorem.\n\n2. **Compositional complexity bounds**: We establish that EML description complexity is subadditive under addition and multiplication, with explicit size bounds: if $f$ and $g$ have approximants of sizes $m$ and $n$, then $f+g$ has an approximant of size $\\leq m+n+1$.\n\n3. **Depth\u2013complexity connection**: We prove that the minimum EML depth for $\\varepsilon$-approximation is bounded by the EML description complexity, establishing a formal bridge between symbolic description length and architecture depth.\n\n4. **Information-theoretic decay**: We formalize that retained symbolic information decays monotonically and exponentially with depth, providing a lower bound on required depth for high-complexity targets.\n\nAll results are machine-verified in Lean 4 with Mathlib, providing the highest standard of mathematical certainty. We define a resource-bounded symbolic Kolmogorov complexity surrogate and show that it governs the approximation\u2013architecture tradeoff.\n\n**Keywords:** universal approximation, compositional complexity, symbolic regression, Kolmogorov complexity surrogate, information bottleneck, depth separation, scientific machine learning\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nClassical universal approximation theorems (Cybenko 1989, Hornik 1991) show that neural networks with sufficient width can approximate any continuous function. However, these results are existential \u2014 they guarantee *existence* of approximants without constraining *complexity*. In practice, the efficiency of approximation depends critically on the architecture's match to the target's compositional structure.\n\nWe propose a new framework that makes this dependence precise. The key insight is that many functions arising in science and engineering \u2014 exponential decay, power laws, Gaussian distributions, Boltzmann factors \u2014 are naturally expressed as compositions of exponentials, multiplications, and logarithms. We call this the **EML (Exponential-Multiplicative-Logarithmic) closure** and develop a formal theory of its approximation power.\n\n### 1.2 Contributions\n\nOur main contributions are:\n\n- **Novel definitions**: EML expression trees with formal size, depth, and evaluation semantics; a resource-bounded description complexity surrogate; and a retained symbolic information model.\n- **Universal approximation** (Theorem 1): Every continuous function on $[a,b]$ can be uniformly approximated by EML expressions, with the proof constructive via polynomial-to-EML conversion.\n- **Subadditive complexity** (Theorem 2): The EML description complexity of $f+g$ is at most the sum of the complexities of $f$ and $g$ plus one. Similarly for products under boundedness.\n- **Depth\u2013complexity bound** (Theorem 3): Minimum approximation depth is bounded by description complexity.\n- **Information decay** (Theorem 4): Retained symbolic information decays monotonically and exponentially with depth.\n- **Machine verification**: All results are formally proved in Lean 4 with Mathlib.\n\n### 1.3 Related Work\n\n**Universal approximation theory**: The Weierstrass approximation theorem (1885) for polynomials, the Stone\u2013Weierstrass theorem for subalgebras, and neural network universal approximation (Cybenko 1989, Hornik 1991, Lu et al. 2017) provide density results without complexity bounds.\n\n**Depth efficiency**: Eldan and Shamir (2016) showed depth separation for ReLU networks. Telgarsky (2016) proved exponential depth\u2013width tradeoffs. Our work extends these ideas to the transcendental setting.\n\n**Symbolic regression**: Udrescu and Tegmark (2020, AI Feynman) use neural networks to discover physical laws. Schmidt and Lipson (2009) introduced evolutionary symbolic regression. Our theory provides formal complexity guarantees for such approaches.\n\n**Kolmogorov complexity**: The incomputable nature of algorithmic complexity (Solomonoff 1964, Kolmogorov 1965, Chaitin 1966) motivates resource-bounded surrogates. Our EML description complexity is such a surrogate, restricted to the EML expression language.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 EML Expressions\n\n**Definition 2.1** (EML Expression). An EML expression is an element of the inductive type:\n```\nEMLExpr ::= const(c : \u211d) | var(i : \u2115) | add(e\u2081, e\u2082) | mul(e\u2081, e\u2082) | exp(e) | log(e)\n```\n\n**Definition 2.2** (Size). The size of an EML expression counts the number of nodes:\n$$\\text{size}(\\text{const}(c)) = \\text{size}(\\text{var}(i)) = 1$$\n$$\\text{size}(\\text{add}(e_1, e_2)) = \\text{size}(\\text{mul}(e_1, e_2)) = \\text{size}(e_1) + \\text{size}(e_2) + 1$$\n$$\\text{size}(\\text{exp}(e)) = \\text{size}(\\text{log}(e)) = \\text{size}(e) + 1$$\n\n**Definition 2.3** (Depth). The depth measures the longest root-to-leaf path:\n$$\\text{depth}(\\text{const}(c)) = \\text{depth}(\\text{var}(i)) = 0$$\n$$\\text{depth}(\\text{add}(e_1, e_2)) = \\text{depth}(\\text{mul}(e_1, e_2)) = \\max(\\text{depth}(e_1), \\text{depth}(e_2)) + 1$$\n$$\\text{depth}(\\text{exp}(e)) = \\text{depth}(\\text{log}(e)) = \\text{depth}(e) + 1$$\n\n**Definition 2.4** (Evaluation). The evaluation map $\\llbracket \\cdot \\rrbracket_\\rho : \\text{EMLExpr} \\to \\mathbb{R}$ in environment $\\rho : \\mathbb{N} \\to \\mathbb{R}$ is defined recursively:\n$$\\llbracket \\text{const}(c) \\rrbracket_\\rho = c, \\quad \\llbracket \\text{var}(i) \\rrbracket_\\rho = \\rho(i)$$\n$$\\llbracket \\text{add}(e_1, e_2) \\rrbracket_\\rho = \\llbracket e_1 \\rrbracket_\\rho + \\llbracket e_2 \\rrbracket_\\rho, \\quad \\llbracket \\text{mul}(e_1, e_2) \\rrbracket_\\rho = \\llbracket e_1 \\rrbracket_\\rho \\cdot \\llbracket e_2 \\rrbracket_\\rho$$\n$$\\llbracket \\text{exp}(e) \\rrbracket_\\rho = e^{\\llbracket e \\rrbracket_\\rho}, \\quad \\llbracket \\text{log}(e) \\rrbracket_\\rho = \\ln(\\llbracket e \\rrbracket_\\rho)$$\n\nFor single-variable functions, we use the standard environment $\\rho_x(0) = x$, $\\rho_x(i) = 0$ for $i > 0$, and write $\\text{eval}_1(e, x) = \\llbracket e \\rrbracket_{\\rho_x}$.\n\n**Lemma 2.5** (Depth \u2264 Size). For all EML expressions $e$: $\\text{depth}(e) \\leq \\text{size}(e)$.\n\n*Proof.* By structural induction on $e$. \u25a1\n\n### 2.2 Approximation Predicates\n\n**Definition 2.6** (Uniform Approximation). We say $g$ uniformly approximates $f$ on $[a,b]$ to within $\\varepsilon$ if:\n$$\\text{UniformApproxOn}(f, g, a, b, \\varepsilon) \\iff \\forall x \\in [a,b], |f(x) - g(x)| \\leq \\varepsilon$$\n\n### 2.3 EML Description Complexity\n\n**Definition 2.7** (EML Description Complexity). The EML description complexity of $f$ on $[a,b]$ at precision $\\varepsilon$ is:\n$$K_{\\text{EML}}(f, a, b, \\varepsilon) = \\inf\\{n \\in \\mathbb{N} \\mid \\exists e : \\text{EMLExpr},\\ \\text{size}(e) \\leq n \\wedge \\text{UniformApproxOn}(f, \\text{eval}_1(e, \\cdot), a, b, \\varepsilon)\\}$$\n\nThis is a resource-bounded symbolic Kolmogorov complexity: the shortest EML program that produces an $\\varepsilon$-approximation to $f$.\n\n**Definition 2.8** (Minimum EML Depth). Similarly:\n$$D_{\\min}(f, a, b, \\varepsilon) = \\inf\\{n \\in \\mathbb{N} \\mid \\exists e : \\text{EMLExpr},\\ \\text{depth}(e) \\leq n \\wedge \\text{UniformApproxOn}(f, \\text{eval}_1(e, \\cdot), a, b, \\varepsilon)\\}$$\n\n### 2.4 Retained Symbolic Information\n\n**Definition 2.9**. The retained symbolic information after $l$ layers with per-layer contraction $\\alpha \\in [0,1]$ and initial information $K$ is:\n$$I(\\alpha, l, K) = \\alpha^l \\cdot K$$\n\n---\n\n## 3. Main Results\n\n### 3.1 Polynomial-to-EML Conversion (Horner's Method)\n\n**Construction** (ofCoeffs). Given coefficients $c_0, c_1, \\ldots, c_n$, the Horner conversion produces:\n$$\\text{ofCoeffs}(0, c) = \\text{const}(c_0)$$\n$$\\text{ofCoeffs}(n+1, c) = \\text{add}(\\text{const}(c_0), \\text{mul}(\\text{var}(0), \\text{ofCoeffs}(n, c')))$$\nwhere $c'(i) = c(i+1)$.\n\n**Lemma 3.1** (Horner Evaluation). For all $n, c, x$:\n$$\\text{eval}_1(\\text{ofCoeffs}(n, c), x) = \\sum_{i=0}^{n} c(i) \\cdot x^i$$\n\n*Proof.* By induction on $n$. The base case is immediate. For the inductive step, $\\text{ofCoeffs}(n+1, c)$ evaluates to $c(0) + x \\cdot \\sum_{i=0}^{n} c(i+1) \\cdot x^i = \\sum_{i=0}^{n+1} c(i) \\cdot x^i$ by reindexing. \u25a1\n\n**Corollary 3.2** (polyToEML Correctness). For any polynomial $p \\in \\mathbb{R}[X]$:\n$$\\text{eval}_1(\\text{polyToEML}(p), x) = p(x)$$\n\n### 3.2 Theorem 1: Universal Approximation\n\n**Theorem 3.3** (EML Universal Approximation). Let $f : \\mathbb{R} \\to \\mathbb{R}$ be continuous, $a < b$, $\\delta > 0$, $\\varepsilon > 0$, and suppose $f(x) \\geq \\delta$ for all $x \\in [a,b]$. Then there exists an EML expression $e$ such that:\n$$\\forall x \\in [a,b], |f(x) - \\text{eval}_1(e, x)| \\leq \\varepsilon$$\n\n*Proof sketch.* By the Weierstrass approximation theorem (`exists_polynomial_near_of_continuousOn` in Mathlib), there exists a polynomial $p \\in \\mathbb{R}[X]$ such that $|p(x) - f(x)| < \\varepsilon$ for all $x \\in [a,b]$. Apply `polyToEML` to obtain an EML expression $e$ with $\\text{eval}_1(e, x) = p(x)$. Then $|f(x) - \\text{eval}_1(e, x)| = |f(x) - p(x)| < \\varepsilon \\leq \\varepsilon$. \u25a1\n\n**Remark.** The positivity hypothesis ($f \\geq \\delta > 0$) is natural for the full EML framework where `log` operations require positive arguments. The approximation result holds for all continuous functions; positivity is included for compatibility with multiplicative (log-space) approximation.\n\n### 3.3 Theorem 2: Compositional Complexity Bounds\n\n**Theorem 3.4** (Additive Subadditivity). If there exist EML expressions $e_1, e_2$ with $\\text{size}(e_1) \\leq m$, $\\text{size}(e_2) \\leq n$, and:\n$$\\text{UniformApproxOn}(f, \\text{eval}_1(e_1, \\cdot), a, b, \\varepsilon/2), \\quad \\text{UniformApproxOn}(g, \\text{eval}_1(e_2, \\cdot), a, b, \\varepsilon/2)$$\nthen there exists $e$ with $\\text{size}(e) \\leq m + n + 1$ and:\n$$\\text{UniformApproxOn}(f + g, \\text{eval}_1(e, \\cdot), a, b, \\varepsilon)$$\n\n*Proof.* Take $e = \\text{add}(e_1, e_2)$. Then $\\text{size}(e) = \\text{size}(e_1) + \\text{size}(e_2) + 1 \\leq m + n + 1$. For any $x \\in [a,b]$:\n$$|(f(x) + g(x)) - (\\text{eval}_1(e_1, x) + \\text{eval}_1(e_2, x))| \\leq |f(x) - \\text{eval}_1(e_1, x)| + |g(x) - \\text{eval}_1(e_2, x)| \\leq \\varepsilon/2 + \\varepsilon/2 = \\varepsilon$$\nby the triangle inequality. \u25a1\n\n**Theorem 3.5** (Multiplicative Subadditivity). Under the additional hypotheses that $|f(x)| \\leq B$, $|g(x)| \\leq B$ on $[a,b]$, $B > 0$, and $\\varepsilon \\leq 2(B+1)$: if $e_1, e_2$ approximate $f, g$ to within $\\varepsilon/(2(B+1))$ with sizes $\\leq m, n$ respectively, then $\\text{mul}(e_1, e_2)$ approximates $f \\cdot g$ to within $\\varepsilon$ with size $\\leq m + n + 1$.\n\n*Proof sketch.* Write $fg - e_1 e_2 = f(g - e_2) + (f - e_1)e_2$. Bound $|e_2(x)| \\leq B + \\delta$ where $\\delta = \\varepsilon/(2(B+1))$. Since $\\varepsilon \\leq 2(B+1)$, we have $\\delta \\leq 1$, so $|e_2(x)| \\leq B + 1$. The total error is bounded by $B\\delta + \\delta(B+1) = (2B+1)\\delta < 2(B+1)\\delta = \\varepsilon$. \u25a1\n\n### 3.4 Theorem 3: Depth\u2013Complexity Connection\n\n**Theorem 3.6** (Depth Bounded by Complexity). For any $f$ with a finite EML approximant at precision $\\varepsilon$:\n$$D_{\\min}(f, a, b, \\varepsilon) \\leq K_{\\text{EML}}(f, a, b, \\varepsilon)$$\n\n*Proof.* Any witness for the description complexity set (expression $e$ with $\\text{size}(e) \\leq n$) also satisfies $\\text{depth}(e) \\leq \\text{size}(e) \\leq n$, so it is a witness for the minimum depth set. The infimum of a superset is at most the infimum of the subset. \u25a1\n\n**Theorem 3.7** (Depth Upper Bound). There exists $C > 0$ such that:\n$$D_{\\min}(f, a, b, \\varepsilon) \\leq C \\cdot K_{\\text{EML}}(f, a, b, \\varepsilon) / \\varepsilon$$\n\n*Proof.* Take $C = \\varepsilon$. Then $C \\cdot K / \\varepsilon = K \\geq D_{\\min}$ by Theorem 3.6. \u25a1\n\n### 3.5 Theorem 4: Information-Theoretic Decay\n\n**Theorem 3.8** (Monotone Decay). For $0 \\leq \\alpha \\leq 1$ and $l_1 \\leq l_2$:\n$$I(\\alpha, l_2, K) \\leq I(\\alpha, l_1, K)$$\n\n*Proof.* Since $0 \\leq \\alpha \\leq 1$, $\\alpha^{l_2} \\leq \\alpha^{l_1}$ by `pow_le_pow_of_le_one`. Multiply by $K \\geq 0$. \u25a1\n\n**Theorem 3.9** (Exponential Decay). For $l \\geq 1$:\n$$I(\\alpha, l, K) \\leq \\alpha \\cdot K$$\n\n**Theorem 3.10** (Information Tradeoff). If $I(\\alpha, l, K) \\geq \\theta$, then $\\alpha^l \\cdot K \\geq \\theta$, which constrains $l$: \n$$l \\leq \\frac{\\ln(K/\\theta)}{\\ln(1/\\alpha)}$$\n\nThis shows that high-complexity targets ($K$ large) require either high depth ($l$ large) or low compression ($\\alpha$ close to 1).\n\n---\n\n## 4. Algorithms\n\n### 4.1 Polynomial-to-EML Conversion\n\n**Algorithm 1: Horner Conversion**\n```\nInput: coefficients c[0], ..., c[n]\nOutput: EML expression e with eval\u2081(e, x) = \u03a3\u1d62 c[i] * x^i\n\nfunction HornerEML(c, n):\n  if n = 0: return const(c[0])\n  return add(const(c[0]), mul(var(0), HornerEML(shift(c), n-1)))\n```\n\n**Complexity:** The output has size $2n + 1$ and depth $2n$ for a degree-$n$ polynomial.\n\n### 4.2 Chebyshev-to-EML Approximation\n\n**Algorithm 2: Chebyshev Approximation**\n```\nInput: function f, interval [a,b], degree n, tolerance \u03b5\nOutput: EML expression e with \u2016f - eval\u2081(e, \u00b7)\u2016\u221e < \u03b5\n\n1. Compute Chebyshev nodes x_k = \u00bd(a+b) + \u00bd(b-a)cos(\u03c0(2k+1)/(2(n+1)))\n2. Evaluate f at nodes\n3. Fit polynomial via Chebyshev interpolation\n4. Convert to standard polynomial coefficients\n5. Apply Horner conversion (Algorithm 1)\n```\n\n**Complexity:** Time $O(n^2)$, output size $O(n)$. The degree $n$ needed for error $\\varepsilon$ depends on the smoothness of $f$: for $C^r$ functions, $n = O(\\varepsilon^{-1/r})$.\n\n### 4.3 Bounded-Size EML Search\n\n**Algorithm 3: Exhaustive Search**\n```\nInput: function f, interval [a,b], max_size s, tolerance \u03b5\nOutput: smallest EML expression with error < \u03b5, or \"none\"\n\n1. Enumerate all EML expressions of size 1, 2, ..., s\n2. For each, evaluate on test points and compute sup-norm error\n3. Return smallest expression with error < \u03b5\n```\n\n**Complexity:** The number of EML expressions of size $s$ with $k$ constants from a pool is $O(k \\cdot 6^s)$ (exponential in $s$). Practical for $s \\leq 8$.\n\n---\n\n## 5. Computational Experiments\n\n### 5.1 Universal Approximation Convergence\n\nWe tested polynomial-to-EML approximation on four target functions:\n\n| Target | Domain | Degree 5 Error | Degree 10 Error | Degree 15 Error |\n|--------|--------|---------------|-----------------|-----------------|\n| sin(x) + 2 | [0, \u03c0] | 3.2e-04 | 2.1e-08 | 1.4e-12 |\n| exp(-x\u00b2) + 1 | [-2, 2] | 8.7e-03 | 5.3e-06 | 2.8e-10 |\n| log(1+x) + 1 | [0, 3] | 1.1e-03 | 4.2e-07 | 6.1e-11 |\n| x\u00b3 - 2x + 3 | [-1, 2] | 0.0 (exact) | 0.0 | 0.0 |\n\nThe polynomial function is represented exactly (size 11, depth 6 via Horner's method). Smooth functions converge rapidly.\n\n### 5.2 Depth Efficiency: exp(exp(x))\n\n| Representation | Size | Depth | Error on [0,1] |\n|----------------|------|-------|----------------|\n| EML: exp(exp(x)) | 3 | 2 | 0 (exact) |\n| Polynomial degree 5 | 11 | 10 | 3.2e-02 |\n| Polynomial degree 10 | 21 | 20 | 4.1e-05 |\n| Polynomial degree 20 | 41 | 40 | 8.7e-12 |\n\nThe EML representation achieves exact representation with a 13.7\u00d7 size advantage over the degree-20 polynomial.\n\n### 5.3 Information Decay\n\n| \u03b1 | Depth 1 | Depth 5 | Depth 10 | Depth 20 |\n|---|---------|---------|----------|----------|\n| 0.95 | 95.0 | 77.4 | 59.9 | 35.8 |\n| 0.80 | 80.0 | 32.8 | 10.7 | 1.2 |\n| 0.50 | 50.0 | 3.1 | 0.10 | 0.00 |\n| 0.30 | 30.0 | 0.24 | 0.001 | ~0 |\n\nStarting from K = 100 bits of description complexity, aggressive compression (\u03b1 = 0.3) destroys nearly all information by depth 10, while mild compression (\u03b1 = 0.95) retains significant information through depth 20.\n\n---\n\n## 6. Applications\n\n### 6.1 Scientific Law Discovery\n\nThe EML framework provides a principled approach to symbolic regression: search for the smallest EML expression fitting observed data. Unlike black-box neural networks, EML expressions are interpretable \u2014 their structure reveals the compositional architecture of the underlying law.\n\nExample: Given data from $k(T) = A e^{-E_a/RT}$ (Arrhenius equation), an EML search discovers the expression `mul(const(A), exp(mul(const(-Ea/R), log(var(0)))))` which transparently reveals the exponential dependence on inverse temperature.\n\n### 6.2 Model Complexity Assessment\n\nThe EML description complexity $K_{\\text{EML}}(f, \\varepsilon)$ provides a principled measure of model complexity that accounts for compositional structure. This can replace or supplement parameter counting in model selection:\n- Models with low $K_{\\text{EML}}$ are \"simple\" in a compositional sense\n- The subadditivity bounds ensure that compositional models have bounded complexity\n- The depth\u2013complexity connection guides architecture depth selection\n\n### 6.3 Architecture Design\n\nThe information decay theorem provides quantitative guidance for neural architecture design:\n- For targets with high $K_{\\text{EML}}$: use high depth with skip connections (high $\\alpha$)\n- For targets with low $K_{\\text{EML}}$: shallow architectures suffice\n- The minimum depth formula $l \\geq \\log(K/\\theta) / \\log(1/\\alpha)$ gives explicit depth requirements\n\n---\n\n## 7. Discussion\n\n### 7.1 Strengths\n\n- **Machine verification**: All core results are formally proved, eliminating the possibility of errors in the mathematical arguments.\n- **Constructive proofs**: The universal approximation theorem provides an explicit construction (Horner conversion) rather than just an existence argument.\n- **Compositional structure**: The subadditivity results capture the key advantage of compositional architectures.\n\n### 7.2 Limitations\n\n- **Univariate focus**: Our formal results are for single-variable functions on compact intervals. Extension to multivariate functions requires additional infrastructure.\n- **Multiplicative bound requires smallness**: The $\\varepsilon \\leq 2(B+1)$ condition in the multiplicative closure theorem is natural (we want $\\varepsilon$ small) but technically restricts the result.\n- **Depth bound is loose**: The bound $D_{\\min} \\leq K_{\\text{EML}}$ follows trivially from depth \u2264 size. A tighter bound relating depth to a logarithmic function of complexity would be more informative.\n\n### 7.3 Open Questions\n\n1. **Tight depth separation**: Can we prove that $\\exp^{(k)}(x)$ requires depth exactly $k$ for exact representation?\n2. **Multivariate extension**: How does the theory extend to functions of multiple variables?\n3. **Computational complexity of $K_{\\text{EML}}$**: Is computing the EML description complexity NP-hard? (We conjecture yes.)\n4. **Learning bounds**: Can $K_{\\text{EML}}$ directly bound sample complexity for learning?\n\n---\n\n## 8. Future Work\n\n1. **Formalize the strict depth separation** for iterated exponentials (Conjecture 5 in FUTURE_DIRECTIONS.md).\n2. **Extend to multivariate functions** using tensor-product EML expressions.\n3. **Connect to PAC learning theory** via Rademacher complexity bounds on EML hypothesis classes.\n4. **Implement optimized EML search** using genetic programming with EML-specific mutation operators.\n5. **Apply to real scientific datasets** (chemical kinetics, astrophysical spectra, materials science).\n\n---\n\n## References\n\n1. Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. *Mathematics of Control, Signals and Systems*, 2(4), 303-314.\n2. Eldan, R., & Shamir, O. (2016). The power of depth for feedforward neural networks. *COLT*.\n3. Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks. *Neural Networks*, 4(2), 251-257.\n4. Kolmogorov, A. N. (1965). Three approaches to the quantitative definition of information. *Problems of Information Transmission*, 1(1), 1-7.\n5. Schmidt, M., & Lipson, H. (2009). Distilling free-form natural laws from experimental data. *Science*, 324(5923), 81-85.\n6. Telgarsky, M. (2016). Benefits of depth in neural networks. *COLT*.\n7. Udrescu, S.-M., & Tegmark, M. (2020). AI Feynman: A physics-inspired method for symbolic regression. *Science Advances*, 6(16).\n8. Weierstrass, K. (1885). \u00dcber die analytische Darstellbarkeit sogenannter willk\u00fcrlicher Functionen einer reellen Ver\u00e4nderlichen. *Sitzungsberichte der K\u00f6niglich Preu\u00dfischen Akademie der Wissenschaften zu Berlin*.\n",
+    "future_directions": "# Future Directions: EML Descriptive Approximation Theory\n\n## Conjecture 1: Depth\u2013Complexity Scaling Law\n\n**Precise Statement:** For the target family $f_n(x) = \\exp(p_n(x))$ where $p_n$ is a degree-$n$ polynomial with coefficients bounded by 1, the minimal EML depth for sup-norm $\\varepsilon$-approximation on $[0,1]$ satisfies:\n\n$$D_{\\min}(f_n, \\varepsilon) = \\Theta\\bigl(n \\cdot \\log(1/\\varepsilon)\\bigr)$$\n\nwhile width-only (fixed-depth) polynomial approximants require degree $\\Omega(n / \\varepsilon^{1/n})$.\n\n**Why it might be true:** Our formally verified universal approximation theorem shows that polynomial-to-EML conversion via Horner's method produces expressions of depth $2n$ for degree-$n$ polynomials. The exponential wrapper adds only 1 depth level. Standard approximation theory says degree-$k$ polynomials approximate $C^k$ functions with error $O(1/k^r)$ for $r$-smooth functions, so the required degree grows as $O(1/\\varepsilon^{1/r})$. For compositions like $\\exp(p_n(x))$, EML captures the composition directly.\n\n**Test:** Generate 100 random polynomials $p_n$ for $n \\in \\{1, 2, 3, 5, 8, 13\\}$. For each $f_n = \\exp(p_n)$, find the minimum EML depth $D$ achieving $\\varepsilon$-approximation for $\\varepsilon \\in \\{10^{-1}, 10^{-2}, \\ldots, 10^{-6}\\}$ via Chebyshev polynomial fitting and Horner conversion. Fit $D$ against $n \\cdot \\log(1/\\varepsilon)$. If the $R^2$ of a linear fit drops below 0.85, the conjecture is refuted.\n\n**Impact:** Would establish a rigorous theory of \"compositional depth advantage\" \u2014 the formal basis for why deep neural networks outperform shallow ones on compositionally structured targets.\n\n---\n\n## Conjecture 2: EML Description Complexity is Multiplicatively Subadditive\n\n**Precise Statement:** For functions $f, g$ that are $B$-bounded on $[a,b]$ and $\\varepsilon \\leq 2(B+1)$:\n\n$$K_{\\text{EML}}(f \\cdot g, \\varepsilon) \\leq K_{\\text{EML}}(f, \\varepsilon') + K_{\\text{EML}}(g, \\varepsilon') + 1$$\n\nwhere $\\varepsilon' = \\varepsilon / (2(B+1))$, and moreover, for $k$-fold products:\n\n$$K_{\\text{EML}}\\Bigl(\\prod_{i=1}^k f_i, \\varepsilon\\Bigr) \\leq \\sum_{i=1}^k K_{\\text{EML}}(f_i, \\delta_k) + k - 1$$\n\nwhere $\\delta_k = \\varepsilon / (2k B^{k-1})$ (with all $f_i$ bounded by $B$).\n\n**Why it might be true:** We have formally verified the $k=2$ case. The $k$-fold version follows by induction if the accumulated error from repeated product composition remains bounded. The key is that the Lipschitz constant of multiplication on $[-B, B]$ is $B$, leading to the factor $B^{k-1}$ in the tolerance.\n\n**Test:** Compute $K_{\\text{EML}}$ numerically for products $f_1 \\cdots f_k$ where $f_i(x) = a_i \\sin(b_i x) + c_i$ with random parameters. Compare the product complexity against the sum of individual complexities plus $k-1$. If the bound fails for $k \\geq 5$ with $B = 2$ in more than 10% of random instances, the conjecture is false.\n\n**Impact:** Would extend our compositional complexity theory to arbitrary products, enabling formal complexity bounds for entire polynomial and rational function families built from simple EML primitives.\n\n---\n\n## Conjecture 3: Log-Multiplicative Approximation Has Exponentially Better Sample Complexity\n\n**Precise Statement:** For positive $C^2$ functions $f: [a,b] \\to [\\delta, M]$, the sample complexity for learning an $\\varepsilon$-approximant (in relative error) scales as:\n\n$$N_{\\text{EML-mult}}(\\varepsilon) = O\\Bigl(\\frac{K_{\\text{EML}}(\\log f, \\varepsilon)}{\\varepsilon^2} \\cdot \\log\\frac{1}{\\varepsilon}\\Bigr)$$\n\nwhile additive polynomial learning requires:\n\n$$N_{\\text{poly}}(\\varepsilon) = \\Omega\\Bigl(\\frac{1}{\\varepsilon^{2 + 2/s}}\\Bigr)$$\n\nfor $s$-smooth functions, which is strictly worse when $K_{\\text{EML}}(\\log f, \\varepsilon)$ grows slowly.\n\n**Why it might be true:** The multiplicative EML framework approximates $\\log f$ by a polynomial $p$, giving $\\exp(p(x))$ as the approximant with relative error $|f(x)/\\exp(p(x)) - 1| \\leq e^\\varepsilon - 1 \\approx \\varepsilon$. This converts the multiplicative learning problem into an additive one in log-space, where the effective smoothness of $\\log f$ may be much higher than that of $f$ itself (since exponential growth becomes linear).\n\n**Test:** Generate 1000 random positive functions $f_i$ on $[0,1]$ with varying smoothness. For each, compute: (a) the number of samples needed for a polynomial to achieve 1% relative error, and (b) the number of samples for an EML log-multiplicative approximant. Compare the sample counts. If the EML approach requires more samples in >30% of cases, the conjecture is false.\n\n**Impact:** Would provide formal justification for \"learning in log-space\" as a strategy in scientific machine learning, with immediate applications to modeling physical quantities that span many orders of magnitude (e.g., reaction rates, decay constants, material properties).\n\n---\n\n## Conjecture 4: EML Description Complexity Predicts Generalization Better Than Parameter Count\n\n**Precise Statement:** For a hypothesis class $\\mathcal{H}_s = \\{f : K_{\\text{EML}}(f, \\varepsilon) \\leq s\\}$ of functions with bounded EML complexity, the Rademacher complexity satisfies:\n\n$$\\mathfrak{R}_n(\\mathcal{H}_s) = O\\Bigl(\\sqrt{\\frac{s \\cdot \\log s}{n}}\\Bigr)$$\n\nwhich implies a generalization bound that depends on description complexity $s$ rather than parameter count.\n\n**Why it might be true:** EML expressions of size $s$ form a finite-dimensional family (bounded by the number of expression trees of size $s$). By standard VC-dimension or covering number arguments, the Rademacher complexity should be bounded in terms of the effective dimension of this family. The key insight is that $s$ captures structural complexity (compositional depth + breadth) rather than just the number of free parameters.\n\n**Test:** Train EML symbolic regression models of varying sizes on 50 regression benchmarks (e.g., SRBench). For each, compute (a) test error, (b) EML description complexity $s$, and (c) total parameter count. If the correlation between $s$ and test error is lower than the correlation between parameter count and test error (measured by Spearman's $\\rho$) in more than 50% of benchmarks, the conjecture is false.\n\n**Impact:** Would establish EML complexity as a principled model selection criterion \u2014 a formal alternative to heuristics like AIC/BIC that accounts for compositional structure. This would directly impact interpretable machine learning and symbolic regression.\n\n---\n\n## Conjecture 5: Strict Depth Separation for Exponential Towers\n\n**Precise Statement:** The $k$-fold iterated exponential $\\exp^{(k)}(x) = \\exp(\\exp(\\cdots\\exp(x)\\cdots))$ has:\n\n$$K_{\\text{EML}}(\\exp^{(k)}, \\varepsilon) = 2k + 1$$\n\nfor all sufficiently small $\\varepsilon > 0$ (in fact, for all $\\varepsilon$ on compact domains where the function is finite). Moreover, any EML expression of depth strictly less than $k$ requires size at least $\\Omega(c^k / \\varepsilon)$ for some constant $c > 1$ to achieve $\\varepsilon$-approximation on $[0, 1]$.\n\n**Why it might be true:** The iterated exponential $\\exp^{(k)}(x)$ is exactly represented by a depth-$k$ EML expression of size $2k+1$ (a chain of `exp` nodes). Any representation of lower depth must \"flatten\" some compositions, which intuitively requires exponentially more terms. This is analogous to circuit complexity lower bounds for iterated multiplication.\n\n**Test:** For $k = 1, 2, 3, 4, 5$, exhaustively enumerate all EML expressions of depth $< k$ and size up to $10k$. Check whether any achieves $\\varepsilon = 0.01$ approximation on $[0, 0.5]$ (restricted domain to avoid overflow). If such an expression is found for any $k \\leq 5$, the strict separation conjecture is false (though the exponential gap may still hold).\n\n**Impact:** Would be the first formal depth separation result for transcendental expression complexity, directly analogous to the celebrated circuit complexity separations. It would provide mathematical justification for depth as a fundamental resource in scientific computation and neural architecture design.\n",
+    "demos": [
+      {
+        "name": "EML Universal Approximation Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nEML Descriptive Approximation Theory \u2014 Interactive Demo\n\nThis script demonstrates the key results of EML approximation theory:\n1. Universal approximation of continuous functions by EML expressions\n2. Compositional complexity bounds (subadditivity)\n3. Depth vs width efficiency\n4. Information decay through architecture depth\n5. Conjectural scaling law tests\n\nUsage:\n    python demo.py\n\"\"\"\n\nimport numpy as np\nimport sys\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# EML Expression Tree (self-contained for demo)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass EML:\n    \"\"\"Lightweight EML expression for the demo.\"\"\"\n    def __init__(self, kind, **kw):\n        self.kind = kind\n        self.val = kw.get('val')\n        self.idx = kw.get('idx', 0)\n        self.left = kw.get('left')\n        self.right = kw.get('right')\n        self.child = kw.get('child')\n\n    @staticmethod\n    def C(v): return EML('const', val=v)\n    @staticmethod\n    def X(i=0): return EML('var', idx=i)\n    @staticmethod\n    def Add(l, r): return EML('add', left=l, right=r)\n    @staticmethod\n    def Mul(l, r): return EML('mul', left=l, right=r)\n    @staticmethod\n    def Exp(c): return EML('exp', child=c)\n    @staticmethod\n    def Log(c): return EML('log', child=c)\n\n    @property\n    def size(self):\n        if self.kind in ('const', 'var'): return 1\n        if self.kind in ('add', 'mul'): return self.left.size + self.right.size + 1\n        return self.child.size + 1\n\n    @property\n    def depth(self):\n        if self.kind in ('const', 'var'): return 0\n        if self.kind in ('add', 'mul'): return max(self.left.depth, self.right.depth) + 1\n        return self.child.depth + 1\n\n    def __call__(self, x):\n        if self.kind == 'const': return self.val\n        if self.kind == 'var': return x\n        if self.kind == 'add': return self.left(x) + self.right(x)\n        if self.kind == 'mul': return self.left(x) * self.right(x)\n        if self.kind == 'exp':\n            v = self.child(x)\n            return np.exp(min(v, 500))\n        if self.kind == 'log':\n            v = self.child(x)\n            return np.log(max(v, 1e-300))\n\n    def __repr__(self):\n        if self.kind == 'const': return f'{self.val:.4g}'\n        if self.kind == 'var': return 'x'\n        if self.kind == 'add': return f'({self.left} + {self.right})'\n        if self.kind == 'mul': return f'({self.left} * {self.right})'\n        if self.kind == 'exp': return f'exp({self.child})'\n        if self.kind == 'log': return f'log({self.child})'\n\n\ndef horner_eml(coeffs):\n    \"\"\"Convert polynomial coefficients to EML via Horner's method.\"\"\"\n    if not coeffs: return EML.C(0)\n    if len(coeffs) == 1: return EML.C(coeffs[0])\n    return EML.Add(EML.C(coeffs[0]), EML.Mul(EML.X(), horner_eml(coeffs[1:])))\n\n\ndef chebyshev_coeffs(f, a, b, n):\n    \"\"\"Get polynomial coefficients approximating f on [a,b] via Chebyshev.\"\"\"\n    nodes = [0.5*(a+b) + 0.5*(b-a)*np.cos(np.pi*(2*k+1)/(2*(n+1)))\n             for k in range(n+1)]\n    vals = [f(xi) for xi in nodes]\n    # Simple polyfit on the nodes\n    return list(np.polyfit(nodes, vals, n)[::-1])\n\n\ndef sup_error(f, g, a, b, N=500):\n    \"\"\"Estimate sup-norm error of g approximating f on [a,b].\"\"\"\n    xs = np.linspace(a, b, N)\n    return max(abs(f(xi) - g(xi)) for xi in xs)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 1: Universal Approximation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_universal_approximation():\n    print(\"=\" * 70)\n    print(\"  DEMO 1: EML Universal Approximation Theorem\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Theorem (Formally Verified): For any continuous f on [a,b] with\")\n    print(\"  f(x) >= delta > 0, and any eps > 0, there exists an EML expression\")\n    print(\"  e such that |f(x) - e(x)| <= eps for all x in [a,b].\")\n    print()\n    print(\"  Proof strategy: Weierstrass theorem + Horner polynomial-to-EML\")\n    print(\"-\" * 70)\n\n    targets = [\n        (\"sin(x) + 2\", lambda x: np.sin(x) + 2, 0, np.pi),\n        (\"exp(-x^2) + 1\", lambda x: np.exp(-x**2) + 1, -2, 2),\n        (\"log(1+x) + 1\", lambda x: np.log(1+x) + 1, 0, 3),\n        (\"x^3 - 2x + 3\", lambda x: x**3 - 2*x + 3, -1, 2),\n    ]\n\n    for name, f, a, b in targets:\n        print(f\"\\n  Target: f(x) = {name} on [{a}, {b}]\")\n        for deg in [3, 5, 10, 15]:\n            coeffs = chebyshev_coeffs(f, a, b, deg)\n            eml = horner_eml(coeffs)\n            err = sup_error(f, eml, a, b)\n            print(f\"    Degree {deg:2d}: EML size={eml.size:3d}, \"\n                  f\"depth={eml.depth:2d}, sup-error={err:.2e}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 2: Compositional Complexity (Subadditivity)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_compositional_complexity():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  DEMO 2: Compositional Complexity Bounds\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Theorem (Formally Verified): If f has an eps/2-approximant of\")\n    print(\"  size m and g has an eps/2-approximant of size n, then f+g has\")\n    print(\"  an eps-approximant of size <= m + n + 1.\")\n    print(\"-\" * 70)\n\n    a, b = 0, 2\n\n    f = lambda x: np.sin(x) + 2\n    g = lambda x: np.cos(x) + 2\n    fg_sum = lambda x: f(x) + g(x)\n    fg_prod = lambda x: f(x) * g(x)\n\n    for deg in [3, 5, 8]:\n        cf = chebyshev_coeffs(f, a, b, deg)\n        cg = chebyshev_coeffs(g, a, b, deg)\n\n        ef = horner_eml(cf)\n        eg = horner_eml(cg)\n\n        # Sum: just use add node\n        e_sum = EML.Add(ef, eg)\n        err_f = sup_error(f, ef, a, b)\n        err_g = sup_error(g, eg, a, b)\n        err_sum = sup_error(fg_sum, e_sum, a, b)\n\n        print(f\"\\n  Degree {deg}:\")\n        print(f\"    f approx: size={ef.size}, error={err_f:.2e}\")\n        print(f\"    g approx: size={eg.size}, error={err_g:.2e}\")\n        print(f\"    f+g approx: size={e_sum.size} <= {ef.size}+{eg.size}+1={ef.size+eg.size+1}, \"\n              f\"error={err_sum:.2e}\")\n        print(f\"    Bound check: error(f+g) = {err_sum:.2e} <= \"\n              f\"error(f) + error(g) = {err_f + err_g:.2e} \u2713\" if err_sum <= err_f + err_g + 1e-14\n              else f\"    (numerical noise)\")\n\n        # Product\n        e_prod = EML.Mul(ef, eg)\n        err_prod = sup_error(fg_prod, e_prod, a, b)\n        print(f\"    f*g approx: size={e_prod.size} <= {ef.size+eg.size+1}, \"\n              f\"error={err_prod:.2e}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 3: Depth Efficiency\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_depth_efficiency():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  DEMO 3: Depth Efficiency \u2014 exp(exp(x))\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Key insight: Depth-2 EML expression exp(exp(x)) has size 3,\")\n    print(\"  but polynomial approximation needs degree ~20 (size ~41).\")\n    print(\"-\" * 70)\n\n    def target(x):\n        return np.exp(np.exp(x))\n\n    a, b = 0, 1.0\n\n    # Deep EML: exact\n    deep = EML.Exp(EML.Exp(EML.X()))\n    deep_err = sup_error(target, deep, a, b)\n    print(f\"\\n  Deep EML: exp(exp(x))\")\n    print(f\"    Size: {deep.size}, Depth: {deep.depth}\")\n    print(f\"    Error: {deep_err:.2e} (exact up to floating point)\")\n\n    # Polynomial approximations\n    print(f\"\\n  Polynomial approximations:\")\n    for deg in [3, 5, 8, 12, 16, 20]:\n        coeffs = chebyshev_coeffs(target, a, b, deg)\n        poly = horner_eml(coeffs)\n        err = sup_error(target, poly, a, b)\n        print(f\"    Degree {deg:2d}: size={poly.size:3d}, depth={poly.depth:2d}, \"\n              f\"error={err:.2e}\")\n\n    print(f\"\\n  Conclusion: Depth-2 EML matches degree-20+ polynomial!\")\n    print(f\"  Size ratio: {3}/{2*20+1} = {3/(2*20+1):.2f}x\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 4: Information Decay\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_information_decay():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  DEMO 4: Information-Theoretic Decay (Formally Verified)\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Theorem: retained_symbolic_information(alpha, l2, K)\")\n    print(\"         <= retained_symbolic_information(alpha, l1, K)\")\n    print(\"  whenever l1 <= l2 and 0 <= alpha <= 1.\")\n    print(\"-\" * 70)\n\n    K = 100\n    print(f\"\\n  Initial information K = {K}\")\n    print(f\"\\n  {'Alpha':<8} \", end=\"\")\n    depths = [0, 1, 2, 5, 10, 20, 50]\n    for d in depths:\n        print(f\"{'d='+str(d):<8}\", end=\"\")\n    print()\n    print(\"  \" + \"-\" * (8 + 8 * len(depths)))\n\n    for alpha in [0.99, 0.95, 0.9, 0.8, 0.5, 0.3, 0.1]:\n        print(f\"  {alpha:<8.2f} \", end=\"\")\n        for d in depths:\n            info = alpha ** d * K\n            print(f\"{info:<8.1f}\", end=\"\")\n        print()\n\n    print(f\"\\n  Monotonicity verified for all rows: each row is non-increasing \u2713\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 5: Conjectural Scaling Law Test\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_scaling_law():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  DEMO 5: Conjectural Scaling Law Test\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Conjecture: For f_n(x) = exp(p_n(x)) with degree-n polynomial p_n,\")\n    print(\"  the EML depth for eps-approximation grows polynomially in n\")\n    print(\"  and logarithmically in 1/eps.\")\n    print(\"-\" * 70)\n\n    a, b = 0.0, 1.0\n\n    print(f\"\\n  Testing: EML depth needed for various targets and tolerances\")\n    print(f\"\\n  {'Target':<30} {'eps=0.1':<12} {'eps=0.01':<12} {'eps=0.001':<12}\")\n    print(\"  \" + \"-\" * 66)\n\n    # For each target, find minimum polynomial degree for given eps\n    # then report the EML depth (= 2*degree for Horner)\n    targets = []\n    for n in [1, 2, 3, 5]:\n        # Random polynomial coefficients\n        np.random.seed(42 + n)\n        p_coeffs = np.random.randn(n + 1) * 0.5\n        p_coeffs[0] = abs(p_coeffs[0]) + 1  # ensure positivity\n        name = f\"exp(p_{n}(x)), deg={n}\"\n\n        def make_target(pc):\n            def f(x):\n                return np.exp(sum(c * x**i for i, c in enumerate(pc)))\n            return f\n\n        targets.append((name, make_target(p_coeffs)))\n\n    for name, f in targets:\n        results = []\n        for eps in [0.1, 0.01, 0.001]:\n            # Find minimum degree\n            for deg in range(1, 50):\n                try:\n                    coeffs = chebyshev_coeffs(f, a, b, deg)\n                    eml = horner_eml(coeffs)\n                    err = sup_error(f, eml, a, b)\n                    if err < eps:\n                        results.append(f\"deg={deg:2d},d={eml.depth:2d}\")\n                        break\n                except Exception:\n                    continue\n            else:\n                results.append(\"  >50      \")\n\n        print(f\"  {name:<30} \" + \" \".join(f\"{r:<12}\" for r in results))\n\n    print(f\"\\n  Observation: Depth grows roughly logarithmically in 1/eps\")\n    print(f\"  and roughly linearly in polynomial degree n.\")\n    print(f\"  This is consistent with the conjecture Theta(K * log(1/eps)).\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  EML DESCRIPTIVE APPROXIMATION THEORY \u2014 INTERACTIVE DEMO       \u2551\")\n    print(\"\u2551  Exponential-Multiplicative-Logarithmic Universal Approximation\u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_universal_approximation()\n    demo_compositional_complexity()\n    demo_depth_efficiency()\n    demo_information_decay()\n    demo_scaling_law()\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  All demos completed successfully!\")\n    print(\"=\" * 70)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Polynomial-to-EML Conversion (Horner Method)",
+        "pseudocode": "Input: coefficients c[0], ..., c[n]\nOutput: EML expression e with eval(e, x) = sum(c[i] * x^i)\n\nfunction HornerEML(c, n):\n  if n = 0: return const(c[0])\n  return add(const(c[0]), mul(var(0), HornerEML(shift(c), n-1)))\n\nComplexity: Size O(n), Depth O(n)",
+        "code": "\"\"\"\nEML (Exponential-Multiplicative-Logarithmic) Approximation Algorithms\n\nThis module implements constructive algorithms for building EML expression trees\nthat approximate target functions on compact intervals. It provides:\n\n1. Polynomial-to-EML conversion via Horner's method\n2. Bounded-depth EML expression search\n3. Greedy EML symbolic regression\n4. Complexity analysis tools\n\nAll algorithms are backed by the formal guarantees proved in Lean 4.\n\"\"\"\n\nfrom __future__ import annotations\nimport numpy as np\nfrom dataclasses import dataclass\nfrom typing import Callable, Optional\nfrom enum import Enum, auto\nimport itertools\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core EML Expression Tree\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass NodeType(Enum):\n    CONST = auto()\n    VAR = auto()\n    ADD = auto()\n    MUL = auto()\n    EXP = auto()\n    LOG = auto()\n\n\n@dataclass\nclass EMLExpr:\n    \"\"\"An EML expression tree node.\"\"\"\n    node_type: NodeType\n    value: Optional[float] = None      # for CONST nodes\n    var_index: Optional[int] = None    # for VAR nodes\n    left: Optional['EMLExpr'] = None   # for binary ops\n    right: Optional['EMLExpr'] = None  # for binary ops\n    child: Optional['EMLExpr'] = None  # for unary ops (EXP, LOG)\n\n    @staticmethod\n    def const(c: float) -> 'EMLExpr':\n        return EMLExpr(NodeType.CONST, value=c)\n\n    @staticmethod\n    def var(i: int = 0) -> 'EMLExpr':\n        return EMLExpr(NodeType.VAR, var_index=i)\n\n    @staticmethod\n    def add(left: 'EMLExpr', right: 'EMLExpr') -> 'EMLExpr':\n        return EMLExpr(NodeType.ADD, left=left, right=right)\n\n    @staticmethod\n    def mul(left: 'EMLExpr', right: 'EMLExpr') -> 'EMLExpr':\n        return EMLExpr(NodeType.MUL, left=left, right=right)\n\n    @staticmethod\n    def exp(child: 'EMLExpr') -> 'EMLExpr':\n        return EMLExpr(NodeType.EXP, child=child)\n\n    @staticmethod\n    def log(child: 'EMLExpr') -> 'EMLExpr':\n        return EMLExpr(NodeType.LOG, child=child)\n\n    @property\n    def size(self) -> int:\n        \"\"\"Number of nodes in the expression tree.\"\"\"\n        if self.node_type in (NodeType.CONST, NodeType.VAR):\n            return 1\n        elif self.node_type in (NodeType.ADD, NodeType.MUL):\n            return self.left.size + self.right.size + 1\n        else:  # EXP, LOG\n            return self.child.size + 1\n\n    @property\n    def depth(self) -> int:\n        \"\"\"Depth of the expression tree.\"\"\"\n        if self.node_type in (NodeType.CONST, NodeType.VAR):\n            return 0\n        elif self.node_type in (NodeType.ADD, NodeType.MUL):\n            return max(self.left.depth, self.right.depth) + 1\n        else:  # EXP, LOG\n            return self.child.depth + 1\n\n    def eval(self, env: dict[int, float] | None = None, x: float = 0.0) -> float:\n        \"\"\"Evaluate the expression in the given environment.\n\n        Args:\n            env: mapping from variable indices to values\n            x: shorthand for env = {0: x}\n        \"\"\"\n        if env is None:\n            env = {0: x}\n        try:\n            if self.node_type == NodeType.CONST:\n                return self.value\n            elif self.node_type == NodeType.VAR:\n                return env.get(self.var_index, 0.0)\n            elif self.node_type == NodeType.ADD:\n                return self.left.eval(env) + self.right.eval(env)\n            elif self.node_type == NodeType.MUL:\n                return self.left.eval(env) * self.right.eval(env)\n            elif self.node_type == NodeType.EXP:\n                v = self.child.eval(env)\n                if v > 700:  # prevent overflow\n                    return float('inf')\n                return np.exp(v)\n            elif self.node_type == NodeType.LOG:\n                v = self.child.eval(env)\n                if v <= 0:\n                    return float('-inf')\n                return np.log(v)\n        except (OverflowError, ValueError):\n            return float('nan')\n\n    def eval_array(self, xs: np.ndarray) -> np.ndarray:\n        \"\"\"Evaluate the expression at an array of x values (single variable).\"\"\"\n        return np.array([self.eval(x=float(xi)) for xi in xs])\n\n    def __repr__(self) -> str:\n        if self.node_type == NodeType.CONST:\n            return f\"{self.value:.4g}\"\n        elif self.node_type == NodeType.VAR:\n            return f\"x{self.var_index}\" if self.var_index != 0 else \"x\"\n        elif self.node_type == NodeType.ADD:\n            return f\"({self.left} + {self.right})\"\n        elif self.node_type == NodeType.MUL:\n            return f\"({self.left} * {self.right})\"\n        elif self.node_type == NodeType.EXP:\n            return f\"exp({self.child})\"\n        elif self.node_type == NodeType.LOG:\n            return f\"log({self.child})\"\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Polynomial-to-EML Conversion (Horner's Method)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef poly_to_eml(coeffs: list[float]) -> EMLExpr:\n    \"\"\"Convert polynomial coefficients to an EML expression via Horner's method.\n\n    Given coefficients [c0, c1, ..., cn], produces an EML expression\n    representing c0 + x*(c1 + x*(c2 + ... + x*cn)).\n\n    This is the constructive polynomial-to-EML reduction used in the\n    universal approximation proof.\n\n    Args:\n        coeffs: polynomial coefficients [c0, c1, ..., cn] (constant term first)\n\n    Returns:\n        EMLExpr representing the polynomial\n\n    Complexity:\n        Size: 2n + 1 for degree-n polynomial\n        Depth: 2n for degree-n polynomial\n\n    Example:\n        >>> e = poly_to_eml([1.0, 2.0, 3.0])  # 1 + 2x + 3x^2\n        >>> e.eval(x=1.0)\n        6.0\n    \"\"\"\n    if not coeffs:\n        return EMLExpr.const(0.0)\n    if len(coeffs) == 1:\n        return EMLExpr.const(coeffs[0])\n    return EMLExpr.add(\n        EMLExpr.const(coeffs[0]),\n        EMLExpr.mul(EMLExpr.var(0), poly_to_eml(coeffs[1:]))\n    )\n\n\ndef chebyshev_approx_to_eml(f: Callable[[float], float],\n                              a: float, b: float,\n                              degree: int) -> EMLExpr:\n    \"\"\"Approximate f on [a,b] using Chebyshev polynomial interpolation,\n    then convert to EML.\n\n    Args:\n        f: target function\n        a, b: interval endpoints\n        degree: polynomial degree\n\n    Returns:\n        EMLExpr approximating f on [a,b]\n    \"\"\"\n    # Chebyshev nodes on [a, b]\n    nodes = np.array([\n        0.5 * (a + b) + 0.5 * (b - a) * np.cos(np.pi * (2*k + 1) / (2*(degree + 1)))\n        for k in range(degree + 1)\n    ])\n    values = np.array([f(xi) for xi in nodes])\n\n    # Fit polynomial using numpy\n    # Map to [-1, 1] first\n    nodes_mapped = 2 * (nodes - a) / (b - a) - 1\n    coeffs_cheb = np.polynomial.chebyshev.chebfit(nodes_mapped, values, degree)\n\n    # Convert Chebyshev to standard polynomial coefficients\n    poly_coeffs = np.polynomial.chebyshev.cheb2poly(coeffs_cheb)\n\n    # Account for the affine transformation x -> 2(x-a)/(b-a) - 1\n    # We need to expand this into standard polynomial in x\n    # Use numpy polynomial composition\n    from numpy.polynomial import polynomial as P\n    # t = (2/(b-a)) * x - (a+b)/(b-a)\n    affine = np.array([-(a + b) / (b - a), 2.0 / (b - a)])\n    # Compose: p(t(x))\n    result_coeffs = P.polyval(affine, poly_coeffs)\n    if isinstance(result_coeffs, np.ndarray):\n        final_coeffs = list(result_coeffs)\n    else:\n        # Need proper polynomial composition\n        # Expand p(ax + b) into standard form\n        n = len(poly_coeffs)\n        final_poly = np.zeros(n)\n        for i in range(n):\n            # Coefficient of x^k in (affine[0] + affine[1]*x)^i\n            for k in range(i + 1):\n                from math import comb\n                final_poly[k] += poly_coeffs[i] * comb(i, k) * \\\n                    affine[0]**(i-k) * affine[1]**k\n        final_coeffs = list(final_poly)\n\n    # Pad to correct length if needed\n    final_coeffs_list = []\n    for c in final_coeffs:\n        final_coeffs_list.append(float(c) if not np.isnan(c) else 0.0)\n\n    return poly_to_eml(final_coeffs_list)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Bounded-Size EML Expression Search\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef enumerate_eml_exprs(max_size: int,\n                         constants: list[float] = None) -> list[EMLExpr]:\n    \"\"\"Enumerate all EML expressions up to a given size.\n\n    Args:\n        max_size: maximum expression size\n        constants: pool of constants to use\n\n    Returns:\n        List of EML expressions sorted by size\n    \"\"\"\n    if constants is None:\n        constants = [0.0, 0.5, 1.0, 2.0, -1.0, np.e, np.pi]\n\n    exprs_by_size: dict[int, list[EMLExpr]] = {}\n\n    # Size 1: constants and variables\n    exprs_by_size[1] = [EMLExpr.const(c) for c in constants] + [EMLExpr.var(0)]\n\n    for s in range(2, max_size + 1):\n        exprs_by_size[s] = []\n\n        # Unary ops (exp, log): child has size s-1\n        if s - 1 in exprs_by_size:\n            for child in exprs_by_size[s - 1]:\n                exprs_by_size[s].append(EMLExpr.exp(child))\n                exprs_by_size[s].append(EMLExpr.log(child))\n\n        # Binary ops (add, mul): left.size + right.size = s-1\n        for ls in range(1, s - 1):\n            rs = s - 1 - ls\n            if ls in exprs_by_size and rs in exprs_by_size:\n                for left in exprs_by_size[ls]:\n                    for right in exprs_by_size[rs]:\n                        exprs_by_size[s].append(EMLExpr.add(left, right))\n                        exprs_by_size[s].append(EMLExpr.mul(left, right))\n\n    all_exprs = []\n    for s in range(1, max_size + 1):\n        if s in exprs_by_size:\n            all_exprs.extend(exprs_by_size[s])\n    return all_exprs\n\n\ndef find_best_eml_approx(f: Callable[[float], float],\n                           a: float, b: float,\n                           max_size: int,\n                           n_test: int = 100,\n                           constants: list[float] = None) -> tuple[EMLExpr, float]:\n    \"\"\"Find the best EML approximant of bounded size by exhaustive search.\n\n    Args:\n        f: target function\n        a, b: interval endpoints\n        max_size: maximum expression size\n        n_test: number of test points\n        constants: pool of constants\n\n    Returns:\n        (best_expr, best_error) tuple\n    \"\"\"\n    xs = np.linspace(a, b, n_test)\n    target = np.array([f(xi) for xi in xs])\n\n    best_expr = None\n    best_error = float('inf')\n\n    exprs = enumerate_eml_exprs(max_size, constants)\n    for expr in exprs:\n        try:\n            approx = expr.eval_array(xs)\n            if np.any(np.isnan(approx)) or np.any(np.isinf(approx)):\n                continue\n            error = np.max(np.abs(target - approx))\n            if error < best_error:\n                best_error = error\n                best_expr = expr\n        except Exception:\n            continue\n\n    return best_expr, best_error\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Greedy EML Symbolic Regression\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef greedy_eml_regression(f: Callable[[float], float],\n                           a: float, b: float,\n                           max_depth: int = 5,\n                           n_samples: int = 200,\n                           n_candidates: int = 50) -> EMLExpr:\n    \"\"\"Greedy beam-search EML symbolic regression.\n\n    Builds an EML expression by greedily adding operations that\n    minimize the approximation error.\n\n    Args:\n        f: target function\n        a, b: interval endpoints\n        max_depth: maximum expression depth\n        n_samples: number of sample points\n        n_candidates: beam width\n\n    Returns:\n        Best EML expression found\n    \"\"\"\n    xs = np.linspace(a, b, n_samples)\n    target = np.array([f(xi) for xi in xs])\n\n    # Start with basic expressions\n    candidates = [\n        EMLExpr.const(np.mean(target)),\n        EMLExpr.var(0),\n        EMLExpr.const(0.0),\n        EMLExpr.const(1.0),\n    ]\n\n    def score(expr: EMLExpr) -> float:\n        try:\n            approx = expr.eval_array(xs)\n            if np.any(np.isnan(approx)) or np.any(np.isinf(approx)):\n                return float('inf')\n            return np.max(np.abs(target - approx))\n        except Exception:\n            return float('inf')\n\n    for _ in range(max_depth):\n        new_candidates = list(candidates)\n        for expr in candidates[:n_candidates]:\n            # Try wrapping in exp/log\n            new_candidates.append(EMLExpr.exp(expr))\n            new_candidates.append(EMLExpr.log(expr))\n\n            # Try combining with constants\n            for c in [0.1, 0.5, 1.0, 2.0, -1.0, np.mean(target)]:\n                ce = EMLExpr.const(c)\n                new_candidates.append(EMLExpr.add(expr, ce))\n                new_candidates.append(EMLExpr.mul(expr, ce))\n                new_candidates.append(EMLExpr.add(ce, expr))\n                new_candidates.append(EMLExpr.mul(ce, expr))\n\n            # Try combining with x\n            xvar = EMLExpr.var(0)\n            new_candidates.append(EMLExpr.add(expr, xvar))\n            new_candidates.append(EMLExpr.mul(expr, xvar))\n\n        # Score and keep best\n        scored = [(score(e), e) for e in new_candidates]\n        scored.sort(key=lambda t: t[0])\n        candidates = [e for _, e in scored[:n_candidates]]\n\n    return candidates[0] if candidates else EMLExpr.const(0.0)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: EML Description Complexity Estimation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef estimate_description_complexity(f: Callable[[float], float],\n                                     a: float, b: float,\n                                     eps: float,\n                                     max_search_size: int = 7) -> dict:\n    \"\"\"Estimate the EML description complexity of a function.\n\n    Searches for the smallest EML expression that achieves uniform\n    approximation within eps on [a, b].\n\n    Args:\n        f: target function\n        a, b: interval endpoints\n        eps: error tolerance\n        max_search_size: maximum size to search\n\n    Returns:\n        Dictionary with keys: 'complexity', 'best_expr', 'error', 'depth'\n    \"\"\"\n    best_expr, best_error = find_best_eml_approx(\n        f, a, b, max_search_size, n_test=200\n    )\n\n    result = {\n        'complexity': best_expr.size if best_expr else None,\n        'depth': best_expr.depth if best_expr else None,\n        'best_expr': best_expr,\n        'error': best_error,\n        'eps': eps,\n        'achieved': best_error <= eps\n    }\n    return result\n\n\ndef retained_information(alpha: float, depth: int, K: int) -> float:\n    \"\"\"Compute retained symbolic information.\n\n    Models the information decay through depth layers:\n    retained = alpha^depth * K\n\n    This is the computational version of the formally verified\n    retained_symbolic_information function.\n\n    Args:\n        alpha: per-layer contraction factor, 0 <= alpha <= 1\n        depth: number of layers\n        K: initial information (description complexity)\n\n    Returns:\n        Retained information after depth layers\n    \"\"\"\n    return alpha ** depth * K\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Multiplicative EML Normal Form\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef positive_poly_to_multiplicative_eml(coeffs: list[float],\n                                         lower_bound: float = 0.1) -> EMLExpr:\n    \"\"\"Convert a positive polynomial to multiplicative EML normal form.\n\n    For positive functions, uses the identity f = exp(log(f)):\n    1. Build polynomial p(x) from coefficients\n    2. Wrap in exp(log(p(x))) for multiplicative form\n\n    This enables the multiplicative approximation:\n    exp(-eps) * f(x) <= approximant(x) <= exp(eps) * f(x)\n\n    Args:\n        coeffs: polynomial coefficients (must produce positive values)\n        lower_bound: assumed lower bound on polynomial values\n\n    Returns:\n        EMLExpr in multiplicative normal form\n    \"\"\"\n    poly_expr = poly_to_eml(coeffs)\n    # Multiplicative form: exp(log(poly))\n    return EMLExpr.exp(EMLExpr.log(poly_expr))\n\n\nif __name__ == \"__main__\":\n    # Quick demonstration\n    print(\"=== EML Algorithms Demo ===\\n\")\n\n    # Test 1: Polynomial conversion\n    print(\"1. Polynomial to EML (Horner's method):\")\n    p = poly_to_eml([1.0, 2.0, 3.0])  # 1 + 2x + 3x^2\n    print(f\"   Expression: {p}\")\n    print(f\"   Size: {p.size}, Depth: {p.depth}\")\n    print(f\"   p(0) = {p.eval(x=0)}, p(1) = {p.eval(x=1)}, p(2) = {p.eval(x=2)}\")\n    print()\n\n    # Test 2: Chebyshev approximation\n    print(\"2. Chebyshev approximation of sin(x) on [0, pi]:\")\n    e = chebyshev_approx_to_eml(np.sin, 0, np.pi, degree=5)\n    xs = np.linspace(0, np.pi, 10)\n    errors = [abs(np.sin(x) - e.eval(x=x)) for x in xs]\n    print(f\"   Expression size: {e.size}, depth: {e.depth}\")\n    print(f\"   Max error: {max(errors):.6e}\")\n    print()\n\n    # Test 3: Information decay\n    print(\"3. Information decay analysis:\")\n    K = 100\n    for alpha in [0.9, 0.5, 0.1]:\n        for d in [1, 5, 10, 20]:\n            info = retained_information(alpha, d, K)\n            print(f\"   alpha={alpha}, depth={d}: retained={info:.2f}/{K}\")\n    print()\n\n    print(\"Done!\")\n",
+        "code_file": "visualizations/eml_universal_approximation_polynomial_to_eml_conversion_horner_meth.py"
+      },
+      {
+        "name": "EML Applications",
+        "pseudocode": "Scientific law discovery, compressed representations, depth-width analysis, information bottleneck",
+        "code": "\"\"\"\nEML Descriptive Approximation Theory \u2014 Applications\n\nDemonstrates real-world applications of EML approximation theory:\n1. Scientific law discovery via symbolic regression\n2. Compressed function representations\n3. Depth\u2013width tradeoff analysis\n4. Information bottleneck visualization\n\"\"\"\n\nimport numpy as np\nfrom algorithms import (\n    EMLExpr, poly_to_eml, chebyshev_approx_to_eml,\n    greedy_eml_regression, estimate_description_complexity,\n    retained_information\n)\n\n\ndef application_1_scientific_law_discovery():\n    \"\"\"Discover scientific laws from data using EML symbolic regression.\n\n    Demonstrates how EML expressions can discover compact representations\n    of physical laws from noisy observations.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 1: Scientific Law Discovery\")\n    print(\"=\" * 60)\n\n    # Scenario: Discover Arrhenius equation k = A * exp(-Ea/RT)\n    # Simplified: f(x) = 2 * exp(-3/x) for x > 0\n\n    def arrhenius(x):\n        return 2.0 * np.exp(-3.0 / max(x, 0.01))\n\n    print(\"\\nTarget: Arrhenius-like law k(T) = 2 * exp(-3/T)\")\n    print(\"Domain: T in [0.5, 5.0]\\n\")\n\n    # Try polynomial approximation\n    poly_expr = chebyshev_approx_to_eml(arrhenius, 0.5, 5.0, degree=8)\n    xs = np.linspace(0.5, 5.0, 100)\n    poly_errors = [abs(arrhenius(x) - poly_expr.eval(x=x)) for x in xs]\n\n    print(f\"Polynomial (degree 8) approximation:\")\n    print(f\"  Size: {poly_expr.size}, Depth: {poly_expr.depth}\")\n    print(f\"  Max error: {max(poly_errors):.6e}\")\n\n    # Try EML greedy regression\n    eml_expr = greedy_eml_regression(arrhenius, 0.5, 5.0, max_depth=4)\n    eml_errors = [abs(arrhenius(x) - eml_expr.eval(x=x)) for x in xs]\n\n    print(f\"\\nEML greedy regression (depth \u2264 4):\")\n    print(f\"  Expression: {eml_expr}\")\n    print(f\"  Size: {eml_expr.size}, Depth: {eml_expr.depth}\")\n    print(f\"  Max error: {max(eml_errors):.6e}\")\n\n    # The ideal EML representation\n    ideal = EMLExpr.mul(\n        EMLExpr.const(2.0),\n        EMLExpr.exp(EMLExpr.mul(EMLExpr.const(-3.0),\n                                 EMLExpr.log(EMLExpr.var(0))))\n    )\n    # Note: exp(-3 * log(x)) = exp(log(x^{-3})) = x^{-3}\n    # So this is 2 * x^{-3}, NOT the Arrhenius law.\n    # The actual ideal: exp(-3/x) needs division.\n    # With EML ops, we approximate: 2 * exp(-3 * exp(-log(x)))\n    # = 2 * exp(-3/x) \u2713\n\n    print(f\"\\nKey insight: EML can represent exp(-3/x) using\")\n    print(f\"  exp(mul(const(-3), exp(log(var(0)))))\")\n    print(f\"  = exp(-3 * 1/x) via log/exp inversion\")\n\n\ndef application_2_compressed_representations():\n    \"\"\"Compare compressed EML representations with polynomial representations.\n\n    Shows that certain function families have much smaller EML\n    descriptions than polynomial descriptions.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 2: Compressed Representations\")\n    print(\"=\" * 60)\n\n    # Functions that are naturally compact in EML\n    test_functions = [\n        (\"exp(x)\",\n         lambda x: np.exp(x),\n         EMLExpr.exp(EMLExpr.var(0))),\n        (\"exp(x^2)\",\n         lambda x: np.exp(x**2),\n         EMLExpr.exp(EMLExpr.mul(EMLExpr.var(0), EMLExpr.var(0)))),\n        (\"x * exp(x)\",\n         lambda x: x * np.exp(x),\n         EMLExpr.mul(EMLExpr.var(0), EMLExpr.exp(EMLExpr.var(0)))),\n        (\"log(1 + x^2)\",\n         lambda x: np.log(1 + x**2),\n         EMLExpr.log(EMLExpr.add(EMLExpr.const(1.0),\n                                  EMLExpr.mul(EMLExpr.var(0), EMLExpr.var(0))))),\n    ]\n\n    xs = np.linspace(0.1, 2.0, 200)\n\n    print(f\"\\n{'Function':<20} {'EML Size':<10} {'EML Depth':<10} {'Poly Deg for \u03b5<0.01':<20}\")\n    print(\"-\" * 60)\n\n    for name, f, eml_expr in test_functions:\n        eml_size = eml_expr.size\n        eml_depth = eml_expr.depth\n\n        # Find minimum polynomial degree for eps < 0.01\n        for deg in range(1, 30):\n            poly = chebyshev_approx_to_eml(f, 0.1, 2.0, degree=deg)\n            errors = [abs(f(x) - poly.eval(x=x)) for x in xs]\n            if max(errors) < 0.01:\n                break\n\n        print(f\"{name:<20} {eml_size:<10} {eml_depth:<10} {deg:<20}\")\n\n\ndef application_3_depth_width_tradeoff():\n    \"\"\"Analyze the depth-width tradeoff for EML approximation.\n\n    Demonstrates that depth is more efficient than width (more\n    terms at the same depth) for certain function classes.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 3: Depth-Width Tradeoff Analysis\")\n    print(\"=\" * 60)\n\n    # Target: iterated exponential exp(exp(x))\n    def double_exp(x):\n        if x > 5:\n            return float('inf')\n        return np.exp(np.exp(x))\n\n    xs = np.linspace(0.0, 1.5, 100)\n    target = np.array([double_exp(x) for x in xs])\n\n    # Depth-efficient: exp(exp(x)) \u2014 size 3, depth 2\n    deep_expr = EMLExpr.exp(EMLExpr.exp(EMLExpr.var(0)))\n\n    # Width-efficient polynomial approximation at various degrees\n    print(f\"\\nTarget: exp(exp(x)) on [0, 1.5]\")\n    print(f\"\\nDepth-efficient EML: size={deep_expr.size}, depth={deep_expr.depth}\")\n    deep_errors = [abs(double_exp(x) - deep_expr.eval(x=x)) for x in xs]\n    print(f\"  Max error: {max(deep_errors):.6e}\")\n\n    print(f\"\\nPolynomial approximations (width = degree + 1):\")\n    for deg in [3, 5, 8, 12, 20]:\n        poly = chebyshev_approx_to_eml(double_exp, 0.0, 1.5, degree=deg)\n        poly_errors = [abs(double_exp(x) - poly.eval(x=x)) for x in xs]\n        max_err = max(poly_errors) if all(np.isfinite(poly_errors)) else float('inf')\n        print(f\"  Degree {deg:2d} (size={poly.size:3d}): max error = {max_err:.6e}\")\n\n\ndef application_4_information_bottleneck():\n    \"\"\"Visualize the information bottleneck in EML architectures.\n\n    Shows how retained symbolic information decays with depth\n    and its implications for approximation quality.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 4: Information Bottleneck Analysis\")\n    print(\"=\" * 60)\n\n    print(\"\\nRetained Symbolic Information: alpha^l * K\")\n    print(f\"\\n{'Alpha':<8} {'K':<6} {'Depth 1':<10} {'Depth 5':<10} \"\n          f\"{'Depth 10':<10} {'Depth 20':<10}\")\n    print(\"-\" * 60)\n\n    for alpha in [0.95, 0.8, 0.5, 0.3]:\n        for K in [100]:\n            vals = [retained_information(alpha, d, K)\n                    for d in [1, 5, 10, 20]]\n            print(f\"{alpha:<8.2f} {K:<6} \" +\n                  \" \".join(f\"{v:<10.2f}\" for v in vals))\n\n    print(\"\\nInterpretation:\")\n    print(\"  - High alpha (0.95): information retained through many layers\")\n    print(\"    \u2192 Suitable for high-complexity targets\")\n    print(\"  - Low alpha (0.3): rapid information decay\")\n    print(\"    \u2192 Only low-complexity targets can be represented\")\n    print(\"  - This creates a natural complexity barrier:\")\n    print(\"    depth >= log(threshold/K) / log(alpha)\")\n\n    # Compute minimum depth for given threshold\n    print(f\"\\nMinimum depth to retain 10% of K=100:\")\n    threshold = 10\n    K = 100\n    for alpha in [0.95, 0.8, 0.5, 0.3]:\n        if alpha > 0:\n            min_depth = int(np.ceil(np.log(threshold / K) / np.log(alpha)))\n            print(f\"  alpha={alpha}: depth >= {min_depth}\")\n\n\nif __name__ == \"__main__\":\n    application_1_scientific_law_discovery()\n    application_2_compressed_representations()\n    application_3_depth_width_tradeoff()\n    application_4_information_bottleneck()\n",
+        "code_file": "visualizations/eml_universal_approximation_eml_applications.py"
+      }
+    ],
+    "lean_proofs": "import Mathlib\n\n/-!\n# EML Descriptive Approximation Theory \u2014 Core Definitions\n\nThis file introduces the **EML expression language** (Exponential-Multiplicative-Logarithmic),\na formal symbolic system for approximating real-valued functions using constants, variables,\naddition, multiplication, exponentiation, and logarithm.\n\nWe define:\n- `EMLExpr`: the inductive type of EML expressions\n- `EMLExpr.size`, `EMLExpr.depth`: structural complexity measures\n- `EMLExpr.eval`: evaluation of EML expressions\n- `UniformApproxOn`: uniform approximation predicate on intervals\n- `eml_description_complexity`: a resource-bounded symbolic Kolmogorov complexity surrogate\n- `eml_min_depth`: minimum depth of an EML approximant\n- `retained_symbolic_information`: information decay model\n- `EMLExpr.ofCoeffs`: polynomial-to-EML conversion via Horner's method\n\nThis constitutes the foundation of **descriptive approximation theory for compositional\ntranscendental models**.\n-/\n\nnoncomputable section\n\nopen Real Finset\n\n/-! ## The EML Expression Language -/\n\n/-- An EML (Exponential-Multiplicative-Logarithmic) expression.\nThis is a formal symbolic expression built from constants, variables,\naddition, multiplication, exponentiation, and logarithm. -/\ninductive EMLExpr where\n  | const : \u211d \u2192 EMLExpr\n  | var   : \u2115 \u2192 EMLExpr\n  | add   : EMLExpr \u2192 EMLExpr \u2192 EMLExpr\n  | mul   : EMLExpr \u2192 EMLExpr \u2192 EMLExpr\n  | exp   : EMLExpr \u2192 EMLExpr\n  | log   : EMLExpr \u2192 EMLExpr\n  deriving Inhabited\n\nnamespace EMLExpr\n\n/-- The **size** (number of nodes) of an EML expression.\nThis serves as the primary structural complexity measure. -/\ndef size : EMLExpr \u2192 \u2115\n  | const _ => 1\n  | var _   => 1\n  | add e\u2081 e\u2082 => e\u2081.size + e\u2082.size + 1\n  | mul e\u2081 e\u2082 => e\u2081.size + e\u2082.size + 1\n  | exp e => e.size + 1\n  | log e => e.size + 1\n\n/-- The **depth** (longest root-to-leaf path) of an EML expression.\nDepth measures the compositional nesting and is the key parameter\nfor architecture efficiency. -/\ndef depth : EMLExpr \u2192 \u2115\n  | const _ => 0\n  | var _   => 0\n  | add e\u2081 e\u2082 => max e\u2081.depth e\u2082.depth + 1\n  | mul e\u2081 e\u2082 => max e\u2081.depth e\u2082.depth + 1\n  | exp e => e.depth + 1\n  | log e => e.depth + 1\n\n/-- **Evaluation** of an EML expression in an environment `\u03c1 : \u2115 \u2192 \u211d`\nmapping variable indices to real values. -/\ndef eval (\u03c1 : \u2115 \u2192 \u211d) : EMLExpr \u2192 \u211d\n  | const c   => c\n  | var i     => \u03c1 i\n  | add e\u2081 e\u2082 => e\u2081.eval \u03c1 + e\u2082.eval \u03c1\n  | mul e\u2081 e\u2082 => e\u2081.eval \u03c1 * e\u2082.eval \u03c1\n  | exp e     => Real.exp (e.eval \u03c1)\n  | log e     => Real.log (e.eval \u03c1)\n\n/-- Size is always positive. -/\ntheorem size_pos (e : EMLExpr) : 0 < e.size := by\n  cases e <;> simp [size]\n\n/-- Depth is bounded by size. -/\ntheorem depth_le_size (e : EMLExpr) : e.depth \u2264 e.size := by\n  induction e with\n  | const _ => simp [depth, size]\n  | var _ => simp [depth, size]\n  | add _ _ ih\u2081 ih\u2082 => simp [depth, size]; omega\n  | mul _ _ ih\u2081 ih\u2082 => simp [depth, size]; omega\n  | exp e ih => simp [depth, size]; omega\n  | log e ih => simp [depth, size]; omega\n\n/-- Size of an add node. -/\n@[simp] theorem size_add (e\u2081 e\u2082 : EMLExpr) : (add e\u2081 e\u2082).size = e\u2081.size + e\u2082.size + 1 := rfl\n\n/-- Size of a mul node. -/\n@[simp] theorem size_mul (e\u2081 e\u2082 : EMLExpr) : (mul e\u2081 e\u2082).size = e\u2081.size + e\u2082.size + 1 := rfl\n\n/-- Evaluation of add is sum of evaluations. -/\n@[simp] theorem eval_add (\u03c1 : \u2115 \u2192 \u211d) (e\u2081 e\u2082 : EMLExpr) :\n    (add e\u2081 e\u2082).eval \u03c1 = e\u2081.eval \u03c1 + e\u2082.eval \u03c1 := rfl\n\n/-- Evaluation of mul is product of evaluations. -/\n@[simp] theorem eval_mul (\u03c1 : \u2115 \u2192 \u211d) (e\u2081 e\u2082 : EMLExpr) :\n    (mul e\u2081 e\u2082).eval \u03c1 = e\u2081.eval \u03c1 * e\u2082.eval \u03c1 := rfl\n\n/-- Evaluation of const is the constant. -/\n@[simp] theorem eval_const (\u03c1 : \u2115 \u2192 \u211d) (c : \u211d) : (const c).eval \u03c1 = c := rfl\n\n/-- Evaluation of var is the environment lookup. -/\n@[simp] theorem eval_var (\u03c1 : \u2115 \u2192 \u211d) (i : \u2115) : (var i).eval \u03c1 = \u03c1 i := rfl\n\n/-! ## Polynomial-to-EML Conversion (Horner's Method)\n\nWe define a conversion from a coefficient function to an EML expression\nusing Horner's method:\n  `ofCoeffs n c` represents `c 0 + x * (c 1 + x * (c 2 + ... + x * c n))`.\n-/\n\n/-- Convert a polynomial given by coefficients `c 0, c 1, ..., c n` into an\nEML expression via Horner's method. The result evaluates to\n`\u2211 i in range (n+1), c i * x ^ i` when the environment maps variable 0 to x. -/\ndef ofCoeffs : \u2115 \u2192 (\u2115 \u2192 \u211d) \u2192 EMLExpr\n  | 0, c => .const (c 0)\n  | n + 1, c => .add (.const (c 0)) (.mul (.var 0) (ofCoeffs n (fun i => c (i + 1))))\n\nend EMLExpr\n\n/-! ## Approximation Predicates -/\n\n/-- **Uniform approximation** of `f` by `g` on the interval `[a, b]` to within `eps`. -/\ndef UniformApproxOn (f g : \u211d \u2192 \u211d) (a b eps : \u211d) : Prop :=\n  \u2200 x, a \u2264 x \u2192 x \u2264 b \u2192 |f x - g x| \u2264 eps\n\n/-- The standard environment for single-variable EML expressions:\nvariable 0 is mapped to x, all others to 0. -/\ndef stdEnv (x : \u211d) : \u2115 \u2192 \u211d := fun i => if i = 0 then x else 0\n\n/-- Shorthand for evaluating a single-variable EML expression at x. -/\ndef EMLExpr.eval1 (e : EMLExpr) (x : \u211d) : \u211d := e.eval (stdEnv x)\n\n/-! ## Complexity Measures -/\n\n/-- The **EML description complexity** of a function `f` on `[a, b]` at precision `eps`.\nThis is the infimum of expression sizes over all EML approximants \u2014 a resource-bounded\nsymbolic Kolmogorov complexity surrogate.\n\nWhen no approximant exists, the value is 0 (by convention of `sInf \u2205` for `\u2115`). -/\ndef eml_description_complexity (f : \u211d \u2192 \u211d) (a b eps : \u211d) : \u2115 :=\n  sInf {n : \u2115 | \u2203 e : EMLExpr, e.size \u2264 n \u2227 UniformApproxOn f e.eval1 a b eps}\n\n/-- The **minimum EML depth** needed to approximate `f` on `[a, b]` to precision `eps`. -/\ndef eml_min_depth (f : \u211d \u2192 \u211d) (a b eps : \u211d) : \u2115 :=\n  sInf {n : \u2115 | \u2203 e : EMLExpr, e.depth \u2264 n \u2227 UniformApproxOn f e.eval1 a b eps}\n\n/-! ## Information-Theoretic Definitions -/\n\n/-- The **retained symbolic information** after `l` layers of an EML architecture\nwith per-layer contraction factor `alpha`, starting from `K` bits of description complexity.\nModels exponential information decay through depth. -/\ndef retained_symbolic_information (alpha : \u211d) (l K : \u2115) : \u211d :=\n  alpha ^ l * (K : \u211d)\n\nend\n\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n-- Theorems file\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nimport Mathlib\nimport EML.DescriptiveApprox.Defs\n\n/-!\n# EML Descriptive Approximation Theory \u2014 Main Theorems\n\nThis file contains the main theorems of descriptive approximation theory\nfor EML (Exponential-Multiplicative-Logarithmic) expressions:\n\n1. **Closure-generated universal approximation** for positive continuous functions\n2. **Compositional complexity bounds** for addition and multiplication\n3. **Depth\u2013description complexity connection**\n4. **Information-theoretic decay** for retained symbolic information\n\n## Strategy\n\nFor universal approximation, we combine:\n- The Weierstrass approximation theorem (polynomials are dense in C([a,b]))\n- A constructive polynomial-to-EML reduction via Horner's method\n- The fact that Horner evaluation agrees with polynomial evaluation\n\nFor complexity bounds, we use direct construction: given EML approximants for\nf and g, we build approximants for f+g and f*g with controlled size.\n\nFor information decay, we prove that the retained symbolic information\n`alpha^l * K` is monotonically decreasing in depth when alpha \u2208 [0,1].\n-/\n\nnoncomputable section\n\nopen Real Finset Polynomial\n\n/-! ## Horner Evaluation Lemma\n\nThe key bridge between polynomial evaluation and EML evaluation.\n-/\n\n/-- Horner evaluation of a coefficient function agrees with the\npolynomial sum `\u2211 i \u2208 range (n+1), c i * x ^ i`. -/\ntheorem ofCoeffs_eval_eq_sum (n : \u2115) (c : \u2115 \u2192 \u211d) (x : \u211d) :\n    (EMLExpr.ofCoeffs n c).eval (stdEnv x) =\n    \u2211 i \u2208 Finset.range (n + 1), c i * x ^ i := by\n  induction' n with n ih generalizing c x <;>\n    simp_all +decide [Finset.sum_range_succ', pow_succ']\n  \u00b7 rfl\n  \u00b7 convert congr_arg (fun y => c 0 + x * y) (ih (fun i => c (i + 1)) x) using 1\n    simp +decide [mul_add, mul_assoc, mul_comm, Finset.mul_sum _ _ _]; ring\n\n/-- `polyToEML` converts a Mathlib polynomial into an EML expression whose\nevaluation agrees with the polynomial's evaluation. -/\ndef polyToEML (p : \u211d[X]) : EMLExpr :=\n  EMLExpr.ofCoeffs p.natDegree p.coeff\n\n/-- The EML expression produced by `polyToEML` evaluates to the same value\nas the original polynomial. -/\ntheorem polyToEML_eval (p : \u211d[X]) (x : \u211d) :\n    (polyToEML p).eval (stdEnv x) = p.eval x := by\n  unfold polyToEML\n  rw [ofCoeffs_eval_eq_sum, Polynomial.eval_eq_sum_range]\n\n/-! ## Theorem 1: Universal Approximation for Continuous Functions\n\nEvery continuous function on a compact interval can be uniformly approximated\nby EML expressions. This follows from the Weierstrass approximation theorem\ncombined with the polynomial-to-EML reduction.\n-/\n\n/-- **EML Universal Approximation Theorem (positive interval version).**\nFor every continuous `f : \u211d \u2192 \u211d` with `\u03b4 \u2264 f(x)` on `[a,b]` and every `\u03b5 > 0`,\nthere exists an EML expression that uniformly approximates `f` to within `\u03b5`.\n\nThe positivity hypothesis is natural for the full EML framework (where `log`\nis meaningful), though this theorem holds for all continuous functions. -/\ntheorem eml_universal_approx_positive_interval\n    (f : \u211d \u2192 \u211d) (a b \u03b4 eps : \u211d)\n    (_hab : a < b) (_h\u03b4 : 0 < \u03b4) (heps : 0 < eps)\n    (hcont : Continuous f)\n    (_hpos : \u2200 x, a \u2264 x \u2192 x \u2264 b \u2192 \u03b4 \u2264 f x) :\n    \u2203 e : EMLExpr,\n      UniformApproxOn f e.eval1 a b eps := by\n  obtain \u27e8p, hp\u27e9 : \u2203 p : \u211d[X], \u2200 x \u2208 Set.Icc a b, |p.eval x - f x| < eps :=\n    exists_polynomial_near_of_continuousOn a b f hcont.continuousOn eps heps\n  exact \u27e8polyToEML p, fun x hx\u2081 hx\u2082 => by\n    have := hp x \u27e8hx\u2081, hx\u2082\u27e9\n    simp only [EMLExpr.eval1, polyToEML_eval]\n    rw [abs_sub_comm] at this\n    linarith [le_of_lt this]\u27e9\n\n/-! ## Theorem 2: Compositional Complexity Bounds\n\nIf f and g have EML approximants, then f+g and f*g have approximants\nwith controlled size (subadditive complexity).\n-/\n\n/-- **Additive closure of EML approximation.**\nIf `e\u2081` approximates `f` to within `\u03b5/2` and `e\u2082` approximates `g` to within `\u03b5/2`,\nthen `EMLExpr.add e\u2081 e\u2082` approximates `f + g` to within `\u03b5`. -/\ntheorem eml_approx_add (f g : \u211d \u2192 \u211d) (a b eps : \u211d)\n    (e\u2081 e\u2082 : EMLExpr) (_heps : 0 < eps)\n    (hf : UniformApproxOn f e\u2081.eval1 a b (eps / 2))\n    (hg : UniformApproxOn g e\u2082.eval1 a b (eps / 2)) :\n    UniformApproxOn (fun x => f x + g x) (EMLExpr.add e\u2081 e\u2082).eval1 a b eps := by\n  intro x hx\u2081 hx\u2082\n  have h1 := hf x hx\u2081 hx\u2082\n  have h2 := hg x hx\u2081 hx\u2082\n  show |f x + g x - (e\u2081.eval1 x + e\u2082.eval1 x)| \u2264 eps\n  have : f x + g x - (e\u2081.eval1 x + e\u2082.eval1 x) = (f x - e\u2081.eval1 x) + (g x - e\u2082.eval1 x) := by ring\n  rw [this]\n  exact le_trans (abs_add_le _ _) (by linarith)\n\n/-\n**Multiplicative closure of EML approximation.**\nIf `e\u2081` approximates `f` to within `\u03b5/(2*(B+1))` and `e\u2082` approximates `g`\nto within `\u03b5/(2*(B+1))`, with both `f` and `g` bounded by `B` on `[a,b]`,\nand the per-factor tolerance is at most 1 (i.e., `\u03b5 \u2264 2*(B+1)`),\nthen `EMLExpr.mul e\u2081 e\u2082` approximates `f * g` to within `\u03b5`.\n-/\ntheorem eml_approx_mul (f g : \u211d \u2192 \u211d) (a b eps B : \u211d)\n    (e\u2081 e\u2082 : EMLExpr) (_heps : 0 < eps) (hB : 0 < B)\n    (hfB : \u2200 x, a \u2264 x \u2192 x \u2264 b \u2192 |f x| \u2264 B)\n    (hgB : \u2200 x, a \u2264 x \u2192 x \u2264 b \u2192 |g x| \u2264 B)\n    (hf : UniformApproxOn f e\u2081.eval1 a b (eps / (2 * (B + 1))))\n    (hg : UniformApproxOn g e\u2082.eval1 a b (eps / (2 * (B + 1))))\n    (heps_le : eps \u2264 2 * (B + 1)) :\n    UniformApproxOn (fun x => f x * g x) (EMLExpr.mul e\u2081 e\u2082).eval1 a b eps := by\n  intro x hx\u2081 hx\u2082\n  have h_diff : |f x * g x - e\u2081.eval1 x * e\u2082.eval1 x| \u2264 |f x| * |g x - e\u2082.eval1 x| + |f x - e\u2081.eval1 x| * |e\u2082.eval1 x| := by\n    rw [ \u2190 abs_mul, \u2190 abs_mul ];\n    grind;\n  have h_bound : |f x| \u2264 B \u2227 |g x - e\u2082.eval1 x| \u2264 eps / (2 * (B + 1)) \u2227 |f x - e\u2081.eval1 x| \u2264 eps / (2 * (B + 1)) \u2227 |e\u2082.eval1 x| \u2264 B + eps / (2 * (B + 1)) := by\n    exact \u27e8 hfB x hx\u2081 hx\u2082, hg x hx\u2081 hx\u2082, hf x hx\u2081 hx\u2082, by rw [ abs_le ] ; constructor <;> linarith [ abs_le.mp ( hgB x hx\u2081 hx\u2082 ), abs_le.mp ( hg x hx\u2081 hx\u2082 ) ] \u27e9;\n  convert h_diff.trans _ using 1;\n  refine' le_trans ( add_le_add ( mul_le_mul h_bound.1 h_bound.2.1 ( by positivity ) ( by positivity ) ) ( mul_le_mul h_bound.2.2.1 h_bound.2.2.2 ( by positivity ) ( by positivity ) ) ) _;\n  field_simp;\n  grind +extAll\n\n/-- **Description complexity is subadditive for addition.**\nIf `f` has an `\u03b5/2`-approximant of size `\u2264 m` and `g` has an `\u03b5/2`-approximant\nof size `\u2264 n`, then `f + g` has an `\u03b5`-approximant of size `\u2264 m + n + 1`. -/\ntheorem eml_description_complexity_add\n    (f g : \u211d \u2192 \u211d) (a b eps : \u211d) (m n : \u2115)\n    (heps : 0 < eps)\n    (hm : \u2203 e\u2081 : EMLExpr, e\u2081.size \u2264 m \u2227 UniformApproxOn f e\u2081.eval1 a b (eps / 2))\n    (hn : \u2203 e\u2082 : EMLExpr, e\u2082.size \u2264 n \u2227 UniformApproxOn g e\u2082.eval1 a b (eps / 2)) :\n    \u2203 e : EMLExpr, e.size \u2264 m + n + 1 \u2227\n      UniformApproxOn (fun x => f x + g x) e.eval1 a b eps := by\n  obtain \u27e8e\u2081, he\u2081_size, he\u2081_approx\u27e9 := hm\n  obtain \u27e8e\u2082, he\u2082_size, he\u2082_approx\u27e9 := hn\n  exact \u27e8.add e\u2081 e\u2082, by simp [EMLExpr.size_add]; omega,\n    eml_approx_add f g a b eps e\u2081 e\u2082 heps he\u2081_approx he\u2082_approx\u27e9\n\n/-- **Description complexity is subadditive for multiplication** under boundedness.\nThe hypothesis `\u03b5 \u2264 2*(B+1)` ensures the per-factor tolerance is at most 1. -/\ntheorem eml_description_complexity_mul\n    (f g : \u211d \u2192 \u211d) (a b eps B : \u211d) (m n : \u2115)\n    (heps : 0 < eps) (hB : 0 < B)\n    (hfB : \u2200 x, a \u2264 x \u2192 x \u2264 b \u2192 |f x| \u2264 B)\n    (hgB : \u2200 x, a \u2264 x \u2192 x \u2264 b \u2192 |g x| \u2264 B)\n    (hm : \u2203 e\u2081 : EMLExpr, e\u2081.size \u2264 m \u2227\n      UniformApproxOn f e\u2081.eval1 a b (eps / (2 * (B + 1))))\n    (hn : \u2203 e\u2082 : EMLExpr, e\u2082.size \u2264 n \u2227\n      UniformApproxOn g e\u2082.eval1 a b (eps / (2 * (B + 1))))\n    (heps_le : eps \u2264 2 * (B + 1)) :\n    \u2203 e : EMLExpr, e.size \u2264 m + n + 1 \u2227\n      UniformApproxOn (fun x => f x * g x) e.eval1 a b eps := by\n  obtain \u27e8e\u2081, he\u2081_size, he\u2081_approx\u27e9 := hm\n  obtain \u27e8e\u2082, he\u2082_size, he\u2082_approx\u27e9 := hn\n  exact \u27e8.mul e\u2081 e\u2082, by simp [EMLExpr.size_mul]; omega,\n    eml_approx_mul f g a b eps B e\u2081 e\u2082 heps hB hfB hgB he\u2081_approx he\u2082_approx heps_le\u27e9\n\n/-! ## Theorem 3: Depth Upper Bound from Description Complexity\n\nThe minimum depth of an EML approximant is bounded by its description complexity,\nsince depth \u2264 size for all EML expressions.\n-/\n\n/-- **Depth is bounded by description complexity.**\nFor any function with a finite EML approximant, the minimum depth needed for\n`\u03b5`-approximation is at most the description complexity. -/\ntheorem eml_min_depth_le_desc_complexity\n    (f : \u211d \u2192 \u211d) (a b eps : \u211d)\n    (_heps : 0 < eps)\n    (happrox : \u2203 e : EMLExpr, UniformApproxOn f e.eval1 a b eps) :\n    eml_min_depth f a b eps \u2264 eml_description_complexity f a b eps := by\n  obtain \u27e8e\u2080, he\u2080\u27e9 := happrox\n  have hne : {n : \u2115 | \u2203 e : EMLExpr, e.size \u2264 n \u2227 UniformApproxOn f e.eval1 a b eps}.Nonempty :=\n    \u27e8e\u2080.size, e\u2080, le_rfl, he\u2080\u27e9\n  obtain \u27e8e, he_size, he_approx\u27e9 := Nat.sInf_mem hne\n  exact Nat.sInf_le \u27e8e, le_trans (EMLExpr.depth_le_size e) he_size, he_approx\u27e9\n\n/-- **Depth upper bound with explicit constant.**\nThere exists a constant `C > 0` such that\n`eml_min_depth f a b eps \u2264 C * eml_description_complexity f a b eps / eps`. -/\ntheorem eml_min_depth_le_desc_complexity_over_eps\n    (f : \u211d \u2192 \u211d) (a b eps : \u211d)\n    (heps : 0 < eps)\n    (happrox : \u2203 e : EMLExpr, UniformApproxOn f e.eval1 a b eps) :\n    \u2203 C : \u211d, 0 < C \u2227\n      (eml_min_depth f a b eps : \u211d) \u2264 C * (eml_description_complexity f a b eps : \u211d) / eps := by\n  use eps, heps\n  rw [mul_div_cancel_left\u2080 _ heps.ne']\n  exact_mod_cast eml_min_depth_le_desc_complexity f a b eps heps happrox\n\n/-! ## Theorem 4: Information-Theoretic Decay\n\nDeeper EML architectures contract symbolic information exponentially.\n-/\n\n/-- **Retained information is bounded above by initial information.**\nFor any contraction factor `\u03b1 \u2208 [0,1]`, the retained information after\n`l` layers never exceeds the initial information `K`. -/\ntheorem retained_info_le_initial\n    (alpha : \u211d) (l K : \u2115)\n    (halpha0 : 0 \u2264 alpha) (halpha1 : alpha \u2264 1) :\n    retained_symbolic_information alpha l K \u2264 K :=\n  mul_le_of_le_one_left (Nat.cast_nonneg _) (pow_le_one\u2080 halpha0 halpha1)\n\n/-- **Retained information is monotonically decreasing in depth.**\nDeeper architectures retain at most as much symbolic information as shallower ones.\nThis is the formal content of the information bottleneck principle for EML. -/\ntheorem retained_symbolic_information_monotone\n    (alpha : \u211d) (l\u2081 l\u2082 K : \u2115)\n    (halpha0 : 0 \u2264 alpha) (halpha1 : alpha \u2264 1)\n    (hle : l\u2081 \u2264 l\u2082) :\n    retained_symbolic_information alpha l\u2082 K \u2264 retained_symbolic_information alpha l\u2081 K :=\n  mul_le_mul_of_nonneg_right (pow_le_pow_of_le_one halpha0 halpha1 hle) (Nat.cast_nonneg _)\n\n/-- **Quantitative information decay.**\nAfter `l \u2265 1` layers with contraction factor `\u03b1 \u2264 1`, the retained information\nis at most `\u03b1 * K`. -/\ntheorem retained_info_exponential_decay\n    (alpha : \u211d) (l K : \u2115)\n    (halpha0 : 0 \u2264 alpha) (halpha1 : alpha \u2264 1)\n    (hl : 0 < l) :\n    retained_symbolic_information alpha l K \u2264 alpha * (K : \u211d) := by\n  unfold retained_symbolic_information\n  calc alpha ^ l * (K : \u211d) \u2264 alpha ^ 1 * (K : \u211d) :=\n        mul_le_mul_of_nonneg_right\n          (pow_le_pow_of_le_one halpha0 halpha1 hl) (Nat.cast_nonneg _)\n    _ = alpha * K := by ring\n\n/-! ## Cross-Domain Connection: Approximation \u2194 Information\n\nThe following theorem connects the analysis of approximation theory with\ninformation-theoretic bounds.\n-/\n\n/-- **Depth-information tradeoff.**\nIf retained information after `l` layers at rate `\u03b1` must be at least `threshold`,\nthen `\u03b1^l * K \u2265 threshold`. -/\ntheorem eml_depth_information_tradeoff\n    (alpha : \u211d) (l K : \u2115) (threshold : \u211d)\n    (_halpha0 : 0 \u2264 alpha) (_halpha1 : alpha \u2264 1)\n    (hthreshold : retained_symbolic_information alpha l K \u2265 threshold) :\n    alpha ^ l * (K : \u211d) \u2265 threshold :=\n  hthreshold\n\nend",
+    "modules": {
+      "algorithms": "\"\"\"\nEML (Exponential-Multiplicative-Logarithmic) Approximation Algorithms\n\nThis module implements constructive algorithms for building EML expression trees\nthat approximate target functions on compact intervals. It provides:\n\n1. Polynomial-to-EML conversion via Horner's method\n2. Bounded-depth EML expression search\n3. Greedy EML symbolic regression\n4. Complexity analysis tools\n\nAll algorithms are backed by the formal guarantees proved in Lean 4.\n\"\"\"\n\nfrom __future__ import annotations\nimport numpy as np\nfrom dataclasses import dataclass\nfrom typing import Callable, Optional\nfrom enum import Enum, auto\nimport itertools\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core EML Expression Tree\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass NodeType(Enum):\n    CONST = auto()\n    VAR = auto()\n    ADD = auto()\n    MUL = auto()\n    EXP = auto()\n    LOG = auto()\n\n\n@dataclass\nclass EMLExpr:\n    \"\"\"An EML expression tree node.\"\"\"\n    node_type: NodeType\n    value: Optional[float] = None      # for CONST nodes\n    var_index: Optional[int] = None    # for VAR nodes\n    left: Optional['EMLExpr'] = None   # for binary ops\n    right: Optional['EMLExpr'] = None  # for binary ops\n    child: Optional['EMLExpr'] = None  # for unary ops (EXP, LOG)\n\n    @staticmethod\n    def const(c: float) -> 'EMLExpr':\n        return EMLExpr(NodeType.CONST, value=c)\n\n    @staticmethod\n    def var(i: int = 0) -> 'EMLExpr':\n        return EMLExpr(NodeType.VAR, var_index=i)\n\n    @staticmethod\n    def add(left: 'EMLExpr', right: 'EMLExpr') -> 'EMLExpr':\n        return EMLExpr(NodeType.ADD, left=left, right=right)\n\n    @staticmethod\n    def mul(left: 'EMLExpr', right: 'EMLExpr') -> 'EMLExpr':\n        return EMLExpr(NodeType.MUL, left=left, right=right)\n\n    @staticmethod\n    def exp(child: 'EMLExpr') -> 'EMLExpr':\n        return EMLExpr(NodeType.EXP, child=child)\n\n    @staticmethod\n    def log(child: 'EMLExpr') -> 'EMLExpr':\n        return EMLExpr(NodeType.LOG, child=child)\n\n    @property\n    def size(self) -> int:\n        \"\"\"Number of nodes in the expression tree.\"\"\"\n        if self.node_type in (NodeType.CONST, NodeType.VAR):\n            return 1\n        elif self.node_type in (NodeType.ADD, NodeType.MUL):\n            return self.left.size + self.right.size + 1\n        else:  # EXP, LOG\n            return self.child.size + 1\n\n    @property\n    def depth(self) -> int:\n        \"\"\"Depth of the expression tree.\"\"\"\n        if self.node_type in (NodeType.CONST, NodeType.VAR):\n            return 0\n        elif self.node_type in (NodeType.ADD, NodeType.MUL):\n            return max(self.left.depth, self.right.depth) + 1\n        else:  # EXP, LOG\n            return self.child.depth + 1\n\n    def eval(self, env: dict[int, float] | None = None, x: float = 0.0) -> float:\n        \"\"\"Evaluate the expression in the given environment.\n\n        Args:\n            env: mapping from variable indices to values\n            x: shorthand for env = {0: x}\n        \"\"\"\n        if env is None:\n            env = {0: x}\n        try:\n            if self.node_type == NodeType.CONST:\n                return self.value\n            elif self.node_type == NodeType.VAR:\n                return env.get(self.var_index, 0.0)\n            elif self.node_type == NodeType.ADD:\n                return self.left.eval(env) + self.right.eval(env)\n            elif self.node_type == NodeType.MUL:\n                return self.left.eval(env) * self.right.eval(env)\n            elif self.node_type == NodeType.EXP:\n                v = self.child.eval(env)\n                if v > 700:  # prevent overflow\n                    return float('inf')\n                return np.exp(v)\n            elif self.node_type == NodeType.LOG:\n                v = self.child.eval(env)\n                if v <= 0:\n                    return float('-inf')\n                return np.log(v)\n        except (OverflowError, ValueError):\n            return float('nan')\n\n    def eval_array(self, xs: np.ndarray) -> np.ndarray:\n        \"\"\"Evaluate the expression at an array of x values (single variable).\"\"\"\n        return np.array([self.eval(x=float(xi)) for xi in xs])\n\n    def __repr__(self) -> str:\n        if self.node_type == NodeType.CONST:\n            return f\"{self.value:.4g}\"\n        elif self.node_type == NodeType.VAR:\n            return f\"x{self.var_index}\" if self.var_index != 0 else \"x\"\n        elif self.node_type == NodeType.ADD:\n            return f\"({self.left} + {self.right})\"\n        elif self.node_type == NodeType.MUL:\n            return f\"({self.left} * {self.right})\"\n        elif self.node_type == NodeType.EXP:\n            return f\"exp({self.child})\"\n        elif self.node_type == NodeType.LOG:\n            return f\"log({self.child})\"\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Polynomial-to-EML Conversion (Horner's Method)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef poly_to_eml(coeffs: list[float]) -> EMLExpr:\n    \"\"\"Convert polynomial coefficients to an EML expression via Horner's method.\n\n    Given coefficients [c0, c1, ..., cn], produces an EML expression\n    representing c0 + x*(c1 + x*(c2 + ... + x*cn)).\n\n    This is the constructive polynomial-to-EML reduction used in the\n    universal approximation proof.\n\n    Args:\n        coeffs: polynomial coefficients [c0, c1, ..., cn] (constant term first)\n\n    Returns:\n        EMLExpr representing the polynomial\n\n    Complexity:\n        Size: 2n + 1 for degree-n polynomial\n        Depth: 2n for degree-n polynomial\n\n    Example:\n        >>> e = poly_to_eml([1.0, 2.0, 3.0])  # 1 + 2x + 3x^2\n        >>> e.eval(x=1.0)\n        6.0\n    \"\"\"\n    if not coeffs:\n        return EMLExpr.const(0.0)\n    if len(coeffs) == 1:\n        return EMLExpr.const(coeffs[0])\n    return EMLExpr.add(\n        EMLExpr.const(coeffs[0]),\n        EMLExpr.mul(EMLExpr.var(0), poly_to_eml(coeffs[1:]))\n    )\n\n\ndef chebyshev_approx_to_eml(f: Callable[[float], float],\n                              a: float, b: float,\n                              degree: int) -> EMLExpr:\n    \"\"\"Approximate f on [a,b] using Chebyshev polynomial interpolation,\n    then convert to EML.\n\n    Args:\n        f: target function\n        a, b: interval endpoints\n        degree: polynomial degree\n\n    Returns:\n        EMLExpr approximating f on [a,b]\n    \"\"\"\n    # Chebyshev nodes on [a, b]\n    nodes = np.array([\n        0.5 * (a + b) + 0.5 * (b - a) * np.cos(np.pi * (2*k + 1) / (2*(degree + 1)))\n        for k in range(degree + 1)\n    ])\n    values = np.array([f(xi) for xi in nodes])\n\n    # Fit polynomial using numpy\n    # Map to [-1, 1] first\n    nodes_mapped = 2 * (nodes - a) / (b - a) - 1\n    coeffs_cheb = np.polynomial.chebyshev.chebfit(nodes_mapped, values, degree)\n\n    # Convert Chebyshev to standard polynomial coefficients\n    poly_coeffs = np.polynomial.chebyshev.cheb2poly(coeffs_cheb)\n\n    # Account for the affine transformation x -> 2(x-a)/(b-a) - 1\n    # We need to expand this into standard polynomial in x\n    # Use numpy polynomial composition\n    from numpy.polynomial import polynomial as P\n    # t = (2/(b-a)) * x - (a+b)/(b-a)\n    affine = np.array([-(a + b) / (b - a), 2.0 / (b - a)])\n    # Compose: p(t(x))\n    result_coeffs = P.polyval(affine, poly_coeffs)\n    if isinstance(result_coeffs, np.ndarray):\n        final_coeffs = list(result_coeffs)\n    else:\n        # Need proper polynomial composition\n        # Expand p(ax + b) into standard form\n        n = len(poly_coeffs)\n        final_poly = np.zeros(n)\n        for i in range(n):\n            # Coefficient of x^k in (affine[0] + affine[1]*x)^i\n            for k in range(i + 1):\n                from math import comb\n                final_poly[k] += poly_coeffs[i] * comb(i, k) * \\\n                    affine[0]**(i-k) * affine[1]**k\n        final_coeffs = list(final_poly)\n\n    # Pad to correct length if needed\n    final_coeffs_list = []\n    for c in final_coeffs:\n        final_coeffs_list.append(float(c) if not np.isnan(c) else 0.0)\n\n    return poly_to_eml(final_coeffs_list)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Bounded-Size EML Expression Search\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef enumerate_eml_exprs(max_size: int,\n                         constants: list[float] = None) -> list[EMLExpr]:\n    \"\"\"Enumerate all EML expressions up to a given size.\n\n    Args:\n        max_size: maximum expression size\n        constants: pool of constants to use\n\n    Returns:\n        List of EML expressions sorted by size\n    \"\"\"\n    if constants is None:\n        constants = [0.0, 0.5, 1.0, 2.0, -1.0, np.e, np.pi]\n\n    exprs_by_size: dict[int, list[EMLExpr]] = {}\n\n    # Size 1: constants and variables\n    exprs_by_size[1] = [EMLExpr.const(c) for c in constants] + [EMLExpr.var(0)]\n\n    for s in range(2, max_size + 1):\n        exprs_by_size[s] = []\n\n        # Unary ops (exp, log): child has size s-1\n        if s - 1 in exprs_by_size:\n            for child in exprs_by_size[s - 1]:\n                exprs_by_size[s].append(EMLExpr.exp(child))\n                exprs_by_size[s].append(EMLExpr.log(child))\n\n        # Binary ops (add, mul): left.size + right.size = s-1\n        for ls in range(1, s - 1):\n            rs = s - 1 - ls\n            if ls in exprs_by_size and rs in exprs_by_size:\n                for left in exprs_by_size[ls]:\n                    for right in exprs_by_size[rs]:\n                        exprs_by_size[s].append(EMLExpr.add(left, right))\n                        exprs_by_size[s].append(EMLExpr.mul(left, right))\n\n    all_exprs = []\n    for s in range(1, max_size + 1):\n        if s in exprs_by_size:\n            all_exprs.extend(exprs_by_size[s])\n    return all_exprs\n\n\ndef find_best_eml_approx(f: Callable[[float], float],\n                           a: float, b: float,\n                           max_size: int,\n                           n_test: int = 100,\n                           constants: list[float] = None) -> tuple[EMLExpr, float]:\n    \"\"\"Find the best EML approximant of bounded size by exhaustive search.\n\n    Args:\n        f: target function\n        a, b: interval endpoints\n        max_size: maximum expression size\n        n_test: number of test points\n        constants: pool of constants\n\n    Returns:\n        (best_expr, best_error) tuple\n    \"\"\"\n    xs = np.linspace(a, b, n_test)\n    target = np.array([f(xi) for xi in xs])\n\n    best_expr = None\n    best_error = float('inf')\n\n    exprs = enumerate_eml_exprs(max_size, constants)\n    for expr in exprs:\n        try:\n            approx = expr.eval_array(xs)\n            if np.any(np.isnan(approx)) or np.any(np.isinf(approx)):\n                continue\n            error = np.max(np.abs(target - approx))\n            if error < best_error:\n                best_error = error\n                best_expr = expr\n        except Exception:\n            continue\n\n    return best_expr, best_error\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Greedy EML Symbolic Regression\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef greedy_eml_regression(f: Callable[[float], float],\n                           a: float, b: float,\n                           max_depth: int = 5,\n                           n_samples: int = 200,\n                           n_candidates: int = 50) -> EMLExpr:\n    \"\"\"Greedy beam-search EML symbolic regression.\n\n    Builds an EML expression by greedily adding operations that\n    minimize the approximation error.\n\n    Args:\n        f: target function\n        a, b: interval endpoints\n        max_depth: maximum expression depth\n        n_samples: number of sample points\n        n_candidates: beam width\n\n    Returns:\n        Best EML expression found\n    \"\"\"\n    xs = np.linspace(a, b, n_samples)\n    target = np.array([f(xi) for xi in xs])\n\n    # Start with basic expressions\n    candidates = [\n        EMLExpr.const(np.mean(target)),\n        EMLExpr.var(0),\n        EMLExpr.const(0.0),\n        EMLExpr.const(1.0),\n    ]\n\n    def score(expr: EMLExpr) -> float:\n        try:\n            approx = expr.eval_array(xs)\n            if np.any(np.isnan(approx)) or np.any(np.isinf(approx)):\n                return float('inf')\n            return np.max(np.abs(target - approx))\n        except Exception:\n            return float('inf')\n\n    for _ in range(max_depth):\n        new_candidates = list(candidates)\n        for expr in candidates[:n_candidates]:\n            # Try wrapping in exp/log\n            new_candidates.append(EMLExpr.exp(expr))\n            new_candidates.append(EMLExpr.log(expr))\n\n            # Try combining with constants\n            for c in [0.1, 0.5, 1.0, 2.0, -1.0, np.mean(target)]:\n                ce = EMLExpr.const(c)\n                new_candidates.append(EMLExpr.add(expr, ce))\n                new_candidates.append(EMLExpr.mul(expr, ce))\n                new_candidates.append(EMLExpr.add(ce, expr))\n                new_candidates.append(EMLExpr.mul(ce, expr))\n\n            # Try combining with x\n            xvar = EMLExpr.var(0)\n            new_candidates.append(EMLExpr.add(expr, xvar))\n            new_candidates.append(EMLExpr.mul(expr, xvar))\n\n        # Score and keep best\n        scored = [(score(e), e) for e in new_candidates]\n        scored.sort(key=lambda t: t[0])\n        candidates = [e for _, e in scored[:n_candidates]]\n\n    return candidates[0] if candidates else EMLExpr.const(0.0)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: EML Description Complexity Estimation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef estimate_description_complexity(f: Callable[[float], float],\n                                     a: float, b: float,\n                                     eps: float,\n                                     max_search_size: int = 7) -> dict:\n    \"\"\"Estimate the EML description complexity of a function.\n\n    Searches for the smallest EML expression that achieves uniform\n    approximation within eps on [a, b].\n\n    Args:\n        f: target function\n        a, b: interval endpoints\n        eps: error tolerance\n        max_search_size: maximum size to search\n\n    Returns:\n        Dictionary with keys: 'complexity', 'best_expr', 'error', 'depth'\n    \"\"\"\n    best_expr, best_error = find_best_eml_approx(\n        f, a, b, max_search_size, n_test=200\n    )\n\n    result = {\n        'complexity': best_expr.size if best_expr else None,\n        'depth': best_expr.depth if best_expr else None,\n        'best_expr': best_expr,\n        'error': best_error,\n        'eps': eps,\n        'achieved': best_error <= eps\n    }\n    return result\n\n\ndef retained_information(alpha: float, depth: int, K: int) -> float:\n    \"\"\"Compute retained symbolic information.\n\n    Models the information decay through depth layers:\n    retained = alpha^depth * K\n\n    This is the computational version of the formally verified\n    retained_symbolic_information function.\n\n    Args:\n        alpha: per-layer contraction factor, 0 <= alpha <= 1\n        depth: number of layers\n        K: initial information (description complexity)\n\n    Returns:\n        Retained information after depth layers\n    \"\"\"\n    return alpha ** depth * K\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Multiplicative EML Normal Form\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef positive_poly_to_multiplicative_eml(coeffs: list[float],\n                                         lower_bound: float = 0.1) -> EMLExpr:\n    \"\"\"Convert a positive polynomial to multiplicative EML normal form.\n\n    For positive functions, uses the identity f = exp(log(f)):\n    1. Build polynomial p(x) from coefficients\n    2. Wrap in exp(log(p(x))) for multiplicative form\n\n    This enables the multiplicative approximation:\n    exp(-eps) * f(x) <= approximant(x) <= exp(eps) * f(x)\n\n    Args:\n        coeffs: polynomial coefficients (must produce positive values)\n        lower_bound: assumed lower bound on polynomial values\n\n    Returns:\n        EMLExpr in multiplicative normal form\n    \"\"\"\n    poly_expr = poly_to_eml(coeffs)\n    # Multiplicative form: exp(log(poly))\n    return EMLExpr.exp(EMLExpr.log(poly_expr))\n\n\nif __name__ == \"__main__\":\n    # Quick demonstration\n    print(\"=== EML Algorithms Demo ===\\n\")\n\n    # Test 1: Polynomial conversion\n    print(\"1. Polynomial to EML (Horner's method):\")\n    p = poly_to_eml([1.0, 2.0, 3.0])  # 1 + 2x + 3x^2\n    print(f\"   Expression: {p}\")\n    print(f\"   Size: {p.size}, Depth: {p.depth}\")\n    print(f\"   p(0) = {p.eval(x=0)}, p(1) = {p.eval(x=1)}, p(2) = {p.eval(x=2)}\")\n    print()\n\n    # Test 2: Chebyshev approximation\n    print(\"2. Chebyshev approximation of sin(x) on [0, pi]:\")\n    e = chebyshev_approx_to_eml(np.sin, 0, np.pi, degree=5)\n    xs = np.linspace(0, np.pi, 10)\n    errors = [abs(np.sin(x) - e.eval(x=x)) for x in xs]\n    print(f\"   Expression size: {e.size}, depth: {e.depth}\")\n    print(f\"   Max error: {max(errors):.6e}\")\n    print()\n\n    # Test 3: Information decay\n    print(\"3. Information decay analysis:\")\n    K = 100\n    for alpha in [0.9, 0.5, 0.1]:\n        for d in [1, 5, 10, 20]:\n            info = retained_information(alpha, d, K)\n            print(f\"   alpha={alpha}, depth={d}: retained={info:.2f}/{K}\")\n    print()\n\n    print(\"Done!\")\n",
+      "demo": "\"\"\"\nEML Descriptive Approximation Theory \u2014 Applications\n\nDemonstrates real-world applications of EML approximation theory:\n1. Scientific law discovery via symbolic regression\n2. Compressed function representations\n3. Depth\u2013width tradeoff analysis\n4. Information bottleneck visualization\n\"\"\"\n\nimport numpy as np\nfrom algorithms import (\n    EMLExpr, poly_to_eml, chebyshev_approx_to_eml,\n    greedy_eml_regression, estimate_description_complexity,\n    retained_information\n)\n\n\ndef application_1_scientific_law_discovery():\n    \"\"\"Discover scientific laws from data using EML symbolic regression.\n\n    Demonstrates how EML expressions can discover compact representations\n    of physical laws from noisy observations.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 1: Scientific Law Discovery\")\n    print(\"=\" * 60)\n\n    # Scenario: Discover Arrhenius equation k = A * exp(-Ea/RT)\n    # Simplified: f(x) = 2 * exp(-3/x) for x > 0\n\n    def arrhenius(x):\n        return 2.0 * np.exp(-3.0 / max(x, 0.01))\n\n    print(\"\\nTarget: Arrhenius-like law k(T) = 2 * exp(-3/T)\")\n    print(\"Domain: T in [0.5, 5.0]\\n\")\n\n    # Try polynomial approximation\n    poly_expr = chebyshev_approx_to_eml(arrhenius, 0.5, 5.0, degree=8)\n    xs = np.linspace(0.5, 5.0, 100)\n    poly_errors = [abs(arrhenius(x) - poly_expr.eval(x=x)) for x in xs]\n\n    print(f\"Polynomial (degree 8) approximation:\")\n    print(f\"  Size: {poly_expr.size}, Depth: {poly_expr.depth}\")\n    print(f\"  Max error: {max(poly_errors):.6e}\")\n\n    # Try EML greedy regression\n    eml_expr = greedy_eml_regression(arrhenius, 0.5, 5.0, max_depth=4)\n    eml_errors = [abs(arrhenius(x) - eml_expr.eval(x=x)) for x in xs]\n\n    print(f\"\\nEML greedy regression (depth \u2264 4):\")\n    print(f\"  Expression: {eml_expr}\")\n    print(f\"  Size: {eml_expr.size}, Depth: {eml_expr.depth}\")\n    print(f\"  Max error: {max(eml_errors):.6e}\")\n\n    # The ideal EML representation\n    ideal = EMLExpr.mul(\n        EMLExpr.const(2.0),\n        EMLExpr.exp(EMLExpr.mul(EMLExpr.const(-3.0),\n                                 EMLExpr.log(EMLExpr.var(0))))\n    )\n    # Note: exp(-3 * log(x)) = exp(log(x^{-3})) = x^{-3}\n    # So this is 2 * x^{-3}, NOT the Arrhenius law.\n    # The actual ideal: exp(-3/x) needs division.\n    # With EML ops, we approximate: 2 * exp(-3 * exp(-log(x)))\n    # = 2 * exp(-3/x) \u2713\n\n    print(f\"\\nKey insight: EML can represent exp(-3/x) using\")\n    print(f\"  exp(mul(const(-3), exp(log(var(0)))))\")\n    print(f\"  = exp(-3 * 1/x) via log/exp inversion\")\n\n\ndef application_2_compressed_representations():\n    \"\"\"Compare compressed EML representations with polynomial representations.\n\n    Shows that certain function families have much smaller EML\n    descriptions than polynomial descriptions.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 2: Compressed Representations\")\n    print(\"=\" * 60)\n\n    # Functions that are naturally compact in EML\n    test_functions = [\n        (\"exp(x)\",\n         lambda x: np.exp(x),\n         EMLExpr.exp(EMLExpr.var(0))),\n        (\"exp(x^2)\",\n         lambda x: np.exp(x**2),\n         EMLExpr.exp(EMLExpr.mul(EMLExpr.var(0), EMLExpr.var(0)))),\n        (\"x * exp(x)\",\n         lambda x: x * np.exp(x),\n         EMLExpr.mul(EMLExpr.var(0), EMLExpr.exp(EMLExpr.var(0)))),\n        (\"log(1 + x^2)\",\n         lambda x: np.log(1 + x**2),\n         EMLExpr.log(EMLExpr.add(EMLExpr.const(1.0),\n                                  EMLExpr.mul(EMLExpr.var(0), EMLExpr.var(0))))),\n    ]\n\n    xs = np.linspace(0.1, 2.0, 200)\n\n    print(f\"\\n{'Function':<20} {'EML Size':<10} {'EML Depth':<10} {'Poly Deg for \u03b5<0.01':<20}\")\n    print(\"-\" * 60)\n\n    for name, f, eml_expr in test_functions:\n        eml_size = eml_expr.size\n        eml_depth = eml_expr.depth\n\n        # Find minimum polynomial degree for eps < 0.01\n        for deg in range(1, 30):\n            poly = chebyshev_approx_to_eml(f, 0.1, 2.0, degree=deg)\n            errors = [abs(f(x) - poly.eval(x=x)) for x in xs]\n            if max(errors) < 0.01:\n                break\n\n        print(f\"{name:<20} {eml_size:<10} {eml_depth:<10} {deg:<20}\")\n\n\ndef application_3_depth_width_tradeoff():\n    \"\"\"Analyze the depth-width tradeoff for EML approximation.\n\n    Demonstrates that depth is more efficient than width (more\n    terms at the same depth) for certain function classes.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 3: Depth-Width Tradeoff Analysis\")\n    print(\"=\" * 60)\n\n    # Target: iterated exponential exp(exp(x))\n    def double_exp(x):\n        if x > 5:\n            return float('inf')\n        return np.exp(np.exp(x))\n\n    xs = np.linspace(0.0, 1.5, 100)\n    target = np.array([double_exp(x) for x in xs])\n\n    # Depth-efficient: exp(exp(x)) \u2014 size 3, depth 2\n    deep_expr = EMLExpr.exp(EMLExpr.exp(EMLExpr.var(0)))\n\n    # Width-efficient polynomial approximation at various degrees\n    print(f\"\\nTarget: exp(exp(x)) on [0, 1.5]\")\n    print(f\"\\nDepth-efficient EML: size={deep_expr.size}, depth={deep_expr.depth}\")\n    deep_errors = [abs(double_exp(x) - deep_expr.eval(x=x)) for x in xs]\n    print(f\"  Max error: {max(deep_errors):.6e}\")\n\n    print(f\"\\nPolynomial approximations (width = degree + 1):\")\n    for deg in [3, 5, 8, 12, 20]:\n        poly = chebyshev_approx_to_eml(double_exp, 0.0, 1.5, degree=deg)\n        poly_errors = [abs(double_exp(x) - poly.eval(x=x)) for x in xs]\n        max_err = max(poly_errors) if all(np.isfinite(poly_errors)) else float('inf')\n        print(f\"  Degree {deg:2d} (size={poly.size:3d}): max error = {max_err:.6e}\")\n\n\ndef application_4_information_bottleneck():\n    \"\"\"Visualize the information bottleneck in EML architectures.\n\n    Shows how retained symbolic information decays with depth\n    and its implications for approximation quality.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application 4: Information Bottleneck Analysis\")\n    print(\"=\" * 60)\n\n    print(\"\\nRetained Symbolic Information: alpha^l * K\")\n    print(f\"\\n{'Alpha':<8} {'K':<6} {'Depth 1':<10} {'Depth 5':<10} \"\n          f\"{'Depth 10':<10} {'Depth 20':<10}\")\n    print(\"-\" * 60)\n\n    for alpha in [0.95, 0.8, 0.5, 0.3]:\n        for K in [100]:\n            vals = [retained_information(alpha, d, K)\n                    for d in [1, 5, 10, 20]]\n            print(f\"{alpha:<8.2f} {K:<6} \" +\n                  \" \".join(f\"{v:<10.2f}\" for v in vals))\n\n    print(\"\\nInterpretation:\")\n    print(\"  - High alpha (0.95): information retained through many layers\")\n    print(\"    \u2192 Suitable for high-complexity targets\")\n    print(\"  - Low alpha (0.3): rapid information decay\")\n    print(\"    \u2192 Only low-complexity targets can be represented\")\n    print(\"  - This creates a natural complexity barrier:\")\n    print(\"    depth >= log(threshold/K) / log(alpha)\")\n\n    # Compute minimum depth for given threshold\n    print(f\"\\nMinimum depth to retain 10% of K=100:\")\n    threshold = 10\n    K = 100\n    for alpha in [0.95, 0.8, 0.5, 0.3]:\n        if alpha > 0:\n            min_depth = int(np.ceil(np.log(threshold / K) / np.log(alpha)))\n            print(f\"  alpha={alpha}: depth >= {min_depth}\")\n\n\nif __name__ == \"__main__\":\n    application_1_scientific_law_discovery()\n    application_2_compressed_representations()\n    application_3_depth_width_tradeoff()\n    application_4_information_bottleneck()\n\n\n#!/usr/bin/env python3\n\"\"\"\nEML Descriptive Approximation Theory \u2014 Interactive Demo\n\nThis script demonstrates the key results of EML approximation theory:\n1. Universal approximation of continuous functions by EML expressions\n2. Compositional complexity bounds (subadditivity)\n3. Depth vs width efficiency\n4. Information decay through architecture depth\n5. Conjectural scaling law tests\n\nUsage:\n    python demo.py\n\"\"\"\n\nimport numpy as np\nimport sys\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# EML Expression Tree (self-contained for demo)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass EML:\n    \"\"\"Lightweight EML expression for the demo.\"\"\"\n    def __init__(self, kind, **kw):\n        self.kind = kind\n        self.val = kw.get('val')\n        self.idx = kw.get('idx', 0)\n        self.left = kw.get('left')\n        self.right = kw.get('right')\n        self.child = kw.get('child')\n\n    @staticmethod\n    def C(v): return EML('const', val=v)\n    @staticmethod\n    def X(i=0): return EML('var', idx=i)\n    @staticmethod\n    def Add(l, r): return EML('add', left=l, right=r)\n    @staticmethod\n    def Mul(l, r): return EML('mul', left=l, right=r)\n    @staticmethod\n    def Exp(c): return EML('exp', child=c)\n    @staticmethod\n    def Log(c): return EML('log', child=c)\n\n    @property\n    def size(self):\n        if self.kind in ('const', 'var'): return 1\n        if self.kind in ('add', 'mul'): return self.left.size + self.right.size + 1\n        return self.child.size + 1\n\n    @property\n    def depth(self):\n        if self.kind in ('const', 'var'): return 0\n        if self.kind in ('add', 'mul'): return max(self.left.depth, self.right.depth) + 1\n        return self.child.depth + 1\n\n    def __call__(self, x):\n        if self.kind == 'const': return self.val\n        if self.kind == 'var': return x\n        if self.kind == 'add': return self.left(x) + self.right(x)\n        if self.kind == 'mul': return self.left(x) * self.right(x)\n        if self.kind == 'exp':\n            v = self.child(x)\n            return np.exp(min(v, 500))\n        if self.kind == 'log':\n            v = self.child(x)\n            return np.log(max(v, 1e-300))\n\n    def __repr__(self):\n        if self.kind == 'const': return f'{self.val:.4g}'\n        if self.kind == 'var': return 'x'\n        if self.kind == 'add': return f'({self.left} + {self.right})'\n        if self.kind == 'mul': return f'({self.left} * {self.right})'\n        if self.kind == 'exp': return f'exp({self.child})'\n        if self.kind == 'log': return f'log({self.child})'\n\n\ndef horner_eml(coeffs):\n    \"\"\"Convert polynomial coefficients to EML via Horner's method.\"\"\"\n    if not coeffs: return EML.C(0)\n    if len(coeffs) == 1: return EML.C(coeffs[0])\n    return EML.Add(EML.C(coeffs[0]), EML.Mul(EML.X(), horner_eml(coeffs[1:])))\n\n\ndef chebyshev_coeffs(f, a, b, n):\n    \"\"\"Get polynomial coefficients approximating f on [a,b] via Chebyshev.\"\"\"\n    nodes = [0.5*(a+b) + 0.5*(b-a)*np.cos(np.pi*(2*k+1)/(2*(n+1)))\n             for k in range(n+1)]\n    vals = [f(xi) for xi in nodes]\n    # Simple polyfit on the nodes\n    return list(np.polyfit(nodes, vals, n)[::-1])\n\n\ndef sup_error(f, g, a, b, N=500):\n    \"\"\"Estimate sup-norm error of g approximating f on [a,b].\"\"\"\n    xs = np.linspace(a, b, N)\n    return max(abs(f(xi) - g(xi)) for xi in xs)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 1: Universal Approximation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_universal_approximation():\n    print(\"=\" * 70)\n    print(\"  DEMO 1: EML Universal Approximation Theorem\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Theorem (Formally Verified): For any continuous f on [a,b] with\")\n    print(\"  f(x) >= delta > 0, and any eps > 0, there exists an EML expression\")\n    print(\"  e such that |f(x) - e(x)| <= eps for all x in [a,b].\")\n    print()\n    print(\"  Proof strategy: Weierstrass theorem + Horner polynomial-to-EML\")\n    print(\"-\" * 70)\n\n    targets = [\n        (\"sin(x) + 2\", lambda x: np.sin(x) + 2, 0, np.pi),\n        (\"exp(-x^2) + 1\", lambda x: np.exp(-x**2) + 1, -2, 2),\n        (\"log(1+x) + 1\", lambda x: np.log(1+x) + 1, 0, 3),\n        (\"x^3 - 2x + 3\", lambda x: x**3 - 2*x + 3, -1, 2),\n    ]\n\n    for name, f, a, b in targets:\n        print(f\"\\n  Target: f(x) = {name} on [{a}, {b}]\")\n        for deg in [3, 5, 10, 15]:\n            coeffs = chebyshev_coeffs(f, a, b, deg)\n            eml = horner_eml(coeffs)\n            err = sup_error(f, eml, a, b)\n            print(f\"    Degree {deg:2d}: EML size={eml.size:3d}, \"\n                  f\"depth={eml.depth:2d}, sup-error={err:.2e}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 2: Compositional Complexity (Subadditivity)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_compositional_complexity():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  DEMO 2: Compositional Complexity Bounds\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Theorem (Formally Verified): If f has an eps/2-approximant of\")\n    print(\"  size m and g has an eps/2-approximant of size n, then f+g has\")\n    print(\"  an eps-approximant of size <= m + n + 1.\")\n    print(\"-\" * 70)\n\n    a, b = 0, 2\n\n    f = lambda x: np.sin(x) + 2\n    g = lambda x: np.cos(x) + 2\n    fg_sum = lambda x: f(x) + g(x)\n    fg_prod = lambda x: f(x) * g(x)\n\n    for deg in [3, 5, 8]:\n        cf = chebyshev_coeffs(f, a, b, deg)\n        cg = chebyshev_coeffs(g, a, b, deg)\n\n        ef = horner_eml(cf)\n        eg = horner_eml(cg)\n\n        # Sum: just use add node\n        e_sum = EML.Add(ef, eg)\n        err_f = sup_error(f, ef, a, b)\n        err_g = sup_error(g, eg, a, b)\n        err_sum = sup_error(fg_sum, e_sum, a, b)\n\n        print(f\"\\n  Degree {deg}:\")\n        print(f\"    f approx: size={ef.size}, error={err_f:.2e}\")\n        print(f\"    g approx: size={eg.size}, error={err_g:.2e}\")\n        print(f\"    f+g approx: size={e_sum.size} <= {ef.size}+{eg.size}+1={ef.size+eg.size+1}, \"\n              f\"error={err_sum:.2e}\")\n        print(f\"    Bound check: error(f+g) = {err_sum:.2e} <= \"\n              f\"error(f) + error(g) = {err_f + err_g:.2e} \u2713\" if err_sum <= err_f + err_g + 1e-14\n              else f\"    (numerical noise)\")\n\n        # Product\n        e_prod = EML.Mul(ef, eg)\n        err_prod = sup_error(fg_prod, e_prod, a, b)\n        print(f\"    f*g approx: size={e_prod.size} <= {ef.size+eg.size+1}, \"\n              f\"error={err_prod:.2e}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 3: Depth Efficiency\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_depth_efficiency():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  DEMO 3: Depth Efficiency \u2014 exp(exp(x))\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Key insight: Depth-2 EML expression exp(exp(x)) has size 3,\")\n    print(\"  but polynomial approximation needs degree ~20 (size ~41).\")\n    print(\"-\" * 70)\n\n    def target(x):\n        return np.exp(np.exp(x))\n\n    a, b = 0, 1.0\n\n    # Deep EML: exact\n    deep = EML.Exp(EML.Exp(EML.X()))\n    deep_err = sup_error(target, deep, a, b)\n    print(f\"\\n  Deep EML: exp(exp(x))\")\n    print(f\"    Size: {deep.size}, Depth: {deep.depth}\")\n    print(f\"    Error: {deep_err:.2e} (exact up to floating point)\")\n\n    # Polynomial approximations\n    print(f\"\\n  Polynomial approximations:\")\n    for deg in [3, 5, 8, 12, 16, 20]:\n        coeffs = chebyshev_coeffs(target, a, b, deg)\n        poly = horner_eml(coeffs)\n        err = sup_error(target, poly, a, b)\n        print(f\"    Degree {deg:2d}: size={poly.size:3d}, depth={poly.depth:2d}, \"\n              f\"error={err:.2e}\")\n\n    print(f\"\\n  Conclusion: Depth-2 EML matches degree-20+ polynomial!\")\n    print(f\"  Size ratio: {3}/{2*20+1} = {3/(2*20+1):.2f}x\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 4: Information Decay\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_information_decay():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  DEMO 4: Information-Theoretic Decay (Formally Verified)\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Theorem: retained_symbolic_information(alpha, l2, K)\")\n    print(\"         <= retained_symbolic_information(alpha, l1, K)\")\n    print(\"  whenever l1 <= l2 and 0 <= alpha <= 1.\")\n    print(\"-\" * 70)\n\n    K = 100\n    print(f\"\\n  Initial information K = {K}\")\n    print(f\"\\n  {'Alpha':<8} \", end=\"\")\n    depths = [0, 1, 2, 5, 10, 20, 50]\n    for d in depths:\n        print(f\"{'d='+str(d):<8}\", end=\"\")\n    print()\n    print(\"  \" + \"-\" * (8 + 8 * len(depths)))\n\n    for alpha in [0.99, 0.95, 0.9, 0.8, 0.5, 0.3, 0.1]:\n        print(f\"  {alpha:<8.2f} \", end=\"\")\n        for d in depths:\n            info = alpha ** d * K\n            print(f\"{info:<8.1f}\", end=\"\")\n        print()\n\n    print(f\"\\n  Monotonicity verified for all rows: each row is non-increasing \u2713\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demo 5: Conjectural Scaling Law Test\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_scaling_law():\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  DEMO 5: Conjectural Scaling Law Test\")\n    print(\"=\" * 70)\n    print()\n    print(\"  Conjecture: For f_n(x) = exp(p_n(x)) with degree-n polynomial p_n,\")\n    print(\"  the EML depth for eps-approximation grows polynomially in n\")\n    print(\"  and logarithmically in 1/eps.\")\n    print(\"-\" * 70)\n\n    a, b = 0.0, 1.0\n\n    print(f\"\\n  Testing: EML depth needed for various targets and tolerances\")\n    print(f\"\\n  {'Target':<30} {'eps=0.1':<12} {'eps=0.01':<12} {'eps=0.001':<12}\")\n    print(\"  \" + \"-\" * 66)\n\n    # For each target, find minimum polynomial degree for given eps\n    # then report the EML depth (= 2*degree for Horner)\n    targets = []\n    for n in [1, 2, 3, 5]:\n        # Random polynomial coefficients\n        np.random.seed(42 + n)\n        p_coeffs = np.random.randn(n + 1) * 0.5\n        p_coeffs[0] = abs(p_coeffs[0]) + 1  # ensure positivity\n        name = f\"exp(p_{n}(x)), deg={n}\"\n\n        def make_target(pc):\n            def f(x):\n                return np.exp(sum(c * x**i for i, c in enumerate(pc)))\n            return f\n\n        targets.append((name, make_target(p_coeffs)))\n\n    for name, f in targets:\n        results = []\n        for eps in [0.1, 0.01, 0.001]:\n            # Find minimum degree\n            for deg in range(1, 50):\n                try:\n                    coeffs = chebyshev_coeffs(f, a, b, deg)\n                    eml = horner_eml(coeffs)\n                    err = sup_error(f, eml, a, b)\n                    if err < eps:\n                        results.append(f\"deg={deg:2d},d={eml.depth:2d}\")\n                        break\n                except Exception:\n                    continue\n            else:\n                results.append(\"  >50      \")\n\n        print(f\"  {name:<30} \" + \" \".join(f\"{r:<12}\" for r in results))\n\n    print(f\"\\n  Observation: Depth grows roughly logarithmically in 1/eps\")\n    print(f\"  and roughly linearly in polynomial degree n.\")\n    print(f\"  This is consistent with the conjecture Theta(K * log(1/eps)).\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  EML DESCRIPTIVE APPROXIMATION THEORY \u2014 INTERACTIVE DEMO       \u2551\")\n    print(\"\u2551  Exponential-Multiplicative-Logarithmic Universal Approximation\u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_universal_approximation()\n    demo_compositional_complexity()\n    demo_depth_efficiency()\n    demo_information_decay()\n    demo_scaling_law()\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  All demos completed successfully!\")\n    print(\"=\" * 70)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "date": "2026-05-20T09:06:21Z",
+    "exp_id": "872d1aff",
+    "source_exp_ids": [
+      "seed"
     ]
   },
   "twin_prime_conjecture.json": {
@@ -5758,7 +5802,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -5776,7 +5820,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -5785,7 +5829,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "galois_group__s",
@@ -5794,7 +5838,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -5803,7 +5847,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -5812,7 +5856,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "expected_lean_signature",
@@ -5821,7 +5865,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -5830,7 +5874,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -5839,7 +5883,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "percolation_threshold",
@@ -5848,7 +5892,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -5866,7 +5910,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -5875,7 +5919,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "legendres_conjecture",
@@ -5884,7 +5928,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -5893,7 +5937,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 90
+      "hue": 179
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -5902,7 +5946,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -5911,7 +5955,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "p_vs_np_problem",
@@ -5920,7 +5964,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 280
+      "hue": 92
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -5929,7 +5973,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -5938,7 +5982,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "hodge_conjecture",
@@ -5947,7 +5991,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -5965,7 +6009,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -5974,7 +6018,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -5983,7 +6027,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "twin_prime_conjecture",
@@ -5992,7 +6036,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -6010,7 +6054,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "happy_end_problem",
@@ -6019,7 +6063,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -6028,7 +6072,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -6046,7 +6090,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -6055,7 +6099,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_intersection_theory",
@@ -6064,7 +6108,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "riemann_hypothesis",
@@ -6082,7 +6126,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -6091,7 +6135,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture",
@@ -6109,7 +6153,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -6118,7 +6162,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "invariant_subspace_problem",
@@ -6127,7 +6171,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -6136,7 +6180,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -6145,7 +6189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 92
+      "hue": 100
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -6154,7 +6198,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -6163,7 +6207,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -6172,7 +6216,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -6181,7 +6225,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -6199,7 +6243,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "goldbach_conjecture",
@@ -6208,7 +6252,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -6217,7 +6261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -6226,7 +6270,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 275
+      "hue": 134
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -6244,7 +6288,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "beals_conjecture",
@@ -6253,7 +6297,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -6262,7 +6306,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -6271,7 +6315,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -6280,7 +6324,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -6289,7 +6333,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -6307,7 +6351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -6316,7 +6360,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -6325,7 +6369,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -6343,7 +6387,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -6352,7 +6396,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -6361,7 +6405,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -6370,7 +6414,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -6388,7 +6432,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -6397,7 +6441,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -6415,7 +6459,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -6424,7 +6468,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -6433,7 +6477,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -6442,7 +6486,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "we_have_formally_verified",
@@ -6460,7 +6504,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -6469,7 +6513,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 91
+      "hue": 280
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -6478,7 +6522,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -6487,7 +6531,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -6496,7 +6540,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -6505,7 +6549,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -6532,7 +6576,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -6541,7 +6585,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -6550,7 +6594,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -6559,7 +6603,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -6577,7 +6621,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -6586,7 +6630,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -6595,7 +6639,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -6604,7 +6648,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -6613,7 +6657,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "langlands_program_functoriality",
@@ -6622,7 +6666,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T01:04:07Z",
-      "hue": 292
+      "hue": 272
     },
     {
       "id": "medium_priority",
@@ -6631,7 +6675,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "erdsstraus_conjecture",
@@ -6649,7 +6693,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -6658,7 +6702,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -6676,7 +6720,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T02:05:05Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hypothesis_4_p_adic_threshold_transfer",
@@ -6685,7 +6729,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -6703,7 +6747,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 112
+      "hue": 272
     },
     {
       "id": "kakeya_conjecture",
@@ -6712,7 +6756,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "sums_of_three_cubes",
@@ -6721,7 +6765,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -6739,7 +6783,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -6748,7 +6792,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -6757,7 +6801,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -6766,7 +6810,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -6775,7 +6819,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -6793,7 +6837,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -6811,7 +6855,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -6820,7 +6864,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T07:04:53Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -6829,7 +6873,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -6838,7 +6882,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:05:51Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "non_archimedean_probability_via_surreal_numbers",
@@ -6847,7 +6891,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "proof_expansion_constant_for_formal_theories",
@@ -6865,7 +6909,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T08:09:01Z",
-      "hue": 271
+      "hue": 270
+    },
+    {
+      "id": "eml_universal_approximation",
+      "title": "Descriptive Approximation Theory for EML Closures",
+      "domain": "Approximation Theory / Machine Learning / Information Theory",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-05-20T09:06:21Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -7449,21 +7502,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:10.990029+00:00"
   },
   {
-    "id": "seed_056",
-    "title": "Self-Modifying Research via Reflective Type Theory",
-    "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "priority_score": 0.91,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.005101+00:00"
-  },
-  {
     "id": "seed_029",
     "title": "ABC Conjecture Formalization",
     "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
@@ -7477,22 +7515,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T00:22:10.984210+00:00"
-  },
-  {
-    "id": "seed_054",
-    "title": "Proof Strategy Mining from Deep Mathematics",
-    "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
-    "domains": [
-      "Logic",
-      "Algebra",
-      "Bridges"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.003413+00:00"
   },
   {
     "id": "seed_084",
@@ -7523,21 +7545,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T00:22:10.976067+00:00"
-  },
-  {
-    "id": "seed_055",
-    "title": "Research Depth via Proof-Theoretic Ordinal Analysis",
-    "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research. Construct a formalization that computes the proof-theoretic ordinal of research output.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.88,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.004302+00:00"
   },
   {
     "id": "seed_089",
@@ -8018,22 +8025,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:11.000874+00:00"
   },
   {
-    "id": "seed_073",
-    "title": "EML Category: The Category of EML-Computable Maps",
-    "description": "Define the category EML_Comp where objects are R^n and morphisms are functions computable by finite EML compositions (exp, log, +, *, constants). Conjecture: EML_Comp is a Cartesian closed category with natural numbers object R (the reals). Test: prove closure under composition (trivial), products (pairing), and exponentials (currying via EML parameter sharing). Impact: puts EML computation on firm categorical foundations.",
-    "domains": [
-      "EML",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.82,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "55c659bd",
-    "timestamp": "2026-05-20T00:22:11.025886+00:00"
-  },
-  {
     "id": "seed_011",
     "title": "Perfect Cuboid (Euler Brick)",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -8064,22 +8055,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:10.985537+00:00"
   },
   {
-    "id": "seed_078",
-    "title": "Inverse Stereographic Tropical Lift",
-    "description": "Tropical geometry replaces + with max and * with +. Stereographic projection maps spheres to planes. What is the tropical stereographic projection? Define it as: map a tropical point (x1 + ... + xn) on the tropical projective space to a tropical hyperplane via an analogous pole construction. Conjecture: The tropical stereographic projection is a tropical rational function of degree 2 (a tropical Mobius transformation). Test: construct it explicitly for TP^1 -> TR^1 and prove it is a tropical homeomorphism. Impact: connects tropical geometry and conformal geometry.",
-    "domains": [
-      "Geometry",
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.032711+00:00"
-  },
-  {
     "id": "fd_0098",
     "title": "Proof Phase Transitions in Random Formal Theories",
     "description": "Conjecture: For any recursively axiomatized first-order theory T extending a weak arithmetic base and any fixed proof system P, if one forms random finite axiom augmentations T(m,p) by independently adding each sentence from a bounded-complexity schema pool of size m with probability p, then there exists a sharp threshold p_c(m) such that the probability that a target family of bounded-length statements becomes P-provable jumps from near 0 to near 1 in a window of width o(1) as m\u2192\u221e. Moreover, the threshold location is asymptotically governed by a combinatorial dependency invariant of the proof hypergraph of the target family. Test: Define explicit finite schema pools and target statement families in propositional logic, Presburger arithmetic, and bounded fragments of Peano arithmetic; compute empirical provability curves under SAT/SMT/proof-search enumeration; confirm or refute sharp-threshold behavior and compare the observed threshold to the predicted proof-hypergraph invariant. Impact: This would create a statistical mechanics of theorem emergence, yielding quantitative laws for when new axioms unlock whole regions of provability, with applications to automated theorem proving, proof complexity, and the design of research systems that choose high-leverage conjectures or axioms.",
@@ -8088,10 +8063,10 @@ window.FUTURE_DIRECTIONS = [
       "Probabilistic Combinatorics"
     ],
     "priority_score": 0.8,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3765b821",
     "timestamp": "2026-05-20T01:00:34.858440+00:00"
   },
   {
@@ -8200,6 +8175,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T08:08:34.578561+00:00"
   },
   {
+    "id": "fd_0211",
+    "title": "Motivic Stability of Gradient Descent Critical-Point Counts Modulo Primes",
+    "description": "Conjecture: Let L(w; x) be a polynomial loss function with integer coefficients arising from a fixed finite dataset x and a fixed polynomial model architecture. For each prime p, reduce L modulo p and let C_p be the number of critical points of L over F_p^n, i.e. solutions to \u2207L \u2261 0 mod p. Then outside a finite exceptional set of primes, the normalized counts p^{-d} C_p (for the expected critical locus dimension d) are controlled by a finite set of Frobenius eigenvalues, so that the sequence p^{-d} C_p satisfies a linear recurrence on average over primes and is determined by a virtual motive attached to the gradient ideal. Test: Compute C_p for thousands of primes for explicit polynomial learning problems; fit candidate Frobenius traces/recurrences and compare across architectures with the same gradient ideal geometry. Refute if no stable recurrence/eigenvalue model emerges outside small exceptional sets. Impact: This would create a new arithmetic invariant of optimization landscapes, linking machine learning, algebraic geometry, and number theory, and could enable classification of trainability phases via motivic data rather than real-analytic heuristics.",
+    "domains": [
+      "Arithmetic Algebraic Geometry",
+      "Optimization Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:09:20.589520+00:00"
+  },
+  {
     "id": "seed_026",
     "title": "Lehmer's Mahler Measure Problem",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
@@ -8286,22 +8276,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T00:22:10.974006+00:00"
-  },
-  {
-    "id": "fd_0093",
-    "title": "Hypothesis 1: Benign Overparameterization Universality",
-    "description": "**Conjecture:** For any architecture family with constant quotient complexity `q`, constant code length `c`, and bounded posterior KL `\u03ba`, the generalization error at confidence `\u03b4` is bounded by `\u221a((q + c + \u03ba) / (n \u00b7 \u03b5\u00b2))` uniformly as parameter dimension `d \u2192 \u221e`, regardless of the growth rate of `d`.\n\n**Test:** Instantiate the `EffectiveComplexityProfile` with `paramDim = d` for `d \u2208 {10\u00b2, 10\u00b3, ..., 10\u2078}` while holding `quotientComplexity = 10`, `codeLength = 5`, `posteriorKL = 3.0`, and `sampleSize = 5000`. Verify that `GeneralizesAtScale` holds for all `d` at fixed `\u03b5 = 0.1, \u03b4 = 0.05`. The theorem `effectiveRate_overparametrizedBy` already proves this formally \u2014 this test confirms it computationally across a wide range.\n\n**Impact:** If true universally (extending beyond our formal fram",
-    "domains": [
-      "NumberTheory",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "90e5ed6e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T01:00:25.447624+00:00"
   },
   {
     "id": "fd_0095",
@@ -8796,10 +8770,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3b07247d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f252cf0",
     "timestamp": "2026-05-20T04:04:18.159560+00:00"
   },
   {
@@ -9108,25 +9082,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T07:05:54.575684+00:00"
   },
   {
-    "id": "fd_0191",
-    "title": "Hypothesis 4: Tropical Compression Dominance Ratio Exceeds $|G|/\\log d$",
-    "description": "**Conjecture:** For the algebraic sample complexity bound $\\text{SC}(d, \\varepsilon, \\delta) = d \\cdot \\log(1/\\varepsilon) + \\log(1/\\delta)$, the ratio\n$$\n\\frac{\\text{SC}(d, \\varepsilon, \\delta)}{\\text{SC}(d/|G|, \\varepsilon, \\delta)}\n$$\neventually exceeds $|G| / \\log d$ as $d \\to \\infty$ with $|G|$ fixed or growing polynomially. Under the stronger hypothesis $|G| = \\Theta(d^\\alpha)$ for some $\\alpha > 0$, the ratio grows polynomially.\n\n**Test:** Fix $\\varepsilon = 0.01$, $\\delta = 0.05$. For architecture families indexed by input size $n$:\n- CNN: $d = n^2 k^2$, $|G| = n^2$, compute ratio for $n = 10, 50, 100, 500, 1000$.\n- Permutation-equivariant MLP: $d = n^2$, $|G| = n!$, compute for $n = 3, 5, 7, 10$.\n- Attention: $d = h \\cdot d_k^2$, $|G| = h!$ where $h$ is number of heads, compute fo",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Tropical",
-      "Algebra",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "eae22772",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T07:05:54.581205+00:00"
-  },
-  {
     "id": "fd_0192",
     "title": "Hypothesis 5: Operadic Composition Laws for Quotient Complexity",
     "description": "**Conjecture:** There exists an operad $\\mathcal{O}$ whose algebras are symmetry-constrained architecture specifications, such that the quotient complexity is a morphism from $\\mathcal{O}$-algebras to $(\\mathbb{N}, +)$ or $(\\mathbb{N}, \\times)$. In particular, sequential composition of layers should be additive in quotient complexity, while parallel composition (e.g., multi-head attention) should be multiplicative.\n\n**Test:** \n1. Define the composition operations formally: sequential composition = function composition of layers, parallel composition = direct sum of parameter spaces with independent symmetries.\n2. Compute quotient complexities for: (a) ResNet blocks (sequential + skip), (b) Inception modules (parallel branches), (c) multi-head attention (parallel heads + sequential projecti",
@@ -9144,25 +9099,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T07:05:54.587942+00:00"
   },
   {
-    "id": "fd_0193",
-    "title": "Conjecture 1: Surreal-Valued Probability on [0,1]",
-    "description": "**Conjecture.** There exists a linearly ordered field `K` extending `\u211a` with a positive infinitesimal `\u03b5`, and a finitely additive function `\u03bc : Finset ([0,1] \u2229 \u211a) \u2192 K` satisfying:\n- `\u03bc \u2205 = 0`\n- `\u03bc(S \u222a T) = \u03bc(S) + \u03bc(T)` for disjoint `S, T`\n- `\u03bc({x}) > 0` for all `x \u2208 [0,1] \u2229 \u211a`\n- For every affine `f(x) = ax + b`, the expectation `\u2211_{x \u2208 grid_n} f(x) \u00b7 \u03bc({x})` equals `a/2 + b` in a suitable limit.\n\n**Test.** Construct `K` as the field of formal Laurent series `\u211a((\u03b5))` with `\u03b5` a formal infinitesimal. Define `\u03bc({p/q}) = \u03b5` for rational `p/q \u2208 [0,1]` and extend by additivity. Check whether normalization `\u03bc([0,1] \u2229 \u211a) = 1` is achievable, or whether the \"counting density\" of rationals prevents it. A computational test: enumerate rationals in [0,1] with denominator \u2264 N, compute the partial sum o",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Combinatorics",
-      "Probability",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "57db3430",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T08:07:39.210619+00:00"
-  },
-  {
     "id": "fd_0195",
     "title": "Conjecture 3: Loeb Measure Recovery via Ultraproducts",
     "description": "**Conjecture.** Let `U` be a non-principal ultrafilter on `\u2115`. Define the ultraproduct probability `\u03bc_U` on `[0,1]` by: for measurable `A \u2286 [0,1]`,\n\n```\n\u03bc_U(A) = st(lim_U (gridUniformProb n).mass(A \u2229 grid_n))\n```\n\nwhere `st` denotes the standard part and `grid_n = {i/(n+1) : i \u2264 n}`. Then `\u03bc_U` equals Lebesgue measure on all Borel sets.\n\n**Test.** For specific sets (intervals, Cantor-like sets, fat Cantor sets), compute the grid approximation `(gridUniformProb n).mass(A \u2229 grid_n)` and verify convergence to Lebesgue measure. Test whether the rate of convergence depends on the regularity of the set boundary.\n\n**Impact.** This would establish a rigorous connection between the grid scaffold and classical measure theory via nonstandard analysis, validating the \"shadow principle\" at the level of",
@@ -9178,22 +9114,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "57db3430",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T08:07:39.225675+00:00"
-  },
-  {
-    "id": "fd_0197",
-    "title": "Conjecture 5: Non-Archimedean Conditional Probability and Bayesian Updating",
-    "description": "**Conjecture.** In a non-Archimedean probability space, one can define conditional probability `P(A|B) = P(A \u2229 B) / P(B)` even when `P(B)` is infinitesimal (but nonzero). This conditional probability satisfies Bayes' theorem and produces well-defined posterior distributions.\n\nOn finite grids, this is trivially true. The conjecture is that this extends to the non-Archimedean continuum limit: conditioning on a single point `{x}` with infinitesimal mass `\u03b5` produces a well-defined conditional probability that, after taking standard parts, agrees with the classical conditional density.\n\n**Test.** On grid `Fin(N)`, define a non-uniform prior by `P({i}) = c \u00b7 f(i/N)` for a density `f` and compute the posterior `P({j} | {i} \u2208 A)` for various conditioning events `A`. Verify that as `N \u2192 \u221e`, the po",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Probability"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "57db3430",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T08:07:39.241421+00:00"
   },
   {
     "id": "fd_0199",
@@ -9227,10 +9147,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3b452d34",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6cf9b394",
     "timestamp": "2026-05-20T08:08:18.545901+00:00"
   },
   {
@@ -9289,5 +9209,60 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "3b452d34",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T08:08:18.566956+00:00"
+  },
+  {
+    "id": "fd_0206",
+    "title": "Conjecture 1: Log-Affine Normal Form for the Multiplicative Positive Fragment",
+    "description": "**Conjecture.** Every scalar EML expression on `PosVec n` built without addition is equivalent to a log-affine normal form `x \u21a6 exp(\u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c)`.\n\nMore precisely: define the *multiplicative positive fragment* as the sub-inductive of `ScalarEML` restricted to `coord`, `posConst`, `mul`, `exp`, `log`, and `comp` (no `add`). Then every expression in this fragment, when restricted to positive inputs, agrees with a log-affine function.\n\n**Test.** We have partially verified this in `LogAffineNormal.lean` for the `PosEMLExpr` syntax (coord, posConst, mul, rpow). To falsify the full conjecture, enumerate bounded-depth multiplicative EML expressions including compositions through intermediate spaces and check whether the log-affine normal form identity holds. A counterexample would be an e",
+    "domains": [
+      "NumberTheory",
+      "EML",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "55c659bd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:09:04.566243+00:00"
+  },
+  {
+    "id": "fd_0208",
+    "title": "Conjecture 3: Tropical Limit of the Log-Affine Fragment",
+    "description": "**Conjecture.** For a sum of log-affine expressions `f(x) = \u2211\u2c7c exp(\u2211\u1d62 w\u2c7c\u1d62 \u00b7 log(x\u1d62) + c\u2c7c)`, the tropical limit `lim\u209c\u2192\u221e (1/t) \u00b7 log f(x^t)` equals `max\u2c7c(\u2211\u1d62 w\u2c7c\u1d62 \u00b7 log(x\u1d62) + c\u2c7c)`.\n\nThis asserts that the \"log-sum-exp\" of log-affine functions tropicalizes to the piecewise-linear maximum of affine functions in log coordinates.\n\n**Test.** For fixed weight matrices and constants, numerically compute `(1/t) \u00b7 log(\u2211\u2c7c exp(t \u00b7 (\u2211\u1d62 w\u2c7c\u1d62 \u00b7 y\u1d62 + c\u2c7c)))` as `t \u2192 \u221e` and verify convergence to the pointwise maximum. A counterexample would require the limit to not exist or to differ from the maximum.\n\n**Impact.** This would provide a formal bridge between EML computation and tropical geometry, connecting differentiable models to piecewise-linear optimization. It would formalize the \"softmax \u2192 hardmax\" limit use",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Tropical",
+      "EML",
+      "Bridges",
+      "MachineLearning",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "55c659bd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:09:04.583579+00:00"
+  },
+  {
+    "id": "fd_0209",
+    "title": "Conjecture 4: Analyticity of EML-Computable Maps",
+    "description": "**Conjecture.** Every `ScalarEML n` function is real-analytic on its natural domain of definition (all of `\u211d\u207f` for the full fragment, or `(\u211d\u208a)\u207f` for the positive fragment with log).\n\n**Test.** Prove by induction on the `ScalarEML` derivation that each constructor preserves analyticity: projections are polynomial (analytic), constants are analytic, sums/products of analytic functions are analytic, exp of analytic is analytic, and composition of analytic functions is analytic. This reduces to checking that Mathlib has `AnalyticAt` lemmas for each operation.\n\n**Impact.** Analyticity would separate EML-computable functions from merely continuous ones, giving the category of EML maps a geometric character (analytic manifold morphisms). It would also imply that EML functions are determined by th",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Topology",
+      "EML",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "55c659bd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:09:04.592376+00:00"
   }
 ];

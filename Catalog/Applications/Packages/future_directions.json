@@ -975,7 +975,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.003413+00:00"
     },
@@ -993,7 +993,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.004302+00:00"
     },
@@ -1011,7 +1011,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.91,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.005101+00:00"
     },
@@ -1332,7 +1332,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "55c659bd",
       "timestamp": "2026-05-20T00:22:11.025886+00:00"
     },
@@ -1427,7 +1427,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.032711+00:00"
     },
@@ -1731,7 +1731,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T01:00:25.447624+00:00"
     },
@@ -1829,8 +1829,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "3765b821",
       "timestamp": "2026-05-20T01:00:34.858440+00:00"
     },
     {
@@ -2968,8 +2968,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "1f252cf0",
       "timestamp": "2026-05-20T04:04:18.159560+00:00"
     },
     {
@@ -3626,7 +3626,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T07:05:54.581205+00:00"
     },
@@ -3668,7 +3668,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:07:39.210619+00:00"
     },
@@ -3744,7 +3744,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:07:39.241421+00:00"
     },
@@ -3806,8 +3806,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "6cf9b394",
       "timestamp": "2026-05-20T08:08:18.545901+00:00"
     },
     {
@@ -3916,6 +3916,130 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:08:34.578561+00:00"
+    },
+    {
+      "id": "fd_0206",
+      "title": "Conjecture 1: Log-Affine Normal Form for the Multiplicative Positive Fragment",
+      "description": "**Conjecture.** Every scalar EML expression on `PosVec n` built without addition is equivalent to a log-affine normal form `x ↦ exp(∑ᵢ wᵢ · log(xᵢ) + c)`.\n\nMore precisely: define the *multiplicative positive fragment* as the sub-inductive of `ScalarEML` restricted to `coord`, `posConst`, `mul`, `exp`, `log`, and `comp` (no `add`). Then every expression in this fragment, when restricted to positive inputs, agrees with a log-affine function.\n\n**Test.** We have partially verified this in `LogAffineNormal.lean` for the `PosEMLExpr` syntax (coord, posConst, mul, rpow). To falsify the full conjecture, enumerate bounded-depth multiplicative EML expressions including compositions through intermediate spaces and check whether the log-affine normal form identity holds. A counterexample would be an e",
+      "source_exp_id": "55c659bd",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/55c659bd",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:09:04.566243+00:00"
+    },
+    {
+      "id": "fd_0207",
+      "title": "Conjecture 2: Parameterized Weak Cartesian Closure",
+      "description": "**Conjecture.** For every `n, m, k`, every EML-computable family `(Fin k → ℝ) → ((Fin n → ℝ) → (Fin m → ℝ))` is representable by an EML-computable map on the combined input space `Fin (k + n) → ℝ → Fin m → ℝ`, and conversely.\n\nThat is, `VecEMLComp (k + n) m f` is equivalent to the existence of a curried family where for each `θ : Fin k → ℝ`, the specialized map `x ↦ f(θ, x)` is `VecEMLComp n m`. We have proved one direction (currying, `vecEMLComp_curry`). The uncurrying direction asserts that any \"smoothly parameterized\" EML family can be written as a single EML expression on the joint space.\n\n**Test.** Construct an explicit EML family (e.g., `θ ↦ (x ↦ exp(θ₁ · x₁ + θ₂ · x₂))`) and verify that the joint map `(θ, x) ↦ exp(θ₁ · x₁ + θ₂ · x₂)` is `ScalarEML (k+n)`. Then search for families wh",
+      "source_exp_id": "55c659bd",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/55c659bd",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:09:04.574323+00:00"
+    },
+    {
+      "id": "fd_0208",
+      "title": "Conjecture 3: Tropical Limit of the Log-Affine Fragment",
+      "description": "**Conjecture.** For a sum of log-affine expressions `f(x) = ∑ⱼ exp(∑ᵢ wⱼᵢ · log(xᵢ) + cⱼ)`, the tropical limit `limₜ→∞ (1/t) · log f(x^t)` equals `maxⱼ(∑ᵢ wⱼᵢ · log(xᵢ) + cⱼ)`.\n\nThis asserts that the \"log-sum-exp\" of log-affine functions tropicalizes to the piecewise-linear maximum of affine functions in log coordinates.\n\n**Test.** For fixed weight matrices and constants, numerically compute `(1/t) · log(∑ⱼ exp(t · (∑ᵢ wⱼᵢ · yᵢ + cⱼ)))` as `t → ∞` and verify convergence to the pointwise maximum. A counterexample would require the limit to not exist or to differ from the maximum.\n\n**Impact.** This would provide a formal bridge between EML computation and tropical geometry, connecting differentiable models to piecewise-linear optimization. It would formalize the \"softmax → hardmax\" limit use",
+      "source_exp_id": "55c659bd",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/55c659bd",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Tropical",
+        "EML",
+        "Bridges",
+        "MachineLearning",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:09:04.583579+00:00"
+    },
+    {
+      "id": "fd_0209",
+      "title": "Conjecture 4: Analyticity of EML-Computable Maps",
+      "description": "**Conjecture.** Every `ScalarEML n` function is real-analytic on its natural domain of definition (all of `ℝⁿ` for the full fragment, or `(ℝ₊)ⁿ` for the positive fragment with log).\n\n**Test.** Prove by induction on the `ScalarEML` derivation that each constructor preserves analyticity: projections are polynomial (analytic), constants are analytic, sums/products of analytic functions are analytic, exp of analytic is analytic, and composition of analytic functions is analytic. This reduces to checking that Mathlib has `AnalyticAt` lemmas for each operation.\n\n**Impact.** Analyticity would separate EML-computable functions from merely continuous ones, giving the category of EML maps a geometric character (analytic manifold morphisms). It would also imply that EML functions are determined by th",
+      "source_exp_id": "55c659bd",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/55c659bd",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Topology",
+        "EML",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:09:04.592376+00:00"
+    },
+    {
+      "id": "fd_0210",
+      "title": "Conjecture 5: EML Category as a Subcategory of Smooth Maps",
+      "description": "**Conjecture.** Define `EML_Cat` as the category with objects `ℕ` (representing `Fin n → ℝ`) and morphisms `Hom(n, m) = {f : (Fin n → ℝ) → (Fin m → ℝ) | VecEMLComp n m f}`. Then the forgetful functor `EML_Cat → Diff` (to the category of smooth manifolds and smooth maps) is faithful and preserves finite products.\n\n**Test.** Faithfulness requires showing that two EML-computable maps that agree as set-theoretic functions are equal as morphisms (trivial since morphisms are functions). Product preservation requires showing that the EML product `Fin (m+k) → ℝ` with projection/pairing maps agrees with the categorical product in `Diff`. The nontrivial content is that EML projections are smooth, which follows from analyticity (Conjecture 4).\n\n**Impact.** This would embed EML computation into differ",
+      "source_exp_id": "55c659bd",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/55c659bd",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Topology",
+        "EML",
+        "Bridges",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:09:04.601388+00:00"
+    },
+    {
+      "id": "fd_0211",
+      "title": "Motivic Stability of Gradient Descent Critical-Point Counts Modulo Primes",
+      "description": "Conjecture: Let L(w; x) be a polynomial loss function with integer coefficients arising from a fixed finite dataset x and a fixed polynomial model architecture. For each prime p, reduce L modulo p and let C_p be the number of critical points of L over F_p^n, i.e. solutions to ∇L ≡ 0 mod p. Then outside a finite exceptional set of primes, the normalized counts p^{-d} C_p (for the expected critical locus dimension d) are controlled by a finite set of Frobenius eigenvalues, so that the sequence p^{-d} C_p satisfies a linear recurrence on average over primes and is determined by a virtual motive attached to the gradient ideal. Test: Compute C_p for thousands of primes for explicit polynomial learning problems; fit candidate Frobenius traces/recurrences and compare across architectures with the same gradient ideal geometry. Refute if no stable recurrence/eigenvalue model emerges outside small exceptional sets. Impact: This would create a new arithmetic invariant of optimization landscapes, linking machine learning, algebraic geometry, and number theory, and could enable classification of trainability phases via motivic data rather than real-analytic heuristics.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Algebraic Geometry",
+        "Optimization Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:09:20.589520+00:00"
     }
   ],
   "pruned": [
