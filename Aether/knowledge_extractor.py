@@ -1010,7 +1010,7 @@ Research mode: {concept.research_mode}
             # Collect existing theorem titles for novelty comparison
             existing_titles = set()
             if hasattr(self, 'catalog_analyzer') and self.catalog_analyzer:
-                for s in self.catalog_analyzer._summaries_cache.get('all', []):
+                for s in self.catalog_analyzer.scan():
                     existing_titles.update(s.declarations)
 
             qscore = qeval.evaluate(

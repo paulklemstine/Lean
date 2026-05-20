@@ -744,10 +744,17 @@ class FutureDirectionsManager:
             domain = direction.domains[0] if direction.domains else "Unknown"
             domain_files = []
             # Try to get files for the direction's domain
-            if hasattr(catalog_analyzer, '_summaries_cache'):
-                for path, summary in catalog_analyzer._summaries_cache.items():
-                    if hasattr(summary, 'domain') and summary.domain and domain.lower() in summary.domain.lower():
-                        domain_files.append(summary)
+            # Use all domains the direction touches
+            for d in direction.domains:
+                domain_files.extend(catalog_analyzer.get_domain_files(d))
+            if not domain_files:
+                # Fallback: scan all summaries
+                all_summaries = catalog_analyzer.scan()
+                domain_lower = domain.lower()
+                domain_files = [
+                    s for s in all_summaries
+                    if s.domain and domain_lower in s.domain.lower()
+                ]
 
             # Count theorems with overlapping keywords
             keywords = set(direction.title.lower().split() + direction.description.lower().split())
