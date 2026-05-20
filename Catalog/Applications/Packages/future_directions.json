@@ -4333,8 +4333,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "e5412c69",
       "timestamp": "2026-05-20T09:07:55.737099+00:00"
     },
     {
@@ -4502,7 +4502,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "2ea43f0c",
       "timestamp": "2026-05-20T10:04:27.264443+00:00"
     },
@@ -4925,6 +4925,112 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T11:04:44.127702+00:00"
+    },
+    {
+      "id": "fd_0256",
+      "title": "Conjecture 1: Spectral-Rank Coincidence",
+      "description": "**Statement:** For every finite structurally parallel attention model `M` with generators `e₁, …, eₖ`, the spectral witness rank (the minimal number of distinct eigenvalue clusters in the attention spectrum) equals the finite transcendence rank (the maximum cardinality of an independent generator family under the structural closure).\n\n**Test:** Enumerate all attention models on ≤ 8 generators. For each, compute:\n- `spectralWitnessRank(M)` by clustering the eigenvalues of the attention weight matrix,\n- `finTranscendenceRank(M)` by exhaustive search over the powerset of generators.\n\nA counterexample is any model where these two numbers differ.\n\n**Impact:** If true, this would establish a deep connection between linear-algebraic spectral methods and combinatorial independence, providing a pol",
+      "source_exp_id": "2ea43f0c",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2ea43f0c",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Algebra",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:00:44.592743+00:00"
+    },
+    {
+      "id": "fd_0257",
+      "title": "Conjecture 2: Perturbation Rigidity Threshold",
+      "description": "**Statement:** For any closure operator `cop` and finite set `A`, there exists a critical threshold `ε* > 0` such that for all perturbation sets `P` with `|P| < ε* · |A|`, the transcendence rank is unchanged: `finTranscendenceRank cop A = finTranscendenceRank (perturbClosure cop P) A`.\n\n**Test:** For random closure operators on sets of size 10–50, compute the rank for increasing perturbation sizes. Find the exact transition point where rank first decreases. Check whether the threshold is always ≥ 1/|A| (as predicted by the tropical perturbation bound).\n\n**Disproof criterion:** Find a closure operator where rank changes under perturbation by a single element (|P| = 1), which would mean ε* = 0 for some systems.\n\n**Impact:** If a universal positive threshold exists, rank-based complexity cert",
+      "source_exp_id": "2ea43f0c",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2ea43f0c",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Tropical",
+        "EML",
+        "MachineLearning",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:00:44.602614+00:00"
+    },
+    {
+      "id": "fd_0258",
+      "title": "Conjecture 3: Tropical Complexity Gap",
+      "description": "**Statement:** For tropical matrices of size n × n, the tropical complexity (number of distinct entry values) of any matrix expressible as a product of ≤ k rank-1 tropical matrices satisfies `tropComplexity(A) ≤ 2k - 1`. This would be tight for the \"staircase\" construction.\n\n**Test:** Enumerate all tropical matrices of size 4 × 4 with entries in {0, 1, 2, 3}. For each, compute the minimal k such that A = A₁ ⊗ A₂ ⊗ ··· ⊗ Aₖ with each Aᵢ having at most 2 distinct values. Check the bound `tropComplexity(A) ≤ 2k - 1`.\n\n**Disproof criterion:** A matrix with tropComplexity > 2k - 1 for its minimal tropical rank factorization.\n\n**Impact:** Would give an exact characterization of tropical computational complexity, with applications to shortest-path algorithms and scheduling theory.\n\n---",
+      "source_exp_id": "2ea43f0c",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2ea43f0c",
+      "domains": [
+        "NumberTheory",
+        "Tropical",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:00:44.615140+00:00"
+    },
+    {
+      "id": "fd_0259",
+      "title": "Conjecture 4: Proof Rank Additivity Under Cut Elimination",
+      "description": "**Statement:** For any proof tree `pt`, cut elimination produces a cut-free proof `pt'` with `proofRank(pt') = proofRank(pt)`. That is, cut elimination preserves the number of axiom leaves exactly.\n\n**Test:** Implement cut elimination on the `ProofTree` inductive type. For random proof trees of depth ≤ 10, verify that axiom count is preserved.\n\n**Disproof criterion:** A proof tree where cut elimination changes the axiom count. This would happen if cut elimination duplicates or eliminates axiom applications.\n\n**Impact:** If true, this proves that the proof-theoretic transcendence rank is an invariant of the *proposition* being proved, not just the proof. This would be the proof-theoretic analogue of the structural congruence invariance theorem.\n\n---",
+      "source_exp_id": "2ea43f0c",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2ea43f0c",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:00:44.626994+00:00"
+    },
+    {
+      "id": "fd_0260",
+      "title": "Conjecture 5: Rank-Capacity Convergence",
+      "description": "**Statement:** For a sequence of closure systems `(M_n)` with increasing state spaces, if the closure capacity (number of Myhill–Nerode equivalence classes) grows as `Θ(f(n))`, then the transcendence rank grows as `Θ(log f(n))`.\n\n**Test:** Construct explicit families:\n1. Full binary tree closure systems (capacity 2ⁿ, predicted rank n)\n2. Linear chain systems (capacity n, predicted rank log n)\n3. Random closure systems on n states\n\nCompute both quantities and test the logarithmic relationship.\n\n**Disproof criterion:** A family where rank grows polynomially with capacity (not logarithmically).\n\n**Impact:** Would establish a universal compression theorem: the \"essential dimension\" of a system grows logarithmically slower than its apparent complexity, enabling exponential compression of struct",
+      "source_exp_id": "2ea43f0c",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2ea43f0c",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:00:44.637100+00:00"
     }
   ],
   "pruned": [
