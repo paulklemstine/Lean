@@ -16,7 +16,11 @@
       "priority_score": 0.95,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499617+00:00"
+      "timestamp": "2026-05-20T20:11:05.499617+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_002",
@@ -33,7 +37,11 @@
       "priority_score": 0.93,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499638+00:00"
+      "timestamp": "2026-05-20T20:11:05.499638+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_003",
@@ -51,7 +59,11 @@
       "priority_score": 0.94,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499640+00:00"
+      "timestamp": "2026-05-20T20:11:05.499640+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_004",
@@ -69,7 +81,11 @@
       "priority_score": 0.82,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499642+00:00"
+      "timestamp": "2026-05-20T20:11:05.499642+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_005",
@@ -86,7 +102,11 @@
       "priority_score": 0.87,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499644+00:00"
+      "timestamp": "2026-05-20T20:11:05.499644+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_006",
@@ -104,7 +124,11 @@
       "priority_score": 0.84,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499645+00:00"
+      "timestamp": "2026-05-20T20:11:05.499645+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_007",
@@ -122,7 +146,11 @@
       "priority_score": 0.86,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499646+00:00"
+      "timestamp": "2026-05-20T20:11:05.499646+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_008",
@@ -140,7 +168,11 @@
       "priority_score": 0.88,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499648+00:00"
+      "timestamp": "2026-05-20T20:11:05.499648+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_009",
@@ -158,7 +190,11 @@
       "priority_score": 0.8,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499649+00:00"
+      "timestamp": "2026-05-20T20:11:05.499649+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_010",
@@ -174,9 +210,13 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499651+00:00"
+      "timestamp": "2026-05-20T20:11:05.499651+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_011",
@@ -193,7 +233,11 @@
       "priority_score": 0.91,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499652+00:00"
+      "timestamp": "2026-05-20T20:11:05.499652+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_012",
@@ -210,7 +254,11 @@
       "priority_score": 0.85,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499656+00:00"
+      "timestamp": "2026-05-20T20:11:05.499656+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_013",
@@ -228,7 +276,11 @@
       "priority_score": 0.86,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499657+00:00"
+      "timestamp": "2026-05-20T20:11:05.499657+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_014",
@@ -246,7 +298,11 @@
       "priority_score": 0.83,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499658+00:00"
+      "timestamp": "2026-05-20T20:11:05.499658+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_015",
@@ -265,7 +321,11 @@
       "priority_score": 0.82,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499660+00:00"
+      "timestamp": "2026-05-20T20:11:05.499660+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_016",
@@ -283,7 +343,11 @@
       "priority_score": 0.93,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499664+00:00"
+      "timestamp": "2026-05-20T20:11:05.499664+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_017",
@@ -301,7 +365,11 @@
       "priority_score": 0.84,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499665+00:00"
+      "timestamp": "2026-05-20T20:11:05.499665+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_018",
@@ -320,7 +388,11 @@
       "priority_score": 0.87,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499666+00:00"
+      "timestamp": "2026-05-20T20:11:05.499666+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_019",
@@ -338,7 +410,11 @@
       "priority_score": 0.85,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499667+00:00"
+      "timestamp": "2026-05-20T20:11:05.499667+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_020",
@@ -356,7 +432,11 @@
       "priority_score": 0.83,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499669+00:00"
+      "timestamp": "2026-05-20T20:11:05.499669+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_021",
@@ -374,7 +454,11 @@
       "priority_score": 0.84,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499670+00:00"
+      "timestamp": "2026-05-20T20:11:05.499670+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_022",
@@ -392,7 +476,11 @@
       "priority_score": 0.85,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499678+00:00"
+      "timestamp": "2026-05-20T20:11:05.499678+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_023",
@@ -410,7 +498,11 @@
       "priority_score": 0.86,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499679+00:00"
+      "timestamp": "2026-05-20T20:11:05.499679+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_024",
@@ -428,7 +520,11 @@
       "priority_score": 0.88,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499681+00:00"
+      "timestamp": "2026-05-20T20:11:05.499681+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_025",
@@ -446,7 +542,11 @@
       "priority_score": 0.83,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499682+00:00"
+      "timestamp": "2026-05-20T20:11:05.499682+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_026",
@@ -463,7 +563,11 @@
       "priority_score": 0.85,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499683+00:00"
+      "timestamp": "2026-05-20T20:11:05.499683+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_027",
@@ -481,7 +585,11 @@
       "priority_score": 0.8,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499685+00:00"
+      "timestamp": "2026-05-20T20:11:05.499685+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_028",
@@ -497,9 +605,13 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.83,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499686+00:00"
+      "timestamp": "2026-05-20T20:11:05.499686+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_029",
@@ -517,7 +629,11 @@
       "priority_score": 0.82,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499687+00:00"
+      "timestamp": "2026-05-20T20:11:05.499687+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_030",
@@ -534,7 +650,11 @@
       "priority_score": 0.86,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499688+00:00"
+      "timestamp": "2026-05-20T20:11:05.499688+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_031",
@@ -552,7 +672,11 @@
       "priority_score": 0.87,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499690+00:00"
+      "timestamp": "2026-05-20T20:11:05.499690+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_032",
@@ -570,7 +694,11 @@
       "priority_score": 0.85,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499698+00:00"
+      "timestamp": "2026-05-20T20:11:05.499698+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_033",
@@ -588,7 +716,11 @@
       "priority_score": 0.82,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499700+00:00"
+      "timestamp": "2026-05-20T20:11:05.499700+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_034",
@@ -607,7 +739,11 @@
       "priority_score": 0.86,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499701+00:00"
+      "timestamp": "2026-05-20T20:11:05.499701+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_035",
@@ -625,7 +761,11 @@
       "priority_score": 0.84,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499703+00:00"
+      "timestamp": "2026-05-20T20:11:05.499703+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_036",
@@ -643,7 +783,11 @@
       "priority_score": 0.88,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499704+00:00"
+      "timestamp": "2026-05-20T20:11:05.499704+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_037",
@@ -662,7 +806,11 @@
       "priority_score": 0.9,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499705+00:00"
+      "timestamp": "2026-05-20T20:11:05.499705+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_038",
@@ -681,7 +829,11 @@
       "priority_score": 0.87,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499706+00:00"
+      "timestamp": "2026-05-20T20:11:05.499706+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_039",
@@ -700,7 +852,11 @@
       "priority_score": 0.86,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499707+00:00"
+      "timestamp": "2026-05-20T20:11:05.499707+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_040",
@@ -718,7 +874,11 @@
       "priority_score": 0.86,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499709+00:00"
+      "timestamp": "2026-05-20T20:11:05.499709+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_041",
@@ -737,7 +897,11 @@
       "priority_score": 0.84,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499710+00:00"
+      "timestamp": "2026-05-20T20:11:05.499710+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_042",
@@ -756,7 +920,11 @@
       "priority_score": 0.83,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499714+00:00"
+      "timestamp": "2026-05-20T20:11:05.499714+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_043",
@@ -775,7 +943,11 @@
       "priority_score": 0.85,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499718+00:00"
+      "timestamp": "2026-05-20T20:11:05.499718+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_044",
@@ -794,7 +966,11 @@
       "priority_score": 0.89,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499719+00:00"
+      "timestamp": "2026-05-20T20:11:05.499719+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_045",
@@ -813,7 +989,11 @@
       "priority_score": 0.88,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499720+00:00"
+      "timestamp": "2026-05-20T20:11:05.499720+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_046",
@@ -832,7 +1012,11 @@
       "priority_score": 0.85,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499722+00:00"
+      "timestamp": "2026-05-20T20:11:05.499722+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_047",
@@ -851,7 +1035,11 @@
       "priority_score": 0.86,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499723+00:00"
+      "timestamp": "2026-05-20T20:11:05.499723+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_048",
@@ -870,7 +1058,11 @@
       "priority_score": 0.82,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499726+00:00"
+      "timestamp": "2026-05-20T20:11:05.499726+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_049",
@@ -889,7 +1081,11 @@
       "priority_score": 0.91,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499728+00:00"
+      "timestamp": "2026-05-20T20:11:05.499728+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_050",
@@ -908,7 +1104,11 @@
       "priority_score": 0.87,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499729+00:00"
+      "timestamp": "2026-05-20T20:11:05.499729+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_051",
@@ -927,7 +1127,11 @@
       "priority_score": 0.84,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499730+00:00"
+      "timestamp": "2026-05-20T20:11:05.499730+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_052",
@@ -946,7 +1150,11 @@
       "priority_score": 0.85,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499734+00:00"
+      "timestamp": "2026-05-20T20:11:05.499734+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_053",
@@ -963,9 +1171,13 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499735+00:00"
+      "timestamp": "2026-05-20T20:11:05.499735+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     },
     {
       "id": "seed_054",
@@ -983,8 +1195,150 @@
       "priority_score": 0.88,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T20:11:05.499736+00:00"
+      "timestamp": "2026-05-20T20:11:05.499736+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0054",
+      "title": "Conjecture 1: Full Growth Bound Theorem (inv case)",
+      "description": "**Conjecture:** For every EMLExpr `e` (including those with `inv` nodes), if `e.emlDepth ≤ D`, then there exist `C > 0` and `X` such that for all `x ≥ X`, `|e.eval x| ≤ iterExp (D + 1) (C * x)`.\n\n**Test:** Formalize the growth bound for expressions with `inv` by showing that rational functions (built from `+`, `*`, `neg`, `inv` applied to `x` and constants) have polynomial growth, and that `eml` layers add exactly one exponential level regardless of `inv` presence. The key step is proving that `inv` preserves eventual polynomial growth for no-eml subexpressions.\n\n**Impact:** This would extend the depth separation from inv-free to all EMLExpr, giving the fully general theorem: no bounded-depth EMLExpr can represent `iterExp n` for large `n`.\n\n---",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:12:19.720837+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0055",
+      "title": "Conjecture 2: Tight Depth Bound (D+1 instead of D+3)",
+      "description": "**Conjecture:** For every `D ≥ 0` and `n > D`, no inv-free EMLExpr of `emlDepth ≤ D` can represent `iterExp n` on positive reals.\n\nCurrently we prove separation for `n ≥ D + 3` due to slack in the growth comparison. The gap of 2 comes from the interplay between growth bound level (D+1) and the strict comparison chain (D+1 < D+2 < D+3).\n\n**Test:** Improve the growth bound to `iterExp (D + 1) (C * x)` → show `iterExp n x > iterExp (D + 1) (C * x)` directly for `n ≥ D + 2`, eliminating one level. Alternatively, prove the tight bound `n > D` by a direct structural induction argument that avoids the growth bound entirely.\n\n**Impact:** The tight bound would show that `emlExprIterExp n` with `emlDepth = n` is essentially optimal: no representation with fewer eml layers exists.\n\n---",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:12:19.722574+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0056",
+      "title": "Conjecture 3: Exponential Size Lower Bound",
+      "description": "**Conjecture:** For fixed depth `D`, the minimal size of an EMLExpr of depth ≤ D that represents `iterExp n` on a finite grid of positive reals grows exponentially in `n` (for `n ≤ D`).\n\n**Test:** For `D = 5` and `n ∈ {1, ..., 5}`, enumerate all EMLExpr of depth ≤ D up to size 100. Evaluate each on a grid of 20 positive points. Record the minimal size that matches `iterExp n`. Plot size vs `n` and fit exponential vs polynomial models. A polynomial fit with R² > 0.99 would refute the conjecture.\n\n**Impact:** This would provide quantitative lower bounds beyond the qualitative depth separation, analogous to exponential size lower bounds for bounded-depth Boolean circuits computing specific functions.\n\n---",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:12:19.724144+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0057",
+      "title": "Conjecture 4: Depth Hierarchy for Trigonometric Extensions",
+      "description": "**Conjecture:** If the EML language is extended with a `trig(a,b) = a * sin(b)` primitive, the resulting \"EML+Trig\" language still cannot represent `iterExp n` at bounded depth, and furthermore the trig primitive does not help compress iterated exponentials.\n\n**Test:** Define `EMLTrigExpr` with both `eml` and `trig` constructors. Extend the growth bound theorem to show that `trig` nodes do not increase the exponential nesting level (since `|sin(t)| ≤ 1`). Prove that the depth separation still holds in the extended language.\n\n**Impact:** This would show that the depth hierarchy is robust under natural extensions of the expression language, strengthening the claim that it captures a fundamental structural property of iterated exponentials rather than an artifact of the EML formalism.\n\n---",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:12:19.725813+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0058",
+      "title": "Conjecture 5: Connection to Hardy Field Hierarchy",
+      "description": "**Conjecture:** The `growthRank` invariant defined in our framework is equivalent to the level in the Hardy field hierarchy for germs of functions definable by EML expressions.\n\nMore precisely: an EML expression of `emlDepth ≤ D` defines a germ in the Hardy field `\\mathcal{H}_D` (the D-th level of the log-exp hierarchy), and `iterExp n` lies in `\\mathcal{H}_n \\setminus \\mathcal{H}_{n-1}`.\n\n**Test:** Formalize the connection between `emlDepth` and Hardy field levels. The key step is showing that `eml(a,b) = a * exp(b)` maps `\\mathcal{H}_D × \\mathcal{H}_D → \\mathcal{H}_{D+1}`. If this can be formalized, the depth separation would follow from the known strict hierarchy of Hardy fields.\n\n**Impact:** This would connect our mechanized complexity theory to a rich body of classical analysis (Hardy",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:12:19.727582+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0059",
+      "title": "Proof-Compression Phase Transition in Formal Mathematics",
+      "description": "Conjecture: For any sufficiently expressive formal system used in Lean-style mathematics, there exists a natural family of theorems {T_n} and a computable semantic feature map phi(T_n) such that the shortest human-structured proof and the shortest automation-generated proof exhibit a sharp phase transition in relative length: below a critical semantic complexity threshold c, automated proofs can be compressed to within a constant factor of human proofs, while above c the optimal automated proof length is superpolynomially larger unless new intermediate lemmas are introduced. Test: Build benchmark families across algebra, analysis, and combinatorics; for each theorem measure minimal proof lengths under fixed tactic vocabularies, with and without learned lemma discovery, and statistically test for a sharp threshold in compression ratio as phi(T_n) varies. Refutation occurs if no robust threshold appears across domains or if automation matches human-structured proof length uniformly without lemma invention. Impact: This would turn proof engineering into a quantitative science, identify where lemma discovery is fundamentally necessary, and guide the architecture of autonomous theorem provers toward phase-aware proof search.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Automated Theorem Proving",
+        "Mathematical Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:12:33.356412+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     }
   ],
-  "pruned": []
+  "pruned": [],
+  "cycle_syntheses": {}
 }

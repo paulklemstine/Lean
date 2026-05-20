@@ -8,6 +8,15 @@
       "shape": "icosahedron",
       "date": "2026-05-20T20:12:16Z",
       "hue": 90
+    },
+    {
+      "id": "conjecture_4_riemannian_gradient_flow_convergence",
+      "title": "Benign Nonconvexity on SU(2): Verified Gradient Flow Convergence for Quantum Gate Synthesis",
+      "domain": "Quantum Control, Riemannian Optimization, Lie Groups",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-20T20:12:59Z",
+      "hue": 275
     }
   ],
   "edges": [],
