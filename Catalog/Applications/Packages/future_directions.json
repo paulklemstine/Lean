@@ -513,7 +513,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "a01b36bc",
       "timestamp": "2026-05-20T00:22:10.984210+00:00"
     },
@@ -549,8 +549,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "d237288b",
       "timestamp": "2026-05-20T00:22:10.985537+00:00"
     },
     {
@@ -2387,8 +2387,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "ca49f647",
       "timestamp": "2026-05-20T02:04:42.918918+00:00"
     },
     {
@@ -2693,8 +2693,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "76858596",
       "timestamp": "2026-05-20T03:08:58.160015+00:00"
     },
     {
@@ -4461,8 +4461,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "c6c90908",
       "timestamp": "2026-05-20T11:03:49.923159+00:00"
     },
     {
@@ -4659,8 +4659,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "df0960fe",
       "timestamp": "2026-05-20T11:04:44.119328+00:00"
     },
     {
@@ -5636,6 +5636,24 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:08:04.814544+00:00"
+    },
+    {
+      "id": "fd_0290",
+      "title": "Modular Spectral Universality for Prime-Indexed Polynomial Dynamics",
+      "description": "Conjecture: Let f,g in Z[x] be non-exceptional polynomials of the same degree d >= 2 with the same geometric monodromy group over Q(t). For each prime p of good reduction, form the directed functional graph of f on F_p and let mu_f,p be the empirical measure of the normalized adjacency eigenvalues of its largest cyclic-attractor basin; define mu_g,p analogously. Then for a density-1 set of primes p, the Wasserstein distance W_1(mu_f,p, mu_g,p) tends to 0 as p -> infinity. Test: Compute these spectral measures for many pairs (f,g) sharing monodromy and for control pairs with different monodromy; confirmation is convergence only in the shared-monodromy class, refutation is a persistent spectral separation for some such pair. Impact: This would propose a new arithmetic universality class for finite-field dynamics, linking monodromy, random graph spectra, and reduction-mod-p behavior, and could yield new invariants for distinguishing polynomial dynamical systems beyond orbit statistics alone.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Spectral Graph Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:08:49.211921+00:00"
     }
   ],
   "pruned": [
