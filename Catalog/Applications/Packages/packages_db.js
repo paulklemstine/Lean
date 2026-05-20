@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "medium_priority.json",
+    "title": "Tropical Matrix Certificates: Local Witnesses for Global Rank-One Structure",
+    "domain": "Tropical Linear Algebra / Certificate Complexity",
+    "date": "2026-05-20T01:04:29Z",
+    "exp_id": "1a0f1a30"
+  },
+  {
     "filename": "langlands_program_functoriality.json",
     "title": "Formally Verified Local Langlands Functoriality: Symmetric Square Transfer via Satake Parameters",
     "domain": "Algebra / Number Theory",
@@ -3230,6 +3237,41 @@ window.PACKAGE_DB = {
       "pi_brainstorm"
     ]
   },
+  "medium_priority.json": {
+    "title": "Tropical Matrix Certificates: Local Witnesses for Global Rank-One Structure",
+    "domain": "Tropical Linear Algebra / Certificate Complexity",
+    "article": "# The Hidden Arithmetic of Structure: How Local Checks Reveal Global Patterns\n\nImagine you're handed a massive spreadsheet of numbers \u2014 shipping costs between warehouses and customers, delay times across a network, or measurements from a scientific experiment. Buried in that grid might be a beautiful, simple pattern: every entry is just the sum of a number for its row and a number for its column. If that pattern exists, the entire matrix collapses from a complex table into two simple lists. Thousands of numbers become dozens.\n\nBut how would you know? Checking every possible decomposition is impractical. The matrix might be enormous. You'd need a shortcut \u2014 some quick test that either confirms the hidden structure or points directly to where the pattern breaks down.\n\nIt turns out that such a test exists, and it requires checking only tiny fragments of the data. You never need to look at more than four numbers at a time.\n\n## The Four-Number Test\n\nHere's the remarkably simple idea. Pick any two rows and any two columns from your matrix. Look at the four numbers sitting at their intersections \u2014 the corners of a rectangle within the grid. Add the two diagonal entries. Then add the two anti-diagonal entries. If these sums are equal, that rectangle passes.\n\nIf *every* possible rectangle passes \u2014 every choice of two rows and two columns \u2014 then the matrix has the hidden additive structure. You can decompose it into row numbers plus column numbers, period.\n\nAnd if the test fails? You get something equally valuable: the specific rectangle that breaks the pattern. That rectangle is a *certificate of complexity* \u2014 proof that no simple decomposition exists, pinpointed to exactly four data points.\n\nThis is a theorem, not a heuristic. It can be proven with mathematical certainty.\n\n## An Ancient Idea in Exotic Dress\n\nThe basic principle \u2014 local consistency implying global structure \u2014 has deep roots. In the 19th century, mathematicians discovered that classical matrices have rank one (can be written as a column times a row) if and only if every 2\u00d72 subdeterminant vanishes. The four-number test is the same idea transplanted into a different algebraic universe.\n\nThat universe is called *tropical mathematics*, a term that has nothing to do with palm trees. Named partly in honor of the Brazilian mathematician Imre Simon, tropical algebra replaces ordinary addition with taking the maximum, and ordinary multiplication with addition. It sounds bizarre, but this swap turns out to capture the essential mathematics of optimization, shortest paths, and scheduling.\n\nIn the classical world, the determinant of a 2\u00d72 matrix is $ad - bc$. In the tropical world, it becomes $\\max(a+d, b+c)$ \u2014 but the \"rank one\" condition becomes $a + d = b + c$, which is exactly our four-number test. The rectangle equality is a tropical minor set to zero.\n\n## The Discrete Poincar\u00e9 Lemma\n\nThere's a deeper way to understand why the four-number test works. Think of the matrix as labeling the edges of a network. The rows are nodes on one side, the columns are nodes on the other, and each matrix entry is a \"potential difference\" along the edge connecting them.\n\nThe rectangle equality says something physical: if you walk around any four-sided loop in this network \u2014 from row 1 to column 1 to row 2 to column 2 and back \u2014 the potential differences cancel out. In physics, this is called the *curl-free condition*. An electric field with no curl comes from a potential function. A matrix with no \"curl\" comes from row and column potentials.\n\nThis connection to physics is not a metaphor \u2014 it's a precise mathematical correspondence. The theorem that curl-free implies potential is called the Poincar\u00e9 lemma, and mathematicians have studied it for over a century in the continuous setting. Our theorem is its discrete, tropical cousin.\n\n## The Algorithm: From Certificate to Decomposition\n\nThe mathematical proof doesn't just say a decomposition *exists* \u2014 it tells you exactly how to find it.\n\nPick any row (call it row zero) and any column (column zero). The row potential for row $i$ is simply the matrix entry at row $i$, column zero. The column potential for column $j$ is the entry at row zero, column $j$, minus the entry at row zero, column zero. That's it \u2014 one pass through a single row and a single column, and you've recovered the complete decomposition.\n\nThis is spectacularly efficient. For a matrix with a million rows and a million columns, containing a trillion entries, the decomposition algorithm touches only two million of them. It runs in microseconds, not hours. And it's provably correct: the four-number test guarantees that this simple recipe works.\n\n## When the Pattern Breaks: Certificates of Complexity\n\nPerhaps more interesting than finding structure is *proving it's absent*. If a matrix doesn't decompose, the four-number test finds a specific, minimal witness: four entries that can't simultaneously be explained by any additive decomposition.\n\nThis witness is astonishingly small. No matter how large the matrix \u2014 billions of rows and columns \u2014 a single bad rectangle, involving just four entries, suffices to certify non-decomposability. You don't need to analyze the entire matrix; you just need to present the right four numbers.\n\nIn computer science, this kind of result is called a *small certificate theorem*. It's the mathematical foundation of efficient verification: a short proof that's easy to check, even when finding it might be hard. The tropical certificate for rank one is among the simplest and most elegant examples.\n\n## Projectors and Fixed Points\n\nThings get even more interesting when the matrix has additional structure. A *tropically idempotent* matrix is one that equals its own tropical square \u2014 applying the matrix operation twice gives the same result as applying it once. These are the tropical analogues of projection operators, the mathematical objects that model \"do this transformation, and you're done; doing it again changes nothing.\"\n\nIt turns out that if a tropically idempotent matrix passes the four-number test, it's simultaneously a rank-one matrix *and* a projector. This means it projects the entire space onto a one-dimensional tropical line \u2014 the simplest possible projection. These objects are the atoms of tropical linear algebra, the building blocks from which more complex projections are assembled.\n\n## Reading the Energy Landscape\n\nIn statistical physics, a matrix of interaction energies between two types of particles tells you how the system behaves. If the energy matrix decomposes additively \u2014 $E_{ij} = u_i + v_j$ \u2014 then the particles don't interact with each other at all. Each particle contributes its own energy independently.\n\nThe four-number test, in this context, is a test for non-interaction. A bad rectangle is a minimal witness of genuine physical coupling between the two types. Physicists call this a \"frustration witness\": four configurations whose energies are incompatible with any non-interacting model.\n\nThis connection extends to information theory. For a probability distribution over two variables, independence means the joint probability factors: $P(x,y) = P(x) \\cdot P(y)$. Taking logarithms turns this into additive separability of the log-probability matrix. The tropical certificate becomes an independence test, and bad rectangles are minimal witnesses of statistical dependence \u2014 the smallest possible proof that two variables are correlated.\n\n## A New Doctrine for Tropical Mathematics\n\nWhat makes this work significant is not any single theorem, but the *paradigm* it introduces. In classical linear algebra, rank is computed by Gaussian elimination \u2014 a global algorithm that manipulates the entire matrix. But it's *certified* locally, by minors.\n\nFor tropical matrices, no tropical analogue of Gaussian elimination exists (the max-plus semiring lacks subtraction, so you can't do row reduction). But the certification theory works perfectly. Local tests \u2014 the four-number rectangles \u2014 control global structure just as completely as classical minors do.\n\nThis suggests a research program: develop the theory of tropical rank certificates for higher ranks. Can rank-two tropical matrices be certified by checking 3\u00d73 submatrices? Can obstructions to low rank always be found in bounded-size sub-blocks? These questions connect to deep open problems in combinatorial optimization and computational complexity.\n\n## The Bigger Picture\n\nThe four-number test sits at a crossroads of ideas from across mathematics and science:\n\n- **Topology**: It's a vanishing-cohomology condition on a bipartite graph.\n- **Optimization**: It characterizes when shortest-path problems decompose.\n- **Statistics**: It tests for independence in exponential families.\n- **Physics**: It detects non-interacting energy landscapes.\n- **Computer science**: It's a polynomial-time verifiable certificate for matrix structure.\n\nEach of these connections opens doors. The topological perspective links to Hodge theory and gauge invariance. The optimization perspective connects to scheduling and network flow. The statistical perspective touches machine learning and causal inference. The physical perspective relates to phase transitions and mean-field theory.\n\nMathematics at its best doesn't just solve problems \u2014 it reveals hidden connections between different ways of understanding the world. The tropical certificate theorem is a small result with large resonance: a reminder that the deepest structures in mathematics are often the simplest to state, and that a test involving just four numbers can unlock the hidden architecture of an arbitrarily large dataset.\n\nSometimes, to see the whole forest, you only need to check a few trees.\n",
+    "research_paper": "# Tropical Matrix Certificates: Local Witnesses for Global Rank-One Structure\n\n## Abstract\n\nWe introduce a theory of **tropical matrix certificates** \u2014 local, finitely checkable witnesses that certify when a real-valued matrix has tropical rank one. The central object is the *tropical rectangle equality*: the condition $A_{i_1 j_1} + A_{i_2 j_2} = A_{i_1 j_2} + A_{i_2 j_1}$ on all 2\u00d72 submatrices, which is the tropical analogue of vanishing 2\u00d72 minors in classical linear algebra.\n\nWe prove that this local condition is equivalent to global additive separability ($A_{ij} = u_i + v_j$), provide an explicit $O(n+m)$ algorithm for extracting the canonical decomposition, establish gauge uniqueness of the factorization, characterize obstructions via bad rectangle witnesses, and show compatibility with tropical matrix idempotence. All results are formally verified in Lean 4 with Mathlib, yielding machine-checked proofs with no unverified assumptions.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nTropical linear algebra \u2014 the study of matrices and vectors over the max-plus semiring $(\\mathbb{R} \\cup \\{-\\infty\\}, \\max, +)$ \u2014 has deep connections to optimization, scheduling, discrete event systems, and algebraic geometry. A fundamental question is: *when does a matrix have low tropical rank?*\n\nIn classical linear algebra, a matrix has rank \u2264 1 if and only if all its 2\u00d72 minors vanish. This is a *locally checkable* condition: each minor involves only four entries, yet the condition certifies a global factorization $A = uv^T$. The purpose of this paper is to establish the tropical analogue of this principle.\n\n### 1.2 The Certificate Paradigm\n\nWe view the rectangle equality as a *certificate*: a compact, verifiable piece of evidence that a matrix has a particular structural property. This perspective connects to:\n\n- **Proof complexity**: Certificates are the mathematical foundation of NP and verification.\n- **Constraint satisfaction**: Local consistency conditions that imply global solutions.\n- **Helly-type theorems**: Small witnesses for infeasibility of convex systems.\n- **Combinatorial Hodge theory**: Vanishing curl conditions on graphs.\n\nThe key insight is that tropical rank one is *certifiable by local data*. Each rectangle equality involves only four matrix entries, yet the totality of these equalities implies a global additive decomposition.\n\n### 1.3 Contributions\n\n1. **Tropical certificate theory** (Definitions): We introduce the tropical rectangle equality, the tropical matrix certificate, and the separable decomposition structure.\n\n2. **Local-to-global theorem** (Theorem 1): We prove that the certificate \u2014 all 2\u00d72 rectangle equalities holding \u2014 is equivalent to additive separability.\n\n3. **Canonical extraction algorithm** (Theorem 2): We provide an explicit $O(n+m)$ algorithm that extracts row and column potentials from a certified matrix, with a formal correctness proof.\n\n4. **Gauge uniqueness** (Theorem 3): We prove that the decomposition is unique up to an additive constant (gauge transformation).\n\n5. **Obstruction characterization** (Theorem 4): We prove that failure of rank one is always witnessed by a single bad 2\u00d72 rectangle.\n\n6. **Idempotent compatibility** (Theorem 5): We show that tropically idempotent matrices with the certificate admit compatible decompositions.\n\n7. **Difference-cocycle characterization** (Theorem 6): We prove that the certificate is equivalent to row-difference constancy, revealing the connection to discrete Hodge theory.\n\n## 2. Definitions and Notation\n\n### 2.1 Tropical Rectangle Equality\n\n**Definition 1** (Tropical Rectangle Equality). For a matrix $A : \\iota \\to \\kappa \\to \\mathbb{R}$ and indices $i_1, i_2 \\in \\iota$, $j_1, j_2 \\in \\kappa$, the *tropical rectangle equality* is:\n\n$$A_{i_1 j_1} + A_{i_2 j_2} = A_{i_1 j_2} + A_{i_2 j_1}$$\n\nThis condition says that the sum of diagonal entries equals the sum of anti-diagonal entries in the 2\u00d72 submatrix indexed by $(i_1, i_2) \\times (j_1, j_2)$.\n\n**Remark.** In classical linear algebra, the 2\u00d72 minor is $A_{i_1 j_1} A_{i_2 j_2} - A_{i_1 j_2} A_{i_2 j_1}$. Under the logarithmic change from $(\u00d7, +)$ to $(+, \\max)$, the \"additive minor\" $A_{i_1 j_1} + A_{i_2 j_2} - A_{i_1 j_2} - A_{i_2 j_1}$ replaces the multiplicative minor. The rectangle equality says this additive minor vanishes.\n\n### 2.2 Tropical Matrix Certificate\n\n**Definition 2** (Tropical Matrix Certificate). A matrix $A$ has a *tropical matrix certificate* if all 2\u00d72 rectangles satisfy the tropical rectangle equality:\n\n$$\\forall i_1, i_2, j_1, j_2: \\quad A_{i_1 j_1} + A_{i_2 j_2} = A_{i_1 j_2} + A_{i_2 j_1}$$\n\n### 2.3 Tropical Separable Decomposition\n\n**Definition 3** (Tropical Separable Decomposition). A *separable decomposition* of $A$ consists of:\n- Row potentials $u : \\iota \\to \\mathbb{R}$\n- Column potentials $v : \\kappa \\to \\mathbb{R}$\n- A witness that $A_{ij} = u_i + v_j$ for all $i, j$\n\n### 2.4 Tropical Matrix Idempotence\n\n**Definition 4** (Tropical Matrix Idempotent). A square matrix $A : \\iota \\to \\iota \\to \\mathbb{R}$ is *tropically idempotent* if $A \\otimes A = A$ under max-plus matrix multiplication:\n\n$$\\max_k (A_{ik} + A_{kj}) = A_{ij} \\quad \\forall i, j$$\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Certificate Implies Separability (Potential Extraction)\n\n**Theorem** (Canonical Potential Extraction). Let $A : \\iota \\to \\kappa \\to \\mathbb{R}$ satisfy the tropical matrix certificate. Fix base indices $i_0 \\in \\iota$, $j_0 \\in \\kappa$. Define:\n\n$$u_i = A_{i, j_0}, \\qquad v_j = A_{i_0, j} - A_{i_0, j_0}$$\n\nThen $A_{ij} = u_i + v_j$ for all $i, j$.\n\n**Proof sketch.** Apply the rectangle equality to the quadruple $(i, i_0, j, j_0)$:\n\n$$A_{i,j} + A_{i_0, j_0} = A_{i, j_0} + A_{i_0, j}$$\n\nRearranging:\n\n$$A_{i,j} = A_{i, j_0} + A_{i_0, j} - A_{i_0, j_0} = u_i + v_j$$\n\nThis is a one-line calculation after the rectangle equality is applied. In the formal proof, `linear_combination` handles the arithmetic. $\\square$\n\n**Corollary** (Existence of Decomposition). For any nonempty index types, a certified matrix admits a separable decomposition.\n\n**Lean formalization:**\n```lean\ntheorem tropical_certificate_extracts_potentials_at\n    {\u03b9 \u03ba : Type*}\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (hcert : HasTropicalMatrixCertificate A)\n    (i\u2080 : \u03b9) (j\u2080 : \u03ba) :\n    let u : \u03b9 \u2192 \u211d := fun i => A i j\u2080\n    let v : \u03ba \u2192 \u211d := fun j => A i\u2080 j - A i\u2080 j\u2080\n    \u2200 i j, A i j = u i + v j\n```\n\n### 3.2 Theorem 2: Converse Direction\n\n**Theorem.** If $A_{ij} = u_i + v_j$ for some $u, v$, then $A$ has a tropical matrix certificate.\n\n**Proof.** Direct calculation:\n$(u_{i_1} + v_{j_1}) + (u_{i_2} + v_{j_2}) = (u_{i_1} + v_{j_2}) + (u_{i_2} + v_{j_1})$\nby commutativity and associativity of addition. $\\square$\n\n### 3.3 Theorem 3: Full Characterization\n\n**Theorem** (Certificate \u2194 Separability). For nonempty index types:\n\n$$\\text{HasTropicalMatrixCertificate}(A) \\iff \\exists u, v: A_{ij} = u_i + v_j$$\n\nThis combines Theorems 1 and 2.\n\n### 3.4 Theorem 4: Gauge Uniqueness\n\n**Theorem.** If $A_{ij} = u_i + v_j = u'_i + v'_j$, then there exists a constant $c \\in \\mathbb{R}$ such that $u'_i = u_i + c$ and $v'_j = v_j - c$ for all $i, j$.\n\n**Proof.** Set $c = u'_{i_0} - u_{i_0}$ for any fixed $i_0$. From $u_i + v_j = u'_i + v'_j$ for all $j$: fixing $j = j_0$ gives $u'_i = u_i + (v_{j_0} - v'_{j_0})$. Fixing $i = i_0$ gives $v'_j = v_j - (u'_{i_0} - u_{i_0}) = v_j - c$. Then $u'_i = u_i + c$ follows. $\\square$\n\n### 3.5 Theorem 5: Obstruction Characterization\n\n**Theorem.** $\\neg \\text{HasTropicalMatrixCertificate}(A)$ if and only if there exist $i_1, i_2, j_1, j_2$ with $A_{i_1 j_1} + A_{i_2 j_2} \\neq A_{i_1 j_2} + A_{i_2 j_1}$.\n\nThis is the direct logical negation of the certificate condition, but it has important algorithmic content: to *refute* rank one, a single bad rectangle suffices.\n\n### 3.6 Theorem 6: Idempotent Compatibility\n\n**Theorem.** If $A$ is tropically idempotent and has the certificate, then there exist $u, v$ with $A_{ij} = u_i + v_j$ and $A$ remains tropically idempotent.\n\nThis connects the certificate theory to tropical projectors. Rank-one idempotent tropical matrices are the atomic building blocks of tropical representation theory.\n\n### 3.7 Theorem 7: Difference-Cocycle Characterization\n\n**Theorem** (Row-Difference Constancy). Under the certificate:\n\n$$A_{i_1, j_1} - A_{i_1, j_2} = A_{i_2, j_1} - A_{i_2, j_2}$$\n\nfor all $i_1, i_2, j_1, j_2$.\n\n**Interpretation.** Define the row-difference function $\\Delta_{j_1, j_2}(i) = A_{i, j_1} - A_{i, j_2}$. The certificate says $\\Delta_{j_1, j_2}$ is constant across rows \u2014 it depends only on the column pair. This is exactly the *vanishing curl* condition on the complete bipartite graph $K_{\\iota, \\kappa}$, viewing $A$ as a 1-cochain and the rectangle equality as the cocycle condition.\n\n## 4. Algorithms\n\n### 4.1 Certificate Checker\n\n```\nAlgorithm: CheckCertificate(A)\nInput:  Matrix A \u2208 \u211d^{n\u00d7m}\nOutput: Boolean (certificate holds or not)\n\nfor i1 = 0 to n-1:\n    for i2 = i1+1 to n-1:\n        for j1 = 0 to m-1:\n            for j2 = j1+1 to m-1:\n                if |A[i1,j1] + A[i2,j2] - A[i1,j2] - A[i2,j1]| > \u03b5:\n                    return False\nreturn True\n```\n\n**Complexity:** $O(n^2 m^2)$ time, $O(1)$ additional space.\n\n### 4.2 Potential Extractor\n\n```\nAlgorithm: ExtractPotentials(A, i0=0, j0=0)\nInput:  Certified matrix A \u2208 \u211d^{n\u00d7m}, base indices i0, j0\nOutput: Potentials u \u2208 \u211d^n, v \u2208 \u211d^m\n\nu[i] := A[i, j0]           for all i\nv[j] := A[i0, j] - A[i0, j0]  for all j\nreturn (u, v)\n```\n\n**Complexity:** $O(n + m)$ time, $O(n + m)$ space.\n\n### 4.3 Bad Rectangle Finder\n\n```\nAlgorithm: FindBadRectangle(A)\nInput:  Matrix A \u2208 \u211d^{n\u00d7m}\nOutput: Bad rectangle (i1, i2, j1, j2) or None\n\nfor i1 = 0 to n-1:\n    for i2 = i1+1 to n-1:\n        for j1 = 0 to m-1:\n            for j2 = j1+1 to m-1:\n                violation := |A[i1,j1] + A[i2,j2] - A[i1,j2] - A[i2,j1]|\n                if violation > \u03b5:\n                    return (i1, i2, j1, j2, violation)\nreturn None\n```\n\n**Complexity:** $O(n^2 m^2)$ worst case, but often $O(1)$ for random matrices (the first rectangle checked is almost surely bad).\n\n## 5. Applications\n\n### 5.1 Network Delay Diagnosis\n\nIn a network with $n$ sources and $m$ destinations, the delay matrix $D_{ij}$ records latency from source $i$ to destination $j$. If $D$ is additively separable, delays decompose into independent source-side and destination-side components. A bad rectangle identifies cross-links with interaction effects (congestion).\n\n### 5.2 Independence Testing\n\nFor a joint probability table $P_{ij}$, independence means $P_{ij} = p_i q_j$. Taking logs: $\\log P_{ij} = \\log p_i + \\log q_j$, which is additive separability. The tropical certificate on $\\log P$ is an independence test, and bad rectangles are minimal witnesses of dependence.\n\n### 5.3 Cost Matrix Factoring\n\nTransportation cost matrices $C_{ij}$ that are additively separable allow independent pricing for source-side and destination-side costs. The certificate checker verifies this structure, and potential extraction recovers the individual cost components.\n\n## 6. Computational Experiments\n\nWe implemented all algorithms in Python and tested on matrices of various sizes.\n\n### 6.1 Certificate Statistics\n\nFor random $n \\times m$ matrices with i.i.d. standard normal entries:\n\n| Size | Trials | Rank-one | % Rank-one |\n|------|--------|----------|------------|\n| 3\u00d73  | 200    | 0        | 0.0%       |\n| 4\u00d74  | 200    | 0        | 0.0%       |\n| 5\u00d75  | 200    | 0        | 0.0%       |\n| 3\u00d76  | 200    | 0        | 0.0%       |\n\nRandom matrices are generically not rank-one. The certificate imposes $\\binom{n}{2}\\binom{m}{2}$ independent constraints on $nm$ entries, so rank-one matrices form a measure-zero subset.\n\n### 6.2 Reconstruction Accuracy\n\nFor rank-one matrices constructed as $A_{ij} = u_i + v_j$ with random potentials, potential extraction achieves machine-precision reconstruction error ($< 10^{-14}$) in all tests.\n\n### 6.3 Gauge Verification\n\nFor all tested rank-one matrices, two decompositions from different base indices $(i_0, j_0)$ and $(i_0', j_0')$ differ by a constant gauge shift, confirming the gauge uniqueness theorem.\n\n## 7. Discussion\n\n### 7.1 Relationship to Classical Rank Theory\n\nThe tropical rank-one certificate is the exact analogue of the classical condition \"all 2\u00d72 minors vanish.\" Under the logarithmic correspondence between $(\u00d7, +)$ and $(+, \\max)$ algebras, multiplicative minors become additive rectangle equalities.\n\n### 7.2 Combinatorial Hodge Theory Connection\n\nThe rectangle equality is a zero-curl condition on the complete bipartite graph $K_{\\iota,\\kappa}$. Viewing $A$ as a 1-cochain on this graph, the certificate says $A$ is a cocycle. Potential extraction computes a primitive (0-cochain) whose coboundary is $A$. This is a discrete Poincar\u00e9 lemma: every closed form is exact on a simply connected domain.\n\n### 7.3 Certificate Complexity\n\nThe certificate has size $O(n^2 m^2)$ (one bit per rectangle). But verification of each rectangle takes $O(1)$ time. The total verification cost is $O(n^2 m^2)$, which is polynomial. Obstructions (bad rectangles) have size $O(1)$ \u2014 a single quadruple of indices suffices.\n\n### 7.4 Limitations\n\n- **Higher rank:** The certificate theory for tropical rank $r > 1$ remains open. The correct analogue of higher minors in the tropical setting involves Kapranov rank, Barvinok rank, and other notions that do not generally coincide.\n- **Approximate certificates:** We have not addressed approximate rank-one structure (matrices \"close\" to being rank-one). This would require a stability analysis.\n\n## 8. Future Work\n\n1. **Higher-rank certificates:** Develop certificate conditions for tropical rank $\\leq r$ using $(r+1) \\times (r+1)$ submatrix conditions.\n2. **Approximate certificates:** Define $\\epsilon$-certificates and prove stability of potential extraction.\n3. **Tropical Helly bridge:** Encode the certificate as a tropical feasibility problem and apply Helly-type bounds on obstruction size.\n4. **Idempotent classification:** Classify all tropical idempotent rank-one matrices and their relationship to max-plus eigenspaces.\n5. **Computational complexity of tropical rank:** Determine the complexity of deciding tropical rank $\\leq r$ for fixed $r \\geq 2$.\n\n## References\n\n1. Develin, M., Santos, F., Sturmfels, B. (2005). On the rank of a tropical matrix. *Combinatorial and Computational Geometry*, MSRI Publications 52.\n2. Akian, M., Gaubert, S., Guterman, A. (2012). Tropical polyhedra are equivalent to mean payoff games. *International Journal of Algebra and Computation*, 22(1).\n3. Kim, K.H., Roush, F.W. (2005). Factorization of polynomials in one variable over the tropical semiring. *arXiv:math/0501167*.\n4. Butkovic, P. (2010). *Max-linear Systems: Theory and Algorithms*. Springer Monographs in Mathematics.\n5. Joswig, M. (2021). *Essentials of Tropical Combinatorics*. Graduate Studies in Mathematics, AMS.\n",
+    "future_directions": "# Future Directions: Tropical Matrix Certificates\n\n## Conjecture 1: Bounded Certificate Size for Higher Tropical Rank\n\n**Precise statement.** For a matrix $A \\in \\mathbb{R}^{n \\times m}$ of tropical rank $r > 1$, every obstruction to tropical rank $\\leq r-1$ can be witnessed by a submatrix of size at most $r \\times r$.\n\nMore precisely: if $A$ does not have tropical rank $\\leq r-1$, then there exist row indices $i_1, \\ldots, i_r$ and column indices $j_1, \\ldots, j_r$ such that the $r \\times r$ submatrix $A[i_1..i_r, j_1..j_r]$ does not have tropical rank $\\leq r-1$.\n\n**Test.** For $r = 2$: generate random $5 \\times 5$ matrices of tropical rank 2 (as tropical sums of two rank-one matrices). Verify that rank > 1 is always witnessed by a $2 \\times 2$ bad rectangle. For $r = 3$: construct matrices of tropical rank 3 and search for minimal obstructions to rank 2.\n\n**Impact.** This would establish a tropical analogue of the classical result that matrix rank equals the size of the largest nonvanishing minor. It would give polynomial-time certificates for tropical rank bounds.\n\n---\n\n## Conjecture 2: Idempotent Rank-One Decomposition Uniqueness\n\n**Precise statement.** If $A$ is a tropically idempotent $n \\times n$ matrix with the tropical rectangle certificate (hence rank one), then the decomposition $A_{ij} = u_i + v_j$ satisfies:\n\n$$\\max_k (u_k + v_k) = 0$$\n\nand the potentials $(u, v)$ are unique (no gauge freedom \u2014 the idempotence constraint fixes the gauge constant).\n\n**Test.** Generate random rank-one idempotent matrices by choosing $u$ and setting $v_j = -u_j$ (which gives $\\max_k(u_k + v_k) = 0$). Verify that potential extraction always returns potentials with $\\max_k(u_k + v_k) = 0$, and that no other gauge choice preserves idempotence.\n\n**Impact.** This would show that idempotence is a natural gauge-fixing condition in tropical linear algebra, analogous to how orthogonal projections in classical linear algebra are uniquely determined. It would connect to the theory of tropical eigenvalues.\n\n---\n\n## Conjecture 3: Certificate Propagation Under Tropical Convex Combinations\n\n**Precise statement.** If matrices $A$ and $B$ both have the tropical rectangle certificate, then their tropical convex combination\n\n$$C_{ij} = \\max(\\lambda + A_{ij}, \\mu + B_{ij})$$\n\nhas the tropical rectangle certificate if and only if $A$ and $B$ have the same column-difference function (i.e., $A_{i,j_1} - A_{i,j_2} = B_{i,j_1} - B_{i,j_2}$ for all $i, j_1, j_2$).\n\n**Test.** Generate pairs of rank-one matrices with (a) matching column differences and (b) different column differences. Compute tropical convex combinations and check the certificate. The conjecture predicts certificate holds in case (a) and fails in case (b).\n\n**Impact.** This would characterize when tropical rank-one structure is preserved under tropical convex operations. It connects to tropical polytope theory and would give conditions under which rank-one certificates are stable under tropical perturbation.\n\n---\n\n## Conjecture 4: Helly Number for Rectangle Certificates\n\n**Precise statement.** For an $n \\times m$ matrix $A$, the tropical rectangle certificate holds if and only if it holds on every $3 \\times 3$ submatrix (i.e., for every triple of rows and triple of columns, all $\\binom{3}{2}^2 = 9$ rectangle equalities hold).\n\nEquivalently: the Helly number for the tropical rectangle certificate system is 3.\n\n**Test.** Construct matrices where all $2 \\times 2$ submatrix certificates hold on $3 \\times 3$ sub-selections but the full certificate fails. If no such matrix exists (across exhaustive search for small sizes), the conjecture is supported. A counterexample would refute it.\n\n**Impact.** A Helly number of 3 would mean that certificate checking requires only $O(n^3 m^3)$ work on triples rather than $O(n^2 m^2)$ on pairs \u2014 not an improvement in this case, but conceptually it would show that the rectangle equality is \"2-local\" (which we already know) and the system has no hidden higher-order dependencies.\n\nActually, since the rectangle equality is inherently a 2-row, 2-column condition, the Helly number should be exactly 2. The real conjecture is: **no higher-order conditions are needed beyond pairwise ones**. This is already proved in our Theorem 1, but the generalization to tropical rank $r$ is open.\n\n---\n\n## Conjecture 5: Tropical Certificate Complexity Dichotomy\n\n**Precise statement.** For fixed $r$, deciding whether a matrix has tropical rank $\\leq r$ is:\n- Polynomial-time for $r = 1$ (via the rectangle certificate, $O(n^2 m^2)$)\n- NP-hard for $r \\geq 3$\n- Open for $r = 2$\n\nMoreover, for $r = 1$, the certificate is always of size $O(nm)$ (the matrix itself), but for $r \\geq 2$, there exist matrices where any certificate of rank $\\leq r$ requires superpolynomial auxiliary data.\n\n**Test.** For $r = 2$: attempt to reduce 3-SAT or another NP-hard problem to tropical rank-2 decision. For the certificate size claim: search for families of matrices where rank-2 certificates must encode a large amount of auxiliary information (e.g., the choice of which rows/columns participate in each rank-one component).\n\n**Impact.** This would establish the computational complexity landscape of tropical rank, analogous to the classical result that matrix rank is polynomial but tensor rank is NP-hard. The certificate-based approach opens the door to complexity-theoretic study of tropical linear algebra.\n",
+    "demos": [
+      {
+        "name": "Tropical Matrix Certificate Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nTropical Matrix Certificate \u2014 Interactive Demo\n\nDemonstrates:\n1. Checking the tropical rectangle certificate on matrices\n2. Extracting canonical potentials (u, v) from certified matrices\n3. Detecting and displaying \"bad rectangle\" witnesses when certificate fails\n4. Visualizing separable vs non-separable energy landscapes\n\"\"\"\n\nimport numpy as np\nimport itertools\n\n\ndef check_rectangle(A, i1, i2, j1, j2):\n    \"\"\"Check if a single 2x2 rectangle satisfies the tropical rectangle equality.\"\"\"\n    return np.isclose(A[i1, j1] + A[i2, j2], A[i1, j2] + A[i2, j1])\n\n\ndef has_tropical_certificate(A):\n    \"\"\"Check if ALL 2x2 rectangles satisfy the tropical rectangle equality.\"\"\"\n    n, m = A.shape\n    for i1, i2 in itertools.combinations(range(n), 2):\n        for j1, j2 in itertools.combinations(range(m), 2):\n            if not check_rectangle(A, i1, i2, j1, j2):\n                return False\n    return True\n\n\ndef find_bad_rectangle(A):\n    \"\"\"Find the first bad rectangle witness, or None if certificate holds.\"\"\"\n    n, m = A.shape\n    for i1, i2 in itertools.combinations(range(n), 2):\n        for j1, j2 in itertools.combinations(range(m), 2):\n            if not check_rectangle(A, i1, i2, j1, j2):\n                violation = abs(\n                    (A[i1, j1] + A[i2, j2]) - (A[i1, j2] + A[i2, j1])\n                )\n                return (i1, i2, j1, j2, violation)\n    return None\n\n\ndef extract_potentials(A, i0=0, j0=0):\n    \"\"\"\n    Extract canonical potentials from a certified matrix.\n    \n    Given base indices (i0, j0), compute:\n        u(i) = A(i, j0)\n        v(j) = A(i0, j) - A(i0, j0)\n    \n    Then A(i,j) = u(i) + v(j) for all i,j (if certificate holds).\n    \"\"\"\n    u = A[:, j0].copy()\n    v = A[i0, :] - A[i0, j0]\n    return u, v\n\n\ndef reconstruct_from_potentials(u, v):\n    \"\"\"Reconstruct the matrix A(i,j) = u(i) + v(j).\"\"\"\n    return u[:, np.newaxis] + v[np.newaxis, :]\n\n\ndef generate_rank_one_matrix(n, m, seed=None):\n    \"\"\"Generate a random tropical rank-one matrix A(i,j) = u(i) + v(j).\"\"\"\n    rng = np.random.default_rng(seed)\n    u = rng.standard_normal(n)\n    v = rng.standard_normal(m)\n    return u[:, np.newaxis] + v[np.newaxis, :], u, v\n\n\ndef generate_random_matrix(n, m, seed=None):\n    \"\"\"Generate a random matrix (generically not rank-one).\"\"\"\n    rng = np.random.default_rng(seed)\n    return rng.standard_normal((n, m))\n\n\ndef print_matrix(A, name=\"A\"):\n    \"\"\"Pretty-print a matrix.\"\"\"\n    print(f\"\\n{name} =\")\n    n, m = A.shape\n    for i in range(n):\n        row = \"  [\" + \"  \".join(f\"{A[i,j]:7.3f}\" for j in range(m)) + \"]\"\n        print(row)\n\n\ndef demo_rank_one():\n    \"\"\"Demo: A rank-one matrix passes the certificate and admits potential extraction.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Tropical Rank-One Matrix (Certificate Holds)\")\n    print(\"=\" * 70)\n\n    A, u_true, v_true = generate_rank_one_matrix(4, 5, seed=42)\n    print_matrix(A, \"A (rank-one)\")\n\n    cert = has_tropical_certificate(A)\n    print(f\"\\nCertificate holds: {cert}\")\n\n    u, v = extract_potentials(A)\n    print(f\"\\nExtracted potentials:\")\n    print(f\"  u = {np.array2string(u, precision=3)}\")\n    print(f\"  v = {np.array2string(v, precision=3)}\")\n\n    A_recon = reconstruct_from_potentials(u, v)\n    error = np.max(np.abs(A - A_recon))\n    print(f\"\\nReconstruction error: {error:.2e}\")\n\n    # Show gauge relationship\n    c = u_true[0] - u[0]\n    print(f\"\\nGauge constant c = u_true[0] - u[0] = {c:.6f}\")\n    print(f\"  u_true - u = {np.array2string(u_true - u, precision=6)}\")\n    print(f\"  v - v_true = {np.array2string(v - v_true, precision=6)}\")\n    print(f\"  (All entries should equal c = {c:.6f})\")\n\n\ndef demo_random():\n    \"\"\"Demo: A random matrix fails the certificate and has a bad rectangle.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 2: Random Matrix (Certificate Fails)\")\n    print(\"=\" * 70)\n\n    A = generate_random_matrix(4, 5, seed=123)\n    print_matrix(A, \"A (random)\")\n\n    cert = has_tropical_certificate(A)\n    print(f\"\\nCertificate holds: {cert}\")\n\n    bad = find_bad_rectangle(A)\n    if bad:\n        i1, i2, j1, j2, violation = bad\n        print(f\"\\nBad rectangle witness: rows ({i1},{i2}), cols ({j1},{j2})\")\n        print(f\"  A[{i1},{j1}] + A[{i2},{j2}] = {A[i1,j1]:.4f} + {A[i2,j2]:.4f} = {A[i1,j1]+A[i2,j2]:.4f}\")\n        print(f\"  A[{i1},{j2}] + A[{i2},{j1}] = {A[i1,j2]:.4f} + {A[i2,j1]:.4f} = {A[i1,j2]+A[i2,j1]:.4f}\")\n        print(f\"  Violation magnitude: {violation:.6f}\")\n\n\ndef demo_perturbation():\n    \"\"\"Demo: Perturbing a rank-one matrix breaks the certificate.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 3: Perturbed Rank-One Matrix\")\n    print(\"=\" * 70)\n\n    A, _, _ = generate_rank_one_matrix(4, 5, seed=7)\n    print_matrix(A, \"A (rank-one)\")\n    print(f\"Certificate holds: {has_tropical_certificate(A)}\")\n\n    # Perturb one entry\n    A_pert = A.copy()\n    A_pert[1, 2] += 0.5\n    print_matrix(A_pert, \"A_perturbed (A[1,2] += 0.5)\")\n    print(f\"Certificate holds: {has_tropical_certificate(A_pert)}\")\n\n    bad = find_bad_rectangle(A_pert)\n    if bad:\n        i1, i2, j1, j2, violation = bad\n        print(f\"Bad rectangle: rows ({i1},{i2}), cols ({j1},{j2}), violation = {violation:.6f}\")\n\n\ndef demo_statistics():\n    \"\"\"Demo: Statistical analysis \u2014 how many random matrices are rank-one?\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 4: Statistical Analysis\")\n    print(\"=\" * 70)\n\n    sizes = [(3, 3), (4, 4), (5, 5), (3, 6)]\n    n_trials = 200\n\n    print(f\"\\nTesting {n_trials} random matrices per size:\")\n    print(f\"{'Size':>10s} | {'Rank-one':>10s} | {'Not rank-one':>12s} | {'% rank-one':>10s}\")\n    print(\"-\" * 50)\n\n    for n, m in sizes:\n        rank_one_count = 0\n        for trial in range(n_trials):\n            A = generate_random_matrix(n, m, seed=1000 * n + trial)\n            if has_tropical_certificate(A):\n                rank_one_count += 1\n        pct = 100.0 * rank_one_count / n_trials\n        print(f\"{n}x{m:>2d}      | {rank_one_count:>10d} | {n_trials - rank_one_count:>12d} | {pct:>9.1f}%\")\n\n    print(\"\\n(Random matrices are generically NOT rank-one \u2014 tropical rank one\")\n    print(\" requires n*m - n - m + 1 independent constraints to hold exactly.)\")\n\n\ndef demo_row_diff_constancy():\n    \"\"\"Demo: Row-difference constancy (vanishing curl) on certified matrices.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 5: Row-Difference Constancy (Vanishing Curl)\")\n    print(\"=\" * 70)\n\n    A, _, _ = generate_rank_one_matrix(4, 5, seed=99)\n    print_matrix(A, \"A (rank-one)\")\n\n    print(\"\\nRow differences A(i, 0) - A(i, 1) for each row i:\")\n    for i in range(4):\n        diff = A[i, 0] - A[i, 1]\n        print(f\"  Row {i}: {diff:.6f}\")\n    print(\"  (All equal \u2014 this is the vanishing curl condition)\")\n\n    print(\"\\nRow differences A(i, 2) - A(i, 3) for each row i:\")\n    for i in range(4):\n        diff = A[i, 2] - A[i, 3]\n        print(f\"  Row {i}: {diff:.6f}\")\n    print(\"  (Again all equal)\")\n\n\nif __name__ == \"__main__\":\n    demo_rank_one()\n    demo_random()\n    demo_perturbation()\n    demo_statistics()\n    demo_row_diff_constancy()\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demos completed successfully.\")\n    print(\"=\" * 70)\n"
+      },
+      {
+        "name": "Applications Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nTropical Matrix Certificate \u2014 Applications\n\nReal-world applications of tropical matrix certificates:\n\n1. Network delay diagnosis \u2014 detecting separable vs interacting delays\n2. Cost matrix analysis \u2014 factoring transportation costs\n3. Scheduling feasibility \u2014 certifying optimal schedules\n4. Data analysis \u2014 testing for additive structure in log-transformed data\n\"\"\"\n\nimport numpy as np\nfrom algorithms import TropicalMatrixCertificate, tropical_matrix_multiply\n\n\ndef network_delay_diagnosis():\n    \"\"\"\n    Application 1: Network Delay Diagnosis\n    \n    In a network with n sources and m destinations, the delay matrix D[i,j]\n    records the latency from source i to destination j.\n    \n    If D is additively separable (D[i,j] = u[i] + v[j]), then delays\n    decompose into independent source-side and destination-side components.\n    No interaction effects exist.\n    \n    If the certificate fails, a \"bad rectangle\" identifies four (source, dest)\n    pairs where interaction effects are present \u2014 e.g., congestion on a\n    specific cross-link.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Network Delay Diagnosis\")\n    print(\"=\" * 70)\n    \n    # Scenario A: Separable delays (no interaction)\n    source_delays = np.array([10.0, 15.0, 8.0, 20.0])  # ms\n    dest_delays = np.array([5.0, 12.0, 3.0, 8.0, 15.0])  # ms\n    D_sep = source_delays[:, np.newaxis] + dest_delays[np.newaxis, :]\n    \n    cert = TropicalMatrixCertificate(D_sep)\n    print(\"\\nScenario A: Independent source/destination delays\")\n    print(f\"  Certificate holds: {cert.check()}\")\n    u, v = cert.extract_potentials()\n    print(f\"  Source delays (extracted): {np.round(u, 1)}\")\n    print(f\"  Dest delays (extracted):  {np.round(v + u[0], 1)}\")\n    \n    # Scenario B: Congested cross-link\n    D_cong = D_sep.copy()\n    D_cong[1, 3] += 5.0  # Extra delay on source 1 \u2192 dest 3\n    D_cong[2, 0] += 3.0  # Extra delay on source 2 \u2192 dest 0\n    \n    cert2 = TropicalMatrixCertificate(D_cong)\n    print(\"\\nScenario B: Congested cross-links\")\n    print(f\"  Certificate holds: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        i1, i2, j1, j2, viol = bad\n        print(f\"  Interaction detected: sources ({i1},{i2}), dests ({j1},{j2})\")\n        print(f\"  Violation magnitude: {viol:.1f} ms\")\n        print(\"  \u2192 This identifies a congested cross-link requiring investigation\")\n\n\ndef transportation_cost_analysis():\n    \"\"\"\n    Application 2: Transportation Cost Factoring\n    \n    A shipping cost matrix C[i,j] gives the cost from warehouse i to customer j.\n    \n    If C is additively separable, costs decompose into:\n    - Warehouse-specific handling/loading costs\n    - Customer-specific delivery costs\n    \n    This means pricing can be done independently for each side.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 2: Transportation Cost Analysis\")\n    print(\"=\" * 70)\n    \n    # Separable costs\n    warehouse_costs = np.array([50.0, 30.0, 45.0])\n    delivery_costs = np.array([20.0, 35.0, 15.0, 40.0])\n    C = warehouse_costs[:, np.newaxis] + delivery_costs[np.newaxis, :]\n    \n    cert = TropicalMatrixCertificate(C)\n    print(\"\\nSeparable cost structure:\")\n    print(f\"  Certificate: {cert.check()}\")\n    u, v = cert.extract_potentials()\n    print(f\"  Warehouse costs: {np.round(u, 0)}\")\n    print(f\"  Delivery costs:  {np.round(v, 0)}\")\n    print(\"  \u2192 Pricing can be decomposed independently!\")\n    \n    # Non-separable: distance-dependent costs\n    locations_w = np.array([[0, 0], [10, 0], [5, 8]])  # warehouse coords\n    locations_c = np.array([[2, 3], [8, 1], [1, 7], [9, 6]])  # customer coords\n    C_dist = np.sqrt(\n        np.sum((locations_w[:, np.newaxis, :] - locations_c[np.newaxis, :, :]) ** 2, axis=2)\n    )\n    \n    cert2 = TropicalMatrixCertificate(C_dist)\n    print(\"\\nDistance-dependent cost structure:\")\n    print(f\"  Certificate: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        print(f\"  Non-separable witness: warehouses ({bad[0]},{bad[1]}), \"\n              f\"customers ({bad[2]},{bad[3]})\")\n        print(\"  \u2192 Distance-based costs have interaction effects (geometry matters)\")\n\n\ndef schedule_analysis():\n    \"\"\"\n    Application 3: Schedule Feasibility\n    \n    In project scheduling, a task matrix T[i,j] gives the time for\n    worker i to complete task j. If T is additively separable:\n        T[i,j] = skill[i] + difficulty[j]\n    \n    then workers and tasks are \"independent\" \u2014 no specialization effects.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 3: Schedule Analysis\")\n    print(\"=\" * 70)\n    \n    # Independent skills + difficulty\n    skill = np.array([2.0, 5.0, 3.0, 1.0])\n    difficulty = np.array([4.0, 2.0, 7.0, 1.0, 5.0])\n    T = skill[:, np.newaxis] + difficulty[np.newaxis, :]\n    \n    cert = TropicalMatrixCertificate(T)\n    print(\"\\nNo specialization (independent skills + difficulty):\")\n    print(f\"  Certificate: {cert.check()}\")\n    \n    # With specialization\n    T_spec = T.copy()\n    T_spec[0, 2] -= 3.0  # Worker 0 is especially good at task 2\n    T_spec[3, 0] -= 2.0  # Worker 3 is especially good at task 0\n    \n    cert2 = TropicalMatrixCertificate(T_spec)\n    print(\"\\nWith worker specialization:\")\n    print(f\"  Certificate: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        print(f\"  Specialization detected: workers ({bad[0]},{bad[1]}), \"\n              f\"tasks ({bad[2]},{bad[3]})\")\n        print(\"  \u2192 Workers have task-specific advantages (cannot decompose)\")\n\n\ndef log_data_independence():\n    \"\"\"\n    Application 4: Testing Independence in Log-Transformed Data\n    \n    For a contingency table P[i,j] of joint probabilities,\n    independence means P[i,j] = p_i * q_j.\n    \n    Taking logs: log P[i,j] = log p_i + log q_j.\n    \n    So tropical certificate on log P tests for independence!\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 4: Independence Test via Log Transform\")\n    print(\"=\" * 70)\n    \n    # Independent distribution\n    p = np.array([0.3, 0.2, 0.5])\n    q = np.array([0.1, 0.4, 0.15, 0.35])\n    P_indep = p[:, np.newaxis] * q[np.newaxis, :]\n    logP = np.log(P_indep)\n    \n    cert = TropicalMatrixCertificate(logP)\n    print(\"\\nIndependent distribution:\")\n    print(f\"  Certificate on log P: {cert.check()}\")\n    print(\"  \u2192 Variables are independent (log-probability is additively separable)\")\n    \n    # Correlated distribution\n    P_corr = P_indep.copy()\n    P_corr[0, 0] += 0.02\n    P_corr[0, 1] -= 0.02\n    P_corr[1, 0] -= 0.02\n    P_corr[1, 1] += 0.02\n    # Renormalize\n    P_corr /= P_corr.sum()\n    logP_corr = np.log(P_corr)\n    \n    cert2 = TropicalMatrixCertificate(logP_corr)\n    print(\"\\nCorrelated distribution:\")\n    print(f\"  Certificate on log P: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        print(f\"  Correlation witness: categories ({bad[0]},{bad[1]}), \"\n              f\"outcomes ({bad[2]},{bad[3]})\")\n        print(f\"  Violation (= interaction strength): {bad[4]:.6f}\")\n        print(\"  \u2192 Variables are NOT independent\")\n\n\nif __name__ == \"__main__\":\n    network_delay_diagnosis()\n    transportation_cost_analysis()\n    schedule_analysis()\n    log_data_independence()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"All applications completed successfully.\")\n    print(\"=\" * 70)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Certificate Checker",
+        "pseudocode": "for each pair of rows (i1,i2) and columns (j1,j2): check A[i1,j1]+A[i2,j2] == A[i1,j2]+A[i2,j1]. Time: O(n^2 m^2)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nTropical Matrix Certificate \u2014 Algorithms\n\nImplements the core algorithms from the tropical matrix certificate theory:\n\n1. Certificate Checker: O(n\u00b2m\u00b2) verification of all 2\u00d72 rectangle equalities\n2. Potential Extractor: O(n + m) canonical decomposition algorithm\n3. Bad Rectangle Finder: O(n\u00b2m\u00b2) worst-case obstruction search\n4. Gauge Normalizer: O(n + m) canonical form computation\n5. Certificate-Preserving Operations: composition and scaling\n\"\"\"\n\nimport numpy as np\nfrom typing import Optional, Tuple, List\n\n\nclass TropicalMatrixCertificate:\n    \"\"\"\n    A tropical matrix certificate checker and potential extractor.\n    \n    Given a matrix A : \u211d^{n\u00d7m}, this class can:\n    - Check if A satisfies the tropical rectangle equality on all 2\u00d72 submatrices\n    - Extract canonical row/column potentials if the certificate holds\n    - Find bad rectangle witnesses if the certificate fails\n    - Compute the gauge-canonical decomposition\n    \n    Time complexity:\n        check():    O(n\u00b2 m\u00b2) \u2014 must verify all rectangle pairs\n        extract():  O(n + m) \u2014 single pass with base indices\n        find_bad(): O(n\u00b2 m\u00b2) worst case, often O(1) for random matrices\n    \n    Space complexity: O(n + m) for potentials\n    \"\"\"\n    \n    def __init__(self, A: np.ndarray, tol: float = 1e-10):\n        \"\"\"\n        Initialize with matrix A.\n        \n        Args:\n            A: Real-valued matrix of shape (n, m)\n            tol: Numerical tolerance for floating-point comparisons\n        \"\"\"\n        assert A.ndim == 2, \"A must be a 2D matrix\"\n        self.A = A.astype(float)\n        self.n, self.m = A.shape\n        self.tol = tol\n        self._certified: Optional[bool] = None\n        self._bad_rect: Optional[Tuple[int, int, int, int]] = None\n    \n    def check_rectangle(self, i1: int, i2: int, j1: int, j2: int) -> bool:\n        \"\"\"\n        Check if a single 2\u00d72 rectangle satisfies the tropical rectangle equality.\n        \n        Verifies: A[i1,j1] + A[i2,j2] == A[i1,j2] + A[i2,j1]\n        \n        Time: O(1)\n        \"\"\"\n        lhs = self.A[i1, j1] + self.A[i2, j2]\n        rhs = self.A[i1, j2] + self.A[i2, j1]\n        return abs(lhs - rhs) < self.tol\n    \n    def check(self) -> bool:\n        \"\"\"\n        Check the full tropical matrix certificate.\n        \n        Returns True if ALL 2\u00d72 rectangles satisfy the tropical rectangle equality.\n        Caches the result and stores the first bad rectangle found (if any).\n        \n        Time: O(n\u00b2 m\u00b2)\n        Space: O(1) additional\n        \n        Algorithm:\n            for each pair of rows (i1, i2):\n                for each pair of columns (j1, j2):\n                    verify A[i1,j1] + A[i2,j2] == A[i1,j2] + A[i2,j1]\n        \"\"\"\n        if self._certified is not None:\n            return self._certified\n        \n        for i1 in range(self.n):\n            for i2 in range(i1 + 1, self.n):\n                for j1 in range(self.m):\n                    for j2 in range(j1 + 1, self.m):\n                        if not self.check_rectangle(i1, i2, j1, j2):\n                            self._certified = False\n                            self._bad_rect = (i1, i2, j1, j2)\n                            return False\n        \n        self._certified = True\n        return True\n    \n    def extract_potentials(\n        self, i0: int = 0, j0: int = 0\n    ) -> Tuple[np.ndarray, np.ndarray]:\n        \"\"\"\n        Extract canonical potentials from a certified matrix.\n        \n        Given base indices (i0, j0), computes:\n            u[i] = A[i, j0]\n            v[j] = A[i0, j] - A[i0, j0]\n        \n        Theorem: If the certificate holds, then A[i,j] = u[i] + v[j] for all i,j.\n        \n        Time: O(n + m)\n        Space: O(n + m)\n        \n        Args:\n            i0: Base row index (default 0)\n            j0: Base column index (default 0)\n        \n        Returns:\n            (u, v): Row and column potential vectors\n        \n        Raises:\n            ValueError: If certificate does not hold\n        \"\"\"\n        if not self.check():\n            raise ValueError(\n                \"Cannot extract potentials: certificate does not hold. \"\n                f\"Bad rectangle at rows {self._bad_rect[:2]}, cols {self._bad_rect[2:]}\"\n            )\n        \n        u = self.A[:, j0].copy()\n        v = self.A[i0, :] - self.A[i0, j0]\n        return u, v\n    \n    def find_bad_rectangle(\n        self,\n    ) -> Optional[Tuple[int, int, int, int, float]]:\n        \"\"\"\n        Find a bad rectangle witness for certificate failure.\n        \n        Returns (i1, i2, j1, j2, violation) where violation is the magnitude\n        of the rectangle inequality, or None if the certificate holds.\n        \n        Time: O(n\u00b2 m\u00b2) worst case\n        \"\"\"\n        self.check()  # Ensure cached\n        if self._certified:\n            return None\n        \n        i1, i2, j1, j2 = self._bad_rect\n        violation = abs(\n            (self.A[i1, j1] + self.A[i2, j2])\n            - (self.A[i1, j2] + self.A[i2, j1])\n        )\n        return (i1, i2, j1, j2, violation)\n    \n    def find_all_bad_rectangles(self) -> List[Tuple[int, int, int, int, float]]:\n        \"\"\"\n        Find ALL bad rectangle witnesses.\n        \n        Returns a list of (i1, i2, j1, j2, violation) tuples.\n        \n        Time: O(n\u00b2 m\u00b2)\n        \"\"\"\n        bads = []\n        for i1 in range(self.n):\n            for i2 in range(i1 + 1, self.n):\n                for j1 in range(self.m):\n                    for j2 in range(j1 + 1, self.m):\n                        lhs = self.A[i1, j1] + self.A[i2, j2]\n                        rhs = self.A[i1, j2] + self.A[i2, j1]\n                        if abs(lhs - rhs) >= self.tol:\n                            bads.append((i1, i2, j1, j2, abs(lhs - rhs)))\n        return bads\n    \n    def gauge_normalize(self) -> Tuple[np.ndarray, np.ndarray, float]:\n        \"\"\"\n        Compute the gauge-canonical decomposition.\n        \n        Returns (u, v, norm) where:\n        - u[0] = A[0, 0] (base row potential at index 0)\n        - v[0] = 0 (column potential normalized to 0 at index 0)\n        - norm = max|A[i,j]| for reference\n        \n        The gauge constant is uniquely determined by the normalization v[0] = 0.\n        \n        Time: O(n + m)\n        \"\"\"\n        u, v = self.extract_potentials(i0=0, j0=0)\n        norm = np.max(np.abs(self.A))\n        return u, v, norm\n    \n    def reconstruction_error(self, u: np.ndarray, v: np.ndarray) -> float:\n        \"\"\"Compute max |A[i,j] - u[i] - v[j]| over all entries.\"\"\"\n        A_recon = u[:, np.newaxis] + v[np.newaxis, :]\n        return np.max(np.abs(self.A - A_recon))\n    \n    def row_differences(self, j1: int, j2: int) -> np.ndarray:\n        \"\"\"\n        Compute row differences \u0394_{j1,j2}(i) = A[i,j1] - A[i,j2].\n        \n        Under the certificate, these are constant across all rows i.\n        This is the \"vanishing curl\" / \"exact 1-form\" characterization.\n        \"\"\"\n        return self.A[:, j1] - self.A[:, j2]\n    \n    def col_differences(self, i1: int, i2: int) -> np.ndarray:\n        \"\"\"\n        Compute column differences \u0394_{i1,i2}(j) = A[i1,j] - A[i2,j].\n        \n        Under the certificate, these are constant across all columns j.\n        \"\"\"\n        return self.A[i1, :] - self.A[i2, :]\n\n\ndef tropical_matrix_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Max-plus matrix multiplication: (A \u2297 B)[i,j] = max_k (A[i,k] + B[k,j]).\n    \n    Time: O(n m p) for A : n\u00d7m, B : m\u00d7p\n    \"\"\"\n    n = A.shape[0]\n    p = B.shape[1]\n    C = np.full((n, p), -np.inf)\n    for k in range(A.shape[1]):\n        C = np.maximum(C, A[:, k:k+1] + B[k:k+1, :])\n    return C\n\n\ndef is_tropical_idempotent(A: np.ndarray, tol: float = 1e-10) -> bool:\n    \"\"\"\n    Check if A is tropically idempotent: A \u2297 A = A in max-plus algebra.\n    \n    Time: O(n\u00b3) for n\u00d7n matrix\n    \"\"\"\n    assert A.shape[0] == A.shape[1], \"Matrix must be square\"\n    A2 = tropical_matrix_multiply(A, A)\n    return np.allclose(A2, A, atol=tol)\n\n\n# Example usage\nif __name__ == \"__main__\":\n    print(\"=== Tropical Matrix Certificate Algorithms ===\\n\")\n    \n    # Example 1: Rank-one matrix\n    u = np.array([1.0, 2.0, 3.0])\n    v = np.array([0.5, -1.0, 2.0, 0.0])\n    A = u[:, np.newaxis] + v[np.newaxis, :]\n    \n    cert = TropicalMatrixCertificate(A)\n    print(f\"Rank-one matrix certificate: {cert.check()}\")\n    u_ext, v_ext = cert.extract_potentials()\n    print(f\"Reconstruction error: {cert.reconstruction_error(u_ext, v_ext):.2e}\")\n    \n    # Example 2: Random matrix\n    B = np.random.randn(4, 5)\n    cert2 = TropicalMatrixCertificate(B)\n    print(f\"\\nRandom matrix certificate: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        print(f\"Bad rectangle: rows ({bad[0]},{bad[1]}), cols ({bad[2]},{bad[3]}), violation={bad[4]:.4f}\")\n    \n    # Example 3: Tropical idempotent\n    # A rank-one idempotent: A[i,j] = u[i] + v[j] with max_k(u[k]+v[k]) = 0\n    u_idem = np.array([1.0, -0.5, 0.3])\n    v_idem = -u_idem  # ensures max_k(u[k]+v[k]) = 0\n    A_idem = u_idem[:, np.newaxis] + v_idem[np.newaxis, :]\n    print(f\"\\nIdempotent check: {is_tropical_idempotent(A_idem)}\")\n    cert3 = TropicalMatrixCertificate(A_idem)\n    print(f\"Certificate: {cert3.check()}\")\n",
+        "code_file": "visualizations/medium_priority_certificate_checker.py"
+      }
+    ],
+    "lean_proofs": "import Mathlib\n\n/-!\n# Tropical Matrix Certificates\n\nThis file develops a theory of **tropical matrix certificates**: local witnesses\nthat certify global rank-one structure in tropical linear algebra.\n\n## Key Concepts\n\n- **Tropical rectangle equality**: The condition `A i\u2081 j\u2081 + A i\u2082 j\u2082 = A i\u2081 j\u2082 + A i\u2082 j\u2081`\n  on a 2\u00d72 submatrix, which is the tropical analogue of a vanishing 2\u00d72 minor.\n\n- **Tropical matrix certificate**: A matrix satisfies the certificate condition when\n  *all* 2\u00d72 rectangles satisfy the tropical rectangle equality. This is a locally\n  checkable condition that implies global additive separability.\n\n- **Certificate-extracted potentials**: Given a certified matrix, we can explicitly\n  extract row potentials `u` and column potentials `v` such that `A i j = u i + v j`.\n  This is the algorithmic heart of the theory \u2014 a discrete Poincar\u00e9 lemma.\n\n## Main Results\n\n1. `tropical_certificate_extracts_potentials`: Rectangle certificate \u27f9 additive separability\n2. `tropical_certificate_converse`: Additive separability \u27f9 rectangle certificate\n3. `tropical_certificate_iff_separable`: Full characterization (iff)\n4. `tropical_certificate_rank_one_unique_gauge`: Gauge uniqueness of the decomposition\n5. `not_certificate_iff_exists_bad_rectangle`: Obstruction characterization\n6. `tropical_matrix_idempotent_certificate_decomp`: Idempotent + certificate \u27f9 decomposition\n\n## Cross-Domain Connections\n\n- **Combinatorial Hodge theory**: Rectangle equalities are zero-curl conditions on\n  a bipartite grid. Potential extraction is a discrete Poincar\u00e9 lemma.\n- **Constraint satisfaction**: Certificates are local witness systems; bad rectangles\n  are minimally unsatisfiable cores.\n- **Statistical physics**: Additively separable matrices are non-interacting energy\n  landscapes; rectangle equality means zero mixed interaction.\n-/\n\n/-! ## Core Definitions -/\n\n/-- **Tropical rectangle equality**: A quadruple `(i\u2081, i\u2082, j\u2081, j\u2082)` satisfies the\nrectangle equality for matrix `A` if `A i\u2081 j\u2081 + A i\u2082 j\u2082 = A i\u2081 j\u2082 + A i\u2082 j\u2081`.\n\nThis is the tropical analogue of a vanishing 2\u00d72 minor after logarithmic change\nof coordinates. It captures the condition that the four entries of the 2\u00d72\nsubmatrix are \"rank-one consistent\" in the tropical sense. -/\ndef TropicalRectangleEq {\u03b9 \u03ba : Type*} (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (i\u2081 i\u2082 : \u03b9) (j\u2081 j\u2082 : \u03ba) : Prop :=\n  A i\u2081 j\u2081 + A i\u2082 j\u2082 = A i\u2081 j\u2082 + A i\u2082 j\u2081\n\n/-- **Tropical matrix certificate**: A matrix has a tropical certificate if *all*\n2\u00d72 rectangles satisfy the tropical rectangle equality. This is a locally checkable\ncondition \u2014 each check involves only four entries \u2014 that certifies global structure.\n\nMathematically, this says the matrix is a 1-cocycle on the complete bipartite graph\nwith zero coboundary, hence exact (= additively separable). -/\ndef HasTropicalMatrixCertificate {\u03b9 \u03ba : Type*} (A : \u03b9 \u2192 \u03ba \u2192 \u211d) : Prop :=\n  \u2200 i\u2081 i\u2082 j\u2081 j\u2082, TropicalRectangleEq A i\u2081 i\u2082 j\u2081 j\u2082\n\n/-- **Tropical separable decomposition**: A witness that a matrix `A` decomposes as\n`A i j = u i + v j` for row potentials `u` and column potentials `v`.\n\nThis is not merely packaging: it turns certification into an extractable algorithmic\nobject. The potentials can be computed in O(n + m) time given a certified matrix. -/\nstructure TropicalSeparableDecomposition {\u03b9 \u03ba : Type*} (A : \u03b9 \u2192 \u03ba \u2192 \u211d) where\n  u : \u03b9 \u2192 \u211d\n  v : \u03ba \u2192 \u211d\n  witness : \u2200 i j, A i j = u i + v j\n\n/-- **Matrix-level tropical idempotence**: A square matrix `A : \u03b9 \u2192 \u03b9 \u2192 \u211d` is\ntropically idempotent if `A \u2295\u2297 A = A` under max-plus matrix multiplication,\ni.e., `\u2a06_k (A i k + A k j) = A i j` for all `i, j`.\n\nIn the max-plus semiring, this means the matrix is a projection operator. -/\ndef TropicalMatrixIdempotent {\u03b9 : Type*} [Fintype \u03b9] [Nonempty \u03b9] (A : \u03b9 \u2192 \u03b9 \u2192 \u211d) : Prop :=\n  \u2200 i j, (Finset.univ.sup' Finset.univ_nonempty (fun k => A i k + A k j)) = A i j\n\n/-! ## Symmetry and Basic Properties of Rectangle Equality -/\n\n/-- Rectangle equality is symmetric in row swaps. -/\ntheorem TropicalRectangleEq.swap_rows {\u03b9 \u03ba : Type*} (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (i\u2081 i\u2082 : \u03b9) (j\u2081 j\u2082 : \u03ba) :\n    TropicalRectangleEq A i\u2081 i\u2082 j\u2081 j\u2082 \u2192 TropicalRectangleEq A i\u2082 i\u2081 j\u2081 j\u2082 := by\n  intro h\n  unfold TropicalRectangleEq at *\n  linarith\n\n/-- Rectangle equality is symmetric in column swaps. -/\ntheorem TropicalRectangleEq.swap_cols {\u03b9 \u03ba : Type*} (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (i\u2081 i\u2082 : \u03b9) (j\u2081 j\u2082 : \u03ba) :\n    TropicalRectangleEq A i\u2081 i\u2082 j\u2081 j\u2082 \u2192 TropicalRectangleEq A i\u2081 i\u2082 j\u2082 j\u2081 := by\n  intro h\n  unfold TropicalRectangleEq at *\n  linarith\n\n/-- Rectangle equality holds trivially when rows coincide. -/\ntheorem TropicalRectangleEq.diag_rows {\u03b9 \u03ba : Type*} (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (i : \u03b9) (j\u2081 j\u2082 : \u03ba) :\n    TropicalRectangleEq A i i j\u2081 j\u2082 := by\n  unfold TropicalRectangleEq\n  ring\n\n/-- Rectangle equality holds trivially when columns coincide. -/\ntheorem TropicalRectangleEq.diag_cols {\u03b9 \u03ba : Type*} (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (i\u2081 i\u2082 : \u03b9) (j : \u03ba) :\n    TropicalRectangleEq A i\u2081 i\u2082 j j := by\n  unfold TropicalRectangleEq\n  ring\n\n/-! ## Theorem 1: Certificate Implies Additive Separability (Potential Extraction)\n\nThis is the central theorem. Given a matrix satisfying the tropical rectangle\nequality on all 2\u00d72 submatrices, we extract explicit row and column potentials.\n\n**Proof strategy (Strategy A \u2014 Basepoint potential extraction)**:\nFix base indices `i\u2080, j\u2080`. Define `u(i) = A(i, j\u2080)` and `v(j) = A(i\u2080, j) - A(i\u2080, j\u2080)`.\nApply the rectangle equality to `(i, i\u2080, j, j\u2080)` to get\n`A(i,j) + A(i\u2080,j\u2080) = A(i,j\u2080) + A(i\u2080,j)`, hence `A(i,j) = u(i) + v(j)`.\n-/\n\n/-\n**Canonical potential extraction**: Given a certified matrix and base indices,\nthe potentials `u(i) = A(i, j\u2080)` and `v(j) = A(i\u2080, j) - A(i\u2080, j\u2080)` satisfy\n`A(i,j) = u(i) + v(j)`. This is a constructive, algorithmic decomposition.\n\nThis is the tropical analogue of recovering vertex potentials from curl-free\nedge data \u2014 a discrete Poincar\u00e9 lemma for the complete bipartite graph.\n-/\ntheorem tropical_certificate_extracts_potentials_at\n    {\u03b9 \u03ba : Type*}\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (hcert : HasTropicalMatrixCertificate A)\n    (i\u2080 : \u03b9) (j\u2080 : \u03ba) :\n    let u : \u03b9 \u2192 \u211d := fun i => A i j\u2080\n    let v : \u03ba \u2192 \u211d := fun j => A i\u2080 j - A i\u2080 j\u2080\n    \u2200 i j, A i j = u i + v j := by\n  -- Apply the rectangle equality to `(i, i\u2080, j, j\u2080)` to get `A i j + A i\u2080 j\u2080 = A i j\u2080 + A i\u2080 j`.\n  have h_eq : \u2200 i j, A i j + A i\u2080 j\u2080 = A i j\u2080 + A i\u2080 j := by\n    exact fun i j => hcert i i\u2080 j j\u2080;\n  exact fun i j => by linear_combination h_eq i j;\n\n/-\n**Global rank-one from rectangle certificate**: For any index types with\n`Nonempty` instances, the certificate implies additive separability.\n\nThis theorem says tropical rank one is not merely existentially factorized;\nit is locally certifiable.\n-/\ntheorem tropical_certificate_extracts_potentials\n    {\u03b9 \u03ba : Type*} [Nonempty \u03b9] [Nonempty \u03ba]\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (hcert : HasTropicalMatrixCertificate A) :\n    \u2203 u : \u03b9 \u2192 \u211d, \u2203 v : \u03ba \u2192 \u211d, \u2200 i j, A i j = u i + v j := by\n  exact \u27e8 fun i => A i ( Classical.choice \u2039_\u203a ), fun j => A ( Classical.choice \u2039_\u203a ) j - A ( Classical.choice \u2039_\u203a ) ( Classical.choice \u2039_\u203a ), fun i j => tropical_certificate_extracts_potentials_at A hcert ( Classical.choice \u2039_\u203a ) ( Classical.choice \u2039_\u203a ) i j \u27e9\n\n/-! ## Theorem 2: Converse \u2014 Additive Separability Implies Certificate\n\nIf `A(i,j) = u(i) + v(j)`, then all 2\u00d72 rectangles satisfy the tropical\nrectangle equality. This is straightforward by `ring`. -/\n\n/-\nThe converse: any additively separable matrix satisfies the certificate.\n-/\ntheorem tropical_certificate_converse\n    {\u03b9 \u03ba : Type*}\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (h : \u2203 u : \u03b9 \u2192 \u211d, \u2203 v : \u03ba \u2192 \u211d, \u2200 i j, A i j = u i + v j) :\n    HasTropicalMatrixCertificate A := by\n  -- Let's obtain the row and column potentials from the hypothesis.\n  obtain \u27e8u, v, huv\u27e9 := h;\n  exact fun i\u2081 i\u2082 j\u2081 j\u2082 => by rw [ TropicalRectangleEq, huv, huv, huv, huv ] ; ring;\n\n/-! ## Theorem 3: Full Characterization (Iff)\n\nThe tropical matrix certificate condition is equivalent to additive separability. -/\n\n/-\n**Full characterization**: A matrix has a tropical certificate if and only if\nit is additively separable. This is the tropical rank-one factorization theorem\nrestated in certificate language.\n-/\ntheorem tropical_certificate_iff_separable\n    {\u03b9 \u03ba : Type*} [Nonempty \u03b9] [Nonempty \u03ba]\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d) :\n    HasTropicalMatrixCertificate A \u2194\n    \u2203 u : \u03b9 \u2192 \u211d, \u2203 v : \u03ba \u2192 \u211d, \u2200 i j, A i j = u i + v j := by\n  exact \u27e8 fun h => tropical_certificate_extracts_potentials A h, fun h => tropical_certificate_converse A h \u27e9\n\n/-! ## Theorem 4: Gauge Uniqueness\n\nThe additive separable decomposition is unique up to a gauge transformation:\nif `A = u + v = u' + v'`, then `u' = u + c` and `v' = v - c` for some constant `c`. -/\n\n/-\n**Gauge uniqueness**: Two separable decompositions of the same matrix differ\nby a constant gauge shift. This is the tropical analogue of the fact that\npotentials are determined up to an additive constant.\n-/\ntheorem tropical_certificate_rank_one_unique_gauge\n    {\u03b9 \u03ba : Type*} [Nonempty \u03b9] [Nonempty \u03ba]\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    {u u' : \u03b9 \u2192 \u211d} {v v' : \u03ba \u2192 \u211d}\n    (h : \u2200 i j, A i j = u i + v j)\n    (h' : \u2200 i j, A i j = u' i + v' j) :\n    \u2203 c : \u211d, (\u2200 i, u' i = u i + c) \u2227 (\u2200 j, v' j = v j - c) := by\n  exact \u27e8 u' ( Classical.arbitrary \u03b9 ) - u ( Classical.arbitrary \u03b9 ), fun i => by linarith [ h i ( Classical.arbitrary \u03ba ), h' i ( Classical.arbitrary \u03ba ), h ( Classical.arbitrary \u03b9 ) ( Classical.arbitrary \u03ba ), h' ( Classical.arbitrary \u03b9 ) ( Classical.arbitrary \u03ba ) ], fun j => by linarith [ h ( Classical.arbitrary \u03b9 ) j, h' ( Classical.arbitrary \u03b9 ) j, h ( Classical.arbitrary \u03b9 ) ( Classical.arbitrary \u03ba ), h' ( Classical.arbitrary \u03b9 ) ( Classical.arbitrary \u03ba ) ] \u27e9\n\n/-! ## Theorem 5: Obstruction Characterization\n\nThe negation of the certificate is equivalent to existence of a bad rectangle. -/\n\n/-\n**Obstruction characterization**: A matrix fails the certificate condition\nif and only if there exists a \"bad rectangle\" \u2014 a 2\u00d72 submatrix violating the\ntropical rectangle equality. This is the tropical analogue of finding a\nnonvanishing 2\u00d72 minor as an obstruction to rank one.\n-/\ntheorem not_certificate_iff_exists_bad_rectangle\n    {\u03b9 \u03ba : Type*}\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d) :\n    \u00ac HasTropicalMatrixCertificate A \u2194\n      \u2203 i\u2081 i\u2082 j\u2081 j\u2082,\n        A i\u2081 j\u2081 + A i\u2082 j\u2082 \u2260 A i\u2081 j\u2082 + A i\u2082 j\u2081 := by\n  simp [HasTropicalMatrixCertificate];\n  rfl\n\n/-! ## Theorem 6: Idempotent Matrices with Certificate\n\nA tropical square matrix that is both idempotent (under max-plus multiplication)\nand has the rectangle certificate admits an additive separable decomposition.\nThis connects tropical projectors to rank-one certificate theory. -/\n\n/-\n**Idempotent + certificate implies decomposition**: If a tropical square matrix\nis both idempotent under max-plus multiplication and satisfies the rectangle\ncertificate, then it admits an additive separable decomposition.\n\nIdempotents are projectors; rank-one certified idempotents are tropical\nprojective atoms \u2014 the building blocks of tropical representation theory.\n-/\ntheorem tropical_matrix_idempotent_certificate_decomp\n    {\u03b9 : Type*} [Fintype \u03b9] [DecidableEq \u03b9] [Nonempty \u03b9]\n    (A : \u03b9 \u2192 \u03b9 \u2192 \u211d)\n    (hidem : TropicalMatrixIdempotent A)\n    (hcert : HasTropicalMatrixCertificate A) :\n    \u2203 u v : \u03b9 \u2192 \u211d, (\u2200 i j, A i j = u i + v j) \u2227 TropicalMatrixIdempotent A := by\n  exact Exists.elim ( tropical_certificate_extracts_potentials A hcert ) fun u hu => Exists.elim hu fun v hv => \u27e8 u, v, hv, hidem \u27e9\n\n/-! ## Theorem 7: Difference-cocycle characterization\n\nRectangle equality means that row differences `A(i,j\u2081) - A(i,j\u2082)` are\nindependent of `i`. This is the \"vanishing curl\" / \"exact 1-form\" perspective. -/\n\n/-\n**Row-difference constancy**: Under the certificate, the difference\n`A(i, j\u2081) - A(i, j\u2082)` is constant across all rows `i`. This reveals the\ncertificate as a vanishing-curl condition on the complete bipartite graph.\n-/\ntheorem tropical_certificate_row_diff_const\n    {\u03b9 \u03ba : Type*}\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (hcert : HasTropicalMatrixCertificate A)\n    (i\u2081 i\u2082 : \u03b9) (j\u2081 j\u2082 : \u03ba) :\n    A i\u2081 j\u2081 - A i\u2081 j\u2082 = A i\u2082 j\u2081 - A i\u2082 j\u2082 := by\n  have := hcert i\u2081 i\u2082 j\u2081 j\u2082\n  unfold TropicalRectangleEq at this\n  linarith\n\n/-\n**Column-difference constancy**: Under the certificate, the difference\n`A(i\u2081, j) - A(i\u2082, j)` is constant across all columns `j`.\n-/\ntheorem tropical_certificate_col_diff_const\n    {\u03b9 \u03ba : Type*}\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (hcert : HasTropicalMatrixCertificate A)\n    (i\u2081 i\u2082 : \u03b9) (j\u2081 j\u2082 : \u03ba) :\n    A i\u2081 j\u2081 - A i\u2082 j\u2081 = A i\u2081 j\u2082 - A i\u2082 j\u2082 := by\n  exact sub_eq_sub_iff_add_eq_add.mpr (hcert i\u2081 i\u2082 j\u2081 j\u2082)\n\n/-! ## Computational API -/\n\n/-- Build a `TropicalSeparableDecomposition` from a certified matrix, choosing\ncanonical base indices via `Nonempty`. -/\nnoncomputable def TropicalSeparableDecomposition.ofCertificate\n    {\u03b9 \u03ba : Type*} [Nonempty \u03b9] [Nonempty \u03ba]\n    (A : \u03b9 \u2192 \u03ba \u2192 \u211d)\n    (hcert : HasTropicalMatrixCertificate A) :\n    TropicalSeparableDecomposition A where\n  u := fun i => A i (Classical.choice \u2039Nonempty \u03ba\u203a)\n  v := fun j => A (Classical.choice \u2039Nonempty \u03b9\u203a) j -\n                A (Classical.choice \u2039Nonempty \u03b9\u203a) (Classical.choice \u2039Nonempty \u03ba\u203a)\n  witness := tropical_certificate_extracts_potentials_at A hcert _ _\n\n/-! ## Falsifiable Conjecture\n\n**Conjecture**: For matrices of tropical rank `r`, obstruction certificates are\nsupported on at most `(r+1) \u00d7 (r+1)` submatrices. This would be the tropical\nanalogue of minor-based rank certification in classical linear algebra.\n\nFor `r = 1`, this is exactly `not_certificate_iff_exists_bad_rectangle` above:\na 2\u00d72 submatrix always suffices. The general case remains open. -/",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nTropical Matrix Certificate \u2014 Algorithms\n\nImplements the core algorithms from the tropical matrix certificate theory:\n\n1. Certificate Checker: O(n\u00b2m\u00b2) verification of all 2\u00d72 rectangle equalities\n2. Potential Extractor: O(n + m) canonical decomposition algorithm\n3. Bad Rectangle Finder: O(n\u00b2m\u00b2) worst-case obstruction search\n4. Gauge Normalizer: O(n + m) canonical form computation\n5. Certificate-Preserving Operations: composition and scaling\n\"\"\"\n\nimport numpy as np\nfrom typing import Optional, Tuple, List\n\n\nclass TropicalMatrixCertificate:\n    \"\"\"\n    A tropical matrix certificate checker and potential extractor.\n    \n    Given a matrix A : \u211d^{n\u00d7m}, this class can:\n    - Check if A satisfies the tropical rectangle equality on all 2\u00d72 submatrices\n    - Extract canonical row/column potentials if the certificate holds\n    - Find bad rectangle witnesses if the certificate fails\n    - Compute the gauge-canonical decomposition\n    \n    Time complexity:\n        check():    O(n\u00b2 m\u00b2) \u2014 must verify all rectangle pairs\n        extract():  O(n + m) \u2014 single pass with base indices\n        find_bad(): O(n\u00b2 m\u00b2) worst case, often O(1) for random matrices\n    \n    Space complexity: O(n + m) for potentials\n    \"\"\"\n    \n    def __init__(self, A: np.ndarray, tol: float = 1e-10):\n        \"\"\"\n        Initialize with matrix A.\n        \n        Args:\n            A: Real-valued matrix of shape (n, m)\n            tol: Numerical tolerance for floating-point comparisons\n        \"\"\"\n        assert A.ndim == 2, \"A must be a 2D matrix\"\n        self.A = A.astype(float)\n        self.n, self.m = A.shape\n        self.tol = tol\n        self._certified: Optional[bool] = None\n        self._bad_rect: Optional[Tuple[int, int, int, int]] = None\n    \n    def check_rectangle(self, i1: int, i2: int, j1: int, j2: int) -> bool:\n        \"\"\"\n        Check if a single 2\u00d72 rectangle satisfies the tropical rectangle equality.\n        \n        Verifies: A[i1,j1] + A[i2,j2] == A[i1,j2] + A[i2,j1]\n        \n        Time: O(1)\n        \"\"\"\n        lhs = self.A[i1, j1] + self.A[i2, j2]\n        rhs = self.A[i1, j2] + self.A[i2, j1]\n        return abs(lhs - rhs) < self.tol\n    \n    def check(self) -> bool:\n        \"\"\"\n        Check the full tropical matrix certificate.\n        \n        Returns True if ALL 2\u00d72 rectangles satisfy the tropical rectangle equality.\n        Caches the result and stores the first bad rectangle found (if any).\n        \n        Time: O(n\u00b2 m\u00b2)\n        Space: O(1) additional\n        \n        Algorithm:\n            for each pair of rows (i1, i2):\n                for each pair of columns (j1, j2):\n                    verify A[i1,j1] + A[i2,j2] == A[i1,j2] + A[i2,j1]\n        \"\"\"\n        if self._certified is not None:\n            return self._certified\n        \n        for i1 in range(self.n):\n            for i2 in range(i1 + 1, self.n):\n                for j1 in range(self.m):\n                    for j2 in range(j1 + 1, self.m):\n                        if not self.check_rectangle(i1, i2, j1, j2):\n                            self._certified = False\n                            self._bad_rect = (i1, i2, j1, j2)\n                            return False\n        \n        self._certified = True\n        return True\n    \n    def extract_potentials(\n        self, i0: int = 0, j0: int = 0\n    ) -> Tuple[np.ndarray, np.ndarray]:\n        \"\"\"\n        Extract canonical potentials from a certified matrix.\n        \n        Given base indices (i0, j0), computes:\n            u[i] = A[i, j0]\n            v[j] = A[i0, j] - A[i0, j0]\n        \n        Theorem: If the certificate holds, then A[i,j] = u[i] + v[j] for all i,j.\n        \n        Time: O(n + m)\n        Space: O(n + m)\n        \n        Args:\n            i0: Base row index (default 0)\n            j0: Base column index (default 0)\n        \n        Returns:\n            (u, v): Row and column potential vectors\n        \n        Raises:\n            ValueError: If certificate does not hold\n        \"\"\"\n        if not self.check():\n            raise ValueError(\n                \"Cannot extract potentials: certificate does not hold. \"\n                f\"Bad rectangle at rows {self._bad_rect[:2]}, cols {self._bad_rect[2:]}\"\n            )\n        \n        u = self.A[:, j0].copy()\n        v = self.A[i0, :] - self.A[i0, j0]\n        return u, v\n    \n    def find_bad_rectangle(\n        self,\n    ) -> Optional[Tuple[int, int, int, int, float]]:\n        \"\"\"\n        Find a bad rectangle witness for certificate failure.\n        \n        Returns (i1, i2, j1, j2, violation) where violation is the magnitude\n        of the rectangle inequality, or None if the certificate holds.\n        \n        Time: O(n\u00b2 m\u00b2) worst case\n        \"\"\"\n        self.check()  # Ensure cached\n        if self._certified:\n            return None\n        \n        i1, i2, j1, j2 = self._bad_rect\n        violation = abs(\n            (self.A[i1, j1] + self.A[i2, j2])\n            - (self.A[i1, j2] + self.A[i2, j1])\n        )\n        return (i1, i2, j1, j2, violation)\n    \n    def find_all_bad_rectangles(self) -> List[Tuple[int, int, int, int, float]]:\n        \"\"\"\n        Find ALL bad rectangle witnesses.\n        \n        Returns a list of (i1, i2, j1, j2, violation) tuples.\n        \n        Time: O(n\u00b2 m\u00b2)\n        \"\"\"\n        bads = []\n        for i1 in range(self.n):\n            for i2 in range(i1 + 1, self.n):\n                for j1 in range(self.m):\n                    for j2 in range(j1 + 1, self.m):\n                        lhs = self.A[i1, j1] + self.A[i2, j2]\n                        rhs = self.A[i1, j2] + self.A[i2, j1]\n                        if abs(lhs - rhs) >= self.tol:\n                            bads.append((i1, i2, j1, j2, abs(lhs - rhs)))\n        return bads\n    \n    def gauge_normalize(self) -> Tuple[np.ndarray, np.ndarray, float]:\n        \"\"\"\n        Compute the gauge-canonical decomposition.\n        \n        Returns (u, v, norm) where:\n        - u[0] = A[0, 0] (base row potential at index 0)\n        - v[0] = 0 (column potential normalized to 0 at index 0)\n        - norm = max|A[i,j]| for reference\n        \n        The gauge constant is uniquely determined by the normalization v[0] = 0.\n        \n        Time: O(n + m)\n        \"\"\"\n        u, v = self.extract_potentials(i0=0, j0=0)\n        norm = np.max(np.abs(self.A))\n        return u, v, norm\n    \n    def reconstruction_error(self, u: np.ndarray, v: np.ndarray) -> float:\n        \"\"\"Compute max |A[i,j] - u[i] - v[j]| over all entries.\"\"\"\n        A_recon = u[:, np.newaxis] + v[np.newaxis, :]\n        return np.max(np.abs(self.A - A_recon))\n    \n    def row_differences(self, j1: int, j2: int) -> np.ndarray:\n        \"\"\"\n        Compute row differences \u0394_{j1,j2}(i) = A[i,j1] - A[i,j2].\n        \n        Under the certificate, these are constant across all rows i.\n        This is the \"vanishing curl\" / \"exact 1-form\" characterization.\n        \"\"\"\n        return self.A[:, j1] - self.A[:, j2]\n    \n    def col_differences(self, i1: int, i2: int) -> np.ndarray:\n        \"\"\"\n        Compute column differences \u0394_{i1,i2}(j) = A[i1,j] - A[i2,j].\n        \n        Under the certificate, these are constant across all columns j.\n        \"\"\"\n        return self.A[i1, :] - self.A[i2, :]\n\n\ndef tropical_matrix_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Max-plus matrix multiplication: (A \u2297 B)[i,j] = max_k (A[i,k] + B[k,j]).\n    \n    Time: O(n m p) for A : n\u00d7m, B : m\u00d7p\n    \"\"\"\n    n = A.shape[0]\n    p = B.shape[1]\n    C = np.full((n, p), -np.inf)\n    for k in range(A.shape[1]):\n        C = np.maximum(C, A[:, k:k+1] + B[k:k+1, :])\n    return C\n\n\ndef is_tropical_idempotent(A: np.ndarray, tol: float = 1e-10) -> bool:\n    \"\"\"\n    Check if A is tropically idempotent: A \u2297 A = A in max-plus algebra.\n    \n    Time: O(n\u00b3) for n\u00d7n matrix\n    \"\"\"\n    assert A.shape[0] == A.shape[1], \"Matrix must be square\"\n    A2 = tropical_matrix_multiply(A, A)\n    return np.allclose(A2, A, atol=tol)\n\n\n# Example usage\nif __name__ == \"__main__\":\n    print(\"=== Tropical Matrix Certificate Algorithms ===\\n\")\n    \n    # Example 1: Rank-one matrix\n    u = np.array([1.0, 2.0, 3.0])\n    v = np.array([0.5, -1.0, 2.0, 0.0])\n    A = u[:, np.newaxis] + v[np.newaxis, :]\n    \n    cert = TropicalMatrixCertificate(A)\n    print(f\"Rank-one matrix certificate: {cert.check()}\")\n    u_ext, v_ext = cert.extract_potentials()\n    print(f\"Reconstruction error: {cert.reconstruction_error(u_ext, v_ext):.2e}\")\n    \n    # Example 2: Random matrix\n    B = np.random.randn(4, 5)\n    cert2 = TropicalMatrixCertificate(B)\n    print(f\"\\nRandom matrix certificate: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        print(f\"Bad rectangle: rows ({bad[0]},{bad[1]}), cols ({bad[2]},{bad[3]}), violation={bad[4]:.4f}\")\n    \n    # Example 3: Tropical idempotent\n    # A rank-one idempotent: A[i,j] = u[i] + v[j] with max_k(u[k]+v[k]) = 0\n    u_idem = np.array([1.0, -0.5, 0.3])\n    v_idem = -u_idem  # ensures max_k(u[k]+v[k]) = 0\n    A_idem = u_idem[:, np.newaxis] + v_idem[np.newaxis, :]\n    print(f\"\\nIdempotent check: {is_tropical_idempotent(A_idem)}\")\n    cert3 = TropicalMatrixCertificate(A_idem)\n    print(f\"Certificate: {cert3.check()}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nTropical Matrix Certificate \u2014 Applications\n\nReal-world applications of tropical matrix certificates:\n\n1. Network delay diagnosis \u2014 detecting separable vs interacting delays\n2. Cost matrix analysis \u2014 factoring transportation costs\n3. Scheduling feasibility \u2014 certifying optimal schedules\n4. Data analysis \u2014 testing for additive structure in log-transformed data\n\"\"\"\n\nimport numpy as np\nfrom algorithms import TropicalMatrixCertificate, tropical_matrix_multiply\n\n\ndef network_delay_diagnosis():\n    \"\"\"\n    Application 1: Network Delay Diagnosis\n    \n    In a network with n sources and m destinations, the delay matrix D[i,j]\n    records the latency from source i to destination j.\n    \n    If D is additively separable (D[i,j] = u[i] + v[j]), then delays\n    decompose into independent source-side and destination-side components.\n    No interaction effects exist.\n    \n    If the certificate fails, a \"bad rectangle\" identifies four (source, dest)\n    pairs where interaction effects are present \u2014 e.g., congestion on a\n    specific cross-link.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Network Delay Diagnosis\")\n    print(\"=\" * 70)\n    \n    # Scenario A: Separable delays (no interaction)\n    source_delays = np.array([10.0, 15.0, 8.0, 20.0])  # ms\n    dest_delays = np.array([5.0, 12.0, 3.0, 8.0, 15.0])  # ms\n    D_sep = source_delays[:, np.newaxis] + dest_delays[np.newaxis, :]\n    \n    cert = TropicalMatrixCertificate(D_sep)\n    print(\"\\nScenario A: Independent source/destination delays\")\n    print(f\"  Certificate holds: {cert.check()}\")\n    u, v = cert.extract_potentials()\n    print(f\"  Source delays (extracted): {np.round(u, 1)}\")\n    print(f\"  Dest delays (extracted):  {np.round(v + u[0], 1)}\")\n    \n    # Scenario B: Congested cross-link\n    D_cong = D_sep.copy()\n    D_cong[1, 3] += 5.0  # Extra delay on source 1 \u2192 dest 3\n    D_cong[2, 0] += 3.0  # Extra delay on source 2 \u2192 dest 0\n    \n    cert2 = TropicalMatrixCertificate(D_cong)\n    print(\"\\nScenario B: Congested cross-links\")\n    print(f\"  Certificate holds: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        i1, i2, j1, j2, viol = bad\n        print(f\"  Interaction detected: sources ({i1},{i2}), dests ({j1},{j2})\")\n        print(f\"  Violation magnitude: {viol:.1f} ms\")\n        print(\"  \u2192 This identifies a congested cross-link requiring investigation\")\n\n\ndef transportation_cost_analysis():\n    \"\"\"\n    Application 2: Transportation Cost Factoring\n    \n    A shipping cost matrix C[i,j] gives the cost from warehouse i to customer j.\n    \n    If C is additively separable, costs decompose into:\n    - Warehouse-specific handling/loading costs\n    - Customer-specific delivery costs\n    \n    This means pricing can be done independently for each side.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 2: Transportation Cost Analysis\")\n    print(\"=\" * 70)\n    \n    # Separable costs\n    warehouse_costs = np.array([50.0, 30.0, 45.0])\n    delivery_costs = np.array([20.0, 35.0, 15.0, 40.0])\n    C = warehouse_costs[:, np.newaxis] + delivery_costs[np.newaxis, :]\n    \n    cert = TropicalMatrixCertificate(C)\n    print(\"\\nSeparable cost structure:\")\n    print(f\"  Certificate: {cert.check()}\")\n    u, v = cert.extract_potentials()\n    print(f\"  Warehouse costs: {np.round(u, 0)}\")\n    print(f\"  Delivery costs:  {np.round(v, 0)}\")\n    print(\"  \u2192 Pricing can be decomposed independently!\")\n    \n    # Non-separable: distance-dependent costs\n    locations_w = np.array([[0, 0], [10, 0], [5, 8]])  # warehouse coords\n    locations_c = np.array([[2, 3], [8, 1], [1, 7], [9, 6]])  # customer coords\n    C_dist = np.sqrt(\n        np.sum((locations_w[:, np.newaxis, :] - locations_c[np.newaxis, :, :]) ** 2, axis=2)\n    )\n    \n    cert2 = TropicalMatrixCertificate(C_dist)\n    print(\"\\nDistance-dependent cost structure:\")\n    print(f\"  Certificate: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        print(f\"  Non-separable witness: warehouses ({bad[0]},{bad[1]}), \"\n              f\"customers ({bad[2]},{bad[3]})\")\n        print(\"  \u2192 Distance-based costs have interaction effects (geometry matters)\")\n\n\ndef schedule_analysis():\n    \"\"\"\n    Application 3: Schedule Feasibility\n    \n    In project scheduling, a task matrix T[i,j] gives the time for\n    worker i to complete task j. If T is additively separable:\n        T[i,j] = skill[i] + difficulty[j]\n    \n    then workers and tasks are \"independent\" \u2014 no specialization effects.\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 3: Schedule Analysis\")\n    print(\"=\" * 70)\n    \n    # Independent skills + difficulty\n    skill = np.array([2.0, 5.0, 3.0, 1.0])\n    difficulty = np.array([4.0, 2.0, 7.0, 1.0, 5.0])\n    T = skill[:, np.newaxis] + difficulty[np.newaxis, :]\n    \n    cert = TropicalMatrixCertificate(T)\n    print(\"\\nNo specialization (independent skills + difficulty):\")\n    print(f\"  Certificate: {cert.check()}\")\n    \n    # With specialization\n    T_spec = T.copy()\n    T_spec[0, 2] -= 3.0  # Worker 0 is especially good at task 2\n    T_spec[3, 0] -= 2.0  # Worker 3 is especially good at task 0\n    \n    cert2 = TropicalMatrixCertificate(T_spec)\n    print(\"\\nWith worker specialization:\")\n    print(f\"  Certificate: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        print(f\"  Specialization detected: workers ({bad[0]},{bad[1]}), \"\n              f\"tasks ({bad[2]},{bad[3]})\")\n        print(\"  \u2192 Workers have task-specific advantages (cannot decompose)\")\n\n\ndef log_data_independence():\n    \"\"\"\n    Application 4: Testing Independence in Log-Transformed Data\n    \n    For a contingency table P[i,j] of joint probabilities,\n    independence means P[i,j] = p_i * q_j.\n    \n    Taking logs: log P[i,j] = log p_i + log q_j.\n    \n    So tropical certificate on log P tests for independence!\n    \"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"APPLICATION 4: Independence Test via Log Transform\")\n    print(\"=\" * 70)\n    \n    # Independent distribution\n    p = np.array([0.3, 0.2, 0.5])\n    q = np.array([0.1, 0.4, 0.15, 0.35])\n    P_indep = p[:, np.newaxis] * q[np.newaxis, :]\n    logP = np.log(P_indep)\n    \n    cert = TropicalMatrixCertificate(logP)\n    print(\"\\nIndependent distribution:\")\n    print(f\"  Certificate on log P: {cert.check()}\")\n    print(\"  \u2192 Variables are independent (log-probability is additively separable)\")\n    \n    # Correlated distribution\n    P_corr = P_indep.copy()\n    P_corr[0, 0] += 0.02\n    P_corr[0, 1] -= 0.02\n    P_corr[1, 0] -= 0.02\n    P_corr[1, 1] += 0.02\n    # Renormalize\n    P_corr /= P_corr.sum()\n    logP_corr = np.log(P_corr)\n    \n    cert2 = TropicalMatrixCertificate(logP_corr)\n    print(\"\\nCorrelated distribution:\")\n    print(f\"  Certificate on log P: {cert2.check()}\")\n    bad = cert2.find_bad_rectangle()\n    if bad:\n        print(f\"  Correlation witness: categories ({bad[0]},{bad[1]}), \"\n              f\"outcomes ({bad[2]},{bad[3]})\")\n        print(f\"  Violation (= interaction strength): {bad[4]:.6f}\")\n        print(\"  \u2192 Variables are NOT independent\")\n\n\nif __name__ == \"__main__\":\n    network_delay_diagnosis()\n    transportation_cost_analysis()\n    schedule_analysis()\n    log_data_independence()\n    \n    print(\"\\n\" + \"=\" * 70)\n    print(\"All applications completed successfully.\")\n    print(\"=\" * 70)\n\n\n#!/usr/bin/env python3\n\"\"\"\nTropical Matrix Certificate \u2014 Interactive Demo\n\nDemonstrates:\n1. Checking the tropical rectangle certificate on matrices\n2. Extracting canonical potentials (u, v) from certified matrices\n3. Detecting and displaying \"bad rectangle\" witnesses when certificate fails\n4. Visualizing separable vs non-separable energy landscapes\n\"\"\"\n\nimport numpy as np\nimport itertools\n\n\ndef check_rectangle(A, i1, i2, j1, j2):\n    \"\"\"Check if a single 2x2 rectangle satisfies the tropical rectangle equality.\"\"\"\n    return np.isclose(A[i1, j1] + A[i2, j2], A[i1, j2] + A[i2, j1])\n\n\ndef has_tropical_certificate(A):\n    \"\"\"Check if ALL 2x2 rectangles satisfy the tropical rectangle equality.\"\"\"\n    n, m = A.shape\n    for i1, i2 in itertools.combinations(range(n), 2):\n        for j1, j2 in itertools.combinations(range(m), 2):\n            if not check_rectangle(A, i1, i2, j1, j2):\n                return False\n    return True\n\n\ndef find_bad_rectangle(A):\n    \"\"\"Find the first bad rectangle witness, or None if certificate holds.\"\"\"\n    n, m = A.shape\n    for i1, i2 in itertools.combinations(range(n), 2):\n        for j1, j2 in itertools.combinations(range(m), 2):\n            if not check_rectangle(A, i1, i2, j1, j2):\n                violation = abs(\n                    (A[i1, j1] + A[i2, j2]) - (A[i1, j2] + A[i2, j1])\n                )\n                return (i1, i2, j1, j2, violation)\n    return None\n\n\ndef extract_potentials(A, i0=0, j0=0):\n    \"\"\"\n    Extract canonical potentials from a certified matrix.\n    \n    Given base indices (i0, j0), compute:\n        u(i) = A(i, j0)\n        v(j) = A(i0, j) - A(i0, j0)\n    \n    Then A(i,j) = u(i) + v(j) for all i,j (if certificate holds).\n    \"\"\"\n    u = A[:, j0].copy()\n    v = A[i0, :] - A[i0, j0]\n    return u, v\n\n\ndef reconstruct_from_potentials(u, v):\n    \"\"\"Reconstruct the matrix A(i,j) = u(i) + v(j).\"\"\"\n    return u[:, np.newaxis] + v[np.newaxis, :]\n\n\ndef generate_rank_one_matrix(n, m, seed=None):\n    \"\"\"Generate a random tropical rank-one matrix A(i,j) = u(i) + v(j).\"\"\"\n    rng = np.random.default_rng(seed)\n    u = rng.standard_normal(n)\n    v = rng.standard_normal(m)\n    return u[:, np.newaxis] + v[np.newaxis, :], u, v\n\n\ndef generate_random_matrix(n, m, seed=None):\n    \"\"\"Generate a random matrix (generically not rank-one).\"\"\"\n    rng = np.random.default_rng(seed)\n    return rng.standard_normal((n, m))\n\n\ndef print_matrix(A, name=\"A\"):\n    \"\"\"Pretty-print a matrix.\"\"\"\n    print(f\"\\n{name} =\")\n    n, m = A.shape\n    for i in range(n):\n        row = \"  [\" + \"  \".join(f\"{A[i,j]:7.3f}\" for j in range(m)) + \"]\"\n        print(row)\n\n\ndef demo_rank_one():\n    \"\"\"Demo: A rank-one matrix passes the certificate and admits potential extraction.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Tropical Rank-One Matrix (Certificate Holds)\")\n    print(\"=\" * 70)\n\n    A, u_true, v_true = generate_rank_one_matrix(4, 5, seed=42)\n    print_matrix(A, \"A (rank-one)\")\n\n    cert = has_tropical_certificate(A)\n    print(f\"\\nCertificate holds: {cert}\")\n\n    u, v = extract_potentials(A)\n    print(f\"\\nExtracted potentials:\")\n    print(f\"  u = {np.array2string(u, precision=3)}\")\n    print(f\"  v = {np.array2string(v, precision=3)}\")\n\n    A_recon = reconstruct_from_potentials(u, v)\n    error = np.max(np.abs(A - A_recon))\n    print(f\"\\nReconstruction error: {error:.2e}\")\n\n    # Show gauge relationship\n    c = u_true[0] - u[0]\n    print(f\"\\nGauge constant c = u_true[0] - u[0] = {c:.6f}\")\n    print(f\"  u_true - u = {np.array2string(u_true - u, precision=6)}\")\n    print(f\"  v - v_true = {np.array2string(v - v_true, precision=6)}\")\n    print(f\"  (All entries should equal c = {c:.6f})\")\n\n\ndef demo_random():\n    \"\"\"Demo: A random matrix fails the certificate and has a bad rectangle.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 2: Random Matrix (Certificate Fails)\")\n    print(\"=\" * 70)\n\n    A = generate_random_matrix(4, 5, seed=123)\n    print_matrix(A, \"A (random)\")\n\n    cert = has_tropical_certificate(A)\n    print(f\"\\nCertificate holds: {cert}\")\n\n    bad = find_bad_rectangle(A)\n    if bad:\n        i1, i2, j1, j2, violation = bad\n        print(f\"\\nBad rectangle witness: rows ({i1},{i2}), cols ({j1},{j2})\")\n        print(f\"  A[{i1},{j1}] + A[{i2},{j2}] = {A[i1,j1]:.4f} + {A[i2,j2]:.4f} = {A[i1,j1]+A[i2,j2]:.4f}\")\n        print(f\"  A[{i1},{j2}] + A[{i2},{j1}] = {A[i1,j2]:.4f} + {A[i2,j1]:.4f} = {A[i1,j2]+A[i2,j1]:.4f}\")\n        print(f\"  Violation magnitude: {violation:.6f}\")\n\n\ndef demo_perturbation():\n    \"\"\"Demo: Perturbing a rank-one matrix breaks the certificate.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 3: Perturbed Rank-One Matrix\")\n    print(\"=\" * 70)\n\n    A, _, _ = generate_rank_one_matrix(4, 5, seed=7)\n    print_matrix(A, \"A (rank-one)\")\n    print(f\"Certificate holds: {has_tropical_certificate(A)}\")\n\n    # Perturb one entry\n    A_pert = A.copy()\n    A_pert[1, 2] += 0.5\n    print_matrix(A_pert, \"A_perturbed (A[1,2] += 0.5)\")\n    print(f\"Certificate holds: {has_tropical_certificate(A_pert)}\")\n\n    bad = find_bad_rectangle(A_pert)\n    if bad:\n        i1, i2, j1, j2, violation = bad\n        print(f\"Bad rectangle: rows ({i1},{i2}), cols ({j1},{j2}), violation = {violation:.6f}\")\n\n\ndef demo_statistics():\n    \"\"\"Demo: Statistical analysis \u2014 how many random matrices are rank-one?\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 4: Statistical Analysis\")\n    print(\"=\" * 70)\n\n    sizes = [(3, 3), (4, 4), (5, 5), (3, 6)]\n    n_trials = 200\n\n    print(f\"\\nTesting {n_trials} random matrices per size:\")\n    print(f\"{'Size':>10s} | {'Rank-one':>10s} | {'Not rank-one':>12s} | {'% rank-one':>10s}\")\n    print(\"-\" * 50)\n\n    for n, m in sizes:\n        rank_one_count = 0\n        for trial in range(n_trials):\n            A = generate_random_matrix(n, m, seed=1000 * n + trial)\n            if has_tropical_certificate(A):\n                rank_one_count += 1\n        pct = 100.0 * rank_one_count / n_trials\n        print(f\"{n}x{m:>2d}      | {rank_one_count:>10d} | {n_trials - rank_one_count:>12d} | {pct:>9.1f}%\")\n\n    print(\"\\n(Random matrices are generically NOT rank-one \u2014 tropical rank one\")\n    print(\" requires n*m - n - m + 1 independent constraints to hold exactly.)\")\n\n\ndef demo_row_diff_constancy():\n    \"\"\"Demo: Row-difference constancy (vanishing curl) on certified matrices.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"DEMO 5: Row-Difference Constancy (Vanishing Curl)\")\n    print(\"=\" * 70)\n\n    A, _, _ = generate_rank_one_matrix(4, 5, seed=99)\n    print_matrix(A, \"A (rank-one)\")\n\n    print(\"\\nRow differences A(i, 0) - A(i, 1) for each row i:\")\n    for i in range(4):\n        diff = A[i, 0] - A[i, 1]\n        print(f\"  Row {i}: {diff:.6f}\")\n    print(\"  (All equal \u2014 this is the vanishing curl condition)\")\n\n    print(\"\\nRow differences A(i, 2) - A(i, 3) for each row i:\")\n    for i in range(4):\n        diff = A[i, 2] - A[i, 3]\n        print(f\"  Row {i}: {diff:.6f}\")\n    print(\"  (Again all equal)\")\n\n\nif __name__ == \"__main__\":\n    demo_rank_one()\n    demo_random()\n    demo_perturbation()\n    demo_statistics()\n    demo_row_diff_constancy()\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"All demos completed successfully.\")\n    print(\"=\" * 70)\n"
+    },
+    "date": "2026-05-20T01:04:29Z",
+    "exp_id": "1a0f1a30",
+    "source_exp_ids": [
+      "f3cf86be"
+    ]
+  },
   "create_a_team_to_conduct_research_brainstorm_hypot.json": {
     "title": "Ordinal Collapse Theorems for Bounded-Branching Research Objects",
     "domain": "Ordinal Analysis / Complexity Theory",
@@ -4972,7 +5014,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -4981,7 +5023,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -4999,7 +5041,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "galois_group__s",
@@ -5008,7 +5050,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 89
+      "hue": 91
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -5017,7 +5059,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -5026,7 +5068,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "expected_lean_signature",
@@ -5035,7 +5077,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -5044,7 +5086,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -5053,7 +5095,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 89
+      "hue": 95
     },
     {
       "id": "percolation_threshold",
@@ -5062,7 +5104,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -5071,7 +5113,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 92
+      "hue": 314
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -5080,7 +5122,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -5089,7 +5131,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -5098,7 +5140,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T16:00:38Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "legendres_conjecture",
@@ -5116,7 +5158,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 272
+      "hue": 280
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -5134,7 +5176,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -5143,7 +5185,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "p_vs_np_problem",
@@ -5161,7 +5203,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -5170,7 +5212,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hodge_conjecture",
@@ -5179,7 +5221,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -5188,7 +5230,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:03:41Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -5206,7 +5248,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "sums_of_three_cubes",
@@ -5215,7 +5257,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T20:03:29Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -5224,7 +5266,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -5233,7 +5275,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "twin_prime_conjecture",
@@ -5242,7 +5284,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -5251,7 +5293,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 271
+      "hue": 100
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -5260,7 +5302,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "happy_end_problem",
@@ -5269,7 +5311,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -5278,7 +5320,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T23:05:18Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -5287,7 +5329,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -5296,7 +5338,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -5314,7 +5356,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:03:55Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -5323,7 +5365,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "tropical_intersection_theory",
@@ -5332,7 +5374,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "riemann_hypothesis",
@@ -5341,7 +5383,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "odd_perfect_numbers",
@@ -5350,7 +5392,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -5359,7 +5401,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture",
@@ -5368,7 +5410,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "10_is_a_solitary_number",
@@ -5377,7 +5419,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "kakeya_conjecture",
@@ -5386,7 +5428,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T10:26:12Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -5395,7 +5437,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "invariant_subspace_problem",
@@ -5404,7 +5446,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -5413,7 +5455,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -5431,7 +5473,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -5440,7 +5482,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -5449,7 +5491,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -5458,7 +5500,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -5467,7 +5509,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 89
+      "hue": 270
     },
     {
       "id": "196_algorithm_non_termination",
@@ -5476,7 +5518,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:04:01Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "yang_mills_mass_gap",
@@ -5494,7 +5536,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -5503,7 +5545,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -5512,7 +5554,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -5521,7 +5563,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -5530,7 +5572,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "beals_conjecture",
@@ -5539,7 +5581,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -5548,7 +5590,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -5557,7 +5599,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -5566,7 +5608,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -5575,7 +5617,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -5584,7 +5626,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 90
+      "hue": 101
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -5611,7 +5653,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -5620,7 +5662,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -5638,7 +5680,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -5647,7 +5689,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -5656,7 +5698,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -5665,7 +5707,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "primes_of_the_form_n1",
@@ -5683,7 +5725,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -5692,7 +5734,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -5701,7 +5743,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "schanuels_conjecture",
@@ -5710,7 +5752,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:44Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -5728,7 +5770,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -5737,7 +5779,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "we_have_formally_verified",
@@ -5746,7 +5788,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -5755,7 +5797,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -5764,7 +5806,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 134
+      "hue": 270
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -5773,7 +5815,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -5782,7 +5824,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -5791,7 +5833,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:00:23Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -5809,7 +5851,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -5818,7 +5860,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "collatz_conjecture",
@@ -5827,7 +5869,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -5836,7 +5878,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -5845,7 +5887,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -5854,7 +5896,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -5863,7 +5905,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -5872,7 +5914,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -5881,7 +5923,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -5890,7 +5932,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -5899,7 +5941,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -5908,7 +5950,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -5917,7 +5959,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "langlands_program_functoriality",
@@ -5926,7 +5968,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T01:04:07Z",
-      "hue": 271
+      "hue": 270
+    },
+    {
+      "id": "medium_priority",
+      "title": "Tropical Matrix Certificates: Local Witnesses for Global Rank-One Structure",
+      "domain": "Tropical Linear Algebra / Certificate Complexity",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-20T01:04:29Z",
+      "hue": 90
     }
   ],
   "edges": [
@@ -6120,6 +6171,13 @@ window.PACKAGE_GRAPH = {
       "type": "provenance"
     },
     {
+      "source": "tropical_brill_noether_theory",
+      "target": "medium_priority",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
       "source": "this_document_identifies_five_falsifiable_scientif",
       "target": "precise_statement_among_all_monotone_symmetric_boo",
       "strength": 1.0,
@@ -6248,7 +6306,7 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Algebra",
       "domain_b": "Tropical",
-      "package_count": 5,
+      "package_count": 6,
       "strength": 1.0
     },
     {
@@ -7614,6 +7672,117 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "20938654",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T01:03:43.220099+00:00"
+  },
+  {
+    "id": "fd_0104",
+    "title": "Overview",
+    "description": "This document identifies five specific, testable scientific hypotheses arising from our formal verification of symmetric-square transfer for GL(2) Satake parameters. Each direction is a falsifiable claim with a clear computational or formal test.\n\n---",
+    "domains": [
+      "Analysis"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bbcf1a44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T01:04:09.557443+00:00"
+  },
+  {
+    "id": "fd_0105",
+    "title": "Conjecture 1: Explicit Hecke Polynomial Formula for Sym^n",
+    "description": "**Conjecture:** For every n \u2265 2, the Euler factor coefficients of the Sym^n transfer can be expressed as explicit polynomials in the Hecke trace a = \u03b1 + \u03b2 and determinant \u03c9 = \u03b1\u03b2. Specifically, the k-th coefficient c_k of L(Sym^n \u03c0, T)^{-1} equals (-1)^k \u00b7 e_k(\u03b1^n, \u03b1^{n-1}\u03b2, ..., \u03b2^n), where e_k is the k-th elementary symmetric polynomial, and this can be rewritten as a polynomial in (a, \u03c9) of degree at most nk/2 in a and k in \u03c9.\n\n**Test:** For n = 2, 3, 4, compute the explicit polynomial expressions symbolically using computer algebra. Verify that the total degree in (a, \u03c9) matches the prediction. For n = 3, the Euler factor should be a degree-4 polynomial in T with coefficients expressible as polynomials in a and \u03c9. Implement symbolic computation in SageMath or SymPy and verify coefficien",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bbcf1a44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T01:04:09.561863+00:00"
+  },
+  {
+    "id": "fd_0106",
+    "title": "Conjecture 2: Formal Temperedness Preservation for All Sym^n",
+    "description": "**Conjecture:** For every n \u2265 1, if |\u03b1| = |\u03b2| = 1, then all n+1 parameters of Sym^n(\u03b1, \u03b2) have absolute value 1. That is, |\u03b1^{n-k} \u03b2^k| = 1 for all 0 \u2264 k \u2264 n.\n\n**Test:** This is straightforward to prove formally in Lean 4 by induction on k, using the multiplicativity of the complex norm: |\u03b1^{n-k} \u03b2^k| = |\u03b1|^{n-k} \u00b7 |\u03b2|^k = 1^{n-k} \u00b7 1^k = 1. Formalize this as a single theorem parametric in n and verify it compiles.\n\n**Impact:** If formally verified, this establishes that symmetric power transfer preserves the Ramanujan conjecture at all levels \u2014 a key structural ingredient for the automorphic theory of symmetric power L-functions. Combined with the Ramanujan conjecture for GL(2) (Deligne's theorem for holomorphic forms), this gives temperedness of all symmetric power lifts at unramified pl",
+    "domains": [
+      "NumberTheory",
+      "Analysis"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bbcf1a44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T01:04:09.565356+00:00"
+  },
+  {
+    "id": "fd_0107",
+    "title": "Conjecture 3: Coefficient Growth Rate Under Iterated Transfer",
+    "description": "**Conjecture:** For Satake parameters with max(|\u03b1|, |\u03b2|) = M > 1, the maximum coefficient norm of the Sym^n Euler factor grows as O(M^{n(n+1)/2}). More precisely:\n\nmax_k |c_k(Sym^n)| \u2264 C(n) \u00b7 M^{n(n+1)/2}\n\nwhere C(n) is a combinatorial constant depending only on n (specifically, related to binomial coefficients).\n\n**Test:** Numerically compute the maximum coefficient norm for M = 1.1, 1.5, 2.0 and n = 2, 3, ..., 10. Fit the growth rate as a function of n and M. Compare with the predicted bound. A deviation at large n or M would suggest the bound is not tight.\n\n**Impact:** Precise coefficient growth bounds are essential for the analytic theory of automorphic L-functions, particularly for establishing bounds on L-functions in the critical strip. Formal verification of such bounds would provi",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bbcf1a44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T01:04:09.568795+00:00"
+  },
+  {
+    "id": "fd_0108",
+    "title": "Conjecture 4: Algebraic Circuit Complexity of Sym^n Coefficient Map",
+    "description": "**Conjecture:** Any algebraic circuit over \u2102 computing the Sym^n coefficient map (a, \u03c9) \u21a6 (c_1, ..., c_{n+1}) requires at least \u230an\u00b2/4\u230b multiplication gates.\n\n**Test:** For small n (2 \u2264 n \u2264 6), construct explicit algebraic circuits computing the coefficient map and count multiplication gates. Compare with the lower bound. Use the Baur-Strassen theorem (derivative complexity) to derive formal lower bounds from the degree structure of the coefficient polynomials.\n\n**Impact:** If true, this establishes that functorial transfer has intrinsic computational complexity growing quadratically with the symmetric power degree. This connects the Langlands program to algebraic complexity theory in a novel way, suggesting that the difficulty of computing L-function data is not merely practical but struct",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Bridges",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bbcf1a44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T01:04:09.572297+00:00"
+  },
+  {
+    "id": "fd_0109",
+    "title": "Conjecture 5: Formal Rankin-Selberg Factorization",
+    "description": "**Conjecture:** The Euler factor of the Rankin-Selberg convolution L(\u03c0 \u00d7 \u03c0, T)^{-1} factors as:\n\nL(\u03c0 \u00d7 \u03c0, T)^{-1} = L(Sym\u00b2\u03c0, T)^{-1} \u00b7 L(\u2227\u00b2\u03c0, T)^{-1}\n\nwhere L(\u2227\u00b2\u03c0, T)^{-1} = (1 - \u03c9T) is the exterior square Euler factor. In terms of Satake parameters:\n\n(1 - \u03b1\u00b2T)(1 - \u03b1\u03b2T)\u00b2(1 - \u03b2\u00b2T) = [(1 - \u03b1\u00b2T)(1 - \u03b1\u03b2T)(1 - \u03b2\u00b2T)] \u00b7 (1 - \u03b1\u03b2T)\n\n**Test:** Formalize both sides as polynomials in Lean 4. Prove the factorization by polynomial algebra (coefficient comparison or direct ring computation). This should be achievable with the same techniques used in our current development.\n\n**Impact:** This factorization is the local analogue of the global decomposition L(\u03c0 \u00d7 \u03c0, s) = L(Sym\u00b2\u03c0, s) \u00b7 L(\u2227\u00b2\u03c0, s), which is a foundational identity in the theory of automorphic L-functions. Formal verification would establish th",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bbcf1a44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T01:04:09.576524+00:00"
+  },
+  {
+    "id": "fd_0110",
+    "title": "Prioritization",
+    "description": "| Priority | Conjecture | Difficulty | Value |\n|----------|-----------|------------|-------|\n| 1 | Conjecture 2 (Sym^n temperedness) | Low | High \u2014 immediate generalization |\n| 2 | Conjecture 5 (Rankin-Selberg) | Medium | Very High \u2014 opens new theory |\n| 3 | Conjecture 1 (Sym^n Hecke formula) | Medium | High \u2014 computational recipe |\n| 4 | Conjecture 3 (Growth rate) | Medium-High | Medium \u2014 analytic applications |\n| 5 | Conjecture 4 (Circuit complexity) | High | Medium \u2014 cross-domain |\n\nConjectures 1 and 2 are the most immediately tractable and should be pursued first. Conjecture 5 would represent the most significant theoretical advance.",
+    "domains": [
+      "NumberTheory",
+      "Bridges",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bbcf1a44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T01:04:09.579595+00:00"
   },
   {
     "id": "seed_083",
