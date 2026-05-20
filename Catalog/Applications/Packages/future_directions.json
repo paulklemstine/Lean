@@ -1332,8 +1332,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "55c659bd",
       "timestamp": "2026-05-20T00:22:11.025886+00:00"
     },
     {
@@ -1753,7 +1753,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "eae22772",
       "timestamp": "2026-05-20T01:00:25.451254+00:00"
     },
@@ -1919,8 +1919,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "7a3a7b1b",
       "timestamp": "2026-05-20T01:03:43.220099+00:00"
     },
     {
@@ -1992,8 +1992,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "59af6731",
       "timestamp": "2026-05-20T01:04:09.568795+00:00"
     },
     {
@@ -3054,8 +3054,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "8155cb9f",
       "timestamp": "2026-05-20T04:04:18.190183+00:00"
     },
     {
@@ -3505,8 +3505,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "ac47644f",
       "timestamp": "2026-05-20T07:05:26.673262+00:00"
     },
     {
@@ -3545,6 +3545,110 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T07:05:26.687112+00:00"
+    },
+    {
+      "id": "fd_0188",
+      "title": "Hypothesis 1: Multiplicative Quotient Complexity Under Composition",
+      "description": "**Conjecture:** For layered architectures where each layer has an independent symmetry group $G_i$ acting on its parameters, the total quotient complexity satisfies\n$$\nC_q(\\text{network}) \\leq \\prod_{i=1}^{L} \\frac{d_i}{|G_i|}\n$$\nwhere $d_i$ is the parameter count of layer $i$. If the symmetry groups compose coherently (e.g., translation symmetry propagating through layers in a CNN), the bound tightens to the quotient of the total parameter count by the product of group orders.\n\n**Test:** Implement a multi-layer architecture descriptor in Python. Compute layerwise quotient complexities for: (a) a 3-layer CNN with same-sized kernels, (b) a 2-layer equivariant MLP, (c) a hybrid CNN-attention model. Compare the product-of-quotients formula against direct orbit-counting on the full parameter s",
+      "source_exp_id": "eae22772",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/eae22772",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:54.562565+00:00"
+    },
+    {
+      "id": "fd_0189",
+      "title": "Hypothesis 2: Quotient Complexity Predicts Test Error Rank Order",
+      "description": "**Conjecture:** Among architectures with the same total parameter count $d$ trained on the same dataset, the architecture with the smallest quotient complexity $d/|G|$ achieves the lowest test error, up to logarithmic corrections. Formally: for any pair of architectures $A_1, A_2$ with $d_1 = d_2$ but $|G_1| > |G_2|$, the test error of $A_1$ on sufficiently large datasets is at most that of $A_2$ with probability at least $1 - \\delta$.\n\n**Test:** Train pairs of networks with matched parameter counts but different symmetry structures on CIFAR-10 and ImageNet-1k. Compare: (a) standard CNN vs. locally-connected network (CNN has translational symmetry, locally-connected does not), (b) permutation-equivariant MLP vs. standard MLP on set-structured tasks, (c) multi-head attention with head-permu",
+      "source_exp_id": "eae22772",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/eae22772",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:54.568667+00:00"
+    },
+    {
+      "id": "fd_0190",
+      "title": "Hypothesis 3: Continuous Symmetry Groups Yield Logarithmic Quotient Complexity",
+      "description": "**Conjecture:** For architectures with continuous symmetry groups (e.g., rotational equivariance with $G = SO(2)$ or $SO(3)$), the effective quotient complexity scales as $O(d / \\dim(G))$ where $\\dim(G)$ is the Lie algebra dimension, not merely $d / |G|$ (which is undefined for infinite groups). For $SO(3)$-equivariant networks with $d$ parameters, the quotient complexity should be approximately $d/3$.\n\n**Test:** Implement $SO(3)$-equivariant architectures (e.g., Tensor Field Networks, SE(3)-Transformers) and count the number of independent parameters after accounting for rotational invariance. Compare the predicted quotient complexity $d/3$ against the empirical number of free parameters. If the actual orbit-space dimension differs from $d/\\dim(G)$ by more than a factor of 2 for standard ",
+      "source_exp_id": "eae22772",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/eae22772",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Algebra",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:54.575684+00:00"
+    },
+    {
+      "id": "fd_0191",
+      "title": "Hypothesis 4: Tropical Compression Dominance Ratio Exceeds $|G|/\\log d$",
+      "description": "**Conjecture:** For the algebraic sample complexity bound $\\text{SC}(d, \\varepsilon, \\delta) = d \\cdot \\log(1/\\varepsilon) + \\log(1/\\delta)$, the ratio\n$$\n\\frac{\\text{SC}(d, \\varepsilon, \\delta)}{\\text{SC}(d/|G|, \\varepsilon, \\delta)}\n$$\neventually exceeds $|G| / \\log d$ as $d \\to \\infty$ with $|G|$ fixed or growing polynomially. Under the stronger hypothesis $|G| = \\Theta(d^\\alpha)$ for some $\\alpha > 0$, the ratio grows polynomially.\n\n**Test:** Fix $\\varepsilon = 0.01$, $\\delta = 0.05$. For architecture families indexed by input size $n$:\n- CNN: $d = n^2 k^2$, $|G| = n^2$, compute ratio for $n = 10, 50, 100, 500, 1000$.\n- Permutation-equivariant MLP: $d = n^2$, $|G| = n!$, compute for $n = 3, 5, 7, 10$.\n- Attention: $d = h \\cdot d_k^2$, $|G| = h!$ where $h$ is number of heads, compute fo",
+      "source_exp_id": "eae22772",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/eae22772",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Tropical",
+        "Algebra",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:54.581205+00:00"
+    },
+    {
+      "id": "fd_0192",
+      "title": "Hypothesis 5: Operadic Composition Laws for Quotient Complexity",
+      "description": "**Conjecture:** There exists an operad $\\mathcal{O}$ whose algebras are symmetry-constrained architecture specifications, such that the quotient complexity is a morphism from $\\mathcal{O}$-algebras to $(\\mathbb{N}, +)$ or $(\\mathbb{N}, \\times)$. In particular, sequential composition of layers should be additive in quotient complexity, while parallel composition (e.g., multi-head attention) should be multiplicative.\n\n**Test:** \n1. Define the composition operations formally: sequential composition = function composition of layers, parallel composition = direct sum of parameter spaces with independent symmetries.\n2. Compute quotient complexities for: (a) ResNet blocks (sequential + skip), (b) Inception modules (parallel branches), (c) multi-head attention (parallel heads + sequential projecti",
+      "source_exp_id": "eae22772",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/eae22772",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:54.587942+00:00"
     }
   ],
   "pruned": [

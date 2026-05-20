@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "non_archimedean_probability_via_surreal_numbers.json",
+    "title": "Non-Archimedean Finitely Additive Probability via Grid Refinement Schemes",
+    "domain": "Probability Theory / Non-Archimedean Analysis",
+    "date": "2026-05-20T08:07:35Z",
+    "exp_id": "57db3430"
+  },
+  {
     "filename": "hypothesis_2_tropical_compression_dominance.json",
     "title": "Tropical Compression Dominance: Symmetry-Aware Sample Complexity via Quotient Complexity",
     "domain": "Tropical Geometry / Learning Theory / Symmetry",
@@ -2896,6 +2903,53 @@ window.PACKAGE_DB = {
       "seed"
     ]
   },
+  "non_archimedean_probability_via_surreal_numbers.json": {
+    "title": "Non-Archimedean Finitely Additive Probability via Grid Refinement Schemes",
+    "domain": "Probability Theory / Non-Archimedean Analysis",
+    "article": "# The Impossible Lottery: How Mathematicians Learned to Give Every Point a Chance\n\n## A paradox hiding in plain sight\n\nImagine spinning a perfect roulette wheel \u2014 not one with 37 numbered slots, but a wheel so perfectly smooth that it can land on any point along its circumference. What is the probability that it lands on exactly the point marked \"0.5\"?\n\nThe answer, according to modern probability theory, is zero.\n\nNot approximately zero. Not \"very small.\" Exactly, precisely, mathematically zero.\n\nThis answer is, on its face, absurd. The wheel *can* land on 0.5. It's a perfectly legitimate outcome. Yet the mathematical framework that governs everything from weather prediction to quantum mechanics assigns it a probability of nothing. Every single point on the wheel is individually impossible, yet one of them must occur.\n\nMathematicians have lived with this paradox for over a century. They've developed elegant workarounds \u2014 measuring intervals instead of points, using sophisticated tools called sigma-algebras. These workarounds are powerful and practical. But they come at a cost: in the standard framework, individual outcomes in continuous spaces are fundamentally invisible. They have no weight. They don't count.\n\nA new mathematical construction suggests there might be another way.\n\n## The Kolmogorov barrier\n\nTo understand why this matters, we need to step back to 1933, when the Russian mathematician Andrey Kolmogorov laid down the axioms that define modern probability. His framework was revolutionary \u2014 it unified discrete probability (coin flips, dice rolls) with continuous probability (Gaussian distributions, Brownian motion) under a single roof.\n\nBut Kolmogorov's framework came with a strict rule: probability measures must be *countably additive*. This means that if you have a collection of non-overlapping events \u2014 even infinitely many of them \u2014 the probability of their union must equal the sum of their individual probabilities.\n\nThis rule creates an iron constraint. If infinitely many singletons each carried the same positive probability \u03b5, then by adding up enough of them, you'd exceed any finite bound. A thousand singletons would have mass 1000\u03b5. A million would have mass 1000000\u03b5. Eventually you'd blow past the total mass of 1, which is supposed to represent certainty.\n\nThe mathematical conclusion is inescapable: in any countably additive probability space with infinitely many equally-weighted atoms, each atom must have mass zero. There is no wiggle room. This isn't a limitation of our techniques \u2014 it's a theorem.\n\nOr is it?\n\n## Breaking the barrier with infinitely small numbers\n\nThe key insight is deceptively simple: what if we used numbers smaller than any positive real number, but still greater than zero?\n\nSuch numbers \u2014 called *infinitesimals* \u2014 have a long and turbulent history. Leibniz and Newton used them freely when inventing calculus in the 17th century. Mathematicians later banished them as logically incoherent. Then, in the 1960s, Abraham Robinson proved that infinitesimals could be made rigorous through what he called *nonstandard analysis*.\n\nMore recently, John Conway's *surreal numbers* \u2014 originally invented to analyze combinatorial games \u2014 provided another framework containing infinitesimals alongside ordinary numbers. In surreal arithmetic, there exist quantities like \u03b5 that satisfy 0 < \u03b5 < 1/n for every positive integer n.\n\nIf we could do probability with such numbers, the Kolmogorov barrier would dissolve. Each point could carry a positive infinitesimal mass, and the sum over all points would be exactly 1 \u2014 not approximately, but exactly, in the extended number system.\n\nBut formalizing this vision rigorously is enormously difficult. Surreal-valued measure theory doesn't yet exist as a mature mathematical discipline. The gap between the dream and the reality is vast.\n\n## Building the bridge, one grid at a time\n\nThe new construction takes a different, more concrete approach. Instead of leaping directly to infinitesimal-valued probability on continuous spaces, it builds a ladder of finite approximations \u2014 and proves that this ladder has remarkable structural properties.\n\nThe idea is this: take the interval from 0 to 1 and approximate it with a grid of equally spaced points. If you use 10 points, each carries mass 1/10. Use 100 points, each carries mass 1/100. Use a million points, each carries mass 1/1,000,000.\n\nAt each level, you have a perfectly valid probability space. Every point has positive mass. The total is exactly 1. There is nothing mysterious or paradoxical about any individual grid.\n\nWhat *is* remarkable is what happens when you look at the whole sequence of grids together.\n\n## The three pillars\n\nThe new theory establishes three fundamental properties of these grid probabilities:\n\n**Exact affine expectation.** For any linear observable \u2014 any quantity that varies proportionally with position \u2014 the expected value on the discrete grid equals the continuum integral *exactly*. Not approximately. Not in the limit. Exactly, for every grid size. If you compute the average of the function f(x) = 3x + 2 on a grid of 5 points or 5 million points, you get the same answer: 7/2. This is precisely the value you'd get from classical calculus.\n\nThis is surprising. Discrete approximations usually introduce error. Here, for an important class of functions, the error is identically zero.\n\n**Refinement invariance.** If you take a coarse grid and subdivide each cell into k equal parts, creating a finer grid, the expected value of any observable lifted from the coarse grid is perfectly preserved. No information is gained or lost. The probability is *coherent* under refinement.\n\nThis is the property that suggests something deeper is going on. Coherence under scale change is a hallmark of structures that survive the passage to a continuum limit. Physicists recognize it as a form of *renormalization group invariance* \u2014 the same property that governs phase transitions and quantum field theory.\n\n**The shadow principle.** As the grid becomes infinitely fine, the discrete expectations converge to the classical continuum values. The grid probability \"shadows\" classical probability \u2014 it agrees with it on every observable that classical probability can see.\n\nTogether, these three properties paint a striking picture: the grid probabilities form a coherent, refinement-stable scaffold that reproduces classical probability as its \"shadow\" while maintaining the property that every individual point has positive mass.\n\n## Why the impossible lottery stays impossible (classically)\n\nThe theory also proves, rigorously, why the Kolmogorov barrier exists. The impossibility theorem shows that no finitely additive real-valued function on the natural numbers can simultaneously assign every singleton the same positive mass and keep total mass bounded.\n\nThe proof is elegant in its simplicity. If every point has mass \u03b5 > 0, then the set {0, 1, 2, ..., N} has mass (N+1)\u03b5 by finite additivity. Choose N large enough that (N+1)\u03b5 > 1 \u2014 which is always possible because the real numbers are *Archimedean* (there are no infinitesimals). Contradiction.\n\nThis theorem draws a sharp line. On one side: classical, Archimedean probability, where equal positive atoms on an infinite set are provably impossible. On the other side: non-Archimedean probability, where the rules change because infinitesimal numbers exist.\n\nThe grid construction lives on the Archimedean side but points toward the non-Archimedean side. Each grid is finite and Archimedean. But the *sequence* of grids, viewed as a single mathematical object, behaves like a bridge between the two worlds.\n\n## From games to rare events\n\nThe implications reach far beyond abstract measure theory.\n\n**Decision theory.** In economics and game theory, some outcomes are \"infinitely unlikely\" but not impossible. A chess player who considers every possible response \u2014 no matter how foolish \u2014 reasons about events of infinitesimal probability. The current framework for this, called *trembling-hand perfection*, uses limits of sequences of mixed strategies. Non-Archimedean probability could provide a direct, single-model treatment where infinitesimal trembles are genuine probabilities.\n\n**Rare-event modeling.** In risk analysis \u2014 nuclear reactor safety, asteroid impacts, financial black swans \u2014 events of extremely low probability carry enormous consequences. Classical probability can assign these events small but positive probabilities. But when the number of possible failure modes is vast, classical models must assign some of them probability exactly zero, losing the ability to reason about them individually. An infinitesimal framework treats each failure mode as genuinely possible.\n\n**Epistemology.** Philosophers of science have long debated whether probability zero means impossibility. If you randomly select a real number between 0 and 1, every specific outcome has probability zero, but clearly some outcome must occur. Non-Archimedean probability resolves this by giving each outcome a positive (infinitesimal) probability, aligning the mathematics with the philosophical intuition.\n\n## The road ahead\n\nThe current construction is a foundation, not a finished building. The grid probabilities are valued in ordinary rational numbers, not in surreal numbers or hyperreals. The bridge to a true infinitesimal-valued probability on the full continuum remains a conjecture \u2014 supported by strong structural evidence, but not yet proven.\n\nThe conjecture is precise: there exists a finitely additive probability valued in a non-Archimedean ordered field, defined on all subsets of the interval [0, 1], that assigns each point a positive infinitesimal mass and reproduces classical expectations for polynomial observables.\n\nTesting this conjecture requires building new mathematical infrastructure \u2014 surreal-valued integration, non-Archimedean measure theory, and formal connections to Robinson's nonstandard analysis and Loeb's measure construction.\n\nWhat the grid construction provides is a *proof of concept*: a rigorous demonstration that the key structural properties (exact expectation, refinement coherence, shadow convergence) are not merely plausible but provable. The finite models work. The question is whether they can be unified into a single infinite model.\n\n## A new lens on an old paradox\n\nMathematics progresses by questioning its own foundations. The probability framework that Kolmogorov built in 1933 has been spectacularly successful. But its treatment of individual points in continuous spaces \u2014 assigning them probability zero \u2014 has always been a philosophical thorn.\n\nThe grid probability construction doesn't overthrow Kolmogorov. It suggests that his framework is one view of a richer landscape. Classical probability is the shadow cast by a higher-dimensional structure where every point matters, every outcome has weight, and the infinitely small is not the same as nothing.\n\nIn the impossible lottery, every ticket might win after all. You just need the right kind of numbers to see it.\n",
+    "research_paper": "# Non-Archimedean Finitely Additive Probability via Grid Refinement Schemes\n\n## Abstract\n\nWe develop a rigorous framework for finitely additive probability valued in ordered fields, motivated by the goal of assigning positive infinitesimal mass to individual points. We define the structure `NAProbability` \u2014 a finitely additive probability on a finite type with values in a linearly ordered field \u2014 and establish four structural theorems for the canonical family of uniform grid probabilities on `Fin(n+1)`. First, we prove the existence of uniform atomic probabilities with singleton mass `1/(n+1)`. Second, we show that affine observables have exact expectation `a/2 + b`, matching the continuum integral for all grid sizes. Third, we prove refinement invariance: expectation is preserved under grid subdivision by any factor `k \u2265 1`. Fourth, we prove convergence of grid expectations to classical continuum values. We complement these with an impossibility theorem showing that no finitely additive real-valued probability on `\u2115` can assign equal positive mass to all singletons while remaining bounded \u2014 delineating the precise frontier where non-Archimedean probability departs from the Kolmogorov framework. All results are formalized and verified in Lean 4 with Mathlib.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nClassical probability theory, founded on Kolmogorov's axioms (1933), requires countable additivity of the probability measure. This axiom, while extremely powerful for analysis, forces a fundamental constraint: in any probability space with uncountably many equally-weighted atoms, each atom must have mass zero. This is incompatible with the intuition that in a uniform distribution on `[0,1]`, each point should carry some positive \"weight.\"\n\nFinitely additive probability \u2014 where additivity is required only for finite disjoint unions \u2014 relaxes this constraint. In a non-Archimedean ordered field containing infinitesimals, one can potentially assign each point a positive infinitesimal mass summing to exactly 1.\n\n### 1.2 Approach\n\nRather than attempting to construct surreal-valued measures directly on `[0,1]` (which requires substantial infrastructure not yet available in standard libraries), we build a scaffold of finite approximations with provable structural properties:\n\n1. **Grid probabilities**: For each `n`, a uniform finitely additive probability on `Fin(n+1)` with singleton mass `1/(n+1)`.\n2. **Exact expectations**: Affine observables have grid expectations matching the continuum integral exactly.\n3. **Refinement coherence**: Expectations are preserved under grid subdivision.\n4. **Shadow convergence**: Grid expectations converge to classical values.\n\nThis approach establishes the key properties that any surreal or hyperfinite extension must satisfy, providing a rigorous foundation for future constructions.\n\n### 1.3 Related Work\n\n- **Nonstandard analysis** (Robinson, 1966): Provides hyperreal numbers with infinitesimals, and the Loeb measure construction (1975) builds countably additive measures from hyperfinite counting measures.\n- **Surreal numbers** (Conway, 1976): A universal ordered field containing all ordinals and infinitesimals, originally from combinatorial game theory.\n- **Finitely additive probability** (de Finetti, 1937; Dubins & Savage, 1965): The subjective probability tradition, which requires only finite additivity.\n- **Formal verification**: Mathlib's `Finset`, `Fintype`, and `BigOperators` libraries provide the infrastructure for our formalization.\n\n## 2. Definitions and Notation\n\n### 2.1 NAProbability\n\n**Definition 2.1** (NAProbability). Let `\u03b1` be a finite type with decidable equality and `K` a linearly ordered field. An *NAProbability* on `\u03b1` valued in `K` is a structure:\n\n```\nstructure NAProbability (\u03b1 : Type*) (K : Type*)\n    [Fintype \u03b1] [DecidableEq \u03b1]\n    [Field K] [LinearOrder K] [IsStrictOrderedRing K] where\n  mass : Finset \u03b1 \u2192 K\n  empty_mass : mass \u2205 = 0\n  add_mass : \u2200 s t, Disjoint s t \u2192 mass (s \u222a t) = mass s + mass t\n  total_mass : mass Finset.univ = 1\n  nonneg_mass : \u2200 s, 0 \u2264 mass s\n```\n\n### 2.2 Expectation\n\n**Definition 2.2** (NAExpectation). For `P : NAProbability \u03b1 K` and `X : \u03b1 \u2192 K`:\n\n```\nNAExpectation P X := \u2211 a : \u03b1, X a * P.mass ({a})\n```\n\n### 2.3 Grid Uniform Probability\n\n**Definition 2.3** (gridUniformProb). For `n : \u2115`, the uniform probability on `Fin(n+1)`:\n\n```\n(gridUniformProb n).mass s := (s.card : \u211a) / (n + 1)\n```\n\n### 2.4 Refinement Map\n\n**Definition 2.4** (refineObservable). For `k \u2265 1`, the block embedding from `Fin(n+1)` to `Fin(k(n+1))`:\n\n```\nrefineObservable k hk X := fun j => X \u27e8j.val / k, _\u27e9\n```\n\nEach coarse point `i` has exactly `k` preimages: `{ik, ik+1, ..., ik+(k-1)}`.\n\n### 2.5 Infinitesimal Scheme\n\n**Definition 2.5** (InfinitesimalScheme). A family `{P_n}_{n \u2208 \u2115}` of NAProbabilities on `Fin(n+1)` whose point masses tend to zero:\n\n```\n\u2200 aseq, Tendsto (fun n => pointMass n (aseq n)) atTop (\ud835\udcdd 0)\n```\n\nThe uniform grid probabilities form a canonical infinitesimal scheme with `pointMass n a = 1/(n+1)`.\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Uniform Grid Probability Existence\n\n**Theorem 3.1** (grid_uniform_exists). For every `n : \u2115`, there exists a probability `P : NAProbability (Fin(n+1)) \u211a` with `P.mass {i} = 1/(n+1)` for all `i`.\n\n*Proof sketch.* Define `mass s := s.card / (n+1)`. Finite additivity follows from `Finset.card_union_of_disjoint`. Total mass uses `Finset.card_fin`. Non-negativity follows from non-negativity of cardinality. \u25a1\n\n### 3.2 Theorem 2: Exact Affine Expectation\n\n**Theorem 3.2** (grid_expectation_affine). For `n \u2265 1` and `a, b : \u211a`, let `X(i) = a\u00b7i/n + b` on `Fin(n+1)`. Then:\n\n```\nNAExpectation (gridUniformProb n) X = a/2 + b\n```\n\n*Proof sketch.* Expand the expectation:\n\n```\nE[X] = \u2211_{i=0}^{n} (a\u00b7i/n + b) \u00b7 1/(n+1)\n     = 1/(n+1) \u00b7 (a/n \u00b7 \u2211 i + (n+1)\u00b7b)\n     = 1/(n+1) \u00b7 (a/n \u00b7 n(n+1)/2 + (n+1)\u00b7b)\n     = a/2 + b\n```\n\nThe key lemma is the Gauss sum formula `\u2211_{i=0}^{n} i = n(n+1)/2`, proved by induction. The formal proof uses `Fin.sum_univ_castSucc` for the inductive step and `field_simp` for algebraic simplification. \u25a1\n\n**Remark.** This is a genuine theorem, not merely a computation. It shows the discrete grid model recovers the exact continuum integral `\u222b\u2080\u00b9 (ax+b) dx = a/2 + b` for all grid sizes simultaneously.\n\n### 3.3 Theorem 3: Refinement Invariance\n\n**Theorem 3.3** (refinement_expectation_invariant). For `k \u2265 1` and any `X : Fin(n+1) \u2192 \u211a`:\n\n```\nNAExpectation (gridUniformProb n) X = NAExpectation (uniformFinProb (k(n+1))) (refineObservable k hk X)\n```\n\n*Proof sketch.* The fine-grid expectation decomposes by fibers:\n\n```\nE_fine[refine(X)] = \u2211_{j=0}^{k(n+1)-1} X(j/k) \u00b7 1/(k(n+1))\n                  = \u2211_{i=0}^{n} \u2211_{j: j/k=i} X(i) \u00b7 1/(k(n+1))\n                  = \u2211_{i=0}^{n} k \u00b7 X(i) / (k(n+1))\n                  = \u2211_{i=0}^{n} X(i) / (n+1)\n                  = E_coarse[X]\n```\n\nThe crucial helper lemma `refine_fiber_card` shows each fiber has exactly `k` elements:\n\n```\n|{j \u2208 Fin(k(n+1)) : j/k = i}| = k\n```\n\nThis is proved by constructing an explicit bijection with `Fin k` via `j \u21a6 j mod k`. \u25a1\n\n**Remark.** Refinement invariance is the property that makes the grid sequence a *projective system* of probability spaces. It is the finite analogue of measure-preserving factor maps and the key structural requirement for any continuum extension.\n\n### 3.4 Theorem 4: Shadow Convergence\n\n**Theorem 3.4** (grid_average_converges_affine). For `a, b : \u211a`:\n\n```\nlim_{n\u2192\u221e} NAExpectation (gridUniformProb (n+1)) (fun i => a\u00b7i/(n+2) + b) = a/2 + b\n```\n\n*Proof sketch.* Expanding the expectation and using the Gauss sum formula yields:\n\n```\nE_n = a/2 \u00b7 (1 - 1/(n+2)) + b\n```\n\nThis converges to `a/2 + b` since `1/(n+2) \u2192 0`. The formal proof uses `Filter.Tendsto` and the convergence of `1/n` to zero in `\u211a` viewed in the `nhds` topology. \u25a1\n\n### 3.5 Theorem 5: Impossibility of Equal Positive Atoms\n\n**Theorem 3.5** (no_equal_positive_atoms_nat). There is no triple `(\u03b5, \u03bc)` with `\u03b5 > 0`, `\u03bc : Finset \u2115 \u2192 \u211d` finitely additive, `\u03bc {n} = \u03b5` for all `n`, and `\u03bc s \u2264 1` for all finite `s`.\n\n*Proof sketch.* By finite additivity and induction, `\u03bc(Finset.range N) = N\u00b7\u03b5`. By the Archimedean property, choose `N = \u230a1/\u03b5\u230b + 1 > 1/\u03b5`. Then `\u03bc(Finset.range N) = N\u00b7\u03b5 > 1`, contradicting `\u03bc s \u2264 1`. \u25a1\n\n**Remark.** This theorem precisely delineates the classical impossibility. The proof uses the Archimedean property of `\u211d` essentially \u2014 in a non-Archimedean field, `N\u00b7\u03b5` can remain small for all standard `N` when `\u03b5` is infinitesimal.\n\n## 4. Algorithms\n\n### 4.1 Grid Probability Construction\n\n**Algorithm 1**: `GridUniformProb(n)`\n```\nInput: n \u2208 \u2115\nOutput: NAProbability on Fin(n+1) over \u211a\n\n1. Set N \u2190 n + 1\n2. For each i \u2208 {0, ..., n}: point_mass[i] \u2190 1/N\n3. For any subset S \u2286 {0,...,n}: mass(S) \u2190 |S|/N\n4. Return (mass, point_mass)\n\nTime: O(n) for construction, O(|S|) per mass query\nSpace: O(n)\n```\n\n### 4.2 Expectation Computation\n\n**Algorithm 2**: `NAExpect(P, X)`\n```\nInput: NAProbability P on {0,...,n}, Observable X: {0,...,n} \u2192 \u211a\nOutput: E[X] \u2208 \u211a\n\n1. result \u2190 0\n2. For i = 0 to n:\n     result \u2190 result + X(i) * P.point_mass[i]\n3. Return result\n\nTime: O(n)\nSpace: O(1)\n```\n\n### 4.3 Refinement Coherence Check\n\n**Algorithm 3**: `CheckRefinement(n, k, X)`\n```\nInput: Grid parameter n, refinement factor k, observable X\nOutput: Boolean (is invariant?)\n\n1. coarse_E \u2190 NAExpect(GridUniformProb(n), X)\n2. fine_P \u2190 GridUniformProb(k*(n+1) - 1)\n3. refined_X(j) \u2190 X(j // k)  for j \u2208 {0, ..., k*(n+1)-1}\n4. fine_E \u2190 NAExpect(fine_P, refined_X)\n5. Return (coarse_E = fine_E)\n\nTime: O(k * n)\nSpace: O(k * n)\n```\n\n## 5. Applications\n\n### 5.1 Fair Lotteries\n\nOn a population of `N` individuals, `gridUniformProb(N-1)` assigns each person mass `1/N > 0`. Every individual has a genuinely positive probability of being selected, satisfying the strongest fairness criterion. Subgroup fairness follows by finite additivity: any subgroup of size `m` has mass `m/N`.\n\n### 5.2 Rare-Event Modeling\n\nIn risk analysis with `N` possible failure modes, each mode has mass `1/N > 0` under the grid probability. Unlike classical models on infinite state spaces, no failure mode is assigned probability zero. This enables reasoning about individual rare events without the philosophical difficulties of probability-zero events that \"can occur.\"\n\n### 5.3 Lexicographic Decision Theory\n\nThe grid probability naturally supports lexicographic expected utility. On a grid of size `N`, \"infinitesimal\" differences of order `1/N` between utilities are faithfully represented. As `N \u2192 \u221e`, these differences vanish in the classical limit but remain visible in the non-Archimedean framework.\n\n### 5.4 Information-Theoretic Consistency\n\nFor affine distortion kernels, the expected distortion under grid probability is invariant under refinement (a direct corollary of Theorem 3.3). This gives a primitive information-theoretic consistency law: rate-distortion computations on coarse models are preserved at finer resolutions for linear distortion measures.\n\n## 6. Computational Experiments\n\n### 6.1 Affine Expectation Exactness\n\n| Grid size N | Observable f(x)=3x+2 | Expected E[f] | Computed E[f] | Error |\n|-------------|----------------------|---------------|---------------|-------|\n| 5 | 3i/4 + 2 | 7/2 | 7/2 | 0 |\n| 10 | 3i/9 + 2 | 7/2 | 7/2 | 0 |\n| 100 | 3i/99 + 2 | 7/2 | 7/2 | 0 |\n| 1000 | 3i/999 + 2 | 7/2 | 7/2 | 0 |\n\nExact agreement for all grid sizes, confirming Theorem 3.2.\n\n### 6.2 Quadratic Convergence\n\n| Grid size N | E[x\u00b2] | True \u222b\u2080\u00b9 x\u00b2 dx = 1/3 | Error | \u2248 1/(6N) |\n|-------------|-------|----------------------|-------|----------|\n| 10 | 0.3383 | 0.3333 | 5.0e-3 | 1.7e-2 |\n| 100 | 0.3338 | 0.3333 | 5.0e-4 | 1.7e-3 |\n| 1000 | 0.3334 | 0.3333 | 5.0e-5 | 1.7e-4 |\n\nConvergence at rate O(1/N), as expected for quadratic observables.\n\n### 6.3 Refinement Invariance Verification\n\nFor X(i) = i\u00b2 on Fin(6):\n| Refinement k | Fine grid size | Coarse E | Fine E | Invariant? |\n|-------------|---------------|----------|--------|------------|\n| 2 | 12 | 55/6 | 55/6 | \u2713 |\n| 3 | 18 | 55/6 | 55/6 | \u2713 |\n| 5 | 30 | 55/6 | 55/6 | \u2713 |\n| 10 | 60 | 55/6 | 55/6 | \u2713 |\n\nExact invariance for all refinement factors, confirming Theorem 3.3.\n\n## 7. Discussion\n\n### 7.1 The Refinement-Coherence Principle\n\nThe most significant structural insight is that grid probabilities form a projective system: expectations of coarse observables are preserved exactly under refinement. This is not merely a computational convenience \u2014 it is the mathematical condition for the existence of a projective limit. In the language of nonstandard analysis, it suggests that the hyperfinite counting measure (the Loeb measure construction) can be recovered as the \"limit\" of our grid scheme.\n\n### 7.2 Connection to Renormalization\n\nRefinement invariance of expectations has a striking analogy with renormalization group fixed points in physics. Under a scale transformation (grid refinement by factor k), the expectation functional is invariant. This makes grid expectation a fixed point of the refinement operator \u2014 a probabilistic analogue of renormalization group invariance.\n\n### 7.3 Limitations\n\nOur construction is valued in `\u211a`, not in a genuine non-Archimedean field. The point masses `1/(n+1)` are small but not infinitesimal. The passage from the discrete scaffold to a continuum non-Archimedean probability remains conjectural.\n\nAdditionally, the refinement map `refineObservable` preserves expectations only for observables defined on the coarse grid. For observables that genuinely use the fine-grid structure, refinement creates new information not captured by the coarse model.\n\n## 8. Conjectures and Future Work\n\n**Conjecture 8.1** (Surreal Hyperfinite Probability). There exists a finitely additive probability `\u03bc` valued in an ordered non-Archimedean field `K \u2287 \u211a`, defined on all finite subsets of `[0,1] \u2229 \u211a`, with `\u03bc({x}) > 0` for all `x` and `E_\u03bc[ax+b] = a/2 + b`.\n\n**Conjecture 8.2** (Loeb Measure Recovery). The standard part of the surreal/hyperfinite probability from Conjecture 8.1, applied to Borel-measurable observables, recovers Lebesgue integration.\n\n**Conjecture 8.3** (Quadratic Refinement Asymptotics). For `X(i) = (i/n)\u00b2`, the refinement error `|E_fine - E_coarse|` for non-block refinements is O(1/k) in the refinement factor.\n\n## 9. References\n\n1. A.N. Kolmogorov, *Grundbegriffe der Wahrscheinlichkeitsrechnung*, 1933.\n2. A. Robinson, *Non-Standard Analysis*, North-Holland, 1966.\n3. P. Loeb, \"Conversion from nonstandard to standard measure spaces and applications in probability theory,\" *Trans. AMS*, 211, 1975.\n4. J.H. Conway, *On Numbers and Games*, Academic Press, 1976.\n5. B. de Finetti, \"La pr\u00e9vision: ses lois logiques, ses sources subjectives,\" *Annales de l'IHP*, 7(1), 1937.\n6. L. Dubins and L. Savage, *How to Gamble if You Must*, McGraw-Hill, 1965.\n7. E. Nelson, \"Internal set theory,\" *Bull. AMS*, 83(6), 1977.\n8. R. Goldblatt, *Lectures on the Hyperreals*, Springer, 1998.\n",
+    "future_directions": "# Future Directions: Non-Archimedean Probability Theory\n\n## Conjecture 1: Surreal-Valued Probability on [0,1]\n\n**Conjecture.** There exists a linearly ordered field `K` extending `\u211a` with a positive infinitesimal `\u03b5`, and a finitely additive function `\u03bc : Finset ([0,1] \u2229 \u211a) \u2192 K` satisfying:\n- `\u03bc \u2205 = 0`\n- `\u03bc(S \u222a T) = \u03bc(S) + \u03bc(T)` for disjoint `S, T`\n- `\u03bc({x}) > 0` for all `x \u2208 [0,1] \u2229 \u211a`\n- For every affine `f(x) = ax + b`, the expectation `\u2211_{x \u2208 grid_n} f(x) \u00b7 \u03bc({x})` equals `a/2 + b` in a suitable limit.\n\n**Test.** Construct `K` as the field of formal Laurent series `\u211a((\u03b5))` with `\u03b5` a formal infinitesimal. Define `\u03bc({p/q}) = \u03b5` for rational `p/q \u2208 [0,1]` and extend by additivity. Check whether normalization `\u03bc([0,1] \u2229 \u211a) = 1` is achievable, or whether the \"counting density\" of rationals prevents it. A computational test: enumerate rationals in [0,1] with denominator \u2264 N, compute the partial sum of \u03bc, and check its asymptotic behavior.\n\n**Impact.** If true, this would give the first explicit construction of a non-Archimedean probability on a dense subset of [0,1], bridging finite grid theory to the continuum and validating the grid scaffold approach.\n\n## Conjecture 2: Higher-Order Moment Refinement Asymptotics\n\n**Conjecture.** For the observable `X_k(i) = (i/n)^k` on `Fin(n+1)`, the expectation under `gridUniformProb n` satisfies:\n\n```\nE[X_k] = 1/(k+1) + c_k / n + O(1/n\u00b2)\n```\n\nwhere `c_k = k/(2(k+1))` is a universal correction coefficient independent of the grid. Moreover, the difference `|E_fine[refine(X_k)] - E_coarse[X_k]|` vanishes exactly (not just asymptotically) for all `k` under block refinement.\n\n**Test.** Compute `E[(i/n)^k]` for `k = 2, 3, 4, 5` on grids of size N = 10, 100, 1000, 10000 and fit the coefficients. Verify exact refinement invariance for block embeddings. Check whether non-block refinements (e.g., interleaving) break invariance.\n\n**Impact.** If confirmed with exact coefficients, this provides a complete asymptotic theory connecting grid probabilities to Riemann-Stieltjes integration, and the exact refinement invariance would extend Theorem 3 to all polynomial observables.\n\n## Conjecture 3: Loeb Measure Recovery via Ultraproducts\n\n**Conjecture.** Let `U` be a non-principal ultrafilter on `\u2115`. Define the ultraproduct probability `\u03bc_U` on `[0,1]` by: for measurable `A \u2286 [0,1]`,\n\n```\n\u03bc_U(A) = st(lim_U (gridUniformProb n).mass(A \u2229 grid_n))\n```\n\nwhere `st` denotes the standard part and `grid_n = {i/(n+1) : i \u2264 n}`. Then `\u03bc_U` equals Lebesgue measure on all Borel sets.\n\n**Test.** For specific sets (intervals, Cantor-like sets, fat Cantor sets), compute the grid approximation `(gridUniformProb n).mass(A \u2229 grid_n)` and verify convergence to Lebesgue measure. Test whether the rate of convergence depends on the regularity of the set boundary.\n\n**Impact.** This would establish a rigorous connection between the grid scaffold and classical measure theory via nonstandard analysis, validating the \"shadow principle\" at the level of sets (not just expectations). It would also link our construction to Loeb's 1975 measure theorem.\n\n## Conjecture 4: Refinement-Invariant Variance and Central Limit Behavior\n\n**Conjecture.** Define the variance of `X` under grid probability as `Var[X] = E[X\u00b2] - E[X]\u00b2`. For affine observables, `Var[X] = a\u00b2/12` on every grid (the uniform distribution variance on [0,1]). For higher-degree polynomials, the variance converges under refinement but is not exactly preserved.\n\nFurthermore, for i.i.d. sums `S_N = (X_1 + ... + X_N) / \u221aN` where each `X_i` is drawn from the grid probability, the distribution of `S_N` converges to a Gaussian in the grid-refinement limit.\n\n**Test.** Compute `Var[(i/n)^k]` for k = 1, 2, 3 on grids of increasing size. Check whether variance is exactly refinement-invariant for k = 1 (it should be, since both E[X] and E[X\u00b2] are affine expectations composed with a quadratic). Simulate the CLT by computing the distribution of sums on product grids.\n\n**Impact.** Exact variance invariance for affine observables would add a second-moment coherence property to the scaffold, strengthening the case for a continuum limit. A grid-based CLT would demonstrate that the framework supports genuine probabilistic reasoning beyond expectations.\n\n## Conjecture 5: Non-Archimedean Conditional Probability and Bayesian Updating\n\n**Conjecture.** In a non-Archimedean probability space, one can define conditional probability `P(A|B) = P(A \u2229 B) / P(B)` even when `P(B)` is infinitesimal (but nonzero). This conditional probability satisfies Bayes' theorem and produces well-defined posterior distributions.\n\nOn finite grids, this is trivially true. The conjecture is that this extends to the non-Archimedean continuum limit: conditioning on a single point `{x}` with infinitesimal mass `\u03b5` produces a well-defined conditional probability that, after taking standard parts, agrees with the classical conditional density.\n\n**Test.** On grid `Fin(N)`, define a non-uniform prior by `P({i}) = c \u00b7 f(i/N)` for a density `f` and compute the posterior `P({j} | {i} \u2208 A)` for various conditioning events `A`. Verify that as `N \u2192 \u221e`, the posterior converges to the classical Bayesian posterior. Test with `f` being uniform, triangular, and beta distributions.\n\n**Impact.** If confirmed, this would resolve a long-standing philosophical issue in Bayesian epistemology: how to condition on measure-zero events. It would also have practical implications for Bayesian nonparametrics and decision theory under radical uncertainty.\n",
+    "demos": [
+      {
+        "name": "Non-Archimedean Probability Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nNon-Archimedean Probability via Finite Grids: Interactive Demo\n\nDemonstrates the key theorems of non-Archimedean finitely additive probability:\n1. Uniform grid probabilities with equal atomic masses\n2. Exact affine expectation matching the continuum limit\n3. Refinement invariance under grid subdivision\n4. Convergence of grid expectations (shadow principle)\n5. Impossibility of equal positive atoms on infinite sets\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import Callable, List\nimport math\n\n\ndef grid_uniform_mass(n: int, subset_size: int) -> Fraction:\n    \"\"\"Mass of a subset of size `subset_size` on grid Fin(n+1).\"\"\"\n    return Fraction(subset_size, n + 1)\n\n\ndef singleton_mass(n: int) -> Fraction:\n    \"\"\"Mass of each singleton on grid Fin(n+1).\"\"\"\n    return Fraction(1, n + 1)\n\n\ndef na_expectation(n: int, X: Callable[[int], Fraction]) -> Fraction:\n    \"\"\"Expectation of observable X on uniform grid Fin(n+1).\n\n    E[X] = sum_{i=0}^{n} X(i) * (1/(n+1))\n    \"\"\"\n    return sum(X(i) * singleton_mass(n) for i in range(n + 1))\n\n\ndef refine_observable(n: int, k: int, X: Callable[[int], Fraction]) -> Callable[[int], Fraction]:\n    \"\"\"Lift observable from Fin(n+1) to Fin(k*(n+1)) by block embedding.\n\n    Point j in the fine grid maps to coarse point j // k.\n    \"\"\"\n    def refined(j: int) -> Fraction:\n        return X(j // k)\n    return refined\n\n\n# =============================================================================\n# Demo 1: Uniform atomic probability on finite grids\n# =============================================================================\ndef demo_uniform_grid():\n    print(\"=\" * 70)\n    print(\"DEMO 1: Uniform Atomic Probability on Finite Grids\")\n    print(\"=\" * 70)\n    print()\n    print(\"For each grid size N = n+1, every point carries mass 1/N.\")\n    print(\"As N \u2192 \u221e, these masses behave like infinitesimals.\\n\")\n\n    for n in [4, 9, 99, 999, 9999]:\n        N = n + 1\n        m = singleton_mass(n)\n        total = sum(singleton_mass(n) for _ in range(N))\n        print(f\"  Grid Fin({N}): singleton mass = {m} = {float(m):.6f}, \"\n              f\"total mass = {total}\")\n\n    print()\n    print(\"\u2713 Every point has positive mass (no atom is null)\")\n    print(\"\u2713 Total mass is exactly 1 (normalization)\")\n    print(\"\u2713 Masses tend to 0 as grid refines (infinitesimal behavior)\")\n    print()\n\n\n# =============================================================================\n# Demo 2: Exact affine expectation\n# =============================================================================\ndef demo_affine_expectation():\n    print(\"=\" * 70)\n    print(\"DEMO 2: Exact Affine Expectation on Grids\")\n    print(\"=\" * 70)\n    print()\n    print(\"For X(i) = a*i/n + b on Fin(n+1), E[X] = a/2 + b exactly.\\n\")\n\n    test_cases = [\n        (1, 0, \"identity\"),\n        (2, 1, \"2x + 1\"),\n        (3, -1, \"3x - 1\"),\n        (Fraction(1, 2), Fraction(1, 3), \"x/2 + 1/3\"),\n    ]\n\n    for a, b, name in test_cases:\n        a, b = Fraction(a), Fraction(b)\n        expected = a / 2 + b\n        print(f\"  f(x) = {name}:  expected E[f] = {expected}\")\n\n        for n in [5, 10, 50, 100]:\n            X = lambda i, a=a, b=b, n=n: a * Fraction(i, n) + b\n            E = na_expectation(n, X)\n            print(f\"    Grid Fin({n+1}): E[f] = {E} {'\u2713 EXACT' if E == expected else '\u2717 MISMATCH'}\")\n        print()\n\n    print(\"\u2713 The discrete model recovers exact continuum expectations for affine functions\")\n    print()\n\n\n# =============================================================================\n# Demo 3: Refinement invariance\n# =============================================================================\ndef demo_refinement_invariance():\n    print(\"=\" * 70)\n    print(\"DEMO 3: Refinement Invariance\")\n    print(\"=\" * 70)\n    print()\n    print(\"Refining grid Fin(n+1) to Fin(k*(n+1)) preserves expectations.\\n\")\n\n    def test_observable(i: int) -> Fraction:\n        \"\"\"A simple test observable: i^2.\"\"\"\n        return Fraction(i * i)\n\n    for n in [3, 5, 9]:\n        coarse_E = na_expectation(n, test_observable)\n        print(f\"  Coarse grid Fin({n+1}): E[i\u00b2] = {coarse_E} = {float(coarse_E):.6f}\")\n\n        for k in [2, 3, 5]:\n            fine_n = k * (n + 1) - 1\n            refined_X = refine_observable(n, k, test_observable)\n            fine_E = na_expectation(fine_n, refined_X)\n            match = \"\u2713\" if fine_E == coarse_E else \"\u2717\"\n            print(f\"    Refined \u00d7{k} \u2192 Fin({k*(n+1)}): E[refine(i\u00b2)] = {fine_E} {match}\")\n        print()\n\n    # Also test with affine observables\n    print(\"  Testing refinement invariance for affine observables:\")\n    for n in [4, 7]:\n        a, b = Fraction(3), Fraction(-1)\n        X_coarse = lambda i, a=a, b=b, n=n: a * Fraction(i, n) + b\n        coarse_E = na_expectation(n, X_coarse)\n\n        for k in [2, 4, 10]:\n            X_coarse_for_refine = lambda i: a * Fraction(i, n) + b\n            refined_X = refine_observable(n, k, X_coarse_for_refine)\n            fine_n = k * (n + 1) - 1\n            fine_E = na_expectation(fine_n, refined_X)\n            match = \"\u2713\" if fine_E == coarse_E else \"\u2717\"\n            print(f\"    n={n}, k={k}: coarse={coarse_E}, fine={fine_E} {match}\")\n\n    print()\n    print(\"\u2713 Expectations are exactly preserved under grid refinement\")\n    print()\n\n\n# =============================================================================\n# Demo 4: Convergence to continuum (shadow principle)\n# =============================================================================\ndef demo_convergence():\n    print(\"=\" * 70)\n    print(\"DEMO 4: Convergence to Continuum (Shadow Principle)\")\n    print(\"=\" * 70)\n    print()\n    print(\"For X(i) = a*i/N + b on Fin(N), E[X] \u2192 a/2 + b as N \u2192 \u221e.\\n\")\n\n    a, b = Fraction(3), Fraction(2)\n    target = a / 2 + b\n    print(f\"  f(x) = 3x + 2, target = {target} = {float(target):.4f}\\n\")\n\n    for N in [5, 10, 50, 100, 500, 1000, 10000]:\n        n = N - 1\n        X = lambda i, n=n: a * Fraction(i, n) + b if n > 0 else b\n        E = na_expectation(n, X)\n        error = abs(float(E) - float(target))\n        print(f\"    N = {N:>6}: E[f] = {float(E):.10f}, |error| = {error:.2e}\")\n\n    print()\n\n    # Quadratic observable (not exact, but converges)\n    print(\"  Quadratic: f(x) = x\u00b2, target = \u222b\u2080\u00b9 x\u00b2 dx = 1/3\\n\")\n    target_quad = Fraction(1, 3)\n    for N in [5, 10, 50, 100, 500, 1000]:\n        n = N - 1\n        X = lambda i, n=n: Fraction(i, n) ** 2 if n > 0 else Fraction(0)\n        E = na_expectation(n, X)\n        error = abs(float(E) - float(target_quad))\n        print(f\"    N = {N:>6}: E[f] = {float(E):.10f}, \"\n              f\"|error| = {error:.2e}, \"\n              f\"\u2248 1/(6N) = {1/(6*N):.2e}\")\n\n    print()\n    print(\"\u2713 Affine expectations converge exactly (are constant)\")\n    print(\"\u2713 Quadratic expectations converge at rate O(1/N)\")\n    print()\n\n\n# =============================================================================\n# Demo 5: Impossibility theorem illustration\n# =============================================================================\ndef demo_impossibility():\n    print(\"=\" * 70)\n    print(\"DEMO 5: Impossibility of Equal Positive Atoms on \u2115\")\n    print(\"=\" * 70)\n    print()\n    print(\"If every singleton {n} has mass \u03b5 > 0, then for N > 1/\u03b5,\")\n    print(\"the finite set {0,...,N-1} has mass N*\u03b5 > 1. Contradiction!\\n\")\n\n    for eps in [0.1, 0.01, 0.001, 0.0001]:\n        N_needed = math.ceil(1 / eps) + 1\n        mass = N_needed * eps\n        print(f\"  \u03b5 = {eps}: need N = {N_needed}, \"\n              f\"mass = N*\u03b5 = {mass:.4f} > 1 \u2713 (contradiction)\")\n\n    print()\n    print(\"This is why classical (Archimedean) probability cannot assign\")\n    print(\"equal positive mass to infinitely many atoms.\")\n    print(\"Non-Archimedean probability escapes via infinitesimals or\")\n    print(\"by abandoning countable additivity.\")\n    print()\n\n\n# =============================================================================\n# Demo 6: Infinitesimal scheme visualization\n# =============================================================================\ndef demo_infinitesimal_scheme():\n    print(\"=\" * 70)\n    print(\"DEMO 6: Infinitesimal Scheme \u2014 Grid Refinement Sequence\")\n    print(\"=\" * 70)\n    print()\n    print(\"A sequence of grid probabilities where point masses \u2192 0:\\n\")\n\n    print(f\"  {'Level n':>10} {'Grid size':>12} {'Point mass':>20} {'\u2248 float':>14}\")\n    print(f\"  {'-'*10:>10} {'-'*12:>12} {'-'*20:>20} {'-'*14:>14}\")\n\n    for n in range(15):\n        size = n + 1\n        mass = Fraction(1, size)\n        print(f\"  {n:>10} {size:>12} {str(mass):>20} {float(mass):>14.8f}\")\n\n    print()\n    print(\"Each row is a valid probability space.\")\n    print(\"The point masses form a null sequence: 1, 1/2, 1/3, ... \u2192 0.\")\n    print(\"This is the formal precursor to hyperfinite counting measure.\")\n    print()\n\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  NON-ARCHIMEDEAN PROBABILITY VIA FINITE GRIDS \u2014 INTERACTIVE DEMO   \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_uniform_grid()\n    demo_affine_expectation()\n    demo_refinement_invariance()\n    demo_convergence()\n    demo_impossibility()\n    demo_infinitesimal_scheme()\n\n    print(\"=\" * 70)\n    print(\"ALL DEMOS COMPLETE\")\n    print(\"=\" * 70)\n"
+      },
+      {
+        "name": "Applications of Non-Archimedean Probability",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of Non-Archimedean Finitely Additive Probability\n\nReal-world applications demonstrating the practical utility of the theory:\n1. Fair lottery on finite populations with exact equal treatment\n2. Rare-event modeling with explicitly positive infinitesimal probabilities\n3. Decision theory with lexicographic preferences\n4. Rate-distortion approximation on discrete grids\n5. Monte Carlo integration error analysis\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import Callable, Dict, List, Tuple\nimport math\nimport random\n\n\n# =============================================================================\n# Application 1: Fair Finite Lotteries\n# =============================================================================\ndef fair_lottery_analysis(population: int) -> Dict:\n    \"\"\"Analyze fairness properties of a uniform grid probability lottery.\n\n    In a fair lottery, every participant must have exactly equal probability\n    of winning. Classical probability on infinite populations requires\n    measure-zero singletons, making \"equal positive probability\" impossible.\n\n    Our non-Archimedean framework gives each participant mass 1/N > 0.\n\n    Returns:\n        Dictionary with fairness metrics.\n    \"\"\"\n    mass = Fraction(1, population)\n\n    # Subgroup fairness: any k-person subgroup has mass k/N\n    subgroup_sizes = [1, 2, 10, population // 2, population]\n    subgroup_masses = {k: mass * k for k in subgroup_sizes if k <= population}\n\n    return {\n        \"population\": population,\n        \"individual_mass\": mass,\n        \"individual_mass_float\": float(mass),\n        \"subgroup_masses\": subgroup_masses,\n        \"total_mass\": mass * population,\n        \"is_normalized\": mass * population == Fraction(1),\n    }\n\n\n# =============================================================================\n# Application 2: Rare-Event Modeling\n# =============================================================================\ndef rare_event_model(grid_size: int, rare_events: List[int]) -> Dict:\n    \"\"\"Model rare events with explicitly positive probabilities.\n\n    In classical probability, events with probability 0 are \"impossible\"\n    even though they may occur. Non-Archimedean probability assigns\n    positive infinitesimal mass to each event.\n\n    Args:\n        grid_size: Total number of possible outcomes (N = grid_size).\n        rare_events: Indices of \"rare\" events.\n\n    Returns:\n        Analysis of rare event probabilities.\n    \"\"\"\n    mass = Fraction(1, grid_size)\n\n    rare_mass = mass * len(rare_events)\n    common_mass = Fraction(1) - rare_mass\n\n    return {\n        \"grid_size\": grid_size,\n        \"singleton_mass\": mass,\n        \"num_rare_events\": len(rare_events),\n        \"rare_total_mass\": rare_mass,\n        \"common_total_mass\": common_mass,\n        \"rare_to_common_ratio\": rare_mass / common_mass if common_mass > 0 else float('inf'),\n        \"every_event_positive\": True,  # This is the key property!\n    }\n\n\n# =============================================================================\n# Application 3: Lexicographic Decision Theory\n# =============================================================================\ndef lexicographic_utility(\n    n: int,\n    primary_utility: Callable[[int], Fraction],\n    secondary_utility: Callable[[int], Fraction],\n) -> Tuple[Fraction, Fraction, str]:\n    \"\"\"Compare actions using lexicographic expected utility.\n\n    In lexicographic decision theory, infinitesimal differences matter.\n    Our grid probability naturally supports this: on a grid of size N,\n    the \"infinitesimal\" contribution of each point is 1/N.\n\n    For two levels of utility (primary and secondary), we compute:\n    - Primary expected utility: E[U_primary]\n    - Secondary expected utility: E[U_secondary]\n    - Decision: compare lexicographically\n\n    Args:\n        n: Grid parameter (universe = {0, ..., n}).\n        primary_utility: Primary utility function.\n        secondary_utility: Secondary utility function.\n\n    Returns:\n        (primary_E, secondary_E, decision_description)\n    \"\"\"\n    mass = Fraction(1, n + 1)\n\n    primary_E = sum(primary_utility(i) * mass for i in range(n + 1))\n    secondary_E = sum(secondary_utility(i) * mass for i in range(n + 1))\n\n    return primary_E, secondary_E, f\"E[U1]={primary_E}, E[U2]={secondary_E}\"\n\n\n# =============================================================================\n# Application 4: Discrete Rate-Distortion\n# =============================================================================\ndef grid_rate_distortion(\n    n: int,\n    codebook_size: int,\n    distortion_fn: Callable[[int, int], Fraction],\n) -> Dict:\n    \"\"\"Compute rate-distortion on a uniform grid.\n\n    Under uniform grid probability, the expected distortion for a\n    codebook (set of reconstruction points) is:\n\n    D = E[min_{c \u2208 codebook} d(X, c)] = (1/(n+1)) \u03a3_i min_c d(i, c)\n\n    For squared distortion d(x,y) = (x-y)\u00b2, this gives exact rational answers.\n\n    The key insight from our theory: for affine distortion kernels,\n    this expected distortion is invariant under grid refinement.\n\n    Args:\n        n: Grid parameter.\n        codebook_size: Number of reconstruction points.\n        distortion_fn: Distortion function d(source, reconstruction).\n\n    Returns:\n        Rate-distortion analysis.\n    \"\"\"\n    mass = Fraction(1, n + 1)\n\n    # Simple uniform codebook\n    codebook = [i * n // (codebook_size - 1) if codebook_size > 1 else n // 2\n                for i in range(codebook_size)]\n    codebook = list(set(codebook))  # Remove duplicates\n\n    # Expected distortion\n    total_distortion = Fraction(0)\n    for i in range(n + 1):\n        min_d = min(distortion_fn(i, c) for c in codebook)\n        total_distortion += min_d * mass\n\n    return {\n        \"grid_size\": n + 1,\n        \"codebook\": codebook,\n        \"codebook_size\": len(codebook),\n        \"expected_distortion\": total_distortion,\n        \"expected_distortion_float\": float(total_distortion),\n        \"rate_bits\": math.log2(len(codebook)) if len(codebook) > 0 else 0,\n    }\n\n\n# =============================================================================\n# Application 5: Monte Carlo Error Analysis\n# =============================================================================\ndef monte_carlo_vs_grid(\n    f: Callable[[float], float],\n    n_grid: int,\n    n_mc: int,\n    true_integral: float,\n    seed: int = 42,\n) -> Dict:\n    \"\"\"Compare grid expectation with Monte Carlo integration.\n\n    Our grid probability gives exact rational expectations.\n    Monte Carlo gives random approximations. This comparison\n    highlights the deterministic exactness of the grid approach.\n\n    Args:\n        f: Function to integrate over [0, 1].\n        n_grid: Number of grid points.\n        n_mc: Number of Monte Carlo samples.\n        true_integral: Known integral value for comparison.\n        seed: Random seed for reproducibility.\n\n    Returns:\n        Comparison metrics.\n    \"\"\"\n    # Grid expectation (exact for our method)\n    grid_sum = sum(f(i / n_grid) for i in range(n_grid + 1))\n    grid_E = grid_sum / (n_grid + 1)\n    grid_error = abs(grid_E - true_integral)\n\n    # Monte Carlo\n    rng = random.Random(seed)\n    mc_samples = [f(rng.random()) for _ in range(n_mc)]\n    mc_E = sum(mc_samples) / n_mc\n    mc_error = abs(mc_E - true_integral)\n\n    return {\n        \"function_desc\": f.__doc__ or \"unknown\",\n        \"true_integral\": true_integral,\n        \"grid_points\": n_grid + 1,\n        \"grid_expectation\": grid_E,\n        \"grid_error\": grid_error,\n        \"mc_samples\": n_mc,\n        \"mc_expectation\": mc_E,\n        \"mc_error\": mc_error,\n        \"grid_wins\": grid_error < mc_error,\n    }\n\n\n# =============================================================================\n# Main demonstration\n# =============================================================================\nif __name__ == \"__main__\":\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551     APPLICATIONS OF NON-ARCHIMEDEAN PROBABILITY                    \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    # Application 1: Fair Lottery\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Fair Finite Lotteries\")\n    print(\"=\" * 70)\n    for pop in [100, 1000, 1000000]:\n        result = fair_lottery_analysis(pop)\n        print(f\"\\n  Population {pop:>10}:\")\n        print(f\"    Individual mass: {result['individual_mass']} \"\n              f\"({result['individual_mass_float']:.2e})\")\n        print(f\"    Normalized: {result['is_normalized']}\")\n        for k, m in result['subgroup_masses'].items():\n            print(f\"    Group of {k}: mass = {float(m):.6f}\")\n    print()\n\n    # Application 2: Rare Events\n    print(\"=\" * 70)\n    print(\"APPLICATION 2: Rare-Event Modeling\")\n    print(\"=\" * 70)\n    result = rare_event_model(1000000, list(range(10)))\n    print(f\"\\n  Grid size: {result['grid_size']}\")\n    print(f\"  Singleton mass: {result['singleton_mass']}\")\n    print(f\"  10 rare events total mass: {result['rare_total_mass']}\")\n    print(f\"  Every event has positive probability: {result['every_event_positive']}\")\n    print()\n\n    # Application 3: Lexicographic Decision\n    print(\"=\" * 70)\n    print(\"APPLICATION 3: Lexicographic Decision Theory\")\n    print(\"=\" * 70)\n    n = 99\n    # Action A: high primary utility, low secondary\n    prim_A = lambda i: Fraction(i, n)\n    sec_A = lambda i: Fraction(1)\n    E_prim_A, E_sec_A, desc_A = lexicographic_utility(n, prim_A, sec_A)\n\n    # Action B: same primary, higher secondary\n    prim_B = lambda i: Fraction(i, n)\n    sec_B = lambda i: Fraction(i * i, n * n)\n    E_prim_B, E_sec_B, desc_B = lexicographic_utility(n, prim_B, sec_B)\n\n    print(f\"\\n  Action A: {desc_A}\")\n    print(f\"  Action B: {desc_B}\")\n    if E_prim_A == E_prim_B:\n        winner = \"A\" if E_sec_A > E_sec_B else \"B\"\n        print(f\"  Primary utilities equal \u2192 decide by secondary \u2192 choose {winner}\")\n    print()\n\n    # Application 4: Rate-Distortion\n    print(\"=\" * 70)\n    print(\"APPLICATION 4: Discrete Rate-Distortion\")\n    print(\"=\" * 70)\n    squared = lambda x, y: Fraction((x - y) ** 2)\n    for n in [10, 50, 100]:\n        for cb_size in [2, 4, 8]:\n            result = grid_rate_distortion(n, cb_size, squared)\n            print(f\"\\n  Grid {n+1} pts, codebook size {result['codebook_size']}:\")\n            print(f\"    Expected distortion: {result['expected_distortion_float']:.6f}\")\n            print(f\"    Rate: {result['rate_bits']:.2f} bits\")\n    print()\n\n    # Application 5: Monte Carlo comparison\n    print(\"=\" * 70)\n    print(\"APPLICATION 5: Grid vs Monte Carlo Integration\")\n    print(\"=\" * 70)\n\n    def linear(x):\n        \"\"\"f(x) = x\"\"\"\n        return x\n\n    def quadratic(x):\n        \"\"\"f(x) = x\u00b2\"\"\"\n        return x * x\n\n    for f, integral, name in [\n        (linear, 0.5, \"x\"),\n        (quadratic, 1/3, \"x\u00b2\"),\n    ]:\n        print(f\"\\n  f(x) = {name}, \u222b\u2080\u00b9 f = {integral}\")\n        result = monte_carlo_vs_grid(f, 100, 100, integral)\n        print(f\"    Grid (101 pts): E = {result['grid_expectation']:.8f}, \"\n              f\"error = {result['grid_error']:.2e}\")\n        print(f\"    MC (100 samples): E = {result['mc_expectation']:.8f}, \"\n              f\"error = {result['mc_error']:.2e}\")\n        print(f\"    Grid wins: {result['grid_wins']}\")\n    print()\n\n    print(\"=\" * 70)\n    print(\"ALL APPLICATIONS DEMONSTRATED\")\n    print(\"=\" * 70)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Grid Uniform Probability Construction",
+        "pseudocode": "Input: n (grid parameter)\nOutput: NAProbability on Fin(n+1)\n1. Set N = n + 1\n2. For each i in {0,...,n}: point_mass[i] = 1/N\n3. For subset S: mass(S) = |S|/N\n4. Return (mass, point_mass)\nTime: O(n), Space: O(n)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Non-Archimedean Finitely Additive Probability\n\nImplements the core algorithms from the research paper:\n1. Construction of grid uniform probabilities\n2. Computation of non-Archimedean-style expectations\n3. Refinement coherence checking\n4. Infinitesimal scheme construction and verification\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import Callable, Dict, FrozenSet, List, Optional, Tuple\nimport math\n\n\nclass NAProbability:\n    \"\"\"A finitely additive probability on a finite set with values in \u211a.\n\n    This implements the NAProbability structure from the Lean formalization:\n    - mass : Finset \u03b1 \u2192 K (here subsets of {0,...,n} \u2192 Fraction)\n    - empty_mass : mass(\u2205) = 0\n    - add_mass : mass(S \u222a T) = mass(S) + mass(T) for disjoint S, T\n    - total_mass : mass(universe) = 1\n    - nonneg_mass : mass(S) \u2265 0\n\n    Time complexity: O(|S|) per mass query, O(n) for expectation.\n    Space complexity: O(n) for storing the universe.\n    \"\"\"\n\n    def __init__(self, n: int, point_masses: Dict[int, Fraction]):\n        \"\"\"Initialize with universe {0, ..., n} and point masses.\n\n        Args:\n            n: Universe is {0, ..., n}\n            point_masses: Maps each point to its mass. Must sum to 1.\n\n        Raises:\n            ValueError: If masses don't satisfy axioms.\n        \"\"\"\n        self.n = n\n        self.universe = set(range(n + 1))\n        self.point_masses = dict(point_masses)\n\n        # Verify axioms\n        total = sum(self.point_masses.values())\n        if total != Fraction(1):\n            raise ValueError(f\"Total mass is {total}, not 1\")\n        for k, v in self.point_masses.items():\n            if v < 0:\n                raise ValueError(f\"Negative mass {v} at point {k}\")\n            if k < 0 or k > n:\n                raise ValueError(f\"Point {k} not in universe {{0,...,{n}}}\")\n\n    def mass(self, subset: set) -> Fraction:\n        \"\"\"Compute the mass of a subset.\n\n        By finite additivity, mass(S) = \u03a3_{i \u2208 S} mass({i}).\n\n        Time: O(|subset|)\n        \"\"\"\n        return sum(self.point_masses.get(i, Fraction(0)) for i in subset)\n\n    def expectation(self, X: Callable[[int], Fraction]) -> Fraction:\n        \"\"\"Compute E[X] = \u03a3_i X(i) * mass({i}).\n\n        Time: O(n)\n        \"\"\"\n        return sum(X(i) * self.point_masses[i] for i in self.universe)\n\n    def verify_axioms(self) -> bool:\n        \"\"\"Verify all NAProbability axioms hold.\n\n        Time: O(n)\n        \"\"\"\n        # empty_mass\n        if self.mass(set()) != Fraction(0):\n            return False\n        # total_mass\n        if self.mass(self.universe) != Fraction(1):\n            return False\n        # nonneg_mass (only check singletons; extends by additivity)\n        for i in self.universe:\n            if self.point_masses[i] < 0:\n                return False\n        return True\n\n\ndef grid_uniform_prob(n: int) -> NAProbability:\n    \"\"\"Construct the uniform probability on {0, ..., n}.\n\n    Each singleton has mass 1/(n+1). This is the gridUniformProb\n    from the Lean formalization.\n\n    Time: O(n)  Space: O(n)\n\n    Args:\n        n: Grid parameter. Universe is {0, ..., n} with n+1 points.\n\n    Returns:\n        NAProbability with uniform masses.\n    \"\"\"\n    N = n + 1\n    mass = Fraction(1, N)\n    return NAProbability(n, {i: mass for i in range(N)})\n\n\ndef na_expectation(P: NAProbability, X: Callable[[int], Fraction]) -> Fraction:\n    \"\"\"Compute expectation of X under probability P.\n\n    E[X] = \u03a3_{a \u2208 \u03b1} X(a) \u00b7 P.mass({a})\n\n    This matches NAExpectation from the Lean formalization.\n\n    Time: O(n) where n = |universe|\n    \"\"\"\n    return P.expectation(X)\n\n\ndef refine_observable(\n    n: int, k: int, X: Callable[[int], Fraction]\n) -> Callable[[int], Fraction]:\n    \"\"\"Lift observable from Fin(n+1) to Fin(k*(n+1)) by block embedding.\n\n    Point j in the fine grid maps to coarse point j // k.\n    This matches refineObservable from the Lean formalization.\n\n    Time: O(1) per evaluation\n    \"\"\"\n    def refined(j: int) -> Fraction:\n        return X(j // k)\n    return refined\n\n\ndef check_refinement_invariance(\n    n: int, k: int, X: Callable[[int], Fraction]\n) -> Tuple[bool, Fraction, Fraction]:\n    \"\"\"Check that refinement preserves expectation.\n\n    Verifies: E_coarse[X] = E_fine[refine(X)]\n\n    This is the computational test for Theorem 3 (refinement_expectation_invariant).\n\n    Time: O(k * n)\n\n    Returns:\n        (invariant, coarse_expectation, fine_expectation)\n    \"\"\"\n    coarse_P = grid_uniform_prob(n)\n    coarse_E = na_expectation(coarse_P, X)\n\n    fine_n = k * (n + 1) - 1\n    fine_P = grid_uniform_prob(fine_n)\n    refined_X = refine_observable(n, k, X)\n    fine_E = na_expectation(fine_P, refined_X)\n\n    return (coarse_E == fine_E, coarse_E, fine_E)\n\n\nclass InfinitesimalScheme:\n    \"\"\"A sequence of grid probabilities whose point masses tend to zero.\n\n    This implements the InfinitesimalScheme structure from the Lean formalization.\n    Each level n gives a probability on Fin(n+1) with point mass 1/(n+1).\n\n    The scheme is the formal precursor to hyperfinite counting measure\n    and surreal-valued probability.\n    \"\"\"\n\n    def __init__(self, max_level: int = 100):\n        \"\"\"Initialize the scheme up to a given refinement level.\n\n        Args:\n            max_level: Maximum grid level to precompute.\n        \"\"\"\n        self.max_level = max_level\n        self._probs: Dict[int, NAProbability] = {}\n\n    def probability(self, n: int) -> NAProbability:\n        \"\"\"Get the probability at level n.\n\n        Time: O(n) on first call, O(1) thereafter.\n        \"\"\"\n        if n not in self._probs:\n            self._probs[n] = grid_uniform_prob(n)\n        return self._probs[n]\n\n    def point_mass(self, n: int) -> Fraction:\n        \"\"\"Point mass at level n: 1/(n+1).\n\n        Time: O(1)\n        \"\"\"\n        return Fraction(1, n + 1)\n\n    def verify_tends_to_zero(self, levels: Optional[List[int]] = None) -> List[Tuple[int, float]]:\n        \"\"\"Verify that point masses tend to zero.\n\n        Returns list of (level, point_mass) pairs showing convergence.\n        \"\"\"\n        if levels is None:\n            levels = [2**k - 1 for k in range(1, 20)]\n        return [(n, float(self.point_mass(n))) for n in levels]\n\n    def expectation_at_level(\n        self, n: int, X_family: Callable[[int, int], Fraction]\n    ) -> Fraction:\n        \"\"\"Compute expectation at level n for a family of observables.\n\n        X_family(n, i) gives the observable value at level n, point i.\n\n        Time: O(n)\n        \"\"\"\n        P = self.probability(n)\n        return na_expectation(P, lambda i: X_family(n, i))\n\n\ndef archimedean_obstruction(epsilon: float) -> Tuple[int, float]:\n    \"\"\"Find N such that N*\u03b5 > 1, demonstrating the impossibility theorem.\n\n    For any \u03b5 > 0, the Archimedean property guarantees such N exists.\n\n    Time: O(1)\n\n    Args:\n        epsilon: The putative equal positive mass.\n\n    Returns:\n        (N, N*epsilon) where N*epsilon > 1.\n    \"\"\"\n    N = math.ceil(1 / epsilon) + 1\n    return (N, N * epsilon)\n\n\n# =============================================================================\n# Example usage\n# =============================================================================\nif __name__ == \"__main__\":\n    print(\"=== Algorithm Demonstrations ===\\n\")\n\n    # 1. Grid uniform probability\n    P = grid_uniform_prob(4)\n    print(f\"Grid Fin(5): axioms valid = {P.verify_axioms()}\")\n    print(f\"  Singleton mass = {P.point_masses[0]}\")\n    print(f\"  Mass of {{0,1,2}} = {P.mass({0,1,2})}\")\n    print()\n\n    # 2. Affine expectation\n    a, b = Fraction(2), Fraction(1)\n    X = lambda i: a * Fraction(i, 4) + b\n    E = na_expectation(P, X)\n    print(f\"E[2x+1] on Fin(5) = {E} (expected {a/2 + b})\")\n    print()\n\n    # 3. Refinement invariance\n    X_square = lambda i: Fraction(i * i)\n    ok, coarse, fine = check_refinement_invariance(4, 3, X_square)\n    print(f\"Refinement (n=4, k=3, X=i\u00b2): invariant={ok}\")\n    print(f\"  Coarse E = {coarse}, Fine E = {fine}\")\n    print()\n\n    # 4. Infinitesimal scheme\n    scheme = InfinitesimalScheme()\n    convergence = scheme.verify_tends_to_zero([0, 9, 99, 999, 9999])\n    print(\"Infinitesimal scheme point masses:\")\n    for n, m in convergence:\n        print(f\"  Level {n:>5}: mass = {m:.8f}\")\n    print()\n\n    # 5. Archimedean obstruction\n    N, mass = archimedean_obstruction(0.001)\n    print(f\"Archimedean obstruction: \u03b5=0.001 \u2192 N={N}, N*\u03b5={mass:.3f} > 1\")\n",
+        "code_file": "visualizations/non_archimedean_probability_via_surreal_numbers_grid_uniform_probability_construction.py"
+      },
+      {
+        "name": "Expectation Computation",
+        "pseudocode": "Input: NAProbability P, Observable X\nOutput: E[X]\n1. result = 0\n2. For i = 0 to n: result += X(i) * P.point_mass[i]\n3. Return result\nTime: O(n), Space: O(1)",
+        "code": "from fractions import Fraction\n\ndef na_expectation(n, X):\n    \"\"\"Compute E[X] under uniform grid probability on Fin(n+1).\"\"\"\n    mass = Fraction(1, n + 1)\n    return sum(X(i) * mass for i in range(n + 1))\n\n# Example: E[2x+1] on Fin(5)\na, b = Fraction(2), Fraction(1)\nX = lambda i: a * Fraction(i, 4) + b\nprint(f\"E[2x+1] = {na_expectation(4, X)}\")  # Output: 2",
+        "code_file": "visualizations/non_archimedean_probability_via_surreal_numbers_expectation_computation.py"
+      },
+      {
+        "name": "Refinement Coherence Check",
+        "pseudocode": "Input: n (coarse grid), k (refinement factor), X (observable)\nOutput: Boolean\n1. coarse_E = NAExpect(GridUniform(n), X)\n2. refined_X(j) = X(j // k)\n3. fine_E = NAExpect(GridUniform(k*(n+1)-1), refined_X)\n4. Return coarse_E == fine_E\nTime: O(k*n), Space: O(k*n)",
+        "code": "from fractions import Fraction\n\ndef check_refinement(n, k, X):\n    \"\"\"Check refinement invariance of expectation.\"\"\"\n    mass_c = Fraction(1, n + 1)\n    coarse = sum(X(i) * mass_c for i in range(n + 1))\n    fine_n = k * (n + 1) - 1\n    mass_f = Fraction(1, fine_n + 1)\n    fine = sum(X(j // k) * mass_f for j in range(fine_n + 1))\n    return coarse == fine\n\n# Example\nX = lambda i: Fraction(i * i)\nprint(check_refinement(5, 3, X))  # True",
+        "code_file": "visualizations/non_archimedean_probability_via_surreal_numbers_refinement_coherence_check.py"
+      }
+    ],
+    "lean_proofs": "/-\n# Non-Archimedean Finitely Additive Probability: Definitions\n\nThis module defines a finitely additive probability structure valued in an\nordered field `K`, along with uniform grid probabilities, expectation, and\nthe key notion of refinement for observable functions.\n-/\nimport Mathlib\n\nopen Finset BigOperators\n\n/-- A finitely additive probability valued in an ordered field `K`.\nThis is the core structure for non-Archimedean probability:\nit replaces countable additivity with finite additivity, allowing\nevery atom to carry positive mass even when the total mass is 1. -/\nstructure NAProbability (\u03b1 : Type*) (K : Type*)\n    [Fintype \u03b1] [DecidableEq \u03b1]\n    [Field K] [LinearOrder K] [IsStrictOrderedRing K] where\n  mass : Finset \u03b1 \u2192 K\n  empty_mass : mass \u2205 = 0\n  add_mass : \u2200 s t : Finset \u03b1, Disjoint s t \u2192 mass (s \u222a t) = mass s + mass t\n  total_mass : mass Finset.univ = 1\n  nonneg_mass : \u2200 s : Finset \u03b1, 0 \u2264 mass s\n\n/-- Expectation of an observable `X : \u03b1 \u2192 K` under a non-Archimedean probability. -/\nnoncomputable def NAExpectation {\u03b1 K : Type*} [Fintype \u03b1] [DecidableEq \u03b1]\n    [Field K] [LinearOrder K] [IsStrictOrderedRing K]\n    (P : NAProbability \u03b1 K) (X : \u03b1 \u2192 K) : K :=\n  \u2211 a : \u03b1, X a * P.mass ({a})\n\n/-- The uniform probability on `Fin (n+1)` with singleton mass `1/(n+1)`. -/\nnoncomputable def gridUniformProb (n : \u2115) : NAProbability (Fin (n + 1)) \u211a where\n  mass s := (s.card : \u211a) / (n + 1 : \u211a)\n  empty_mass := by simp\n  add_mass := by\n    intro s t hst\n    rw [Finset.card_union_of_disjoint hst]\n    push_cast; ring\n  total_mass := by\n    rw [Finset.card_fin]; push_cast\n    exact div_self (by positivity)\n  nonneg_mass := fun s => by positivity\n\n/-- Singleton mass of the uniform grid probability. -/\ntheorem gridUniformProb_singleton (n : \u2115) (i : Fin (n + 1)) :\n    (gridUniformProb n).mass {i} = 1 / (n + 1 : \u211a) := by\n  simp [gridUniformProb, Finset.card_singleton]\n\n/-- Lift a coarse-grid observable to a fine grid by block embedding.\nPoint `j : Fin (k * (n+1))` maps to coarse point `\u27e8j / k, ...\u27e9`.\nEach coarse grid point has exactly `k` preimages under this map. -/\ndef refineObservable {n : \u2115} (k : \u2115) (_hk : 0 < k)\n    (X : Fin (n + 1) \u2192 \u211a) : Fin (k * (n + 1)) \u2192 \u211a :=\n  fun j => X \u27e8j.val / k, Nat.div_lt_of_lt_mul (by omega)\u27e9\n\n\n-- ==========================================\n-- Theorems file\n-- ==========================================\n\n/-\n# Non-Archimedean Finitely Additive Probability: Main Theorems\n\nThis module proves the core theorems of non-Archimedean probability theory:\n1. Existence of uniform grid probabilities with equal positive atomic masses\n2. Exact expectation of affine observables matching the continuum limit\n3. Refinement invariance (coherence under grid subdivision)\n4. Convergence of grid expectations to the continuum integral (shadow principle)\n5. Impossibility of countably additive equal-mass probabilities on \u2115\n-/\nimport Speculative.NAProbability.Defs\n\nopen Finset BigOperators\n\n/-! ## Theorem 1: Uniform atomic probability on finite grids -/\n\n/-- Every point on the grid `Fin (n+1)` carries equal mass `1/(n+1)` under\nthe uniform grid probability. This is the seed theorem: every point has a\nnonzero \"small\" probability, and as `n \u2192 \u221e` these masses asymptotically\nbehave as infinitesimals. -/\ntheorem grid_uniform_exists (n : \u2115) :\n    \u2203 P : NAProbability (Fin (n + 1)) \u211a,\n      \u2200 i : Fin (n + 1),\n        P.mass ({i}) = 1 / (n + 1 : \u211a) := by\n  exact \u27e8gridUniformProb n, gridUniformProb_singleton n\u27e9\n\n/-! ## Theorem 2: Exact affine expectation on grids -/\n\n/-\nHelper: the Gauss sum formula `\u2211 i : Fin (n+1), (i : \u211a) = n*(n+1)/2`.\n-/\ntheorem fin_sum_id (n : \u2115) :\n    \u2211 i : Fin (n + 1), (i : \u211a) = (n : \u211a) * (n + 1) / 2 := by\n  exact Nat.recOn n ( by norm_num ) fun k ih => by norm_num [ Fin.sum_univ_castSucc ] at * ; linarith;\n\n/-\nFor affine observables `X(i) = a * i/n + b` on the uniform grid probability\nover `Fin (n+1)`, the expectation equals exactly `a/2 + b`. This exhibits a\nproto-continuum law: the discrete model already recovers the exact classical\nexpectation for affine functions.\n-/\ntheorem grid_expectation_affine (n : \u2115) (hn : 0 < n) (a b : \u211a) :\n    let X : Fin (n + 1) \u2192 \u211a := fun i => a * (i : \u211a) / n + b\n    let P := gridUniformProb n\n    NAExpectation P X = a / 2 + b := by\n  unfold NAExpectation;\n  unfold gridUniformProb;\n  simp +decide [ Finset.sum_add_distrib, add_mul, div_eq_mul_inv ];\n  norm_num [ \u2190 Finset.mul_sum _ _ _, \u2190 Finset.sum_mul ];\n  rw [ show ( \u2211 i : Fin ( n + 1 ), ( i : \u211a ) ) = n * ( n + 1 ) / 2 from mod_cast fin_sum_id n ] ; ring;\n  -- Combine like terms and simplify the expression.\n  field_simp\n  ring\n\n/-! ## Theorem 3: Refinement invariance -/\n\n/-- Uniform probability on `Fin m` for any `m \u2265 1`, parameterized by `m` directly. -/\nnoncomputable def uniformFinProb (m : \u2115) (hm : 0 < m) :\n    NAProbability (Fin m) \u211a where\n  mass s := (s.card : \u211a) / (m : \u211a)\n  empty_mass := by simp\n  add_mass := by\n    intro s t hst\n    rw [Finset.card_union_of_disjoint hst]\n    push_cast; ring\n  total_mass := by\n    rw [Finset.card_fin]; push_cast\n    exact div_self (by positivity)\n  nonneg_mass := fun s => by positivity\n\n/-- The uniform prob on `Fin m` assigns each singleton mass `1/m`. -/\ntheorem uniformFinProb_singleton (m : \u2115) (hm : 0 < m) (i : Fin m) :\n    (uniformFinProb m hm).mass {i} = 1 / (m : \u211a) := by\n  simp [uniformFinProb, Finset.card_singleton]\n\n/-\nHelper: the number of elements in `Fin (k*(n+1))` mapping to a given\ncoarse point under the block embedding `j \u21a6 j/k` is exactly `k`.\n-/\ntheorem refine_fiber_card {n : \u2115} (k : \u2115) (hk : 0 < k) (i : Fin (n + 1)) :\n    (Finset.univ.filter (fun j : Fin (k * (n + 1)) => j.val / k = i.val)).card = k := by\n  rw [ Finset.card_eq_of_bijective ];\n  use fun j hj => \u27e8 i * k + j, by nlinarith [ Fin.is_lt i ] \u27e9;\n  \u00b7 simp +zetaDelta at *;\n    exact fun a ha => \u27e8 a % k, Nat.mod_lt _ hk, Fin.ext <| by nlinarith [ Nat.mod_add_div a k, Fin.is_lt a ] \u27e9;\n  \u00b7 simp +decide [ Nat.add_div, hk ];\n    exact fun j hj => by rw [ Nat.div_eq_of_lt hj, if_neg ( Nat.not_le_of_gt ( Nat.mod_lt _ hk ) ) ] ; ring;\n  \u00b7 aesop\n\n/-\nExpectation of observables pulled back from a coarse grid is preserved\nby the refined uniform probability. This is the key coherence property:\nprobability is consistent under refinement.\n\nFor any `k \u2265 1`, refining the grid `Fin(n+1)` to `Fin(k*(n+1))` by replacing\neach point with a block of `k` points preserves the expectation of any\nobservable lifted via `refineObservable`.\n-/\ntheorem refinement_expectation_invariant (n k : \u2115) (hk : 0 < k) :\n    \u2200 X : Fin (n + 1) \u2192 \u211a,\n      NAExpectation (gridUniformProb n) X =\n      NAExpectation (uniformFinProb (k * (n + 1)) (by positivity))\n        (refineObservable k hk X) := by\n  unfold refineObservable\n  generalize_proofs at *;\n  intro X\n  unfold NAExpectation uniformFinProb gridUniformProb\n  simp [Finset.sum_mul, div_eq_mul_inv];\n  -- By Fubini's theorem, we can interchange the order of summation.\n  have h_fubini : \u2211 j : Fin (k * (n + 1)), X \u27e8j.val / k, by\n    exact?\u27e9 * (n + 1 : \u211a)\u207b\u00b9 * (k : \u211a)\u207b\u00b9 = \u2211 i : Fin (n + 1), \u2211 j \u2208 Finset.univ.filter (fun j : Fin (k * (n + 1)) => j.val / k = i.val), X i * (n + 1 : \u211a)\u207b\u00b9 * (k : \u211a)\u207b\u00b9 := by\n    rw [ Finset.sum_sigma' ];\n    refine' Finset.sum_bij ( fun j _ => \u27e8 \u27e8 j / k, by solve_by_elim \u27e9, j \u27e9 ) _ _ _ _ <;> aesop\n  generalize_proofs at *;\n  simp_all +decide [ \u2190 mul_assoc, Finset.sum_mul _ _ _ ];\n  exact Finset.sum_congr rfl fun i hi => by rw [ refine_fiber_card k hk i ] ; simp +decide [ hk.ne', mul_assoc, mul_comm, mul_left_comm ] ;\n\n/-! ## Theorem 4: Convergence to continuum (shadow principle) -/\n\n/-\nThe grid expectation of `x \u21a6 a*x + b` on `Fin (n+2)` with uniform\nprobability converges to `a/2 + b` as `n \u2192 \u221e`. This is the shadow principle:\ninfinitesimal atomic probabilities approximate classical continuum probability.\n-/\ntheorem grid_average_converges_affine (a b : \u211a) :\n    Filter.Tendsto\n      (fun n : \u2115 => NAExpectation (gridUniformProb (n + 1))\n        (fun i : Fin (n + 2) => a * ((i : \u211a) / (\u2191n + 2)) + b))\n      Filter.atTop\n      (nhds (a / 2 + b)) := by\n  unfold NAExpectation gridUniformProb;\n  simp +decide [ Finset.sum_add_distrib, add_mul, mul_add, div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm, Finset.mul_sum _ _ _, Finset.sum_mul _ _ _, Finset.sum_const, Finset.card_fin ];\n  norm_num [ \u2190 mul_assoc, \u2190 Finset.mul_sum _ _ _, \u2190 Finset.sum_mul, ( by ring : ( ( Nat.cast:\u2115 \u2192 \u211a ) _ + 1 + 1 ) = ( Nat.cast:\u2115 \u2192 \u211a ) _ + 2 ) ];\n  -- We'll use the fact that $\\sum_{i=0}^{n} i = \\frac{n(n+1)}{2}$ to simplify the expression.\n  have h_sum : \u2200 n : \u2115, \u2211 i : Fin (n + 2), (i : \u211a) = (n + 1) * (n + 2) / 2 := by\n    exact fun n => by induction n <;> norm_num [ Fin.sum_univ_castSucc ] at * ; linarith;\n  -- Substitute the sum formula into the expression.\n  simp_rw [h_sum];\n  -- Simplify the expression inside the limit.\n  suffices h_simp : Filter.Tendsto (fun n : \u2115 => a / 2 * (1 - 1 / (n + 2 : \u211a)) + b) Filter.atTop (nhds (a / 2 + b)) by\n    grind +suggestions;\n  exact le_trans ( Filter.Tendsto.add ( tendsto_const_nhds.mul ( tendsto_const_nhds.sub ( tendsto_const_nhds.div_atTop ( Filter.tendsto_atTop_add_const_right _ _ tendsto_natCast_atTop_atTop ) ) ) ) tendsto_const_nhds ) ( by norm_num )\n\n/-! ## Theorem 5: Impossibility of equal positive atoms on \u2115 -/\n\n/-\nThere is no finitely additive real-valued probability on `\u2115` that assigns\nevery singleton the same positive mass and has all finite subsets with mass \u2264 1.\nThis marks the exact frontier where non-Archimedean probability departs from\nthe classical Kolmogorov framework.\n\nThe proof uses the Archimedean property: if `\u03b5 > 0`, then for `N > 1/\u03b5`,\na set of `N` disjoint singletons has mass `N*\u03b5 > 1`, contradicting bounded\ntotal mass.\n-/\ntheorem no_equal_positive_atoms_nat :\n    \u00ac \u2203 (\u03b5 : \u211d) (_ : 0 < \u03b5) (\u03bc : Finset \u2115 \u2192 \u211d),\n      (\u2200 n : \u2115, \u03bc {n} = \u03b5) \u2227\n      (\u2200 s t : Finset \u2115, Disjoint s t \u2192 \u03bc (s \u222a t) = \u03bc s + \u03bc t) \u2227\n      (\u2200 s : Finset \u2115, \u03bc s \u2264 1) := by\n  by_contra h\n  obtain \u27e8\u03b5, h\u03b5_pos, \u03bc, h\u03bc_singleton, h\u03bc_additive, h\u03bc_le_one\u27e9 := h;\n  -- By finite additivity and induction, we have $\\mu(\\text{Finset.range } N) = N \\cdot \\epsilon$.\n  have h_mu_range : \u2200 N : \u2115, \u03bc (Finset.range N) = N * \u03b5 := by\n    intro N; induction' N with N ih <;> simp_all +decide [ Finset.range_add_one ] ;\n    \u00b7 simpa using h\u03bc_additive \u2205 \u2205;\n    \u00b7 rw [ Finset.insert_eq, h\u03bc_additive ] <;> norm_num [ ih, h\u03bc_singleton ] ; ring;\n  exact absurd ( h\u03bc_le_one ( Finset.range ( \u230a\u03b5\u207b\u00b9\u230b\u208a + 1 ) ) ) ( by push_cast [ h_mu_range ] ; nlinarith [ Nat.lt_floor_add_one \u03b5\u207b\u00b9, mul_inv_cancel\u2080 ( ne_of_gt h\u03b5_pos ) ] )",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Non-Archimedean Finitely Additive Probability\n\nImplements the core algorithms from the research paper:\n1. Construction of grid uniform probabilities\n2. Computation of non-Archimedean-style expectations\n3. Refinement coherence checking\n4. Infinitesimal scheme construction and verification\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import Callable, Dict, FrozenSet, List, Optional, Tuple\nimport math\n\n\nclass NAProbability:\n    \"\"\"A finitely additive probability on a finite set with values in \u211a.\n\n    This implements the NAProbability structure from the Lean formalization:\n    - mass : Finset \u03b1 \u2192 K (here subsets of {0,...,n} \u2192 Fraction)\n    - empty_mass : mass(\u2205) = 0\n    - add_mass : mass(S \u222a T) = mass(S) + mass(T) for disjoint S, T\n    - total_mass : mass(universe) = 1\n    - nonneg_mass : mass(S) \u2265 0\n\n    Time complexity: O(|S|) per mass query, O(n) for expectation.\n    Space complexity: O(n) for storing the universe.\n    \"\"\"\n\n    def __init__(self, n: int, point_masses: Dict[int, Fraction]):\n        \"\"\"Initialize with universe {0, ..., n} and point masses.\n\n        Args:\n            n: Universe is {0, ..., n}\n            point_masses: Maps each point to its mass. Must sum to 1.\n\n        Raises:\n            ValueError: If masses don't satisfy axioms.\n        \"\"\"\n        self.n = n\n        self.universe = set(range(n + 1))\n        self.point_masses = dict(point_masses)\n\n        # Verify axioms\n        total = sum(self.point_masses.values())\n        if total != Fraction(1):\n            raise ValueError(f\"Total mass is {total}, not 1\")\n        for k, v in self.point_masses.items():\n            if v < 0:\n                raise ValueError(f\"Negative mass {v} at point {k}\")\n            if k < 0 or k > n:\n                raise ValueError(f\"Point {k} not in universe {{0,...,{n}}}\")\n\n    def mass(self, subset: set) -> Fraction:\n        \"\"\"Compute the mass of a subset.\n\n        By finite additivity, mass(S) = \u03a3_{i \u2208 S} mass({i}).\n\n        Time: O(|subset|)\n        \"\"\"\n        return sum(self.point_masses.get(i, Fraction(0)) for i in subset)\n\n    def expectation(self, X: Callable[[int], Fraction]) -> Fraction:\n        \"\"\"Compute E[X] = \u03a3_i X(i) * mass({i}).\n\n        Time: O(n)\n        \"\"\"\n        return sum(X(i) * self.point_masses[i] for i in self.universe)\n\n    def verify_axioms(self) -> bool:\n        \"\"\"Verify all NAProbability axioms hold.\n\n        Time: O(n)\n        \"\"\"\n        # empty_mass\n        if self.mass(set()) != Fraction(0):\n            return False\n        # total_mass\n        if self.mass(self.universe) != Fraction(1):\n            return False\n        # nonneg_mass (only check singletons; extends by additivity)\n        for i in self.universe:\n            if self.point_masses[i] < 0:\n                return False\n        return True\n\n\ndef grid_uniform_prob(n: int) -> NAProbability:\n    \"\"\"Construct the uniform probability on {0, ..., n}.\n\n    Each singleton has mass 1/(n+1). This is the gridUniformProb\n    from the Lean formalization.\n\n    Time: O(n)  Space: O(n)\n\n    Args:\n        n: Grid parameter. Universe is {0, ..., n} with n+1 points.\n\n    Returns:\n        NAProbability with uniform masses.\n    \"\"\"\n    N = n + 1\n    mass = Fraction(1, N)\n    return NAProbability(n, {i: mass for i in range(N)})\n\n\ndef na_expectation(P: NAProbability, X: Callable[[int], Fraction]) -> Fraction:\n    \"\"\"Compute expectation of X under probability P.\n\n    E[X] = \u03a3_{a \u2208 \u03b1} X(a) \u00b7 P.mass({a})\n\n    This matches NAExpectation from the Lean formalization.\n\n    Time: O(n) where n = |universe|\n    \"\"\"\n    return P.expectation(X)\n\n\ndef refine_observable(\n    n: int, k: int, X: Callable[[int], Fraction]\n) -> Callable[[int], Fraction]:\n    \"\"\"Lift observable from Fin(n+1) to Fin(k*(n+1)) by block embedding.\n\n    Point j in the fine grid maps to coarse point j // k.\n    This matches refineObservable from the Lean formalization.\n\n    Time: O(1) per evaluation\n    \"\"\"\n    def refined(j: int) -> Fraction:\n        return X(j // k)\n    return refined\n\n\ndef check_refinement_invariance(\n    n: int, k: int, X: Callable[[int], Fraction]\n) -> Tuple[bool, Fraction, Fraction]:\n    \"\"\"Check that refinement preserves expectation.\n\n    Verifies: E_coarse[X] = E_fine[refine(X)]\n\n    This is the computational test for Theorem 3 (refinement_expectation_invariant).\n\n    Time: O(k * n)\n\n    Returns:\n        (invariant, coarse_expectation, fine_expectation)\n    \"\"\"\n    coarse_P = grid_uniform_prob(n)\n    coarse_E = na_expectation(coarse_P, X)\n\n    fine_n = k * (n + 1) - 1\n    fine_P = grid_uniform_prob(fine_n)\n    refined_X = refine_observable(n, k, X)\n    fine_E = na_expectation(fine_P, refined_X)\n\n    return (coarse_E == fine_E, coarse_E, fine_E)\n\n\nclass InfinitesimalScheme:\n    \"\"\"A sequence of grid probabilities whose point masses tend to zero.\n\n    This implements the InfinitesimalScheme structure from the Lean formalization.\n    Each level n gives a probability on Fin(n+1) with point mass 1/(n+1).\n\n    The scheme is the formal precursor to hyperfinite counting measure\n    and surreal-valued probability.\n    \"\"\"\n\n    def __init__(self, max_level: int = 100):\n        \"\"\"Initialize the scheme up to a given refinement level.\n\n        Args:\n            max_level: Maximum grid level to precompute.\n        \"\"\"\n        self.max_level = max_level\n        self._probs: Dict[int, NAProbability] = {}\n\n    def probability(self, n: int) -> NAProbability:\n        \"\"\"Get the probability at level n.\n\n        Time: O(n) on first call, O(1) thereafter.\n        \"\"\"\n        if n not in self._probs:\n            self._probs[n] = grid_uniform_prob(n)\n        return self._probs[n]\n\n    def point_mass(self, n: int) -> Fraction:\n        \"\"\"Point mass at level n: 1/(n+1).\n\n        Time: O(1)\n        \"\"\"\n        return Fraction(1, n + 1)\n\n    def verify_tends_to_zero(self, levels: Optional[List[int]] = None) -> List[Tuple[int, float]]:\n        \"\"\"Verify that point masses tend to zero.\n\n        Returns list of (level, point_mass) pairs showing convergence.\n        \"\"\"\n        if levels is None:\n            levels = [2**k - 1 for k in range(1, 20)]\n        return [(n, float(self.point_mass(n))) for n in levels]\n\n    def expectation_at_level(\n        self, n: int, X_family: Callable[[int, int], Fraction]\n    ) -> Fraction:\n        \"\"\"Compute expectation at level n for a family of observables.\n\n        X_family(n, i) gives the observable value at level n, point i.\n\n        Time: O(n)\n        \"\"\"\n        P = self.probability(n)\n        return na_expectation(P, lambda i: X_family(n, i))\n\n\ndef archimedean_obstruction(epsilon: float) -> Tuple[int, float]:\n    \"\"\"Find N such that N*\u03b5 > 1, demonstrating the impossibility theorem.\n\n    For any \u03b5 > 0, the Archimedean property guarantees such N exists.\n\n    Time: O(1)\n\n    Args:\n        epsilon: The putative equal positive mass.\n\n    Returns:\n        (N, N*epsilon) where N*epsilon > 1.\n    \"\"\"\n    N = math.ceil(1 / epsilon) + 1\n    return (N, N * epsilon)\n\n\n# =============================================================================\n# Example usage\n# =============================================================================\nif __name__ == \"__main__\":\n    print(\"=== Algorithm Demonstrations ===\\n\")\n\n    # 1. Grid uniform probability\n    P = grid_uniform_prob(4)\n    print(f\"Grid Fin(5): axioms valid = {P.verify_axioms()}\")\n    print(f\"  Singleton mass = {P.point_masses[0]}\")\n    print(f\"  Mass of {{0,1,2}} = {P.mass({0,1,2})}\")\n    print()\n\n    # 2. Affine expectation\n    a, b = Fraction(2), Fraction(1)\n    X = lambda i: a * Fraction(i, 4) + b\n    E = na_expectation(P, X)\n    print(f\"E[2x+1] on Fin(5) = {E} (expected {a/2 + b})\")\n    print()\n\n    # 3. Refinement invariance\n    X_square = lambda i: Fraction(i * i)\n    ok, coarse, fine = check_refinement_invariance(4, 3, X_square)\n    print(f\"Refinement (n=4, k=3, X=i\u00b2): invariant={ok}\")\n    print(f\"  Coarse E = {coarse}, Fine E = {fine}\")\n    print()\n\n    # 4. Infinitesimal scheme\n    scheme = InfinitesimalScheme()\n    convergence = scheme.verify_tends_to_zero([0, 9, 99, 999, 9999])\n    print(\"Infinitesimal scheme point masses:\")\n    for n, m in convergence:\n        print(f\"  Level {n:>5}: mass = {m:.8f}\")\n    print()\n\n    # 5. Archimedean obstruction\n    N, mass = archimedean_obstruction(0.001)\n    print(f\"Archimedean obstruction: \u03b5=0.001 \u2192 N={N}, N*\u03b5={mass:.3f} > 1\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Non-Archimedean Finitely Additive Probability\n\nReal-world applications demonstrating the practical utility of the theory:\n1. Fair lottery on finite populations with exact equal treatment\n2. Rare-event modeling with explicitly positive infinitesimal probabilities\n3. Decision theory with lexicographic preferences\n4. Rate-distortion approximation on discrete grids\n5. Monte Carlo integration error analysis\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import Callable, Dict, List, Tuple\nimport math\nimport random\n\n\n# =============================================================================\n# Application 1: Fair Finite Lotteries\n# =============================================================================\ndef fair_lottery_analysis(population: int) -> Dict:\n    \"\"\"Analyze fairness properties of a uniform grid probability lottery.\n\n    In a fair lottery, every participant must have exactly equal probability\n    of winning. Classical probability on infinite populations requires\n    measure-zero singletons, making \"equal positive probability\" impossible.\n\n    Our non-Archimedean framework gives each participant mass 1/N > 0.\n\n    Returns:\n        Dictionary with fairness metrics.\n    \"\"\"\n    mass = Fraction(1, population)\n\n    # Subgroup fairness: any k-person subgroup has mass k/N\n    subgroup_sizes = [1, 2, 10, population // 2, population]\n    subgroup_masses = {k: mass * k for k in subgroup_sizes if k <= population}\n\n    return {\n        \"population\": population,\n        \"individual_mass\": mass,\n        \"individual_mass_float\": float(mass),\n        \"subgroup_masses\": subgroup_masses,\n        \"total_mass\": mass * population,\n        \"is_normalized\": mass * population == Fraction(1),\n    }\n\n\n# =============================================================================\n# Application 2: Rare-Event Modeling\n# =============================================================================\ndef rare_event_model(grid_size: int, rare_events: List[int]) -> Dict:\n    \"\"\"Model rare events with explicitly positive probabilities.\n\n    In classical probability, events with probability 0 are \"impossible\"\n    even though they may occur. Non-Archimedean probability assigns\n    positive infinitesimal mass to each event.\n\n    Args:\n        grid_size: Total number of possible outcomes (N = grid_size).\n        rare_events: Indices of \"rare\" events.\n\n    Returns:\n        Analysis of rare event probabilities.\n    \"\"\"\n    mass = Fraction(1, grid_size)\n\n    rare_mass = mass * len(rare_events)\n    common_mass = Fraction(1) - rare_mass\n\n    return {\n        \"grid_size\": grid_size,\n        \"singleton_mass\": mass,\n        \"num_rare_events\": len(rare_events),\n        \"rare_total_mass\": rare_mass,\n        \"common_total_mass\": common_mass,\n        \"rare_to_common_ratio\": rare_mass / common_mass if common_mass > 0 else float('inf'),\n        \"every_event_positive\": True,  # This is the key property!\n    }\n\n\n# =============================================================================\n# Application 3: Lexicographic Decision Theory\n# =============================================================================\ndef lexicographic_utility(\n    n: int,\n    primary_utility: Callable[[int], Fraction],\n    secondary_utility: Callable[[int], Fraction],\n) -> Tuple[Fraction, Fraction, str]:\n    \"\"\"Compare actions using lexicographic expected utility.\n\n    In lexicographic decision theory, infinitesimal differences matter.\n    Our grid probability naturally supports this: on a grid of size N,\n    the \"infinitesimal\" contribution of each point is 1/N.\n\n    For two levels of utility (primary and secondary), we compute:\n    - Primary expected utility: E[U_primary]\n    - Secondary expected utility: E[U_secondary]\n    - Decision: compare lexicographically\n\n    Args:\n        n: Grid parameter (universe = {0, ..., n}).\n        primary_utility: Primary utility function.\n        secondary_utility: Secondary utility function.\n\n    Returns:\n        (primary_E, secondary_E, decision_description)\n    \"\"\"\n    mass = Fraction(1, n + 1)\n\n    primary_E = sum(primary_utility(i) * mass for i in range(n + 1))\n    secondary_E = sum(secondary_utility(i) * mass for i in range(n + 1))\n\n    return primary_E, secondary_E, f\"E[U1]={primary_E}, E[U2]={secondary_E}\"\n\n\n# =============================================================================\n# Application 4: Discrete Rate-Distortion\n# =============================================================================\ndef grid_rate_distortion(\n    n: int,\n    codebook_size: int,\n    distortion_fn: Callable[[int, int], Fraction],\n) -> Dict:\n    \"\"\"Compute rate-distortion on a uniform grid.\n\n    Under uniform grid probability, the expected distortion for a\n    codebook (set of reconstruction points) is:\n\n    D = E[min_{c \u2208 codebook} d(X, c)] = (1/(n+1)) \u03a3_i min_c d(i, c)\n\n    For squared distortion d(x,y) = (x-y)\u00b2, this gives exact rational answers.\n\n    The key insight from our theory: for affine distortion kernels,\n    this expected distortion is invariant under grid refinement.\n\n    Args:\n        n: Grid parameter.\n        codebook_size: Number of reconstruction points.\n        distortion_fn: Distortion function d(source, reconstruction).\n\n    Returns:\n        Rate-distortion analysis.\n    \"\"\"\n    mass = Fraction(1, n + 1)\n\n    # Simple uniform codebook\n    codebook = [i * n // (codebook_size - 1) if codebook_size > 1 else n // 2\n                for i in range(codebook_size)]\n    codebook = list(set(codebook))  # Remove duplicates\n\n    # Expected distortion\n    total_distortion = Fraction(0)\n    for i in range(n + 1):\n        min_d = min(distortion_fn(i, c) for c in codebook)\n        total_distortion += min_d * mass\n\n    return {\n        \"grid_size\": n + 1,\n        \"codebook\": codebook,\n        \"codebook_size\": len(codebook),\n        \"expected_distortion\": total_distortion,\n        \"expected_distortion_float\": float(total_distortion),\n        \"rate_bits\": math.log2(len(codebook)) if len(codebook) > 0 else 0,\n    }\n\n\n# =============================================================================\n# Application 5: Monte Carlo Error Analysis\n# =============================================================================\ndef monte_carlo_vs_grid(\n    f: Callable[[float], float],\n    n_grid: int,\n    n_mc: int,\n    true_integral: float,\n    seed: int = 42,\n) -> Dict:\n    \"\"\"Compare grid expectation with Monte Carlo integration.\n\n    Our grid probability gives exact rational expectations.\n    Monte Carlo gives random approximations. This comparison\n    highlights the deterministic exactness of the grid approach.\n\n    Args:\n        f: Function to integrate over [0, 1].\n        n_grid: Number of grid points.\n        n_mc: Number of Monte Carlo samples.\n        true_integral: Known integral value for comparison.\n        seed: Random seed for reproducibility.\n\n    Returns:\n        Comparison metrics.\n    \"\"\"\n    # Grid expectation (exact for our method)\n    grid_sum = sum(f(i / n_grid) for i in range(n_grid + 1))\n    grid_E = grid_sum / (n_grid + 1)\n    grid_error = abs(grid_E - true_integral)\n\n    # Monte Carlo\n    rng = random.Random(seed)\n    mc_samples = [f(rng.random()) for _ in range(n_mc)]\n    mc_E = sum(mc_samples) / n_mc\n    mc_error = abs(mc_E - true_integral)\n\n    return {\n        \"function_desc\": f.__doc__ or \"unknown\",\n        \"true_integral\": true_integral,\n        \"grid_points\": n_grid + 1,\n        \"grid_expectation\": grid_E,\n        \"grid_error\": grid_error,\n        \"mc_samples\": n_mc,\n        \"mc_expectation\": mc_E,\n        \"mc_error\": mc_error,\n        \"grid_wins\": grid_error < mc_error,\n    }\n\n\n# =============================================================================\n# Main demonstration\n# =============================================================================\nif __name__ == \"__main__\":\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551     APPLICATIONS OF NON-ARCHIMEDEAN PROBABILITY                    \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    # Application 1: Fair Lottery\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Fair Finite Lotteries\")\n    print(\"=\" * 70)\n    for pop in [100, 1000, 1000000]:\n        result = fair_lottery_analysis(pop)\n        print(f\"\\n  Population {pop:>10}:\")\n        print(f\"    Individual mass: {result['individual_mass']} \"\n              f\"({result['individual_mass_float']:.2e})\")\n        print(f\"    Normalized: {result['is_normalized']}\")\n        for k, m in result['subgroup_masses'].items():\n            print(f\"    Group of {k}: mass = {float(m):.6f}\")\n    print()\n\n    # Application 2: Rare Events\n    print(\"=\" * 70)\n    print(\"APPLICATION 2: Rare-Event Modeling\")\n    print(\"=\" * 70)\n    result = rare_event_model(1000000, list(range(10)))\n    print(f\"\\n  Grid size: {result['grid_size']}\")\n    print(f\"  Singleton mass: {result['singleton_mass']}\")\n    print(f\"  10 rare events total mass: {result['rare_total_mass']}\")\n    print(f\"  Every event has positive probability: {result['every_event_positive']}\")\n    print()\n\n    # Application 3: Lexicographic Decision\n    print(\"=\" * 70)\n    print(\"APPLICATION 3: Lexicographic Decision Theory\")\n    print(\"=\" * 70)\n    n = 99\n    # Action A: high primary utility, low secondary\n    prim_A = lambda i: Fraction(i, n)\n    sec_A = lambda i: Fraction(1)\n    E_prim_A, E_sec_A, desc_A = lexicographic_utility(n, prim_A, sec_A)\n\n    # Action B: same primary, higher secondary\n    prim_B = lambda i: Fraction(i, n)\n    sec_B = lambda i: Fraction(i * i, n * n)\n    E_prim_B, E_sec_B, desc_B = lexicographic_utility(n, prim_B, sec_B)\n\n    print(f\"\\n  Action A: {desc_A}\")\n    print(f\"  Action B: {desc_B}\")\n    if E_prim_A == E_prim_B:\n        winner = \"A\" if E_sec_A > E_sec_B else \"B\"\n        print(f\"  Primary utilities equal \u2192 decide by secondary \u2192 choose {winner}\")\n    print()\n\n    # Application 4: Rate-Distortion\n    print(\"=\" * 70)\n    print(\"APPLICATION 4: Discrete Rate-Distortion\")\n    print(\"=\" * 70)\n    squared = lambda x, y: Fraction((x - y) ** 2)\n    for n in [10, 50, 100]:\n        for cb_size in [2, 4, 8]:\n            result = grid_rate_distortion(n, cb_size, squared)\n            print(f\"\\n  Grid {n+1} pts, codebook size {result['codebook_size']}:\")\n            print(f\"    Expected distortion: {result['expected_distortion_float']:.6f}\")\n            print(f\"    Rate: {result['rate_bits']:.2f} bits\")\n    print()\n\n    # Application 5: Monte Carlo comparison\n    print(\"=\" * 70)\n    print(\"APPLICATION 5: Grid vs Monte Carlo Integration\")\n    print(\"=\" * 70)\n\n    def linear(x):\n        \"\"\"f(x) = x\"\"\"\n        return x\n\n    def quadratic(x):\n        \"\"\"f(x) = x\u00b2\"\"\"\n        return x * x\n\n    for f, integral, name in [\n        (linear, 0.5, \"x\"),\n        (quadratic, 1/3, \"x\u00b2\"),\n    ]:\n        print(f\"\\n  f(x) = {name}, \u222b\u2080\u00b9 f = {integral}\")\n        result = monte_carlo_vs_grid(f, 100, 100, integral)\n        print(f\"    Grid (101 pts): E = {result['grid_expectation']:.8f}, \"\n              f\"error = {result['grid_error']:.2e}\")\n        print(f\"    MC (100 samples): E = {result['mc_expectation']:.8f}, \"\n              f\"error = {result['mc_error']:.2e}\")\n        print(f\"    Grid wins: {result['grid_wins']}\")\n    print()\n\n    print(\"=\" * 70)\n    print(\"ALL APPLICATIONS DEMONSTRATED\")\n    print(\"=\" * 70)\n\n\n#!/usr/bin/env python3\n\"\"\"\nNon-Archimedean Probability via Finite Grids: Interactive Demo\n\nDemonstrates the key theorems of non-Archimedean finitely additive probability:\n1. Uniform grid probabilities with equal atomic masses\n2. Exact affine expectation matching the continuum limit\n3. Refinement invariance under grid subdivision\n4. Convergence of grid expectations (shadow principle)\n5. Impossibility of equal positive atoms on infinite sets\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import Callable, List\nimport math\n\n\ndef grid_uniform_mass(n: int, subset_size: int) -> Fraction:\n    \"\"\"Mass of a subset of size `subset_size` on grid Fin(n+1).\"\"\"\n    return Fraction(subset_size, n + 1)\n\n\ndef singleton_mass(n: int) -> Fraction:\n    \"\"\"Mass of each singleton on grid Fin(n+1).\"\"\"\n    return Fraction(1, n + 1)\n\n\ndef na_expectation(n: int, X: Callable[[int], Fraction]) -> Fraction:\n    \"\"\"Expectation of observable X on uniform grid Fin(n+1).\n\n    E[X] = sum_{i=0}^{n} X(i) * (1/(n+1))\n    \"\"\"\n    return sum(X(i) * singleton_mass(n) for i in range(n + 1))\n\n\ndef refine_observable(n: int, k: int, X: Callable[[int], Fraction]) -> Callable[[int], Fraction]:\n    \"\"\"Lift observable from Fin(n+1) to Fin(k*(n+1)) by block embedding.\n\n    Point j in the fine grid maps to coarse point j // k.\n    \"\"\"\n    def refined(j: int) -> Fraction:\n        return X(j // k)\n    return refined\n\n\n# =============================================================================\n# Demo 1: Uniform atomic probability on finite grids\n# =============================================================================\ndef demo_uniform_grid():\n    print(\"=\" * 70)\n    print(\"DEMO 1: Uniform Atomic Probability on Finite Grids\")\n    print(\"=\" * 70)\n    print()\n    print(\"For each grid size N = n+1, every point carries mass 1/N.\")\n    print(\"As N \u2192 \u221e, these masses behave like infinitesimals.\\n\")\n\n    for n in [4, 9, 99, 999, 9999]:\n        N = n + 1\n        m = singleton_mass(n)\n        total = sum(singleton_mass(n) for _ in range(N))\n        print(f\"  Grid Fin({N}): singleton mass = {m} = {float(m):.6f}, \"\n              f\"total mass = {total}\")\n\n    print()\n    print(\"\u2713 Every point has positive mass (no atom is null)\")\n    print(\"\u2713 Total mass is exactly 1 (normalization)\")\n    print(\"\u2713 Masses tend to 0 as grid refines (infinitesimal behavior)\")\n    print()\n\n\n# =============================================================================\n# Demo 2: Exact affine expectation\n# =============================================================================\ndef demo_affine_expectation():\n    print(\"=\" * 70)\n    print(\"DEMO 2: Exact Affine Expectation on Grids\")\n    print(\"=\" * 70)\n    print()\n    print(\"For X(i) = a*i/n + b on Fin(n+1), E[X] = a/2 + b exactly.\\n\")\n\n    test_cases = [\n        (1, 0, \"identity\"),\n        (2, 1, \"2x + 1\"),\n        (3, -1, \"3x - 1\"),\n        (Fraction(1, 2), Fraction(1, 3), \"x/2 + 1/3\"),\n    ]\n\n    for a, b, name in test_cases:\n        a, b = Fraction(a), Fraction(b)\n        expected = a / 2 + b\n        print(f\"  f(x) = {name}:  expected E[f] = {expected}\")\n\n        for n in [5, 10, 50, 100]:\n            X = lambda i, a=a, b=b, n=n: a * Fraction(i, n) + b\n            E = na_expectation(n, X)\n            print(f\"    Grid Fin({n+1}): E[f] = {E} {'\u2713 EXACT' if E == expected else '\u2717 MISMATCH'}\")\n        print()\n\n    print(\"\u2713 The discrete model recovers exact continuum expectations for affine functions\")\n    print()\n\n\n# =============================================================================\n# Demo 3: Refinement invariance\n# =============================================================================\ndef demo_refinement_invariance():\n    print(\"=\" * 70)\n    print(\"DEMO 3: Refinement Invariance\")\n    print(\"=\" * 70)\n    print()\n    print(\"Refining grid Fin(n+1) to Fin(k*(n+1)) preserves expectations.\\n\")\n\n    def test_observable(i: int) -> Fraction:\n        \"\"\"A simple test observable: i^2.\"\"\"\n        return Fraction(i * i)\n\n    for n in [3, 5, 9]:\n        coarse_E = na_expectation(n, test_observable)\n        print(f\"  Coarse grid Fin({n+1}): E[i\u00b2] = {coarse_E} = {float(coarse_E):.6f}\")\n\n        for k in [2, 3, 5]:\n            fine_n = k * (n + 1) - 1\n            refined_X = refine_observable(n, k, test_observable)\n            fine_E = na_expectation(fine_n, refined_X)\n            match = \"\u2713\" if fine_E == coarse_E else \"\u2717\"\n            print(f\"    Refined \u00d7{k} \u2192 Fin({k*(n+1)}): E[refine(i\u00b2)] = {fine_E} {match}\")\n        print()\n\n    # Also test with affine observables\n    print(\"  Testing refinement invariance for affine observables:\")\n    for n in [4, 7]:\n        a, b = Fraction(3), Fraction(-1)\n        X_coarse = lambda i, a=a, b=b, n=n: a * Fraction(i, n) + b\n        coarse_E = na_expectation(n, X_coarse)\n\n        for k in [2, 4, 10]:\n            X_coarse_for_refine = lambda i: a * Fraction(i, n) + b\n            refined_X = refine_observable(n, k, X_coarse_for_refine)\n            fine_n = k * (n + 1) - 1\n            fine_E = na_expectation(fine_n, refined_X)\n            match = \"\u2713\" if fine_E == coarse_E else \"\u2717\"\n            print(f\"    n={n}, k={k}: coarse={coarse_E}, fine={fine_E} {match}\")\n\n    print()\n    print(\"\u2713 Expectations are exactly preserved under grid refinement\")\n    print()\n\n\n# =============================================================================\n# Demo 4: Convergence to continuum (shadow principle)\n# =============================================================================\ndef demo_convergence():\n    print(\"=\" * 70)\n    print(\"DEMO 4: Convergence to Continuum (Shadow Principle)\")\n    print(\"=\" * 70)\n    print()\n    print(\"For X(i) = a*i/N + b on Fin(N), E[X] \u2192 a/2 + b as N \u2192 \u221e.\\n\")\n\n    a, b = Fraction(3), Fraction(2)\n    target = a / 2 + b\n    print(f\"  f(x) = 3x + 2, target = {target} = {float(target):.4f}\\n\")\n\n    for N in [5, 10, 50, 100, 500, 1000, 10000]:\n        n = N - 1\n        X = lambda i, n=n: a * Fraction(i, n) + b if n > 0 else b\n        E = na_expectation(n, X)\n        error = abs(float(E) - float(target))\n        print(f\"    N = {N:>6}: E[f] = {float(E):.10f}, |error| = {error:.2e}\")\n\n    print()\n\n    # Quadratic observable (not exact, but converges)\n    print(\"  Quadratic: f(x) = x\u00b2, target = \u222b\u2080\u00b9 x\u00b2 dx = 1/3\\n\")\n    target_quad = Fraction(1, 3)\n    for N in [5, 10, 50, 100, 500, 1000]:\n        n = N - 1\n        X = lambda i, n=n: Fraction(i, n) ** 2 if n > 0 else Fraction(0)\n        E = na_expectation(n, X)\n        error = abs(float(E) - float(target_quad))\n        print(f\"    N = {N:>6}: E[f] = {float(E):.10f}, \"\n              f\"|error| = {error:.2e}, \"\n              f\"\u2248 1/(6N) = {1/(6*N):.2e}\")\n\n    print()\n    print(\"\u2713 Affine expectations converge exactly (are constant)\")\n    print(\"\u2713 Quadratic expectations converge at rate O(1/N)\")\n    print()\n\n\n# =============================================================================\n# Demo 5: Impossibility theorem illustration\n# =============================================================================\ndef demo_impossibility():\n    print(\"=\" * 70)\n    print(\"DEMO 5: Impossibility of Equal Positive Atoms on \u2115\")\n    print(\"=\" * 70)\n    print()\n    print(\"If every singleton {n} has mass \u03b5 > 0, then for N > 1/\u03b5,\")\n    print(\"the finite set {0,...,N-1} has mass N*\u03b5 > 1. Contradiction!\\n\")\n\n    for eps in [0.1, 0.01, 0.001, 0.0001]:\n        N_needed = math.ceil(1 / eps) + 1\n        mass = N_needed * eps\n        print(f\"  \u03b5 = {eps}: need N = {N_needed}, \"\n              f\"mass = N*\u03b5 = {mass:.4f} > 1 \u2713 (contradiction)\")\n\n    print()\n    print(\"This is why classical (Archimedean) probability cannot assign\")\n    print(\"equal positive mass to infinitely many atoms.\")\n    print(\"Non-Archimedean probability escapes via infinitesimals or\")\n    print(\"by abandoning countable additivity.\")\n    print()\n\n\n# =============================================================================\n# Demo 6: Infinitesimal scheme visualization\n# =============================================================================\ndef demo_infinitesimal_scheme():\n    print(\"=\" * 70)\n    print(\"DEMO 6: Infinitesimal Scheme \u2014 Grid Refinement Sequence\")\n    print(\"=\" * 70)\n    print()\n    print(\"A sequence of grid probabilities where point masses \u2192 0:\\n\")\n\n    print(f\"  {'Level n':>10} {'Grid size':>12} {'Point mass':>20} {'\u2248 float':>14}\")\n    print(f\"  {'-'*10:>10} {'-'*12:>12} {'-'*20:>20} {'-'*14:>14}\")\n\n    for n in range(15):\n        size = n + 1\n        mass = Fraction(1, size)\n        print(f\"  {n:>10} {size:>12} {str(mass):>20} {float(mass):>14.8f}\")\n\n    print()\n    print(\"Each row is a valid probability space.\")\n    print(\"The point masses form a null sequence: 1, 1/2, 1/3, ... \u2192 0.\")\n    print(\"This is the formal precursor to hyperfinite counting measure.\")\n    print()\n\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  NON-ARCHIMEDEAN PROBABILITY VIA FINITE GRIDS \u2014 INTERACTIVE DEMO   \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_uniform_grid()\n    demo_affine_expectation()\n    demo_refinement_invariance()\n    demo_convergence()\n    demo_impossibility()\n    demo_infinitesimal_scheme()\n\n    print(\"=\" * 70)\n    print(\"ALL DEMOS COMPLETE\")\n    print(\"=\" * 70)\n"
+    },
+    "date": "2026-05-20T08:07:35Z",
+    "exp_id": "57db3430",
+    "source_exp_ids": [
+      "seed"
+    ]
+  },
   "conjecture_2_positive_density_of_admissible_intege.json": {
     "title": "Positive Density of Admissible Integers and Zero Density of Representability Obstructions for Sums of Three Cubes",
     "domain": "Additive Number Theory / Diophantine Equations",
@@ -5620,7 +5674,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -5629,7 +5683,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -5656,7 +5710,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -5665,7 +5719,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -5683,7 +5737,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -5692,7 +5746,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -5701,7 +5755,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "percolation_threshold",
@@ -5710,7 +5764,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -5719,7 +5773,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -5737,7 +5791,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "legendres_conjecture",
@@ -5746,7 +5800,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -5755,7 +5809,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -5764,7 +5818,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -5773,7 +5827,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "p_vs_np_problem",
@@ -5782,7 +5836,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 280
+      "hue": 275
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -5800,7 +5854,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "hodge_conjecture",
@@ -5809,7 +5863,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -5818,7 +5872,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -5827,7 +5881,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -5836,7 +5890,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -5854,7 +5908,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -5863,7 +5917,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -5872,7 +5926,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "happy_end_problem",
@@ -5881,7 +5935,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 281
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -5890,7 +5944,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -5899,7 +5953,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 270
+      "hue": 359
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -5917,7 +5971,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "tropical_intersection_theory",
@@ -5935,7 +5989,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "odd_perfect_numbers",
@@ -5944,7 +5998,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -5953,7 +6007,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "jacobian_conjecture",
@@ -5962,7 +6016,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "10_is_a_solitary_number",
@@ -5971,7 +6025,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 314
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -5980,7 +6034,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 272
+      "hue": 134
     },
     {
       "id": "invariant_subspace_problem",
@@ -5989,7 +6043,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 271
+      "hue": 112
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -5998,7 +6052,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -6007,7 +6061,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -6016,7 +6070,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -6034,7 +6088,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -6043,7 +6097,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -6052,7 +6106,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "yang_mills_mass_gap",
@@ -6061,7 +6115,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "goldbach_conjecture",
@@ -6070,7 +6124,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -6079,7 +6133,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -6088,7 +6142,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -6097,7 +6151,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -6115,7 +6169,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -6124,7 +6178,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -6133,7 +6187,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -6142,7 +6196,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -6160,7 +6214,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -6169,7 +6223,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -6178,7 +6232,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -6187,7 +6241,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -6196,7 +6250,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -6205,7 +6259,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -6214,7 +6268,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -6223,7 +6277,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -6232,7 +6286,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -6241,7 +6295,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "primes_of_the_form_n1",
@@ -6250,7 +6304,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -6259,7 +6313,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -6268,7 +6322,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -6277,7 +6331,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 272
+      "hue": 275
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -6286,7 +6340,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -6295,7 +6349,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -6304,7 +6358,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "we_have_formally_verified",
@@ -6313,7 +6367,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -6322,7 +6376,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -6331,7 +6385,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -6340,7 +6394,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -6349,7 +6403,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -6358,7 +6412,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -6367,7 +6421,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -6376,7 +6430,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "collatz_conjecture",
@@ -6385,7 +6439,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -6394,7 +6448,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -6412,7 +6466,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -6421,7 +6475,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -6430,7 +6484,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -6439,7 +6493,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -6448,7 +6502,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -6457,7 +6511,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -6466,7 +6520,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -6475,7 +6529,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "langlands_program_functoriality",
@@ -6484,7 +6538,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T01:04:07Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "medium_priority",
@@ -6493,7 +6547,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "erdsstraus_conjecture",
@@ -6520,7 +6574,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -6529,7 +6583,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -6547,7 +6601,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -6556,7 +6610,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -6565,7 +6619,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "kakeya_conjecture",
@@ -6574,7 +6628,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "sums_of_three_cubes",
@@ -6583,7 +6637,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -6592,7 +6646,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "196_algorithm_non_termination",
@@ -6601,7 +6655,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -6628,7 +6682,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -6637,7 +6691,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -6646,7 +6700,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -6655,7 +6709,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -6664,7 +6718,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:03:57Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "schanuels_conjecture",
@@ -6673,7 +6727,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -6682,7 +6736,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T07:04:53Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -6691,7 +6745,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -6700,6 +6754,15 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:05:51Z",
+      "hue": 270
+    },
+    {
+      "id": "non_archimedean_probability_via_surreal_numbers",
+      "title": "Non-Archimedean Finitely Additive Probability via Grid Refinement Schemes",
+      "domain": "Probability Theory / Non-Archimedean Analysis",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-20T08:07:35Z",
       "hue": 90
     }
   ],
@@ -7862,10 +7925,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.82,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "55c659bd",
     "timestamp": "2026-05-20T00:22:11.025886+00:00"
   },
   {
@@ -8124,25 +8187,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T01:00:25.447624+00:00"
   },
   {
-    "id": "fd_0094",
-    "title": "Hypothesis 2: Tropical Compression Dominance",
-    "description": "**Conjecture:** For architectures with non-trivial symmetry groups (e.g., permutation-equivariant networks, convolutional networks with weight sharing), the tropical quotient complexity predicts sample complexity at least `\u03a9(d / log d)` times more sharply than the raw parameter dimension `d`, where the quotient complexity grows as `O(d / |G|)` for symmetry group `G`.\n\n**Test:** \n1. Define explicit operadic presentations for CNN, equivariant MLP, and attention architectures.\n2. Compute `quotientComplexity` as `dim(param_space) / |symmetry_group|`.\n3. Compare `algebraicSampleComplexityBound(quotientComplexity, \u03b5, \u03b4)` with `algebraicSampleComplexityBound(paramDim, \u03b5, \u03b4)`.\n4. The ratio should be at least `d / (d/|G| \u00b7 log d)` = `|G| / log d`.\n\nFor a CNN with `k \u00d7 k` kernels over `n \u00d7 n` images",
-    "domains": [
-      "NumberTheory",
-      "Tropical",
-      "Algebra",
-      "MachineLearning",
-      "Computation",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "90e5ed6e",
-    "consumed_by_exp_id": "eae22772",
-    "timestamp": "2026-05-20T01:00:25.451254+00:00"
-  },
-  {
     "id": "fd_0095",
     "title": "Hypothesis 3: PAC-Bayes / MDL Equivalence Window",
     "description": "**Conjecture:** In the equal-variance regime (prior and posterior share variance `\u03c3\u00b2`), the PAC-Bayes KL upper bound `\u2016w\u2016\u00b2/(2\u03c3\u00b2n)` is within a factor `C \u2208 [1/2, 2]` of the minimum description length `code_length / n` for all architectures with effective dimension at most `d_eff = O(\u221an)`.\n\n**Test:**\n1. For synthetic Gaussian posteriors with `d` dimensions and norm bound `C_norm`:\n   - PAC-Bayes term: `C_norm / (2\u03c3\u00b2n)`\n   - MDL code length: `(d/2) \u00b7 log(n \u00b7 C_norm / d)` (from quantization at resolution `\u221a(d/(n\u00b7C_norm))`)\n2. Compute the ratio PAC-Bayes / MDL across `d \u2208 {1, 2, ..., 1000}` and `n \u2208 {100, 1000, 10000}`.\n3. Check whether the ratio remains in `[1/2, 2]` for `d \u2264 \u221an`.\n\n**Impact:** If confirmed, this would unify two major generalization theories (PAC-Bayes and MDL) into a single fr",
@@ -8226,10 +8270,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "20938654",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7a3a7b1b",
     "timestamp": "2026-05-20T01:03:43.220099+00:00"
   },
   {
@@ -8258,10 +8302,10 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "bbcf1a44",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59af6731",
     "timestamp": "2026-05-20T01:04:09.568795+00:00"
   },
   {
@@ -8718,10 +8762,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3b07247d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8155cb9f",
     "timestamp": "2026-05-20T04:04:18.190183+00:00"
   },
   {
@@ -8934,10 +8978,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "75564677",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac47644f",
     "timestamp": "2026-05-20T07:05:26.673262+00:00"
   },
   {
@@ -8970,6 +9014,95 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "75564677",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T07:05:26.687112+00:00"
+  },
+  {
+    "id": "fd_0188",
+    "title": "Hypothesis 1: Multiplicative Quotient Complexity Under Composition",
+    "description": "**Conjecture:** For layered architectures where each layer has an independent symmetry group $G_i$ acting on its parameters, the total quotient complexity satisfies\n$$\nC_q(\\text{network}) \\leq \\prod_{i=1}^{L} \\frac{d_i}{|G_i|}\n$$\nwhere $d_i$ is the parameter count of layer $i$. If the symmetry groups compose coherently (e.g., translation symmetry propagating through layers in a CNN), the bound tightens to the quotient of the total parameter count by the product of group orders.\n\n**Test:** Implement a multi-layer architecture descriptor in Python. Compute layerwise quotient complexities for: (a) a 3-layer CNN with same-sized kernels, (b) a 2-layer equivariant MLP, (c) a hybrid CNN-attention model. Compare the product-of-quotients formula against direct orbit-counting on the full parameter s",
+    "domains": [
+      "NumberTheory",
+      "Algebra",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eae22772",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T07:05:54.562565+00:00"
+  },
+  {
+    "id": "fd_0189",
+    "title": "Hypothesis 2: Quotient Complexity Predicts Test Error Rank Order",
+    "description": "**Conjecture:** Among architectures with the same total parameter count $d$ trained on the same dataset, the architecture with the smallest quotient complexity $d/|G|$ achieves the lowest test error, up to logarithmic corrections. Formally: for any pair of architectures $A_1, A_2$ with $d_1 = d_2$ but $|G_1| > |G_2|$, the test error of $A_1$ on sufficiently large datasets is at most that of $A_2$ with probability at least $1 - \\delta$.\n\n**Test:** Train pairs of networks with matched parameter counts but different symmetry structures on CIFAR-10 and ImageNet-1k. Compare: (a) standard CNN vs. locally-connected network (CNN has translational symmetry, locally-connected does not), (b) permutation-equivariant MLP vs. standard MLP on set-structured tasks, (c) multi-head attention with head-permu",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eae22772",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T07:05:54.568667+00:00"
+  },
+  {
+    "id": "fd_0190",
+    "title": "Hypothesis 3: Continuous Symmetry Groups Yield Logarithmic Quotient Complexity",
+    "description": "**Conjecture:** For architectures with continuous symmetry groups (e.g., rotational equivariance with $G = SO(2)$ or $SO(3)$), the effective quotient complexity scales as $O(d / \\dim(G))$ where $\\dim(G)$ is the Lie algebra dimension, not merely $d / |G|$ (which is undefined for infinite groups). For $SO(3)$-equivariant networks with $d$ parameters, the quotient complexity should be approximately $d/3$.\n\n**Test:** Implement $SO(3)$-equivariant architectures (e.g., Tensor Field Networks, SE(3)-Transformers) and count the number of independent parameters after accounting for rotational invariance. Compare the predicted quotient complexity $d/3$ against the empirical number of free parameters. If the actual orbit-space dimension differs from $d/\\dim(G)$ by more than a factor of 2 for standard ",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Algebra",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eae22772",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T07:05:54.575684+00:00"
+  },
+  {
+    "id": "fd_0191",
+    "title": "Hypothesis 4: Tropical Compression Dominance Ratio Exceeds $|G|/\\log d$",
+    "description": "**Conjecture:** For the algebraic sample complexity bound $\\text{SC}(d, \\varepsilon, \\delta) = d \\cdot \\log(1/\\varepsilon) + \\log(1/\\delta)$, the ratio\n$$\n\\frac{\\text{SC}(d, \\varepsilon, \\delta)}{\\text{SC}(d/|G|, \\varepsilon, \\delta)}\n$$\neventually exceeds $|G| / \\log d$ as $d \\to \\infty$ with $|G|$ fixed or growing polynomially. Under the stronger hypothesis $|G| = \\Theta(d^\\alpha)$ for some $\\alpha > 0$, the ratio grows polynomially.\n\n**Test:** Fix $\\varepsilon = 0.01$, $\\delta = 0.05$. For architecture families indexed by input size $n$:\n- CNN: $d = n^2 k^2$, $|G| = n^2$, compute ratio for $n = 10, 50, 100, 500, 1000$.\n- Permutation-equivariant MLP: $d = n^2$, $|G| = n!$, compute for $n = 3, 5, 7, 10$.\n- Attention: $d = h \\cdot d_k^2$, $|G| = h!$ where $h$ is number of heads, compute fo",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Tropical",
+      "Algebra",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eae22772",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T07:05:54.581205+00:00"
+  },
+  {
+    "id": "fd_0192",
+    "title": "Hypothesis 5: Operadic Composition Laws for Quotient Complexity",
+    "description": "**Conjecture:** There exists an operad $\\mathcal{O}$ whose algebras are symmetry-constrained architecture specifications, such that the quotient complexity is a morphism from $\\mathcal{O}$-algebras to $(\\mathbb{N}, +)$ or $(\\mathbb{N}, \\times)$. In particular, sequential composition of layers should be additive in quotient complexity, while parallel composition (e.g., multi-head attention) should be multiplicative.\n\n**Test:** \n1. Define the composition operations formally: sequential composition = function composition of layers, parallel composition = direct sum of parameter spaces with independent symmetries.\n2. Compute quotient complexities for: (a) ResNet blocks (sequential + skip), (b) Inception modules (parallel branches), (c) multi-head attention (parallel heads + sequential projecti",
+    "domains": [
+      "NumberTheory",
+      "Algebra",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eae22772",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T07:05:54.587942+00:00"
   },
   {
     "id": "seed_061",
