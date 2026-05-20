@@ -956,7 +956,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.92,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.060797+00:00"
     },
@@ -993,7 +993,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.063602+00:00"
     },
@@ -1123,7 +1123,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.073114+00:00"
     },
@@ -1161,7 +1161,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:11:32.075855+00:00"
     },
@@ -1571,7 +1571,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:28:23.972900+00:00"
     },
@@ -1590,7 +1590,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:28:23.976356+00:00"
     },
@@ -1610,7 +1610,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:28:23.979205+00:00"
     },
@@ -1631,7 +1631,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:28:23.981822+00:00"
     },
@@ -1651,7 +1651,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:28:23.984460+00:00"
     },
@@ -1741,6 +1741,121 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:01:02.315203+00:00"
+    },
+    {
+      "id": "fd_0095",
+      "title": "Hypothesis 1: Low-Rank BSD Numerical Verification at 50-Digit Precision",
+      "description": "**Conjecture.** For at least 99% of elliptic curves E/ℚ with conductor N ≤ 10⁶ and analytic rank 0 or 1, the BSD leading-term formula can be numerically verified to 50 decimal digits:\n\n|L*(E,1) / bsdAlgebraicSide(E) − 1| < 10⁻⁵⁰\n\n**Test.** Populate `BSDData` from LMFDB invariants for all rank-0 and rank-1 curves with conductor ≤ 10⁶. Use the formally verified `bsdAlgebraicSide_pos` theorem to certify the denominator is positive before computing the ratio. Compute L*(E,1) via interval arithmetic (using e.g. Arb or FLINT) to 60 digits of precision. Report any curve where the ratio deviates from 1 by more than 10⁻⁵⁰.\n\n**Refutation criterion.** Finding even one curve in this range where the deviation exceeds 10⁻⁵⁰ would either (a) falsify the precision claim, (b) indicate a data or import inco",
+      "source_exp_id": "2a21f3ec",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2a21f3ec",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:01:27.092093+00:00"
+    },
+    {
+      "id": "fd_0096",
+      "title": "Hypothesis 2: Sato-Tate KS Convergence Rate for Non-CM Curves",
+      "description": "**Conjecture.** For any non-CM elliptic curve E/ℚ, if θ_p ∈ [0,π] is defined by a_p = 2√p cos(θ_p), then for the first N good primes, the Kolmogorov-Smirnov statistic against the Sato-Tate measure satisfies D_N = O(N⁻⁰·⁴⁹). Concretely, for N = 10⁶, one has D_N < 0.002 for all non-CM curves in LMFDB with conductor ≤ 10⁵.\n\n**Test.** For each non-CM curve in the LMFDB database with conductor ≤ 10⁵:\n1. Compute a_p for the first 10⁶ good primes using the formally verified trace pipeline (`local_euler_factor_ext_of_trace` guarantees canonicality).\n2. Derive θ_p = arccos(a_p / 2√p).\n3. Compute the KS statistic against the Sato-Tate CDF.\n4. Fit the exponent on a log-log plot of D_N vs N.\n\n**Refutation criterion.** A slope outside [-0.53, -0.45] in the log-log fit, or D_N ≥ 0.002 at N = 10⁶ for any",
+      "source_exp_id": "2a21f3ec",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2a21f3ec",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:01:27.095246+00:00"
+    },
+    {
+      "id": "fd_0097",
+      "title": "Hypothesis 3: Regulator Growth and Height Pairing Condition Number",
+      "description": "**Conjecture.** For elliptic curves E/ℚ of Mordell-Weil rank r ≤ 3 and conductor N ≤ 10⁶, there exist constants C, k > 0 such that Reg(E) ≤ C(log N)^k for at least 95% of curves in each fixed rank stratum. Moreover, for all such curves with explicitly computed generators, the height pairing matrix is positive definite with condition number below 10⁸.\n\n**Test.** For curves with rank 1, 2, and 3 in the LMFDB database with conductor ≤ 10⁶:\n1. Use the formally verified `regulator_pos_of_posDef` theorem to certify that the height pairing matrix is positive definite.\n2. Compute the regulator (= det of the Gram matrix).\n3. Fit regulator growth against log N for each rank stratum.\n4. Record the condition number of every height pairing matrix.\n\n**Refutation criterion.** If more than 5% of curves in",
+      "source_exp_id": "2a21f3ec",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2a21f3ec",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:01:27.098961+00:00"
+    },
+    {
+      "id": "fd_0098",
+      "title": "Hypothesis 4: Tamagawa Product Growth and Bad Reduction Density",
+      "description": "**Conjecture.** For elliptic curves E/ℚ with conductor N ≤ 10⁶, the Tamagawa product ∏ c_p satisfies ∏ c_p ≤ N^ε for any fixed ε > 0 and sufficiently large N. More precisely, for 99% of curves with conductor ≤ 10⁶, one has ∏ c_p ≤ N^{0.1}.\n\n**Test.** For all curves in the LMFDB database with conductor ≤ 10⁶:\n1. Use the formally verified `finset_prod_pos_of_pos` to certify that ∏ c_p > 0.\n2. Use `tamagawa_product_invariant` to verify database consistency (different presentations of bad prime data give the same product).\n3. Compute ∏ c_p / N^{0.1} and check it is ≤ 1 for 99% of curves.\n\n**Refutation criterion.** More than 1% of curves with ∏ c_p > N^{0.1} refutes the claim.\n\n**Impact.** Bounds on Tamagawa products are essential for estimating the size of the BSD algebraic side and for calibr",
+      "source_exp_id": "2a21f3ec",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2a21f3ec",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:01:27.102375+00:00"
+    },
+    {
+      "id": "fd_0099",
+      "title": "Hypothesis 5: Formal BSD Pipeline Completeness for Rank ≤ 1",
+      "description": "**Conjecture.** The formal BSD scaffold (Definitions + LocalEulerExt + Positivity + RegulatorPosDef + ProductCoherence) is sufficient to state and verify, in a machine-checked setting, the BSD leading-term formula for any rank-0 or rank-1 elliptic curve over ℚ, given:\n- a certified point count at each good prime (providing Euler factors via `local_euler_factor_ext_of_trace`),\n- a certified height pairing matrix (providing the regulator via `regulator_pos_of_posDef`),\n- certified values of |Sha|, ∏ c_p, |E_tors|,\n- and a certified computation of L*(E,1) to sufficient precision.\n\n**Test.** Select 10 well-known rank-0 and rank-1 curves. For each:\n1. Instantiate `BSDData` with LMFDB values.\n2. Prove `bsdAlgebraicSide_pos` from the instantiated data.\n3. Provide a certified computation of L*(E,1",
+      "source_exp_id": "2a21f3ec",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2a21f3ec",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:01:27.105493+00:00"
+    },
+    {
+      "id": "fd_0100",
+      "title": "Spectral Universality of Proof Graphs Across Mathematical Domains",
+      "description": "Conjecture: Let G(T) be the directed acyclic dependency graph of any fully formalized theorem proof T in a fixed proof assistant, with vertices compressed to irreducible lemma motifs and edges given by essential logical dependence. After normalizing for proof length and library-specific syntax, the empirical spectral measure of the graph Laplacian and the motif frequency vector lie in one of finitely many universality classes that are invariant across domains (number theory, topology, analysis, algebra) and predict both proof compressibility and transferability of tactics. Test: Build a corpus of large formal proofs from multiple domains, extract normalized proof graphs, and statistically test whether clustering in spectral/motif space is domain-independent and whether class membership predicts downstream success of tactic transfer or proof compression better than size-based baselines. Refutation occurs if no stable cross-domain universality classes appear or if they have no predictive power. Impact: This would suggest that deep mathematical reasoning has a small number of reusable structural laws, enabling theorem provers to route new conjectures to the right proof architecture and learn domain-general proof strategies.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Proof Theory",
+        "Spectral Graph Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:01:44.913466+00:00"
     }
   ],
   "pruned": [
