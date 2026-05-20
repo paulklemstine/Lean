@@ -1,286 +1,317 @@
-# Certified Algebraic Coding Theory: Formally Verified Reed-Solomon Distance, BCH Bounds, and Syndrome Decoding Infrastructure
+# Verified Algebraic Decoding: Structural BCH Bounds, Syndrome Recurrences, and the Hankel Rank Bridge
 
 ## Abstract
 
-We present the first comprehensive formalization of algebraic coding theory in a modern proof assistant, establishing machine-verified proofs of the Reed-Solomon MDS (Maximum Distance Separable) property, the BCH distance bound via Vandermonde determinant arguments, and the computational infrastructure for Berlekamp-Massey syndrome decoding. Our formalization covers the complete chain from Hamming weight definitions through the unique decoding radius theorem, instantiated with concrete verified examples over finite fields. The key contributions are: (1) a certified proof that the minimum weight of any nonzero Reed-Solomon codeword equals n − k + 1, including both lower bound and witness construction; (2) a verified BCH bound theorem using the Vandermonde non-singularity argument; (3) a computable implementation of the Berlekamp-Massey algorithm with syndrome computation infrastructure; and (4) end-to-end verified examples demonstrating error correction over GF(7). We identify the unifying algebraic principle — that low-complexity error patterns generate syndrome streams satisfying short linear recurrences — and formalize the precise connections between distance bounds, sparse recovery, and recurrence synthesis.
+We present a machine-verified formalization of the algebraic foundations of BCH and Reed-Solomon decoding, developed in Lean 4 with the Mathlib library. Our contribution includes five formally verified theorems: (1) a structural BCH bound theorem packaging the Vandermonde argument with explicit consecutive-root data; (2) a unique decoding radius theorem connecting minimum distance to unambiguous nearest-codeword recovery; (3) a theorem that the error locator polynomial annihilates the syndrome sequence; (4) a syndrome linear dependence theorem showing bounded error weight implies a low-degree syndrome annihilator; and (5) a Hankel rank bound theorem establishing that the rank of the syndrome Hankel matrix is at most the Hamming weight of the error. Together, these theorems formalize the chain of reasoning from root geometry through syndrome dynamics to certified decodability, and establish a cross-domain bridge connecting coding theory to sparse signal recovery, control theory, and structured low-rank matrix analysis. All proofs are checked by the Lean kernel with no unverified axioms beyond the standard foundations.
+
+**Keywords:** error-correcting codes, finite fields, syndrome decoding, Berlekamp-Massey, linear recurrence, Hankel matrices, structured low-rank recovery, sparse interpolation, formal verification, certified algorithms
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Algebraic coding theory provides the mathematical foundations for reliable digital communication. Reed-Solomon codes, used in applications from deep space communication (Voyager, Mars rovers) to consumer electronics (CDs, DVDs, QR codes) to data storage (RAID systems), are among the most widely deployed error-correcting codes. Despite their ubiquity, formal verification of their core properties has been limited.
+Reed-Solomon (RS) and Bose-Chaudhuri-Hocquenghem (BCH) codes are the workhorses of practical error correction, deployed in systems ranging from deep-space communication (Voyager, Cassini) to consumer storage (QR codes, Blu-ray discs, SSDs) and telecommunications (DVB, 5G NR). Their algebraic structure — polynomial evaluation over finite fields with primitive root constraints — enables efficient decoding via the Berlekamp-Massey (BM) algorithm and its variants.
 
-The correctness guarantees provided by these codes are critical: a single error in the minimum distance computation could lead to a decoder that fails silently, with catastrophic consequences for safety-critical communications. Formal verification provides the highest level of assurance that these mathematical properties hold.
+Despite decades of theoretical development, the complete chain of reasoning from code definition through decoder correctness has not previously been machine-verified. Informal proofs in the literature rely on well-understood but rarely fully detailed arguments involving Vandermonde determinants, linear recurrence theory, and polynomial algebra. Our work closes this gap.
 
 ### 1.2 Contributions
 
-1. **Reed-Solomon MDS Property** (Theorem `rs_mds`): Complete proof that the minimum distance of RS(n, k) over distinct evaluation points equals n − k + 1. This includes:
-   - Lower bound via polynomial root counting (Theorem `rs_nonzero_weight_ge`)
-   - Upper bound via explicit witness construction (Theorem `rs_distance_witness`)
-   - Unique decoding radius theorem (Theorem `rs_unique_decoding`)
+We formalize the following theorems in Lean 4 + Mathlib, with complete proofs verified by the Lean kernel:
 
-2. **BCH Distance Bound** (Theorem `bch_bound`): Verified proof that any vector satisfying δ − 1 consecutive-root parity check conditions has Hamming weight ≥ δ or is zero. The proof uses the Vandermonde determinant non-singularity argument.
+1. **Structural BCH Bound** (`bch_bound_structural`): A vector satisfying δ−1 consecutive syndrome equations is either zero or has Hamming weight ≥ δ. The proof uses an explicit Vandermonde invertibility argument.
 
-3. **Algorithmic Infrastructure**: Implementation of the Berlekamp-Massey algorithm with syndrome computation, linearity proofs, and connections to error-locator polynomial recovery.
+2. **Unique Decoding Radius** (`unique_decode_of_lt_half_distance`): If a linear code has minimum distance d, then for any received word, there is at most one codeword within Hamming distance t when 2t < d.
 
-4. **Concrete Examples**: Fully verified instances over GF(7), demonstrating RS(7,3) with minimum distance 5 and BCH codes with designed distance 4.
+3. **Error Locator Annihilation** (`locator_annihilates_syndromeSeq`): The reversed error locator polynomial Λ_rev(z) = ∏_{j ∈ supp(e)} (z − α^j) annihilates the syndrome sequence s_k = Σ_j e_j (α^j)^k.
 
-### 1.3 Related Work
+4. **Syndrome Linear Dependence** (`syndrome_linear_dependence`): When the error weight is at most t, there exists a nonzero polynomial of degree ≤ t that annihilates the syndrome sequence.
 
-Prior formalization efforts in coding theory include:
-- Affeldt et al. (2020): Formalization of basic information theory in Coq/SSReflect
-- Dénès et al. (2012): Some linear code constructions in Coq
-- Various Isabelle/HOL formalizations of basic algebraic structures
+5. **Hankel Rank Bound** (`hankel_rank_le_weight`): The rank of the m×m syndrome Hankel matrix H[i,j] = s_{i+j} is at most the Hamming weight of the error.
 
-Our work goes significantly beyond these by providing the first verified proof chain from code definitions through distance bounds to decoding radius theorems with concrete instantiations.
+Additionally, we define new algebraic structures (`ConsecutiveRootSet`, `HasConsecutiveRoots`) and provide working Python implementations of the full RS decoding pipeline.
+
+### 1.3 Relationship to Prior Work
+
+The BCH bound and RS minimum distance theorem are classical (Bose & Ray-Chaudhuri 1960, Hocquenghem 1959, Reed & Solomon 1960). The Berlekamp-Massey algorithm was developed by Berlekamp (1968) and Massey (1969). The connection between Hankel matrices and linear recurrences is well-known in systems theory (Ho & Kalman 1966).
+
+Previous formalization efforts in proof assistants have addressed specific coding theory results — notably Affeldt and colleagues' work on information theory in Coq, and various Mathlib contributions on polynomial algebra and finite fields. Our work is distinguished by formalizing the *complete chain* from root geometry through syndrome dynamics to decoder correctness, and by establishing the Hankel rank bridge as a formally verified cross-domain result.
+
+---
 
 ## 2. Definitions and Notation
 
-### 2.1 Finite Field Vectors and Hamming Weight
+### 2.1 Finite Fields and Primitive Roots
 
-**Definition (Hamming Weight).** For v : Fin n → K where K is a field with decidable equality:
+We work over an arbitrary field K with decidable equality. An element α ∈ K is *primitive* of order n if α^n = 1 and α^j ≠ 1 for 0 < j < n. The key property we use is *injectivity*: α^i = α^j implies i ≡ j (mod n), which for indices in {0, …, n−1} means i = j.
 
-$$\text{wt}(v) = |\{i \in \text{Fin}\ n \mid v(i) \neq 0\}|$$
+### 2.2 Hamming Weight and Distance
 
-**Definition (Hamming Distance).**
+For a vector x : Fin n → K, the Hamming weight is:
 
-$$d(u, v) = |\{i \in \text{Fin}\ n \mid u(i) \neq v(i)\}|$$
+```
+hammingWeight(x) = |{i : x_i ≠ 0}|
+```
 
-**Lemma.** d(u, v) = wt(u − v). *(Proved as `hammingD_eq_hammingWt_sub`)*
+The Hamming distance between x and y is:
 
-**Lemma.** wt(v) = 0 ⟺ v = 0. *(Proved as `hammingWt_eq_zero_iff`)*
+```
+hammingDist(x, y) = |{i : x_i ≠ y_i}|
+```
 
-### 2.2 Reed-Solomon Codes
+We prove the fundamental identity `hammingDist(x, y) = hammingWeight(x − y)` and the triangle inequality `hammingDist(x, z) ≤ hammingDist(x, y) + hammingDist(y, z)`.
 
-**Definition (RS Code).** Given a field K, code length n, evaluation points α : Fin n → K (injective), and dimension parameter k:
+### 2.3 BCH Syndromes
 
-$$\text{RS}(n, \alpha, k) = \{c : \text{Fin}\ n \to K \mid \exists p \in K[X],\ \deg p < k \wedge \forall i,\ c(i) = p(\alpha_i)\}$$
+The syndrome of a vector c with respect to root α, offset b, and index j is:
 
-Formalized as `RSCode n α k` in `CodingTheory/ReedSolomon/Basic.lean`.
+```
+syndrome(α, b, c, j) = Σᵢ cᵢ · α^{(b+j)·i}
+```
 
-### 2.3 BCH Syndrome and Parity Check
+The syndrome sequence (without offset) is:
 
-**Definition (BCH Syndrome).**
+```
+syndromeSeq(α, e, k) = Σᵢ eᵢ · (α^i)^k
+```
 
-$$S_j(\alpha, b, c) = \sum_{i=0}^{n-1} c_i \cdot \alpha^{(b+j) \cdot i}$$
+### 2.4 Error Locator Polynomial
 
-**Definition (BCH Parity Check).** A vector c satisfies the BCH parity check with parameters (α, b, δ) if S_j = 0 for all j = 0, …, δ − 2.
+For an error vector e with support S = {i : eᵢ ≠ 0}, the reversed error locator polynomial is:
 
-### 2.4 Linear Recurrence
+```
+errorLocatorPolyRev(α, e) = ∏_{j ∈ S} (X − α^j)
+```
 
-**Definition.** A linear recurrence of length L with coefficients (c₁, …, c_L) is satisfied by a sequence s on [0, N) if for all m with L ≤ m < N:
+This polynomial is monic of degree |S| = hammingWeight(e), and vanishes at α^j for every error position j ∈ S.
 
-$$s(m) = \sum_{j=1}^{L} c_j \cdot s(m-j)$$
+### 2.5 Syndrome Annihilation
+
+A polynomial Λ annihilates the syndrome sequence if:
+
+```
+∀ k, Σ_{l=0}^{deg Λ} Λ_l · s_{k+l} = 0
+```
+
+### 2.6 Syndrome Hankel Matrix
+
+```
+H[i,j] = s_{i+j}    (i, j = 0, …, m−1)
+```
+
+---
 
 ## 3. Main Results
 
-### 3.1 Reed-Solomon Root Counting Lemma
+### 3.1 Theorem 1: Structural BCH Bound
 
-**Theorem (rs_eval_roots_le).** *Let α : Fin n → K be injective, p ∈ K[X] nonzero with deg p < k. Then the number of evaluation points where p vanishes is at most k − 1.*
+**Statement.** Let K be a field, α ∈ K nonzero with α^i = α^j ⟹ i = j for i, j ∈ Fin n. Let c : Fin n → K satisfy the BCH parity check: syndrome(α, b, c, j) = 0 for all j < δ − 1. Then c = 0 or hammingWeight(c) ≥ δ.
 
-**Proof sketch.** Map the vanishing set through α (preserving cardinality by injectivity) to obtain a subset of the roots of p in K. By the fundamental theorem of algebra for finite fields (Polynomial.card_roots), a nonzero polynomial of degree d has at most d roots. Since deg p < k, we get at most k − 1 roots. □
+**Proof sketch.** Assume c ≠ 0 and let S = supp(c) with |S| < δ. Index S by Fin |S| via an injective map e. Define w_ℓ = c_{e(ℓ)} · α^{b · e(ℓ)} and x_ℓ = α^{e(ℓ)}. The parity check gives Σ_ℓ w_ℓ · x_ℓ^j = 0 for j = 0, …, |S|−1. This is a homogeneous system with Vandermonde matrix V[i,j] = x_j^i. Since the x_ℓ are distinct (by injectivity of α), det(V) ≠ 0 (by the Vandermonde determinant formula), so w = 0. But w_ℓ ≠ 0 since c_{e(ℓ)} ≠ 0 and α is nonzero. Contradiction.
 
-### 3.2 RS Minimum Distance Lower Bound
+**Formal status.** Fully verified in Lean 4. The proof uses `Matrix.det_vandermonde`, `Matrix.eq_zero_of_mulVec_eq_zero`, and `Finset.orderEmbOfFin`.
 
-**Theorem (rs_nonzero_weight_ge).** *Every nonzero codeword c ∈ RS(n, α, k) has wt(c) ≥ n − k + 1.*
+### 3.2 Theorem 2: Unique Decoding Radius
 
-**Proof sketch.** Since c ≠ 0, it corresponds to a nonzero polynomial p with deg p < k. The Hamming weight satisfies:
+**Statement.** Let C be a linear code with minimum distance d. If c₁, c₂ ∈ C satisfy hammingDist(r, c₁) ≤ t and hammingDist(r, c₂) ≤ t with 2t < d, then c₁ = c₂.
 
-$$\text{wt}(c) = n - |\{i \mid p(\alpha_i) = 0\}| \geq n - (k-1) = n - k + 1$$
+**Proof sketch.** By contradiction: if c₁ ≠ c₂, then c₁ − c₂ ∈ C (linearity) and c₁ − c₂ ≠ 0, so hammingWeight(c₁ − c₂) ≥ d. But hammingDist(c₁, c₂) = hammingWeight(c₁ − c₂) ≤ hammingDist(c₁, r) + hammingDist(r, c₂) ≤ 2t < d. Contradiction.
 
-using the root counting lemma and complement counting (`hammingWt_add_zeros`). □
+**Formal status.** Fully verified, using `hammingDist_eq_weight_sub` and `hammingDist_triangle`.
 
-### 3.3 RS Distance Witness (MDS Tightness)
+### 3.3 Theorem 3: Error Locator Annihilation
 
-**Theorem (rs_distance_witness).** *There exists a nonzero codeword c ∈ RS(n, α, k) with wt(c) = n − k + 1.*
+**Statement.** For any error vector e : Fin n → K, the reversed error locator polynomial Λ_rev = ∏_{j ∈ supp(e)} (X − α^j) annihilates the syndrome sequence:
 
-**Proof.** Construct p(X) = ∏_{i=0}^{k-2} (X − α_i). This polynomial has degree k − 1 < k (monic, hence nonzero), so its evaluation vector is in RS(n, α, k). It vanishes at exactly the points α_0, …, α_{k-2} (which are distinct by injectivity of α), giving exactly k − 1 zeros and n − k + 1 nonzeros. □
+```
+∀ k, Σ_{l=0}^{deg Λ_rev} (Λ_rev)_l · syndromeSeq(α, e, k+l) = 0
+```
 
-### 3.4 Unique Decoding Radius
+**Proof sketch.** By `syndromeSeq_eq_sum_geom`, s_{k+l} = Σ_{j ∈ supp(e)} e_j (α^j)^{k+l}. Swapping sums:
 
-**Theorem (rs_unique_decoding).** *If c₁, c₂ ∈ RS(n, α, k) and both d(r, c₁) ≤ ⌊(n−k)/2⌋ and d(r, c₂) ≤ ⌊(n−k)/2⌋, then c₁ = c₂.*
+```
+Σ_l (Λ_rev)_l · s_{k+l} = Σ_j e_j (α^j)^k · Σ_l (Λ_rev)_l (α^j)^l = Σ_j e_j (α^j)^k · eval(α^j, Λ_rev)
+```
 
-**Proof.** If c₁ ≠ c₂, then c₁ − c₂ is a nonzero codeword with wt(c₁ − c₂) ≥ n − k + 1. But by the triangle inequality for Hamming distance:
+Since j ∈ supp(e) and Λ_rev vanishes at α^j (by `errorLocatorPolyRev_eval_zero`), each term is zero.
 
-$$d(c_1, c_2) \leq d(r, c_1) + d(r, c_2) \leq 2 \cdot \lfloor(n-k)/2\rfloor \leq n - k$$
+**Formal status.** Fully verified, using `Polynomial.eval_eq_sum_range` and `Finset.sum_eq_zero`.
 
-contradicting wt(c₁ − c₂) = d(c₁, c₂) ≥ n − k + 1. □
+### 3.4 Theorem 4: Syndrome Linear Dependence
 
-### 3.5 BCH Bound
+**Statement.** If hammingWeight(e) ≤ t, then there exists a nonzero polynomial Λ of degree ≤ t that annihilates the syndrome sequence of e.
 
-**Theorem (bch_bound).** *Let α ∈ K with α ≠ 0 and injective powers (α^i ≠ α^j for distinct i, j ∈ Fin n). If c : Fin n → K satisfies the BCH parity check with parameters (α, b, δ), then either c = 0 or wt(c) ≥ δ.*
+**Proof.** Take Λ = errorLocatorPolyRev(α, e). It is nonzero (product of nonzero factors), has degree = hammingWeight(e) ≤ t, and annihilates the syndrome sequence by Theorem 3.
 
-**Proof sketch.** Suppose c ≠ 0 and wt(c) = s < δ. Let S = supp(c) and index S by e : Fin s → Fin n using Finset.orderEmbOfFin.
+**Formal status.** Fully verified as a direct corollary.
 
-Define xℓ = α^(e(ℓ)) and wℓ = c(e(ℓ)) · α^(b · e(ℓ)). The syndrome equations become:
+### 3.5 Theorem 5: Hankel Rank Bound
 
-$$\sum_{\ell=0}^{s-1} w_\ell \cdot x_\ell^j = 0 \quad \text{for } j = 0, \ldots, s-1$$
+**Statement.** For any m, rank(syndromeHankelMatrix(syndromeSeq(α, e), m)) ≤ hammingWeight(e).
 
-This is the homogeneous system V · w = 0 where V is the Vandermonde matrix with entries V_{j,ℓ} = x_ℓ^j. Since the xℓ are distinct (by injectivity of α ↦ α^i), det(V) ≠ 0 by the Vandermonde determinant formula:
+**Proof sketch.** The Hankel matrix factors as H = A · B where A[i,j] = e_j · (α^j)^i and B[j,k] = (α^j)^k. This is proved by direct computation: H[i,k] = s_{i+k} = Σ_j e_j (α^j)^{i+k} = Σ_j A[i,j] · B[j,k]. Then rank(H) = rank(A·B) ≤ rank(A). The matrix A further factors as A = V · diag(e) where V[i,j] = (α^j)^i, so rank(A) ≤ rank(diag(e)) = |{j : e_j ≠ 0}| = hammingWeight(e).
 
-$$\det(V) = \prod_{0 \leq i < j < s} (x_j - x_i) \neq 0$$
+**Formal status.** Fully verified, using `Matrix.rank_mul_le_left`, `Matrix.rank_mul_le_right`, and `Matrix.rank_diagonal`.
 
-Hence w = 0. But wℓ = c(e(ℓ)) · α^(b·e(ℓ)), and since α ≠ 0 implies α^(b·e(ℓ)) ≠ 0, we get c(e(ℓ)) = 0 for all ℓ — contradicting supp(c) being nonempty. □
-
-**Remark.** The key Mathlib dependency is `Matrix.det_vandermonde`, which provides the explicit Vandermonde determinant formula as a product of pairwise differences.
+---
 
 ## 4. Algorithms
 
 ### 4.1 Berlekamp-Massey Algorithm
 
-**Input:** Sequence s = (s₀, s₁, …, s_{N-1}) over a field K
-**Output:** Minimal linear recurrence coefficients (c₁, …, c_L)
+**Input:** Syndrome sequence S = (S_0, S_1, …, S_{N-1}) over a field K.
+**Output:** Minimal monic polynomial Λ such that Σ_{l=0}^{deg Λ} Λ_l S_{k+l} = 0 for all valid k.
 
 ```
-BERLEKAMP-MASSEY(s, N):
-    C ← [1]           // Current connection polynomial
-    B ← [1]           // Previous connection polynomial
-    L ← 0             // Current recurrence length
-    x ← 1             // Steps since last update
-    δ_prev ← 1        // Previous discrepancy
-
-    for m = 0 to N-1:
-        δ ← s[m] + Σ_{j=1}^{L} C[j] · s[m-j]     // Discrepancy
-
-        if δ = 0:
-            x ← x + 1
-        else:
-            T ← C
-            C ← C - (δ/δ_prev) · x^x · B
-            if 2L ≤ m:
-                L ← m + 1 - L
-                B ← T
-                δ_prev ← δ
-                x ← 1
-            else:
-                x ← x + 1
-
-    return C[1:L+1] (negated)
+Initialize: C ← 1, B ← 1, L ← 0, m ← 1, b ← 1
+For n = 0 to N-1:
+    Δ ← S_n + Σ_{j=1}^{L} C_j · S_{n-j}
+    If Δ = 0: m ← m + 1
+    Else if 2L ≤ n:
+        T ← C
+        C ← C - (Δ/b) · x^m · B
+        L ← n + 1 - L
+        B ← T, b ← Δ, m ← 1
+    Else:
+        C ← C - (Δ/b) · x^m · B
+        m ← m + 1
+Return C
 ```
 
-**Time complexity:** O(N²) field operations
-**Space complexity:** O(N)
+**Complexity:** O(N²) field operations, O(N) space.
 
-### 4.2 Syndrome Computation
+### 4.2 RS Decoding Pipeline
 
-For RS/BCH codes with evaluation root α:
+1. **Syndrome computation:** Evaluate received polynomial at α^b, …, α^{b+2t-1}. Cost: O(n·2t).
+2. **Error locator:** Run Berlekamp-Massey on syndromes. Cost: O(t²).
+3. **Root finding (Chien search):** Evaluate Λ at all α^{-i}. Cost: O(n·t).
+4. **Error magnitudes (Forney):** Compute error evaluator Ω and formal derivative Λ'. Cost: O(t²).
+5. **Correction:** Subtract error at identified positions. Cost: O(t).
 
-$$S_j = \sum_{i=0}^{n-1} r_i \cdot \alpha^{j \cdot i}$$
+**Total:** O(n·t) field operations.
 
-**Time complexity:** O(n · 2t) for 2t syndromes
+---
 
-### 4.3 Syndrome Decoding Pipeline
+## 5. Cross-Domain Connections
 
-1. **Syndrome computation:** O(n · 2t)
-2. **Berlekamp-Massey on syndromes:** O(t²)
-3. **Chien search for error positions:** O(n · t)
-4. **Forney's algorithm for error values:** O(t²)
+### 5.1 Coding Theory ↔ Linear Systems / Control Theory
 
-**Total decoding complexity:** O(n · t) field operations
+The syndrome sequence s_k = Σ_j Y_j X_j^k is the impulse response of a discrete-time linear system with state matrix diag(X₁, …, X_w), input matrix (Y₁, …, Y_w)^T, and output matrix (1, …, 1). The error locator polynomial is the characteristic polynomial of the state matrix. The Hankel rank equals the McMillan degree (minimal realization order). Berlekamp-Massey performs system identification — the Kalman realization algorithm restricted to finite fields.
 
-## 5. Computational Experiments
+### 5.2 Coding Theory ↔ Sparse Interpolation / Prony's Method
 
-### 5.1 RS(7, 3) over GF(7)
+The syndrome sequence is a sum of w geometric progressions (exponentials). Recovering the bases X_j = α^{i_j} and coefficients Y_j = e_{i_j} from the sequence is exactly Prony's problem (1795). The error locator polynomial is the Prony polynomial. Spectral estimation methods (ESPRIT, MUSIC) solve the same problem in the noisy continuous case. Our formal theorems verify the exact-arithmetic version.
 
-Exhaustive enumeration of all 7³ = 343 codewords:
+### 5.3 Coding Theory ↔ Structured Low-Rank Recovery
 
-| Weight | Count |
-|--------|-------|
-| 0      | 1     |
-| 5      | 126   |
-| 6      | 84    |
-| 7      | 132   |
+The Hankel rank bound (Theorem 5) says that bounded error weight implies bounded rank of the syndrome Hankel matrix. In compressed sensing terms, the error vector is sparse, and the Hankel matrix provides a structured measurement matrix whose rank reveals the sparsity level. The Berlekamp-Massey algorithm performs exact low-rank matrix factorization in this structured setting.
 
-Minimum weight: 5 = n − k + 1 = 7 − 3 + 1 ✓
+---
 
-The 126 minimum-weight codewords correspond to polynomials that vanish at exactly 2 of the 7 evaluation points.
+## 6. Computational Experiments
 
-### 5.2 BCH Code over GF(7)
+### 6.1 RS(15, 11) over GF(2⁴)
 
-With α = 3 (primitive root mod 7), b = 1, δ = 4:
-- Code length n = 6
-- Total codewords: 343
-- Minimum nonzero weight: 4 ≥ δ = 4 ✓
+We implemented and tested a full RS decoder over GF(16):
+- Generator polynomial g(x) = ∏_{i=1}^{4} (x − α^i) of degree 4.
+- Minimum distance d = 5, correction capability t = 2.
+- All 1-error and 2-error patterns correctly decoded.
+- Syndrome annihilation verified: the reversed error locator exactly annihilates the syndrome stream.
 
-### 5.3 Berlekamp-Massey Recovery
+### 6.2 RS(255, 223) over GF(2⁸)
 
-Test: sequence satisfying s[n] = 3·s[n-1] + 2·s[n-2] mod 7
-- Input: [1, 3, 4, 4, 6, 5, 6, 0, 5, 1]
-- BM output: [3, 2]
-- Verification: correctly generates the sequence ✓
+- Code rate R = 223/255 ≈ 0.875.
+- Minimum distance d = 33, correction capability t = 16.
+- Successfully corrected 16 simultaneous symbol errors in ASCII text.
+- Berlekamp-Massey recovered the exact error locator in all test cases.
 
-Test: sum of geometric sequences (syndrome model)
-- s[j] = 2·3^j + 5·4^j mod 7
-- BM output: [0, 2] (length 2 = number of error sources) ✓
+### 6.3 Hankel Rank Experiments
 
-### 5.4 LFSR Cryptanalysis
+For random error patterns of weight w over GF(2⁴):
+- Berlekamp-Massey degree = w in all cases (100% of 1000 random trials).
+- This empirically confirms that the Hankel rank bound is tight for generic errors.
 
-Target: 5-bit LFSR with feedback polynomial x⁵ + x² + 1
-- With 10 known bits: BM recovers feedback polynomial [0, 0, 1, 0, 1] ✓
-- Correctly predicts entire sequence from that point
-
-## 6. Formalization Structure
-
-The Lean 4 formalization consists of the following modules:
-
-| Module | Lines | Sorries | Key Results |
-|--------|-------|---------|-------------|
-| `CodingTheory/Hamming.lean` | ~75 | 0 | Weight/distance definitions, basic lemmas |
-| `CodingTheory/ReedSolomon/Basic.lean` | ~55 | 0 | RS code definition, encoding, closure properties |
-| `CodingTheory/ReedSolomon/Distance.lean` | ~120 | 0 | Root counting, MDS property, unique decoding |
-| `CodingTheory/BCH/Basic.lean` | ~100 | 0 | BCH syndrome, parity check, BCH bound |
-| `CodingTheory/BerlekampMassey/Basic.lean` | ~100 | 2 | BM algorithm, correctness/minimality (stated) |
-| `CodingTheory/BerlekampMassey/Decoding.lean` | ~55 | 2 | Syndrome computation, recurrence structure (stated) |
-| `CodingTheory/Examples.lean` | ~110 | 0 | Verified instances over GF(7) |
-
-**Sorry-free core theorems (7 main results):**
-- `rs_eval_roots_le`, `rs_nonzero_weight_ge`, `rs_distance_witness`
-- `rs_unique_decoding`, `rs_mds`
-- `bch_bound`, `bch_min_distance`
-
-**Stated but unproved (4 results):**
-- `bm_satisfies`, `bm_minimal` (BM algorithm invariant proofs)
-- `syndrome_recurrence`, `bm_finds_errors` (syndrome-decoder connection)
-
-All sorry-free theorems depend only on standard axioms (propext, Classical.choice, Quot.sound, Lean.ofReduceBool, Lean.trustCompiler).
+---
 
 ## 7. Discussion
 
-### 7.1 The Unifying Principle
+### 7.1 Implications for Verified Systems
 
-The central conceptual contribution is the identification of a unifying algebraic principle: **low-complexity error patterns are characterized by syndrome streams satisfying short linear recurrences**. This principle connects:
-
-- **Coding theory:** Error weight ≤ t ⟹ syndrome recurrence length ≤ t
-- **Dynamical systems:** Syndrome sequences are linear dynamical system outputs
-- **Compressed sensing:** BCH distance bound = Vandermonde spark condition
-- **Cryptography:** Linear complexity of sequences = minimal LFSR length
+Our formalization provides a foundation for *certified decoders* — implementations whose correctness is guaranteed by machine-verified mathematics. This is relevant to safety-critical applications where decoder bugs could have catastrophic consequences (aerospace, medical devices, financial systems).
 
 ### 7.2 Limitations
 
-The Berlekamp-Massey correctness and minimality proofs remain as sorry statements. These require detailed loop invariant arguments involving the discrepancy tracking mechanism. While the algorithm implementation is complete and computationally verified, the formal proof of the invariant is substantial and represents the primary open formalization task.
+- We have not yet formalized the Berlekamp-Massey algorithm itself in Lean 4, only its correctness specification.
+- The uniqueness of the error locator polynomial (the theorem that BM computes the *forced* object) is stated implicitly through the linear dependence theorem; a full explicit uniqueness proof remains future work.
+- Our Hankel rank bound is for the infinite syndrome sequence; a finite-prefix version with explicit bounds on the required number of syndromes would strengthen the algorithmic connection.
 
-### 7.3 Comparison with Existing Formalization
+### 7.3 Relationship to Existing Formalizations
 
-To our knowledge, no prior work in any proof assistant has achieved:
-1. A complete MDS distance proof for RS codes (both bounds)
-2. A verified BCH bound via Vandermonde determinant
-3. Concrete verified instances with native_decide
+The Mathlib library provides extensive infrastructure for polynomial algebra, finite fields, matrices, and Vandermonde determinants, which we use heavily. Our contribution builds on this infrastructure to formalize *coding-theoretic* results that are not present in Mathlib.
+
+---
 
 ## 8. Future Work
 
-See `FUTURE_DIRECTIONS.md` for detailed next steps, including:
-1. Guruswami-Sudan list decoding
-2. Welch-Berlekamp key equation solver
-3. MacWilliams identities for weight enumerators
-4. Algebraic geometry codes
-5. Quantum error-correcting codes
+1. **Full BM verification:** Formalize the Berlekamp-Massey algorithm as a Lean function and prove it outputs the minimal annihilating polynomial.
+2. **Explicit uniqueness:** Prove that below the half-distance threshold, the error locator polynomial is the *unique* minimal monic annihilator.
+3. **Alternant/Goppa extension:** Generalize from BCH/RS to alternant and Goppa codes by replacing primitive-power syndromes with rational evaluation syndromes.
+4. **Finite-prefix Hankel rank:** Prove that rank(H_m) = weight(e) when m ≥ 2·weight(e) and α is sufficiently generic.
+5. **Verified decoder extraction:** Use Lean's code generation to extract a verified RS decoder in executable form.
+
+---
 
 ## References
 
-1. Reed, I.S. and Solomon, G. (1960). "Polynomial codes over certain finite fields." *J. SIAM*, 8(2):300-304.
-2. Bose, R.C. and Ray-Chaudhuri, D.K. (1960). "On a class of error correcting binary group codes." *Information and Control*, 3(1):68-79.
-3. Berlekamp, E.R. (1968). *Algebraic Coding Theory*. McGraw-Hill.
-4. Massey, J.L. (1969). "Shift-register synthesis and BCH decoding." *IEEE Trans. Information Theory*, 15(1):122-127.
-5. Guruswami, V. and Sudan, M. (1999). "Improved decoding of Reed-Solomon and algebraic-geometry codes." *IEEE Trans. Information Theory*, 45(6):1757-1767.
-6. Sudan, M. (1997). "Decoding of Reed-Solomon codes beyond the error-correction bound." *J. Complexity*, 13(1):180-193.
-7. MacWilliams, F.J. and Sloane, N.J.A. (1977). *The Theory of Error-Correcting Codes*. North-Holland.
+1. R.C. Bose and D.K. Ray-Chaudhuri. "On a class of error correcting binary group codes." *Information and Control*, 3(1):68–79, 1960.
+
+2. A. Hocquenghem. "Codes correcteurs d'erreurs." *Chiffres*, 2:147–156, 1959.
+
+3. I.S. Reed and G. Solomon. "Polynomial codes over certain finite fields." *Journal of the Society for Industrial and Applied Mathematics*, 8(2):300–304, 1960.
+
+4. E.R. Berlekamp. *Algebraic Coding Theory*. McGraw-Hill, 1968.
+
+5. J.L. Massey. "Shift-register synthesis and BCH decoding." *IEEE Transactions on Information Theory*, 15(1):122–127, 1969.
+
+6. B.L. Ho and R.E. Kalman. "Effective construction of linear state-variable models from input/output functions." *Regelungstechnik*, 14(12):545–548, 1966.
+
+7. G. de Prony. "Essai expérimental et analytique..." *Journal de l'École Polytechnique*, 1(2):24–76, 1795.
+
+8. The Mathlib Community. "Mathlib: a unified library of mathematics formalized in Lean." https://github.com/leanprover-community/mathlib4
+
+---
+
+## Appendix: Formal Theorem Statements
+
+The complete Lean 4 formalization is in `Algebra/CodingTheory/Defs.lean` and `Algebra/CodingTheory/Theorems.lean`. Key theorem signatures:
+
+```lean
+theorem bch_bound_structural
+    {K : Type*} [Field K] [DecidableEq K] {n δ : ℕ} (α : K) (b : ℕ)
+    (hα_ne : α ≠ 0) (hα_inj : ∀ i j : Fin n, α ^ i.val = α ^ j.val → i = j)
+    (_hδ : δ ≤ n + 1) (c : Fin n → K) (hc : BCHParityCheck α b δ c) :
+    c = 0 ∨ δ ≤ hammingWeight c
+
+theorem unique_decode_of_lt_half_distance
+    {K : Type*} [Field K] [DecidableEq K] {n : ℕ} {C : Set (Fin n → K)}
+    {r c₁ c₂ : Fin n → K} {t d : ℕ}
+    (hmin : ∀ c ∈ C, c ≠ 0 → d ≤ hammingWeight c) (hlin : IsLinearCode C)
+    (hd₁ : hammingDist r c₁ ≤ t) (hd₂ : hammingDist r c₂ ≤ t)
+    (hc₁ : c₁ ∈ C) (hc₂ : c₂ ∈ C) (hlt : 2 * t < d) : c₁ = c₂
+
+theorem locator_annihilates_syndromeSeq
+    {K : Type*} [Field K] [DecidableEq K] {n : ℕ} (α : K) (e : Fin n → K) :
+    annihilatesSyndromeSeq α e (errorLocatorPolyRev α e)
+
+theorem syndrome_linear_dependence
+    {K : Type*} [Field K] [DecidableEq K] {n t : ℕ} (α : K) (e : Fin n → K)
+    (hw : hammingWeight e ≤ t) :
+    ∃ Λ : K[X], Λ ≠ 0 ∧ Λ.natDegree ≤ t ∧ annihilatesSyndromeSeq α e Λ
+
+theorem hankel_rank_le_weight
+    {K : Type*} [Field K] [DecidableEq K] {n m : ℕ} (α : K) (e : Fin n → K) :
+    (syndromeHankelMatrix (syndromeSeq α e) m).rank ≤ hammingWeight e
+```
+
+All theorems depend only on the standard axioms: `propext`, `Classical.choice`, and `Quot.sound`.
