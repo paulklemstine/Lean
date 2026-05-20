@@ -3505,7 +3505,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "ac47644f",
       "timestamp": "2026-05-20T07:05:26.673262+00:00"
     },
@@ -4380,6 +4380,23 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T09:07:55.756020+00:00"
+    },
+    {
+      "id": "fd_0228",
+      "title": "Formal test:",
+      "description": "Prove in Lean using `sum_char_eq_zero` restricted to the subgroup (viewing $\\chi|_H$ as a character of $H$).",
+      "source_exp_id": "ac47644f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ac47644f",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:03:56.849055+00:00"
     }
   ],
   "pruned": [

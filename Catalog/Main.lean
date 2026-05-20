@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1609 of the highest-quality
+A curated collection of 1611 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1609
+Total files: 1611
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -798,6 +798,7 @@ import FINAL.EML.CausalInferenceTheory
 import FINAL.EML.CausalRepresentationTheory
 import FINAL.EML.ClosureOperator
 import FINAL.EML.CompactRetractApprox
+import FINAL.EML.Compile
 import FINAL.EML.Complexity
 import FINAL.EML.ComputationalExtraction
 import FINAL.EML.ConvergenceGuarantees
@@ -845,6 +846,7 @@ import FINAL.EML.MultiModalTheory
 import FINAL.EML.MultivariateVanishing
 import FINAL.EML.NeuralArchitectureTheory
 import FINAL.EML.NewTheorems
+import FINAL.EML.Normalize
 import FINAL.EML.OISCC
 import FINAL.EML.OpenQuestions
 import FINAL.EML.PhotonResearchRound3
