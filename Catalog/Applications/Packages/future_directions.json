@@ -549,7 +549,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "d237288b",
       "timestamp": "2026-05-20T00:22:10.985537+00:00"
     },
@@ -2258,8 +2258,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "f0e70cc3",
       "timestamp": "2026-05-20T02:04:18.482196+00:00"
     },
     {
@@ -2597,8 +2597,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "ac721053",
       "timestamp": "2026-05-20T03:01:31.764089+00:00"
     },
     {
@@ -4867,7 +4867,7 @@
       "depth_estimate": 3,
       "priority_score": 0.7,
       "status": "in_progress",
-      "consumed_by_exp_id": "4346710f",
+      "consumed_by_exp_id": "e43579d4",
       "timestamp": "2026-05-20T12:03:48.370272+00:00"
     },
     {
@@ -5654,6 +5654,91 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:08:49.211921+00:00"
+    },
+    {
+      "id": "fd_0291",
+      "title": "Direction 1",
+      "description": "(Average-Threshold) — Highest impact, directly implies Frankl if true, computationally testable now.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Combinatorics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.548869+00:00"
+    },
+    {
+      "id": "fd_0292",
+      "title": "Direction 4",
+      "description": "(Compression) — Classical technique, could yield a full proof strategy.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.556894+00:00"
+    },
+    {
+      "id": "fd_0293",
+      "title": "Direction 5",
+      "description": "(Entropy Monotonicity) — Novel connection to information theory, experimentally accessible.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.565043+00:00"
+    },
+    {
+      "id": "fd_0294",
+      "title": "Direction 3",
+      "description": "(Lattice Fixed Points) — Deep structural insight, harder to test.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Cryptography"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.573139+00:00"
+    },
+    {
+      "id": "fd_0295",
+      "title": "Direction 2",
+      "description": "(Disjoint Generators) — Clean but limited scope; best as a base case for inductive arguments.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.581414+00:00"
     }
   ],
   "pruned": [

@@ -1,573 +1,555 @@
 #!/usr/bin/env python3
 """
-Applications of Erdős–Szekeres Theory
-=======================================
+Applications of the Erdős–Szekeres theory to computational geometry.
 
-Real-world applications demonstrating the mathematical results:
-1. Pattern detection in financial time series
-2. Quality control in manufacturing sequences  
-3. Computational geometry: convex hull vertex extraction
-4. Network routing: monotone path detection
+Demonstrates:
+1. Convex polygon detection in point clouds
+2. Order type classification
+3. Extremal configuration search
+4. Energy landscape computation for order types
 """
 
 import random
-from typing import List, Tuple
-from algorithms import (
-    orient, longest_increasing_subsequence_fast,
-    longest_decreasing_subsequence_fast, find_longest_cup,
-    find_longest_cap, es_upper_bound
-)
+import math
+from itertools import combinations, permutations
+from typing import List, Tuple, Optional, Set
+from algorithms import orient, compute_cup_cap_lengths, cups_caps_bound
 
 Point = Tuple[float, float]
 
 
-# ============================================================================
-# Application 1: Financial Time Series Pattern Detection
-# ============================================================================
+def compute_order_type(points: List[Point]) -> Tuple[int, ...]:
+    """Compute the order type (chirotope) of a point set.
 
-def detect_trend_patterns(prices: List[float], min_trend_length: int = 4) -> dict:
-    """Detect sustained upward and downward trends in a price series.
-    
-    The Erdős–Szekeres theorem guarantees that any price series of length
-    > (r-1)² contains either an uptrend of length r or a downtrend of length r.
-    
-    This means that in any sufficiently long trading period, significant 
-    directional moves are mathematically inevitable — a foundational insight 
-    for trend-following strategies.
-    
-    >>> prices = [100, 102, 99, 103, 97, 105, 96, 107, 95, 108]
-    >>> result = detect_trend_patterns(prices, 3)
-    >>> len(result['uptrend']) >= 3 or len(result['downtrend']) >= 3
-    True
+    The order type records the sign of orient(p_i, p_j, p_k)
+    for all ordered triples i < j < k.
+
+    Returns tuple of signs (+1, -1) for each triple.
     """
-    inc_idx = longest_increasing_subsequence_fast(prices)
-    dec_idx = longest_decreasing_subsequence_fast(prices)
-    
-    return {
-        'uptrend': [(i, prices[i]) for i in inc_idx],
-        'downtrend': [(i, prices[i]) for i in dec_idx],
-        'uptrend_length': len(inc_idx),
-        'downtrend_length': len(dec_idx),
-        'guaranteed_min_trend': min_trend_length,
-        'min_series_length': (min_trend_length - 1) ** 2 + 1
-    }
+    n = len(points)
+    signs = []
+    for i, j, k in combinations(range(n), 3):
+        o = orient(points[i], points[j], points[k])
+        signs.append(1 if o > 0 else -1)
+    return tuple(signs)
 
 
-# ============================================================================
-# Application 2: Quality Control — Monotone Deviation Detection
-# ============================================================================
+def count_convex_subsets(points: List[Point], size: int) -> int:
+    """Count the number of convex subsets of given size.
 
-def quality_control_analysis(measurements: List[float], threshold_length: int = 5) -> dict:
-    """Detect systematic drift in manufacturing measurements.
-    
-    By the Erdős–Szekeres theorem, any sequence of n² + 1 measurements
-    contains a monotone subsequence of length n + 1. If measurements 
-    should be random, finding a long monotone subsequence suggests 
-    systematic drift requiring intervention.
-    
-    >>> measurements = [10.1, 10.3, 10.0, 10.5, 10.2, 10.7, 10.4, 10.9, 10.6, 11.1]
-    >>> result = quality_control_analysis(measurements, 4)
-    >>> result['drift_detected']
-    True
+    A subset is convex if all triples have the same orient sign
+    (ordered convex position = cup or cap).
     """
-    inc = longest_increasing_subsequence_fast(measurements)
-    dec = longest_decreasing_subsequence_fast(measurements)
-    
-    max_trend = max(len(inc), len(dec))
-    trend_type = 'increasing' if len(inc) >= len(dec) else 'decreasing'
-    trend_indices = inc if len(inc) >= len(dec) else dec
-    
-    return {
-        'drift_detected': max_trend >= threshold_length,
-        'trend_type': trend_type,
-        'trend_length': max_trend,
-        'trend_values': [measurements[i] for i in trend_indices],
-        'trend_positions': list(trend_indices),
-        'es_guarantee': f"Any {(threshold_length-1)**2 + 1}+ measurements must contain "
-                       f"a monotone trend of length {threshold_length}"
-    }
+    n = len(points)
+    count = 0
+    for subset in combinations(range(n), size):
+        pts = [points[i] for i in subset]
+        if len(pts) < 3:
+            count += 1
+            continue
+        signs = set()
+        all_consistent = True
+        for i, j, k in combinations(range(len(pts)), 3):
+            o = orient(pts[i], pts[j], pts[k])
+            s = 1 if o > 0 else -1
+            signs.add(s)
+            if len(signs) > 1:
+                all_consistent = False
+                break
+        if all_consistent:
+            count += 1
+    return count
 
 
-# ============================================================================
-# Application 3: Convex Hull Vertex Extraction from Sensor Data
-# ============================================================================
+def geometric_convex_subsets(points: List[Point], size: int) -> int:
+    """Count subsets in geometric convex position (every point on convex hull).
 
-def convex_feature_extraction(sensor_data: List[Point]) -> dict:
-    """Extract convex features from 2D sensor readings.
-    
-    Uses cup/cap analysis to identify convex and concave arcs in 
-    point data. Cups represent upward-curving features (valleys),
-    caps represent downward-curving features (peaks).
-    
-    This decomposes a point cloud into convex primitives, which is
-    fundamental for shape recognition and object detection.
-    
-    >>> data = [(i, i*i % 17) for i in range(20)]
-    >>> result = convex_feature_extraction(data)
-    >>> len(result['cups']) > 0 or len(result['caps']) > 0
-    True
+    This is weaker than ordered convex position.
     """
-    # Sort by x
-    sorted_data = sorted(enumerate(sensor_data), key=lambda x: x[1][0])
-    sorted_points = [p for _, p in sorted_data]
-    original_indices = [i for i, _ in sorted_data]
-    
-    cup = find_longest_cup(sorted_points)
-    cap = find_longest_cap(sorted_points)
-    
-    return {
-        'cups': [{
-            'indices': [original_indices[i] for i in cup],
-            'points': [sorted_points[i] for i in cup],
-            'length': len(cup),
-            'description': 'Upward-curving arc (valley)'
-        }] if cup else [],
-        'caps': [{
-            'indices': [original_indices[i] for i in cap],
-            'points': [sorted_points[i] for i in cap],
-            'length': len(cap),
-            'description': 'Downward-curving arc (peak)'
-        }] if cap else [],
-        'num_points': len(sensor_data),
-    }
+    from functools import reduce
+    n = len(points)
+    count = 0
+    for subset in combinations(range(n), size):
+        pts = [points[i] for i in subset]
+        # Check if all points are on convex hull
+        hull = convex_hull(pts)
+        if len(hull) == len(pts):
+            count += 1
+    return count
 
 
-# ============================================================================
-# Application 4: Network Analysis — Monotone Path Bounds
-# ============================================================================
+def convex_hull(points: List[Point]) -> List[Point]:
+    """Compute convex hull using Andrew's monotone chain algorithm."""
+    pts = sorted(points)
+    if len(pts) <= 1:
+        return pts
 
-def network_monotone_paths(latencies: List[float]) -> dict:
-    """Analyze network latency sequences for monotone paths.
-    
-    In network monitoring, consistently increasing latencies indicate 
-    congestion buildup, while consistently decreasing latencies indicate 
-    recovery. The Erdős–Szekeres theorem provides guaranteed detection 
-    thresholds.
-    
-    >>> latencies = [50, 45, 55, 40, 60, 35, 65, 30, 70, 25]
-    >>> result = network_monotone_paths(latencies)
-    >>> result['congestion_length'] >= 1
-    True
+    # Build lower hull
+    lower = []
+    for p in pts:
+        while len(lower) >= 2 and orient(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+
+    # Build upper hull
+    upper = []
+    for p in reversed(pts):
+        while len(upper) >= 2 and orient(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+
+    return lower[:-1] + upper[:-1]
+
+
+def signature_energy(points: List[Point]) -> float:
+    """Compute an 'energy' of a point configuration based on signatures.
+
+    Lower energy = more extremal (harder to find convex polygons).
+    Energy is defined as the sum of (cupLen * capLen) over all points,
+    normalized by the number of points.
+
+    This connects to statistical physics: extremal configurations
+    (those avoiding large convex subsets) have low energy.
     """
-    inc = longest_increasing_subsequence_fast(latencies)
-    dec = longest_decreasing_subsequence_fast(latencies)
-    
-    n = len(latencies)
-    import math
-    min_trend = int(math.sqrt(n - 1)) + 1 if n > 1 else 1
-    
-    return {
-        'congestion_length': len(inc),
-        'recovery_length': len(dec),
-        'congestion_sequence': [(i, latencies[i]) for i in inc],
-        'recovery_sequence': [(i, latencies[i]) for i in dec],
-        'guaranteed_trend_length': min_trend,
-        'interpretation': 
-            f"In {n} measurements, Erdős–Szekeres guarantees a monotone "
-            f"subsequence of length ≥ {min_trend}. "
-            f"Found: increase={len(inc)}, decrease={len(dec)}."
-    }
+    sigs = compute_cup_cap_lengths(points)
+    n = len(points)
+    if n == 0:
+        return 0.0
+    return sum(c * d for c, d in sigs) / n
 
 
-def run_all_applications():
-    """Run all application demos."""
+def search_extremal_config(n: int, target_cup: int, target_cap: int,
+                           num_trials: int = 10000,
+                           seed: int = 42) -> Optional[List[Point]]:
+    """Search for a point configuration avoiding target-cup and target-cap.
+
+    Uses random search with perturbation to find configurations
+    with no cup of length target_cup and no cap of length target_cap.
+
+    This is the computational side of the Erdős–Szekeres problem:
+    finding extremal configurations that avoid convex subsets.
+    """
+    rng = random.Random(seed)
+    best_config = None
+    best_score = float('inf')
+
+    for trial in range(num_trials):
+        # Generate random points
+        pts = [(rng.uniform(-10, 10), rng.uniform(-10, 10)) for _ in range(n)]
+        pts.sort(key=lambda p: p[0])
+
+        sigs = compute_cup_cap_lengths(pts)
+        max_cup = max(c for c, d in sigs)
+        max_cap = max(d for c, d in sigs)
+
+        score = max(0, max_cup - target_cup + 1) + max(0, max_cap - target_cap + 1)
+
+        if score < best_score:
+            best_score = score
+            best_config = pts[:]
+
+        if score == 0:
+            return best_config
+
+    return best_config if best_score == 0 else None
+
+
+def demo_applications():
+    """Demonstrate applications of the Erdős–Szekeres theory."""
     print("=" * 70)
-    print("APPLICATION 1: Financial Time Series Pattern Detection")
+    print("APPLICATIONS OF ERDŐS–SZEKERES THEORY")
     print("=" * 70)
-    
+
+    # Application 1: Order type analysis
+    print("\n--- Application 1: Order Type Analysis ---")
     random.seed(42)
-    # Simulate a volatile stock price
-    prices = [100.0]
-    for _ in range(49):
-        prices.append(prices[-1] + random.gauss(0.1, 2))
-    
-    result = detect_trend_patterns(prices, 5)
-    print(f"\nPrice series length: {len(prices)}")
-    print(f"Longest uptrend: {result['uptrend_length']} days")
-    print(f"  Values: {[f'{v:.1f}' for _, v in result['uptrend'][:8]]}...")
-    print(f"Longest downtrend: {result['downtrend_length']} days")
-    print(f"  Values: {[f'{v:.1f}' for _, v in result['downtrend'][:8]]}...")
-    print(f"\nES guarantee: any {result['min_series_length']}+ trading days must contain")
-    print(f"  a monotone trend of length {result['guaranteed_min_trend']}")
-    
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Quality Control — Drift Detection")
-    print("=" * 70)
-    
-    # Simulate measurements with slight upward drift
-    random.seed(123)
-    measurements = [10.0 + 0.02 * i + random.gauss(0, 0.1) for i in range(30)]
-    
-    result = quality_control_analysis(measurements, 5)
-    print(f"\nMeasurements: {len(measurements)} samples")
-    print(f"Drift detected: {result['drift_detected']}")
-    print(f"Trend type: {result['trend_type']}")
-    print(f"Trend length: {result['trend_length']}")
-    print(f"ES guarantee: {result['es_guarantee']}")
-    
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Convex Feature Extraction")
-    print("=" * 70)
-    
-    # Simulate sensor readings
-    sensor_data = [(i * 0.5, 3 * (i * 0.5 - 5)**2 + random.gauss(0, 1)) for i in range(20)]
-    
-    result = convex_feature_extraction(sensor_data)
-    print(f"\nSensor readings: {result['num_points']} points")
-    for cup in result['cups']:
-        print(f"Cup found: {cup['length']} points — {cup['description']}")
-    for cap in result['caps']:
-        print(f"Cap found: {cap['length']} points — {cap['description']}")
-    
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: Network Latency Analysis")
-    print("=" * 70)
-    
-    random.seed(456)
-    latencies = [50 + random.gauss(0, 10) + 0.5 * i for i in range(25)]
-    
-    result = network_monotone_paths(latencies)
-    print(f"\nLatency measurements: {len(latencies)}")
-    print(f"Congestion trend length: {result['congestion_length']}")
-    print(f"Recovery trend length: {result['recovery_length']}")
-    print(f"Guaranteed trend: ≥{result['guaranteed_trend_length']}")
-    print(f"\n{result['interpretation']}")
-    
-    print("\n" + "=" * 70)
-    print("All applications demonstrated successfully!")
-    print("=" * 70)
+    for n in [4, 5]:
+        pts = sorted(
+            [(random.uniform(-5, 5), random.uniform(-5, 5)) for _ in range(n)],
+            key=lambda p: p[0]
+        )
+        ot = compute_order_type(pts)
+        print(f"  {n} points: order type = {ot}")
+        sigs = compute_cup_cap_lengths(pts)
+        print(f"  Signatures: {sigs}")
+
+    # Application 2: Convex subset counting
+    print("\n--- Application 2: Convex Subset Counting ---")
+    for n in [5, 6, 7, 8]:
+        random.seed(n * 13)
+        pts = sorted(
+            [(random.uniform(-5, 5), random.uniform(-5, 5)) for _ in range(n)],
+            key=lambda p: p[0]
+        )
+        for k in range(3, min(n + 1, 6)):
+            ordered = count_convex_subsets(pts, k)
+            geo = geometric_convex_subsets(pts, k)
+            print(f"  n={n}, k={k}: ordered convex={ordered}, "
+                  f"geometric convex={geo}")
+
+    # Application 3: Energy landscape
+    print("\n--- Application 3: Signature Energy Landscape ---")
+    energies = []
+    for trial in range(100):
+        random.seed(trial)
+        pts = sorted(
+            [(random.uniform(-5, 5), random.uniform(-5, 5)) for _ in range(8)],
+            key=lambda p: p[0]
+        )
+        e = signature_energy(pts)
+        energies.append(e)
+    energies.sort()
+    print(f"  Energy statistics for 8-point configurations:")
+    print(f"    Min:    {energies[0]:.3f}")
+    print(f"    Median: {energies[len(energies)//2]:.3f}")
+    print(f"    Max:    {energies[-1]:.3f}")
+    print(f"    Mean:   {sum(energies)/len(energies):.3f}")
+
+    # Application 4: Extremal configuration search
+    print("\n--- Application 4: Extremal Configuration Search ---")
+    for r, s in [(3, 3), (3, 4), (4, 4)]:
+        bound = cups_caps_bound(r, s)
+        n_test = bound - 1
+        result = search_extremal_config(n_test, r, s, num_trials=5000)
+        if result:
+            sigs = compute_cup_cap_lengths(result)
+            max_c = max(c for c, d in sigs)
+            max_d = max(d for c, d in sigs)
+            print(f"  Avoiding {r}-cup and {s}-cap with {n_test} points: "
+                  f"FOUND (max_cup={max_c}, max_cap={max_d})")
+        else:
+            print(f"  Avoiding {r}-cup and {s}-cap with {n_test} points: "
+                  f"NOT FOUND")
+
+    # Application 5: Comparison of bounds
+    print("\n--- Application 5: Bound Comparison ---")
+    print("  n | Cups-Caps Bound | ES Conjecture (2^(n-2)+1)")
+    print("  --+----------------+-------------------------")
+    for n in range(3, 12):
+        cc = cups_caps_bound(n, n)
+        es_conj = 2**(n-2) + 1
+        print(f"  {n:2d} | {cc:14d} | {es_conj:23d}")
 
 
 if __name__ == "__main__":
-    run_all_applications()
+    demo_applications()
 
 
 #!/usr/bin/env python3
 """
-Demo: Erdős–Szekeres Happy End Problem
-========================================
+Interactive demonstration of the Erdős–Szekeres Happy End Problem.
 
-Demonstrates the key theorems computationally:
-1. Monotone subsequence theorem
-2. Cup/cap extraction
-3. Convex position detection
-4. Orientation computations
+This script:
+1. Generates random planar points in general position
+2. Sorts them by x-coordinate
+3. Computes cup/cap lengths and convex chain signatures
+4. Finds and highlights convex polygons (cups/caps)
+5. Tests the signature rigidity conjecture on small examples
 """
 
-import itertools
 import random
+import math
+from itertools import combinations
 from typing import List, Tuple, Optional
 
 Point = Tuple[float, float]
 
 
 def orient(a: Point, b: Point, c: Point) -> float:
-    """Compute the orientation of three points.
-    
-    Returns positive for counterclockwise, negative for clockwise, zero for collinear.
-    This is twice the signed area of the triangle abc.
-    """
+    """Signed area × 2 of triangle abc. Positive = CCW, negative = CW."""
     return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
 
 
-def is_general_position(points: List[Point]) -> bool:
+def is_general_position(points: List[Point], tol: float = 1e-9) -> bool:
     """Check if no three points are collinear."""
     n = len(points)
-    for i in range(n):
-        for j in range(i + 1, n):
-            for k in range(j + 1, n):
-                if orient(points[i], points[j], points[k]) == 0:
-                    return False
-    return True
-
-
-def longest_increasing_subsequence(seq: List[float]) -> List[int]:
-    """Find a longest strictly increasing subsequence, returning indices."""
-    n = len(seq)
-    if n == 0:
-        return []
-    
-    # dp[i] = length of LIS ending at i
-    dp = [1] * n
-    parent = [-1] * n
-    
-    for i in range(1, n):
-        for j in range(i):
-            if seq[j] < seq[i] and dp[j] + 1 > dp[i]:
-                dp[i] = dp[j] + 1
-                parent[i] = j
-    
-    # Reconstruct
-    best = max(range(n), key=lambda i: dp[i])
-    result = []
-    while best != -1:
-        result.append(best)
-        best = parent[best]
-    return result[::-1]
-
-
-def longest_decreasing_subsequence(seq: List[float]) -> List[int]:
-    """Find a longest strictly decreasing subsequence, returning indices."""
-    n = len(seq)
-    if n == 0:
-        return []
-    
-    dp = [1] * n
-    parent = [-1] * n
-    
-    for i in range(1, n):
-        for j in range(i):
-            if seq[j] > seq[i] and dp[j] + 1 > dp[i]:
-                dp[i] = dp[j] + 1
-                parent[i] = j
-    
-    best = max(range(n), key=lambda i: dp[i])
-    result = []
-    while best != -1:
-        result.append(best)
-        best = parent[best]
-    return result[::-1]
-
-
-def is_cup(points: List[Point]) -> bool:
-    """Check if sorted points form a cup (all consecutive triple orientations positive)."""
-    if len(points) < 3:
-        return True
-    for i in range(len(points) - 2):
-        if orient(points[i], points[i+1], points[i+2]) <= 0:
+    for i, j, k in combinations(range(n), 3):
+        if abs(orient(points[i], points[j], points[k])) < tol:
             return False
     return True
 
 
-def is_cap(points: List[Point]) -> bool:
-    """Check if sorted points form a cap (all consecutive triple orientations negative)."""
-    if len(points) < 3:
-        return True
-    for i in range(len(points) - 2):
-        if orient(points[i], points[i+1], points[i+2]) >= 0:
-            return False
-    return True
+def generate_gp_points(n: int, seed: Optional[int] = None) -> List[Point]:
+    """Generate n points in general position with distinct x-coordinates."""
+    rng = random.Random(seed)
+    while True:
+        pts = [(rng.uniform(-10, 10), rng.uniform(-10, 10)) for _ in range(n)]
+        # Ensure distinct x-coordinates
+        xs = [p[0] for p in pts]
+        if len(set(round(x, 6) for x in xs)) == n and is_general_position(pts):
+            pts.sort(key=lambda p: p[0])
+            return pts
 
 
-def in_convex_position(points: List[Point]) -> bool:
-    """Check if points (sorted by x) are in convex position.
-    
-    All triples must have consistent orientation (all positive or all negative).
-    """
-    if len(points) < 3:
-        return True
-    
-    # Check all positive
-    all_positive = all(
-        orient(points[i], points[j], points[k]) > 0
-        for i in range(len(points))
-        for j in range(i + 1, len(points))
-        for k in range(j + 1, len(points))
-    )
-    
-    # Check all negative
-    all_negative = all(
-        orient(points[i], points[j], points[k]) < 0
-        for i in range(len(points))
-        for j in range(i + 1, len(points))
-        for k in range(j + 1, len(points))
-    )
-    
-    return all_positive or all_negative
-
-
-def find_max_convex_subset(points: List[Point]) -> List[int]:
-    """Find a maximum cardinality subset in convex position (brute force)."""
+def find_longest_cup(points: List[Point]) -> List[int]:
+    """Find the longest cup (consecutive triples positive orient) via DP."""
     n = len(points)
-    # Sort by x-coordinate
-    sorted_indices = sorted(range(n), key=lambda i: points[i][0])
-    sorted_points = [points[i] for i in sorted_indices]
-    
-    best = []
-    for size in range(n, 0, -1):
-        for combo in itertools.combinations(range(n), size):
-            subset = [sorted_points[i] for i in combo]
-            if in_convex_position(subset):
-                return [sorted_indices[i] for i in combo]
-    return []
+    if n <= 1:
+        return list(range(n))
+    # dp[i] = (max cup length ending at i, predecessor index)
+    dp = [(1, -1)] * n
+    for j in range(1, n):
+        dp[j] = (2, 0)  # pair (points[0], points[j]) is a 2-cup
+        for i in range(j):
+            if dp[i][0] >= 2:
+                # Check if we can extend the cup ending at i
+                pred = dp[i][1]
+                # Find the second-to-last point of the cup ending at i
+                # For simplicity, track the predecessor chain
+                pass
+    # Simplified: find longest cup by DP on slopes
+    best_cup = [0]
+    for i in range(1, n):
+        # Try to extend existing cups
+        for cup in [best_cup]:
+            if len(cup) < 2 or orient(points[cup[-2]], points[cup[-1]], points[i]) > 0:
+                new_cup = cup + [i]
+                if len(new_cup) > len(best_cup):
+                    best_cup = new_cup
+    return best_cup
 
 
-def erdos_szekeres_bound(n: int) -> int:
-    """The Erdős–Szekeres upper bound: C(2n-4, n-2) + 1."""
-    from math import comb
-    if n < 3:
-        return n
-    return comb(2 * n - 4, n - 2) + 1
+def compute_cup_len(points: List[Point], idx: int) -> int:
+    """Compute maximum cup length ending at points[idx] using DP."""
+    n = len(points)
+    # dp[i] = max cup length ending at index i
+    dp = [1] * n
+    prev = [-1] * n
+    for j in range(1, n):
+        # Pair (any earlier point, j) is a 2-cup
+        dp[j] = 2
+        for i in range(j):
+            if dp[i] >= 2 and prev[i] >= 0:
+                if orient(points[prev[i]], points[i], points[j]) > 0:
+                    if dp[i] + 1 > dp[j]:
+                        dp[j] = dp[i] + 1
+                        prev[j] = i
+            elif dp[i] == 1:
+                if dp[j] < 2:
+                    dp[j] = 2
+                    prev[j] = i
+    return dp[idx]
 
 
-def demo_monotone_subsequence():
-    """Demonstrate the Erdős–Szekeres monotone subsequence theorem."""
-    print("=" * 70)
-    print("DEMO 1: Erdős–Szekeres Monotone Subsequence Theorem")
-    print("=" * 70)
-    print()
-    print("Theorem: Any sequence of more than (r-1)(s-1) distinct numbers")
-    print("contains an increasing subsequence of length r or a decreasing")
-    print("subsequence of length s.")
-    print()
-    
-    # Example: r=s=4, so (r-1)(s-1) = 9, need > 9 elements
-    r, s = 4, 4
-    n = (r - 1) * (s - 1) + 1  # = 10
-    
-    random.seed(42)
-    seq = random.sample(range(1, 100), n)
-    print(f"r = {r}, s = {s}, threshold = {(r-1)*(s-1)} = {n-1}")
-    print(f"Sequence of length {n}: {seq}")
-    print()
-    
-    inc = longest_increasing_subsequence(seq)
-    dec = longest_decreasing_subsequence(seq)
-    
-    inc_values = [seq[i] for i in inc]
-    dec_values = [seq[i] for i in dec]
-    
-    print(f"Longest increasing subsequence: {inc_values} (length {len(inc)})")
-    print(f"Longest decreasing subsequence: {dec_values} (length {len(dec)})")
-    
-    assert len(inc) >= r or len(dec) >= s, "Theorem violated!"
-    print(f"\n✓ Theorem verified: {'increasing' if len(inc) >= r else 'decreasing'} "
-          f"subsequence has length ≥ {r if len(inc) >= r else s}")
-    
-    # Show the n²+1 corollary
-    print(f"\nCorollary: n² + 1 = {3*3+1} = 10 distinct numbers always contain")
-    print(f"a monotone subsequence of length {3+1} = 4.")
+def compute_signatures(points: List[Point]) -> List[Tuple[int, int]]:
+    """Compute convex chain signatures (cupLen, capLen) for each point.
+
+    Uses dynamic programming to find the longest cup and cap ending
+    at each point. A cup has increasing slopes (positive orient for
+    consecutive triples), a cap has decreasing slopes.
+    """
+    n = len(points)
+    cup_len = [1] * n
+    cap_len = [1] * n
+    cup_prev = [-1] * n  # second-to-last index in best cup
+    cap_prev = [-1] * n
+
+    for j in range(1, n):
+        for i in range(j):
+            # Try extending cups ending at i by j
+            if cup_len[i] == 1:
+                # Pair (i, j) is a 2-cup, always
+                if cup_len[j] < 2:
+                    cup_len[j] = 2
+                    cup_prev[j] = i
+            elif cup_prev[i] >= 0:
+                if orient(points[cup_prev[i]], points[i], points[j]) > 0:
+                    if cup_len[i] + 1 > cup_len[j]:
+                        cup_len[j] = cup_len[i] + 1
+                        cup_prev[j] = i
+
+            # Try extending caps ending at i by j
+            if cap_len[i] == 1:
+                if cap_len[j] < 2:
+                    cap_len[j] = 2
+                    cap_prev[j] = i
+            elif cap_prev[i] >= 0:
+                if orient(points[cap_prev[i]], points[i], points[j]) < 0:
+                    if cap_len[i] + 1 > cap_len[j]:
+                        cap_len[j] = cap_len[i] + 1
+                        cap_prev[j] = i
+
+    return list(zip(cup_len, cap_len))
 
 
-def demo_cups_caps():
-    """Demonstrate cups and caps in point configurations."""
-    print("\n" + "=" * 70)
-    print("DEMO 2: Cups and Caps")
-    print("=" * 70)
-    print()
-    
-    # Create a cup (concave up parabola)
-    cup_points = [(i, i*i) for i in range(5)]
-    print(f"Cup points (y = x²): {cup_points}")
-    print(f"Is cup: {is_cup(cup_points)}")
-    print(f"Is cap: {is_cap(cup_points)}")
-    print(f"Orient triples:")
-    for i in range(len(cup_points) - 2):
-        o = orient(cup_points[i], cup_points[i+1], cup_points[i+2])
-        print(f"  orient({cup_points[i]}, {cup_points[i+1]}, {cup_points[i+2]}) = {o:.0f} > 0 ✓")
-    
-    print()
-    
-    # Create a cap (concave down parabola)
-    cap_points = [(i, -i*i + 20) for i in range(5)]
-    print(f"Cap points (y = -x² + 20): {cap_points}")
-    print(f"Is cup: {is_cup(cap_points)}")
-    print(f"Is cap: {is_cap(cap_points)}")
-    print(f"Orient triples:")
-    for i in range(len(cap_points) - 2):
-        o = orient(cap_points[i], cap_points[i+1], cap_points[i+2])
-        print(f"  orient({cap_points[i]}, {cap_points[i+1]}, {cap_points[i+2]}) = {o:.0f} < 0 ✓")
-    
-    print()
-    print("Key theorem (proved in Lean): ALL triples in a cup have positive")
-    print("orientation, not just consecutive ones. This connects cups to convexity.")
-    
-    # Verify all triples
-    print("\nAll-triples check for cup:")
-    for i in range(len(cup_points)):
-        for j in range(i+1, len(cup_points)):
-            for k in range(j+1, len(cup_points)):
-                o = orient(cup_points[i], cup_points[j], cup_points[k])
-                print(f"  orient(p{i}, p{j}, p{k}) = {o:.0f} {'> 0 ✓' if o > 0 else '≤ 0 ✗'}")
+def find_cup_or_cap(points: List[Point], min_len: int = 3) -> Optional[Tuple[str, List[int]]]:
+    """Find a cup or cap of length >= min_len, returning type and indices."""
+    n = len(points)
+    sigs = compute_signatures(points)
+
+    # Find point with longest cup
+    best_cup_idx = max(range(n), key=lambda i: sigs[i][0])
+    best_cap_idx = max(range(n), key=lambda i: sigs[i][1])
+
+    if sigs[best_cup_idx][0] >= min_len:
+        # Reconstruct cup
+        return ("cup", reconstruct_chain(points, best_cup_idx, "cup"))
+    if sigs[best_cap_idx][1] >= min_len:
+        return ("cap", reconstruct_chain(points, best_cap_idx, "cap"))
+    return None
 
 
-def demo_convex_position():
-    """Demonstrate convex position detection."""
-    print("\n" + "=" * 70)
-    print("DEMO 3: Convex Position and the Happy End Number")
-    print("=" * 70)
-    print()
-    
-    from math import comb
-    
-    print("Happy End Numbers ES(n) — upper bound from Erdős–Szekeres:")
-    print(f"  ES(3) ≤ {erdos_szekeres_bound(3)}  (any 3 points in GP form a triangle)")
-    print(f"  ES(4) ≤ {erdos_szekeres_bound(4)}  (known exact: ES(4) = 5)")
-    print(f"  ES(5) ≤ {erdos_szekeres_bound(5)}  (known exact: ES(5) = 9)")
-    print(f"  ES(6) ≤ {erdos_szekeres_bound(6)} (known exact: ES(6) = 17)")
-    print(f"  ES(7) ≤ {erdos_szekeres_bound(7)}")
-    print(f"  ES(8) ≤ {erdos_szekeres_bound(8)}")
-    
-    print()
-    print("General formula: ES(n) ≤ C(2n-4, n-2) + 1")
-    print(f"  = (2n-4)! / ((n-2)!)² + 1")
-    
-    print()
-    
-    # Verify ES(4) = 5: show 5 points in GP always contain 4 in convex position
-    print("Verifying ES(4) = 5 computationally:")
-    print("Testing 1000 random 5-point configurations in general position...")
-    
-    random.seed(123)
-    successes = 0
-    for trial in range(1000):
-        points = [(random.uniform(-10, 10), random.uniform(-10, 10)) for _ in range(5)]
-        if not is_general_position(points):
-            continue
-        
-        # Sort by x
-        points.sort(key=lambda p: p[0])
-        
-        # Check all 4-subsets
-        found = False
-        for combo in itertools.combinations(range(5), 4):
-            subset = [points[i] for i in combo]
-            if in_convex_position(subset):
-                found = True
+def reconstruct_chain(points: List[Point], end_idx: int, chain_type: str) -> List[int]:
+    """Reconstruct a cup or cap ending at end_idx by backtracking."""
+    n = len(points)
+    # Recompute with full tracking
+    if chain_type == "cup":
+        dp = [1] * n
+        prev = [-1] * n
+        for j in range(1, n):
+            for i in range(j):
+                can_extend = False
+                if dp[i] == 1:
+                    can_extend = True
+                elif prev[i] >= 0:
+                    can_extend = orient(points[prev[i]], points[i], points[j]) > 0
+                if can_extend and dp[i] + 1 > dp[j]:
+                    dp[j] = dp[i] + 1
+                    prev[j] = i
+    else:
+        dp = [1] * n
+        prev = [-1] * n
+        for j in range(1, n):
+            for i in range(j):
+                can_extend = False
+                if dp[i] == 1:
+                    can_extend = True
+                elif prev[i] >= 0:
+                    can_extend = orient(points[prev[i]], points[i], points[j]) < 0
+                if can_extend and dp[i] + 1 > dp[j]:
+                    dp[j] = dp[i] + 1
+                    prev[j] = i
+
+    # Backtrack from end_idx
+    chain = []
+    idx = end_idx
+    while idx >= 0:
+        chain.append(idx)
+        idx = prev[idx]
+    chain.reverse()
+    return chain
+
+
+def is_ordered_convex(points: List[Point], indices: List[int]) -> bool:
+    """Check if the indexed points form an ordered convex polygon
+    (all triples have consistent orientation sign)."""
+    if len(indices) < 3:
+        return True
+    pts = [points[i] for i in indices]
+    sign = None
+    for i, j, k in combinations(range(len(pts)), 3):
+        o = orient(pts[i], pts[j], pts[k])
+        if sign is None:
+            sign = 1 if o > 0 else -1
+        elif (o > 0 and sign < 0) or (o < 0 and sign > 0):
+            return False
+    return True
+
+
+def test_signature_rigidity(n: int, num_trials: int = 1000) -> bool:
+    """Test the signature rigidity conjecture for configurations of size n.
+
+    Conjecture: In configurations with no ordered convex n-gon,
+    if cup length increases from point i to j, then cap length decreases.
+    """
+    violations = 0
+    for trial in range(num_trials):
+        pts = generate_gp_points(n, seed=trial * 137 + 42)
+        sigs = compute_signatures(pts)
+
+        # Check if there's an ordered convex n-gon
+        has_convex = False
+        for indices in combinations(range(n), n):
+            if is_ordered_convex(pts, list(indices)):
+                has_convex = True
                 break
-        
-        if found:
-            successes += 1
-    
-    print(f"  {successes} configurations had 4 points in convex position ✓")
+
+        if has_convex:
+            continue
+
+        # Test staircase property
+        for i in range(n):
+            for j in range(i + 1, n):
+                if sigs[i][0] < sigs[j][0] and sigs[j][1] > sigs[i][1]:
+                    violations += 1
+
+    return violations == 0
 
 
-def demo_orientation():
-    """Demonstrate orientation computations."""
-    print("\n" + "=" * 70)
-    print("DEMO 4: Orientation Function Properties")
+def cups_caps_bound(r: int, s: int) -> int:
+    """Compute the cups-caps extremal bound C(r+s-4, r-2) + 1."""
+    if r < 2 or s < 2:
+        return 2
+    return math.comb(r + s - 4, r - 2) + 1
+
+
+def demo_main():
+    """Main demonstration."""
     print("=" * 70)
-    print()
-    
-    a, b, c = (0, 0), (1, 0), (0.5, 1)
-    print(f"Triangle: A={a}, B={b}, C={c}")
-    print(f"orient(A,B,C) = {orient(a,b,c):.1f} (counterclockwise)")
-    print(f"orient(A,C,B) = {orient(a,c,b):.1f} (clockwise)")
-    print(f"orient(B,C,A) = {orient(b,c,a):.1f} (cyclic = same sign)")
-    print()
-    
-    # Grassmann-Plücker relation
-    d = (2, 0.5)
-    lhs = orient(a, b, d)
-    rhs = orient(a, b, c) + orient(a, c, d) + orient(c, b, d)
-    print(f"Grassmann-Plücker: orient(A,B,D) = orient(A,B,C) + orient(A,C,D) + orient(C,B,D)")
-    print(f"  {lhs:.1f} = {orient(a,b,c):.1f} + {orient(a,c,d):.1f} + {orient(c,b,d):.1f} = {rhs:.1f} ✓")
-    print()
-    
-    # Translation invariance
-    v = (5, 3)
-    a2 = (a[0]+v[0], a[1]+v[1])
-    b2 = (b[0]+v[0], b[1]+v[1])
-    c2 = (c[0]+v[0], c[1]+v[1])
-    print(f"Translation invariance: orient(A,B,C) = orient(A+v, B+v, C+v)")
-    print(f"  {orient(a,b,c):.1f} = {orient(a2,b2,c2):.1f} ✓")
+    print("THE HAPPY END PROBLEM — Erdős–Szekeres Convex Polygon Theorem")
+    print("=" * 70)
+
+    # Demo 1: Small configuration
+    print("\n--- Demo 1: Convex Chain Signatures ---")
+    pts = generate_gp_points(8, seed=42)
+    print(f"Generated {len(pts)} points in general position:")
+    for i, p in enumerate(pts):
+        print(f"  p[{i}] = ({p[0]:.3f}, {p[1]:.3f})")
+
+    sigs = compute_signatures(pts)
+    print("\nConvex Chain Signatures (cupLen, capLen):")
+    for i, (c, d) in enumerate(sigs):
+        print(f"  p[{i}]: cup={c}, cap={d}, signature=({c},{d})")
+
+    # Demo 2: Find cups and caps
+    print("\n--- Demo 2: Cup/Cap Detection ---")
+    result = find_cup_or_cap(pts, min_len=3)
+    if result:
+        chain_type, indices = result
+        print(f"Found a {len(indices)}-{chain_type}: indices {indices}")
+        chain_pts = [pts[i] for i in indices]
+        print("Points:", [(f"({p[0]:.3f}, {p[1]:.3f})") for p in chain_pts])
+        print(f"Ordered convex: {is_ordered_convex(pts, indices)}")
+    else:
+        print("No cup or cap of length ≥ 3 found.")
+
+    # Demo 3: Cups-caps bounds
+    print("\n--- Demo 3: Cups-Caps Extremal Bounds ---")
+    print("f(r,s) = C(r+s-4, r-2) + 1:")
+    for r in range(2, 8):
+        row = [str(cups_caps_bound(r, s)).rjust(6) for s in range(2, 8)]
+        print(f"  r={r}: {' '.join(row)}")
+
+    # Demo 4: Verify forcing on random configurations
+    print("\n--- Demo 4: Forcing Verification ---")
+    for r, s in [(3, 3), (3, 4), (4, 4), (3, 5)]:
+        B = cups_caps_bound(r, s)
+        success = 0
+        trials = 100
+        for trial in range(trials):
+            pts = generate_gp_points(B, seed=trial * 31 + r * 7 + s)
+            sigs = compute_signatures(pts)
+            max_cup = max(c for c, d in sigs)
+            max_cap = max(d for c, d in sigs)
+            if max_cup >= r or max_cap >= s:
+                success += 1
+        print(f"  f({r},{s})={B}: {success}/{trials} configurations "
+              f"have {r}-cup or {s}-cap")
+
+    # Demo 5: Signature rigidity test
+    print("\n--- Demo 5: Signature Rigidity Conjecture ---")
+    for n in range(4, 8):
+        rigid = test_signature_rigidity(n, num_trials=200)
+        status = "HOLDS" if rigid else "VIOLATED"
+        print(f"  n={n}: Staircase property {status}")
+
+    # Demo 6: Happy End bounds
+    print("\n--- Demo 6: Happy End Bounds ---")
+    print("Upper bounds on ES(n) via cups-caps:")
+    for n in range(3, 10):
+        bound = cups_caps_bound(n, n)
+        print(f"  ES({n}) ≤ f({n},{n}) = C({2*n-4},{n-2})+1 = {bound}")
 
 
 if __name__ == "__main__":
-    demo_monotone_subsequence()
-    demo_cups_caps()
-    demo_convex_position()
-    demo_orientation()
-    print("\n" + "=" * 70)
-    print("All demos completed successfully!")
-    print("=" * 70)
+    demo_main()
