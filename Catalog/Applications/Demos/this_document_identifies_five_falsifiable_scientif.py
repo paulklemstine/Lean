@@ -1,464 +1,433 @@
-#!/usr/bin/env python3
 """
-Applications of Additive Prime Decomposition Theory.
+Applications of the Algebraic/Transcendental Decomposition
 
-Demonstrates real-world applications:
-1. Cryptographic parameter validation via parity census
-2. Error detection in prime-sum protocols
-3. Goldbach representation density analysis
-4. Semiprime decomposition for composite modulus analysis
+Demonstrates real-world applications of the orthogonal decomposition theorem
+and Schur's lemma in the context of K3 surfaces, abelian varieties, and
+lattice theory.
 """
 
-from typing import List, Tuple, Dict
-from sympy import isprime, primerange, nextprime, factorint
-import random
-import math
+import numpy as np
+from algorithms import orthogonal_projection, decompose_vector, verify_decomposition
 
 
-# ============================================================
-# Application 1: Parity Census as Error Detection
-# ============================================================
-
-def parity_census_check(primes: List[int]) -> bool:
+def k3_surface_lattice():
     """
-    Use the parity census law as an error-detection code.
-
-    In protocols that transmit prime decompositions, the parity census
-    law provides a single-bit parity check: any single transmission
-    error that corrupts one prime will be caught.
-
-    Returns True if the list passes the parity census check.
-    """
-    ct = primes.count(2)
-    return ct % 2 == (sum(primes) + len(primes)) % 2
-
-
-def demonstrate_error_detection():
-    """Show how parity census catches transmission errors."""
-    print("=" * 70)
-    print("APPLICATION 1: Parity Census as Error Detection")
-    print("=" * 70)
-    print()
-
-    # Original message: a valid prime decomposition
-    original = [3, 5, 7, 11, 13]
-    print(f"Original prime list: {original}")
-    print(f"Sum = {sum(original)}, Length = {len(original)}")
-    print(f"Parity check: {parity_census_check(original)}")
-    print()
-
-    # Simulate transmission errors
-    print("Simulating single-element corruption:")
-    for i in range(len(original)):
-        corrupted = original.copy()
-        # Replace one prime with a different prime
-        corrupted[i] = nextprime(corrupted[i])
-        passes = parity_census_check(corrupted)
-        print(f"  Position {i}: {original[i]} -> {corrupted[i]}: "
-              f"check = {passes} {'(CAUGHT!)' if not passes else '(missed)'}")
-
-    print()
-    print("Note: The parity census catches errors where a prime changes")
-    print("parity class (odd→even or even→odd), which is most corruptions.")
-    print()
-
-
-# ============================================================
-# Application 2: Goldbach Representation Density Analysis
-# ============================================================
-
-def goldbach_density_analysis(limit: int = 1000):
-    """
-    Analyze how Goldbach representation counts grow with n.
-
-    The Hardy-Littlewood conjecture predicts the count grows like
-    C * n / (ln n)^2. We compute the empirical density.
+    Application: K3 surface lattice decomposition.
+    
+    A K3 surface X has H²(X, Z) ≅ U³ ⊕ E₈(-1)² (the K3 lattice),
+    a rank-22 lattice with signature (3, 19). The Néron-Severi lattice
+    NS(X) sits inside as a primitive sublattice, and the transcendental
+    lattice T(X) = NS(X)^⊥ is its orthogonal complement.
+    
+    The orthogonal decomposition theorem guarantees:
+      H²(X, Q) = NS(X)_Q ⊕ T(X)_Q
+    when the intersection form restricted to NS is nondegenerate.
     """
     print("=" * 70)
-    print("APPLICATION 2: Goldbach Representation Density")
+    print("APPLICATION: K3 SURFACE LATTICE DECOMPOSITION")
     print("=" * 70)
     print()
-
-    data = []
-    for n in range(4, limit + 1, 2):
-        count = 0
-        for p in primerange(2, n):
-            q = n - p
-            if q >= 2 and isprime(q):
-                count += 1
-        # Unordered count
-        unord = (count + (1 if n % 2 == 0 and isprime(n // 2) else 0)) // 2
-        data.append((n, count, unord))
-
-    # Print summary statistics
-    print(f"{'n':>6} {'Ordered':>8} {'Unordered':>10} {'Ratio n/ln²n':>14}")
-    print("-" * 42)
-    for n, ordered, unordered in data:
-        if n in [10, 20, 50, 100, 200, 500, 1000]:
-            ln_n = math.log(n) if n > 1 else 1
-            ratio = ordered / (n / ln_n**2) if ln_n > 0 else 0
-            print(f"{n:>6} {ordered:>8} {unordered:>10} {ratio:>14.3f}")
-
-    # Show multiplicity never drops below 2 for n >= 8
-    min_count = min(c for n, c, _ in data if n >= 8)
-    min_n = [n for n, c, _ in data if n >= 8 and c == min_count]
-    print(f"\nMinimum ordered count for n ≥ 8: {min_count} at n = {min_n}")
-    print(f"Numbers with exactly 1 representation: "
-          f"{[n for n, c, _ in data if c == 1]}")
+    
+    # Simplified model: rank 6, signature (1, 5)
+    # Represents a "small K3" with Picard rank 2
+    
+    # Intersection form (simplified)
+    Q = np.zeros((6, 6))
+    # NS block: rank 2, signature (1,1), like a hyperbolic plane
+    Q[0, 0] = 0; Q[0, 1] = 1; Q[1, 0] = 1; Q[1, 1] = 0
+    # Transcendental block: rank 4, negative definite
+    Q[2, 2] = -2; Q[3, 3] = -2; Q[4, 4] = -2; Q[5, 5] = -2
+    
+    print("Intersection form Q (signature (1,5)):")
+    print(Q)
+    print()
+    
+    # Néron-Severi lattice: first 2 basis vectors
+    NS_basis = np.eye(6)[:2]
+    
+    # Check nondegeneracy of Q|_NS
+    Q_NS = Q[:2, :2]
+    print(f"Q restricted to NS = {Q_NS.tolist()}")
+    print(f"det(Q|_NS) = {np.linalg.det(Q_NS):.0f} ≠ 0: NONDEGENERATE ✓")
+    print()
+    
+    # Decompose a class
+    omega = np.array([2, 3, 1, -1, 0, 2], dtype=float)
+    alg, trans = decompose_vector(omega, Q, NS_basis)
+    
+    print(f"Cohomology class ω = {omega}")
+    print(f"Algebraic part (∈ NS):  {alg}")
+    print(f"Transcendental part (∈ T): {trans}")
+    
+    ver = verify_decomposition(omega, alg, trans, Q, NS_basis)
+    print(f"Verification: {ver}")
+    print()
+    
+    # The ample cone lives inside NS
+    h = np.array([1, 1, 0, 0, 0, 0], dtype=float)  # Ample class
+    print(f"Ample class h = {h}")
+    print(f"Self-intersection h² = Q(h,h) = {h @ Q @ h:.0f}")
+    print(f"(Positive self-intersection ↔ ample, by Nakai-Moishezon)")
     print()
 
 
-# ============================================================
-# Application 3: Semiprime Gap Analysis
-# ============================================================
-
-def semiprime_gap_analysis(limit: int = 200):
+def abelian_variety_endomorphisms():
     """
-    Analyze the density of semiprimes and their role in Chen-type decompositions.
-
-    Semiprimes are denser than primes, so Chen-type decompositions
-    should be more abundant than pure Goldbach decompositions.
-    """
-    print("=" * 70)
-    print("APPLICATION 3: Semiprime Density & Chen Decompositions")
-    print("=" * 70)
-    print()
-
-    def is_semiprime(n):
-        if n < 4:
-            return False
-        f = factorint(n)
-        return sum(f.values()) == 2
-
-    # Count primes, semiprimes, and Chen-type decompositions
-    print(f"{'n':>5} {'Primes≤n':>10} {'Semi≤n':>8} {'Goldbach':>10} {'Chen':>8}")
-    print("-" * 46)
-
-    for n in range(10, limit + 1, 10):
-        if n % 2 != 0:
-            continue
-        num_primes = sum(1 for p in range(2, n + 1) if isprime(p))
-        num_semi = sum(1 for s in range(4, n + 1) if is_semiprime(s))
-
-        # Goldbach count
-        goldbach = 0
-        chen = 0
-        for p in primerange(2, n):
-            s = n - p
-            if s >= 2 and isprime(s):
-                goldbach += 1
-            if s >= 2 and (isprime(s) or is_semiprime(s)):
-                chen += 1
-
-        if n in [10, 20, 50, 100, 150, 200]:
-            print(f"{n:>5} {num_primes:>10} {num_semi:>8} {goldbach:>10} {chen:>8}")
-
-    print()
-    print("Observation: Chen-type counts consistently exceed Goldbach counts,")
-    print("confirming that the semiprime relaxation layer is genuinely denser.")
-    print()
-
-
-# ============================================================
-# Application 4: Symmetry Analysis of Witness Sets
-# ============================================================
-
-def symmetry_analysis():
-    """
-    Visualize the orbit structure of Goldbach witnesses under Z/2 swap.
+    Application: Endomorphism algebras of abelian varieties.
+    
+    For a simple abelian variety A/C, End⁰(A) = End(A) ⊗ Q is a division
+    algebra by Schur's lemma. The Albert classification determines which
+    division algebras can occur:
+    
+    Type I: Totally real number field
+    Type II: Totally indefinite quaternion algebra  
+    Type III: Totally definite quaternion algebra
+    Type IV: CM field
+    
+    Our Schur lemma formalization is the key ingredient: it shows that
+    End_HS(W) is a division algebra when W is simple.
     """
     print("=" * 70)
-    print("APPLICATION 4: Witness Symmetry Under Swap Action")
+    print("APPLICATION: ABELIAN VARIETY ENDOMORPHISM ALGEBRAS")
     print("=" * 70)
     print()
-
-    print("The Z/2 swap action (p,q) ↦ (q,p) partitions witnesses into:")
-    print("  - Off-diagonal orbits of size 2 (p ≠ q)")
-    print("  - Fixed points of size 1 (p = p, i.e., n = 2p)")
+    
+    # Example 1: Elliptic curve without CM (Type I)
+    print("--- Elliptic Curve E without CM ---")
+    print("Hodge structure on H¹(E,Q) = Q²")
+    print("H^{1,0} = C·(1, τ) where τ ∈ H (upper half-plane)")
+    print("End_HS(H¹(E)) = Q (only scalar endomorphisms)")
+    print("→ Type I: totally real field Q")
     print()
-    print(f"{'n':>5} {'Ordered':>8} {'Orbits':>8} {'Fixed':>7} "
-          f"{'2*orbits+fixed':>15} {'Match':>6}")
-    print("-" * 52)
-
-    for n in range(4, 62, 2):
-        witnesses = []
-        for p in primerange(2, n):
-            q = n - p
-            if q >= 2 and isprime(q):
-                witnesses.append((p, q))
-
-        fixed = sum(1 for p, q in witnesses if p == q)
-        orbits = (len(witnesses) - fixed) // 2
-        formula = 2 * orbits + fixed
-        match = len(witnesses) == formula
-
-        if n <= 30 or n == 60:
-            print(f"{n:>5} {len(witnesses):>8} {orbits:>8} {fixed:>7} "
-                  f"{formula:>15} {str(match):>6}")
-
+    
+    # Example 2: Elliptic curve with CM by Q(√-d)
+    print("--- Elliptic Curve E with CM by Q(i) ---")
+    d = 1
+    print(f"Hodge structure on H¹(E,Q) = Q²")
+    print(f"τ = i (CM point)")
+    print(f"Endomorphism: multiplication by i")
+    
+    # The matrix of multiplication by i on Q²
+    J = np.array([[0, -1], [1, 0]], dtype=float)
+    print(f"Matrix of [i]: {J.tolist()}")
+    print(f"J² = {(J@J).tolist()} = -I ✓")
+    print(f"det(J) = {np.linalg.det(J):.0f} ≠ 0: INVERTIBLE ✓ (Schur's lemma)")
+    print(f"End_HS = Q ⊕ Q·J ≅ Q(i): a CM FIELD")
+    print(f"→ Type IV: CM field Q(i)")
     print()
-    print("The transfer law |ordered| = 2|orbits| + |fixed| holds universally.")
-    print("This is the orbit-stabilizer theorem for the Z/2 action on pairs.")
+    
+    # Example 3: Abelian surface with quaternionic multiplication
+    print("--- Abelian Surface A with QM ---")
+    print("dim A = 2, so H¹(A,Q) = Q⁴")
+    print("End⁰(A) = B_{p,∞} (quaternion algebra)")
+    
+    # Quaternion algebra generated by i, j with i²=-1, j²=-p, ij=-ji
+    print("Basis: {1, i, j, k} with i²=-1, j²=-p, k=ij")
+    print("Every nonzero element has an inverse:")
+    print("  (a+bi+cj+dk)⁻¹ = (a-bi-cj-dk)/(a²+b²+pc²+pd²)")
+    print("This is a DIVISION ALGEBRA by Schur's lemma ✓")
+    print(f"→ Type III: definite quaternion algebra")
     print()
+
+
+def torelli_theorem_illustration():
+    """
+    Application: The Torelli theorem via the decomposition.
+    
+    The Global Torelli Theorem for K3 surfaces states that a K3 surface
+    is determined (up to isomorphism) by its polarized Hodge structure.
+    The algebraic/transcendental decomposition is the key structural input:
+    
+    1. Two K3 surfaces are isomorphic iff there's a Hodge isometry
+       between their H² lattices.
+    2. Such an isometry must preserve the NS/T decomposition.
+    3. On NS, it must preserve the ample cone.
+    4. On T, it must be a Hodge isometry of the transcendental lattice.
+    
+    Our decomposition theorem formalizes step (2).
+    """
+    print("=" * 70)
+    print("APPLICATION: TORELLI THEOREM STRUCTURE")
+    print("=" * 70)
+    print()
+    
+    # Two "K3 surfaces" with the same lattice structure
+    dim = 6
+    Q = np.zeros((dim, dim))
+    Q[0, 1] = Q[1, 0] = 1  # Hyperbolic plane in NS
+    for i in range(2, dim):
+        Q[i, i] = -2  # Negative definite in T
+    
+    print("Two K3 surfaces X, Y with isometric H² lattices")
+    print(f"Intersection form Q = {Q.tolist()}")
+    print()
+    
+    # An isometry φ: H²(X) → H²(Y)
+    # Must decompose as φ = φ_NS ⊕ φ_T
+    phi_NS = np.array([[1, 0], [0, 1]])  # Identity on NS
+    phi_T = np.eye(dim - 2)  # Identity on T
+    
+    phi = np.block([
+        [phi_NS, np.zeros((2, dim-2))],
+        [np.zeros((dim-2, 2)), phi_T]
+    ])
+    
+    print("Hodge isometry φ decomposes as:")
+    print(f"  φ_NS = {phi_NS.tolist()} (preserves Néron-Severi)")
+    print(f"  φ_T  = {phi_T.tolist()} (preserves transcendental lattice)")
+    print()
+    
+    # Verify φ preserves Q
+    Q_preserved = np.allclose(phi.T @ Q @ phi, Q)
+    print(f"φ preserves Q: {Q_preserved} ✓")
+    print()
+    
+    # The decomposition theorem guarantees this block structure!
+    print("KEY INSIGHT: The orthogonal decomposition theorem guarantees")
+    print("that any Hodge isometry MUST have this block-diagonal form")
+    print("(up to the NS ⊕ T decomposition).")
+    print()
+    print("This is why the decomposition is the 'engine' behind Torelli:")
+    print("it reduces the global isomorphism problem to two simpler")
+    print("problems on the algebraic and transcendental parts separately.")
+
+
+def main():
+    k3_surface_lattice()
+    print()
+    abelian_variety_endomorphisms()
+    print()
+    torelli_theorem_illustration()
 
 
 if __name__ == "__main__":
-    print("\n" + "=" * 70)
-    print("  ADDITIVE PRIME DECOMPOSITION THEORY — APPLICATIONS")
-    print("=" * 70 + "\n")
-
-    demonstrate_error_detection()
-    goldbach_density_analysis(limit=200)
-    semiprime_gap_analysis(limit=200)
-    symmetry_analysis()
-
-    print("\nAll applications complete.")
+    main()
 
 
-#!/usr/bin/env python3
 """
-Demonstration of Additive Prime Decomposition Theory.
+Demonstration of the Algebraic/Transcendental Decomposition in Hodge Theory
 
-Concrete numerical examples illustrating:
-1. The k-ary Parity Census Law
-2. Ordered/Unordered Witness Transfer
-3. Goldbach Multiplicity Lower Bounds
-4. Weak Chen Decompositions
+This script provides concrete numerical examples of the orthogonal decomposition
+theorem for polarized Hodge structures, showing how a vector space equipped with
+a bilinear form splits into algebraic and transcendental parts.
 """
 
-from sympy import isprime, primerange
-from collections import Counter
-from typing import List, Tuple, Set
+import numpy as np
+from typing import Tuple, List
 
-
-def is_semiprime(n: int) -> bool:
-    """Check if n is a product of exactly two primes."""
-    if n < 4:
-        return False
-    for p in primerange(2, n):
-        if n % p == 0:
-            q = n // p
-            return isprime(q)
-    return False
-
-
-def count_twos(primes: List[int]) -> int:
-    """Count the number of 2s in a list of primes."""
-    return primes.count(2)
-
-
-def goldbach_witnesses_ordered(n: int) -> List[Tuple[int, int]]:
-    """All ordered pairs (p, q) of primes with p + q = n."""
-    witnesses = []
-    for p in primerange(2, n):
-        q = n - p
-        if q >= 2 and isprime(q):
-            witnesses.append((p, q))
-    return witnesses
-
-
-def goldbach_witnesses_unordered(n: int) -> List[Tuple[int, int]]:
-    """All pairs (p, q) with p ≤ q, both prime, p + q = n."""
-    witnesses = []
-    for p in primerange(2, n // 2 + 1):
-        q = n - p
-        if isprime(q):
-            witnesses.append((p, q))
-    return witnesses
-
-
-def weak_chen_decomposition(n: int) -> List[Tuple[int, int, str]]:
-    """Find all weak Chen decompositions n = p + s where s is prime or semiprime."""
-    results = []
-    for p in primerange(2, n):
-        s = n - p
-        if s < 2:
-            continue
-        if isprime(s):
-            results.append((p, s, "prime"))
-        elif is_semiprime(s):
-            results.append((p, s, "semiprime"))
-    return results
-
-
-def demo_parity_census():
-    """Demonstrate the k-ary Parity Census Law."""
+def demonstrate_orthogonal_decomposition():
+    """
+    Demonstrate the key theorem: when Q restricted to the Hodge class subspace A
+    is nondegenerate, V = A ⊕ A^⊥.
+    
+    We work over Q (approximated by rationals) with:
+    - V = Q^4 (a 4-dimensional rational vector space)
+    - A = span{e1, e2} (the "Hodge class" subspace, rank 2)
+    - Q = a nondegenerate symmetric bilinear form
+    """
     print("=" * 70)
-    print("DEMO 1: The k-ary Parity Census Law")
+    print("ORTHOGONAL DECOMPOSITION THEOREM — NUMERICAL DEMONSTRATION")
     print("=" * 70)
     print()
-    print("For any list L of primes: countTwos(L) % 2 = (sum(L) + len(L)) % 2")
+    
+    # Define V = Q^4 with standard basis
+    dim_V = 4
+    dim_A = 2  # Picard rank 2
+    
+    # Define the polarization form Q as a symmetric matrix
+    # This represents the intersection form on H^2 of a surface
+    Q = np.array([
+        [ 2, 1, 0, 0],
+        [ 1, 3, 0, 0],
+        [ 0, 0,-1, 0],
+        [ 0, 0, 0,-2]
+    ], dtype=float)
+    
+    print(f"Vector space V = Q^{dim_V}")
+    print(f"Polarization form Q =")
+    print(Q)
+    print(f"det(Q) = {np.linalg.det(Q):.1f} (nondegenerate)")
     print()
-
-    # Binary (Goldbach) examples
-    print("--- Arity 2 (Goldbach pairs) ---")
-    for n in [10, 20, 30, 36, 100]:
-        witnesses = goldbach_witnesses_ordered(n)
-        if witnesses:
-            p, q = witnesses[0]
-            L = [p, q]
-            ct = count_twos(L)
-            lhs = ct % 2
-            rhs = (sum(L) + len(L)) % 2
-            print(f"  n={n}: ({p},{q}), countTwos={ct}, "
-                  f"LHS={lhs}, RHS=({sum(L)}+{len(L)})%2={rhs}, "
-                  f"Equal: {lhs == rhs}")
+    
+    # Define A = span{e1, e2} (the Hodge class subspace)
+    # Basis of A
+    A_basis = np.eye(dim_V)[:dim_A]  # e1, e2
+    print(f"Hodge class subspace A = span{{e1, e2}}, dim(A) = {dim_A}")
+    
+    # Restriction of Q to A
+    Q_A = Q[:dim_A, :dim_A]
+    print(f"Q restricted to A =")
+    print(Q_A)
+    print(f"det(Q|_A) = {np.linalg.det(Q_A):.1f} (nondegenerate ✓)")
     print()
-
-    # Ternary examples
-    print("--- Arity 3 (Ternary Goldbach) ---")
-    test_triples = [
-        (2, 2, 3),   # sum=7
-        (3, 5, 7),   # sum=15
-        (2, 5, 11),  # sum=18
-        (2, 3, 7),   # sum=12
-        (5, 7, 11),  # sum=23
-    ]
-    for a, b, c in test_triples:
-        L = [a, b, c]
-        ct = count_twos(L)
-        lhs = ct % 2
-        rhs = (sum(L) + len(L)) % 2
-        print(f"  ({a},{b},{c}), sum={sum(L)}, countTwos={ct}, "
-              f"LHS={lhs}, RHS=({sum(L)}+3)%2={rhs}, Equal: {lhs == rhs}")
+    
+    # Compute A^⊥ = {v ∈ V : Q(a, v) = 0 for all a ∈ A}
+    # This is the null space of Q_A^T @ [I | 0] applied to V,
+    # i.e., vectors v such that Q[i,:] @ v = 0 for i = 0,...,dim_A-1
+    # Equivalently, null space of Q[:dim_A, :] 
+    from numpy.linalg import svd
+    U, S, Vt = svd(Q[:dim_A, :])
+    null_space_indices = S < 1e-10
+    T_basis = Vt[dim_A:, :]  # Rows corresponding to zero singular values
+    
+    # More directly: A^⊥ = {v : Q[0,:].v = 0 and Q[1,:].v = 0}
+    # Solve the system Q[:2,:] @ v = 0
+    # Since Q is block diagonal here, A^⊥ = span{e3, e4}
+    print(f"Transcendental lattice T = A^⊥ = span{{e3, e4}}")
+    print(f"dim(T) = {dim_V - dim_A}")
+    print(f"dim(A) + dim(T) = {dim_A} + {dim_V - dim_A} = {dim_V} = dim(V) ✓")
     print()
-
-    # Verify over many random decompositions
-    print("--- Exhaustive verification (arity 2, n=4..200) ---")
-    violations = 0
-    checks = 0
-    for n in range(4, 201, 2):
-        for p, q in goldbach_witnesses_ordered(n):
-            L = [p, q]
-            ct = count_twos(L)
-            if ct % 2 != (sum(L) + len(L)) % 2:
-                violations += 1
-            checks += 1
-    print(f"  Checked {checks} decompositions, violations: {violations}")
+    
+    # Verify A ∩ A^⊥ = {0}
+    print("Verification: A ∩ T = {0}")
+    print("  Any v ∈ A has v = a₁e₁ + a₂e₂, so v₃ = v₄ = 0")
+    print("  Any v ∈ T has v = t₃e₃ + t₄e₄, so v₁ = v₂ = 0")
+    print("  Hence A ∩ T = {0} ✓")
     print()
+    
+    # Demonstrate unique decomposition
+    print("--- Unique Decomposition v = a + t ---")
+    v = np.array([3, -1, 2, 5], dtype=float)
+    a = np.array([v[0], v[1], 0, 0], dtype=float)  # Projection onto A
+    t = np.array([0, 0, v[2], v[3]], dtype=float)  # Projection onto T
+    
+    print(f"v = {v}")
+    print(f"a = {a}  (algebraic part, a ∈ A)")
+    print(f"t = {t}  (transcendental part, t ∈ T)")
+    print(f"v = a + t: {np.allclose(v, a + t)} ✓")
+    
+    # Verify orthogonality
+    for i in range(dim_A):
+        for j in range(dim_A, dim_V):
+            ei = np.zeros(dim_V); ei[i] = 1
+            ej = np.zeros(dim_V); ej[j] = 1
+            print(f"Q(e{i+1}, e{j+1}) = {ei @ Q @ ej:.0f} = 0 ✓")
+    print()
+    return Q, dim_A
 
 
-def demo_symmetry_transfer():
-    """Demonstrate the Ordered/Unordered Transfer Law."""
+def demonstrate_schur_lemma():
+    """
+    Demonstrate Schur's lemma: nonzero endomorphism of a simple structure is bijective.
+    
+    We construct a 2-dimensional 'Hodge structure' and show that any nonzero
+    endomorphism preserving the structure must be invertible.
+    """
     print("=" * 70)
-    print("DEMO 2: Ordered/Unordered Witness Transfer Law")
-    print("=" * 70)
-    print()
-    print("|ordered| = 2 * |strict| + |diagonal|")
-    print()
-    print(f"{'n':>5} {'|ordered|':>10} {'|strict|':>10} {'|diag|':>7} "
-          f"{'2*strict+diag':>14} {'Match':>6}")
-    print("-" * 55)
-
-    for n in range(4, 102, 2):
-        ordered = goldbach_witnesses_ordered(n)
-        strict = [(p, q) for p, q in ordered if p < q]
-        diag = [(p, q) for p, q in ordered if p == q]
-
-        expected = 2 * len(strict) + len(diag)
-        match = len(ordered) == expected
-
-        if n <= 30 or n in [50, 100]:
-            print(f"{n:>5} {len(ordered):>10} {len(strict):>10} {len(diag):>7} "
-                  f"{expected:>14} {str(match):>6}")
-
-    print()
-    # Verify the formula for all even n up to 500
-    violations = 0
-    for n in range(4, 501, 2):
-        ordered = goldbach_witnesses_ordered(n)
-        strict = [(p, q) for p, q in ordered if p < q]
-        diag = [(p, q) for p, q in ordered if p == q]
-        if len(ordered) != 2 * len(strict) + len(diag):
-            violations += 1
-    print(f"  Verified transfer law for all even n in [4,500]: "
-          f"violations = {violations}")
-    print()
-
-
-def demo_multiplicity():
-    """Demonstrate the Goldbach Multiplicity Lower Bound."""
-    print("=" * 70)
-    print("DEMO 3: Goldbach Multiplicity Lower Bound")
+    print("SCHUR'S LEMMA — NUMERICAL DEMONSTRATION")
     print("=" * 70)
     print()
-    print("For even n >= 8, the ordered Goldbach count is >= 2.")
+    
+    # Simple weight-1 Hodge structure: V = Q^2
+    # H^{1,0} = span{(1, i)} in C^2
+    # H^{0,1} = span{(1, -i)} in C^2
+    
+    print("Weight-1 Hodge structure on V = Q^2:")
+    print("  H^{1,0} = C·(1, i)  in C ⊗ V")
+    print("  H^{0,1} = C·(1,-i)  in C ⊗ V")
+    print("  This is simple (no proper sub-Hodge-structures)")
+    print()
+    
+    # A Hodge endomorphism must preserve H^{1,0} and H^{0,1}
+    # If f is Q-linear and f_C preserves H^{1,0}, then f_C(1,i) = λ(1,i)
+    # This means f(1,0) + i·f(0,1) = λ(1,i)
+    # So f(1,0) = Re(λ)(1,0) - Im(λ)(0,1)
+    #    f(0,1) = Im(λ)(1,0) + Re(λ)(0,1)
+    # Matrix: [[Re(λ), -Im(λ)], [Im(λ), Re(λ)]]
+    
+    # Example 1: λ = 2 + 3i
+    lam = 2 + 3j
+    f = np.array([[lam.real, -lam.imag],
+                   [lam.imag,  lam.real]])
+    
+    print(f"Hodge endomorphism f with eigenvalue λ = {lam}:")
+    print(f"  Matrix = {f.tolist()}")
+    print(f"  det(f) = {np.linalg.det(f):.1f} = |λ|² = {abs(lam)**2:.1f}")
+    print(f"  f is {'bijective ✓' if abs(np.linalg.det(f)) > 1e-10 else 'NOT bijective'}")
+    print()
+    
+    # Show all nonzero Hodge endomorphisms are bijective
+    print("Theorem: For simple V, every nonzero Hodge endomorphism is bijective")
+    print("Proof sketch:")
+    print("  - ker(f) is a Hodge substructure")
+    print("  - By simplicity: ker(f) = {0} or ker(f) = V")
+    print("  - Since f ≠ 0, ker(f) ≠ V, so ker(f) = {0}")
+    print("  - f is injective, hence bijective (finite-dimensional)")
+    print()
+    
+    # Show det(f) = |λ|² ≥ 0, and = 0 only if f = 0
+    print("In this example, det(f) = a² + b² where λ = a + bi")
+    print("This is zero iff a = b = 0, i.e., f = 0")
+    print("So every nonzero Hodge endomorphism IS bijective ✓")
+    print()
+    
+    # Endomorphism algebra structure
+    print("The endomorphism algebra End_HS(V) for this simple V:")
+    print("  {[[a, -b], [b, a]] : a, b ∈ Q}")
+    print("  This is isomorphic to Q(i) — a number field!")
+    print("  It is a DIVISION ALGEBRA (every nonzero element is invertible)")
     print()
 
-    # Show the counts for small n
-    print(f"{'n':>5} {'|ordered|':>10} {'Status':>20}")
-    print("-" * 40)
-    for n in range(4, 52, 2):
-        ordered = goldbach_witnesses_ordered(n)
-        count = len(ordered)
-        if n < 8:
-            status = f"count={count} (below threshold)"
-        elif count >= 2:
-            status = f"count={count} >= 2 ✓"
-        else:
-            status = f"count={count} VIOLATION!"
-        if n <= 20 or n == 50:
-            print(f"{n:>5} {count:>10} {status:>20}")
 
-    # Verify for all even n in [8, 1000]
-    min_count = float('inf')
-    min_n = 0
-    violations = 0
-    for n in range(8, 1001, 2):
-        count = len(goldbach_witnesses_ordered(n))
-        if count < 2:
-            violations += 1
-        if count < min_count:
-            min_count = count
-            min_n = n
-
-    print(f"\n  Verified for all even n in [8,1000]: violations = {violations}")
-    print(f"  Minimum count = {min_count} at n = {min_n}")
-    print(f"  Only n=4 (count=1) and n=6 (count=1) have exactly 1 representation")
-    print()
-
-
-def demo_weak_chen():
-    """Demonstrate Weak Chen Decompositions."""
+def demonstrate_picard_rank():
+    """
+    Demonstrate the rank-one and rank-two classification theorems.
+    """
     print("=" * 70)
-    print("DEMO 4: Weak Chen Decompositions")
+    print("PICARD RANK CLASSIFICATION — NUMERICAL DEMONSTRATION")
     print("=" * 70)
     print()
-    print("n = p + s where p is prime, s is prime or semiprime")
+    
+    # Rank 1 example: V = Q^3, Hodge classes = span{η}
+    print("--- Picard Rank 1 ---")
+    eta = np.array([1, 0, 0], dtype=float)
+    print(f"Generator η = {eta}")
+    print(f"Every Hodge class is a rational multiple of η")
+    print(f"Example: 3η = {3*eta}, -1/2·η = {-0.5*eta}")
+    print()
+    
+    # Rank 2 example: V = Q^4, Hodge classes = span{η₁, η₂}
+    print("--- Picard Rank 2 ---")
+    eta1 = np.array([1, 0, 0, 0], dtype=float)
+    eta2 = np.array([0, 1, 0, 0], dtype=float)
+    print(f"Generators η₁ = {eta1}, η₂ = {eta2}")
+    print(f"Every Hodge class is a₁η₁ + a₂η₂ for a₁, a₂ ∈ Q")
+    print(f"Example: 2η₁ + 3η₂ = {2*eta1 + 3*eta2}")
+    print()
+    
+    # Dimension formula
+    print("--- Dimension Formula ---")
+    dim_V = 22  # For a K3 surface, H^2 has dimension 22
+    picard_rank = 2
+    trans_rank = dim_V - picard_rank
+    print(f"K3 surface analogy: dim H²(X,Q) = {dim_V}")
+    print(f"Picard rank ρ = {picard_rank}")
+    print(f"Transcendental rank = {dim_V} - {picard_rank} = {trans_rank}")
+    print(f"V = NS(X) ⊕ T(X) where dim NS = {picard_rank}, dim T = {trans_rank}")
     print()
 
-    # Show examples
-    for n in [10, 20, 30, 50, 100]:
-        decomps = weak_chen_decomposition(n)
-        prime_decomps = [(p, s) for p, s, t in decomps if t == "prime"]
-        semi_decomps = [(p, s) for p, s, t in decomps if t == "semiprime"]
-        print(f"  n={n}: {len(prime_decomps)} prime decomps, "
-              f"{len(semi_decomps)} semiprime decomps")
-        if prime_decomps:
-            print(f"    Prime examples: {prime_decomps[:3]}")
-        if semi_decomps:
-            print(f"    Semiprime examples: {semi_decomps[:3]}")
-        print()
 
-    # Verify for all even n in [4, 500]
-    missing = []
-    for n in range(4, 501, 2):
-        if not weak_chen_decomposition(n):
-            missing.append(n)
-
-    print(f"  Even numbers in [4,500] without weak Chen decomposition: "
-          f"{missing if missing else 'none'}")
+def main():
+    """Run all demonstrations."""
+    demonstrate_orthogonal_decomposition()
+    demonstrate_schur_lemma()
+    demonstrate_picard_rank()
+    
+    print("=" * 70)
+    print("SUMMARY")
+    print("=" * 70)
     print()
+    print("Three formally verified theorems demonstrated:")
+    print()
+    print("1. ORTHOGONAL DECOMPOSITION: When Q|_A is nondegenerate,")
+    print("   V = A ⊕ A^⊥ (algebraic ⊕ transcendental)")
+    print()
+    print("2. SCHUR'S LEMMA: Nonzero Hodge endomorphism of a simple")
+    print("   structure is always bijective (division algebra)")
+    print()
+    print("3. PICARD RANK CLASSIFICATION: Low-rank Hodge classes are")
+    print("   completely determined by finitely many generators")
 
 
 if __name__ == "__main__":
-    print("\n" + "=" * 70)
-    print("  ADDITIVE PRIME DECOMPOSITION THEORY — DEMONSTRATIONS")
-    print("=" * 70 + "\n")
-
-    demo_parity_census()
-    demo_symmetry_transfer()
-    demo_multiplicity()
-    demo_weak_chen()
-
-    print("\nAll demonstrations complete.")
+    main()

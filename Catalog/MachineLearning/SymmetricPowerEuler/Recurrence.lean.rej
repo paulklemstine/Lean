@@ -1,0 +1,39 @@
+--- Recurrence.lean
++++ Recurrence.lean
+@@ -56,22 +66,25 @@
+ 
+ /-! ## symmTraceRec equals e1SymmPower -/
+ 
++/-
++The recursive trace polynomial equals e1SymmPower when evaluated at t=α+β, d=αβ.
++-/
+ theorem symmTraceRec_eq_e1SymmPower {R : Type*} [CommRing R] (n : ℕ) (α β : R) :
+     symmTraceRec (α + β) (α * β) n = e1SymmPower n α β := by
+-  induction' n using Nat.strongRecOn with n ih
+-  rcases n with ( _ | _ | n ) <;> simp_all +decide
+-  · rfl
+-  · rfl
+-  · rw [show symmTraceRec (α + β) (α * β) (n + 2) =
+-        (α + β) * symmTraceRec (α + β) (α * β) (n + 1) -
+-        (α * β) * symmTraceRec (α + β) (α * β) n from rfl,
+-      ih _ le_rfl, ih _ (Nat.le_succ _), e1SymmPower_recurrence]
++  induction' n using Nat.strongRecOn with n ih;
++  rcases n with ( _ | _ | n ) <;> simp_all +decide;
++  · rfl;
++  · rfl;
++  · rw [ show symmTraceRec ( α + β ) ( α * β ) ( n + 2 ) = ( α + β ) * symmTraceRec ( α + β ) ( α * β ) ( n + 1 ) - ( α * β ) * symmTraceRec ( α + β ) ( α * β ) n from rfl, ih _ le_rfl, ih _ ( Nat.le_succ _ ), e1SymmPower_recurrence ]
+ 
+ /-! ## Power sum identity -/
+ 
++/-
++The power sum recurrence gives α^n + β^n when evaluated at t=α+β, d=αβ.
++-/
+ theorem powerSumTwo_eq {R : Type*} [CommRing R] (n : ℕ) (α β : R) :
+     powerSumTwo (α + β) (α * β) n = α ^ n + β ^ n := by
+-  induction' n using Nat.strongRecOn with n ih
+-  rcases n with ( _ | _ | n ) <;> simp_all +decide [powerSumTwo]
+-  · norm_num
++  induction' n using Nat.strongRecOn with n ih;
++  rcases n with ( _ | _ | n ) <;> simp_all +decide [ powerSumTwo ];
++  · norm_num;
+ 
