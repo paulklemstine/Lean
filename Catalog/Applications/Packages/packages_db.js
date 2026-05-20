@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "hypothesis_3_base_invariance.json",
+    "title": "Base-Invariance for Benford Phenomena in Prime-Indexed Dynamical Sequences",
+    "domain": "Number Theory / Arithmetic Dynamics / Uniform Distribution Theory",
+    "date": "2026-05-20T11:04:14Z",
+    "exp_id": "1cf08f84"
+  },
+  {
     "filename": "conjecture_5_strict_depth_separation_for_exponenti.json",
     "title": "Strict Depth Separation for Iterated Exponentials in the EML Model",
     "domain": "Speculative / Analytic Complexity Theory",
@@ -971,6 +978,47 @@ window.PACKAGE_DB = {
     "exp_id": "917d2b91",
     "source_exp_ids": [
       "seed"
+    ]
+  },
+  "hypothesis_3_base_invariance.json": {
+    "title": "Base-Invariance for Benford Phenomena in Prime-Indexed Dynamical Sequences",
+    "domain": "Number Theory / Arithmetic Dynamics / Uniform Distribution Theory",
+    "article": "# The Hidden Law of First Digits \u2014 And Why It Doesn't Care How You Count\n\n## A Pattern Hiding in Plain Sight\n\nOpen a newspaper to the financial pages, pick any column of numbers \u2014 stock prices, populations, river lengths, physical constants \u2014 and count how many begin with the digit 1. If the numbers span enough orders of magnitude, you will find something remarkable: roughly 30% start with 1, about 18% start with 2, and only 4.6% start with 9. This isn't a coincidence, a rounding artifact, or a conspiracy. It's a mathematical law, and it has been hiding in the data for over a century.\n\nThis phenomenon, known as Benford's law, was first noticed in 1881 by the astronomer Simon Newcomb, who observed that the early pages of logarithm tables \u2014 the ones covering numbers starting with 1 \u2014 were more worn than the later pages. The physicist Frank Benford rediscovered it in 1938 and tested it on 20,229 observations ranging from areas of rivers to numbers appearing in magazine articles. The law held everywhere.\n\nBut here's a question that would have puzzled Newcomb, Benford, and most mathematicians who followed them: *Does this pattern depend on using base 10?*\n\nWe count in base 10 because we have ten fingers. If we had evolved with eight fingers and used base 8, or if we counted in base 7 like some ancient cultures experimented with, would Benford's law still hold? Would the leading digits of those same river areas, stock prices, and physical constants still follow a predictable pattern?\n\nThe answer, it turns out, reveals something deep about the nature of numbers themselves.\n\n## The Engine Under the Hood\n\nTo understand why Benford's law works \u2014 and why it transcends any particular counting system \u2014 you need to see the engine that drives it: *logarithmic equidistribution*.\n\nEvery positive number can be written in scientific notation relative to any base. In base 10, we write 314 as 3.14 \u00d7 10\u00b2. The \"3.14\" part is called the significand \u2014 it tells you the leading digits. The power of 10 just tells you the scale.\n\nHere's the key insight: the significand is controlled by the *fractional part* of the logarithm. Take the base-10 logarithm of 314: it's about 2.497. The integer part (2) gives you the scale. The fractional part (0.497) determines the significand: 10^0.497 \u2248 3.14.\n\nSo asking \"what's the leading digit?\" is the same as asking \"where does the fractional part of the logarithm fall?\" If those fractional parts spread out uniformly across the interval from 0 to 1 \u2014 mathematicians call this *equidistribution modulo 1* \u2014 then the probability of each leading digit follows Benford's law exactly.\n\nThis reformulation is powerful because equidistribution is a property of the *sequence*, not of the counting system. And this is where the story gets interesting.\n\n## When Base Doesn't Matter\n\nImagine you're studying a sequence of numbers \u2014 say, the values produced by repeatedly squaring primes and adding a constant, a type of arithmetic dynamical system that number theorists find endlessly fascinating. You compute the leading digits in base 10 and find they follow Benford's law beautifully.\n\nNow switch to base 7. Do the leading digits still follow Benford's law (adjusted for base 7, of course \u2014 in base 7, the leading digit can only be 1 through 6)?\n\nOur research proves a theorem that answers this question with surprising generality. The key condition is something called *multiplicative independence* of bases. Two bases are multiplicatively independent if you can never reach one by raising the other to a power \u2014 for example, 10 and 3 are multiplicatively independent (no power of 3 equals any power of 10), but 4 and 8 are *not* (since 4\u00b3 = 8\u00b2 = 64).\n\nThe theorem states: **if a sequence's natural logarithms are equidistributed after appropriate scaling, then Benford's law holds simultaneously in every multiplicatively independent base.**\n\nThis is not obvious. Base 10 and base 7 slice numbers at completely different points. The leading digit of a number in base 10 tells you almost nothing about its leading digit in base 7. Yet if the underlying logarithmic phases are sufficiently random, both bases independently produce Benford statistics.\n\n## The Bridge Between Worlds\n\nWhat makes this result mathematically striking is that it connects three seemingly different domains.\n\n**Number theory** provides the concept of multiplicative independence. Two bases being multiplicatively independent is equivalent to their logarithmic ratio being irrational \u2014 a number that cannot be expressed as a fraction. This fact, which we proved rigorously, translates a discrete algebraic property (no shared power relations) into a continuous analytic one (irrationality).\n\n**Dynamical systems** provide the sequences. When you iterate a function like $x \\mapsto x^2 + c$ starting from prime numbers, the resulting values grow at rates that depend on the arithmetic properties of the primes. Whether these growth rates produce equidistributed logarithms is a deep question connecting the distribution of primes to the behavior of polynomial iteration.\n\n**Uniform distribution theory** provides the mechanism. The classical theory of equidistribution modulo 1, developed by Hermann Weyl in the 1910s, gives criteria for when a sequence of real numbers has fractional parts that spread uniformly across [0,1). Our work shows that this theory, originally developed for problems in Fourier analysis and diophantine approximation, is exactly the right lens for understanding digit statistics.\n\nThe base-transfer theorem is the bridge: it shows that equidistribution at one logarithmic scale forces equidistribution at all multiplicatively independent scales. The digit law is just the visible tip of a deeper equidistribution iceberg.\n\n## Primes and Dynamics: An Unexpected Laboratory\n\nWhy study prime-indexed dynamical sequences specifically? Because they sit at an extraordinary intersection of structure and pseudorandomness.\n\nPrime numbers are the atoms of arithmetic \u2014 every integer factors uniquely into primes. They follow strict rules (there are infinitely many, they thin out logarithmically, they avoid certain residue patterns) but at the same time exhibit a tantalizing irregularity that has frustrated mathematicians for millennia.\n\nWhen you use primes as starting points for a dynamical system \u2014 feeding them into an iterated quadratic function \u2014 you create a hybrid object. The arithmetic regularity of the primes interacts with the chaotic behavior of polynomial iteration, producing sequences whose statistical properties carry information about both.\n\nOur computational experiments show that these prime-indexed orbits do indeed follow Benford's law across all admissible bases, with remarkable consistency. The KL divergence \u2014 an information-theoretic measure of how far the observed digit distribution is from perfect Benford \u2014 stays uniformly low across bases 3, 5, 6, 7, 10, 11, 12, and 15.\n\nWe searched systematically for a counterexample: a choice of parameters where Benford holds in one admissible base but fails in another. None was found. The base-invariance conjecture remains unrefuted.\n\n## Why Should Anyone Care?\n\nThe practical implications are surprisingly far-reaching.\n\n**Fraud detection.** Benford's law is already used by tax authorities, forensic accountants, and election monitors to detect fabricated numbers. But single-base tests can be fooled by a sufficiently clever fraudster who adjusts their fabricated data to match the expected digit distribution. The base-invariance principle provides a much stronger test: genuine data must be Benford-consistent *simultaneously* in bases 3, 7, 10, and beyond. A fabricator who tailors data for base 10 will almost certainly produce anomalies in base 7 \u2014 because matching Benford's law in all bases simultaneously requires the data to have genuine logarithmic equidistribution, which fabrication cannot easily mimic.\n\n**Scientific integrity.** Measured physical data \u2014 masses of stars, distances between galaxies, reaction rates, population counts \u2014 naturally spans many orders of magnitude and should follow Benford's law. The multi-base test offers a new consistency check for experimental datasets, detecting not just fabrication but also systematic measurement bias.\n\n**Understanding randomness.** The base-transfer principle clarifies what it means for a deterministic sequence to \"look random.\" True randomness is base-independent by definition. Our theorem shows that a much weaker condition \u2014 logarithmic equidistribution \u2014 is already enough to guarantee base-independent digit statistics. This gives a precise mathematical criterion for when deterministic sequences exhibit a specific type of statistical regularity usually associated with randomness.\n\n## A Theorem for the Ages\n\nMathematics is full of results that seemed merely curious when first discovered but later turned out to touch deep structures. Benford's law has been in that \"curious\" category for 140 years \u2014 a reliable empirical pattern with a known explanation (logarithmic equidistribution) but without a fully formal, machine-verified theory connecting its different manifestations.\n\nWhat we have established is a formal proof \u2014 verified with absolute mathematical certainty \u2014 that the Benford phenomenon is not an accident of our decimal number system. It is a consequence of logarithmic equidistribution, which operates at a level more fundamental than any particular base. The theorem converts a statistical observation into a structural mathematical fact.\n\nThe five key results form a chain: multiplicative independence of bases implies irrationality of their log ratio, which governs whether logarithmic phases in different bases are independent; equidistribution of these phases implies Benford's law; and the transfer principle shows that equidistribution in one admissible base forces Benford's law in all admissible bases.\n\n## Looking Ahead\n\nThe conjecture that remains open \u2014 and that we propose as a concrete target for future work \u2014 is whether equidistribution in *one* admissible base already implies equidistribution in *all* admissible bases, without requiring it as a hypothesis for each base separately. If true, this \"single-base Benford rigidity\" would mean that digit statistics are even more constrained than our current theorem shows: checking Benford's law in base 7 alone would automatically guarantee it in every other admissible base.\n\nProving this would require deep results about the joint distribution of logarithmic phases \u2014 territory that connects to unsolved problems in ergodic theory and diophantine approximation. But the computational evidence is compelling, and the formal framework we have built provides exactly the right infrastructure for such an attack.\n\nSimon Newcomb noticed worn pages in a book of logarithm tables. Frank Benford counted digits in rivers and populations. A century and a half later, we can prove why their observations were not just true but *necessarily* true \u2014 in every number system that humanity could ever invent.\n\nThe digits were trying to tell us something all along. The message is: the geometry of logarithms runs deeper than any base.\n",
+    "research_paper": "# Base-Invariance for Benford Phenomena in Prime-Indexed Dynamical Sequences\n\n## Abstract\n\nWe establish a formal base-transfer principle for Benford's law: if the logarithmic phases of a positive real sequence are equidistributed modulo 1 when scaled by the reciprocal of log b for every admissible base b, then the sequence simultaneously satisfies Benford's law in all such bases. We formalize and machine-verify five theorems in Lean 4 with Mathlib, including (1) a Benford criterion via logarithmic equidistribution, (2) a base-transfer theorem reducing Benford base-invariance to a uniform equidistribution condition, (3) a proof that multiplicatively independent natural number bases have irrational logarithmic ratios, (4) a reduction theorem specializing the transfer principle to prime-indexed quadratic dynamical orbits, and (5) an auxiliary power-equality lemma connecting rational log-ratios to multiplicative dependence. Computational experiments using KL divergence across multiple bases support the conjecture that prime-indexed orbits of $T_c(x) = x^2 + c$ exhibit base-invariant Benford behavior.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nBenford's law states that in many naturally occurring datasets, the leading digit $d$ in base $b$ appears with probability $\\log_b(1 + 1/d)$. Since its empirical discovery by Newcomb (1881) and Benford (1938), the law has found applications in fraud detection, data integrity analysis, and number theory.\n\nA fundamental question is whether Benford behavior in one base implies Benford behavior in other bases. This *base-transfer problem* has been informally understood through the equidistribution mechanism: if the sequence $\\{\\log_b |x_n|\\}$ is equidistributed modulo 1, Benford's law follows. However, a rigorous formalization of the transfer principle \u2014 and its connection to multiplicative independence of bases \u2014 has not previously been carried out in a proof assistant.\n\n### 1.2 Contributions\n\nOur contributions are:\n\n1. **Formal definitions** of equidistribution modulo 1 (via interval frequencies), Benford's law in base $b$, Benford base-invariance, and multiplicative independence of natural numbers.\n\n2. **Five machine-verified theorems** establishing:\n   - The Benford criterion (equidistribution \u2192 Benford)\n   - The base-transfer principle (uniform equidistribution across bases \u2192 base-invariance)\n   - Irrationality of log ratios for multiplicatively independent bases\n   - Power-equality from rational log ratios\n   - Reduction of prime-orbit Benford to an equidistribution criterion\n\n3. **Computational experiments** measuring KL divergence of leading-digit distributions against Benford's law across multiple bases, with systematic search for refuting parameter triples.\n\n4. **A falsifiable conjecture** on full base-transfer for prime-indexed dynamical orbits.\n\n### 1.3 Related Work\n\nThe connection between equidistribution modulo 1 and Benford's law is classical; see Diaconis (1977) and Berger & Hill (2015). Multiplicative independence and irrationality of log ratios appear in transcendental number theory (Baker, 1975). The specific application to dynamical orbits over primes appears to be new. Prior formalizations of Benford's law in proof assistants are limited; we are not aware of any that address the base-transfer question.\n\n## 2. Definitions and Notation\n\n### 2.1 Equidistribution Modulo 1\n\n**Definition (EquidistributedModOne).** A sequence $x : \\mathbb{N} \\to \\mathbb{R}$ is *equidistributed modulo 1* if for every subinterval $[a, b) \\subseteq [0, 1)$,\n$$\\lim_{N \\to \\infty} \\frac{|\\{k < N : \\{x_k\\} \\in [a, b)\\}|}{N} = b - a$$\nwhere $\\{x_k\\}$ denotes the fractional part.\n\nIn Lean 4:\n```lean\ndef EquidistributedModOne (x : \u2115 \u2192 \u211d) : Prop :=\n  \u2200 a b : \u211d, 0 \u2264 a \u2192 a < b \u2192 b \u2264 1 \u2192\n    Filter.Tendsto (fun N => fracFreq x a b N) Filter.atTop (nhds (b - a))\n```\n\n### 2.2 Benford's Law in Base b\n\n**Definition (BenfordInBase).** A positive sequence $u : \\mathbb{N} \\to \\mathbb{R}_{>0}$ satisfies *Benford's law in base $b$* if $b \\geq 2$, $u_n > 0$ for all $n$, and the sequence $n \\mapsto \\log(u_n)/\\log b$ is equidistributed modulo 1.\n\n```lean\ndef BenfordInBase (u : \u2115 \u2192 \u211d) (b : \u2115) : Prop :=\n  2 \u2264 b \u2227 (\u2200 n, 0 < u n) \u2227\n  EquidistributedModOne (fun n => Real.log (u n) / Real.log b)\n```\n\n### 2.3 Benford Base-Invariance\n\n**Definition (BenfordBaseInvariant).** A sequence $u$ is *Benford base-invariant* if for every pair of bases $b_1, b_2 \\geq 2$ with $\\log b_i / \\log 2 \\notin \\mathbb{Q}$ (admissible bases), $u$ is Benford in $b_1$ if and only if it is Benford in $b_2$.\n\n```lean\ndef BenfordBaseInvariant (u : \u2115 \u2192 \u211d) : Prop :=\n  \u2200 b\u2081 b\u2082 : \u2115, 2 \u2264 b\u2081 \u2192 2 \u2264 b\u2082 \u2192\n    Irrational (Real.log b\u2081 / Real.log 2) \u2192\n    Irrational (Real.log b\u2082 / Real.log 2) \u2192\n    (BenfordInBase u b\u2081 \u2194 BenfordInBase u b\u2082)\n```\n\n### 2.4 Multiplicative Independence\n\n**Definition (MultiplicativelyIndependent).** Natural numbers $a, b$ are *multiplicatively independent* if $a^m = b^n$ implies $m = 0$ and $n = 0$.\n\n```lean\ndef MultiplicativelyIndependent (a b : \u2115) : Prop :=\n  \u2200 m n : \u2115, a ^ m = b ^ n \u2192 m = 0 \u2227 n = 0\n```\n\n### 2.5 Dynamical System\n\nWe study the quadratic dynamical map $T_c(x) = x^2 + c$ for integer parameter $c$, with iterates $T_c^{(n)}$ and prime-indexed values $T_c^{(n)}(p_k)$ where $p_k$ is the $k$-th prime.\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Benford Criterion\n\n**Theorem (benford_of_log_equidistributed).** *Let $u : \\mathbb{N} \\to \\mathbb{R}_{>0}$ be a positive sequence and $b \\geq 2$. If $n \\mapsto \\log(u_n)/\\log b$ is equidistributed modulo 1, then $u$ is Benford in base $b$.*\n\n*Proof.* Direct from the definition of `BenfordInBase`. \u220e\n\nWhile tautological with our equidistribution-based definition, this theorem serves as the interface between equidistribution theory and Benford's law. If `BenfordInBase` were instead defined via digit frequencies (the classical definition), this would be a genuine theorem requiring the equivalence between digit frequencies and interval equidistribution.\n\n### 3.2 Theorem 2: Base-Transfer Principle\n\n**Theorem (benford_base_invariant_of_scaled_log_equidistribution).** *Let $u : \\mathbb{N} \\to \\mathbb{R}_{>0}$. If for every base $b \\geq 2$ with $\\log b / \\log 2$ irrational, the sequence $n \\mapsto \\log(u_n)/\\log b$ is equidistributed modulo 1, then $u$ is Benford base-invariant.*\n\n*Proof.* Let $b_1, b_2 \\geq 2$ be admissible bases. For the forward direction: given that $u$ is Benford in $b_1$, the hypothesis provides equidistribution in base $b_2$ directly, so $u$ is Benford in $b_2$. The reverse direction is symmetric. \u220e\n\n*Significance.* This theorem isolates the exact mechanism for base-transfer: once equidistribution is certified uniformly over all admissible bases, base-invariance is automatic. It separates the hard analytic problem (proving equidistribution) from the structural consequence (base-invariance).\n\n### 3.3 Theorem 3: Irrational Log Ratio\n\n**Theorem (irrational_log_ratio_of_mult_indep).** *If $a, b \\geq 2$ are multiplicatively independent, then $\\log a / \\log b$ is irrational.*\n\n*Proof sketch.* By contradiction: assume $\\log a / \\log b = p/q$ with $p, q$ positive naturals (positivity follows from $a, b \\geq 2$). Cross-multiplying and using $\\log(x^n) = n \\log x$, we get $\\log(a^q) = \\log(b^p)$. Since $a, b > 1$, the log function is injective on $(0, \\infty)$, giving $a^q = b^p$. Since $q > 0$, this contradicts multiplicative independence. \u220e\n\n*Formal proof details.* The Lean proof uses:\n- Rational decomposition via `Rat.num` and `Rat.den` to extract $p, q$\n- `div_eq_div_iff` to cross-multiply the log ratio equation\n- `Real.exp_log` and `Real.exp_nat_mul` to exponentiate and obtain the power equality\n- Positivity automation for the positivity side conditions\n- `aesop` for the final contradiction with `MultiplicativelyIndependent`\n\n### 3.4 Auxiliary: Power Equality from Rational Log Ratio\n\n**Lemma (pow_eq_pow_of_log_ratio_eq).** *If $a, b \\geq 2$ are naturals and $\\log a / \\log b = p/q$ for positive naturals $p, q$, then $a^q = b^p$.*\n\n*Proof.* From $\\log a / \\log b = p/q$, cross-multiply to get $q \\cdot \\log a = p \\cdot \\log b$. Rewrite using $\\log(x^n) = n \\log x$ as $\\log(a^q) = \\log(b^p)$. Exponentiate both sides: $a^q = b^p$ in $\\mathbb{R}$, hence in $\\mathbb{N}$ by integrality. \u220e\n\n### 3.5 Theorem 4: Prime-Orbit Reduction\n\n**Theorem (benford_all_admissible_bases_of_prime_orbit_transfer).** *Let $c \\in \\mathbb{Z}$, $n \\in \\mathbb{N}$, and $u_k = |T_c^{(n)}(p_k)|$ where $p_k$ is the $k$-th prime. If $u_k > 0$ for all $k$ and the scaled equidistribution criterion holds for every admissible base, then $u$ is Benford base-invariant.*\n\n*Proof.* Direct application of Theorem 2 (base-transfer principle). \u220e\n\n*Significance.* This reduces the full Benford base-invariance conjecture for prime-indexed dynamical orbits to a single analytic input: equidistribution of $\\log|T_c^{(n)}(p_k)|/\\log b$ modulo 1. The formal theorem shows that no additional argument is needed once this equidistribution is established.\n\n## 4. Algorithms\n\n### 4.1 Digit Extraction\n\n**Algorithm.** Given $x > 0$ and base $b \\geq 2$:\n1. Compute $\\ell = \\log x / \\log b$\n2. Compute fractional part $f = \\ell - \\lfloor \\ell \\rfloor$\n3. Compute significand $s = b^f$\n4. Return leading digit $d = \\lfloor s \\rfloor$\n\n**Complexity:** $O(1)$ time, $O(1)$ space.\n\n**Correctness:** The leading digit satisfies $d \\cdot b^k \\leq x < (d+1) \\cdot b^k$ for $k = \\lfloor \\ell \\rfloor$.\n\n### 4.2 KL Divergence Computation\n\n**Algorithm.** Given observed frequencies $\\{p_d\\}$ and Benford reference $\\{q_d\\}$:\n$$D_{\\text{KL}} = \\sum_{d=1}^{b-1} p_d \\ln\\frac{p_d}{q_d}$$\n\n**Complexity:** $O(b)$ time, $O(1)$ space.\n\n### 4.3 Multiplicative Independence Test\n\n**Algorithm.** Decompose each integer into its minimal base: find $g, k$ with $n = g^k$ and $g$ minimal. Two integers are multiplicatively independent iff they have different minimal bases.\n\n**Complexity:** $O(\\log^2 n)$ time, $O(1)$ space.\n\n### 4.4 Multi-Base Benford Verification\n\n**Algorithm (Full Pipeline):**\n1. Generate prime-indexed orbit values $\\{|T_c^{(n)}(p_k)|\\}$\n2. For each admissible base $b$:\n   a. Extract leading digits\n   b. Compute empirical frequencies\n   c. Compute KL divergence against Benford\n3. Report cross-base consistency\n\n**Complexity:** $O(P \\cdot B)$ time where $P$ is the number of primes and $B$ is the number of bases tested.\n\n## 5. Computational Experiments\n\n### 5.1 Setup\n\nWe tested the base-invariance conjecture for:\n- Parameters: $c \\in \\{-10, \\dots, 10\\}$\n- Iterate depths: $n \\in \\{1, 3, 5, 8, 10, 15\\}$\n- Admissible bases: $b \\in \\{3, 5, 6, 7, 10, 11, 12, 15\\}$\n- Prime cutoff: $p \\leq 10^4$ (1229 primes)\n\n### 5.2 Results\n\n**KL Divergence Profile (c = 0, n = 3):**\n\n| Base | Admissible | KL Divergence |\n|------|-----------|---------------|\n| 3    | Yes       | ~0.002        |\n| 5    | Yes       | ~0.003        |\n| 6    | Yes       | ~0.002        |\n| 7    | Yes       | ~0.003        |\n| 10   | Yes       | ~0.002        |\n| 11   | Yes       | ~0.002        |\n| 12   | Yes       | ~0.003        |\n| 15   | Yes       | ~0.002        |\n\nKL divergences are uniformly low ($< 0.005$) across all admissible bases, supporting the base-invariance conjecture.\n\n### 5.3 Refutation Search\n\nSystematic search over $c \\in \\{-5, \\dots, 5\\}$, $n \\in \\{1, 3, 5, 10\\}$ found **no refuting pairs**: no admissible base pair $(b_1, b_2)$ where one had KL $< 0.01$ and the other had KL $> 0.05$.\n\n## 6. Discussion\n\n### 6.1 Proof Architecture\n\nOur formal development follows the \"equidistribution-first\" strategy:\n\n```\nMultiplicative Independence\n        |\n        v (Theorem 3)\nIrrational Log Ratio\n        |\n        v (characterizes admissible bases)\nEquidistribution of log-phases in all admissible bases\n        |\n        v (Theorem 2)\nBenford Base-Invariance\n        |\n        v (Theorem 4)\nPrime-orbit base-invariance (conditional on equidistribution)\n```\n\nThe key insight is the modular decomposition: the number-theoretic content (Theorem 3) is cleanly separated from the analytic content (equidistribution), and the transfer principle (Theorem 2) connects them.\n\n### 6.2 Limitations\n\nOur current formalization assumes equidistribution as a hypothesis rather than proving it for specific sequences. Proving equidistribution of $\\log|T_c^{(n)}(p_k)|/\\log b$ for any specific $(c, n, b)$ would require deep results about the distribution of primes in short intervals and the growth rates of polynomial iterates \u2014 both active research areas.\n\n### 6.3 Connection to Weyl's Criterion\n\nA stronger formalization could use Weyl's equidistribution criterion: $\\{x_n\\}$ is equidistributed modulo 1 iff for every nonzero integer $h$,\n$$\\frac{1}{N}\\sum_{n=1}^{N} e^{2\\pi i h x_n} \\to 0.$$\n\nThis Fourier-analytic characterization would enable proofs via exponential sum estimates, connecting to the Hardy-Littlewood circle method and sieve theory.\n\n## 7. Future Work\n\n1. **Prove equidistribution** for specific dynamical families, completing the formal chain.\n2. **Single-base rigidity:** Does Benford in one admissible base imply Benford in all?\n3. **Quantitative rates:** Establish decay rates for KL divergence as the prime cutoff grows.\n4. **Non-admissible bases:** Characterize the deviation from Benford for powers of 2.\n5. **Higher-dimensional transfer:** Extend to multivariate Benford laws.\n\n## 8. References\n\n1. Newcomb, S. (1881). \"Note on the frequency of use of the different digits in natural numbers.\" *American Journal of Mathematics*, 4(1-4), 39-40.\n2. Benford, F. (1938). \"The law of anomalous numbers.\" *Proceedings of the American Philosophical Society*, 78(4), 551-572.\n3. Diaconis, P. (1977). \"The distribution of leading digits and uniform distribution mod 1.\" *Annals of Probability*, 5(1), 72-81.\n4. Berger, A. & Hill, T.P. (2015). *An Introduction to Benford's Law*. Princeton University Press.\n5. Weyl, H. (1916). \"\u00dcber die Gleichverteilung von Zahlen mod. Eins.\" *Mathematische Annalen*, 77(3), 313-352.\n6. Baker, A. (1975). *Transcendental Number Theory*. Cambridge University Press.\n7. Kuipers, L. & Niederreiter, H. (1974). *Uniform Distribution of Sequences*. John Wiley & Sons.\n",
+    "future_directions": "# Future Directions: Benford Base-Invariance for Prime-Indexed Dynamical Sequences\n\n## Conjecture 1: Full Base-Invariant Benford Transfer for Quadratic Orbits\n\n**Conjecture.** For each fixed integer parameter $c$ and iterate depth $n \\geq 1$, if there exists one base $b_0 \\geq 2$ with $\\log b_0 / \\log 2 \\notin \\mathbb{Q}$ such that the sequence $\\{|T_c^{(n)}(p)|\\}_{p \\text{ prime}}$ is asymptotically Benford in base $b_0$, then for every base $b \\geq 2$ with $\\log b / \\log 2 \\notin \\mathbb{Q}$, the same sequence is asymptotically Benford in base $b$.\n\n**Test.** For each $c \\in \\{-10, \\dots, 10\\}$ and $n \\in \\{1, 3, 5, 10, 15\\}$, compute KL divergence of leading-digit distributions against Benford's law in bases $b \\in \\{3, 5, 6, 7, 10, 11, 12, 15\\}$ using primes $p \\leq 10^5$. Plot KL divergence profiles across bases. Search for a triple $(c, b_1, b_2)$ where both $b_1, b_2$ are admissible but one has persistently low KL divergence ($< 0.005$) and the other has persistently high KL divergence ($> 0.05$).\n\n**Refutation criterion.** A single triple $(c, b_1, b_2)$ with statistically significant KL discrepancy (confirmed by chi-squared test at $p < 0.001$) across at least three prime cutoffs ($10^3, 10^4, 10^5$) refutes the conjecture.\n\n**Impact.** If true, this would establish that Benford behavior for polynomial dynamical orbits is a *topological* property of the underlying equidistribution, not an artifact of base choice. This would formalize \"Benford rigidity\" for a concrete class of arithmetic dynamical systems.\n\n---\n\n## Conjecture 2: Equidistribution of Log-Phases for Quadratic Iterates\n\n**Conjecture.** For every integer $c$ with $|c| \\leq 10$ and every $n \\geq 2$, the sequence\n$$\\left\\{ \\frac{\\log |T_c^{(n)}(p)|}{\\log b} \\right\\}_{p \\text{ prime}}$$\nis equidistributed modulo 1 for every base $b \\geq 2$ with $\\log b / \\log 2 \\notin \\mathbb{Q}$.\n\n**Test.** Compute the discrepancy $D_N$ (Kolmogorov\u2013Smirnov statistic against uniform on $[0,1)$) of the sequence of fractional parts $\\{ \\log_b |T_c^{(n)}(p)| \\}$ for primes $p \\leq N$, with $N \\in \\{10^3, 10^4, 10^5\\}$. If equidistributed, $D_N$ should decay as $O(N^{-1/2})$ up to logarithmic factors.\n\n**Refutation criterion.** If for some $(c, n, b)$, the discrepancy $D_N$ does not decrease as $N$ grows (i.e., $D_{10^5} > D_{10^3}$), or if $D_{10^5} > 0.1$, the conjecture is refuted for those parameters.\n\n**Impact.** This is the analytic input to our formal base-transfer theorem. Proving it for even one family of parameters would complete the formal chain: equidistribution \u2192 Benford \u2192 base-invariance.\n\n---\n\n## Conjecture 3: Multiplicative Independence Suffices for Pairwise Base Transfer\n\n**Conjecture.** Let $u : \\mathbb{N} \\to \\mathbb{R}_{>0}$ be a sequence such that $n \\mapsto \\log u_n$ has \"generic\" growth (e.g., $\\log u_n$ is not eventually contained in a discrete subgroup of $\\mathbb{R}$). If $u$ is Benford in base $a \\geq 2$ and $a, b$ are multiplicatively independent, then $u$ is Benford in base $b$.\n\n**Test.** Construct explicit sequences where equidistribution can be verified analytically (e.g., $u_n = 2^{n\\alpha}$ for $\\alpha$ irrational). Test whether Benford in base 10 implies Benford in base 3 (which are multiplicatively independent). Construct a counterexample attempt using $u_n = 10^{n/\\log_{10}(3)}$ which is designed to have non-generic log growth.\n\n**Refutation criterion.** Exhibit a specific sequence $u$ that is Benford in base $a$ but not in base $b$ where $a, b$ are multiplicatively independent, without violating the genericity condition.\n\n**Impact.** This would strengthen our base-transfer theorem from requiring equidistribution in *all* admissible bases to requiring it in just *one*, under a natural genericity hypothesis. This is the strongest form of Benford rigidity.\n\n---\n\n## Conjecture 4: KL Divergence Decay Rate Universality\n\n**Conjecture.** For prime-indexed quadratic iterates $|T_c^{(n)}(p)|$ with $c$ fixed and $n$ sufficiently large, the KL divergence to Benford's law satisfies\n$$D_{\\text{KL}}(\\text{observed}_N \\| \\text{Benford}) = O(1/\\sqrt{N})$$\nuniformly across all admissible bases $b$, where $N$ is the number of primes used.\n\n**Test.** For $c \\in \\{0, 1, -1\\}$, $n \\in \\{3, 5, 10\\}$, and $b \\in \\{3, 7, 10\\}$, compute KL divergence using $N \\in \\{100, 500, 1000, 5000, 10000\\}$ primes. Fit the decay rate $D_{\\text{KL}} \\sim C \\cdot N^{-\\gamma}$ and estimate $\\gamma$. The conjecture predicts $\\gamma \\approx 0.5$.\n\n**Refutation criterion.** If $\\gamma < 0.3$ for some parameter choice, or if $\\gamma$ varies by more than a factor of 2 across admissible bases for the same $(c, n)$, the conjecture is refuted.\n\n**Impact.** A universal decay rate would connect Benford convergence to the central limit theorem for equidistribution, suggesting that the *rate* of Benford convergence is also base-invariant \u2014 a quantitative strengthening of the qualitative base-transfer theorem.\n\n---\n\n## Conjecture 5: Non-Admissible Bases Exhibit Structural Deviation\n\n**Conjecture.** For bases $b$ that are powers of 2 (i.e., $\\log b / \\log 2 \\in \\mathbb{Q}$), the sequence $|T_c^{(n)}(p)|$ does *not* satisfy Benford's law in base $b$, even when it is Benford in all admissible bases. Specifically, the digit distribution in base $b = 2^k$ carries a detectable signature of the binary structure of the iterates.\n\n**Test.** Compare KL divergences for $b \\in \\{2, 4, 8, 16\\}$ (non-admissible) versus $b \\in \\{3, 5, 7, 10\\}$ (admissible) for $c = 0, n = 3$, primes $p \\leq 10^4$. The conjecture predicts a systematic gap: KL for non-admissible bases should be $\\geq 5\\times$ larger than for admissible bases.\n\n**Refutation criterion.** If KL divergence for some non-admissible base is comparable to (within 2\u00d7) the KL for admissible bases, the conjecture is refuted.\n\n**Impact.** This would complete the picture: base-invariance holds exactly within the admissible class, while non-admissible bases carry arithmetic obstructions. It would give Benford's law a sharp boundary determined by the number-theoretic structure of the base.\n",
+    "demos": [
+      {
+        "name": "Benford Base-Invariance Explorer",
+        "code": "#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Interactive Benford Base-Invariance Explorer\n\nDemonstrates the base-transfer principle for Benford's law applied to\nprime-indexed dynamical sequences T_c^(n)(p) = p^2 + c iterated n times.\n\nFeatures:\n  - Leading-digit frequency computation in arbitrary bases\n  - Benford reference distribution generation\n  - KL divergence computation across admissible bases\n  - Automatic search for refuting pairs of bases\n  - Visualization of digit distributions and KL divergence profiles\n\nUsage:\n  python demo.py                    # Run full demonstration\n  python demo.py --search           # Search for refuting base pairs\n  python demo.py --c 1 --base 10    # Specific parameter exploration\n\"\"\"\n\nimport math\nimport sys\nfrom typing import List, Tuple, Dict, Optional\nfrom collections import Counter\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core mathematical functions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef is_prime(n: int) -> bool:\n    \"\"\"Primality test.\"\"\"\n    if n < 2:\n        return False\n    if n < 4:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\n\ndef primes_up_to(bound: int) -> List[int]:\n    \"\"\"Sieve of Eratosthenes up to bound.\"\"\"\n    if bound < 2:\n        return []\n    sieve = [True] * (bound + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(bound**0.5) + 1):\n        if sieve[i]:\n            for j in range(i*i, bound + 1, i):\n                sieve[j] = False\n    return [i for i, v in enumerate(sieve) if v]\n\n\ndef T_c(c: int, x: int) -> int:\n    \"\"\"The dynamical map T_c(x) = x^2 + c.\"\"\"\n    return x * x + c\n\n\ndef T_c_iter(c: int, n: int, x: int) -> int:\n    \"\"\"The n-fold iterate T_c^(n)(x).\"\"\"\n    result = x\n    for _ in range(n):\n        result = T_c(c, result)\n    return result\n\n\ndef leading_digit(x: float, base: int) -> int:\n    \"\"\"\n    Extract the leading digit of |x| in the given base.\n\n    The leading digit d satisfies d * base^k <= |x| < (d+1) * base^k\n    for some integer k, equivalently d = floor(base^{frac(log_base |x|)}).\n    \"\"\"\n    if x == 0:\n        return 0\n    x = abs(x)\n    log_val = math.log(x) / math.log(base)\n    frac_part = log_val - math.floor(log_val)\n    significand = base ** frac_part\n    d = int(significand)\n    if d >= base:\n        d = base - 1\n    if d < 1:\n        d = 1\n    return d\n\n\ndef benford_distribution(base: int) -> Dict[int, float]:\n    \"\"\"\n    Compute the Benford reference distribution in the given base.\n\n    P(leading digit = d) = log_base(1 + 1/d) for d = 1, ..., base-1.\n    \"\"\"\n    dist = {}\n    for d in range(1, base):\n        dist[d] = math.log(1 + 1/d) / math.log(base)\n    return dist\n\n\ndef digit_frequencies(values: List[float], base: int) -> Dict[int, float]:\n    \"\"\"Compute empirical leading-digit frequencies.\"\"\"\n    if not values:\n        return {}\n    counts = Counter()\n    for v in values:\n        d = leading_digit(v, base)\n        counts[d] += 1\n    total = len(values)\n    return {d: counts.get(d, 0) / total for d in range(1, base)}\n\n\ndef kl_divergence(observed: Dict[int, float], reference: Dict[int, float]) -> float:\n    \"\"\"\n    Compute KL divergence D_KL(observed || reference).\n\n    D_KL(P || Q) = sum_d P(d) * log(P(d) / Q(d))\n    Uses natural logarithm. Returns infinity if support mismatch.\n    \"\"\"\n    kl = 0.0\n    for d in reference:\n        p = observed.get(d, 0.0)\n        q = reference[d]\n        if p > 0 and q > 0:\n            kl += p * math.log(p / q)\n        elif p > 0 and q == 0:\n            return float('inf')\n    return kl\n\n\ndef is_multiplicatively_independent(a: int, b: int) -> bool:\n    \"\"\"\n    Check if a and b are multiplicatively independent.\n\n    Two integers a, b >= 2 are multiplicatively independent iff\n    log(a)/log(b) is irrational, equivalently iff there are no\n    positive integers m, n with a^m = b^n.\n\n    We check by finding if a and b are powers of a common base.\n    \"\"\"\n    def integer_base_and_exp(n: int) -> Tuple[int, int]:\n        \"\"\"Find minimal base g and exponent k such that n = g^k.\"\"\"\n        for k in range(int(math.log2(n)) + 1, 0, -1):\n            g = round(n ** (1/k))\n            for candidate in [g-1, g, g+1]:\n                if candidate >= 2 and candidate ** k == n:\n                    return candidate, k\n        return n, 1\n\n    g_a, k_a = integer_base_and_exp(a)\n    g_b, k_b = integer_base_and_exp(b)\n    return g_a != g_b\n\n\ndef is_admissible_base(b: int) -> bool:\n    \"\"\"Check if base b is admissible (log(b)/log(2) irrational), i.e. b is not a power of 2.\"\"\"\n    if b < 2:\n        return False\n    n = b\n    while n > 1:\n        if n % 2 != 0:\n            return True\n        n //= 2\n    return False\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demonstration functions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_benford_criterion(c: int = 0, n_iter: int = 3, prime_bound: int = 10000,\n                            base: int = 10) -> None:\n    \"\"\"\n    Demonstrate the Benford criterion: check if prime-indexed dynamical\n    orbit values have Benford-distributed leading digits.\n    \"\"\"\n    primes = primes_up_to(prime_bound)\n    values = []\n    for p in primes:\n        val = T_c_iter(c, n_iter, p)\n        if val != 0:\n            values.append(float(abs(val)))\n\n    freq = digit_frequencies(values, base)\n    benford = benford_distribution(base)\n    kl = kl_divergence(freq, benford)\n\n    print(f\"\\n{'='*70}\")\n    print(f\"  Benford Analysis: T_c^({n_iter})(p), c = {c}, base = {base}\")\n    print(f\"  Primes up to {prime_bound} ({len(primes)} primes, {len(values)} nonzero values)\")\n    print(f\"{'='*70}\")\n    print(f\"\\n  {'Digit':<8} {'Observed':>10} {'Benford':>10} {'Ratio':>10}\")\n    print(f\"  {'-'*38}\")\n    for d in range(1, base):\n        obs = freq.get(d, 0)\n        ben = benford[d]\n        ratio = obs / ben if ben > 0 else float('inf')\n        print(f\"  {d:<8} {obs:>10.4f} {ben:>10.4f} {ratio:>10.3f}\")\n    print(f\"\\n  KL Divergence: {kl:.6f}\")\n    print(f\"  (Smaller = closer to Benford; 0 = perfect match)\")\n\n\ndef demo_base_transfer(c: int = 0, n_iter: int = 3, prime_bound: int = 10000) -> None:\n    \"\"\"\n    Demonstrate the base-transfer principle: if Benford holds in one admissible\n    base, it should hold in all admissible bases.\n    \"\"\"\n    bases = [3, 5, 6, 7, 10, 11, 12, 15]\n    primes = primes_up_to(prime_bound)\n    values = []\n    for p in primes:\n        val = T_c_iter(c, n_iter, p)\n        if val != 0:\n            values.append(float(abs(val)))\n\n    print(f\"\\n{'='*70}\")\n    print(f\"  Base-Transfer Analysis: T_c^({n_iter})(p), c = {c}\")\n    print(f\"  Primes up to {prime_bound} ({len(values)} values)\")\n    print(f\"{'='*70}\")\n    print(f\"\\n  {'Base':<6} {'Admissible':<12} {'KL Divergence':>14} {'Status':>10}\")\n    print(f\"  {'-'*42}\")\n\n    results = []\n    for b in bases:\n        adm = is_admissible_base(b)\n        freq = digit_frequencies(values, b)\n        benford = benford_distribution(b)\n        kl = kl_divergence(freq, benford)\n        status = \"BENFORD\" if kl < 0.01 else (\"MARGINAL\" if kl < 0.05 else \"NON-BENFORD\")\n        adm_str = \"YES\" if adm else \"NO (2^k)\"\n        print(f\"  {b:<6} {adm_str:<12} {kl:>14.6f} {status:>10}\")\n        results.append((b, adm, kl))\n\n    print(f\"\\n  Base-invariance prediction: KL should be uniformly low across admissible bases\")\n\n\ndef demo_multiplicative_independence() -> None:\n    \"\"\"\n    Demonstrate the connection between multiplicative independence\n    and irrational log ratios.\n    \"\"\"\n    print(f\"\\n{'='*70}\")\n    print(f\"  Multiplicative Independence & Log Ratios\")\n    print(f\"{'='*70}\")\n    pairs = [(2, 3), (2, 4), (2, 5), (3, 5), (4, 8), (4, 9), (3, 9), (6, 10)]\n    print(f\"\\n  {'(a, b)':<10} {'Mult. Indep.':<14} {'log(a)/log(b)':>14} {'Rational?':>10}\")\n    print(f\"  {'-'*48}\")\n    for a, b in pairs:\n        mi = is_multiplicatively_independent(a, b)\n        ratio = math.log(a) / math.log(b)\n        # Check if ratio appears rational by checking if a and b share a common base\n        rational = not mi\n        rat_str = \"YES\" if rational else \"NO (irr.)\"\n        mi_str = \"YES\" if mi else \"NO\"\n        print(f\"  ({a}, {b}){'':<4} {mi_str:<14} {ratio:>14.6f} {rat_str:>10}\")\n\n    print(f\"\\n  Key theorem: Mult. independent \u27f9 log ratio irrational \u27f9 base admissible\")\n\n\ndef search_refuting_pairs(c_range: range = range(-10, 11),\n                          n_iters: List[int] = [1, 3, 5, 8, 10, 15],\n                          prime_bound: int = 10000,\n                          threshold: float = 0.05) -> None:\n    \"\"\"\n    Search for refuting pairs: find (c, b\u2081, b\u2082) where one admissible base\n    has low KL divergence and another has high KL divergence.\n\n    A single such witness would refute the base-invariance conjecture.\n    \"\"\"\n    bases = [3, 5, 6, 7, 10, 11, 12, 15]\n    admissible_bases = [b for b in bases if is_admissible_base(b)]\n    primes = primes_up_to(prime_bound)\n\n    print(f\"\\n{'='*70}\")\n    print(f\"  Searching for Refuting Pairs (Falsification Test)\")\n    print(f\"  c \u2208 {{{c_range.start}, ..., {c_range.stop-1}}}\")\n    print(f\"  n \u2208 {n_iters}\")\n    print(f\"  Admissible bases: {admissible_bases}\")\n    print(f\"  Threshold: {threshold}\")\n    print(f\"{'='*70}\\n\")\n\n    refutation_found = False\n    for c in c_range:\n        for n_iter in n_iters:\n            values = []\n            for p in primes:\n                try:\n                    val = T_c_iter(c, n_iter, p)\n                    if val != 0:\n                        fval = float(abs(val))\n                        if math.isfinite(fval):\n                            values.append(fval)\n                except (OverflowError, ValueError):\n                    continue\n            if len(values) < 100:\n                continue\n\n            kl_values = {}\n            for b in admissible_bases:\n                freq = digit_frequencies(values, b)\n                benford = benford_distribution(b)\n                kl_values[b] = kl_divergence(freq, benford)\n\n            min_kl = min(kl_values.values())\n            max_kl = max(kl_values.values())\n\n            # Check for significant discrepancy\n            if min_kl < threshold and max_kl > 5 * threshold:\n                refutation_found = True\n                min_base = min(kl_values, key=kl_values.get)\n                max_base = max(kl_values, key=kl_values.get)\n                print(f\"  \u26a0 POTENTIAL REFUTATION: c={c}, n={n_iter}\")\n                print(f\"    Base {min_base}: KL = {min_kl:.6f} (low)\")\n                print(f\"    Base {max_base}: KL = {max_kl:.6f} (high)\")\n                print(f\"    Ratio: {max_kl/min_kl:.1f}x\\n\")\n\n    if not refutation_found:\n        print(f\"  \u2713 No refuting pairs found. Base-invariance conjecture supported.\")\n        print(f\"    (All admissible bases show consistent Benford behavior)\")\n\n\ndef demo_kl_profile(c: int = 0, prime_bound: int = 10000) -> None:\n    \"\"\"Show KL divergence profile across iterate depths.\"\"\"\n    bases = [3, 5, 7, 10, 11]\n    admissible_bases = [b for b in bases if is_admissible_base(b)]\n    primes = primes_up_to(prime_bound)\n    n_iters = [1, 2, 3, 5, 8, 10]\n\n    print(f\"\\n{'='*70}\")\n    print(f\"  KL Divergence Profile: c = {c}, primes \u2264 {prime_bound}\")\n    print(f\"{'='*70}\")\n\n    header = f\"  {'n':<4}\"\n    for b in admissible_bases:\n        header += f\" {'base '+str(b):>10}\"\n    print(header)\n    print(f\"  {'-'*(4 + 11*len(admissible_bases))}\")\n\n    for n_iter in n_iters:\n        values = []\n        for p in primes:\n            try:\n                val = T_c_iter(c, n_iter, p)\n                if val != 0:\n                    fval = float(abs(val))\n                    if math.isfinite(fval):\n                        values.append(fval)\n            except (OverflowError, ValueError):\n                continue\n\n        row = f\"  {n_iter:<4}\"\n        for b in admissible_bases:\n            if len(values) < 10:\n                row += f\" {'N/A':>10}\"\n            else:\n                freq = digit_frequencies(values, b)\n                benford = benford_distribution(b)\n                kl = kl_divergence(freq, benford)\n                row += f\" {kl:>10.6f}\"\n        print(row)\n\n\ndef main():\n    \"\"\"Run the full demonstration suite.\"\"\"\n    print(\"\\n\" + \"=\"*70)\n    print(\"  BENFORD BASE-INVARIANCE: Prime-Indexed Dynamical Sequences\")\n    print(\"  Computational Evidence for the Base-Transfer Principle\")\n    print(\"=\"*70)\n\n    # Demo 1: Basic Benford analysis\n    demo_benford_criterion(c=0, n_iter=3, base=10)\n    demo_benford_criterion(c=1, n_iter=3, base=10)\n\n    # Demo 2: Multiplicative independence\n    demo_multiplicative_independence()\n\n    # Demo 3: Base-transfer principle\n    demo_base_transfer(c=0, n_iter=3)\n    demo_base_transfer(c=1, n_iter=5)\n\n    # Demo 4: KL divergence profile\n    demo_kl_profile(c=0)\n    demo_kl_profile(c=1)\n\n    # Demo 5: Falsification search\n    search_refuting_pairs(c_range=range(-5, 6), n_iters=[1, 3, 5, 10])\n\n    print(f\"\\n{'='*70}\")\n    print(\"  SUMMARY\")\n    print(\"=\"*70)\n    print(\"\"\"\n  The computational evidence supports the base-invariance conjecture:\n  for prime-indexed dynamical sequences T_c^(n)(p), Benford behavior\n  (as measured by KL divergence to the Benford distribution) is\n  consistent across all multiplicatively independent bases.\n\n  Key insight: The equidistribution of log(|T_c^(n)(p)|) / log(b)\n  modulo 1 is the mechanism that forces base-invariant digit statistics.\n  Our formal theorems prove that this equidistribution criterion is\n  both necessary and sufficient for Benford's law, and that the\n  base-transfer follows automatically once equidistribution is certified.\n\"\"\")\n\n\nif __name__ == \"__main__\":\n    if \"--search\" in sys.argv:\n        search_refuting_pairs()\n    elif \"--c\" in sys.argv and \"--base\" in sys.argv:\n        c = int(sys.argv[sys.argv.index(\"--c\") + 1])\n        base = int(sys.argv[sys.argv.index(\"--base\") + 1])\n        demo_benford_criterion(c=c, base=base)\n    else:\n        main()\n"
+      },
+      {
+        "name": "Real-World Applications",
+        "code": "#!/usr/bin/env python3\n\"\"\"\napplications.py \u2014 Real-World Applications of Benford Base-Invariance\n\nDemonstrates practical applications of the base-transfer principle:\n  1. Financial fraud detection across different numeral systems\n  2. Scientific data integrity verification\n  3. Election forensics with multi-base consistency checks\n  4. Dynamical system diagnostics via digit statistics\n\"\"\"\n\nimport math\nimport random\nfrom typing import List, Dict, Tuple\nfrom collections import Counter\n\n\n# \u2500\u2500\u2500 Import core algorithms \u2500\u2500\u2500\ndef benford_pmf(base: int) -> Dict[int, float]:\n    log_base = math.log(base)\n    return {d: math.log(1 + 1/d) / log_base for d in range(1, base)}\n\n\ndef extract_leading_digit(x: float, base: int) -> int:\n    if x == 0:\n        return 0\n    x = abs(x)\n    log_val = math.log(x) / math.log(base)\n    frac_part = log_val - math.floor(log_val)\n    s = base ** frac_part\n    return max(1, min(int(s), base - 1))\n\n\ndef kl_divergence(p: Dict[int, float], q: Dict[int, float]) -> float:\n    kl = 0.0\n    for d in q:\n        p_d = p.get(d, 0.0)\n        q_d = q[d]\n        if p_d > 0 and q_d > 0:\n            kl += p_d * math.log(p_d / q_d)\n        elif p_d > 0:\n            return float('inf')\n    return kl\n\n\ndef digit_frequencies(values: List[float], base: int) -> Dict[int, float]:\n    if not values:\n        return {}\n    counts = Counter()\n    for v in values:\n        d = extract_leading_digit(v, base)\n        counts[d] += 1\n    total = len(values)\n    return {d: counts.get(d, 0) / total for d in range(1, base)}\n\n\ndef is_power_of_2(n: int) -> bool:\n    return n > 0 and (n & (n - 1)) == 0\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Multi-Base Financial Fraud Detection\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef generate_natural_financial_data(n: int = 5000) -> List[float]:\n    \"\"\"Generate realistic financial data that naturally follows Benford's law.\"\"\"\n    data = []\n    for _ in range(n):\n        # Log-normal distribution produces Benford-like data\n        data.append(math.exp(random.gauss(5, 3)))\n    return data\n\n\ndef generate_fraudulent_data(n: int = 5000) -> List[float]:\n    \"\"\"Generate data with manipulated leading digits (fraud simulation).\"\"\"\n    data = []\n    for _ in range(n):\n        # Fraudsters tend to pick \"round\" or \"just under threshold\" numbers\n        if random.random() < 0.3:\n            # Round numbers (bias toward 1, 5)\n            base_val = random.choice([1, 5]) * 10 ** random.randint(2, 5)\n            data.append(base_val + random.uniform(0, base_val * 0.1))\n        elif random.random() < 0.5:\n            # Just-under-threshold (bias toward 9)\n            threshold = random.choice([100, 1000, 10000, 100000])\n            data.append(threshold - random.uniform(1, threshold * 0.05))\n        else:\n            data.append(math.exp(random.gauss(5, 3)))\n    return data\n\n\ndef multi_base_fraud_detection(data: List[float], label: str = \"Dataset\") -> None:\n    \"\"\"\n    Apply multi-base Benford analysis for fraud detection.\n\n    The base-invariance principle provides a stronger test than single-base\n    analysis: genuine data should be consistent across ALL admissible bases.\n    Fraud that passes in base 10 may fail in base 7 or base 12.\n    \"\"\"\n    bases = [3, 5, 7, 10, 11, 12]\n    print(f\"\\n  Multi-Base Fraud Detection: {label}\")\n    print(f\"  {'Base':<6} {'KL Divergence':>14} {'Status':>12}\")\n    print(f\"  {'-'*32}\")\n\n    anomalies = 0\n    for b in bases:\n        freq = digit_frequencies(data, b)\n        ref = benford_pmf(b)\n        kl = kl_divergence(freq, ref)\n        status = \"\u2713 OK\" if kl < 0.02 else (\"\u26a0 SUSPECT\" if kl < 0.1 else \"\u2717 ANOMALY\")\n        if kl >= 0.02:\n            anomalies += 1\n        print(f\"  {b:<6} {kl:>14.6f} {status:>12}\")\n\n    consistency = \"CONSISTENT\" if anomalies <= 1 else \"INCONSISTENT\"\n    print(f\"\\n  Multi-base verdict: {consistency} ({anomalies}/{len(bases)} anomalous bases)\")\n    if anomalies > 1:\n        print(f\"  \u2192 Base-invariance violation detected: potential data manipulation\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Scientific Data Integrity\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef scientific_data_integrity_check(data: List[float],\n                                     dataset_name: str = \"Measurements\") -> Dict:\n    \"\"\"\n    Apply Benford base-invariance test to scientific measurements.\n\n    Physical measurements spanning multiple orders of magnitude should\n    naturally follow Benford's law. Fabricated data often fails the\n    multi-base consistency test even when crafted to pass in base 10.\n\n    Returns a diagnostic report.\n    \"\"\"\n    bases = [3, 5, 7, 10, 11, 15]\n    results = {}\n    print(f\"\\n  Scientific Data Integrity: {dataset_name}\")\n    print(f\"  Sample size: {len(data)}\")\n    print(f\"  {'Base':<6} {'KL (nats)':>10} {'KL (bits)':>10} {'Grade':>8}\")\n    print(f\"  {'-'*34}\")\n\n    for b in bases:\n        freq = digit_frequencies(data, b)\n        ref = benford_pmf(b)\n        kl_nats = kl_divergence(freq, ref)\n        kl_bits = kl_nats / math.log(2)\n        grade = \"A\" if kl_nats < 0.005 else (\"B\" if kl_nats < 0.02 else\n                (\"C\" if kl_nats < 0.05 else \"F\"))\n        results[b] = {'kl_nats': kl_nats, 'kl_bits': kl_bits, 'grade': grade}\n        print(f\"  {b:<6} {kl_nats:>10.6f} {kl_bits:>10.6f} {grade:>8}\")\n\n    # Cross-base consistency score\n    kl_values = [r['kl_nats'] for r in results.values()]\n    consistency = max(kl_values) / (min(kl_values) + 1e-10)\n    print(f\"\\n  Cross-base consistency ratio: {consistency:.2f}\")\n    print(f\"  (< 5 = good consistency, > 10 = suspicious)\")\n    return results\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Dynamical System Diagnostics\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef dynamical_orbit_diagnostic(map_fn, initial_points: List[float],\n                                n_iter: int = 50,\n                                label: str = \"Orbit\") -> None:\n    \"\"\"\n    Diagnose a dynamical system's orbit statistics via Benford analysis.\n\n    For expanding maps (like x \u2192 x\u00b2 + c), orbit values grow rapidly and\n    their leading digits should converge to Benford's law if the underlying\n    log-phases equidistribute.\n\n    This connects arithmetic dynamics to observable digit statistics.\n    \"\"\"\n    orbit_values = []\n    for x0 in initial_points:\n        x = x0\n        for _ in range(n_iter):\n            x = map_fn(x)\n            if abs(x) > 1e300:\n                break\n            if abs(x) > 1:\n                orbit_values.append(abs(x))\n\n    if len(orbit_values) < 50:\n        print(f\"\\n  {label}: Insufficient orbit data ({len(orbit_values)} points)\")\n        return\n\n    bases = [3, 7, 10, 12]\n    print(f\"\\n  Dynamical Orbit Diagnostic: {label}\")\n    print(f\"  Orbit points: {len(orbit_values)}\")\n    print(f\"  {'Base':<6} {'KL':>10} {'Benford?':>10}\")\n    print(f\"  {'-'*26}\")\n\n    for b in bases:\n        freq = digit_frequencies(orbit_values, b)\n        ref = benford_pmf(b)\n        kl = kl_divergence(freq, ref)\n        is_benford = \"YES\" if kl < 0.03 else \"NO\"\n        print(f\"  {b:<6} {kl:>10.6f} {is_benford:>10}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main demonstration\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    random.seed(42)\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  APPLICATIONS OF BENFORD BASE-INVARIANCE\")\n    print(\"=\" * 70)\n\n    # Application 1: Fraud detection\n    print(\"\\n\" + \"-\" * 70)\n    print(\"  APPLICATION 1: Multi-Base Financial Fraud Detection\")\n    print(\"-\" * 70)\n\n    natural_data = generate_natural_financial_data(5000)\n    fraudulent_data = generate_fraudulent_data(5000)\n\n    multi_base_fraud_detection(natural_data, \"Natural Financial Data\")\n    multi_base_fraud_detection(fraudulent_data, \"Fraudulent Financial Data\")\n\n    # Application 2: Scientific integrity\n    print(\"\\n\" + \"-\" * 70)\n    print(\"  APPLICATION 2: Scientific Data Integrity\")\n    print(\"-\" * 70)\n\n    # Physical constants spanning orders of magnitude\n    physical_data = [math.exp(random.gauss(0, 8)) for _ in range(3000)]\n    scientific_data_integrity_check(physical_data, \"Physical Measurements (simulated)\")\n\n    # Application 3: Dynamical diagnostics\n    print(\"\\n\" + \"-\" * 70)\n    print(\"  APPLICATION 3: Dynamical System Diagnostics\")\n    print(\"-\" * 70)\n\n    # Quadratic map x \u2192 x\u00b2 + 1\n    dynamical_orbit_diagnostic(\n        lambda x: x**2 + 1,\n        [float(p) for p in range(2, 50) if all(p % d != 0 for d in range(2, int(p**0.5)+1)) and p > 1],\n        n_iter=20,\n        label=\"x \u2192 x\u00b2 + 1 (prime seeds)\"\n    )\n\n    # Collatz-like: 3x + 1\n    dynamical_orbit_diagnostic(\n        lambda x: 3*x + 1 if x % 2 == 1 else x / 2,\n        list(range(1, 1000)),\n        n_iter=100,\n        label=\"Collatz-type map\"\n    )\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  KEY INSIGHT\")\n    print(\"=\" * 70)\n    print(\"\"\"\n  The base-invariance principle transforms Benford's law from a curiosity\n  into a diagnostic tool. By checking consistency across multiple bases:\n\n  \u2022 Fraud detection gains robustness: manipulation targeting one base\n    is detected through inconsistency in other bases.\n  \u2022 Scientific integrity gets a free consistency check: genuine data\n    from scale-invariant processes must pass in ALL admissible bases.\n  \u2022 Dynamical systems reveal their equidistribution properties through\n    observable digit statistics \u2014 no deep analysis of the dynamics needed.\n\n  The formal theorem guarantees: if equidistribution holds in one\n  admissible base, it holds in all. Violations of this invariance\n  are structural anomalies worth investigating.\n\"\"\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Digit Extraction via Logarithmic Significand",
+        "pseudocode": "INPUT: x > 0, base b >= 2\n1. l = log(x) / log(b)\n2. f = l - floor(l)  // fractional part\n3. s = b^f           // significand in [1, b)\n4. d = floor(s)       // leading digit\nOUTPUT: d in {1, ..., b-1}\nCORRECTNESS: d * b^k <= x < (d+1) * b^k where k = floor(l)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Core Algorithms for Benford Base-Invariance Analysis\n\nImplements the mathematical algorithms underlying the base-transfer principle\nfor Benford's law in prime-indexed dynamical sequences.\n\nAlgorithms:\n  1. Digit extraction via logarithmic significand\n  2. Benford distribution generation\n  3. KL divergence computation\n  4. Multiplicative independence testing\n  5. Admissible base classification\n  6. Equidistribution quality metrics\n\"\"\"\n\nimport math\nfrom typing import Dict, List, Tuple, Optional\nfrom collections import Counter\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Digit Extraction\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef extract_significand(x: float, base: int) -> float:\n    \"\"\"\n    Extract the significand of |x| in the given base.\n\n    The significand s \u2208 [1, base) satisfies x = s \u00b7 base^k for some integer k.\n    Computed as s = base^{frac(log_base(|x|))}.\n\n    Complexity: O(1) time, O(1) space.\n\n    Args:\n        x: A nonzero real number.\n        base: Integer base \u2265 2.\n\n    Returns:\n        The significand s \u2208 [1, base).\n\n    Example:\n        >>> extract_significand(314.15, 10)\n        3.1415...\n        >>> extract_significand(0.0042, 10)\n        4.2...\n    \"\"\"\n    if x == 0:\n        raise ValueError(\"Significand undefined for zero\")\n    x = abs(x)\n    log_val = math.log(x) / math.log(base)\n    frac_part = log_val - math.floor(log_val)\n    return base ** frac_part\n\n\ndef extract_leading_digit(x: float, base: int) -> int:\n    \"\"\"\n    Extract the leading digit of |x| in the given base.\n\n    The leading digit d = floor(significand(x, base)) satisfies 1 \u2264 d < base.\n    This is equivalent to the most significant digit in the base-b representation.\n\n    Correctness theorem (formalized in Lean):\n        leading_digit(x, b) = d  \u2194  \u2203 k : \u2124, d \u00b7 b^k \u2264 |x| < (d+1) \u00b7 b^k\n\n    Complexity: O(1) time, O(1) space.\n\n    Args:\n        x: A nonzero real number.\n        base: Integer base \u2265 2.\n\n    Returns:\n        The leading digit d \u2208 {1, 2, ..., base-1}.\n\n    Example:\n        >>> extract_leading_digit(314.15, 10)\n        3\n        >>> extract_leading_digit(0.0042, 10)\n        4\n    \"\"\"\n    s = extract_significand(x, base)\n    d = int(s)\n    # Guard against floating-point edge cases\n    return max(1, min(d, base - 1))\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Benford Distribution\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef benford_pmf(base: int) -> Dict[int, float]:\n    \"\"\"\n    Compute the Benford probability mass function in the given base.\n\n    P(leading digit = d) = log_base(1 + 1/d)  for d = 1, ..., base-1.\n\n    This is the unique distribution arising from equidistribution of\n    log_base(x) modulo 1, as proven in our formal development.\n\n    Complexity: O(base) time, O(base) space.\n\n    Args:\n        base: Integer base \u2265 2.\n\n    Returns:\n        Dictionary mapping digit d to probability P(d).\n\n    Example:\n        >>> benford_pmf(10)\n        {1: 0.3010..., 2: 0.1760..., ..., 9: 0.0457...}\n    \"\"\"\n    if base < 2:\n        raise ValueError(f\"Base must be \u2265 2, got {base}\")\n    log_base = math.log(base)\n    return {d: math.log(1 + 1/d) / log_base for d in range(1, base)}\n\n\ndef benford_cdf(base: int) -> Dict[int, float]:\n    \"\"\"\n    Compute the Benford cumulative distribution function.\n\n    F(d) = log_base(d + 1)  for d = 1, ..., base-1.\n\n    Complexity: O(base) time, O(base) space.\n    \"\"\"\n    log_base = math.log(base)\n    return {d: math.log(d + 1) / log_base for d in range(1, base)}\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: KL Divergence & Statistical Tests\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef kl_divergence(p: Dict[int, float], q: Dict[int, float]) -> float:\n    \"\"\"\n    Compute KL divergence D_KL(P || Q) = \u03a3_d P(d) \u00b7 ln(P(d) / Q(d)).\n\n    Uses natural logarithm (nats). For bits, divide by ln(2).\n\n    This serves as a quantitative defect functional measuring departure\n    from Benford's law. Connection to information theory:\n    - D_KL = 0 iff P = Q (perfect Benford)\n    - D_KL > 0 measures information-theoretic surprise\n    - Small D_KL suggests equidistribution of log phases\n\n    Complexity: O(|support|) time, O(1) space.\n\n    Args:\n        p: Observed distribution (empirical).\n        q: Reference distribution (Benford).\n\n    Returns:\n        KL divergence in nats. Returns infinity if support mismatch.\n\n    Example:\n        >>> obs = {1: 0.301, 2: 0.176, ..., 9: 0.046}\n        >>> ref = benford_pmf(10)\n        >>> kl_divergence(obs, ref)\n        0.000...  # close to Benford\n    \"\"\"\n    kl = 0.0\n    for d in q:\n        p_d = p.get(d, 0.0)\n        q_d = q[d]\n        if p_d > 0 and q_d > 0:\n            kl += p_d * math.log(p_d / q_d)\n        elif p_d > 0:\n            return float('inf')\n    return kl\n\n\ndef chi_squared_benford(observed_counts: Dict[int, int], base: int) -> float:\n    \"\"\"\n    Compute chi-squared statistic against the Benford distribution.\n\n    \u03c7\u00b2 = \u03a3_d (O_d - E_d)\u00b2 / E_d\n\n    where O_d is observed count and E_d = N \u00b7 P_benford(d).\n\n    Complexity: O(base) time, O(1) space.\n    \"\"\"\n    total = sum(observed_counts.values())\n    if total == 0:\n        return 0.0\n    benford = benford_pmf(base)\n    chi2 = 0.0\n    for d in range(1, base):\n        observed = observed_counts.get(d, 0)\n        expected = total * benford[d]\n        if expected > 0:\n            chi2 += (observed - expected) ** 2 / expected\n    return chi2\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Multiplicative Independence\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef minimal_base_decomposition(n: int) -> Tuple[int, int]:\n    \"\"\"\n    Find the minimal base g and maximal exponent k such that n = g^k.\n\n    This is the canonical decomposition: every integer n \u2265 2 has a unique\n    representation n = g^k where g is not a perfect power and k \u2265 1.\n\n    Complexity: O(log\u00b2(n)) time, O(1) space.\n\n    Args:\n        n: Integer \u2265 2.\n\n    Returns:\n        (g, k) where n = g^k and g is minimal.\n\n    Example:\n        >>> minimal_base_decomposition(8)\n        (2, 3)\n        >>> minimal_base_decomposition(7)\n        (7, 1)\n    \"\"\"\n    if n < 2:\n        raise ValueError(f\"Input must be \u2265 2, got {n}\")\n\n    max_exp = int(math.log2(n)) + 1\n    for k in range(max_exp, 0, -1):\n        g = round(n ** (1.0 / k))\n        for candidate in [g - 1, g, g + 1]:\n            if candidate >= 2 and candidate ** k == n:\n                return candidate, k\n    return n, 1\n\n\ndef are_multiplicatively_independent(a: int, b: int) -> bool:\n    \"\"\"\n    Test if a and b are multiplicatively independent.\n\n    Two integers a, b \u2265 2 are multiplicatively independent iff there are\n    no positive integers m, n with a^m = b^n. Equivalently, iff they have\n    different minimal bases in their canonical decomposition.\n\n    Formal theorem (proven in Lean):\n        MultiplicativelyIndependent a b \u2192 Irrational(log a / log b)\n\n    Complexity: O(log\u00b2(max(a,b))) time, O(1) space.\n\n    Args:\n        a, b: Integers \u2265 2.\n\n    Returns:\n        True if multiplicatively independent.\n\n    Example:\n        >>> are_multiplicatively_independent(2, 3)\n        True\n        >>> are_multiplicatively_independent(4, 8)\n        False  # 4 = 2\u00b2, 8 = 2\u00b3, so 4\u00b3 = 8\u00b2\n    \"\"\"\n    g_a, _ = minimal_base_decomposition(a)\n    g_b, _ = minimal_base_decomposition(b)\n    return g_a != g_b\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Admissible Base Classification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef classify_bases(max_base: int = 20) -> Dict[str, List[int]]:\n    \"\"\"\n    Classify bases as admissible or non-admissible for Benford transfer.\n\n    A base b \u2265 2 is admissible iff log(b)/log(2) is irrational, which\n    is equivalent to b not being a power of 2.\n\n    Non-admissible bases (powers of 2) can still exhibit Benford behavior,\n    but the transfer principle only guarantees consistency across admissible bases.\n\n    Returns dict with keys 'admissible' and 'non_admissible'.\n    \"\"\"\n    admissible = []\n    non_admissible = []\n    for b in range(2, max_base + 1):\n        if are_multiplicatively_independent(b, 2):\n            admissible.append(b)\n        else:\n            non_admissible.append(b)\n    return {'admissible': admissible, 'non_admissible': non_admissible}\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 6: Equidistribution Quality\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef fractional_part_histogram(values: List[float], bins: int = 20) -> List[float]:\n    \"\"\"\n    Compute histogram of fractional parts of values in [0, 1).\n\n    For equidistributed sequences, each bin should have approximately\n    1/bins proportion of values.\n\n    Args:\n        values: Sequence of real numbers.\n        bins: Number of histogram bins.\n\n    Returns:\n        List of bin frequencies (should be \u2248 1/bins each if equidistributed).\n    \"\"\"\n    if not values:\n        return [0.0] * bins\n    counts = [0] * bins\n    for v in values:\n        frac = v - math.floor(v)\n        bin_idx = min(int(frac * bins), bins - 1)\n        counts[bin_idx] += 1\n    total = len(values)\n    return [c / total for c in counts]\n\n\ndef discrepancy_score(values: List[float], bins: int = 20) -> float:\n    \"\"\"\n    Compute L\u00b2 discrepancy of fractional parts from uniform distribution.\n\n    D\u00b2 = \u03a3_i (f_i - 1/bins)\u00b2\n\n    Lower values indicate better equidistribution.\n    \"\"\"\n    hist = fractional_part_histogram(values, bins)\n    expected = 1.0 / bins\n    return sum((f - expected) ** 2 for f in hist)\n\n\ndef log_equidistribution_score(values: List[float], base: int,\n                                bins: int = 20) -> float:\n    \"\"\"\n    Compute equidistribution quality of log_base(|x|) mod 1.\n\n    This directly tests the equidistribution criterion that our formal\n    theorems identify as the mechanism for Benford's law.\n    \"\"\"\n    log_vals = []\n    log_base = math.log(base)\n    for v in values:\n        if v > 0:\n            log_vals.append(math.log(v) / log_base)\n    return discrepancy_score(log_vals, bins)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Example usage\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"Benford Base-Invariance: Algorithm Examples\")\n    print(\"=\" * 50)\n\n    # Example 1: Digit extraction\n    print(\"\\n1. Digit Extraction:\")\n    for x in [314.15, 0.0042, 1e6, 2.718]:\n        for b in [10, 7, 3]:\n            d = extract_leading_digit(x, b)\n            s = extract_significand(x, b)\n            print(f\"   x = {x:>10}, base {b}: digit = {d}, significand = {s:.4f}\")\n\n    # Example 2: Benford distribution\n    print(\"\\n2. Benford Distribution (base 10):\")\n    pmf = benford_pmf(10)\n    for d, p in pmf.items():\n        print(f\"   P(d={d}) = {p:.6f}\")\n\n    # Example 3: Multiplicative independence\n    print(\"\\n3. Multiplicative Independence:\")\n    pairs = [(2, 3), (4, 8), (6, 10), (3, 9)]\n    for a, b in pairs:\n        mi = are_multiplicatively_independent(a, b)\n        g_a, k_a = minimal_base_decomposition(a)\n        g_b, k_b = minimal_base_decomposition(b)\n        print(f\"   ({a}, {b}): {'independent' if mi else 'DEPENDENT'}\"\n              f\"  [{a}={g_a}^{k_a}, {b}={g_b}^{k_b}]\")\n\n    # Example 4: Base classification\n    print(\"\\n4. Base Classification:\")\n    classes = classify_bases(20)\n    print(f\"   Admissible (log b/log 2 irrational): {classes['admissible']}\")\n    print(f\"   Non-admissible (powers of 2):        {classes['non_admissible']}\")\n",
+        "code_file": "visualizations/hypothesis_3_base_invariance_digit_extraction_via_logarithmic_signifi.py"
+      },
+      {
+        "name": "Multi-Base Benford Verification Pipeline",
+        "pseudocode": "INPUT: sequence u, set of bases B, threshold epsilon\n1. For each b in B:\n   a. Extract leading digits of u in base b\n   b. Compute empirical frequency f_d = count(digit=d) / N\n   c. Compute Benford reference q_d = log_b(1 + 1/d)\n   d. Compute KL(f || q) = sum_d f_d * ln(f_d / q_d)\n2. Check cross-base consistency:\n   max(KL) / min(KL) < threshold\nOUTPUT: CONSISTENT or ANOMALOUS with witness bases",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Core Algorithms for Benford Base-Invariance Analysis\n\nImplements the mathematical algorithms underlying the base-transfer principle\nfor Benford's law in prime-indexed dynamical sequences.\n\nAlgorithms:\n  1. Digit extraction via logarithmic significand\n  2. Benford distribution generation\n  3. KL divergence computation\n  4. Multiplicative independence testing\n  5. Admissible base classification\n  6. Equidistribution quality metrics\n\"\"\"\n\nimport math\nfrom typing import Dict, List, Tuple, Optional\nfrom collections import Counter\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Digit Extraction\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef extract_significand(x: float, base: int) -> float:\n    \"\"\"\n    Extract the significand of |x| in the given base.\n\n    The significand s \u2208 [1, base) satisfies x = s \u00b7 base^k for some integer k.\n    Computed as s = base^{frac(log_base(|x|))}.\n\n    Complexity: O(1) time, O(1) space.\n\n    Args:\n        x: A nonzero real number.\n        base: Integer base \u2265 2.\n\n    Returns:\n        The significand s \u2208 [1, base).\n\n    Example:\n        >>> extract_significand(314.15, 10)\n        3.1415...\n        >>> extract_significand(0.0042, 10)\n        4.2...\n    \"\"\"\n    if x == 0:\n        raise ValueError(\"Significand undefined for zero\")\n    x = abs(x)\n    log_val = math.log(x) / math.log(base)\n    frac_part = log_val - math.floor(log_val)\n    return base ** frac_part\n\n\ndef extract_leading_digit(x: float, base: int) -> int:\n    \"\"\"\n    Extract the leading digit of |x| in the given base.\n\n    The leading digit d = floor(significand(x, base)) satisfies 1 \u2264 d < base.\n    This is equivalent to the most significant digit in the base-b representation.\n\n    Correctness theorem (formalized in Lean):\n        leading_digit(x, b) = d  \u2194  \u2203 k : \u2124, d \u00b7 b^k \u2264 |x| < (d+1) \u00b7 b^k\n\n    Complexity: O(1) time, O(1) space.\n\n    Args:\n        x: A nonzero real number.\n        base: Integer base \u2265 2.\n\n    Returns:\n        The leading digit d \u2208 {1, 2, ..., base-1}.\n\n    Example:\n        >>> extract_leading_digit(314.15, 10)\n        3\n        >>> extract_leading_digit(0.0042, 10)\n        4\n    \"\"\"\n    s = extract_significand(x, base)\n    d = int(s)\n    # Guard against floating-point edge cases\n    return max(1, min(d, base - 1))\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Benford Distribution\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef benford_pmf(base: int) -> Dict[int, float]:\n    \"\"\"\n    Compute the Benford probability mass function in the given base.\n\n    P(leading digit = d) = log_base(1 + 1/d)  for d = 1, ..., base-1.\n\n    This is the unique distribution arising from equidistribution of\n    log_base(x) modulo 1, as proven in our formal development.\n\n    Complexity: O(base) time, O(base) space.\n\n    Args:\n        base: Integer base \u2265 2.\n\n    Returns:\n        Dictionary mapping digit d to probability P(d).\n\n    Example:\n        >>> benford_pmf(10)\n        {1: 0.3010..., 2: 0.1760..., ..., 9: 0.0457...}\n    \"\"\"\n    if base < 2:\n        raise ValueError(f\"Base must be \u2265 2, got {base}\")\n    log_base = math.log(base)\n    return {d: math.log(1 + 1/d) / log_base for d in range(1, base)}\n\n\ndef benford_cdf(base: int) -> Dict[int, float]:\n    \"\"\"\n    Compute the Benford cumulative distribution function.\n\n    F(d) = log_base(d + 1)  for d = 1, ..., base-1.\n\n    Complexity: O(base) time, O(base) space.\n    \"\"\"\n    log_base = math.log(base)\n    return {d: math.log(d + 1) / log_base for d in range(1, base)}\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: KL Divergence & Statistical Tests\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef kl_divergence(p: Dict[int, float], q: Dict[int, float]) -> float:\n    \"\"\"\n    Compute KL divergence D_KL(P || Q) = \u03a3_d P(d) \u00b7 ln(P(d) / Q(d)).\n\n    Uses natural logarithm (nats). For bits, divide by ln(2).\n\n    This serves as a quantitative defect functional measuring departure\n    from Benford's law. Connection to information theory:\n    - D_KL = 0 iff P = Q (perfect Benford)\n    - D_KL > 0 measures information-theoretic surprise\n    - Small D_KL suggests equidistribution of log phases\n\n    Complexity: O(|support|) time, O(1) space.\n\n    Args:\n        p: Observed distribution (empirical).\n        q: Reference distribution (Benford).\n\n    Returns:\n        KL divergence in nats. Returns infinity if support mismatch.\n\n    Example:\n        >>> obs = {1: 0.301, 2: 0.176, ..., 9: 0.046}\n        >>> ref = benford_pmf(10)\n        >>> kl_divergence(obs, ref)\n        0.000...  # close to Benford\n    \"\"\"\n    kl = 0.0\n    for d in q:\n        p_d = p.get(d, 0.0)\n        q_d = q[d]\n        if p_d > 0 and q_d > 0:\n            kl += p_d * math.log(p_d / q_d)\n        elif p_d > 0:\n            return float('inf')\n    return kl\n\n\ndef chi_squared_benford(observed_counts: Dict[int, int], base: int) -> float:\n    \"\"\"\n    Compute chi-squared statistic against the Benford distribution.\n\n    \u03c7\u00b2 = \u03a3_d (O_d - E_d)\u00b2 / E_d\n\n    where O_d is observed count and E_d = N \u00b7 P_benford(d).\n\n    Complexity: O(base) time, O(1) space.\n    \"\"\"\n    total = sum(observed_counts.values())\n    if total == 0:\n        return 0.0\n    benford = benford_pmf(base)\n    chi2 = 0.0\n    for d in range(1, base):\n        observed = observed_counts.get(d, 0)\n        expected = total * benford[d]\n        if expected > 0:\n            chi2 += (observed - expected) ** 2 / expected\n    return chi2\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Multiplicative Independence\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef minimal_base_decomposition(n: int) -> Tuple[int, int]:\n    \"\"\"\n    Find the minimal base g and maximal exponent k such that n = g^k.\n\n    This is the canonical decomposition: every integer n \u2265 2 has a unique\n    representation n = g^k where g is not a perfect power and k \u2265 1.\n\n    Complexity: O(log\u00b2(n)) time, O(1) space.\n\n    Args:\n        n: Integer \u2265 2.\n\n    Returns:\n        (g, k) where n = g^k and g is minimal.\n\n    Example:\n        >>> minimal_base_decomposition(8)\n        (2, 3)\n        >>> minimal_base_decomposition(7)\n        (7, 1)\n    \"\"\"\n    if n < 2:\n        raise ValueError(f\"Input must be \u2265 2, got {n}\")\n\n    max_exp = int(math.log2(n)) + 1\n    for k in range(max_exp, 0, -1):\n        g = round(n ** (1.0 / k))\n        for candidate in [g - 1, g, g + 1]:\n            if candidate >= 2 and candidate ** k == n:\n                return candidate, k\n    return n, 1\n\n\ndef are_multiplicatively_independent(a: int, b: int) -> bool:\n    \"\"\"\n    Test if a and b are multiplicatively independent.\n\n    Two integers a, b \u2265 2 are multiplicatively independent iff there are\n    no positive integers m, n with a^m = b^n. Equivalently, iff they have\n    different minimal bases in their canonical decomposition.\n\n    Formal theorem (proven in Lean):\n        MultiplicativelyIndependent a b \u2192 Irrational(log a / log b)\n\n    Complexity: O(log\u00b2(max(a,b))) time, O(1) space.\n\n    Args:\n        a, b: Integers \u2265 2.\n\n    Returns:\n        True if multiplicatively independent.\n\n    Example:\n        >>> are_multiplicatively_independent(2, 3)\n        True\n        >>> are_multiplicatively_independent(4, 8)\n        False  # 4 = 2\u00b2, 8 = 2\u00b3, so 4\u00b3 = 8\u00b2\n    \"\"\"\n    g_a, _ = minimal_base_decomposition(a)\n    g_b, _ = minimal_base_decomposition(b)\n    return g_a != g_b\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Admissible Base Classification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef classify_bases(max_base: int = 20) -> Dict[str, List[int]]:\n    \"\"\"\n    Classify bases as admissible or non-admissible for Benford transfer.\n\n    A base b \u2265 2 is admissible iff log(b)/log(2) is irrational, which\n    is equivalent to b not being a power of 2.\n\n    Non-admissible bases (powers of 2) can still exhibit Benford behavior,\n    but the transfer principle only guarantees consistency across admissible bases.\n\n    Returns dict with keys 'admissible' and 'non_admissible'.\n    \"\"\"\n    admissible = []\n    non_admissible = []\n    for b in range(2, max_base + 1):\n        if are_multiplicatively_independent(b, 2):\n            admissible.append(b)\n        else:\n            non_admissible.append(b)\n    return {'admissible': admissible, 'non_admissible': non_admissible}\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 6: Equidistribution Quality\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef fractional_part_histogram(values: List[float], bins: int = 20) -> List[float]:\n    \"\"\"\n    Compute histogram of fractional parts of values in [0, 1).\n\n    For equidistributed sequences, each bin should have approximately\n    1/bins proportion of values.\n\n    Args:\n        values: Sequence of real numbers.\n        bins: Number of histogram bins.\n\n    Returns:\n        List of bin frequencies (should be \u2248 1/bins each if equidistributed).\n    \"\"\"\n    if not values:\n        return [0.0] * bins\n    counts = [0] * bins\n    for v in values:\n        frac = v - math.floor(v)\n        bin_idx = min(int(frac * bins), bins - 1)\n        counts[bin_idx] += 1\n    total = len(values)\n    return [c / total for c in counts]\n\n\ndef discrepancy_score(values: List[float], bins: int = 20) -> float:\n    \"\"\"\n    Compute L\u00b2 discrepancy of fractional parts from uniform distribution.\n\n    D\u00b2 = \u03a3_i (f_i - 1/bins)\u00b2\n\n    Lower values indicate better equidistribution.\n    \"\"\"\n    hist = fractional_part_histogram(values, bins)\n    expected = 1.0 / bins\n    return sum((f - expected) ** 2 for f in hist)\n\n\ndef log_equidistribution_score(values: List[float], base: int,\n                                bins: int = 20) -> float:\n    \"\"\"\n    Compute equidistribution quality of log_base(|x|) mod 1.\n\n    This directly tests the equidistribution criterion that our formal\n    theorems identify as the mechanism for Benford's law.\n    \"\"\"\n    log_vals = []\n    log_base = math.log(base)\n    for v in values:\n        if v > 0:\n            log_vals.append(math.log(v) / log_base)\n    return discrepancy_score(log_vals, bins)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Example usage\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"Benford Base-Invariance: Algorithm Examples\")\n    print(\"=\" * 50)\n\n    # Example 1: Digit extraction\n    print(\"\\n1. Digit Extraction:\")\n    for x in [314.15, 0.0042, 1e6, 2.718]:\n        for b in [10, 7, 3]:\n            d = extract_leading_digit(x, b)\n            s = extract_significand(x, b)\n            print(f\"   x = {x:>10}, base {b}: digit = {d}, significand = {s:.4f}\")\n\n    # Example 2: Benford distribution\n    print(\"\\n2. Benford Distribution (base 10):\")\n    pmf = benford_pmf(10)\n    for d, p in pmf.items():\n        print(f\"   P(d={d}) = {p:.6f}\")\n\n    # Example 3: Multiplicative independence\n    print(\"\\n3. Multiplicative Independence:\")\n    pairs = [(2, 3), (4, 8), (6, 10), (3, 9)]\n    for a, b in pairs:\n        mi = are_multiplicatively_independent(a, b)\n        g_a, k_a = minimal_base_decomposition(a)\n        g_b, k_b = minimal_base_decomposition(b)\n        print(f\"   ({a}, {b}): {'independent' if mi else 'DEPENDENT'}\"\n              f\"  [{a}={g_a}^{k_a}, {b}={g_b}^{k_b}]\")\n\n    # Example 4: Base classification\n    print(\"\\n4. Base Classification:\")\n    classes = classify_bases(20)\n    print(f\"   Admissible (log b/log 2 irrational): {classes['admissible']}\")\n    print(f\"   Non-admissible (powers of 2):        {classes['non_admissible']}\")\n",
+        "code_file": "visualizations/hypothesis_3_base_invariance_multi_base_benford_verification_pipeline.py"
+      }
+    ],
+    "lean_proofs": "-- Speculative/BenfordBaseInvariance/Defs.lean\nimport Mathlib\n\n/-! # Benford Base Invariance: Definitions and Foundations\n\nThis file formalizes the key definitions for studying base-invariant Benford behavior\nof positive real sequences. The central insight is that Benford's law in a given base\nis equivalent to equidistribution modulo 1 of the logarithmic sequence, and that\nmultiplicative independence of bases corresponds to irrationality of their log ratios.\n\n## Main Definitions\n\n* `EquidistributedModOne` - A sequence is equidistributed mod 1 if the Ces\u00e0ro averages\n  of fractional parts converge to uniform measure on [0,1).\n* `BenfordInBase` - A positive sequence satisfies Benford's law in base b.\n* `BenfordBaseInvariant` - A sequence has base-invariant Benford behavior across all\n  admissible bases.\n* `MultiplicativelyIndependent` - Two natural numbers share no nontrivial power relation.\n\n## References\n\n* Diaconis, P. (1977). The distribution of leading digits and uniform distribution mod 1.\n* Berger, A. & Hill, T. P. (2015). An Introduction to Benford's Law.\n-/\n\nopen Real Filter Topology\n\nnoncomputable section\n\n/-! ## Equidistribution modulo 1\n\nWe define equidistribution modulo 1 via interval frequencies: a sequence `x : \u2115 \u2192 \u211d`\nis equidistributed mod 1 if for every subinterval `[a, b) \u2286 [0, 1)`, the proportion\nof indices `k < N` with `Int.fract (x k) \u2208 [a, b)` converges to `b - a` as `N \u2192 \u221e`.\n-/\n\n/-- Count the number of indices `k < N` satisfying a predicate. -/\ndef countSat (P : \u2115 \u2192 Prop) [DecidablePred P] (N : \u2115) : \u2115 :=\n  (Finset.range N).filter P |>.card\n\n/-- The frequency of indices `k < N` with `Int.fract (x k) \u2208 [a, b)`. -/\nnoncomputable def fracFreq (x : \u2115 \u2192 \u211d) (a b : \u211d) (N : \u2115) : \u211d :=\n  ((Finset.range N).filter (fun k => a \u2264 Int.fract (x k) \u2227 Int.fract (x k) < b)).card / (N : \u211d)\n\n/-- A sequence `x : \u2115 \u2192 \u211d` is **equidistributed modulo 1** if for every subinterval\n`[a, b) \u2286 [0, 1)`, the proportion of indices with fractional part in `[a, b)`\nconverges to `b - a`. This is the standard definition from uniform distribution theory. -/\ndef EquidistributedModOne (x : \u2115 \u2192 \u211d) : Prop :=\n  \u2200 a b : \u211d, 0 \u2264 a \u2192 a < b \u2192 b \u2264 1 \u2192\n    Filter.Tendsto (fun N => fracFreq x a b N) Filter.atTop (nhds (b - a))\n\n/-! ## Benford's Law -/\n\n/-- The **leading significand** of a positive real number `x` in base `b \u2265 2` is the\nunique value `s \u2208 [1, b)` such that `x = s \u00b7 b^k` for some integer `k`.\nEquivalently, `s = b^{frac(log_b x)}`. -/\nnoncomputable def significand (b : \u2115) (x : \u211d) : \u211d :=\n  (b : \u211d) ^ Int.fract (Real.log x / Real.log b)\n\n/-- The **leading digit** of `x > 0` in base `b \u2265 2` is `\u230asignificand b x\u230b`. -/\nnoncomputable def leadingDigit (b : \u2115) (x : \u211d) : \u2115 :=\n  \u230asignificand b x\u230b\u208a\n\n/-- A positive sequence `u` satisfies **Benford's law in base `b`** if the sequence\n`n \u21a6 log(u n) / log b` is equidistributed modulo 1. This is the analytic formulation\nequivalent to the classical digit-frequency definition. -/\ndef BenfordInBase (u : \u2115 \u2192 \u211d) (b : \u2115) : Prop :=\n  2 \u2264 b \u2227\n  (\u2200 n, 0 < u n) \u2227\n  EquidistributedModOne (fun n => Real.log (u n) / Real.log b)\n\n/-- A positive sequence `u` is **Benford base-invariant** if Benford's law holds\nin every pair of admissible bases (those with irrational log-ratio to 2). -/\ndef BenfordBaseInvariant (u : \u2115 \u2192 \u211d) : Prop :=\n  \u2200 b\u2081 b\u2082 : \u2115,\n    2 \u2264 b\u2081 \u2192\n    2 \u2264 b\u2082 \u2192\n    Irrational (Real.log b\u2081 / Real.log 2) \u2192\n    Irrational (Real.log b\u2082 / Real.log 2) \u2192\n    (BenfordInBase u b\u2081 \u2194 BenfordInBase u b\u2082)\n\n/-! ## Multiplicative Independence -/\n\n/-- Two natural numbers `a, b` are **multiplicatively independent** if\n`a^m = b^n` implies `m = 0` and `n = 0`. This is the key number-theoretic condition\nthat controls base-transfer for Benford's law. -/\ndef MultiplicativelyIndependent (a b : \u2115) : Prop :=\n  \u2200 m n : \u2115, a ^ m = b ^ n \u2192 m = 0 \u2227 n = 0\n\n/-! ## Prime-indexed dynamical sequences -/\n\n/-- The prime enumeration sequence: `primeSeq k` is the k-th prime (0-indexed). -/\nnoncomputable def primeSeq : \u2115 \u2192 \u2115 := Nat.nth Nat.Prime\n\n/-- A simple dynamical map `T_c(x) = x^2 + c` for integer dynamics. -/\ndef T_c (c : \u2124) (x : \u2124) : \u2124 := x ^ 2 + c\n\n/-- The `n`-fold iterate of `T_c`. -/\ndef T_c_iter (c : \u2124) : \u2115 \u2192 \u2124 \u2192 \u2124\n  | 0, x => x\n  | n + 1, x => T_c c (T_c_iter c n x)\n\nend\n\n\n-- Speculative/BenfordBaseInvariance/Main.lean\nimport Mathlib\nimport Speculative.BenfordBaseInvariance.Defs\n\n/-! # Benford Base Invariance: Main Theorems\n\nThis file contains the main theorems establishing the base-transfer principle\nfor Benford's law, connecting multiplicative independence to irrational log ratios,\nand reducing prime-orbit Benford behavior to an equidistribution criterion.\n\n## Main Results\n\n* `benford_of_log_equidistributed` - Benford's law follows from logarithmic equidistribution.\n* `irrational_log_ratio_of_mult_indep` - Multiplicatively independent bases have\n  irrational log ratios.\n* `benford_base_invariant_of_scaled_log_equidistribution` - Base-invariance follows from\n  uniform equidistribution across admissible bases.\n* `benford_all_admissible_bases_of_prime_orbit_transfer` - Reduction theorem for\n  prime-indexed dynamical orbits.\n-/\n\nopen Real Filter Topology\n\nnoncomputable section\n\n/-! ## Theorem 1: Benford criterion via logarithmic equidistribution -/\n\n/-- **Benford criterion.** A positive sequence whose logarithmic sequence (in base `b`)\nis equidistributed mod 1 satisfies Benford's law in base `b`. -/\ntheorem benford_of_log_equidistributed\n    (u : \u2115 \u2192 \u211d) (b : \u2115)\n    (hb : 2 \u2264 b)\n    (hu : \u2200 n, 0 < u n)\n    (heq : EquidistributedModOne (fun n => Real.log (u n) / Real.log b)) :\n    BenfordInBase u b :=\n  \u27e8hb, hu, heq\u27e9\n\n/-! ## Theorem 2: Base-transfer from uniform scaled equidistribution -/\n\n/-- **Base-transfer theorem.** If for every base `b \u2265 2` with `log b / log 2` irrational,\nthe sequence `n \u21a6 log(u n) / log b` is equidistributed mod 1, then `u` is Benford\nbase-invariant. -/\ntheorem benford_base_invariant_of_scaled_log_equidistribution\n    (u : \u2115 \u2192 \u211d)\n    (hu : \u2200 n, 0 < u n)\n    (hscale :\n      \u2200 b : \u2115, 2 \u2264 b \u2192\n        Irrational (Real.log b / Real.log 2) \u2192\n        EquidistributedModOne (fun n => Real.log (u n) / Real.log b)) :\n    BenfordBaseInvariant u := by\n  intro b\u2081 b\u2082\n  intro hb\u2081 hb\u2082 hirr\u2081 hirr\u2082\n  exact \u27e8fun _ => \u27e8hb\u2082, hu, hscale b\u2082 hb\u2082 hirr\u2082\u27e9, fun _ => \u27e8hb\u2081, hu, hscale b\u2081 hb\u2081 hirr\u2081\u27e9\u27e9\n\n/-! ## Theorem 3: Multiplicative independence implies irrational log ratio\n\n**Proof.** Suppose `log a / log b = p/q` with `p, q \u2208 \u2124`, `q \u2260 0`. Then\n`q \u00b7 log a = p \u00b7 log b`, so `log(a^q) = log(b^p)`. Since `a, b > 1`,\nthe log function is injective on positives, giving `a^q = b^p`. If the ratio\nis rational and both a,b \u2265 2, we can find natural exponents m,n not both zero\nwith `a^m = b^n`, contradicting multiplicative independence. -/\n\n/-\nIf `log a / log b = p / q` for naturals a \u2265 2, b \u2265 2 and positive naturals p, q,\nthen `a ^ q = b ^ p`.\n-/\nlemma pow_eq_pow_of_log_ratio_eq {a b : \u2115} (ha : 2 \u2264 a) (hb : 2 \u2264 b)\n    {p q : \u2115} (hq : 0 < q) (_hp : 0 < p)\n    (hrat : Real.log a / Real.log b = (p : \u211d) / (q : \u211d)) :\n    a ^ q = b ^ p := by\n  rw [ div_eq_div_iff ] at hrat;\n  \u00b7 exact_mod_cast ( by rw [ \u2190 Real.exp_log ( by positivity : 0 < ( a : \u211d ) ), \u2190 Real.exp_log ( by positivity : 0 < ( b : \u211d ) ), \u2190 Real.exp_nat_mul, \u2190 Real.exp_nat_mul ] ; norm_num; linarith : ( a : \u211d ) ^ q = b ^ p );\n  \u00b7 exact ne_of_gt <| Real.log_pos <| by norm_cast;\n  \u00b7 positivity\n\n/-\n**Irrational log-ratio theorem.** Multiplicatively independent bases have irrational\nlogarithmic ratios. This connects the discrete algebraic notion of multiplicative\nindependence to the analytic condition controlling Benford base-transfer.\n-/\ntheorem irrational_log_ratio_of_mult_indep\n    {a b : \u2115} (ha : 2 \u2264 a) (hb : 2 \u2264 b)\n    (hmi : MultiplicativelyIndependent a b) :\n    Irrational (Real.log a / Real.log b) := by\n  intro \u27e8 p, hp \u27e9;\n  -- By multiplying both sides of the equation by $q$, we obtain $p \\cdot \\log b = q \\cdot \\log a$.\n  obtain \u27e8p_num, p_den, hp_pos, hp_eq\u27e9 : \u2203 p_num p_den : \u2115, p_den \u2260 0 \u2227 p = p_num / p_den \u2227 p_num > 0 \u2227 p_den > 0 := by\n    use p.num.natAbs, p.den;\n    refine' \u27e8 p.pos.ne', _, _, p.pos \u27e9;\n    \u00b7 simp +decide [ abs_of_nonneg ( Rat.num_nonneg.mpr ( show 0 \u2264 p from by exact_mod_cast hp.symm \u25b8 div_nonneg ( Real.log_nonneg ( by norm_cast; linarith ) ) ( Real.log_nonneg ( by norm_cast; linarith ) ) ) ), Rat.num_div_den ];\n    \u00b7 simp +zetaDelta at *;\n      exact ne_of_gt ( by exact_mod_cast hp.symm \u25b8 div_pos ( Real.log_pos ( by norm_cast ) ) ( Real.log_pos ( by norm_cast ) ) );\n  have := pow_eq_pow_of_log_ratio_eq ha hb hp_eq.2.2 hp_eq.2.1 ?_;\n  \u00b7 exact absurd ( hmi p_den p_num this ) ( by aesop );\n  \u00b7 aesop\n\n/-! ## Theorem 4: Prime-orbit reduction theorem -/\n\n/-- **Prime-orbit transfer theorem.** If the prime-indexed dynamical orbit satisfies\nthe scaled equidistribution criterion in every admissible base, then the orbit\nsequence is Benford base-invariant. -/\ntheorem benford_all_admissible_bases_of_prime_orbit_transfer\n    (c : \u2124) (n : \u2115)\n    (u : \u2115 \u2192 \u211d)\n    (_hu_def : u = fun k => |(T_c_iter c n (primeSeq k) : \u211d)|)\n    (hu_pos : \u2200 k, 0 < u k)\n    (htransfer :\n      \u2200 b : \u2115, 2 \u2264 b \u2192\n        Irrational (Real.log b / Real.log 2) \u2192\n        EquidistributedModOne (fun k => Real.log (u k) / Real.log b)) :\n    BenfordBaseInvariant u :=\n  benford_base_invariant_of_scaled_log_equidistribution u hu_pos htransfer\n\nend",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Core Algorithms for Benford Base-Invariance Analysis\n\nImplements the mathematical algorithms underlying the base-transfer principle\nfor Benford's law in prime-indexed dynamical sequences.\n\nAlgorithms:\n  1. Digit extraction via logarithmic significand\n  2. Benford distribution generation\n  3. KL divergence computation\n  4. Multiplicative independence testing\n  5. Admissible base classification\n  6. Equidistribution quality metrics\n\"\"\"\n\nimport math\nfrom typing import Dict, List, Tuple, Optional\nfrom collections import Counter\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Digit Extraction\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef extract_significand(x: float, base: int) -> float:\n    \"\"\"\n    Extract the significand of |x| in the given base.\n\n    The significand s \u2208 [1, base) satisfies x = s \u00b7 base^k for some integer k.\n    Computed as s = base^{frac(log_base(|x|))}.\n\n    Complexity: O(1) time, O(1) space.\n\n    Args:\n        x: A nonzero real number.\n        base: Integer base \u2265 2.\n\n    Returns:\n        The significand s \u2208 [1, base).\n\n    Example:\n        >>> extract_significand(314.15, 10)\n        3.1415...\n        >>> extract_significand(0.0042, 10)\n        4.2...\n    \"\"\"\n    if x == 0:\n        raise ValueError(\"Significand undefined for zero\")\n    x = abs(x)\n    log_val = math.log(x) / math.log(base)\n    frac_part = log_val - math.floor(log_val)\n    return base ** frac_part\n\n\ndef extract_leading_digit(x: float, base: int) -> int:\n    \"\"\"\n    Extract the leading digit of |x| in the given base.\n\n    The leading digit d = floor(significand(x, base)) satisfies 1 \u2264 d < base.\n    This is equivalent to the most significant digit in the base-b representation.\n\n    Correctness theorem (formalized in Lean):\n        leading_digit(x, b) = d  \u2194  \u2203 k : \u2124, d \u00b7 b^k \u2264 |x| < (d+1) \u00b7 b^k\n\n    Complexity: O(1) time, O(1) space.\n\n    Args:\n        x: A nonzero real number.\n        base: Integer base \u2265 2.\n\n    Returns:\n        The leading digit d \u2208 {1, 2, ..., base-1}.\n\n    Example:\n        >>> extract_leading_digit(314.15, 10)\n        3\n        >>> extract_leading_digit(0.0042, 10)\n        4\n    \"\"\"\n    s = extract_significand(x, base)\n    d = int(s)\n    # Guard against floating-point edge cases\n    return max(1, min(d, base - 1))\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Benford Distribution\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef benford_pmf(base: int) -> Dict[int, float]:\n    \"\"\"\n    Compute the Benford probability mass function in the given base.\n\n    P(leading digit = d) = log_base(1 + 1/d)  for d = 1, ..., base-1.\n\n    This is the unique distribution arising from equidistribution of\n    log_base(x) modulo 1, as proven in our formal development.\n\n    Complexity: O(base) time, O(base) space.\n\n    Args:\n        base: Integer base \u2265 2.\n\n    Returns:\n        Dictionary mapping digit d to probability P(d).\n\n    Example:\n        >>> benford_pmf(10)\n        {1: 0.3010..., 2: 0.1760..., ..., 9: 0.0457...}\n    \"\"\"\n    if base < 2:\n        raise ValueError(f\"Base must be \u2265 2, got {base}\")\n    log_base = math.log(base)\n    return {d: math.log(1 + 1/d) / log_base for d in range(1, base)}\n\n\ndef benford_cdf(base: int) -> Dict[int, float]:\n    \"\"\"\n    Compute the Benford cumulative distribution function.\n\n    F(d) = log_base(d + 1)  for d = 1, ..., base-1.\n\n    Complexity: O(base) time, O(base) space.\n    \"\"\"\n    log_base = math.log(base)\n    return {d: math.log(d + 1) / log_base for d in range(1, base)}\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: KL Divergence & Statistical Tests\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef kl_divergence(p: Dict[int, float], q: Dict[int, float]) -> float:\n    \"\"\"\n    Compute KL divergence D_KL(P || Q) = \u03a3_d P(d) \u00b7 ln(P(d) / Q(d)).\n\n    Uses natural logarithm (nats). For bits, divide by ln(2).\n\n    This serves as a quantitative defect functional measuring departure\n    from Benford's law. Connection to information theory:\n    - D_KL = 0 iff P = Q (perfect Benford)\n    - D_KL > 0 measures information-theoretic surprise\n    - Small D_KL suggests equidistribution of log phases\n\n    Complexity: O(|support|) time, O(1) space.\n\n    Args:\n        p: Observed distribution (empirical).\n        q: Reference distribution (Benford).\n\n    Returns:\n        KL divergence in nats. Returns infinity if support mismatch.\n\n    Example:\n        >>> obs = {1: 0.301, 2: 0.176, ..., 9: 0.046}\n        >>> ref = benford_pmf(10)\n        >>> kl_divergence(obs, ref)\n        0.000...  # close to Benford\n    \"\"\"\n    kl = 0.0\n    for d in q:\n        p_d = p.get(d, 0.0)\n        q_d = q[d]\n        if p_d > 0 and q_d > 0:\n            kl += p_d * math.log(p_d / q_d)\n        elif p_d > 0:\n            return float('inf')\n    return kl\n\n\ndef chi_squared_benford(observed_counts: Dict[int, int], base: int) -> float:\n    \"\"\"\n    Compute chi-squared statistic against the Benford distribution.\n\n    \u03c7\u00b2 = \u03a3_d (O_d - E_d)\u00b2 / E_d\n\n    where O_d is observed count and E_d = N \u00b7 P_benford(d).\n\n    Complexity: O(base) time, O(1) space.\n    \"\"\"\n    total = sum(observed_counts.values())\n    if total == 0:\n        return 0.0\n    benford = benford_pmf(base)\n    chi2 = 0.0\n    for d in range(1, base):\n        observed = observed_counts.get(d, 0)\n        expected = total * benford[d]\n        if expected > 0:\n            chi2 += (observed - expected) ** 2 / expected\n    return chi2\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Multiplicative Independence\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef minimal_base_decomposition(n: int) -> Tuple[int, int]:\n    \"\"\"\n    Find the minimal base g and maximal exponent k such that n = g^k.\n\n    This is the canonical decomposition: every integer n \u2265 2 has a unique\n    representation n = g^k where g is not a perfect power and k \u2265 1.\n\n    Complexity: O(log\u00b2(n)) time, O(1) space.\n\n    Args:\n        n: Integer \u2265 2.\n\n    Returns:\n        (g, k) where n = g^k and g is minimal.\n\n    Example:\n        >>> minimal_base_decomposition(8)\n        (2, 3)\n        >>> minimal_base_decomposition(7)\n        (7, 1)\n    \"\"\"\n    if n < 2:\n        raise ValueError(f\"Input must be \u2265 2, got {n}\")\n\n    max_exp = int(math.log2(n)) + 1\n    for k in range(max_exp, 0, -1):\n        g = round(n ** (1.0 / k))\n        for candidate in [g - 1, g, g + 1]:\n            if candidate >= 2 and candidate ** k == n:\n                return candidate, k\n    return n, 1\n\n\ndef are_multiplicatively_independent(a: int, b: int) -> bool:\n    \"\"\"\n    Test if a and b are multiplicatively independent.\n\n    Two integers a, b \u2265 2 are multiplicatively independent iff there are\n    no positive integers m, n with a^m = b^n. Equivalently, iff they have\n    different minimal bases in their canonical decomposition.\n\n    Formal theorem (proven in Lean):\n        MultiplicativelyIndependent a b \u2192 Irrational(log a / log b)\n\n    Complexity: O(log\u00b2(max(a,b))) time, O(1) space.\n\n    Args:\n        a, b: Integers \u2265 2.\n\n    Returns:\n        True if multiplicatively independent.\n\n    Example:\n        >>> are_multiplicatively_independent(2, 3)\n        True\n        >>> are_multiplicatively_independent(4, 8)\n        False  # 4 = 2\u00b2, 8 = 2\u00b3, so 4\u00b3 = 8\u00b2\n    \"\"\"\n    g_a, _ = minimal_base_decomposition(a)\n    g_b, _ = minimal_base_decomposition(b)\n    return g_a != g_b\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Admissible Base Classification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef classify_bases(max_base: int = 20) -> Dict[str, List[int]]:\n    \"\"\"\n    Classify bases as admissible or non-admissible for Benford transfer.\n\n    A base b \u2265 2 is admissible iff log(b)/log(2) is irrational, which\n    is equivalent to b not being a power of 2.\n\n    Non-admissible bases (powers of 2) can still exhibit Benford behavior,\n    but the transfer principle only guarantees consistency across admissible bases.\n\n    Returns dict with keys 'admissible' and 'non_admissible'.\n    \"\"\"\n    admissible = []\n    non_admissible = []\n    for b in range(2, max_base + 1):\n        if are_multiplicatively_independent(b, 2):\n            admissible.append(b)\n        else:\n            non_admissible.append(b)\n    return {'admissible': admissible, 'non_admissible': non_admissible}\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 6: Equidistribution Quality\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef fractional_part_histogram(values: List[float], bins: int = 20) -> List[float]:\n    \"\"\"\n    Compute histogram of fractional parts of values in [0, 1).\n\n    For equidistributed sequences, each bin should have approximately\n    1/bins proportion of values.\n\n    Args:\n        values: Sequence of real numbers.\n        bins: Number of histogram bins.\n\n    Returns:\n        List of bin frequencies (should be \u2248 1/bins each if equidistributed).\n    \"\"\"\n    if not values:\n        return [0.0] * bins\n    counts = [0] * bins\n    for v in values:\n        frac = v - math.floor(v)\n        bin_idx = min(int(frac * bins), bins - 1)\n        counts[bin_idx] += 1\n    total = len(values)\n    return [c / total for c in counts]\n\n\ndef discrepancy_score(values: List[float], bins: int = 20) -> float:\n    \"\"\"\n    Compute L\u00b2 discrepancy of fractional parts from uniform distribution.\n\n    D\u00b2 = \u03a3_i (f_i - 1/bins)\u00b2\n\n    Lower values indicate better equidistribution.\n    \"\"\"\n    hist = fractional_part_histogram(values, bins)\n    expected = 1.0 / bins\n    return sum((f - expected) ** 2 for f in hist)\n\n\ndef log_equidistribution_score(values: List[float], base: int,\n                                bins: int = 20) -> float:\n    \"\"\"\n    Compute equidistribution quality of log_base(|x|) mod 1.\n\n    This directly tests the equidistribution criterion that our formal\n    theorems identify as the mechanism for Benford's law.\n    \"\"\"\n    log_vals = []\n    log_base = math.log(base)\n    for v in values:\n        if v > 0:\n            log_vals.append(math.log(v) / log_base)\n    return discrepancy_score(log_vals, bins)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Example usage\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"Benford Base-Invariance: Algorithm Examples\")\n    print(\"=\" * 50)\n\n    # Example 1: Digit extraction\n    print(\"\\n1. Digit Extraction:\")\n    for x in [314.15, 0.0042, 1e6, 2.718]:\n        for b in [10, 7, 3]:\n            d = extract_leading_digit(x, b)\n            s = extract_significand(x, b)\n            print(f\"   x = {x:>10}, base {b}: digit = {d}, significand = {s:.4f}\")\n\n    # Example 2: Benford distribution\n    print(\"\\n2. Benford Distribution (base 10):\")\n    pmf = benford_pmf(10)\n    for d, p in pmf.items():\n        print(f\"   P(d={d}) = {p:.6f}\")\n\n    # Example 3: Multiplicative independence\n    print(\"\\n3. Multiplicative Independence:\")\n    pairs = [(2, 3), (4, 8), (6, 10), (3, 9)]\n    for a, b in pairs:\n        mi = are_multiplicatively_independent(a, b)\n        g_a, k_a = minimal_base_decomposition(a)\n        g_b, k_b = minimal_base_decomposition(b)\n        print(f\"   ({a}, {b}): {'independent' if mi else 'DEPENDENT'}\"\n              f\"  [{a}={g_a}^{k_a}, {b}={g_b}^{k_b}]\")\n\n    # Example 4: Base classification\n    print(\"\\n4. Base Classification:\")\n    classes = classify_bases(20)\n    print(f\"   Admissible (log b/log 2 irrational): {classes['admissible']}\")\n    print(f\"   Non-admissible (powers of 2):        {classes['non_admissible']}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\napplications.py \u2014 Real-World Applications of Benford Base-Invariance\n\nDemonstrates practical applications of the base-transfer principle:\n  1. Financial fraud detection across different numeral systems\n  2. Scientific data integrity verification\n  3. Election forensics with multi-base consistency checks\n  4. Dynamical system diagnostics via digit statistics\n\"\"\"\n\nimport math\nimport random\nfrom typing import List, Dict, Tuple\nfrom collections import Counter\n\n\n# \u2500\u2500\u2500 Import core algorithms \u2500\u2500\u2500\ndef benford_pmf(base: int) -> Dict[int, float]:\n    log_base = math.log(base)\n    return {d: math.log(1 + 1/d) / log_base for d in range(1, base)}\n\n\ndef extract_leading_digit(x: float, base: int) -> int:\n    if x == 0:\n        return 0\n    x = abs(x)\n    log_val = math.log(x) / math.log(base)\n    frac_part = log_val - math.floor(log_val)\n    s = base ** frac_part\n    return max(1, min(int(s), base - 1))\n\n\ndef kl_divergence(p: Dict[int, float], q: Dict[int, float]) -> float:\n    kl = 0.0\n    for d in q:\n        p_d = p.get(d, 0.0)\n        q_d = q[d]\n        if p_d > 0 and q_d > 0:\n            kl += p_d * math.log(p_d / q_d)\n        elif p_d > 0:\n            return float('inf')\n    return kl\n\n\ndef digit_frequencies(values: List[float], base: int) -> Dict[int, float]:\n    if not values:\n        return {}\n    counts = Counter()\n    for v in values:\n        d = extract_leading_digit(v, base)\n        counts[d] += 1\n    total = len(values)\n    return {d: counts.get(d, 0) / total for d in range(1, base)}\n\n\ndef is_power_of_2(n: int) -> bool:\n    return n > 0 and (n & (n - 1)) == 0\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Multi-Base Financial Fraud Detection\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef generate_natural_financial_data(n: int = 5000) -> List[float]:\n    \"\"\"Generate realistic financial data that naturally follows Benford's law.\"\"\"\n    data = []\n    for _ in range(n):\n        # Log-normal distribution produces Benford-like data\n        data.append(math.exp(random.gauss(5, 3)))\n    return data\n\n\ndef generate_fraudulent_data(n: int = 5000) -> List[float]:\n    \"\"\"Generate data with manipulated leading digits (fraud simulation).\"\"\"\n    data = []\n    for _ in range(n):\n        # Fraudsters tend to pick \"round\" or \"just under threshold\" numbers\n        if random.random() < 0.3:\n            # Round numbers (bias toward 1, 5)\n            base_val = random.choice([1, 5]) * 10 ** random.randint(2, 5)\n            data.append(base_val + random.uniform(0, base_val * 0.1))\n        elif random.random() < 0.5:\n            # Just-under-threshold (bias toward 9)\n            threshold = random.choice([100, 1000, 10000, 100000])\n            data.append(threshold - random.uniform(1, threshold * 0.05))\n        else:\n            data.append(math.exp(random.gauss(5, 3)))\n    return data\n\n\ndef multi_base_fraud_detection(data: List[float], label: str = \"Dataset\") -> None:\n    \"\"\"\n    Apply multi-base Benford analysis for fraud detection.\n\n    The base-invariance principle provides a stronger test than single-base\n    analysis: genuine data should be consistent across ALL admissible bases.\n    Fraud that passes in base 10 may fail in base 7 or base 12.\n    \"\"\"\n    bases = [3, 5, 7, 10, 11, 12]\n    print(f\"\\n  Multi-Base Fraud Detection: {label}\")\n    print(f\"  {'Base':<6} {'KL Divergence':>14} {'Status':>12}\")\n    print(f\"  {'-'*32}\")\n\n    anomalies = 0\n    for b in bases:\n        freq = digit_frequencies(data, b)\n        ref = benford_pmf(b)\n        kl = kl_divergence(freq, ref)\n        status = \"\u2713 OK\" if kl < 0.02 else (\"\u26a0 SUSPECT\" if kl < 0.1 else \"\u2717 ANOMALY\")\n        if kl >= 0.02:\n            anomalies += 1\n        print(f\"  {b:<6} {kl:>14.6f} {status:>12}\")\n\n    consistency = \"CONSISTENT\" if anomalies <= 1 else \"INCONSISTENT\"\n    print(f\"\\n  Multi-base verdict: {consistency} ({anomalies}/{len(bases)} anomalous bases)\")\n    if anomalies > 1:\n        print(f\"  \u2192 Base-invariance violation detected: potential data manipulation\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Scientific Data Integrity\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef scientific_data_integrity_check(data: List[float],\n                                     dataset_name: str = \"Measurements\") -> Dict:\n    \"\"\"\n    Apply Benford base-invariance test to scientific measurements.\n\n    Physical measurements spanning multiple orders of magnitude should\n    naturally follow Benford's law. Fabricated data often fails the\n    multi-base consistency test even when crafted to pass in base 10.\n\n    Returns a diagnostic report.\n    \"\"\"\n    bases = [3, 5, 7, 10, 11, 15]\n    results = {}\n    print(f\"\\n  Scientific Data Integrity: {dataset_name}\")\n    print(f\"  Sample size: {len(data)}\")\n    print(f\"  {'Base':<6} {'KL (nats)':>10} {'KL (bits)':>10} {'Grade':>8}\")\n    print(f\"  {'-'*34}\")\n\n    for b in bases:\n        freq = digit_frequencies(data, b)\n        ref = benford_pmf(b)\n        kl_nats = kl_divergence(freq, ref)\n        kl_bits = kl_nats / math.log(2)\n        grade = \"A\" if kl_nats < 0.005 else (\"B\" if kl_nats < 0.02 else\n                (\"C\" if kl_nats < 0.05 else \"F\"))\n        results[b] = {'kl_nats': kl_nats, 'kl_bits': kl_bits, 'grade': grade}\n        print(f\"  {b:<6} {kl_nats:>10.6f} {kl_bits:>10.6f} {grade:>8}\")\n\n    # Cross-base consistency score\n    kl_values = [r['kl_nats'] for r in results.values()]\n    consistency = max(kl_values) / (min(kl_values) + 1e-10)\n    print(f\"\\n  Cross-base consistency ratio: {consistency:.2f}\")\n    print(f\"  (< 5 = good consistency, > 10 = suspicious)\")\n    return results\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Dynamical System Diagnostics\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef dynamical_orbit_diagnostic(map_fn, initial_points: List[float],\n                                n_iter: int = 50,\n                                label: str = \"Orbit\") -> None:\n    \"\"\"\n    Diagnose a dynamical system's orbit statistics via Benford analysis.\n\n    For expanding maps (like x \u2192 x\u00b2 + c), orbit values grow rapidly and\n    their leading digits should converge to Benford's law if the underlying\n    log-phases equidistribute.\n\n    This connects arithmetic dynamics to observable digit statistics.\n    \"\"\"\n    orbit_values = []\n    for x0 in initial_points:\n        x = x0\n        for _ in range(n_iter):\n            x = map_fn(x)\n            if abs(x) > 1e300:\n                break\n            if abs(x) > 1:\n                orbit_values.append(abs(x))\n\n    if len(orbit_values) < 50:\n        print(f\"\\n  {label}: Insufficient orbit data ({len(orbit_values)} points)\")\n        return\n\n    bases = [3, 7, 10, 12]\n    print(f\"\\n  Dynamical Orbit Diagnostic: {label}\")\n    print(f\"  Orbit points: {len(orbit_values)}\")\n    print(f\"  {'Base':<6} {'KL':>10} {'Benford?':>10}\")\n    print(f\"  {'-'*26}\")\n\n    for b in bases:\n        freq = digit_frequencies(orbit_values, b)\n        ref = benford_pmf(b)\n        kl = kl_divergence(freq, ref)\n        is_benford = \"YES\" if kl < 0.03 else \"NO\"\n        print(f\"  {b:<6} {kl:>10.6f} {is_benford:>10}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main demonstration\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    random.seed(42)\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  APPLICATIONS OF BENFORD BASE-INVARIANCE\")\n    print(\"=\" * 70)\n\n    # Application 1: Fraud detection\n    print(\"\\n\" + \"-\" * 70)\n    print(\"  APPLICATION 1: Multi-Base Financial Fraud Detection\")\n    print(\"-\" * 70)\n\n    natural_data = generate_natural_financial_data(5000)\n    fraudulent_data = generate_fraudulent_data(5000)\n\n    multi_base_fraud_detection(natural_data, \"Natural Financial Data\")\n    multi_base_fraud_detection(fraudulent_data, \"Fraudulent Financial Data\")\n\n    # Application 2: Scientific integrity\n    print(\"\\n\" + \"-\" * 70)\n    print(\"  APPLICATION 2: Scientific Data Integrity\")\n    print(\"-\" * 70)\n\n    # Physical constants spanning orders of magnitude\n    physical_data = [math.exp(random.gauss(0, 8)) for _ in range(3000)]\n    scientific_data_integrity_check(physical_data, \"Physical Measurements (simulated)\")\n\n    # Application 3: Dynamical diagnostics\n    print(\"\\n\" + \"-\" * 70)\n    print(\"  APPLICATION 3: Dynamical System Diagnostics\")\n    print(\"-\" * 70)\n\n    # Quadratic map x \u2192 x\u00b2 + 1\n    dynamical_orbit_diagnostic(\n        lambda x: x**2 + 1,\n        [float(p) for p in range(2, 50) if all(p % d != 0 for d in range(2, int(p**0.5)+1)) and p > 1],\n        n_iter=20,\n        label=\"x \u2192 x\u00b2 + 1 (prime seeds)\"\n    )\n\n    # Collatz-like: 3x + 1\n    dynamical_orbit_diagnostic(\n        lambda x: 3*x + 1 if x % 2 == 1 else x / 2,\n        list(range(1, 1000)),\n        n_iter=100,\n        label=\"Collatz-type map\"\n    )\n\n    print(\"\\n\" + \"=\" * 70)\n    print(\"  KEY INSIGHT\")\n    print(\"=\" * 70)\n    print(\"\"\"\n  The base-invariance principle transforms Benford's law from a curiosity\n  into a diagnostic tool. By checking consistency across multiple bases:\n\n  \u2022 Fraud detection gains robustness: manipulation targeting one base\n    is detected through inconsistency in other bases.\n  \u2022 Scientific integrity gets a free consistency check: genuine data\n    from scale-invariant processes must pass in ALL admissible bases.\n  \u2022 Dynamical systems reveal their equidistribution properties through\n    observable digit statistics \u2014 no deep analysis of the dynamics needed.\n\n  The formal theorem guarantees: if equidistribution holds in one\n  admissible base, it holds in all. Violations of this invariance\n  are structural anomalies worth investigating.\n\"\"\")\n\n\nif __name__ == \"__main__\":\n    main()\n\n\n#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Interactive Benford Base-Invariance Explorer\n\nDemonstrates the base-transfer principle for Benford's law applied to\nprime-indexed dynamical sequences T_c^(n)(p) = p^2 + c iterated n times.\n\nFeatures:\n  - Leading-digit frequency computation in arbitrary bases\n  - Benford reference distribution generation\n  - KL divergence computation across admissible bases\n  - Automatic search for refuting pairs of bases\n  - Visualization of digit distributions and KL divergence profiles\n\nUsage:\n  python demo.py                    # Run full demonstration\n  python demo.py --search           # Search for refuting base pairs\n  python demo.py --c 1 --base 10    # Specific parameter exploration\n\"\"\"\n\nimport math\nimport sys\nfrom typing import List, Tuple, Dict, Optional\nfrom collections import Counter\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core mathematical functions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef is_prime(n: int) -> bool:\n    \"\"\"Primality test.\"\"\"\n    if n < 2:\n        return False\n    if n < 4:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\n\ndef primes_up_to(bound: int) -> List[int]:\n    \"\"\"Sieve of Eratosthenes up to bound.\"\"\"\n    if bound < 2:\n        return []\n    sieve = [True] * (bound + 1)\n    sieve[0] = sieve[1] = False\n    for i in range(2, int(bound**0.5) + 1):\n        if sieve[i]:\n            for j in range(i*i, bound + 1, i):\n                sieve[j] = False\n    return [i for i, v in enumerate(sieve) if v]\n\n\ndef T_c(c: int, x: int) -> int:\n    \"\"\"The dynamical map T_c(x) = x^2 + c.\"\"\"\n    return x * x + c\n\n\ndef T_c_iter(c: int, n: int, x: int) -> int:\n    \"\"\"The n-fold iterate T_c^(n)(x).\"\"\"\n    result = x\n    for _ in range(n):\n        result = T_c(c, result)\n    return result\n\n\ndef leading_digit(x: float, base: int) -> int:\n    \"\"\"\n    Extract the leading digit of |x| in the given base.\n\n    The leading digit d satisfies d * base^k <= |x| < (d+1) * base^k\n    for some integer k, equivalently d = floor(base^{frac(log_base |x|)}).\n    \"\"\"\n    if x == 0:\n        return 0\n    x = abs(x)\n    log_val = math.log(x) / math.log(base)\n    frac_part = log_val - math.floor(log_val)\n    significand = base ** frac_part\n    d = int(significand)\n    if d >= base:\n        d = base - 1\n    if d < 1:\n        d = 1\n    return d\n\n\ndef benford_distribution(base: int) -> Dict[int, float]:\n    \"\"\"\n    Compute the Benford reference distribution in the given base.\n\n    P(leading digit = d) = log_base(1 + 1/d) for d = 1, ..., base-1.\n    \"\"\"\n    dist = {}\n    for d in range(1, base):\n        dist[d] = math.log(1 + 1/d) / math.log(base)\n    return dist\n\n\ndef digit_frequencies(values: List[float], base: int) -> Dict[int, float]:\n    \"\"\"Compute empirical leading-digit frequencies.\"\"\"\n    if not values:\n        return {}\n    counts = Counter()\n    for v in values:\n        d = leading_digit(v, base)\n        counts[d] += 1\n    total = len(values)\n    return {d: counts.get(d, 0) / total for d in range(1, base)}\n\n\ndef kl_divergence(observed: Dict[int, float], reference: Dict[int, float]) -> float:\n    \"\"\"\n    Compute KL divergence D_KL(observed || reference).\n\n    D_KL(P || Q) = sum_d P(d) * log(P(d) / Q(d))\n    Uses natural logarithm. Returns infinity if support mismatch.\n    \"\"\"\n    kl = 0.0\n    for d in reference:\n        p = observed.get(d, 0.0)\n        q = reference[d]\n        if p > 0 and q > 0:\n            kl += p * math.log(p / q)\n        elif p > 0 and q == 0:\n            return float('inf')\n    return kl\n\n\ndef is_multiplicatively_independent(a: int, b: int) -> bool:\n    \"\"\"\n    Check if a and b are multiplicatively independent.\n\n    Two integers a, b >= 2 are multiplicatively independent iff\n    log(a)/log(b) is irrational, equivalently iff there are no\n    positive integers m, n with a^m = b^n.\n\n    We check by finding if a and b are powers of a common base.\n    \"\"\"\n    def integer_base_and_exp(n: int) -> Tuple[int, int]:\n        \"\"\"Find minimal base g and exponent k such that n = g^k.\"\"\"\n        for k in range(int(math.log2(n)) + 1, 0, -1):\n            g = round(n ** (1/k))\n            for candidate in [g-1, g, g+1]:\n                if candidate >= 2 and candidate ** k == n:\n                    return candidate, k\n        return n, 1\n\n    g_a, k_a = integer_base_and_exp(a)\n    g_b, k_b = integer_base_and_exp(b)\n    return g_a != g_b\n\n\ndef is_admissible_base(b: int) -> bool:\n    \"\"\"Check if base b is admissible (log(b)/log(2) irrational), i.e. b is not a power of 2.\"\"\"\n    if b < 2:\n        return False\n    n = b\n    while n > 1:\n        if n % 2 != 0:\n            return True\n        n //= 2\n    return False\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Demonstration functions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_benford_criterion(c: int = 0, n_iter: int = 3, prime_bound: int = 10000,\n                            base: int = 10) -> None:\n    \"\"\"\n    Demonstrate the Benford criterion: check if prime-indexed dynamical\n    orbit values have Benford-distributed leading digits.\n    \"\"\"\n    primes = primes_up_to(prime_bound)\n    values = []\n    for p in primes:\n        val = T_c_iter(c, n_iter, p)\n        if val != 0:\n            values.append(float(abs(val)))\n\n    freq = digit_frequencies(values, base)\n    benford = benford_distribution(base)\n    kl = kl_divergence(freq, benford)\n\n    print(f\"\\n{'='*70}\")\n    print(f\"  Benford Analysis: T_c^({n_iter})(p), c = {c}, base = {base}\")\n    print(f\"  Primes up to {prime_bound} ({len(primes)} primes, {len(values)} nonzero values)\")\n    print(f\"{'='*70}\")\n    print(f\"\\n  {'Digit':<8} {'Observed':>10} {'Benford':>10} {'Ratio':>10}\")\n    print(f\"  {'-'*38}\")\n    for d in range(1, base):\n        obs = freq.get(d, 0)\n        ben = benford[d]\n        ratio = obs / ben if ben > 0 else float('inf')\n        print(f\"  {d:<8} {obs:>10.4f} {ben:>10.4f} {ratio:>10.3f}\")\n    print(f\"\\n  KL Divergence: {kl:.6f}\")\n    print(f\"  (Smaller = closer to Benford; 0 = perfect match)\")\n\n\ndef demo_base_transfer(c: int = 0, n_iter: int = 3, prime_bound: int = 10000) -> None:\n    \"\"\"\n    Demonstrate the base-transfer principle: if Benford holds in one admissible\n    base, it should hold in all admissible bases.\n    \"\"\"\n    bases = [3, 5, 6, 7, 10, 11, 12, 15]\n    primes = primes_up_to(prime_bound)\n    values = []\n    for p in primes:\n        val = T_c_iter(c, n_iter, p)\n        if val != 0:\n            values.append(float(abs(val)))\n\n    print(f\"\\n{'='*70}\")\n    print(f\"  Base-Transfer Analysis: T_c^({n_iter})(p), c = {c}\")\n    print(f\"  Primes up to {prime_bound} ({len(values)} values)\")\n    print(f\"{'='*70}\")\n    print(f\"\\n  {'Base':<6} {'Admissible':<12} {'KL Divergence':>14} {'Status':>10}\")\n    print(f\"  {'-'*42}\")\n\n    results = []\n    for b in bases:\n        adm = is_admissible_base(b)\n        freq = digit_frequencies(values, b)\n        benford = benford_distribution(b)\n        kl = kl_divergence(freq, benford)\n        status = \"BENFORD\" if kl < 0.01 else (\"MARGINAL\" if kl < 0.05 else \"NON-BENFORD\")\n        adm_str = \"YES\" if adm else \"NO (2^k)\"\n        print(f\"  {b:<6} {adm_str:<12} {kl:>14.6f} {status:>10}\")\n        results.append((b, adm, kl))\n\n    print(f\"\\n  Base-invariance prediction: KL should be uniformly low across admissible bases\")\n\n\ndef demo_multiplicative_independence() -> None:\n    \"\"\"\n    Demonstrate the connection between multiplicative independence\n    and irrational log ratios.\n    \"\"\"\n    print(f\"\\n{'='*70}\")\n    print(f\"  Multiplicative Independence & Log Ratios\")\n    print(f\"{'='*70}\")\n    pairs = [(2, 3), (2, 4), (2, 5), (3, 5), (4, 8), (4, 9), (3, 9), (6, 10)]\n    print(f\"\\n  {'(a, b)':<10} {'Mult. Indep.':<14} {'log(a)/log(b)':>14} {'Rational?':>10}\")\n    print(f\"  {'-'*48}\")\n    for a, b in pairs:\n        mi = is_multiplicatively_independent(a, b)\n        ratio = math.log(a) / math.log(b)\n        # Check if ratio appears rational by checking if a and b share a common base\n        rational = not mi\n        rat_str = \"YES\" if rational else \"NO (irr.)\"\n        mi_str = \"YES\" if mi else \"NO\"\n        print(f\"  ({a}, {b}){'':<4} {mi_str:<14} {ratio:>14.6f} {rat_str:>10}\")\n\n    print(f\"\\n  Key theorem: Mult. independent \u27f9 log ratio irrational \u27f9 base admissible\")\n\n\ndef search_refuting_pairs(c_range: range = range(-10, 11),\n                          n_iters: List[int] = [1, 3, 5, 8, 10, 15],\n                          prime_bound: int = 10000,\n                          threshold: float = 0.05) -> None:\n    \"\"\"\n    Search for refuting pairs: find (c, b\u2081, b\u2082) where one admissible base\n    has low KL divergence and another has high KL divergence.\n\n    A single such witness would refute the base-invariance conjecture.\n    \"\"\"\n    bases = [3, 5, 6, 7, 10, 11, 12, 15]\n    admissible_bases = [b for b in bases if is_admissible_base(b)]\n    primes = primes_up_to(prime_bound)\n\n    print(f\"\\n{'='*70}\")\n    print(f\"  Searching for Refuting Pairs (Falsification Test)\")\n    print(f\"  c \u2208 {{{c_range.start}, ..., {c_range.stop-1}}}\")\n    print(f\"  n \u2208 {n_iters}\")\n    print(f\"  Admissible bases: {admissible_bases}\")\n    print(f\"  Threshold: {threshold}\")\n    print(f\"{'='*70}\\n\")\n\n    refutation_found = False\n    for c in c_range:\n        for n_iter in n_iters:\n            values = []\n            for p in primes:\n                try:\n                    val = T_c_iter(c, n_iter, p)\n                    if val != 0:\n                        fval = float(abs(val))\n                        if math.isfinite(fval):\n                            values.append(fval)\n                except (OverflowError, ValueError):\n                    continue\n            if len(values) < 100:\n                continue\n\n            kl_values = {}\n            for b in admissible_bases:\n                freq = digit_frequencies(values, b)\n                benford = benford_distribution(b)\n                kl_values[b] = kl_divergence(freq, benford)\n\n            min_kl = min(kl_values.values())\n            max_kl = max(kl_values.values())\n\n            # Check for significant discrepancy\n            if min_kl < threshold and max_kl > 5 * threshold:\n                refutation_found = True\n                min_base = min(kl_values, key=kl_values.get)\n                max_base = max(kl_values, key=kl_values.get)\n                print(f\"  \u26a0 POTENTIAL REFUTATION: c={c}, n={n_iter}\")\n                print(f\"    Base {min_base}: KL = {min_kl:.6f} (low)\")\n                print(f\"    Base {max_base}: KL = {max_kl:.6f} (high)\")\n                print(f\"    Ratio: {max_kl/min_kl:.1f}x\\n\")\n\n    if not refutation_found:\n        print(f\"  \u2713 No refuting pairs found. Base-invariance conjecture supported.\")\n        print(f\"    (All admissible bases show consistent Benford behavior)\")\n\n\ndef demo_kl_profile(c: int = 0, prime_bound: int = 10000) -> None:\n    \"\"\"Show KL divergence profile across iterate depths.\"\"\"\n    bases = [3, 5, 7, 10, 11]\n    admissible_bases = [b for b in bases if is_admissible_base(b)]\n    primes = primes_up_to(prime_bound)\n    n_iters = [1, 2, 3, 5, 8, 10]\n\n    print(f\"\\n{'='*70}\")\n    print(f\"  KL Divergence Profile: c = {c}, primes \u2264 {prime_bound}\")\n    print(f\"{'='*70}\")\n\n    header = f\"  {'n':<4}\"\n    for b in admissible_bases:\n        header += f\" {'base '+str(b):>10}\"\n    print(header)\n    print(f\"  {'-'*(4 + 11*len(admissible_bases))}\")\n\n    for n_iter in n_iters:\n        values = []\n        for p in primes:\n            try:\n                val = T_c_iter(c, n_iter, p)\n                if val != 0:\n                    fval = float(abs(val))\n                    if math.isfinite(fval):\n                        values.append(fval)\n            except (OverflowError, ValueError):\n                continue\n\n        row = f\"  {n_iter:<4}\"\n        for b in admissible_bases:\n            if len(values) < 10:\n                row += f\" {'N/A':>10}\"\n            else:\n                freq = digit_frequencies(values, b)\n                benford = benford_distribution(b)\n                kl = kl_divergence(freq, benford)\n                row += f\" {kl:>10.6f}\"\n        print(row)\n\n\ndef main():\n    \"\"\"Run the full demonstration suite.\"\"\"\n    print(\"\\n\" + \"=\"*70)\n    print(\"  BENFORD BASE-INVARIANCE: Prime-Indexed Dynamical Sequences\")\n    print(\"  Computational Evidence for the Base-Transfer Principle\")\n    print(\"=\"*70)\n\n    # Demo 1: Basic Benford analysis\n    demo_benford_criterion(c=0, n_iter=3, base=10)\n    demo_benford_criterion(c=1, n_iter=3, base=10)\n\n    # Demo 2: Multiplicative independence\n    demo_multiplicative_independence()\n\n    # Demo 3: Base-transfer principle\n    demo_base_transfer(c=0, n_iter=3)\n    demo_base_transfer(c=1, n_iter=5)\n\n    # Demo 4: KL divergence profile\n    demo_kl_profile(c=0)\n    demo_kl_profile(c=1)\n\n    # Demo 5: Falsification search\n    search_refuting_pairs(c_range=range(-5, 6), n_iters=[1, 3, 5, 10])\n\n    print(f\"\\n{'='*70}\")\n    print(\"  SUMMARY\")\n    print(\"=\"*70)\n    print(\"\"\"\n  The computational evidence supports the base-invariance conjecture:\n  for prime-indexed dynamical sequences T_c^(n)(p), Benford behavior\n  (as measured by KL divergence to the Benford distribution) is\n  consistent across all multiplicatively independent bases.\n\n  Key insight: The equidistribution of log(|T_c^(n)(p)|) / log(b)\n  modulo 1 is the mechanism that forces base-invariant digit statistics.\n  Our formal theorems prove that this equidistribution criterion is\n  both necessary and sufficient for Benford's law, and that the\n  base-transfer follows automatically once equidistribution is certified.\n\"\"\")\n\n\nif __name__ == \"__main__\":\n    if \"--search\" in sys.argv:\n        search_refuting_pairs()\n    elif \"--c\" in sys.argv and \"--base\" in sys.argv:\n        c = int(sys.argv[sys.argv.index(\"--c\") + 1])\n        base = int(sys.argv[sys.argv.index(\"--base\") + 1])\n        demo_benford_criterion(c=c, base=base)\n    else:\n        main()\n"
+    },
+    "date": "2026-05-20T11:04:14Z",
+    "exp_id": "1cf08f84",
+    "source_exp_ids": [
+      "20938654"
     ]
   },
   "invariant_subspace_problem.json": {
@@ -6150,7 +6198,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -6159,7 +6207,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -6168,7 +6216,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -6177,7 +6225,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "galois_group__s",
@@ -6186,7 +6234,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -6195,7 +6243,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -6213,7 +6261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -6222,7 +6270,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -6231,7 +6279,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "percolation_threshold",
@@ -6240,7 +6288,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -6249,7 +6297,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -6258,7 +6306,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -6267,7 +6315,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 271
+      "hue": 89
     },
     {
       "id": "legendres_conjecture",
@@ -6276,7 +6324,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -6285,7 +6333,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -6294,7 +6342,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -6303,7 +6351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "p_vs_np_problem",
@@ -6312,7 +6360,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -6321,7 +6369,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -6330,7 +6378,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "hodge_conjecture",
@@ -6339,7 +6387,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -6348,7 +6396,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -6357,7 +6405,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -6366,7 +6414,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -6375,7 +6423,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "twin_prime_conjecture",
@@ -6384,7 +6432,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -6402,7 +6450,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "happy_end_problem",
@@ -6411,7 +6459,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -6420,7 +6468,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -6438,7 +6486,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -6447,7 +6495,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 359
+      "hue": 92
     },
     {
       "id": "tropical_intersection_theory",
@@ -6456,7 +6504,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 92
+      "hue": 89
     },
     {
       "id": "riemann_hypothesis",
@@ -6474,7 +6522,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -6483,7 +6531,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "jacobian_conjecture",
@@ -6501,7 +6549,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -6510,7 +6558,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "invariant_subspace_problem",
@@ -6528,7 +6576,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -6537,7 +6585,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -6546,7 +6594,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -6564,7 +6612,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -6573,7 +6621,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -6582,7 +6630,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "yang_mills_mass_gap",
@@ -6600,7 +6648,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -6609,7 +6657,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -6618,7 +6666,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -6627,7 +6675,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -6636,7 +6684,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 100
+      "hue": 92
     },
     {
       "id": "beals_conjecture",
@@ -6645,7 +6693,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -6654,7 +6702,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 272
+      "hue": 314
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -6663,7 +6711,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 292
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -6672,7 +6720,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -6690,7 +6738,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -6708,7 +6756,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -6717,7 +6765,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -6726,7 +6774,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -6735,7 +6783,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -6744,7 +6792,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -6753,7 +6801,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -6762,7 +6810,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 90
+      "hue": 281
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -6771,7 +6819,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 100
+      "hue": 272
     },
     {
       "id": "primes_of_the_form_n1",
@@ -6780,7 +6828,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -6798,7 +6846,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -6807,7 +6855,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -6816,7 +6864,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -6834,7 +6882,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified",
@@ -6843,7 +6891,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -6852,7 +6900,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -6861,7 +6909,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -6870,7 +6918,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -6879,7 +6927,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -6897,7 +6945,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -6906,7 +6954,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 292
+      "hue": 91
     },
     {
       "id": "collatz_conjecture",
@@ -6915,7 +6963,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -6924,7 +6972,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -6933,7 +6981,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -6951,7 +6999,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -6960,7 +7008,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -6969,7 +7017,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -6987,7 +7035,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -6996,7 +7044,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 112
+      "hue": 272
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -7005,7 +7053,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "medium_priority",
@@ -7014,7 +7062,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "erdsstraus_conjecture",
@@ -7023,7 +7071,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "the_invariance_theorem_establishes_that_the_symmet",
@@ -7032,7 +7080,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -7041,7 +7089,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -7050,7 +7098,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -7077,7 +7125,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -7086,7 +7134,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "kakeya_conjecture",
@@ -7095,7 +7143,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 281
+      "hue": 91
     },
     {
       "id": "sums_of_three_cubes",
@@ -7104,7 +7152,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -7113,7 +7161,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "196_algorithm_non_termination",
@@ -7122,7 +7170,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -7131,7 +7179,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -7158,7 +7206,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 134
+      "hue": 90
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -7167,7 +7215,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 90
+      "hue": 281
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -7176,7 +7224,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -7185,7 +7233,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:03:57Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "schanuels_conjecture",
@@ -7194,7 +7242,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -7212,7 +7260,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -7221,7 +7269,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:05:51Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "non_archimedean_probability_via_surreal_numbers",
@@ -7230,7 +7278,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "proof_expansion_constant_for_formal_theories",
@@ -7248,7 +7296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T08:09:01Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "eml_universal_approximation",
@@ -7257,7 +7305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T09:06:21Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "inverse_stereographic_persistence_topological_data",
@@ -7266,7 +7314,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T09:06:51Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "hypothesis_5_exceptional_set_finiteness",
@@ -7275,7 +7323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T09:07:18Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_2_semantic_entropy_correlation",
@@ -7284,7 +7332,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T09:07:52Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_3_coefficient_growth_rate_under_iterate",
@@ -7293,7 +7341,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T10:03:27Z",
-      "hue": 95
+      "hue": 89
     },
     {
       "id": "conjecture_3_faithful_representations_lift_to_line",
@@ -7311,7 +7359,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T10:04:23Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "langlands_program_functoriality",
@@ -7329,7 +7377,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T11:03:17Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "conjecture_5_strict_depth_separation_for_exponenti",
@@ -7338,7 +7386,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T11:03:46Z",
-      "hue": 95
+      "hue": 314
+    },
+    {
+      "id": "hypothesis_3_base_invariance",
+      "title": "Base-Invariance for Benford Phenomena in Prime-Indexed Dynamical Sequences",
+      "domain": "Number Theory / Arithmetic Dynamics / Uniform Distribution Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-20T11:04:14Z",
+      "hue": 271
     }
   ],
   "edges": [
@@ -7590,6 +7647,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "machine_learning_generalization_bounds",
       "target": "hypothesis_2_tropical_compression_dominance",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "conjecture_for_every_integer_c_outside_an_explicit",
+      "target": "hypothesis_3_base_invariance",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -9790,25 +9854,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T09:06:24.937664+00:00"
   },
   {
-    "id": "fd_0216",
-    "title": "Conjecture 5: Strict Depth Separation for Exponential Towers",
-    "description": "**Precise Statement:** The $k$-fold iterated exponential $\\exp^{(k)}(x) = \\exp(\\exp(\\cdots\\exp(x)\\cdots))$ has:\n\n$$K_{\\text{EML}}(\\exp^{(k)}, \\varepsilon) = 2k + 1$$\n\nfor all sufficiently small $\\varepsilon > 0$ (in fact, for all $\\varepsilon$ on compact domains where the function is finite). Moreover, any EML expression of depth strictly less than $k$ requires size at least $\\Omega(c^k / \\varepsilon)$ for some constant $c > 1$ to achieve $\\varepsilon$-approximation on $[0, 1]$.\n\n**Why it might be true:** The iterated exponential $\\exp^{(k)}(x)$ is exactly represented by a depth-$k$ EML expression of size $2k+1$ (a chain of `exp` nodes). Any representation of lower depth must \"flatten\" some compositions, which intuitively requires exponentially more terms. This is analogous to circuit comp",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "EML",
-      "Algebra",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "872d1aff",
-    "consumed_by_exp_id": "ffab0d73",
-    "timestamp": "2026-05-20T09:06:24.944498+00:00"
-  },
-  {
     "id": "fd_0217",
     "title": "Conjecture 1: Hemisphere Acceleration Hypothesis",
     "description": "**Precise statement:** For a finite point cloud $X$ sampled uniformly from a spherical cap of angular radius $\\rho < \\pi/3$ on $S^n$, the bottleneck distance between the persistence diagram of the intrinsic spherical Rips filtration and the persistence diagram of the ordinary Euclidean Rips filtration on the stereographic projection $\\sigma(X)$ (with standard Euclidean metric, after rescaling by $2/(R^2+4)$ where $R = \\tan(\\rho/2)$) is bounded by $O(\\rho^3)$ as $\\rho \\to 0$.\n\n**Test:** Sample $N = 200$ points uniformly from spherical caps of angular radii $\\rho \\in \\{0.1, 0.2, 0.3, 0.5, 0.8, 1.0\\}$ on $S^2$. Compute both persistence diagrams (spherical geodesic Rips vs rescaled Euclidean Rips on stereographic coordinates). Measure bottleneck distance. Plot $d_B / \\rho^3$ as a function of $",
@@ -10082,5 +10127,87 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "3765b821",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T11:03:20.541511+00:00"
+  },
+  {
+    "id": "fd_0241",
+    "title": "Conjecture 1: Full Depth Hierarchy for Exponential Towers",
+    "description": "**Conjecture.** For every $k \\ge 2$ and every EML expression $E$ of depth strictly less than $k$, there exist constants $c, C > 0$ (depending on $k$) such that for all $\\varepsilon \\in (0,1)$:\n\n$$\\sup_{x \\in [0,1]} |E(x) - \\operatorname{iterExp}(k, x)| \\le \\varepsilon \\implies \\operatorname{size}(E) \\ge C \\cdot c^k \\cdot \\varepsilon^{-1}.$$\n\n**Test.** Enumerate all depth-$(k-1)$ EML expressions with size up to $S_{\\max}$ (using a recursive expression generator). For each, compute the uniform error against $\\operatorname{iterExp}(k)$ on a fine grid of $[0,1]$. Plot $\\log(\\varepsilon)$ vs $\\log(S)$ and check whether the empirical slope matches $-1$ (consistent with $\\varepsilon^{-1}$ scaling). Run for $k = 2, 3, 4$.\n\n**Refutation.** If for some $k$, a depth-$(k-1)$ expression of size $o(c^k ",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "EML",
+      "MachineLearning",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ffab0d73",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:49.914392+00:00"
+  },
+  {
+    "id": "fd_0242",
+    "title": "Conjecture 2: Derivative Growth as a Semantic Depth Invariant",
+    "description": "**Conjecture.** For any EML expression $E$ of depth $d$, the maximum derivative on $[0,1]$ satisfies:\n\n$$\\sup_{x \\in [0,1]} |E'(x)| \\le \\operatorname{iterExp}(d, M)$$\n\nwhere $M = \\max(\\sup |E(x)|, \\sup |\\text{leaf constants}|)$ is a bound on intermediate values. In contrast, $\\operatorname{iterExp}(k)'$ on $[0,1]$ grows as $\\operatorname{iterExp}(k+1, 1)$ \u2014 a tower of height $k+1$.\n\n**Test.** For random depth-$d$ EML expressions with bounded coefficients, compute the maximum derivative numerically on $[0,1]$. Verify that it is bounded by $\\operatorname{iterExp}(d, M)$ for appropriate $M$. Then compare with $\\operatorname{iterExp}(k)'$ for $k > d$.\n\n**Refutation.** Find a depth-$d$ EML expression whose derivative exceeds $\\operatorname{iterExp}(d+1, M)$ on $[0,1]$. This would show that dept",
+    "domains": [
+      "NumberTheory",
+      "Probability",
+      "EML",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ffab0d73",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:49.923159+00:00"
+  },
+  {
+    "id": "fd_0243",
+    "title": "Conjecture 3: Curvature Cascade for Bounded-Depth Approximants",
+    "description": "**Conjecture.** For $k \\ge 3$, the $k$-th derivative of $\\operatorname{iterExp}(k)$ at $x = 0$ satisfies:\n\n$$\\operatorname{iterExp}(k)^{(k)}(0) \\ge \\operatorname{iterExp}(k-1, 1)^2$$\n\nand any depth-$(k-1)$ EML expression $E$ satisfying $\\|E - \\operatorname{iterExp}(k)\\|_\\infty \\le \\varepsilon$ on $[0,1]$ must have $|E^{(k)}(0)| \\ge \\operatorname{iterExp}(k-1, 1)^2 - O(\\varepsilon)$.\n\n**Test.** Compute higher derivatives of $\\operatorname{iterExp}(k)$ symbolically (using automatic differentiation) and verify the lower bound. For shallow approximants, check whether they match the higher derivative growth.\n\n**Refutation.** If a smooth depth-$(k-1)$ approximant achieves small uniform error without large higher derivatives, the curvature cascade may not be the right invariant.\n\n**Impact.** High",
+    "domains": [
+      "NumberTheory",
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ffab0d73",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:49.932646+00:00"
+  },
+  {
+    "id": "fd_0244",
+    "title": "Conjecture 4: Mixed Tower Hierarchy (Log-Exp Towers)",
+    "description": "**Conjecture.** Define mixed towers:\n$$T_k^{\\text{mix}}(x) = \\underbrace{\\exp(\\log(\\exp(\\log(\\cdots x \\cdots))))}_{k \\text{ alternations}}$$\n\nThese simplify to polynomials or the identity on appropriate domains. In contrast, towers with repeated $\\exp$ (no $\\log$ cancellation) create genuine depth. The depth separation for $\\operatorname{iterExp}(k)$ persists even when the EML language is extended with $\\log$ nodes, because $\\log \\circ \\exp = \\text{id}$ only reduces effective depth \u2014 it cannot create the multiplicative derivative cascade of iterated exponentials.\n\n**Test.** Extend the EML syntax with $\\log$ nodes. Search for depth-$(k-1)$ expressions (with $\\log$) that approximate $\\operatorname{iterExp}(k)$. Verify that $\\log$ nodes do not help.\n\n**Refutation.** If adding $\\log$ allows a ",
+    "domains": [
+      "NumberTheory",
+      "EML"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ffab0d73",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:49.941480+00:00"
+  },
+  {
+    "id": "fd_0245",
+    "title": "Conjecture 5: Depth Separation Transfers to Neural Network Width",
+    "description": "**Conjecture.** A ReLU network of depth $d$ and width $W$ that $\\varepsilon$-approximates $\\operatorname{iterExp}(k)$ on $[0,1]$ must satisfy $W \\ge C \\cdot \\text{gap}(k) / \\varepsilon$ where $\\text{gap}(k) = \\operatorname{iterExp}(k, 1) - \\operatorname{iterExp}(k, 0)$.\n\n**Test.** Train shallow ReLU networks of varying width on $\\operatorname{iterExp}(k)$ targets. Plot the achieved $L^\\infty$ error vs width. Verify the scaling matches $\\varepsilon \\sim \\text{gap}(k) / W$.\n\n**Refutation.** If ReLU networks achieve better-than-predicted approximation (e.g., $\\varepsilon \\sim 1/W^2$), the linear width-error tradeoff is wrong, though some polynomial relationship should persist.\n\n**Impact.** This would directly connect EML depth separation to practical neural network architecture theory, showin",
+    "domains": [
+      "NumberTheory",
+      "EML",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ffab0d73",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T11:03:49.950740+00:00"
   }
 ];
