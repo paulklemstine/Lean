@@ -109,6 +109,8 @@
                     <span>Powered by <a href="https://pollinations.ai" target="_blank" rel="noopener">Pollinations.ai</a></span>
                     <span class="footer-separator">&middot;</span>
                     <span>Reasoning via <a href="https://aristotle.harmonic.fun" target="_blank" rel="noopener">Aristotle</a></span>
+                    <span class="footer-separator">&middot;</span>
+                    <button id="check-updates-btn" style="background:none;border:1px solid var(--border-color);color:var(--text-muted);padding:2px 8px;border-radius:4px;cursor:pointer;font-size:12px;" title="Check for new research packages">Check for Updates</button>
                 </footer>
             </div>
 
@@ -250,6 +252,7 @@
 
         // Periodic refresh: check for new packages every 60 seconds
         // Works on both file:// (script-tag injection) and http:// (fetch)
+        console.log('[Aether] Starting package polling (every 60s)');
         setInterval(() => {
             try {
                 // Snapshot current state before reload
@@ -266,6 +269,7 @@
                         if (newIndex.length > prevCount) {
                             const prevFilenames = new Set(prevIndex.map(p => p.filename));
                             const newFilenames = newIndex.filter(p => !prevFilenames.has(p.filename)).map(p => p.filename);
+                            console.log('[Aether] New packages detected! Previous:', prevCount, 'Now:', newIndex.length, 'New:', newFilenames);
 
                             window.Aether.packages = newIndex;
                             if (window.renderSidebar) window.renderSidebar(newIndex);
@@ -294,16 +298,26 @@
                             if (window.Aether.directionsVisible && window.renderDirectionsView) window.renderDirectionsView();
                         }
                     } catch (err) {
-                        // Silently fail — refresh is best-effort
+                        console.warn('[Aether] Poll refresh error:', err);
                     }
                     script.remove();
                 };
-                script.onerror = () => script.remove();
+                script.onerror = () => { console.warn('[Aether] Failed to load packages_db.js'); script.remove(); };
                 document.head.appendChild(script);
             } catch (err) {
-                // Silently fail — refresh is best-effort
+                console.warn('[Aether] Poll error:', err);
             }
         }, 60000);
+
+        // Check for Updates button
+        const checkUpdatesBtn = document.getElementById('check-updates-btn');
+        if (checkUpdatesBtn) {
+            checkUpdatesBtn.addEventListener('click', () => {
+                if (window.AetherNotifications) {
+                    window.AetherNotifications.checkNow();
+                }
+            });
+        }
 
         // Author popover
         const authorLink = document.getElementById('author-link');

@@ -44,15 +44,19 @@ window.AetherNotifications = (() => {
             : newPackages.slice(0, 3).map(p => p.title || p.filename).join('\n')
               + (count > 3 ? `\n...and ${count - 3} more` : '');
 
+        console.log('[Aether] Showing notification:', title, body.replace(/\n/g, ' | '));
+
         // Browser notification
         if ('Notification' in window && Notification.permission === 'granted') {
             try {
                 const n = new Notification(title, { body, icon: 'visualizations/favicon.svg', tag: 'aether-new-packages' });
                 n.onclick = () => { window.focus(); n.close(); };
-            } catch { /* Notification constructor can fail in some contexts */ }
+            } catch (e) { console.warn('[Aether] Browser notification failed:', e); }
+        } else {
+            console.log('[Aether] Browser notification not available (permission:', Notification.permission, ')');
         }
 
-        // In-app toast
+        // In-app toast (always shown)
         showToast(title, body, newPackages);
     }
 
@@ -95,17 +99,34 @@ window.AetherNotifications = (() => {
             markSeen(filenames);
         }
 
+        console.log('[Aether] Notifications initialized. Packages:', filenames.length, 'Seen before:', hadSeenBefore, 'Notification permission:', 'Notification' in window ? Notification.permission : 'N/A');
         requestPermission();
     }
 
     // Called when the poll detects new packages
     function onNewPackages(allPackages, newFilenames) {
         const newPkgs = allPackages.filter(p => newFilenames.includes(p.filename));
+        console.log('[Aether] onNewPackages called. Total:', allPackages.length, 'New filenames:', newFilenames.length, 'Matched packages:', newPkgs.length);
         if (!newPkgs.length) return;
 
         markSeen(newFilenames);
         notify(newPkgs);
     }
 
-    return { init, onNewPackages, findNew, markSeen };
+    // Manual check: trigger a notification test with current unseen packages
+    function checkNow() {
+        const currentIndex = window.PACKAGE_INDEX || [];
+        const seen = new Set(getSeen());
+        const unseen = currentIndex.filter(p => !seen.has(p.filename));
+        console.log('[Aether] Manual check. Total packages:', currentIndex.length, 'Seen:', seen.size, 'Unseen:', unseen.length);
+        if (unseen.length > 0) {
+            const filenames = unseen.map(p => p.filename);
+            markSeen(filenames);
+            notify(unseen);
+        } else {
+            showToast('Up to Date', 'No new packages found. Total: ' + currentIndex.length, []);
+        }
+    }
+
+    return { init, onNewPackages, findNew, markSeen, checkNow };
 })();
