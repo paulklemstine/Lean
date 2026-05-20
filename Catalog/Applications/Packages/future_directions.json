@@ -335,7 +335,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:10.979738+00:00"
     },
@@ -371,7 +371,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.78,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:10.980589+00:00"
     },
@@ -389,7 +389,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:10.980976+00:00"
     },
@@ -862,7 +862,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:10.997716+00:00"
     },
@@ -1067,7 +1067,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.77,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.007589+00:00"
     },
@@ -1085,7 +1085,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.72,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.008504+00:00"
     },
@@ -1199,7 +1199,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.76,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.015218+00:00"
     },
@@ -1218,7 +1218,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.74,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.016868+00:00"
     },
@@ -1389,8 +1389,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "07fa7e82",
       "timestamp": "2026-05-20T00:22:11.029972+00:00"
     },
     {
@@ -1484,7 +1484,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.038093+00:00"
     },
@@ -1560,7 +1560,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.88,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.047535+00:00"
     },
@@ -1674,7 +1674,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.063199+00:00"
     },
@@ -1715,6 +1715,123 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.068780+00:00"
+    },
+    {
+      "id": "fd_0093",
+      "title": "Hypothesis 1: Benign Overparameterization Universality",
+      "description": "**Conjecture:** For any architecture family with constant quotient complexity `q`, constant code length `c`, and bounded posterior KL `κ`, the generalization error at confidence `δ` is bounded by `√((q + c + κ) / (n · ε²))` uniformly as parameter dimension `d → ∞`, regardless of the growth rate of `d`.\n\n**Test:** Instantiate the `EffectiveComplexityProfile` with `paramDim = d` for `d ∈ {10², 10³, ..., 10⁸}` while holding `quotientComplexity = 10`, `codeLength = 5`, `posteriorKL = 3.0`, and `sampleSize = 5000`. Verify that `GeneralizesAtScale` holds for all `d` at fixed `ε = 0.1, δ = 0.05`. The theorem `effectiveRate_overparametrizedBy` already proves this formally — this test confirms it computationally across a wide range.\n\n**Impact:** If true universally (extending beyond our formal fram",
+      "source_exp_id": "90e5ed6e",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/90e5ed6e",
+      "domains": [
+        "NumberTheory",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:00:25.447624+00:00"
+    },
+    {
+      "id": "fd_0094",
+      "title": "Hypothesis 2: Tropical Compression Dominance",
+      "description": "**Conjecture:** For architectures with non-trivial symmetry groups (e.g., permutation-equivariant networks, convolutional networks with weight sharing), the tropical quotient complexity predicts sample complexity at least `Ω(d / log d)` times more sharply than the raw parameter dimension `d`, where the quotient complexity grows as `O(d / |G|)` for symmetry group `G`.\n\n**Test:** \n1. Define explicit operadic presentations for CNN, equivariant MLP, and attention architectures.\n2. Compute `quotientComplexity` as `dim(param_space) / |symmetry_group|`.\n3. Compare `algebraicSampleComplexityBound(quotientComplexity, ε, δ)` with `algebraicSampleComplexityBound(paramDim, ε, δ)`.\n4. The ratio should be at least `d / (d/|G| · log d)` = `|G| / log d`.\n\nFor a CNN with `k × k` kernels over `n × n` images",
+      "source_exp_id": "90e5ed6e",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/90e5ed6e",
+      "domains": [
+        "NumberTheory",
+        "Tropical",
+        "Algebra",
+        "MachineLearning",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:00:25.451254+00:00"
+    },
+    {
+      "id": "fd_0095",
+      "title": "Hypothesis 3: PAC-Bayes / MDL Equivalence Window",
+      "description": "**Conjecture:** In the equal-variance regime (prior and posterior share variance `σ²`), the PAC-Bayes KL upper bound `‖w‖²/(2σ²n)` is within a factor `C ∈ [1/2, 2]` of the minimum description length `code_length / n` for all architectures with effective dimension at most `d_eff = O(√n)`.\n\n**Test:**\n1. For synthetic Gaussian posteriors with `d` dimensions and norm bound `C_norm`:\n   - PAC-Bayes term: `C_norm / (2σ²n)`\n   - MDL code length: `(d/2) · log(n · C_norm / d)` (from quantization at resolution `√(d/(n·C_norm))`)\n2. Compute the ratio PAC-Bayes / MDL across `d ∈ {1, 2, ..., 1000}` and `n ∈ {100, 1000, 10000}`.\n3. Check whether the ratio remains in `[1/2, 2]` for `d ≤ √n`.\n\n**Impact:** If confirmed, this would unify two major generalization theories (PAC-Bayes and MDL) into a single fr",
+      "source_exp_id": "90e5ed6e",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/90e5ed6e",
+      "domains": [
+        "NumberTheory",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:00:25.454436+00:00"
+    },
+    {
+      "id": "fd_0096",
+      "title": "Hypothesis 4: p-adic Threshold Transfer",
+      "description": "**Conjecture:** The p-adic sample complexity threshold `‖p‖ = p⁻¹` (from `sample_complexity_threshold`) transfers to architecture-aware generalization criteria: for any `EffectiveComplexityProfile` with `sampleSize ≥ p^k` (the threshold for `k` bits of precision), if the effective rate satisfies our generalization condition, then the profile generalizes with precision `ε = p^{-k/2}` — and this holds independently of `paramDim`.\n\n**Test:**\n1. Set `p = 2` (binary precision).\n2. For `k = 1, ..., 20`, set `sampleSize = 2^k`, `ε = 2^{-k/2}`.\n3. Construct profiles with `quotientComplexity + codeLength + posteriorKL ≤ sampleSize · ε² = 1`.\n4. Verify `GeneralizesAtScale` holds regardless of `paramDim`.\n5. Check that the p-adic norm condition `‖p^k‖ = p^{-k}` correctly predicts the achievable preci",
+      "source_exp_id": "90e5ed6e",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/90e5ed6e",
+      "domains": [
+        "NumberTheory",
+        "Bridges",
+        "MachineLearning",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:00:25.457998+00:00"
+    },
+    {
+      "id": "fd_0097",
+      "title": "Hypothesis 5: Strict Separation Density",
+      "description": "**Conjecture:** The fraction of integer profiles `(d, q, c, n) ∈ [1, N]⁴` with `kl ∈ [0, N]` exhibiting strict separation (where effective-rate bounds certify generalization but raw-dimension bounds do not) grows as `Θ(1 - 1/N)` as `N → ∞`. In particular, separation is the *generic* case, not the exception.\n\n**Test:**\n1. For `N = 10, 20, 50, 100, 200`, enumerate all integer profiles `(d, q, c, kl, n)` with `q + c < d`, `kl < d - q - c`, and `n ≥ 1`.\n2. For each profile, run `find_separation_regime` to check if an `ε` exists with effective bound ≤ `n·ε²` < `d`.\n3. Compute the fraction of profiles exhibiting separation.\n4. Fit the growth rate and verify it approaches 1.\n\nThe brute-force search in `algorithms.py` already implements this protocol for small `N`. Extend to larger values.\n\n**Impa",
+      "source_exp_id": "90e5ed6e",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/90e5ed6e",
+      "domains": [
+        "NumberTheory",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:00:25.460962+00:00"
+    },
+    {
+      "id": "fd_0098",
+      "title": "Proof Phase Transitions in Random Formal Theories",
+      "description": "Conjecture: For any recursively axiomatized first-order theory T extending a weak arithmetic base and any fixed proof system P, if one forms random finite axiom augmentations T(m,p) by independently adding each sentence from a bounded-complexity schema pool of size m with probability p, then there exists a sharp threshold p_c(m) such that the probability that a target family of bounded-length statements becomes P-provable jumps from near 0 to near 1 in a window of width o(1) as m→∞. Moreover, the threshold location is asymptotically governed by a combinatorial dependency invariant of the proof hypergraph of the target family. Test: Define explicit finite schema pools and target statement families in propositional logic, Presburger arithmetic, and bounded fragments of Peano arithmetic; compute empirical provability curves under SAT/SMT/proof-search enumeration; confirm or refute sharp-threshold behavior and compare the observed threshold to the predicted proof-hypergraph invariant. Impact: This would create a statistical mechanics of theorem emergence, yielding quantitative laws for when new axioms unlock whole regions of provability, with applications to automated theorem proving, proof complexity, and the design of research systems that choose high-leverage conjectures or axioms.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Proof Complexity",
+        "Probabilistic Combinatorics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:00:34.858440+00:00"
     }
   ],
   "pruned": [
