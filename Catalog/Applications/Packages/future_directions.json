@@ -1551,7 +1551,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:28:23.970042+00:00"
     },
@@ -1654,6 +1654,93 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-19T23:28:23.984460+00:00"
+    },
+    {
+      "id": "fd_0090",
+      "title": "Harmonic truncations:",
+      "description": "p/q = H_n (exact rational), with q = lcm(1,...,n).",
+      "source_exp_id": "6c440f37",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/6c440f37",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:00:36.238823+00:00"
+    },
+    {
+      "id": "fd_0091",
+      "title": "Padé approximants to log:",
+      "description": "Rational approximations from [m/n] Padé expansions of log near 1.",
+      "source_exp_id": "6c440f37",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/6c440f37",
+      "domains": [
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:00:36.242611+00:00"
+    },
+    {
+      "id": "fd_0092",
+      "title": "Apéry-like constructs:",
+      "description": "Integer linear combinations of H_n and rational numbers with controlled denominators.",
+      "source_exp_id": "6c440f37",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/6c440f37",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:00:37.120453+00:00"
+    },
+    {
+      "id": "fd_0093",
+      "title": "Impact:",
+      "description": "This would extend our formal infrastructure from a single constant to a family, creating a reusable \"renormalization toolkit\" applicable across analytic number theory. The Stieltjes constants γ_k are important in the Riemann zeta function's Laurent expansion and have open irrationality status for k ≥ 1.",
+      "source_exp_id": "6c440f37",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/6c440f37",
+      "domains": [
+        "NumberTheory",
+        "Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:00:37.178469+00:00"
+    },
+    {
+      "id": "fd_0094",
+      "title": "Topological Memory Law for Euclidean Algorithms via Persistent Homology",
+      "description": "Conjecture: For every primitive positive-definite binary quadratic form Q(x,y)=ax^2+bxy+cy^2 with class number h(Q), the persistent homology barcode of the point cloud formed by normalized Euclidean-algorithm trajectories of coprime lattice points on level sets Q(x,y) <= R converges, as R -> infinity, to a class invariant that determines h(Q) and distinguishes genera except for finitely many discriminants. Test: Compute barcodes for large R across many discriminants, check whether the limiting persistence summaries cluster exactly by class number/genus and whether counterexamples persist as R grows; refute by exhibiting infinitely many discriminants with indistinguishable limiting barcodes but different class numbers/genera. Impact: This would create a new bridge between computational topology, arithmetic dynamics, and algebraic number theory, yielding a geometric-statistical probe of class groups and potentially new computable invariants for arithmetic equivalence.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Number Theory",
+        "Topological Data Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T00:01:02.315203+00:00"
     }
   ],
   "pruned": [
