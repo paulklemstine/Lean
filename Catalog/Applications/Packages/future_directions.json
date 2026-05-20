@@ -1029,7 +1029,7 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.8,
+      "priority_score": 0.65,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.005953+00:00"
@@ -1048,7 +1048,7 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.76,
+      "priority_score": 0.61,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.006774+00:00"
@@ -1103,7 +1103,7 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.82,
+      "priority_score": 0.6699999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.009411+00:00"
@@ -1122,7 +1122,7 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.85,
+      "priority_score": 0.7,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.010435+00:00"
@@ -1160,7 +1160,7 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.8,
+      "priority_score": 0.65,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.012667+00:00"
@@ -1179,7 +1179,7 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.78,
+      "priority_score": 0.63,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.013875+00:00"
@@ -1445,7 +1445,7 @@
       "proof_strategy": "Construct a Gentzen-style sequent calculus where the Cut rule is replaced by a consequence verification rule: if Gamma proves A and A has desirable consequences verified by a computational check, then A is accepted. Prove cut-elimination fails in general but holds for consequence-stable formulas. Test: show that Fermat's Last Theorem for n=4 is consequence-stable, enabling a retrocausal proof.",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.9,
+      "priority_score": 0.75,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.034403+00:00"
@@ -1521,7 +1521,7 @@
       "proof_strategy": "Extend Godel-Lob provability logic GL with temporal operators: Box A means A is provable now, Diamond A means A will be provable. Define axiom schema: Box(Box A implies Box Box A) and (Box A and Diamond B implies Diamond(A and B)). Prove TGL is consistent (interpret in PA with time-stamped provability Prov(n, A) = there exists a PA-proof of A with at most n steps). Prove TGL is decidable via finite model property. Test: show that the temporal paradox this statement will be provable tomorrow but not today is refutable.",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.84,
+      "priority_score": 0.69,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.042677+00:00"
@@ -1832,6 +1832,96 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T01:00:34.858440+00:00"
+    },
+    {
+      "id": "fd_0099",
+      "title": "Hypothesis 1: Prime-Height Equidistribution",
+      "description": "**Conjecture.** For every integer c outside a finite exceptional set E, the sequence of fractional parts {2ⁿ · Λ_c(p)} is equidistributed modulo 1 as (p, n) ranges over primes p and positive integers n:\n\n$$\\lim_{X, N \\to \\infty} \\frac{1}{\\pi(X) \\cdot N} \\#\\{(p, n) : p \\le X \\text{ prime}, 1 \\le n \\le N, \\{2^n \\Lambda_c(p)\\} \\in [a, b]\\} = b - a$$\n\nfor all 0 ≤ a < b ≤ 1, where Λ_c(p) = lim_{n→∞} 2⁻ⁿ log|T_c⁽ⁿ⁾(p)| is the canonical height.\n\n**Test.** For c ∈ {-10, ..., 10}, compute Λ_c(p) for all primes p ≤ 10⁶ using 50 iterations of the renormalized height sequence. For each c, compute the discrepancy D_N of the sequence {2ⁿ · Λ_c(p) mod 1} for n = 1, ..., 30 and primes up to X = 10⁵. The hypothesis predicts D_N = O(1/√(π(X)·N)).\n\n**Refutation criterion.** If for any c ∉ E, the discrepancy ",
+      "source_exp_id": "20938654",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/20938654",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:03:43.202576+00:00"
+    },
+    {
+      "id": "fd_0100",
+      "title": "Hypothesis 2: Semiconjugacy Rigidity",
+      "description": "**Conjecture.** Persistent digit bias in the orbits of T_c occurs if and only if T_c is semiconjugate to a monomial map ±x^d via an integer-valued function φ satisfying φ(T_c(x)) = ±(φ(x))^d.\n\nFormally: PersistentDigitBias(c) ⟺ HasMonomialSemiconjugacy(c).\n\n**Test.** For each c ∈ {-100, ..., 100}:\n1. Compute leading-digit frequencies for primes p ≤ 10⁴ and n ≤ 20. Flag c as \"biased\" if the KL divergence from Benford exceeds 0.005.\n2. For each biased c, search for a semiconjugacy by testing polynomial candidates φ of degree ≤ 10 and checking the functional equation φ(x² + c) = ±(φ(x))^d modulo large primes.\n3. Verify: every biased c has a semiconjugacy, and every unbiased c does not.\n\n**Refutation criterion.** Finding a c with persistent digit bias but no semiconjugacy (or vice versa) falsi",
+      "source_exp_id": "20938654",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/20938654",
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:03:43.206176+00:00"
+    },
+    {
+      "id": "fd_0101",
+      "title": "Hypothesis 3: Base-Invariance",
+      "description": "**Conjecture.** If the leading digits of |T_c⁽ⁿ⁾(p)| satisfy Benford's law in some base b ≥ 2 that is multiplicatively independent of 2 (i.e., log b / log 2 ∉ ℚ), then they satisfy Benford's law in every such base.\n\n**Test.** For c ∈ {-10, ..., 10} and bases b ∈ {3, 5, 6, 7, 10, 11, 12, 15}:\n1. Compute leading-digit frequencies in each base for primes p ≤ 10⁴ and n ≤ 15.\n2. Compute KL divergence from the base-b Benford distribution for each (c, b) pair.\n3. Check whether all bases with log b / log 2 ∉ ℚ give qualitatively similar results.\n\n**Refutation criterion.** Finding a c and two multiplicatively independent bases b₁, b₂ (both independent of 2) such that Benford holds in b₁ but fails in b₂ would refute the hypothesis.\n\n**Impact.** Base-invariance is predicted by the equidistribution me",
+      "source_exp_id": "20938654",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/20938654",
+      "domains": [
+        "NumberTheory",
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:03:43.210379+00:00"
+    },
+    {
+      "id": "fd_0102",
+      "title": "Hypothesis 4: Entropy-Rate Decay",
+      "description": "**Conjecture.** For generic c, the KL divergence between the empirical leading-digit distribution of {|T_c⁽ⁿ⁾(p)| : p ≤ X prime} and the Benford distribution decays exponentially in n:\n\n$$D_{KL}(P_n \\| B) \\le C_c \\cdot \\rho^n$$\n\nfor constants C_c > 0 and 0 < ρ < 1 depending on c but not on X (for X sufficiently large).\n\n**Test.** For c ∈ {0, 1, -1, 2, -2}:\n1. For each n = 1, ..., 25, compute the leading-digit distribution of |T_c⁽ⁿ⁾(p)| for all primes p ≤ 10⁵.\n2. Compute D_KL(P_n || B) for each n.\n3. Fit a model D_KL = C · ρⁿ and estimate ρ by linear regression of log(D_KL) vs. n.\n\n**Refutation criterion.** If D_KL does not decay exponentially (e.g., decays polynomially or oscillates) for any generic c, the hypothesis is falsified. Specifically, if the fitted ρ exceeds 0.99 for X = 10⁵, th",
+      "source_exp_id": "20938654",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/20938654",
+      "domains": [
+        "NumberTheory",
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:03:43.215515+00:00"
+    },
+    {
+      "id": "fd_0103",
+      "title": "Hypothesis 5: Exceptional-Set Finiteness",
+      "description": "**Conjecture.** The exceptional set E = {c ∈ ℤ : Benford universality fails for T_c} is finite, and possibly empty.\n\n**Test.** Scan c ∈ {-10⁶, ..., 10⁶} (or as large as computationally feasible):\n1. For each c, compute the KL divergence from Benford for primes p ≤ 10³ and n ≤ 10 as a quick filter.\n2. For any c flagged as potentially exceptional (KL > 0.01), refine with primes p ≤ 10⁵ and n ≤ 20.\n3. Catalog all confirmed exceptional c values.\n\n**Refutation criterion.** If the number of exceptional c values grows unboundedly with the search range (e.g., linearly in |c|), finiteness is falsified. Conversely, if no exceptions are found, the hypothesis that E is empty is supported.\n\n**Impact.** Finiteness of E would mean that Benford behavior is a universal property of quadratic dynamics, not a",
+      "source_exp_id": "20938654",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/20938654",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:03:43.220099+00:00"
     }
   ],
   "pruned": [
