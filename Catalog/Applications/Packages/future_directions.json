@@ -824,8 +824,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "872d1aff",
       "timestamp": "2026-05-20T00:22:10.996341+00:00"
     },
     {
@@ -1104,8 +1104,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.6699999999999999,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "57db3430",
       "timestamp": "2026-05-20T00:22:11.009411+00:00"
     },
     {
@@ -1180,7 +1180,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.63,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "70a5c7c1",
       "timestamp": "2026-05-20T00:22:11.013875+00:00"
     },
@@ -1693,8 +1693,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "47aaf4e4",
       "timestamp": "2026-05-20T00:22:11.066001+00:00"
     },
     {
@@ -1753,8 +1753,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "eae22772",
       "timestamp": "2026-05-20T01:00:25.451254+00:00"
     },
     {
@@ -2031,7 +2031,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T01:04:09.576524+00:00"
     },
@@ -2103,7 +2103,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T02:00:27.941473+00:00"
     },
@@ -2296,7 +2296,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T02:04:18.486818+00:00"
     },
@@ -2358,7 +2358,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T02:04:42.909764+00:00"
     },
@@ -3269,8 +3269,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "3b452d34",
       "timestamp": "2026-05-20T05:07:35.464824+00:00"
     },
     {
@@ -3326,6 +3326,130 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T06:00:55.276286+00:00"
+    },
+    {
+      "id": "fd_0177",
+      "title": "Conjecture 1: MPS Min-Cut Principle",
+      "description": "**Conjecture.** For every normalized Matrix Product State ψ on a chain of n sites with bond dimension D, the integrated information rank equals the minimum contiguous-cut flattening rank:\n\n$$\\Phi^\\#(\\psi) = \\min_{1 \\le k < n} \\operatorname{rank}(\\operatorname{Flat}_{\\{0,\\ldots,k\\}}(\\psi))$$\n\nIn other words, the minimum over *all* nontrivial bipartitions (including non-contiguous ones) is always achieved by a contiguous cut for MPS states.\n\n**Test.** Generate random MPS tensors with various bond dimensions D ∈ {2,3,4,5} and chain lengths n ∈ {3,...,8}, compute Φ# by exhaustive enumeration of all 2^n − 2 bipartitions, and compare against the minimum contiguous-cut rank. A single instance where Φ# < min contiguous-cut rank would falsify the conjecture. Our numerical experiments (1200+ trials)",
+      "source_exp_id": "70a5c7c1",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/70a5c7c1",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Probability",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T06:01:32.441299+00:00"
+    },
+    {
+      "id": "fd_0178",
+      "title": "Conjecture 2: Area-Law Stabilization",
+      "description": "**Conjecture.** For translation-invariant injective MPS with bond dimension D, the integrated information rank stabilizes and becomes independent of chain length once n ≥ 2D:\n\n$$n \\ge 2D \\implies \\Phi^\\#(\\psi_n) = \\Phi^\\#(\\psi_{2D})$$\n\n**Test.** Fix an injective transfer matrix T of dimension D × D (verify injectivity by checking that the set {T_i : i = 0,...,d-1} spans the full D² matrix space). Generate the corresponding MPS for n = 2D, 2D+1, ..., 4D and compute Φ# for each. The conjecture predicts all values are identical.\n\n**Disproof criterion.** An injective MPS where Φ# changes between n = 3D and n = 4D for some D.\n\n**Impact.** This would establish that integrated information obeys a strict area law for gapped systems — a deep connection between IIT and condensed matter physics. It w",
+      "source_exp_id": "70a5c7c1",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/70a5c7c1",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Physics",
+        "Logic",
+        "Speculative"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T06:01:32.448126+00:00"
+    },
+    {
+      "id": "fd_0179",
+      "title": "Conjecture 3: Multiplicativity Under Disconnected Tensor Products",
+      "description": "**Conjecture.** For tensor states ψ on system ι and φ on system κ (disjoint), the integrated information rank of their tensor product satisfies:\n\n$$\\Phi^\\#(\\psi \\otimes \\phi) = \\min(\\Phi^\\#(\\psi), \\Phi^\\#(\\phi))$$\n\n**Test.** Construct pairs of random MPS states on separate chains, form their tensor product (a state on the disjoint union), and verify this equality. The key insight: for a bipartition that splits within one subsystem, the rank is determined by that subsystem's cut rank times the full dimension of the other — but for bipartitions that cross the subsystem boundary, the rank factors as a product.\n\n**Disproof criterion.** A pair (ψ, φ) where Φ#(ψ ⊗ φ) ≠ min(Φ#(ψ), Φ#(φ)). Since the ≤ direction should be provable (a cut within ψ gives rank ≤ Φ#(ψ)), a disproof would require Φ#(ψ ⊗",
+      "source_exp_id": "70a5c7c1",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/70a5c7c1",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Probability",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T06:01:32.453859+00:00"
+    },
+    {
+      "id": "fd_0180",
+      "title": "Conjecture 4: Rank-Entropy Equivalence for Generic States",
+      "description": "**Conjecture.** For generic (full-measure) states on n qubits, the integrated information rank equals 2 raised to the floor of the minimum bipartite entanglement entropy:\n\n$$\\Phi^\\#(\\psi) = 2^{\\lfloor S_{\\min}(\\psi) \\rfloor}$$\n\nwhere $S_{\\min}(\\psi) = \\min_{A} S(\\rho_A)$ is the minimum entanglement entropy across bipartitions and $\\rho_A = \\operatorname{Tr}_{A^c}(|\\psi\\rangle\\langle\\psi|)$.\n\n**Test.** For small systems (n = 3, 4, 5 qubits), generate random states from the Haar measure, compute both Φ# and S_min via reduced density matrix eigenvalues, and check the proposed relation. Non-generic states (measure zero) are excluded.\n\n**Disproof criterion.** A Haar-random state where the equality fails. Since this is a measure-theoretic statement, finding counterexamples in a large random samp",
+      "source_exp_id": "70a5c7c1",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/70a5c7c1",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Physics",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T06:01:32.460520+00:00"
+    },
+    {
+      "id": "fd_0181",
+      "title": "Conjecture 5: Stabilizer Code Integration Bound",
+      "description": "**Conjecture.** For a stabilizer code [[n, k, d]], any encoded state ψ (image of k logical qubits under the encoding isometry) satisfies:\n\n$$\\Phi^\\#(\\psi) \\le 2^k$$\n\nMoreover, this bound is tight: there exist stabilizer codes achieving $\\Phi^\\#(\\psi) = 2^k$.\n\n**Test.** Implement standard stabilizer codes (Steane [[7,1,3]], Shor [[9,1,3]], five-qubit [[5,1,3]]), generate encoded states, and compute Φ#. Verify Φ# ≤ 2^k = 2 for k=1 codes. For the tightness direction, search for codes where some encoded state achieves equality.\n\n**Disproof criterion.** An explicit stabilizer code state with Φ# > 2^k, or a proof that no encoded state of a given code achieves Φ# = 2^k.\n\n**Impact.** This would connect IIT to quantum error correction — the integration capacity of a quantum code is bounded by its l",
+      "source_exp_id": "70a5c7c1",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/70a5c7c1",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Physics",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T06:01:32.467199+00:00"
+    },
+    {
+      "id": "fd_0182",
+      "title": "Zero-Locus Universality for Neural Training Flows",
+      "description": "Conjecture: For a broad class of overparameterized analytic models (including exp-log/EML networks and standard smooth networks), the algebraic-topological type of the loss-gradient zero set near initialization undergoes a sharp universality transition controlled by a single dimensionless ratio rho = (parameter dimension)/(number of independent data constraints). Specifically, there exists a critical rho_c such that for rho < rho_c the zero set is generically empty or zero-dimensional, while for rho > rho_c it almost surely contains a positive-dimensional manifold whose Betti numbers, after appropriate normalization, converge to architecture-independent limits. Test: Sample random datasets and random initializations across multiple architecture families; symbolically or numerically compute local critical-point varieties and persistent homology of their zero loci; confirm universality if the normalized topological statistics collapse across architectures at fixed rho, and refute if they remain architecture-specific or show no sharp transition. Impact: This would create a new mathematical theory linking optimization, topology, and expressivity, giving a geometric criterion for trainability and potentially explaining why very different neural architectures exhibit similar overparameterized learning behavior.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Algebraic Topology",
+        "Optimization"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T06:01:45.866441+00:00"
     }
   ],
   "pruned": [
