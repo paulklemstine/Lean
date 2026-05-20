@@ -4461,7 +4461,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "c6c90908",
       "timestamp": "2026-05-20T11:03:49.923159+00:00"
     },
@@ -5814,7 +5814,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T18:17:04.966156+00:00"
     },
@@ -5873,6 +5873,41 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T18:18:00.033851+00:00"
+    },
+    {
+      "id": "fd_0303",
+      "title": "Refutation Criterion",
+      "description": "Find two extensionally equal functions with minimal depths *d₁* and *d₂* where |*d₁* - *d₂*| ≥ 2 but identical derivative envelopes. Alternatively, find an expression where the derivative growth class underestimates the true depth by ≥ 2.",
+      "source_exp_id": "c6c90908",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c6c90908",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:18:26.990930+00:00"
+    },
+    {
+      "id": "fd_0304",
+      "title": "Prime-Uniform Spectral Gap for Pollard-Rho Functional Graphs",
+      "description": "Conjecture: Let f_c(x)=x^2+c over F_p with c fixed in Z and excluding the exceptional PCF/monomial-Chebyshev-type parameters. Form the directed functional graph G_{p,c} on F_p and let P_{p,c} be the Markov operator of the random walk that with probability 1/2 stays put and with probability 1/2 follows x->f_c(x). Then there exists an absolute epsilon>0 such that for a density-1 set of primes p, every nontrivial eigenvalue lambda of P_{p,c} satisfies |lambda|<=1-epsilon. Test: For many non-exceptional c, compute spectra of P_{p,c} over large prime ranges and estimate whether the second-largest eigenvalue is uniformly bounded away from 1 on a density-1 subset; refute by exhibiting a non-exceptional c with lambda_2->1 along a positive-density prime subsequence. Impact: Establishes a new pseudorandomness universality class for arithmetic dynamical systems, with consequences for collision times, mixing of polynomial iteration modulo primes, and randomness guarantees for rho-style integer factorization heuristics.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Spectral Graph Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:18:38.209090+00:00"
     }
   ],
   "pruned": [
