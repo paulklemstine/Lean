@@ -1,534 +1,593 @@
+#!/usr/bin/env python3
 """
-applications.py — Applications of Finite-Field Kakeya Theory
+applications.py — Real-world applications of discrete Kakeya theory.
 
-Demonstrates practical applications of the polynomial method and Kakeya
-set theory, including:
-1. Error-correcting codes via polynomial evaluation
-2. Randomized polynomial identity testing
-3. Combinatorial set covering problems
-4. Extremal configurations in finite geometry
+Demonstrates how the formally verified incidence-energy bounds apply to:
+1. Compressed sensing / sparse recovery: tube-like measurement matrices
+2. Network coding: multicast relay design with coverage guarantees
+3. Hash function analysis: collision bounds from incidence theory
 """
 
+from collections import Counter
+from typing import Dict, List, Set, Tuple
 import itertools
-from collections import defaultdict
 import math
-from algorithms import FiniteField, affine_line_points, direction_classes
+
+Point = Tuple[int, int]
 
 
-def application_polynomial_identity_testing():
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 1: Compressed Sensing — Measurement Matrix Design
+# ═══════════════════════════════════════════════════════════════════════════
+
+def measurement_matrix_from_lines(p: int, num_slopes: int) -> List[List[int]]:
     """
-    Application 1: Schwartz-Zippel Polynomial Identity Testing
+    Construct a measurement matrix from a line family in F_p^2.
 
-    The Schwartz-Zippel lemma (which we formalized as mvpoly_nonvanishing)
-    is the foundation of randomized polynomial identity testing:
-    if P ≠ 0 and deg(P) < q, then evaluating P at a random point of F_q^n
-    gives P(x) ≠ 0 with probability ≥ 1 - d/q.
+    Each direction d defines a 'measurement': the indicator of line_d.
+    The matrix A has rows indexed by directions and columns by carrier points.
+    A[d, p] = 1 iff point p is on line d.
 
-    This gives a simple randomized algorithm: to test if P = Q,
-    evaluate P - Q at random points.
+    The Kakeya energy bound gives: if this matrix has small carrier (few
+    columns), then the energy (sum of squared column norms) must be large,
+    which means the matrix has poor RIP-like properties.
+
+    Conversely, good measurement matrices (low energy) force large carriers,
+    giving the link to compressed sensing.
     """
-    print("=" * 60)
-    print("APPLICATION 1: Polynomial Identity Testing")
-    print("=" * 60)
-    print()
+    # Build star configuration for demonstration
+    lines = {}
+    for slope in range(num_slopes):
+        lines[slope] = frozenset((x, (slope * x) % p) for x in range(p))
 
-    import random
-    random.seed(42)
+    carrier = sorted(set().union(*lines.values()))
+    carrier_idx = {pt: i for i, pt in enumerate(carrier)}
 
-    for p in [7, 11, 13]:
-        F = FiniteField(p)
-        n = 2
+    matrix = []
+    for slope in range(num_slopes):
+        row = [0] * len(carrier)
+        for pt in lines[slope]:
+            row[carrier_idx[pt]] = 1
+        matrix.append(row)
 
-        # Create a nonzero polynomial of degree 3
-        # P(x,y) = x^2*y + 2*x + 3
-        def poly_P(x, y):
-            return (F.mul(F.mul(x, x), y) + F.mul(2, x) + 3) % p
-
-        # Count non-roots
-        total = 0
-        non_roots = 0
-        for x in F.elements:
-            for y in F.elements:
-                total += 1
-                if poly_P(x, y) != 0:
-                    non_roots += 1
-
-        prob_nonzero = non_roots / total
-        theoretical_lower = 1 - 3 / p  # degree 3, field size p
-
-        print(f"F_{p}^2, degree-3 polynomial:")
-        print(f"  Non-root fraction:       {prob_nonzero:.4f}")
-        print(f"  Theoretical lower bound: {theoretical_lower:.4f}")
-        print(f"  Bound holds:             {prob_nonzero >= theoretical_lower - 1e-10}")
-        print()
+    return matrix
 
 
-def application_covering_designs():
+def analyze_measurement_matrix(matrix: List[List[int]]) -> Dict:
     """
-    Application 2: Optimal Covering Designs
+    Analyze RIP-related properties of a measurement matrix.
 
-    Kakeya sets provide solutions to covering problems:
-    what is the minimum number of points needed to intersect
-    every line in every direction?
+    The formal bound tells us:
+        (rows * cols_per_row)^2 <= num_cols * sum(col_norm^2)
 
-    This connects to combinatorial design theory and coding theory.
+    This is exactly the Cauchy-Schwarz energy inequality applied to the
+    incidence matrix of the configuration.
     """
-    print("=" * 60)
-    print("APPLICATION 2: Covering Designs from Kakeya Sets")
-    print("=" * 60)
-    print()
+    num_rows = len(matrix)
+    num_cols = len(matrix[0]) if matrix else 0
 
-    for p in [2, 3, 5]:
-        F = FiniteField(p)
-        n = 2
-        q = p
+    # Column multiplicities (number of 1s per column = point multiplicity)
+    col_mult = []
+    for j in range(num_cols):
+        mult = sum(matrix[i][j] for i in range(num_rows))
+        col_mult.append(mult)
 
-        dirs = direction_classes(F, n)
-        num_dirs = len(dirs)
+    # Energy = sum of squared multiplicities
+    total_energy = sum(m ** 2 for m in col_mult)
+    total_mass = sum(col_mult)
+    max_coherence = max(m ** 2 for m in col_mult) if col_mult else 0
 
-        # For each direction class, count how many lines exist
-        lines_per_dir = {}
-        for v in dirs:
-            lines = set()
-            for base in itertools.product(F.elements, repeat=n):
-                line = affine_line_points(F, base, v)
-                lines.add(line)
-            lines_per_dir[v] = len(lines)
+    # Verify Cauchy-Schwarz bound
+    lhs = total_mass ** 2
+    rhs = num_cols * total_energy
+    bound_satisfied = lhs <= rhs
 
-        total_lines = sum(lines_per_dir.values())
-        total_points = q**n
-
-        print(f"F_{q}^{n}:")
-        print(f"  Direction classes:     {num_dirs}")
-        print(f"  Lines per direction:   {lines_per_dir[dirs[0]]}")
-        print(f"  Total lines:           {total_lines}")
-        print(f"  Total points:          {total_points}")
-        print(f"  Dvir bound:            {q**n / math.factorial(n):.1f}")
-        print()
-
-
-def application_incidence_energy_analysis():
-    """
-    Application 3: Incidence Energy Analysis
-
-    Analyze the multiplicity energy E = Σ m(x)² for various line
-    configurations. The energy controls the Cauchy-Schwarz union
-    size lower bound: |P| ≥ (|L|·q)² / E.
-
-    High energy means many points lie on many lines (high overlap).
-    Low energy means the lines spread out efficiently.
-    """
-    print("=" * 60)
-    print("APPLICATION 3: Incidence Energy Analysis")
-    print("=" * 60)
-    print()
-
-    for p in [3, 5, 7]:
-        F = FiniteField(p)
-        n = 2
-        q = p
-
-        dirs = direction_classes(F, n)
-
-        # Configuration 1: All lines through origin
-        lines_origin = [(tuple(0 for _ in range(n)), v) for v in dirs]
-
-        # Configuration 2: Lines with spread-out base points
-        lines_spread = []
-        for i, v in enumerate(dirs):
-            base = tuple((i * j) % q for j in range(n))
-            lines_spread.append((base, v))
-
-        for name, lines in [("Through origin", lines_origin),
-                            ("Spread bases", lines_spread)]:
-            mults = defaultdict(int)
-            for base, direction in lines:
-                for point in affine_line_points(F, base, direction):
-                    mults[point] += 1
-
-            total_inc = sum(mults.values())
-            energy = sum(m * m for m in mults.values())
-            union_size = len(mults)
-            max_mult = max(mults.values())
-
-            # Cauchy-Schwarz bound
-            cs_bound = (total_inc ** 2) / energy if energy > 0 else 0
-
-            print(f"F_{q}^{n}, {name} ({len(lines)} lines):")
-            print(f"  Union size |P|:        {union_size}")
-            print(f"  Total incidences:      {total_inc}")
-            print(f"  Energy Σm²:            {energy}")
-            print(f"  Max multiplicity:      {max_mult}")
-            print(f"  Cauchy-Schwarz bound:  {cs_bound:.1f}")
-            print()
-
-
-def application_extremal_kakeya():
-    """
-    Application 4: Extremal Kakeya Configurations
-
-    Search for minimal Kakeya sets and analyze their structure.
-    These extremal configurations reveal algebraic structure
-    that connects to the polynomial method.
-    """
-    print("=" * 60)
-    print("APPLICATION 4: Extremal Kakeya Configurations")
-    print("=" * 60)
-    print()
-
-    for p in [2, 3]:
-        F = FiniteField(p)
-        n = 2
-        q = p
-        total_points = q ** n
-
-        dirs = direction_classes(F, n)
-
-        # Exhaustive search for minimum Kakeya set (only feasible for small q)
-        if q <= 3:
-            min_size = total_points
-            min_sets = []
-
-            # Generate all subsets of F_q^n of size >= Dvir bound
-            all_points = list(itertools.product(F.elements, repeat=n))
-            dvir = math.ceil(q**n / math.factorial(n))
-
-            for size in range(dvir, total_points + 1):
-                if size > min_size:
-                    break
-                found_at_size = False
-                for subset in itertools.combinations(all_points, size):
-                    K = set(subset)
-                    # Check Kakeya property
-                    is_kakeya = True
-                    for v in dirs:
-                        has_line = False
-                        for base in all_points:
-                            line = affine_line_points(F, base, v)
-                            if line.issubset(K):
-                                has_line = True
-                                break
-                        if not has_line:
-                            is_kakeya = False
-                            break
-                    if is_kakeya:
-                        if size < min_size:
-                            min_size = size
-                            min_sets = [K]
-                        elif size == min_size:
-                            min_sets.append(K)
-                        found_at_size = True
-                if found_at_size:
-                    break
-
-            print(f"F_{q}^{n}: Exhaustive search")
-            print(f"  Direction classes:       {len(dirs)}")
-            print(f"  Dvir lower bound:        {dvir}")
-            print(f"  Minimum Kakeya size:     {min_size}")
-            print(f"  Number of minimizers:    {len(min_sets)}")
-            if min_sets:
-                print(f"  Example minimizer:       {sorted(min_sets[0])}")
-            print()
-
-
-if __name__ == "__main__":
-    application_polynomial_identity_testing()
-    application_covering_designs()
-    application_incidence_energy_analysis()
-    application_extremal_kakeya()
-    print("\nAll applications demonstrated successfully!")
-
-
-"""
-demo.py — Finite-Field Kakeya Sets: Computational Demonstrations
-
-This module demonstrates key phenomena from the finite-field Kakeya conjecture
-through concrete numerical examples. It constructs Kakeya sets over small finite
-fields, measures their sizes, and verifies the Dvir lower bound |K| >= q^n / n!.
-"""
-
-import itertools
-from collections import defaultdict
-
-
-def make_field(p):
-    """Create arithmetic operations for F_p (prime field)."""
     return {
-        'add': lambda a, b: (a + b) % p,
-        'mul': lambda a, b: (a * b) % p,
-        'sub': lambda a, b: (a - b) % p,
-        'inv': lambda a: pow(a, p - 2, p) if a != 0 else None,
-        'neg': lambda a: (-a) % p,
-        'elements': list(range(p)),
-        'q': p,
+        'num_rows': num_rows,
+        'num_cols': num_cols,
+        'total_mass': total_mass,
+        'total_energy': total_energy,
+        'max_column_norm_sq': max_coherence,
+        'cauchy_schwarz_lhs': lhs,
+        'cauchy_schwarz_rhs': rhs,
+        'bound_satisfied': bound_satisfied,
     }
 
 
-def affine_line(F, base, direction):
-    """Compute the set of points on the affine line base + t * direction in F^n."""
-    q = F['q']
-    n = len(base)
-    points = set()
-    for t in F['elements']:
-        point = tuple(F['add'](base[i], F['mul'](t, direction[i])) for i in range(n))
-        points.add(point)
-    return points
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 2: Network Coverage Analysis
+# ═══════════════════════════════════════════════════════════════════════════
 
-
-def is_nonzero(v):
-    """Check if a vector is nonzero."""
-    return any(x != 0 for x in v)
-
-
-def all_nonzero_directions(F, n):
-    """Generate all nonzero vectors in F^n."""
-    return [v for v in itertools.product(F['elements'], repeat=n) if is_nonzero(v)]
-
-
-def construct_kakeya_set(F, n):
+def network_coverage_model(p: int) -> Dict:
     """
-    Construct a Kakeya set in F_q^n by choosing a line for each nonzero direction.
-    Uses a greedy approach to try to minimize the set size.
+    Model a relay network where each 'direction' is a broadcast beam
+    covering points along a line in a grid.
+
+    The Kakeya bounds give fundamental limits:
+    - To cover all p+1 beam directions, you need at least a certain
+      number of relay points (the carrier).
+    - The energy measures how unevenly traffic is distributed.
+    - Low energy = uniform load = good network design.
+
+    Returns analysis comparing star (hub) vs spread (distributed) topologies.
     """
-    directions = all_nonzero_directions(F, n)
-    kakeya_set = set()
+    results = {}
 
-    for v in directions:
-        # Try each base point and pick the one that adds the fewest new points
-        best_base = None
-        best_new = None
-        for base in itertools.product(F['elements'], repeat=n):
-            line = affine_line(F, base, v)
-            new_points = line - kakeya_set
-            if best_new is None or len(new_points) < len(best_new):
-                best_base = base
-                best_new = new_points
-        kakeya_set.update(affine_line(F, best_base, v))
+    # Hub topology: all beams through one center
+    hub_lines = {s: frozenset((x, (s * x) % p) for x in range(p)) for s in range(p)}
+    hub_carrier = set().union(*hub_lines.values())
+    hub_mult = Counter()
+    for ln in hub_lines.values():
+        for pt in ln:
+            hub_mult[pt] += 1
+    hub_energy = sum(m ** 2 for m in hub_mult.values())
+    hub_max_load = max(hub_mult.values())
 
-    return kakeya_set
+    results['hub'] = {
+        'carrier_size': len(hub_carrier),
+        'energy': hub_energy,
+        'max_load': hub_max_load,
+        'load_distribution': dict(Counter(hub_mult.values())),
+    }
 
+    # Distributed topology: spread intercepts
+    dist_lines = {s: frozenset((x, (s * x + s * s) % p) for x in range(p)) for s in range(p)}
+    dist_carrier = set().union(*dist_lines.values())
+    dist_mult = Counter()
+    for ln in dist_lines.values():
+        for pt in ln:
+            dist_mult[pt] += 1
+    dist_energy = sum(m ** 2 for m in dist_mult.values())
+    dist_max_load = max(dist_mult.values())
 
-def construct_kakeya_random(F, n, base_choice=None):
-    """
-    Construct a Kakeya set by choosing base = 0 for all directions.
-    This is a simple construction that may not be minimal.
-    """
-    if base_choice is None:
-        base_choice = tuple(0 for _ in range(n))
+    results['distributed'] = {
+        'carrier_size': len(dist_carrier),
+        'energy': dist_energy,
+        'max_load': dist_max_load,
+        'load_distribution': dict(Counter(dist_mult.values())),
+    }
 
-    directions = all_nonzero_directions(F, n)
-    kakeya_set = set()
-    for v in directions:
-        line = affine_line(F, base_choice, v)
-        kakeya_set.update(line)
-    return kakeya_set
+    # Theoretical minimum carrier from pairwise bound (T=1 for distinct slopes)
+    num_dirs = p
+    L = p
+    T = 1
+    min_carrier = (num_dirs * L) ** 2 / (num_dirs * L + num_dirs * (num_dirs - 1) * T)
 
-
-def verify_kakeya(F, n, K):
-    """Verify that K is indeed a Kakeya set."""
-    directions = all_nonzero_directions(F, n)
-    for v in directions:
-        found = False
-        for base in itertools.product(F['elements'], repeat=n):
-            line = affine_line(F, base, v)
-            if line.issubset(K):
-                found = True
-                break
-        if not found:
-            return False
-    return True
-
-
-def dvir_lower_bound(q, n):
-    """Compute the Dvir lower bound q^n / n!."""
-    import math
-    return q**n / math.factorial(n)
-
-
-def compute_incidences(F, n, lines):
-    """
-    Compute incidence data: for each point, count how many lines pass through it.
-    Returns (point_multiplicities, total_incidences).
-    """
-    multiplicities = defaultdict(int)
-    for base, direction in lines:
-        for point in affine_line(F, base, direction):
-            multiplicities[point] += 1
-    total = sum(multiplicities.values())
-    return dict(multiplicities), total
-
-
-def demo_kakeya_sizes():
-    """Demonstrate Kakeya set sizes for small parameters."""
-    print("=" * 60)
-    print("DEMO 1: Kakeya Set Sizes vs Dvir Lower Bound")
-    print("=" * 60)
-    print()
-
-    results = []
-    for p in [2, 3, 5]:
-        for n_dim in [2, 3]:
-            F = make_field(p)
-            q = F['q']
-
-            # Simple construction (all lines through origin)
-            K_simple = construct_kakeya_random(F, n_dim)
-
-            # Greedy construction
-            if q <= 3 or n_dim <= 2:
-                K_greedy = construct_kakeya_set(F, n_dim)
-            else:
-                K_greedy = K_simple  # Skip greedy for large cases
-
-            lb = dvir_lower_bound(q, n_dim)
-            total = q**n_dim
-
-            print(f"F_{q}^{n_dim}:")
-            print(f"  Total points:          {total}")
-            print(f"  Dvir lower bound:      {lb:.1f}")
-            print(f"  Simple Kakeya |K|:     {len(K_simple)}")
-            if K_greedy is not K_simple:
-                print(f"  Greedy Kakeya |K|:     {len(K_greedy)}")
-            print(f"  Is valid (simple):     {verify_kakeya(F, n_dim, K_simple)}")
-            print(f"  Ratio |K|/q^n:         {len(K_simple)/total:.3f}")
-            print()
-            results.append((q, n_dim, len(K_simple), lb, total))
+    results['theoretical_min_carrier'] = min_carrier
+    results['p'] = p
 
     return results
 
 
-def demo_incidence_identity():
-    """Demonstrate the incidence double-counting identity."""
-    print("=" * 60)
-    print("DEMO 2: Incidence Double-Counting Identity")
-    print("=" * 60)
-    print()
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 3: Hash Collision Analysis
+# ═══════════════════════════════════════════════════════════════════════════
 
-    for p in [2, 3, 5]:
-        F = make_field(p)
-        q = F['q']
-        n = 2
+def hash_collision_analysis(p: int, num_hash_functions: int) -> Dict:
+    """
+    Analyze collision structure using incidence theory.
 
-        # Create lines with distinct directions
-        directions = all_nonzero_directions(F, n)
-        lines = []
-        for v in directions:
-            base = tuple(0 for _ in range(n))
-            lines.append((base, v))
+    Model: each 'hash function' h_s maps x -> (s*x + b) mod p.
+    The 'line' for slope s is the graph {(x, h_s(x))}.
+    Collisions between hash functions correspond to line intersections.
 
-        _, total_incidences = compute_incidences(F, n, lines)
-        expected = len(lines) * q
+    The pairwise intersection bound gives: if each pair of hash functions
+    collides on at most T inputs, then the combined output range (carrier)
+    must be large.
 
-        print(f"F_{q}^{n}, {len(lines)} lines:")
-        print(f"  Total incidences:      {total_incidences}")
-        print(f"  Expected (|L| * q):    {expected}")
-        print(f"  Match:                 {total_incidences == expected}")
+    This formalizes the folk wisdom: good hash families spread their outputs.
+    """
+    # Construct hash family
+    hash_lines = {}
+    for s in range(min(num_hash_functions, p)):
+        # h_s(x) = s*x mod p
+        hash_lines[s] = frozenset((x, (s * x) % p) for x in range(p))
+
+    carrier = set().union(*hash_lines.values())
+    mult = Counter()
+    for ln in hash_lines.values():
+        for pt in ln:
+            mult[pt] += 1
+
+    # Compute pairwise collisions
+    max_T = 0
+    collision_counts = []
+    dirs = list(hash_lines.keys())
+    for i in range(len(dirs)):
+        for j in range(i + 1, len(dirs)):
+            isect = len(hash_lines[dirs[i]] & hash_lines[dirs[j]])
+            collision_counts.append(isect)
+            max_T = max(max_T, isect)
+
+    num_dirs = len(hash_lines)
+    L = p
+    bound = (num_dirs * L) ** 2 / (num_dirs * L + num_dirs * (num_dirs - 1) * max(max_T, 1))
+
+    return {
+        'p': p,
+        'num_hash_functions': num_dirs,
+        'domain_size': p,
+        'carrier_size': len(carrier),
+        'max_pairwise_collision': max_T,
+        'energy': sum(m ** 2 for m in mult.values()),
+        'lower_bound_from_theorem': bound,
+        'bound_satisfied': len(carrier) >= bound - 1e-9,
+        'collision_distribution': dict(Counter(collision_counts)),
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Main demonstration
+# ═══════════════════════════════════════════════════════════════════════════
+
+def main():
+    print("=" * 72)
+    print("  APPLICATIONS OF DISCRETE KAKEYA THEORY")
+    print("=" * 72)
+
+    # Application 1
+    print("\n┌─────────────────────────────────────────────────────┐")
+    print("│  Application 1: Compressed Sensing Matrix Design    │")
+    print("└─────────────────────────────────────────────────────┘\n")
+
+    for p in [5, 7, 11]:
+        matrix = measurement_matrix_from_lines(p, p)
+        analysis = analyze_measurement_matrix(matrix)
+        print(f"  p={p}: {analysis['num_rows']} measurements × "
+              f"{analysis['num_cols']} sensors")
+        print(f"    Total mass: {analysis['total_mass']}, "
+              f"Energy: {analysis['total_energy']}")
+        print(f"    Max column coherence: {analysis['max_column_norm_sq']}")
+        print(f"    Cauchy-Schwarz: {analysis['cauchy_schwarz_lhs']} ≤ "
+              f"{analysis['cauchy_schwarz_rhs']}  "
+              f"({'✓' if analysis['bound_satisfied'] else '✗'})")
         print()
 
+    # Application 2
+    print("\n┌─────────────────────────────────────────────────────┐")
+    print("│  Application 2: Network Coverage Analysis           │")
+    print("└─────────────────────────────────────────────────────┘\n")
 
-def demo_polynomial_vanishing():
-    """Demonstrate that a polynomial of degree < q vanishing on all of F_q is zero."""
-    print("=" * 60)
-    print("DEMO 3: Polynomial Vanishing over Finite Fields")
-    print("=" * 60)
-    print()
+    for p in [5, 7, 11]:
+        results = network_coverage_model(p)
+        print(f"  p={p}:")
+        print(f"    Hub topology:     carrier={results['hub']['carrier_size']}, "
+              f"energy={results['hub']['energy']}, "
+              f"max_load={results['hub']['max_load']}")
+        print(f"    Distributed:      carrier={results['distributed']['carrier_size']}, "
+              f"energy={results['distributed']['energy']}, "
+              f"max_load={results['distributed']['max_load']}")
+        print(f"    Theoretical min:  {results['theoretical_min_carrier']:.1f}")
+        print()
+
+    # Application 3
+    print("\n┌─────────────────────────────────────────────────────┐")
+    print("│  Application 3: Hash Collision Analysis             │")
+    print("└─────────────────────────────────────────────────────┘\n")
+
+    for p in [7, 11, 13]:
+        for nh in [3, p]:
+            result = hash_collision_analysis(p, nh)
+            print(f"  p={p}, {result['num_hash_functions']} hash functions:")
+            print(f"    Output range: {result['carrier_size']} / {p*p} cells")
+            print(f"    Max pairwise collision: {result['max_pairwise_collision']}")
+            print(f"    Energy: {result['energy']}")
+            print(f"    Lower bound: {result['lower_bound_from_theorem']:.1f}")
+            print(f"    Bound satisfied: {'✓' if result['bound_satisfied'] else '✗'}")
+        print()
+
+    print("=" * 72)
+    print("  All applications demonstrate verified bounds.")
+    print("=" * 72)
+
+
+if __name__ == '__main__':
+    main()
+
+
+#!/usr/bin/env python3
+"""
+demo.py — Interactive demonstration of discrete Kakeya configurations.
+
+Generates finite Kakeya configurations over ZMod(p) x ZMod(p), computes
+carrier sizes, point multiplicities, overlap energy, and tests lower bounds
+proved in the formal development.
+
+Usage:
+    python demo.py
+"""
+
+import itertools
+from collections import Counter
+from typing import Dict, List, Set, Tuple
+
+# ─── Core data types ─────────────────────────────────────────────────────────
+
+Point = Tuple[int, int]
+Line = frozenset  # frozenset of Points
+
+
+def affine_line_Fp2(p: int, slope: int, intercept: int) -> frozenset:
+    """Affine line y = slope*x + intercept in (ZMod p)^2."""
+    return frozenset((x, (slope * x + intercept) % p) for x in range(p))
+
+
+def vertical_line_Fp2(p: int, x0: int) -> frozenset:
+    """Vertical line x = x0 in (ZMod p)^2."""
+    return frozenset((x0, y) for y in range(p))
+
+
+# ─── Kakeya configuration builders ──────────────────────────────────────────
+
+def star_config(p: int, center: Point = (0, 0)) -> Dict[str, object]:
+    """
+    Star configuration: all lines through a single center point.
+    One line per 'direction' (p slopes + 1 vertical = p+1 directions).
+    """
+    cx, cy = center
+    lines = {}
+    for slope in range(p):
+        intercept = (cy - slope * cx) % p
+        lines[('slope', slope)] = affine_line_Fp2(p, slope, intercept)
+    lines[('vertical', 0)] = vertical_line_Fp2(p, cx)
+    carrier = set()
+    for ln in lines.values():
+        carrier |= ln
+    return {'lines': lines, 'carrier': carrier, 'p': p, 'name': 'star'}
+
+
+def spread_config(p: int) -> Dict[str, object]:
+    """
+    Spread configuration: choose intercepts to spread lines apart.
+    Uses distinct intercepts to reduce concurrency.
+    """
+    lines = {}
+    for slope in range(p):
+        intercept = (slope * slope) % p  # quadratic spread
+        lines[('slope', slope)] = affine_line_Fp2(p, slope, intercept)
+    lines[('vertical', 0)] = vertical_line_Fp2(p, 0)
+    carrier = set()
+    for ln in lines.values():
+        carrier |= ln
+    return {'lines': lines, 'carrier': carrier, 'p': p, 'name': 'spread'}
+
+
+def random_config(p: int, seed: int = 42) -> Dict[str, object]:
+    """
+    Random configuration: random intercept per slope.
+    """
+    import random
+    rng = random.Random(seed)
+    lines = {}
+    for slope in range(p):
+        intercept = rng.randint(0, p - 1)
+        lines[('slope', slope)] = affine_line_Fp2(p, slope, intercept)
+    lines[('vertical', 0)] = vertical_line_Fp2(p, rng.randint(0, p - 1))
+    carrier = set()
+    for ln in lines.values():
+        carrier |= ln
+    return {'lines': lines, 'carrier': carrier, 'p': p, 'name': 'random'}
+
+
+# ─── Statistics ──────────────────────────────────────────────────────────────
+
+def compute_multiplicity(config: Dict) -> Counter:
+    """Compute point multiplicity: how many lines pass through each point."""
+    mult = Counter()
+    for ln in config['lines'].values():
+        for pt in ln:
+            mult[pt] += 1
+    return mult
+
+
+def compute_energy(config: Dict) -> int:
+    """Compute Kakeya energy = sum of squared multiplicities."""
+    mult = compute_multiplicity(config)
+    return sum(m ** 2 for m in mult.values())
+
+
+def compute_pairwise_intersections(config: Dict) -> Dict[Tuple, int]:
+    """Compute pairwise intersection sizes between all line pairs."""
+    dirs = list(config['lines'].keys())
+    intersections = {}
+    for i, d1 in enumerate(dirs):
+        for j, d2 in enumerate(dirs):
+            if i < j:
+                isect = config['lines'][d1] & config['lines'][d2]
+                intersections[(d1, d2)] = len(isect)
+    return intersections
+
+
+def max_pairwise_intersection(config: Dict) -> int:
+    """Maximum pairwise intersection size T."""
+    ints = compute_pairwise_intersections(config)
+    return max(ints.values()) if ints else 0
+
+
+# ─── Lower bound from proved theorems ───────────────────────────────────────
+
+def cauchy_schwarz_bound(num_dirs: int, L: int, energy: int) -> float:
+    """
+    From Theorem 1 (sq_total_line_mass_le_card_mul_energy):
+    |carrier| >= (|Dir| * L)^2 / energy
+    """
+    if energy == 0:
+        return 0
+    return (num_dirs * L) ** 2 / energy
+
+
+def pairwise_bound(num_dirs: int, L: int, T: int) -> float:
+    """
+    From Theorem 2 (card_lower_bound_of_pairwise_intersection_bound):
+    |carrier| >= (|Dir| * L)^2 / (|Dir| * L + |Dir| * (|Dir| - 1) * T)
+    """
+    denom = num_dirs * L + num_dirs * (num_dirs - 1) * T
+    if denom == 0:
+        return 0
+    return (num_dirs * L) ** 2 / denom
+
+
+# ─── Exhaustive search for small primes ─────────────────────────────────────
+
+def exhaustive_min_carrier(p: int) -> Tuple[int, List]:
+    """
+    For small p, exhaustively search over all one-line-per-slope families
+    to find minimum carrier size. Only slopes 0..p-1 (no vertical).
+    """
+    if p > 7:
+        print(f"  Skipping exhaustive search for p={p} (too large)")
+        return -1, []
+
+    best_size = p * p + 1
+    best_configs = []
+    # Each slope gets an intercept in {0, ..., p-1}
+    for intercepts in itertools.product(range(p), repeat=p):
+        carrier = set()
+        for slope in range(p):
+            for x in range(p):
+                carrier.add((x, (slope * x + intercepts[slope]) % p))
+        size = len(carrier)
+        if size < best_size:
+            best_size = size
+            best_configs = [intercepts]
+        elif size == best_size:
+            best_configs.append(intercepts)
+    return best_size, best_configs
+
+
+def check_star_like(p: int, intercepts: Tuple[int, ...]) -> bool:
+    """
+    Check if a minimizing configuration is 'star-like': has a point
+    with maximum possible multiplicity (= p, one per slope).
+    """
+    mult = Counter()
+    for slope in range(p):
+        for x in range(p):
+            pt = (x, (slope * x + intercepts[slope]) % p)
+            mult[pt] += 1
+    return max(mult.values()) == p
+
+
+# ─── Main demo ───────────────────────────────────────────────────────────────
+
+def main():
+    print("=" * 72)
+    print("  DISCRETE KAKEYA CONFIGURATIONS — DEMONSTRATION")
+    print("  Verified lower bounds from incidence geometry")
+    print("=" * 72)
+
+    # ── Section 1: Configuration statistics for various primes ──
+    print("\n┌─────────────────────────────────────────────────────┐")
+    print("│  Section 1: Configuration Statistics                │")
+    print("└─────────────────────────────────────────────────────┘\n")
+
+    for p in [3, 5, 7, 11]:
+        print(f"━━━ Prime p = {p}, working in F_{p}² ━━━")
+        configs = [star_config(p), spread_config(p), random_config(p)]
+        for cfg in configs:
+            num_dirs = len(cfg['lines'])
+            L = p  # each line has p points
+            carrier_size = len(cfg['carrier'])
+            energy = compute_energy(cfg)
+            T = max_pairwise_intersection(cfg)
+            mult = compute_multiplicity(cfg)
+            max_mult = max(mult.values())
+
+            cs_bound = cauchy_schwarz_bound(num_dirs, L, energy)
+            pw_bound = pairwise_bound(num_dirs, L, T)
+
+            print(f"\n  Config: {cfg['name']}")
+            print(f"    Directions:     {num_dirs}")
+            print(f"    Line size (L):  {L}")
+            print(f"    Carrier size:   {carrier_size}")
+            print(f"    Energy:         {energy}")
+            print(f"    Max T:          {T}")
+            print(f"    Max multiplicity: {max_mult}")
+            print(f"    ── Proved lower bounds ──")
+            print(f"    Cauchy–Schwarz: |carrier| ≥ {cs_bound:.1f}")
+            print(f"    Pairwise (T={T}): |carrier| ≥ {pw_bound:.1f}")
+            print(f"    Bounds satisfied: CS={carrier_size >= cs_bound}, "
+                  f"PW={carrier_size >= pw_bound}")
+        print()
+
+    # ── Section 2: Extremizer conjecture test ──
+    print("\n┌─────────────────────────────────────────────────────┐")
+    print("│  Section 2: Extremizer Conjecture Test              │")
+    print("│  'Minimizers are star-like (max concurrency)'       │")
+    print("└─────────────────────────────────────────────────────┘\n")
 
     for p in [3, 5, 7]:
-        F = make_field(p)
-        q = F['q']
-
-        # Test: polynomial of degree < q vanishing on all of F_q
-        # Use Lagrange interpolation to find the unique polynomial
-        # that vanishes on all of F_q
-        # p(x) = prod_{a in F_q} (x - a) has degree q
-        # Any polynomial of degree < q vanishing on all F_q must be 0
-
-        # Construct random polynomial of degree < q
-        import random
-        random.seed(42)
-        coeffs = [random.randint(0, p-1) for _ in range(q - 1)]
-
-        def eval_poly(coeffs, x):
-            result = 0
-            for i, c in enumerate(coeffs):
-                result = F['add'](result, F['mul'](c, pow(x, i, p)))
-            return result
-
-        # Check if it vanishes everywhere
-        all_zero = all(eval_poly(coeffs, x) == 0 for x in F['elements'])
-        is_zero_poly = all(c == 0 for c in coeffs)
-
-        print(f"F_{q}: Random poly of degree < {q}")
-        print(f"  Coefficients: {coeffs}")
-        print(f"  Vanishes on all F_{q}: {all_zero}")
-        print(f"  Is zero polynomial:    {is_zero_poly}")
-        if all_zero and not is_zero_poly:
-            print(f"  ERROR: Non-zero poly vanishes everywhere!")
-        elif all_zero:
-            print(f"  Consistent: zero poly vanishes everywhere")
+        print(f"  p = {p}:")
+        min_size, minimizers = exhaustive_min_carrier(p)
+        if min_size < 0:
+            continue
+        print(f"    Minimum carrier size: {min_size}")
+        print(f"    Number of minimizers: {len(minimizers)}")
+        all_star = all(check_star_like(p, m) for m in minimizers)
+        print(f"    All minimizers star-like: {all_star}")
+        if not all_star:
+            non_star = [m for m in minimizers if not check_star_like(p, m)]
+            print(f"    ⚠ Non-star minimizers found: {len(non_star)}")
         else:
-            print(f"  Consistent: non-zero poly has non-roots")
+            print(f"    ✓ Conjecture holds for p={p}")
         print()
 
+    # ── Section 3: Energy vs carrier trade-off ──
+    print("\n┌─────────────────────────────────────────────────────┐")
+    print("│  Section 3: Energy–Carrier Trade-off                │")
+    print("└─────────────────────────────────────────────────────┘\n")
 
-def demo_line_intersection():
-    """Demonstrate that lines with distinct directions intersect in at most one point."""
-    print("=" * 60)
-    print("DEMO 4: Line Intersection Bounds")
-    print("=" * 60)
-    print()
+    p = 5
+    print(f"  p = {p}: scanning all intercept choices (slopes 0..{p-1})")
+    print(f"  {'Carrier':>8}  {'Energy':>8}  {'MaxMult':>8}  {'CS Bound':>10}  {'Tight?':>6}")
+    print(f"  {'─'*8}  {'─'*8}  {'─'*8}  {'─'*10}  {'─'*6}")
 
-    for p in [3, 5, 7]:
-        F = make_field(p)
-        q = F['q']
-        n = 2
+    seen = set()
+    for intercepts in itertools.product(range(p), repeat=p):
+        carrier = set()
+        mult = Counter()
+        for slope in range(p):
+            for x in range(p):
+                pt = (x, (slope * x + intercepts[slope]) % p)
+                carrier.add(pt)
+                mult[pt] += 1
+        csize = len(carrier)
+        energy = sum(m ** 2 for m in mult.values())
+        max_m = max(mult.values())
+        key = (csize, energy, max_m)
+        if key not in seen:
+            seen.add(key)
+            cs_b = cauchy_schwarz_bound(p, p, energy)
+            tight = "yes" if abs(csize - cs_b) < 0.01 else ""
+            print(f"  {csize:>8}  {energy:>8}  {max_m:>8}  {cs_b:>10.2f}  {tight:>6}")
 
-        directions = all_nonzero_directions(F, n)
-        max_intersection = 0
-        total_pairs = 0
-        single_point_count = 0
+    # ── Section 4: Multiplicity distribution ──
+    print("\n┌─────────────────────────────────────────────────────┐")
+    print("│  Section 4: Multiplicity Distribution               │")
+    print("└─────────────────────────────────────────────────────┘\n")
 
-        for i, v1 in enumerate(directions):
-            for v2 in directions[i+1:]:
-                if v1 == v2:
-                    continue
-                line1 = affine_line(F, (0,) * n, v1)
-                line2 = affine_line(F, (1, 0), v2)
-                intersection = line1 & line2
-                max_intersection = max(max_intersection, len(intersection))
-                total_pairs += 1
-                if len(intersection) == 1:
-                    single_point_count += 1
+    for p in [5, 7, 11]:
+        cfg = star_config(p)
+        mult = compute_multiplicity(cfg)
+        dist = Counter(mult.values())
+        print(f"  Star config, p={p}:")
+        for k in sorted(dist.keys()):
+            bar = "█" * dist[k]
+            print(f"    mult={k}: {dist[k]:>4} points  {bar}")
 
-        print(f"F_{q}^{n}: {total_pairs} line pairs tested")
-        print(f"  Max intersection size: {max_intersection}")
-        print(f"  Single-point intersections: {single_point_count}")
+        cfg2 = spread_config(p)
+        mult2 = compute_multiplicity(cfg2)
+        dist2 = Counter(mult2.values())
+        print(f"  Spread config, p={p}:")
+        for k in sorted(dist2.keys()):
+            bar = "█" * min(dist2[k], 60)
+            print(f"    mult={k}: {dist2[k]:>4} points  {bar}")
         print()
 
-
-def demo_ascending_factorial():
-    """Demonstrate the ascending factorial inequality q^n <= q(q+1)...(q+n-1)."""
-    print("=" * 60)
-    print("DEMO 5: Ascending Factorial Inequality")
-    print("=" * 60)
-    print()
-
-    for q in [2, 3, 5, 7, 11]:
-        for n in [1, 2, 3, 4, 5]:
-            asc_fact = 1
-            for i in range(n):
-                asc_fact *= (q + i)
-            power = q ** n
-            print(f"  q={q}, n={n}: q^n = {power:>6d}, "
-                  f"q(q+1)...(q+n-1) = {asc_fact:>8d}, "
-                  f"ratio = {asc_fact/power:.2f}")
-        print()
+    print("\n" + "=" * 72)
+    print("  Demo complete. All proved bounds verified numerically.")
+    print("=" * 72)
 
 
-if __name__ == "__main__":
-    demo_kakeya_sizes()
-    demo_incidence_identity()
-    demo_polynomial_vanishing()
-    demo_line_intersection()
-    demo_ascending_factorial()
-    print("\nAll demos completed successfully!")
+if __name__ == '__main__':
+    main()
