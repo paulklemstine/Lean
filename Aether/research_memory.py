@@ -757,23 +757,73 @@ class FutureDirectionsManager:
                 ]
 
             # Count theorems with overlapping keywords
-            keywords = set(direction.title.lower().split() + direction.description.lower().split())
-            # Filter out common stop words
-            stop_words = {"the", "a", "an", "and", "or", "of", "for", "in", "to", "is", "are",
-                          "by", "with", "from", "that", "this", "it", "as", "be", "can", "we"}
-            keywords = keywords - stop_words
+            # Use a two-tier approach: distinctive terms from the title (high weight)
+            # plus rare terms from the description (supplementary).
+            # Avoid common math/English words that match everything.
+            import re
+            title_words = re.findall(r'[a-zA-Z]{3,}', direction.title.lower())
+            desc_words = re.findall(r'[a-zA-Z]{3,}', direction.description.lower())
+
+            # Broad stop word list covering common English and generic math terms
+            stop_words = {
+                "the", "and", "or", "for", "in", "to", "is", "are", "by", "with",
+                "from", "that", "this", "it", "as", "be", "can", "we", "has", "had",
+                "was", "were", "been", "have", "will", "would", "could", "should",
+                "may", "might", "shall", "not", "but", "all", "any", "each", "every",
+                "both", "few", "more", "most", "other", "some", "such", "than", "too",
+                "very", "just", "also", "then", "when", "where", "how", "what", "which",
+                "who", "why", "if", "into", "over", "under", "about", "between",
+                "through", "during", "before", "after", "above", "below", "only",
+                "own", "there", "their", "they", "them", "these", "those",
+                # Generic math terms that appear in almost every Lean file
+                "theorem", "proof", "prove", "lemma", "prop", "corollary", "def",
+                "definition", "set", "function", "let", "assume", "show", "given",
+                "using", "based", "since", "therefore", "thus", "hence", "moreover",
+                "however", "indeed", "note", "remark", "example", "case", "result",
+                "implies", "following", "follows", "construct", "define", "int",
+                "real", "nat", "bool", "type", "class", "instance", "term", "value",
+                "number", "point", "line", "field", "ring", "group", "map", "fin",
+                "list", "option", "sort", "test", "impact", "conjecture", "constant",
+                "exists", "forall", "lambda", "variable", "parameter", "return",
+                "arithmetic", "automated", "axiom", "consistent", "derive", "develop",
+                "general", "specific", "property", "structure", "method", "approach",
+                "result", "statement", "condition", "bound", "space", "module",
+                "category", "morphism", "object", "element", "sequence", "series",
+                "limit", "finite", "infinite", "complete", "partial", "total",
+                "order", "relation", "equation", "system", "model", "theory",
+                "computable", "algorithm", "computing", "computation", "computational",
+            }
+
+            # Tier 1: Title keywords (most distinctive — these are the core topic)
+            title_keywords = set(w for w in title_words if w not in stop_words)
+            # Tier 2: Description keywords (supplementary — must be longer to reduce noise)
+            desc_keywords = set(w for w in desc_words if w not in stop_words and len(w) >= 7)
 
             overlap = 0
             for f in domain_files:
                 decls_lower = " ".join(getattr(f, 'declarations', [])).lower()
-                if any(k in decls_lower for k in keywords):
+                # A file is "overlapping" if it has a title keyword match
+                # OR multiple description keyword matches
+                title_matches = sum(1 for k in title_keywords if k in decls_lower)
+                desc_matches = sum(1 for k in desc_keywords if k in decls_lower)
+                if title_matches >= 1 or desc_matches >= 2:
                     overlap += 1
 
-            if overlap == 0:
+            # Also check title-level novelty: does the exact topic already exist?
+            title_lower = direction.title.lower()
+            title_overlap = sum(
+                1 for f in domain_files
+                if title_lower.split(":")[0].strip() in
+                   f.relative_path.lower() + " ".join(getattr(f, 'declarations', [])).lower()
+            )
+
+            if title_overlap >= 3:
+                return 0.35  # exact topic is already heavily mined
+            elif overlap == 0:
                 return 0.85  # completely novel — high potential
-            elif overlap < 3:
+            elif overlap < 5:
                 return 0.75  # some grounding — good
-            elif overlap < 10:
+            elif overlap < 15:
                 return 0.55  # well-trodden area
             else:
                 return 0.35  # heavily mined — discourage

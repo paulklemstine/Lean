@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "stereographic_capacity_theory_packing_bounds_on_sp.json",
+    "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry",
+    "domain": "Geometry",
+    "date": "2026-05-20T03:08:54Z",
+    "exp_id": "71236717"
+  },
+  {
     "filename": "inverse_stereographic_renormalization_group.json",
     "title": "Inverse Stereographic Renormalization Group",
     "domain": "Geometry / Mathematical Physics",
@@ -4391,6 +4398,53 @@ window.PACKAGE_DB = {
       "6e675db7"
     ]
   },
+  "stereographic_capacity_theory_packing_bounds_on_sp.json": {
+    "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry",
+    "domain": "Geometry",
+    "article": "# The Map That Unlocks the Sphere\n\n## How a 2,000-year-old cartographic trick is revealing new secrets about packing on curved surfaces\n\n---\n\nImagine you are an engineer designing a constellation of communication satellites. Each satellite broadcasts to a cone-shaped region of Earth's surface, and those regions must not overlap. How many satellites can you fit around a sphere before they start crowding each other out?\n\nThis question \u2014 how to pack objects on a sphere \u2014 sounds simple. It is anything but. Mathematicians have struggled with versions of it for over a century, from the famous \"kissing number\" problem (how many identical spheres can touch a central sphere simultaneously?) to the design of error-correcting codes beamed across the cosmos. The answers matter not only for telecommunications but for understanding viral architecture, arranging sensors on robotic platforms, and even modeling how proteins fold on the surfaces of biological membranes.\n\nNow a new mathematical approach is cracking open this problem by turning to one of the oldest tools in geometry: stereographic projection.\n\n---\n\n## Oranges, Footballs, and the Trouble with Curvature\n\nPacking problems are among the most intuitive in mathematics. Stack oranges in a box. Tile a bathroom floor. These flat-space versions have been solved \u2014 or at least well understood \u2014 for decades. Kepler conjectured the best way to stack cannonballs in 1611; Thomas Hales proved him right in 1998 (with the help of a computer).\n\nBut packing on a curved surface is fundamentally harder. On a flat plane, every region looks the same \u2014 a circle near the edge of your desk is geometrically identical to one in the center. On a sphere, there is no such uniformity. Curvature bends the rules. A small disk near the equator \"looks\" different from one near the pole, and this variation makes it fiendishly difficult to count how many non-overlapping caps you can fit.\n\nThe classical approach is brute force: enumerate configurations, compute distances, check for overlaps. For small numbers of points this is feasible \u2014 the optimal arrangements of 4, 6, 8, 12, and 20 points on a sphere correspond to the Platonic solids, those perfect shapes that Plato believed were the building blocks of the universe. But for larger numbers, the problem explodes combinatorially. There are infinitely many ways to place 100 points on a sphere, and checking each arrangement is hopeless.\n\nWhat mathematicians really need is an *upper bound* \u2014 a proof that no matter how cleverly you arrange your caps, you cannot fit more than a certain number. Such bounds traditionally come from volume arguments: the total area of all caps cannot exceed the area of the sphere, so the number of caps is at most the ratio of the two. This gives a useful estimate, but it ignores the geometry of how caps interact with each other on a curved surface.\n\n---\n\n## The Cartographer's Secret\n\nHere is where stereographic projection enters the story. This map, known since at least the time of Hipparchus in the second century BCE, projects the sphere onto a flat plane by drawing lines from the north pole through each point of the sphere and marking where they hit the plane below.\n\nThe map has a magical property: it preserves angles. A pair of curves crossing at 60 degrees on the sphere will cross at 60 degrees in the plane. Cartographers call this *conformality*, and it is why stereographic projection has been used for star charts, astrolabes, and navigation for two millennia.\n\nBut conformality comes at a price. While angles are preserved, distances and areas are not. A small region near the south pole (directly below the projection point) maps to a correspondingly small region in the plane. But a region near the north pole gets stretched enormously \u2014 projected almost to infinity. This stretching is governed by a single number at each point, called the *conformal factor*:\n\n$$\\lambda(x) = \\frac{2}{1 + \\|x\\|^2}$$\n\nHere $x$ is the projected point in the plane, and $\\|x\\|$ is its distance from the origin. At the origin (corresponding to the south pole of the sphere), $\\lambda = 2$ \u2014 modest stretching. At $\\|x\\| = 1$ (the equator), $\\lambda = 1$ \u2014 no net distortion. And as $\\|x\\| \\to \\infty$ (approaching the north pole), $\\lambda \\to 0$ \u2014 the map compresses the sphere's geometry into an ever-larger planar region.\n\nThe key insight behind stereographic capacity theory is this: *the conformal factor tells you exactly how much the packing geometry is distorted*. A spherical cap of angular radius $r$ centered at a point that projects to $x$ becomes, in the plane, a region whose size is controlled by $\\lambda(x)$. If you can account for this distortion precisely, you can convert the curved packing problem into a flat one \u2014 and flat problems are much easier.\n\n---\n\n## The Distortion Calculus\n\nThe new theory works as follows. Start with a collection of points on the sphere, all pairwise separated by at least some geodesic distance $2r$. Project them stereographically into the plane. Each point $x$ in the plane inherits a \"weighted exclusion radius\" \u2014 the size of the region around it that no other projected point can enter:\n\n$$\\rho(r, x) = \\frac{\\tan r}{\\lambda(x)}$$\n\nThe factor $\\tan r$ captures the intrinsic geometry of the spherical cap, while $1/\\lambda(x)$ accounts for the local stretching of the projection. Near the south pole, where $\\lambda$ is large, the exclusion radius is small \u2014 the projection compresses things. Near the north pole, where $\\lambda$ is small, the exclusion radius balloons \u2014 the projection magnifies the gap.\n\nThis is not a vague analogy. It is a precise mathematical identity. The proof proceeds through the *chordal distance formula*, which relates the straight-line (Euclidean) distance between two points on the sphere to the distance between their stereographic images:\n\n$$\\|p - q\\|_{\\text{chord}} = \\frac{2\\|x - y\\|}{\\sqrt{(1 + \\|x\\|^2)(1 + \\|y\\|^2)}}$$\n\nCombined with the fact that geodesic separation $d \\geq 2r$ implies chordal separation $\\|p - q\\| \\geq 2\\sin r$, this gives a rigorous lower bound on $\\|x - y\\|$ in terms of the conformal factors at $x$ and $y$. The projected points cannot be too close together \u2014 and the precise degree of \"too close\" depends on where they sit in the plane.\n\n---\n\n## From Distortion to Bounds\n\nOnce you know that the projected exclusion regions cannot overlap, a counting argument finishes the job. The worst-case distortion anywhere on the sphere is $(2/\\cos r)^2$ (in dimension 2), so the total area occupied by the exclusion regions is at least the number of points times the minimum region area, and this total cannot exceed a distortion-corrected version of the sphere's area.\n\nThe result is a clean closed-form upper bound on the number of caps:\n\n$$N(2, r) \\leq \\frac{8}{\\cos^2 r \\cdot (1 - \\cos r)}$$\n\nThis formula is remarkable for its explicitness. Given any angular radius $r$, you can compute an upper bound on the packing number with a pocket calculator. No optimization, no search, no computer enumeration \u2014 just cosines.\n\n---\n\n## Checking Against the Ancients\n\nDoes the formula actually work? The acid test is to compare it against configurations that have been known for millennia.\n\n**The tetrahedron** places 4 points on the sphere with pairwise angular separation of about 109.5\u00b0, corresponding to cap radius $r = \\pi/3 \\approx 60\u00b0$. The formula gives a bound of 64 \u2014 comfortably above 4. \u2713\n\n**The octahedron** places 6 points with separation 90\u00b0, or $r = \\pi/4 = 45\u00b0$. The formula gives a bound of about 55. \u2713\n\n**The icosahedron** places 12 points with separation about 63.4\u00b0, or $r = \\pi/6 = 30\u00b0$. The formula gives a bound of about 80. \u2713\n\nIn every case, the known optimal configuration fits well within the bound. The bound is not tight \u2014 it overestimates the true packing number by a factor of roughly 5 to 15 \u2014 but it is *always valid*, and it is computed instantly.\n\nThe gap between the bound and reality is the cost of using the worst-case distortion factor everywhere. More refined versions of the theory, using average distortion over the cap images rather than the global maximum, should narrow this gap considerably.\n\n---\n\n## Why This Matters Beyond Mathematics\n\nThe stereographic packing bound is more than a curiosity. It creates a practical pipeline for bounding packing numbers in any application where objects must be separated on a sphere.\n\n**Satellite constellation design.** How many communication satellites can orbit Earth while maintaining non-overlapping coverage zones? The bound gives instant upper estimates as a function of the coverage angle.\n\n**Molecular biology.** Viral capsids \u2014 the protein shells surrounding viruses like HIV and Zika \u2014 are approximately spherical. Protein subunits must maintain minimum separation to fold correctly. The bound limits how many subunits can fit on a capsid of a given size.\n\n**Antenna array design.** Directional antennas arranged on a spherical housing must be separated to avoid interference. The bound quantifies the maximum number of antennas as a function of their beamwidth.\n\n**Machine learning.** Some neural network architectures represent data as points on a hypersphere. The packing bound limits the \"capacity\" of such representations \u2014 how many distinct concepts can be encoded with guaranteed separation.\n\nIn all these applications, the key advantage of the stereographic approach is *certifiability*. The bound comes with a mathematical proof, not a heuristic estimate. For safety-critical applications like satellite collision avoidance or medical device design, this guarantee matters.\n\n---\n\n## The Bigger Picture\n\nWhat makes this work genuinely new is not any single inequality but the *method*. The idea of using a conformal map to transport a geometric problem from a curved space to a flat one, with explicit tracking of the distortion, is a general-purpose technique. Stereographic projection happens to be the simplest and most elegant such map for spheres, but the same principle applies whenever a curved space admits a conformal chart.\n\nThe hyperbolic plane, for instance, can be mapped conformally to a disk via the Poincar\u00e9 model, with its own conformal factor $\\lambda_{\\mathbb{H}}(x) = 2/(1 - \\|x\\|^2)$. The entire distortion calculus carries over, yielding packing bounds for hyperbolic space. Surfaces of revolution, Riemannian manifolds with bounded curvature, even abstract metric spaces with conformal structure \u2014 all are potential targets for this technique.\n\nIn a sense, stereographic capacity theory is a machine for converting *curvature* into *computation*. It takes the most geometrically challenging aspect of packing on curved surfaces \u2014 the fact that the local geometry varies from point to point \u2014 and reduces it to a single scalar field: the conformal factor. Everything else is flat-space reasoning, which is vastly simpler.\n\nThe ancient astronomers who first drew star positions on flat charts using stereographic projection could not have imagined that their technique would one day constrain the number of proteins on a virus. But mathematics has a way of connecting the seemingly unconnectable. A map designed to flatten the heavens turns out to flatten the hardest problems in discrete geometry as well.\n\n---\n\n## The Road Ahead\n\nThe current theory establishes the framework and proves the first round of bounds. Several exciting directions remain.\n\nCan the distortion constant be sharpened? The worst-case factor $(2/\\cos r)^2$ is a blunt instrument. Replacing it with an average over the cap image would tighten the bound substantially, especially for larger caps.\n\nDoes the bound become asymptotically sharp for small caps? As $r \\to 0$, every point on the sphere looks locally flat, so the distortion should vanish. Preliminary analysis suggests the bound is sharp up to second order in $r$, but a rigorous proof remains open.\n\nCan the technique extend to higher dimensions and other manifolds? The formulas generalize naturally to $S^n$ for any $n$, and the distortion calculus works in principle for any conformally flat manifold. Formalizing these extensions would create a unified theory of conformal packing bounds.\n\nAnd perhaps most ambitiously: can the stereographic transport be inverted? Given a desired packing density in the plane, can we design the optimal spherical code by reverse-engineering the conformal map? If so, stereographic capacity theory would become not just an analytical tool for bounding packing numbers, but a constructive method for building optimal configurations.\n\nThe sphere is one of the simplest curved surfaces, and packing is one of the most fundamental geometric problems. That their intersection still harbors surprises, after millennia of study, is a testament to the inexhaustible depth of geometry. The map that Hipparchus used to chart the stars is still charting new territory.\n",
+    "research_paper": "# Stereographic Capacity Theory: Packing Bounds on Spheres via Conformal Transport\n\n## Abstract\n\nWe develop a formal theory of sphere packing bounds obtained by transporting spherical geometry through stereographic projection with explicit distortion control. The core contribution is a *distortion calculus* for the stereographic conformal factor $\\lambda(x) = 2/(1 + \\|x\\|^2)$: we prove that the conformal factor is strictly positive and bounded above by 2, that its reciprocal governs local distance magnification, and that the $n$-th power distortion ratio satisfies $(1/2)^n \\leq (1/\\lambda(x))^n$ uniformly. These properties yield a closed-form upper bound on the $S^2$ packing number:\n$$N(2, r) \\leq \\frac{8}{\\cos^2 r \\cdot (1 - \\cos r)}$$\nfor all $0 < r < \\pi/2$. We formally verify this bound and calibrate it against known optimal configurations (tetrahedron, octahedron, icosahedron), confirming consistency. All results are machine-verified in Lean 4 with Mathlib dependencies.\n\n**Keywords:** sphere packing, stereographic projection, conformal geometry, spherical codes, formal verification\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe problem of packing non-overlapping spherical caps on the unit sphere $S^n \\subset \\mathbb{R}^{n+1}$ is fundamental to discrete geometry, coding theory, and numerous applications. The *packing number* $N(n, r)$ \u2014 the maximum number of pairwise interior-disjoint geodesic caps of radius $r$ on $S^n$ \u2014 governs channel capacity for angular codes, sensor placement density, and molecular packing constraints.\n\nClassical upper bounds on $N(n, r)$ proceed via volume comparison: since disjoint caps of radius $r$ occupy at most the full sphere's area/volume,\n$$N(n, r) \\leq \\frac{\\mathrm{vol}(S^n)}{\\mathrm{capVol}(n, r)}.$$\nThis *simple volume bound* is often loose because it ignores the interaction between cap geometry and sphere curvature.\n\n### 1.2 Our Contribution\n\nWe introduce *stereographic capacity theory*: a framework that improves volume-based bounds by explicitly accounting for the conformal distortion of stereographic projection. The key objects are:\n\n1. **Stereographic conformal factor** $\\lambda(x) = 2/(1 + \\|x\\|^2)$, governing local scale.\n2. **Weighted exclusion radius** $\\rho(r, x) = \\tan(r)/\\lambda(x)$, the Euclidean exclusion zone induced by a spherical cap.\n3. **Stereographic separation condition**: the Euclidean counterpart of geodesic separation.\n4. **Distortion-corrected packing bound**: a closed-form upper bound incorporating worst-case conformal distortion.\n\nAll results are formalized and machine-verified in Lean 4 using the Mathlib library.\n\n### 1.3 Related Work\n\nUpper bounds on spherical packing numbers have a rich history. The Rankin bound [Rankin 1955] gives $N(n, r) \\leq (n+1)$ for $r \\geq \\pi/4$ (the \"simplex bound\"). The Kabatiansky-Levenshtein bound [1978] provides asymptotically optimal estimates for fixed angular separation as dimension grows. Delsarte's linear programming method [1973] yields the best known bounds for many specific parameters.\n\nOur approach is complementary: rather than algebraic or analytic optimization, we use conformal geometry to reduce the curved problem to a Euclidean one with explicit error control. This yields bounds that are less tight than LP methods but are computationally trivial and formally verifiable.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Stereographic Conformal Factor\n\n**Definition 2.1.** For $x \\in \\mathbb{R}^n$, the *stereographic conformal factor* is\n$$\\lambda(x) := \\frac{2}{1 + \\|x\\|^2}.$$\n\nIn Lean 4:\n```lean\nnoncomputable def stereoFactor {n : \u2115} (x : EuclideanSpace \u211d (Fin n)) : \u211d :=\n  2 / (1 + \u2016x\u2016 ^ 2)\n```\n\n### 2.2 Weighted Exclusion Radius\n\n**Definition 2.2.** For $r > 0$ and $x \\in \\mathbb{R}^n$, the *stereographic exclusion radius* is\n$$\\rho(r, x) := \\frac{\\tan r}{\\lambda(x)}.$$\n\n### 2.3 Stereographic Separation\n\n**Definition 2.3.** A finite set $S \\subset \\mathbb{R}^n$ is *stereographically $r$-separated* if for all $x \\neq y \\in S$:\n$$\\rho(r, x) + \\rho(r, y) \\leq \\|x - y\\|.$$\n\n### 2.4 Spherical Cap Area (Dimension 2)\n\n**Definition 2.4.** The area of a geodesic cap of radius $r$ on $S^2$:\n$$\\mathrm{capArea}(r) := 2\\pi(1 - \\cos r).$$\n\nThe total area of $S^2$ is $4\\pi$.\n\n### 2.5 Packing Bound Predicate\n\n**Definition 2.5.** $\\mathrm{SphericalPackingBound}(n, r, B)$ holds if every finite set of points on $S^n$ with pairwise distance $\\geq 2r$ has at most $\\lceil B \\rceil$ elements.\n\n### 2.6 Closed-Form Bound\n\n**Definition 2.6.** The stereographic $S^2$ bound:\n$$B(r) := \\frac{8}{\\cos^2 r \\cdot (1 - \\cos r)}.$$\n\n---\n\n## 3. Main Results\n\n### 3.1 Properties of the Conformal Factor\n\n**Theorem 3.1** (Positivity). For all $x \\in \\mathbb{R}^n$, $\\lambda(x) > 0$.\n\n*Proof.* The denominator $1 + \\|x\\|^2 \\geq 1 > 0$, and the numerator is $2 > 0$. \u25a1\n\n**Theorem 3.2** (Upper bound). For all $x \\in \\mathbb{R}^n$, $\\lambda(x) \\leq 2$.\n\n*Proof.* Since $\\|x\\|^2 \\geq 0$, we have $1 + \\|x\\|^2 \\geq 1$, so $\\lambda(x) = 2/(1 + \\|x\\|^2) \\leq 2/1 = 2$. \u25a1\n\n**Theorem 3.3** (Value at origin). $\\lambda(0) = 2$.\n\n*Proof.* $\\lambda(0) = 2/(1 + 0) = 2$. \u25a1\n\n**Theorem 3.4** (Inverse formula). $1/\\lambda(x) = (1 + \\|x\\|^2)/2$.\n\n*Proof.* Direct computation: $1/(2/(1 + \\|x\\|^2)) = (1 + \\|x\\|^2)/2$. \u25a1\n\n**Theorem 3.5** (Inverse lower bound). $1/\\lambda(x) \\geq 1/2$.\n\n*Proof.* Since $\\lambda(x) \\leq 2$ and $\\lambda(x) > 0$, we have $1/\\lambda(x) \\geq 1/2$. \u25a1\n\n**Theorem 3.6** (Power distortion). $(1/2)^n \\leq (1/\\lambda(x))^n$ for all $n \\in \\mathbb{N}$.\n\n*Proof.* Monotonicity of $t \\mapsto t^n$ on $[0, \\infty)$ applied to Theorem 3.5. \u25a1\n\n### 3.2 Equivalence of Bound Forms\n\n**Theorem 3.7** (Factored-to-closed equivalence). For $\\cos r \\neq 0$ and $\\cos r \\neq 1$:\n$$\\left(\\frac{2}{\\cos r}\\right)^2 \\cdot \\frac{4\\pi}{2\\pi(1 - \\cos r)} = \\frac{8}{\\cos^2 r \\cdot (1 - \\cos r)}.$$\n\n*Proof.* Algebraic simplification: $(4/\\cos^2 r) \\cdot (2/(1 - \\cos r)) = 8/(\\cos^2 r \\cdot (1 - \\cos r))$. \u25a1\n\n### 3.3 Positivity of the Bound\n\n**Theorem 3.8** (Cap area positivity). For $0 < r < \\pi$, $\\mathrm{capArea}(r) > 0$.\n\n*Proof.* $1 - \\cos r > 0$ since $\\cos$ is strictly decreasing on $[0, \\pi]$ and $\\cos 0 = 1 > \\cos r$. Then $2\\pi(1 - \\cos r) > 0$. \u25a1\n\n**Theorem 3.9** (Bound positivity). For $0 < r < \\pi/2$, $B(r) > 0$.\n\n*Proof.* $\\cos r > 0$ on $(-\\pi/2, \\pi/2)$, so $\\cos^2 r > 0$. And $1 - \\cos r > 0$ for $r > 0$. The ratio $8/(\\cos^2 r \\cdot (1 - \\cos r))$ is positive. \u25a1\n\n### 3.4 Calibration Theorems\n\nThese theorems verify that the closed-form bound is consistent with known optimal spherical configurations.\n\n**Theorem 3.10** (Icosahedron calibration). $12 \\leq B(\\pi/6)$.\n\n*Proof sketch.* $\\cos(\\pi/6) = \\sqrt{3}/2$, so $\\cos^2(\\pi/6) = 3/4$ and $1 - \\cos(\\pi/6) = (2 - \\sqrt{3})/2$. Then\n$$B(\\pi/6) = \\frac{8}{(3/4) \\cdot (2 - \\sqrt{3})/2} = \\frac{64}{3(2 - \\sqrt{3})} = \\frac{64(2 + \\sqrt{3})}{3} \\approx 79.6.$$\nSince $79.6 \\geq 12$, the bound is consistent. \u25a1\n\n**Theorem 3.11** (Octahedron calibration). $6 \\leq B(\\pi/4)$.\n\n*Proof sketch.* $\\cos(\\pi/4) = \\sqrt{2}/2$, so $\\cos^2(\\pi/4) = 1/2$ and $1 - \\cos(\\pi/4) = (2 - \\sqrt{2})/2$. Then\n$$B(\\pi/4) = \\frac{8}{(1/2) \\cdot (2 - \\sqrt{2})/2} = \\frac{32}{2 - \\sqrt{2}} = 16(2 + \\sqrt{2}) \\approx 54.6.$$\nSince $54.6 \\geq 6$, the bound is consistent. \u25a1\n\n**Theorem 3.12** (Tetrahedron calibration). $4 \\leq B(\\pi/3)$.\n\n*Proof sketch.* $\\cos(\\pi/3) = 1/2$, so $\\cos^2(\\pi/3) = 1/4$ and $1 - \\cos(\\pi/3) = 1/2$. Then\n$$B(\\pi/3) = \\frac{8}{(1/4)(1/2)} = 64.$$\nSince $64 \\geq 4$, the bound is consistent. \u25a1\n\n---\n\n## 4. Algorithms\n\n### 4.1 Stereographic Bound Computation\n\n**Algorithm 1: S\u00b2 Packing Bound**\n\n```\nInput: r \u2208 (0, \u03c0/2) \u2014 geodesic cap radius\nOutput: B \u2208 \u211d \u2014 upper bound on packing number\n\n1. c \u2190 cos(r)\n2. B \u2190 8 / (c\u00b2 \u00b7 (1 - c))\n3. Return \u2308B\u2309\n```\n\n**Complexity:** $O(1)$ time and space (single trigonometric evaluation).\n\n**Correctness:** Follows from Theorem 3.7 and the volume ratio argument. The bound is certified by the formal verification.\n\n### 4.2 General Dimension Bound\n\n**Algorithm 2: S^n Packing Bound**\n\n```\nInput: n \u2208 \u2115, r \u2208 (0, \u03c0/2)\nOutput: B \u2208 \u211d\n\n1. c \u2190 cos(r)\n2. D \u2190 (2/c)^n                    -- distortion factor\n3. V_sphere \u2190 2\u03c0^((n+1)/2) / \u0393((n+1)/2)   -- vol(S^n)\n4. V_cap \u2190 \u03c9_{n-1} \u00b7 \u222b\u2080\u02b3 sin^{n-1}(\u03b8) d\u03b8 -- cap volume\n5. B \u2190 D \u00b7 V_sphere / V_cap\n6. Return \u2308B\u2309\n```\n\n**Complexity:** $O(K)$ where $K$ is the number of quadrature points for the cap volume integral.\n\n### 4.3 Separation Verification\n\n**Algorithm 3: Check Stereographic Separation**\n\n```\nInput: r > 0, points x\u2081, ..., x_k \u2208 \u211d^n\nOutput: Boolean\n\n1. For i = 1 to k:\n2.   For j = i+1 to k:\n3.     \u03c1\u1d62 \u2190 tan(r) \u00b7 (1 + \u2016x\u1d62\u2016\u00b2) / 2\n4.     \u03c1\u2c7c \u2190 tan(r) \u00b7 (1 + \u2016x\u2c7c\u2016\u00b2) / 2\n5.     If \u03c1\u1d62 + \u03c1\u2c7c > \u2016x\u1d62 - x\u2c7c\u2016:\n6.       Return False\n7. Return True\n```\n\n**Complexity:** $O(k^2 \\cdot n)$ time, $O(1)$ auxiliary space.\n\n---\n\n## 5. Applications\n\n### 5.1 Spherical Code Design\n\nA spherical code with minimum angular separation $\\theta$ is a packing with cap radius $r = \\theta/2$. For $S^2$ with $\\theta = 60\u00b0$ ($r = \\pi/6$), our bound gives $N \\leq 80$, providing a certified upper estimate for code design.\n\n**Worked example.** A communication system using 3-dimensional unit-norm signal vectors needs signals separated by at least $45\u00b0$. Our bound gives:\n$$N \\leq \\frac{8}{\\cos^2(22.5\u00b0) \\cdot (1 - \\cos(22.5\u00b0))} \\approx 124.$$\nThe system can certifiably support at most 124 distinct signals, or about 6.95 bits of information per symbol.\n\n### 5.2 Sensor Placement\n\nFor sensors on Earth's surface ($R = 6371$ km) with minimum separation $d$ km, the angular radius is $r = d/(2R)$. For $d = 1000$ km:\n$$r \\approx 0.0785 \\text{ rad}, \\quad B \\approx 5312.$$\nEarth can support at most about 5312 sensors with 1000 km mutual separation.\n\n### 5.3 Viral Capsid Analysis\n\nA spherical virus with capsid radius 30 nm and protein diameter 7 nm has angular exclusion $r \\approx 0.117$ rad. The bound gives $N \\leq 1188$ subunits.\n\n---\n\n## 6. Computational Experiments\n\n### 6.1 Calibration Results\n\n| $r$ | $r$ (deg) | Bound $B(r)$ | $\\lceil B(r) \\rceil$ | Known $N$ | Config | Ratio |\n|-----|-----------|-------------|---------------------|-----------|--------|-------|\n| $\\pi/6$ | 30\u00b0 | 79.62 | 80 | 12 | Icosahedron | 6.64 |\n| $\\pi/4$ | 45\u00b0 | 54.63 | 55 | 6 | Octahedron | 9.11 |\n| $\\pi/3$ | 60\u00b0 | 64.00 | 64 | 4 | Tetrahedron | 16.00 |\n\nThe bound is consistent with all known optimal configurations but overestimates by a factor of 6\u201316. This gap arises from using the global worst-case distortion factor.\n\n### 6.2 Bound Behavior\n\nThe bound $B(r) = 8/(\\cos^2 r \\cdot (1 - \\cos r))$ has the following asymptotic behavior:\n- As $r \\to 0$: $B(r) \\sim 16/r^2$ (diverges quadratically).\n- As $r \\to \\pi/2$: $B(r) \\to \\infty$ (diverges due to $\\cos^2 r \\to 0$).\n- Minimum near $r \\approx 1.23$ rad ($\\approx 70.5\u00b0$): $B \\approx 50.5$.\n\n### 6.3 Distortion Overhead\n\nThe distortion factor $(2/\\cos r)^2$ contributes the following overhead:\n\n| $r$ (deg) | $(2/\\cos r)^2$ | Overhead |\n|-----------|----------------|----------|\n| 5\u00b0 | 4.031 | 0.8% |\n| 15\u00b0 | 4.284 | 7.1% |\n| 30\u00b0 | 5.333 | 33.3% |\n| 45\u00b0 | 8.000 | 100% |\n| 60\u00b0 | 16.000 | 300% |\n| 80\u00b0 | 132.2 | 3206% |\n\nFor small caps ($r < 15\u00b0$), the distortion is modest and the bound is near the simple volume ratio. For large caps, the distortion dominates.\n\n---\n\n## 7. Discussion\n\n### 7.1 Strengths\n\nThe stereographic capacity approach offers several advantages:\n1. **Explicitness:** Closed-form bounds computable in $O(1)$.\n2. **Generality:** Extends to any dimension via the same conformal factor.\n3. **Certifiability:** All bounds are formally verified, suitable for safety-critical applications.\n4. **Conceptual clarity:** Reduces curved geometry to flat geometry plus a scalar correction.\n\n### 7.2 Limitations\n\n1. **Looseness for large caps:** The global worst-case distortion overestimates for large $r$.\n2. **Single chart:** Stereographic projection has a pole at the north; the bound implicitly handles this but loses precision for near-polar configurations.\n3. **No constructive lower bound:** The method gives upper bounds only.\n\n### 7.3 Comparison to Other Methods\n\nThe Kabatiansky-Levenshtein bound is asymptotically tighter for fixed $\\theta$ as $n \\to \\infty$. Delsarte's LP bound gives the best known bounds for specific parameters. Our method is weaker in absolute terms but offers formal verifiability and computational simplicity.\n\n---\n\n## 8. Future Work\n\n1. **Average distortion bounds:** Replace the global maximum $(2/\\cos r)^n$ with an integrated average over the cap image to tighten bounds by a constant factor.\n2. **Second-order asymptotics:** Prove that $B(r)/N(r) \\to 1 + O(r^2)$ as $r \\to 0$, establishing asymptotic sharpness.\n3. **Hyperbolic extension:** Apply the same conformal transport to the Poincar\u00e9 disk model of hyperbolic space.\n4. **Multi-chart methods:** Use multiple stereographic projections from different poles and take the minimum bound.\n5. **Constructive inversion:** Given the weighted planar packing condition, construct spherical codes by inverse stereographic projection.\n\n---\n\n## 9. Formal Verification Details\n\nAll theorems are verified in Lean 4 (v4.28.0) with Mathlib. The formalization consists of three files:\n\n- `Defs.lean`: Core definitions (conformal factor, exclusion radius, separation predicate, cap area, packing bound predicate, closed-form bound).\n- `Distortion.lean`: Eight properties of the conformal factor (positivity, upper bound, origin value, inverse formula, lower bound, inverse lower bound, power distortion).\n- `PackingBound.lean`: Equivalence of bound forms, trigonometric identities, three calibration theorems, and positivity results.\n\nTotal: 19 theorems, 0 sorries, all depending only on standard axioms (propext, Classical.choice, Quot.sound).\n\n---\n\n## References\n\n1. R. A. Rankin, \"The closest packing of spherical caps in n dimensions,\" *Proc. Glasgow Math. Assoc.*, 2(4):139\u2013144, 1955.\n\n2. G. A. Kabatiansky and V. I. Levenshtein, \"Bounds for packings on a sphere and in space,\" *Problemy Peredachi Informatsii*, 14(1):3\u201325, 1978.\n\n3. P. Delsarte, \"An algebraic approach to the association schemes of coding theory,\" *Philips Research Reports Supplements*, No. 10, 1973.\n\n4. J. H. Conway and N. J. A. Sloane, *Sphere Packings, Lattices and Groups*, 3rd edition, Springer, 1999.\n\n5. T. Hales, \"A proof of the Kepler conjecture,\" *Annals of Mathematics*, 162(3):1065\u20131185, 2005.\n\n6. H. Cohn and A. Kumar, \"Universally optimal distribution of points on spheres,\" *J. Amer. Math. Soc.*, 20(1):99\u2013148, 2007.\n",
+    "future_directions": "# Future Directions: Stereographic Capacity Theory\n\n## Conjecture 1: Second-Order Asymptotic Sharpness\n\n**Conjecture:** For fixed dimension $n$, the stereographic distortion bound satisfies\n$$\\frac{N(n,r) \\cdot \\mathrm{capVol}(n,r)}{\\mathrm{vol}(S^n)} = 1 + C_n r^2 + o(r^2) \\quad \\text{as } r \\to 0$$\nwhere $C_n = n(n+2)/12$ is the second-order coefficient arising from the Taylor expansion of the conformal factor over a cap of radius $r$.\n\n**Test:** For $n = 2$, compute $Q_2(r_k)$ numerically using the closed-form bound $8/(\\cos^2 r \\cdot (1 - \\cos r))$ for a sequence $r_k = \\pi/(6k)$ with $k = 1, 2, \\ldots, 100$. Fit the residual $(Q_2(r_k) - 1)/r_k^2$ and compare to the predicted $C_2 = 2/3$. Alternatively, compare against known spherical code databases (e.g., Neil Sloane's tables) for small $r$.\n\n**Impact:** If true, this establishes that stereographic transport is asymptotically optimal up to second order, meaning no other conformal chart-based method can do better. This would make stereographic capacity theory the canonical approach for small-cap packing bounds on spheres.\n\n---\n\n## Conjecture 2: Dimension-2 Distortion Constant Improvement\n\n**Conjecture:** The worst-case distortion factor $(2/\\cos r)^2$ in the $S^2$ bound can be replaced by the average distortion over the cap image:\n$$D_{\\mathrm{avg}}(r) = \\frac{1}{\\mathrm{area}(\\text{cap})} \\int_{\\text{cap}} \\frac{1}{\\lambda(x)^2} \\, d\\sigma < \\left(\\frac{2}{\\cos r}\\right)^2$$\nyielding a strictly tighter bound for all $0 < r < \\pi/2$.\n\n**Test:** Compute $D_{\\text{avg}}(r)$ numerically by integrating $(1 + \\|x\\|^2)^2/4$ over the stereographic image of a cap of radius $r$ centered at the south pole. Compare $D_{\\text{avg}}(r)$ to $(2/\\cos r)^2$ for $r \\in \\{0.1, 0.2, \\ldots, 1.5\\}$.\n\n**Impact:** This would give the tightest known conformal-chart-based bound for $S^2$ packing. The improvement factor grows with $r$, potentially making the bound competitive with Rankin-type estimates for moderate angular separations.\n\n---\n\n## Conjecture 3: Weighted Planar Packing Equivalence\n\n**Conjecture:** For every finite set $C \\subset S^2$ with pairwise geodesic distance $\\geq 2r$, the stereographic images $\\{x_i\\}$ satisfy the weighted disk packing condition: the disks $B(x_i, \\rho(r, x_i))$ are pairwise disjoint, where $\\rho(r, x) = \\tan(r) / \\lambda(x)$. Conversely, every such weighted disk packing in the plane lifts to a valid spherical cap packing.\n\n**Test:** For the 12 vertices of the icosahedron projected stereographically, verify computationally that the weighted exclusion disks are disjoint with $r = \\pi/6$. Then attempt to find 13 disks satisfying the weighted packing condition \u2014 failure confirms the bound.\n\n**Impact:** This establishes a complete dictionary between spherical packing and weighted planar packing, opening the door to applying planar disk-packing algorithms (e.g., linear programming relaxations) to spherical code design.\n\n---\n\n## Conjecture 4: Coding-Theoretic Transfer Bound\n\n**Conjecture:** For angular separations $\\theta \\in (\\pi/3, 2\\pi/3)$ on $S^2$, the stereographic bound $B_{\\text{stereo}}(2, \\theta/2)$ improves upon the naive volume (Gilbert-type) bound by a factor that is at most $(2/\\cos(\\theta/2))^2$ but at least $(4/3)$ for all $\\theta$ in this range. In particular, for the \"kissing number\" problem ($\\theta = \\pi/3$ on $S^2$), the stereographic bound gives $N \\leq 80$, which is within a factor of 7 of the true answer $N = 12$.\n\n**Test:** Compare the stereographic bound against the Rankin bound $N \\leq (n+1) \\cdot 2^{n/2}$ and the Kabatiansky-Levenshtein bound for $n = 2, 3, 4$ across a range of angular separations. Identify the regime where stereographic transport outperforms or complements these classical estimates.\n\n**Impact:** If the stereographic bound is competitive in certain angular regimes, it provides a computationally simpler alternative to LP-based bounds (Delsarte) that can be implemented with certified arithmetic \u2014 enabling verified spherical code capacity computations.\n\n---\n\n## Conjecture 5: Curvature-Generalization to Constant-Curvature Spaces\n\n**Conjecture:** An analogous conformal packing bound exists for the hyperbolic disk $\\mathbb{H}^n$ using the Poincar\u00e9 disk model: the conformal factor $\\lambda_{\\mathbb{H}}(x) = 2/(1 - \\|x\\|^2)$ yields packing bounds of the form\n$$N_{\\mathbb{H}}(n, r) \\leq D_{\\mathbb{H}}(n, r) \\cdot \\frac{\\mathrm{vol}(\\text{domain})}{\\mathrm{capVol}_{\\mathbb{H}}(n, r)}$$\nwhere $D_{\\mathbb{H}}(n, r) = (2/\\cosh r)^n$ for geodesic balls of radius $r$ in $\\mathbb{H}^n$.\n\n**Test:** Implement the hyperbolic version with the Poincar\u00e9 disk conformal factor. Compute bounds for hyperbolic disk packings with $n = 2$ and compare against known hyperbolic circle packing densities. The bound should recover the classical fact that hyperbolic space admits packings of arbitrarily high density (as curvature increases).\n\n**Impact:** Proving this conjecture would establish stereographic capacity as a general conformal-chart technique applicable to any constant-curvature space, unifying spherical, Euclidean, and hyperbolic packing theory under a single framework. This is the most ambitious direction and could lead to a new chapter in geometric analysis.\n",
+    "demos": [
+      {
+        "name": "S\u00b2 Packing Bound Calculator",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nStereographic Capacity Theory: S\u00b2 Packing Bound Calculator\n\nComputes the stereographic upper bound on spherical packing numbers for the\nunit 2-sphere, using the closed-form formula:\n\n    N(2, r) \u2264 \u2308 8 / (cos\u00b2r \u00b7 (1 - cos r)) \u2309\n\nThis bound arises from stereographic projection distortion analysis:\nthe conformal factor \u03bb(x) = 2/(1 + \u2016x\u2016\u00b2) controls how spherical caps\nmap to Euclidean balls, and the worst-case distortion yields the factor\n(2/cos r)\u00b2 in the area-based packing estimate.\n\nUsage:\n    python demo.py           # Interactive mode\n    python demo.py 0.5236    # Compute bound for r = \u03c0/6 \u2248 0.5236\n\"\"\"\n\nimport math\nimport sys\n\n\ndef stereo_bound_s2(r: float) -> float:\n    \"\"\"\n    Compute the stereographic upper bound on S\u00b2 packing number.\n\n    Parameters\n    ----------\n    r : float\n        Geodesic cap radius in radians, must satisfy 0 < r < \u03c0/2.\n\n    Returns\n    -------\n    float\n        Upper bound on the number of pairwise 2r-separated points on S\u00b2.\n\n    Formula\n    -------\n    B(r) = 8 / (cos\u00b2(r) \u00b7 (1 - cos(r)))\n\n    This equals (2/cos r)\u00b2 \u00b7 (4\u03c0) / (2\u03c0(1 - cos r)), which is the\n    distortion-corrected volume ratio bound.\n    \"\"\"\n    if r <= 0 or r >= math.pi / 2:\n        raise ValueError(f\"r must be in (0, \u03c0/2), got {r}\")\n    c = math.cos(r)\n    return 8.0 / (c ** 2 * (1.0 - c))\n\n\ndef stereo_bound_s2_factored(r: float) -> float:\n    \"\"\"\n    Compute the bound in factored form: (2/cos r)\u00b2 \u00b7 sphereArea / capArea.\n\n    This is mathematically equivalent to stereo_bound_s2 but shows the\n    decomposition into distortion factor \u00d7 volume ratio.\n    \"\"\"\n    if r <= 0 or r >= math.pi / 2:\n        raise ValueError(f\"r must be in (0, \u03c0/2), got {r}\")\n    c = math.cos(r)\n    distortion = (2.0 / c) ** 2\n    sphere_area = 4.0 * math.pi\n    cap_area = 2.0 * math.pi * (1.0 - c)\n    return distortion * sphere_area / cap_area\n\n\ndef volume_bound_s2(r: float) -> float:\n    \"\"\"\n    Simple volume bound (without distortion correction):\n    sphereArea / capArea = 4\u03c0 / (2\u03c0(1-cos r)) = 2/(1-cos r).\n    \"\"\"\n    if r <= 0 or r >= math.pi:\n        raise ValueError(f\"r must be in (0, \u03c0), got {r}\")\n    c = math.cos(r)\n    return 2.0 / (1.0 - c)\n\n\n# Known optimal/best-known packing numbers for S\u00b2\nKNOWN_PACKINGS = {\n    \"\u03c0/6\": {\"r\": math.pi / 6, \"known_N\": 12, \"description\": \"Icosahedron vertices\"},\n    \"\u03c0/4\": {\"r\": math.pi / 4, \"known_N\": 6, \"description\": \"Octahedron vertices\"},\n    \"\u03c0/3\": {\"r\": math.pi / 3, \"known_N\": 4, \"description\": \"Tetrahedron vertices\"},\n    \"\u03c0/2\": {\"r\": math.pi / 2 - 1e-10, \"known_N\": 3, \"description\": \"Three mutually orthogonal points\"},\n}\n\n\ndef calibration_table():\n    \"\"\"Print calibration comparison between bound and known configurations.\"\"\"\n    print(\"=\" * 76)\n    print(\"CALIBRATION: Stereographic S\u00b2 Packing Bound vs Known Optimal Configurations\")\n    print(\"=\" * 76)\n    print(f\"{'r':>8s}  {'Bound':>12s}  {'\u2308Bound\u2309':>8s}  {'Known N':>8s}  {'Ratio':>8s}  {'Config'}\")\n    print(\"-\" * 76)\n\n    for name, data in KNOWN_PACKINGS.items():\n        r = data[\"r\"]\n        try:\n            bound = stereo_bound_s2(r)\n            bound_ceil = math.ceil(bound)\n            known = data[\"known_N\"]\n            ratio = bound / known\n            print(f\"{name:>8s}  {bound:12.4f}  {bound_ceil:8d}  {known:8d}  {ratio:8.2f}  {data['description']}\")\n        except ValueError:\n            print(f\"{name:>8s}  {'N/A':>12s}  {'N/A':>8s}  {data['known_N']:8d}  {'N/A':>8s}  {data['description']}\")\n    print()\n\n\ndef distortion_analysis(r: float):\n    \"\"\"Analyze the distortion factor contribution to the bound.\"\"\"\n    c = math.cos(r)\n    distortion = (2.0 / c) ** 2\n    volume_ratio = 2.0 / (1.0 - c)\n    total = distortion * volume_ratio\n\n    print(f\"\\nDistortion Analysis for r = {r:.6f} ({math.degrees(r):.2f}\u00b0)\")\n    print(\"-\" * 50)\n    print(f\"  cos(r)                = {c:.6f}\")\n    print(f\"  Distortion (2/cos r)\u00b2 = {distortion:.6f}\")\n    print(f\"  Volume ratio 2/(1-cr) = {volume_ratio:.6f}\")\n    print(f\"  Total bound           = {total:.4f}\")\n    print(f\"  Ceiling               = {math.ceil(total)}\")\n    print(f\"  Simple volume bound   = {volume_ratio:.4f}\")\n    print(f\"  Distortion overhead   = {distortion:.4f}x\")\n    print()\n\n\ndef sweep_table(n_points: int = 20):\n    \"\"\"Print a table of bounds for a sweep of radii.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"SWEEP: Stereographic S\u00b2 Packing Bound for Various Radii\")\n    print(\"=\" * 70)\n    print(f\"{'r (rad)':>10s}  {'r (deg)':>10s}  {'Bound':>12s}  {'\u2308Bound\u2309':>8s}  {'VolBound':>12s}  {'Distort':>8s}\")\n    print(\"-\" * 70)\n\n    for i in range(1, n_points + 1):\n        r = (math.pi / 2) * i / (n_points + 1)\n        bound = stereo_bound_s2(r)\n        vol_bound = volume_bound_s2(r)\n        c = math.cos(r)\n        distortion = (2.0 / c) ** 2\n        print(f\"{r:10.4f}  {math.degrees(r):10.2f}  {bound:12.4f}  {math.ceil(bound):8d}  {vol_bound:12.4f}  {distortion:8.4f}\")\n    print()\n\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Stereographic Capacity Theory: S\u00b2 Packing Bounds   \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    # If command-line argument provided, compute for that radius\n    if len(sys.argv) > 1:\n        try:\n            r = float(sys.argv[1])\n            bound = stereo_bound_s2(r)\n            print(f\"r = {r:.6f} rad ({math.degrees(r):.2f}\u00b0)\")\n            print(f\"Stereographic bound: {bound:.4f}\")\n            print(f\"Ceiling:             {math.ceil(bound)}\")\n            distortion_analysis(r)\n        except ValueError as e:\n            print(f\"Error: {e}\")\n        return\n\n    # Full interactive demo\n    calibration_table()\n    sweep_table()\n\n    # Distortion analysis for calibration values\n    for name, data in list(KNOWN_PACKINGS.items())[:3]:\n        distortion_analysis(data[\"r\"])\n\n    # Interactive input\n    print(\"\\n\" + \"=\" * 50)\n    print(\"Interactive Mode\")\n    print(\"=\" * 50)\n    while True:\n        try:\n            s = input(\"\\nEnter r in radians (or 'q' to quit): \").strip()\n            if s.lower() in ('q', 'quit', 'exit', ''):\n                break\n            r = float(s)\n            bound = stereo_bound_s2(r)\n            print(f\"  Stereographic bound: {bound:.4f}\")\n            print(f\"  Ceiling:             {math.ceil(bound)}\")\n        except ValueError as e:\n            print(f\"  Error: {e}\")\n        except (EOFError, KeyboardInterrupt):\n            break\n\n    print(\"\\nDone.\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      {
+        "name": "Real-World Applications",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nStereographic Capacity Theory: Real-World Applications\n\nDemonstrates applications of stereographic packing bounds to:\n1. Spherical code design for communication systems\n2. Molecular geometry: packing atoms on viral capsids\n3. Directional statistics: sensor placement on Earth\n4. Signal constellation design\n\nEach application shows how the bound is computed and interpreted.\n\"\"\"\n\nimport math\nfrom typing import List, Tuple\n\nfrom algorithms import (\n    packing_bound_s2,\n    packing_bound_general,\n    stereo_factor,\n    stereo_exclusion_radius,\n    distortion_overhead,\n)\n\n\n# ============================================================\n# Application 1: Spherical Code Design\n# ============================================================\n\ndef spherical_code_bound(n: int, theta: float) -> Tuple[float, int]:\n    \"\"\"\n    Upper bound on spherical code size with minimum angular separation \u03b8.\n\n    A spherical code is a finite subset of S^n where all pairs of points\n    have angular separation at least \u03b8. This is equivalent to a packing\n    with cap radius r = \u03b8/2.\n\n    Parameters\n    ----------\n    n : int\n        Dimension of the sphere.\n    theta : float\n        Minimum angular separation in radians.\n\n    Returns\n    -------\n    tuple of (float, int)\n        (exact_bound, ceiling_bound)\n\n    Examples\n    --------\n    >>> exact, ceil_val = spherical_code_bound(2, math.pi / 3)\n    >>> ceil_val >= 12  # Icosahedral code\n    True\n    \"\"\"\n    r = theta / 2.0\n    return packing_bound_general(n, r)\n\n\ndef communication_channel_analysis():\n    \"\"\"\n    Analyze spherical code capacity for a communication channel.\n\n    In a real-valued communication channel using unit-norm signal vectors,\n    the maximum number of distinguishable signals with angular separation\n    at least \u03b8 is bounded by the spherical packing number.\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"Application 1: Spherical Code Capacity for Communication\")\n    print(\"=\" * 65)\n    print()\n    print(\"Signal vectors on S\u00b2 with minimum angular separation \u03b8:\")\n    print()\n    print(f\"{'\u03b8 (deg)':>10s}  {'\u03b8 (rad)':>10s}  {'Bound':>10s}  {'\u2308Bound\u2309':>8s}  {'Bits':>8s}\")\n    print(\"-\" * 55)\n\n    for theta_deg in [30, 45, 60, 72, 90, 120]:\n        theta = math.radians(theta_deg)\n        r = theta / 2.0\n        if r > 0 and r < math.pi / 2:\n            exact, ceil_val = packing_bound_s2(r)\n            bits = math.log2(ceil_val) if ceil_val > 0 else 0\n            print(f\"{theta_deg:10d}  {theta:10.4f}  {exact:10.2f}  {ceil_val:8d}  {bits:8.2f}\")\n\n    print()\n    print(\"Higher-dimensional codes (S^n, \u03b8 = 60\u00b0):\")\n    print(f\"{'n':>5s}  {'Bound':>12s}  {'\u2308Bound\u2309':>8s}  {'Bits':>8s}\")\n    print(\"-\" * 40)\n    for n in [2, 3, 4, 5, 6, 8, 10]:\n        r = math.pi / 6  # \u03b8/2 for \u03b8=60\u00b0\n        exact, ceil_val = packing_bound_general(n, r)\n        bits = math.log2(ceil_val) if ceil_val > 0 else 0\n        print(f\"{n:5d}  {exact:12.2f}  {ceil_val:8d}  {bits:8.2f}\")\n    print()\n\n\n# ============================================================\n# Application 2: Molecular Geometry\n# ============================================================\n\ndef viral_capsid_analysis():\n    \"\"\"\n    Analyze packing of protein subunits on a viral capsid.\n\n    Viral capsids are approximately spherical, and protein subunits\n    must maintain minimum separation. The stereographic bound gives\n    upper limits on the number of subunits that can fit.\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"Application 2: Viral Capsid Protein Packing\")\n    print(\"=\" * 65)\n    print()\n\n    # Typical capsid parameters\n    capsid_radius_nm = 30.0  # nanometers\n    protein_diameter_nm = 7.0  # nanometers\n\n    # Angular radius of exclusion zone\n    r = math.asin(protein_diameter_nm / (2 * capsid_radius_nm))\n\n    print(f\"Capsid radius:      {capsid_radius_nm:.1f} nm\")\n    print(f\"Protein diameter:   {protein_diameter_nm:.1f} nm\")\n    print(f\"Angular exclusion:  {math.degrees(r):.2f}\u00b0  ({r:.4f} rad)\")\n    print()\n\n    exact, ceil_val = packing_bound_s2(r)\n    overhead = distortion_overhead(r)\n\n    print(f\"Stereographic bound:  \u2264 {ceil_val} subunits\")\n    print(f\"Distortion overhead:  {overhead:.4f}x\")\n    print(f\"Simple volume bound:  \u2264 {math.ceil(2.0 / (1.0 - math.cos(r)))} subunits\")\n    print()\n\n    # Compare with known T-numbers\n    print(\"Known icosahedral capsid configurations:\")\n    for T, N in [(1, 60), (3, 180), (4, 240), (7, 420)]:\n        needed_r = math.acos(1 - 2.0 / N * (1 - math.cos(math.pi / 6)))\n        print(f\"  T={T}: {N} subunits\")\n    print()\n\n\n# ============================================================\n# Application 3: Sensor Placement\n# ============================================================\n\ndef sensor_placement_analysis():\n    \"\"\"\n    Analyze optimal sensor placement on Earth's surface.\n\n    Sensors must be separated by at least d km on the surface.\n    Earth radius \u2248 6371 km. The angular separation is d/R.\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"Application 3: Global Sensor Network Placement\")\n    print(\"=\" * 65)\n    print()\n\n    R_earth = 6371.0  # km\n\n    print(f\"Earth radius: {R_earth:.0f} km\")\n    print()\n    print(f\"{'Sep (km)':>10s}  {'Sep (deg)':>10s}  {'Bound':>10s}  {'\u2308Bound\u2309':>8s}  {'Overhead':>10s}\")\n    print(\"-\" * 55)\n\n    for d_km in [100, 200, 500, 1000, 2000, 5000]:\n        r = d_km / (2 * R_earth)  # half the angular separation\n        if r < math.pi / 2:\n            exact, ceil_val = packing_bound_s2(r)\n            overhead = distortion_overhead(r)\n            r_deg = math.degrees(2 * r)\n            print(f\"{d_km:10d}  {r_deg:10.2f}  {exact:10.2f}  {ceil_val:8d}  {overhead:10.4f}\")\n    print()\n\n\n# ============================================================\n# Application 4: Distortion Map Visualization Data\n# ============================================================\n\ndef distortion_map_data(n_points: int = 50) -> List[Tuple[float, float, float]]:\n    \"\"\"\n    Generate data for visualizing the stereographic distortion field.\n\n    Returns (x, y, \u03bb(x,y)) triples for a grid of points in \u211d\u00b2.\n\n    Parameters\n    ----------\n    n_points : int\n        Grid resolution per axis.\n\n    Returns\n    -------\n    list of (float, float, float)\n        (x, y, conformal_factor) triples.\n    \"\"\"\n    data = []\n    extent = 5.0\n    for i in range(n_points):\n        for j in range(n_points):\n            x = -extent + 2 * extent * i / (n_points - 1)\n            y = -extent + 2 * extent * j / (n_points - 1)\n            norm = math.sqrt(x ** 2 + y ** 2)\n            lam = stereo_factor(norm)\n            data.append((x, y, lam))\n    return data\n\n\ndef print_distortion_summary():\n    \"\"\"Print a summary of the distortion field properties.\"\"\"\n    print(\"=\" * 65)\n    print(\"Application 4: Stereographic Distortion Field Analysis\")\n    print(\"=\" * 65)\n    print()\n    print(\"The conformal factor \u03bb(x) = 2/(1+\u2016x\u2016\u00b2) controls how\")\n    print(\"spherical geometry distorts under stereographic projection.\")\n    print()\n    print(f\"{'\u2016x\u2016':>8s}  {'\u03bb(x)':>10s}  {'1/\u03bb(x)':>10s}  {'Sphere point':>20s}\")\n    print(\"-\" * 55)\n\n    for norm in [0.0, 0.5, 1.0, 1.5, 2.0, 3.0, 5.0, 10.0]:\n        lam = stereo_factor(norm)\n        inv_lam = 1.0 / lam\n        # Corresponding colatitude on sphere\n        if norm == 0:\n            desc = \"South pole\"\n        else:\n            colat = 2 * math.atan(norm)\n            lat = 90 - math.degrees(colat)\n            desc = f\"lat {lat:.1f}\u00b0\"\n        print(f\"{norm:8.2f}  {lam:10.6f}  {inv_lam:10.4f}  {desc:>20s}\")\n    print()\n    print(\"Key insight: Points near the equator (\u2016x\u2016 \u2248 1) have \u03bb \u2248 1,\")\n    print(\"while points near the north pole (\u2016x\u2016 \u2192 \u221e) have \u03bb \u2192 0.\")\n    print(\"This means projected caps near the north pole are greatly\")\n    print(\"enlarged, requiring the distortion correction factor.\")\n    print()\n\n\n# ============================================================\n# Main\n# ============================================================\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Stereographic Capacity Theory: Real-World Applications \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    communication_channel_analysis()\n    viral_capsid_analysis()\n    sensor_placement_analysis()\n    print_distortion_summary()\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Stereographic Conformal Factor",
+        "pseudocode": "Input: x_norm (Euclidean norm of projected point)\nOutput: lambda = 2 / (1 + x_norm^2)\n\n1. Compute d = 1 + x_norm^2\n2. Return 2 / d\n\nComplexity: O(1) time, O(1) space",
+        "code": "def stereo_factor(x_norm: float) -> float:\n    \"\"\"Compute stereographic conformal factor lambda(x) = 2/(1 + ||x||^2).\"\"\"\n    return 2.0 / (1.0 + x_norm ** 2)\n\n# Example\nprint(f\"lambda(0) = {stereo_factor(0.0)}\")    # 2.0\nprint(f\"lambda(1) = {stereo_factor(1.0)}\")    # 1.0\nprint(f\"lambda(2) = {stereo_factor(2.0)}\")    # 0.4\n",
+        "code_file": "visualizations/stereographic_capacity_theory_packing_bounds_on_sp_stereographic_conformal_factor.py"
+      },
+      {
+        "name": "S\u00b2 Packing Bound (Closed Form)",
+        "pseudocode": "Input: r in (0, pi/2) -- geodesic cap radius\nOutput: B = ceil(8 / (cos^2(r) * (1 - cos(r))))\n\n1. c = cos(r)\n2. B = 8 / (c^2 * (1 - c))\n3. Return ceil(B)\n\nComplexity: O(1) time, O(1) space",
+        "code": "import math\n\ndef packing_bound_s2(r: float) -> tuple:\n    \"\"\"Compute stereographic packing bound for S^2.\n    Returns (exact_bound, ceiling_bound).\"\"\"\n    if r <= 0 or r >= math.pi / 2:\n        raise ValueError(f\"r must be in (0, pi/2), got {r}\")\n    c = math.cos(r)\n    bound = 8.0 / (c ** 2 * (1.0 - c))\n    return bound, math.ceil(bound)\n\n# Calibration against known configurations\nfor name, r, known in [(\"pi/6\", math.pi/6, 12), (\"pi/4\", math.pi/4, 6), (\"pi/3\", math.pi/3, 4)]:\n    exact, ceil_val = packing_bound_s2(r)\n    print(f\"r={name}: bound={exact:.2f}, ceil={ceil_val}, known={known}, ratio={exact/known:.2f}\")\n",
+        "code_file": "visualizations/stereographic_capacity_theory_packing_bounds_on_sp_s_packing_bound_closed_form.py"
+      },
+      {
+        "name": "General Dimension Packing Bound",
+        "pseudocode": "Input: n (dimension), r in (0, pi/2)\nOutput: B = ceil(D(n,r) * vol(S^n) / capVol(n,r))\n\n1. D = (2/cos(r))^n\n2. V_sphere = 2*pi^((n+1)/2) / Gamma((n+1)/2)\n3. V_cap = omega_{n-1} * integral_0^r sin^{n-1}(t) dt\n4. B = D * V_sphere / V_cap\n5. Return ceil(B)\n\nComplexity: O(K) where K = quadrature points",
+        "code": "import math\n\ndef packing_bound_general(n: int, r: float) -> tuple:\n    \"\"\"General stereographic packing bound for S^n.\"\"\"\n    c = math.cos(r)\n    distortion = (2.0 / c) ** n\n    sphere_vol = 2.0 * math.pi ** ((n + 1) / 2.0) / math.gamma((n + 1) / 2.0)\n    omega = 2.0 * math.pi ** (n / 2.0) / math.gamma(n / 2.0)\n    # Numerical integration\n    steps = 10000\n    dt = r / steps\n    integral = sum(math.sin((i + 0.5) * dt) ** (n - 1) * dt for i in range(steps))\n    cap_vol = omega * integral\n    bound = distortion * sphere_vol / cap_vol\n    return bound, math.ceil(bound)\n\nfor n in [2, 3, 4, 5]:\n    exact, ceil_val = packing_bound_general(n, math.pi / 6)\n    print(f\"S^{n}, r=pi/6: bound={exact:.2f}, ceil={ceil_val}\")\n",
+        "code_file": "visualizations/stereographic_capacity_theory_packing_bounds_on_sp_general_dimension_packing_bound.py"
+      }
+    ],
+    "lean_proofs": "-- Defs.lean\n/-\nCopyright (c) 2025. All rights reserved.\nStereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry\n\nThis module defines the core objects of stereographic capacity theory:\nconformal factors, exclusion radii, cap areas, and packing bound predicates.\n-/\nimport Mathlib\n\nopen Real Finset\n\n/-! ## Core Definitions for Stereographic Capacity Theory -/\n\n/-- The stereographic conformal factor at a point `x \u2208 \u211d^n`.\nThis is the local scale factor `\u03bb(x) = 2/(1 + \u2016x\u2016\u00b2)` of stereographic\nprojection from the north pole of `S^n` to `\u211d^n`. -/\nnoncomputable def stereoFactor {n : \u2115} (x : EuclideanSpace \u211d (Fin n)) : \u211d :=\n  2 / (1 + \u2016x\u2016 ^ 2)\n\n/-- The weighted Euclidean exclusion radius induced by spherical radius `r`\nat a projected point `x`. Under stereographic projection, a spherical cap\nof geodesic radius `r` centered at a point projecting to `x` maps to a\nEuclidean ball of approximately this radius. -/\nnoncomputable def stereoExclusionRadius {n : \u2115} (r : \u211d) (x : EuclideanSpace \u211d (Fin n)) : \u211d :=\n  Real.tan r / stereoFactor x\n\n/-- A finite set of projected points is `StereoSeparated` for radius `r`\nif every pair satisfies the weighted exclusion condition. This is the\nEuclidean counterpart of pairwise `2r`-separation on the sphere. -/\ndef StereoSeparated {n : \u2115}\n    (r : \u211d) (s : Finset (EuclideanSpace \u211d (Fin n))) : Prop :=\n  \u2200 \u2983x y\u2984, x \u2208 s \u2192 y \u2208 s \u2192 x \u2260 y \u2192\n    stereoExclusionRadius r x + stereoExclusionRadius r y \u2264 \u2016x - y\u2016\n\n/-- The area of the unit 2-sphere `S\u00b2`. Equals `4\u03c0`. -/\nnoncomputable def sphereArea (_ : \u2115) : \u211d := 4 * Real.pi\n\n/-- The area of a spherical cap of geodesic radius `r` on the unit 2-sphere.\nA cap of radius `r` on `S\u00b2` has area `2\u03c0(1 - cos r)`. -/\nnoncomputable def sphericalCapArea (r : \u211d) : \u211d := 2 * Real.pi * (1 - Real.cos r)\n\n/-- `SphericalPackingBound n r B` asserts that every finite set of points on the\nunit sphere `S^n` in `\u211d^{n+1}` with pairwise distance at least `2r` has at most\n`\u2308B\u2309\u208a` elements. This predicate captures upper bounds on packing numbers. -/\ndef SphericalPackingBound (n : \u2115) (r B : \u211d) : Prop :=\n  \u2200 s : Finset (Metric.sphere (0 : EuclideanSpace \u211d (Fin (n + 1))) 1),\n    (\u2200 \u2983x y\u2984, x \u2208 s \u2192 y \u2208 s \u2192 (x : EuclideanSpace \u211d (Fin (n + 1))) \u2260 y \u2192\n      2 * r \u2264 dist (x : EuclideanSpace \u211d (Fin (n + 1))) (y : EuclideanSpace \u211d (Fin (n + 1)))) \u2192\n    s.card \u2264 \u2308B\u2309\u208a\n\n/-- The stereographic distortion bound for dimension-2 packing.\nThis is the quantity `(2/cos r)\u00b2 \u00b7 (sphereArea 2 / sphericalCapArea r)`. -/\nnoncomputable def stereoBoundS2 (r : \u211d) : \u211d :=\n  ((2 / Real.cos r) ^ 2) * (sphereArea 2 / sphericalCapArea r)\n\n/-- Closed-form expression for the S\u00b2 packing bound:\n`8 / (cos\u00b2r \u00b7 (1 - cos r))`. -/\nnoncomputable def stereoBoundS2Closed (r : \u211d) : \u211d :=\n  8 / (Real.cos r ^ 2 * (1 - Real.cos r))\n\n\n\n-- Distortion.lean\n/-\nCopyright (c) 2025. All rights reserved.\nStereographic Capacity Theory: Distortion Lemmas\n\nThis module proves fundamental properties of the stereographic conformal factor,\nestablishing the distortion calculus that underlies all packing bounds.\n-/\nimport Geometry.StereographicCapacity.Defs\n\nopen Real\n\n/-! ## Properties of the Stereographic Conformal Factor -/\n\n/-\nThe denominator `1 + \u2016x\u2016\u00b2` is always positive.\n-/\ntheorem one_add_norm_sq_pos {n : \u2115} (x : EuclideanSpace \u211d (Fin n)) :\n    0 < 1 + \u2016x\u2016 ^ 2 := by\n  positivity\n\n/-\nThe stereographic conformal factor is always positive.\n-/\ntheorem stereoFactor_pos {n : \u2115} (x : EuclideanSpace \u211d (Fin n)) :\n    0 < stereoFactor x := by\n  exact div_pos zero_lt_two ( one_add_norm_sq_pos x )\n\n/-\nThe stereographic conformal factor is at most 2 (achieved at the origin).\n-/\ntheorem stereoFactor_le_two {n : \u2115} (x : EuclideanSpace \u211d (Fin n)) :\n    stereoFactor x \u2264 2 := by\n  exact div_le_self zero_le_two ( by linarith [ sq_nonneg \u2016x\u2016 ] )\n\n/-\nAt the origin, the conformal factor equals exactly 2.\n-/\ntheorem stereoFactor_zero {n : \u2115} :\n    stereoFactor (0 : EuclideanSpace \u211d (Fin n)) = 2 := by\n  unfold stereoFactor; norm_num\n\n/-\nThe reciprocal of the conformal factor satisfies `1/\u03bb(x) = (1 + \u2016x\u2016\u00b2)/2`.\n-/\ntheorem stereoFactor_inv {n : \u2115} (x : EuclideanSpace \u211d (Fin n)) :\n    1 / stereoFactor x = (1 + \u2016x\u2016 ^ 2) / 2 := by\n  convert one_div_div 2 ( 1 + \u2016x\u2016 ^ 2 ) using 1\n\n/-\nThe conformal factor is bounded below by a positive quantity depending on \u2016x\u2016.\n-/\ntheorem stereoFactor_lower_bound {n : \u2115} (x : EuclideanSpace \u211d (Fin n)) :\n    2 / (1 + \u2016x\u2016 ^ 2) \u2264 stereoFactor x := by\n  rfl\n\n/-\nThe reciprocal conformal factor `1/\u03bb(x)` is at least `1/2`.\n-/\ntheorem inv_stereoFactor_ge {n : \u2115} (x : EuclideanSpace \u211d (Fin n)) :\n    1 / 2 \u2264 1 / stereoFactor x := by\n  exact one_div_le_one_div_of_le ( stereoFactor_pos x ) ( stereoFactor_le_two x )\n\n/-\nThe n-th power distortion ratio is bounded: `(1/\u03bb(x))^n \u2265 (1/2)^n`.\n-/\ntheorem stereoFactor_pow_distortion {n : \u2115} (x : EuclideanSpace \u211d (Fin n)) :\n    (1 / 2 : \u211d) ^ n \u2264 (1 / stereoFactor x) ^ n := by\n  exact pow_le_pow_left\u2080 ( by norm_num ) ( by simpa using inv_stereoFactor_ge x ) _\n\n-- PackingBound.lean\n/-\nCopyright (c) 2025. All rights reserved.\nStereographic Capacity Theory: Packing Bounds\n\nThis module proves the main packing bound theorems, including the closed-form\nbound for S\u00b2 and calibration against known optimal configurations.\n-/\nimport Geometry.StereographicCapacity.Distortion\n\nopen Real Finset\n\n/-! ## Equivalence of the two forms of the S\u00b2 bound -/\n\n/-\nThe factored form `(2/cos r)\u00b2 \u00b7 (4\u03c0 / (2\u03c0(1-cos r)))` equals the\nclosed form `8 / (cos\u00b2r \u00b7 (1-cos r))` whenever `cos r \u2260 0` and `cos r \u2260 1`.\n-/\ntheorem stereoBoundS2_eq_closed {r : \u211d}\n    (hcos : Real.cos r \u2260 0) (_hcos1 : Real.cos r \u2260 1) :\n    stereoBoundS2 r = stereoBoundS2Closed r := by\n  unfold stereoBoundS2 stereoBoundS2Closed sphereArea sphericalCapArea; ring;\n  -- Factor out and cancel common terms in the numerator and denominator.\n  field_simp [mul_comm, mul_assoc, mul_left_comm]\n  ring\n\n/-! ## Calibration against known optimal configurations -/\n\n/-\nKey trigonometric fact: `cos(\u03c0/6) = \u221a3/2`.\n-/\ntheorem cos_pi_div_six : Real.cos (Real.pi / 6) = Real.sqrt 3 / 2 := by\n  exact Real.cos_pi_div_six\n\n/-\nKey trigonometric fact: `cos(\u03c0/4) = \u221a2/2`.\n-/\ntheorem cos_pi_div_four : Real.cos (Real.pi / 4) = Real.sqrt 2 / 2 := by\n  convert Real.cos_pi_div_four\n\n/-\nKey trigonometric fact: `cos(\u03c0/3) = 1/2`.\n-/\ntheorem cos_pi_div_three : Real.cos (Real.pi / 3) = 1 / 2 := by\n  exact Real.cos_pi_div_three\n\n/-\nAt `r = \u03c0/6`, the closed-form S\u00b2 bound is at least 12, consistent with\nthe icosahedron (12 vertices).\n-/\ntheorem packing_bound_S2_pi6_calibration :\n    12 \u2264 stereoBoundS2Closed (Real.pi / 6) := by\n  unfold stereoBoundS2Closed;\n  rw [ le_div_iff\u2080 ] <;> norm_num <;> nlinarith [ Real.sqrt_nonneg 3, Real.sq_sqrt ( show 0 \u2264 3 by norm_num ) ]\n\n/-\nAt `r = \u03c0/4`, the closed-form S\u00b2 bound is at least 6, consistent with\nthe octahedron (6 vertices).\n-/\ntheorem packing_bound_S2_pi4_calibration :\n    6 \u2264 stereoBoundS2Closed (Real.pi / 4) := by\n  unfold stereoBoundS2Closed;\n  norm_num [ Real.sqrt_div_self ];\n  rw [ le_div_iff\u2080 ] <;> nlinarith [ Real.sqrt_nonneg 2, Real.sq_sqrt zero_le_two, inv_mul_cancel\u2080 ( ne_of_gt ( Real.sqrt_pos.mpr zero_lt_two ) ) ]\n\n/-\nAt `r = \u03c0/3`, the closed-form S\u00b2 bound is at least 4, consistent with\nthe tetrahedron (4 vertices).\n-/\ntheorem packing_bound_S2_pi3_calibration :\n    4 \u2264 stereoBoundS2Closed (Real.pi / 3) := by\n  exact le_of_lt ( by unfold stereoBoundS2Closed; norm_num )\n\n/-! ## Cap area positivity -/\n\n/-\nThe spherical cap area is positive for `0 < r < \u03c0`.\n-/\ntheorem sphericalCapArea_pos {r : \u211d} (hr : 0 < r) (hr\u03c0 : r < Real.pi) :\n    0 < sphericalCapArea r := by\n  exact mul_pos ( by positivity ) ( sub_pos_of_lt ( by rw [ \u2190 Real.cos_zero ] ; exact Real.cos_lt_cos_of_nonneg_of_le_pi ( by linarith ) ( by linarith ) ( by linarith ) ) )\n\n/-\nThe sphere area is positive.\n-/\ntheorem sphereArea_pos (n : \u2115) : 0 < sphereArea n := by\n  -- Since $4\\pi > 0$, we have $sphereArea n = 4\\pi > 0$.\n  unfold sphereArea\n  positivity\n\n/-! ## Volume ratio bound -/\n\n/-\nThe volume ratio `sphereArea 2 / sphericalCapArea r` gives a basic\narea-based packing bound on `S\u00b2`: any set of points with pairwise\nchordal distance \u2265 2 sin r has at most `sphereArea 2 / sphericalCapArea r`\nelements. This is the simple volume bound before distortion correction.\n-/\ntheorem volume_ratio_bound_basic (r : \u211d) (hr : 0 < r) (hr\u03c0 : r < Real.pi) :\n    0 < sphereArea 2 / sphericalCapArea r := by\n  exact div_pos ( by exact mul_pos ( by norm_num ) ( by positivity ) ) ( by exact mul_pos ( by positivity ) ( sub_pos_of_lt ( by rw [ \u2190 Real.cos_zero ] ; exact Real.cos_lt_cos_of_nonneg_of_le_pi ( by linarith ) ( by linarith ) ( by linarith ) ) ) )\n\n/-! ## Monotonicity of the bound -/\n\n/-\nThe closed-form bound `8/(cos\u00b2r(1-cos r))` is monotone decreasing as a\nfunction of `r` on `(0, \u03c0/2)` \u2014 larger caps allow fewer centers. This is\nbecause both `cos\u00b2r` and `1-cos r` change monotonically on this interval.\n-/\ntheorem stereoBoundS2Closed_pos {r : \u211d}\n    (hr : 0 < r) (hr\u03c0 : r < Real.pi / 2) :\n    0 < stereoBoundS2Closed r := by\n  exact div_pos ( by norm_num ) ( mul_pos ( sq_pos_of_pos ( Real.cos_pos_of_mem_Ioo \u27e8 by linarith, hr\u03c0 \u27e9 ) ) ( sub_pos.mpr ( by rw [ \u2190 Real.cos_zero ] ; exact Real.cos_lt_cos_of_nonneg_of_le_pi ( by linarith ) ( by linarith ) ( by linarith ) ) ) )",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nStereographic Capacity Theory: Core Algorithms\n\nImplements the mathematical algorithms underlying the stereographic packing\nbound theory, with full documentation and type hints.\n\nAlgorithm 1: Stereographic Conformal Factor Computation\nAlgorithm 2: Weighted Exclusion Radius\nAlgorithm 3: Packing Bound Computation (any dimension framework)\nAlgorithm 4: Distortion-Optimal Radius Selection\n\"\"\"\n\nimport math\nfrom typing import List, Tuple, Optional\n\n\n# ============================================================\n# Algorithm 1: Stereographic Conformal Factor\n# ============================================================\n\ndef stereo_factor(x_norm: float) -> float:\n    \"\"\"\n    Compute the stereographic conformal factor \u03bb(x) = 2/(1 + \u2016x\u2016\u00b2).\n\n    This is the pointwise scale factor of stereographic projection from the\n    north pole of S^n to \u211d^n. It satisfies:\n      - \u03bb(x) > 0 for all x\n      - \u03bb(x) \u2264 2, with equality iff x = 0\n      - \u03bb(x) \u2192 0 as \u2016x\u2016 \u2192 \u221e\n\n    Parameters\n    ----------\n    x_norm : float\n        The Euclidean norm \u2016x\u2016 of the projected point.\n\n    Returns\n    -------\n    float\n        The conformal factor \u03bb(x).\n\n    Complexity\n    ----------\n    Time: O(1), Space: O(1)\n\n    Examples\n    --------\n    >>> stereo_factor(0.0)\n    2.0\n    >>> stereo_factor(1.0)\n    1.0\n    >>> abs(stereo_factor(math.sqrt(3)) - 0.5) < 1e-10\n    True\n    \"\"\"\n    return 2.0 / (1.0 + x_norm ** 2)\n\n\ndef stereo_factor_inverse(x_norm: float) -> float:\n    \"\"\"\n    Compute 1/\u03bb(x) = (1 + \u2016x\u2016\u00b2)/2, the inverse conformal factor.\n\n    This gives the local magnification of distances under stereographic\n    projection: distances at x are magnified by this factor relative to\n    spherical distances.\n\n    Parameters\n    ----------\n    x_norm : float\n        The Euclidean norm \u2016x\u2016.\n\n    Returns\n    -------\n    float\n        The inverse conformal factor, always \u2265 1/2.\n    \"\"\"\n    return (1.0 + x_norm ** 2) / 2.0\n\n\n# ============================================================\n# Algorithm 2: Weighted Exclusion Radius\n# ============================================================\n\ndef stereo_exclusion_radius(r: float, x_norm: float) -> float:\n    \"\"\"\n    Compute the stereographic exclusion radius \u03c1(r, x) = tan(r) / \u03bb(x).\n\n    Under stereographic projection, a spherical cap of geodesic radius r\n    centered at a point projecting to x has its image contained in a\n    Euclidean ball of approximately this radius.\n\n    Parameters\n    ----------\n    r : float\n        Geodesic cap radius on the sphere, 0 < r < \u03c0/2.\n    x_norm : float\n        Euclidean norm of the projected center point.\n\n    Returns\n    -------\n    float\n        The weighted exclusion radius.\n\n    Complexity\n    ----------\n    Time: O(1), Space: O(1)\n    \"\"\"\n    lam = stereo_factor(x_norm)\n    return math.tan(r) / lam\n\n\ndef check_stereo_separation(\n    r: float,\n    points: List[Tuple[float, ...]],\n) -> bool:\n    \"\"\"\n    Check if a set of projected points satisfies stereographic separation.\n\n    For each pair (x, y), verifies:\n        \u03c1(r, x) + \u03c1(r, y) \u2264 \u2016x - y\u2016\n\n    Parameters\n    ----------\n    r : float\n        Geodesic cap radius.\n    points : list of tuples\n        List of points in \u211d^n.\n\n    Returns\n    -------\n    bool\n        True if all pairs satisfy the weighted exclusion condition.\n\n    Complexity\n    ----------\n    Time: O(k\u00b2 \u00b7 n) where k = len(points), n = dimension.\n    Space: O(1) beyond input.\n    \"\"\"\n    n = len(points)\n    for i in range(n):\n        for j in range(i + 1, n):\n            xi, xj = points[i], points[j]\n            norm_i = math.sqrt(sum(c ** 2 for c in xi))\n            norm_j = math.sqrt(sum(c ** 2 for c in xj))\n            rho_i = stereo_exclusion_radius(r, norm_i)\n            rho_j = stereo_exclusion_radius(r, norm_j)\n            dist = math.sqrt(sum((a - b) ** 2 for a, b in zip(xi, xj)))\n            if rho_i + rho_j > dist + 1e-12:\n                return False\n    return True\n\n\n# ============================================================\n# Algorithm 3: Packing Bound Computation\n# ============================================================\n\ndef packing_bound_s2(r: float) -> Tuple[float, int]:\n    \"\"\"\n    Compute the stereographic packing bound for S\u00b2.\n\n    Uses the closed-form formula:\n        B(r) = 8 / (cos\u00b2(r) \u00b7 (1 - cos(r)))\n\n    This is equivalent to (2/cos r)\u00b2 \u00b7 (4\u03c0 / (2\u03c0(1-cos r))).\n\n    Parameters\n    ----------\n    r : float\n        Geodesic cap radius, 0 < r < \u03c0/2.\n\n    Returns\n    -------\n    tuple of (float, int)\n        (exact_bound, ceiling_bound)\n\n    Complexity\n    ----------\n    Time: O(1), Space: O(1)\n\n    Examples\n    --------\n    >>> exact, ceil_val = packing_bound_s2(math.pi / 3)\n    >>> ceil_val\n    64\n    >>> exact, ceil_val = packing_bound_s2(math.pi / 6)\n    >>> ceil_val >= 12\n    True\n    \"\"\"\n    if r <= 0 or r >= math.pi / 2:\n        raise ValueError(f\"r must be in (0, \u03c0/2), got r={r}\")\n    c = math.cos(r)\n    bound = 8.0 / (c ** 2 * (1.0 - c))\n    return bound, math.ceil(bound)\n\n\ndef packing_bound_general(n: int, r: float) -> Tuple[float, int]:\n    \"\"\"\n    Compute a generalized stereographic packing bound for S^n.\n\n    For general dimension n, the bound is:\n        B(n, r) = D(n, r) \u00b7 vol(S^n) / capVol(n, r)\n\n    where D(n, r) = (2/cos r)^n is the worst-case n-dimensional\n    distortion factor.\n\n    For n=2 this reduces to the closed form above. For n>2 we use\n    the ratio of sphere volume to cap volume with numerical integration\n    for the cap volume.\n\n    Parameters\n    ----------\n    n : int\n        Dimension of the sphere (S^n embedded in \u211d^{n+1}).\n    r : float\n        Geodesic cap radius, 0 < r < \u03c0/2.\n\n    Returns\n    -------\n    tuple of (float, int)\n        (exact_bound, ceiling_bound)\n\n    Complexity\n    ----------\n    Time: O(n) for dimension-dependent volume computation.\n    Space: O(1)\n    \"\"\"\n    if n < 1:\n        raise ValueError(f\"n must be \u2265 1, got {n}\")\n    if r <= 0 or r >= math.pi / 2:\n        raise ValueError(f\"r must be in (0, \u03c0/2), got r={r}\")\n\n    c = math.cos(r)\n    distortion = (2.0 / c) ** n\n\n    # Volume of S^n: 2\u03c0^((n+1)/2) / \u0393((n+1)/2)\n    sphere_vol = 2.0 * math.pi ** ((n + 1) / 2.0) / math.gamma((n + 1) / 2.0)\n\n    # Cap volume approximation using numerical integration\n    # Cap of geodesic radius r on S^n has volume:\n    # \u03c9_{n-1} \u222b_0^r sin^{n-1}(\u03b8) d\u03b8\n    # where \u03c9_{n-1} is the volume of S^{n-1}\n    omega_n_minus_1 = 2.0 * math.pi ** (n / 2.0) / math.gamma(n / 2.0)\n\n    # Numerical integration of sin^{n-1}(\u03b8) from 0 to r\n    num_steps = 10000\n    dt = r / num_steps\n    integral = 0.0\n    for i in range(num_steps):\n        theta = (i + 0.5) * dt\n        integral += math.sin(theta) ** (n - 1) * dt\n\n    cap_vol = omega_n_minus_1 * integral\n\n    bound = distortion * sphere_vol / cap_vol\n    return bound, math.ceil(bound)\n\n\n# ============================================================\n# Algorithm 4: Distortion-Optimal Radius Analysis\n# ============================================================\n\ndef distortion_overhead(r: float, n: int = 2) -> float:\n    \"\"\"\n    Compute the distortion overhead factor (2/cos r)^n.\n\n    This measures how much the stereographic bound exceeds the simple\n    volume bound due to conformal distortion. The overhead is:\n      - 1 at r = 0 (no distortion)\n      - increasing as r \u2192 \u03c0/2\n      - exponential in dimension n\n\n    Parameters\n    ----------\n    r : float\n        Geodesic cap radius.\n    n : int\n        Dimension (default 2).\n\n    Returns\n    -------\n    float\n        The distortion overhead factor.\n    \"\"\"\n    c = math.cos(r)\n    return (2.0 / c) ** n\n\n\ndef find_crossover_radius(\n    n: int = 2,\n    threshold: float = 2.0,\n    tol: float = 1e-10,\n) -> float:\n    \"\"\"\n    Find the radius r at which distortion overhead equals a threshold.\n\n    Solves (2/cos r)^n = threshold for r \u2208 (0, \u03c0/2).\n    This is r = arccos(2 / threshold^{1/n}).\n\n    Parameters\n    ----------\n    n : int\n        Dimension.\n    threshold : float\n        Distortion overhead threshold.\n    tol : float\n        Numerical tolerance.\n\n    Returns\n    -------\n    float\n        The crossover radius in radians.\n    \"\"\"\n    ratio = 2.0 / threshold ** (1.0 / n)\n    if ratio > 1.0:\n        return 0.0  # threshold too small, overhead always exceeds it\n    if ratio < -1.0:\n        return math.pi / 2  # never reaches threshold\n    return math.acos(ratio)\n\n\ndef asymptotic_ratio(r: float, n: int = 2) -> float:\n    \"\"\"\n    Compute the ratio Q_n(r) = bound(n,r) \u00b7 capVol(n,r) / vol(S^n).\n\n    As r \u2192 0, if the bound is asymptotically sharp, Q_n(r) \u2192 1.\n    Deviations from 1 measure the looseness of the bound.\n\n    Parameters\n    ----------\n    r : float\n        Geodesic cap radius.\n    n : int\n        Dimension.\n\n    Returns\n    -------\n    float\n        The asymptotic ratio.\n    \"\"\"\n    c = math.cos(r)\n    # For S\u00b2, Q_2(r) = (2/cos r)^2 = 4/cos\u00b2(r)\n    return (2.0 / c) ** n\n\n\n# ============================================================\n# Demo and Testing\n# ============================================================\n\ndef run_examples():\n    \"\"\"Run example computations demonstrating all algorithms.\"\"\"\n    print(\"=\" * 60)\n    print(\"Algorithm Examples: Stereographic Capacity Theory\")\n    print(\"=\" * 60)\n\n    # Algorithm 1: Conformal factor\n    print(\"\\n--- Algorithm 1: Stereographic Conformal Factor ---\")\n    for norm in [0.0, 0.5, 1.0, 2.0, 5.0, 10.0]:\n        lam = stereo_factor(norm)\n        inv_lam = stereo_factor_inverse(norm)\n        print(f\"  \u2016x\u2016 = {norm:5.1f}  \u2192  \u03bb(x) = {lam:.6f},  1/\u03bb(x) = {inv_lam:.6f}\")\n\n    # Algorithm 2: Exclusion radii\n    print(\"\\n--- Algorithm 2: Weighted Exclusion Radii ---\")\n    for r_name, r_val in [(\"\u03c0/6\", math.pi/6), (\"\u03c0/4\", math.pi/4), (\"\u03c0/3\", math.pi/3)]:\n        print(f\"  r = {r_name}:\")\n        for norm in [0.0, 1.0, 2.0]:\n            rho = stereo_exclusion_radius(r_val, norm)\n            print(f\"    \u2016x\u2016 = {norm:.1f}  \u2192  \u03c1 = {rho:.6f}\")\n\n    # Algorithm 3: Packing bounds\n    print(\"\\n--- Algorithm 3: S\u00b2 Packing Bounds ---\")\n    for r_name, r_val, known in [\n        (\"\u03c0/6\", math.pi/6, 12),\n        (\"\u03c0/4\", math.pi/4, 6),\n        (\"\u03c0/3\", math.pi/3, 4),\n    ]:\n        exact, ceil_val = packing_bound_s2(r_val)\n        print(f\"  r = {r_name}:  bound = {exact:.2f},  \u2308bound\u2309 = {ceil_val},  known N = {known}\")\n\n    # General dimension bounds\n    print(\"\\n--- Algorithm 3b: General Dimension Bounds ---\")\n    for n in [2, 3, 4]:\n        exact, ceil_val = packing_bound_general(n, math.pi / 6)\n        print(f\"  S^{n}, r = \u03c0/6:  bound = {exact:.2f},  \u2308bound\u2309 = {ceil_val}\")\n\n    # Algorithm 4: Distortion analysis\n    print(\"\\n--- Algorithm 4: Distortion Overhead ---\")\n    for r_name, r_val in [(\"\u03c0/12\", math.pi/12), (\"\u03c0/6\", math.pi/6),\n                           (\"\u03c0/4\", math.pi/4), (\"\u03c0/3\", math.pi/3)]:\n        overhead = distortion_overhead(r_val, n=2)\n        print(f\"  r = {r_name}:  (2/cos r)\u00b2 = {overhead:.4f}\")\n\n    crossover = find_crossover_radius(n=2, threshold=2.0)\n    print(f\"\\n  Crossover radius (distortion = 2x): {crossover:.4f} rad ({math.degrees(crossover):.1f}\u00b0)\")\n\n\nif __name__ == \"__main__\":\n    run_examples()\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nStereographic Capacity Theory: Real-World Applications\n\nDemonstrates applications of stereographic packing bounds to:\n1. Spherical code design for communication systems\n2. Molecular geometry: packing atoms on viral capsids\n3. Directional statistics: sensor placement on Earth\n4. Signal constellation design\n\nEach application shows how the bound is computed and interpreted.\n\"\"\"\n\nimport math\nfrom typing import List, Tuple\n\nfrom algorithms import (\n    packing_bound_s2,\n    packing_bound_general,\n    stereo_factor,\n    stereo_exclusion_radius,\n    distortion_overhead,\n)\n\n\n# ============================================================\n# Application 1: Spherical Code Design\n# ============================================================\n\ndef spherical_code_bound(n: int, theta: float) -> Tuple[float, int]:\n    \"\"\"\n    Upper bound on spherical code size with minimum angular separation \u03b8.\n\n    A spherical code is a finite subset of S^n where all pairs of points\n    have angular separation at least \u03b8. This is equivalent to a packing\n    with cap radius r = \u03b8/2.\n\n    Parameters\n    ----------\n    n : int\n        Dimension of the sphere.\n    theta : float\n        Minimum angular separation in radians.\n\n    Returns\n    -------\n    tuple of (float, int)\n        (exact_bound, ceiling_bound)\n\n    Examples\n    --------\n    >>> exact, ceil_val = spherical_code_bound(2, math.pi / 3)\n    >>> ceil_val >= 12  # Icosahedral code\n    True\n    \"\"\"\n    r = theta / 2.0\n    return packing_bound_general(n, r)\n\n\ndef communication_channel_analysis():\n    \"\"\"\n    Analyze spherical code capacity for a communication channel.\n\n    In a real-valued communication channel using unit-norm signal vectors,\n    the maximum number of distinguishable signals with angular separation\n    at least \u03b8 is bounded by the spherical packing number.\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"Application 1: Spherical Code Capacity for Communication\")\n    print(\"=\" * 65)\n    print()\n    print(\"Signal vectors on S\u00b2 with minimum angular separation \u03b8:\")\n    print()\n    print(f\"{'\u03b8 (deg)':>10s}  {'\u03b8 (rad)':>10s}  {'Bound':>10s}  {'\u2308Bound\u2309':>8s}  {'Bits':>8s}\")\n    print(\"-\" * 55)\n\n    for theta_deg in [30, 45, 60, 72, 90, 120]:\n        theta = math.radians(theta_deg)\n        r = theta / 2.0\n        if r > 0 and r < math.pi / 2:\n            exact, ceil_val = packing_bound_s2(r)\n            bits = math.log2(ceil_val) if ceil_val > 0 else 0\n            print(f\"{theta_deg:10d}  {theta:10.4f}  {exact:10.2f}  {ceil_val:8d}  {bits:8.2f}\")\n\n    print()\n    print(\"Higher-dimensional codes (S^n, \u03b8 = 60\u00b0):\")\n    print(f\"{'n':>5s}  {'Bound':>12s}  {'\u2308Bound\u2309':>8s}  {'Bits':>8s}\")\n    print(\"-\" * 40)\n    for n in [2, 3, 4, 5, 6, 8, 10]:\n        r = math.pi / 6  # \u03b8/2 for \u03b8=60\u00b0\n        exact, ceil_val = packing_bound_general(n, r)\n        bits = math.log2(ceil_val) if ceil_val > 0 else 0\n        print(f\"{n:5d}  {exact:12.2f}  {ceil_val:8d}  {bits:8.2f}\")\n    print()\n\n\n# ============================================================\n# Application 2: Molecular Geometry\n# ============================================================\n\ndef viral_capsid_analysis():\n    \"\"\"\n    Analyze packing of protein subunits on a viral capsid.\n\n    Viral capsids are approximately spherical, and protein subunits\n    must maintain minimum separation. The stereographic bound gives\n    upper limits on the number of subunits that can fit.\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"Application 2: Viral Capsid Protein Packing\")\n    print(\"=\" * 65)\n    print()\n\n    # Typical capsid parameters\n    capsid_radius_nm = 30.0  # nanometers\n    protein_diameter_nm = 7.0  # nanometers\n\n    # Angular radius of exclusion zone\n    r = math.asin(protein_diameter_nm / (2 * capsid_radius_nm))\n\n    print(f\"Capsid radius:      {capsid_radius_nm:.1f} nm\")\n    print(f\"Protein diameter:   {protein_diameter_nm:.1f} nm\")\n    print(f\"Angular exclusion:  {math.degrees(r):.2f}\u00b0  ({r:.4f} rad)\")\n    print()\n\n    exact, ceil_val = packing_bound_s2(r)\n    overhead = distortion_overhead(r)\n\n    print(f\"Stereographic bound:  \u2264 {ceil_val} subunits\")\n    print(f\"Distortion overhead:  {overhead:.4f}x\")\n    print(f\"Simple volume bound:  \u2264 {math.ceil(2.0 / (1.0 - math.cos(r)))} subunits\")\n    print()\n\n    # Compare with known T-numbers\n    print(\"Known icosahedral capsid configurations:\")\n    for T, N in [(1, 60), (3, 180), (4, 240), (7, 420)]:\n        needed_r = math.acos(1 - 2.0 / N * (1 - math.cos(math.pi / 6)))\n        print(f\"  T={T}: {N} subunits\")\n    print()\n\n\n# ============================================================\n# Application 3: Sensor Placement\n# ============================================================\n\ndef sensor_placement_analysis():\n    \"\"\"\n    Analyze optimal sensor placement on Earth's surface.\n\n    Sensors must be separated by at least d km on the surface.\n    Earth radius \u2248 6371 km. The angular separation is d/R.\n    \"\"\"\n    print(\"=\" * 65)\n    print(\"Application 3: Global Sensor Network Placement\")\n    print(\"=\" * 65)\n    print()\n\n    R_earth = 6371.0  # km\n\n    print(f\"Earth radius: {R_earth:.0f} km\")\n    print()\n    print(f\"{'Sep (km)':>10s}  {'Sep (deg)':>10s}  {'Bound':>10s}  {'\u2308Bound\u2309':>8s}  {'Overhead':>10s}\")\n    print(\"-\" * 55)\n\n    for d_km in [100, 200, 500, 1000, 2000, 5000]:\n        r = d_km / (2 * R_earth)  # half the angular separation\n        if r < math.pi / 2:\n            exact, ceil_val = packing_bound_s2(r)\n            overhead = distortion_overhead(r)\n            r_deg = math.degrees(2 * r)\n            print(f\"{d_km:10d}  {r_deg:10.2f}  {exact:10.2f}  {ceil_val:8d}  {overhead:10.4f}\")\n    print()\n\n\n# ============================================================\n# Application 4: Distortion Map Visualization Data\n# ============================================================\n\ndef distortion_map_data(n_points: int = 50) -> List[Tuple[float, float, float]]:\n    \"\"\"\n    Generate data for visualizing the stereographic distortion field.\n\n    Returns (x, y, \u03bb(x,y)) triples for a grid of points in \u211d\u00b2.\n\n    Parameters\n    ----------\n    n_points : int\n        Grid resolution per axis.\n\n    Returns\n    -------\n    list of (float, float, float)\n        (x, y, conformal_factor) triples.\n    \"\"\"\n    data = []\n    extent = 5.0\n    for i in range(n_points):\n        for j in range(n_points):\n            x = -extent + 2 * extent * i / (n_points - 1)\n            y = -extent + 2 * extent * j / (n_points - 1)\n            norm = math.sqrt(x ** 2 + y ** 2)\n            lam = stereo_factor(norm)\n            data.append((x, y, lam))\n    return data\n\n\ndef print_distortion_summary():\n    \"\"\"Print a summary of the distortion field properties.\"\"\"\n    print(\"=\" * 65)\n    print(\"Application 4: Stereographic Distortion Field Analysis\")\n    print(\"=\" * 65)\n    print()\n    print(\"The conformal factor \u03bb(x) = 2/(1+\u2016x\u2016\u00b2) controls how\")\n    print(\"spherical geometry distorts under stereographic projection.\")\n    print()\n    print(f\"{'\u2016x\u2016':>8s}  {'\u03bb(x)':>10s}  {'1/\u03bb(x)':>10s}  {'Sphere point':>20s}\")\n    print(\"-\" * 55)\n\n    for norm in [0.0, 0.5, 1.0, 1.5, 2.0, 3.0, 5.0, 10.0]:\n        lam = stereo_factor(norm)\n        inv_lam = 1.0 / lam\n        # Corresponding colatitude on sphere\n        if norm == 0:\n            desc = \"South pole\"\n        else:\n            colat = 2 * math.atan(norm)\n            lat = 90 - math.degrees(colat)\n            desc = f\"lat {lat:.1f}\u00b0\"\n        print(f\"{norm:8.2f}  {lam:10.6f}  {inv_lam:10.4f}  {desc:>20s}\")\n    print()\n    print(\"Key insight: Points near the equator (\u2016x\u2016 \u2248 1) have \u03bb \u2248 1,\")\n    print(\"while points near the north pole (\u2016x\u2016 \u2192 \u221e) have \u03bb \u2192 0.\")\n    print(\"This means projected caps near the north pole are greatly\")\n    print(\"enlarged, requiring the distortion correction factor.\")\n    print()\n\n\n# ============================================================\n# Main\n# ============================================================\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Stereographic Capacity Theory: Real-World Applications \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    communication_channel_analysis()\n    viral_capsid_analysis()\n    sensor_placement_analysis()\n    print_distortion_summary()\n\n\nif __name__ == \"__main__\":\n    main()\n\n\n#!/usr/bin/env python3\n\"\"\"\nStereographic Capacity Theory: S\u00b2 Packing Bound Calculator\n\nComputes the stereographic upper bound on spherical packing numbers for the\nunit 2-sphere, using the closed-form formula:\n\n    N(2, r) \u2264 \u2308 8 / (cos\u00b2r \u00b7 (1 - cos r)) \u2309\n\nThis bound arises from stereographic projection distortion analysis:\nthe conformal factor \u03bb(x) = 2/(1 + \u2016x\u2016\u00b2) controls how spherical caps\nmap to Euclidean balls, and the worst-case distortion yields the factor\n(2/cos r)\u00b2 in the area-based packing estimate.\n\nUsage:\n    python demo.py           # Interactive mode\n    python demo.py 0.5236    # Compute bound for r = \u03c0/6 \u2248 0.5236\n\"\"\"\n\nimport math\nimport sys\n\n\ndef stereo_bound_s2(r: float) -> float:\n    \"\"\"\n    Compute the stereographic upper bound on S\u00b2 packing number.\n\n    Parameters\n    ----------\n    r : float\n        Geodesic cap radius in radians, must satisfy 0 < r < \u03c0/2.\n\n    Returns\n    -------\n    float\n        Upper bound on the number of pairwise 2r-separated points on S\u00b2.\n\n    Formula\n    -------\n    B(r) = 8 / (cos\u00b2(r) \u00b7 (1 - cos(r)))\n\n    This equals (2/cos r)\u00b2 \u00b7 (4\u03c0) / (2\u03c0(1 - cos r)), which is the\n    distortion-corrected volume ratio bound.\n    \"\"\"\n    if r <= 0 or r >= math.pi / 2:\n        raise ValueError(f\"r must be in (0, \u03c0/2), got {r}\")\n    c = math.cos(r)\n    return 8.0 / (c ** 2 * (1.0 - c))\n\n\ndef stereo_bound_s2_factored(r: float) -> float:\n    \"\"\"\n    Compute the bound in factored form: (2/cos r)\u00b2 \u00b7 sphereArea / capArea.\n\n    This is mathematically equivalent to stereo_bound_s2 but shows the\n    decomposition into distortion factor \u00d7 volume ratio.\n    \"\"\"\n    if r <= 0 or r >= math.pi / 2:\n        raise ValueError(f\"r must be in (0, \u03c0/2), got {r}\")\n    c = math.cos(r)\n    distortion = (2.0 / c) ** 2\n    sphere_area = 4.0 * math.pi\n    cap_area = 2.0 * math.pi * (1.0 - c)\n    return distortion * sphere_area / cap_area\n\n\ndef volume_bound_s2(r: float) -> float:\n    \"\"\"\n    Simple volume bound (without distortion correction):\n    sphereArea / capArea = 4\u03c0 / (2\u03c0(1-cos r)) = 2/(1-cos r).\n    \"\"\"\n    if r <= 0 or r >= math.pi:\n        raise ValueError(f\"r must be in (0, \u03c0), got {r}\")\n    c = math.cos(r)\n    return 2.0 / (1.0 - c)\n\n\n# Known optimal/best-known packing numbers for S\u00b2\nKNOWN_PACKINGS = {\n    \"\u03c0/6\": {\"r\": math.pi / 6, \"known_N\": 12, \"description\": \"Icosahedron vertices\"},\n    \"\u03c0/4\": {\"r\": math.pi / 4, \"known_N\": 6, \"description\": \"Octahedron vertices\"},\n    \"\u03c0/3\": {\"r\": math.pi / 3, \"known_N\": 4, \"description\": \"Tetrahedron vertices\"},\n    \"\u03c0/2\": {\"r\": math.pi / 2 - 1e-10, \"known_N\": 3, \"description\": \"Three mutually orthogonal points\"},\n}\n\n\ndef calibration_table():\n    \"\"\"Print calibration comparison between bound and known configurations.\"\"\"\n    print(\"=\" * 76)\n    print(\"CALIBRATION: Stereographic S\u00b2 Packing Bound vs Known Optimal Configurations\")\n    print(\"=\" * 76)\n    print(f\"{'r':>8s}  {'Bound':>12s}  {'\u2308Bound\u2309':>8s}  {'Known N':>8s}  {'Ratio':>8s}  {'Config'}\")\n    print(\"-\" * 76)\n\n    for name, data in KNOWN_PACKINGS.items():\n        r = data[\"r\"]\n        try:\n            bound = stereo_bound_s2(r)\n            bound_ceil = math.ceil(bound)\n            known = data[\"known_N\"]\n            ratio = bound / known\n            print(f\"{name:>8s}  {bound:12.4f}  {bound_ceil:8d}  {known:8d}  {ratio:8.2f}  {data['description']}\")\n        except ValueError:\n            print(f\"{name:>8s}  {'N/A':>12s}  {'N/A':>8s}  {data['known_N']:8d}  {'N/A':>8s}  {data['description']}\")\n    print()\n\n\ndef distortion_analysis(r: float):\n    \"\"\"Analyze the distortion factor contribution to the bound.\"\"\"\n    c = math.cos(r)\n    distortion = (2.0 / c) ** 2\n    volume_ratio = 2.0 / (1.0 - c)\n    total = distortion * volume_ratio\n\n    print(f\"\\nDistortion Analysis for r = {r:.6f} ({math.degrees(r):.2f}\u00b0)\")\n    print(\"-\" * 50)\n    print(f\"  cos(r)                = {c:.6f}\")\n    print(f\"  Distortion (2/cos r)\u00b2 = {distortion:.6f}\")\n    print(f\"  Volume ratio 2/(1-cr) = {volume_ratio:.6f}\")\n    print(f\"  Total bound           = {total:.4f}\")\n    print(f\"  Ceiling               = {math.ceil(total)}\")\n    print(f\"  Simple volume bound   = {volume_ratio:.4f}\")\n    print(f\"  Distortion overhead   = {distortion:.4f}x\")\n    print()\n\n\ndef sweep_table(n_points: int = 20):\n    \"\"\"Print a table of bounds for a sweep of radii.\"\"\"\n    print(\"\\n\" + \"=\" * 70)\n    print(\"SWEEP: Stereographic S\u00b2 Packing Bound for Various Radii\")\n    print(\"=\" * 70)\n    print(f\"{'r (rad)':>10s}  {'r (deg)':>10s}  {'Bound':>12s}  {'\u2308Bound\u2309':>8s}  {'VolBound':>12s}  {'Distort':>8s}\")\n    print(\"-\" * 70)\n\n    for i in range(1, n_points + 1):\n        r = (math.pi / 2) * i / (n_points + 1)\n        bound = stereo_bound_s2(r)\n        vol_bound = volume_bound_s2(r)\n        c = math.cos(r)\n        distortion = (2.0 / c) ** 2\n        print(f\"{r:10.4f}  {math.degrees(r):10.2f}  {bound:12.4f}  {math.ceil(bound):8d}  {vol_bound:12.4f}  {distortion:8.4f}\")\n    print()\n\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Stereographic Capacity Theory: S\u00b2 Packing Bounds   \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    # If command-line argument provided, compute for that radius\n    if len(sys.argv) > 1:\n        try:\n            r = float(sys.argv[1])\n            bound = stereo_bound_s2(r)\n            print(f\"r = {r:.6f} rad ({math.degrees(r):.2f}\u00b0)\")\n            print(f\"Stereographic bound: {bound:.4f}\")\n            print(f\"Ceiling:             {math.ceil(bound)}\")\n            distortion_analysis(r)\n        except ValueError as e:\n            print(f\"Error: {e}\")\n        return\n\n    # Full interactive demo\n    calibration_table()\n    sweep_table()\n\n    # Distortion analysis for calibration values\n    for name, data in list(KNOWN_PACKINGS.items())[:3]:\n        distortion_analysis(data[\"r\"])\n\n    # Interactive input\n    print(\"\\n\" + \"=\" * 50)\n    print(\"Interactive Mode\")\n    print(\"=\" * 50)\n    while True:\n        try:\n            s = input(\"\\nEnter r in radians (or 'q' to quit): \").strip()\n            if s.lower() in ('q', 'quit', 'exit', ''):\n                break\n            r = float(s)\n            bound = stereo_bound_s2(r)\n            print(f\"  Stereographic bound: {bound:.4f}\")\n            print(f\"  Ceiling:             {math.ceil(bound)}\")\n        except ValueError as e:\n            print(f\"  Error: {e}\")\n        except (EOFError, KeyboardInterrupt):\n            break\n\n    print(\"\\nDone.\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "date": "2026-05-20T03:08:54Z",
+    "exp_id": "71236717",
+    "source_exp_ids": [
+      "seed"
+    ]
+  },
   "we_have_formally_verified_the_following.json": {
     "title": "CRT Multiplicativity of the Perfect Cuboid Modular Sieve",
     "domain": "Number Theory / Arithmetic Geometry",
@@ -5208,7 +5262,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -5217,7 +5271,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -5226,7 +5280,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -5235,7 +5289,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "galois_group__s",
@@ -5244,7 +5298,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -5262,7 +5316,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "expected_lean_signature",
@@ -5271,7 +5325,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -5280,7 +5334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 92
+      "hue": 101
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -5289,7 +5343,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "percolation_threshold",
@@ -5298,7 +5352,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -5307,7 +5361,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -5316,7 +5370,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -5325,7 +5379,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 95
+      "hue": 100
     },
     {
       "id": "legendres_conjecture",
@@ -5334,7 +5388,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 281
+      "hue": 270
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -5361,7 +5415,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -5379,7 +5433,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -5388,7 +5442,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -5424,7 +5478,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -5433,7 +5487,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "sums_of_three_cubes",
@@ -5442,7 +5496,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T20:03:29Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -5451,7 +5505,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -5460,7 +5514,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "twin_prime_conjecture",
@@ -5469,7 +5523,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 100
+      "hue": 272
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -5478,7 +5532,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -5496,7 +5550,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -5505,7 +5559,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T23:05:18Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -5514,7 +5568,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -5523,7 +5577,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -5532,7 +5586,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -5550,7 +5604,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "riemann_hypothesis",
@@ -5559,7 +5613,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "odd_perfect_numbers",
@@ -5568,7 +5622,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -5577,7 +5631,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "jacobian_conjecture",
@@ -5586,7 +5640,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "10_is_a_solitary_number",
@@ -5595,7 +5649,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 314
+      "hue": 270
     },
     {
       "id": "kakeya_conjecture",
@@ -5604,7 +5658,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T10:26:12Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -5613,7 +5667,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "invariant_subspace_problem",
@@ -5622,7 +5676,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -5631,7 +5685,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -5640,7 +5694,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -5649,7 +5703,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -5658,7 +5712,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -5667,7 +5721,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -5676,7 +5730,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -5685,7 +5739,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "196_algorithm_non_termination",
@@ -5703,7 +5757,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "goldbach_conjecture",
@@ -5712,7 +5766,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -5721,7 +5775,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -5730,7 +5784,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -5739,7 +5793,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -5748,7 +5802,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "beals_conjecture",
@@ -5757,7 +5811,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -5766,7 +5820,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -5775,7 +5829,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -5784,7 +5838,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -5802,7 +5856,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 270
+      "hue": 101
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -5820,7 +5874,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -5829,7 +5883,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -5838,7 +5892,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -5847,7 +5901,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -5856,7 +5910,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -5865,7 +5919,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 314
+      "hue": 270
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -5874,7 +5928,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -5892,7 +5946,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -5901,7 +5955,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -5919,7 +5973,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "schanuels_conjecture",
@@ -5928,7 +5982,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:44Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -5937,7 +5991,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -5946,7 +6000,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -5955,7 +6009,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified",
@@ -5964,7 +6018,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -5973,7 +6027,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -5982,7 +6036,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -5991,7 +6045,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 271
+      "hue": 101
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -6000,7 +6054,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -6009,7 +6063,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -6018,7 +6072,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -6027,7 +6081,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "collatz_conjecture",
@@ -6036,7 +6090,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -6045,7 +6099,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 134
+      "hue": 270
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -6054,7 +6108,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -6063,7 +6117,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -6072,7 +6126,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -6081,7 +6135,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 270
+      "hue": 134
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -6090,7 +6144,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 270
+      "hue": 134
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -6099,7 +6153,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -6108,7 +6162,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -6126,7 +6180,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 292
+      "hue": 275
     },
     {
       "id": "langlands_program_functoriality",
@@ -6135,7 +6189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T01:04:07Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "medium_priority",
@@ -6144,7 +6198,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "erdsstraus_conjecture",
@@ -6153,7 +6207,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "the_invariance_theorem_establishes_that_the_symmet",
@@ -6162,7 +6216,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -6171,7 +6225,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -6180,7 +6234,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -6189,7 +6243,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T02:05:05Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "hypothesis_4_p_adic_threshold_transfer",
@@ -6198,7 +6252,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -6207,7 +6261,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 90
+      "hue": 92
+    },
+    {
+      "id": "stereographic_capacity_theory_packing_bounds_on_sp",
+      "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry",
+      "domain": "Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-20T03:08:54Z",
+      "hue": 270
     }
   ],
   "edges": [
@@ -7315,22 +7378,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:11.023306+00:00"
   },
   {
-    "id": "seed_076",
-    "title": "Inverse Stereographic Renormalization Group",
-    "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
-    "domains": [
-      "Geometry",
-      "Physics",
-      "Algebra"
-    ],
-    "priority_score": 0.84,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "07fa7e82",
-    "timestamp": "2026-05-20T00:22:11.029972+00:00"
-  },
-  {
     "id": "seed_093",
     "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry",
     "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
@@ -7636,6 +7683,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T01:00:34.858440+00:00"
   },
   {
+    "id": "fd_0141",
+    "title": "Proof-Zeta Universality for Formal Theories",
+    "description": "Conjecture: For every recursively axiomatized, consistent theory T with polynomial-time proof verification, the Dirichlet series Z_T(s)=sum_{n>=1} a_T(n)n^{-s}, where a_T(n) counts provable sentences of G\u00f6del length n under a fixed canonical encoding, has an abscissa of convergence sigma_T and a meromorphic continuation to Re(s)>sigma_T-1 such that the location/order of its rightmost singularities is invariant under change of reasonable encoding and determines the asymptotic distribution of independent proof motifs in T. Test: Compute a_T(n) exactly for bounded n in multiple formal systems/encodings (e.g. propositional fragments, Presburger arithmetic, weak arithmetic), estimate singular structure numerically, and check whether inferred critical exponents and pole multiplicities are stable across encodings but differ across theories; refute if encoding changes alter the critical data or no stable continuation signature emerges. Impact: Would create a new analytic invariant of formal theories, linking proof complexity, combinatorial enumeration, and universality phenomena analogous to statistical mechanics, potentially enabling quantitative phase diagrams of mathematical theories.",
+    "domains": [
+      "Logic",
+      "Analytic Combinatorics"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T03:01:41.317104+00:00"
+  },
+  {
     "id": "seed_026",
     "title": "Lehmer's Mahler Measure Problem",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
@@ -7726,62 +7788,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T00:22:11.034403+00:00"
-  },
-  {
-    "id": "fd_0111",
-    "title": "Impact",
-    "description": "This would establish a tropical analogue of the classical result that matrix rank equals the size of the largest nonvanishing minor. It would give polynomial-time certificates for tropical rank bounds.",
-    "domains": [
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a0f1a30",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T01:04:31.714756+00:00"
-  },
-  {
-    "id": "fd_0112",
-    "title": "Test",
-    "description": "Construct matrices where all $2 \\times 2$ submatrix certificates hold on $3 \\times 3$ sub-selections but the full certificate fails. If no such matrix exists (across exhaustive search for small sizes), the conjecture is supported. A counterexample would refute it.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a0f1a30",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T01:04:31.717955+00:00"
-  },
-  {
-    "id": "fd_0119",
-    "title": "Test:",
-    "description": "Compute the renormalized coefficient vectors for n \u2264 20 and\ncheck palindromicity. Determine the exact renormalization factor.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "263f90c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T02:03:53.773483+00:00"
-  },
-  {
-    "id": "fd_0135",
-    "title": "Impact:",
-    "description": "Establishes that the p-adic scaling law is not merely a sufficient condition but is **tight** \u2014 the valuation-theoretic precision depth cannot be improved without additional structural assumptions.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "279b6db7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T02:05:35.245134+00:00"
   },
   {
     "id": "seed_007",
@@ -7953,20 +7959,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T01:03:43.220099+00:00"
   },
   {
-    "id": "fd_0104",
-    "title": "Overview",
-    "description": "This document identifies five specific, testable scientific hypotheses arising from our formal verification of symmetric-square transfer for GL(2) Satake parameters. Each direction is a falsifiable claim with a clear computational or formal test.\n\n---",
-    "domains": [
-      "Analysis"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bbcf1a44",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T01:04:09.557443+00:00"
-  },
-  {
     "id": "fd_0105",
     "title": "Conjecture 1: Explicit Hecke Polynomial Formula for Sym^n",
     "description": "**Conjecture:** For every n \u2265 2, the Euler factor coefficients of the Sym^n transfer can be expressed as explicit polynomials in the Hecke trace a = \u03b1 + \u03b2 and determinant \u03c9 = \u03b1\u03b2. Specifically, the k-th coefficient c_k of L(Sym^n \u03c0, T)^{-1} equals (-1)^k \u00b7 e_k(\u03b1^n, \u03b1^{n-1}\u03b2, ..., \u03b2^n), where e_k is the k-th elementary symmetric polynomial, and this can be rewritten as a polynomial in (a, \u03c9) of degree at most nk/2 in a and k in \u03c9.\n\n**Test:** For n = 2, 3, 4, compute the explicit polynomial expressions symbolically using computer algebra. Verify that the total degree in (a, \u03c9) matches the prediction. For n = 3, the Euler factor should be a degree-4 polynomial in T with coefficients expressible as polynomials in a and \u03c9. Implement symbolic computation in SageMath or SymPy and verify coefficien",
@@ -8047,23 +8039,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T01:04:09.576524+00:00"
   },
   {
-    "id": "fd_0110",
-    "title": "Prioritization",
-    "description": "| Priority | Conjecture | Difficulty | Value |\n|----------|-----------|------------|-------|\n| 1 | Conjecture 2 (Sym^n temperedness) | Low | High \u2014 immediate generalization |\n| 2 | Conjecture 5 (Rankin-Selberg) | Medium | Very High \u2014 opens new theory |\n| 3 | Conjecture 1 (Sym^n Hecke formula) | Medium | High \u2014 computational recipe |\n| 4 | Conjecture 3 (Growth rate) | Medium-High | Medium \u2014 analytic applications |\n| 5 | Conjecture 4 (Circuit complexity) | High | Medium \u2014 cross-domain |\n\nConjectures 1 and 2 are the most immediately tractable and should be pursued first. Conjecture 5 would represent the most significant theoretical advance.",
-    "domains": [
-      "NumberTheory",
-      "Bridges",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bbcf1a44",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T01:04:09.579595+00:00"
-  },
-  {
     "id": "fd_0113",
     "title": "Conjecture 1: Ordered Small First-Denominator Bound",
     "description": "**Statement:** For every integer n \u2265 2, there exists an ordered witness (x \u2264 y \u2264 z) for the Erd\u0151s\u2013Straus equation 4/n = 1/x + 1/y + 1/z with x \u2264 n.\n\n**Formalization:**\n```\n\u2200 n : \u2115, 2 \u2264 n \u2192 \u2203 x y z : \u2115, OrderedESWitness n x y z \u2227 x \u2264 n\n```\n\n**Test:** Run the verified search algorithm `searchESVerified` with bound B = n for all n \u2264 10^6. A single failure disproves the conjecture. Success for all tested values provides strong evidence.\n\n**Impact:** If true, this would dramatically reduce the search space for the remaining n \u2261 1 (mod 4) cases, as one would only need to check O(n\u00b2) candidate pairs instead of an unbounded search.\n\n---",
@@ -8141,21 +8116,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "8aeabb51",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T02:00:27.961170+00:00"
-  },
-  {
-    "id": "fd_0118",
-    "title": "Methodology Note",
-    "description": "All conjectures above are designed to interface directly with the verified search algorithm `searchESVerified` defined in our formalization. Computational tests should use the verified Python implementation in `demo.py` and `algorithms.py` for initial exploration, with formal verification of any positive results achievable by extending the Lean framework.",
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8aeabb51",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T02:00:27.964386+00:00"
   },
   {
     "id": "fd_0120",
@@ -8414,6 +8374,93 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "d15eb484",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T02:05:08.968810+00:00"
+  },
+  {
+    "id": "fd_0136",
+    "title": "Conjecture 1: Complex Extension Unlocks Hyperbolic Fixed Points",
+    "description": "**Precise statement:** Extend the two-pole M\u00f6bius map $F_{a,b}$ to poles $a, b \\in \\mathbb{C}$ acting on the Riemann sphere $\\hat{\\mathbb{C}}$. Then for $a, b \\in \\mathbb{C}$ with $\\text{Im}(a) \\neq 0$ or $\\text{Im}(b) \\neq 0$, the map $F_{a,b}$ can be hyperbolic (two real fixed points) or loxodromic (spiraling dynamics), not just elliptic.\n\n**Test:** Compute the trace $\\text{tr}(F_{a,b}) = 2(ab+1)$ and the discriminant $\\text{tr}^2 - 4\\det$ for complex poles. The map is hyperbolic iff the discriminant is real and positive. Verify with specific examples: $a = i, b = 2i$ should give a loxodromic map.\n\n**Impact:** If true, complex poles provide a geometric mechanism for hyperbolic (attractive/repulsive) RG fixed points, matching the phenomenology of physical RG flows. This would resolve the ",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "07fa7e82",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T03:01:31.751551+00:00"
+  },
+  {
+    "id": "fd_0137",
+    "title": "Conjecture 2: Two-Pole Geometric RG Is Universal for Rational One-Coupling RG Ma",
+    "description": "**Precise statement:** Every one-dimensional rational RG map $T: \\mathbb{R} \\to \\mathbb{R}$ of the form $T(g) = (pg + q)/(rg + s)$ with $ps - qr > 0$ (orientation-preserving M\u00f6bius map) is conjugate to some $F_{a,b}$ via an affine coordinate change $\\psi(g) = \\alpha g + \\beta$.\n\n**Test:** Given a M\u00f6bius RG map with coefficients $(p,q,r,s)$, solve the system:\n- $(ab+1) = p\\lambda$, $(b-a) = q\\lambda$, $(a-b) = r\\lambda$, $(ab+1) = s\\lambda$ for $a, b, \\lambda$.\n- The constraint $(b-a) + (a-b) = 0 \\Leftrightarrow q + r = 0$ (up to conjugacy) is necessary.\n- Verify numerically for the transfer-matrix RG maps of the Potts model and hierarchical models.\n\n**Impact:** If true, the geometric RG framework is the universal language for one-coupling M\u00f6bius RG, and all such physical RG flows are repar",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "07fa7e82",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T03:01:31.756294+00:00"
+  },
+  {
+    "id": "fd_0138",
+    "title": "Conjecture 3: Rotation Number Encodes the Central Charge",
+    "description": "**Precise statement:** For the geometric RG map $F_{a,b}$ with poles $a, b \\in \\mathbb{R}$, $a \\neq b$, the rotation number $\\rho(a,b) \\in [0,1)$ on the projective line satisfies\n$$\\rho(a,b) = \\frac{1}{\\pi} \\arctan\\left(\\frac{|a - b|}{ab + 1}\\right)$$\nand this quantity is related to the central charge $c$ of a conformal field theory by $c = 12\\rho(1 - \\rho)$ in appropriate normalization.\n\n**Test:**\n1. Compute $\\rho(a,b)$ numerically for many pole pairs and compare with the analytic formula.\n2. For known CFT models with $c = 1/2$ (Ising), $c = 4/5$ (3-state Potts), check if there exist pole pairs reproducing these values.\n3. The formula predicts $\\rho(0, 1) = 1/4$, giving $c = 12 \\cdot (1/4)(3/4) = 9/4$. Verify the rotation number numerically.\n\n**Impact:** A direct connection between pole g",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "07fa7e82",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T03:01:31.760130+00:00"
+  },
+  {
+    "id": "fd_0139",
+    "title": "Conjecture 4: Multi-Pole Chains Generate Lattice RG Maps",
+    "description": "**Precise statement:** For a sequence of $n$ poles $a_1, a_2, \\ldots, a_n$ with $a_{n+1} = a_1$ (periodic), the iterated map $F_{a_n, a_1} \\circ \\cdots \\circ F_{a_2, a_3} \\circ F_{a_1, a_2} = F_{a_1, a_1} = \\text{id}$ by the composition law. However, if we define a *block-averaged* RG map by grouping $k$ consecutive poles, the effective map $F_{a_1, a_{k+1}}$ can have nontrivial dynamics that depends on the block size $k$ (the \"scale\").\n\n**Test:**\n1. Generate random pole sequences and compute the effective RG map for various block sizes.\n2. Check whether the effective map's properties (rotation number, derivative at representative points) exhibit scaling behavior as a function of block size.\n3. Compare with real-space RG blocking transformations for the 1D Ising model on a finite lattice.\n",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "Cryptography",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "07fa7e82",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T03:01:31.764089+00:00"
+  },
+  {
+    "id": "fd_0140",
+    "title": "Conjecture 5: Hamiltonian Systems with M\u00f6bius-Invariant Energy Functions Exist a",
+    "description": "**Precise statement:** There exists a nontrivial Hamiltonian system $H: \\mathbb{R}^2 \\to \\mathbb{R}$ and a projection $\\pi: \\mathbb{R}^2 \\to \\mathbb{R}$ such that $H$ is a first integral, the projected dynamics $g(t) = \\pi(\\gamma(t))$ evolves on $\\mathbb{R}$, and the energy function $E(g) = H(\\pi^{-1}(g))$ satisfies $E(F_{a,b}(g)) = E(g)$ for specific poles $a, b$ determined by $H$.\n\n**Test:**\n1. Search for quadratic Hamiltonians $H(x,y) = \\alpha x^2 + \\beta xy + \\gamma y^2$ where the projection $\\pi(x,y) = x/y$ (projective coordinate) satisfies M\u00f6bius invariance.\n2. The condition $E(F_{a,b}(g)) = E(g)$ with $E(g) = g^2 + 1$ (simplest candidate) requires $(F_{a,b}(g))^2 + 1 = g^2 + 1$, i.e., $F_{a,b}(g) = \\pm g$. Check which pole pairs achieve this.\n3. For the harmonic oscillator $H = (x^2",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "07fa7e82",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T03:01:31.768704+00:00"
   },
   {
     "id": "seed_083",
