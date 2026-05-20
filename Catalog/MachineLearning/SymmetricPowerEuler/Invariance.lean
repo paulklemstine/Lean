@@ -12,16 +12,6 @@ import Speculative.SymmetricPowerEuler.Recurrence
 This file proves the central invariance theorem: the symmetric-power
 Euler denominator depends only on the trace α+β and determinant αβ.
 
-## Strategy
-
-We use the recursion:
-  E_n(α,β;X) = (1 - (α^n+β^n)X + (αβ)^n X²) · E_{n-2}(α,β; αβ·X)
-
-Since (α^n+β^n) = powerSumTwo(α+β, αβ, n) depends only on trace and det,
-and the recursive structure only involves d·X substitution, we can show
-E_n(α,β;X) = eulerPhiRec(α+β, αβ, X, n), which manifestly depends only
-on trace and det. Invariance follows immediately.
-
 ## Main results
 
 - `euler_product_recursion`: The factored recursion for the Euler product.
@@ -33,38 +23,31 @@ open Finset BigOperators
 
 /-! ## The Euler product recursion -/
 
-/-
-**Euler product recursion.**
-E_n(α,β;X) = (1 - (α^n+β^n)X + (αβ)^n X²) · E_{n-2}(α,β; αβ·X)
-
-This is the factored form that separates the "new" outer factors
-(1-α^n X)(1-β^n X) from the "shifted" inner product.
--/
 theorem euler_product_recursion {R : Type*} [CommRing R]
     (n : ℕ) (α β X : R) :
     symmPowerEulerDen (n + 2) α β X =
       (1 - (α ^ (n + 2) + β ^ (n + 2)) * X + (α * β) ^ (n + 2) * X ^ 2) *
         symmPowerEulerDen n α β (α * β * X) := by
-  unfold symmPowerEulerDen;
-  rw [ Finset.prod_range_succ, Finset.prod_range_succ' ];
-  simp +decide [ mul_assoc, mul_comm, mul_left_comm, pow_succ, Nat.succ_sub_succ ];
-  rw [ Finset.prod_congr rfl fun x hx => by rw [ show n + 1 - x = n - x + 1 by rw [ tsub_add_eq_add_tsub ( Finset.mem_range_succ_iff.mp hx ) ] ] ] ; ring
+  unfold symmPowerEulerDen
+  rw [Finset.prod_range_succ, Finset.prod_range_succ']
+  simp +decide [mul_assoc, mul_comm, mul_left_comm, pow_succ, Nat.succ_sub_succ]
+  rw [Finset.prod_congr rfl fun x hx => by
+    rw [show n + 1 - x = n - x + 1 by
+      rw [tsub_add_eq_add_tsub (Finset.mem_range_succ_iff.mp hx)]]]
+  ring
 
 /-! ## E_n equals the recursive trace-det form -/
 
-/-
-The Euler denominator equals the recursive trace-det form.
--/
 theorem symmPowerEulerDen_eq_eulerPhiRec {R : Type*} [CommRing R]
     (n : ℕ) (α β X : R) :
     symmPowerEulerDen n α β X = eulerPhiRec (α + β) (α * β) X n := by
-  induction' n using Nat.strongRecOn with n ih generalizing α β X;
-  rcases n with ( _ | _ | n );
-  · simp +decide [ symmPowerEulerDen, eulerPhiRec ];
-  · simp [symmPowerEulerDen, eulerPhiRec];
-    simpa [ Finset.prod_range_succ ] using by ring;
-  · rw [ euler_product_recursion, ih ];
-    · exact congr_arg₂ _ ( by rw [ ← powerSumTwo_eq ] ) rfl;
+  induction' n using Nat.strongRecOn with n ih generalizing α β X
+  rcases n with ( _ | _ | n )
+  · simp +decide [symmPowerEulerDen, eulerPhiRec]
+  · simp [symmPowerEulerDen, eulerPhiRec]
+    simpa [Finset.prod_range_succ] using by ring
+  · rw [euler_product_recursion, ih]
+    · exact congr_arg₂ _ (by rw [← powerSumTwo_eq]) rfl
     · grind
 
 /-! ## The main invariance theorem -/

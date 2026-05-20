@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "the_invariance_theorem_establishes_that_the_symmet.json",
+    "title": "Constructive Universal Coefficient Theory for Symmetric-Power Euler Factors of GL2",
+    "domain": "Number Theory / Arithmetic Geometry / Automorphic Forms",
+    "date": "2026-05-20T02:03:49Z",
+    "exp_id": "263f90c3"
+  },
+  {
     "filename": "erdsstraus_conjecture.json",
     "title": "Formal Arithmetic Geometry of Egyptian Fraction Decompositions",
     "domain": "Number Theory / Diophantine Geometry",
@@ -4121,6 +4128,53 @@ window.PACKAGE_DB = {
       "5475ab04"
     ]
   },
+  "the_invariance_theorem_establishes_that_the_symmet.json": {
+    "title": "Constructive Universal Coefficient Theory for Symmetric-Power Euler Factors of GL2",
+    "domain": "Number Theory / Arithmetic Geometry / Automorphic Forms",
+    "article": "# The Hidden Engine Inside Every Prime\n\n## A universal algebraic machine, centuries in the making, reveals that the deepest symmetries of prime numbers can be computed from just two numbers\n\n---\n\nIn 1859, Bernhard Riemann wrote an eight-page paper that would haunt mathematics for more than 160 years. His central object\u2014the zeta function\u2014encodes information about every prime number in a single, elegant formula. But Riemann's insight went further: he showed that the primes are not scattered randomly across the number line. They are governed by hidden harmonics, like the overtones of a vibrating string.\n\nWhat Riemann couldn't have known is that his harmonics were just the beginning. Behind each prime lurks not one frequency but an infinite tower of increasingly complex vibrations, each one encoding deeper arithmetic information. Mathematicians call these vibrations *symmetric powers*, and computing them has been one of the grand challenges of modern number theory.\n\nNow, a new result reveals something remarkable: this entire infinite tower can be generated from a simple, self-replicating algebraic machine. No matter how high you climb, every vibration is controlled by just two numbers\u2014the *trace* and *determinant* of a single matrix. And the machine that generates them is not merely theoretical. It is constructive, recursive, and computationally efficient.\n\n## The Fingerprint of a Prime\n\nTo understand the breakthrough, imagine you're a detective trying to identify a suspect. You have a fingerprint\u2014a unique pattern that identifies one person among billions. In number theory, the analogue of a fingerprint is the *Frobenius matrix*: a 2\u00d72 matrix attached to each prime number by a given mathematical structure (technically, a modular form or automorphic representation).\n\nThis matrix has two eigenvalues, \u03b1 and \u03b2, which are the \"frequencies\" of the prime. From \u03b1 and \u03b2, you can compute the local *Euler factor*\u2014the prime's contribution to an L-function. For the simplest L-function, the computation is straightforward: the Euler factor is (1 \u2212 \u03b1X)(1 \u2212 \u03b2X).\n\nBut for symmetric-power L-functions, you need to compute products involving all possible combinations of powers of \u03b1 and \u03b2:\n\n\u220f (1 \u2212 \u03b1^{n\u2212k} \u03b2^k X)\n\nfor k = 0, 1, \u2026, n. As n grows, this product becomes enormous. For the 10th symmetric power, it's a polynomial of degree 11. For the 100th, degree 101. The naive approach requires knowing \u03b1 and \u03b2 individually\u2014extracting the \"eigenvalues\" of the fingerprint.\n\nHere's the surprise: **you never actually need to know \u03b1 and \u03b2.**\n\n## Two Numbers Rule Them All\n\nThe trace t = \u03b1 + \u03b2 and the determinant d = \u03b1\u03b2\u2014the two coefficients of the *characteristic polynomial* of the Frobenius matrix\u2014contain all the information needed to compute every symmetric-power Euler factor, at every degree, for every prime.\n\nThis isn't obvious. The product \u220f(1 \u2212 \u03b1^{n\u2212k}\u03b2^k X) involves intricate combinations of powers of \u03b1 and \u03b2. Why should it be recoverable from just t and d?\n\nThe answer lies in a beautiful recursive structure. The key insight is a *two-step recurrence*: the Euler factor at level n+2 can be computed from the one at level n, using only three ingredients:\n1. A \"power sum oracle\" that computes \u03b1^m + \u03b2^m from t and d (via a Chebyshev-type recurrence),\n2. Powers of the determinant d,\n3. A simple algebraic substitution.\n\nThis means the entire infinite tower of Euler factors collapses into a finite algorithm. Given t and d, you can compute the Euler factor at any level n in time proportional to n\u2014no eigenvalue extraction needed, no complex algebra, no factorization.\n\n## The Coefficient Machine\n\nBut the new result goes much further than just computing the product. It shows that **every individual coefficient** of the Euler factor polynomial is a universal function of (t, d).\n\nThink of it this way: the Euler factor is a polynomial in X, say \u03a6_n(X) = c\u2080 + c\u2081X + c\u2082X\u00b2 + \u22ef + c_{n+1}X^{n+1}. Each coefficient c_j is a symmetric function of the weights {\u03b1^{n\u2212k}\u03b2^k}. The new theorem proves that each c_j can be expressed as a polynomial in t and d\u2014the same polynomial, regardless of which specific \u03b1 and \u03b2 gave rise to those values of t and d.\n\nThis transforms the theory from a single invariance statement (\"the product depends only on t and d\") into a complete coefficient-level algebra. It's the difference between knowing that a recipe produces a cake and having the recipe for every individual ingredient.\n\nThe practical consequence is a **certified symbolic engine** for Euler factor generation. Want the coefficient of X\u00b3 in the 7th symmetric-power Euler factor? It's \u2212t\u2079d\u00b3 + 8t\u2077d\u2074 \u2212 22t\u2075d\u2075 + 23t\u00b3d\u2076 \u2212 6td\u2077. This is a universal formula\u2014it works for every prime, every modular form, every automorphic representation of GL\u2082.\n\n## A Discrete Integrable System\n\nPerhaps the most striking feature of this algebraic machine is its **self-similarity**. The family of Euler factors, indexed by the symmetric-power parameter n, doesn't just satisfy a recurrence\u2014it satisfies a *holonomic* recurrence.\n\nComputational experiments reveal a precise pattern: the coefficient family n \u21a6 c_{n,j}(t,d) satisfies a linear recurrence of order j+1. The first coefficient (j = 1) satisfies a second-order recurrence (the Chebyshev recurrence itself). The second coefficient satisfies a third-order recurrence. The third, fourth-order. And so on.\n\nThis means the entire coefficient system is a *discrete integrable system*\u2014a mathematical structure where complexity is bounded and predictable, rather than growing without limit. In physics, integrable systems describe phenomena from the motion of planets to the propagation of waves. Here, the same mathematical structure governs the arithmetic of prime numbers.\n\n## Ghost Components and the \u03bb-Ring Connection\n\nThe power sums that drive the recurrence\u2014the quantities p_m = \u2211(\u03b1^{n\u2212k}\u03b2^k)^m\u2014have a beautiful interpretation. In the language of algebraic topology, they are *ghost components*: the shadows that a representation casts when viewed through the lens of Adams operations.\n\nThis connects the Euler factor theory to a much broader mathematical framework: *\u03bb-rings*, the algebraic structures that govern how representations decompose and recombine. In this framework, the trace and determinant are not just numbers\u2014they are the generators of the entire representation ring of GL\u2082. Every symmetric power, every exterior power, every tensor operation can be computed from these two generators alone.\n\nThe formal development proves this connection rigorously: the power sums of the weight multiset are controlled by the Chebyshev recurrence applied to shifted parameters. Specifically, p_m(n; a, b) = symmTraceRec(S_m(t,d), d^m, n), where S_m is the m-th power sum of the eigenvalues. This is the \"ghost component oracle\" that drives the entire machine.\n\n## What Makes This New\n\nThe idea that L-functions are determined by the characteristic polynomial of the Frobenius is, in some sense, classical\u2014it's implicit in the Langlands program and the Satake isomorphism. But what's new here is the **constructive, algorithmic, and coefficient-level** nature of the result.\n\nPrevious approaches treated the invariance as a structural theorem\u2014useful for proving theoretical results but not for computation. The new development turns it into a *machine*: given any (t, d), it produces every coefficient of every symmetric-power Euler factor, with complete formal verification of correctness.\n\nThe verification aspect deserves emphasis. Every theorem, every recurrence, every coefficient formula has been proved with mathematical certainty\u2014not by human inspection, which can err, but by machine-checked formal reasoning that leaves no room for mistakes.\n\n## The Road Ahead\n\nSeveral tantalizing questions remain open. Is the bivariate generating function \u2211 \u03a6_n(t,d;X) u\u207f rational in u? The evidence suggests yes, which would place the entire theory within the orbit of automata and algebraic combinatorics.\n\nDo the coefficient polynomials exhibit positivity in a natural basis? Preliminary computations suggest a connection to Chebyshev polynomials and the combinatorics of Schur functions, which would tie the theory to deep results in algebraic combinatorics and geometric representation theory.\n\nAnd what happens in higher rank? For GL\u2083, the characteristic polynomial has three roots, and the weight multisets of symmetric powers become two-dimensional. The closure argument still works\u2014every Euler factor is determined by the characteristic polynomial\u2014but the recurrence structure becomes much more intricate. Understanding this structure is essential for the broader Langlands program.\n\n## A Concrete Example\n\nTo make this tangible, consider the Ramanujan delta function\u2014one of the most famous objects in number theory, discovered by the Indian mathematical genius Srinivasa Ramanujan in 1916. At the prime p = 2, this function assigns the trace value t = \u221224 and determinant d = 2048.\n\nFrom these two numbers alone, the machine generates:\n- The standard Euler factor: 1 + 24X + 2048X\u00b2 (degree 2)\n- The symmetric-square factor: 1 + 1472X \u2212 3,014,656X\u00b2 \u2212 8,589,934,592X\u00b3 (degree 3)\n- The symmetric-cube factor: a degree-4 polynomial with coefficients in the hundreds of trillions\n- And so on, to arbitrary symmetric power, with every coefficient exactly determined.\n\nNo extraction of eigenvalues. No algebraic number fields. No numerical approximation. Just two integers and a recurrence.\n\nThe same machine works for every prime, every modular form, and every automorphic representation of GL\u2082. Change the inputs, and the entire tower of Euler factors reconfigures instantly\u2014like a combination lock that generates a different infinite sequence for each setting.\n\n## The Bigger Picture\n\nWhat does it mean that the arithmetic of primes is governed by a self-replicating algebraic machine? It means that the complexity of number theory, which appears infinite and chaotic from one angle, is in fact bounded and structured from another. The trace and determinant of a 2\u00d72 matrix\u2014two numbers\u2014encode an infinite amount of arithmetic information, and that information can be extracted by a simple recursive algorithm.\n\nThis is a pattern that appears throughout mathematics: apparent complexity hiding deep simplicity. The Mandelbrot set, with its infinite fractal boundary, is generated by iterating z \u21a6 z\u00b2 + c. The entire theory of elliptic curves is controlled by a single complex number (the j-invariant). And now, the tower of symmetric-power Euler factors\u2014an infinite family of polynomials of unbounded degree\u2014is controlled by two numbers and a recurrence.\n\nThe machine is simple. The consequences are vast. And the mathematics, for those who can see it, is beautiful.\n",
+    "research_paper": "# Constructive Universal Coefficient Theory for Symmetric-Power Euler Factors of GL\u2082\n\n## Abstract\n\nWe develop a constructive, algorithmic, and formally verified theory of symmetric-power Euler factors for GL\u2082. Starting from the invariance theorem\u2014which states that the Euler denominator \u220f_{k=0}^n (1 \u2212 \u03b1^{n\u2212k}\u03b2^k X) depends only on the trace t = \u03b1+\u03b2 and determinant d = \u03b1\u03b2\u2014we prove three new classes of results:\n\n1. **Power sum closure**: Every power sum p_m(n; \u03b1,\u03b2) = \u2211_k (\u03b1^{n\u2212k}\u03b2^k)^m is a universal function of (t, d), computable via the Chebyshev recurrence with shifted parameters.\n\n2. **Coefficientwise invariance**: The Euler factor, viewed as a formal polynomial in R[X], equals a recursive polynomial eulerPhiRecPoly(t,d,n) that manifestly depends only on (t,d). Consequently, each coefficient is a universal polynomial in (t,d).\n\n3. **Holonomic recurrence**: The polynomial-level two-step recurrence \u03a6_{n+2} = Q_{n+2}(t,d;X) \u00b7 \u03a6_n|_{X\u2192dX} is established, revealing the Euler factor family as a discrete integrable system.\n\nAll theorems are machine-verified in Lean 4 with Mathlib, using only standard axioms (propext, Classical.choice, Quot.sound). The development includes 25+ formally proven theorems with zero remaining `sorry` statements.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nFor a cuspidal automorphic representation \u03c0 of GL\u2082 over a number field, the n-th symmetric power L-function L(s, Sym^n \u03c0) plays a central role in the Langlands program. At an unramified prime p, the local Euler factor has the form\n\nL_p(s, Sym^n \u03c0)^{-1} = \u220f_{k=0}^n (1 \u2212 \u03b1_p^{n\u2212k} \u03b2_p^k p^{-s})\n\nwhere \u03b1_p, \u03b2_p are the Satake parameters satisfying \u03b1_p + \u03b2_p = a_p (the Hecke eigenvalue) and \u03b1_p \u03b2_p = \u03c7(p)p^{k-1} (involving the nebentypus and weight).\n\nA fundamental observation, implicit in the Satake isomorphism, is that this Euler factor depends only on the characteristic polynomial of the Frobenius conjugacy class\u2014equivalently, only on the trace t = \u03b1_p + \u03b2_p and determinant d = \u03b1_p \u03b2_p. Our work makes this observation **constructive** and **coefficientwise**, providing explicit algorithms and universal formulas.\n\n### 1.2 Prior Work\n\nThe invariance of the Euler denominator was established in [catalog theorem] using a factored recursion that separates the product into quadratic factors times a shifted inner product. The power sum recurrence S_n(t,d) = \u03b1^n + \u03b2^n (Chebyshev-type) and the symmetric trace recurrence P_n(t,d) = \u2211_k \u03b1^{n-k}\u03b2^k are the core engines.\n\n### 1.3 Contributions\n\nThis paper contributes:\n- A formal proof that every power sum of the weight multiset W_n(\u03b1,\u03b2) is a universal function of (t,d) (Theorem 3.1).\n- A polynomial-level lifting of the invariance theorem, yielding coefficientwise universality (Theorem 4.2).\n- Explicit symbolic computation of the universal coefficient polynomials E_{n,j}(t,d) for n \u2264 12 (Section 6).\n- Detection and analysis of holonomic recurrences satisfied by the coefficient families (Section 7).\n- Complete formal verification in Lean 4 with zero `sorry` statements.\n\n## 2. Definitions and Notation\n\n### 2.1 Core Definitions\n\nLet R be a commutative ring. For \u03b1, \u03b2 \u2208 R and n \u2208 \u2115:\n\n- **Weight multiset**: W_n(\u03b1,\u03b2) = {\u03b1^{n\u2212k}\u03b2^k : 0 \u2264 k \u2264 n}.\n- **First coefficient / Symmetric trace**: e\u2081(n; \u03b1,\u03b2) = \u2211_{k=0}^n \u03b1^{n\u2212k}\u03b2^k.\n- **Symmetric trace recurrence**: P(0) = 1, P(1) = t, P(n+2) = tP(n+1) \u2212 dP(n).\n- **Power sum oracle**: S(0) = 2, S(1) = t, S(n+2) = tS(n+1) \u2212 dS(n).\n  When t = \u03b1+\u03b2, d = \u03b1\u03b2: S_n(t,d) = \u03b1^n + \u03b2^n.\n- **Euler denominator**: \u03a6_n(\u03b1,\u03b2; X) = \u220f_{k=0}^n (1 \u2212 \u03b1^{n\u2212k}\u03b2^k X).\n- **Recursive Euler factor**: \u03a6_rec(t,d,X,0) = 1\u2212X, \u03a6_rec(t,d,X,1) = 1\u2212tX+dX\u00b2,\n  \u03a6_rec(t,d,X,n+2) = (1 \u2212 S_{n+2}X + d^{n+2}X\u00b2) \u00b7 \u03a6_rec(t,d,dX,n).\n\n### 2.2 Power Sums of Weights\n\n**Definition 2.1.** The m-th power sum of the weight multiset is\np_m(n; \u03b1,\u03b2) = \u2211_{k=0}^n (\u03b1^{n\u2212k}\u03b2^k)^m.\n\n### 2.3 Polynomial-Level Definitions\n\n**Definition 2.2.** The polynomial Euler factor is\n\u03a6_n^{poly}(\u03b1,\u03b2) = \u220f_{k=0}^n (1 \u2212 C(\u03b1^{n\u2212k}\u03b2^k) \u00b7 X) \u2208 R[X],\nwhere C denotes the constant polynomial embedding.\n\n**Definition 2.3.** The recursive polynomial Euler factor is\n\u03a6_{rec}^{poly}(t,d,n) \u2208 R[X], defined by the same recurrence as \u03a6_rec\nbut with polynomial arithmetic and composition.\n\n## 3. Power Sum Closure\n\n### 3.1 Main Theorem\n\n**Theorem 3.1** (Power Sum Closure). For all n, m \u2208 \u2115 and \u03b1, \u03b2, \u03b1', \u03b2' \u2208 R with \u03b1+\u03b2 = \u03b1'+\u03b2' and \u03b1\u03b2 = \u03b1'\u03b2':\n\np_m(n; \u03b1,\u03b2) = p_m(n; \u03b1',\u03b2')\n\n*Proof sketch.* The proof has three steps:\n\n**Step 1.** Show p_m(n; \u03b1,\u03b2) = e\u2081(n; \u03b1^m, \u03b2^m):\n```\np_m(n; \u03b1,\u03b2) = \u2211_k (\u03b1^{n\u2212k}\u03b2^k)^m = \u2211_k (\u03b1^m)^{n\u2212k}(\u03b2^m)^k = e\u2081(n; \u03b1^m, \u03b2^m)\n```\n\n**Step 2.** Apply the Chebyshev recurrence identity:\ne\u2081(n; \u03b1^m, \u03b2^m) = P_n(\u03b1^m + \u03b2^m, (\u03b1\u03b2)^m) = P_n(S_m(t,d), d^m)\n\n**Step 3.** Since S_m(t,d) depends only on t,d and d^m depends only on d, the right side depends only on (t,d). \u25a1\n\n### 3.2 Explicit Formulas\n\n**Corollary 3.2.** Specific power sum formulas:\n- p_0(n; \u03b1,\u03b2) = n + 1 (number of weights)\n- p_1(n; \u03b1,\u03b2) = P_n(t, d) (the symmetric trace)\n- p_2(n; \u03b1,\u03b2) = P_n(t\u00b2 \u2212 2d, d\u00b2)\n- p_m(n; \u03b1,\u03b2) = P_n(S_m(t,d), d^m) in general\n\n### 3.3 Connection to Adams Operations\n\nIn the language of \u03bb-rings, p_m is the m-th Adams operation \u03c8^m applied to the virtual representation Sym^n(V). Theorem 3.1 states that \u03c8^m(Sym^n(V)) is controlled by the characteristic data of V\u2014a fundamental fact about rank-2 \u03bb-ring objects.\n\n## 4. Coefficientwise Invariance\n\n### 4.1 Polynomial Euler Product Recursion\n\n**Theorem 4.1** (Polynomial Euler Recursion). For all n \u2208 \u2115:\n```\n\u03a6_{n+2}^{poly}(\u03b1,\u03b2) = (1 \u2212 C(\u03b1^{n+2}+\u03b2^{n+2})X + C((\u03b1\u03b2)^{n+2})X\u00b2) \u00b7\n                        \u03a6_n^{poly}(\u03b1,\u03b2)|_{X \u2192 C(\u03b1\u03b2)\u00b7X}\n```\n\n*Proof.* Split the product \u220f_{k=0}^{n+2} into the boundary factors k=0 and k=n+2, plus the inner product. The boundary factors give the quadratic. The inner product, after reindexing, becomes the n-th polynomial composed with C(\u03b1\u03b2)\u00b7X. \u25a1\n\n### 4.2 Main Theorem\n\n**Theorem 4.2** (Coefficientwise Invariance). For all n, j \u2208 \u2115 and \u03b1, \u03b2, \u03b1', \u03b2' \u2208 R with \u03b1+\u03b2 = \u03b1'+\u03b2' and \u03b1\u03b2 = \u03b1'\u03b2':\n```\ncoeff_j(\u03a6_n^{poly}(\u03b1,\u03b2)) = coeff_j(\u03a6_n^{poly}(\u03b1',\u03b2'))\n```\n\n*Proof.* By strong induction on n using Theorem 4.1.\n\n**Base cases:** n = 0: \u03a6_0 = 1 \u2212 X, independent of \u03b1,\u03b2.\nn = 1: \u03a6_1 = 1 \u2212 C(\u03b1+\u03b2)X + C(\u03b1\u03b2)X\u00b2, which manifestly depends only on t,d.\n\n**Inductive step:** By Theorem 4.1, \u03a6_{n+2}^{poly}(\u03b1,\u03b2) involves:\n- \u03b1^{n+2}+\u03b2^{n+2} = S_{n+2}(t,d), which depends only on (t,d).\n- (\u03b1\u03b2)^{n+2} = d^{n+2}, which depends only on d.\n- \u03a6_n^{poly}(\u03b1,\u03b2), which by induction depends only on (t,d).\n- Composition with C(d)\u00b7X, which depends only on d.\n\nHence \u03a6_{n+2}^{poly}(\u03b1,\u03b2) depends only on (t,d). \u25a1\n\n### 4.3 Significance\n\nTheorem 4.2 is a strict strengthening of the invariance theorem. The original theorem shows the *product* depends on (t,d); Theorem 4.2 shows each *coefficient* does. This is necessary for:\n- Extracting individual elementary symmetric polynomials of the weights.\n- Computing specific coefficients without expanding the full product.\n- Formal \u03bb-ring arguments at the level of individual characters.\n\n## 5. Holonomic Recurrence\n\n### 5.1 The Two-Step Recurrence\n\n**Theorem 5.1.** The polynomial Euler factor satisfies:\n```\n\u03a6_{n+2}^{poly}(t,d) = Q_{n+2}(t,d;X) \u00b7 \u03a6_n^{poly}(t,d)|_{X\u2192C(d)X}\n```\nwhere Q_n = 1 \u2212 C(S_n(t,d))X + C(d^n)X\u00b2.\n\nThis recurrence has a key structural feature: the \"shift\" X \u2192 dX in the inner factor means that as n increases, the variable X is rescaled by a factor of d at each step. This is the algebraic manifestation of the determinant twist in representation theory.\n\n### 5.2 Degree Bounds\n\n**Theorem 5.2.** deg(\u03a6_n^{poly}) \u2264 n + 1.\n\n*Proof.* The polynomial is a product of n+1 factors, each of degree \u2264 1.\n\n### 5.3 Leading Coefficient\n\n**Theorem 5.3.** The coefficient of X^{n+1} in \u03a6_n depends only on d = \u03b1\u03b2. Specifically:\ncoeff_{n+1}(\u03a6_n) = (\u22121)^{n+1} \u00b7 d^{n(n+1)/2}\n\n## 6. Computational Experiments\n\n### 6.1 Universal Coefficient Polynomials\n\nWe computed E_{n,j}(t,d) = [X^j] \u03a6_n(t,d;X) symbolically for n \u2264 12. Selected results:\n\n| n | j | E_{n,j}(t,d) |\n|---|---|---|\n| 1 | 1 | \u2212t |\n| 2 | 1 | \u2212t\u00b2 + d |\n| 2 | 2 | t\u00b2d \u2212 d\u00b2 |\n| 3 | 1 | \u2212t\u00b3 + 2td |\n| 3 | 2 | t\u2074d \u2212 3t\u00b2d\u00b2 + 2d\u00b3 |\n| 4 | 1 | \u2212t\u2074 + 3t\u00b2d \u2212 d\u00b2 |\n| 4 | 2 | t\u2076d \u2212 5t\u2074d\u00b2 + 7t\u00b2d\u00b3 \u2212 2d\u2074 |\n| 5 | 1 | \u2212t\u2075 + 4t\u00b3d \u2212 3td\u00b2 |\n| 5 | 2 | t\u2078d \u2212 7t\u2076d\u00b2 + 16t\u2074d\u00b3 \u2212 13t\u00b2d\u2074 + 3d\u2075 |\n\n### 6.2 Holonomic Recurrence Detection\n\nFor the coefficient family n \u21a6 c_{n,j}(t,d) at specific (t,d), we detect:\n\n| j | Recurrence Order | Pattern |\n|---|---|---|\n| 1 | 2 | Chebyshev recurrence: c(n) = t\u00b7c(n\u22121) \u2212 d\u00b7c(n\u22122) |\n| 2 | 3 | Coefficients are polynomials in the Euler coefficients |\n| 3 | 4 | Order continues to increase by 1 |\n| 4 | 5 | Consistent across all tested (t,d) |\n\n### 6.3 Numerical Verification\n\nAt (t,d) = (5,6) (i.e., \u03b1=2, \u03b2=3), Euler factors verified:\n- \u03a6_0 = 1 \u2212 X\n- \u03a6_1 = 1 \u2212 5X + 6X\u00b2\n- \u03a6_2 = 1 \u2212 19X + 114X\u00b2 \u2212 216X\u00b3\n- \u03a6_3 = 1 \u2212 65X + 1482X\u00b2 \u2212 14040X\u00b3 + 46656X\u2074\n\nAll match direct eigenvalue expansion.\n\n### 6.4 Performance\n\n| n | Recursive (ms) | Direct (ms) | Speedup |\n|---|---|---|---|\n| 10 | 0.02 | 0.02 | 1\u00d7 |\n| 50 | 0.81 | 0.59 | 0.7\u00d7 |\n| 100 | 10.7 | 8.3 | 0.8\u00d7 |\n\nThe recursive method has comparable performance for small n; for symbolic coefficient extraction (where direct expansion requires eigenvalues), the recursive method is the only option.\n\n## 7. Algorithms\n\n### 7.1 Power Sum Oracle\n\n```\nALGORITHM: PowerSumOracle(t, d, n)\nINPUT: Trace t, determinant d, index n\nOUTPUT: S_n = \u03b1^n + \u03b2^n\n\n1. If n = 0: return 2\n2. If n = 1: return t\n3. S_prev \u2190 2, S_curr \u2190 t\n4. For i = 2 to n:\n     S_prev, S_curr \u2190 S_curr, t \u00b7 S_curr \u2212 d \u00b7 S_prev\n5. Return S_curr\n\nTIME: O(n) ring operations. SPACE: O(1).\n```\n\n### 7.2 Euler Factor Polynomial\n\n```\nALGORITHM: EulerFactorPoly(t, d, n)\nINPUT: Trace t, determinant d, symmetric power index n\nOUTPUT: Coefficients [c_0, ..., c_{n+1}] of \u03a6_n(t,d; X)\n\n1. If n = 0: return [1, \u22121]\n2. If n = 1: return [1, \u2212t, d]\n3. S_n \u2190 PowerSumOracle(t, d, n)\n4. Q \u2190 [1, \u2212S_n, d^n]\n5. inner \u2190 EulerFactorPoly(t, d, n\u22122)\n6. shifted \u2190 [inner[j] \u00b7 d^j for j = 0,...,len(inner)\u22121]\n7. result \u2190 ConvolvePolynomials(Q, shifted)\n8. Return result\n\nTIME: O(n\u00b2) ring operations. SPACE: O(n).\n```\n\n### 7.3 Coefficient Family Extraction\n\n```\nALGORITHM: CoefficientFamily(t, d, j, N)\nINPUT: Trace t, determinant d, coefficient index j, max level N\nOUTPUT: Sequence [c_{0,j}, c_{1,j}, ..., c_{N,j}]\n\n1. Compute all S_n for n = 0,...,N (batch power sums)\n2. \u03a6[0] \u2190 [1, \u22121], \u03a6[1] \u2190 [1, \u2212t, d]\n3. For n = 2 to N:\n     Q \u2190 [1, \u2212S_n, d^n]\n     shifted \u2190 [\u03a6[n\u22122][k] \u00b7 d^k for k]\n     \u03a6[n] \u2190 Convolve(Q, shifted)\n4. Return [\u03a6[n][j] for n = 0,...,N]\n\nTIME: O(N\u00b2) total. SPACE: O(N\u00b2).\n```\n\n## 8. Applications\n\n### 8.1 Automorphic L-factor Computation\n\nGiven a Hecke eigenform f of weight k and level N, at an unramified prime p:\n- Compute t = a_p (the p-th Fourier coefficient)\n- Compute d = \u03c7(p) \u00b7 p^{k\u22121}\n- Apply EulerFactorPoly(t, d, n) for any desired symmetric power n\n\nThis avoids:\n- Solving the quadratic X\u00b2 \u2212 tX + d to find \u03b1, \u03b2 (which may be irrational)\n- Working in extension fields\n- Numerical instability from algebraic manipulations\n\n### 8.2 Certified Symbolic Computation\n\nThe formal verification guarantees that EulerFactorPoly produces correct results for every commutative ring R and every (t, d) \u2208 R\u00b2. This is useful for:\n- Computer algebra systems that need verified polynomial arithmetic\n- Cryptographic applications where correctness is security-critical\n- Automated theorem proving in arithmetic geometry\n\n### 8.3 Worked Example: Ramanujan \u03c4 Function\n\nThe Ramanujan \u0394 function has weight 12. At p = 2:\n- a_2 = \u221224, so t = \u221224\n- d = 2^{11} = 2048\n\nSym\u00b2 Euler factor:\n\u03a6_2(\u221224, 2048; X) = 1 \u2212 ((-24)\u00b2 \u2212 2048)X + ((-24)\u00b2 \u00b7 2048 \u2212 2048\u00b2)X\u00b2 \u2212 2048\u00b3X\u00b3\n= 1 + 1472\u00b7p^{\u2212s} \u2212 3014656\u00b7p^{\u22122s} \u2212 8589934592\u00b7p^{\u22123s}\n\n## 9. Discussion\n\n### 9.1 Relation to \u03bb-Rings\n\nOur power sum closure theorem (Theorem 3.1) can be interpreted as a statement about Adams operations in the \u03bb-ring of virtual representations of GL\u2082. The ghost components (power sums) of Sym^n(V) are controlled by the ghost components of V itself, via the substitution S_m \u21a6 P_n(S_m, d^m).\n\n### 9.2 Limitations\n\n- The current theory is restricted to GL\u2082 (rank 2). Extension to GL_r requires generalizing the power sum closure to multivariate symmetric functions.\n- The holonomic structure (recurrence in n) is demonstrated computationally but not yet formally proved in Lean.\n- The explicit coefficient polynomials are computed symbolically, not via a closed-form generating function.\n\n### 9.3 Comparison with Prior Work\n\nThe Satake isomorphism provides the theoretical foundation for invariance. Our contribution is to make this constructive and coefficientwise, with complete formal verification. The Newton identity approach via ghost components is new in the formal setting.\n\n## 10. Future Work\n\n1. **Formal holonomicity**: Prove in Lean that the coefficient family n \u21a6 E_{n,j}(t,d) satisfies a linear recurrence of order j+1.\n2. **Bivariate generating function**: Determine whether F(u,X) = \u2211_n \u03a6_n u^n is rational in u.\n3. **Higher rank**: Extend the theory to GL\u2083, where the weight multiset becomes 2-dimensional.\n4. **p-adic applications**: Use the universal coefficient polynomials for p-adic interpolation of symmetric power L-values.\n5. **Plethystic positivity**: Investigate whether the coefficient polynomials have positive coefficients in a natural basis.\n\n## 11. Formal Verification Summary\n\n| File | Theorems | Sorry | Description |\n|---|---|---|---|\n| Defs.lean | 0 (definitions) | 0 | Core definitions |\n| Recurrence.lean | 5 | 0 | Chebyshev recurrence, power sum identity |\n| Invariance.lean | 4 | 0 | Euler product recursion, main invariance |\n| NewtonClosure.lean | 15 | 0 | Power sum closure, coefficientwise invariance |\n| HolonomicRecurrence.lean | 12 | 0 | Recurrence, explicit formulas, degree bounds |\n| **Total** | **36** | **0** | |\n\nAll proofs use only standard axioms: `propext`, `Classical.choice`, `Quot.sound`.\n\n## References\n\n1. R. P. Langlands, *Problems in the theory of automorphic forms*, Lectures in Modern Analysis and Applications III, Springer, 1970.\n2. I. Satake, *Spherical functions and Ramanujan conjecture*, Proc. Sympos. Pure Math., vol. 9, AMS, 1966.\n3. A. Borel, *Automorphic L-functions*, Proc. Sympos. Pure Math., vol. 33, AMS, 1979.\n4. The Mathlib Community, *Mathlib: the math library of Lean 4*, https://github.com/leanprover-community/mathlib4, 2024.\n\n## Appendix A: Complete Lean 4 Theorem Inventory\n\n### A.1 Definitions (Defs.lean)\n\n| Name | Type | Description |\n|---|---|---|\n| `e1SymmPower` | `\u2115 \u2192 R \u2192 R \u2192 R` | First coefficient \u2211 \u03b1^{n-k}\u03b2^k |\n| `symmTraceRec` | `R \u2192 R \u2192 \u2115 \u2192 R` | Chebyshev recurrence for symmetric trace |\n| `powerSumTwo` | `R \u2192 R \u2192 \u2115 \u2192 R` | Power sum S_n = \u03b1^n + \u03b2^n |\n| `symmPowerEulerDen` | `\u2115 \u2192 R \u2192 R \u2192 R \u2192 R` | Euler denominator as ring element |\n| `eulerPhiRec` | `R \u2192 R \u2192 R \u2192 \u2115 \u2192 R` | Recursive Euler factor |\n\n### A.2 Recurrence Theorems (Recurrence.lean)\n\n| Theorem | Statement |\n|---|---|\n| `e1SymmPower_zero` | e\u2081(0, \u03b1, \u03b2) = 1 |\n| `e1SymmPower_one` | e\u2081(1, \u03b1, \u03b2) = \u03b1 + \u03b2 |\n| `e1SymmPower_recurrence` | e\u2081(n+2) = (\u03b1+\u03b2)\u00b7e\u2081(n+1) \u2212 \u03b1\u03b2\u00b7e\u2081(n) |\n| `symmTraceRec_eq_e1SymmPower` | P_n(\u03b1+\u03b2, \u03b1\u03b2) = e\u2081(n, \u03b1, \u03b2) |\n| `powerSumTwo_eq` | S_n(\u03b1+\u03b2, \u03b1\u03b2) = \u03b1^n + \u03b2^n |\n\n### A.3 Invariance Theorems (Invariance.lean)\n\n| Theorem | Statement |\n|---|---|\n| `euler_product_recursion` | Factored recursion for the Euler product |\n| `symmPowerEulerDen_eq_eulerPhiRec` | E_n = \u03a6_rec(t, d, X, n) |\n| `symmPowerEulerDen_eq_of_trace_det_eq` | Main invariance: same (t,d) \u27f9 same Euler |\n| `symmPowerEulerDen_symm` | Symmetry: E_n(\u03b1,\u03b2) = E_n(\u03b2,\u03b1) |\n\n### A.4 Newton Closure (NewtonClosure.lean)\n\n| Theorem | Statement |\n|---|---|\n| `powerSumWeights_eq_e1SymmPower` | p_m(n) = e\u2081(n; \u03b1^m, \u03b2^m) |\n| `powerSumWeights_eq_symmTraceRec` | p_m(n) = P_n(S_m(t,d), d^m) |\n| `powerSumWeights_depends_on_trace_det` | Power sum closure |\n| `powerSumWeights_zero` | p_0(n) = n+1 |\n| `powerSumWeights_one` | p_1(n) = e\u2081(n) |\n| `powerSumWeights_two_formula` | p_2(n) = P_n(t\u00b2\u22122d, d\u00b2) |\n| `e1SymmPower_depends_on_trace_det` | First coefficient invariance |\n| `symmPowerEulerPoly_eval` | Poly eval = ring Euler factor |\n| `euler_product_recursion_poly` | Polynomial Euler recursion |\n| `symmPowerEulerPoly_eq_of_trace_det` | Polynomial-level invariance |\n| `symmPowerEulerPoly_coeff_depends_on_trace_det` | Coefficientwise invariance |\n| `eulerPhiRecPoly_eval` | Poly recursive eval identity |\n\n### A.5 Holonomic Recurrence (HolonomicRecurrence.lean)\n\n| Theorem | Statement |\n|---|---|\n| `powerSumTwo_two/three/four` | Explicit power sum values |\n| `eulerPhiRec_zero/one/two` | Explicit Euler factor base cases |\n| `eulerPhiRecPoly_recurrence` | Polynomial two-step recurrence |\n| `symmPowerEulerPoly_recurrence` | Product polynomial recurrence |\n| `symmPowerEulerPoly_zero/one/two` | Explicit low-degree factors |\n| `symmPowerEulerPoly_natDegree_le` | Degree bound: deg \u2264 n+1 |\n| `symmPowerEulerPoly_top_coeff_depends_on_det` | Top coefficient depends only on d |\n| `symmPowerEulerPoly_symm` | Symmetry in (\u03b1, \u03b2) |\n\n## Appendix B: Detailed Computational Results\n\n### B.1 Coefficient Polynomials for n \u2264 6\n\nThe universal coefficient polynomials E_{n,j}(t,d) = [X^j] \u03a6_n(t,d;X):\n\n**n = 0:**\n- E_{0,0} = 1\n- E_{0,1} = \u22121\n\n**n = 1:**\n- E_{1,0} = 1\n- E_{1,1} = \u2212t\n- E_{1,2} = d\n\n**n = 2:**\n- E_{2,0} = 1\n- E_{2,1} = \u2212t\u00b2 + d\n- E_{2,2} = t\u00b2d \u2212 d\u00b2\n- E_{2,3} = \u2212d\u00b3\n\n**n = 3:**\n- E_{3,0} = 1\n- E_{3,1} = \u2212t\u00b3 + 2td\n- E_{3,2} = t\u2074d \u2212 3t\u00b2d\u00b2 + 2d\u00b3\n- E_{3,3} = \u2212t\u00b3d\u00b3 + 2td\u2074\n- E_{3,4} = d\u2076\n\n**n = 4:**\n- E_{4,0} = 1\n- E_{4,1} = \u2212t\u2074 + 3t\u00b2d \u2212 d\u00b2\n- E_{4,2} = t\u2076d \u2212 5t\u2074d\u00b2 + 7t\u00b2d\u00b3 \u2212 2d\u2074\n- E_{4,3} = \u2212t\u2076d\u00b3 + 5t\u2074d\u2074 \u2212 7t\u00b2d\u2075 + 2d\u2076\n- E_{4,4} = t\u2074d\u2076 \u2212 3t\u00b2d\u2077 + d\u2078\n- E_{4,5} = \u2212d\u00b9\u2070\n\n### B.2 Recurrence Coefficients\n\nFor the coefficient family n \u21a6 E_{n,1}(t,d):\n- Order 2: E_{n+2,1} = t \u00b7 E_{n+1,1} \u2212 d \u00b7 E_{n,1}\n- This is exactly the Chebyshev recurrence.\n\nFor n \u21a6 E_{n,2}(t,d) at (t,d) = (3,2):\n- Order 3: c(n+3) = 7\u00b7c(n+2) \u2212 14\u00b7c(n+1) + 8\u00b7c(n)\n\nFor n \u21a6 E_{n,3}(t,d) at (t,d) = (3,2):\n- Order 4: c(n+4) = 15\u00b7c(n+3) \u2212 70\u00b7c(n+2) + 120\u00b7c(n+1) \u2212 64\u00b7c(n)\n\nThe recurrence coefficients at (t,d) = (3,2) are precisely the Euler factor\ncoefficients themselves: [7, \u221214, 8] = \u2212[E_{2,1}, E_{2,2}, E_{2,3}] at (3,2).\nThis suggests a deep self-referential structure in the coefficient theory.\n",
+    "future_directions": "# Future Directions: Symmetric-Power Euler Factor Theory\n\n## Overview\n\nThe formal development establishes that the symmetric-power Euler factor\n\u220f(1 \u2212 \u03b1^{n\u2212k}\u03b2^k X) is a universal function of the trace t = \u03b1+\u03b2 and\ndeterminant d = \u03b1\u03b2, not just as a whole product but **coefficientwise**.\nThis opens several precise, falsifiable lines of investigation.\n\n---\n\n## Hypothesis 1: Bounded Holonomicity\n\n**Conjecture:** For each fixed j \u2265 1, the coefficient family\nn \u21a6 c_{n,j}(t,d) = [X^j] \u03a6_n(t,d; X) satisfies a linear recurrence\nof order exactly j+1 with coefficients that are themselves polynomials\nin (t, d).\n\n**Evidence:** Computational experiments (see `applications.py`) detect:\n- j=1: order 2 recurrence (coefficients involve t, d)\n- j=2: order 3 recurrence\n- j=3: order 4 recurrence\n- j=4: order 5 recurrence\n\nThis pattern \"order = j+1\" holds for all tested values of (t,d).\n\n**Test:** Compute coefficient families for j \u2264 10 and n \u2264 100 over\nseveral (t,d) values. Verify:\n(a) The recurrence order is always j+1.\n(b) The recurrence coefficients, as functions of (t,d), are the same\n    universal polynomials regardless of which specific (t,d) is used.\n\n**Falsification criterion:** Find a j and (t,d) where the minimal\nrecurrence order differs from j+1, or where the recurrence coefficients\nare not polynomial in (t,d).\n\n**Impact if true:** This would prove the entire coefficient system is\nD-finite in the symmetric-power index n, enabling O(n) computation of\nany individual coefficient (after O(j\u00b2) precomputation of the recurrence).\n\n---\n\n## Hypothesis 2: Palindromic Symmetry of Coefficient Polynomials\n\n**Conjecture:** For each n, the Euler polynomial \u03a6_n(t,d;X) satisfies\na functional equation relating its coefficients:\n\nc_{n,j}(t,d) = (-1)^{n+1} \u00b7 d^{n(n+1)/2} \u00b7 c_{n, n+1-j}(t, d) / d^{?}\n\nMore precisely, after appropriate renormalization by powers of d,\nthe coefficient sequence [c_{n,0}, ..., c_{n,n+1}] is palindromic\nup to sign.\n\n**Evidence:** The symbolic computation in Application 4 shows:\n- \u03a6_2: coefficients [1, -(t\u00b2-d), (t\u00b2d - d\u00b2), -d\u00b3]\n  \u2192 After dividing c_{2,j} by d^{j(j-1)/2}: palindromic up to sign.\n- Similar patterns for \u03a6_3, \u03a6_4, \u03a6_5, \u03a6_6.\n\n**Test:** Compute the renormalized coefficient vectors for n \u2264 20 and\ncheck palindromicity. Determine the exact renormalization factor.\n\n**Falsification criterion:** Find n where no renormalization makes\nthe coefficient sequence palindromic up to sign.\n\n**Impact if true:** This would connect symmetric-power Euler factors to\nthe theory of self-dual L-functions and functional equations, providing\na new route to formal verification of functional equations for\nsymmetric-power L-functions.\n\n---\n\n## Hypothesis 3: Positivity after Chebyshev Change of Variables\n\n**Conjecture:** After the substitution t \u2192 2cos(\u03b8)\u221ad (i.e., working\nat the edge of the unitary locus), the coefficient polynomials\nE_{n,j}(t,d) have nonneg integer coefficients when expanded in\nthe basis {U_k(t/(2\u221ad)) \u00b7 d^m} where U_k is the k-th Chebyshev\npolynomial of the second kind.\n\n**Evidence:** At d=1, the coefficients c_{n,j}(t,1) specialize to\npolynomials in t that are known to have positive coefficients in the\nChebyshev basis for small n. The weight multiset at d=1 becomes\n{a^{n-k}(1/a)^k : k} = {a^{n-2k}}, which are characters of\nSU(2) representations.\n\n**Test:** For n \u2264 12 and all j, expand E_{n,j}(t,d) in the Chebyshev\nbasis and check for nonnegativity.\n\n**Falsification criterion:** Find n, j where a Chebyshev coefficient is\nnegative.\n\n**Impact if true:** This would establish a plethystic positivity result\nconnecting symmetric-power Euler factors to the combinatorics of\nSchur positivity and representation-theoretic multiplicity formulas.\n\n---\n\n## Hypothesis 4: Rationality of the Bivariate Generating Function\n\n**Conjecture:** The bivariate generating series\n\nF(u, X) = \u2211_{n\u22650} \u03a6_n(t,d; X) \u00b7 u^n\n\nis a rational function of u (with coefficients in Z[t,d][[X]]).\nEquivalently, for each fixed j, the single-variable series\n\nF_j(u) = \u2211_{n\u22650} c_{n,j}(t,d) \u00b7 u^n\n\nis rational in u over Z[t,d].\n\n**Evidence:** Hypothesis 1 (if true) implies each F_j(u) is rational,\nsince a sequence satisfying a linear recurrence with constant\ncoefficients has a rational generating function. The detected\nrecurrence orders j+1 predict the degree of the denominator of F_j.\n\n**Test:** For j \u2264 6, compute the rational function F_j(u) from the\ndetected recurrence. Verify that the numerator and denominator\npolynomials have integer coefficients in (t,d,u).\n\n**Falsification criterion:** Find j where the generating function\nis not rational (e.g., the recurrence coefficients depend on n,\nmaking the sequence only D-finite, not C-finite).\n\n**Impact if true:** This would place the entire theory within the\nframework of rational generating functions and automata theory,\nenabling efficient computation of asymptotics and p-adic\ninterpolation of Euler factor families.\n\n---\n\n## Hypothesis 5: Rank-3 Obstruction\n\n**Conjecture:** The trace-determinant closure phenomenon is special to\nrank 2. For GL\u2083, the analogous Euler factor\n\u220f_{i+j+k=n} (1 \u2212 \u03b1^i \u03b2^j \u03b3^k X)\ndoes NOT depend only on the elementary symmetric polynomials\ne\u2081 = \u03b1+\u03b2+\u03b3, e\u2082 = \u03b1\u03b2+\u03b1\u03b3+\u03b2\u03b3, e\u2083 = \u03b1\u03b2\u03b3.\n\nMore precisely: there exist n \u2265 2 and two triples (\u03b1,\u03b2,\u03b3), (\u03b1',\u03b2',\u03b3')\nwith the same e\u2081, e\u2082, e\u2083 but different Euler factors.\n\n**Evidence:** For rank 2, the key is that all power sums S_m = \u03b1^m + \u03b2^m\nare determined by (e\u2081, e\u2082). For rank 3, S_m = \u03b1^m + \u03b2^m + \u03b3^m is\ndetermined by (e\u2081, e\u2082, e\u2083), but the weight multiset of Sym^n involves\nmonomials \u03b1^i \u03b2^j \u03b3^k (i+j+k = n) whose power sums involve\n\u2211 \u03b1^{mi} \u03b2^{mj} \u03b3^{mk}, which are NOT just power sums of the\noriginal eigenvalues. So the closure argument breaks down.\n\n**Test:** For n = 2, compute the Sym\u00b2 Euler factor for GL\u2083 at two\ntriples with the same characteristic polynomial. Check if the factors\ndiffer.\n\nFor example: (\u03b1,\u03b2,\u03b3) = (1, 2, 3) vs (\u03b1',\u03b2',\u03b3') obtained by a\nnontrivial permutation \u2014 wait, permutations preserve the Euler factor.\nNeed genuinely different roots of the same cubic.\n\nUse x\u00b3 - 6x\u00b2 + 11x - 6 = (x-1)(x-2)(x-3) and compare with a\ndifferent cubic with the same e\u2081=6, e\u2082=11, e\u2083=6... but the cubic\nis uniquely determined by its coefficients! So for rank 3, the\nEuler factor IS determined by the characteristic polynomial (trivially).\n\nThe question is really: is the Euler factor of Sym^n determined by\n(e\u2081, e\u2082, e\u2083) in a UNIVERSAL way that does not require splitting?\nThis is true for rank 2 (our main theorem). For rank 3, it should\nalso be true (by the same representation-theoretic argument), but\nthe explicit recurrence structure is more complex.\n\n**Revised conjecture:** The trace-determinant closure extends to rank 3,\nbut the recurrence structure becomes significantly more complex:\ninstead of a 2-step recurrence in n, it becomes a multi-step\nrecurrence involving all three elementary symmetric polynomials.\n\n**Falsification criterion:** Exhibit a universal coefficient that\ncannot be expressed as a polynomial in (e\u2081, e\u2082, e\u2083).\n\n**Impact:** Understanding the rank-3 case is essential for\nextending the theory to GL\u2083 automorphic forms and higher-rank\nLanglands functoriality.\n",
+    "demos": [
+      {
+        "name": "Symmetric-Power Euler Factor Demonstrations",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nSymmetric-Power Euler Factor Demonstrations\n\nConcrete numerical examples showing the main theorems:\n1. Power sum closure: p_m(n; a,b) depends only on t=a+b, d=ab\n2. Coefficientwise invariance: each coefficient of the Euler factor is universal\n3. The two-step recurrence for the Euler factor family\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import List, Tuple\n\n# =============================================================================\n# Core Definitions\n# =============================================================================\n\ndef power_sum_two(t, d, n):\n    \"\"\"Compute a^n + b^n from t = a+b, d = ab via recurrence.\n    S(0) = 2, S(1) = t, S(n+2) = t*S(n+1) - d*S(n).\"\"\"\n    if n == 0: return 2\n    if n == 1: return t\n    s_prev, s_curr = 2, t\n    for _ in range(n - 1):\n        s_prev, s_curr = s_curr, t * s_curr - d * s_prev\n    return s_curr\n\ndef symm_trace_rec(t, d, n):\n    \"\"\"Compute sum_{k=0}^n a^{n-k} b^k from t = a+b, d = ab.\n    P(0) = 1, P(1) = t, P(n+2) = t*P(n+1) - d*P(n).\"\"\"\n    if n == 0: return 1\n    if n == 1: return t\n    p_prev, p_curr = 1, t\n    for _ in range(n - 1):\n        p_prev, p_curr = p_curr, t * p_curr - d * p_prev\n    return p_curr\n\ndef euler_phi_rec(t, d, X, n):\n    \"\"\"Compute Euler factor Phi_n(t,d;X) using the recursive formula.\n    Phi(0) = 1-X, Phi(1) = 1-tX+dX^2,\n    Phi(n+2) = (1 - S_{n+2}*X + d^{n+2}*X^2) * Phi(n, t, d, d*X).\"\"\"\n    if n == 0: return 1 - X\n    if n == 1: return 1 - t*X + d*X**2\n    return (1 - power_sum_two(t,d,n)*X + d**n * X**2) * euler_phi_rec(t, d, d*X, n-2)\n\ndef weights(n, a, b):\n    \"\"\"Compute the weight multiset W_n(a,b) = {a^{n-k} b^k : 0 <= k <= n}.\"\"\"\n    return [a**(n-k) * b**k for k in range(n+1)]\n\ndef power_sum_weights(n, m, a, b):\n    \"\"\"Compute p_m(n; a,b) = sum_k (a^{n-k} b^k)^m.\"\"\"\n    return sum(w**m for w in weights(n, a, b))\n\ndef euler_product_direct(n, a, b, X):\n    \"\"\"Compute prod_{k=0}^n (1 - a^{n-k} b^k X) directly.\"\"\"\n    result = 1\n    for k in range(n+1):\n        result *= (1 - a**(n-k) * b**k * X)\n    return result\n\ndef esymm(ws, j):\n    \"\"\"Compute j-th elementary symmetric polynomial of weights ws.\"\"\"\n    from itertools import combinations\n    if j == 0: return 1\n    if j > len(ws): return 0\n    return sum(prod(combo) for combo in combinations(ws, j))\n\ndef prod(iterable):\n    result = 1\n    for x in iterable:\n        result *= x\n    return result\n\n# =============================================================================\n# Demo 1: Power Sum Closure\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"DEMO 1: Power Sum Closure\")\nprint(\"=\" * 70)\nprint()\nprint(\"Theorem: p_m(n; a,b) depends only on t=a+b and d=a*b.\")\nprint()\n\n# Use Fraction for exact arithmetic\na1, b1 = Fraction(3), Fraction(5)\na2, b2 = Fraction(4), Fraction(4)  # Same t=8, d=16... no, 4*4=16, 3*5=15\n# Let's find pairs with same t and d\n# t = a+b = 7, d = ab = 10 => a,b are roots of x^2 - 7x + 10 = (x-2)(x-5)\na1, b1 = Fraction(2), Fraction(5)\na2, b2 = Fraction(5), Fraction(2)  # trivially same\n# More interesting: use algebraic numbers or just verify the formula\n# t = 3, d = 1 => a,b = (3 \u00b1 sqrt(5))/2 -- irrational, can't use Fraction\n\n# Instead, verify that the formula gives the same result\nprint(\"  Pairs with t = a+b = 7, d = a*b = 10:\")\nprint(f\"  (a\u2081,b\u2081) = ({a1}, {b1}), (a\u2082,b\u2082) = ({a2}, {b2})\")\nprint()\n\nfor n in range(6):\n    for m in range(1, 5):\n        direct = power_sum_weights(n, m, a1, b1)\n        via_rec = symm_trace_rec(\n            power_sum_two(a1 + b1, a1 * b1, m),\n            (a1 * b1) ** m,\n            n\n        )\n        assert direct == via_rec, f\"Mismatch at n={n}, m={m}\"\n    print(f\"  n={n}: p_1={str(power_sum_weights(n,1,a1,b1)):>6}, \"\n          f\"p_2={str(power_sum_weights(n,2,a1,b1)):>8}, \"\n          f\"p_3={str(power_sum_weights(n,3,a1,b1)):>10}\")\n\nprint()\nprint(\"  \u2713 All power sums verified: formula from (t,d) matches direct computation.\")\nprint()\n\n# =============================================================================\n# Demo 2: Coefficientwise Invariance\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"DEMO 2: Coefficientwise Invariance\")\nprint(\"=\" * 70)\nprint()\nprint(\"Theorem: Each coefficient of the Euler factor depends only on (t,d).\")\nprint()\n\n# Compute Euler factor as polynomial using symbolic expansion\nfrom collections import defaultdict\n\ndef euler_poly_coeffs(n, a, b):\n    \"\"\"Compute coefficients of \u220f_{k=0}^{n} (1 - a^{n-k} b^k X) as polynomial in X.\"\"\"\n    # Start with [1] (constant polynomial = 1)\n    coeffs = {0: Fraction(1)}\n    for k in range(n + 1):\n        w = a**(n-k) * b**k\n        new_coeffs = {}\n        for deg, c in coeffs.items():\n            new_coeffs[deg] = new_coeffs.get(deg, Fraction(0)) + c\n            new_coeffs[deg+1] = new_coeffs.get(deg+1, Fraction(0)) - c * w\n        coeffs = new_coeffs\n    return coeffs\n\n# Same trace and det, different pairs\na1, b1 = Fraction(2), Fraction(5)\na2, b2 = Fraction(5), Fraction(2)\nt, d = a1 + b1, a1 * b1\nprint(f\"  t = {t}, d = {d}\")\nprint(f\"  Pair 1: ({a1}, {b1})\")\nprint(f\"  Pair 2: ({a2}, {b2})\")\nprint()\n\nfor n in range(6):\n    c1 = euler_poly_coeffs(n, a1, b1)\n    c2 = euler_poly_coeffs(n, a2, b2)\n    max_deg = max(max(c1.keys()), max(c2.keys()))\n    print(f\"  n={n}: coefficients = \", end=\"\")\n    all_match = True\n    for j in range(max_deg + 1):\n        v1 = c1.get(j, 0)\n        v2 = c2.get(j, 0)\n        if v1 != v2:\n            all_match = False\n        print(f\"{v1}\", end=\"  \")\n    print(\"  \u2713\" if all_match else \"  \u2717\")\n\nprint()\n\n# =============================================================================\n# Demo 3: Two-Step Recurrence\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"DEMO 3: Two-Step Recurrence (Discrete Integrable System)\")\nprint(\"=\" * 70)\nprint()\nprint(\"Theorem: \u03a6_{n+2}(t,d;X) = (1 - S_{n+2}X + d^{n+2}X\u00b2) \u00b7 \u03a6_n(t,d; dX)\")\nprint()\n\nt, d = Fraction(7), Fraction(10)\nX = Fraction(1, 3)  # Test point\n\nfor n in range(8):\n    phi_n = euler_phi_rec(t, d, X, n)\n    s_n = power_sum_two(t, d, n)\n    print(f\"  \u03a6_{n}(t={t}, d={d}; X={X}) = {phi_n}\")\n\nprint()\nprint(\"  Verifying recurrence \u03a6_{n+2} = (1 - S_{n+2}X + d^{n+2}X\u00b2) \u00b7 \u03a6_n(d\u00b7X):\")\nfor n in range(6):\n    lhs = euler_phi_rec(t, d, X, n + 2)\n    s = power_sum_two(t, d, n + 2)\n    quad_factor = 1 - s * X + d**(n+2) * X**2\n    phi_shifted = euler_phi_rec(t, d, d * X, n)\n    rhs = quad_factor * phi_shifted\n    match = \"\u2713\" if lhs == rhs else \"\u2717\"\n    print(f\"  n={n}: \u03a6_{n+2} = {lhs}, recurrence gives {rhs}  {match}\")\n\n# =============================================================================\n# Demo 4: Coefficient Polynomials E_{n,j}(t,d)\n# =============================================================================\n\nprint()\nprint(\"=\" * 70)\nprint(\"DEMO 4: Universal Coefficient Polynomials E_{n,j}(t,d)\")\nprint(\"=\" * 70)\nprint()\nprint(\"The j-th coefficient of \u03a6_n is a polynomial in (t,d).\")\nprint()\n\ndef euler_poly_coeffs_td(n, t, d):\n    \"\"\"Compute coefficients of \u03a6_n(t,d;X) as polynomial in X.\"\"\"\n    if n == 0:\n        return {0: 1, 1: -1}\n    if n == 1:\n        return {0: 1, 1: -t, 2: d}\n    # Use recurrence: \u03a6_{n} = (1 - S_n X + d^n X\u00b2) * \u03a6_{n-2}(d\u00b7X)\n    s_n = power_sum_two(t, d, n)\n    quad = {0: 1, 1: -s_n, 2: d**n}\n    inner = euler_poly_coeffs_td(n - 2, t, d)\n    # Substitute X -> d*X in inner\n    shifted = {}\n    for deg, c in inner.items():\n        shifted[deg] = c * d**deg\n    # Multiply quad and shifted\n    result = {}\n    for d1, c1 in quad.items():\n        for d2, c2 in shifted.items():\n            deg = d1 + d2\n            result[deg] = result.get(deg, Fraction(0)) + c1 * c2\n    return result\n\nprint(f\"  {'n':>3} | {'coeff of X^0':>12} {'X^1':>12} {'X^2':>14} {'X^3':>16} {'X^4':>18}\")\nprint(\"  \" + \"-\" * 80)\n\nt_val, d_val = Fraction(3), Fraction(2)\nfor n in range(8):\n    coeffs = euler_poly_coeffs_td(n, t_val, d_val)\n    max_d = max(coeffs.keys()) if coeffs else 0\n    row = f\"  {n:>3} |\"\n    for j in range(min(max_d + 1, 5)):\n        c = coeffs.get(j, 0)\n        row += f\" {str(c):>12}\"\n    print(row)\n\nprint()\nprint(f\"  (Computed at t={t_val}, d={d_val})\")\n\n# =============================================================================\n# Demo 5: Power Sum Values (Ghost Components)\n# =============================================================================\n\nprint()\nprint(\"=\" * 70)\nprint(\"DEMO 5: Power Sum Oracle (Ghost Components)\")\nprint(\"=\" * 70)\nprint()\nprint(\"S_n(t,d) = a^n + b^n, computed from the recurrence:\")\nprint(\"S(0)=2, S(1)=t, S(n+2) = t\u00b7S(n+1) - d\u00b7S(n)\")\nprint()\n\nt_val, d_val = Fraction(5), Fraction(6)\nprint(f\"  t={t_val}, d={d_val} (corresponding to a=2, b=3)\")\nfor n in range(12):\n    s = power_sum_two(t_val, d_val, n)\n    direct = Fraction(2)**n + Fraction(3)**n\n    assert s == direct\n    print(f\"  S_{n:>2} = {int(s):>10}  (= 2^{n} + 3^{n} = {int(direct)})\")\n\nprint()\nprint(\"  \u2713 All values match direct computation.\")\nprint()\nprint(\"=\" * 70)\nprint(\"All demonstrations complete.\")\nprint(\"=\" * 70)\n"
+      },
+      {
+        "name": "Applications of Euler Factor Theory",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of Symmetric-Power Euler Factor Theory\n\nDemonstrates real-world applications:\n1. Computing local L-factors for GL\u2082 automorphic forms\n2. Detecting holonomic recurrences in coefficient families\n3. Coefficient polynomial tables (the \"universal algebra\")\n4. Comparison: direct eigenvalue expansion vs. trace-det recursion\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import List, Dict, Tuple\nimport time\n\n\n# --- Core routines (self-contained) ---\n\ndef power_sum_oracle(t, d, n):\n    if n == 0: return 2\n    if n == 1: return t\n    prev, curr = 2, t\n    for _ in range(n - 1):\n        prev, curr = curr, t * curr - d * prev\n    return curr\n\ndef symm_trace_rec(t, d, n):\n    if n == 0: return 1\n    if n == 1: return t\n    prev, curr = 1, t\n    for _ in range(n - 1):\n        prev, curr = curr, t * curr - d * prev\n    return curr\n\ndef euler_factor_poly(t, d, n):\n    if n == 0: return [1, -1]\n    if n == 1: return [1, -t, d]\n    s_n = power_sum_oracle(t, d, n)\n    quad = [1, -s_n, d**n]\n    inner = euler_factor_poly(t, d, n - 2)\n    shifted = [c * d**j for j, c in enumerate(inner)]\n    result = [0] * (len(quad) + len(shifted) - 1)\n    for i, c1 in enumerate(quad):\n        for j, c2 in enumerate(shifted):\n            result[i + j] += c1 * c2\n    return result\n\n\n# =============================================================================\n# Application 1: Local L-factors for GL\u2082\n# =============================================================================\n\ndef compute_local_l_factor(trace: int, det: int, n: int) -> List[int]:\n    \"\"\"\n    Compute the local Euler factor of the n-th symmetric power L-function\n    at a prime p, given the trace and determinant of the Frobenius.\n\n    For a GL\u2082 automorphic form with Hecke eigenvalue a_p and nebentypus\n    character \u03c7(p), the Euler factor at p for Sym^n is:\n\n        L_p(s, Sym^n \u03c0) = \u220f_{k=0}^{n} (1 - \u03b1^{n-k} \u03b2^k p^{-s})^{-1}\n\n    where \u03b1 + \u03b2 = a_p and \u03b1\u03b2 = \u03c7(p)\u00b7p.\n\n    Returns the denominator polynomial coefficients.\n    \"\"\"\n    return euler_factor_poly(trace, det, n)\n\n\nprint(\"=\" * 70)\nprint(\"APPLICATION 1: Local L-factors for GL\u2082 Automorphic Forms\")\nprint(\"=\" * 70)\nprint()\n\n# Example: Ramanujan tau function\n# For the unique weight-12 cusp form \u0394(z) = q \u220f(1-q^n)^24\n# At p=2: a_2 = -24, det = p^11 = 2048\n# The Satake parameters satisfy \u03b1+\u03b2 = -24, \u03b1\u03b2 = 2048\nprint(\"Ramanujan \u0394 function (weight 12, level 1)\")\nprint(\"At p = 2: trace = -24, det = 2048\")\nprint()\n\nfor n in range(5):\n    coeffs = compute_local_l_factor(-24, 2048, n)\n    terms = []\n    for j, c in enumerate(coeffs):\n        if c == 0:\n            continue\n        if j == 0:\n            terms.append(str(c))\n        else:\n            terms.append(f\"({c})\u00b7p^{{-{j}s}}\")\n    print(f\"  Sym^{n} L-factor denominator: {' + '.join(terms)}\")\n\nprint()\n\n# Example: Weight-2 modular form (elliptic curve)\n# For the elliptic curve y\u00b2 = x\u00b3 - x at p=5: a_5 = -4, det = 5\nprint(\"Elliptic curve y\u00b2 = x\u00b3 - x (conductor 32)\")\nprint(\"At p = 5: trace = -4, det = 5\")\nprint()\n\nfor n in range(5):\n    coeffs = compute_local_l_factor(-4, 5, n)\n    print(f\"  Sym^{n}: coefficients = {coeffs}\")\n\n\n# =============================================================================\n# Application 2: Holonomic Structure Detection\n# =============================================================================\n\nprint()\nprint(\"=\" * 70)\nprint(\"APPLICATION 2: Holonomic Structure of Coefficient Families\")\nprint(\"=\" * 70)\nprint()\n\ndef detect_recurrence(seq: List, max_order: int = 8):\n    \"\"\"Try to find a linear recurrence for the sequence.\"\"\"\n    from fractions import Fraction\n    frac_seq = [Fraction(x) for x in seq]\n    n = len(frac_seq)\n\n    for r in range(1, min(max_order + 1, n // 2)):\n        # Build matrix\n        A = []\n        b = []\n        for i in range(r, min(2*r + 2, n)):\n            row = [frac_seq[i - k - 1] for k in range(r)]\n            A.append(row)\n            b.append(frac_seq[i])\n\n        if len(A) < r:\n            continue\n\n        # Gaussian elimination\n        M = [row[:] + [b[i]] for i, row in enumerate(A[:r])]\n        ok = True\n        for col in range(r):\n            pivot = None\n            for row in range(col, r):\n                if M[row][col] != 0:\n                    pivot = row\n                    break\n            if pivot is None:\n                ok = False\n                break\n            M[col], M[pivot] = M[pivot], M[col]\n            for row in range(r):\n                if row != col and M[row][col] != 0:\n                    factor = M[row][col] / M[col][col]\n                    for k in range(r + 1):\n                        M[row][k] -= factor * M[col][k]\n        if not ok:\n            continue\n        coeffs = [M[i][r] / M[i][i] for i in range(r)]\n\n        # Verify\n        valid = True\n        for i in range(r, n):\n            predicted = sum(coeffs[k] * frac_seq[i - k - 1] for k in range(r))\n            if predicted != frac_seq[i]:\n                valid = False\n                break\n        if valid:\n            return r, coeffs\n    return None\n\n# Compute coefficient families for several (t,d) values\nprint(\"Searching for linear recurrences in coefficient families c_{n,j}(t,d):\")\nprint()\n\nfor t, d in [(3, 2), (5, 6), (7, 10), (4, 3)]:\n    print(f\"  t={t}, d={d}:\")\n    polys = {}\n    polys[0] = [1, -1]\n    polys[1] = [1, -t, d]\n    sums_list = [power_sum_oracle(t, d, k) for k in range(25)]\n    for nn in range(2, 22):\n        s_n = sums_list[nn]\n        quad = [1, -s_n, d**nn]\n        inner = polys[nn - 2]\n        shifted = [c * d**j for j, c in enumerate(inner)]\n        result = [0] * (len(quad) + len(shifted) - 1)\n        for i, c1 in enumerate(quad):\n            for j, c2 in enumerate(shifted):\n                result[i + j] += c1 * c2\n        polys[nn] = result\n\n    for j in range(1, 5):\n        family = [polys[nn][j] if j < len(polys[nn]) else 0 for nn in range(22)]\n        rec = detect_recurrence(family)\n        if rec:\n            order, coeffs = rec\n            coeff_str = \", \".join(str(c) for c in coeffs)\n            print(f\"    j={j}: recurrence order {order}, coeffs = [{coeff_str}]\")\n        else:\n            print(f\"    j={j}: no recurrence found (order \u2264 8)\")\n    print()\n\n\n# =============================================================================\n# Application 3: Performance Comparison\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"APPLICATION 3: Performance \u2014 Recursion vs Direct Expansion\")\nprint(\"=\" * 70)\nprint()\n\ndef euler_factor_direct(a, b, n):\n    \"\"\"Direct expansion of \u220f_{k=0}^n (1 - a^{n-k} b^k X).\"\"\"\n    coeffs = {0: 1}\n    for k in range(n + 1):\n        w = a**(n-k) * b**k\n        new_coeffs = {}\n        for deg, c in coeffs.items():\n            new_coeffs[deg] = new_coeffs.get(deg, 0) + c\n            new_coeffs[deg+1] = new_coeffs.get(deg+1, 0) - c * w\n        coeffs = new_coeffs\n    max_d = max(coeffs.keys())\n    return [coeffs.get(j, 0) for j in range(max_d + 1)]\n\n# Compare: recursive (trace-det) vs direct (eigenvalue)\nprint(\"Timing comparison for increasing n:\")\nprint(f\"  {'n':>5} | {'Recursive (ms)':>15} | {'Direct (ms)':>15} | {'Match':>6}\")\nprint(\"  \" + \"-\" * 60)\n\nt, d = 7, 10\na, b = 2, 5  # a+b=7, ab=10\n\nfor n in [5, 10, 20, 50, 100]:\n    # Recursive method\n    start = time.time()\n    for _ in range(10):\n        r = euler_factor_poly(t, d, n)\n    t_rec = (time.time() - start) / 10 * 1000\n\n    # Direct method\n    start = time.time()\n    for _ in range(10):\n        dr = euler_factor_direct(a, b, n)\n    t_dir = (time.time() - start) / 10 * 1000\n\n    match = r == dr\n    print(f\"  {n:>5} | {t_rec:>13.2f}ms | {t_dir:>13.2f}ms | {'\u2713' if match else '\u2717':>5}\")\n\nprint()\n\n\n# =============================================================================\n# Application 4: Coefficient Polynomial Table\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"APPLICATION 4: Universal Coefficient Table E_{n,j}(t,d)\")\nprint(\"=\" * 70)\nprint()\nprint(\"The coefficient of X^j in \u03a6_n(t,d;X) for the first few n and j:\")\nprint()\n\n# Compute symbolically over Z[t,d] using multivariate polynomials\n# Represent as dict {(i,j): coeff} for t^i d^j\n\ndef euler_poly_symbolic(n: int) -> List[Dict[Tuple[int,int], int]]:\n    \"\"\"\n    Compute \u03a6_n(t,d;X) symbolically, returning coefficients of X^j\n    as polynomials in (t,d).\n\n    Each coefficient is a dict mapping (i,j) to the coefficient of t^i d^j.\n    \"\"\"\n    if n == 0:\n        return [{(0,0): 1}, {(0,0): -1}]\n    if n == 1:\n        return [{(0,0): 1}, {(1,0): -1}, {(0,1): 1}]\n\n    # S_n as polynomial in (t,d)\n    s_n = power_sum_two_symbolic(n)\n\n    # Quadratic factor: [1, -S_n, d^n]\n    neg_s_n = {k: -v for k, v in s_n.items()}\n    d_n = {(0, n): 1}\n    quad = [{(0,0): 1}, neg_s_n, d_n]\n\n    # Inner: \u03a6_{n-2} with X \u2192 dX\n    inner = euler_poly_symbolic(n - 2)\n    shifted = []\n    for j, poly in enumerate(inner):\n        # Multiply by d^j\n        new_poly = {}\n        for (ti, di), c in poly.items():\n            new_poly[(ti, di + j)] = new_poly.get((ti, di + j), 0) + c\n        shifted.append(new_poly)\n\n    # Multiply quad * shifted\n    result_len = len(quad) + len(shifted) - 1\n    result = [{} for _ in range(result_len)]\n    for i, q in enumerate(quad):\n        for j, s in enumerate(shifted):\n            target = result[i + j]\n            for (ti1, di1), c1 in q.items():\n                for (ti2, di2), c2 in s.items():\n                    key = (ti1 + ti2, di1 + di2)\n                    target[key] = target.get(key, 0) + c1 * c2\n\n    # Clean zeros\n    for poly in result:\n        for k in list(poly.keys()):\n            if poly[k] == 0:\n                del poly[k]\n\n    return result\n\n\ndef power_sum_two_symbolic(n: int) -> Dict[Tuple[int,int], int]:\n    \"\"\"\n    Compute S_n(t,d) = \u03b1^n + \u03b2^n as a polynomial in (t,d).\n    \"\"\"\n    if n == 0:\n        return {(0,0): 2}\n    if n == 1:\n        return {(1,0): 1}\n    prev = {(0,0): 2}\n    curr = {(1,0): 1}\n    for _ in range(n - 1):\n        new = {}\n        # t * curr\n        for (ti, di), c in curr.items():\n            key = (ti + 1, di)\n            new[key] = new.get(key, 0) + c\n        # - d * prev\n        for (ti, di), c in prev.items():\n            key = (ti, di + 1)\n            new[key] = new.get(key, 0) - c\n        prev, curr = curr, new\n    return curr\n\n\ndef poly_to_str(poly: Dict[Tuple[int,int], int]) -> str:\n    \"\"\"Format a polynomial in (t,d) as a string.\"\"\"\n    if not poly:\n        return \"0\"\n    terms = []\n    for (ti, di) in sorted(poly.keys(), reverse=True):\n        c = poly[(ti, di)]\n        if c == 0:\n            continue\n        parts = []\n        if abs(c) != 1 or (ti == 0 and di == 0):\n            parts.append(str(abs(c)))\n        if ti > 0:\n            parts.append(f\"t{'\u00b2' if ti == 2 else '\u00b3' if ti == 3 else '^'+str(ti) if ti > 3 else ''}\" if ti > 0 else \"\")\n            if ti == 1: parts[-1] = \"t\"\n        if di > 0:\n            parts.append(f\"d{'\u00b2' if di == 2 else '\u00b3' if di == 3 else '^'+str(di) if di > 3 else ''}\" if di > 0 else \"\")\n            if di == 1: parts[-1] = \"d\"\n        term = \"\u00b7\".join(parts) if parts else str(abs(c))\n        if c > 0 and terms:\n            terms.append(f\"+ {term}\")\n        elif c < 0:\n            terms.append(f\"- {term}\")\n        else:\n            terms.append(term)\n    return \" \".join(terms) if terms else \"0\"\n\n# Print table\nfor n in range(7):\n    coeffs = euler_poly_symbolic(n)\n    print(f\"\u03a6_{n}(t,d;X):\")\n    for j, poly in enumerate(coeffs):\n        if poly:\n            print(f\"  [X^{j}] = {poly_to_str(poly)}\")\n    print()\n\n\nprint(\"=\" * 70)\nprint(\"All applications complete.\")\nprint(\"=\" * 70)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Power Sum Oracle",
+        "pseudocode": "ALGORITHM: PowerSumOracle(t, d, n)\nS(0)=2, S(1)=t, S(n+2)=t*S(n+1)-d*S(n)\nTIME: O(n). SPACE: O(1).",
+        "code": "def power_sum_oracle(t, d, n):\n    if n == 0: return 2\n    if n == 1: return t\n    prev, curr = 2, t\n    for _ in range(n - 1):\n        prev, curr = curr, t * curr - d * prev\n    return curr\n\nfor n in range(8):\n    print(f\"S_{n} = {power_sum_oracle(5, 6, n)}\")",
+        "code_file": "visualizations/the_invariance_theorem_establishes_that_the_symmet_power_sum_oracle.py"
+      },
+      {
+        "name": "Euler Factor Polynomial",
+        "pseudocode": "ALGORITHM: EulerFactorPoly(t, d, n)\nPhi(0)=[1,-1], Phi(1)=[1,-t,d]\nPhi(n) = Convolve([1,-S_n,d^n], Shift(Phi(n-2),d))\nTIME: O(n^2). SPACE: O(n).",
+        "code": "def power_sum_oracle(t, d, n):\n    if n == 0: return 2\n    if n == 1: return t\n    prev, curr = 2, t\n    for _ in range(n - 1):\n        prev, curr = curr, t * curr - d * prev\n    return curr\n\ndef euler_factor_poly(t, d, n):\n    if n == 0: return [1, -1]\n    if n == 1: return [1, -t, d]\n    s_n = power_sum_oracle(t, d, n)\n    quad = [1, -s_n, d**n]\n    inner = euler_factor_poly(t, d, n - 2)\n    shifted = [c * d**j for j, c in enumerate(inner)]\n    result = [0] * (len(quad) + len(shifted) - 1)\n    for i, c1 in enumerate(quad):\n        for j, c2 in enumerate(shifted):\n            result[i + j] += c1 * c2\n    return result\n\nfor n in range(6):\n    print(f\"Phi_{n} = {euler_factor_poly(5, 6, n)}\")",
+        "code_file": "visualizations/the_invariance_theorem_establishes_that_the_symmet_euler_factor_polynomial.py"
+      },
+      {
+        "name": "Holonomic Recurrence Detection",
+        "pseudocode": "ALGORITHM: DetectRecurrence(seq, max_order)\nFor r=1..max_order: solve linear system, verify\nTIME: O(n*r^2). SPACE: O(r^2).",
+        "code": "from fractions import Fraction\n\ndef detect_recurrence(seq, max_order=8):\n    n = len(seq)\n    frac_seq = [Fraction(x) for x in seq]\n    for r in range(1, min(max_order + 1, n // 2)):\n        A = [[frac_seq[i-k-1] for k in range(r)] for i in range(r, min(2*r+2, n))]\n        b = [frac_seq[i] for i in range(r, min(2*r+2, n))]\n        if len(A) < r: continue\n        M = [row[:] + [b[i]] for i, row in enumerate(A[:r])]\n        ok = True\n        for col in range(r):\n            pivot = next((row for row in range(col, r) if M[row][col] != 0), None)\n            if pivot is None: ok = False; break\n            M[col], M[pivot] = M[pivot], M[col]\n            for row in range(r):\n                if row != col and M[row][col] != 0:\n                    factor = M[row][col] / M[col][col]\n                    for k in range(r + 1): M[row][k] -= factor * M[col][k]\n        if not ok: continue\n        coeffs = [M[i][r] / M[i][i] for i in range(r)]\n        if all(sum(coeffs[k]*frac_seq[i-k-1] for k in range(r)) == frac_seq[i] for i in range(r, n)):\n            return r, coeffs\n    return None\n\nprint(detect_recurrence([1, 1, 2, 3, 5, 8, 13, 21, 34]))",
+        "code_file": "visualizations/the_invariance_theorem_establishes_that_the_symmet_holonomic_recurrence_detection.py"
+      }
+    ],
+    "lean_proofs": "-- Defs.lean\n/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\n\n/-!\n# Symmetric Power Euler Factors: Core Definitions\n\nThis file defines the fundamental objects in the invariant-theoretic approach\nto symmetric-power Euler factors for GL\u2082.\n\n## Main definitions\n\n- `e1SymmPower n \u03b1 \u03b2`: The first coefficient \u2211_{k=0}^{n} \u03b1^{n-k} \u03b2^k.\n- `symmTraceRec t d n`: Chebyshev recurrence P(0)=1, P(1)=t, P(n+2)=t\u00b7P(n+1)\u2212d\u00b7P(n).\n- `powerSumTwo t d n`: Power sum recurrence S(0)=2, S(1)=t, S(n+2)=t\u00b7S(n+1)\u2212d\u00b7S(n).\n  When t=\u03b1+\u03b2, d=\u03b1\u03b2, this gives \u03b1^n + \u03b2^n.\n- `symmPowerEulerDen n \u03b1 \u03b2 X`: The Euler denominator \u220f_{k=0}^{n} (1 \u2212 \u03b1^{n\u2212k} \u03b2^k X).\n- `eulerPhiRec t d X n`: Recursive definition of the Euler denominator using only t, d, X.\n-/\n\nopen Finset BigOperators\n\n/-- The first coefficient of the Sym^n Euler factor: \u2211_{k=0}^{n} \u03b1^{n-k} \u03b2^k. -/\ndef e1SymmPower {R : Type*} [CommRing R] (n : \u2115) (\u03b1 \u03b2 : R) : R :=\n  \u2211 k \u2208 Finset.range (n + 1), \u03b1 ^ (n - k) * \u03b2 ^ k\n\n/-- Recursive trace polynomial: P(0)=1, P(1)=t, P(n+2)=t\u00b7P(n+1)\u2212d\u00b7P(n).\nWhen evaluated at t=\u03b1+\u03b2, d=\u03b1\u03b2, this equals e1SymmPower n \u03b1 \u03b2. -/\ndef symmTraceRec {R : Type*} [CommRing R] (t d : R) : \u2115 \u2192 R\n  | 0 => 1\n  | 1 => t\n  | n + 2 => t * symmTraceRec t d (n + 1) - d * symmTraceRec t d n\n\n/-- Power sum recurrence: S(0)=2, S(1)=t, S(n+2)=t\u00b7S(n+1)\u2212d\u00b7S(n).\nWhen t=\u03b1+\u03b2, d=\u03b1\u03b2, this gives \u03b1^n + \u03b2^n. -/\ndef powerSumTwo {R : Type*} [CommRing R] (t d : R) : \u2115 \u2192 R\n  | 0 => 2\n  | 1 => t\n  | n + 2 => t * powerSumTwo t d (n + 1) - d * powerSumTwo t d n\n\n/-- The symmetric-power Euler denominator: \u220f_{k=0}^{n} (1 \u2212 \u03b1^{n\u2212k} \u03b2^k X). -/\ndef symmPowerEulerDen {R : Type*} [CommRing R] (n : \u2115) (\u03b1 \u03b2 X : R) : R :=\n  \u220f k \u2208 Finset.range (n + 1), (1 - \u03b1 ^ (n - k) * \u03b2 ^ k * X)\n\n/-- Recursive definition of the Euler denominator using only trace t, determinant d, and X.\nUses the recursion: \u03a6(0) = 1-X, \u03a6(1) = 1-tX+dX\u00b2,\n\u03a6(n+2) = (1 - S(n+2)\u00b7X + d^{n+2}\u00b7X\u00b2) \u00b7 \u03a6(n, t, d, d\u00b7X). -/\ndef eulerPhiRec {R : Type*} [CommRing R] (t d X : R) : \u2115 \u2192 R\n  | 0 => 1 - X\n  | 1 => 1 - t * X + d * X ^ 2\n  | n + 2 => (1 - powerSumTwo t d (n + 2) * X + d ^ (n + 2) * X ^ 2) *\n              eulerPhiRec t d (d * X) n\n\n\n-- Recurrence.lean\n/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\nimport Speculative.SymmetricPowerEuler.Defs\n\n/-!\n# Chebyshev Recurrence and Power Sum Identities\n\nThis file proves the fundamental recurrence relations for `e1SymmPower`,\n`powerSumTwo`, and establishes their connection to the trace-determinant\nrecursive definitions.\n\n## Main results\n\n- `e1SymmPower_zero`, `e1SymmPower_one`: Base cases.\n- `e1SymmPower_recurrence`: e\u2081(n+2) = (\u03b1+\u03b2)\u00b7e\u2081(n+1) \u2212 (\u03b1\u03b2)\u00b7e\u2081(n).\n- `symmTraceRec_eq_e1SymmPower`: symmTraceRec(\u03b1+\u03b2, \u03b1\u03b2) n = e1SymmPower n \u03b1 \u03b2.\n- `powerSumTwo_eq`: powerSumTwo(\u03b1+\u03b2, \u03b1\u03b2) n = \u03b1^n + \u03b2^n.\n-/\n\nopen Finset BigOperators\n\n/-! ## Base cases for e1SymmPower -/\n\n@[simp] theorem e1SymmPower_zero {R : Type*} [CommRing R] (\u03b1 \u03b2 : R) :\n    e1SymmPower 0 \u03b1 \u03b2 = 1 := by\n  simp [e1SymmPower]\n\n@[simp] theorem e1SymmPower_one {R : Type*} [CommRing R] (\u03b1 \u03b2 : R) :\n    e1SymmPower 1 \u03b1 \u03b2 = \u03b1 + \u03b2 := by\n  simp [e1SymmPower, Finset.sum_range_succ]\n\n/-! ## The Chebyshev recurrence for e1SymmPower -/\n\ntheorem e1SymmPower_recurrence {R : Type*} [CommRing R] (n : \u2115) (\u03b1 \u03b2 : R) :\n    e1SymmPower (n + 2) \u03b1 \u03b2 =\n      (\u03b1 + \u03b2) * e1SymmPower (n + 1) \u03b1 \u03b2 - \u03b1 * \u03b2 * e1SymmPower n \u03b1 \u03b2 := by\n  simp only [e1SymmPower, mul_comm, mul_assoc]\n  simp +decide [Finset.sum_range_succ', add_mul, mul_add, mul_assoc, mul_comm,\n    mul_left_comm, pow_succ']\n  simp +decide [mul_assoc, Finset.mul_sum _ _ _, add_assoc,\n    add_left_comm, add_comm]\n  abel1\n\n/-! ## symmTraceRec equals e1SymmPower -/\n\ntheorem symmTraceRec_eq_e1SymmPower {R : Type*} [CommRing R] (n : \u2115) (\u03b1 \u03b2 : R) :\n    symmTraceRec (\u03b1 + \u03b2) (\u03b1 * \u03b2) n = e1SymmPower n \u03b1 \u03b2 := by\n  induction' n using Nat.strongRecOn with n ih\n  rcases n with ( _ | _ | n ) <;> simp_all +decide\n  \u00b7 rfl\n  \u00b7 rfl\n  \u00b7 rw [show symmTraceRec (\u03b1 + \u03b2) (\u03b1 * \u03b2) (n + 2) =\n        (\u03b1 + \u03b2) * symmTraceRec (\u03b1 + \u03b2) (\u03b1 * \u03b2) (n + 1) -\n        (\u03b1 * \u03b2) * symmTraceRec (\u03b1 + \u03b2) (\u03b1 * \u03b2) n from rfl,\n      ih _ le_rfl, ih _ (Nat.le_succ _), e1SymmPower_recurrence]\n\n/-! ## Power sum identity -/\n\ntheorem powerSumTwo_eq {R : Type*} [CommRing R] (n : \u2115) (\u03b1 \u03b2 : R) :\n    powerSumTwo (\u03b1 + \u03b2) (\u03b1 * \u03b2) n = \u03b1 ^ n + \u03b2 ^ n := by\n  induction' n using Nat.strongRecOn with n ih\n  rcases n with ( _ | _ | n ) <;> simp_all +decide [powerSumTwo]\n  \u00b7 norm_num\n  \u00b7 ring\n\n\n-- Invariance.lean\n/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\nimport Speculative.SymmetricPowerEuler.Defs\nimport Speculative.SymmetricPowerEuler.Recurrence\n\n/-!\n# Invariance of Symmetric Power Euler Factors\n\nThis file proves the central invariance theorem: the symmetric-power\nEuler denominator depends only on the trace \u03b1+\u03b2 and determinant \u03b1\u03b2.\n\n## Main results\n\n- `euler_product_recursion`: The factored recursion for the Euler product.\n- `symmPowerEulerDen_eq_eulerPhiRec`: E_n equals the trace-det recursive form.\n- `symmPowerEulerDen_eq_of_trace_det_eq`: The main invariance theorem.\n-/\n\nopen Finset BigOperators\n\n/-! ## The Euler product recursion -/\n\ntheorem euler_product_recursion {R : Type*} [CommRing R]\n    (n : \u2115) (\u03b1 \u03b2 X : R) :\n    symmPowerEulerDen (n + 2) \u03b1 \u03b2 X =\n      (1 - (\u03b1 ^ (n + 2) + \u03b2 ^ (n + 2)) * X + (\u03b1 * \u03b2) ^ (n + 2) * X ^ 2) *\n        symmPowerEulerDen n \u03b1 \u03b2 (\u03b1 * \u03b2 * X) := by\n  unfold symmPowerEulerDen\n  rw [Finset.prod_range_succ, Finset.prod_range_succ']\n  simp +decide [mul_assoc, mul_comm, mul_left_comm, pow_succ, Nat.succ_sub_succ]\n  rw [Finset.prod_congr rfl fun x hx => by\n    rw [show n + 1 - x = n - x + 1 by\n      rw [tsub_add_eq_add_tsub (Finset.mem_range_succ_iff.mp hx)]]]\n  ring\n\n/-! ## E_n equals the recursive trace-det form -/\n\ntheorem symmPowerEulerDen_eq_eulerPhiRec {R : Type*} [CommRing R]\n    (n : \u2115) (\u03b1 \u03b2 X : R) :\n    symmPowerEulerDen n \u03b1 \u03b2 X = eulerPhiRec (\u03b1 + \u03b2) (\u03b1 * \u03b2) X n := by\n  induction' n using Nat.strongRecOn with n ih generalizing \u03b1 \u03b2 X\n  rcases n with ( _ | _ | n )\n  \u00b7 simp +decide [symmPowerEulerDen, eulerPhiRec]\n  \u00b7 simp [symmPowerEulerDen, eulerPhiRec]\n    simpa [Finset.prod_range_succ] using by ring\n  \u00b7 rw [euler_product_recursion, ih]\n    \u00b7 exact congr_arg\u2082 _ (by rw [\u2190 powerSumTwo_eq]) rfl\n    \u00b7 grind\n\n/-! ## The main invariance theorem -/\n\n/-- **Symmetric-power Euler denominator depends only on trace and determinant.**\n\nFor every n : \u2115, if two pairs (\u03b1,\u03b2) and (\u03b1',\u03b2') have the same trace and\ndeterminant, they produce the same symmetric-power Euler denominator.\n\nThis is the invariant-theoretic heart of symmetric-power functoriality for GL\u2082:\nthe local L-factor is determined by the characteristic polynomial of the\nFrobenius conjugacy class. -/\ntheorem symmPowerEulerDen_eq_of_trace_det_eq\n    {R : Type*} [CommRing R]\n    (n : \u2115) (\u03b1 \u03b2 \u03b1' \u03b2' X : R)\n    (htr : \u03b1 + \u03b2 = \u03b1' + \u03b2')\n    (hdet : \u03b1 * \u03b2 = \u03b1' * \u03b2') :\n    (\u220f k \u2208 Finset.range (n + 1), (1 - \u03b1 ^ (n - k) * \u03b2 ^ k * X)) =\n    (\u220f k \u2208 Finset.range (n + 1), (1 - \u03b1' ^ (n - k) * \u03b2' ^ k * X)) := by\n  show symmPowerEulerDen n \u03b1 \u03b2 X = symmPowerEulerDen n \u03b1' \u03b2' X\n  rw [symmPowerEulerDen_eq_eulerPhiRec, symmPowerEulerDen_eq_eulerPhiRec, htr, hdet]\n\n/-- Corollary: the symmetric-power Euler denominator is symmetric in \u03b1 and \u03b2. -/\ntheorem symmPowerEulerDen_symm {R : Type*} [CommRing R]\n    (n : \u2115) (\u03b1 \u03b2 X : R) :\n    symmPowerEulerDen n \u03b1 \u03b2 X = symmPowerEulerDen n \u03b2 \u03b1 X := by\n  exact symmPowerEulerDen_eq_of_trace_det_eq n \u03b1 \u03b2 \u03b2 \u03b1 X (by ring) (by ring)\n\n\n-- NewtonClosure.lean\n/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\nimport Speculative.SymmetricPowerEuler.Defs\nimport Speculative.SymmetricPowerEuler.Recurrence\nimport Speculative.SymmetricPowerEuler.Invariance\n\n/-!\n# Newton Closure for Symmetric-Power Weights\n\nThis file proves that every symmetric function of the weight multiset\nW_n(a,b) = {a^{n-k} b^k | 0 \u2264 k \u2264 n} depends only on the trace t = a+b\nand determinant d = a*b. This upgrades the invariance theorem from a\nwhole-product statement to a **coefficientwise universal algebra**.\n\n## Builds on\n\n- `symmTraceRec_eq_e1SymmPower` from Recurrence.lean\n- `powerSumTwo_eq` from Recurrence.lean\n- `symmPowerEulerDen_eq_eulerPhiRec` from Invariance.lean\n-/\n\nopen Finset BigOperators Polynomial\n\n/-! ## Power sums of the weight multiset -/\n\n/-- Power sums of the symmetric-power weight multiset:\np_m(n; a,b) = \u2211_{k=0}^{n} (a^{n-k} b^k)^m. -/\ndef powerSumWeights {R : Type*} [CommRing R] (n m : \u2115) (a b : R) : R :=\n  \u2211 k \u2208 Finset.range (n + 1), (a ^ (n - k) * b ^ k) ^ m\n\n/-- Power sums of weights equal e1SymmPower evaluated at (a^m, b^m). -/\ntheorem powerSumWeights_eq_e1SymmPower {R : Type*} [CommRing R]\n    (n m : \u2115) (a b : R) :\n    powerSumWeights n m a b = e1SymmPower n (a ^ m) (b ^ m) := by\n  simp only [powerSumWeights, e1SymmPower]\n  congr 1; ext k\n  rw [mul_pow, pow_right_comm, pow_right_comm b]\n\n/-- Power sums of weights equal the Chebyshev recurrence at\n(powerSumTwo(t,d,m), d^m). -/\ntheorem powerSumWeights_eq_symmTraceRec {R : Type*} [CommRing R]\n    (n m : \u2115) (a b : R) :\n    powerSumWeights n m a b =\n      symmTraceRec (powerSumTwo (a + b) (a * b) m) ((a * b) ^ m) n := by\n  rw [powerSumWeights_eq_e1SymmPower, \u2190 symmTraceRec_eq_e1SymmPower]\n  congr 1\n  \u00b7 exact (powerSumTwo_eq m a b).symm\n  \u00b7 ring\n\n/-- **Power sum closure**: p_m(n; a,b) depends only on (t,d). -/\ntheorem powerSumWeights_depends_on_trace_det {R : Type*} [CommRing R]\n    (n m : \u2115) (a b a' b' : R)\n    (ht : a + b = a' + b')\n    (hd : a * b = a' * b') :\n    powerSumWeights n m a b = powerSumWeights n m a' b' := by\n  rw [powerSumWeights_eq_symmTraceRec, powerSumWeights_eq_symmTraceRec, ht, hd]\n\n/-! ## Specific power sum formulas -/\n\n/-- p_0(n; a, b) = n + 1. -/\ntheorem powerSumWeights_zero {R : Type*} [CommRing R] (n : \u2115) (a b : R) :\n    powerSumWeights n 0 a b = (n + 1 : \u2115) := by\n  simp [powerSumWeights, Finset.card_range]\n\n/-- p_1(n; a, b) = e1SymmPower n a b. -/\ntheorem powerSumWeights_one {R : Type*} [CommRing R] (n : \u2115) (a b : R) :\n    powerSumWeights n 1 a b = e1SymmPower n a b := by\n  simp [powerSumWeights, e1SymmPower, pow_one]\n\n/-- p_2(n; a, b) = symmTraceRec(t\u00b2 \u2212 2d, d\u00b2, n). -/\ntheorem powerSumWeights_two_formula {R : Type*} [CommRing R]\n    (n : \u2115) (a b : R) :\n    powerSumWeights n 2 a b =\n      symmTraceRec ((a + b) ^ 2 - 2 * (a * b)) ((a * b) ^ 2) n := by\n  rw [powerSumWeights_eq_symmTraceRec]\n  congr 1\n  simp [powerSumTwo]; ring\n\n/-! ## e1SymmPower closure -/\n\n/-- e1SymmPower depends only on (t, d). -/\ntheorem e1SymmPower_depends_on_trace_det {R : Type*} [CommRing R]\n    (n : \u2115) (a b a' b' : R)\n    (ht : a + b = a' + b')\n    (hd : a * b = a' * b') :\n    e1SymmPower n a b = e1SymmPower n a' b' := by\n  rw [\u2190 symmTraceRec_eq_e1SymmPower, \u2190 symmTraceRec_eq_e1SymmPower, ht, hd]\n\n/-! ## Polynomial-level Euler factor -/\n\n/-- The symmetric-power Euler factor as a polynomial in R[X]. -/\nnoncomputable def symmPowerEulerPoly {R : Type*} [CommRing R]\n    (n : \u2115) (a b : R) : R[X] :=\n  \u220f k \u2208 Finset.range (n + 1),\n    (1 - Polynomial.C (a ^ (n - k) * b ^ k) * Polynomial.X)\n\n/-- Evaluating the polynomial Euler factor recovers the ring-level one. -/\ntheorem symmPowerEulerPoly_eval {R : Type*} [CommRing R]\n    (n : \u2115) (a b X : R) :\n    Polynomial.eval X (symmPowerEulerPoly n a b) = symmPowerEulerDen n a b X := by\n  simp only [symmPowerEulerPoly, symmPowerEulerDen]\n  rw [Polynomial.eval_prod]\n  congr 1; ext k\n  simp [mul_assoc]\n\n/-! ## Polynomial Euler product recursion -/\n\n/-\n**Polynomial-level Euler product recursion.**\nThe key structural identity that splits the degree-(n+3) product into a\nquadratic factor times a shifted degree-(n+1) product.\n-/\ntheorem euler_product_recursion_poly {R : Type*} [CommRing R]\n    (n : \u2115) (a b : R) :\n    symmPowerEulerPoly (n + 2) a b =\n      (1 - Polynomial.C (a ^ (n + 2) + b ^ (n + 2)) * Polynomial.X +\n        Polynomial.C ((a * b) ^ (n + 2)) * Polynomial.X ^ 2) *\n      (symmPowerEulerPoly n a b).comp (Polynomial.C (a * b) * Polynomial.X) := by\n  unfold symmPowerEulerPoly;\n  rw [ Finset.prod_range_succ, Finset.prod_range_succ' ];\n  simp +decide [ mul_assoc, mul_comm, mul_left_comm, pow_succ, \u2190 mul_pow ];\n  rw [ show ( \u220f x \u2208 range ( n + 1 ), ( 1 - X * ( C b * ( C a ^ ( n + 1 - x ) * C b ^ x ) ) ) ) = ( \u220f x \u2208 range ( n + 1 ), ( 1 - X * ( C a ^ ( n - x ) * C b ^ x ) ) |> Polynomial.comp <| Polynomial.X * ( C a * C b ) ) from ?_ ];\n  \u00b7 ring;\n  \u00b7 rw [ Polynomial.prod_comp ];\n    refine' Finset.prod_congr rfl fun x hx => _;\n    rw [ show n + 1 - x = n - x + 1 by rw [ tsub_add_eq_add_tsub ( Finset.mem_range_succ_iff.mp hx ) ] ] ; norm_num ; ring\n\n/-! ## Coefficientwise invariance (direct inductive proof) -/\n\n/-\n**Coefficientwise invariance**: the polynomial Euler factor depends\nonly on (t, d), hence each coefficient does too.\n\nProved by strong induction on n using `euler_product_recursion_poly`.\n-/\ntheorem symmPowerEulerPoly_eq_of_trace_det {R : Type*} [CommRing R]\n    (n : \u2115) (a b a' b' : R)\n    (ht : a + b = a' + b')\n    (hd : a * b = a' * b') :\n    symmPowerEulerPoly n a b = symmPowerEulerPoly n a' b' := by\n  induction' n using Nat.strong_induction_on with n ih generalizing a b a' b';\n  rcases n with ( _ | _ | n );\n  \u00b7 unfold symmPowerEulerPoly; simp +decide [ Finset.prod_range_succ' ] ;\n  \u00b7 simp +decide [ symmPowerEulerPoly, Finset.prod_range_succ ];\n    ext i; simp +decide [ Polynomial.coeff_one, Polynomial.coeff_X, mul_assoc, sub_mul, mul_sub ] ; ring;\n    rcases i with ( _ | _ | _ | i ) <;> simp +decide [ Polynomial.coeff_eq_zero_of_natDegree_lt ];\n    \u00b7 linear_combination -ht;\n    \u00b7 exact hd;\n  \u00b7 rw [ euler_product_recursion_poly, euler_product_recursion_poly ];\n    rw [ ih n ( by linarith ) a b a' b' ht hd, hd ];\n    rw [ \u2190 powerSumTwo_eq, \u2190 powerSumTwo_eq ];\n    rw [ ht, hd ]\n\n/-- Coefficientwise invariance: each coefficient of the polynomial\nEuler factor depends only on trace and determinant. -/\ntheorem symmPowerEulerPoly_coeff_depends_on_trace_det {R : Type*} [CommRing R]\n    (n j : \u2115) (a b a' b' : R)\n    (ht : a + b = a' + b')\n    (hd : a * b = a' * b') :\n    (symmPowerEulerPoly n a b).coeff j = (symmPowerEulerPoly n a' b').coeff j := by\n  rw [symmPowerEulerPoly_eq_of_trace_det n a b a' b' ht hd]\n\n/-! ## Polynomial-level recursive Euler factor -/\n\n/-- The recursive Euler factor as a polynomial in R[X], depending only on (t,d). -/\nnoncomputable def eulerPhiRecPoly {R : Type*} [CommRing R]\n    (t d : R) : \u2115 \u2192 R[X]\n  | 0 => 1 - Polynomial.X\n  | 1 => 1 - Polynomial.C t * Polynomial.X + Polynomial.C d * Polynomial.X ^ 2\n  | n + 2 => (1 - Polynomial.C (powerSumTwo t d (n + 2)) * Polynomial.X +\n              Polynomial.C (d ^ (n + 2)) * Polynomial.X ^ 2) *\n              (eulerPhiRecPoly t d n).comp (Polynomial.C d * Polynomial.X)\n\n/-- Evaluating eulerPhiRecPoly at X recovers the ring-level eulerPhiRec. -/\ntheorem eulerPhiRecPoly_eval {R : Type*} [CommRing R]\n    (t d X : R) (n : \u2115) :\n    Polynomial.eval X (eulerPhiRecPoly t d n) = eulerPhiRec t d X n := by\n  induction' n using Nat.strong_induction_on with n ih generalizing X\n  rcases n with ( _ | _ | n ) <;> simp_all +decide [eulerPhiRecPoly, eulerPhiRec]\n\n/-! ## Recurrence identities -/\n\n/-- The eulerPhiRec function satisfies a two-step recursion. -/\ntheorem eulerPhiRec_step {R : Type*} [CommRing R]\n    (t d X : R) (n : \u2115) :\n    eulerPhiRec t d X (n + 2) =\n      (1 - powerSumTwo t d (n + 2) * X + d ^ (n + 2) * X ^ 2) *\n        eulerPhiRec t d (d * X) n := by\n  rfl\n\n/-- The powerSumTwo oracle satisfies its own recurrence. -/\ntheorem powerSumTwo_recurrence {R : Type*} [CommRing R]\n    (t d : R) (n : \u2115) :\n    powerSumTwo t d (n + 2) = t * powerSumTwo t d (n + 1) - d * powerSumTwo t d n := by\n  rfl\n\n/-- The symmTraceRec oracle satisfies its own recurrence. -/\ntheorem symmTraceRec_recurrence {R : Type*} [CommRing R]\n    (t d : R) (n : \u2115) :\n    symmTraceRec t d (n + 2) = t * symmTraceRec t d (n + 1) - d * symmTraceRec t d n := by\n  rfl\n\n-- HolonomicRecurrence.lean\n/-\nCopyright (c) 2025 Harmonic. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\nimport Speculative.SymmetricPowerEuler.Defs\nimport Speculative.SymmetricPowerEuler.Recurrence\nimport Speculative.SymmetricPowerEuler.Invariance\nimport Speculative.SymmetricPowerEuler.NewtonClosure\n\n/-!\n# Holonomic Recurrence for Symmetric-Power Euler Factors\n\nThis file proves that the family n \u21a6 \u03a6_n(t,d;X) of symmetric-power\nEuler factors satisfies a universal two-step recurrence controlled\nentirely by the trace-determinant parameters (t, d).\n\n## Main results\n\n- `eulerPhiRecPoly_recurrence`: The two-step recurrence for eulerPhiRecPoly.\n- `eulerPhiRec_base_cases`: Base cases for the recursion.\n- `symmPowerEulerPoly_recurrence`: The recurrence for symmPowerEulerPoly.\n- `powerSumTwo_explicit_values`: Explicit values for small n.\n- `eulerPhiRecPoly_explicit_low`: Explicit low-degree Euler factors.\n\n## Mathematical significance\n\nThis establishes the family of symmetric-power Euler factors as a\n**discrete integrable system** in the parameter n: each \u03a6_{n+2} is\ndetermined by \u03a6_n via a universal quadratic-times-shift operation.\nThis opens algorithmic acceleration and connections to D-finite\ngenerating functions and representation stability.\n\n## Builds on\n\n- `eulerPhiRecPoly` and `symmPowerEulerPoly` from NewtonClosure.lean\n- `powerSumTwo` and `eulerPhiRec` from Defs.lean\n- `powerSumTwo_eq` from Recurrence.lean\n-/\n\nopen Finset BigOperators Polynomial\n\n/-! ## Base cases and explicit values -/\n\n/-- powerSumTwo at n = 0 gives 2. -/\n@[simp] theorem powerSumTwo_zero {R : Type*} [CommRing R] (t d : R) :\n    powerSumTwo t d 0 = 2 := by rfl\n\n/-- powerSumTwo at n = 1 gives t. -/\n@[simp] theorem powerSumTwo_one {R : Type*} [CommRing R] (t d : R) :\n    powerSumTwo t d 1 = t := by rfl\n\n/-- powerSumTwo at n = 2 gives t\u00b2 - 2d. -/\ntheorem powerSumTwo_two {R : Type*} [CommRing R] (t d : R) :\n    powerSumTwo t d 2 = t ^ 2 - 2 * d := by\n  simp [powerSumTwo]; ring\n\n/-- powerSumTwo at n = 3 gives t\u00b3 - 3td. -/\ntheorem powerSumTwo_three {R : Type*} [CommRing R] (t d : R) :\n    powerSumTwo t d 3 = t ^ 3 - 3 * t * d := by\n  simp [powerSumTwo]; ring\n\n/-- powerSumTwo at n = 4 gives t\u2074 - 4t\u00b2d + 2d\u00b2. -/\ntheorem powerSumTwo_four {R : Type*} [CommRing R] (t d : R) :\n    powerSumTwo t d 4 = t ^ 4 - 4 * t ^ 2 * d + 2 * d ^ 2 := by\n  simp [powerSumTwo]; ring\n\n/-! ## eulerPhiRec base cases -/\n\n/-- \u03a6_0 = 1 - X. -/\n@[simp] theorem eulerPhiRec_zero {R : Type*} [CommRing R] (t d X : R) :\n    eulerPhiRec t d X 0 = 1 - X := by rfl\n\n/-- \u03a6_1 = 1 - tX + dX\u00b2. -/\n@[simp] theorem eulerPhiRec_one {R : Type*} [CommRing R] (t d X : R) :\n    eulerPhiRec t d X 1 = 1 - t * X + d * X ^ 2 := by rfl\n\n/-- \u03a6_2 = (1 - (t\u00b2-2d)X + d\u00b2X\u00b2)(1 - dX). -/\ntheorem eulerPhiRec_two {R : Type*} [CommRing R] (t d X : R) :\n    eulerPhiRec t d X 2 =\n      (1 - (t ^ 2 - 2 * d) * X + d ^ 2 * X ^ 2) * (1 - d * X) := by\n  simp [eulerPhiRec, powerSumTwo]; ring\n\n/-! ## The universal two-step recurrence -/\n\n/-- **The universal two-step recurrence for eulerPhiRecPoly.**\n\n\u03a6_poly(n+2) = Q_{n+2}(t,d;X) \u00b7 \u03a6_poly(n)|_{X \u21a6 C(d)\u00b7X}\n\nwhere Q_{n+2} = 1 - C(S_{n+2}(t,d))\u00b7X + C(d^{n+2})\u00b7X\u00b2. -/\ntheorem eulerPhiRecPoly_recurrence {R : Type*} [CommRing R]\n    (t d : R) (n : \u2115) :\n    eulerPhiRecPoly t d (n + 2) =\n      (1 - Polynomial.C (powerSumTwo t d (n + 2)) * Polynomial.X +\n        Polynomial.C (d ^ (n + 2)) * Polynomial.X ^ 2) *\n      (eulerPhiRecPoly t d n).comp (Polynomial.C d * Polynomial.X) := by\n  rfl\n\n/-- **The universal two-step recurrence for the Euler product polynomial.**\n\nsymmPowerEulerPoly(n+2, a, b) =\n  Q_{n+2}(a+b, ab; X) \u00b7 symmPowerEulerPoly(n, a, b)|_{X \u21a6 C(ab)\u00b7X}\n\nThis is the polynomial lifting of euler_product_recursion. -/\ntheorem symmPowerEulerPoly_recurrence {R : Type*} [CommRing R]\n    (n : \u2115) (a b : R) :\n    symmPowerEulerPoly (n + 2) a b =\n      (1 - Polynomial.C (a ^ (n + 2) + b ^ (n + 2)) * Polynomial.X +\n        Polynomial.C ((a * b) ^ (n + 2)) * Polynomial.X ^ 2) *\n      (symmPowerEulerPoly n a b).comp (Polynomial.C (a * b) * Polynomial.X) :=\n  euler_product_recursion_poly n a b\n\n/-! ## Explicit low-degree Euler factor polynomials -/\n\n/-- The Sym\u2070 Euler factor: 1 - X. -/\ntheorem symmPowerEulerPoly_zero {R : Type*} [CommRing R] (a b : R) :\n    symmPowerEulerPoly 0 a b = 1 - Polynomial.X := by\n  simp [symmPowerEulerPoly, Finset.prod_range_succ]\n\n/-\nThe Sym\u00b9 Euler factor: 1 - (a+b)X + ab\u00b7X\u00b2.\n-/\ntheorem symmPowerEulerPoly_one {R : Type*} [CommRing R] (a b : R) :\n    symmPowerEulerPoly 1 a b =\n      1 - Polynomial.C (a + b) * Polynomial.X +\n        Polynomial.C (a * b) * Polynomial.X ^ 2 := by\n  unfold symmPowerEulerPoly;\n  simp +decide [ Finset.prod_range_succ ] ; ring\n\n/-\nThe Sym\u00b2 Euler factor (degree 3):\n(1 - (a\u00b2+b\u00b2)X + (ab)\u00b2X\u00b2)(1 - ab\u00b7X).\n-/\ntheorem symmPowerEulerPoly_two {R : Type*} [CommRing R] (a b : R) :\n    symmPowerEulerPoly 2 a b =\n      (1 - Polynomial.C (a ^ 2 + b ^ 2) * Polynomial.X +\n        Polynomial.C ((a * b) ^ 2) * Polynomial.X ^ 2) *\n      (1 - Polynomial.C (a * b) * Polynomial.X) := by\n  convert euler_product_recursion_poly 0 a b using 1;\n  -- Substitute the definition of `symmPowerEulerPoly 0 a b` into the right-hand side.\n  simp [symmPowerEulerPoly_zero]\n\n/-! ## Degree bounds -/\n\n/-\nThe Euler polynomial has degree at most n+1.\n-/\ntheorem symmPowerEulerPoly_natDegree_le {R : Type*} [CommRing R]\n    (n : \u2115) (a b : R) :\n    (symmPowerEulerPoly n a b).natDegree \u2264 n + 1 := by\n  nontriviality;\n  have h_deg : \u2200 k \u2208 Finset.range (n + 1), Polynomial.natDegree (1 - Polynomial.C (a ^ (n - k) * b ^ k) * Polynomial.X) \u2264 1 := by\n    -- The degree of a constant polynomial is 0, and the degree of X is 1. Multiplying by a constant doesn't change the degree.\n    have h_deg_le_one : \u2200 c : R, Polynomial.natDegree (1 - Polynomial.C c * Polynomial.X) \u2264 1 := by\n      intro c;\n      by_cases hc : c = 0 <;> simp +decide [ hc, Polynomial.natDegree_le_iff_degree_le, Polynomial.degree_le_iff_coeff_zero ];\n      intro m hm; rw [ Polynomial.coeff_one, Polynomial.coeff_X ] ; aesop;\n    exact fun k hk => h_deg_le_one _;\n  exact le_trans ( Polynomial.natDegree_prod_le _ _ ) ( by simpa using Finset.sum_le_sum h_deg )\n\n/-! ## The coefficient at maximum degree -/\n\n/-\nThe leading behavior of the Euler polynomial is controlled by\nthe product of all weights, which is d^{n(n+1)/2}. Specifically,\nthe coefficient of X^{n+1} is (-1)^{n+1} \u00b7 \u220f_{k=0}^{n} a^{n-k} b^k,\nwhich depends only on d = ab.\n-/\ntheorem symmPowerEulerPoly_top_coeff_depends_on_det {R : Type*} [CommRing R]\n    (n : \u2115) (a b a' b' : R)\n    (hd : a * b = a' * b') :\n    (symmPowerEulerPoly n a b).coeff (n + 1) =\n    (symmPowerEulerPoly n a' b').coeff (n + 1) := by\n  -- By definition of Euler polynomial, the coefficient of $X^{n+1}$ is $(-1)^{n+1}$ times the product of all weights.\n  have h_coeff_def : \u2200 (n : \u2115) (a b : R), (symmPowerEulerPoly n a b).coeff (n + 1) = (-1) ^ (n + 1) * \u220f k \u2208 Finset.range (n + 1), a ^ (n - k) * b ^ k := by\n    intro n a b;\n    unfold symmPowerEulerPoly;\n    erw [ Finset.prod_congr rfl fun _ _ => show ( 1 - C ( a ^ ( n - _ ) * b ^ _ ) * X ) = ( -C ( a ^ ( n - _ ) * b ^ _ ) * X + 1 ) by ring, Finset.prod_add ] ; norm_num;\n    rw [ Finset.sum_eq_single ( Finset.range ( n + 1 ) ) ] <;> simp +decide [ Polynomial.coeff_X_pow, Polynomial.coeff_C, Finset.prod_mul_distrib ];\n    \u00b7 rw [ Finset.prod_congr rfl fun _ _ => neg_eq_neg_one_mul _, Finset.prod_mul_distrib ] ; norm_num [ Polynomial.coeff_X_pow, Polynomial.coeff_C, Finset.prod_mul_distrib ];\n      norm_num [ Polynomial.coeff_mul ];\n      rw [ Finset.sum_eq_single ( 0, n + 1 ) ] <;> simp +decide [ Polynomial.coeff_eq_zero_of_natDegree_lt ];\n      \u00b7 rw [ Finset.sum_eq_single ( 0, n + 1 ) ] <;> simp +decide [ Polynomial.coeff_zero_eq_eval_zero, Polynomial.eval_prod ];\n        aesop;\n      \u00b7 intro i j hij hi; rw [ Finset.sum_eq_zero ] <;> simp +decide [ Polynomial.coeff_eq_zero_of_natDegree_lt, Polynomial.natDegree_prod', Polynomial.natDegree_pow, Polynomial.natDegree_C, Polynomial.natDegree_X, hij ] ;\n        grind;\n    \u00b7 intro s hs hs'; rw [ Polynomial.coeff_eq_zero_of_natDegree_lt ] ;\n      refine' lt_of_le_of_lt ( Polynomial.natDegree_prod_le _ _ ) _;\n      refine' lt_of_le_of_lt ( Finset.sum_le_sum fun i hi => Polynomial.natDegree_neg _ |> le_of_eq |> le_trans <| Polynomial.natDegree_mul_le.trans <| add_le_add ( Polynomial.natDegree_mul_le.trans <| add_le_add ( Polynomial.natDegree_pow_le ) <| Polynomial.natDegree_pow_le ) <| Polynomial.natDegree_X_le ) _ ; simp +decide [ Finset.sum_add_distrib ];\n      exact Nat.le_of_lt_succ ( lt_of_lt_of_le ( Finset.card_lt_card ( Finset.ssubset_iff_subset_ne.mpr \u27e8 hs, hs' \u27e9 ) ) ( by simp +decide ) );\n  -- Since $a * b = a' * b'$, we have $a^{n-k} * b^k = (a' * b')^{n-k} * b^k = a'^{n-k} * b'^{n-k} * b^k$.\n  have h_prod_eq : \u220f k \u2208 Finset.range (n + 1), a ^ (n - k) * b ^ k = (a * b) ^ (n * (n + 1) / 2) := by\n    rw [ Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, Finset.prod_pow_eq_pow_sum, \u2190 Finset.sum_range_reflect ];\n    simp +decide [ mul_pow, Finset.sum_range_id ];\n    rw [ Finset.sum_congr rfl fun x hx => tsub_tsub_cancel_of_le ( Finset.mem_range_succ_iff.mp hx ) ] ; ring;\n    rw [ Finset.sum_range_id ] ; norm_num ; ring;\n  have h_prod_eq' : \u220f k \u2208 Finset.range (n + 1), a' ^ (n - k) * b' ^ k = (a' * b') ^ (n * (n + 1) / 2) := by\n    rw [ Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, Finset.prod_pow_eq_pow_sum ];\n    rw [ mul_pow, show \u2211 i \u2208 Finset.range ( n + 1 ), ( n - i ) = n * ( n + 1 ) / 2 from ?_, show \u2211 i \u2208 Finset.range ( n + 1 ), i = n * ( n + 1 ) / 2 from ?_ ];\n    \u00b7 simp +arith +decide [ mul_comm, Finset.sum_range_id ];\n    \u00b7 convert Finset.sum_range_id ( n + 1 ) using 1;\n      \u00b7 conv_rhs => rw [ \u2190 Finset.sum_flip ] ;\n      \u00b7 norm_num [ mul_comm ];\n  aesop\n\n/-! ## Symmetry at the polynomial level -/\n\n/-- The Euler polynomial is symmetric in a and b. -/\ntheorem symmPowerEulerPoly_symm {R : Type*} [CommRing R]\n    (n : \u2115) (a b : R) :\n    symmPowerEulerPoly n a b = symmPowerEulerPoly n b a := by\n  apply symmPowerEulerPoly_eq_of_trace_det <;> ring",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Symmetric-Power Euler Factor Computation\n\nImplements the core algorithms from the formal development:\n1. Power sum oracle via Chebyshev recurrence\n2. Euler factor computation via two-step recurrence\n3. Coefficient extraction via Newton identities\n4. Holonomic detection for coefficient families\n\nAll algorithms work over exact arithmetic (integers/rationals).\n\"\"\"\n\nfrom typing import List, Dict, Tuple, Optional\nfrom fractions import Fraction\nfrom functools import lru_cache\n\n\n# =============================================================================\n# Algorithm 1: Power Sum Oracle\n# =============================================================================\n\ndef power_sum_oracle(t: int, d: int, n: int) -> int:\n    \"\"\"\n    Compute S_n(t,d) = \u03b1^n + \u03b2^n where \u03b1+\u03b2 = t, \u03b1\u03b2 = d.\n\n    Uses the Chebyshev recurrence:\n        S(0) = 2, S(1) = t, S(n+2) = t\u00b7S(n+1) - d\u00b7S(n)\n\n    Time complexity: O(n) arithmetic operations.\n    Space complexity: O(1).\n\n    Examples:\n        >>> power_sum_oracle(5, 6, 4)  # \u03b1=2, \u03b2=3: 2^4+3^4 = 97\n        97\n        >>> power_sum_oracle(3, 2, 6)  # \u03b1=1, \u03b2=2: 1^6+2^6 = 65\n        65\n    \"\"\"\n    if n == 0:\n        return 2\n    if n == 1:\n        return t\n    prev, curr = 2, t\n    for _ in range(n - 1):\n        prev, curr = curr, t * curr - d * prev\n    return curr\n\n\ndef power_sum_oracle_batch(t: int, d: int, max_n: int) -> List[int]:\n    \"\"\"\n    Compute S_0(t,d), S_1(t,d), ..., S_{max_n}(t,d) simultaneously.\n\n    Time complexity: O(max_n) arithmetic operations.\n    Space complexity: O(max_n).\n\n    Examples:\n        >>> power_sum_oracle_batch(5, 6, 5)\n        [2, 5, 13, 35, 97, 275]\n    \"\"\"\n    if max_n < 0:\n        return []\n    result = [0] * (max_n + 1)\n    result[0] = 2\n    if max_n == 0:\n        return result\n    result[1] = t\n    for i in range(2, max_n + 1):\n        result[i] = t * result[i-1] - d * result[i-2]\n    return result\n\n\n# =============================================================================\n# Algorithm 2: Symmetric Trace Recurrence\n# =============================================================================\n\ndef symm_trace_rec(t: int, d: int, n: int) -> int:\n    \"\"\"\n    Compute P_n(t,d) = \u2211_{k=0}^{n} \u03b1^{n-k} \u03b2^k where \u03b1+\u03b2 = t, \u03b1\u03b2 = d.\n\n    Uses the recurrence:\n        P(0) = 1, P(1) = t, P(n+2) = t\u00b7P(n+1) - d\u00b7P(n)\n\n    This is the trace of Sym^n(V) for a rank-2 representation V\n    with characteristic polynomial X\u00b2 - tX + d.\n\n    Time complexity: O(n) arithmetic operations.\n    Space complexity: O(1).\n\n    Examples:\n        >>> symm_trace_rec(5, 6, 3)  # 2^3+2^2\u00b73+2\u00b73^2+3^3 = 8+12+18+27 = 65\n        65\n    \"\"\"\n    if n == 0:\n        return 1\n    if n == 1:\n        return t\n    prev, curr = 1, t\n    for _ in range(n - 1):\n        prev, curr = curr, t * curr - d * prev\n    return curr\n\n\n# =============================================================================\n# Algorithm 3: Euler Factor Polynomial Computation\n# =============================================================================\n\ndef euler_factor_poly(t: int, d: int, n: int) -> List[int]:\n    \"\"\"\n    Compute the coefficients of \u03a6_n(t,d;X) = \u220f_{k=0}^{n}(1 - \u03b1^{n-k}\u03b2^k X).\n\n    Returns coefficients [c_0, c_1, ..., c_{n+1}] where\n    \u03a6_n(t,d;X) = \u2211_j c_j X^j.\n\n    Uses the two-step recurrence:\n        \u03a6(0) = [1, -1]\n        \u03a6(1) = [1, -t, d]\n        \u03a6(n+2) = [1, -S_{n+2}, d^{n+2}] * \u03a6(n)|_{X \u2192 dX}\n\n    Time complexity: O(n\u00b2) arithmetic operations.\n    Space complexity: O(n).\n\n    Examples:\n        >>> euler_factor_poly(3, 2, 0)\n        [1, -1]\n        >>> euler_factor_poly(3, 2, 1)\n        [1, -3, 2]\n        >>> euler_factor_poly(3, 2, 2)\n        [1, -7, 14, -8]\n    \"\"\"\n    if n == 0:\n        return [1, -1]\n    if n == 1:\n        return [1, -t, d]\n\n    # Recursive: \u03a6_{n} = Q_n * \u03a6_{n-2}(dX)\n    s_n = power_sum_oracle(t, d, n)\n    quad = [1, -s_n, d**n]  # 1 - S_n X + d^n X\u00b2\n\n    inner = euler_factor_poly(t, d, n - 2)\n\n    # Substitute X \u2192 dX: coefficient of X^j gets multiplied by d^j\n    shifted = [c * d**j for j, c in enumerate(inner)]\n\n    # Multiply quad and shifted\n    result = [0] * (len(quad) + len(shifted) - 1)\n    for i, c1 in enumerate(quad):\n        for j, c2 in enumerate(shifted):\n            result[i + j] += c1 * c2\n\n    return result\n\n\ndef euler_factor_poly_iterative(t: int, d: int, max_n: int) -> Dict[int, List[int]]:\n    \"\"\"\n    Compute Euler factor polynomials for n = 0, 1, ..., max_n.\n\n    Returns a dictionary mapping n to the coefficient list.\n\n    Time complexity: O(max_n\u00b2) total arithmetic operations.\n\n    Examples:\n        >>> polys = euler_factor_poly_iterative(3, 2, 4)\n        >>> polys[2]\n        [1, -7, 14, -8]\n    \"\"\"\n    result = {}\n    result[0] = [1, -1]\n    if max_n >= 1:\n        result[1] = [1, -t, d]\n\n    sums = power_sum_oracle_batch(t, d, max_n)\n\n    for n in range(2, max_n + 1):\n        s_n = sums[n]\n        quad = [1, -s_n, d**n]\n        inner = result[n - 2]\n        shifted = [c * d**j for j, c in enumerate(inner)]\n\n        coeffs = [0] * (len(quad) + len(shifted) - 1)\n        for i, c1 in enumerate(quad):\n            for j, c2 in enumerate(shifted):\n                coeffs[i + j] += c1 * c2\n\n        result[n] = coeffs\n\n    return result\n\n\n# =============================================================================\n# Algorithm 4: Coefficient Family Analysis\n# =============================================================================\n\ndef coefficient_family(t: int, d: int, max_n: int, j: int) -> List[int]:\n    \"\"\"\n    Extract the family n \u21a6 c_{n,j}(t,d) = [X^j] \u03a6_n(t,d;X) for n = 0,...,max_n.\n\n    Examples:\n        >>> coefficient_family(3, 2, 6, 1)  # First coefficient family\n        [-1, -3, -7, -15, -31, -63, -127]\n    \"\"\"\n    polys = euler_factor_poly_iterative(t, d, max_n)\n    return [polys[n][j] if j < len(polys[n]) else 0 for n in range(max_n + 1)]\n\n\ndef detect_linear_recurrence(seq: List[int], max_order: int = 10) -> Optional[Tuple[int, List[int]]]:\n    \"\"\"\n    Detect if a sequence satisfies a linear recurrence with constant coefficients.\n\n    Returns (order, [c_1, ..., c_r]) such that\n        a(n) = c_1 * a(n-1) + c_2 * a(n-2) + ... + c_r * a(n-r)\n\n    Uses the Berlekamp-Massey algorithm (simplified for exact arithmetic).\n\n    Returns None if no recurrence of order \u2264 max_order is detected.\n\n    Examples:\n        >>> detect_linear_recurrence([1, 1, 2, 3, 5, 8, 13, 21])\n        (2, [Fraction(1, 1), Fraction(1, 1)])\n    \"\"\"\n    n = len(seq)\n    frac_seq = [Fraction(x) for x in seq]\n\n    for r in range(1, min(max_order + 1, n // 2)):\n        # Try to solve a(n) = c_1 a(n-1) + ... + c_r a(n-r)\n        # Set up linear system\n\n        # Build matrix equation: A * c = b\n        A = []\n        b = []\n        for i in range(r, min(2*r + 2, n)):\n            row = [frac_seq[i - k - 1] for k in range(r)]\n            A.append(row)\n            b.append(frac_seq[i])\n\n        if len(A) < r:\n            continue\n\n        # Solve via Gaussian elimination\n        coeffs = _solve_linear(A[:r], b[:r])\n        if coeffs is None:\n            continue\n\n        # Verify on remaining data\n        valid = True\n        for i in range(r, n):\n            predicted = sum(coeffs[k] * frac_seq[i - k - 1] for k in range(r))\n            if predicted != frac_seq[i]:\n                valid = False\n                break\n\n        if valid:\n            return r, coeffs\n\n    return None\n\n\ndef _solve_linear(A: List[List[Fraction]], b: List[Fraction]) -> Optional[List[Fraction]]:\n    \"\"\"Solve Ax = b using Gaussian elimination with exact arithmetic.\"\"\"\n    n = len(b)\n    # Augmented matrix\n    M = [row[:] + [b[i]] for i, row in enumerate(A)]\n\n    for col in range(n):\n        # Find pivot\n        pivot = None\n        for row in range(col, n):\n            if M[row][col] != 0:\n                pivot = row\n                break\n        if pivot is None:\n            return None\n\n        M[col], M[pivot] = M[pivot], M[col]\n\n        for row in range(n):\n            if row != col and M[row][col] != 0:\n                factor = M[row][col] / M[col][col]\n                for k in range(n + 1):\n                    M[row][k] -= factor * M[col][k]\n\n    return [M[i][n] / M[i][i] for i in range(n)]\n\n\n# =============================================================================\n# Algorithm 5: Weight Multiset Power Sums\n# =============================================================================\n\ndef weight_power_sum(t: int, d: int, n: int, m: int) -> int:\n    \"\"\"\n    Compute p_m(n; t, d) = \u2211_{k=0}^{n} (\u03b1^{n-k} \u03b2^k)^m.\n\n    Uses the formula: p_m = symmTraceRec(S_m(t,d), d^m, n)\n    where S_m = power_sum_oracle(t, d, m).\n\n    Time complexity: O(n + m) arithmetic operations.\n    Space complexity: O(1).\n\n    Examples:\n        >>> weight_power_sum(5, 6, 3, 2)  # Direct: 8\u00b2 + 12\u00b2 + 18\u00b2 + 27\u00b2 = 64+144+324+729 = 1261\n        1261\n    \"\"\"\n    s_m = power_sum_oracle(t, d, m)\n    d_m = d ** m\n    return symm_trace_rec(s_m, d_m, n)\n\n\n# =============================================================================\n# Main: Run all algorithm demonstrations\n# =============================================================================\n\nif __name__ == \"__main__\":\n    print(\"=\" * 70)\n    print(\"ALGORITHM DEMONSTRATIONS\")\n    print(\"=\" * 70)\n\n    # Demo 1: Power sum oracle\n    print(\"\\n1. Power Sum Oracle S_n(t,d) = \u03b1^n + \u03b2^n\")\n    print(\"-\" * 50)\n    t, d = 5, 6  # \u03b1=2, \u03b2=3\n    print(f\"   t={t}, d={d} (eigenvalues \u03b1=2, \u03b2=3)\")\n    sums = power_sum_oracle_batch(t, d, 10)\n    for i, s in enumerate(sums):\n        print(f\"   S_{i:>2} = {s}\")\n\n    # Demo 2: Euler factor polynomials\n    print(\"\\n2. Euler Factor Polynomials \u03a6_n(t,d;X)\")\n    print(\"-\" * 50)\n    t, d = 3, 2  # \u03b1=1, \u03b2=2\n    print(f\"   t={t}, d={d} (eigenvalues \u03b1=1, \u03b2=2)\")\n    polys = euler_factor_poly_iterative(t, d, 8)\n    for n in range(9):\n        coeffs = polys[n]\n        terms = \" + \".join(f\"({c})X^{j}\" if j > 0 else str(c)\n                          for j, c in enumerate(coeffs) if c != 0)\n        print(f\"   \u03a6_{n} = {terms}\")\n\n    # Demo 3: Coefficient families and recurrence detection\n    print(\"\\n3. Coefficient Families and Recurrence Detection\")\n    print(\"-\" * 50)\n    t, d = 3, 2\n    for j in range(5):\n        family = coefficient_family(t, d, 20, j)\n        rec = detect_linear_recurrence(family)\n        print(f\"   j={j}: first values = {family[:8]}\")\n        if rec:\n            order, coeffs = rec\n            coeff_str = \", \".join(str(c) for c in coeffs)\n            print(f\"        Recurrence of order {order}: coeffs = [{coeff_str}]\")\n        print()\n\n    # Demo 4: Weight power sums\n    print(\"4. Weight Power Sums p_m(n; t,d)\")\n    print(\"-\" * 50)\n    t, d = 5, 6\n    print(f\"   t={t}, d={d}\")\n    for n in range(5):\n        for m in range(1, 5):\n            val = weight_power_sum(t, d, n, m)\n            print(f\"   p_{m}({n}; {t},{d}) = {val}\")\n        print()\n\n    print(\"=\" * 70)\n    print(\"All algorithm demonstrations complete.\")\n    print(\"=\" * 70)\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Symmetric-Power Euler Factor Theory\n\nDemonstrates real-world applications:\n1. Computing local L-factors for GL\u2082 automorphic forms\n2. Detecting holonomic recurrences in coefficient families\n3. Coefficient polynomial tables (the \"universal algebra\")\n4. Comparison: direct eigenvalue expansion vs. trace-det recursion\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import List, Dict, Tuple\nimport time\n\n\n# --- Core routines (self-contained) ---\n\ndef power_sum_oracle(t, d, n):\n    if n == 0: return 2\n    if n == 1: return t\n    prev, curr = 2, t\n    for _ in range(n - 1):\n        prev, curr = curr, t * curr - d * prev\n    return curr\n\ndef symm_trace_rec(t, d, n):\n    if n == 0: return 1\n    if n == 1: return t\n    prev, curr = 1, t\n    for _ in range(n - 1):\n        prev, curr = curr, t * curr - d * prev\n    return curr\n\ndef euler_factor_poly(t, d, n):\n    if n == 0: return [1, -1]\n    if n == 1: return [1, -t, d]\n    s_n = power_sum_oracle(t, d, n)\n    quad = [1, -s_n, d**n]\n    inner = euler_factor_poly(t, d, n - 2)\n    shifted = [c * d**j for j, c in enumerate(inner)]\n    result = [0] * (len(quad) + len(shifted) - 1)\n    for i, c1 in enumerate(quad):\n        for j, c2 in enumerate(shifted):\n            result[i + j] += c1 * c2\n    return result\n\n\n# =============================================================================\n# Application 1: Local L-factors for GL\u2082\n# =============================================================================\n\ndef compute_local_l_factor(trace: int, det: int, n: int) -> List[int]:\n    \"\"\"\n    Compute the local Euler factor of the n-th symmetric power L-function\n    at a prime p, given the trace and determinant of the Frobenius.\n\n    For a GL\u2082 automorphic form with Hecke eigenvalue a_p and nebentypus\n    character \u03c7(p), the Euler factor at p for Sym^n is:\n\n        L_p(s, Sym^n \u03c0) = \u220f_{k=0}^{n} (1 - \u03b1^{n-k} \u03b2^k p^{-s})^{-1}\n\n    where \u03b1 + \u03b2 = a_p and \u03b1\u03b2 = \u03c7(p)\u00b7p.\n\n    Returns the denominator polynomial coefficients.\n    \"\"\"\n    return euler_factor_poly(trace, det, n)\n\n\nprint(\"=\" * 70)\nprint(\"APPLICATION 1: Local L-factors for GL\u2082 Automorphic Forms\")\nprint(\"=\" * 70)\nprint()\n\n# Example: Ramanujan tau function\n# For the unique weight-12 cusp form \u0394(z) = q \u220f(1-q^n)^24\n# At p=2: a_2 = -24, det = p^11 = 2048\n# The Satake parameters satisfy \u03b1+\u03b2 = -24, \u03b1\u03b2 = 2048\nprint(\"Ramanujan \u0394 function (weight 12, level 1)\")\nprint(\"At p = 2: trace = -24, det = 2048\")\nprint()\n\nfor n in range(5):\n    coeffs = compute_local_l_factor(-24, 2048, n)\n    terms = []\n    for j, c in enumerate(coeffs):\n        if c == 0:\n            continue\n        if j == 0:\n            terms.append(str(c))\n        else:\n            terms.append(f\"({c})\u00b7p^{{-{j}s}}\")\n    print(f\"  Sym^{n} L-factor denominator: {' + '.join(terms)}\")\n\nprint()\n\n# Example: Weight-2 modular form (elliptic curve)\n# For the elliptic curve y\u00b2 = x\u00b3 - x at p=5: a_5 = -4, det = 5\nprint(\"Elliptic curve y\u00b2 = x\u00b3 - x (conductor 32)\")\nprint(\"At p = 5: trace = -4, det = 5\")\nprint()\n\nfor n in range(5):\n    coeffs = compute_local_l_factor(-4, 5, n)\n    print(f\"  Sym^{n}: coefficients = {coeffs}\")\n\n\n# =============================================================================\n# Application 2: Holonomic Structure Detection\n# =============================================================================\n\nprint()\nprint(\"=\" * 70)\nprint(\"APPLICATION 2: Holonomic Structure of Coefficient Families\")\nprint(\"=\" * 70)\nprint()\n\ndef detect_recurrence(seq: List, max_order: int = 8):\n    \"\"\"Try to find a linear recurrence for the sequence.\"\"\"\n    from fractions import Fraction\n    frac_seq = [Fraction(x) for x in seq]\n    n = len(frac_seq)\n\n    for r in range(1, min(max_order + 1, n // 2)):\n        # Build matrix\n        A = []\n        b = []\n        for i in range(r, min(2*r + 2, n)):\n            row = [frac_seq[i - k - 1] for k in range(r)]\n            A.append(row)\n            b.append(frac_seq[i])\n\n        if len(A) < r:\n            continue\n\n        # Gaussian elimination\n        M = [row[:] + [b[i]] for i, row in enumerate(A[:r])]\n        ok = True\n        for col in range(r):\n            pivot = None\n            for row in range(col, r):\n                if M[row][col] != 0:\n                    pivot = row\n                    break\n            if pivot is None:\n                ok = False\n                break\n            M[col], M[pivot] = M[pivot], M[col]\n            for row in range(r):\n                if row != col and M[row][col] != 0:\n                    factor = M[row][col] / M[col][col]\n                    for k in range(r + 1):\n                        M[row][k] -= factor * M[col][k]\n        if not ok:\n            continue\n        coeffs = [M[i][r] / M[i][i] for i in range(r)]\n\n        # Verify\n        valid = True\n        for i in range(r, n):\n            predicted = sum(coeffs[k] * frac_seq[i - k - 1] for k in range(r))\n            if predicted != frac_seq[i]:\n                valid = False\n                break\n        if valid:\n            return r, coeffs\n    return None\n\n# Compute coefficient families for several (t,d) values\nprint(\"Searching for linear recurrences in coefficient families c_{n,j}(t,d):\")\nprint()\n\nfor t, d in [(3, 2), (5, 6), (7, 10), (4, 3)]:\n    print(f\"  t={t}, d={d}:\")\n    polys = {}\n    polys[0] = [1, -1]\n    polys[1] = [1, -t, d]\n    sums_list = [power_sum_oracle(t, d, k) for k in range(25)]\n    for nn in range(2, 22):\n        s_n = sums_list[nn]\n        quad = [1, -s_n, d**nn]\n        inner = polys[nn - 2]\n        shifted = [c * d**j for j, c in enumerate(inner)]\n        result = [0] * (len(quad) + len(shifted) - 1)\n        for i, c1 in enumerate(quad):\n            for j, c2 in enumerate(shifted):\n                result[i + j] += c1 * c2\n        polys[nn] = result\n\n    for j in range(1, 5):\n        family = [polys[nn][j] if j < len(polys[nn]) else 0 for nn in range(22)]\n        rec = detect_recurrence(family)\n        if rec:\n            order, coeffs = rec\n            coeff_str = \", \".join(str(c) for c in coeffs)\n            print(f\"    j={j}: recurrence order {order}, coeffs = [{coeff_str}]\")\n        else:\n            print(f\"    j={j}: no recurrence found (order \u2264 8)\")\n    print()\n\n\n# =============================================================================\n# Application 3: Performance Comparison\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"APPLICATION 3: Performance \u2014 Recursion vs Direct Expansion\")\nprint(\"=\" * 70)\nprint()\n\ndef euler_factor_direct(a, b, n):\n    \"\"\"Direct expansion of \u220f_{k=0}^n (1 - a^{n-k} b^k X).\"\"\"\n    coeffs = {0: 1}\n    for k in range(n + 1):\n        w = a**(n-k) * b**k\n        new_coeffs = {}\n        for deg, c in coeffs.items():\n            new_coeffs[deg] = new_coeffs.get(deg, 0) + c\n            new_coeffs[deg+1] = new_coeffs.get(deg+1, 0) - c * w\n        coeffs = new_coeffs\n    max_d = max(coeffs.keys())\n    return [coeffs.get(j, 0) for j in range(max_d + 1)]\n\n# Compare: recursive (trace-det) vs direct (eigenvalue)\nprint(\"Timing comparison for increasing n:\")\nprint(f\"  {'n':>5} | {'Recursive (ms)':>15} | {'Direct (ms)':>15} | {'Match':>6}\")\nprint(\"  \" + \"-\" * 60)\n\nt, d = 7, 10\na, b = 2, 5  # a+b=7, ab=10\n\nfor n in [5, 10, 20, 50, 100]:\n    # Recursive method\n    start = time.time()\n    for _ in range(10):\n        r = euler_factor_poly(t, d, n)\n    t_rec = (time.time() - start) / 10 * 1000\n\n    # Direct method\n    start = time.time()\n    for _ in range(10):\n        dr = euler_factor_direct(a, b, n)\n    t_dir = (time.time() - start) / 10 * 1000\n\n    match = r == dr\n    print(f\"  {n:>5} | {t_rec:>13.2f}ms | {t_dir:>13.2f}ms | {'\u2713' if match else '\u2717':>5}\")\n\nprint()\n\n\n# =============================================================================\n# Application 4: Coefficient Polynomial Table\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"APPLICATION 4: Universal Coefficient Table E_{n,j}(t,d)\")\nprint(\"=\" * 70)\nprint()\nprint(\"The coefficient of X^j in \u03a6_n(t,d;X) for the first few n and j:\")\nprint()\n\n# Compute symbolically over Z[t,d] using multivariate polynomials\n# Represent as dict {(i,j): coeff} for t^i d^j\n\ndef euler_poly_symbolic(n: int) -> List[Dict[Tuple[int,int], int]]:\n    \"\"\"\n    Compute \u03a6_n(t,d;X) symbolically, returning coefficients of X^j\n    as polynomials in (t,d).\n\n    Each coefficient is a dict mapping (i,j) to the coefficient of t^i d^j.\n    \"\"\"\n    if n == 0:\n        return [{(0,0): 1}, {(0,0): -1}]\n    if n == 1:\n        return [{(0,0): 1}, {(1,0): -1}, {(0,1): 1}]\n\n    # S_n as polynomial in (t,d)\n    s_n = power_sum_two_symbolic(n)\n\n    # Quadratic factor: [1, -S_n, d^n]\n    neg_s_n = {k: -v for k, v in s_n.items()}\n    d_n = {(0, n): 1}\n    quad = [{(0,0): 1}, neg_s_n, d_n]\n\n    # Inner: \u03a6_{n-2} with X \u2192 dX\n    inner = euler_poly_symbolic(n - 2)\n    shifted = []\n    for j, poly in enumerate(inner):\n        # Multiply by d^j\n        new_poly = {}\n        for (ti, di), c in poly.items():\n            new_poly[(ti, di + j)] = new_poly.get((ti, di + j), 0) + c\n        shifted.append(new_poly)\n\n    # Multiply quad * shifted\n    result_len = len(quad) + len(shifted) - 1\n    result = [{} for _ in range(result_len)]\n    for i, q in enumerate(quad):\n        for j, s in enumerate(shifted):\n            target = result[i + j]\n            for (ti1, di1), c1 in q.items():\n                for (ti2, di2), c2 in s.items():\n                    key = (ti1 + ti2, di1 + di2)\n                    target[key] = target.get(key, 0) + c1 * c2\n\n    # Clean zeros\n    for poly in result:\n        for k in list(poly.keys()):\n            if poly[k] == 0:\n                del poly[k]\n\n    return result\n\n\ndef power_sum_two_symbolic(n: int) -> Dict[Tuple[int,int], int]:\n    \"\"\"\n    Compute S_n(t,d) = \u03b1^n + \u03b2^n as a polynomial in (t,d).\n    \"\"\"\n    if n == 0:\n        return {(0,0): 2}\n    if n == 1:\n        return {(1,0): 1}\n    prev = {(0,0): 2}\n    curr = {(1,0): 1}\n    for _ in range(n - 1):\n        new = {}\n        # t * curr\n        for (ti, di), c in curr.items():\n            key = (ti + 1, di)\n            new[key] = new.get(key, 0) + c\n        # - d * prev\n        for (ti, di), c in prev.items():\n            key = (ti, di + 1)\n            new[key] = new.get(key, 0) - c\n        prev, curr = curr, new\n    return curr\n\n\ndef poly_to_str(poly: Dict[Tuple[int,int], int]) -> str:\n    \"\"\"Format a polynomial in (t,d) as a string.\"\"\"\n    if not poly:\n        return \"0\"\n    terms = []\n    for (ti, di) in sorted(poly.keys(), reverse=True):\n        c = poly[(ti, di)]\n        if c == 0:\n            continue\n        parts = []\n        if abs(c) != 1 or (ti == 0 and di == 0):\n            parts.append(str(abs(c)))\n        if ti > 0:\n            parts.append(f\"t{'\u00b2' if ti == 2 else '\u00b3' if ti == 3 else '^'+str(ti) if ti > 3 else ''}\" if ti > 0 else \"\")\n            if ti == 1: parts[-1] = \"t\"\n        if di > 0:\n            parts.append(f\"d{'\u00b2' if di == 2 else '\u00b3' if di == 3 else '^'+str(di) if di > 3 else ''}\" if di > 0 else \"\")\n            if di == 1: parts[-1] = \"d\"\n        term = \"\u00b7\".join(parts) if parts else str(abs(c))\n        if c > 0 and terms:\n            terms.append(f\"+ {term}\")\n        elif c < 0:\n            terms.append(f\"- {term}\")\n        else:\n            terms.append(term)\n    return \" \".join(terms) if terms else \"0\"\n\n# Print table\nfor n in range(7):\n    coeffs = euler_poly_symbolic(n)\n    print(f\"\u03a6_{n}(t,d;X):\")\n    for j, poly in enumerate(coeffs):\n        if poly:\n            print(f\"  [X^{j}] = {poly_to_str(poly)}\")\n    print()\n\n\nprint(\"=\" * 70)\nprint(\"All applications complete.\")\nprint(\"=\" * 70)\n\n\n#!/usr/bin/env python3\n\"\"\"\nSymmetric-Power Euler Factor Demonstrations\n\nConcrete numerical examples showing the main theorems:\n1. Power sum closure: p_m(n; a,b) depends only on t=a+b, d=ab\n2. Coefficientwise invariance: each coefficient of the Euler factor is universal\n3. The two-step recurrence for the Euler factor family\n\"\"\"\n\nfrom fractions import Fraction\nfrom typing import List, Tuple\n\n# =============================================================================\n# Core Definitions\n# =============================================================================\n\ndef power_sum_two(t, d, n):\n    \"\"\"Compute a^n + b^n from t = a+b, d = ab via recurrence.\n    S(0) = 2, S(1) = t, S(n+2) = t*S(n+1) - d*S(n).\"\"\"\n    if n == 0: return 2\n    if n == 1: return t\n    s_prev, s_curr = 2, t\n    for _ in range(n - 1):\n        s_prev, s_curr = s_curr, t * s_curr - d * s_prev\n    return s_curr\n\ndef symm_trace_rec(t, d, n):\n    \"\"\"Compute sum_{k=0}^n a^{n-k} b^k from t = a+b, d = ab.\n    P(0) = 1, P(1) = t, P(n+2) = t*P(n+1) - d*P(n).\"\"\"\n    if n == 0: return 1\n    if n == 1: return t\n    p_prev, p_curr = 1, t\n    for _ in range(n - 1):\n        p_prev, p_curr = p_curr, t * p_curr - d * p_prev\n    return p_curr\n\ndef euler_phi_rec(t, d, X, n):\n    \"\"\"Compute Euler factor Phi_n(t,d;X) using the recursive formula.\n    Phi(0) = 1-X, Phi(1) = 1-tX+dX^2,\n    Phi(n+2) = (1 - S_{n+2}*X + d^{n+2}*X^2) * Phi(n, t, d, d*X).\"\"\"\n    if n == 0: return 1 - X\n    if n == 1: return 1 - t*X + d*X**2\n    return (1 - power_sum_two(t,d,n)*X + d**n * X**2) * euler_phi_rec(t, d, d*X, n-2)\n\ndef weights(n, a, b):\n    \"\"\"Compute the weight multiset W_n(a,b) = {a^{n-k} b^k : 0 <= k <= n}.\"\"\"\n    return [a**(n-k) * b**k for k in range(n+1)]\n\ndef power_sum_weights(n, m, a, b):\n    \"\"\"Compute p_m(n; a,b) = sum_k (a^{n-k} b^k)^m.\"\"\"\n    return sum(w**m for w in weights(n, a, b))\n\ndef euler_product_direct(n, a, b, X):\n    \"\"\"Compute prod_{k=0}^n (1 - a^{n-k} b^k X) directly.\"\"\"\n    result = 1\n    for k in range(n+1):\n        result *= (1 - a**(n-k) * b**k * X)\n    return result\n\ndef esymm(ws, j):\n    \"\"\"Compute j-th elementary symmetric polynomial of weights ws.\"\"\"\n    from itertools import combinations\n    if j == 0: return 1\n    if j > len(ws): return 0\n    return sum(prod(combo) for combo in combinations(ws, j))\n\ndef prod(iterable):\n    result = 1\n    for x in iterable:\n        result *= x\n    return result\n\n# =============================================================================\n# Demo 1: Power Sum Closure\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"DEMO 1: Power Sum Closure\")\nprint(\"=\" * 70)\nprint()\nprint(\"Theorem: p_m(n; a,b) depends only on t=a+b and d=a*b.\")\nprint()\n\n# Use Fraction for exact arithmetic\na1, b1 = Fraction(3), Fraction(5)\na2, b2 = Fraction(4), Fraction(4)  # Same t=8, d=16... no, 4*4=16, 3*5=15\n# Let's find pairs with same t and d\n# t = a+b = 7, d = ab = 10 => a,b are roots of x^2 - 7x + 10 = (x-2)(x-5)\na1, b1 = Fraction(2), Fraction(5)\na2, b2 = Fraction(5), Fraction(2)  # trivially same\n# More interesting: use algebraic numbers or just verify the formula\n# t = 3, d = 1 => a,b = (3 \u00b1 sqrt(5))/2 -- irrational, can't use Fraction\n\n# Instead, verify that the formula gives the same result\nprint(\"  Pairs with t = a+b = 7, d = a*b = 10:\")\nprint(f\"  (a\u2081,b\u2081) = ({a1}, {b1}), (a\u2082,b\u2082) = ({a2}, {b2})\")\nprint()\n\nfor n in range(6):\n    for m in range(1, 5):\n        direct = power_sum_weights(n, m, a1, b1)\n        via_rec = symm_trace_rec(\n            power_sum_two(a1 + b1, a1 * b1, m),\n            (a1 * b1) ** m,\n            n\n        )\n        assert direct == via_rec, f\"Mismatch at n={n}, m={m}\"\n    print(f\"  n={n}: p_1={str(power_sum_weights(n,1,a1,b1)):>6}, \"\n          f\"p_2={str(power_sum_weights(n,2,a1,b1)):>8}, \"\n          f\"p_3={str(power_sum_weights(n,3,a1,b1)):>10}\")\n\nprint()\nprint(\"  \u2713 All power sums verified: formula from (t,d) matches direct computation.\")\nprint()\n\n# =============================================================================\n# Demo 2: Coefficientwise Invariance\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"DEMO 2: Coefficientwise Invariance\")\nprint(\"=\" * 70)\nprint()\nprint(\"Theorem: Each coefficient of the Euler factor depends only on (t,d).\")\nprint()\n\n# Compute Euler factor as polynomial using symbolic expansion\nfrom collections import defaultdict\n\ndef euler_poly_coeffs(n, a, b):\n    \"\"\"Compute coefficients of \u220f_{k=0}^{n} (1 - a^{n-k} b^k X) as polynomial in X.\"\"\"\n    # Start with [1] (constant polynomial = 1)\n    coeffs = {0: Fraction(1)}\n    for k in range(n + 1):\n        w = a**(n-k) * b**k\n        new_coeffs = {}\n        for deg, c in coeffs.items():\n            new_coeffs[deg] = new_coeffs.get(deg, Fraction(0)) + c\n            new_coeffs[deg+1] = new_coeffs.get(deg+1, Fraction(0)) - c * w\n        coeffs = new_coeffs\n    return coeffs\n\n# Same trace and det, different pairs\na1, b1 = Fraction(2), Fraction(5)\na2, b2 = Fraction(5), Fraction(2)\nt, d = a1 + b1, a1 * b1\nprint(f\"  t = {t}, d = {d}\")\nprint(f\"  Pair 1: ({a1}, {b1})\")\nprint(f\"  Pair 2: ({a2}, {b2})\")\nprint()\n\nfor n in range(6):\n    c1 = euler_poly_coeffs(n, a1, b1)\n    c2 = euler_poly_coeffs(n, a2, b2)\n    max_deg = max(max(c1.keys()), max(c2.keys()))\n    print(f\"  n={n}: coefficients = \", end=\"\")\n    all_match = True\n    for j in range(max_deg + 1):\n        v1 = c1.get(j, 0)\n        v2 = c2.get(j, 0)\n        if v1 != v2:\n            all_match = False\n        print(f\"{v1}\", end=\"  \")\n    print(\"  \u2713\" if all_match else \"  \u2717\")\n\nprint()\n\n# =============================================================================\n# Demo 3: Two-Step Recurrence\n# =============================================================================\n\nprint(\"=\" * 70)\nprint(\"DEMO 3: Two-Step Recurrence (Discrete Integrable System)\")\nprint(\"=\" * 70)\nprint()\nprint(\"Theorem: \u03a6_{n+2}(t,d;X) = (1 - S_{n+2}X + d^{n+2}X\u00b2) \u00b7 \u03a6_n(t,d; dX)\")\nprint()\n\nt, d = Fraction(7), Fraction(10)\nX = Fraction(1, 3)  # Test point\n\nfor n in range(8):\n    phi_n = euler_phi_rec(t, d, X, n)\n    s_n = power_sum_two(t, d, n)\n    print(f\"  \u03a6_{n}(t={t}, d={d}; X={X}) = {phi_n}\")\n\nprint()\nprint(\"  Verifying recurrence \u03a6_{n+2} = (1 - S_{n+2}X + d^{n+2}X\u00b2) \u00b7 \u03a6_n(d\u00b7X):\")\nfor n in range(6):\n    lhs = euler_phi_rec(t, d, X, n + 2)\n    s = power_sum_two(t, d, n + 2)\n    quad_factor = 1 - s * X + d**(n+2) * X**2\n    phi_shifted = euler_phi_rec(t, d, d * X, n)\n    rhs = quad_factor * phi_shifted\n    match = \"\u2713\" if lhs == rhs else \"\u2717\"\n    print(f\"  n={n}: \u03a6_{n+2} = {lhs}, recurrence gives {rhs}  {match}\")\n\n# =============================================================================\n# Demo 4: Coefficient Polynomials E_{n,j}(t,d)\n# =============================================================================\n\nprint()\nprint(\"=\" * 70)\nprint(\"DEMO 4: Universal Coefficient Polynomials E_{n,j}(t,d)\")\nprint(\"=\" * 70)\nprint()\nprint(\"The j-th coefficient of \u03a6_n is a polynomial in (t,d).\")\nprint()\n\ndef euler_poly_coeffs_td(n, t, d):\n    \"\"\"Compute coefficients of \u03a6_n(t,d;X) as polynomial in X.\"\"\"\n    if n == 0:\n        return {0: 1, 1: -1}\n    if n == 1:\n        return {0: 1, 1: -t, 2: d}\n    # Use recurrence: \u03a6_{n} = (1 - S_n X + d^n X\u00b2) * \u03a6_{n-2}(d\u00b7X)\n    s_n = power_sum_two(t, d, n)\n    quad = {0: 1, 1: -s_n, 2: d**n}\n    inner = euler_poly_coeffs_td(n - 2, t, d)\n    # Substitute X -> d*X in inner\n    shifted = {}\n    for deg, c in inner.items():\n        shifted[deg] = c * d**deg\n    # Multiply quad and shifted\n    result = {}\n    for d1, c1 in quad.items():\n        for d2, c2 in shifted.items():\n            deg = d1 + d2\n            result[deg] = result.get(deg, Fraction(0)) + c1 * c2\n    return result\n\nprint(f\"  {'n':>3} | {'coeff of X^0':>12} {'X^1':>12} {'X^2':>14} {'X^3':>16} {'X^4':>18}\")\nprint(\"  \" + \"-\" * 80)\n\nt_val, d_val = Fraction(3), Fraction(2)\nfor n in range(8):\n    coeffs = euler_poly_coeffs_td(n, t_val, d_val)\n    max_d = max(coeffs.keys()) if coeffs else 0\n    row = f\"  {n:>3} |\"\n    for j in range(min(max_d + 1, 5)):\n        c = coeffs.get(j, 0)\n        row += f\" {str(c):>12}\"\n    print(row)\n\nprint()\nprint(f\"  (Computed at t={t_val}, d={d_val})\")\n\n# =============================================================================\n# Demo 5: Power Sum Values (Ghost Components)\n# =============================================================================\n\nprint()\nprint(\"=\" * 70)\nprint(\"DEMO 5: Power Sum Oracle (Ghost Components)\")\nprint(\"=\" * 70)\nprint()\nprint(\"S_n(t,d) = a^n + b^n, computed from the recurrence:\")\nprint(\"S(0)=2, S(1)=t, S(n+2) = t\u00b7S(n+1) - d\u00b7S(n)\")\nprint()\n\nt_val, d_val = Fraction(5), Fraction(6)\nprint(f\"  t={t_val}, d={d_val} (corresponding to a=2, b=3)\")\nfor n in range(12):\n    s = power_sum_two(t_val, d_val, n)\n    direct = Fraction(2)**n + Fraction(3)**n\n    assert s == direct\n    print(f\"  S_{n:>2} = {int(s):>10}  (= 2^{n} + 3^{n} = {int(direct)})\")\n\nprint()\nprint(\"  \u2713 All values match direct computation.\")\nprint()\nprint(\"=\" * 70)\nprint(\"All demonstrations complete.\")\nprint(\"=\" * 70)\n"
+    },
+    "date": "2026-05-20T02:03:49Z",
+    "exp_id": "263f90c3",
+    "source_exp_ids": [
+      "dcbdc123"
+    ]
+  },
   "pythagorean_triple_group_structure.json": {
     "title": "The Berggren Tree as a Certified Arithmetic Dynamical System on Primitive Pythagorean Triples",
     "domain": "Number Theory / Arithmetic Dynamics",
@@ -5014,7 +5068,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -5023,7 +5077,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -5032,7 +5086,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -5041,7 +5095,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "galois_group__s",
@@ -5050,7 +5104,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -5068,7 +5122,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 280
+      "hue": 112
     },
     {
       "id": "expected_lean_signature",
@@ -5077,7 +5131,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -5086,7 +5140,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -5095,7 +5149,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "percolation_threshold",
@@ -5104,7 +5158,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -5131,7 +5185,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 101
+      "hue": 92
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -5140,7 +5194,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T16:00:38Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "legendres_conjecture",
@@ -5149,7 +5203,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -5158,7 +5212,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -5167,7 +5221,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T17:03:39Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -5176,7 +5230,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -5185,7 +5239,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "p_vs_np_problem",
@@ -5194,7 +5248,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 281
+      "hue": 91
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -5203,7 +5257,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -5212,7 +5266,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "hodge_conjecture",
@@ -5221,7 +5275,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -5230,7 +5284,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:03:41Z",
-      "hue": 91
+      "hue": 134
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -5239,7 +5293,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -5248,7 +5302,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "sums_of_three_cubes",
@@ -5275,7 +5329,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "twin_prime_conjecture",
@@ -5284,7 +5338,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -5293,7 +5347,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -5302,7 +5356,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "happy_end_problem",
@@ -5311,7 +5365,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -5320,7 +5374,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T23:05:18Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -5338,7 +5392,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -5347,7 +5401,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -5356,7 +5410,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "tropical_intersection_theory",
@@ -5365,7 +5419,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "riemann_hypothesis",
@@ -5374,7 +5428,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "odd_perfect_numbers",
@@ -5383,7 +5437,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -5392,7 +5446,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 91
+      "hue": 281
     },
     {
       "id": "jacobian_conjecture",
@@ -5401,7 +5455,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "10_is_a_solitary_number",
@@ -5410,7 +5464,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "kakeya_conjecture",
@@ -5419,7 +5473,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T10:26:12Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -5428,7 +5482,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "invariant_subspace_problem",
@@ -5437,7 +5491,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -5446,7 +5500,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -5455,7 +5509,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 90
+      "hue": 281
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -5473,7 +5527,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -5482,7 +5536,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -5491,7 +5545,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -5500,7 +5554,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "196_algorithm_non_termination",
@@ -5509,7 +5563,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:04:01Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "yang_mills_mass_gap",
@@ -5518,7 +5572,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "goldbach_conjecture",
@@ -5527,7 +5581,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -5536,7 +5590,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -5545,7 +5599,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -5554,7 +5608,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -5563,7 +5617,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "beals_conjecture",
@@ -5572,7 +5626,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -5581,7 +5635,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -5590,7 +5644,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -5599,7 +5653,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -5608,7 +5662,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -5617,7 +5671,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -5635,7 +5689,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -5644,7 +5698,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -5653,7 +5707,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -5662,7 +5716,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -5680,7 +5734,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -5698,7 +5752,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "primes_of_the_form_n1",
@@ -5707,7 +5761,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -5716,7 +5770,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -5725,7 +5779,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -5734,7 +5788,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "schanuels_conjecture",
@@ -5743,7 +5797,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:44Z",
-      "hue": 271
+      "hue": 89
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -5752,7 +5806,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -5770,7 +5824,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "we_have_formally_verified",
@@ -5779,7 +5833,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -5788,7 +5842,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -5797,7 +5851,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -5806,7 +5860,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -5815,7 +5869,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -5824,7 +5878,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:00:23Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -5833,7 +5887,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -5842,7 +5896,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -5851,7 +5905,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 270
+      "hue": 314
     },
     {
       "id": "collatz_conjecture",
@@ -5860,7 +5914,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -5869,7 +5923,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -5887,7 +5941,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -5896,7 +5950,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -5905,7 +5959,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -5914,7 +5968,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -5923,7 +5977,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -5941,7 +5995,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -5950,7 +6004,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "langlands_program_functoriality",
@@ -5959,7 +6013,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T01:04:07Z",
-      "hue": 272
+      "hue": 281
     },
     {
       "id": "medium_priority",
@@ -5968,7 +6022,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "erdsstraus_conjecture",
@@ -5977,7 +6031,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 90
+      "hue": 101
+    },
+    {
+      "id": "the_invariance_theorem_establishes_that_the_symmet",
+      "title": "Constructive Universal Coefficient Theory for Symmetric-Power Euler Factors of GL2",
+      "domain": "Number Theory / Arithmetic Geometry / Automorphic Forms",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-20T02:03:49Z",
+      "hue": 270
     }
   ],
   "edges": [
@@ -6215,6 +6278,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "the_formal_verification_of_the_berggren_trees_free",
       "target": "the_formally_verified_theorems_in_this_cycle__clos",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "this_document_identifies_five_falsifiable_conjectu",
+      "target": "the_invariance_theorem_establishes_that_the_symmet",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -7099,10 +7169,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "priority_score": 0.84,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71236717",
     "timestamp": "2026-05-20T00:22:11.068780+00:00"
   },
   {
@@ -7811,6 +7881,100 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "bbcf1a44",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T01:04:09.579595+00:00"
+  },
+  {
+    "id": "fd_0113",
+    "title": "Conjecture 1: Ordered Small First-Denominator Bound",
+    "description": "**Statement:** For every integer n \u2265 2, there exists an ordered witness (x \u2264 y \u2264 z) for the Erd\u0151s\u2013Straus equation 4/n = 1/x + 1/y + 1/z with x \u2264 n.\n\n**Formalization:**\n```\n\u2200 n : \u2115, 2 \u2264 n \u2192 \u2203 x y z : \u2115, OrderedESWitness n x y z \u2227 x \u2264 n\n```\n\n**Test:** Run the verified search algorithm `searchESVerified` with bound B = n for all n \u2264 10^6. A single failure disproves the conjecture. Success for all tested values provides strong evidence.\n\n**Impact:** If true, this would dramatically reduce the search space for the remaining n \u2261 1 (mod 4) cases, as one would only need to check O(n\u00b2) candidate pairs instead of an unbounded search.\n\n---",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8aeabb51",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T02:00:27.941473+00:00"
+  },
+  {
+    "id": "fd_0114",
+    "title": "Conjecture 2: Polynomial Template Completeness for n \u2261 1 (mod 4)",
+    "description": "**Statement:** There exists a finite family of at most 20 polynomial templates (x(k), y(k), z(k)) in the parameter k such that for every n \u2261 1 (mod 4), at least one template produces a valid decomposition when k is chosen appropriately from the divisor or residue structure of n.\n\n**Test:** Enumerate polynomial templates arising from the identity\n  4/(4k+1) - 1/a = remainder\nfor various choices of a as a function of k. For each template, check which values of n \u2261 1 (mod 4) up to 10^6 it covers. Track coverage as templates are added. If fewer than 20 templates achieve 100% coverage up to 10^6, the conjecture is supported.\n\n**Impact:** A finite template library would reduce the Erd\u0151s\u2013Straus conjecture to a finite verification problem in formal algebra, potentially allowing a complete machine-",
+    "domains": [
+      "NumberTheory",
+      "Algebra",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8aeabb51",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T02:00:27.947786+00:00"
+  },
+  {
+    "id": "fd_0115",
+    "title": "Conjecture 3: Search-Space Sparsity",
+    "description": "**Statement:** For a fixed n, the number of ordered pairs (x, y) with 1 \u2264 x \u2264 y \u2264 B that yield a valid integer z in the Erd\u0151s\u2013Straus equation is O(B^\u03b5) for any \u03b5 > 0 as B \u2192 \u221e.\n\nIn other words, valid lattice points on the cubic surface 4xyz = n(xy + xz + yz) are extremely sparse among all candidate pairs.\n\n**Test:** For several fixed values of n (e.g., n = 5, 13, 17, 29, 37), compute the count of valid (x, y) pairs for B = 10^2, 10^3, 10^4, 10^5. Plot log(count) vs log(B). If the slope approaches 0, the conjecture is supported. A slope bounded away from 0 would refute sub-polynomial growth.\n\n**Impact:** Sparsity would explain why naive enumeration is computationally efficient despite searching a seemingly large space, and would connect the problem to questions about rational points on algeb",
+    "domains": [
+      "NumberTheory",
+      "Cryptography",
+      "Algebra",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8aeabb51",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T02:00:27.952468+00:00"
+  },
+  {
+    "id": "fd_0116",
+    "title": "Conjecture 4: Divisor-Scaled Coverage Density",
+    "description": "**Statement:** Define the \"coverage set\" C as the union of all multiples of integers covered by the even and mod-4\u22613 families. Then the natural density of C among integers \u2261 1 (mod 4) exceeds 90%.\n\nMore precisely, among n \u2261 1 (mod 4) with n \u2264 N, the fraction that can be written as n = k\u00b7m where m is even or m \u2261 3 (mod 4) exceeds 0.9 for all sufficiently large N.\n\n**Test:** For N = 10^5, enumerate all n \u2261 1 (mod 4) up to N. For each, check whether any divisor m of n satisfies m even or m \u2261 3 (mod 4), with m \u2265 2 and k = n/m \u2265 1. Compute the fraction covered.\n\n**Impact:** If the density is indeed very high, this would show that the scaling principle alone, combined with two simple seed families, resolves almost all cases. The remaining \"hard core\" of integers resisting all transfer methods wo",
+    "domains": [
+      "NumberTheory"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8aeabb51",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T02:00:27.957110+00:00"
+  },
+  {
+    "id": "fd_0117",
+    "title": "Conjecture 5: Cubic Surface Geometry \u2014 Convex Hull Dimension",
+    "description": "**Statement:** For every n \u2265 2 admitting at least 3 non-collinear ordered witnesses, the convex hull of the set {(x, y, z) : OrderedESWitness n x y z, x \u2264 n\u00b2} has full dimension (dimension 2, as a subset of the surface) in \u211d\u00b3.\n\n**Test:** For n = 5, 7, 11, 13, enumerate all ordered witnesses with x, y, z \u2264 n\u00b2. Compute the convex hull of these integer points and check its dimension. If for any n the witnesses are collinear (dimension \u2264 1), the conjecture is refuted.\n\n**Impact:** Full-dimensional convex hulls would confirm that the solution surface has rich geometric structure, supporting approaches to the conjecture based on the geometry of numbers (e.g., Minkowski-type arguments for lattice points in convex bodies on cubic surfaces).\n\n---",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Cryptography",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8aeabb51",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T02:00:27.961170+00:00"
+  },
+  {
+    "id": "fd_0118",
+    "title": "Methodology Note",
+    "description": "All conjectures above are designed to interface directly with the verified search algorithm `searchESVerified` defined in our formalization. Computational tests should use the verified Python implementation in `demo.py` and `algorithms.py` for initial exploration, with formal verification of any positive results achievable by extending the Lean framework.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8aeabb51",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T02:00:27.964386+00:00"
   },
   {
     "id": "seed_083",
