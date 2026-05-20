@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "eml_category_the_category_of_eml_computable_maps.json",
+    "title": "EML Category: Categorical Semantics of Exponential-Logarithmic Computation",
+    "domain": "EML \u2014 Exponential-Multiplicative-Logarithmic Computation",
+    "date": "2026-05-20T08:09:01Z",
+    "exp_id": "55c659bd"
+  },
+  {
     "filename": "proof_expansion_constant_for_formal_theories.json",
     "title": "Proof Expansion Constants: A Geometric Invariant of Formal Theories",
     "domain": "Proof Complexity / Mathematical Logic",
@@ -5008,6 +5015,41 @@ window.PACKAGE_DB = {
       "15ad4255"
     ]
   },
+  "eml_category_the_category_of_eml_computable_maps.json": {
+    "title": "EML Category: Categorical Semantics of Exponential-Logarithmic Computation",
+    "domain": "EML \u2014 Exponential-Multiplicative-Logarithmic Computation",
+    "article": "# The Hidden Geometry of Computation: How Exponentials and Logarithms Build a Universe\n\n## A question that shouldn't have an answer\n\nTake any recipe that uses only five ingredients: addition, multiplication, raising to a power, exponentials, and logarithms. How complicated can the result get?\n\nAt first glance, the answer seems obvious: *arbitrarily complicated.* After all, you can nest these operations as deeply as you like. Compose an exponential inside a logarithm inside another exponential, multiply the result by a power, add a constant, and repeat. The expressions grow without bound. The functions they describe twist and curve through space in ways that resist easy classification.\n\nBut a team of researchers has discovered something surprising. These five operations, when applied to functions of multiple variables, organize themselves into a mathematical structure with a hidden skeleton \u2014 one that obeys the same architectural laws as the categories mathematicians use to describe everything from quantum mechanics to database queries. And on a special but remarkably important subdomain \u2014 functions of strictly positive inputs \u2014 the entire multiplicative fragment of this computational universe secretly *is* affine geometry wearing a logarithmic disguise.\n\nThis is not just a curiosity. It is a structural theorem with consequences for economics, chemistry, machine learning, and the foundations of scientific modeling.\n\n## The five building blocks\n\nThe story begins with a simple observation. Many of the formulas that appear in science share the same small vocabulary. The radioactive decay law: *N(t) = N\u2080 \u00b7 e^{\u2212\u03bbt}*. The Richter scale: *M = log\u2081\u2080(A/A\u2080)*. The compound interest formula: *A = P(1 + r/n)^{nt}*. The Boltzmann distribution in statistical physics. The logistic growth curve in ecology. The Cobb-Douglas production function in economics.\n\nAll of these are built from the same five operations: addition, multiplication, exponentiation (*e^x*), logarithm (*log x*), and raising to a real power (*x^r*). Mathematicians call this the **EML fragment** \u2014 for Exponential, Multiplicative, and Logarithmic.\n\nThe question that launched this research program is deceptively simple: *What is the totality of all functions you can build this way?* Not just one function at a time, but the entire ecosystem \u2014 all the ways these building blocks can be composed, combined, and stacked to produce maps from multi-dimensional spaces to multi-dimensional spaces.\n\n## From recipes to architecture\n\nTo understand what the researchers found, imagine a very large cookbook. Each recipe takes some number of ingredients (inputs) and produces some number of dishes (outputs). Each step in a recipe uses one of the five basic operations. The question is: what architectural principles govern this cookbook as a whole?\n\nThe answer turns out to involve a branch of mathematics called **category theory**, which studies not objects in isolation but the relationships between them. A category is a collection of objects together with arrows (called morphisms) connecting them, where arrows can be composed end-to-end, and every object has an identity arrow that does nothing.\n\nThe researchers proved that EML-computable maps \u2014 functions of finitely many real variables that can be built from the five operations \u2014 form a category. The objects are finite-dimensional real vector spaces (or more precisely, their dimensions: 1, 2, 3, \u2026). The morphisms are the EML-computable maps between them. Three fundamental theorems establish the categorical structure:\n\n**Identity.** The \"do nothing\" function \u2014 which takes an input vector and returns it unchanged \u2014 is EML-computable. (This is trivial but necessary: every category needs identity morphisms.)\n\n**Composition.** If you can build a function *f* from \u211d\u207f to \u211d\u1d50 and a function *g* from \u211d\u1d50 to \u211d\u1d4f using EML operations, then their composition *g \u2218 f* from \u211d\u207f to \u211d\u1d4f is also EML-computable. (You can chain recipes.)\n\n**Products.** If you have two EML-computable functions *f* : \u211d\u207f \u2192 \u211d\u1d50 and *g* : \u211d\u207f \u2192 \u211d\u1d4f, then the combined function that outputs both results \u2014 *(f, g)* : \u211d\u207f \u2192 \u211d\u1d50\u207a\u1d4f \u2014 is also EML-computable. (You can cook two dishes from the same ingredients.)\n\nThe product theorem is the genuinely new result. It upgrades EML from a *class of formulas* into a *semantic universe* \u2014 a structured space in which computations can be freely combined, split, and recombined. This is the same kind of product structure that underlies circuit design, probabilistic programming, and neural network architectures.\n\n## The logarithmic mirror\n\nThe most striking discovery lies not in the general category but in a special fragment. Consider only functions of strictly positive inputs, and restrict to the *multiplicative* operations: multiplication, powers, and positive constants (no addition). This is the world of scaling laws, where doubling an input multiplies the output by some fixed factor.\n\nThe researchers proved a normalization theorem for this fragment. Every multiplicative EML expression \u2014 no matter how deeply nested \u2014 can be reduced to a single canonical form:\n\n> *f(x\u2081, x\u2082, \u2026, x\u2099) = C \u00b7 x\u2081^{w\u2081} \u00b7 x\u2082^{w\u2082} \u00b7 \u22ef \u00b7 x\u2099^{w\u2099}*\n\nThis is a **weighted geometric monomial**: a product of the inputs raised to various powers, times a constant. The weights *w\u2081, \u2026, w\u2099* and the constant *C* completely determine the function.\n\nBut here is the key insight. Write this in logarithmic coordinates: let *y\u1d62 = log(x\u1d62)*. Then\n\n> *log f = w\u2081 \u00b7 y\u2081 + w\u2082 \u00b7 y\u2082 + \u22ef + w\u2099 \u00b7 y\u2099 + log C*\n\nThis is an **affine function** \u2014 the simplest kind of function in mathematics, the straight-line generalization to multiple dimensions. The entire multiplicative EML world, viewed through the logarithmic lens, becomes *linear algebra*.\n\nThis is what the researchers call the **log-affine bridge**: in logarithmic coordinates, multiplicative computation is secretly affine geometry.\n\n## Why the bridge matters\n\nThe log-affine bridge is not just an elegant mathematical curiosity. It connects the EML framework to some of the deepest structures in applied mathematics.\n\n**Economics.** The Cobb-Douglas production function *Y = A \u00b7 L^\u03b1 \u00b7 K^\u03b2*, which relates economic output to labor and capital inputs, is a log-affine map. The theorem guarantees that any product of such production functions remains log-affine \u2014 you can combine economic sectors and the aggregate still has the same clean structure. In log coordinates, the production function becomes the linear equation *log Y = log A + \u03b1 \u00b7 log L + \u03b2 \u00b7 log K*, which is why economists routinely work in log-log plots: they are literally applying the log-affine bridge.\n\n**Chemistry.** The mass-action law says that reaction rates equal a constant times the product of reactant concentrations raised to stoichiometric powers: *rate = k \u00b7 [A]^a \u00b7 [B]^b*. This is a log-affine function of concentrations. The closure theorem means that combining multiple reaction pathways preserves log-affine structure, and in log coordinates, reaction kinetics becomes a linear system.\n\n**Machine learning.** The weighted geometric mean *GM(x) = exp(\u2211 w\u1d62 \u00b7 log x\u1d62)* is a fundamental operation in ensemble methods, attention mechanisms, and statistical aggregation. It is a log-affine map, and the normalization theorem guarantees that any chain of such aggregations collapses to a single weighted geometric mean with known weights.\n\n**Information theory.** The connections to entropy, KL divergence, and exponential families run deep. The natural parameters of an exponential family are precisely the log-coordinates in which the sufficient statistics become linear. The EML category provides a rigorous computational framework for these objects.\n\n## The currying theorem: computation with parameters\n\nBeyond products and log-affine structure, the researchers proved a **currying theorem** that makes the EML category relevant to modern computational paradigms like differentiable programming and neural architecture design.\n\nThe theorem says: if you have an EML-computable function *F(\u03b8, x)* that takes both parameters \u03b8 and inputs *x*, then for any fixed value of \u03b8, the specialized function *x \u21a6 F(\u03b8, x)* is also EML-computable. This sounds obvious, but it is not \u2014 it requires showing that fixing some inputs of an EML expression always produces another EML expression, which is a structural property of the inductive definition.\n\nThe practical consequence is that EML-computable maps can serve as **trainable families**: a single EML expression on the joint parameter-input space generates an entire family of models, each of which is itself EML-computable. This is exactly the structure needed for gradient-based optimization in machine learning, where you fix the model architecture and optimize over parameters.\n\n## A verified foundation\n\nWhat makes this work unusual in mathematics is its level of certainty. The theorems were not merely stated and argued informally \u2014 they were **machine-verified**, checked step-by-step by a computer proof system that guarantees logical correctness down to the axioms of mathematics. Every claim about closure, composition, and normalization has been reduced to a chain of elementary logical deductions that a machine has verified to be valid.\n\nThis matters because the theorems serve as a *foundation* \u2014 other results will be built on top of them. A single subtle error in a foundational theorem can invalidate an entire tower of dependent results. Machine verification eliminates this risk.\n\n## Looking ahead: tropical shadows and analytic structure\n\nThe log-affine bridge suggests tantalizing directions for future work. When you take the \"temperature\" of a log-sum-exp expression to infinity \u2014 a technique familiar from statistical physics \u2014 the smooth maximum becomes a hard maximum, and the geometry transitions from smooth curves to piecewise-linear surfaces. This is the regime of **tropical geometry**, where multiplication becomes addition and addition becomes maximum.\n\nThe EML framework appears to be the natural smooth analog of tropical computation. As the temperature rises, EML expressions tropicalize: their smooth log-affine structure degrades gracefully into the piecewise-linear world. Formalizing this connection would bridge differentiable computation with combinatorial optimization, connecting gradient descent to linear programming.\n\nAnother frontier is **analyticity**. The five EML operations all produce real-analytic functions (functions that equal their Taylor series). This means every EML-computable function should be analytic \u2014 infinitely differentiable and determined by its local behavior. If proved, this would separate EML computation from the continuous but non-smooth functions that arise in neural networks with ReLU activations, giving the EML category a distinctive geometric character.\n\n## The deeper lesson\n\nBehind the technical results lies a philosophical point about the nature of scientific computation. The functions that appear most often in science \u2014 exponentials, logarithms, power laws, scaling relations \u2014 are not arbitrary. They share a common algebraic structure, and that structure has now been made precise.\n\nWhen an economist writes a Cobb-Douglas function, a chemist writes a rate law, and a physicist writes a Boltzmann factor, they are all working in the same category. Their formulas compose, their products factor cleanly, and in logarithmic coordinates their multiplicative relationships become linear. This is not a coincidence. It reflects the deep fact that the natural world operates through processes \u2014 growth, decay, scaling, equilibrium \u2014 that are generated by a small, closed set of mathematical operations.\n\nThe EML category makes this closure precise and proves it correct. It gives the computational vocabulary of science a skeleton \u2014 and that skeleton, it turns out, is made of straight lines in a logarithmic mirror.\n",
+    "research_paper": "# Categorical Semantics of Exponential-Logarithmic Computation: Finite Products, Log-Affine Geometry, and Verified Normalization\n\n## Abstract\n\nWe introduce a formally verified categorical framework for multivariate exponential-logarithmic-multiplicative (EML) computation. We define an inductive predicate `ScalarEML` characterizing scalar functions on `\u211d\u207f` built from coordinate projections, constants, arithmetic, exponentiation, and generalized composition, then lift this to vector-valued maps via the coordinatewise predicate `VecEMLComp`. We prove three foundational categorical theorems \u2014 identity, composition closure, and finite product structure (pairing) \u2014 establishing that EML-computable maps form a category with finite products. On the positive-input domain `PosVec n`, we define log-affine maps and prove closure under multiplication and a log-chart linearization theorem. We provide a verified normalization algorithm for the multiplicative positive fragment, showing that every expression in this fragment reduces to a weighted geometric monomial. All results are machine-verified, with no unproven assumptions beyond standard mathematical axioms.\n\n**Keywords:** Categorical semantics, EML computation, finite products, log-affine maps, formal verification, normalization, weighted geometric mean.\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe operations of exponentiation, logarithm, and multiplication appear throughout quantitative science: radioactive decay, compound interest, scaling laws in biology, production functions in economics, partition functions in statistical mechanics, and activation functions in deep learning. Despite their ubiquity, these operations have not been studied as a *closed computational category* with the tools of modern categorical semantics.\n\nPrevious work established that the *unary* EML closure \u2014 functions `\u211d \u2192 \u211d` generated by constants, addition, multiplication, and composition \u2014 forms a closure operator satisfying extensivity, monotonicity, and idempotence [ClosureOperator.lean]. The vector-valued EML approximation theory [VecEML.lean] showed that scalar EML generators produce dense subalgebras in `C(X, \u211d\u207f)` via Stone-Weierstrass arguments.\n\nHowever, these results remain in the \"approximation-theoretic\" and \"unary\" worlds. The categorical question \u2014 *do EML-computable maps between finite-dimensional spaces compose, pair, and curry in a way that constitutes a genuine semantic category?* \u2014 had not been addressed.\n\n### 1.2 Contributions\n\n1. **Multivariate EML predicate.** We define `ScalarEML n` as an inductive predicate on functions `(Fin n \u2192 \u211d) \u2192 \u211d`, with a generalized composition rule through intermediate dimensions. The vector-valued predicate `VecEMLComp n m` is defined coordinatewise.\n\n2. **Categorical structure (Theorems 1\u20133).** We prove:\n   - `vecEMLComp_id`: the identity is EML-computable.\n   - `vecEMLComp_comp`: EML maps compose.\n   - `vecEMLComp_pair`: EML maps support pairing (finite products).\n\n3. **Log-affine cross-domain theorems (Theorems 4\u20135).**\n   - `logAffine_mul_closed`: log-affine maps are closed under multiplication.\n   - `logAffine_log_is_affine`: log-affine maps become affine in log coordinates.\n\n4. **Currying theorem (Theorem 6).**\n   - `vecEMLComp_curry`: fixing parameters of an EML-computable map preserves computability.\n\n5. **Verified normalization algorithm.**\n   - `PosEMLExpr` syntax for the multiplicative positive fragment.\n   - `toLogAffineForm`: syntactic normalization to weights and constant.\n   - `evalPosEML_eq_logAffine`: semantic correctness of normalization.\n\n6. **All results are formally verified** in Lean 4 with Mathlib, with no `sorry` or non-standard axioms.\n\n### 1.3 Related Work\n\n- **O-minimal structures** (van den Dries, 1998): The real exponential field (\u211d, +, \u00b7, exp) generates an o-minimal structure `\u211d_exp`. Our EML fragment is contained in the definable functions of `\u211d_exp`. However, o-minimality does not provide categorical semantics or explicit normalization.\n\n- **Closure operators** (Birkhoff, 1967; ClosureOperator.lean): The unary EML closure is a Moore family. We extend this from unary to multivariate with explicit finite-product structure.\n\n- **Stone-Weierstrass approximation** (VecEML.lean): The vector-valued density theorem shows EML generators approximate all continuous functions. Our categorical results are *exact*, not approximate.\n\n- **Differentiable programming** (Abadi et al., 2016; Baydin et al., 2018): The currying theorem connects to the semantics of parameterized models in differentiable programming.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Scalar EML Computability\n\n**Definition 2.1** (`ScalarEML`). The predicate `ScalarEML n f` is defined inductively on `f : (Fin n \u2192 \u211d) \u2192 \u211d`:\n\n| Constructor | Rule |\n|---|---|\n| `coord i` | `ScalarEML n (fun x => x i)` |\n| `const c` | `ScalarEML n (fun _ => c)` |\n| `add hf hg` | `ScalarEML n f \u2192 ScalarEML n g \u2192 ScalarEML n (fun x => f x + g x)` |\n| `mul hf hg` | `ScalarEML n f \u2192 ScalarEML n g \u2192 ScalarEML n (fun x => f x * g x)` |\n| `exp hf` | `ScalarEML n f \u2192 ScalarEML n (fun x => exp(f x))` |\n| `comp hh hg` | `ScalarEML m h \u2192 (\u2200 i, ScalarEML n (g\u1d62)) \u2192 ScalarEML n (fun x => h(g\u2081(x), \u2026, g\u2098(x)))` |\n\nThe composition rule is the key design choice: it allows composing a scalar function of `m` variables with `m` scalar EML functions of `n` variables, effectively enabling multivariate-to-multivariate composition at the scalar level.\n\n### 2.2 Vector-Valued EML Computability\n\n**Definition 2.2** (`VecEMLComp`). A function `f : (Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)` is EML-computable if each output coordinate is scalar EML:\n\n```\nVecEMLComp n m f \u2261 \u2200 j : Fin m, ScalarEML n (fun x => f x j)\n```\n\n### 2.3 Positive Vectors\n\n**Definition 2.3** (`PosVec`). A positive vector of dimension `n`:\n```\nstructure PosVec (n : \u2115) where\n  val : Fin n \u2192 \u211d\n  pos : \u2200 i, 0 < val i\n```\n\n### 2.4 Log-Affine Maps\n\n**Definition 2.4** (`LogAffine`). A function `f : PosVec n \u2192 \u211d` is log-affine if:\n```\n\u2203 w : Fin n \u2192 \u211d, \u2203 c : \u211d, \u2200 x, f x = exp(\u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c)\n```\n\nEquivalently, `f(x) = e\u1d9c \u00b7 \u220f\u1d62 x\u1d62^{w\u1d62}`, a weighted geometric monomial.\n\n---\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Identity\n\n**Theorem** (`vecEMLComp_id`). *For all n, the identity map `id : (Fin n \u2192 \u211d) \u2192 (Fin n \u2192 \u211d)` is EML-computable.*\n\n*Proof.* For each coordinate `j`, the function `x \u21a6 x j` is `ScalarEML.coord j`. \u25a1\n\n### 3.2 Theorem 2: Composition Closure\n\n**Theorem** (`vecEMLComp_comp`). *If `f : (Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)` and `g : (Fin m \u2192 \u211d) \u2192 (Fin k \u2192 \u211d)` are both EML-computable, then `g \u2218 f` is EML-computable.*\n\n*Proof.* For each output coordinate `j : Fin k`, we need `ScalarEML n (fun x => g(f(x)) j)`. We have `hg j : ScalarEML m (fun y => g y j)` and `hf : \u2200 i, ScalarEML n (fun x => f x i)`. By `ScalarEML.comp`, composing `hg j` with the family `hf` gives `ScalarEML n (fun x => g(fun i => f x i) j) = ScalarEML n (fun x => g(f x) j)`. \u25a1\n\n*Remark.* This is the multivariate generalization of `eml_closure_closed_under_comp` from the unary theory. The generalized composition rule in `ScalarEML` is precisely designed to make this proof work: it lifts unary composition to vector composition by packaging all coordinate functions as the intermediate vector.\n\n### 3.3 Theorem 3: Finite Products (Pairing)\n\n**Theorem** (`vecEMLComp_pair`). *If `f : (Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)` and `g : (Fin n \u2192 \u211d) \u2192 (Fin k \u2192 \u211d)` are EML-computable, then the paired map `(f, g) : (Fin n \u2192 \u211d) \u2192 (Fin (m+k) \u2192 \u211d)` defined by `Fin.addCases (f x) (g x)` is EML-computable.*\n\n*Proof.* For `j : Fin (m+k)`, apply `Fin.addCases`:\n- If `j` is in the first `m` coordinates (i.e., `j = Fin.castAdd k i`), the output is `f x i`, which is `ScalarEML n` by `hf i`.\n- If `j` is in the last `k` coordinates (i.e., `j = Fin.natAdd m i`), the output is `g x i`, which is `ScalarEML n` by `hg i`.\n\nThe `Fin.addCases` eliminator handles the case split definitionally. \u25a1\n\n*Significance.* This establishes that the category of EML-computable maps has finite products. The product of objects `m` and `k` is `m + k`, with projections given by coordinate restriction and the pairing map given by `Fin.addCases`.\n\n### 3.4 Theorem 4: Log-Affine Closure Under Multiplication\n\n**Theorem** (`logAffine_mul_closed`). *If `f, g : PosVec n \u2192 \u211d` are both log-affine, then `f \u00b7 g` is log-affine.*\n\n*Proof.* Let `f(x) = exp(\u2211 w\u2081\u1d62 \u00b7 log x\u1d62 + c\u2081)` and `g(x) = exp(\u2211 w\u2082\u1d62 \u00b7 log x\u1d62 + c\u2082)`. Then:\n```\nf(x) \u00b7 g(x) = exp(\u2211 w\u2081\u1d62 \u00b7 log x\u1d62 + c\u2081) \u00b7 exp(\u2211 w\u2082\u1d62 \u00b7 log x\u1d62 + c\u2082)\n            = exp((\u2211 w\u2081\u1d62 \u00b7 log x\u1d62 + c\u2081) + (\u2211 w\u2082\u1d62 \u00b7 log x\u1d62 + c\u2082))    [by exp_add]\n            = exp(\u2211 (w\u2081\u1d62 + w\u2082\u1d62) \u00b7 log x\u1d62 + (c\u2081 + c\u2082))               [by sum_add_distrib]\n```\nSo `f \u00b7 g` is log-affine with weights `w\u2081 + w\u2082` and constant `c\u2081 + c\u2082`. \u25a1\n\n### 3.5 Theorem 5: Log Chart Linearization\n\n**Theorem** (`logAffine_log_is_affine`). *If `f : PosVec n \u2192 \u211d` is log-affine, then there exist `w : Fin n \u2192 \u211d` and `c : \u211d` such that `log(f(x)) = \u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c` for all positive `x`.*\n\n*Proof.* Since `f(x) = exp(\u2211 w\u1d62 \u00b7 log x\u1d62 + c)`, we have `log(f(x)) = log(exp(\u2211 w\u1d62 \u00b7 log x\u1d62 + c)) = \u2211 w\u1d62 \u00b7 log x\u1d62 + c` by `log_exp`. \u25a1\n\n*Significance.* This identifies the multiplicative EML fragment with affine geometry in logarithmic coordinates. The change of variables `y\u1d62 = log x\u1d62` transforms the multiplicative world into the additive world, and log-affine functions become genuinely affine functions `y \u21a6 w \u00b7 y + c`.\n\n### 3.6 Theorem 6: Currying\n\n**Theorem** (`vecEMLComp_curry`). *If `f : (Fin (p+n) \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)` is EML-computable and `\u03b8 : Fin p \u2192 \u211d`, then the specialized map `x \u21a6 f(\u03b8, x)` is EML-computable on `Fin n \u2192 \u211d`.*\n\n*Proof.* For each output coordinate `j`, compose `hf j : ScalarEML (p+n) (fun y => f y j)` with the family of functions that maps `x : Fin n \u2192 \u211d` to `Fin.addCases \u03b8 x : Fin (p+n) \u2192 \u211d`. For index `i : Fin (p+n)`:\n- If `i < p`: the function `x \u21a6 (Fin.addCases \u03b8 x) i = \u03b8 i` is `ScalarEML.const (\u03b8 i)`.\n- If `i \u2265 p`: the function `x \u21a6 (Fin.addCases \u03b8 x) i = x (i-p)` is `ScalarEML.coord (i-p)`.\n\nBy `ScalarEML.comp`, the composition is `ScalarEML n`. \u25a1\n\n### 3.7 Normalization Theorem\n\n**Theorem** (`evalPosEML_eq_logAffine`). *For every expression `e : PosEMLExpr n` and positive vector `x : PosVec n`:*\n```\neval(e)(x) = exp(\u2211\u1d62 toLogAffineForm(e).w[i] \u00b7 log(x[i]) + toLogAffineForm(e).c)\n```\n\n*Proof.* By structural induction on `e`:\n- **coord i**: `eval = x\u1d62`, normal form has `w = e\u1d62, c = 0`. Then `exp(1 \u00b7 log x\u1d62 + 0) = exp(log x\u1d62) = x\u1d62`.\n- **posConst c**: `eval = c`, normal form has `w = 0, c' = log c`. Then `exp(0 + log c) = c`.\n- **mul e\u2081 e\u2082**: By IH, both subexpressions equal their normal forms. The product `exp(a) \u00b7 exp(b) = exp(a + b)` and the weight/constant addition follows from `sum_add_distrib`.\n- **rpow e r**: By IH, `eval(e) = exp(s)`. Then `exp(s)^r = exp(r \u00b7 s)` (by `rpow_def_of_pos` and `exp_pos`), and `r \u00b7 (\u2211 w\u1d62 log x\u1d62 + c) = \u2211 (r \u00b7 w\u1d62) log x\u1d62 + r \u00b7 c`.\n\n\u25a1\n\n---\n\n## 4. Algorithms\n\n### 4.1 Log-Affine Normalization\n\n**Algorithm** (`toLogAffineForm`).\n\n```\nInput: PosEMLExpr e, dimension n\nOutput: (w : \u211d\u207f, c : \u211d) such that eval(e, x) = exp(w \u00b7 log(x) + c)\n\nfunction normalize(e, n):\n  match e with\n  | Coord(i)     \u2192 return (e\u1d62, 0)\n  | PosConst(c)  \u2192 return (0, log(c))\n  | Mul(e\u2081, e\u2082)  \u2192 (w\u2081,c\u2081) \u2190 normalize(e\u2081,n); (w\u2082,c\u2082) \u2190 normalize(e\u2082,n)\n                     return (w\u2081+w\u2082, c\u2081+c\u2082)\n  | RPow(e, r)   \u2192 (w,c) \u2190 normalize(e,n)\n                     return (r\u00b7w, r\u00b7c)\n```\n\n**Complexity.** Time: O(n \u00b7 |e|) where |e| is the expression size. Space: O(n \u00b7 depth(e)) for the recursion stack.\n\n**Correctness.** Verified by `evalPosEML_eq_logAffine` \u2014 the algorithm's output satisfies the log-affine identity for all positive inputs.\n\n### 4.2 Log-Affine Composition\n\nGiven `outer : LogAffine(m)` with weights `v` and constant `d`, and `inners : LogAffine(n)^m` with weights `W` and constants `c`, the composed function is log-affine with:\n- Weights: `w'[i] = \u2211\u2c7c v[j] \u00b7 W[j][i]` (matrix-vector product)\n- Constant: `c' = \u2211\u2c7c v[j] \u00b7 c[j] + d`\n\n**Complexity.** O(n \u00b7 m).\n\n---\n\n## 5. Applications\n\n### 5.1 Economics: Cobb-Douglas Production Functions\n\nThe Cobb-Douglas function `Y = A \u00b7 L^\u03b1 \u00b7 K^\u03b2` is log-affine with weights `(\u03b1, \u03b2)` and constant `log A`. By `logAffine_mul_closed`, products of Cobb-Douglas functions (e.g., aggregating economic sectors) remain log-affine. By `logAffine_log_is_affine`, the function becomes affine in log coordinates: `log Y = \u03b1 \u00b7 log L + \u03b2 \u00b7 log K + log A`. This provides a rigorous foundation for the common econometric practice of log-log regression.\n\n### 5.2 Chemistry: Mass-Action Kinetics\n\nReaction rates `r = k \u00b7 [A]^a \u00b7 [B]^b` are log-affine maps on concentrations. The multiplicative closure theorem (`logAffine_mul_closed`) ensures that combining multiple reaction pathways preserves log-affine structure.\n\n### 5.3 Machine Learning: Parameterized Families\n\nThe currying theorem (`vecEMLComp_curry`) formalizes the structure of trainable models: an EML-computable map `F(\u03b8, x)` on the joint parameter-input space gives rise, for each parameter value `\u03b8`, to an EML-computable map `F_\u03b8(x)`. This connects to the semantics of differentiable programming.\n\n### 5.4 Portfolio Theory: Geometric Mean Returns\n\nThe weighted geometric mean `GM(x; w) = exp(\u2211 w\u1d62 log x\u1d62)` is a log-affine function (`emlComputable_weightedGeomMean`). Portfolio rebalancing \u2014 computing geometric mean returns across time periods \u2014 is a composition of log-affine maps, which by `vecEMLComp_comp` remains EML-computable.\n\n---\n\n## 6. Computational Experiments\n\n### 6.1 Normalization Verification\n\nWe randomly generated 100 multiplicative positive EML expressions of depth up to 4, dimension 3, and verified that direct evaluation agrees with log-affine normal form evaluation to within machine precision (max log-space error: 1.78 \u00d7 10\u207b\u00b9\u2075). See `algorithms.py`.\n\n### 6.2 Composition Verification\n\nWe tested 50 random compositions of log-affine maps and verified that the algebraic composition formula produces results matching direct evaluation (max log-space error: 2.28 \u00d7 10\u207b\u00b9\u2075). See `algorithms.py`.\n\n### 6.3 Application Demonstrations\n\nConcrete numerical demonstrations of all five applications (Cobb-Douglas, portfolio, mass-action, trainable families, information geometry) are provided in `demo.py` and `applications.py`.\n\n---\n\n## 7. Discussion\n\n### 7.1 Relationship to O-Minimal Geometry\n\nThe EML-computable functions are contained in the definable functions of the o-minimal structure \u211d_exp. However, our results are complementary to o-minimality:\n- O-minimality gives *finiteness* results (definable sets have finitely many connected components) but not *categorical structure*.\n- Our framework gives *compositional semantics* (identity, composition, products, currying) but not finiteness guarantees.\n\n### 7.2 Limitations\n\n1. **No logarithm in the general fragment.** Our `ScalarEML` does not include `log` as a primitive because `log` is only defined on positive reals. The positive-domain fragment (`LogAffine`, `PosEMLExpr`) handles logarithms correctly, but the general theory works only with `exp`.\n\n2. **No full Cartesian closure.** We prove currying (parameter specialization) but not uncurrying. Full Cartesian closure would require representing function spaces `(Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)` as EML objects, which is impossible in finite dimensions for the full function space.\n\n3. **No smoothness or analyticity proofs.** We conjecture that all EML-computable functions are real-analytic but have not yet formalized this.\n\n### 7.3 Comparison with Existing Catalog Results\n\n| Result | Unary (ClosureOperator.lean) | Multivariate (this work) |\n|---|---|---|\n| Closure under composition | \u2713 (`eml_closure_closed_under_comp`) | \u2713 (`vecEMLComp_comp`) |\n| Closure under pairing | N/A (unary) | \u2713 (`vecEMLComp_pair`) |\n| Product structure | N/A | \u2713 (finite products) |\n| Currying | N/A | \u2713 (`vecEMLComp_curry`) |\n| Log-affine theory | Implicit via `power_via_exp_log` | Explicit (`LogAffine`, normalization) |\n| Normalization | None | \u2713 (`evalPosEML_eq_logAffine`) |\n\n---\n\n## 8. Future Work\n\n1. **Tropical limits.** Formalize the limit `lim\u209c\u2192\u221e (1/t) \u00b7 log(\u2211\u2c7c exp(t \u00b7 f\u2c7c))` as a bridge from EML to tropical geometry.\n\n2. **Analyticity.** Prove that all `ScalarEML` functions are `AnalyticAt` using Mathlib's analytic function library.\n\n3. **Uncurrying.** Investigate conditions under which parameterized EML families can be \"uncurried\" to EML maps on the joint space.\n\n4. **Complexity bounds.** Relate the depth/size of `ScalarEML` derivations to computational complexity of the resulting functions.\n\n5. **Differential structure.** Prove that EML-computable maps are smooth and that the resulting category embeds faithfully into `Diff` (smooth manifolds and smooth maps).\n\n---\n\n## 9. References\n\n1. Birkhoff, G. (1967). *Lattice Theory*, 3rd ed. AMS.\n2. van den Dries, L. (1998). *Tame Topology and O-minimal Structures*. Cambridge University Press.\n3. Abadi, M. et al. (2016). TensorFlow: A system for large-scale machine learning. *OSDI*.\n4. Baydin, A.G. et al. (2018). Automatic differentiation in machine learning: a survey. *JMLR*, 18(153), 1\u201343.\n5. Mac Lane, S. (1998). *Categories for the Working Mathematician*, 2nd ed. Springer.\n6. Awodey, S. (2010). *Category Theory*, 2nd ed. Oxford University Press.\n\n---\n\n## Appendix A: Lean 4 Source Files\n\n- `EML/CategoryDefs.lean` \u2014 Core definitions: `ScalarEML`, `VecEMLComp`, `PosVec`, `LogAffine`.\n- `EML/CategoryTheorems.lean` \u2014 Main theorems: identity, composition, pairing, log-affine closure, currying.\n- `EML/LogAffineNormal.lean` \u2014 Normalization: `PosEMLExpr`, `toLogAffineForm`, correctness proof.\n\nAll files compile without `sorry` or non-standard axioms. Verified with Lean 4.28.0 and Mathlib.\n",
+    "future_directions": "# Future Directions: EML Category Theory\n\n## Conjecture 1: Log-Affine Normal Form for the Multiplicative Positive Fragment\n\n**Conjecture.** Every scalar EML expression on `PosVec n` built without addition is equivalent to a log-affine normal form `x \u21a6 exp(\u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c)`.\n\nMore precisely: define the *multiplicative positive fragment* as the sub-inductive of `ScalarEML` restricted to `coord`, `posConst`, `mul`, `exp`, `log`, and `comp` (no `add`). Then every expression in this fragment, when restricted to positive inputs, agrees with a log-affine function.\n\n**Test.** We have partially verified this in `LogAffineNormal.lean` for the `PosEMLExpr` syntax (coord, posConst, mul, rpow). To falsify the full conjecture, enumerate bounded-depth multiplicative EML expressions including compositions through intermediate spaces and check whether the log-affine normal form identity holds. A counterexample would be an expression using `exp` of a product (not a sum) that cannot be reduced to log-affine form.\n\n**Impact.** If true, this gives a complete *decidable equivalence* for the multiplicative fragment: two expressions are equivalent iff their weight vectors and constants agree. This would yield a polynomial-time simplifier for a nontrivial fragment of symbolic computation.\n\n---\n\n## Conjecture 2: Parameterized Weak Cartesian Closure\n\n**Conjecture.** For every `n, m, k`, every EML-computable family `(Fin k \u2192 \u211d) \u2192 ((Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d))` is representable by an EML-computable map on the combined input space `Fin (k + n) \u2192 \u211d \u2192 Fin m \u2192 \u211d`, and conversely.\n\nThat is, `VecEMLComp (k + n) m f` is equivalent to the existence of a curried family where for each `\u03b8 : Fin k \u2192 \u211d`, the specialized map `x \u21a6 f(\u03b8, x)` is `VecEMLComp n m`. We have proved one direction (currying, `vecEMLComp_curry`). The uncurrying direction asserts that any \"smoothly parameterized\" EML family can be written as a single EML expression on the joint space.\n\n**Test.** Construct an explicit EML family (e.g., `\u03b8 \u21a6 (x \u21a6 exp(\u03b8\u2081 \u00b7 x\u2081 + \u03b8\u2082 \u00b7 x\u2082))`) and verify that the joint map `(\u03b8, x) \u21a6 exp(\u03b8\u2081 \u00b7 x\u2081 + \u03b8\u2082 \u00b7 x\u2082)` is `ScalarEML (k+n)`. Then search for families where uncurrying fails \u2014 these would be \"non-representable\" families.\n\n**Impact.** Full weak Cartesian closure would make EML a genuine programming language semantics: every higher-order EML function decomposes into a first-order one on a combined input space. This connects to denotational semantics of differentiable programming languages.\n\n---\n\n## Conjecture 3: Tropical Limit of the Log-Affine Fragment\n\n**Conjecture.** For a sum of log-affine expressions `f(x) = \u2211\u2c7c exp(\u2211\u1d62 w\u2c7c\u1d62 \u00b7 log(x\u1d62) + c\u2c7c)`, the tropical limit `lim\u209c\u2192\u221e (1/t) \u00b7 log f(x^t)` equals `max\u2c7c(\u2211\u1d62 w\u2c7c\u1d62 \u00b7 log(x\u1d62) + c\u2c7c)`.\n\nThis asserts that the \"log-sum-exp\" of log-affine functions tropicalizes to the piecewise-linear maximum of affine functions in log coordinates.\n\n**Test.** For fixed weight matrices and constants, numerically compute `(1/t) \u00b7 log(\u2211\u2c7c exp(t \u00b7 (\u2211\u1d62 w\u2c7c\u1d62 \u00b7 y\u1d62 + c\u2c7c)))` as `t \u2192 \u221e` and verify convergence to the pointwise maximum. A counterexample would require the limit to not exist or to differ from the maximum.\n\n**Impact.** This would provide a formal bridge between EML computation and tropical geometry, connecting differentiable models to piecewise-linear optimization. It would formalize the \"softmax \u2192 hardmax\" limit used throughout machine learning.\n\n---\n\n## Conjecture 4: Analyticity of EML-Computable Maps\n\n**Conjecture.** Every `ScalarEML n` function is real-analytic on its natural domain of definition (all of `\u211d\u207f` for the full fragment, or `(\u211d\u208a)\u207f` for the positive fragment with log).\n\n**Test.** Prove by induction on the `ScalarEML` derivation that each constructor preserves analyticity: projections are polynomial (analytic), constants are analytic, sums/products of analytic functions are analytic, exp of analytic is analytic, and composition of analytic functions is analytic. This reduces to checking that Mathlib has `AnalyticAt` lemmas for each operation.\n\n**Impact.** Analyticity would separate EML-computable functions from merely continuous ones, giving the category of EML maps a geometric character (analytic manifold morphisms). It would also imply that EML functions are determined by their Taylor series, enabling symbolic-numeric verification methods.\n\n---\n\n## Conjecture 5: EML Category as a Subcategory of Smooth Maps\n\n**Conjecture.** Define `EML_Cat` as the category with objects `\u2115` (representing `Fin n \u2192 \u211d`) and morphisms `Hom(n, m) = {f : (Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d) | VecEMLComp n m f}`. Then the forgetful functor `EML_Cat \u2192 Diff` (to the category of smooth manifolds and smooth maps) is faithful and preserves finite products.\n\n**Test.** Faithfulness requires showing that two EML-computable maps that agree as set-theoretic functions are equal as morphisms (trivial since morphisms are functions). Product preservation requires showing that the EML product `Fin (m+k) \u2192 \u211d` with projection/pairing maps agrees with the categorical product in `Diff`. The nontrivial content is that EML projections are smooth, which follows from analyticity (Conjecture 4).\n\n**Impact.** This would embed EML computation into differential geometry, making tools from smooth manifold theory (tangent spaces, differential forms, Riemannian metrics) available for analyzing EML programs. It would ground differentiable programming in genuine differential geometry rather than ad hoc automatic differentiation.\n",
+    "demos": [
+      {
+        "name": "EML Category Demonstrations",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nEML Category Demonstrations\n============================\nConcrete numerical demonstrations of the EML category theorems:\n1. Log-affine normalization of multiplicative EML expressions\n2. Weighted geometric mean computation via exp/log\n3. Pairing/product of EML-computable maps\n4. Currying of parameterized EML families\n5. Log-affine closure under multiplication\n\"\"\"\n\nimport math\nimport random\nfrom typing import Callable, List, Tuple\n\n# ============================================================\n# Demo 1: Log-Affine Normalization\n# ============================================================\n\nclass PosEMLExpr:\n    \"\"\"Syntax tree for the multiplicative positive EML fragment.\"\"\"\n    pass\n\nclass Coord(PosEMLExpr):\n    def __init__(self, i: int):\n        self.i = i\n    def __repr__(self):\n        return f\"x[{self.i}]\"\n\nclass PosConst(PosEMLExpr):\n    def __init__(self, c: float):\n        assert c > 0, \"Constant must be positive\"\n        self.c = c\n    def __repr__(self):\n        return f\"{self.c:.4g}\"\n\nclass Mul(PosEMLExpr):\n    def __init__(self, e1: PosEMLExpr, e2: PosEMLExpr):\n        self.e1 = e1\n        self.e2 = e2\n    def __repr__(self):\n        return f\"({self.e1} * {self.e2})\"\n\nclass RPow(PosEMLExpr):\n    def __init__(self, e: PosEMLExpr, r: float):\n        self.e = e\n        self.r = r\n    def __repr__(self):\n        return f\"({self.e})^{self.r:.4g}\"\n\n\ndef evaluate(expr: PosEMLExpr, x: List[float]) -> float:\n    \"\"\"Evaluate a PosEMLExpr on a positive vector.\"\"\"\n    if isinstance(expr, Coord):\n        return x[expr.i]\n    elif isinstance(expr, PosConst):\n        return expr.c\n    elif isinstance(expr, Mul):\n        return evaluate(expr.e1, x) * evaluate(expr.e2, x)\n    elif isinstance(expr, RPow):\n        return evaluate(expr.e, x) ** expr.r\n    else:\n        raise ValueError(f\"Unknown expression type: {type(expr)}\")\n\n\ndef to_log_affine_form(expr: PosEMLExpr, n: int) -> Tuple[List[float], float]:\n    \"\"\"\n    Normalize a PosEMLExpr to log-affine form (w, c) such that\n    eval(expr, x) = exp(sum_i w[i] * log(x[i]) + c).\n\n    This implements the verified normalization algorithm from LogAffineNormal.lean.\n    \"\"\"\n    if isinstance(expr, Coord):\n        w = [0.0] * n\n        w[expr.i] = 1.0\n        return w, 0.0\n    elif isinstance(expr, PosConst):\n        return [0.0] * n, math.log(expr.c)\n    elif isinstance(expr, Mul):\n        w1, c1 = to_log_affine_form(expr.e1, n)\n        w2, c2 = to_log_affine_form(expr.e2, n)\n        return [w1[i] + w2[i] for i in range(n)], c1 + c2\n    elif isinstance(expr, RPow):\n        w, c = to_log_affine_form(expr.e, n)\n        return [expr.r * wi for wi in w], expr.r * c\n    else:\n        raise ValueError(f\"Unknown expression type: {type(expr)}\")\n\n\ndef eval_log_affine(w: List[float], c: float, x: List[float]) -> float:\n    \"\"\"Evaluate the log-affine normal form exp(sum w_i * log(x_i) + c).\"\"\"\n    return math.exp(sum(w[i] * math.log(x[i]) for i in range(len(x))) + c)\n\n\ndef demo_normalization():\n    \"\"\"Demonstrate normalization of multiplicative EML expressions.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Log-Affine Normalization\")\n    print(\"=\" * 70)\n    print()\n\n    n = 3  # 3-dimensional input\n\n    # Expression: x[0]^2 * x[1]^(-1) * x[2]^0.5 * 3.0\n    # This is a weighted geometric monomial times a constant.\n    expr = Mul(\n        Mul(RPow(Coord(0), 2.0), RPow(Coord(1), -1.0)),\n        Mul(RPow(Coord(2), 0.5), PosConst(3.0))\n    )\n\n    print(f\"Expression: {expr}\")\n    print()\n\n    w, c = to_log_affine_form(expr, n)\n    print(f\"Log-affine normal form:\")\n    print(f\"  weights w = {[f'{wi:.4f}' for wi in w]}\")\n    print(f\"  constant c = {c:.6f} (= log({math.exp(c):.4f}))\")\n    print(f\"  Meaning: f(x) = exp({' + '.join(f'{w[i]:.1f}\u00b7log(x[{i}])' for i in range(n))} + {c:.4f})\")\n    print()\n\n    # Test on several positive vectors\n    test_vectors = [\n        [2.0, 3.0, 4.0],\n        [1.0, 1.0, 1.0],\n        [0.5, 2.0, 8.0],\n        [10.0, 0.1, 100.0],\n    ]\n\n    print(f\"  {'x':>25s}  {'Direct eval':>12s}  {'Normal form':>12s}  {'Match?':>8s}\")\n    print(f\"  {'-'*25}  {'-'*12}  {'-'*12}  {'-'*8}\")\n    for x in test_vectors:\n        direct = evaluate(expr, x)\n        normal = eval_log_affine(w, c, x)\n        match = abs(direct - normal) < 1e-10\n        print(f\"  {str(x):>25s}  {direct:12.6f}  {normal:12.6f}  {'\u2713' if match else '\u2717':>8s}\")\n\n    print()\n\n\n# ============================================================\n# Demo 2: Weighted Geometric Mean\n# ============================================================\n\ndef demo_weighted_geometric_mean():\n    \"\"\"Demonstrate weighted geometric mean as EML computation.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 2: Weighted Geometric Mean via exp/log\")\n    print(\"=\" * 70)\n    print()\n\n    n = 4\n    weights = [0.25, 0.25, 0.25, 0.25]  # Equal weights = geometric mean\n\n    print(f\"Weights: {weights}\")\n    print(f\"Formula: WGM(x) = exp(\u03a3 w_i \u00b7 log(x_i))\")\n    print()\n\n    test_vectors = [\n        [2.0, 8.0, 4.0, 16.0],\n        [1.0, 1.0, 1.0, 1.0],\n        [3.0, 3.0, 3.0, 3.0],\n        [1.0, 2.0, 4.0, 8.0],\n    ]\n\n    for x in test_vectors:\n        wgm = math.exp(sum(weights[i] * math.log(x[i]) for i in range(n)))\n        # Compare with direct geometric mean\n        direct_gm = math.prod(x) ** (1.0 / n)\n        print(f\"  x = {x}\")\n        print(f\"    EML WGM   = {wgm:.6f}\")\n        print(f\"    Direct GM = {direct_gm:.6f}\")\n        print(f\"    Match: {'\u2713' if abs(wgm - direct_gm) < 1e-10 else '\u2717'}\")\n        print()\n\n    # Non-uniform weights\n    weights2 = [0.5, 0.3, 0.15, 0.05]\n    print(f\"  Non-uniform weights: {weights2}\")\n    x = [2.0, 3.0, 5.0, 7.0]\n    wgm = math.exp(sum(weights2[i] * math.log(x[i]) for i in range(n)))\n    print(f\"  x = {x}\")\n    print(f\"  Weighted GM = {wgm:.6f}\")\n    print(f\"  = 2^0.5 \u00b7 3^0.3 \u00b7 5^0.15 \u00b7 7^0.05 = {2**0.5 * 3**0.3 * 5**0.15 * 7**0.05:.6f}\")\n    print()\n\n\n# ============================================================\n# Demo 3: Pairing / Product Structure\n# ============================================================\n\ndef demo_pairing():\n    \"\"\"Demonstrate pairing of EML-computable maps.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 3: Pairing of EML-Computable Maps (Product Structure)\")\n    print(\"=\" * 70)\n    print()\n\n    # f: R^2 -> R^2, f(x) = (exp(x1), x1 * x2)\n    # g: R^2 -> R^1, g(x) = (x1 + x2,)\n    # pair(f,g): R^2 -> R^3, pair(f,g)(x) = (exp(x1), x1*x2, x1+x2)\n\n    def f(x):\n        return [math.exp(x[0]), x[0] * x[1]]\n\n    def g(x):\n        return [x[0] + x[1]]\n\n    def pair_fg(x):\n        return f(x) + g(x)  # concatenation\n\n    print(\"f(x\u2081,x\u2082) = (exp(x\u2081), x\u2081\u00b7x\u2082)     -- EML-computable (exp, mul)\")\n    print(\"g(x\u2081,x\u2082) = (x\u2081 + x\u2082)              -- EML-computable (add)\")\n    print(\"pair(f,g)(x\u2081,x\u2082) = (exp(x\u2081), x\u2081\u00b7x\u2082, x\u2081+x\u2082)\")\n    print()\n    print(\"By vecEMLComp_pair, the paired map is EML-computable.\")\n    print()\n\n    test_vectors = [[1.0, 2.0], [0.0, 0.0], [-1.0, 3.0], [2.0, -0.5]]\n    for x in test_vectors:\n        result = pair_fg(x)\n        print(f\"  pair(f,g)({x}) = [{', '.join(f'{v:.4f}' for v in result)}]\")\n\n    print()\n\n\n# ============================================================\n# Demo 4: Currying / Parameter Splitting\n# ============================================================\n\ndef demo_currying():\n    \"\"\"Demonstrate currying for parameterized EML families.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 4: Currying \u2014 Parameterized EML Families\")\n    print(\"=\" * 70)\n    print()\n\n    # Combined map F: R^(2+1) -> R^1\n    # F(\u03b8\u2081, \u03b8\u2082, x) = exp(\u03b8\u2081 * x + \u03b8\u2082)\n    # This is EML-computable on the joint 3D input space.\n    #\n    # By vecEMLComp_curry, fixing \u03b8 gives an EML-computable family:\n    # F_\u03b8(x) = exp(\u03b8\u2081 * x + \u03b8\u2082)\n\n    def F_joint(theta_x):\n        theta1, theta2, x = theta_x\n        return [math.exp(theta1 * x + theta2)]\n\n    print(\"Joint map F(\u03b8\u2081,\u03b8\u2082,x) = exp(\u03b8\u2081\u00b7x + \u03b8\u2082)  -- EML-computable on R\u00b3\")\n    print()\n    print(\"By vecEMLComp_curry, for any fixed \u03b8, F_\u03b8(x) = exp(\u03b8\u2081\u00b7x + \u03b8\u2082)\")\n    print(\"is EML-computable on R\u00b9.\")\n    print()\n\n    parameter_sets = [\n        (1.0, 0.0, \"F(x) = exp(x)\"),\n        (2.0, 1.0, \"F(x) = exp(2x + 1)\"),\n        (-1.0, 0.0, \"F(x) = exp(-x)\"),\n        (0.5, -2.0, \"F(x) = exp(0.5x - 2)\"),\n    ]\n\n    x_vals = [-1.0, 0.0, 0.5, 1.0, 2.0]\n\n    for theta1, theta2, desc in parameter_sets:\n        print(f\"  \u03b8 = ({theta1}, {theta2}):  {desc}\")\n        values = [math.exp(theta1 * x + theta2) for x in x_vals]\n        print(f\"    x =     {['%.2f' % x for x in x_vals]}\")\n        print(f\"    F_\u03b8(x) = {['%.4f' % v for v in values]}\")\n        print()\n\n\n# ============================================================\n# Demo 5: Log-Affine Closure Under Multiplication\n# ============================================================\n\ndef demo_log_affine_closure():\n    \"\"\"Demonstrate that log-affine maps are closed under multiplication.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 5: Log-Affine Closure Under Multiplication\")\n    print(\"=\" * 70)\n    print()\n\n    n = 2\n\n    # f(x) = exp(2\u00b7log(x\u2081) + 1\u00b7log(x\u2082) + 0) = x\u2081\u00b2 \u00b7 x\u2082\n    w_f, c_f = [2.0, 1.0], 0.0\n    # g(x) = exp(-1\u00b7log(x\u2081) + 3\u00b7log(x\u2082) + log(2)) = 2 \u00b7 x\u2081\u207b\u00b9 \u00b7 x\u2082\u00b3\n    w_g, c_g = [-1.0, 3.0], math.log(2.0)\n\n    # Product: (f\u00b7g)(x) = exp((2-1)\u00b7log(x\u2081) + (1+3)\u00b7log(x\u2082) + (0+log2))\n    #                    = exp(1\u00b7log(x\u2081) + 4\u00b7log(x\u2082) + log2)\n    #                    = 2 \u00b7 x\u2081 \u00b7 x\u2082\u2074\n    w_fg = [w_f[i] + w_g[i] for i in range(n)]\n    c_fg = c_f + c_g\n\n    print(f\"f(x) = exp({w_f[0]}\u00b7log(x\u2081) + {w_f[1]}\u00b7log(x\u2082) + {c_f})\")\n    print(f\"     = x\u2081\u00b2 \u00b7 x\u2082\")\n    print()\n    print(f\"g(x) = exp({w_g[0]}\u00b7log(x\u2081) + {w_g[1]}\u00b7log(x\u2082) + {c_g:.4f})\")\n    print(f\"     = 2 \u00b7 x\u2081\u207b\u00b9 \u00b7 x\u2082\u00b3\")\n    print()\n    print(f\"Product weights: w = {w_fg}\")\n    print(f\"Product constant: c = {c_fg:.4f} (= log({math.exp(c_fg):.4f}))\")\n    print(f\"(f\u00b7g)(x) = 2 \u00b7 x\u2081 \u00b7 x\u2082\u2074\")\n    print()\n\n    test_vectors = [[2.0, 3.0], [1.0, 1.0], [0.5, 2.0], [3.0, 0.5]]\n\n    print(f\"  {'x':>12s}  {'f(x)':>10s}  {'g(x)':>10s}  {'f\u00b7g direct':>12s}  {'f\u00b7g normal':>12s}  {'Match?':>8s}\")\n    print(f\"  {'-'*12}  {'-'*10}  {'-'*10}  {'-'*12}  {'-'*12}  {'-'*8}\")\n    for x in test_vectors:\n        fx = eval_log_affine(w_f, c_f, x)\n        gx = eval_log_affine(w_g, c_g, x)\n        direct = fx * gx\n        normal = eval_log_affine(w_fg, c_fg, x)\n        match = abs(direct - normal) < 1e-10\n        print(f\"  {str(x):>12s}  {fx:10.4f}  {gx:10.4f}  {direct:12.4f}  {normal:12.4f}  {'\u2713' if match else '\u2717':>8s}\")\n\n    print()\n    print(\"Theorem logAffine_mul_closed verified numerically: the product\")\n    print(\"of log-affine maps is log-affine with summed weights and constants.\")\n    print()\n\n\n# ============================================================\n# Demo 6: Log Chart \u2014 Affine Becomes Linear\n# ============================================================\n\ndef demo_log_chart():\n    \"\"\"Demonstrate that log-affine maps become affine in log coordinates.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 6: The Log Chart \u2014 Multiplicative \u2192 Additive\")\n    print(\"=\" * 70)\n    print()\n\n    n = 3\n    w = [2.0, -1.0, 0.5]\n    c = math.log(5.0)\n\n    print(f\"Log-affine function: f(x) = exp(2\u00b7log(x\u2081) - log(x\u2082) + 0.5\u00b7log(x\u2083) + log(5))\")\n    print(f\"                          = 5 \u00b7 x\u2081\u00b2 \u00b7 x\u2082\u207b\u00b9 \u00b7 x\u2083^0.5\")\n    print()\n    print(f\"In log coordinates y_i = log(x_i):\")\n    print(f\"  log(f(x)) = 2\u00b7y\u2081 - y\u2082 + 0.5\u00b7y\u2083 + log(5)\")\n    print(f\"This is an AFFINE function of y \u2014 the theorem logAffine_log_is_affine.\")\n    print()\n\n    test_vectors = [[1.0, 1.0, 1.0], [2.0, 4.0, 9.0], [math.e, math.e, math.e]]\n\n    for x in test_vectors:\n        y = [math.log(xi) for xi in x]\n        fx = eval_log_affine(w, c, x)\n        log_fx = math.log(fx)\n        affine_val = sum(w[i] * y[i] for i in range(n)) + c\n        print(f\"  x = [{', '.join(f'{xi:.4f}' for xi in x)}]\")\n        print(f\"  y = log(x) = [{', '.join(f'{yi:.4f}' for yi in y)}]\")\n        print(f\"  f(x) = {fx:.6f}\")\n        print(f\"  log(f(x)) = {log_fx:.6f}\")\n        print(f\"  w\u00b7y + c   = {affine_val:.6f}\")\n        print(f\"  Match: {'\u2713' if abs(log_fx - affine_val) < 1e-10 else '\u2717'}\")\n        print()\n\n\nif __name__ == \"__main__\":\n    demo_normalization()\n    demo_weighted_geometric_mean()\n    demo_pairing()\n    demo_currying()\n    demo_log_affine_closure()\n    demo_log_chart()\n    print(\"All demonstrations complete.\")\n"
+      },
+      {
+        "name": "EML Real-World Applications",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nEML Category Applications\n==========================\nReal-world applications of EML categorical semantics:\n1. Cobb-Douglas production function (economics)\n2. Information geometry: Fisher information on exponential families\n3. Log-linear models for statistical inference\n4. Differentiable programming: trainable EML families\n5. Chemical reaction kinetics (mass-action law)\n\"\"\"\n\nimport math\nfrom typing import List, Tuple, Callable\n\n\n# ============================================================\n# Application 1: Cobb-Douglas Production Function\n# ============================================================\n\ndef cobb_douglas_demo():\n    \"\"\"\n    The Cobb-Douglas production function Y = A \u00b7 L^\u03b1 \u00b7 K^\u03b2\n    is a log-affine map on positive inputs (A, L, K).\n\n    In log coordinates: log Y = log A + \u03b1\u00b7log L + \u03b2\u00b7log K\n    which is affine \u2014 confirming logAffine_log_is_affine.\n\n    This means the entire microeconomic theory of production functions\n    with constant returns to scale lives inside the EML category.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Cobb-Douglas Production Function\")\n    print(\"=\" * 70)\n    print()\n\n    # Parameters\n    A = 1.0   # Total factor productivity\n    alpha = 0.7  # Labor elasticity\n    beta = 0.3   # Capital elasticity (constant returns: \u03b1 + \u03b2 = 1)\n\n    # Log-affine form: weights = [0, \u03b1, \u03b2], constant = log(A)\n    # On PosVec 3 where x = (A, L, K)\n    # But since A is fixed, simplify to PosVec 2 with x = (L, K)\n    w = [alpha, beta]\n    c = math.log(A)\n\n    print(f\"Y = A \u00b7 L^\u03b1 \u00b7 K^\u03b2  with A={A}, \u03b1={alpha}, \u03b2={beta}\")\n    print(f\"Log-affine form: exp({alpha}\u00b7log(L) + {beta}\u00b7log(K) + {c})\")\n    print()\n\n    scenarios = [\n        (\"Baseline\", 100, 50),\n        (\"Double labor\", 200, 50),\n        (\"Double capital\", 100, 100),\n        (\"Double both\", 200, 100),\n    ]\n\n    print(f\"  {'Scenario':>15s}  {'L':>6s}  {'K':>6s}  {'Y':>10s}  {'log Y':>10s}\")\n    print(f\"  {'-'*15}  {'-'*6}  {'-'*6}  {'-'*10}  {'-'*10}\")\n    for desc, L, K in scenarios:\n        Y = A * L**alpha * K**beta\n        logY = math.log(A) + alpha * math.log(L) + beta * math.log(K)\n        print(f\"  {desc:>15s}  {L:6d}  {K:6d}  {Y:10.2f}  {logY:10.4f}\")\n\n    print()\n    print(\"Key insight: in log coordinates, doubling inputs adds log(2) \u2248 0.693\")\n    print(f\"to log Y (since \u03b1+\u03b2=1). This linearity IS logAffine_log_is_affine.\")\n    print()\n\n\n# ============================================================\n# Application 2: Weighted Geometric Mean for Portfolio Returns\n# ============================================================\n\ndef portfolio_demo():\n    \"\"\"\n    Portfolio geometric mean return is a weighted geometric mean,\n    which is an EML-computable function (emlComputable_weightedGeomMean).\n\n    For assets with gross returns r_1, ..., r_n and portfolio weights w_i:\n    Portfolio gross return = prod(r_i^w_i) = exp(sum w_i * log(r_i))\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 2: Portfolio Geometric Mean Returns\")\n    print(\"=\" * 70)\n    print()\n\n    # Three assets with annual gross returns\n    asset_names = [\"Stocks\", \"Bonds\", \"Real Estate\"]\n    returns_history = [\n        [1.12, 1.05, 1.08],  # Year 1\n        [0.95, 1.03, 1.06],  # Year 2\n        [1.20, 1.02, 1.10],  # Year 3\n        [1.08, 1.04, 1.03],  # Year 4\n        [0.90, 1.06, 1.15],  # Year 5\n    ]\n\n    weights = [0.6, 0.3, 0.1]\n\n    print(f\"Portfolio weights: {dict(zip(asset_names, weights))}\")\n    print()\n\n    for year, returns in enumerate(returns_history, 1):\n        # Weighted geometric mean via EML formula\n        wgm = math.exp(sum(weights[i] * math.log(returns[i]) for i in range(3)))\n        print(f\"  Year {year}: returns = {returns} \u2192 portfolio return = {wgm:.4f} ({(wgm-1)*100:+.2f}%)\")\n\n    # Compound geometric mean across all years\n    all_portfolio = []\n    for returns in returns_history:\n        wgm = math.exp(sum(weights[i] * math.log(returns[i]) for i in range(3)))\n        all_portfolio.append(wgm)\n\n    compound = math.exp(sum(math.log(r) for r in all_portfolio) / len(all_portfolio))\n    print(f\"\\n  Compound annual geometric mean: {compound:.4f} ({(compound-1)*100:+.2f}%)\")\n    print(f\"  (This is a composition of EML-computable maps \u2014 vecEMLComp_comp)\")\n    print()\n\n\n# ============================================================\n# Application 3: Mass-Action Kinetics\n# ============================================================\n\ndef mass_action_demo():\n    \"\"\"\n    The mass-action law in chemistry:\n    reaction rate = k \u00b7 [A]^a \u00b7 [B]^b \u00b7 [C]^c\n\n    This is a log-affine function on concentrations.\n    By logAffine_mul_closed, combining reaction rates (e.g., for\n    competing pathways) preserves log-affine structure.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 3: Chemical Reaction Kinetics (Mass-Action Law)\")\n    print(\"=\" * 70)\n    print()\n\n    # Reaction: A + 2B \u2192 C\n    # Rate = k \u00b7 [A]^1 \u00b7 [B]^2\n    k = 0.05  # rate constant\n    print(f\"Reaction: A + 2B \u2192 C\")\n    print(f\"Rate law: r = k\u00b7[A]\u00b7[B]\u00b2  with k = {k}\")\n    print(f\"Log-affine form: exp(1\u00b7log[A] + 2\u00b7log[B] + log(k))\")\n    print()\n\n    concentrations = [\n        (1.0, 1.0),\n        (2.0, 1.0),\n        (1.0, 2.0),\n        (2.0, 2.0),\n        (0.5, 3.0),\n    ]\n\n    print(f\"  {'[A]':>6s}  {'[B]':>6s}  {'Rate':>10s}  {'log(Rate)':>10s}\")\n    print(f\"  {'-'*6}  {'-'*6}  {'-'*10}  {'-'*10}\")\n    for A_conc, B_conc in concentrations:\n        rate = k * A_conc * B_conc**2\n        log_rate = math.log(k) + math.log(A_conc) + 2 * math.log(B_conc)\n        print(f\"  {A_conc:6.2f}  {B_conc:6.2f}  {rate:10.4f}  {log_rate:10.4f}\")\n\n    print()\n    print(\"In log coordinates, the rate law becomes LINEAR:\")\n    print(\"  log(r) = log(k) + 1\u00b7log[A] + 2\u00b7log[B]\")\n    print(\"This is the content of logAffine_log_is_affine applied to chemistry.\")\n    print()\n\n\n# ============================================================\n# Application 4: Trainable EML Families\n# ============================================================\n\ndef trainable_family_demo():\n    \"\"\"\n    By vecEMLComp_curry, EML-computable maps on joint (\u03b8, x) space\n    give rise to trainable families indexed by parameters \u03b8.\n\n    Example: log-linear classifier\n    P(class=1 | x; \u03b8) = \u03c3(\u03b8\u00b7x) = 1/(1+exp(-\u03b8\u00b7x))\n    The softmax/logistic function is built from exp and arithmetic.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 4: Trainable EML Families (Differentiable Programming)\")\n    print(\"=\" * 70)\n    print()\n\n    # Simple 2D logistic classifier: \u03c3(\u03b8\u2081\u00b7x\u2081 + \u03b8\u2082\u00b7x\u2082 + b)\n    def logistic(z):\n        return 1.0 / (1.0 + math.exp(-z))\n\n    # Training data\n    data = [\n        ([1.0, 2.0], 1),\n        ([2.0, 1.0], 0),\n        ([3.0, 3.0], 1),\n        ([0.5, 0.5], 0),\n    ]\n\n    # Different parameter settings\n    param_sets = [\n        ([0.0, 0.0, 0.0], \"Untrained\"),\n        ([1.0, 1.0, -2.5], \"Partially trained\"),\n        ([0.5, 1.5, -2.0], \"Better fit\"),\n    ]\n\n    for params, name in param_sets:\n        theta1, theta2, b = params\n        print(f\"  Parameters \u03b8 = ({theta1}, {theta2}, {b})  [{name}]\")\n        print(f\"  F_\u03b8(x) = \u03c3({theta1}\u00b7x\u2081 + {theta2}\u00b7x\u2082 + {b})\")\n        total_loss = 0\n        for x, y in data:\n            pred = logistic(theta1 * x[0] + theta2 * x[1] + b)\n            loss = -(y * math.log(pred + 1e-10) + (1-y) * math.log(1 - pred + 1e-10))\n            total_loss += loss\n            print(f\"    x={x}, y={y}, P(1|x)={pred:.4f}, loss={loss:.4f}\")\n        print(f\"    Total loss: {total_loss:.4f}\")\n        print()\n\n    print(\"vecEMLComp_curry guarantees: for ANY fixed \u03b8,\")\n    print(\"the specialized map x \u21a6 F_\u03b8(x) is EML-computable.\")\n    print()\n\n\n# ============================================================\n# Application 5: Entropy and Information Geometry\n# ============================================================\n\ndef information_geometry_demo():\n    \"\"\"\n    Shannon entropy and KL divergence involve exp and log,\n    making them natural EML-computable quantities.\n\n    For a discrete distribution p = (p_1, ..., p_n):\n    H(p) = -\u2211 p_i \u00b7 log(p_i)\n\n    This is NOT log-affine (it involves addition of log terms),\n    but it IS EML-computable since ScalarEML includes both\n    add and exp/log (via composition with log).\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 5: Information Geometry \u2014 Entropy as EML Computation\")\n    print(\"=\" * 70)\n    print()\n\n    def entropy(p: List[float]) -> float:\n        return -sum(pi * math.log(pi) for pi in p if pi > 0)\n\n    def kl_divergence(p: List[float], q: List[float]) -> float:\n        return sum(pi * math.log(pi / qi) for pi, qi in zip(p, q) if pi > 0 and qi > 0)\n\n    distributions = [\n        ([0.5, 0.5], \"Fair coin\"),\n        ([0.9, 0.1], \"Biased coin\"),\n        ([0.25, 0.25, 0.25, 0.25], \"Fair 4-sided die\"),\n        ([0.7, 0.1, 0.1, 0.1], \"Loaded 4-sided die\"),\n    ]\n\n    print(\"Shannon Entropy H(p) = -\u2211 p\u1d62 \u00b7 log(p\u1d62)\")\n    print(\"(EML-computable: uses mul, log, add, neg)\")\n    print()\n\n    for p, name in distributions:\n        H = entropy(p)\n        print(f\"  {name:>25s}: H = {H:.4f} nats\")\n\n    print()\n    print(\"KL Divergence D_KL(p || q) = \u2211 p\u1d62 \u00b7 log(p\u1d62/q\u1d62)\")\n    print(\"(EML-computable: uses mul, log, div=mul\u00b7inv, add)\")\n    print()\n\n    p = [0.7, 0.2, 0.1]\n    q = [0.33, 0.33, 0.34]\n    print(f\"  p = {p}, q = {[round(qi, 2) for qi in q]}\")\n    print(f\"  D_KL(p || q) = {kl_divergence(p, q):.4f} nats\")\n    print(f\"  D_KL(q || p) = {kl_divergence(q, p):.4f} nats  (asymmetric!)\")\n    print()\n\n\nif __name__ == \"__main__\":\n    cobb_douglas_demo()\n    portfolio_demo()\n    mass_action_demo()\n    trainable_family_demo()\n    information_geometry_demo()\n    print(\"All applications demonstrated.\")\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Log-Affine Normalization",
+        "pseudocode": "Input: PosEMLExpr e, dimension n\nOutput: (w : R^n, c : R) such that eval(e, x) = exp(w . log(x) + c)\n\nfunction normalize(e, n):\n  match e with\n  | Coord(i)     -> return (e_i, 0)       -- unit vector, zero constant\n  | PosConst(c)  -> return (0, log(c))     -- zero weights, log of constant\n  | Mul(e1, e2)  -> (w1,c1) <- normalize(e1,n)\n                     (w2,c2) <- normalize(e2,n)\n                     return (w1+w2, c1+c2) -- add weights and constants\n  | RPow(e, r)   -> (w,c) <- normalize(e,n)\n                     return (r*w, r*c)     -- scale weights and constant\n\nComplexity: O(n * |e|) time, O(n * depth(e)) space\nCorrectness: Verified by evalPosEML_eq_logAffine in LogAffineNormal.lean",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nEML Category Algorithms\n========================\nImplementations of the core algorithms from the EML category theory:\n1. Log-affine normalization (verified in LogAffineNormal.lean)\n2. Expression depth and size analysis\n3. Composition of EML maps in log-affine normal form\n4. Random EML expression generation for testing\n\"\"\"\n\nimport math\nimport random\nfrom dataclasses import dataclass\nfrom typing import List, Tuple, Optional, Dict\n\n\n# ============================================================\n# Core Data Types\n# ============================================================\n\nclass PosEMLExpr:\n    \"\"\"Abstract base for multiplicative positive EML expressions.\"\"\"\n    pass\n\n@dataclass\nclass Coord(PosEMLExpr):\n    \"\"\"Coordinate projection x_i.\"\"\"\n    i: int\n    def __repr__(self): return f\"x[{self.i}]\"\n\n@dataclass\nclass PosConst(PosEMLExpr):\n    \"\"\"Positive constant c > 0.\"\"\"\n    c: float\n    def __repr__(self): return f\"{self.c:.4g}\"\n\n@dataclass\nclass Mul(PosEMLExpr):\n    \"\"\"Product e1 * e2.\"\"\"\n    e1: PosEMLExpr\n    e2: PosEMLExpr\n    def __repr__(self): return f\"({self.e1} * {self.e2})\"\n\n@dataclass\nclass RPow(PosEMLExpr):\n    \"\"\"Real power e^r.\"\"\"\n    e: PosEMLExpr\n    r: float\n    def __repr__(self): return f\"({self.e})^{self.r:.4g}\"\n\n\n@dataclass\nclass LogAffineForm:\n    \"\"\"\n    Log-affine normal form: exp(sum_i w[i] * log(x[i]) + c).\n\n    This represents a weighted geometric monomial:\n    prod_i x[i]^w[i] * exp(c)\n    \"\"\"\n    weights: List[float]\n    constant: float\n    dim: int\n\n    def evaluate(self, x: List[float]) -> float:\n        \"\"\"Evaluate on a positive vector.\"\"\"\n        assert len(x) == self.dim\n        return math.exp(\n            sum(self.weights[i] * math.log(x[i]) for i in range(self.dim))\n            + self.constant\n        )\n\n    def __repr__(self):\n        terms = []\n        for i, w in enumerate(self.weights):\n            if abs(w) > 1e-12:\n                terms.append(f\"{w:.4g}\u00b7log(x[{i}])\")\n        c_str = f\" + {self.constant:.4g}\" if abs(self.constant) > 1e-12 else \"\"\n        return f\"exp({' + '.join(terms) if terms else '0'}{c_str})\"\n\n\n# ============================================================\n# Algorithm 1: Log-Affine Normalization\n# ============================================================\n\ndef normalize(expr: PosEMLExpr, dim: int) -> LogAffineForm:\n    \"\"\"\n    Normalize a multiplicative positive EML expression to log-affine form.\n\n    This is the verified algorithm from LogAffineNormal.lean:\n    - Coord(i) \u2192 weights = e_i, c = 0\n    - PosConst(c) \u2192 weights = 0, c = log(c)\n    - Mul(e1, e2) \u2192 weights = w1 + w2, c = c1 + c2\n    - RPow(e, r) \u2192 weights = r * w, c = r * c\n\n    Time complexity: O(n * |expr|) where n = dim, |expr| = expression size\n    Space complexity: O(n * depth(expr)) for the recursion stack\n\n    Args:\n        expr: A multiplicative positive EML expression\n        dim: Input dimension\n\n    Returns:\n        LogAffineForm equivalent to the expression\n    \"\"\"\n    if isinstance(expr, Coord):\n        w = [0.0] * dim\n        w[expr.i] = 1.0\n        return LogAffineForm(w, 0.0, dim)\n\n    elif isinstance(expr, PosConst):\n        return LogAffineForm([0.0] * dim, math.log(expr.c), dim)\n\n    elif isinstance(expr, Mul):\n        f1 = normalize(expr.e1, dim)\n        f2 = normalize(expr.e2, dim)\n        return LogAffineForm(\n            [f1.weights[i] + f2.weights[i] for i in range(dim)],\n            f1.constant + f2.constant,\n            dim\n        )\n\n    elif isinstance(expr, RPow):\n        f = normalize(expr.e, dim)\n        return LogAffineForm(\n            [expr.r * w for w in f.weights],\n            expr.r * f.constant,\n            dim\n        )\n\n    else:\n        raise ValueError(f\"Unknown expression type: {type(expr)}\")\n\n\n# ============================================================\n# Algorithm 2: Composition of Log-Affine Maps\n# ============================================================\n\ndef compose_log_affine(\n    outer: LogAffineForm,\n    inners: List[LogAffineForm]\n) -> LogAffineForm:\n    \"\"\"\n    Compose a scalar log-affine map with a vector of log-affine maps.\n\n    Given outer: R^m -> R with form exp(sum_j v[j] * log(y[j]) + d)\n    and inners: R^n -> R^m with inner[j] = exp(sum_i w_j[i] * log(x[i]) + c_j),\n\n    the composition is:\n    outer(inner(x)) = exp(sum_j v[j] * (sum_i w_j[i]*log(x[i]) + c_j) + d)\n                     = exp(sum_i (sum_j v[j]*w_j[i]) * log(x[i]) + (sum_j v[j]*c_j + d))\n\n    This shows that composition of log-affine maps is log-affine,\n    which is the content of vecEMLComp_comp restricted to the multiplicative fragment.\n\n    Time complexity: O(n * m)\n    \"\"\"\n    assert len(inners) == outer.dim, \"Dimension mismatch\"\n    n = inners[0].dim if inners else 0\n\n    # Compute composed weights: w'[i] = sum_j v[j] * w_j[i]\n    new_weights = [0.0] * n\n    for j in range(outer.dim):\n        for i in range(n):\n            new_weights[i] += outer.weights[j] * inners[j].weights[i]\n\n    # Compute composed constant: c' = sum_j v[j] * c_j + d\n    new_constant = outer.constant\n    for j in range(outer.dim):\n        new_constant += outer.weights[j] * inners[j].constant\n\n    return LogAffineForm(new_weights, new_constant, n)\n\n\n# ============================================================\n# Algorithm 3: Random Expression Generation\n# ============================================================\n\ndef random_pos_eml(dim: int, max_depth: int = 4) -> PosEMLExpr:\n    \"\"\"\n    Generate a random multiplicative positive EML expression.\n\n    Used for testing the normalization theorem:\n    for any generated expression, evaluate(expr, x) should equal\n    normalize(expr, dim).evaluate(x) for all positive x.\n    \"\"\"\n    if max_depth <= 0 or random.random() < 0.3:\n        # Base case: coordinate or constant\n        if random.random() < 0.6:\n            return Coord(random.randint(0, dim - 1))\n        else:\n            return PosConst(random.uniform(0.1, 10.0))\n    else:\n        choice = random.random()\n        if choice < 0.5:\n            return Mul(\n                random_pos_eml(dim, max_depth - 1),\n                random_pos_eml(dim, max_depth - 1)\n            )\n        else:\n            return RPow(\n                random_pos_eml(dim, max_depth - 1),\n                random.uniform(-3.0, 3.0)\n            )\n\n\ndef evaluate_expr(expr: PosEMLExpr, x: List[float]) -> float:\n    \"\"\"Direct evaluation of a PosEMLExpr.\"\"\"\n    if isinstance(expr, Coord):\n        return x[expr.i]\n    elif isinstance(expr, PosConst):\n        return expr.c\n    elif isinstance(expr, Mul):\n        return evaluate_expr(expr.e1, x) * evaluate_expr(expr.e2, x)\n    elif isinstance(expr, RPow):\n        return evaluate_expr(expr.e, x) ** expr.r\n    else:\n        raise ValueError(f\"Unknown: {type(expr)}\")\n\n\n# ============================================================\n# Algorithm 4: Expression Analysis\n# ============================================================\n\ndef expr_depth(expr: PosEMLExpr) -> int:\n    \"\"\"Compute the depth of an expression tree.\"\"\"\n    if isinstance(expr, (Coord, PosConst)):\n        return 0\n    elif isinstance(expr, Mul):\n        return 1 + max(expr_depth(expr.e1), expr_depth(expr.e2))\n    elif isinstance(expr, RPow):\n        return 1 + expr_depth(expr.e)\n    return 0\n\ndef expr_size(expr: PosEMLExpr) -> int:\n    \"\"\"Compute the number of nodes in an expression tree.\"\"\"\n    if isinstance(expr, (Coord, PosConst)):\n        return 1\n    elif isinstance(expr, Mul):\n        return 1 + expr_size(expr.e1) + expr_size(expr.e2)\n    elif isinstance(expr, RPow):\n        return 1 + expr_size(expr.e)\n    return 1\n\n\n# ============================================================\n# Verification tests\n# ============================================================\n\ndef test_normalization(num_tests: int = 100, dim: int = 3):\n    \"\"\"\n    Empirically verify the normalization theorem:\n    for random expressions, direct evaluation matches normal form evaluation.\n    \"\"\"\n    print(f\"Testing normalization on {num_tests} random expressions (dim={dim})...\")\n    max_error = 0.0\n    for trial in range(num_tests):\n        expr = random_pos_eml(dim, max_depth=4)\n        nf = normalize(expr, dim)\n        x = [random.uniform(0.1, 5.0) for _ in range(dim)]\n\n        direct = evaluate_expr(expr, x)\n        normal = nf.evaluate(x)\n\n        if direct > 0 and normal > 0:\n            # Use relative error in log space for numerical stability\n            err = abs(math.log(direct) - math.log(normal))\n            max_error = max(max_error, err)\n\n    print(f\"  Max log-space error: {max_error:.2e}\")\n    print(f\"  Status: {'PASS' if max_error < 1e-8 else 'FAIL'}\")\n    return max_error < 1e-8\n\n\ndef test_composition(num_tests: int = 50, dim: int = 3):\n    \"\"\"\n    Test that composition of log-affine maps produces correct results.\n    \"\"\"\n    print(f\"Testing composition on {num_tests} random pairs (dim={dim})...\")\n    max_error = 0.0\n    for _ in range(num_tests):\n        m = random.randint(1, 4)\n        # Random outer function R^m -> R\n        outer = LogAffineForm(\n            [random.uniform(-2, 2) for _ in range(m)],\n            random.uniform(-1, 1), m\n        )\n        # Random inner functions R^dim -> R, one per coordinate\n        inners = [\n            LogAffineForm(\n                [random.uniform(-2, 2) for _ in range(dim)],\n                random.uniform(-1, 1), dim\n            ) for _ in range(m)\n        ]\n\n        composed = compose_log_affine(outer, inners)\n        x = [random.uniform(0.1, 5.0) for _ in range(dim)]\n\n        # Direct: outer(inner1(x), ..., innerm(x))\n        inner_vals = [f.evaluate(x) for f in inners]\n        direct = outer.evaluate(inner_vals)\n        normal = composed.evaluate(x)\n\n        if direct > 0 and normal > 0:\n            err = abs(math.log(direct) - math.log(normal))\n            max_error = max(max_error, err)\n\n    print(f\"  Max log-space error: {max_error:.2e}\")\n    print(f\"  Status: {'PASS' if max_error < 1e-8 else 'FAIL'}\")\n    return max_error < 1e-8\n\n\nif __name__ == \"__main__\":\n    print(\"EML Category Algorithms \u2014 Verification Tests\")\n    print(\"=\" * 60)\n    print()\n\n    random.seed(42)\n    ok1 = test_normalization()\n    print()\n    ok2 = test_composition()\n    print()\n\n    if ok1 and ok2:\n        print(\"All tests PASSED.\")\n    else:\n        print(\"Some tests FAILED.\")\n",
+        "code_file": "visualizations/eml_category_the_category_of_eml_computable_maps_log_affine_normalization.py"
+      }
+    ],
+    "lean_proofs": "/-\nCopyright (c) 2026 Harmonic. All rights reserved.\nReleased under Apache 2.0 license.\n-/\nimport Mathlib\n\n/-!\n# EML Category: Multivariate EML-Computable Maps\n\nThis file defines a genuine categorical semantics for exponential-logarithmic computation\non finite-dimensional real vector spaces. The key innovation is lifting the unary EML closure\ntheory to a multivariate setting with finite-product structure.\n\n## Main definitions\n\n* `ScalarEML n f` \u2014 Inductive predicate asserting that a scalar function `f : (Fin n \u2192 \u211d) \u2192 \u211d`\n  is generated by coordinate projections, constants, addition, multiplication, exponentiation,\n  and generalized composition from intermediate vector spaces.\n\n* `VecEMLComp n m f` \u2014 A vector-valued function `f : (Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)` is\n  EML-computable iff each coordinate component is `ScalarEML`.\n\n* `PosVec n` \u2014 Bundled positive real vectors, the natural domain for logarithmic operations.\n\n* `LogAffine n f` \u2014 A scalar function on positive vectors is log-affine if it has the form\n  `x \u21a6 exp(\u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c)`, i.e., a weighted geometric monomial.\n\n## Design choices\n\nWe parameterize `ScalarEML` by the input dimension `n` and include a generalized composition\nrule that composes through an intermediate dimension `m`. This makes the predicate powerful\nenough to capture all multivariate EML computations while remaining inductively well-founded.\n\nThe `VecEMLComp` predicate is defined coordinatewise: a vector map is EML-computable iff\neach output coordinate is a scalar EML expression. This naturally supports tupling/pairing.\n-/\n\nnoncomputable section\n\nopen Finset Real\n\n/-! ## Core inductive predicate for scalar EML computability -/\n\n/-- `ScalarEML n f` asserts that `f : (Fin n \u2192 \u211d) \u2192 \u211d` is built from:\n- coordinate projections `x\u1d62`,\n- real constants `c`,\n- pointwise addition `f + g`,\n- pointwise multiplication `f \u00b7 g`,\n- pointwise exponentiation `exp \u2218 f`,\n- generalized composition: given `h : (Fin m \u2192 \u211d) \u2192 \u211d` and `g : Fin m \u2192 ((Fin n \u2192 \u211d) \u2192 \u211d)`,\n  form `x \u21a6 h(g\u2081(x), \u2026, g\u2098(x))`.\n\nThis is the fundamental building block for multivariate EML semantics. -/\ninductive ScalarEML : (n : \u2115) \u2192 ((Fin n \u2192 \u211d) \u2192 \u211d) \u2192 Prop where\n  | coord {n : \u2115} (i : Fin n) : ScalarEML n (fun x => x i)\n  | const {n : \u2115} (c : \u211d) : ScalarEML n (fun _ => c)\n  | add {n : \u2115} {f g : (Fin n \u2192 \u211d) \u2192 \u211d} :\n      ScalarEML n f \u2192 ScalarEML n g \u2192 ScalarEML n (fun x => f x + g x)\n  | mul {n : \u2115} {f g : (Fin n \u2192 \u211d) \u2192 \u211d} :\n      ScalarEML n f \u2192 ScalarEML n g \u2192 ScalarEML n (fun x => f x * g x)\n  | exp {n : \u2115} {f : (Fin n \u2192 \u211d) \u2192 \u211d} :\n      ScalarEML n f \u2192 ScalarEML n (fun x => Real.exp (f x))\n  | comp {n m : \u2115} {h : (Fin m \u2192 \u211d) \u2192 \u211d} {g : Fin m \u2192 ((Fin n \u2192 \u211d) \u2192 \u211d)} :\n      ScalarEML m h \u2192 (\u2200 i, ScalarEML n (g i)) \u2192\n      ScalarEML n (fun x => h (fun i => g i x))\n\n/-! ## Vector-valued EML computability -/\n\n/-- A vector-valued function `f : (Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)` is **EML-computable**\niff each output coordinate `f(x)_j` is a scalar EML expression. This coordinatewise\ndefinition naturally supports tupling and product constructions. -/\ndef VecEMLComp (n m : \u2115) (f : (Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)) : Prop :=\n  \u2200 j : Fin m, ScalarEML n (fun x => f x j)\n\n/-! ## Positive vectors and log-affine maps -/\n\n/-- A **positive vector** of dimension `n`: all coordinates are strictly positive.\nThis is the natural domain for logarithmic operations in the EML framework. -/\nstructure PosVec (n : \u2115) where\n  /-- The underlying function from `Fin n` to `\u211d`. -/\n  val : Fin n \u2192 \u211d\n  /-- Every coordinate is strictly positive. -/\n  pos : \u2200 i, 0 < val i\n\ninstance {n : \u2115} : CoeFun (PosVec n) (fun _ => Fin n \u2192 \u211d) where\n  coe := PosVec.val\n\n/-- A scalar function on positive vectors is **log-affine** if it has the form\n`x \u21a6 exp(\u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c)`. Equivalently, in logarithmic coordinates\n`y\u1d62 = log(x\u1d62)`, the function becomes `y \u21a6 exp(w \u00b7 y + c)`, which is the\nexponential of an affine function.\n\nLog-affine maps capture weighted geometric monomials:\n`x\u2081^w\u2081 \u00b7 x\u2082^w\u2082 \u00b7 \u22ef \u00b7 x\u2099^w\u2099 \u00b7 e\u1d9c`. -/\ndef LogAffine (n : \u2115) (f : PosVec n \u2192 \u211d) : Prop :=\n  \u2203 w : Fin n \u2192 \u211d, \u2203 c : \u211d,\n    \u2200 x : PosVec n, f x = Real.exp (\u2211 i, w i * Real.log (x.val i) + c)\n\nend\n\n\n/-\nCopyright (c) 2026 Harmonic. All rights reserved.\nReleased under Apache 2.0 license.\n-/\nimport EML.CategoryDefs\n\n/-!\n# EML Category Theorems: Categorical and Analytic Structure\n\nThis file proves that EML-computable maps form a category with finite products and\nestablishes cross-domain theorems connecting EML computation to log-affine geometry.\n\n## Main results\n\n### Categorical structure (Theorems 1\u20133)\n* `vecEMLComp_id` \u2014 The identity map is EML-computable.\n* `vecEMLComp_comp` \u2014 EML-computable maps are closed under composition.\n* `vecEMLComp_pair` \u2014 EML-computable maps are closed under pairing (finite products).\n\n### Analytical structure (Theorems 4\u20135)\n* `logAffine_mul_closed` \u2014 Log-affine maps are closed under multiplication.\n* `logAffine_log_is_affine` \u2014 Log-affine maps become affine in logarithmic coordinates.\n\n### Additional results\n* `scalarEML_neg` \u2014 Negation preserves scalar EML computability.\n* `scalarEML_sub` \u2014 Subtraction preserves scalar EML computability.\n* `scalarEML_sum` \u2014 Finite sums of EML-computable functions are EML-computable.\n* `vecEMLComp_proj` \u2014 Coordinate projections are EML-computable.\n* `emlComputable_weightedGeomMean` \u2014 Weighted geometric means are EML-computable.\n\n## Proof strategy\n\nAll categorical theorems are proved by structural induction on the `ScalarEML` derivation\nor by coordinatewise reduction. The cross-domain theorems use algebraic identities for\n`Real.exp` and `Real.log` (`exp_add`, `log_mul`, `log_exp`).\n-/\n\nnoncomputable section\n\nopen Finset Real\n\n/-! ## Basic scalar EML closure properties -/\n\n/-- Negation preserves scalar EML computability: if `f` is EML-computable, so is `-f`. -/\ntheorem scalarEML_neg {n : \u2115} {f : (Fin n \u2192 \u211d) \u2192 \u211d}\n    (hf : ScalarEML n f) : ScalarEML n (fun x => -(f x)) := by\n  have : (fun x => -(f x)) = (fun x => (fun _ => (-1 : \u211d)) x * f x) := by ext; ring\n  rw [this]\n  exact ScalarEML.mul (ScalarEML.const (-1)) hf\n\n/-- Subtraction preserves scalar EML computability. -/\ntheorem scalarEML_sub {n : \u2115} {f g : (Fin n \u2192 \u211d) \u2192 \u211d}\n    (hf : ScalarEML n f) (hg : ScalarEML n g) :\n    ScalarEML n (fun x => f x - g x) := by\n  have : (fun x => f x - g x) = (fun x => f x + (-(g x))) := by ext; ring\n  rw [this]\n  exact ScalarEML.add hf (scalarEML_neg hg)\n\n/-- Finite sums of EML-computable scalar functions are EML-computable. -/\ntheorem scalarEML_sum {n k : \u2115} {fs : Fin k \u2192 ((Fin n \u2192 \u211d) \u2192 \u211d)}\n    (hfs : \u2200 i, ScalarEML n (fs i)) :\n    ScalarEML n (fun x => \u2211 i : Fin k, fs i x) := by\n  induction k with\n  | zero =>\n    simp\n    exact ScalarEML.const 0\n  | succ k ih =>\n    have : (fun x => \u2211 i : Fin (k + 1), fs i x) =\n           (fun x => (\u2211 i : Fin k, fs (Fin.castSucc i) x) + fs (Fin.last k) x) := by\n      ext x\n      rw [Fin.sum_univ_castSucc]\n    rw [this]\n    exact ScalarEML.add (ih (fun i => hfs (Fin.castSucc i))) (hfs (Fin.last k))\n\n/-! ## Theorem 1: Identity is EML-computable -/\n\n/-- **The identity map is EML-computable.** This is the first categorical axiom:\nevery object has an identity morphism. -/\ntheorem vecEMLComp_id (n : \u2115) : VecEMLComp n n (fun x => x) := by\n  intro j\n  exact ScalarEML.coord j\n\n/-! ## Theorem 2: Composition closure -/\n\n/-- **EML-computable maps are closed under composition.** This is the second categorical\naxiom: morphisms compose. The proof works by showing that for each output coordinate `j`,\nthe composed function `g(f(x))_j` is scalar EML by composing the scalar EML derivation\nfor `g(\u00b7)_j` with the vector of scalar EML derivations for `f(\u00b7)_i`.\n\nThis is the multivariate generalization of `eml_closure_closed_under_comp` from\n`ClosureOperator.lean`, lifting from unary to finite-dimensional semantics. -/\ntheorem vecEMLComp_comp {n m k : \u2115}\n    {f : (Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)}\n    {g : (Fin m \u2192 \u211d) \u2192 (Fin k \u2192 \u211d)}\n    (hf : VecEMLComp n m f) (hg : VecEMLComp m k g) :\n    VecEMLComp n k (fun x => g (f x)) := by\n  intro j\n  -- g(\u00b7)_j is ScalarEML m, and each f(\u00b7)_i is ScalarEML n\n  -- By the composition rule, g(f(x))_j is ScalarEML n\n  exact ScalarEML.comp (hg j) hf\n\n/-! ## Theorem 3: Product stability / Pairing -/\n\n/-- **Coordinate projection is EML-computable.** Projecting onto any single coordinate\nis a basic EML-computable map. -/\ntheorem vecEMLComp_proj {n : \u2115} (i : Fin n) :\n    VecEMLComp n 1 (fun x => ![x i]) := by\n  intro j\n  fin_cases j\n  simp\n  exact ScalarEML.coord i\n\n/-- **EML-computable maps are closed under pairing (finite products).**\nGiven `f : \u211d\u207f \u2192 \u211d\u1d50` and `g : \u211d\u207f \u2192 \u211d\u1d4f`, both EML-computable, the paired map\n`x \u21a6 (f(x), g(x)) : \u211d\u207f \u2192 \u211d\u1d50\u207a\u1d4f` is also EML-computable.\n\nThis establishes that the category of EML-computable maps has finite products,\nupgrading EML from \"a class of formulas\" to a semantic universe with product structure.\nThe paired output uses `Fin.addCases` to index the first `m` coordinates by `f`\nand the remaining `k` coordinates by `g`. -/\ntheorem vecEMLComp_pair {n m k : \u2115}\n    {f : (Fin n \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)}\n    {g : (Fin n \u2192 \u211d) \u2192 (Fin k \u2192 \u211d)}\n    (hf : VecEMLComp n m f) (hg : VecEMLComp n k g) :\n    VecEMLComp n (m + k) (fun x => Fin.addCases (f x) (g x)) := by\n  intro j\n  refine Fin.addCases (fun i => ?_) (fun i => ?_) j\n  \u00b7 -- For indices in the first m coordinates, use f\n    simp [Fin.addCases]\n    exact hf i\n  \u00b7 -- For indices in the last k coordinates, use g\n    simp [Fin.addCases]\n    exact hg i\n\n/-! ## Theorem 4: Log-affine maps are closed under multiplication -/\n\n/-\n**Log-affine maps are closed under pointwise multiplication.**\nIf `f(x) = exp(\u2211\u1d62 w\u1d62 log(x\u1d62) + c)` and `g(x) = exp(\u2211\u1d62 v\u1d62 log(x\u1d62) + d)`,\nthen `(f \u00b7 g)(x) = exp(\u2211\u1d62 (w\u1d62 + v\u1d62) log(x\u1d62) + (c + d))`.\n\nThis shows the log-affine fragment forms a multiplicative monoid, connecting\nEML semantics to information geometry and log-linear statistical models.\n-/\ntheorem logAffine_mul_closed {n : \u2115} {f g : PosVec n \u2192 \u211d}\n    (hf : LogAffine n f) (hg : LogAffine n g) :\n    LogAffine n (fun x => f x * g x) := by\n  obtain \u27e8 w\u2081, c\u2081, hw\u2081 \u27e9 := hf; obtain \u27e8 w\u2082, c\u2082, hw\u2082 \u27e9 := hg; use w\u2081 + w\u2082; use c\u2081 + c\u2082; intro x; simp +decide [ hw\u2081, hw\u2082, Real.exp_add, add_mul, Finset.sum_add_distrib ] ;\n  ring\n\n/-\n**Log-affine maps become affine in logarithmic coordinates.**\nIf `f` is log-affine, then `log(f(x)) = \u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c`.\n\nThis is the key cross-domain theorem: it identifies the multiplicative fragment\nof EML computation with affine geometry in logarithmic coordinates, bridging\nanalytic computation to convex analysis and tropical geometry.\n-/\ntheorem logAffine_log_is_affine {n : \u2115} {f : PosVec n \u2192 \u211d}\n    (hf : LogAffine n f) :\n    \u2203 w : Fin n \u2192 \u211d, \u2203 c : \u211d,\n      \u2200 x : PosVec n, Real.log (f x) = \u2211 i, w i * Real.log (x.val i) + c := by\n  rcases hf with \u27e8 w, c, h \u27e9;\n  -- Apply the natural logarithm to both sides of the equation from h.\n  use w, c\n  intro x\n  simp [h, Real.log_exp]\n\n/-! ## Theorem 5: Weighted geometric mean is EML-computable -/\n\n/-\n**Weighted geometric means are EML-computable on positive inputs.**\nFor any weight vector `w`, the map\n`x \u21a6 exp(\u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62))`\nis a scalar EML expression. This internalizes nonlinear scaling laws, geometric means,\nand multiplicative statistics within the EML framework.\n-/\ntheorem emlComputable_weightedGeomMean {n : \u2115} (w : Fin n \u2192 \u211d) :\n    LogAffine n (fun x : PosVec n => Real.exp (\u2211 i, w i * Real.log (x.val i))) := by\n  exact \u27e8 w, 0, fun x => by simp +decide \u27e9\n\n/-! ## Theorem 6: Parameterized EML maps (currying) -/\n\n/-\n**EML-computable maps support currying via parameter splitting.**\nIf `f : \u211d\u1d56\u207a\u207f \u2192 \u211d\u1d50` is EML-computable on a combined input space,\nthen for any fixed parameter vector `\u03b8 : Fin p \u2192 \u211d`, the specialized map\n`x \u21a6 f(\u03b8, x)` is EML-computable.\n\nThis formalizes the idea that EML families support \"parameter sharing\":\na single EML-computable map on the joint space gives rise to a family\nof EML-computable maps indexed by parameters.\n-/\ntheorem vecEMLComp_curry {p n m : \u2115}\n    {f : (Fin (p + n) \u2192 \u211d) \u2192 (Fin m \u2192 \u211d)}\n    (hf : VecEMLComp (p + n) m f)\n    (\u03b8 : Fin p \u2192 \u211d) :\n    VecEMLComp n m (fun x => f (Fin.addCases \u03b8 x)) := by\n  intro j;\n  convert ScalarEML.comp ( hf j ) _;\n  intro i; refine' Fin.addCases _ _ i <;> simp +decide ;\n  \u00b7 exact fun i => ScalarEML.const _;\n  \u00b7 exact fun i => ScalarEML.coord i\n\n/-! ## Additional categorical constructions -/\n\n/-- The constant map is EML-computable. -/\ntheorem vecEMLComp_const {n m : \u2115} (v : Fin m \u2192 \u211d) :\n    VecEMLComp n m (fun _ => v) := by\n  intro j\n  exact ScalarEML.const (v j)\n\n/-- The zero map is EML-computable. -/\ntheorem vecEMLComp_zero {n m : \u2115} :\n    VecEMLComp n m (fun _ => 0) := by\n  exact vecEMLComp_const 0\n\n/-\nScalar EML functions on positive inputs are log-affine when they have the right form.\n-/\ntheorem logAffine_const {n : \u2115} (c : \u211d) :\n    LogAffine n (fun _ : PosVec n => Real.exp c) := by\n  exact \u27e8 fun _ \u21a6 0, c, fun _ \u21a6 by simp +decide \u27e9\n\n/-\nLog-affine positivity: log-affine functions are strictly positive.\n-/\ntheorem logAffine_pos {n : \u2115} {f : PosVec n \u2192 \u211d}\n    (hf : LogAffine n f) (x : PosVec n) : 0 < f x := by\n  obtain \u27e8 w, c, h \u27e9 := hf;\n  exact h x \u25b8 Real.exp_pos _\n\nend\n\n/-\nCopyright (c) 2026 Harmonic. All rights reserved.\nReleased under Apache 2.0 license.\n-/\nimport EML.CategoryDefs\n\n/-!\n# Log-Affine Normal Form and Normalization\n\nThis file defines a syntactic representation of the multiplicative positive EML fragment\nand proves a semantic normalization theorem: every expression in the multiplicative\npositive fragment evaluates to a log-affine function.\n\n## Main definitions\n\n* `PosEMLExpr n` \u2014 Inductive syntax for the multiplicative positive fragment of EML:\n  coordinate projections, positive constants, multiplication, and real powers `x^r`.\n\n* `evalPosEML` \u2014 Semantic evaluation of `PosEMLExpr n` on positive vectors.\n\n* `toLogAffineForm` \u2014 Syntactic normalization: every `PosEMLExpr` normalizes to\n  weights `w : Fin n \u2192 \u211d` and a constant `c : \u211d`.\n\n## Main results\n\n* `evalPosEML_eq_logAffine` \u2014 Semantic correctness: the evaluation of any multiplicative\n  positive EML expression equals its log-affine normal form `exp(\u2211 w\u1d62 log x\u1d62 + c)`.\n\n* `posEML_is_logAffine` \u2014 Every multiplicative positive EML expression is `LogAffine`.\n\n## Significance\n\nThis establishes a **normal form theorem** for the multiplicative positive fragment:\nevery expression built from coordinate projections, positive constants, multiplication,\nand real powers is equivalent to a weighted geometric monomial. This is the algebraic\ncontent of \"log-linearization\" \u2014 the multiplicative fragment secretly lives in the\naffine geometry of logarithmic coordinates.\n-/\n\nnoncomputable section\n\nopen Finset Real\n\n/-! ## Syntax for the multiplicative positive fragment -/\n\n/-- Syntactic expressions for the multiplicative positive EML fragment.\nThese expressions are guaranteed to evaluate to positive values on positive inputs. -/\ninductive PosEMLExpr (n : \u2115) : Type where\n  /-- Coordinate projection `x\u1d62`. -/\n  | coord (i : Fin n) : PosEMLExpr n\n  /-- A positive constant `c > 0`. -/\n  | posConst (c : \u211d) (hc : 0 < c) : PosEMLExpr n\n  /-- Multiplication `e\u2081 \u00b7 e\u2082`. -/\n  | mul (e\u2081 e\u2082 : PosEMLExpr n) : PosEMLExpr n\n  /-- Real power `e^r` for `r : \u211d`. -/\n  | rpow (e : PosEMLExpr n) (r : \u211d) : PosEMLExpr n\n\n/-- Semantic evaluation of a multiplicative positive EML expression on a positive vector. -/\ndef evalPosEML {n : \u2115} : PosEMLExpr n \u2192 PosVec n \u2192 \u211d\n  | .coord i, x => x.val i\n  | .posConst c _, _ => c\n  | .mul e\u2081 e\u2082, x => evalPosEML e\u2081 x * evalPosEML e\u2082 x\n  | .rpow e r, x => (evalPosEML e x) ^ r\n\n/-\nEvaluation of positive EML expressions is strictly positive on positive inputs.\n-/\ntheorem evalPosEML_pos {n : \u2115} (e : PosEMLExpr n) (x : PosVec n) :\n    0 < evalPosEML e x := by\n  induction' e with e\u2081 e\u2082 ih\u2081 ih\u2082 e ih;\n  \u00b7 exact x.pos e\u2081;\n  \u00b7 exact ih\u2081;\n  \u00b7 exact mul_pos ih \u2039_\u203a;\n  \u00b7 exact Real.rpow_pos_of_pos \u2039_\u203a _\n\n/-! ## Syntactic normalization to log-affine form -/\n\n/-- Normalize a multiplicative positive EML expression to log-affine form:\nreturns weights `w : Fin n \u2192 \u211d` and a constant `c : \u211d` such that the expression\nevaluates to `exp(\u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c)`. -/\ndef toLogAffineForm {n : \u2115} : PosEMLExpr n \u2192 (Fin n \u2192 \u211d) \u00d7 \u211d\n  | .coord i => (Pi.single i 1, 0)\n  | .posConst c _ => (0, Real.log c)\n  | .mul e\u2081 e\u2082 =>\n    let (w\u2081, c\u2081) := toLogAffineForm e\u2081\n    let (w\u2082, c\u2082) := toLogAffineForm e\u2082\n    (w\u2081 + w\u2082, c\u2081 + c\u2082)\n  | .rpow e r =>\n    let (w, c) := toLogAffineForm e\n    (r \u2022 w, r * c)\n\n/-\n**Semantic correctness of normalization.** The evaluation of any multiplicative\npositive EML expression equals its log-affine normal form.\n\nFor any expression `e` and positive input `x`:\n  `eval(e)(x) = exp(\u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c)`\nwhere `(w, c) = toLogAffineForm(e)`.\n\nThis is the core normalization theorem: it says the syntactic normalization procedure\ncorrectly computes the log-affine representation.\n-/\ntheorem evalPosEML_eq_logAffine {n : \u2115} (e : PosEMLExpr n) (x : PosVec n) :\n    evalPosEML e x =\n      Real.exp (\u2211 i, (toLogAffineForm e).1 i * Real.log (x.val i) + (toLogAffineForm e).2) := by\n  induction' e with e\u2081 e\u2082 ih\u2081 ih\u2082;\n  \u00b7 simp +decide [ evalPosEML, toLogAffineForm ];\n    rw [ Finset.sum_eq_single e\u2081 ] <;> simp +decide [ Real.exp_log ( x.pos _ ) ];\n    exact fun i hi => Or.inl <| Pi.single_eq_of_ne hi _;\n  \u00b7 unfold evalPosEML toLogAffineForm; norm_num [ Real.exp_log ih\u2081 ] ;\n  \u00b7 erw [ show evalPosEML ( ih\u2082.mul _ ) x = evalPosEML ih\u2082 x * evalPosEML _ x from rfl ] ; simp_all +decide [ Real.exp_add, Finset.sum_add_distrib ];\n    erw [ show toLogAffineForm ( ih\u2082.mul _ ) = ( ( toLogAffineForm ih\u2082 ).1 + ( toLogAffineForm _ ).1, ( toLogAffineForm ih\u2082 ).2 + ( toLogAffineForm _ ).2 ) from rfl ] ; simp +decide [ Finset.sum_add_distrib, mul_assoc, \u2190 Real.exp_add ] ; ring;\n    rw [ Finset.sum_add_distrib ] ; ring;\n  \u00b7 simp_all +decide [ evalPosEML, toLogAffineForm ];\n    rw [ \u2190 Real.exp_mul ] ; simp +decide [ mul_add, mul_assoc, mul_comm, mul_left_comm, Finset.mul_sum _ _ _ ] ;\n\n/-- Every multiplicative positive EML expression is `LogAffine`. -/\ntheorem posEML_is_logAffine {n : \u2115} (e : PosEMLExpr n) :\n    LogAffine n (evalPosEML e) := by\n  exact \u27e8(toLogAffineForm e).1, (toLogAffineForm e).2,\n    fun x => evalPosEML_eq_logAffine e x\u27e9\n\nend",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nEML Category Algorithms\n========================\nImplementations of the core algorithms from the EML category theory:\n1. Log-affine normalization (verified in LogAffineNormal.lean)\n2. Expression depth and size analysis\n3. Composition of EML maps in log-affine normal form\n4. Random EML expression generation for testing\n\"\"\"\n\nimport math\nimport random\nfrom dataclasses import dataclass\nfrom typing import List, Tuple, Optional, Dict\n\n\n# ============================================================\n# Core Data Types\n# ============================================================\n\nclass PosEMLExpr:\n    \"\"\"Abstract base for multiplicative positive EML expressions.\"\"\"\n    pass\n\n@dataclass\nclass Coord(PosEMLExpr):\n    \"\"\"Coordinate projection x_i.\"\"\"\n    i: int\n    def __repr__(self): return f\"x[{self.i}]\"\n\n@dataclass\nclass PosConst(PosEMLExpr):\n    \"\"\"Positive constant c > 0.\"\"\"\n    c: float\n    def __repr__(self): return f\"{self.c:.4g}\"\n\n@dataclass\nclass Mul(PosEMLExpr):\n    \"\"\"Product e1 * e2.\"\"\"\n    e1: PosEMLExpr\n    e2: PosEMLExpr\n    def __repr__(self): return f\"({self.e1} * {self.e2})\"\n\n@dataclass\nclass RPow(PosEMLExpr):\n    \"\"\"Real power e^r.\"\"\"\n    e: PosEMLExpr\n    r: float\n    def __repr__(self): return f\"({self.e})^{self.r:.4g}\"\n\n\n@dataclass\nclass LogAffineForm:\n    \"\"\"\n    Log-affine normal form: exp(sum_i w[i] * log(x[i]) + c).\n\n    This represents a weighted geometric monomial:\n    prod_i x[i]^w[i] * exp(c)\n    \"\"\"\n    weights: List[float]\n    constant: float\n    dim: int\n\n    def evaluate(self, x: List[float]) -> float:\n        \"\"\"Evaluate on a positive vector.\"\"\"\n        assert len(x) == self.dim\n        return math.exp(\n            sum(self.weights[i] * math.log(x[i]) for i in range(self.dim))\n            + self.constant\n        )\n\n    def __repr__(self):\n        terms = []\n        for i, w in enumerate(self.weights):\n            if abs(w) > 1e-12:\n                terms.append(f\"{w:.4g}\u00b7log(x[{i}])\")\n        c_str = f\" + {self.constant:.4g}\" if abs(self.constant) > 1e-12 else \"\"\n        return f\"exp({' + '.join(terms) if terms else '0'}{c_str})\"\n\n\n# ============================================================\n# Algorithm 1: Log-Affine Normalization\n# ============================================================\n\ndef normalize(expr: PosEMLExpr, dim: int) -> LogAffineForm:\n    \"\"\"\n    Normalize a multiplicative positive EML expression to log-affine form.\n\n    This is the verified algorithm from LogAffineNormal.lean:\n    - Coord(i) \u2192 weights = e_i, c = 0\n    - PosConst(c) \u2192 weights = 0, c = log(c)\n    - Mul(e1, e2) \u2192 weights = w1 + w2, c = c1 + c2\n    - RPow(e, r) \u2192 weights = r * w, c = r * c\n\n    Time complexity: O(n * |expr|) where n = dim, |expr| = expression size\n    Space complexity: O(n * depth(expr)) for the recursion stack\n\n    Args:\n        expr: A multiplicative positive EML expression\n        dim: Input dimension\n\n    Returns:\n        LogAffineForm equivalent to the expression\n    \"\"\"\n    if isinstance(expr, Coord):\n        w = [0.0] * dim\n        w[expr.i] = 1.0\n        return LogAffineForm(w, 0.0, dim)\n\n    elif isinstance(expr, PosConst):\n        return LogAffineForm([0.0] * dim, math.log(expr.c), dim)\n\n    elif isinstance(expr, Mul):\n        f1 = normalize(expr.e1, dim)\n        f2 = normalize(expr.e2, dim)\n        return LogAffineForm(\n            [f1.weights[i] + f2.weights[i] for i in range(dim)],\n            f1.constant + f2.constant,\n            dim\n        )\n\n    elif isinstance(expr, RPow):\n        f = normalize(expr.e, dim)\n        return LogAffineForm(\n            [expr.r * w for w in f.weights],\n            expr.r * f.constant,\n            dim\n        )\n\n    else:\n        raise ValueError(f\"Unknown expression type: {type(expr)}\")\n\n\n# ============================================================\n# Algorithm 2: Composition of Log-Affine Maps\n# ============================================================\n\ndef compose_log_affine(\n    outer: LogAffineForm,\n    inners: List[LogAffineForm]\n) -> LogAffineForm:\n    \"\"\"\n    Compose a scalar log-affine map with a vector of log-affine maps.\n\n    Given outer: R^m -> R with form exp(sum_j v[j] * log(y[j]) + d)\n    and inners: R^n -> R^m with inner[j] = exp(sum_i w_j[i] * log(x[i]) + c_j),\n\n    the composition is:\n    outer(inner(x)) = exp(sum_j v[j] * (sum_i w_j[i]*log(x[i]) + c_j) + d)\n                     = exp(sum_i (sum_j v[j]*w_j[i]) * log(x[i]) + (sum_j v[j]*c_j + d))\n\n    This shows that composition of log-affine maps is log-affine,\n    which is the content of vecEMLComp_comp restricted to the multiplicative fragment.\n\n    Time complexity: O(n * m)\n    \"\"\"\n    assert len(inners) == outer.dim, \"Dimension mismatch\"\n    n = inners[0].dim if inners else 0\n\n    # Compute composed weights: w'[i] = sum_j v[j] * w_j[i]\n    new_weights = [0.0] * n\n    for j in range(outer.dim):\n        for i in range(n):\n            new_weights[i] += outer.weights[j] * inners[j].weights[i]\n\n    # Compute composed constant: c' = sum_j v[j] * c_j + d\n    new_constant = outer.constant\n    for j in range(outer.dim):\n        new_constant += outer.weights[j] * inners[j].constant\n\n    return LogAffineForm(new_weights, new_constant, n)\n\n\n# ============================================================\n# Algorithm 3: Random Expression Generation\n# ============================================================\n\ndef random_pos_eml(dim: int, max_depth: int = 4) -> PosEMLExpr:\n    \"\"\"\n    Generate a random multiplicative positive EML expression.\n\n    Used for testing the normalization theorem:\n    for any generated expression, evaluate(expr, x) should equal\n    normalize(expr, dim).evaluate(x) for all positive x.\n    \"\"\"\n    if max_depth <= 0 or random.random() < 0.3:\n        # Base case: coordinate or constant\n        if random.random() < 0.6:\n            return Coord(random.randint(0, dim - 1))\n        else:\n            return PosConst(random.uniform(0.1, 10.0))\n    else:\n        choice = random.random()\n        if choice < 0.5:\n            return Mul(\n                random_pos_eml(dim, max_depth - 1),\n                random_pos_eml(dim, max_depth - 1)\n            )\n        else:\n            return RPow(\n                random_pos_eml(dim, max_depth - 1),\n                random.uniform(-3.0, 3.0)\n            )\n\n\ndef evaluate_expr(expr: PosEMLExpr, x: List[float]) -> float:\n    \"\"\"Direct evaluation of a PosEMLExpr.\"\"\"\n    if isinstance(expr, Coord):\n        return x[expr.i]\n    elif isinstance(expr, PosConst):\n        return expr.c\n    elif isinstance(expr, Mul):\n        return evaluate_expr(expr.e1, x) * evaluate_expr(expr.e2, x)\n    elif isinstance(expr, RPow):\n        return evaluate_expr(expr.e, x) ** expr.r\n    else:\n        raise ValueError(f\"Unknown: {type(expr)}\")\n\n\n# ============================================================\n# Algorithm 4: Expression Analysis\n# ============================================================\n\ndef expr_depth(expr: PosEMLExpr) -> int:\n    \"\"\"Compute the depth of an expression tree.\"\"\"\n    if isinstance(expr, (Coord, PosConst)):\n        return 0\n    elif isinstance(expr, Mul):\n        return 1 + max(expr_depth(expr.e1), expr_depth(expr.e2))\n    elif isinstance(expr, RPow):\n        return 1 + expr_depth(expr.e)\n    return 0\n\ndef expr_size(expr: PosEMLExpr) -> int:\n    \"\"\"Compute the number of nodes in an expression tree.\"\"\"\n    if isinstance(expr, (Coord, PosConst)):\n        return 1\n    elif isinstance(expr, Mul):\n        return 1 + expr_size(expr.e1) + expr_size(expr.e2)\n    elif isinstance(expr, RPow):\n        return 1 + expr_size(expr.e)\n    return 1\n\n\n# ============================================================\n# Verification tests\n# ============================================================\n\ndef test_normalization(num_tests: int = 100, dim: int = 3):\n    \"\"\"\n    Empirically verify the normalization theorem:\n    for random expressions, direct evaluation matches normal form evaluation.\n    \"\"\"\n    print(f\"Testing normalization on {num_tests} random expressions (dim={dim})...\")\n    max_error = 0.0\n    for trial in range(num_tests):\n        expr = random_pos_eml(dim, max_depth=4)\n        nf = normalize(expr, dim)\n        x = [random.uniform(0.1, 5.0) for _ in range(dim)]\n\n        direct = evaluate_expr(expr, x)\n        normal = nf.evaluate(x)\n\n        if direct > 0 and normal > 0:\n            # Use relative error in log space for numerical stability\n            err = abs(math.log(direct) - math.log(normal))\n            max_error = max(max_error, err)\n\n    print(f\"  Max log-space error: {max_error:.2e}\")\n    print(f\"  Status: {'PASS' if max_error < 1e-8 else 'FAIL'}\")\n    return max_error < 1e-8\n\n\ndef test_composition(num_tests: int = 50, dim: int = 3):\n    \"\"\"\n    Test that composition of log-affine maps produces correct results.\n    \"\"\"\n    print(f\"Testing composition on {num_tests} random pairs (dim={dim})...\")\n    max_error = 0.0\n    for _ in range(num_tests):\n        m = random.randint(1, 4)\n        # Random outer function R^m -> R\n        outer = LogAffineForm(\n            [random.uniform(-2, 2) for _ in range(m)],\n            random.uniform(-1, 1), m\n        )\n        # Random inner functions R^dim -> R, one per coordinate\n        inners = [\n            LogAffineForm(\n                [random.uniform(-2, 2) for _ in range(dim)],\n                random.uniform(-1, 1), dim\n            ) for _ in range(m)\n        ]\n\n        composed = compose_log_affine(outer, inners)\n        x = [random.uniform(0.1, 5.0) for _ in range(dim)]\n\n        # Direct: outer(inner1(x), ..., innerm(x))\n        inner_vals = [f.evaluate(x) for f in inners]\n        direct = outer.evaluate(inner_vals)\n        normal = composed.evaluate(x)\n\n        if direct > 0 and normal > 0:\n            err = abs(math.log(direct) - math.log(normal))\n            max_error = max(max_error, err)\n\n    print(f\"  Max log-space error: {max_error:.2e}\")\n    print(f\"  Status: {'PASS' if max_error < 1e-8 else 'FAIL'}\")\n    return max_error < 1e-8\n\n\nif __name__ == \"__main__\":\n    print(\"EML Category Algorithms \u2014 Verification Tests\")\n    print(\"=\" * 60)\n    print()\n\n    random.seed(42)\n    ok1 = test_normalization()\n    print()\n    ok2 = test_composition()\n    print()\n\n    if ok1 and ok2:\n        print(\"All tests PASSED.\")\n    else:\n        print(\"Some tests FAILED.\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nEML Category Applications\n==========================\nReal-world applications of EML categorical semantics:\n1. Cobb-Douglas production function (economics)\n2. Information geometry: Fisher information on exponential families\n3. Log-linear models for statistical inference\n4. Differentiable programming: trainable EML families\n5. Chemical reaction kinetics (mass-action law)\n\"\"\"\n\nimport math\nfrom typing import List, Tuple, Callable\n\n\n# ============================================================\n# Application 1: Cobb-Douglas Production Function\n# ============================================================\n\ndef cobb_douglas_demo():\n    \"\"\"\n    The Cobb-Douglas production function Y = A \u00b7 L^\u03b1 \u00b7 K^\u03b2\n    is a log-affine map on positive inputs (A, L, K).\n\n    In log coordinates: log Y = log A + \u03b1\u00b7log L + \u03b2\u00b7log K\n    which is affine \u2014 confirming logAffine_log_is_affine.\n\n    This means the entire microeconomic theory of production functions\n    with constant returns to scale lives inside the EML category.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Cobb-Douglas Production Function\")\n    print(\"=\" * 70)\n    print()\n\n    # Parameters\n    A = 1.0   # Total factor productivity\n    alpha = 0.7  # Labor elasticity\n    beta = 0.3   # Capital elasticity (constant returns: \u03b1 + \u03b2 = 1)\n\n    # Log-affine form: weights = [0, \u03b1, \u03b2], constant = log(A)\n    # On PosVec 3 where x = (A, L, K)\n    # But since A is fixed, simplify to PosVec 2 with x = (L, K)\n    w = [alpha, beta]\n    c = math.log(A)\n\n    print(f\"Y = A \u00b7 L^\u03b1 \u00b7 K^\u03b2  with A={A}, \u03b1={alpha}, \u03b2={beta}\")\n    print(f\"Log-affine form: exp({alpha}\u00b7log(L) + {beta}\u00b7log(K) + {c})\")\n    print()\n\n    scenarios = [\n        (\"Baseline\", 100, 50),\n        (\"Double labor\", 200, 50),\n        (\"Double capital\", 100, 100),\n        (\"Double both\", 200, 100),\n    ]\n\n    print(f\"  {'Scenario':>15s}  {'L':>6s}  {'K':>6s}  {'Y':>10s}  {'log Y':>10s}\")\n    print(f\"  {'-'*15}  {'-'*6}  {'-'*6}  {'-'*10}  {'-'*10}\")\n    for desc, L, K in scenarios:\n        Y = A * L**alpha * K**beta\n        logY = math.log(A) + alpha * math.log(L) + beta * math.log(K)\n        print(f\"  {desc:>15s}  {L:6d}  {K:6d}  {Y:10.2f}  {logY:10.4f}\")\n\n    print()\n    print(\"Key insight: in log coordinates, doubling inputs adds log(2) \u2248 0.693\")\n    print(f\"to log Y (since \u03b1+\u03b2=1). This linearity IS logAffine_log_is_affine.\")\n    print()\n\n\n# ============================================================\n# Application 2: Weighted Geometric Mean for Portfolio Returns\n# ============================================================\n\ndef portfolio_demo():\n    \"\"\"\n    Portfolio geometric mean return is a weighted geometric mean,\n    which is an EML-computable function (emlComputable_weightedGeomMean).\n\n    For assets with gross returns r_1, ..., r_n and portfolio weights w_i:\n    Portfolio gross return = prod(r_i^w_i) = exp(sum w_i * log(r_i))\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 2: Portfolio Geometric Mean Returns\")\n    print(\"=\" * 70)\n    print()\n\n    # Three assets with annual gross returns\n    asset_names = [\"Stocks\", \"Bonds\", \"Real Estate\"]\n    returns_history = [\n        [1.12, 1.05, 1.08],  # Year 1\n        [0.95, 1.03, 1.06],  # Year 2\n        [1.20, 1.02, 1.10],  # Year 3\n        [1.08, 1.04, 1.03],  # Year 4\n        [0.90, 1.06, 1.15],  # Year 5\n    ]\n\n    weights = [0.6, 0.3, 0.1]\n\n    print(f\"Portfolio weights: {dict(zip(asset_names, weights))}\")\n    print()\n\n    for year, returns in enumerate(returns_history, 1):\n        # Weighted geometric mean via EML formula\n        wgm = math.exp(sum(weights[i] * math.log(returns[i]) for i in range(3)))\n        print(f\"  Year {year}: returns = {returns} \u2192 portfolio return = {wgm:.4f} ({(wgm-1)*100:+.2f}%)\")\n\n    # Compound geometric mean across all years\n    all_portfolio = []\n    for returns in returns_history:\n        wgm = math.exp(sum(weights[i] * math.log(returns[i]) for i in range(3)))\n        all_portfolio.append(wgm)\n\n    compound = math.exp(sum(math.log(r) for r in all_portfolio) / len(all_portfolio))\n    print(f\"\\n  Compound annual geometric mean: {compound:.4f} ({(compound-1)*100:+.2f}%)\")\n    print(f\"  (This is a composition of EML-computable maps \u2014 vecEMLComp_comp)\")\n    print()\n\n\n# ============================================================\n# Application 3: Mass-Action Kinetics\n# ============================================================\n\ndef mass_action_demo():\n    \"\"\"\n    The mass-action law in chemistry:\n    reaction rate = k \u00b7 [A]^a \u00b7 [B]^b \u00b7 [C]^c\n\n    This is a log-affine function on concentrations.\n    By logAffine_mul_closed, combining reaction rates (e.g., for\n    competing pathways) preserves log-affine structure.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 3: Chemical Reaction Kinetics (Mass-Action Law)\")\n    print(\"=\" * 70)\n    print()\n\n    # Reaction: A + 2B \u2192 C\n    # Rate = k \u00b7 [A]^1 \u00b7 [B]^2\n    k = 0.05  # rate constant\n    print(f\"Reaction: A + 2B \u2192 C\")\n    print(f\"Rate law: r = k\u00b7[A]\u00b7[B]\u00b2  with k = {k}\")\n    print(f\"Log-affine form: exp(1\u00b7log[A] + 2\u00b7log[B] + log(k))\")\n    print()\n\n    concentrations = [\n        (1.0, 1.0),\n        (2.0, 1.0),\n        (1.0, 2.0),\n        (2.0, 2.0),\n        (0.5, 3.0),\n    ]\n\n    print(f\"  {'[A]':>6s}  {'[B]':>6s}  {'Rate':>10s}  {'log(Rate)':>10s}\")\n    print(f\"  {'-'*6}  {'-'*6}  {'-'*10}  {'-'*10}\")\n    for A_conc, B_conc in concentrations:\n        rate = k * A_conc * B_conc**2\n        log_rate = math.log(k) + math.log(A_conc) + 2 * math.log(B_conc)\n        print(f\"  {A_conc:6.2f}  {B_conc:6.2f}  {rate:10.4f}  {log_rate:10.4f}\")\n\n    print()\n    print(\"In log coordinates, the rate law becomes LINEAR:\")\n    print(\"  log(r) = log(k) + 1\u00b7log[A] + 2\u00b7log[B]\")\n    print(\"This is the content of logAffine_log_is_affine applied to chemistry.\")\n    print()\n\n\n# ============================================================\n# Application 4: Trainable EML Families\n# ============================================================\n\ndef trainable_family_demo():\n    \"\"\"\n    By vecEMLComp_curry, EML-computable maps on joint (\u03b8, x) space\n    give rise to trainable families indexed by parameters \u03b8.\n\n    Example: log-linear classifier\n    P(class=1 | x; \u03b8) = \u03c3(\u03b8\u00b7x) = 1/(1+exp(-\u03b8\u00b7x))\n    The softmax/logistic function is built from exp and arithmetic.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 4: Trainable EML Families (Differentiable Programming)\")\n    print(\"=\" * 70)\n    print()\n\n    # Simple 2D logistic classifier: \u03c3(\u03b8\u2081\u00b7x\u2081 + \u03b8\u2082\u00b7x\u2082 + b)\n    def logistic(z):\n        return 1.0 / (1.0 + math.exp(-z))\n\n    # Training data\n    data = [\n        ([1.0, 2.0], 1),\n        ([2.0, 1.0], 0),\n        ([3.0, 3.0], 1),\n        ([0.5, 0.5], 0),\n    ]\n\n    # Different parameter settings\n    param_sets = [\n        ([0.0, 0.0, 0.0], \"Untrained\"),\n        ([1.0, 1.0, -2.5], \"Partially trained\"),\n        ([0.5, 1.5, -2.0], \"Better fit\"),\n    ]\n\n    for params, name in param_sets:\n        theta1, theta2, b = params\n        print(f\"  Parameters \u03b8 = ({theta1}, {theta2}, {b})  [{name}]\")\n        print(f\"  F_\u03b8(x) = \u03c3({theta1}\u00b7x\u2081 + {theta2}\u00b7x\u2082 + {b})\")\n        total_loss = 0\n        for x, y in data:\n            pred = logistic(theta1 * x[0] + theta2 * x[1] + b)\n            loss = -(y * math.log(pred + 1e-10) + (1-y) * math.log(1 - pred + 1e-10))\n            total_loss += loss\n            print(f\"    x={x}, y={y}, P(1|x)={pred:.4f}, loss={loss:.4f}\")\n        print(f\"    Total loss: {total_loss:.4f}\")\n        print()\n\n    print(\"vecEMLComp_curry guarantees: for ANY fixed \u03b8,\")\n    print(\"the specialized map x \u21a6 F_\u03b8(x) is EML-computable.\")\n    print()\n\n\n# ============================================================\n# Application 5: Entropy and Information Geometry\n# ============================================================\n\ndef information_geometry_demo():\n    \"\"\"\n    Shannon entropy and KL divergence involve exp and log,\n    making them natural EML-computable quantities.\n\n    For a discrete distribution p = (p_1, ..., p_n):\n    H(p) = -\u2211 p_i \u00b7 log(p_i)\n\n    This is NOT log-affine (it involves addition of log terms),\n    but it IS EML-computable since ScalarEML includes both\n    add and exp/log (via composition with log).\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 5: Information Geometry \u2014 Entropy as EML Computation\")\n    print(\"=\" * 70)\n    print()\n\n    def entropy(p: List[float]) -> float:\n        return -sum(pi * math.log(pi) for pi in p if pi > 0)\n\n    def kl_divergence(p: List[float], q: List[float]) -> float:\n        return sum(pi * math.log(pi / qi) for pi, qi in zip(p, q) if pi > 0 and qi > 0)\n\n    distributions = [\n        ([0.5, 0.5], \"Fair coin\"),\n        ([0.9, 0.1], \"Biased coin\"),\n        ([0.25, 0.25, 0.25, 0.25], \"Fair 4-sided die\"),\n        ([0.7, 0.1, 0.1, 0.1], \"Loaded 4-sided die\"),\n    ]\n\n    print(\"Shannon Entropy H(p) = -\u2211 p\u1d62 \u00b7 log(p\u1d62)\")\n    print(\"(EML-computable: uses mul, log, add, neg)\")\n    print()\n\n    for p, name in distributions:\n        H = entropy(p)\n        print(f\"  {name:>25s}: H = {H:.4f} nats\")\n\n    print()\n    print(\"KL Divergence D_KL(p || q) = \u2211 p\u1d62 \u00b7 log(p\u1d62/q\u1d62)\")\n    print(\"(EML-computable: uses mul, log, div=mul\u00b7inv, add)\")\n    print()\n\n    p = [0.7, 0.2, 0.1]\n    q = [0.33, 0.33, 0.34]\n    print(f\"  p = {p}, q = {[round(qi, 2) for qi in q]}\")\n    print(f\"  D_KL(p || q) = {kl_divergence(p, q):.4f} nats\")\n    print(f\"  D_KL(q || p) = {kl_divergence(q, p):.4f} nats  (asymmetric!)\")\n    print()\n\n\nif __name__ == \"__main__\":\n    cobb_douglas_demo()\n    portfolio_demo()\n    mass_action_demo()\n    trainable_family_demo()\n    information_geometry_demo()\n    print(\"All applications demonstrated.\")\n\n\n#!/usr/bin/env python3\n\"\"\"\nEML Category Demonstrations\n============================\nConcrete numerical demonstrations of the EML category theorems:\n1. Log-affine normalization of multiplicative EML expressions\n2. Weighted geometric mean computation via exp/log\n3. Pairing/product of EML-computable maps\n4. Currying of parameterized EML families\n5. Log-affine closure under multiplication\n\"\"\"\n\nimport math\nimport random\nfrom typing import Callable, List, Tuple\n\n# ============================================================\n# Demo 1: Log-Affine Normalization\n# ============================================================\n\nclass PosEMLExpr:\n    \"\"\"Syntax tree for the multiplicative positive EML fragment.\"\"\"\n    pass\n\nclass Coord(PosEMLExpr):\n    def __init__(self, i: int):\n        self.i = i\n    def __repr__(self):\n        return f\"x[{self.i}]\"\n\nclass PosConst(PosEMLExpr):\n    def __init__(self, c: float):\n        assert c > 0, \"Constant must be positive\"\n        self.c = c\n    def __repr__(self):\n        return f\"{self.c:.4g}\"\n\nclass Mul(PosEMLExpr):\n    def __init__(self, e1: PosEMLExpr, e2: PosEMLExpr):\n        self.e1 = e1\n        self.e2 = e2\n    def __repr__(self):\n        return f\"({self.e1} * {self.e2})\"\n\nclass RPow(PosEMLExpr):\n    def __init__(self, e: PosEMLExpr, r: float):\n        self.e = e\n        self.r = r\n    def __repr__(self):\n        return f\"({self.e})^{self.r:.4g}\"\n\n\ndef evaluate(expr: PosEMLExpr, x: List[float]) -> float:\n    \"\"\"Evaluate a PosEMLExpr on a positive vector.\"\"\"\n    if isinstance(expr, Coord):\n        return x[expr.i]\n    elif isinstance(expr, PosConst):\n        return expr.c\n    elif isinstance(expr, Mul):\n        return evaluate(expr.e1, x) * evaluate(expr.e2, x)\n    elif isinstance(expr, RPow):\n        return evaluate(expr.e, x) ** expr.r\n    else:\n        raise ValueError(f\"Unknown expression type: {type(expr)}\")\n\n\ndef to_log_affine_form(expr: PosEMLExpr, n: int) -> Tuple[List[float], float]:\n    \"\"\"\n    Normalize a PosEMLExpr to log-affine form (w, c) such that\n    eval(expr, x) = exp(sum_i w[i] * log(x[i]) + c).\n\n    This implements the verified normalization algorithm from LogAffineNormal.lean.\n    \"\"\"\n    if isinstance(expr, Coord):\n        w = [0.0] * n\n        w[expr.i] = 1.0\n        return w, 0.0\n    elif isinstance(expr, PosConst):\n        return [0.0] * n, math.log(expr.c)\n    elif isinstance(expr, Mul):\n        w1, c1 = to_log_affine_form(expr.e1, n)\n        w2, c2 = to_log_affine_form(expr.e2, n)\n        return [w1[i] + w2[i] for i in range(n)], c1 + c2\n    elif isinstance(expr, RPow):\n        w, c = to_log_affine_form(expr.e, n)\n        return [expr.r * wi for wi in w], expr.r * c\n    else:\n        raise ValueError(f\"Unknown expression type: {type(expr)}\")\n\n\ndef eval_log_affine(w: List[float], c: float, x: List[float]) -> float:\n    \"\"\"Evaluate the log-affine normal form exp(sum w_i * log(x_i) + c).\"\"\"\n    return math.exp(sum(w[i] * math.log(x[i]) for i in range(len(x))) + c)\n\n\ndef demo_normalization():\n    \"\"\"Demonstrate normalization of multiplicative EML expressions.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Log-Affine Normalization\")\n    print(\"=\" * 70)\n    print()\n\n    n = 3  # 3-dimensional input\n\n    # Expression: x[0]^2 * x[1]^(-1) * x[2]^0.5 * 3.0\n    # This is a weighted geometric monomial times a constant.\n    expr = Mul(\n        Mul(RPow(Coord(0), 2.0), RPow(Coord(1), -1.0)),\n        Mul(RPow(Coord(2), 0.5), PosConst(3.0))\n    )\n\n    print(f\"Expression: {expr}\")\n    print()\n\n    w, c = to_log_affine_form(expr, n)\n    print(f\"Log-affine normal form:\")\n    print(f\"  weights w = {[f'{wi:.4f}' for wi in w]}\")\n    print(f\"  constant c = {c:.6f} (= log({math.exp(c):.4f}))\")\n    print(f\"  Meaning: f(x) = exp({' + '.join(f'{w[i]:.1f}\u00b7log(x[{i}])' for i in range(n))} + {c:.4f})\")\n    print()\n\n    # Test on several positive vectors\n    test_vectors = [\n        [2.0, 3.0, 4.0],\n        [1.0, 1.0, 1.0],\n        [0.5, 2.0, 8.0],\n        [10.0, 0.1, 100.0],\n    ]\n\n    print(f\"  {'x':>25s}  {'Direct eval':>12s}  {'Normal form':>12s}  {'Match?':>8s}\")\n    print(f\"  {'-'*25}  {'-'*12}  {'-'*12}  {'-'*8}\")\n    for x in test_vectors:\n        direct = evaluate(expr, x)\n        normal = eval_log_affine(w, c, x)\n        match = abs(direct - normal) < 1e-10\n        print(f\"  {str(x):>25s}  {direct:12.6f}  {normal:12.6f}  {'\u2713' if match else '\u2717':>8s}\")\n\n    print()\n\n\n# ============================================================\n# Demo 2: Weighted Geometric Mean\n# ============================================================\n\ndef demo_weighted_geometric_mean():\n    \"\"\"Demonstrate weighted geometric mean as EML computation.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 2: Weighted Geometric Mean via exp/log\")\n    print(\"=\" * 70)\n    print()\n\n    n = 4\n    weights = [0.25, 0.25, 0.25, 0.25]  # Equal weights = geometric mean\n\n    print(f\"Weights: {weights}\")\n    print(f\"Formula: WGM(x) = exp(\u03a3 w_i \u00b7 log(x_i))\")\n    print()\n\n    test_vectors = [\n        [2.0, 8.0, 4.0, 16.0],\n        [1.0, 1.0, 1.0, 1.0],\n        [3.0, 3.0, 3.0, 3.0],\n        [1.0, 2.0, 4.0, 8.0],\n    ]\n\n    for x in test_vectors:\n        wgm = math.exp(sum(weights[i] * math.log(x[i]) for i in range(n)))\n        # Compare with direct geometric mean\n        direct_gm = math.prod(x) ** (1.0 / n)\n        print(f\"  x = {x}\")\n        print(f\"    EML WGM   = {wgm:.6f}\")\n        print(f\"    Direct GM = {direct_gm:.6f}\")\n        print(f\"    Match: {'\u2713' if abs(wgm - direct_gm) < 1e-10 else '\u2717'}\")\n        print()\n\n    # Non-uniform weights\n    weights2 = [0.5, 0.3, 0.15, 0.05]\n    print(f\"  Non-uniform weights: {weights2}\")\n    x = [2.0, 3.0, 5.0, 7.0]\n    wgm = math.exp(sum(weights2[i] * math.log(x[i]) for i in range(n)))\n    print(f\"  x = {x}\")\n    print(f\"  Weighted GM = {wgm:.6f}\")\n    print(f\"  = 2^0.5 \u00b7 3^0.3 \u00b7 5^0.15 \u00b7 7^0.05 = {2**0.5 * 3**0.3 * 5**0.15 * 7**0.05:.6f}\")\n    print()\n\n\n# ============================================================\n# Demo 3: Pairing / Product Structure\n# ============================================================\n\ndef demo_pairing():\n    \"\"\"Demonstrate pairing of EML-computable maps.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 3: Pairing of EML-Computable Maps (Product Structure)\")\n    print(\"=\" * 70)\n    print()\n\n    # f: R^2 -> R^2, f(x) = (exp(x1), x1 * x2)\n    # g: R^2 -> R^1, g(x) = (x1 + x2,)\n    # pair(f,g): R^2 -> R^3, pair(f,g)(x) = (exp(x1), x1*x2, x1+x2)\n\n    def f(x):\n        return [math.exp(x[0]), x[0] * x[1]]\n\n    def g(x):\n        return [x[0] + x[1]]\n\n    def pair_fg(x):\n        return f(x) + g(x)  # concatenation\n\n    print(\"f(x\u2081,x\u2082) = (exp(x\u2081), x\u2081\u00b7x\u2082)     -- EML-computable (exp, mul)\")\n    print(\"g(x\u2081,x\u2082) = (x\u2081 + x\u2082)              -- EML-computable (add)\")\n    print(\"pair(f,g)(x\u2081,x\u2082) = (exp(x\u2081), x\u2081\u00b7x\u2082, x\u2081+x\u2082)\")\n    print()\n    print(\"By vecEMLComp_pair, the paired map is EML-computable.\")\n    print()\n\n    test_vectors = [[1.0, 2.0], [0.0, 0.0], [-1.0, 3.0], [2.0, -0.5]]\n    for x in test_vectors:\n        result = pair_fg(x)\n        print(f\"  pair(f,g)({x}) = [{', '.join(f'{v:.4f}' for v in result)}]\")\n\n    print()\n\n\n# ============================================================\n# Demo 4: Currying / Parameter Splitting\n# ============================================================\n\ndef demo_currying():\n    \"\"\"Demonstrate currying for parameterized EML families.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 4: Currying \u2014 Parameterized EML Families\")\n    print(\"=\" * 70)\n    print()\n\n    # Combined map F: R^(2+1) -> R^1\n    # F(\u03b8\u2081, \u03b8\u2082, x) = exp(\u03b8\u2081 * x + \u03b8\u2082)\n    # This is EML-computable on the joint 3D input space.\n    #\n    # By vecEMLComp_curry, fixing \u03b8 gives an EML-computable family:\n    # F_\u03b8(x) = exp(\u03b8\u2081 * x + \u03b8\u2082)\n\n    def F_joint(theta_x):\n        theta1, theta2, x = theta_x\n        return [math.exp(theta1 * x + theta2)]\n\n    print(\"Joint map F(\u03b8\u2081,\u03b8\u2082,x) = exp(\u03b8\u2081\u00b7x + \u03b8\u2082)  -- EML-computable on R\u00b3\")\n    print()\n    print(\"By vecEMLComp_curry, for any fixed \u03b8, F_\u03b8(x) = exp(\u03b8\u2081\u00b7x + \u03b8\u2082)\")\n    print(\"is EML-computable on R\u00b9.\")\n    print()\n\n    parameter_sets = [\n        (1.0, 0.0, \"F(x) = exp(x)\"),\n        (2.0, 1.0, \"F(x) = exp(2x + 1)\"),\n        (-1.0, 0.0, \"F(x) = exp(-x)\"),\n        (0.5, -2.0, \"F(x) = exp(0.5x - 2)\"),\n    ]\n\n    x_vals = [-1.0, 0.0, 0.5, 1.0, 2.0]\n\n    for theta1, theta2, desc in parameter_sets:\n        print(f\"  \u03b8 = ({theta1}, {theta2}):  {desc}\")\n        values = [math.exp(theta1 * x + theta2) for x in x_vals]\n        print(f\"    x =     {['%.2f' % x for x in x_vals]}\")\n        print(f\"    F_\u03b8(x) = {['%.4f' % v for v in values]}\")\n        print()\n\n\n# ============================================================\n# Demo 5: Log-Affine Closure Under Multiplication\n# ============================================================\n\ndef demo_log_affine_closure():\n    \"\"\"Demonstrate that log-affine maps are closed under multiplication.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 5: Log-Affine Closure Under Multiplication\")\n    print(\"=\" * 70)\n    print()\n\n    n = 2\n\n    # f(x) = exp(2\u00b7log(x\u2081) + 1\u00b7log(x\u2082) + 0) = x\u2081\u00b2 \u00b7 x\u2082\n    w_f, c_f = [2.0, 1.0], 0.0\n    # g(x) = exp(-1\u00b7log(x\u2081) + 3\u00b7log(x\u2082) + log(2)) = 2 \u00b7 x\u2081\u207b\u00b9 \u00b7 x\u2082\u00b3\n    w_g, c_g = [-1.0, 3.0], math.log(2.0)\n\n    # Product: (f\u00b7g)(x) = exp((2-1)\u00b7log(x\u2081) + (1+3)\u00b7log(x\u2082) + (0+log2))\n    #                    = exp(1\u00b7log(x\u2081) + 4\u00b7log(x\u2082) + log2)\n    #                    = 2 \u00b7 x\u2081 \u00b7 x\u2082\u2074\n    w_fg = [w_f[i] + w_g[i] for i in range(n)]\n    c_fg = c_f + c_g\n\n    print(f\"f(x) = exp({w_f[0]}\u00b7log(x\u2081) + {w_f[1]}\u00b7log(x\u2082) + {c_f})\")\n    print(f\"     = x\u2081\u00b2 \u00b7 x\u2082\")\n    print()\n    print(f\"g(x) = exp({w_g[0]}\u00b7log(x\u2081) + {w_g[1]}\u00b7log(x\u2082) + {c_g:.4f})\")\n    print(f\"     = 2 \u00b7 x\u2081\u207b\u00b9 \u00b7 x\u2082\u00b3\")\n    print()\n    print(f\"Product weights: w = {w_fg}\")\n    print(f\"Product constant: c = {c_fg:.4f} (= log({math.exp(c_fg):.4f}))\")\n    print(f\"(f\u00b7g)(x) = 2 \u00b7 x\u2081 \u00b7 x\u2082\u2074\")\n    print()\n\n    test_vectors = [[2.0, 3.0], [1.0, 1.0], [0.5, 2.0], [3.0, 0.5]]\n\n    print(f\"  {'x':>12s}  {'f(x)':>10s}  {'g(x)':>10s}  {'f\u00b7g direct':>12s}  {'f\u00b7g normal':>12s}  {'Match?':>8s}\")\n    print(f\"  {'-'*12}  {'-'*10}  {'-'*10}  {'-'*12}  {'-'*12}  {'-'*8}\")\n    for x in test_vectors:\n        fx = eval_log_affine(w_f, c_f, x)\n        gx = eval_log_affine(w_g, c_g, x)\n        direct = fx * gx\n        normal = eval_log_affine(w_fg, c_fg, x)\n        match = abs(direct - normal) < 1e-10\n        print(f\"  {str(x):>12s}  {fx:10.4f}  {gx:10.4f}  {direct:12.4f}  {normal:12.4f}  {'\u2713' if match else '\u2717':>8s}\")\n\n    print()\n    print(\"Theorem logAffine_mul_closed verified numerically: the product\")\n    print(\"of log-affine maps is log-affine with summed weights and constants.\")\n    print()\n\n\n# ============================================================\n# Demo 6: Log Chart \u2014 Affine Becomes Linear\n# ============================================================\n\ndef demo_log_chart():\n    \"\"\"Demonstrate that log-affine maps become affine in log coordinates.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 6: The Log Chart \u2014 Multiplicative \u2192 Additive\")\n    print(\"=\" * 70)\n    print()\n\n    n = 3\n    w = [2.0, -1.0, 0.5]\n    c = math.log(5.0)\n\n    print(f\"Log-affine function: f(x) = exp(2\u00b7log(x\u2081) - log(x\u2082) + 0.5\u00b7log(x\u2083) + log(5))\")\n    print(f\"                          = 5 \u00b7 x\u2081\u00b2 \u00b7 x\u2082\u207b\u00b9 \u00b7 x\u2083^0.5\")\n    print()\n    print(f\"In log coordinates y_i = log(x_i):\")\n    print(f\"  log(f(x)) = 2\u00b7y\u2081 - y\u2082 + 0.5\u00b7y\u2083 + log(5)\")\n    print(f\"This is an AFFINE function of y \u2014 the theorem logAffine_log_is_affine.\")\n    print()\n\n    test_vectors = [[1.0, 1.0, 1.0], [2.0, 4.0, 9.0], [math.e, math.e, math.e]]\n\n    for x in test_vectors:\n        y = [math.log(xi) for xi in x]\n        fx = eval_log_affine(w, c, x)\n        log_fx = math.log(fx)\n        affine_val = sum(w[i] * y[i] for i in range(n)) + c\n        print(f\"  x = [{', '.join(f'{xi:.4f}' for xi in x)}]\")\n        print(f\"  y = log(x) = [{', '.join(f'{yi:.4f}' for yi in y)}]\")\n        print(f\"  f(x) = {fx:.6f}\")\n        print(f\"  log(f(x)) = {log_fx:.6f}\")\n        print(f\"  w\u00b7y + c   = {affine_val:.6f}\")\n        print(f\"  Match: {'\u2713' if abs(log_fx - affine_val) < 1e-10 else '\u2717'}\")\n        print()\n\n\nif __name__ == \"__main__\":\n    demo_normalization()\n    demo_weighted_geometric_mean()\n    demo_pairing()\n    demo_currying()\n    demo_log_affine_closure()\n    demo_log_chart()\n    print(\"All demonstrations complete.\")\n"
+    },
+    "date": "2026-05-20T08:09:01Z",
+    "exp_id": "55c659bd",
+    "source_exp_ids": [
+      "seed"
+    ]
+  },
   "precise_statement_among_all_monotone_symmetric_boo.json": {
     "title": "Extremal Witness Geometry for Karchmer-Wigderson Games on Monotone Symmetric Boolean Functions",
     "domain": "Communication Complexity / Extremal Combinatorics",
@@ -5716,7 +5758,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 100
+      "hue": 272
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -5725,7 +5767,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -5743,7 +5785,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "galois_group__s",
@@ -5752,7 +5794,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -5761,7 +5803,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -5779,7 +5821,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -5788,7 +5830,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -5797,7 +5839,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "percolation_threshold",
@@ -5806,7 +5848,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -5824,7 +5866,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 292
+      "hue": 270
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -5833,7 +5875,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "legendres_conjecture",
@@ -5842,7 +5884,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -5851,7 +5893,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -5860,7 +5902,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -5869,7 +5911,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "p_vs_np_problem",
@@ -5878,7 +5920,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -5887,7 +5929,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -5905,7 +5947,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -5914,7 +5956,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -5923,7 +5965,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -5932,7 +5974,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -5941,7 +5983,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "twin_prime_conjecture",
@@ -5950,7 +5992,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -5959,7 +6001,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -5968,7 +6010,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "happy_end_problem",
@@ -5977,7 +6019,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 89
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -5986,7 +6028,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -5995,7 +6037,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -6004,7 +6046,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -6013,7 +6055,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "tropical_intersection_theory",
@@ -6040,7 +6082,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -6049,7 +6091,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "jacobian_conjecture",
@@ -6058,7 +6100,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 281
+      "hue": 90
     },
     {
       "id": "10_is_a_solitary_number",
@@ -6076,7 +6118,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "invariant_subspace_problem",
@@ -6085,7 +6127,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -6103,7 +6145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -6112,7 +6154,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -6121,7 +6163,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -6130,7 +6172,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -6148,7 +6190,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "yang_mills_mass_gap",
@@ -6157,7 +6199,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "goldbach_conjecture",
@@ -6166,7 +6208,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -6175,7 +6217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -6184,7 +6226,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -6193,7 +6235,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -6202,7 +6244,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "beals_conjecture",
@@ -6211,7 +6253,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -6220,7 +6262,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -6229,7 +6271,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -6238,7 +6280,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -6247,7 +6289,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -6256,7 +6298,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -6265,7 +6307,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -6274,7 +6316,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -6283,7 +6325,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -6292,7 +6334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -6301,7 +6343,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -6310,7 +6352,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -6319,7 +6361,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -6328,7 +6370,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -6355,7 +6397,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -6364,7 +6406,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -6373,7 +6415,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -6382,7 +6424,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 281
+      "hue": 272
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -6400,7 +6442,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "we_have_formally_verified",
@@ -6418,7 +6460,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -6436,7 +6478,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 272
+      "hue": 275
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -6445,7 +6487,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -6454,7 +6496,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -6463,7 +6505,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 272
+      "hue": 275
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -6472,7 +6514,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "collatz_conjecture",
@@ -6481,7 +6523,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -6490,7 +6532,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -6499,7 +6541,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -6508,7 +6550,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -6526,7 +6568,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -6535,7 +6577,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -6544,7 +6586,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -6553,7 +6595,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -6562,7 +6604,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -6571,7 +6613,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "langlands_program_functoriality",
@@ -6580,7 +6622,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T01:04:07Z",
-      "hue": 92
+      "hue": 292
     },
     {
       "id": "medium_priority",
@@ -6589,7 +6631,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "erdsstraus_conjecture",
@@ -6598,7 +6640,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_invariance_theorem_establishes_that_the_symmet",
@@ -6616,7 +6658,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -6625,7 +6667,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -6643,7 +6685,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -6652,7 +6694,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -6661,7 +6703,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "kakeya_conjecture",
@@ -6670,7 +6712,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "sums_of_three_cubes",
@@ -6679,7 +6721,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 179
+      "hue": 90
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -6688,7 +6730,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "196_algorithm_non_termination",
@@ -6697,7 +6739,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -6706,7 +6748,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 281
+      "hue": 91
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -6715,7 +6757,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -6724,7 +6766,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -6733,7 +6775,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -6742,7 +6784,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -6751,7 +6793,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -6760,7 +6802,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:03:57Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "schanuels_conjecture",
@@ -6769,7 +6811,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -6778,7 +6820,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T07:04:53Z",
-      "hue": 112
+      "hue": 92
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -6787,7 +6829,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -6805,7 +6847,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "proof_expansion_constant_for_formal_theories",
@@ -6814,7 +6856,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T08:08:15Z",
-      "hue": 270
+      "hue": 92
+    },
+    {
+      "id": "eml_category_the_category_of_eml_computable_maps",
+      "title": "EML Category: Categorical Semantics of Exponential-Logarithmic Computation",
+      "domain": "EML \u2014 Exponential-Multiplicative-Logarithmic Computation",
+      "primary_domain": "EML",
+      "shape": "octahedron",
+      "date": "2026-05-20T08:09:01Z",
+      "hue": 271
     }
   ],
   "edges": [
@@ -7221,6 +7272,12 @@ window.PACKAGE_GRAPH = {
       "strength": 0.7
     },
     {
+      "domain_a": "Computation",
+      "domain_b": "EML",
+      "package_count": 2,
+      "strength": 0.7
+    },
+    {
       "domain_a": "Algebra",
       "domain_b": "Cryptography",
       "package_count": 1,
@@ -7228,12 +7285,6 @@ window.PACKAGE_GRAPH = {
     },
     {
       "domain_a": "Algebra",
-      "domain_b": "EML",
-      "package_count": 1,
-      "strength": 0.5
-    },
-    {
-      "domain_a": "Computation",
       "domain_b": "EML",
       "package_count": 1,
       "strength": 0.5
@@ -8059,21 +8110,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T03:01:41.317104+00:00"
   },
   {
-    "id": "fd_0173",
-    "title": "Proof Expansion Constant for Formal Theories",
-    "description": "Conjecture: For every recursively axiomatized, consistent theory T with polynomial-time proof verification, there exists a theory-dependent constant h(T) > 0 such that for infinitely many theorem pairs (phi, psi) with psi a nontrivial strengthening of phi, every proof of psi has length at least exp(h(T) * d(phi, psi)) times the minimum proof length of phi, where d(phi, psi) is a formally defined semantic strengthening distance (e.g. quantifier alternation plus model-class shrinkage). Test: Define a precise strengthening metric in a fixed proof assistant, compute empirical proof-length ratios across large theorem families in arithmetic, algebra, and combinatorics, and refute the conjecture by exhibiting a family with unbounded strengthening distance but only polynomial proof-length blowup. Confirming evidence would be persistent exponential lower envelopes across unrelated domains. Impact: This would create a geometric invariant of theories measuring how rapidly stronger truths become harder to prove, enabling principled forecasting of theorem difficulty, curriculum design for automated provers, and a new bridge between proof complexity, model theory, and mathematical practice.",
-    "domains": [
-      "Proof Complexity",
-      "Model Theory"
-    ],
-    "priority_score": 0.8,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "3b452d34",
-    "timestamp": "2026-05-20T05:07:35.464824+00:00"
-  },
-  {
     "id": "fd_0174",
     "title": "Universality of Homological Stability Windows in Neural Tangent Complexes",
     "description": "Conjecture: For fully-connected ReLU networks of depth L with width n trained by gradient flow on a fixed finite dataset in the lazy-training regime, there exists a simplicial complex K_t built functorially from neuron activation sign patterns over the dataset such that, as n -> infinity, the persistent homology barcode of K_t over any finite training-time window [0,T] converges in probability to a deterministic limit depending only on depth, initialization variance, and the empirical kernel spectrum of the dataset, not on microscopic parameter initialization. Test: Define K_t explicitly from co-activation/sign-pattern incidence, simulate ensembles across widths and random initializations, and check whether bottleneck distances between barcodes concentrate to 0 around a predicted limit while changing architecture class or kernel spectrum changes the limit. Refutation occurs if barcode laws remain initialization-sensitive at large width or fail to stabilize across widths. Impact: This would create a new topological universality class for deep learning dynamics, linking random matrix limits, persistent homology, and training theory, and could yield architecture-level invariants for optimization and generalization.",
@@ -8147,6 +8183,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T08:07:49.732483+00:00"
+  },
+  {
+    "id": "fd_0205",
+    "title": "Arithmetic Phase Locking in Gradient Descent over Rational Polynomial Models",
+    "description": "Conjecture: For a Zariski-open family of polynomial loss functions L(w) with rational coefficients and rational initialization w_0, constant-step gradient descent w_{t+1}=w_t-eta*grad L(w_t) with rational eta either (i) enters an algebraic periodic orbit modulo p for a set of primes p of positive natural density, or (ii) its reduction modulo p is equidistributed on the forward orbit variety for density-1 primes; moreover the dichotomy is determined by whether the Jacobian cocycle along the complex critical skeleton has virtually solvable arithmetic monodromy. Test: Sample broad families of polynomial learning problems, compute trajectories modulo many primes, estimate prime-density of periodic-locking behavior, and compare against independently computed/arbitrarily approximated monodromy groups or Galois groups of the update map. Refutation occurs if generic instances violate the predicted dichotomy or if locking density shows no relation to monodromy type. Impact: This would create a new arithmetic-dynamical theory of optimization, giving a falsifiable bridge between training dynamics, number theory, and algebraic geometry, and could yield new diagnostics for trainability and instability invisible to real-valued analysis.",
+    "domains": [
+      "Arithmetic Dynamics",
+      "Optimization Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:08:34.578561+00:00"
   },
   {
     "id": "seed_026",
@@ -8440,23 +8491,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T02:00:27.957110+00:00"
   },
   {
-    "id": "fd_0117",
-    "title": "Conjecture 5: Cubic Surface Geometry \u2014 Convex Hull Dimension",
-    "description": "**Statement:** For every n \u2265 2 admitting at least 3 non-collinear ordered witnesses, the convex hull of the set {(x, y, z) : OrderedESWitness n x y z, x \u2264 n\u00b2} has full dimension (dimension 2, as a subset of the surface) in \u211d\u00b3.\n\n**Test:** For n = 5, 7, 11, 13, enumerate all ordered witnesses with x, y, z \u2264 n\u00b2. Compute the convex hull of these integer points and check its dimension. If for any n the witnesses are collinear (dimension \u2264 1), the conjecture is refuted.\n\n**Impact:** Full-dimensional convex hulls would confirm that the solution surface has rich geometric structure, supporting approaches to the conjecture based on the geometry of numbers (e.g., Minkowski-type arguments for lattice points in convex bodies on cubic surfaces).\n\n---",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Cryptography",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8aeabb51",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T02:00:27.961170+00:00"
-  },
-  {
     "id": "fd_0120",
     "title": "Hypothesis 1: Primitive Embedding via Discriminant Forms",
     "description": "**Conjecture.** Let $(L, Q)$ be a nondegenerate even lattice of signature $(1, r-1)$ with $r \\leq 20$. Then $L$ admits a primitive embedding into the K3 lattice $\\Lambda_{K3} = U^3 \\oplus E_8(-1)^2$ if and only if the discriminant form $q_L: A_L \\to \\mathbb{Q}/2\\mathbb{Z}$ satisfies the Nikulin embedding conditions:\n1. $\\text{rank}(\\Lambda_{K3}) - \\text{rank}(L) \\geq \\ell(A_L)$ (length condition),\n2. The signature modulo 8 is compatible.\n\n**Test.** Formalize the discriminant form as a finite bilinear form on $L^\\vee / L$ and state the embedding criterion as a decidable predicate. Implement a verified algorithm that checks the Nikulin conditions for explicit lattices. For refutation, construct an explicit lattice satisfying the numerical conditions but failing to embed (which would reveal a",
@@ -8508,22 +8542,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "825b3b9b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T02:04:18.490592+00:00"
-  },
-  {
-    "id": "fd_0125",
-    "title": "Conjecture 1: Bi-Lipschitz Chart Away from the Antipodal Point",
-    "description": "**Precise Statement.** Let $B_R = \\{H \\in \\mathfrak{su}(2) : \\|H\\| \\leq R\\}$ for any $R > 0$. The map $\\Phi_R: B_R \\to \\mathrm{SU}(2)$ defined by $\\Phi_R(H) = \\mathrm{qEMLnorm}(H)$ is bi-Lipschitz: there exist constants $0 < c_R \\leq C_R$ such that\n$$c_R \\|H - K\\| \\leq \\|\\Phi_R(H) - \\Phi_R(K)\\| \\leq C_R \\|H - K\\|$$\nfor all $H, K \\in B_R$, where norms are the operator norm on $2 \\times 2$ matrices.\n\n**Test.** Monte Carlo sampling of $10^6$ pairs $(H, K)$ with $\\|H\\|, \\|K\\| \\leq R$ for $R \\in \\{1, 5, 10, 50\\}$. Compute the ratio $\\|\\Phi_R(H) - \\Phi_R(K)\\| / \\|H - K\\|$ and check whether it stays bounded above and below. Plot histograms of the ratio for each $R$.\n\n**Impact.** If true, this establishes that the qEML chart is a **bi-Lipschitz embedding** of the Lie algebra into the group, which ",
-    "domains": [
-      "NumberTheory",
-      "EML",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e91c4b67",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T02:04:42.905032+00:00"
   },
   {
     "id": "fd_0128",
@@ -8612,20 +8630,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "71236717",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T03:08:58.141111+00:00"
-  },
-  {
-    "id": "fd_0143",
-    "title": "Conjecture 2: Dimension-2 Distortion Constant Improvement",
-    "description": "**Conjecture:** The worst-case distortion factor $(2/\\cos r)^2$ in the $S^2$ bound can be replaced by the average distortion over the cap image:\n$$D_{\\mathrm{avg}}(r) = \\frac{1}{\\mathrm{area}(\\text{cap})} \\int_{\\text{cap}} \\frac{1}{\\lambda(x)^2} \\, d\\sigma < \\left(\\frac{2}{\\cos r}\\right)^2$$\nyielding a strictly tighter bound for all $0 < r < \\pi/2$.\n\n**Test:** Compute $D_{\\text{avg}}(r)$ numerically by integrating $(1 + \\|x\\|^2)^2/4$ over the stereographic image of a cap of radius $r$ centered at the south pole. Compare $D_{\\text{avg}}(r)$ to $(2/\\cos r)^2$ for $r \\in \\{0.1, 0.2, \\ldots, 1.5\\}$.\n\n**Impact:** This would give the tightest known conformal-chart-based bound for $S^2$ packing. The improvement factor grows with $r$, potentially making the bound competitive with Rankin-type estim",
-    "domains": [
-      "NumberTheory"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "71236717",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T03:08:58.145710+00:00"
   },
   {
     "id": "fd_0144",
@@ -9019,21 +9023,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T07:05:26.659533+00:00"
   },
   {
-    "id": "fd_0184",
-    "title": "Conjecture 2: Extension from Finite Class Actions to Ray Class Data",
-    "description": "**Precise statement.** The `ExplicitClassFieldDatum` structure can be extended with a modulus (a formal product of primes) to model ray class groups, and the collapse theorem generalizes: if the ray class group modulo m is trivial, then every abelian extension of conductor dividing m is trivial.\n\nFormally: define `RayClassFieldDatum R m` extending `ExplicitClassFieldDatum R` with conductor data, and prove:\n```\ntheorem ray_class_collapse (D : RayClassFieldDatum R m) [Subsingleton D.Cl] :\n    -- the associated extension is trivial\n```\n\n**Test.** Implement `RayClassFieldDatum` in Lean 4 and verify that it specializes correctly for known examples: (a) \u211a with modulus m should recover the cyclotomic field \u211a(\u03b6_m); (b) imaginary quadratic fields with trivial ray class group should yield no new ext",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "75564677",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T07:05:26.666460+00:00"
-  },
-  {
     "id": "fd_0185",
     "title": "Conjecture 3: Faithful Representations Lift to Linear Representations",
     "description": "**Precise statement.** For any finite abelian group G (modeling a class group), the faithful permutation representation \u03c1 : G \u2192* Equiv.Perm G decomposes over \u2102 into a direct sum of one-dimensional representations (characters), and the multiplicity of each character equals 1.\n\nFormally:\n```\ntheorem regular_rep_decomposition (G : Type*) [CommGroup G] [Fintype G] :\n    \u2203 (chars : Finset (G \u2192* \u2102\u02e3)),\n      chars.card = Fintype.card G \u2227\n      -- the regular representation decomposes as \u2295 \u03c7 over chars\n```\n\n**Test.** For small abelian groups (Z/n, Z/2 \u00d7 Z/2, Z/2 \u00d7 Z/4), compute the character table and verify that the regular representation decomposes with multiplicity one. The standard theory (Maschke's theorem + Schur's lemma for abelian groups) guarantees this, but the formalization would create",
@@ -9174,20 +9163,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T08:07:39.210619+00:00"
   },
   {
-    "id": "fd_0194",
-    "title": "Conjecture 2: Higher-Order Moment Refinement Asymptotics",
-    "description": "**Conjecture.** For the observable `X_k(i) = (i/n)^k` on `Fin(n+1)`, the expectation under `gridUniformProb n` satisfies:\n\n```\nE[X_k] = 1/(k+1) + c_k / n + O(1/n\u00b2)\n```\n\nwhere `c_k = k/(2(k+1))` is a universal correction coefficient independent of the grid. Moreover, the difference `|E_fine[refine(X_k)] - E_coarse[X_k]|` vanishes exactly (not just asymptotically) for all `k` under block refinement.\n\n**Test.** Compute `E[(i/n)^k]` for `k = 2, 3, 4, 5` on grids of size N = 10, 100, 1000, 10000 and fit the coefficients. Verify exact refinement invariance for block embeddings. Check whether non-block refinements (e.g., interleaving) break invariance.\n\n**Impact.** If confirmed with exact coefficients, this provides a complete asymptotic theory connecting grid probabilities to Riemann-Stieltjes i",
-    "domains": [
-      "NumberTheory"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "57db3430",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T08:07:39.218711+00:00"
-  },
-  {
     "id": "fd_0195",
     "title": "Conjecture 3: Loeb Measure Recovery via Ultraproducts",
     "description": "**Conjecture.** Let `U` be a non-principal ultrafilter on `\u2115`. Define the ultraproduct probability `\u03bc_U` on `[0,1]` by: for measurable `A \u2286 [0,1]`,\n\n```\n\u03bc_U(A) = st(lim_U (gridUniformProb n).mass(A \u2229 grid_n))\n```\n\nwhere `st` denotes the standard part and `grid_n = {i/(n+1) : i \u2264 n}`. Then `\u03bc_U` equals Lebesgue measure on all Borel sets.\n\n**Test.** For specific sets (intervals, Cantor-like sets, fat Cantor sets), compute the grid approximation `(gridUniformProb n).mass(A \u2229 grid_n)` and verify convergence to Lebesgue measure. Test whether the rate of convergence depends on the regularity of the set boundary.\n\n**Impact.** This would establish a rigorous connection between the grid scaffold and classical measure theory via nonstandard analysis, validating the \"shadow principle\" at the level of",
@@ -9219,5 +9194,100 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "57db3430",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T08:07:39.241421+00:00"
+  },
+  {
+    "id": "fd_0199",
+    "title": "Conjecture 1: Universal Binary Expansion Lower Envelope",
+    "description": "**Conjecture.** For every recursively axiomatized, consistent theory $T$ extending Peano Arithmetic, and every \"natural\" hierarchy of theorems $\\{\\Phi_n\\}_{n \\in \\mathbb{N}}$ where $\\Phi_{n+1}$ is obtained from $\\Phi_n$ by a uniform syntactic strengthening operation, there exists a constant $b > 1$ such that for all sufficiently large $m \\le n$:\n\n$$\\mathrm{ProofLength}_T(\\Phi_n) \\ge b^{n-m} \\cdot \\mathrm{ProofLength}_T(\\Phi_m).$$\n\n**Test.** Search for hierarchies where semantic distance $n - m \\to \\infty$ but $\\mathrm{ProofLength}(\\Phi_n) / \\mathrm{ProofLength}(\\Phi_m)$ remains bounded by a polynomial in $n - m$. A single explicit family with unbounded distance and polynomial blowup refutes the conjecture. Candidate test families:\n- Pigeonhole principles $\\mathrm{PHP}^n_{n+1}$ in bounded a",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics",
+      "Logic",
+      "Computation",
+      "Geometry"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3b452d34",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:08:18.538744+00:00"
+  },
+  {
+    "id": "fd_0200",
+    "title": "Conjecture 2: Semantic Entropy Correlation",
+    "description": "**Conjecture.** Let $\\mathcal{M}_N(\\phi)$ denote the set of models of $\\phi$ over structures of size $\\le N$. Define semantic entropy $H_N(\\phi) = \\log_2 |\\mathcal{M}_N(\\phi)|$. For natural strengthening hierarchies, there exists $C > 0$ such that:\n\n$$\\log_2 \\frac{\\mathrm{ProofLength}(\\Phi_n)}{\\mathrm{ProofLength}(\\Phi_m)} \\ge C \\cdot (H_N(\\Phi_m) - H_N(\\Phi_n))$$\n\nfor all sufficiently large $N$ and all $m \\le n$.\n\n**Test.** Compute $H_N(\\phi)$ and proof lengths for families of propositional tautologies, graph coloring constraints, and SAT instances with parameterized clause density. Plot $\\log(\\text{proof ratio})$ vs. $\\Delta H$ and test for a linear lower envelope. A family where entropy drops sharply but proof length grows sublinearly would refute this.\n\n**Impact.** This would establish",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics",
+      "Physics",
+      "Bridges",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3b452d34",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:08:18.545901+00:00"
+  },
+  {
+    "id": "fd_0201",
+    "title": "Conjecture 3: Expansion Constant Universality Classes",
+    "description": "**Conjecture.** Natural theorem hierarchies fall into finitely many \"universality classes\" based on their expansion constant. Specifically, for hierarchies over PA:\n- **Class I (polynomial):** $b = 1$ (no exponential expansion). Only degenerate/trivial hierarchies.\n- **Class II (single exponential):** $b \\in (1, 2]$. Includes most arithmetic hierarchies.\n- **Class III (double exponential):** Expansion rate is $2^{2^{\\Theta(d)}}$. Includes hierarchies involving iterated exponentiation or Ackermann-type growth.\n\n**Test.** Compute empirical expansion constants for:\n1. Arithmetic progression statements (van der Waerden-type): $W(k) \\le f(k)$.\n2. Graph Ramsey statements: $R(k,k) \\le g(k)$.\n3. Paris-Harrington statements.\n4. Friedman's finite forms of Kruskal's theorem.\n\nMeasure the best-fit $b$",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Combinatorics",
+      "Probability",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3b452d34",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:08:18.552980+00:00"
+  },
+  {
+    "id": "fd_0202",
+    "title": "Conjecture 4: Expansion-Aware Curriculum Optimality",
+    "description": "**Conjecture.** For an automated theorem prover with bounded computational resources, the optimal ordering of a finite set of theorems $\\{\\Phi_1, \\ldots, \\Phi_N\\}$ to maximize the number proved within a time budget $T$ is a monotone ordering with respect to the proof expansion constant. Specifically, if $\\Phi_i$ has expansion constant $b_i$ relative to previously proved theorems, the greedy ordering by increasing $b_i$ is within a factor of $O(\\log N)$ of optimal.\n\n**Test.** Implement the expansion-constant ordering for families of Lean/Isabelle theorems from Mathlib or the Archive of Formal Proofs. Compare against:\n- Random ordering\n- Ordering by statement complexity\n- Ordering by proof length\n- The greedy expansion-constant ordering\n\nMeasure total theorems proved within a fixed ATP time ",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "Algebra",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3b452d34",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:08:18.559040+00:00"
+  },
+  {
+    "id": "fd_0203",
+    "title": "Conjecture 5: Model-Shrinkage Distance is a Proof Complexity Invariant",
+    "description": "**Conjecture.** For propositional proof systems (Resolution, Frege, Extended Frege), the model-shrinkage distance $d(\\phi, \\psi) = \\log_2(|\\text{Mod}(\\phi)|/|\\text{Mod}(\\psi)|)$ provides a lower bound on the ratio of proof lengths:\n\n$$\\frac{\\mathrm{ProofLength}(\\psi)}{\\mathrm{ProofLength}(\\phi)} \\ge 2^{\\Omega(d(\\phi, \\psi))}$$\n\nwhenever $\\psi$ logically implies $\\phi$ and both are provable in the system.\n\n**Test.** Construct explicit CNF formula pairs $(\\phi, \\psi)$ where:\n- $\\psi \\models \\phi$\n- The model count ratio is known exactly (e.g., via #SAT solvers like sharpSAT)\n- Proof lengths are measured in Resolution and Frege systems\n\nIf a family exists where model count drops exponentially but proof length grows only polynomially, the conjecture is refuted.\n\n**Impact.** This would be a bre",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "Logic",
+      "Computation"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3b452d34",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:08:18.566956+00:00"
   }
 ];

@@ -2179,7 +2179,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T02:00:27.961170+00:00"
     },
@@ -2336,7 +2336,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T02:04:42.905032+00:00"
     },
@@ -2688,7 +2688,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T03:08:58.145710+00:00"
     },
@@ -3269,7 +3269,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "3b452d34",
       "timestamp": "2026-05-20T05:07:35.464824+00:00"
     },
@@ -3485,7 +3485,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T07:05:26.666460+00:00"
     },
@@ -3685,7 +3685,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:07:39.218711+00:00"
     },
@@ -3765,6 +3765,157 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:07:49.732483+00:00"
+    },
+    {
+      "id": "fd_0199",
+      "title": "Conjecture 1: Universal Binary Expansion Lower Envelope",
+      "description": "**Conjecture.** For every recursively axiomatized, consistent theory $T$ extending Peano Arithmetic, and every \"natural\" hierarchy of theorems $\\{\\Phi_n\\}_{n \\in \\mathbb{N}}$ where $\\Phi_{n+1}$ is obtained from $\\Phi_n$ by a uniform syntactic strengthening operation, there exists a constant $b > 1$ such that for all sufficiently large $m \\le n$:\n\n$$\\mathrm{ProofLength}_T(\\Phi_n) \\ge b^{n-m} \\cdot \\mathrm{ProofLength}_T(\\Phi_m).$$\n\n**Test.** Search for hierarchies where semantic distance $n - m \\to \\infty$ but $\\mathrm{ProofLength}(\\Phi_n) / \\mathrm{ProofLength}(\\Phi_m)$ remains bounded by a polynomial in $n - m$. A single explicit family with unbounded distance and polynomial blowup refutes the conjecture. Candidate test families:\n- Pigeonhole principles $\\mathrm{PHP}^n_{n+1}$ in bounded a",
+      "source_exp_id": "3b452d34",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3b452d34",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:08:18.538744+00:00"
+    },
+    {
+      "id": "fd_0200",
+      "title": "Conjecture 2: Semantic Entropy Correlation",
+      "description": "**Conjecture.** Let $\\mathcal{M}_N(\\phi)$ denote the set of models of $\\phi$ over structures of size $\\le N$. Define semantic entropy $H_N(\\phi) = \\log_2 |\\mathcal{M}_N(\\phi)|$. For natural strengthening hierarchies, there exists $C > 0$ such that:\n\n$$\\log_2 \\frac{\\mathrm{ProofLength}(\\Phi_n)}{\\mathrm{ProofLength}(\\Phi_m)} \\ge C \\cdot (H_N(\\Phi_m) - H_N(\\Phi_n))$$\n\nfor all sufficiently large $N$ and all $m \\le n$.\n\n**Test.** Compute $H_N(\\phi)$ and proof lengths for families of propositional tautologies, graph coloring constraints, and SAT instances with parameterized clause density. Plot $\\log(\\text{proof ratio})$ vs. $\\Delta H$ and test for a linear lower envelope. A family where entropy drops sharply but proof length grows sublinearly would refute this.\n\n**Impact.** This would establish",
+      "source_exp_id": "3b452d34",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3b452d34",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Physics",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:08:18.545901+00:00"
+    },
+    {
+      "id": "fd_0201",
+      "title": "Conjecture 3: Expansion Constant Universality Classes",
+      "description": "**Conjecture.** Natural theorem hierarchies fall into finitely many \"universality classes\" based on their expansion constant. Specifically, for hierarchies over PA:\n- **Class I (polynomial):** $b = 1$ (no exponential expansion). Only degenerate/trivial hierarchies.\n- **Class II (single exponential):** $b \\in (1, 2]$. Includes most arithmetic hierarchies.\n- **Class III (double exponential):** Expansion rate is $2^{2^{\\Theta(d)}}$. Includes hierarchies involving iterated exponentiation or Ackermann-type growth.\n\n**Test.** Compute empirical expansion constants for:\n1. Arithmetic progression statements (van der Waerden-type): $W(k) \\le f(k)$.\n2. Graph Ramsey statements: $R(k,k) \\le g(k)$.\n3. Paris-Harrington statements.\n4. Friedman's finite forms of Kruskal's theorem.\n\nMeasure the best-fit $b$",
+      "source_exp_id": "3b452d34",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3b452d34",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:08:18.552980+00:00"
+    },
+    {
+      "id": "fd_0202",
+      "title": "Conjecture 4: Expansion-Aware Curriculum Optimality",
+      "description": "**Conjecture.** For an automated theorem prover with bounded computational resources, the optimal ordering of a finite set of theorems $\\{\\Phi_1, \\ldots, \\Phi_N\\}$ to maximize the number proved within a time budget $T$ is a monotone ordering with respect to the proof expansion constant. Specifically, if $\\Phi_i$ has expansion constant $b_i$ relative to previously proved theorems, the greedy ordering by increasing $b_i$ is within a factor of $O(\\log N)$ of optimal.\n\n**Test.** Implement the expansion-constant ordering for families of Lean/Isabelle theorems from Mathlib or the Archive of Formal Proofs. Compare against:\n- Random ordering\n- Ordering by statement complexity\n- Ordering by proof length\n- The greedy expansion-constant ordering\n\nMeasure total theorems proved within a fixed ATP time ",
+      "source_exp_id": "3b452d34",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3b452d34",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Algebra",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:08:18.559040+00:00"
+    },
+    {
+      "id": "fd_0203",
+      "title": "Conjecture 5: Model-Shrinkage Distance is a Proof Complexity Invariant",
+      "description": "**Conjecture.** For propositional proof systems (Resolution, Frege, Extended Frege), the model-shrinkage distance $d(\\phi, \\psi) = \\log_2(|\\text{Mod}(\\phi)|/|\\text{Mod}(\\psi)|)$ provides a lower bound on the ratio of proof lengths:\n\n$$\\frac{\\mathrm{ProofLength}(\\psi)}{\\mathrm{ProofLength}(\\phi)} \\ge 2^{\\Omega(d(\\phi, \\psi))}$$\n\nwhenever $\\psi$ logically implies $\\phi$ and both are provable in the system.\n\n**Test.** Construct explicit CNF formula pairs $(\\phi, \\psi)$ where:\n- $\\psi \\models \\phi$\n- The model count ratio is known exactly (e.g., via #SAT solvers like sharpSAT)\n- Proof lengths are measured in Resolution and Frege systems\n\nIf a family exists where model count drops exponentially but proof length grows only polynomially, the conjecture is refuted.\n\n**Impact.** This would be a bre",
+      "source_exp_id": "3b452d34",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3b452d34",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:08:18.566956+00:00"
+    },
+    {
+      "id": "fd_0204",
+      "title": "Meta-Observation",
+      "description": "All five conjectures share a common theme: **semantic compression (reducing the set of models) forces syntactic inflation (increasing proof length)**. This \"no free lunch\" principle, if validated even partially, would establish proof expansion as a fundamental invariant of formal reasoning, bridging proof complexity, information theory, model theory, and computational learning theory into a unified geometric framework.\n\nThe most immediately testable conjecture is **Conjecture 2** (Semantic Entropy Correlation), as it requires only model counting and proof-length measurement on finite propositional instances. The most impactful if true is **Conjecture 5** (Model-Shrinkage as Proof Complexity Invariant), as it would provide new proof-complexity lower bound techniques.",
+      "source_exp_id": "3b452d34",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3b452d34",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "MachineLearning",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:08:18.573066+00:00"
+    },
+    {
+      "id": "fd_0205",
+      "title": "Arithmetic Phase Locking in Gradient Descent over Rational Polynomial Models",
+      "description": "Conjecture: For a Zariski-open family of polynomial loss functions L(w) with rational coefficients and rational initialization w_0, constant-step gradient descent w_{t+1}=w_t-eta*grad L(w_t) with rational eta either (i) enters an algebraic periodic orbit modulo p for a set of primes p of positive natural density, or (ii) its reduction modulo p is equidistributed on the forward orbit variety for density-1 primes; moreover the dichotomy is determined by whether the Jacobian cocycle along the complex critical skeleton has virtually solvable arithmetic monodromy. Test: Sample broad families of polynomial learning problems, compute trajectories modulo many primes, estimate prime-density of periodic-locking behavior, and compare against independently computed/arbitrarily approximated monodromy groups or Galois groups of the update map. Refutation occurs if generic instances violate the predicted dichotomy or if locking density shows no relation to monodromy type. Impact: This would create a new arithmetic-dynamical theory of optimization, giving a falsifiable bridge between training dynamics, number theory, and algebraic geometry, and could yield new diagnostics for trainability and instability invisible to real-valued analysis.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Optimization Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T08:08:34.578561+00:00"
     }
   ],
   "pruned": [
