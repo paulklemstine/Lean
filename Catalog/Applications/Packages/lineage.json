@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T20:12:16Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "conjecture_4_riemannian_gradient_flow_convergence",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T20:12:59Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "conjecture_2_derivative_growth_as_a_semantic_depth",
@@ -25,7 +25,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T20:13:24Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "conjecture_4_log_linearization_characterizes_multi",
@@ -34,6 +34,15 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T20:13:42Z",
+      "hue": 95
+    },
+    {
+      "id": "prime_modular_morse_stability_for_neural_loss_land",
+      "title": "Prime-Modular Morse Stability for Neural Loss Landscapes",
+      "domain": "Arithmetic Geometry × Optimization Theory",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-20T20:14:03Z",
       "hue": 90
     }
   ],
