@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T20:12:16Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_4_riemannian_gradient_flow_convergence",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T20:12:59Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "conjecture_2_derivative_growth_as_a_semantic_depth",
@@ -25,6 +25,15 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T20:13:24Z",
+      "hue": 91
+    },
+    {
+      "id": "conjecture_4_log_linearization_characterizes_multi",
+      "title": "Log-Linearization Characterizes Multiplicative Interactions",
+      "domain": "Analysis / Interaction Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-20T20:13:42Z",
       "hue": 90
     }
   ],

@@ -1380,6 +1380,93 @@
       "ambition_level": "extension",
       "lineage_refs": [],
       "domain_bridges": []
+    },
+    {
+      "id": "fd_0062",
+      "title": "Test",
+      "description": "Enumerate all exp-fragment expressions of size ≤ 20 and depth ≤ 5. For each, compute the ratio R(E) = max|E'| / iterExp(depth(E), M). If R(E) grows superpolynomially in |E| for some family, the conjecture is false. If R(E) is bounded by |E|^k for some fixed k across all experiments, the conjecture is supported.",
+      "source_exp_id": "c6c90908",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c6c90908",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:13:24.821724+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0063",
+      "title": "Refutation Criterion",
+      "description": "Find two extensionally equal functions with minimal depths *d₁* and *d₂* where |*d₁* - *d₂*| ≥ 2 but identical derivative envelopes. Alternatively, find an expression where the derivative growth class underestimates the true depth by ≥ 2.",
+      "source_exp_id": "c6c90908",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c6c90908",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:13:24.823743+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0064",
+      "title": "Impact",
+      "description": "If true, this would make depth a *detectable* invariant: given black-box access to a function, one could infer its representation depth from derivative measurements alone.",
+      "source_exp_id": "c6c90908",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c6c90908",
+      "domains": [
+        "Analysis",
+        "Probability",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:13:24.825608+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0065",
+      "title": "Renormalization Universality in Proof Search Trees",
+      "description": "Conjecture: For a broad class of automated theorem proving systems (SAT-resolution, term-rewriting completion, and Lean-style tactic search), there exists a coarse-graining map on proof states such that near the satisfiable/unsatisfiable or provable/unprovable search boundary, the distribution of subtree sizes flows to a universal scaling law with system-independent critical exponent. Test: Define a proof-state coarse-graining procedure, generate theorem/problem families with tunable difficulty near phase boundaries, and measure whether subtree-size distributions collapse onto the same scaling curve across distinct provers after rescaling; refuted if no stable cross-system exponent or scaling collapse appears. Impact: Would introduce a statistical-physics theory of proof complexity, enabling difficulty prediction, principled benchmark generation, and new proof-search heuristics based on critical phenomena.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Proof Complexity",
+        "Statistical Mechanics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:13:32.313940+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     }
   ],
   "pruned": [],
