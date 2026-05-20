@@ -1337,6 +1337,49 @@
       "ambition_level": "extension",
       "lineage_refs": [],
       "domain_bridges": []
+    },
+    {
+      "id": "fd_0060",
+      "title": "Test:",
+      "description": "Sample 500 random SU(3) targets satisfying the eigenvalue condition. From 20 random initializations each, run gradient descent with various step sizes. Check whether all runs converge to the same minimizer (the principal logarithm). A single instance where two runs converge to different points with L > 0 would indicate a spurious local minimum.",
+      "source_exp_id": "ca49f647",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ca49f647",
+      "domains": [
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:13:03.885734+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0061",
+      "title": "Arithmetic Resonance in Neural Proof Search",
+      "description": "Conjecture: For transformer-based theorem provers trained on mixed-domain formal mathematics, there exists a statistically significant phase transition in proof success on number-theoretic statements when the training corpus crosses a threshold of explicit additive-combinatorial lemmas; specifically, success rates on unseen formalized prime-distribution theorems increase superlinearly once the library contains sufficiently many formally linked Fourier-analytic and sieve-theoretic components, while control domains without this arithmetic dependency graph do not show the same jump. Test: Construct staged training corpora with matched size but varying density of additive-combinatorial prerequisites, then measure proof success, proof length, and retrieval graph structure on held-out formal prime-distribution results versus matched non-arithmetic controls. The conjecture is refuted if gains are smooth and size-explained, or if the same transition appears uniformly across unrelated domains. Impact: This would reveal whether formal mathematical reasoning exhibits domain-specific emergent structure acquisition, guiding how to build theorem libraries for maximal downstream discovery rather than mere scale.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Automated Theorem Proving",
+        "Additive Combinatorics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T20:13:14.206769+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     }
   ],
   "pruned": [],

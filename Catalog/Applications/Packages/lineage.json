@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T20:12:16Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_4_riemannian_gradient_flow_convergence",
@@ -16,7 +16,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T20:12:59Z",
-      "hue": 275
+      "hue": 95
+    },
+    {
+      "id": "conjecture_2_derivative_growth_as_a_semantic_depth",
+      "title": "Derivative Growth as a Semantic Depth Invariant",
+      "domain": "Real Analysis / Computational Complexity",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-20T20:13:24Z",
+      "hue": 90
     }
   ],
   "edges": [],
