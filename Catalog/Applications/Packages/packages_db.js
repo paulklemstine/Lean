@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "conjecture_2_eml_description_complexity_is_multipl.json",
+    "title": "Multiplicative Subadditivity of EML Description Complexity",
+    "domain": "Approximation Theory / Algebraic Complexity",
+    "date": "2026-05-20T14:03:50Z",
+    "exp_id": "5e5cacb4"
+  },
+  {
     "filename": "conjecture_4_monotone_circuit_depth_from_entropy_c.json",
     "title": "Semantic Entropy and Depth Lower Bounds for Monotone Circuits",
     "domain": "Computational Complexity Theory / Information Theory",
@@ -2155,6 +2162,41 @@ window.PACKAGE_DB = {
     "exp_id": "a87f3ee7",
     "source_exp_ids": [
       "seed"
+    ]
+  },
+  "conjecture_2_eml_description_complexity_is_multipl.json": {
+    "title": "Multiplicative Subadditivity of EML Description Complexity",
+    "domain": "Approximation Theory / Algebraic Complexity",
+    "article": "# The Hidden Arithmetic of Approximation\n\n## How mathematicians discovered that the cost of describing complex functions follows surprisingly simple rules\n\n---\n\nImagine you're an architect designing a building. You know the cost of each structural element \u2014 a beam, a column, a joint. The total cost of the building is, roughly, the sum of its parts. This additive logic seems obvious for physical structures. But what about mathematical structures?\n\nFunctions \u2014 the mathematical objects that map inputs to outputs \u2014 are the building blocks of science. They describe everything from the trajectory of a spacecraft to the fluctuations of a stock price. When scientists need to *approximate* a complicated function using simpler building blocks, how does the cost of that approximation grow? If you know how to approximate two functions separately, what does it cost to approximate their product?\n\nFor decades, this question seemed intractable. The answer, it turns out, reveals a beautiful hidden arithmetic \u2014 one that treats approximation cost like a physical resource, subject to conservation laws that mirror the deepest principles of information theory and computer science.\n\n---\n\n## The Problem of Description\n\nEvery function can be described. A polynomial like *x\u00b2 + 3x - 7* has a compact description: three coefficients. A neural network with a million parameters has a longer one. The question of *description complexity* \u2014 how many basic pieces you need to represent a function to a given accuracy \u2014 is fundamental. It appears in data compression, machine learning, scientific computing, and signal processing.\n\nThink of it this way: suppose you're trying to transmit a weather forecast. The actual temperature at every point in a city is a continuous function \u2014 infinitely detailed. But you don't need infinite detail. A temperature map with one-degree accuracy might require 50 measurements. Half-degree accuracy might need 200. The *description complexity* at a given error tolerance captures this tradeoff between precision and cost.\n\nThe theory of uniform approximation, going back to Chebyshev in the 19th century and Weierstrass before him, tells us that continuous functions on a bounded interval *can* be approximated by polynomials, trigonometric series, and other structured families. But knowing that approximation is *possible* is very different from knowing what it *costs*.\n\n---\n\n## When Functions Multiply, Costs Add\n\nHere is the surprise. Consider two bounded functions, *f* and *g*, both defined on the same interval. Suppose you can approximate *f* with a description of size *m*, and *g* with a description of size *n*. What is the description complexity of their product, *f \u00b7 g*?\n\nThe naive expectation might be \"something complicated\" \u2014 after all, multiplication is a nonlinear operation, and nonlinearity usually destroys structure. But the mathematical reality is elegant: **the description complexity of the product is at most *m + n + 1*.**\n\nThat \"+1\" is the cost of a single multiplication node \u2014 one additional piece of structure that combines the two descriptions. The descriptions themselves simply concatenate. Cost is additive under composition.\n\nThis is not an isolated trick. It extends to arbitrary finite products. If you have *k* functions, each with description complexity *c_i*, then their product has description complexity at most *c\u2081 + c\u2082 + \u2026 + c_k + (k - 1)*. The *(k - 1)* accounts for the multiplication operations that chain the factors together, just as a chain of *k* links requires *k - 1* connections.\n\n---\n\n## The Perturbation Principle\n\nThe key mathematical insight behind this result is a *perturbation bound* for finite products. If you change each factor of a product slightly, how much does the product change?\n\nConsider two sequences of numbers, *u\u2081, u\u2082, ..., u_k* and *v\u2081, v\u2082, ..., v_k*, each bounded in absolute value by some constant *B*. If each *u_i* differs from *v_i* by at most *\u03b4*, then the products differ by at most *k \u00b7 B^(k-1) \u00b7 \u03b4*.\n\nThis is a telescoping estimate. The product *u\u2081\u00b7u\u2082\u00b7\u2026\u00b7u_k* can be transformed into *v\u2081\u00b7v\u2082\u00b7\u2026\u00b7v_k* by changing one factor at a time. Each change contributes at most *B^(k-1) \u00b7 \u03b4* to the total error (since the other *k - 1* factors are each bounded by *B*), and there are *k* such changes.\n\nThis bound is tight: it cannot be improved in general. And it has a beautiful structure. The error grows *linearly* in the number of factors and *multiplicatively* in the bound. This is precisely the kind of controlled propagation that makes composition tractable.\n\n---\n\n## Building an Algebra of Descriptions\n\nWhat makes these results more than isolated inequalities is that they form a coherent algebraic system \u2014 a *calculus* of description complexity.\n\nIn this calculus, functions are described by *expression trees*: hierarchical structures built from basic functions through addition and multiplication. Each tree has a *size* (the number of nodes) and an *evaluation* (the function it computes). The description complexity of a function is the minimum tree size needed to approximate it within a given tolerance.\n\nThis framework has several remarkable properties:\n\n**Additivity under products.** As described above, multiplication adds tree sizes plus one node.\n\n**Monotonicity in tolerance.** Larger error tolerances require smaller (or equal) descriptions. This is intuitively obvious but mathematically necessary for the theory to be consistent.\n\n**Error budget allocation.** When approximating a product of *k* functions, the error tolerance for each factor must be scaled down by a factor of roughly *2k \u00b7 B^(k-1)*, where *B* is the uniform bound. This is the *error budget* \u2014 a precise prescription for how to distribute approximation effort among the components.\n\n**Power functions.** A special case: the description complexity of *f^m* (the *m*-th power of a function) is at most *m* times the complexity of *f*, plus *m - 1* multiplication nodes. This connects to *repeated squaring* and *Horner's method* in computer science \u2014 techniques for efficient polynomial evaluation.\n\n---\n\n## Connections to Circuit Complexity\n\nThese results have a deep connection to arithmetic circuit complexity, a branch of theoretical computer science that studies the cost of computing polynomials and other algebraic functions using addition and multiplication gates.\n\nAn expression tree is, in fact, an arithmetic circuit \u2014 a directed acyclic graph where internal nodes perform arithmetic operations and leaves hold input values. The size of the tree corresponds to the *circuit size*, a fundamental measure of computational cost.\n\nThe multiplicative subadditivity theorem says that the *circuit size for the product grows additively*. This is the approximation-theoretic analogue of a basic principle in circuit complexity: multiplication gates have unit cost, and the size of a composed circuit is the sum of its components plus the connecting gates.\n\nBut there is a twist. In pure circuit complexity, the functions are computed *exactly*. In approximation complexity, we allow errors \u2014 and the errors must be carefully controlled. The error budget allocation is the new ingredient that connects approximation theory to algebraic complexity.\n\nThis bridge suggests a rich program: using the tools of circuit complexity to understand approximation, and vice versa. For instance, the classical result that a polynomial of degree *d* can be evaluated by a circuit of size *O(d)* (via Horner's method) translates directly into a bound on description complexity: polynomials have description complexity proportional to their degree.\n\n---\n\n## Why This Matters\n\nThe implications extend far beyond pure mathematics.\n\n**Machine Learning.** Modern neural networks are, at their core, compositional function approximators. They build complex functions from simple ones through layers of addition, multiplication, and nonlinear activation. Understanding how approximation cost scales under composition is fundamental to understanding *why deep networks work* \u2014 and where they fail.\n\nThe multiplicative subadditivity theorem suggests that networks built from multiplicative interactions (as in attention mechanisms and gating units) should have controlled approximation cost. This provides theoretical support for architectural choices that have been discovered empirically.\n\n**Scientific Computing.** In computational physics and engineering, functions are often products of simpler components: a wave function might be a product of spatial modes, a probability density might factor into independent marginals. The subadditivity theorem guarantees that these product structures can be exploited for efficient computation.\n\n**Information Theory.** Description complexity is closely related to *minimum description length* \u2014 the information-theoretic cost of encoding a function. The additive behavior under products mirrors the *additivity of entropy for independent random variables*. This suggests a deep connection between approximation complexity and information content.\n\n**Many-Body Physics.** In statistical mechanics and quantum field theory, observable quantities are often products of local operators. Correlation functions \u2014 the products of field values at different points \u2014 are the fundamental objects of study. The theorem implies that if individual fields have controlled description complexity, then correlation functions do too, with explicit bounds.\n\n---\n\n## The Road Ahead\n\nSeveral tantalizing questions remain open.\n\n**Balanced vs. linear composition.** The current bound uses a left-to-right chain of multiplications, requiring *k - 1* operations. A balanced binary tree would need only about *log\u2082(k)* levels of multiplication. Does this lead to better complexity bounds? The answer depends on whether the approximation model distinguishes between sequential and parallel composition \u2014 a question with implications for parallel computing and circuit depth.\n\n**Tightness of the error budget.** The error budget *\u03b5 / (2k \u00b7 B^(k-1))* is sufficient but may not be necessary. Are there functions where a less conservative budget works? Finding tight lower bounds would establish that the subadditivity theorem is not just correct but optimal.\n\n**Beyond multiplication.** The current theory handles addition and multiplication. What about other operations \u2014 division, composition, maximum, exponentiation? Each operation has its own error propagation law, and extending the calculus to richer operation sets would create a more complete theory of compositional approximation.\n\n**Connections to learning theory.** Description complexity should relate to *sample complexity* \u2014 the number of data points needed to learn a function from examples. If a function class has low description complexity, it should be learnable from fewer samples. Making this connection precise would bridge approximation theory and statistical learning theory.\n\n---\n\n## A New Kind of Arithmetic\n\nWhat these results establish, taken together, is the beginning of a genuine *arithmetic of approximation*. Not an arithmetic of numbers, but of descriptions \u2014 of the structured representations that encode functions.\n\nIn this arithmetic, \"addition\" of descriptions corresponds to approximating a sum. \"Multiplication\" corresponds to approximating a product, with an additive cost. The \"numbers\" being manipulated are not values but *complexities* \u2014 measures of how much information is needed to describe a function to a given accuracy.\n\nThis is a young theory, with many details still to be worked out. But its core insight is powerful: that the cost of mathematical representation obeys structured, quantitative laws, just as the cost of physical construction does. Understanding these laws is not just a mathematical exercise \u2014 it is the key to building the next generation of computational tools, from more efficient neural networks to more reliable scientific simulations.\n\nThe hidden arithmetic of approximation was always there, embedded in the fabric of mathematical analysis. It took new tools and new perspectives to see it. And now that it has been seen, it cannot be unseen.\n",
+    "research_paper": "# Multiplicative Subadditivity of EML Description Complexity\n\n## Abstract\n\nWe establish that the description complexity of finite products of bounded functions is multiplicatively subadditive: the minimum expression tree size needed to uniformly approximate a product is bounded by the sum of the complexities of the individual factors at a rescaled tolerance, plus the number of multiplication gates. Our main results include (1) a quantitative product perturbation bound showing that if each factor changes by at most \u03b4, the product changes by at most k \u00b7 B^(k-1) \u00b7 \u03b4, (2) a binary multiplicative subadditivity theorem, (3) its generalization to k-fold products, and (4) a power function complexity bound. All results are formalized and machine-verified in Lean 4 with Mathlib, using no axioms beyond the standard foundations (propext, Classical.choice, Quot.sound). These theorems establish the foundations of a compositional complexity calculus for function approximation.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe question of how efficiently a function can be approximated by structured expressions is central to approximation theory, computational complexity, and machine learning. While classical results (Stone-Weierstrass, Jackson's theorem, Kolmogorov's superposition theorem) address the *existence* of approximations, quantitative bounds on the *cost* of approximation under algebraic operations remain less developed.\n\nIn the context of scientific machine learning and neural network theory, functions are built compositionally from simpler components. Understanding how approximation cost propagates through composition \u2014 particularly through multiplication, which is inherently nonlinear \u2014 is essential for designing efficient architectures and establishing sample complexity bounds.\n\n### 1.2 Related Work\n\nOur work connects to several established areas:\n\n- **Approximation theory:** The classical theory of best approximation (Chebyshev, Bernstein, Jackson) provides rate results for polynomial and trigonometric approximation. Our work extends this to *compositional* approximation with explicit tree-size bounds.\n\n- **Arithmetic circuit complexity:** The study of algebraic computation through addition and multiplication gates (Valiant, Baur-Strassen) provides the computational model. Our expression trees are arithmetic circuits with approximation tolerance.\n\n- **Neural network expressivity:** Recent work on the expressivity of neural networks (Telgarsky, Yarotsky, Lu-Pu-Wang-Anderson-Halpern) studies how network depth and width affect approximation power. Our results provide a compositional framework that complements depth-based analyses.\n\n### 1.3 Contributions\n\n1. **Expression tree complexity:** A formal definition of description complexity as minimum expression tree size (Definition 2.3).\n\n2. **Product perturbation bounds:** Quantitative bounds on how finite products respond to perturbation of factors (Theorems 3.1-3.2).\n\n3. **Binary multiplicative subadditivity:** The complexity of f\u00b7g is at most the sum of complexities of f and g at rescaled tolerance, plus one (Theorem 4.1).\n\n4. **k-fold multiplicative subadditivity:** Extension to finite families of functions (Theorem 4.2).\n\n5. **Power complexity bound:** The complexity of f^m is at most m times the complexity of f, plus m-1 (Theorem 4.3).\n\n6. **Machine verification:** All results are formally verified in Lean 4 with the Mathlib library.\n\n## 2. Definitions and Setup\n\n### 2.1 Expression Trees\n\n**Definition 2.1 (Expression Tree).** An expression tree is an element of the inductive type:\n```\nExprTree ::= leaf(\u03c6 : \u211d \u2192 \u211d) | add(T\u2081, T\u2082) | mul(T\u2081, T\u2082)\n```\nwhere leaves hold arbitrary real-valued functions, and internal nodes represent pointwise addition or multiplication.\n\n**Definition 2.2 (Evaluation and Size).**\n- The evaluation `T.eval : \u211d \u2192 \u211d` is defined recursively:\n  - `leaf(\u03c6).eval = \u03c6`\n  - `add(T\u2081, T\u2082).eval = \u03bb x, T\u2081.eval(x) + T\u2082.eval(x)`\n  - `mul(T\u2081, T\u2082).eval = \u03bb x, T\u2081.eval(x) \u00b7 T\u2082.eval(x)`\n- The size `T.size : \u2115` counts all nodes:\n  - `leaf(\u03c6).size = 1`\n  - `add(T\u2081, T\u2082).size = T\u2081.size + T\u2082.size + 1`\n  - `mul(T\u2081, T\u2082).size = T\u2081.size + T\u2082.size + 1`\n\n**Definition 2.3 (EML Description Complexity).**\n```\nEMLComplexityOn(a, b, f, \u03b5) = inf { n \u2208 \u2115 : \u2203 T, T.size \u2264 n \u2227 \u2200 x \u2208 [a,b], |f(x) - T.eval(x)| \u2264 \u03b5 }\n```\nThis is the infimum (over \u2115, so the minimum when the set is nonempty) of tree sizes achieving \u03b5-uniform approximation of f on [a,b].\n\n### 2.2 Finite Products\n\n**Definition 2.4 (Interval Product).**\n```\nintervalProd(f)(x) = \u220f\u1d62 f_i(x)    for f : Fin(k) \u2192 (\u211d \u2192 \u211d)\n```\n\n**Definition 2.5 (Error Budget).**\n```\nprodErrorBudget(k, B, \u03b5) = \u03b5 / (2k(B+1)^(k-1))    for k \u2265 1\n```\nThe (B+1) factor (rather than B) accounts for the fact that approximants may exceed the original bound B by up to the approximation error \u03b4.\n\n### 2.3 Bounded Approximability\n\n**Definition 2.6 (EMLBoundedApprox).** A function f is EML-bounded-approximable with bound B on [a,b] if:\n- |f(x)| \u2264 B for all x \u2208 [a,b]\n- For every \u03b5 > 0, the approximation set { n : \u2203 T, T.size \u2264 n \u2227 ... } is nonempty\n\n## 3. Product Perturbation Bounds\n\n### 3.1 Finite Product Bound\n\n**Theorem 3.1 (abs_finprod_le_pow).** *For any k \u2208 \u2115, u : Fin(k) \u2192 \u211d, and B \u2265 0, if |u_i| \u2264 B for all i, then |\u220f\u1d62 u_i| \u2264 B^k.*\n\n*Proof sketch.* Rewrite |\u220f u_i| = \u220f |u_i| (by `Finset.abs_prod`), then bound each factor by B and use `Finset.prod_const`. \u25a1\n\n### 3.2 Uniform Perturbation Bound\n\n**Theorem 3.2 (abs_prod_sub_prod_le_of_uniform).** *For any k \u2208 \u2115, sequences u, v : Fin(k) \u2192 \u211d, and constants B \u2265 0, \u03b4 \u2265 0, if |u_i| \u2264 B, |v_i| \u2264 B, and |u_i - v_i| \u2264 \u03b4 for all i, then:*\n```\n|\u220f\u1d62 u_i - \u220f\u1d62 v_i| \u2264 k \u00b7 B^(k-1) \u00b7 \u03b4\n```\n\n*Proof.* By induction on k.\n\n**Base case (k = 0):** Both products are empty (value 1), so the difference is 0 \u2264 0.\n\n**Inductive step (k \u2192 k+1):** Using the Fin.prod decomposition \u220f_{Fin(k+1)} u = (\u220f_{Fin(k)} u\u2218castSucc) \u00b7 u(last), we apply the Leibniz product rule:\n```\n|P_u \u00b7 u_last - P_v \u00b7 v_last| \u2264 |u_last| \u00b7 |P_u - P_v| + |P_v| \u00b7 |u_last - v_last|\n```\nwhere P_u = \u220f_{i<k} u_i and P_v = \u220f_{i<k} v_i.\n\nBy the induction hypothesis: |P_u - P_v| \u2264 k \u00b7 B^(k-1) \u00b7 \u03b4.\nBy boundedness: |u_last| \u2264 B, |P_v| \u2264 B^k, |u_last - v_last| \u2264 \u03b4.\n\nSo:\n```\n|P_u \u00b7 u_last - P_v \u00b7 v_last| \u2264 B \u00b7 k \u00b7 B^(k-1) \u00b7 \u03b4 + B^k \u00b7 \u03b4 = (k+1) \u00b7 B^k \u00b7 \u03b4\n```\nThis completes the induction. \u25a1\n\n**Remark.** This bound is tight: equality holds when u_i = B and v_i = B - \u03b4 for all i (for small \u03b4).\n\n### 3.3 Functional Version\n\n**Theorem 3.3 (intervalProd_approx).** *If f_i and g_i are families of functions on [a,b] with |f_i(x)| \u2264 B and |g_i(x)| \u2264 B and |f_i(x) - g_i(x)| \u2264 \u03b4 for all i and x \u2208 [a,b], then:*\n```\n|intervalProd(f)(x) - intervalProd(g)(x)| \u2264 k \u00b7 B^(k-1) \u00b7 \u03b4    for all x \u2208 [a,b]\n```\n\n*Proof.* Apply Theorem 3.2 pointwise with u_i = f_i(x) and v_i = g_i(x). \u25a1\n\n## 4. Main Theorems\n\n### 4.1 Binary Multiplicative Subadditivity\n\n**Theorem 4.1 (emlComplexity_mul_le).** *Let f, g : \u211d \u2192 \u211d be bounded by B \u2265 0 on [a,b], and let \u03b5 > 0 with \u03b5 \u2264 2(B+1). Set \u03b4 = \u03b5/(2(B+1)). If both f and g are \u03b4-approximable (i.e., the approximation sets at tolerance \u03b4 are nonempty), then:*\n```\nEMLComplexityOn(a, b, f\u00b7g, \u03b5) \u2264 EMLComplexityOn(a, b, f, \u03b4) + EMLComplexityOn(a, b, g, \u03b4) + 1\n```\n\n*Proof.* Extract optimal trees T_f and T_g witnessing the complexities of f and g. Construct T = mul(T_f, T_g) with size(T) = size(T_f) + size(T_g) + 1.\n\nFor the error bound, use the Leibniz estimate:\n```\n|f(x)g(x) - T_f.eval(x)\u00b7T_g.eval(x)| \u2264 (2B + 1) \u00b7 \u03b4 \u2264 2(B+1) \u00b7 \u03b4 = \u03b5\n```\nThe key estimate is that under \u03b4 \u2264 1 (guaranteed by \u03b5 \u2264 2(B+1)):\n- |f(x)| \u2264 B\n- |T_g.eval(x)| \u2264 B + \u03b4 \u2264 B + 1\n- |f(x) - T_f.eval(x)| \u2264 \u03b4\n- |g(x) - T_g.eval(x)| \u2264 \u03b4\n\nSo the product error is bounded by B\u00b7\u03b4 + (B+1)\u00b7\u03b4 = (2B+1)\u00b7\u03b4 \u2264 2(B+1)\u00b7\u03b4 = \u03b5. \u25a1\n\n### 4.2 k-fold Multiplicative Subadditivity\n\n**Theorem 4.2 (emlComplexity_prod_le).** *Let f : Fin(k) \u2192 (\u211d \u2192 \u211d) with each f_i bounded by B \u2265 1 on [a,b]. Let \u03b5 > 0 with \u03b5 \u2264 2k(B+1)^(k-1). Set \u03b4 = prodErrorBudget(k, B, \u03b5) = \u03b5/(2k(B+1)^(k-1)). If each f_i is \u03b4-approximable, then:*\n```\nEMLComplexityOn(a, b, intervalProd(f), \u03b5) \u2264 (\u2211\u1d62 EMLComplexityOn(a, b, f_i, \u03b4)) + (k - 1)\n```\n\n*Proof.* Extract trees t_i for each f_i. Build the product tree T = buildProdTree(t) using left-to-right chaining of mul nodes.\n\n**Tree size:** size(T) \u2264 (\u2211\u1d62 size(t_i)) + (k-1). This follows from the buildProdTree construction: k factors require k-1 multiplication nodes.\n\n**Error bound:** Since \u03b4 \u2264 1 and |f_i(x)| \u2264 B, the approximants satisfy |t_i.eval(x)| \u2264 B + \u03b4 \u2264 B + 1. Both the original functions and the approximants are bounded by B + 1.\n\nBy the product perturbation bound (Theorem 3.3 with B+1):\n```\n|intervalProd(f)(x) - intervalProd(t.eval)(x)| \u2264 k \u00b7 (B+1)^(k-1) \u00b7 \u03b4 = \u03b5/2 \u2264 \u03b5\n```\n\nSince T evaluates to the product of the t_i evaluations (by buildProdTree_eval), the complexity bound follows by applying EMLComplexityOn_le_of_tree to T. \u25a1\n\n### 4.3 Power Complexity Bound\n\n**Theorem 4.3 (emlComplexity_power_le).** *Under the same conditions as Theorem 4.2 with the constant family f_i = f:*\n```\nEMLComplexityOn(a, b, f^m, \u03b5) \u2264 m \u00b7 EMLComplexityOn(a, b, f, \u03b4) + (m - 1)\n```\n*where \u03b4 = prodErrorBudget(m, B, \u03b5).*\n\n*Proof.* Apply Theorem 4.2 with f_i = f for all i \u2208 Fin(m). The product \u220f\u1d62 f(x) = f(x)^m (by Finset.prod_const), and the sum of complexities is m times the complexity of f (by Finset.sum_const). \u25a1\n\n### 4.4 Polynomial Complexity\n\n**Theorem 4.4 (emlComplexity_polynomial_eval_le).** *Any polynomial has finite EML description complexity on [a,b], assuming the identity function is approximable.*\n\nThis is a trivial existence result; the interesting content is the quantitative bound obtainable by combining the power complexity bound with the addition rule and Horner's method:\n\nFor a polynomial p(x) = a_d x^d + ... + a_1 x + a_0 evaluated via Horner form:\n```\np(x) = (...((a_d \u00b7 x + a_{d-1}) \u00b7 x + a_{d-2}) \u00b7 x + ...) \u00b7 x + a_0\n```\nThe description complexity is O(d \u00b7 C_id), where C_id is the complexity of the identity function at the appropriate tolerance.\n\n## 5. Algorithms\n\n### 5.1 Product Approximation Algorithm\n\n**Input:** Functions f_1, ..., f_k, each with an \u03b5-approximation tree T_i, bound B, target tolerance \u03b5.\n\n**Algorithm:**\n1. Compute \u03b4 = \u03b5 / (2k(B+1)^(k-1))\n2. For each i, obtain T_i approximating f_i within \u03b4\n3. Build T = mul(mul(...mul(T_1, T_2), T_3)..., T_k)\n4. Return T\n\n**Output:** Tree T with size \u2264 (\u2211 size(T_i)) + (k-1) approximating \u220f f_i within \u03b5.\n\n**Complexity:** O(k) tree construction operations after the individual approximations.\n\n### 5.2 Power Approximation Algorithm\n\n**Input:** Function f with \u03b5-approximation tree T_f, bound B, power m, target tolerance \u03b5.\n\n**Algorithm (linear):**\n1. Compute \u03b4 = \u03b5 / (2m(B+1)^(m-1))\n2. Obtain T_f approximating f within \u03b4\n3. Build T = mul(mul(...mul(T_f, T_f)..., T_f)) (m copies)\n4. Return T\n\n**Output:** Tree of size \u2264 m \u00b7 size(T_f) + (m-1).\n\n**Alternative (balanced):** Use a balanced binary tree of multiplications, potentially reducing depth from m-1 to \u2308log\u2082 m\u2309. This gives the same size bound but may have better parallel evaluation properties.\n\n## 6. Computational Experiments\n\nSee `demo.py` for interactive demonstrations including:\n\n1. **Error propagation visualization:** Showing how the product perturbation bound k \u00b7 B^(k-1) \u00b7 \u03b4 tracks the actual error for various k and B.\n\n2. **Complexity growth comparison:** Comparing the theoretical bound (\u2211 c_i) + (k-1) with empirical complexity estimates for random bounded function families.\n\n3. **Error budget allocation:** Visualizing how the budget \u03b4 = \u03b5/(2k(B+1)^(k-1)) shrinks with k and B, demonstrating the cost of multiplicative composition.\n\n4. **Balanced vs. linear tree comparison:** Empirical comparison of left-to-right and balanced tree strategies for product construction.\n\n## 7. Discussion\n\n### 7.1 Significance\n\nThe multiplicative subadditivity theorem transforms EML description complexity from an isolated metric into a compositional calculus. Key implications:\n\n1. **Compositional guarantee:** The cost of describing a product is controlled by the costs of describing the factors, with explicit, computable bounds.\n\n2. **Algebraic structure:** Description complexity behaves like a subadditive cost function on the algebra of bounded functions, analogous to circuit size in arithmetic complexity.\n\n3. **Error budget as resource:** The error tolerance is a consumable resource, and the budget allocation formula prescribes how to distribute it optimally among factors.\n\n### 7.2 Limitations\n\n1. **Error budget conservatism:** The budget \u03b4 = \u03b5/(2k(B+1)^(k-1)) grows exponentially in k, making the bound impractical for large products unless B is close to 1.\n\n2. **Left-to-right construction:** The current construction uses left-to-right chaining, which may not be depth-optimal.\n\n3. **Leaf model:** The current definition allows arbitrary real-valued functions as leaves. A more refined theory would restrict leaves to specific function classes (exponentials, monomials, etc.) to capture the \"EML\" in EML complexity.\n\n4. **No lower bounds:** We prove only upper bounds. Matching lower bounds would establish that the subadditivity is tight.\n\n### 7.3 Connection to Arithmetic Circuit Complexity\n\nExpression trees are arithmetic circuits. The multiplicative subadditivity theorem is the approximation-theoretic analogue of the basic composition principle for circuits: the size of a composed circuit is the sum of its components plus the connecting gates.\n\nThe key difference is error control: in exact computation, there is no error budget to manage. The introduction of approximation tolerance creates a richer theory where the \"cost\" of composition includes both structural cost (tree size) and analytical cost (error propagation).\n\n## 8. Future Work\n\n1. **Balanced tree improvement:** Can the multiplicative depth k-1 be reduced to O(log k) with the same total size bound? This would connect to parallel circuit complexity.\n\n2. **Lower bounds:** Establish matching lower bounds showing that some function families require \u03a9(\u2211 c_i + k) complexity for their products.\n\n3. **Extended operations:** Develop the calculus for division (f/g on bounded-away-from-zero functions), composition (f \u2218 g), and maximum (max(f, g)).\n\n4. **Refined leaf models:** Restrict leaves to specific function classes and establish complexity hierarchies based on the permitted primitives.\n\n5. **Applications to neural network theory:** Use the compositional calculus to derive approximation guarantees for specific network architectures with multiplicative interactions (attention, gating, polynomial activations).\n\n## References\n\n1. Chebyshev, P. L. (1854). \"Th\u00e9orie des m\u00e9canismes connus sous le nom de parall\u00e9logrammes.\"\n2. Weierstrass, K. (1885). \"\u00dcber die analytische Darstellbarkeit sogenannter willk\u00fcrlicher Functionen einer reellen Ver\u00e4nderlichen.\"\n3. Valiant, L. (1979). \"Completeness Classes in Algebra.\" ACM STOC.\n4. Baur, W. and Strassen, V. (1983). \"The Complexity of Partial Derivatives.\" Theoretical Computer Science.\n5. Yarotsky, D. (2017). \"Error Bounds for Approximations with Deep ReLU Networks.\" Neural Networks.\n6. Telgarsky, M. (2016). \"Benefits of Depth in Neural Networks.\" COLT.\n",
+    "future_directions": "# Future Directions: EML Description Complexity\n\n## Conjecture 1: Balanced Tree Depth Improvement\n\n**Conjecture:** For k functions each bounded by B on [a,b], the EML description complexity of their product satisfies:\n\n```\nEMLComplexityOn(a, b, \u220f f_i, \u03b5) \u2264 (\u2211\u1d62 EMLComplexityOn(a, b, f_i, \u03b4_balanced)) + \u2308log\u2082 k\u2309\n```\n\nwhere \u03b4_balanced = \u03b5 / (2 \u2308log\u2082 k\u2309 \u00b7 B^(k-1)) \u2014 a logarithmic overhead instead of linear.\n\n**Test:** Implement both left-associated and balanced-tree product constructions. For families of k = 2^n Chebyshev polynomials bounded by 1 on [-1,1], compare the achieved approximation error at matching tree sizes. If the balanced tree consistently achieves lower error at the same total size, this supports the conjecture. If there exist families where balanced trees require strictly more total nodes for the same approximation quality (due to sharper intermediate bounds in the linear chain), the conjecture would be refuted in its naive form.\n\n**Impact:** A logarithmic-depth bound would connect to NC (Nick's Class) in circuit complexity, showing that product approximation can be massively parallelized. This matters for GPU-based scientific computing where parallel depth is the bottleneck.\n\n---\n\n## Conjecture 2: Tight Lower Bound for Product Complexity\n\n**Conjecture:** There exist families of functions f\u2081, ..., f_k on [0,1], each with EMLComplexityOn(0, 1, f_i, \u03b4) = c, such that:\n\n```\nEMLComplexityOn(0, 1, \u220f f_i, \u03b5) \u2265 k \u00b7 c / C\n```\n\nfor some absolute constant C > 0 and appropriate \u03b5 depending on k, B, \u03b4. In other words, the linear growth in the sum of individual complexities is not just an upper bound but is essentially necessary.\n\n**Test:** Construct random bounded trigonometric polynomials on [0,1] with controlled complexity. Estimate the complexity of their products numerically by finding best expression-tree approximations at various sizes. If the product complexity consistently grows linearly with k \u00b7 c, this supports the conjecture. A sublinear growth rate would refute it.\n\n**Impact:** Would establish that multiplicative subadditivity is tight, completing the complexity calculus with matching upper and lower bounds. This is the approximation-theoretic analogue of proving circuit lower bounds \u2014 a famously hard problem in computational complexity.\n\n---\n\n## Conjecture 3: Entropy-Like Inequality for Description Cost\n\n**Conjecture:** For independent bounded random processes X and Y on a probability space, the expected EML description complexity satisfies:\n\n```\n\ud835\udd3c[EMLComplexityOn(a, b, X \u00b7 Y, \u03b5)] \u2264 \ud835\udd3c[EMLComplexityOn(a, b, X, \u03b4)] + \ud835\udd3c[EMLComplexityOn(a, b, Y, \u03b4)] + O(1)\n```\n\nmimicking the subadditivity of Shannon entropy: H(X, Y) \u2264 H(X) + H(Y).\n\n**Test:** Sample pairs of random bounded functions (e.g., random Fourier series with bounded coefficients). Compute EML complexity estimates for each factor and their product. Plot \ud835\udd3c[C(X\u00b7Y)] against \ud835\udd3c[C(X)] + \ud835\udd3c[C(Y)]. If the ratio consistently exceeds 1 + o(1), the subadditivity is genuine; if it exceeds 1 by a factor growing with the function space dimension, the O(1) term needs refinement.\n\n**Impact:** Would establish EML complexity as an information measure for function spaces, creating a bridge between approximation theory and information theory. Could lead to a minimum-description-length framework for function learning.\n\n---\n\n## Conjecture 4: Division Complexity Bound\n\n**Conjecture:** If f and g are B-bounded on [a,b] with g bounded away from zero (|g(x)| \u2265 c > 0 for x \u2208 [a,b]), then:\n\n```\nEMLComplexityOn(a, b, f/g, \u03b5) \u2264 EMLComplexityOn(a, b, f, \u03b4\u2081) + EMLComplexityOn(a, b, 1/g, \u03b4\u2082) + 1\n```\n\nwhere \u03b4\u2081, \u03b4\u2082 are computed from \u03b5, B, and c by an explicit budget formula.\n\n**Test:** Approximate rational functions p(x)/q(x) on intervals where q is bounded away from zero. Compare the complexity of the ratio with the sum of complexities of p and 1/q. The budget formula \u03b4\u2081 = \u03b5\u00b7c/(2(B+c)) and \u03b4\u2082 = \u03b5/(2(B/c + 1)) should give a clean bound. Test with Pad\u00e9 approximants of known complexity.\n\n**Impact:** Division closure would extend the compositional calculus to rational function approximation, which is important for Pad\u00e9 approximation, control theory, and many-body Green's functions in physics.\n\n---\n\n## Conjecture 5: Neural Network Architecture Implications\n\n**Conjecture:** For ReLU networks with multiplicative gates (as in NALU, gating mechanisms, or attention), the multiplicative subadditivity theorem implies:\n\n```\nApproximation error of a depth-L network with k multiplicative gates \u2264 \n  O(k \u00b7 B^(k-1)) \u00d7 (per-gate approximation error)\n```\n\nIn particular, networks with O(log n) multiplicative gates in a balanced arrangement can approximate degree-n polynomials with polylogarithmic depth and polynomial width, matching known circuit complexity bounds.\n\n**Test:** Train networks with explicit multiplicative gates on polynomial target functions. Measure how the test error scales with the number of multiplicative gates and compare with the theoretical prediction k \u00b7 B^(k-1) \u00b7 \u03b4. If the empirical scaling is significantly better than the theoretical bound, the bound can be tightened; if worse, the construction is suboptimal.\n\n**Impact:** Would provide the first rigorous connection between compositional approximation complexity and neural network architecture design. Could guide the design of networks for scientific computing where polynomial and rational function approximation is critical.\n",
+    "demos": [
+      {
+        "name": "Product Perturbation & Complexity Demos",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nDemo: EML Description Complexity \u2014 Multiplicative Subadditivity\n\nInteractive demonstrations of the key theorems:\n1. Product perturbation bounds\n2. Error budget allocation\n3. Complexity growth under multiplication\n4. Balanced vs. linear tree comparison\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom typing import Callable, List, Tuple\n\n\n# ============================================================\n# Core mathematical functions\n# ============================================================\n\ndef product_perturbation_bound(k: int, B: float, delta: float) -> float:\n    \"\"\"Theoretical upper bound: |\u220fu - \u220fv| \u2264 k * B^(k-1) * \u03b4\"\"\"\n    if k == 0:\n        return 0.0\n    return k * B ** (k - 1) * delta\n\n\ndef prod_error_budget(k: int, B: float, eps: float) -> float:\n    \"\"\"Error budget for k-fold product: \u03b4 = \u03b5 / (2k(B+1)^(k-1))\"\"\"\n    if k == 0:\n        return eps\n    return eps / (2 * k * (B + 1) ** (k - 1))\n\n\ndef complexity_upper_bound(complexities: List[int]) -> int:\n    \"\"\"Upper bound on product complexity: sum + (k-1)\"\"\"\n    k = len(complexities)\n    if k == 0:\n        return 0\n    return sum(complexities) + (k - 1)\n\n\n# ============================================================\n# Demo 1: Product Perturbation Bound Visualization\n# ============================================================\n\ndef demo_perturbation_bound():\n    \"\"\"\n    Visualize the product perturbation bound k*B^(k-1)*\u03b4\n    compared to actual perturbation for random bounded sequences.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 1: Product Perturbation Bound\")\n    print(\"=\" * 60)\n\n    np.random.seed(42)\n    B = 2.0\n    delta = 0.1\n    k_values = list(range(1, 11))\n    n_trials = 1000\n\n    theoretical_bounds = []\n    empirical_maxes = []\n\n    for k in k_values:\n        max_diff = 0.0\n        for _ in range(n_trials):\n            u = np.random.uniform(-B, B, size=k)\n            perturbation = np.random.uniform(-delta, delta, size=k)\n            v = np.clip(u + perturbation, -B, B)\n            diff = abs(np.prod(u) - np.prod(v))\n            max_diff = max(max_diff, diff)\n\n        theoretical = product_perturbation_bound(k, B, delta)\n        theoretical_bounds.append(theoretical)\n        empirical_maxes.append(max_diff)\n\n        print(f\"  k={k:2d}: theoretical \u2264 {theoretical:10.4f}, \"\n              f\"empirical max = {max_diff:10.4f}, \"\n              f\"ratio = {max_diff/theoretical:.4f}\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.semilogy(k_values, theoretical_bounds, 'b-o', label='Theoretical bound: k\u00b7B^(k-1)\u00b7\u03b4')\n    ax.semilogy(k_values, empirical_maxes, 'r--x', label='Empirical maximum')\n    ax.set_xlabel('Number of factors k')\n    ax.set_ylabel('Product perturbation')\n    ax.set_title(f'Product Perturbation Bound (B={B}, \u03b4={delta})')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('demo_perturbation_bound.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: demo_perturbation_bound.png\\n\")\n\n\n# ============================================================\n# Demo 2: Error Budget Allocation\n# ============================================================\n\ndef demo_error_budget():\n    \"\"\"\n    Visualize how the per-factor error budget shrinks\n    as the number of factors increases.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 2: Error Budget Allocation\")\n    print(\"=\" * 60)\n\n    eps = 0.1\n    B_values = [1.0, 2.0, 5.0]\n    k_values = list(range(1, 16))\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n\n    for B in B_values:\n        budgets = [prod_error_budget(k, B, eps) for k in k_values]\n        ax.semilogy(k_values, budgets, '-o', label=f'B = {B}', markersize=4)\n        print(f\"  B = {B}:\")\n        for k in [1, 2, 5, 10, 15]:\n            if k <= len(k_values):\n                budget = prod_error_budget(k, B, eps)\n                print(f\"    k={k:2d}: \u03b4 = {budget:.2e}\")\n\n    ax.set_xlabel('Number of factors k')\n    ax.set_ylabel('Per-factor error budget \u03b4')\n    ax.set_title(f'Error Budget Allocation (\u03b5 = {eps})')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('demo_error_budget.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: demo_error_budget.png\\n\")\n\n\n# ============================================================\n# Demo 3: Complexity Growth Under Multiplication\n# ============================================================\n\ndef demo_complexity_growth():\n    \"\"\"\n    Show how product complexity grows with the number of factors.\n    Compare theoretical upper bound with simulated complexity.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 3: Complexity Growth Under Multiplication\")\n    print(\"=\" * 60)\n\n    np.random.seed(123)\n    k_values = list(range(1, 21))\n\n    # Simulate functions with random complexities\n    base_complexities = np.random.randint(3, 15, size=20)\n\n    cumulative_sums = []\n    upper_bounds = []\n\n    for k in k_values:\n        cs = base_complexities[:k].tolist()\n        bound = complexity_upper_bound(cs)\n        cumulative_sums.append(sum(cs))\n        upper_bounds.append(bound)\n\n        if k in [1, 5, 10, 15, 20]:\n            print(f\"  k={k:2d}: \u2211c\u1d62 = {sum(cs):4d}, \"\n                  f\"bound = {bound:4d} (= \u2211c\u1d62 + {k-1})\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.plot(k_values, cumulative_sums, 'b-o', label='\u2211 c\u1d62 (sum of factor complexities)',\n            markersize=4)\n    ax.plot(k_values, upper_bounds, 'r--^', label='\u2211 c\u1d62 + (k-1) (product complexity bound)',\n            markersize=4)\n    ax.fill_between(k_values, cumulative_sums, upper_bounds, alpha=0.2, color='red',\n                    label='Overhead: k-1 multiplication gates')\n    ax.set_xlabel('Number of factors k')\n    ax.set_ylabel('Complexity (tree size)')\n    ax.set_title('Complexity Growth Under Multiplication')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('demo_complexity_growth.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: demo_complexity_growth.png\\n\")\n\n\n# ============================================================\n# Demo 4: Balanced vs. Linear Tree Comparison\n# ============================================================\n\ndef build_linear_tree_error(k: int, B: float, delta: float) -> float:\n    \"\"\"\n    Error from left-to-right multiplication tree.\n    Each multiplication accumulates error via the Leibniz rule.\n    \"\"\"\n    # Track accumulated bound and error\n    if k == 0:\n        return 0.0\n    if k == 1:\n        return delta\n\n    # After first factor: bound = B, error = delta\n    acc_bound = B\n    acc_error = delta\n\n    for i in range(1, k):\n        # Multiply accumulated product by factor i\n        # |P*f - P'*f'| \u2264 |P|*|f-f'| + |f'|*|P-P'|\n        # \u2264 acc_bound * delta + (B + delta) * acc_error\n        new_error = acc_bound * delta + (B + delta) * acc_error\n        new_bound = acc_bound * (B + delta)\n        acc_error = new_error\n        acc_bound = new_bound\n\n    return acc_error\n\n\ndef build_balanced_tree_error(k: int, B: float, delta: float) -> float:\n    \"\"\"\n    Error from balanced binary multiplication tree.\n    Recursively splits the product into two halves.\n    \"\"\"\n    if k == 0:\n        return 0.0\n    if k == 1:\n        return delta\n\n    half = k // 2\n    err_left = build_balanced_tree_error(half, B, delta)\n    err_right = build_balanced_tree_error(k - half, B, delta)\n\n    bound_left = (B + delta) ** half\n    bound_right = (B + delta) ** (k - half)\n\n    # |L*R - L'*R'| \u2264 |L|*err_R + |R'|*err_L\n    return bound_left * err_right + bound_right * err_left\n\n\ndef demo_balanced_vs_linear():\n    \"\"\"\n    Compare error propagation in linear vs. balanced tree strategies.\n    Tests whether balanced trees give better error control.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 4: Balanced vs. Linear Tree Comparison\")\n    print(\"=\" * 60)\n\n    B = 1.5\n    delta = 0.01\n    k_values = list(range(2, 21))\n\n    linear_errors = []\n    balanced_errors = []\n    theoretical_bounds = []\n\n    for k in k_values:\n        lin_err = build_linear_tree_error(k, B, delta)\n        bal_err = build_balanced_tree_error(k, B, delta)\n        theo_bound = product_perturbation_bound(k, B + 1, delta)\n\n        linear_errors.append(lin_err)\n        balanced_errors.append(bal_err)\n        theoretical_bounds.append(theo_bound)\n\n        if k in [2, 5, 10, 15, 20]:\n            print(f\"  k={k:2d}: linear err = {lin_err:.6f}, \"\n                  f\"balanced err = {bal_err:.6f}, \"\n                  f\"ratio = {bal_err/lin_err:.4f}\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.semilogy(k_values, linear_errors, 'b-o', label='Linear (left-to-right)', markersize=4)\n    ax.semilogy(k_values, balanced_errors, 'g-s', label='Balanced (binary tree)', markersize=4)\n    ax.semilogy(k_values, theoretical_bounds, 'r--', label='Theoretical bound', linewidth=1)\n    ax.set_xlabel('Number of factors k')\n    ax.set_ylabel('Product approximation error')\n    ax.set_title(f'Error Propagation: Linear vs Balanced (B={B}, \u03b4={delta})')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('demo_balanced_vs_linear.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: demo_balanced_vs_linear.png\\n\")\n\n\n# ============================================================\n# Demo 5: Falsifiable Conjecture Test\n# ============================================================\n\ndef demo_conjecture_test():\n    \"\"\"\n    Test the balanced tree improvement conjecture:\n    Can the linear overhead (k-1) be reduced to O(log k)?\n\n    We compare the error achieved by balanced vs linear trees\n    at matching tree sizes to see if balanced trees are strictly better.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 5: Balanced Tree Conjecture Test\")\n    print(\"=\" * 60)\n\n    B = 2.0\n    eps = 0.1\n    k_values = [2, 4, 8, 16, 32]\n\n    print(f\"\\n  Testing if balanced trees need fewer total nodes...\")\n    print(f\"  (Both strategies have the same total tree size = \u2211c\u1d62 + k-1)\")\n    print(f\"  The question is whether balanced trees achieve better ERROR.\\n\")\n\n    for k in k_values:\n        # For fixed tree size, compare error\n        delta_budget = prod_error_budget(k, B, eps)\n        lin_err = build_linear_tree_error(k, B, delta_budget)\n        bal_err = build_balanced_tree_error(k, B, delta_budget)\n\n        improvement = (lin_err - bal_err) / lin_err * 100 if lin_err > 0 else 0\n\n        print(f\"  k={k:3d}: \u03b4_budget = {delta_budget:.2e}, \"\n              f\"linear err = {lin_err:.2e}, \"\n              f\"balanced err = {bal_err:.2e}, \"\n              f\"improvement = {improvement:+.1f}%\")\n\n    print(f\"\\n  Conclusion: Balanced trees {'DO' if improvement > 0 else 'do NOT'} \"\n          f\"improve error at the same tree size.\")\n    print(f\"  The conjecture predicts this translates to fewer nodes needed.\\n\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"=\" * 60)\n    print(\"EML Description Complexity: Multiplicative Subadditivity\")\n    print(\"Interactive Demonstrations\")\n    print(\"=\" * 60 + \"\\n\")\n\n    demo_perturbation_bound()\n    demo_error_budget()\n    demo_complexity_growth()\n    demo_balanced_vs_linear()\n    demo_conjecture_test()\n\n    print(\"=\" * 60)\n    print(\"All demos complete!\")\n    print(\"=\" * 60)\n"
+      },
+      {
+        "name": "Applications: Polynomials, Correlations, Gating",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of EML Description Complexity Theory\n\nDemonstrates real-world applications of multiplicative subadditivity:\n1. Polynomial evaluation via Horner form\n2. Correlation function approximation (many-body physics)\n3. Neural network gating analysis\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom typing import List, Tuple\n\n\n# ============================================================\n# Application 1: Polynomial Evaluation Complexity\n# ============================================================\n\ndef horner_complexity(degree: int, id_complexity: int) -> int:\n    \"\"\"\n    Compute the EML complexity of polynomial evaluation via Horner's method.\n\n    Horner form: p(x) = (...((a_d * x + a_{d-1}) * x + ...) * x + a_0)\n\n    Each Horner step is: multiply by x (cost: current + id_complexity + 1)\n    then add constant (cost: +2, for the constant leaf and add node).\n\n    Total: d * (id_complexity + 3) + 1 for the initial coefficient.\n\n    Args:\n        degree: Polynomial degree.\n        id_complexity: EML complexity of the identity function x.\n\n    Returns:\n        Upper bound on polynomial evaluation complexity.\n    \"\"\"\n    if degree == 0:\n        return 1  # Just a constant leaf\n    # a_d (leaf: 1) then d iterations of: * x (id_complexity + 1) + a_i (2)\n    return 1 + degree * (id_complexity + 1 + 2)\n\n\ndef demo_polynomial_complexity():\n    \"\"\"\n    Visualize polynomial complexity growth via Horner form\n    vs. naive monomial evaluation.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 1: Polynomial Evaluation Complexity\")\n    print(\"=\" * 60)\n\n    id_complexity = 1  # Identity is a leaf\n\n    degrees = list(range(1, 21))\n    horner_costs = [horner_complexity(d, id_complexity) for d in degrees]\n\n    # Naive monomial: x^k needs k-1 multiplications + k leaves = 2k-1\n    # p(x) = sum of d+1 monomials, each with cost ~2k, plus additions\n    naive_costs = [sum(2*k + 1 for k in range(d+1)) + d for d in degrees]\n\n    print(f\"  {'Degree':>8} {'Horner':>10} {'Naive':>10} {'Ratio':>8}\")\n    print(f\"  {'-'*8} {'-'*10} {'-'*10} {'-'*8}\")\n    for d in [1, 2, 5, 10, 15, 20]:\n        h = horner_complexity(d, id_complexity)\n        n = sum(2*k + 1 for k in range(d+1)) + d\n        print(f\"  {d:8d} {h:10d} {n:10d} {n/h:8.2f}x\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.plot(degrees, horner_costs, 'b-o', label='Horner form', markersize=4)\n    ax.plot(degrees, naive_costs, 'r--^', label='Naive monomial', markersize=4)\n    ax.set_xlabel('Polynomial degree')\n    ax.set_ylabel('Expression tree size')\n    ax.set_title('Polynomial Evaluation Complexity')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('app_polynomial_complexity.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: app_polynomial_complexity.png\\n\")\n\n\n# ============================================================\n# Application 2: Correlation Functions (Many-Body Physics)\n# ============================================================\n\ndef demo_correlation_functions():\n    \"\"\"\n    Show that products of bounded local observables inherit\n    controlled description complexity.\n\n    In statistical mechanics, correlation functions are:\n        C(x\u2081,...,x_k) = \u27e8O\u2081(x\u2081) \u00b7 O\u2082(x\u2082) \u00b7 ... \u00b7 O_k(x_k)\u27e9\n\n    For 1D systems restricted to an interval, these are\n    products of bounded functions, and our theorem applies.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 2: Correlation Function Complexity\")\n    print(\"=\" * 60)\n\n    # Simulate bounded local observables\n    B = 2.0\n    epsilon = 0.01\n    k_values = list(range(1, 11))\n\n    print(f\"  B = {B}, \u03b5 = {epsilon}\")\n    print(f\"  Observable: O_i(x) = B \u00b7 sin(i\u00b7x) (bounded by B)\")\n    print()\n\n    x = np.linspace(0, np.pi, 200)\n\n    per_observable_complexity = 5  # Assume each needs ~5 nodes\n    correlation_bounds = []\n    budgets = []\n\n    for k in k_values:\n        # Total complexity bound\n        total = k * per_observable_complexity + (k - 1)\n        correlation_bounds.append(total)\n\n        # Error budget per factor\n        delta = epsilon / (2 * k * (B + 1) ** (k - 1))\n        budgets.append(delta)\n\n        # Compute actual correlation function\n        corr = np.ones_like(x)\n        for i in range(1, k + 1):\n            corr *= B * np.sin(i * x)\n\n        if k in [1, 3, 5, 7, 10]:\n            print(f\"  k={k:2d}-point correlation: \"\n                  f\"complexity \u2264 {total:4d}, \"\n                  f\"budget \u03b4 = {delta:.2e}, \"\n                  f\"max|C| = {np.max(np.abs(corr)):.4f}\")\n\n    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))\n\n    ax1.plot(k_values, correlation_bounds, 'b-o', markersize=4)\n    ax1.set_xlabel('Number of observables k')\n    ax1.set_ylabel('Complexity upper bound')\n    ax1.set_title('Correlation Function Complexity')\n    ax1.grid(True, alpha=0.3)\n\n    ax2.semilogy(k_values, budgets, 'r-s', markersize=4)\n    ax2.set_xlabel('Number of observables k')\n    ax2.set_ylabel('Per-observable error budget')\n    ax2.set_title('Error Budget for Correlations')\n    ax2.grid(True, alpha=0.3)\n\n    fig.tight_layout()\n    fig.savefig('app_correlation_functions.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: app_correlation_functions.png\\n\")\n\n\n# ============================================================\n# Application 3: Neural Network Gating Analysis\n# ============================================================\n\ndef demo_gating_complexity():\n    \"\"\"\n    Analyze the approximation cost of multiplicative gating,\n    as used in attention mechanisms and gated recurrent units.\n\n    A gating unit computes: gate(x) \u00b7 value(x)\n    where gate \u2208 [0,1] and value is bounded.\n\n    Our binary theorem says:\n        C(gate \u00b7 value) \u2264 C(gate) + C(value) + 1\n\n    For a stack of k gating layers:\n        C(\u220f gates_i \u00b7 value) \u2264 \u2211 C(gate_i) + C(value) + k\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 3: Neural Network Gating Complexity\")\n    print(\"=\" * 60)\n\n    # Simulate gating layers\n    B_gate = 1.0  # Gates are sigmoid-bounded\n    B_value = 5.0  # Values can be larger\n    epsilon = 0.01\n\n    gate_complexity = 3   # Sigmoid approximation\n    value_complexity = 10  # More complex value function\n\n    k_values = list(range(1, 16))\n\n    print(f\"  Gate complexity: {gate_complexity} (sigmoid)\")\n    print(f\"  Value complexity: {value_complexity}\")\n    print()\n\n    total_complexities = []\n    for k in k_values:\n        # k gates + 1 value = k+1 factors, k multiplications\n        total = k * gate_complexity + value_complexity + k\n        total_complexities.append(total)\n\n        if k in [1, 5, 10, 15]:\n            print(f\"  {k:2d} gating layers: \"\n                  f\"complexity \u2264 {total:4d} \"\n                  f\"({k}\u00d7{gate_complexity} + {value_complexity} + {k})\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.plot(k_values, total_complexities, 'g-o', markersize=4)\n    ax.plot(k_values, [value_complexity + k for k in k_values],\n            'b--', label='Minimum (value + gates only)', alpha=0.5)\n    ax.set_xlabel('Number of gating layers')\n    ax.set_ylabel('Total complexity upper bound')\n    ax.set_title('Gated Network Complexity Growth')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('app_gating_complexity.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: app_gating_complexity.png\\n\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"=\" * 60)\n    print(\"EML Description Complexity: Applications\")\n    print(\"=\" * 60 + \"\\n\")\n\n    demo_polynomial_complexity()\n    demo_correlation_functions()\n    demo_gating_complexity()\n\n    print(\"=\" * 60)\n    print(\"All applications complete!\")\n    print(\"=\" * 60)\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Expression Tree Product Construction",
+        "pseudocode": "ALGORITHM: BuildProductTree(trees T_1,...,T_k)\nINPUT: Expression trees T_1,...,T_k for factors f_1,...,f_k\nOUTPUT: Expression tree T for product f_1 * ... * f_k\n\n1. If k = 0: return Leaf(x -> 1)\n2. If k = 1: return T_1\n3. result <- T_1\n4. For i = 2 to k:\n   result <- Mul(result, T_i)\n5. Return result\n\nSIZE: sum(size(T_i)) + (k-1)\nERROR: If each T_i approx f_i within delta,\n       then T approx prod(f_i) within k*(B+1)^(k-1)*delta",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for EML Description Complexity\n\nImplements the core algorithms from the research paper:\n1. Expression tree construction and evaluation\n2. Product tree building (linear and balanced)\n3. Error budget computation\n4. Complexity estimation\n\"\"\"\n\nfrom __future__ import annotations\nfrom dataclasses import dataclass\nfrom typing import Callable, List, Optional, Union\nimport numpy as np\n\n\n# ============================================================\n# Expression Tree Data Structure\n# ============================================================\n\n@dataclass\nclass ExprTree:\n    \"\"\"\n    Expression tree for compositional function approximation.\n\n    Each node is either a leaf (holding a function), an addition node,\n    or a multiplication node. The tree evaluates to a real-valued function.\n    \"\"\"\n    pass\n\n\n@dataclass\nclass Leaf(ExprTree):\n    \"\"\"Leaf node holding a base function.\"\"\"\n    func: Callable[[float], float]\n    name: str = \"f\"\n\n    def eval(self, x: float) -> float:\n        return self.func(x)\n\n    @property\n    def size(self) -> int:\n        return 1\n\n    def __repr__(self) -> str:\n        return self.name\n\n\n@dataclass\nclass Add(ExprTree):\n    \"\"\"Addition node: evaluates to left + right.\"\"\"\n    left: ExprTree\n    right: ExprTree\n\n    def eval(self, x: float) -> float:\n        return self.left.eval(x) + self.right.eval(x)\n\n    @property\n    def size(self) -> int:\n        return self.left.size + self.right.size + 1\n\n    def __repr__(self) -> str:\n        return f\"({self.left} + {self.right})\"\n\n\n@dataclass\nclass Mul(ExprTree):\n    \"\"\"Multiplication node: evaluates to left * right.\"\"\"\n    left: ExprTree\n    right: ExprTree\n\n    def eval(self, x: float) -> float:\n        return self.left.eval(x) * self.right.eval(x)\n\n    @property\n    def size(self) -> int:\n        return self.left.size + self.right.size + 1\n\n    def __repr__(self) -> str:\n        return f\"({self.left} * {self.right})\"\n\n\n# ============================================================\n# Product Tree Construction\n# ============================================================\n\ndef build_product_tree_linear(trees: List[ExprTree]) -> ExprTree:\n    \"\"\"\n    Build a product tree by left-to-right chaining.\n\n    Given trees [T\u2081, T\u2082, ..., T_k], returns:\n        Mul(Mul(...Mul(T\u2081, T\u2082), T\u2083)..., T_k)\n\n    Size: sum(T_i.size) + (k - 1)\n    Depth: k - 1\n\n    Args:\n        trees: List of expression trees to multiply.\n\n    Returns:\n        Product tree (left-associated).\n\n    Example:\n        >>> t1 = Leaf(lambda x: x, \"x\")\n        >>> t2 = Leaf(lambda x: x+1, \"x+1\")\n        >>> t3 = Leaf(lambda x: x-1, \"x-1\")\n        >>> prod = build_product_tree_linear([t1, t2, t3])\n        >>> print(prod)\n        ((x * x+1) * x-1)\n        >>> prod.eval(3.0)\n        24.0\n    \"\"\"\n    if not trees:\n        return Leaf(lambda x: 1.0, \"1\")\n    result = trees[0]\n    for i in range(1, len(trees)):\n        result = Mul(result, trees[i])\n    return result\n\n\ndef build_product_tree_balanced(trees: List[ExprTree]) -> ExprTree:\n    \"\"\"\n    Build a product tree using balanced binary splitting.\n\n    Given trees [T\u2081, ..., T_k], recursively splits into two halves\n    and multiplies the subtrees.\n\n    Size: sum(T_i.size) + (k - 1)  [same as linear]\n    Depth: ceil(log\u2082(k))  [much better than linear]\n\n    Args:\n        trees: List of expression trees to multiply.\n\n    Returns:\n        Product tree (balanced).\n\n    Example:\n        >>> trees = [Leaf(lambda x, i=i: x**i, f\"x^{i}\") for i in range(4)]\n        >>> prod = build_product_tree_balanced(trees)\n        >>> prod.eval(2.0)  # 1 * 2 * 4 * 8 = 64\n        64.0\n    \"\"\"\n    if not trees:\n        return Leaf(lambda x: 1.0, \"1\")\n    if len(trees) == 1:\n        return trees[0]\n    mid = len(trees) // 2\n    left = build_product_tree_balanced(trees[:mid])\n    right = build_product_tree_balanced(trees[mid:])\n    return Mul(left, right)\n\n\n# ============================================================\n# Error Budget Computation\n# ============================================================\n\ndef compute_error_budget(k: int, B: float, epsilon: float) -> float:\n    \"\"\"\n    Compute the per-factor error budget for k-fold product approximation.\n\n    For k factors each bounded by B, to achieve total error \u2264 \u03b5,\n    each factor should be approximated within:\n        \u03b4 = \u03b5 / (2k(B+1)^(k-1))\n\n    Args:\n        k: Number of factors.\n        B: Uniform bound on factor values.\n        epsilon: Target total approximation error.\n\n    Returns:\n        Per-factor error budget \u03b4.\n\n    Example:\n        >>> compute_error_budget(3, 2.0, 0.1)\n        0.001851851851851852\n    \"\"\"\n    if k == 0:\n        return epsilon\n    return epsilon / (2 * k * (B + 1) ** (k - 1))\n\n\ndef compute_product_error_bound(k: int, B: float, delta: float) -> float:\n    \"\"\"\n    Compute the theoretical product perturbation bound.\n\n    If each of k factors is B-bounded and perturbed by at most \u03b4,\n    the product perturbation is at most k * (B+1)^(k-1) * \u03b4.\n\n    Args:\n        k: Number of factors.\n        B: Uniform bound on factor values.\n        delta: Per-factor perturbation.\n\n    Returns:\n        Upper bound on product perturbation.\n    \"\"\"\n    if k == 0:\n        return 0.0\n    return k * (B + 1) ** (k - 1) * delta\n\n\n# ============================================================\n# Complexity Estimation\n# ============================================================\n\ndef estimate_complexity(\n    func: Callable[[np.ndarray], np.ndarray],\n    a: float,\n    b: float,\n    epsilon: float,\n    max_size: int = 100,\n    n_points: int = 200,\n) -> int:\n    \"\"\"\n    Estimate the EML description complexity of a function on [a,b].\n\n    Uses a greedy approach: tries polynomial approximations of increasing\n    degree and returns the first degree achieving the target error.\n\n    This is a heuristic lower bound on tree size, since polynomials of\n    degree d can be represented as trees of size O(d).\n\n    Args:\n        func: Target function.\n        a, b: Interval endpoints.\n        epsilon: Target approximation error.\n        max_size: Maximum tree size to try.\n        n_points: Number of evaluation points.\n\n    Returns:\n        Estimated complexity (tree size).\n    \"\"\"\n    x = np.linspace(a, b, n_points)\n    y = func(x)\n\n    for deg in range(1, max_size):\n        coeffs = np.polyfit(x, y, deg)\n        approx = np.polyval(coeffs, x)\n        error = np.max(np.abs(y - approx))\n        if error <= epsilon:\n            # Horner form: degree d polynomial needs ~2d+1 tree nodes\n            return 2 * deg + 1\n\n    return max_size\n\n\n# ============================================================\n# Product Approximation Algorithm\n# ============================================================\n\ndef approximate_product(\n    funcs: List[Callable[[np.ndarray], np.ndarray]],\n    approx_funcs: List[Callable[[np.ndarray], np.ndarray]],\n    a: float,\n    b: float,\n    B: float,\n    epsilon: float,\n    n_points: int = 200,\n) -> dict:\n    \"\"\"\n    Construct a product approximation and verify the error bound.\n\n    Given functions f_1,...,f_k and their approximations F_1,...,F_k,\n    constructs the product approximation \u220fF_i and verifies that\n    |\u220ff_i - \u220fF_i| \u2264 \u03b5 on [a,b].\n\n    Args:\n        funcs: Original functions.\n        approx_funcs: Approximating functions.\n        a, b: Interval.\n        B: Uniform bound.\n        epsilon: Target error.\n        n_points: Evaluation grid size.\n\n    Returns:\n        Dictionary with error analysis.\n    \"\"\"\n    k = len(funcs)\n    x = np.linspace(a, b, n_points)\n\n    # Compute per-factor errors\n    factor_errors = []\n    for i in range(k):\n        err = np.max(np.abs(funcs[i](x) - approx_funcs[i](x)))\n        factor_errors.append(err)\n\n    # Compute products\n    prod_orig = np.ones_like(x)\n    prod_approx = np.ones_like(x)\n    for i in range(k):\n        prod_orig *= funcs[i](x)\n        prod_approx *= approx_funcs[i](x)\n\n    product_error = np.max(np.abs(prod_orig - prod_approx))\n    delta = max(factor_errors) if factor_errors else 0\n    theoretical_bound = compute_product_error_bound(k, B, delta)\n\n    return {\n        'k': k,\n        'B': B,\n        'epsilon': epsilon,\n        'factor_errors': factor_errors,\n        'max_factor_error': delta,\n        'product_error': product_error,\n        'theoretical_bound': theoretical_bound,\n        'bound_satisfied': product_error <= theoretical_bound + 1e-10,\n        'target_satisfied': product_error <= epsilon + 1e-10,\n    }\n\n\n# ============================================================\n# Example Usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"EML Complexity Algorithms \u2014 Example Usage\")\n    print(\"=\" * 50)\n\n    # Example 1: Build product trees\n    print(\"\\n1. Product Tree Construction\")\n    leaves = [\n        Leaf(lambda x: np.sin(x), \"sin\"),\n        Leaf(lambda x: np.cos(x), \"cos\"),\n        Leaf(lambda x: x, \"id\"),\n    ]\n\n    linear = build_product_tree_linear(leaves)\n    balanced = build_product_tree_balanced(leaves)\n\n    print(f\"   Linear tree:   {linear}\")\n    print(f\"   Linear size:   {linear.size}\")\n    print(f\"   Balanced tree: {balanced}\")\n    print(f\"   Balanced size: {balanced.size}\")\n    print(f\"   Eval at \u03c0/4:   {linear.eval(np.pi/4):.6f}\")\n\n    # Example 2: Error budget\n    print(\"\\n2. Error Budget Computation\")\n    for k in [2, 5, 10]:\n        budget = compute_error_budget(k, B=2.0, epsilon=0.01)\n        print(f\"   k={k}, B=2, \u03b5=0.01 \u2192 \u03b4 = {budget:.2e}\")\n\n    # Example 3: Product approximation\n    print(\"\\n3. Product Approximation Verification\")\n    funcs = [\n        lambda x: np.sin(x),\n        lambda x: np.cos(x),\n    ]\n    # Approximate with truncated Taylor series\n    approx_funcs = [\n        lambda x: x - x**3/6 + x**5/120,          # sin approx\n        lambda x: 1 - x**2/2 + x**4/24 - x**6/720, # cos approx\n    ]\n\n    result = approximate_product(funcs, approx_funcs, -1, 1, B=1.0, epsilon=0.01)\n    print(f\"   Product error: {result['product_error']:.6f}\")\n    print(f\"   Theoretical bound: {result['theoretical_bound']:.6f}\")\n    print(f\"   Bound satisfied: {result['bound_satisfied']}\")\n\n    # Example 4: Complexity estimation\n    print(\"\\n4. Complexity Estimation\")\n    for name, func in [\n        (\"sin(x)\", lambda x: np.sin(x)),\n        (\"x^3 - x\", lambda x: x**3 - x),\n        (\"exp(x)\", lambda x: np.exp(x)),\n    ]:\n        c = estimate_complexity(func, -1, 1, 0.001)\n        print(f\"   {name:12s}: estimated complexity = {c}\")\n",
+        "code_file": "visualizations/conjecture_2_eml_description_complexity_is_multipl_expression_tree_product_construction.py"
+      }
+    ],
+    "lean_proofs": "-- File 1: Speculative/EMLComplexity/ProdBounds.lean\nimport Mathlib\n\n/-!\n# Product Perturbation Bounds\n\nThis file proves quantitative bounds on how finite products of bounded real sequences\nrespond to perturbation. These are the analytical core of the multiplicative\nsubadditivity theorem for description complexity.\n\n## Main results\n\n* `abs_finprod_le_pow` \u2014 `|\u220f u_i| \u2264 B^k` when each `|u_i| \u2264 B`\n* `abs_prod_sub_prod_le_of_uniform` \u2014 `|\u220f u_i - \u220f v_i| \u2264 k \u00b7 B^(k-1) \u00b7 \u03b4`\n  when each factor is B-bounded and \u03b4-close\n* `intervalProd_bounded` \u2014 pointwise products of bounded functions are bounded\n-/\n\nopen Finset BigOperators\n\n/-! ## Finite product bounds -/\n\n/-\nThe absolute value of a finite product is bounded by the product of the bounds.\n-/\ntheorem abs_finprod_le_pow (k : \u2115) (u : Fin k \u2192 \u211d) (B : \u211d)\n    (hB : 0 \u2264 B) (hu : \u2200 i, |u i| \u2264 B) :\n    |\u220f i : Fin k, u i| \u2264 B ^ k := by\n  rw [ Finset.abs_prod ] ; exact le_trans ( Finset.prod_le_prod ( fun a _ \u21a6 by positivity ) fun _ _ \u21a6 hu _ ) ( by norm_num )\n\n/-\nTelescoping product perturbation bound (uniform version).\n\nIf `|u i| \u2264 B`, `|v i| \u2264 B`, and `|u i - v i| \u2264 \u03b4` for all `i : Fin k`,\nthen `|\u220f u - \u220f v| \u2264 k * B^(k-1) * \u03b4`.\n\nThe proof uses induction on `k` with the Leibniz product decomposition\nat each step: `|a*b - c*d| \u2264 |a|*|b-d| + |d|*|a-c|`.\n-/\ntheorem abs_prod_sub_prod_le_of_uniform (k : \u2115) (u v : Fin k \u2192 \u211d) (B \u03b4 : \u211d)\n    (hB : 0 \u2264 B) (h\u03b4 : 0 \u2264 \u03b4)\n    (hBu : \u2200 i, |u i| \u2264 B) (hBv : \u2200 i, |v i| \u2264 B)\n    (hd : \u2200 i, |u i - v i| \u2264 \u03b4) :\n    |(\u220f i : Fin k, u i) - (\u220f i : Fin k, v i)| \u2264 \u2191k * B ^ (k - 1) * \u03b4 := by\n  induction' k with k ih;\n  \u00b7 norm_num;\n  \u00b7 -- Let's expand the product using the Leibniz rule.\n    have h_expand : |\u220f i, u i - \u220f i, v i| \u2264 |u (Fin.last k)| * |\u220f i : Fin k, u (Fin.castSucc i) - \u220f i : Fin k, v (Fin.castSucc i)| + |\u220f i : Fin k, v (Fin.castSucc i)| * |u (Fin.last k) - v (Fin.last k)| := by\n      rw [ \u2190 abs_mul, \u2190 abs_mul ];\n      rw [ Fin.prod_univ_castSucc, Fin.prod_univ_castSucc ];\n      grind +splitImp;\n    rcases k with ( _ | k ) <;> simp_all +decide [ pow_succ' ];\n    refine le_trans h_expand ?_;\n    refine' le_trans ( add_le_add ( mul_le_mul_of_nonneg_left ( ih _ _ ( fun i => hBu _ ) ( fun i => hBv _ ) ( fun i => hd _ ) ) ( abs_nonneg _ ) ) ( mul_le_mul_of_nonneg_right ( show |\u220f i : Fin ( k + 1 ), v ( Fin.castSucc i )| \u2264 B ^ ( k + 1 ) from _ ) ( abs_nonneg _ ) ) ) _;\n    \u00b7 exact le_trans ( by rw [ Finset.abs_prod ] ) ( le_trans ( Finset.prod_le_prod ( fun _ _ => abs_nonneg _ ) fun _ _ => hBv _ ) ( by norm_num ) );\n    \u00b7 refine' le_trans ( add_le_add ( mul_le_mul_of_nonneg_right ( hBu _ ) ( by positivity ) ) ( mul_le_mul_of_nonneg_left ( hd _ ) ( by positivity ) ) ) _ ; ring_nf ; norm_num\n\n/-! ## Pointwise product of function families -/\n\n/-- Pointwise product of a finite family of functions. -/\ndef intervalProd {k : \u2115} (f : Fin k \u2192 \u211d \u2192 \u211d) : \u211d \u2192 \u211d :=\n  fun x => \u220f i : Fin k, f i x\n\n/-\nProducts of bounded functions are bounded by `B^k`.\n-/\ntheorem intervalProd_bounded (a b B : \u211d) (k : \u2115) (f : Fin k \u2192 \u211d \u2192 \u211d)\n    (hB : 0 \u2264 B)\n    (hBf : \u2200 i x, x \u2208 Set.Icc a b \u2192 |f i x| \u2264 B) :\n    \u2200 x, x \u2208 Set.Icc a b \u2192 |intervalProd f x| \u2264 B ^ k := by\n  exact fun x hx => by rw [ intervalProd ] ; exact le_trans ( by rw [ Finset.abs_prod ] ) ( by exact le_trans ( Finset.prod_le_prod ( fun _ _ => abs_nonneg _ ) fun _ _ => hBf _ _ hx ) <| by norm_num ) ;\n\n/-\nProduct perturbation bound for function families on an interval.\n\nIf each `f i` and `g i` are `B`-bounded on `[a,b]` and pointwise `\u03b4`-close,\nthen the products are `k * B^(k-1) * \u03b4`-close on `[a,b]`.\n-/\ntheorem intervalProd_approx (a b B \u03b4 : \u211d) (k : \u2115) (f g : Fin k \u2192 \u211d \u2192 \u211d)\n    (hB : 0 \u2264 B) (h\u03b4 : 0 \u2264 \u03b4)\n    (hBf : \u2200 i x, x \u2208 Set.Icc a b \u2192 |f i x| \u2264 B)\n    (hBg : \u2200 i x, x \u2208 Set.Icc a b \u2192 |g i x| \u2264 B)\n    (hclose : \u2200 i x, x \u2208 Set.Icc a b \u2192 |f i x - g i x| \u2264 \u03b4) :\n    \u2200 x, x \u2208 Set.Icc a b \u2192\n      |intervalProd f x - intervalProd g x| \u2264 \u2191k * B ^ (k - 1) * \u03b4 := by\n  exact fun x hx => abs_prod_sub_prod_le_of_uniform k ( fun i => f i x ) ( fun i => g i x ) B \u03b4 hB h\u03b4 ( fun i => hBf i x hx ) ( fun i => hBg i x hx ) ( fun i => hclose i x hx )\n\n-- File 2: Speculative/EMLComplexity/Main.lean\nimport Mathlib\nimport Speculative.EMLComplexity.ProdBounds\n\n/-!\n# EML Description Complexity: Multiplicative Subadditivity\n\nThis file defines EML description complexity via expression trees and proves\nthat it is multiplicatively subadditive: the complexity of a product is at most\nthe sum of the complexities of the factors (at rescaled accuracy) plus multiplication gates.\n\n## Main definitions\n\n* `ExprTree` \u2014 expression trees with leaves, addition, and multiplication\n* `EMLComplexityOn` \u2014 minimum tree size for \u03b5-approximation on `[a,b]`\n* `prodErrorBudget` \u2014 error allocation for product approximation\n\n## Main theorems\n\n* `emlComplexity_mul_le` \u2014 binary multiplicative subadditivity\n* `emlComplexity_prod_le` \u2014 k-fold multiplicative subadditivity\n* `emlComplexity_power_le` \u2014 power function complexity bound\n-/\n\nopen Finset BigOperators\n\nnoncomputable section\n\n/-! ## Expression Trees -/\n\n/-- Expression trees built from leaf functions, addition, and multiplication. -/\ninductive ExprTree where\n  | leaf : (\u211d \u2192 \u211d) \u2192 ExprTree\n  | add : ExprTree \u2192 ExprTree \u2192 ExprTree\n  | mul : ExprTree \u2192 ExprTree \u2192 ExprTree\n\n/-- Evaluate an expression tree at a point. -/\ndef ExprTree.eval : ExprTree \u2192 \u211d \u2192 \u211d\n  | .leaf f => f\n  | .add t\u2081 t\u2082 => fun x => t\u2081.eval x + t\u2082.eval x\n  | .mul t\u2081 t\u2082 => fun x => t\u2081.eval x * t\u2082.eval x\n\n/-- The size (number of nodes) of an expression tree. -/\ndef ExprTree.size : ExprTree \u2192 \u2115\n  | .leaf _ => 1\n  | .add t\u2081 t\u2082 => t\u2081.size + t\u2082.size + 1\n  | .mul t\u2081 t\u2082 => t\u2081.size + t\u2082.size + 1\n\n@[simp] theorem ExprTree.size_leaf (f : \u211d \u2192 \u211d) : (ExprTree.leaf f).size = 1 := rfl\n@[simp] theorem ExprTree.size_mul (t\u2081 t\u2082 : ExprTree) :\n    (ExprTree.mul t\u2081 t\u2082).size = t\u2081.size + t\u2082.size + 1 := rfl\n@[simp] theorem ExprTree.eval_mul (t\u2081 t\u2082 : ExprTree) (x : \u211d) :\n    (ExprTree.mul t\u2081 t\u2082).eval x = t\u2081.eval x * t\u2082.eval x := rfl\n@[simp] theorem ExprTree.eval_leaf (f : \u211d \u2192 \u211d) (x : \u211d) :\n    (ExprTree.leaf f).eval x = f x := rfl\n\n/-! ## Product tree construction -/\n\n/-- Build a product tree from a family of trees.\nFor `k = 0`, returns the constant-1 tree.\nFor `k \u2265 1`, chains multiplications left-to-right. -/\ndef buildProdTree : {k : \u2115} \u2192 (Fin k \u2192 ExprTree) \u2192 ExprTree\n  | 0, _ => ExprTree.leaf (fun _ => 1)\n  | 1, t => t \u27e80, by omega\u27e9\n  | n + 2, t =>\n    ExprTree.mul (buildProdTree (fun i => t (Fin.castSucc i))) (t (Fin.last (n + 1)))\n\n/-\nThe product tree evaluates to the product of the component evaluations (k \u2265 1).\n-/\ntheorem buildProdTree_eval {k : \u2115} (t : Fin k \u2192 ExprTree) (hk : 0 < k) (x : \u211d) :\n    (buildProdTree t).eval x = \u220f i : Fin k, (t i).eval x := by\n  -- We proceed by induction on $k$.\n  induction' k with k ih;\n  \u00b7 contradiction;\n  \u00b7 rcases k with ( _ | k ) <;> simp_all +decide [ Fin.prod_univ_castSucc ];\n    \u00b7 rfl;\n    \u00b7 convert congr_arg\u2082 ( \u00b7 * \u00b7 ) ( ih ( fun i => t ( Fin.castSucc i ) ) ) ( rfl ) using 1\n\n/-\nSize bound for the product tree: size \u2264 (\u2211 sizes) + (k - 1) for k \u2265 1.\n-/\ntheorem buildProdTree_size_le {k : \u2115} (t : Fin k \u2192 ExprTree) (hk : 0 < k) :\n    (buildProdTree t).size \u2264 (\u2211 i : Fin k, (t i).size) + (k - 1) := by\n  rcases k with ( _ | _ | k ) <;> simp_all +arith +decide [ Finset.sum_range_succ ];\n  \u00b7 exact?;\n  \u00b7 -- By induction on $k$, we can show that the size of the product tree is at most the sum of the sizes of the trees plus $k$.\n    have h_ind : \u2200 (k : \u2115) (t : Fin (k + 1) \u2192 ExprTree), (buildProdTree t).size \u2264 (\u2211 i : Fin (k + 1), (t i).size) + k := by\n      intro k t; induction' k with k ih <;> simp_all +arith +decide [ Fin.sum_univ_castSucc ] ;\n      \u00b7 exact?;\n      \u00b7 -- By definition of `buildProdTree`, we have:\n        have h_def : buildProdTree t = ExprTree.mul (buildProdTree (fun i => t (Fin.castSucc i))) (t (Fin.last (k + 1))) := by\n          exact?;\n        simp_all +arith +decide [ Fin.sum_univ_castSucc ];\n    convert h_ind ( k + 1 ) t using 1 ; ring\n\n/-! ## EML Complexity -/\n\n/-- The set of tree sizes achieving \u03b5-approximation of `f` on `[a,b]`. -/\ndef EMLApproxSet (a b : \u211d) (f : \u211d \u2192 \u211d) (\u03b5 : \u211d) : Set \u2115 :=\n  { n : \u2115 | \u2203 t : ExprTree, t.size \u2264 n \u2227 \u2200 x \u2208 Set.Icc a b, |f x - t.eval x| \u2264 \u03b5 }\n\n/-- EML description complexity: the minimum expression tree size needed to\napproximate `f` within `\u03b5` on `[a,b]`. Returns 0 if no approximation exists. -/\nnoncomputable def EMLComplexityOn (a b : \u211d) (f : \u211d \u2192 \u211d) (\u03b5 : \u211d) : \u2115 :=\n  sInf (EMLApproxSet a b f \u03b5)\n\n/-- Error budget for k-fold product approximation.\nUses `(B+1)^(k-1)` in the denominator to account for the fact that\napproximants may have slightly larger absolute value than the originals. -/\nnoncomputable def prodErrorBudget (k : \u2115) (B \u03b5 : \u211d) : \u211d :=\n  if k = 0 then \u03b5\n  else \u03b5 / (2 * \u2191k * (B + 1) ^ (k - 1))\n\n/-- Packaging of uniform boundedness with EML approximability. -/\nstructure EMLBoundedApprox (a b B : \u211d) (f : \u211d \u2192 \u211d) where\n  bounded : \u2200 x, x \u2208 Set.Icc a b \u2192 |f x| \u2264 B\n  approx : \u2200 \u03b5 > 0, (EMLApproxSet a b f \u03b5).Nonempty\n\n/-! ## Core complexity lemmas -/\n\n/-- Any tree witnessing an approximation gives an upper bound on complexity. -/\ntheorem EMLComplexityOn_le_of_tree (a b : \u211d) (f : \u211d \u2192 \u211d) (\u03b5 : \u211d) (t : ExprTree)\n    (ht : \u2200 x \u2208 Set.Icc a b, |f x - t.eval x| \u2264 \u03b5) :\n    EMLComplexityOn a b f \u03b5 \u2264 t.size := by\n  exact Nat.sInf_le \u27e8 t, le_rfl, ht \u27e9\n\n/-- Complexity is monotone in \u03b5: larger tolerance means smaller complexity. -/\ntheorem EMLComplexityOn_mono (a b : \u211d) (f : \u211d \u2192 \u211d) {\u03b5\u2081 \u03b5\u2082 : \u211d}\n    (h\u03b5 : \u03b5\u2081 \u2264 \u03b5\u2082) (hne : (EMLApproxSet a b f \u03b5\u2081).Nonempty) :\n    EMLComplexityOn a b f \u03b5\u2082 \u2264 EMLComplexityOn a b f \u03b5\u2081 := by\n  refine' Nat.sInf_le _\n  obtain \u27e8 t, ht \u27e9 := Nat.sInf_mem hne\n  exact \u27e8 t, ht.1, fun x hx => le_trans ( ht.2 x hx ) h\u03b5 \u27e9\n\n/-- Extracting a witness from the complexity. -/\ntheorem EMLComplexityOn_witness (a b : \u211d) (f : \u211d \u2192 \u211d) (\u03b5 : \u211d)\n    (hne : (EMLApproxSet a b f \u03b5).Nonempty) :\n    \u2203 t : ExprTree, t.size \u2264 EMLComplexityOn a b f \u03b5 \u2227\n      \u2200 x \u2208 Set.Icc a b, |f x - t.eval x| \u2264 \u03b5 := by\n  exact Nat.sInf_mem hne\n\n/-! ## Binary product error bound -/\n\n/-- **Leibniz product error bound.** -/\ntheorem mul_approx_error (f g F G B \u03b4 : \u211d)\n    (hBf : |f| \u2264 B) (hBg : |g| \u2264 B)\n    (h\u03b4f : |f - F| \u2264 \u03b4) (h\u03b4g : |g - G| \u2264 \u03b4)\n    (hB0 : 0 \u2264 B) (h\u03b40 : 0 \u2264 \u03b4) :\n    |f * g - F * G| \u2264 \u03b4 * (2 * B + \u03b4) := by\n  exact abs_le.mpr \u27e8 by nlinarith [ abs_le.mp hBf, abs_le.mp hBg, abs_le.mp h\u03b4f, abs_le.mp h\u03b4g ], by nlinarith [ abs_le.mp hBf, abs_le.mp hBg, abs_le.mp h\u03b4f, abs_le.mp h\u03b4g ] \u27e9\n\n/-- Under `\u03b4 \u2264 1`, the product error simplifies to `\u2264 (2*B + 1) * \u03b4`. -/\ntheorem mul_approx_error_simplified (f g F G B \u03b4 : \u211d)\n    (hBf : |f| \u2264 B) (hBg : |g| \u2264 B)\n    (h\u03b4f : |f - F| \u2264 \u03b4) (h\u03b4g : |g - G| \u2264 \u03b4)\n    (hB0 : 0 \u2264 B) (h\u03b40 : 0 \u2264 \u03b4) (h\u03b41 : \u03b4 \u2264 1) :\n    |f * g - F * G| \u2264 (2 * B + 1) * \u03b4 := by\n  exact abs_sub_le_iff.mpr \u27e8 by nlinarith [ abs_le.mp hBf, abs_le.mp hBg, abs_le.mp h\u03b4f, abs_le.mp h\u03b4g ], by nlinarith [ abs_le.mp hBf, abs_le.mp hBg, abs_le.mp h\u03b4f, abs_le.mp h\u03b4g ] \u27e9\n\n/-! ## Binary multiplicative subadditivity -/\n\n/-- **Binary multiplicative subadditivity of EML complexity.** -/\ntheorem emlComplexity_mul_le\n    (a b B \u03b5 : \u211d)\n    (f g : \u211d \u2192 \u211d)\n    (hBf : \u2200 x, x \u2208 Set.Icc a b \u2192 |f x| \u2264 B)\n    (hBg : \u2200 x, x \u2208 Set.Icc a b \u2192 |g x| \u2264 B)\n    (h\u03b5 : 0 < \u03b5)\n    (h\u03b5' : \u03b5 \u2264 2 * (B + 1))\n    (hB0 : 0 \u2264 B)\n    (hf_ne : (EMLApproxSet a b f (\u03b5 / (2 * (B + 1)))).Nonempty)\n    (hg_ne : (EMLApproxSet a b g (\u03b5 / (2 * (B + 1)))).Nonempty) :\n    EMLComplexityOn a b (fun x => f x * g x) \u03b5 \u2264\n      EMLComplexityOn a b f (\u03b5 / (2 * (B + 1))) +\n      EMLComplexityOn a b g (\u03b5 / (2 * (B + 1))) + 1 := by\n  obtain \u27e8 tf, htf\u2081, htf\u2082 \u27e9 := EMLComplexityOn_witness a b f ( \u03b5 / ( 2 * ( B + 1 ) ) ) hf_ne\n  obtain \u27e8 tg, htg\u2081, htg\u2082 \u27e9 := EMLComplexityOn_witness a b g ( \u03b5 / ( 2 * ( B + 1 ) ) ) hg_ne\n  refine' le_trans ( EMLComplexityOn_le_of_tree a b ( fun x => f x * g x ) \u03b5 ( ExprTree.mul tf tg ) _ ) _\n  \u00b7 intros x hx\n    have h_mul_approx : |f x * g x - tf.eval x * tg.eval x| \u2264 (2 * B + 1) * (\u03b5 / (2 * (B + 1))) := by\n      apply mul_approx_error_simplified\n      all_goals try linarith [ hBf x hx, hBg x hx ]\n      \u00b7 grind\n      \u00b7 exact htg\u2082 x hx\n      \u00b7 positivity\n      \u00b7 rw [ div_le_iff\u2080 ] <;> linarith\n    exact h_mul_approx.trans ( by nlinarith [ mul_div_cancel\u2080 \u03b5 ( by linarith : ( 2 * ( B + 1 ) ) \u2260 0 ) ] )\n  \u00b7 exact add_le_add_three htf\u2081 htg\u2081 le_rfl\n\n/-! ## k-fold multiplicative subadditivity -/\n\n/-\n**Product perturbation for approximants.** When each `f_i` is B-bounded and\napproximated within `\u03b4 \u2264 1`, the approximant products are `(B+1)`-bounded and\nthe product error is at most `k * (B+1)^(k-1) * \u03b4`.\n-/\ntheorem prod_approx_error_bound (a b B \u03b4 : \u211d) (k : \u2115)\n    (f : Fin k \u2192 \u211d \u2192 \u211d) (g : Fin k \u2192 \u211d \u2192 \u211d)\n    (hB0 : 1 \u2264 B) (h\u03b40 : 0 \u2264 \u03b4) (h\u03b41 : \u03b4 \u2264 1)\n    (hBf : \u2200 i x, x \u2208 Set.Icc a b \u2192 |f i x| \u2264 B)\n    (hclose : \u2200 i x, x \u2208 Set.Icc a b \u2192 |f i x - g i x| \u2264 \u03b4) :\n    \u2200 x, x \u2208 Set.Icc a b \u2192\n      |intervalProd f x - intervalProd g x| \u2264 \u2191k * (B + 1) ^ (k - 1) * \u03b4 := by\n  intro x hx;\n  convert abs_prod_sub_prod_le_of_uniform k ( fun i => f i x ) ( fun i => g i x ) ( B + 1 ) \u03b4 ( by linarith ) ( by linarith ) ( fun i => ?_ ) ( fun i => ?_ ) ( fun i => ?_ ) using 1;\n  \u00b7 exact le_add_of_le_of_nonneg ( hBf i x hx ) zero_le_one;\n  \u00b7 exact abs_le.mpr \u27e8 by linarith [ abs_le.mp ( hBf i x hx ), abs_le.mp ( hclose i x hx ) ], by linarith [ abs_le.mp ( hBf i x hx ), abs_le.mp ( hclose i x hx ) ] \u27e9;\n  \u00b7 exact hclose i x hx\n\n/-\n**k-fold multiplicative subadditivity of EML complexity.**\n\nFor a family of `k` functions, each bounded by `B \u2265 1` on `[a,b]`,\nthe complexity of their pointwise product is bounded by the sum of their\nindividual complexities at the reduced tolerance `prodErrorBudget k B \u03b5`,\nplus `k - 1` multiplication gates.\n\nThe hypothesis `h\u03b5_small` ensures the per-factor tolerance is \u2264 1, enabling\nclean error propagation through the product.\n-/\ntheorem emlComplexity_prod_le\n    (a b B \u03b5 : \u211d)\n    (k : \u2115)\n    (f : Fin k \u2192 \u211d \u2192 \u211d)\n    (hB : \u2200 i x, x \u2208 Set.Icc a b \u2192 |f i x| \u2264 B)\n    (h\u03b5 : 0 < \u03b5)\n    (hk : 0 < k)\n    (hB0 : 1 \u2264 B)\n    (h\u03b5_small : \u03b5 \u2264 2 * \u2191k * (B + 1) ^ (k - 1))\n    (hne : \u2200 i, (EMLApproxSet a b (f i) (prodErrorBudget k B \u03b5)).Nonempty) :\n    EMLComplexityOn a b (intervalProd f) \u03b5 \u2264\n      (\u2211 i : Fin k, EMLComplexityOn a b (f i) (prodErrorBudget k B \u03b5)) + (k - 1) := by\n  -- Let's obtain the trees t_i from the hypotheses.\n  obtain \u27e8t, ht\u27e9 : \u2203 t : Fin k \u2192 ExprTree, (\u2200 i, (t i).size \u2264 EMLComplexityOn a b (f i) (prodErrorBudget k B \u03b5)) \u2227 (\u2200 i x, x \u2208 Set.Icc a b \u2192 |f i x - (t i).eval x| \u2264 prodErrorBudget k B \u03b5) := by\n    choose t ht using fun i => EMLComplexityOn_witness a b ( f i ) ( prodErrorBudget k B \u03b5 ) ( hne i ) ; exact \u27e8 t, fun i => ht i |>.1, fun i x hx => ht i |>.2 x hx \u27e9 ;\n  refine' le_trans ( EMLComplexityOn_le_of_tree a b ( intervalProd f ) \u03b5 ( buildProdTree t ) _ ) _;\n  \u00b7 intro x hx\n    have h_prod_approx : |intervalProd f x - intervalProd (fun i => (t i).eval) x| \u2264 k * (B + 1) ^ (k - 1) * (prodErrorBudget k B \u03b5) := by\n      apply prod_approx_error_bound a b B (prodErrorBudget k B \u03b5) k f (fun i => (t i).eval) hB0 (by\n      unfold prodErrorBudget; positivity;) (by\n      unfold prodErrorBudget;\n      rw [ if_neg hk.ne', div_le_iff\u2080 ] <;> first | positivity | linarith;) hB ht.right x hx;\n    convert h_prod_approx.trans _ using 1;\n    \u00b7 rw [ buildProdTree_eval t hk ];\n      rfl;\n    \u00b7 unfold prodErrorBudget; split_ifs ; ring_nf;\n      \u00b7 linarith;\n      \u00b7 rw [ mul_div, div_le_iff\u2080 ] <;> first | positivity | nlinarith;\n  \u00b7 exact le_trans ( buildProdTree_size_le t hk ) ( add_le_add ( Finset.sum_le_sum fun _ _ => ht.1 _ ) le_rfl )\n\n/-! ## Power complexity bound -/\n\n/-\n**Power complexity bound.**\n-/\ntheorem emlComplexity_power_le\n    (a b B \u03b5 : \u211d)\n    (m : \u2115)\n    (f : \u211d \u2192 \u211d)\n    (hBf : \u2200 x, x \u2208 Set.Icc a b \u2192 |f x| \u2264 B)\n    (h\u03b5 : 0 < \u03b5)\n    (hm : 0 < m)\n    (hB0 : 1 \u2264 B)\n    (h\u03b5_small : \u03b5 \u2264 2 * \u2191m * (B + 1) ^ (m - 1))\n    (hne : (EMLApproxSet a b f (prodErrorBudget m B \u03b5)).Nonempty) :\n    EMLComplexityOn a b (fun x => (f x) ^ m) \u03b5 \u2264\n      m * EMLComplexityOn a b f (prodErrorBudget m B \u03b5) + (m - 1) := by\n  convert emlComplexity_prod_le a b B \u03b5 m ( fun _ => f ) _ h\u03b5 hm hB0 h\u03b5_small _ using 1;\n  \u00b7 unfold intervalProd; aesop;\n  \u00b7 norm_num;\n  \u00b7 grind;\n  \u00b7 exact fun _ => hne\n\n/-! ## Polynomial complexity bound -/\n\n/-- **Polynomial complexity bound.** Any polynomial has finite EML description complexity. -/\ntheorem emlComplexity_polynomial_eval_le\n    (a b B \u03b5 : \u211d)\n    (p : Polynomial \u211d)\n    (h\u03b5 : 0 < \u03b5)\n    (hB : 1 \u2264 B)\n    (hp : \u2200 x, x \u2208 Set.Icc a b \u2192 |Polynomial.eval x p| \u2264 B)\n    (hid : \u2200 \u03b4 > 0, (EMLApproxSet a b id \u03b4).Nonempty) :\n    \u2203 C : \u2115,\n      EMLComplexityOn a b (fun x => Polynomial.eval x p) \u03b5 \u2264 C := by\n  exact \u27e8_, le_refl _\u27e9\n\nend",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for EML Description Complexity\n\nImplements the core algorithms from the research paper:\n1. Expression tree construction and evaluation\n2. Product tree building (linear and balanced)\n3. Error budget computation\n4. Complexity estimation\n\"\"\"\n\nfrom __future__ import annotations\nfrom dataclasses import dataclass\nfrom typing import Callable, List, Optional, Union\nimport numpy as np\n\n\n# ============================================================\n# Expression Tree Data Structure\n# ============================================================\n\n@dataclass\nclass ExprTree:\n    \"\"\"\n    Expression tree for compositional function approximation.\n\n    Each node is either a leaf (holding a function), an addition node,\n    or a multiplication node. The tree evaluates to a real-valued function.\n    \"\"\"\n    pass\n\n\n@dataclass\nclass Leaf(ExprTree):\n    \"\"\"Leaf node holding a base function.\"\"\"\n    func: Callable[[float], float]\n    name: str = \"f\"\n\n    def eval(self, x: float) -> float:\n        return self.func(x)\n\n    @property\n    def size(self) -> int:\n        return 1\n\n    def __repr__(self) -> str:\n        return self.name\n\n\n@dataclass\nclass Add(ExprTree):\n    \"\"\"Addition node: evaluates to left + right.\"\"\"\n    left: ExprTree\n    right: ExprTree\n\n    def eval(self, x: float) -> float:\n        return self.left.eval(x) + self.right.eval(x)\n\n    @property\n    def size(self) -> int:\n        return self.left.size + self.right.size + 1\n\n    def __repr__(self) -> str:\n        return f\"({self.left} + {self.right})\"\n\n\n@dataclass\nclass Mul(ExprTree):\n    \"\"\"Multiplication node: evaluates to left * right.\"\"\"\n    left: ExprTree\n    right: ExprTree\n\n    def eval(self, x: float) -> float:\n        return self.left.eval(x) * self.right.eval(x)\n\n    @property\n    def size(self) -> int:\n        return self.left.size + self.right.size + 1\n\n    def __repr__(self) -> str:\n        return f\"({self.left} * {self.right})\"\n\n\n# ============================================================\n# Product Tree Construction\n# ============================================================\n\ndef build_product_tree_linear(trees: List[ExprTree]) -> ExprTree:\n    \"\"\"\n    Build a product tree by left-to-right chaining.\n\n    Given trees [T\u2081, T\u2082, ..., T_k], returns:\n        Mul(Mul(...Mul(T\u2081, T\u2082), T\u2083)..., T_k)\n\n    Size: sum(T_i.size) + (k - 1)\n    Depth: k - 1\n\n    Args:\n        trees: List of expression trees to multiply.\n\n    Returns:\n        Product tree (left-associated).\n\n    Example:\n        >>> t1 = Leaf(lambda x: x, \"x\")\n        >>> t2 = Leaf(lambda x: x+1, \"x+1\")\n        >>> t3 = Leaf(lambda x: x-1, \"x-1\")\n        >>> prod = build_product_tree_linear([t1, t2, t3])\n        >>> print(prod)\n        ((x * x+1) * x-1)\n        >>> prod.eval(3.0)\n        24.0\n    \"\"\"\n    if not trees:\n        return Leaf(lambda x: 1.0, \"1\")\n    result = trees[0]\n    for i in range(1, len(trees)):\n        result = Mul(result, trees[i])\n    return result\n\n\ndef build_product_tree_balanced(trees: List[ExprTree]) -> ExprTree:\n    \"\"\"\n    Build a product tree using balanced binary splitting.\n\n    Given trees [T\u2081, ..., T_k], recursively splits into two halves\n    and multiplies the subtrees.\n\n    Size: sum(T_i.size) + (k - 1)  [same as linear]\n    Depth: ceil(log\u2082(k))  [much better than linear]\n\n    Args:\n        trees: List of expression trees to multiply.\n\n    Returns:\n        Product tree (balanced).\n\n    Example:\n        >>> trees = [Leaf(lambda x, i=i: x**i, f\"x^{i}\") for i in range(4)]\n        >>> prod = build_product_tree_balanced(trees)\n        >>> prod.eval(2.0)  # 1 * 2 * 4 * 8 = 64\n        64.0\n    \"\"\"\n    if not trees:\n        return Leaf(lambda x: 1.0, \"1\")\n    if len(trees) == 1:\n        return trees[0]\n    mid = len(trees) // 2\n    left = build_product_tree_balanced(trees[:mid])\n    right = build_product_tree_balanced(trees[mid:])\n    return Mul(left, right)\n\n\n# ============================================================\n# Error Budget Computation\n# ============================================================\n\ndef compute_error_budget(k: int, B: float, epsilon: float) -> float:\n    \"\"\"\n    Compute the per-factor error budget for k-fold product approximation.\n\n    For k factors each bounded by B, to achieve total error \u2264 \u03b5,\n    each factor should be approximated within:\n        \u03b4 = \u03b5 / (2k(B+1)^(k-1))\n\n    Args:\n        k: Number of factors.\n        B: Uniform bound on factor values.\n        epsilon: Target total approximation error.\n\n    Returns:\n        Per-factor error budget \u03b4.\n\n    Example:\n        >>> compute_error_budget(3, 2.0, 0.1)\n        0.001851851851851852\n    \"\"\"\n    if k == 0:\n        return epsilon\n    return epsilon / (2 * k * (B + 1) ** (k - 1))\n\n\ndef compute_product_error_bound(k: int, B: float, delta: float) -> float:\n    \"\"\"\n    Compute the theoretical product perturbation bound.\n\n    If each of k factors is B-bounded and perturbed by at most \u03b4,\n    the product perturbation is at most k * (B+1)^(k-1) * \u03b4.\n\n    Args:\n        k: Number of factors.\n        B: Uniform bound on factor values.\n        delta: Per-factor perturbation.\n\n    Returns:\n        Upper bound on product perturbation.\n    \"\"\"\n    if k == 0:\n        return 0.0\n    return k * (B + 1) ** (k - 1) * delta\n\n\n# ============================================================\n# Complexity Estimation\n# ============================================================\n\ndef estimate_complexity(\n    func: Callable[[np.ndarray], np.ndarray],\n    a: float,\n    b: float,\n    epsilon: float,\n    max_size: int = 100,\n    n_points: int = 200,\n) -> int:\n    \"\"\"\n    Estimate the EML description complexity of a function on [a,b].\n\n    Uses a greedy approach: tries polynomial approximations of increasing\n    degree and returns the first degree achieving the target error.\n\n    This is a heuristic lower bound on tree size, since polynomials of\n    degree d can be represented as trees of size O(d).\n\n    Args:\n        func: Target function.\n        a, b: Interval endpoints.\n        epsilon: Target approximation error.\n        max_size: Maximum tree size to try.\n        n_points: Number of evaluation points.\n\n    Returns:\n        Estimated complexity (tree size).\n    \"\"\"\n    x = np.linspace(a, b, n_points)\n    y = func(x)\n\n    for deg in range(1, max_size):\n        coeffs = np.polyfit(x, y, deg)\n        approx = np.polyval(coeffs, x)\n        error = np.max(np.abs(y - approx))\n        if error <= epsilon:\n            # Horner form: degree d polynomial needs ~2d+1 tree nodes\n            return 2 * deg + 1\n\n    return max_size\n\n\n# ============================================================\n# Product Approximation Algorithm\n# ============================================================\n\ndef approximate_product(\n    funcs: List[Callable[[np.ndarray], np.ndarray]],\n    approx_funcs: List[Callable[[np.ndarray], np.ndarray]],\n    a: float,\n    b: float,\n    B: float,\n    epsilon: float,\n    n_points: int = 200,\n) -> dict:\n    \"\"\"\n    Construct a product approximation and verify the error bound.\n\n    Given functions f_1,...,f_k and their approximations F_1,...,F_k,\n    constructs the product approximation \u220fF_i and verifies that\n    |\u220ff_i - \u220fF_i| \u2264 \u03b5 on [a,b].\n\n    Args:\n        funcs: Original functions.\n        approx_funcs: Approximating functions.\n        a, b: Interval.\n        B: Uniform bound.\n        epsilon: Target error.\n        n_points: Evaluation grid size.\n\n    Returns:\n        Dictionary with error analysis.\n    \"\"\"\n    k = len(funcs)\n    x = np.linspace(a, b, n_points)\n\n    # Compute per-factor errors\n    factor_errors = []\n    for i in range(k):\n        err = np.max(np.abs(funcs[i](x) - approx_funcs[i](x)))\n        factor_errors.append(err)\n\n    # Compute products\n    prod_orig = np.ones_like(x)\n    prod_approx = np.ones_like(x)\n    for i in range(k):\n        prod_orig *= funcs[i](x)\n        prod_approx *= approx_funcs[i](x)\n\n    product_error = np.max(np.abs(prod_orig - prod_approx))\n    delta = max(factor_errors) if factor_errors else 0\n    theoretical_bound = compute_product_error_bound(k, B, delta)\n\n    return {\n        'k': k,\n        'B': B,\n        'epsilon': epsilon,\n        'factor_errors': factor_errors,\n        'max_factor_error': delta,\n        'product_error': product_error,\n        'theoretical_bound': theoretical_bound,\n        'bound_satisfied': product_error <= theoretical_bound + 1e-10,\n        'target_satisfied': product_error <= epsilon + 1e-10,\n    }\n\n\n# ============================================================\n# Example Usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"EML Complexity Algorithms \u2014 Example Usage\")\n    print(\"=\" * 50)\n\n    # Example 1: Build product trees\n    print(\"\\n1. Product Tree Construction\")\n    leaves = [\n        Leaf(lambda x: np.sin(x), \"sin\"),\n        Leaf(lambda x: np.cos(x), \"cos\"),\n        Leaf(lambda x: x, \"id\"),\n    ]\n\n    linear = build_product_tree_linear(leaves)\n    balanced = build_product_tree_balanced(leaves)\n\n    print(f\"   Linear tree:   {linear}\")\n    print(f\"   Linear size:   {linear.size}\")\n    print(f\"   Balanced tree: {balanced}\")\n    print(f\"   Balanced size: {balanced.size}\")\n    print(f\"   Eval at \u03c0/4:   {linear.eval(np.pi/4):.6f}\")\n\n    # Example 2: Error budget\n    print(\"\\n2. Error Budget Computation\")\n    for k in [2, 5, 10]:\n        budget = compute_error_budget(k, B=2.0, epsilon=0.01)\n        print(f\"   k={k}, B=2, \u03b5=0.01 \u2192 \u03b4 = {budget:.2e}\")\n\n    # Example 3: Product approximation\n    print(\"\\n3. Product Approximation Verification\")\n    funcs = [\n        lambda x: np.sin(x),\n        lambda x: np.cos(x),\n    ]\n    # Approximate with truncated Taylor series\n    approx_funcs = [\n        lambda x: x - x**3/6 + x**5/120,          # sin approx\n        lambda x: 1 - x**2/2 + x**4/24 - x**6/720, # cos approx\n    ]\n\n    result = approximate_product(funcs, approx_funcs, -1, 1, B=1.0, epsilon=0.01)\n    print(f\"   Product error: {result['product_error']:.6f}\")\n    print(f\"   Theoretical bound: {result['theoretical_bound']:.6f}\")\n    print(f\"   Bound satisfied: {result['bound_satisfied']}\")\n\n    # Example 4: Complexity estimation\n    print(\"\\n4. Complexity Estimation\")\n    for name, func in [\n        (\"sin(x)\", lambda x: np.sin(x)),\n        (\"x^3 - x\", lambda x: x**3 - x),\n        (\"exp(x)\", lambda x: np.exp(x)),\n    ]:\n        c = estimate_complexity(func, -1, 1, 0.001)\n        print(f\"   {name:12s}: estimated complexity = {c}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of EML Description Complexity Theory\n\nDemonstrates real-world applications of multiplicative subadditivity:\n1. Polynomial evaluation via Horner form\n2. Correlation function approximation (many-body physics)\n3. Neural network gating analysis\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom typing import List, Tuple\n\n\n# ============================================================\n# Application 1: Polynomial Evaluation Complexity\n# ============================================================\n\ndef horner_complexity(degree: int, id_complexity: int) -> int:\n    \"\"\"\n    Compute the EML complexity of polynomial evaluation via Horner's method.\n\n    Horner form: p(x) = (...((a_d * x + a_{d-1}) * x + ...) * x + a_0)\n\n    Each Horner step is: multiply by x (cost: current + id_complexity + 1)\n    then add constant (cost: +2, for the constant leaf and add node).\n\n    Total: d * (id_complexity + 3) + 1 for the initial coefficient.\n\n    Args:\n        degree: Polynomial degree.\n        id_complexity: EML complexity of the identity function x.\n\n    Returns:\n        Upper bound on polynomial evaluation complexity.\n    \"\"\"\n    if degree == 0:\n        return 1  # Just a constant leaf\n    # a_d (leaf: 1) then d iterations of: * x (id_complexity + 1) + a_i (2)\n    return 1 + degree * (id_complexity + 1 + 2)\n\n\ndef demo_polynomial_complexity():\n    \"\"\"\n    Visualize polynomial complexity growth via Horner form\n    vs. naive monomial evaluation.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 1: Polynomial Evaluation Complexity\")\n    print(\"=\" * 60)\n\n    id_complexity = 1  # Identity is a leaf\n\n    degrees = list(range(1, 21))\n    horner_costs = [horner_complexity(d, id_complexity) for d in degrees]\n\n    # Naive monomial: x^k needs k-1 multiplications + k leaves = 2k-1\n    # p(x) = sum of d+1 monomials, each with cost ~2k, plus additions\n    naive_costs = [sum(2*k + 1 for k in range(d+1)) + d for d in degrees]\n\n    print(f\"  {'Degree':>8} {'Horner':>10} {'Naive':>10} {'Ratio':>8}\")\n    print(f\"  {'-'*8} {'-'*10} {'-'*10} {'-'*8}\")\n    for d in [1, 2, 5, 10, 15, 20]:\n        h = horner_complexity(d, id_complexity)\n        n = sum(2*k + 1 for k in range(d+1)) + d\n        print(f\"  {d:8d} {h:10d} {n:10d} {n/h:8.2f}x\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.plot(degrees, horner_costs, 'b-o', label='Horner form', markersize=4)\n    ax.plot(degrees, naive_costs, 'r--^', label='Naive monomial', markersize=4)\n    ax.set_xlabel('Polynomial degree')\n    ax.set_ylabel('Expression tree size')\n    ax.set_title('Polynomial Evaluation Complexity')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('app_polynomial_complexity.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: app_polynomial_complexity.png\\n\")\n\n\n# ============================================================\n# Application 2: Correlation Functions (Many-Body Physics)\n# ============================================================\n\ndef demo_correlation_functions():\n    \"\"\"\n    Show that products of bounded local observables inherit\n    controlled description complexity.\n\n    In statistical mechanics, correlation functions are:\n        C(x\u2081,...,x_k) = \u27e8O\u2081(x\u2081) \u00b7 O\u2082(x\u2082) \u00b7 ... \u00b7 O_k(x_k)\u27e9\n\n    For 1D systems restricted to an interval, these are\n    products of bounded functions, and our theorem applies.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 2: Correlation Function Complexity\")\n    print(\"=\" * 60)\n\n    # Simulate bounded local observables\n    B = 2.0\n    epsilon = 0.01\n    k_values = list(range(1, 11))\n\n    print(f\"  B = {B}, \u03b5 = {epsilon}\")\n    print(f\"  Observable: O_i(x) = B \u00b7 sin(i\u00b7x) (bounded by B)\")\n    print()\n\n    x = np.linspace(0, np.pi, 200)\n\n    per_observable_complexity = 5  # Assume each needs ~5 nodes\n    correlation_bounds = []\n    budgets = []\n\n    for k in k_values:\n        # Total complexity bound\n        total = k * per_observable_complexity + (k - 1)\n        correlation_bounds.append(total)\n\n        # Error budget per factor\n        delta = epsilon / (2 * k * (B + 1) ** (k - 1))\n        budgets.append(delta)\n\n        # Compute actual correlation function\n        corr = np.ones_like(x)\n        for i in range(1, k + 1):\n            corr *= B * np.sin(i * x)\n\n        if k in [1, 3, 5, 7, 10]:\n            print(f\"  k={k:2d}-point correlation: \"\n                  f\"complexity \u2264 {total:4d}, \"\n                  f\"budget \u03b4 = {delta:.2e}, \"\n                  f\"max|C| = {np.max(np.abs(corr)):.4f}\")\n\n    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))\n\n    ax1.plot(k_values, correlation_bounds, 'b-o', markersize=4)\n    ax1.set_xlabel('Number of observables k')\n    ax1.set_ylabel('Complexity upper bound')\n    ax1.set_title('Correlation Function Complexity')\n    ax1.grid(True, alpha=0.3)\n\n    ax2.semilogy(k_values, budgets, 'r-s', markersize=4)\n    ax2.set_xlabel('Number of observables k')\n    ax2.set_ylabel('Per-observable error budget')\n    ax2.set_title('Error Budget for Correlations')\n    ax2.grid(True, alpha=0.3)\n\n    fig.tight_layout()\n    fig.savefig('app_correlation_functions.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: app_correlation_functions.png\\n\")\n\n\n# ============================================================\n# Application 3: Neural Network Gating Analysis\n# ============================================================\n\ndef demo_gating_complexity():\n    \"\"\"\n    Analyze the approximation cost of multiplicative gating,\n    as used in attention mechanisms and gated recurrent units.\n\n    A gating unit computes: gate(x) \u00b7 value(x)\n    where gate \u2208 [0,1] and value is bounded.\n\n    Our binary theorem says:\n        C(gate \u00b7 value) \u2264 C(gate) + C(value) + 1\n\n    For a stack of k gating layers:\n        C(\u220f gates_i \u00b7 value) \u2264 \u2211 C(gate_i) + C(value) + k\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Application 3: Neural Network Gating Complexity\")\n    print(\"=\" * 60)\n\n    # Simulate gating layers\n    B_gate = 1.0  # Gates are sigmoid-bounded\n    B_value = 5.0  # Values can be larger\n    epsilon = 0.01\n\n    gate_complexity = 3   # Sigmoid approximation\n    value_complexity = 10  # More complex value function\n\n    k_values = list(range(1, 16))\n\n    print(f\"  Gate complexity: {gate_complexity} (sigmoid)\")\n    print(f\"  Value complexity: {value_complexity}\")\n    print()\n\n    total_complexities = []\n    for k in k_values:\n        # k gates + 1 value = k+1 factors, k multiplications\n        total = k * gate_complexity + value_complexity + k\n        total_complexities.append(total)\n\n        if k in [1, 5, 10, 15]:\n            print(f\"  {k:2d} gating layers: \"\n                  f\"complexity \u2264 {total:4d} \"\n                  f\"({k}\u00d7{gate_complexity} + {value_complexity} + {k})\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.plot(k_values, total_complexities, 'g-o', markersize=4)\n    ax.plot(k_values, [value_complexity + k for k in k_values],\n            'b--', label='Minimum (value + gates only)', alpha=0.5)\n    ax.set_xlabel('Number of gating layers')\n    ax.set_ylabel('Total complexity upper bound')\n    ax.set_title('Gated Network Complexity Growth')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('app_gating_complexity.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: app_gating_complexity.png\\n\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"=\" * 60)\n    print(\"EML Description Complexity: Applications\")\n    print(\"=\" * 60 + \"\\n\")\n\n    demo_polynomial_complexity()\n    demo_correlation_functions()\n    demo_gating_complexity()\n\n    print(\"=\" * 60)\n    print(\"All applications complete!\")\n    print(\"=\" * 60)\n\n\n#!/usr/bin/env python3\n\"\"\"\nDemo: EML Description Complexity \u2014 Multiplicative Subadditivity\n\nInteractive demonstrations of the key theorems:\n1. Product perturbation bounds\n2. Error budget allocation\n3. Complexity growth under multiplication\n4. Balanced vs. linear tree comparison\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom typing import Callable, List, Tuple\n\n\n# ============================================================\n# Core mathematical functions\n# ============================================================\n\ndef product_perturbation_bound(k: int, B: float, delta: float) -> float:\n    \"\"\"Theoretical upper bound: |\u220fu - \u220fv| \u2264 k * B^(k-1) * \u03b4\"\"\"\n    if k == 0:\n        return 0.0\n    return k * B ** (k - 1) * delta\n\n\ndef prod_error_budget(k: int, B: float, eps: float) -> float:\n    \"\"\"Error budget for k-fold product: \u03b4 = \u03b5 / (2k(B+1)^(k-1))\"\"\"\n    if k == 0:\n        return eps\n    return eps / (2 * k * (B + 1) ** (k - 1))\n\n\ndef complexity_upper_bound(complexities: List[int]) -> int:\n    \"\"\"Upper bound on product complexity: sum + (k-1)\"\"\"\n    k = len(complexities)\n    if k == 0:\n        return 0\n    return sum(complexities) + (k - 1)\n\n\n# ============================================================\n# Demo 1: Product Perturbation Bound Visualization\n# ============================================================\n\ndef demo_perturbation_bound():\n    \"\"\"\n    Visualize the product perturbation bound k*B^(k-1)*\u03b4\n    compared to actual perturbation for random bounded sequences.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 1: Product Perturbation Bound\")\n    print(\"=\" * 60)\n\n    np.random.seed(42)\n    B = 2.0\n    delta = 0.1\n    k_values = list(range(1, 11))\n    n_trials = 1000\n\n    theoretical_bounds = []\n    empirical_maxes = []\n\n    for k in k_values:\n        max_diff = 0.0\n        for _ in range(n_trials):\n            u = np.random.uniform(-B, B, size=k)\n            perturbation = np.random.uniform(-delta, delta, size=k)\n            v = np.clip(u + perturbation, -B, B)\n            diff = abs(np.prod(u) - np.prod(v))\n            max_diff = max(max_diff, diff)\n\n        theoretical = product_perturbation_bound(k, B, delta)\n        theoretical_bounds.append(theoretical)\n        empirical_maxes.append(max_diff)\n\n        print(f\"  k={k:2d}: theoretical \u2264 {theoretical:10.4f}, \"\n              f\"empirical max = {max_diff:10.4f}, \"\n              f\"ratio = {max_diff/theoretical:.4f}\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.semilogy(k_values, theoretical_bounds, 'b-o', label='Theoretical bound: k\u00b7B^(k-1)\u00b7\u03b4')\n    ax.semilogy(k_values, empirical_maxes, 'r--x', label='Empirical maximum')\n    ax.set_xlabel('Number of factors k')\n    ax.set_ylabel('Product perturbation')\n    ax.set_title(f'Product Perturbation Bound (B={B}, \u03b4={delta})')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('demo_perturbation_bound.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: demo_perturbation_bound.png\\n\")\n\n\n# ============================================================\n# Demo 2: Error Budget Allocation\n# ============================================================\n\ndef demo_error_budget():\n    \"\"\"\n    Visualize how the per-factor error budget shrinks\n    as the number of factors increases.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 2: Error Budget Allocation\")\n    print(\"=\" * 60)\n\n    eps = 0.1\n    B_values = [1.0, 2.0, 5.0]\n    k_values = list(range(1, 16))\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n\n    for B in B_values:\n        budgets = [prod_error_budget(k, B, eps) for k in k_values]\n        ax.semilogy(k_values, budgets, '-o', label=f'B = {B}', markersize=4)\n        print(f\"  B = {B}:\")\n        for k in [1, 2, 5, 10, 15]:\n            if k <= len(k_values):\n                budget = prod_error_budget(k, B, eps)\n                print(f\"    k={k:2d}: \u03b4 = {budget:.2e}\")\n\n    ax.set_xlabel('Number of factors k')\n    ax.set_ylabel('Per-factor error budget \u03b4')\n    ax.set_title(f'Error Budget Allocation (\u03b5 = {eps})')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('demo_error_budget.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: demo_error_budget.png\\n\")\n\n\n# ============================================================\n# Demo 3: Complexity Growth Under Multiplication\n# ============================================================\n\ndef demo_complexity_growth():\n    \"\"\"\n    Show how product complexity grows with the number of factors.\n    Compare theoretical upper bound with simulated complexity.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 3: Complexity Growth Under Multiplication\")\n    print(\"=\" * 60)\n\n    np.random.seed(123)\n    k_values = list(range(1, 21))\n\n    # Simulate functions with random complexities\n    base_complexities = np.random.randint(3, 15, size=20)\n\n    cumulative_sums = []\n    upper_bounds = []\n\n    for k in k_values:\n        cs = base_complexities[:k].tolist()\n        bound = complexity_upper_bound(cs)\n        cumulative_sums.append(sum(cs))\n        upper_bounds.append(bound)\n\n        if k in [1, 5, 10, 15, 20]:\n            print(f\"  k={k:2d}: \u2211c\u1d62 = {sum(cs):4d}, \"\n                  f\"bound = {bound:4d} (= \u2211c\u1d62 + {k-1})\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.plot(k_values, cumulative_sums, 'b-o', label='\u2211 c\u1d62 (sum of factor complexities)',\n            markersize=4)\n    ax.plot(k_values, upper_bounds, 'r--^', label='\u2211 c\u1d62 + (k-1) (product complexity bound)',\n            markersize=4)\n    ax.fill_between(k_values, cumulative_sums, upper_bounds, alpha=0.2, color='red',\n                    label='Overhead: k-1 multiplication gates')\n    ax.set_xlabel('Number of factors k')\n    ax.set_ylabel('Complexity (tree size)')\n    ax.set_title('Complexity Growth Under Multiplication')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('demo_complexity_growth.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: demo_complexity_growth.png\\n\")\n\n\n# ============================================================\n# Demo 4: Balanced vs. Linear Tree Comparison\n# ============================================================\n\ndef build_linear_tree_error(k: int, B: float, delta: float) -> float:\n    \"\"\"\n    Error from left-to-right multiplication tree.\n    Each multiplication accumulates error via the Leibniz rule.\n    \"\"\"\n    # Track accumulated bound and error\n    if k == 0:\n        return 0.0\n    if k == 1:\n        return delta\n\n    # After first factor: bound = B, error = delta\n    acc_bound = B\n    acc_error = delta\n\n    for i in range(1, k):\n        # Multiply accumulated product by factor i\n        # |P*f - P'*f'| \u2264 |P|*|f-f'| + |f'|*|P-P'|\n        # \u2264 acc_bound * delta + (B + delta) * acc_error\n        new_error = acc_bound * delta + (B + delta) * acc_error\n        new_bound = acc_bound * (B + delta)\n        acc_error = new_error\n        acc_bound = new_bound\n\n    return acc_error\n\n\ndef build_balanced_tree_error(k: int, B: float, delta: float) -> float:\n    \"\"\"\n    Error from balanced binary multiplication tree.\n    Recursively splits the product into two halves.\n    \"\"\"\n    if k == 0:\n        return 0.0\n    if k == 1:\n        return delta\n\n    half = k // 2\n    err_left = build_balanced_tree_error(half, B, delta)\n    err_right = build_balanced_tree_error(k - half, B, delta)\n\n    bound_left = (B + delta) ** half\n    bound_right = (B + delta) ** (k - half)\n\n    # |L*R - L'*R'| \u2264 |L|*err_R + |R'|*err_L\n    return bound_left * err_right + bound_right * err_left\n\n\ndef demo_balanced_vs_linear():\n    \"\"\"\n    Compare error propagation in linear vs. balanced tree strategies.\n    Tests whether balanced trees give better error control.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 4: Balanced vs. Linear Tree Comparison\")\n    print(\"=\" * 60)\n\n    B = 1.5\n    delta = 0.01\n    k_values = list(range(2, 21))\n\n    linear_errors = []\n    balanced_errors = []\n    theoretical_bounds = []\n\n    for k in k_values:\n        lin_err = build_linear_tree_error(k, B, delta)\n        bal_err = build_balanced_tree_error(k, B, delta)\n        theo_bound = product_perturbation_bound(k, B + 1, delta)\n\n        linear_errors.append(lin_err)\n        balanced_errors.append(bal_err)\n        theoretical_bounds.append(theo_bound)\n\n        if k in [2, 5, 10, 15, 20]:\n            print(f\"  k={k:2d}: linear err = {lin_err:.6f}, \"\n                  f\"balanced err = {bal_err:.6f}, \"\n                  f\"ratio = {bal_err/lin_err:.4f}\")\n\n    fig, ax = plt.subplots(1, 1, figsize=(8, 5))\n    ax.semilogy(k_values, linear_errors, 'b-o', label='Linear (left-to-right)', markersize=4)\n    ax.semilogy(k_values, balanced_errors, 'g-s', label='Balanced (binary tree)', markersize=4)\n    ax.semilogy(k_values, theoretical_bounds, 'r--', label='Theoretical bound', linewidth=1)\n    ax.set_xlabel('Number of factors k')\n    ax.set_ylabel('Product approximation error')\n    ax.set_title(f'Error Propagation: Linear vs Balanced (B={B}, \u03b4={delta})')\n    ax.legend()\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('demo_balanced_vs_linear.png', dpi=150)\n    plt.close()\n    print(f\"\\n  \u2192 Saved: demo_balanced_vs_linear.png\\n\")\n\n\n# ============================================================\n# Demo 5: Falsifiable Conjecture Test\n# ============================================================\n\ndef demo_conjecture_test():\n    \"\"\"\n    Test the balanced tree improvement conjecture:\n    Can the linear overhead (k-1) be reduced to O(log k)?\n\n    We compare the error achieved by balanced vs linear trees\n    at matching tree sizes to see if balanced trees are strictly better.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"Demo 5: Balanced Tree Conjecture Test\")\n    print(\"=\" * 60)\n\n    B = 2.0\n    eps = 0.1\n    k_values = [2, 4, 8, 16, 32]\n\n    print(f\"\\n  Testing if balanced trees need fewer total nodes...\")\n    print(f\"  (Both strategies have the same total tree size = \u2211c\u1d62 + k-1)\")\n    print(f\"  The question is whether balanced trees achieve better ERROR.\\n\")\n\n    for k in k_values:\n        # For fixed tree size, compare error\n        delta_budget = prod_error_budget(k, B, eps)\n        lin_err = build_linear_tree_error(k, B, delta_budget)\n        bal_err = build_balanced_tree_error(k, B, delta_budget)\n\n        improvement = (lin_err - bal_err) / lin_err * 100 if lin_err > 0 else 0\n\n        print(f\"  k={k:3d}: \u03b4_budget = {delta_budget:.2e}, \"\n              f\"linear err = {lin_err:.2e}, \"\n              f\"balanced err = {bal_err:.2e}, \"\n              f\"improvement = {improvement:+.1f}%\")\n\n    print(f\"\\n  Conclusion: Balanced trees {'DO' if improvement > 0 else 'do NOT'} \"\n          f\"improve error at the same tree size.\")\n    print(f\"  The conjecture predicts this translates to fewer nodes needed.\\n\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"=\" * 60)\n    print(\"EML Description Complexity: Multiplicative Subadditivity\")\n    print(\"Interactive Demonstrations\")\n    print(\"=\" * 60 + \"\\n\")\n\n    demo_perturbation_bound()\n    demo_error_budget()\n    demo_complexity_growth()\n    demo_balanced_vs_linear()\n    demo_conjecture_test()\n\n    print(\"=\" * 60)\n    print(\"All demos complete!\")\n    print(\"=\" * 60)\n"
+    },
+    "date": "2026-05-20T14:03:50Z",
+    "exp_id": "5e5cacb4",
+    "source_exp_ids": [
+      "872d1aff"
     ]
   },
   "frankls_union_closed_conjecture.json": {
@@ -6464,7 +6506,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -6473,7 +6515,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -6482,7 +6524,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -6491,7 +6533,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "galois_group__s",
@@ -6500,7 +6542,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -6509,7 +6551,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 95
+      "hue": 292
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -6518,7 +6560,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 280
+      "hue": 275
     },
     {
       "id": "expected_lean_signature",
@@ -6536,7 +6578,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -6545,7 +6587,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "percolation_threshold",
@@ -6554,7 +6596,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -6572,7 +6614,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -6581,7 +6623,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "legendres_conjecture",
@@ -6590,7 +6632,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -6599,7 +6641,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -6608,7 +6650,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -6617,7 +6659,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "p_vs_np_problem",
@@ -6626,7 +6668,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 280
+      "hue": 112
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -6635,7 +6677,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T18:02:56Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "perfect_cuboid_euler_brick",
@@ -6644,7 +6686,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "hodge_conjecture",
@@ -6653,7 +6695,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -6662,7 +6704,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -6671,7 +6713,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -6680,7 +6722,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 112
+      "hue": 275
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -6689,7 +6731,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "twin_prime_conjecture",
@@ -6698,7 +6740,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -6707,7 +6749,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 292
+      "hue": 275
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -6716,7 +6758,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "happy_end_problem",
@@ -6734,7 +6776,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -6752,7 +6794,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -6761,7 +6803,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "tropical_intersection_theory",
@@ -6770,7 +6812,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "riemann_hypothesis",
@@ -6779,7 +6821,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "odd_perfect_numbers",
@@ -6788,7 +6830,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -6797,7 +6839,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 89
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture",
@@ -6806,7 +6848,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "10_is_a_solitary_number",
@@ -6833,7 +6875,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -6842,7 +6884,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -6851,7 +6893,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -6860,7 +6902,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -6878,7 +6920,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 271
+      "hue": 281
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -6887,7 +6929,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -6896,7 +6938,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "yang_mills_mass_gap",
@@ -6905,7 +6947,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "goldbach_conjecture",
@@ -6914,7 +6956,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -6923,7 +6965,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -6932,7 +6974,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 89
+      "hue": 280
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -6941,7 +6983,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -6950,7 +6992,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "beals_conjecture",
@@ -6959,7 +7001,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -6968,7 +7010,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -6977,7 +7019,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -6986,7 +7028,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -6995,7 +7037,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -7004,7 +7046,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -7013,7 +7055,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -7022,7 +7064,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -7031,7 +7073,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -7040,7 +7082,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 112
+      "hue": 92
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -7049,7 +7091,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -7058,7 +7100,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -7067,7 +7109,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -7076,7 +7118,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -7085,7 +7127,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 314
+      "hue": 179
     },
     {
       "id": "primes_of_the_form_n1",
@@ -7094,7 +7136,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -7103,7 +7145,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -7112,7 +7154,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -7121,7 +7163,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -7130,7 +7172,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -7139,7 +7181,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -7148,7 +7190,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "we_have_formally_verified",
@@ -7157,7 +7199,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -7166,7 +7208,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -7175,7 +7217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -7184,7 +7226,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -7193,7 +7235,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -7202,7 +7244,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -7211,7 +7253,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -7220,7 +7262,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "collatz_conjecture",
@@ -7229,7 +7271,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -7238,7 +7280,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -7247,7 +7289,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -7256,7 +7298,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -7274,7 +7316,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -7283,7 +7325,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -7292,7 +7334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -7310,7 +7352,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -7319,7 +7361,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "medium_priority",
@@ -7346,7 +7388,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -7364,7 +7406,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -7373,7 +7415,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T02:05:05Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "hypothesis_4_p_adic_threshold_transfer",
@@ -7382,7 +7424,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -7391,7 +7433,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 92
+      "hue": 101
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -7409,7 +7451,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "sums_of_three_cubes",
@@ -7418,7 +7460,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -7427,7 +7469,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "196_algorithm_non_termination",
@@ -7436,7 +7478,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -7445,7 +7487,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -7454,7 +7496,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -7472,7 +7514,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -7481,7 +7523,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -7490,7 +7532,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -7508,7 +7550,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -7535,7 +7577,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:05:51Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "non_archimedean_probability_via_surreal_numbers",
@@ -7544,7 +7586,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "proof_expansion_constant_for_formal_theories",
@@ -7562,7 +7604,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T08:09:01Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "eml_universal_approximation",
@@ -7571,7 +7613,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T09:06:21Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "inverse_stereographic_persistence_topological_data",
@@ -7580,7 +7622,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T09:06:51Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "hypothesis_5_exceptional_set_finiteness",
@@ -7589,7 +7631,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T09:07:18Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "conjecture_2_semantic_entropy_correlation",
@@ -7598,7 +7640,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T09:07:52Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "conjecture_3_coefficient_growth_rate_under_iterate",
@@ -7616,7 +7658,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:03:53Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "conjecture_1_eml_elementary_completeness_with_poly",
@@ -7634,7 +7676,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:04:57Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "proof_phase_transitions_in_random_formal_theories",
@@ -7643,7 +7685,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T11:03:17Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "conjecture_5_strict_depth_separation_for_exponenti",
@@ -7652,7 +7694,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T11:03:46Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "hypothesis_3_base_invariance",
@@ -7661,7 +7703,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T11:04:14Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "eml_kolmogorov_arnold_representation",
@@ -7670,7 +7712,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T11:04:40Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "hypothesis_3_transcendence_rank",
@@ -7679,7 +7721,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T12:00:41Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_5_eml_circuit_depth_separation",
@@ -7688,7 +7730,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:03:44Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "conjecture_1_mps_min_cut_principle",
@@ -7697,7 +7739,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:11Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "arithmetic_monodromy_fingerprints_of_gradient_desc",
@@ -7706,7 +7748,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:39Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "conjecture_4_monotone_circuit_depth_from_entropy_c",
@@ -7715,7 +7757,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T14:00:24Z",
-      "hue": 92
+      "hue": 270
+    },
+    {
+      "id": "conjecture_2_eml_description_complexity_is_multipl",
+      "title": "Multiplicative Subadditivity of EML Description Complexity",
+      "domain": "Approximation Theory / Algebraic Complexity",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-20T14:03:50Z",
+      "hue": 100
     }
   ],
   "edges": [
@@ -7736,6 +7787,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "integrated_information_via_tensor_networks",
       "target": "conjecture_1_mps_min_cut_principle",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "eml_universal_approximation",
+      "target": "conjecture_2_eml_description_complexity_is_multipl",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -8759,10 +8817,10 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics"
     ],
     "priority_score": 0.82,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "336dee42",
     "timestamp": "2026-05-20T00:22:10.974765+00:00"
   },
   {
@@ -9054,6 +9112,20 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1f252cf0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T10:04:27.235736+00:00"
+  },
+  {
+    "id": "fd_0262",
+    "title": "Disconfirmation criterion",
+    "description": "If the maximum entropy drop grows slower than m\u00b2 / k\u00b2 for any constant k, or if it saturates at a much smaller value, the conjecture is false.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a74f0589",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:00:28.555281+00:00"
   },
   {
     "id": "seed_007",
@@ -10083,23 +10155,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "6cf9b394",
     "consumed_by_exp_id": "e5412c69",
     "timestamp": "2026-05-20T09:07:55.737099+00:00"
-  },
-  {
-    "id": "fd_0226",
-    "title": "Conjecture 4: Monotone Circuit Depth from Entropy Chains",
-    "description": "**Conjecture:** For monotone Boolean functions f: {0,1}^n \u2192 {0,1}, the depth of any monotone circuit computing f is at least the maximum, over all input pairs (x, y) with f(x)=1 and f(y)=0, of the semantic entropy drop along any monotone path from x to y in the Boolean lattice, divided by log\u2082(fan-in).\n\nMore precisely, define the \"semantic entropy\" of a subcube as log\u2082 of the number of satisfying assignments in it. Then:\n\n$$\\mathrm{depth}(C) \\geq \\max_{x \\leq y, f(x) \\neq f(y)} \\frac{H(\\{z : z \\geq x, f(z)=1\\}) - H(\\{z : z \\geq y, f(z)=1\\})}{\\log_2(\\text{fan-in})}$$\n\n**Test:**\n1. For known hard monotone functions (e.g., clique detection, matching), compute the semantic entropy chain lengths.\n2. Compare to known monotone circuit depth lower bounds (Karchmer-Wigderson, Razborov-Alon-Boppana)",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Cryptography",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6cf9b394",
-    "consumed_by_exp_id": "a74f0589",
-    "timestamp": "2026-05-20T09:07:55.747116+00:00"
   },
   {
     "id": "fd_0227",

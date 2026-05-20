@@ -174,8 +174,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "336dee42",
       "timestamp": "2026-05-20T00:22:10.974765+00:00"
     },
     {
@@ -4251,7 +4251,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "a74f0589",
       "timestamp": "2026-05-20T09:07:55.747116+00:00"
     },
@@ -5088,6 +5088,23 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:04:43.100653+00:00"
+    },
+    {
+      "id": "fd_0262",
+      "title": "Disconfirmation criterion",
+      "description": "If the maximum entropy drop grows slower than m² / k² for any constant k, or if it saturates at a much smaller value, the conjecture is false.",
+      "source_exp_id": "a74f0589",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/a74f0589",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:00:28.555281+00:00"
     }
   ],
   "pruned": [
