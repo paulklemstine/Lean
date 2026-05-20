@@ -3993,7 +3993,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "5e5cacb4",
       "timestamp": "2026-05-20T09:06:24.923076+00:00"
     },
@@ -4298,7 +4298,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T10:04:27.235736+00:00"
     },
@@ -4497,7 +4497,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T11:03:49.941480+00:00"
     },
@@ -4541,24 +4541,6 @@
       "timestamp": "2026-05-20T11:04:19.157308+00:00"
     },
     {
-      "id": "fd_0247",
-      "title": "Conjecture 2: Equidistribution of Log-Phases for Quadratic Iterates",
-      "description": "**Conjecture.** For every integer $c$ with $|c| \\leq 10$ and every $n \\geq 2$, the sequence\n$$\\left\\{ \\frac{\\log |T_c^{(n)}(p)|}{\\log b} \\right\\}_{p \\text{ prime}}$$\nis equidistributed modulo 1 for every base $b \\geq 2$ with $\\log b / \\log 2 \\notin \\mathbb{Q}$.\n\n**Test.** Compute the discrepancy $D_N$ (Kolmogorov–Smirnov statistic against uniform on $[0,1)$) of the sequence of fractional parts $\\{ \\log_b |T_c^{(n)}(p)| \\}$ for primes $p \\leq N$, with $N \\in \\{10^3, 10^4, 10^5\\}$. If equidistributed, $D_N$ should decay as $O(N^{-1/2})$ up to logarithmic factors.\n\n**Refutation criterion.** If for some $(c, n, b)$, the discrepancy $D_N$ does not decrease as $N$ grows (i.e., $D_{10^5} > D_{10^3}$), or if $D_{10^5} > 0.1$, the conjecture is refuted for those parameters.\n\n**Impact.** This is the",
-      "source_exp_id": "1cf08f84",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1cf08f84",
-      "domains": [
-        "NumberTheory",
-        "Probability"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T11:04:19.168518+00:00"
-    },
-    {
       "id": "fd_0248",
       "title": "Conjecture 3: Multiplicative Independence Suffices for Pairwise Base Transfer",
       "description": "**Conjecture.** Let $u : \\mathbb{N} \\to \\mathbb{R}_{>0}$ be a sequence such that $n \\mapsto \\log u_n$ has \"generic\" growth (e.g., $\\log u_n$ is not eventually contained in a discrete subgroup of $\\mathbb{R}$). If $u$ is Benford in base $a \\geq 2$ and $a, b$ are multiplicatively independent, then $u$ is Benford in base $b$.\n\n**Test.** Construct explicit sequences where equidistribution can be verified analytically (e.g., $u_n = 2^{n\\alpha}$ for $\\alpha$ irrational). Test whether Benford in base 10 implies Benford in base 3 (which are multiplicatively independent). Construct a counterexample attempt using $u_n = 10^{n/\\log_{10}(3)}$ which is designed to have non-generic log growth.\n\n**Refutation criterion.** Exhibit a specific sequence $u$ that is Benford in base $a$ but not in base $b$ wher",
@@ -4595,24 +4577,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T11:04:19.186940+00:00"
-    },
-    {
-      "id": "fd_0250",
-      "title": "Conjecture 5: Non-Admissible Bases Exhibit Structural Deviation",
-      "description": "**Conjecture.** For bases $b$ that are powers of 2 (i.e., $\\log b / \\log 2 \\in \\mathbb{Q}$), the sequence $|T_c^{(n)}(p)|$ does *not* satisfy Benford's law in base $b$, even when it is Benford in all admissible bases. Specifically, the digit distribution in base $b = 2^k$ carries a detectable signature of the binary structure of the iterates.\n\n**Test.** Compare KL divergences for $b \\in \\{2, 4, 8, 16\\}$ (non-admissible) versus $b \\in \\{3, 5, 7, 10\\}$ (admissible) for $c = 0, n = 3$, primes $p \\leq 10^4$. The conjecture predicts a systematic gap: KL for non-admissible bases should be $\\geq 5\\times$ larger than for admissible bases.\n\n**Refutation criterion.** If KL divergence for some non-admissible base is comparable to (within 2×) the KL for admissible bases, the conjecture is refuted.\n\n**",
-      "source_exp_id": "1cf08f84",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1cf08f84",
-      "domains": [
-        "NumberTheory",
-        "Probability"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T11:04:19.196956+00:00"
     },
     {
       "id": "fd_0251",
@@ -4802,7 +4766,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:00:44.626994+00:00"
     },
@@ -4824,7 +4788,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:00:44.637100+00:00"
     },
@@ -4846,26 +4810,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:03:48.327979+00:00"
-    },
-    {
-      "id": "fd_0262",
-      "title": "Conjecture B: Full Linear Lower Bound (emlDepth ≥ n)",
-      "description": "**Conjecture:** For every `n ≥ 0`, every `EMLExpr` `e` satisfying `∀ x > 0, e.eval x = iterExp n x` has `e.emlDepth ≥ n`.\n\n**Precise statement:** `∀ (n : ℕ) (e : EMLExpr), RepresentsOnPos e (iterExp n) → n ≤ e.emlDepth`\n\n**Status:** This is the central open theorem. The proof architecture (Strategy A) is in place: `expRank ≤ emlDepth` is proved, and the canonical construction achieves `expRank = emlDepth = n`. What remains is proving the semantic lower bound: any expression computing `iterExp n` must have `expRank ≥ n`.\n\n**Test:** For each `n ∈ {1,2,3,4,5}`, exhaustively generate all `EMLExpr` trees of `emlDepth < n` with constants from `{-1, 0, 1, 2, e}`, evaluate at 50 points in `[0.1, 5]`, and verify no tree matches `iterExp n`. A match would disprove the conjecture.\n\n**Impact:** A full",
-      "source_exp_id": "8155cb9f",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8155cb9f",
-      "domains": [
-        "NumberTheory",
-        "EML",
-        "Logic",
-        "Computation"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T12:03:48.337646+00:00"
     },
     {
       "id": "fd_0263",
@@ -5006,7 +4950,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:04:15.933324+00:00"
     },
@@ -5090,21 +5034,128 @@
       "timestamp": "2026-05-20T12:04:43.100653+00:00"
     },
     {
-      "id": "fd_0262",
-      "title": "Disconfirmation criterion",
-      "description": "If the maximum entropy drop grows slower than m² / k² for any constant k, or if it saturates at a much smaller value, the conjecture is false.",
-      "source_exp_id": "a74f0589",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/a74f0589",
+      "id": "fd_0263",
+      "title": "Conjecture 1: Balanced Tree Depth Improvement",
+      "description": "**Conjecture:** For k functions each bounded by B on [a,b], the EML description complexity of their product satisfies:\n\n```\nEMLComplexityOn(a, b, ∏ f_i, ε) ≤ (∑ᵢ EMLComplexityOn(a, b, f_i, δ_balanced)) + ⌈log₂ k⌉\n```\n\nwhere δ_balanced = ε / (2 ⌈log₂ k⌉ · B^(k-1)) — a logarithmic overhead instead of linear.\n\n**Test:** Implement both left-associated and balanced-tree product constructions. For families of k = 2^n Chebyshev polynomials bounded by 1 on [-1,1], compare the achieved approximation error at matching tree sizes. If the balanced tree consistently achieves lower error at the same total size, this supports the conjecture. If there exist families where balanced trees require strictly more total nodes for the same approximation quality (due to sharper intermediate bounds in the linear c",
+      "source_exp_id": "5e5cacb4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5e5cacb4",
       "domains": [
-        "NumberTheory"
+        "NumberTheory",
+        "EML",
+        "MachineLearning",
+        "Computation"
       ],
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.75,
+      "priority_score": 0.7,
       "status": "available",
       "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T14:00:28.555281+00:00"
+      "timestamp": "2026-05-20T14:03:57.575646+00:00"
+    },
+    {
+      "id": "fd_0264",
+      "title": "Conjecture 2: Tight Lower Bound for Product Complexity",
+      "description": "**Conjecture:** There exist families of functions f₁, ..., f_k on [0,1], each with EMLComplexityOn(0, 1, f_i, δ) = c, such that:\n\n```\nEMLComplexityOn(0, 1, ∏ f_i, ε) ≥ k · c / C\n```\n\nfor some absolute constant C > 0 and appropriate ε depending on k, B, δ. In other words, the linear growth in the sum of individual complexities is not just an upper bound but is essentially necessary.\n\n**Test:** Construct random bounded trigonometric polynomials on [0,1] with controlled complexity. Estimate the complexity of their products numerically by finding best expression-tree approximations at various sizes. If the product complexity consistently grows linearly with k · c, this supports the conjecture. A sublinear growth rate would refute it.\n\n**Impact:** Would establish that multiplicative subadditivi",
+      "source_exp_id": "5e5cacb4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5e5cacb4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "EML",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:03:57.586363+00:00"
+    },
+    {
+      "id": "fd_0265",
+      "title": "Conjecture 3: Entropy-Like Inequality for Description Cost",
+      "description": "**Conjecture:** For independent bounded random processes X and Y on a probability space, the expected EML description complexity satisfies:\n\n```\n𝔼[EMLComplexityOn(a, b, X · Y, ε)] ≤ 𝔼[EMLComplexityOn(a, b, X, δ)] + 𝔼[EMLComplexityOn(a, b, Y, δ)] + O(1)\n```\n\nmimicking the subadditivity of Shannon entropy: H(X, Y) ≤ H(X) + H(Y).\n\n**Test:** Sample pairs of random bounded functions (e.g., random Fourier series with bounded coefficients). Compute EML complexity estimates for each factor and their product. Plot 𝔼[C(X·Y)] against 𝔼[C(X)] + 𝔼[C(Y)]. If the ratio consistently exceeds 1 + o(1), the subadditivity is genuine; if it exceeds 1 by a factor growing with the function space dimension, the O(1) term needs refinement.\n\n**Impact:** Would establish EML complexity as an information measure for f",
+      "source_exp_id": "5e5cacb4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5e5cacb4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "EML",
+        "Bridges",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:03:57.597578+00:00"
+    },
+    {
+      "id": "fd_0266",
+      "title": "Conjecture 4: Division Complexity Bound",
+      "description": "**Conjecture:** If f and g are B-bounded on [a,b] with g bounded away from zero (|g(x)| ≥ c > 0 for x ∈ [a,b]), then:\n\n```\nEMLComplexityOn(a, b, f/g, ε) ≤ EMLComplexityOn(a, b, f, δ₁) + EMLComplexityOn(a, b, 1/g, δ₂) + 1\n```\n\nwhere δ₁, δ₂ are computed from ε, B, and c by an explicit budget formula.\n\n**Test:** Approximate rational functions p(x)/q(x) on intervals where q is bounded away from zero. Compare the complexity of the ratio with the sum of complexities of p and 1/q. The budget formula δ₁ = ε·c/(2(B+c)) and δ₂ = ε/(2(B/c + 1)) should give a clean bound. Test with Padé approximants of known complexity.\n\n**Impact:** Division closure would extend the compositional calculus to rational function approximation, which is important for Padé approximation, control theory, and many-body Green",
+      "source_exp_id": "5e5cacb4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5e5cacb4",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:03:57.608186+00:00"
+    },
+    {
+      "id": "fd_0267",
+      "title": "Conjecture 5: Neural Network Architecture Implications",
+      "description": "**Conjecture:** For ReLU networks with multiplicative gates (as in NALU, gating mechanisms, or attention), the multiplicative subadditivity theorem implies:\n\n```\nApproximation error of a depth-L network with k multiplicative gates ≤ \n  O(k · B^(k-1)) × (per-gate approximation error)\n```\n\nIn particular, networks with O(log n) multiplicative gates in a balanced arrangement can approximate degree-n polynomials with polylogarithmic depth and polynomial width, matching known circuit complexity bounds.\n\n**Test:** Train networks with explicit multiplicative gates on polynomial target functions. Measure how the test error scales with the number of multiplicative gates and compare with the theoretical prediction k · B^(k-1) · δ. If the empirical scaling is significantly better than the theoretical ",
+      "source_exp_id": "5e5cacb4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5e5cacb4",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Probability",
+        "MachineLearning",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:03:57.618628+00:00"
+    },
+    {
+      "id": "fd_0264",
+      "title": "Prime-to-Prime Gradient Criticality Transfer Modulo p",
+      "description": "Conjecture: Let F_theta(x) be a polynomial model with integer coefficients and polynomial loss L(theta; D) built from a fixed finite integer dataset D. For two datasets D and D' whose empirical moment tensors agree up to order r, there exists a threshold r0 depending only on the architecture such that for all r >= r0, the zeta functions counting critical points of the gradient equations modulo p, Z_D,p(t) = exp(sum_{m>=1} N_m(D) t^m / m) and Z_D',p(t), have the same numerator degree and the same multiset of reciprocal-pole p-adic slopes for a set of primes p of natural density 1. Test: Fix an architecture and generate many dataset pairs with matched low-order moments but different higher-order structure; for each prime p in a large range, count solutions to grad_theta L = 0 over F_{p^m} for small m, reconstruct the local zeta functions, and check whether slope data stabilizes exactly when moment matching exceeds the predicted threshold. A single robust family of counterexamples refutes the conjecture. Impact: This would reveal a hidden arithmetic universality class for optimization landscapes, linking dataset statistics to motivic invariants of training dynamics and suggesting new compression principles for learning problems.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Geometry",
+        "Optimization Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:04:12.052920+00:00"
     }
   ],
   "pruned": [
@@ -5397,6 +5448,59 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T04:04:51.071894+00:00"
+    },
+    {
+      "id": "fd_0247",
+      "title": "Conjecture 2: Equidistribution of Log-Phases for Quadratic Iterates",
+      "description": "**Conjecture.** For every integer $c$ with $|c| \\leq 10$ and every $n \\geq 2$, the sequence\n$$\\left\\{ \\frac{\\log |T_c^{(n)}(p)|}{\\log b} \\right\\}_{p \\text{ prime}}$$\nis equidistributed modulo 1 for every base $b \\geq 2$ with $\\log b / \\log 2 \\notin \\mathbb{Q}$.\n\n**Test.** Compute the discrepancy $D_N$ (Kolmogorov–Smirnov statistic against uniform on $[0,1)$) of the sequence of fractional parts $\\{ \\log_b |T_c^{(n)}(p)| \\}$ for primes $p \\leq N$, with $N \\in \\{10^3, 10^4, 10^5\\}$. If equidistributed, $D_N$ should decay as $O(N^{-1/2})$ up to logarithmic factors.\n\n**Refutation criterion.** If for some $(c, n, b)$, the discrepancy $D_N$ does not decrease as $N$ grows (i.e., $D_{10^5} > D_{10^3}$), or if $D_{10^5} > 0.1$, the conjecture is refuted for those parameters.\n\n**Impact.** This is the",
+      "source_exp_id": "1cf08f84",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1cf08f84",
+      "domains": [
+        "NumberTheory",
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T11:04:19.168518+00:00"
+    },
+    {
+      "id": "fd_0250",
+      "title": "Conjecture 5: Non-Admissible Bases Exhibit Structural Deviation",
+      "description": "**Conjecture.** For bases $b$ that are powers of 2 (i.e., $\\log b / \\log 2 \\in \\mathbb{Q}$), the sequence $|T_c^{(n)}(p)|$ does *not* satisfy Benford's law in base $b$, even when it is Benford in all admissible bases. Specifically, the digit distribution in base $b = 2^k$ carries a detectable signature of the binary structure of the iterates.\n\n**Test.** Compare KL divergences for $b \\in \\{2, 4, 8, 16\\}$ (non-admissible) versus $b \\in \\{3, 5, 7, 10\\}$ (admissible) for $c = 0, n = 3$, primes $p \\leq 10^4$. The conjecture predicts a systematic gap: KL for non-admissible bases should be $\\geq 5\\times$ larger than for admissible bases.\n\n**Refutation criterion.** If KL divergence for some non-admissible base is comparable to (within 2×) the KL for admissible bases, the conjecture is refuted.\n\n**",
+      "source_exp_id": "1cf08f84",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1cf08f84",
+      "domains": [
+        "NumberTheory",
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T11:04:19.196956+00:00"
+    },
+    {
+      "id": "fd_0262",
+      "title": "Disconfirmation criterion",
+      "description": "If the maximum entropy drop grows slower than m² / k² for any constant k, or if it saturates at a much smaller value, the conjecture is false.",
+      "source_exp_id": "a74f0589",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/a74f0589",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:00:28.555281+00:00"
     }
   ]
 }
