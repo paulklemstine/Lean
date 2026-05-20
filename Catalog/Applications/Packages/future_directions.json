@@ -174,7 +174,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "336dee42",
       "timestamp": "2026-05-20T00:22:10.974765+00:00"
     },
@@ -5739,6 +5739,77 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T17:05:16.581414+00:00"
+    },
+    {
+      "id": "fd_0296",
+      "title": "Highest priority",
+      "description": ": Conjecture 1 (Signature Injectivity). This directly addresses the single remaining sorry in the formalization and would complete the formal proof of the Happy End theorem.",
+      "source_exp_id": "336dee42",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/336dee42",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:12:49.268207+00:00"
+    },
+    {
+      "id": "fd_0297",
+      "title": "High priority",
+      "description": ": Conjecture 4 (Order-Type Invariance). This is likely provable and would establish the foundational abstraction for the entire program.",
+      "source_exp_id": "336dee42",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/336dee42",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:12:49.278985+00:00"
+    },
+    {
+      "id": "fd_0298",
+      "title": "Medium priority",
+      "description": ": Conjecture 2 (Staircase Property). A stepping stone toward Conjecture 1 with independent interest.",
+      "source_exp_id": "336dee42",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/336dee42",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:12:49.288900+00:00"
+    },
+    {
+      "id": "fd_0299",
+      "title": "Exploratory",
+      "description": ": Conjectures 3 and 5. These introduce genuinely new ideas (second-order signatures, energy landscapes) that could open entirely new directions.",
+      "source_exp_id": "336dee42",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/336dee42",
+      "domains": [
+        "NumberTheory",
+        "Physics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:12:49.300302+00:00"
     }
   ],
   "pruned": [

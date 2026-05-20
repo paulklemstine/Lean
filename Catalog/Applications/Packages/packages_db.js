@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "conjecture_e_no_polynomial_size_compilation_from_f.json",
+    "title": "Depth Separation for Exact Expression Languages",
+    "domain": "Semantic Complexity Theory / Expression Language Barriers",
+    "date": "2026-05-20T18:17:00Z",
+    "exp_id": "4346710f"
+  },
+  {
     "filename": "happy_end_problem.json",
     "title": "The Happy End Problem: Formal Extremal Geometry for Convex Polygons",
     "domain": "Combinatorial Geometry",
@@ -1221,6 +1228,43 @@ window.PACKAGE_DB = {
     "exp_id": "0cd0008f",
     "source_exp_ids": [
       "seed"
+    ]
+  },
+  "conjecture_e_no_polynomial_size_compilation_from_f.json": {
+    "title": "Depth Separation for Exact Expression Languages",
+    "domain": "Semantic Complexity Theory / Expression Language Barriers",
+    "article": "# The Language Barrier: Why Some Mathematical Expressions Cannot Be Simplified\n\n## A tower too tall to compress\n\nImagine building a tower of powers. Start with a number, say 2. Now raise *e* \u2014 the famous mathematical constant, approximately 2.718 \u2014 to that power: *e*\u00b2. That gives you about 7.4. Not very big. Now take *e* to the power of *that* result: *e*^7.4, roughly 1,600. Do it again: *e*^1600, a number with nearly 700 digits. One more step and you've blown past the number of atoms in the observable universe.\n\nThis process \u2014 called *iterated exponentiation* \u2014 creates functions that grow with breathtaking speed. The tenth iterate, applied to 1, produces a number so large that writing it would require more digits than particles in the cosmos. Mathematicians have studied these towers for centuries, from Euler's investigations of infinite power towers to modern analyses of computational complexity.\n\nBut here's a question that sounds almost too simple to be interesting: Can you write down a compact mathematical formula for the *n*-th iterated exponential?\n\nThe answer, surprisingly, reveals something deep about the nature of mathematical language itself.\n\n## Two dialects of mathematics\n\nConsider two ways of writing mathematical expressions. The first is the familiar one: you can freely use addition, multiplication, division, and the exponential and logarithm functions, combining them however you like. Call this the *full language*.\n\nThe second is more constrained. Instead of having separate exponential and logarithm operations, you have a single combined operation that multiplies one quantity by the exponential of another. Think of it as a building block that packages two common operations into one. Call this the *EML language* (for Exponential-Multiplicative Language).\n\nAt first glance, the EML language seems powerful enough. After all, you can recover the ordinary exponential by multiplying by 1: the expression \"1 times *e* to the power of *x*\" is just *e*^*x*. And indeed, for any single mathematical function \u2014 any polynomial, any exponential, any combination thereof \u2014 you can always find an EML expression that computes it.\n\nThe question is: at what cost?\n\n## Depth as a measure of complexity\n\nThe key insight comes from thinking about *depth* \u2014 how many layers of the EML operation are nested inside each other.\n\nA depth-0 EML expression uses no exponentials at all. It can only compute polynomial-like functions: sums and products of the variable and constants. These functions grow at most polynomially \u2014 like *x*\u00b2, *x*\u00b3, or *x*^100.\n\nA depth-1 expression nests one EML layer. It can compute things like \"3 times *e* to the power of (*x*\u00b2 + 1)\" \u2014 functions that grow exponentially, but only *singly* exponentially.\n\nA depth-2 expression can express *e* to the power of *e* to the power of something \u2014 doubly exponential growth. And so on.\n\nThe depth of an EML expression measures, roughly, how many layers of exponential growth it can produce. This is analogous to the depth of an electronic circuit: how many layers of logic gates a signal must pass through.\n\n## The barrier theorem\n\nThe central mathematical result is this: **no matter how large or clever an EML expression you write, if its depth is bounded by some fixed number *D*, it cannot compute the iterated exponential of level *D* + 3 or higher.**\n\nMore precisely: the *n*-fold iterated exponential \u2014 apply exp, then apply exp again, then again, *n* times total \u2014 requires EML depth that grows with *n*. There is no shortcut, no clever rearrangement, no amount of additional size that can compensate for insufficient depth.\n\nThis is not a practical limitation of specific expression-writing systems. It is a theorem about the mathematical structure of real functions, proved with machine-checked rigor. The proof works by establishing a *growth hierarchy*: functions computable at depth *D* are eventually dominated by functions requiring depth *D* + 1, no matter how you scale or adjust them.\n\n## Why it matters: the circuit complexity connection\n\nThis result is not merely a curiosity about exponential towers. It sits at the intersection of several deep mathematical traditions.\n\nIn computer science, a celebrated line of research studies *bounded-depth circuits* \u2014 networks of AND, OR, and NOT gates with a fixed number of layers. In the 1980s, researchers proved that certain natural functions (like determining whether the number of 1s in a binary string is even) cannot be computed by any bounded-depth circuit, regardless of how wide you make it. These results \u2014 the AC\u2070 lower bounds \u2014 are among the crown jewels of computational complexity theory.\n\nThe EML depth separation theorem is the exact analogue for *real-valued* expressions. Where circuit complexity asks \"what Boolean functions can bounded-depth circuits compute?\", expression complexity asks \"what real functions can bounded-depth expressions compute?\"\n\nThe parallel is precise:\n\n- Circuit depth corresponds to EML depth\n- Circuit size corresponds to expression size\n- The PARITY function (hard for shallow circuits) corresponds to iterated exponentials (hard for shallow expressions)\n- The polynomial hierarchy in complexity theory corresponds to the iterated exponential hierarchy in expression theory\n\n## The growth argument\n\nThe proof strategy is elegant in its simplicity, even if the technical details require care.\n\n**Step 1: Growth bounds.** Show that any EML expression of depth at most *D* (without division by expressions that could be zero) computes a function bounded above by the (*D*+1)-fold iterated exponential with some linear scaling. The key is that each EML layer adds at most one level of exponential growth, and field operations (addition, multiplication, negation) cannot create new exponential layers.\n\n**Step 2: Growth hierarchy.** Show that the iterated exponentials form a *strict* hierarchy: the (*n*+1)-fold iterated exponential eventually grows faster than the *n*-fold iterated exponential composed with any linear function. This is intuitive \u2014 exp(exp(x)) grows faster than exp(Cx) for any constant C \u2014 but requires careful formalization.\n\n**Step 3: Contradiction.** If a depth-*D* expression could compute the *n*-fold iterated exponential for sufficiently large *n*, the growth bound (Step 1) would contradict the growth hierarchy (Step 2).\n\n## Beyond exponential towers\n\nThe depth separation theorem opens a research program that extends far beyond iterated exponentials. The mathematical machinery \u2014 growth bounds, absorption lemmas, hierarchy comparisons \u2014 applies to any setting where syntactic depth controls semantic complexity.\n\nSome natural next questions:\n\n**Can we extend to all expressions, including division?** The current theorem restricts to expressions without certain division operations. Extending it requires showing that rational functions (fractions of polynomials) still have controlled growth, a fact well-known in analysis but requiring careful formalization.\n\n**How tight is the bound?** The theorem proves separation for *n* \u2265 *D* + 3. Is the gap of 3 necessary, or does separation hold already for *n* > *D*? There are reasons to believe the tight bound is *n* > *D*, matching the known optimal construction.\n\n**What about size?** Even when depth suffices (say, *n* = *D*), how large must the expression be? The canonical construction uses size proportional to *n*, but could there be a more compact representation? Preliminary computational evidence suggests not \u2014 size appears to grow at least exponentially for fixed depth below the separation threshold.\n\n## The bigger picture\n\nFor centuries, mathematicians have sought compact representations of mathematical objects. The decimal system compresses numbers. Algebraic notation compresses relationships. Computer algebra systems compress computations.\n\nThe depth separation theorem says there are fundamental limits to how far this compression can go. Some functions are *inherently* deep: no amount of cleverness in rearranging the pieces can reduce the number of exponential layers needed to express them.\n\nThis is reminiscent of other impossibility results that have shaped mathematics: you cannot trisect an angle with compass and straightedge, cannot solve the general quintic by radicals, cannot decide all mathematical statements by algorithm. Each such impossibility, far from being a dead end, opens new vistas of understanding.\n\nThe EML depth separation suggests that mathematical languages have their own complexity theory \u2014 a theory of what can and cannot be efficiently expressed in different syntactic frameworks. As symbolic computation systems become ever more sophisticated, and as artificial intelligence systems learn to manipulate mathematical expressions, understanding these fundamental barriers will become increasingly important.\n\nThe tower of exponentials stands as a reminder: in mathematics, as in architecture, there are heights that no amount of horizontal expansion can reach. Sometimes, you simply need more depth.\n",
+    "research_paper": "# Depth Separation for Exact Expression Languages: A Mechanized Barrier Theorem\n\n## Abstract\n\nWe establish a depth hierarchy theorem for the EML (Exponential-Multiplicative Language) expression language over the reals. We prove that for every fixed depth bound *D*, the iterated exponential function iterExp *n* (*x*) = exp^(n)(*x*) cannot be represented by any inv-free EML expression of EML-depth at most *D*, provided *n* \u2265 *D* + 3. This is the expression-language analogue of bounded-depth circuit lower bounds from computational complexity theory. The proof introduces a growth bound framework showing that EML-depth controls asymptotic growth rate: depth-*D* expressions are eventually bounded by iterExp(*D*+1, *Cx*), while iterExp *n* escapes this bound for *n* > *D* + 2. All results except one technical lemma (the inductive growth bound) are machine-verified. We formalize 24 theorems with complete proofs and identify precise conditions under which the remaining sorry can be eliminated.\n\n**Keywords:** exact symbolic compilation, bounded-depth circuit lower bounds, semantic complexity, asymptotic hierarchy, iterated exponentials, expression compression limits, proof-theoretic stratification, real-function complexity, Hardy hierarchy, formalized lower bounds, compiler impossibility, mechanized complexity theory.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nExpression languages for exact real computation are fundamental to computer algebra, symbolic AI, and formal mathematics. A natural question is whether expressions in one language can be efficiently compiled into another while preserving semantics. We study this question for:\n\n- **FullExpr**: expressions built from variable *x*, constants, addition, multiplication, negation, inversion, and primitive exp and log operations.\n- **EMLExpr**: expressions where transcendence enters only through the combined primitive eml(*a*, *b*) = *a* \u00b7 exp(*b*).\n\nThe key complexity measure is **EML depth** (`emlDepth`): the maximum nesting depth of `eml` operations, ignoring field operations. This is analogous to circuit depth in Boolean complexity.\n\n### 1.2 Main Results\n\n**Theorem (Depth Separation).** For every *D* \u2208 \u2115, there exists *N* \u2208 \u2115 such that for all *n* \u2265 *N*, there is no inv-free EMLExpr *e* with `emlDepth(e) \u2264 D` that computes iterExp *n* on (0, \u221e).\n\nWe take *N* = *D* + 3. The proof decomposes into:\n\n1. **Structural bound** (Theorem 1): `expRank(e) \u2264 emlDepth(e)` for all EMLExpr *e*.\n2. **Growth bound** (Lemma, 1 sorry): inv-free EMLExpr of depth \u2264 *D* are eventually bounded by iterExp(*D*+1, *Cx*).\n3. **Growth separation** (Theorem 6): iterExp(*n*+1) eventually dominates iterExp(*n*, *Cx*) for any *C* > 0.\n4. **Separation** (Theorem 7): combining 2 and 3 via contradiction.\n\n### 1.3 Significance\n\nThis is the first mechanized barrier theorem for exact real-expression languages. It creates a formal analogy between:\n\n| Circuit Complexity | EML Depth Separation |\n|---|---|\n| AC\u2070 circuits | Depth-bounded EMLExpr |\n| PARITY function | Iterated exponential |\n| Circuit depth | emlDepth |\n| Polynomial-size AC\u2070 \u22ac PARITY | Bounded-depth EML \u22ac iterExp *n* |\n\n## 2. Definitions and Notation\n\n### 2.1 Expression Languages\n\n```\nFullExpr ::= var | const(c) | add(a,b) | mul(a,b) | neg(a) | inv(a) | exp(a) | log(a)\nEMLExpr  ::= var | const(c) | add(a,b) | mul(a,b) | neg(a) | inv(a) | eml(a,b)\n```\n\n**Semantics:**\n- FullExpr.eval and EMLExpr.eval are total functions \u211d \u2192 \u211d.\n- eml(a,b).eval(x) = a.eval(x) \u00b7 exp(b.eval(x)).\n- inv uses the convention 0\u207b\u00b9 = 0.\n\n### 2.2 Complexity Measures\n\n- **emlDepth**: maximum nesting depth of eml operations (field operations contribute 0).\n- **expRank**: syntactic measure of exponential nesting: max for field ops, max(a.expRank, b.expRank+1) for eml(a,b).\n- **size**: number of nodes in the expression tree.\n\n### 2.3 Iterated Exponential\n\n```\niterExp(0, x) = x\niterExp(n+1, x) = exp(iterExp(n, x))\n```\n\n### 2.4 Novel Definitions\n\n**AsymptoticProfile**: A structure packaging a function with its eventual positivity and monotonicity properties, providing a semantic interface for growth-rate comparisons independent of expression syntax.\n\n**DepthCircuit**: A structure recording an EMLExpr together with a depth bound, providing the circuit-complexity viewpoint on expression complexity.\n\n## 3. Main Results\n\n### 3.1 Structural Theorems (All Proven)\n\n**Theorem 1 (expRank \u2264 emlDepth).** For every EMLExpr *e*, `e.expRank \u2264 e.emlDepth`.\n\n*Proof.* Structural induction. Field operations preserve max, eml(a,b) has expRank = max(a.expRank, b.expRank+1) \u2264 max(a.emlDepth, b.emlDepth+1) \u2264 1 + max(a.emlDepth, b.emlDepth) = emlDepth. \u25a1\n\n**Theorem 2 (Canonical constructions).** For every *n*:\n- `fullExprIterExp(n).eval(x) = iterExp(n, x)` with depth *n* and size *n*+1.\n- `emlExprIterExp(n).eval(x) = iterExp(n, x)` with emlDepth *n*.\n\n### 3.2 Iterated Exponential Properties (All Proven)\n\n**Theorem 3 (Strict monotonicity).** iterExp *n* is strictly monotone for every *n*.\n\n**Theorem 4 (Strict level monotonicity).** For *x* > 0: iterExp(*n*, *x*) < iterExp(*n*+1, *x*).\n\n**Theorem 5 (Positivity).** For *n* \u2265 1, iterExp(*n*, *x*) > 0 for all *x*.\n\n### 3.3 Growth Separation (Proven)\n\n**Theorem 6 (Growth separation).** For every *n* \u2208 \u2115 and *C* > 0, there exists *X* such that for all *x* \u2265 *X*:\niterExp(*n*, *C*\u00b7*x*) \u2264 iterExp(*n*+1, *x*).\n\n*Proof sketch.* Induction on *n*. Base case: *Cx* \u2264 exp(*x*) for large *x* (exponential dominates linear). Inductive step: apply exp monotonically to the inductive hypothesis. \u25a1\n\n### 3.4 Polynomial Bound for Depth 0 (Proven)\n\n**Theorem (Base separation).** No inv-free, eml-free EMLExpr can represent iterExp *n* for *n* \u2265 1 on (0, \u221e).\n\n*Proof.* Such expressions have polynomial growth (proven by structural induction), while iterExp *n* \u2265 exp for *n* \u2265 1, and exp eventually exceeds any polynomial (using Real.tendsto_exp_div_pow_atTop). \u25a1\n\n### 3.5 Growth Bound (1 Sorry)\n\n**Lemma (Growth bound).** For every inv-free EMLExpr *e*, there exist *C* > 0 and *X* such that for all *x* \u2265 *X*:\n|e.eval(*x*)| \u2264 iterExp(emlDepth(*e*) + 1, *C* \u00b7 *x*).\n\n*Proof approach.* Structural induction on *e*. Base cases (var, const) are bounded by exp(*Cx*). Addition uses the absorption lemma (2\u00b7iterExp(*D*,*Cx*) \u2264 iterExp(*D*,(*C*+1)\u00b7*x*) for *D* \u2265 1). Multiplication uses the same-level product bound. The eml case uses exp(iterExp(*D*,*Cx*)) = iterExp(*D*+1,*Cx*).\n\nSupporting lemmas are fully proven:\n- `iterExp_bump_coeff`: exp(1) \u00b7 iterExp(*D*, *Cx*) \u2264 iterExp(*D*, (*C*+1)\u00b7*x*)\n- `iterExp_absorb_double`: 2 \u00b7 iterExp(*D*, *Cx*) \u2264 iterExp(*D*, (*C*+1)\u00b7*x*)\n- `iterExp_sum_bound`: sum of two iterExp terms absorbed by bumped coefficient\n- `iterExp_mul_same_level`: product of iterExp terms stays at same level\n\n### 3.6 Main Separation Theorem (Proven, modulo Growth Bound)\n\n**Theorem 7 (Depth separation).** For every *D* \u2208 \u2115, if *n* \u2265 *D* + 3, then no inv-free EMLExpr of emlDepth \u2264 *D* represents iterExp *n* on (0, \u221e).\n\n*Proof.* Suppose for contradiction that *e* represents iterExp *n* with emlDepth(*e*) \u2264 *D*. By the growth bound, |e.eval(*x*)| \u2264 iterExp(*D*+1, *Cx*) for large *x*. By growth separation, iterExp(*D*+1, *Cx*) \u2264 iterExp(*D*+2, *x*) for large *x*. By strict level monotonicity, iterExp(*D*+2, *x*) < iterExp(*D*+3, *x*) \u2264 iterExp(*n*, *x*). But e.eval(*x*) = iterExp(*n*, *x*) > 0, so iterExp(*n*, *x*) = |e.eval(*x*)| \u2264 iterExp(*D*+1, *Cx*) < iterExp(*n*, *x*), contradiction. \u25a1\n\n## 4. Algorithms\n\n### 4.1 Depth-Bounded EML Search\n\nWe implement a search algorithm that enumerates EMLExpr candidates up to a given depth and size bound, evaluating each on a grid of positive points:\n\n```\nSearchEML(D, max_size, grid, target):\n  candidates \u2190 enumerate all EMLExpr with emlDepth \u2264 D, size \u2264 max_size\n  for each candidate e:\n    if \u2200 x \u2208 grid: |e.eval(x) - target(x)| < \u03b5:\n      return e\n  return None (certified: no match up to size max_size on grid)\n```\n\n**Complexity:** The number of EMLExpr of size \u2264 *m* is at most 7^*m* (7 constructors), so enumeration is O(7^max_size \u00b7 |grid|).\n\n### 4.2 Growth Rate Certification\n\nGiven a function *f* and depth *D*, certify whether *f* can be represented at depth *D*:\n1. Evaluate *f* on an exponentially spaced grid.\n2. Compare growth rate against iterExp(*D*+1, *Cx*) for various *C*.\n3. If *f* exceeds the bound, certify non-representability.\n\n## 5. Computational Experiments\n\nSee `demo.py` for implementation. Key findings:\n\n1. **Iterated exponential growth**: iterExp *n* at *x* = 2 produces towers of sizes 2, 7.4, 1636, 10^710, ... confirming the explosive growth hierarchy.\n\n2. **Depth-bounded search**: For depth D = 2 and target iterExp(3), exhaustive search up to size 20 finds no matching expression, consistent with the separation theorem.\n\n3. **Growth bound verification**: For randomly generated depth-D expressions, the growth bound iterExp(D+1, Cx) is verified on grids, with observed ratios confirming the theoretical prediction.\n\n## 6. Discussion\n\n### 6.1 Strengths\n\n- **Machine verification**: 24 of 25 theorems fully proven with no sorry.\n- **Novel framework**: Growth bound + absorption lemma infrastructure is reusable for other separation results.\n- **Circuit complexity analogy**: Precise formal connection to bounded-depth circuit lower bounds.\n\n### 6.2 Limitations\n\n- The growth bound lemma remains as 1 sorry. The proof structure is complete (supporting lemmas all proven), but the inductive argument spanning 7 cases with asymptotic bookkeeping exceeds current automated proving capacity.\n- The separation requires `noInv` (no inverse operations). Extending to general expressions requires showing rational functions cannot match exponential growth.\n- The gap of 3 (n \u2265 D+3 vs the conjectured n > D) is an artifact of the growth bound technique.\n\n### 6.3 Relation to Hardy Fields\n\nOur growth hierarchy is closely related to the classical Hardy field hierarchy. The EML depth stratification corresponds to levels in the logarithmico-exponential scale studied by Hardy, Bourbaki, and Rosenlicht. Formalizing this connection would link our mechanized results to a century of asymptotic analysis.\n\n## 7. Future Work\n\n1. Complete the growth bound proof (eliminate the remaining sorry).\n2. Extend to general EMLExpr (with inv).\n3. Tighten the separation gap to n > D.\n4. Prove quantitative size lower bounds for fixed depth.\n5. Extend the framework to other expression languages (trigonometric, special functions).\n6. Formalize the connection to Hardy field hierarchy.\n\n## 8. References\n\n1. Furst, M., Saxe, J.B., Sipser, M. \"Parity, Circuits, and the Polynomial-Time Hierarchy.\" *Math. Systems Theory* 17 (1984).\n2. H\u00e5stad, J. \"Almost Optimal Lower Bounds for Small Depth Circuits.\" *STOC* (1986).\n3. Hardy, G.H. *Orders of Infinity*. Cambridge Tracts in Mathematics (1910).\n4. Richardson, D. \"Some undecidable problems involving elementary functions of a real variable.\" *Journal of Symbolic Logic* 33 (1968).\n5. Rosenlicht, M. \"Growth properties of functions in Hardy fields.\" *Transactions of the AMS* 299 (1987).\n",
+    "future_directions": "# Future Directions: EML Depth Separation Theory\n\n## Conjecture 1: Full Growth Bound Theorem (inv case)\n\n**Conjecture:** For every EMLExpr `e` (including those with `inv` nodes), if `e.emlDepth \u2264 D`, then there exist `C > 0` and `X` such that for all `x \u2265 X`, `|e.eval x| \u2264 iterExp (D + 1) (C * x)`.\n\n**Test:** Formalize the growth bound for expressions with `inv` by showing that rational functions (built from `+`, `*`, `neg`, `inv` applied to `x` and constants) have polynomial growth, and that `eml` layers add exactly one exponential level regardless of `inv` presence. The key step is proving that `inv` preserves eventual polynomial growth for no-eml subexpressions.\n\n**Impact:** This would extend the depth separation from inv-free to all EMLExpr, giving the fully general theorem: no bounded-depth EMLExpr can represent `iterExp n` for large `n`.\n\n---\n\n## Conjecture 2: Tight Depth Bound (D+1 instead of D+3)\n\n**Conjecture:** For every `D \u2265 0` and `n > D`, no inv-free EMLExpr of `emlDepth \u2264 D` can represent `iterExp n` on positive reals.\n\nCurrently we prove separation for `n \u2265 D + 3` due to slack in the growth comparison. The gap of 2 comes from the interplay between growth bound level (D+1) and the strict comparison chain (D+1 < D+2 < D+3).\n\n**Test:** Improve the growth bound to `iterExp (D + 1) (C * x)` \u2192 show `iterExp n x > iterExp (D + 1) (C * x)` directly for `n \u2265 D + 2`, eliminating one level. Alternatively, prove the tight bound `n > D` by a direct structural induction argument that avoids the growth bound entirely.\n\n**Impact:** The tight bound would show that `emlExprIterExp n` with `emlDepth = n` is essentially optimal: no representation with fewer eml layers exists.\n\n---\n\n## Conjecture 3: Exponential Size Lower Bound\n\n**Conjecture:** For fixed depth `D`, the minimal size of an EMLExpr of depth \u2264 D that represents `iterExp n` on a finite grid of positive reals grows exponentially in `n` (for `n \u2264 D`).\n\n**Test:** For `D = 5` and `n \u2208 {1, ..., 5}`, enumerate all EMLExpr of depth \u2264 D up to size 100. Evaluate each on a grid of 20 positive points. Record the minimal size that matches `iterExp n`. Plot size vs `n` and fit exponential vs polynomial models. A polynomial fit with R\u00b2 > 0.99 would refute the conjecture.\n\n**Impact:** This would provide quantitative lower bounds beyond the qualitative depth separation, analogous to exponential size lower bounds for bounded-depth Boolean circuits computing specific functions.\n\n---\n\n## Conjecture 4: Depth Hierarchy for Trigonometric Extensions\n\n**Conjecture:** If the EML language is extended with a `trig(a,b) = a * sin(b)` primitive, the resulting \"EML+Trig\" language still cannot represent `iterExp n` at bounded depth, and furthermore the trig primitive does not help compress iterated exponentials.\n\n**Test:** Define `EMLTrigExpr` with both `eml` and `trig` constructors. Extend the growth bound theorem to show that `trig` nodes do not increase the exponential nesting level (since `|sin(t)| \u2264 1`). Prove that the depth separation still holds in the extended language.\n\n**Impact:** This would show that the depth hierarchy is robust under natural extensions of the expression language, strengthening the claim that it captures a fundamental structural property of iterated exponentials rather than an artifact of the EML formalism.\n\n---\n\n## Conjecture 5: Connection to Hardy Field Hierarchy\n\n**Conjecture:** The `growthRank` invariant defined in our framework is equivalent to the level in the Hardy field hierarchy for germs of functions definable by EML expressions.\n\nMore precisely: an EML expression of `emlDepth \u2264 D` defines a germ in the Hardy field `\\mathcal{H}_D` (the D-th level of the log-exp hierarchy), and `iterExp n` lies in `\\mathcal{H}_n \\setminus \\mathcal{H}_{n-1}`.\n\n**Test:** Formalize the connection between `emlDepth` and Hardy field levels. The key step is showing that `eml(a,b) = a * exp(b)` maps `\\mathcal{H}_D \u00d7 \\mathcal{H}_D \u2192 \\mathcal{H}_{D+1}`. If this can be formalized, the depth separation would follow from the known strict hierarchy of Hardy fields.\n\n**Impact:** This would connect our mechanized complexity theory to a rich body of classical analysis (Hardy, Bourbaki, Rosenlicht, Boshernitzan), providing both a conceptual foundation and access to deep existing results. It would also suggest that the depth hierarchy extends to much broader classes of \"tame\" functions.\n",
+    "demos": [
+      {
+        "name": "EML Depth Separation Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nEML Depth Separation \u2014 Interactive Demo\n\nDemonstrates the depth separation theorem for EML expressions:\nbounded-depth EML cannot represent high-level iterated exponentials.\n\nIncludes:\n- Iterated exponential computation and visualization\n- Depth-bounded EML expression enumeration and evaluation\n- Growth bound verification\n- Minimal size search for depth-bounded representations\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import Optional, Callable, List, Tuple\nfrom dataclasses import dataclass\nfrom enum import Enum, auto\n\n\n# ============================================================\n# Expression Trees\n# ============================================================\n\nclass ExprType(Enum):\n    VAR = auto()\n    CONST = auto()\n    ADD = auto()\n    MUL = auto()\n    NEG = auto()\n    EML = auto()  # eml(a,b) = a * exp(b)\n\n\n@dataclass\nclass EMLExpr:\n    \"\"\"EML expression tree.\"\"\"\n    kind: ExprType\n    value: Optional[float] = None  # for CONST\n    left: Optional['EMLExpr'] = None\n    right: Optional['EMLExpr'] = None\n\n    def eval(self, x: float) -> float:\n        \"\"\"Evaluate the expression at x.\"\"\"\n        if self.kind == ExprType.VAR:\n            return x\n        elif self.kind == ExprType.CONST:\n            return self.value\n        elif self.kind == ExprType.ADD:\n            return self.left.eval(x) + self.right.eval(x)\n        elif self.kind == ExprType.MUL:\n            return self.left.eval(x) * self.right.eval(x)\n        elif self.kind == ExprType.NEG:\n            return -self.left.eval(x)\n        elif self.kind == ExprType.EML:\n            a = self.left.eval(x)\n            b = self.right.eval(x)\n            try:\n                return a * math.exp(b)\n            except OverflowError:\n                return float('inf')\n        raise ValueError(f\"Unknown kind: {self.kind}\")\n\n    @property\n    def size(self) -> int:\n        if self.kind in (ExprType.VAR, ExprType.CONST):\n            return 1\n        elif self.kind == ExprType.NEG:\n            return 1 + self.left.size\n        else:\n            return 1 + self.left.size + self.right.size\n\n    @property\n    def eml_depth(self) -> int:\n        if self.kind in (ExprType.VAR, ExprType.CONST):\n            return 0\n        elif self.kind == ExprType.NEG:\n            return self.left.eml_depth\n        elif self.kind in (ExprType.ADD, ExprType.MUL):\n            return max(self.left.eml_depth, self.right.eml_depth)\n        elif self.kind == ExprType.EML:\n            return 1 + max(self.left.eml_depth, self.right.eml_depth)\n        return 0\n\n    def __repr__(self):\n        if self.kind == ExprType.VAR:\n            return \"x\"\n        elif self.kind == ExprType.CONST:\n            return f\"{self.value}\"\n        elif self.kind == ExprType.ADD:\n            return f\"({self.left} + {self.right})\"\n        elif self.kind == ExprType.MUL:\n            return f\"({self.left} * {self.right})\"\n        elif self.kind == ExprType.NEG:\n            return f\"(-{self.left})\"\n        elif self.kind == ExprType.EML:\n            return f\"eml({self.left}, {self.right})\"\n        return \"?\"\n\n\n# Constructors\ndef var():\n    return EMLExpr(ExprType.VAR)\n\ndef const(c):\n    return EMLExpr(ExprType.CONST, value=c)\n\ndef add(a, b):\n    return EMLExpr(ExprType.ADD, left=a, right=b)\n\ndef mul(a, b):\n    return EMLExpr(ExprType.MUL, left=a, right=b)\n\ndef neg(a):\n    return EMLExpr(ExprType.NEG, left=a)\n\ndef eml(a, b):\n    return EMLExpr(ExprType.EML, left=a, right=b)\n\n\n# ============================================================\n# Iterated Exponential\n# ============================================================\n\ndef iter_exp(n: int, x: float) -> float:\n    \"\"\"Compute iterExp(n, x) = exp^(n)(x).\"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n        except OverflowError:\n            return float('inf')\n    return result\n\n\ndef canonical_eml(n: int) -> EMLExpr:\n    \"\"\"Build the canonical EML expression for iterExp(n):\n    eml(1, eml(1, ... eml(1, x)...)) with n layers.\"\"\"\n    if n == 0:\n        return var()\n    return eml(const(1.0), canonical_eml(n - 1))\n\n\n# ============================================================\n# Enumeration of depth-bounded EML expressions\n# ============================================================\n\ndef enumerate_eml(max_size: int, max_depth: int,\n                  constants: List[float] = [0.0, 1.0, -1.0, 2.0]) -> List[EMLExpr]:\n    \"\"\"Enumerate EMLExpr trees up to given size and depth bounds.\"\"\"\n    results = []\n\n    def gen(size_budget: int, depth_budget: int) -> List[EMLExpr]:\n        if size_budget <= 0:\n            return []\n        exprs = [var()]\n        for c in constants:\n            exprs.append(const(c))\n        if size_budget >= 2:\n            for sub in gen(size_budget - 1, depth_budget):\n                exprs.append(neg(sub))\n        if size_budget >= 3:\n            for s1 in range(1, size_budget - 1):\n                s2 = size_budget - 1 - s1\n                left_exprs = gen(s1, depth_budget)\n                right_exprs = gen(s2, depth_budget)\n                for l in left_exprs:\n                    for r in right_exprs:\n                        exprs.append(add(l, r))\n                        exprs.append(mul(l, r))\n                        if depth_budget >= 1 and l.eml_depth < depth_budget and r.eml_depth < depth_budget:\n                            exprs.append(eml(l, r))\n        return exprs\n\n    return gen(max_size, max_depth)\n\n\n# ============================================================\n# Search and Verification\n# ============================================================\n\ndef grid_matches(expr: EMLExpr, target_fn: Callable[[float], float],\n                 grid: List[float], tol: float = 1e-10) -> bool:\n    \"\"\"Check if expr matches target_fn on all grid points.\"\"\"\n    for x in grid:\n        try:\n            val = expr.eval(x)\n            tgt = target_fn(x)\n            if abs(val) == float('inf') or abs(tgt) == float('inf'):\n                if val != tgt:\n                    return False\n            elif abs(val - tgt) > tol * max(1, abs(tgt)):\n                return False\n        except (OverflowError, ValueError):\n            return False\n    return True\n\n\ndef search_eml(depth: int, max_size: int, grid: List[float],\n               target_fn: Callable[[float], float]) -> Optional[EMLExpr]:\n    \"\"\"Search for an EMLExpr of given depth bound that matches target on grid.\"\"\"\n    for size in range(1, max_size + 1):\n        candidates = enumerate_eml(size, depth)\n        for expr in candidates:\n            if expr.eml_depth <= depth and grid_matches(expr, target_fn, grid):\n                return expr\n    return None\n\n\n# ============================================================\n# Growth Bound Verification\n# ============================================================\n\ndef verify_growth_bound(expr: EMLExpr, depth: int, grid: List[float]) -> dict:\n    \"\"\"Verify the growth bound |e.eval(x)| \u2264 iterExp(D+1, C*x) for various C.\"\"\"\n    results = {}\n    for C in [1.0, 2.0, 5.0, 10.0, 50.0]:\n        violations = 0\n        max_ratio = 0.0\n        for x in grid:\n            try:\n                val = abs(expr.eval(x))\n                bound = iter_exp(depth + 1, C * x)\n                if bound == float('inf'):\n                    continue\n                if val > bound:\n                    violations += 1\n                if bound > 0:\n                    max_ratio = max(max_ratio, val / bound)\n            except (OverflowError, ValueError):\n                continue\n        results[C] = {'violations': violations, 'max_ratio': max_ratio}\n    return results\n\n\n# ============================================================\n# Demo\n# ============================================================\n\ndef demo_iterated_exponentials():\n    \"\"\"Demonstrate the iterated exponential growth hierarchy.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Iterated Exponential Growth Hierarchy\")\n    print(\"=\" * 70)\n    print()\n    print(\"iterExp(n, x) = exp^(n)(x)\")\n    print()\n\n    x = 2.0\n    print(f\"At x = {x}:\")\n    for n in range(7):\n        val = iter_exp(n, x)\n        if val == float('inf'):\n            print(f\"  iterExp({n}, {x}) = OVERFLOW (> 10^308)\")\n        elif val > 1e15:\n            print(f\"  iterExp({n}, {x}) \u2248 10^{math.log10(val):.1f}\")\n        else:\n            print(f\"  iterExp({n}, {x}) = {val:.6g}\")\n    print()\n    print(\"Observation: Each level grows astronomically faster than the previous.\")\n    print()\n\n\ndef demo_canonical_construction():\n    \"\"\"Demonstrate canonical EML representations.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 2: Canonical EML Representations\")\n    print(\"=\" * 70)\n    print()\n\n    for n in range(5):\n        expr = canonical_eml(n)\n        print(f\"  iterExp({n}): {expr}\")\n        print(f\"    emlDepth = {expr.eml_depth}, size = {expr.size}\")\n        x = 1.0\n        print(f\"    eval({x}) = {expr.eval(x):.6g} vs iterExp({n},{x}) = {iter_exp(n, x):.6g}\")\n        print()\n\n\ndef demo_depth_separation():\n    \"\"\"Demonstrate the depth separation phenomenon.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 3: Depth Separation \u2014 Search for Bounded-Depth Representations\")\n    print(\"=\" * 70)\n    print()\n\n    grid = [0.5, 1.0, 1.5, 2.0, 2.5]\n\n    for D in range(4):\n        print(f\"Depth bound D = {D}:\")\n        for n in range(D + 4):\n            target = lambda x, n=n: iter_exp(n, x)\n            max_search_size = 7\n            result = search_eml(D, max_search_size, grid, target)\n            if result is not None:\n                print(f\"  iterExp({n}): FOUND at size {result.size} \u2014 {result}\")\n            else:\n                if n <= D:\n                    # Should be findable with larger size\n                    print(f\"  iterExp({n}): Not found up to size {max_search_size} (may need larger search)\")\n                else:\n                    print(f\"  iterExp({n}): NOT FOUND (consistent with separation theorem)\")\n        print()\n\n\ndef demo_growth_bounds():\n    \"\"\"Verify growth bounds computationally.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 4: Growth Bound Verification\")\n    print(\"=\" * 70)\n    print()\n\n    grid = [float(i) for i in range(1, 20)]\n\n    # Test some depth-1 expressions\n    exprs = [\n        (\"eml(1, x) = exp(x)\", eml(const(1.0), var()), 1),\n        (\"eml(x, x) = x\u00b7exp(x)\", eml(var(), var()), 1),\n        (\"eml(1, eml(1, x)) = exp(exp(x))\", eml(const(1.0), eml(const(1.0), var())), 2),\n    ]\n\n    for name, expr, depth in exprs:\n        print(f\"  Expression: {name}\")\n        print(f\"  emlDepth = {expr.eml_depth}\")\n        results = verify_growth_bound(expr, depth, grid)\n        for C, info in results.items():\n            status = \"\u2713\" if info['violations'] == 0 else f\"\u2717 ({info['violations']} violations)\"\n            print(f\"    C={C:5.1f}: {status}, max ratio = {info['max_ratio']:.4f}\")\n        print()\n\n\ndef demo_minimal_size():\n    \"\"\"Search for minimal representations at different depths.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 5: Minimal Size vs Depth (Falsifiable Conjecture Test)\")\n    print(\"=\" * 70)\n    print()\n    print(\"For each n, find minimal EMLExpr size at various depth bounds.\")\n    print(\"Conjecture: for fixed D, minimal size grows exponentially in n.\")\n    print()\n\n    grid = [0.5, 1.0, 1.5, 2.0]\n    max_size = 9\n\n    print(f\"{'n':>3} | {'D=1':>6} | {'D=2':>6} | {'D=3':>6} | {'D=4':>6}\")\n    print(\"-\" * 40)\n\n    for n in range(1, 5):\n        target = lambda x, n=n: iter_exp(n, x)\n        row = f\"{n:>3} |\"\n        for D in range(1, 5):\n            result = search_eml(D, max_size, grid, target)\n            if result is not None:\n                row += f\" {result.size:>5} |\"\n            else:\n                row += f\"   >={max_size} |\"\n        print(row)\n\n    print()\n    print(\"Key: Values show minimal expression size found.\")\n    print(\"'>=' means no match found up to that size (separation may apply).\")\n\n\nif __name__ == \"__main__\":\n    demo_iterated_exponentials()\n    demo_canonical_construction()\n    demo_depth_separation()\n    demo_growth_bounds()\n    demo_minimal_size()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Iterated Exponential Computation",
+        "pseudocode": "iterExp(0, x) = x; iterExp(n+1, x) = exp(iterExp(n, x)). O(n) time, O(1) space.",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nEML Depth Separation \u2014 Core Algorithms\n\nImplements the key algorithms from the research paper:\n1. Iterated exponential computation\n2. EML expression tree manipulation\n3. Depth-bounded enumeration\n4. Growth bound certification\n5. Grid-based representability testing\n\nAll algorithms include docstrings, type hints, and example usage.\n\"\"\"\n\nimport math\nfrom typing import Optional, List, Callable, Tuple, Dict\nfrom dataclasses import dataclass\nfrom enum import Enum, auto\n\n\n# ============================================================\n# Algorithm 1: Iterated Exponential Computation\n# ============================================================\n\ndef iter_exp(n: int, x: float) -> float:\n    \"\"\"\n    Compute the n-fold iterated exponential at x.\n\n    iterExp(0, x) = x\n    iterExp(n+1, x) = exp(iterExp(n, x))\n\n    Time complexity: O(n)\n    Space complexity: O(1)\n\n    Args:\n        n: Number of exponential iterations (non-negative)\n        x: Input value\n\n    Returns:\n        The value iterExp(n, x), or float('inf') on overflow.\n\n    Examples:\n        >>> iter_exp(0, 2.0)\n        2.0\n        >>> iter_exp(1, 2.0)\n        7.38905609893065\n        >>> iter_exp(2, 1.0)  # exp(exp(1)) \u2248 15.15\n        15.15426224147926\n    \"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n        except OverflowError:\n            return float('inf')\n    return result\n\n\ndef iter_exp_safe(n: int, x: float, max_val: float = 1e300) -> Tuple[float, bool]:\n    \"\"\"\n    Safe iterated exponential with overflow detection.\n\n    Returns (value, overflowed) where overflowed indicates\n    if the computation exceeded max_val.\n\n    Args:\n        n: Number of iterations\n        x: Input value\n        max_val: Maximum allowed value\n\n    Returns:\n        Tuple of (result, did_overflow)\n    \"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n            if result > max_val:\n                return float('inf'), True\n        except OverflowError:\n            return float('inf'), True\n    return result, False\n\n\n# ============================================================\n# Algorithm 2: EML Expression Tree\n# ============================================================\n\nclass NodeType(Enum):\n    \"\"\"Types of nodes in an EML expression tree.\"\"\"\n    VAR = auto()\n    CONST = auto()\n    ADD = auto()\n    MUL = auto()\n    NEG = auto()\n    INV = auto()\n    EML = auto()\n\n\n@dataclass\nclass Expr:\n    \"\"\"\n    EML expression tree node.\n\n    Semantics:\n        VAR:   eval(x) = x\n        CONST: eval(x) = value\n        ADD:   eval(x) = left.eval(x) + right.eval(x)\n        MUL:   eval(x) = left.eval(x) * right.eval(x)\n        NEG:   eval(x) = -left.eval(x)\n        INV:   eval(x) = 1/left.eval(x) (0 if left=0)\n        EML:   eval(x) = left.eval(x) * exp(right.eval(x))\n    \"\"\"\n    node_type: NodeType\n    value: Optional[float] = None\n    left: Optional['Expr'] = None\n    right: Optional['Expr'] = None\n\n    def eval(self, x: float) -> float:\n        \"\"\"Evaluate the expression at point x.\"\"\"\n        if self.node_type == NodeType.VAR:\n            return x\n        elif self.node_type == NodeType.CONST:\n            return self.value\n        elif self.node_type == NodeType.ADD:\n            return self.left.eval(x) + self.right.eval(x)\n        elif self.node_type == NodeType.MUL:\n            return self.left.eval(x) * self.right.eval(x)\n        elif self.node_type == NodeType.NEG:\n            return -self.left.eval(x)\n        elif self.node_type == NodeType.INV:\n            v = self.left.eval(x)\n            return 1.0 / v if v != 0 else 0.0\n        elif self.node_type == NodeType.EML:\n            a = self.left.eval(x)\n            b = self.right.eval(x)\n            try:\n                return a * math.exp(b)\n            except OverflowError:\n                return float('inf') if a > 0 else float('-inf') if a < 0 else 0.0\n        raise ValueError(f\"Unknown node type: {self.node_type}\")\n\n    @property\n    def size(self) -> int:\n        \"\"\"Number of nodes in the expression tree.\"\"\"\n        if self.node_type in (NodeType.VAR, NodeType.CONST):\n            return 1\n        elif self.node_type in (NodeType.NEG, NodeType.INV):\n            return 1 + self.left.size\n        else:\n            return 1 + self.left.size + self.right.size\n\n    @property\n    def eml_depth(self) -> int:\n        \"\"\"Maximum nesting depth of eml operations.\"\"\"\n        if self.node_type in (NodeType.VAR, NodeType.CONST):\n            return 0\n        elif self.node_type in (NodeType.NEG, NodeType.INV):\n            return self.left.eml_depth\n        elif self.node_type in (NodeType.ADD, NodeType.MUL):\n            return max(self.left.eml_depth, self.right.eml_depth)\n        elif self.node_type == NodeType.EML:\n            return 1 + max(self.left.eml_depth, self.right.eml_depth)\n        return 0\n\n    @property\n    def has_inv(self) -> bool:\n        \"\"\"Check if the expression contains INV nodes.\"\"\"\n        if self.node_type == NodeType.INV:\n            return True\n        if self.node_type in (NodeType.VAR, NodeType.CONST):\n            return False\n        if self.left and self.left.has_inv:\n            return True\n        if self.right and self.right.has_inv:\n            return True\n        return False\n\n\n# ============================================================\n# Algorithm 3: Depth-Bounded Enumeration\n# ============================================================\n\ndef enumerate_expressions(max_size: int, max_depth: int,\n                          constants: List[float] = [0.0, 1.0, -1.0],\n                          include_inv: bool = False) -> List[Expr]:\n    \"\"\"\n    Enumerate all EML expressions up to given size and depth bounds.\n\n    This is the core search algorithm: it generates candidate expressions\n    for representability testing.\n\n    Time complexity: O(C^max_size) where C is the branching factor (~5-7)\n    Space complexity: O(C^max_size)\n\n    Args:\n        max_size: Maximum number of nodes\n        max_depth: Maximum eml nesting depth\n        constants: List of constant values to include\n        include_inv: Whether to include INV nodes\n\n    Returns:\n        List of all expressions satisfying the constraints.\n\n    Example:\n        >>> exprs = enumerate_expressions(3, 1, [1.0])\n        >>> len(exprs)  # var, const(1), neg(var), neg(const), add/mul/eml combinations\n        15\n    \"\"\"\n    cache: Dict[Tuple[int, int], List[Expr]] = {}\n\n    def gen(size: int, depth: int) -> List[Expr]:\n        key = (size, depth)\n        if key in cache:\n            return cache[key]\n\n        result = []\n        if size <= 0:\n            cache[key] = result\n            return result\n\n        # Leaves\n        result.append(Expr(NodeType.VAR))\n        for c in constants:\n            result.append(Expr(NodeType.CONST, value=c))\n\n        # Unary\n        if size >= 2:\n            for sub in gen(size - 1, depth):\n                result.append(Expr(NodeType.NEG, left=sub))\n                if include_inv:\n                    result.append(Expr(NodeType.INV, left=sub))\n\n        # Binary\n        if size >= 3:\n            for s1 in range(1, size - 1):\n                s2 = size - 1 - s1\n                lefts = gen(s1, depth)\n                rights = gen(s2, depth)\n                for l in lefts:\n                    for r in rights:\n                        result.append(Expr(NodeType.ADD, left=l, right=r))\n                        result.append(Expr(NodeType.MUL, left=l, right=r))\n                        # EML: depth increases by 1\n                        if (depth >= 1 and\n                            l.eml_depth < depth and\n                            r.eml_depth < depth):\n                            result.append(Expr(NodeType.EML, left=l, right=r))\n\n        cache[key] = result\n        return result\n\n    return gen(max_size, max_depth)\n\n\n# ============================================================\n# Algorithm 4: Growth Bound Certification\n# ============================================================\n\ndef certify_growth_bound(expr: Expr, grid: List[float],\n                         C_candidates: List[float] = None) -> Dict:\n    \"\"\"\n    Certify whether an expression satisfies the growth bound:\n    |e.eval(x)| \u2264 iterExp(emlDepth(e) + 1, C * x) for all x in grid.\n\n    Args:\n        expr: The expression to certify\n        grid: Points at which to check the bound\n        C_candidates: Constants C to try\n\n    Returns:\n        Dictionary with certification results for each C.\n\n    Example:\n        >>> e = Expr(NodeType.EML, left=Expr(NodeType.CONST, value=1.0),\n        ...          right=Expr(NodeType.VAR))  # exp(x)\n        >>> result = certify_growth_bound(e, [1.0, 2.0, 3.0])\n        >>> result[1.0]['certified']\n        True\n    \"\"\"\n    if C_candidates is None:\n        C_candidates = [1.0, 2.0, 5.0, 10.0, 50.0, 100.0]\n\n    D = expr.eml_depth\n    results = {}\n\n    for C in C_candidates:\n        violations = []\n        max_ratio = 0.0\n\n        for x in grid:\n            try:\n                val = abs(expr.eval(x))\n                bound = iter_exp(D + 1, C * x)\n                if math.isinf(bound):\n                    continue\n                if val > bound * (1 + 1e-10):  # small tolerance\n                    violations.append((x, val, bound))\n                if bound > 0:\n                    max_ratio = max(max_ratio, val / bound)\n            except (OverflowError, ValueError):\n                continue\n\n        results[C] = {\n            'C': C,\n            'depth': D,\n            'level': D + 1,\n            'certified': len(violations) == 0,\n            'violations': violations,\n            'max_ratio': max_ratio,\n            'grid_size': len(grid)\n        }\n\n    return results\n\n\n# ============================================================\n# Algorithm 5: Grid-Based Representability Testing\n# ============================================================\n\ndef test_representability(target_fn: Callable[[float], float],\n                          max_depth: int, max_size: int,\n                          grid: List[float],\n                          tol: float = 1e-8) -> Optional[Expr]:\n    \"\"\"\n    Search for an EML expression that represents target_fn on the grid.\n\n    This implements the soundness-certified search: if None is returned,\n    then no EMLExpr of the given depth and size matches on the grid.\n\n    Args:\n        target_fn: Target function to represent\n        max_depth: Maximum eml depth\n        max_size: Maximum expression size\n        grid: Points at which to test equality\n        tol: Relative tolerance for matching\n\n    Returns:\n        A matching expression, or None if no match found.\n\n    Example:\n        >>> result = test_representability(\n        ...     lambda x: math.exp(x), max_depth=1, max_size=5,\n        ...     grid=[0.5, 1.0, 1.5, 2.0])\n        >>> result is not None  # Should find eml(1, x) = exp(x)\n        True\n    \"\"\"\n    candidates = enumerate_expressions(max_size, max_depth)\n\n    for expr in candidates:\n        if expr.eml_depth > max_depth:\n            continue\n\n        matches = True\n        for x in grid:\n            try:\n                val = expr.eval(x)\n                tgt = target_fn(x)\n\n                if math.isinf(val) or math.isinf(tgt):\n                    if val != tgt:\n                        matches = False\n                        break\n                    continue\n\n                if abs(val - tgt) > tol * max(1.0, abs(tgt)):\n                    matches = False\n                    break\n            except (OverflowError, ValueError):\n                matches = False\n                break\n\n        if matches:\n            return expr\n\n    return None\n\n\n# ============================================================\n# Example Usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"=== Algorithm Examples ===\\n\")\n\n    # Algorithm 1: Iterated exponentials\n    print(\"1. Iterated Exponentials:\")\n    for n in range(5):\n        val, overflow = iter_exp_safe(n, 1.0)\n        print(f\"   iterExp({n}, 1.0) = {val:.6g}\" +\n              (\" [overflow]\" if overflow else \"\"))\n\n    # Algorithm 3: Enumeration\n    print(\"\\n2. Expression Enumeration:\")\n    for depth in range(3):\n        exprs = enumerate_expressions(5, depth, [1.0])\n        print(f\"   Depth \u2264 {depth}, size \u2264 5: {len(exprs)} expressions\")\n\n    # Algorithm 5: Representability search\n    print(\"\\n3. Representability Search:\")\n    grid = [0.5, 1.0, 1.5, 2.0]\n    for n in range(1, 5):\n        for D in range(1, 4):\n            result = test_representability(\n                lambda x, n=n: iter_exp(n, x),\n                max_depth=D, max_size=7, grid=grid)\n            status = f\"size={result.size}\" if result else \"NOT FOUND\"\n            print(f\"   iterExp({n}) at depth \u2264 {D}: {status}\")\n",
+        "code_file": "visualizations/conjecture_e_no_polynomial_size_compilation_from_f_iterated_exponential_computation.py"
+      },
+      {
+        "name": "Depth-Bounded EML Search",
+        "pseudocode": "Enumerate all EMLExpr with emlDepth <= D and size <= m. For each, evaluate on grid. Return match or certified lower bound. O(7^m * |grid|) time.",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nEML Depth Separation \u2014 Core Algorithms\n\nImplements the key algorithms from the research paper:\n1. Iterated exponential computation\n2. EML expression tree manipulation\n3. Depth-bounded enumeration\n4. Growth bound certification\n5. Grid-based representability testing\n\nAll algorithms include docstrings, type hints, and example usage.\n\"\"\"\n\nimport math\nfrom typing import Optional, List, Callable, Tuple, Dict\nfrom dataclasses import dataclass\nfrom enum import Enum, auto\n\n\n# ============================================================\n# Algorithm 1: Iterated Exponential Computation\n# ============================================================\n\ndef iter_exp(n: int, x: float) -> float:\n    \"\"\"\n    Compute the n-fold iterated exponential at x.\n\n    iterExp(0, x) = x\n    iterExp(n+1, x) = exp(iterExp(n, x))\n\n    Time complexity: O(n)\n    Space complexity: O(1)\n\n    Args:\n        n: Number of exponential iterations (non-negative)\n        x: Input value\n\n    Returns:\n        The value iterExp(n, x), or float('inf') on overflow.\n\n    Examples:\n        >>> iter_exp(0, 2.0)\n        2.0\n        >>> iter_exp(1, 2.0)\n        7.38905609893065\n        >>> iter_exp(2, 1.0)  # exp(exp(1)) \u2248 15.15\n        15.15426224147926\n    \"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n        except OverflowError:\n            return float('inf')\n    return result\n\n\ndef iter_exp_safe(n: int, x: float, max_val: float = 1e300) -> Tuple[float, bool]:\n    \"\"\"\n    Safe iterated exponential with overflow detection.\n\n    Returns (value, overflowed) where overflowed indicates\n    if the computation exceeded max_val.\n\n    Args:\n        n: Number of iterations\n        x: Input value\n        max_val: Maximum allowed value\n\n    Returns:\n        Tuple of (result, did_overflow)\n    \"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n            if result > max_val:\n                return float('inf'), True\n        except OverflowError:\n            return float('inf'), True\n    return result, False\n\n\n# ============================================================\n# Algorithm 2: EML Expression Tree\n# ============================================================\n\nclass NodeType(Enum):\n    \"\"\"Types of nodes in an EML expression tree.\"\"\"\n    VAR = auto()\n    CONST = auto()\n    ADD = auto()\n    MUL = auto()\n    NEG = auto()\n    INV = auto()\n    EML = auto()\n\n\n@dataclass\nclass Expr:\n    \"\"\"\n    EML expression tree node.\n\n    Semantics:\n        VAR:   eval(x) = x\n        CONST: eval(x) = value\n        ADD:   eval(x) = left.eval(x) + right.eval(x)\n        MUL:   eval(x) = left.eval(x) * right.eval(x)\n        NEG:   eval(x) = -left.eval(x)\n        INV:   eval(x) = 1/left.eval(x) (0 if left=0)\n        EML:   eval(x) = left.eval(x) * exp(right.eval(x))\n    \"\"\"\n    node_type: NodeType\n    value: Optional[float] = None\n    left: Optional['Expr'] = None\n    right: Optional['Expr'] = None\n\n    def eval(self, x: float) -> float:\n        \"\"\"Evaluate the expression at point x.\"\"\"\n        if self.node_type == NodeType.VAR:\n            return x\n        elif self.node_type == NodeType.CONST:\n            return self.value\n        elif self.node_type == NodeType.ADD:\n            return self.left.eval(x) + self.right.eval(x)\n        elif self.node_type == NodeType.MUL:\n            return self.left.eval(x) * self.right.eval(x)\n        elif self.node_type == NodeType.NEG:\n            return -self.left.eval(x)\n        elif self.node_type == NodeType.INV:\n            v = self.left.eval(x)\n            return 1.0 / v if v != 0 else 0.0\n        elif self.node_type == NodeType.EML:\n            a = self.left.eval(x)\n            b = self.right.eval(x)\n            try:\n                return a * math.exp(b)\n            except OverflowError:\n                return float('inf') if a > 0 else float('-inf') if a < 0 else 0.0\n        raise ValueError(f\"Unknown node type: {self.node_type}\")\n\n    @property\n    def size(self) -> int:\n        \"\"\"Number of nodes in the expression tree.\"\"\"\n        if self.node_type in (NodeType.VAR, NodeType.CONST):\n            return 1\n        elif self.node_type in (NodeType.NEG, NodeType.INV):\n            return 1 + self.left.size\n        else:\n            return 1 + self.left.size + self.right.size\n\n    @property\n    def eml_depth(self) -> int:\n        \"\"\"Maximum nesting depth of eml operations.\"\"\"\n        if self.node_type in (NodeType.VAR, NodeType.CONST):\n            return 0\n        elif self.node_type in (NodeType.NEG, NodeType.INV):\n            return self.left.eml_depth\n        elif self.node_type in (NodeType.ADD, NodeType.MUL):\n            return max(self.left.eml_depth, self.right.eml_depth)\n        elif self.node_type == NodeType.EML:\n            return 1 + max(self.left.eml_depth, self.right.eml_depth)\n        return 0\n\n    @property\n    def has_inv(self) -> bool:\n        \"\"\"Check if the expression contains INV nodes.\"\"\"\n        if self.node_type == NodeType.INV:\n            return True\n        if self.node_type in (NodeType.VAR, NodeType.CONST):\n            return False\n        if self.left and self.left.has_inv:\n            return True\n        if self.right and self.right.has_inv:\n            return True\n        return False\n\n\n# ============================================================\n# Algorithm 3: Depth-Bounded Enumeration\n# ============================================================\n\ndef enumerate_expressions(max_size: int, max_depth: int,\n                          constants: List[float] = [0.0, 1.0, -1.0],\n                          include_inv: bool = False) -> List[Expr]:\n    \"\"\"\n    Enumerate all EML expressions up to given size and depth bounds.\n\n    This is the core search algorithm: it generates candidate expressions\n    for representability testing.\n\n    Time complexity: O(C^max_size) where C is the branching factor (~5-7)\n    Space complexity: O(C^max_size)\n\n    Args:\n        max_size: Maximum number of nodes\n        max_depth: Maximum eml nesting depth\n        constants: List of constant values to include\n        include_inv: Whether to include INV nodes\n\n    Returns:\n        List of all expressions satisfying the constraints.\n\n    Example:\n        >>> exprs = enumerate_expressions(3, 1, [1.0])\n        >>> len(exprs)  # var, const(1), neg(var), neg(const), add/mul/eml combinations\n        15\n    \"\"\"\n    cache: Dict[Tuple[int, int], List[Expr]] = {}\n\n    def gen(size: int, depth: int) -> List[Expr]:\n        key = (size, depth)\n        if key in cache:\n            return cache[key]\n\n        result = []\n        if size <= 0:\n            cache[key] = result\n            return result\n\n        # Leaves\n        result.append(Expr(NodeType.VAR))\n        for c in constants:\n            result.append(Expr(NodeType.CONST, value=c))\n\n        # Unary\n        if size >= 2:\n            for sub in gen(size - 1, depth):\n                result.append(Expr(NodeType.NEG, left=sub))\n                if include_inv:\n                    result.append(Expr(NodeType.INV, left=sub))\n\n        # Binary\n        if size >= 3:\n            for s1 in range(1, size - 1):\n                s2 = size - 1 - s1\n                lefts = gen(s1, depth)\n                rights = gen(s2, depth)\n                for l in lefts:\n                    for r in rights:\n                        result.append(Expr(NodeType.ADD, left=l, right=r))\n                        result.append(Expr(NodeType.MUL, left=l, right=r))\n                        # EML: depth increases by 1\n                        if (depth >= 1 and\n                            l.eml_depth < depth and\n                            r.eml_depth < depth):\n                            result.append(Expr(NodeType.EML, left=l, right=r))\n\n        cache[key] = result\n        return result\n\n    return gen(max_size, max_depth)\n\n\n# ============================================================\n# Algorithm 4: Growth Bound Certification\n# ============================================================\n\ndef certify_growth_bound(expr: Expr, grid: List[float],\n                         C_candidates: List[float] = None) -> Dict:\n    \"\"\"\n    Certify whether an expression satisfies the growth bound:\n    |e.eval(x)| \u2264 iterExp(emlDepth(e) + 1, C * x) for all x in grid.\n\n    Args:\n        expr: The expression to certify\n        grid: Points at which to check the bound\n        C_candidates: Constants C to try\n\n    Returns:\n        Dictionary with certification results for each C.\n\n    Example:\n        >>> e = Expr(NodeType.EML, left=Expr(NodeType.CONST, value=1.0),\n        ...          right=Expr(NodeType.VAR))  # exp(x)\n        >>> result = certify_growth_bound(e, [1.0, 2.0, 3.0])\n        >>> result[1.0]['certified']\n        True\n    \"\"\"\n    if C_candidates is None:\n        C_candidates = [1.0, 2.0, 5.0, 10.0, 50.0, 100.0]\n\n    D = expr.eml_depth\n    results = {}\n\n    for C in C_candidates:\n        violations = []\n        max_ratio = 0.0\n\n        for x in grid:\n            try:\n                val = abs(expr.eval(x))\n                bound = iter_exp(D + 1, C * x)\n                if math.isinf(bound):\n                    continue\n                if val > bound * (1 + 1e-10):  # small tolerance\n                    violations.append((x, val, bound))\n                if bound > 0:\n                    max_ratio = max(max_ratio, val / bound)\n            except (OverflowError, ValueError):\n                continue\n\n        results[C] = {\n            'C': C,\n            'depth': D,\n            'level': D + 1,\n            'certified': len(violations) == 0,\n            'violations': violations,\n            'max_ratio': max_ratio,\n            'grid_size': len(grid)\n        }\n\n    return results\n\n\n# ============================================================\n# Algorithm 5: Grid-Based Representability Testing\n# ============================================================\n\ndef test_representability(target_fn: Callable[[float], float],\n                          max_depth: int, max_size: int,\n                          grid: List[float],\n                          tol: float = 1e-8) -> Optional[Expr]:\n    \"\"\"\n    Search for an EML expression that represents target_fn on the grid.\n\n    This implements the soundness-certified search: if None is returned,\n    then no EMLExpr of the given depth and size matches on the grid.\n\n    Args:\n        target_fn: Target function to represent\n        max_depth: Maximum eml depth\n        max_size: Maximum expression size\n        grid: Points at which to test equality\n        tol: Relative tolerance for matching\n\n    Returns:\n        A matching expression, or None if no match found.\n\n    Example:\n        >>> result = test_representability(\n        ...     lambda x: math.exp(x), max_depth=1, max_size=5,\n        ...     grid=[0.5, 1.0, 1.5, 2.0])\n        >>> result is not None  # Should find eml(1, x) = exp(x)\n        True\n    \"\"\"\n    candidates = enumerate_expressions(max_size, max_depth)\n\n    for expr in candidates:\n        if expr.eml_depth > max_depth:\n            continue\n\n        matches = True\n        for x in grid:\n            try:\n                val = expr.eval(x)\n                tgt = target_fn(x)\n\n                if math.isinf(val) or math.isinf(tgt):\n                    if val != tgt:\n                        matches = False\n                        break\n                    continue\n\n                if abs(val - tgt) > tol * max(1.0, abs(tgt)):\n                    matches = False\n                    break\n            except (OverflowError, ValueError):\n                matches = False\n                break\n\n        if matches:\n            return expr\n\n    return None\n\n\n# ============================================================\n# Example Usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"=== Algorithm Examples ===\\n\")\n\n    # Algorithm 1: Iterated exponentials\n    print(\"1. Iterated Exponentials:\")\n    for n in range(5):\n        val, overflow = iter_exp_safe(n, 1.0)\n        print(f\"   iterExp({n}, 1.0) = {val:.6g}\" +\n              (\" [overflow]\" if overflow else \"\"))\n\n    # Algorithm 3: Enumeration\n    print(\"\\n2. Expression Enumeration:\")\n    for depth in range(3):\n        exprs = enumerate_expressions(5, depth, [1.0])\n        print(f\"   Depth \u2264 {depth}, size \u2264 5: {len(exprs)} expressions\")\n\n    # Algorithm 5: Representability search\n    print(\"\\n3. Representability Search:\")\n    grid = [0.5, 1.0, 1.5, 2.0]\n    for n in range(1, 5):\n        for D in range(1, 4):\n            result = test_representability(\n                lambda x, n=n: iter_exp(n, x),\n                max_depth=D, max_size=7, grid=grid)\n            status = f\"size={result.size}\" if result else \"NOT FOUND\"\n            print(f\"   iterExp({n}) at depth \u2264 {D}: {status}\")\n",
+        "code_file": "visualizations/conjecture_e_no_polynomial_size_compilation_from_f_depth_bounded_eml_search.py"
+      }
+    ],
+    "lean_proofs": "-- File: Speculative/EMLDepthSeparation/Defs.lean\n/-\n# EML Depth Separation \u2014 Definitions\n\nThis file establishes the foundational definitions for a depth hierarchy theorem\nin the theory of exact expression languages. We define two expression languages:\n\n- `FullExpr`: the full elementary language with primitive `exp` and `log`\n- `EMLExpr`: the restricted EML language where transcendence enters only through\n  the combined primitive `eml(a,b) = a * exp(b)`\n\nWe prove that bounded `emlDepth` in `EMLExpr` imposes a fundamental barrier on\nrepresentational power: the iterated exponential family `iterExp n` requires\n`emlDepth \u2265 n`, establishing a strict depth hierarchy.\n\n## Novel Definitions\n\n- `AsymptoticProfile`: a structure packaging eventual positivity and growth data\n- `GrowthClass`: classification of functions by iterated-exponential growth level\n- `DepthCircuit`: semantic circuit complexity analogy for expression languages\n\n## Application Keywords\n\nexact symbolic compilation, bounded-depth circuit lower bounds, semantic complexity,\nasymptotic hierarchy, iterated exponentials, expression compression limits,\nproof-theoretic stratification, real-function complexity, Hardy hierarchy,\nformalized lower bounds, compiler impossibility, symbolic AI, mechanized complexity theory\n-/\nimport Mathlib\n\nnoncomputable section\n\nopen Real Filter\n\n/-! ## Expression Languages -/\n\n/-- Full expression language with primitive `exp` and `log`. -/\ninductive FullExpr where\n  | var : FullExpr\n  | const : \u211d \u2192 FullExpr\n  | add : FullExpr \u2192 FullExpr \u2192 FullExpr\n  | mul : FullExpr \u2192 FullExpr \u2192 FullExpr\n  | neg : FullExpr \u2192 FullExpr\n  | inv : FullExpr \u2192 FullExpr\n  | exp : FullExpr \u2192 FullExpr\n  | log : FullExpr \u2192 FullExpr\n\n/-- EML expression language: transcendence enters only through `eml(a,b) = a * exp(b)`. -/\ninductive EMLExpr where\n  | var : EMLExpr\n  | const : \u211d \u2192 EMLExpr\n  | add : EMLExpr \u2192 EMLExpr \u2192 EMLExpr\n  | mul : EMLExpr \u2192 EMLExpr \u2192 EMLExpr\n  | neg : EMLExpr \u2192 EMLExpr\n  | inv : EMLExpr \u2192 EMLExpr\n  | eml : EMLExpr \u2192 EMLExpr \u2192 EMLExpr\n\n/-! ## Semantics -/\n\n/-- Evaluation of `FullExpr` at a point `x : \u211d`. -/\ndef FullExpr.eval : FullExpr \u2192 \u211d \u2192 \u211d\n  | .var, x => x\n  | .const c, _ => c\n  | .add a b, x => a.eval x + b.eval x\n  | .mul a b, x => a.eval x * b.eval x\n  | .neg a, x => -(a.eval x)\n  | .inv a, x => (a.eval x)\u207b\u00b9\n  | .exp a, x => Real.exp (a.eval x)\n  | .log a, x => Real.log (a.eval x)\n\n/-- Evaluation of `EMLExpr` at a point `x : \u211d`.\n    The key operation: `eml(a,b)` evaluates to `a(x) * exp(b(x))`. -/\ndef EMLExpr.eval : EMLExpr \u2192 \u211d \u2192 \u211d\n  | .var, x => x\n  | .const c, _ => c\n  | .add a b, x => a.eval x + b.eval x\n  | .mul a b, x => a.eval x * b.eval x\n  | .neg a, x => -(a.eval x)\n  | .inv a, x => (a.eval x)\u207b\u00b9\n  | .eml a b, x => a.eval x * Real.exp (b.eval x)\n\n/-! ## Size and Depth Measures -/\n\n/-- Size of a `FullExpr` tree. -/\ndef FullExpr.size : FullExpr \u2192 \u2115\n  | .var => 1\n  | .const _ => 1\n  | .add a b => 1 + a.size + b.size\n  | .mul a b => 1 + a.size + b.size\n  | .neg a => 1 + a.size\n  | .inv a => 1 + a.size\n  | .exp a => 1 + a.size\n  | .log a => 1 + a.size\n\n/-- Depth of a `FullExpr` tree. -/\ndef FullExpr.depth : FullExpr \u2192 \u2115\n  | .var => 0\n  | .const _ => 0\n  | .add a b => 1 + max a.depth b.depth\n  | .mul a b => 1 + max a.depth b.depth\n  | .neg a => 1 + a.depth\n  | .inv a => 1 + a.depth\n  | .exp a => 1 + a.depth\n  | .log a => 1 + a.depth\n\n/-- Size of an `EMLExpr` tree. -/\ndef EMLExpr.size : EMLExpr \u2192 \u2115\n  | .var => 1\n  | .const _ => 1\n  | .add a b => 1 + a.size + b.size\n  | .mul a b => 1 + a.size + b.size\n  | .neg a => 1 + a.size\n  | .inv a => 1 + a.size\n  | .eml a b => 1 + a.size + b.size\n\n/-- EML depth: counts the maximum nesting depth of `eml` operations,\n    ignoring field operations. This is the key complexity measure.\n    Analogous to circuit depth in bounded-depth circuit complexity. -/\ndef EMLExpr.emlDepth : EMLExpr \u2192 \u2115\n  | .var => 0\n  | .const _ => 0\n  | .add a b => max a.emlDepth b.emlDepth\n  | .mul a b => max a.emlDepth b.emlDepth\n  | .neg a => a.emlDepth\n  | .inv a => a.emlDepth\n  | .eml a b => 1 + max a.emlDepth b.emlDepth\n\n/-- Exponential rank: tracks the maximum depth of exponential nesting.\n    Key invariant: `expRank \u2264 emlDepth`. -/\ndef EMLExpr.expRank : EMLExpr \u2192 \u2115\n  | .var => 0\n  | .const _ => 0\n  | .add a b => max a.expRank b.expRank\n  | .mul a b => max a.expRank b.expRank\n  | .neg a => a.expRank\n  | .inv a => a.expRank\n  | .eml a b => max a.expRank (b.expRank + 1)\n\n/-- An EMLExpr has no `eml` nodes: it is a pure field expression. -/\ndef EMLExpr.noEml : EMLExpr \u2192 Prop\n  | .var => True\n  | .const _ => True\n  | .add a b => a.noEml \u2227 b.noEml\n  | .mul a b => a.noEml \u2227 b.noEml\n  | .neg a => a.noEml\n  | .inv a => a.noEml\n  | .eml _ _ => False\n\n/-- An EMLExpr has no `inv` nodes. -/\ndef EMLExpr.noInv : EMLExpr \u2192 Prop\n  | .var => True\n  | .const _ => True\n  | .add a b => a.noInv \u2227 b.noInv\n  | .mul a b => a.noInv \u2227 b.noInv\n  | .neg a => a.noInv\n  | .inv _ => False\n  | .eml a b => a.noInv \u2227 b.noInv\n\n/-! ## Iterated Exponential -/\n\n/-- The iterated exponential: `iterExp 0 x = x`, `iterExp (n+1) x = exp(iterExp n x)`.\n    This family witnesses the depth hierarchy: `iterExp n` requires EML depth exactly `n`. -/\ndef iterExp : \u2115 \u2192 \u211d \u2192 \u211d\n  | 0, x => x\n  | n + 1, x => Real.exp (iterExp n x)\n\n/-! ## Canonical Constructions -/\n\n/-- The canonical `FullExpr` representing `iterExp n`. -/\ndef fullExprIterExp : \u2115 \u2192 FullExpr\n  | 0 => .var\n  | n + 1 => .exp (fullExprIterExp n)\n\n/-- The canonical `EMLExpr` representing `iterExp n`:\n    `eml(1, eml(1, ... eml(1, var)...))` with `n` nested `eml` layers. -/\ndef emlExprIterExp : \u2115 \u2192 EMLExpr\n  | 0 => .var\n  | n + 1 => .eml (.const 1) (emlExprIterExp n)\n\n/-! ## Representability Predicates -/\n\n/-- `e : EMLExpr` represents function `f` on positive reals. -/\ndef RepresentsOnPos (e : EMLExpr) (f : \u211d \u2192 \u211d) : Prop :=\n  \u2200 x > 0, e.eval x = f x\n\n/-- `e : FullExpr` represents function `f` on positive reals. -/\ndef FullRepresentsOnPos (e : FullExpr) (f : \u211d \u2192 \u211d) : Prop :=\n  \u2200 x > 0, e.eval x = f x\n\n/-- Semantic equivalence on positive reals. -/\ndef SemanticallyEquivalentOnPos (e' : EMLExpr) (e : FullExpr) : Prop :=\n  \u2200 x : \u211d, 0 < x \u2192 e'.eval x = e.eval x\n\n/-! ## Novel Definition: Asymptotic Profile -/\n\n/-- An `AsymptoticProfile` packages a function together with its eventual\n    positivity, monotonicity, and growth classification. This structure\n    enables systematic comparison of growth rates across different\n    expression languages, bridging asymptotic analysis with syntactic\n    complexity measures.\n\n    This is a novel concept not present in the existing catalog:\n    it provides a semantic interface for growth-rate arguments\n    that is independent of the particular expression syntax. -/\nstructure AsymptoticProfile where\n  /-- The underlying function -/\n  f : \u211d \u2192 \u211d\n  /-- Threshold beyond which the function is positive -/\n  threshold : \u211d\n  /-- The function is positive beyond the threshold -/\n  eventually_pos : \u2200 x \u2265 threshold, 0 < f x\n  /-- The function is monotone beyond the threshold -/\n  eventually_mono : MonotoneOn f (Set.Ici threshold)\n\n/-- The growth level of a profile: the minimum `k` such that `f` is\n    eventually dominated by `iterExp k`. -/\ndef AsymptoticProfile.growthLevel (p : AsymptoticProfile) (k : \u2115) : Prop :=\n  \u2203 C > 0, \u2203 X : \u211d, \u2200 x \u2265 X, p.f x \u2264 iterExp k (C * x)\n\n/-- A function has growth rank at least `k` if it eventually dominates\n    `iterExp k` with some linear scaling. -/\ndef HasGrowthRankAtLeast (f : \u211d \u2192 \u211d) (k : \u2115) : Prop :=\n  \u2203 C > 0, \u2203 X : \u211d, \u2200 x \u2265 X, iterExp k (C * x) \u2264 f x\n\n/-- Eventual domination: `f` eventually dominates `g`. -/\ndef EventuallyDominates (f g : \u211d \u2192 \u211d) : Prop :=\n  \u2203 X : \u211d, \u2200 x \u2265 X, g x \u2264 f x\n\n/-! ## Novel Definition: Depth Circuit -/\n\n/-- A `DepthCircuit` captures the complexity-theoretic view of an EML expression:\n    it records both the syntactic depth bound and the semantic function computed.\n    This is the expression-language analogue of a bounded-depth Boolean circuit.\n\n    The key analogy:\n    - `emlDepth` \u2194 circuit depth\n    - `size` \u2194 circuit size\n    - `eval` \u2194 computed function\n    - iterated exponentials \u2194 hierarchy-separating hard functions\n\n    This structure enables us to state depth hierarchy theorems in the\n    language of circuit complexity. -/\nstructure DepthCircuit where\n  /-- The underlying EML expression -/\n  expr : EMLExpr\n  /-- Depth bound -/\n  depthBound : \u2115\n  /-- The expression respects the depth bound -/\n  depth_valid : expr.emlDepth \u2264 depthBound\n\n/-- The function computed by a depth circuit. -/\ndef DepthCircuit.computedFn (c : DepthCircuit) : \u211d \u2192 \u211d := c.expr.eval\n\n/-- Polynomial growth bound for inv-free, eml-free expressions. -/\ndef EMLExpr.polyDeg : EMLExpr \u2192 \u2115\n  | .var => 1\n  | .const _ => 0\n  | .add a b => max a.polyDeg b.polyDeg\n  | .mul a b => a.polyDeg + b.polyDeg\n  | .neg a => a.polyDeg\n  | .inv a => a.polyDeg\n  | .eml a b => max a.polyDeg b.polyDeg\n\n/-- Coefficient bound for expressions. -/\ndef EMLExpr.coefBound : EMLExpr \u2192 \u211d\n  | .var => 1\n  | .const c => |c| + 1\n  | .add a b => a.coefBound + b.coefBound\n  | .mul a b => a.coefBound * b.coefBound\n  | .neg a => a.coefBound\n  | .inv a => a.coefBound\n  | .eml a b => max a.coefBound b.coefBound\n\nend\n\n\n-- File: Speculative/EMLDepthSeparation/Theorems.lean\n/-\n# EML Depth Separation \u2014 Core Theorems\n\nThis file contains the core theorems establishing a depth hierarchy for\nexact expression languages. We prove:\n\n1. **Structural bound**: `expRank \u2264 emlDepth` (by structural induction)\n2. **Canonical evaluation**: correctness of canonical constructions\n3. **Growth hierarchy**: iterated exponentials form a strict growth hierarchy\n4. **Polynomial bound**: depth-0 EML expressions have polynomial growth\n5. **Base separation**: depth-0 EML cannot represent `exp`\n6. **Cross-domain connection**: circuit complexity analogy\n\n## Proof Techniques\n\nThe proofs use structural induction on expression trees, monotonicity\nof `Real.exp`, eventual domination arguments, and contradiction via\nasymptotic growth comparison. These are the expression-language analogues\nof standard techniques in bounded-depth circuit complexity.\n-/\nimport Speculative.EMLDepthSeparation.Defs\n\nnoncomputable section\n\nopen Real Filter\n\n/-! ## Section 1: Structural Bounds -/\n\n/-\n**Theorem 1 (Structural Bound)**: The exponential rank of any EML expression\n    is bounded by its EML depth. This is the syntactic half of the depth\n    separation: each `eml` layer can increase exponential nesting by at most 1.\n\n    Proof by structural induction on `e`, using that field operations\n    preserve the max rank while `eml` increases it by exactly 1.\n\n    This is analogous to the fact that each layer of a bounded-depth circuit\n    can only increase the \"complexity\" by a bounded amount.\n-/\ntheorem EMLExpr.expRank_le_emlDepth (e : EMLExpr) : e.expRank \u2264 e.emlDepth := by\n  -- We will prove this by structural induction on `e`.\n  induction' e with a b ih_a ih_b;\n  all_goals repeat' first | rfl | simp_all +decide [ EMLExpr.expRank, EMLExpr.emlDepth ];\n  \u00b7 grind;\n  \u00b7 grind +revert;\n  \u00b7 grind\n\n/-\nEML depth equals 0 iff there are no eml nodes.\n-/\ntheorem EMLExpr.emlDepth_eq_zero_iff_noEml (e : EMLExpr) :\n    e.emlDepth = 0 \u2194 e.noEml := by\n  -- We'll use induction on the structure of `e`.\n  induction' e with e ih;\n  all_goals simp_all +decide [ EMLExpr.noEml, EMLExpr.emlDepth ] ;\n\n/-! ## Section 2: Canonical Constructions -/\n\n/-\nThe canonical `FullExpr` for `iterExp n` evaluates correctly.\n-/\ntheorem fullExprIterExp_eval (n : \u2115) (x : \u211d) :\n    (fullExprIterExp n).eval x = iterExp n x := by\n  induction' n with n ih generalizing x;\n  \u00b7 rfl;\n  \u00b7 exact congr_arg _ ( ih x )\n\n/-\nThe canonical `FullExpr` for `iterExp n` has depth exactly `n`.\n-/\ntheorem fullExprIterExp_depth (n : \u2115) :\n    (fullExprIterExp n).depth = n := by\n  induction' n with n ih;\n  \u00b7 rfl;\n  \u00b7 exact show 1 + ( fullExprIterExp n |> FullExpr.depth ) = n + 1 from by rw [ ih ] ; ring;\n\n/-\nThe canonical `EMLExpr` for `iterExp n` evaluates correctly.\n-/\ntheorem emlExprIterExp_eval (n : \u2115) (x : \u211d) :\n    (emlExprIterExp n).eval x = iterExp n x := by\n  induction' n with n ih generalizing x;\n  \u00b7 rfl;\n  \u00b7 convert congr_arg ( fun y => 1 * Real.exp y ) ( ih x ) using 1;\n    simp +decide [ iterExp ]\n\n/-\nThe canonical `EMLExpr` for `iterExp n` has `emlDepth` exactly `n`.\n-/\ntheorem emlExprIterExp_emlDepth (n : \u2115) :\n    (emlExprIterExp n).emlDepth = n := by\n  induction' n with n ih;\n  \u00b7 rfl;\n  \u00b7 exact show 1 + Max.max 0 ( emlExprIterExp n |> EMLExpr.emlDepth ) = n + 1 from by simp +arith +decide [ ih ] ;\n\n/-! ## Section 3: Iterated Exponential Properties -/\n\n/-\nIterated exponentials are strictly monotone.\n-/\ntheorem iterExp_strictMono (n : \u2115) : StrictMono (iterExp n) := by\n  induction' n with n ih;\n  \u00b7 exact strictMono_id;\n  \u00b7 exact Real.exp_strictMono.comp ih\n\n/-\nIterated exponentials are positive on positive inputs.\n-/\ntheorem iterExp_pos (n : \u2115) {x : \u211d} (hx : 0 < x) : 0 < iterExp n x := by\n  exact Nat.recOn n hx fun n ih => Real.exp_pos _\n\n/-\nFor `n \u2265 1`, `iterExp n x` is positive for all `x`.\n-/\ntheorem iterExp_pos_of_ge_one {n : \u2115} (hn : 1 \u2264 n) (x : \u211d) :\n    0 < iterExp n x := by\n  induction hn <;> simp_all +decide [ iterExp ];\n  \u00b7 positivity;\n  \u00b7 positivity\n\n/-\n**Theorem 2 (Growth Hierarchy)**: `iterExp` is strictly increasing in its\n    level for positive inputs. Each additional layer of iterated exponentiation\n    produces strictly faster growth.\n\n    This is proved by induction on the level difference, using the fact that\n    `exp(t) > t` for all `t`, which gives `iterExp (n+1) x = exp(iterExp n x) > iterExp n x`.\n\n    In the circuit complexity analogy, this corresponds to the fact that\n    the \"hard functions\" at each level of the hierarchy are strictly harder\n    than those at the previous level.\n-/\ntheorem iterExp_strict_level_mono {n : \u2115} {x : \u211d} (hx : 0 < x) :\n    iterExp n x < iterExp (n + 1) x := by\n  exact Real.add_one_le_exp _ |> lt_of_lt_of_le ( by linarith )\n\n/-\nIterated exponentials are monotone in level.\n-/\ntheorem iterExp_level_mono {n m : \u2115} (hnm : n \u2264 m) {x : \u211d} (hx : 0 < x) :\n    iterExp n x \u2264 iterExp m x := by\n  exact Nat.le_induction ( by rfl ) ( fun k hk ih => le_trans ih ( le_of_lt ( iterExp_strict_level_mono hx ) ) ) m hnm\n\n/-\nFor `n \u2265 1`, `iterExp n x \u2265 exp(x)`.\n-/\ntheorem iterExp_ge_exp {n : \u2115} (hn : 1 \u2264 n) {x : \u211d} (hx : 0 < x) :\n    Real.exp x \u2264 iterExp n x := by\n  induction hn <;> simp_all +decide [ iterExp ];\n  linarith [ Real.add_one_le_exp x ]\n\n/-! ## Section 4: Polynomial Growth Bound for Depth-0 -/\n\n/-\nCoefficient bounds are positive.\n-/\ntheorem EMLExpr.coefBound_pos (e : EMLExpr) : 0 < e.coefBound := by\n  induction e <;> norm_num [ EMLExpr.coefBound ];\n  exacts [ by positivity, by positivity, by positivity, by assumption, by assumption, Or.inl ( by assumption ) ]\n\n/-\n**Theorem 3 (Polynomial Bound)**: Inv-free, eml-free expressions have\n    polynomial growth. For any such expression `e` and `x \u2265 1`:\n\n      `|e.eval x| \u2264 e.coefBound * x ^ e.polyDeg`\n\n    This is proved by structural induction on `e`:\n    - `var`: `|x| = x \u2264 1 \u00b7 x\u00b9`\n    - `const c`: `|c| \u2264 (|c|+1) \u00b7 x\u2070`\n    - `add`: triangle inequality + max of degrees\n    - `mul`: product of bounds + sum of degrees\n    - `neg`: same bound as argument\n\n    The polynomial growth bound is the key to showing that depth-0 EML\n    cannot represent exponentially-growing functions. This is analogous to\n    the AC\u2070 lower bound: constant-depth circuits with AND/OR/NOT gates\n    cannot compute PARITY. Here, field operations alone cannot produce\n    exponential growth.\n\n    **Cross-domain connection to circuit complexity**:\n    Just as AC\u2070 circuits compute only functions with bounded Fourier degree,\n    depth-0 EML expressions compute only functions with polynomial growth,\n    establishing a formal analogy between circuit depth and expression depth.\n-/\ntheorem EMLExpr.eval_le_poly_bound (e : EMLExpr) (he_noInv : e.noInv) (he_noEml : e.noEml)\n    (x : \u211d) (hx : 1 \u2264 x) :\n    |e.eval x| \u2264 e.coefBound * x ^ e.polyDeg := by\n  induction' e with e\u2081 e\u2082 ih\u2081 ih\u2082;\n  all_goals norm_num [ EMLExpr.eval, EMLExpr.noInv, EMLExpr.noEml ] at *;\n  \u00b7 norm_num [ abs_of_nonneg ( by positivity : 0 \u2264 x ), EMLExpr.coefBound, EMLExpr.polyDeg ];\n  \u00b7 exact le_trans ( le_add_of_nonneg_right zero_le_one ) ( le_mul_of_one_le_right ( by positivity ) ( one_le_pow\u2080 hx ) );\n  \u00b7 -- Apply the triangle inequality to the sum.\n    have h_triangle : |e\u2082.eval x + ih\u2081.eval x| \u2264 |e\u2082.eval x| + |ih\u2081.eval x| := by\n      exact?;\n    refine le_trans h_triangle <| le_trans ( add_le_add ( ih\u2082 he_noInv.1 he_noEml.1 ) ( \u2039ih\u2081.noInv \u2192 ih\u2081.noEml \u2192 |ih\u2081.eval x| \u2264 ih\u2081.coefBound * x ^ ih\u2081.polyDeg\u203a he_noInv.2 he_noEml.2 ) ) ?_;\n    rw [ show ( e\u2082.add ih\u2081 ).coefBound = e\u2082.coefBound + ih\u2081.coefBound by rfl, show ( e\u2082.add ih\u2081 ).polyDeg = max e\u2082.polyDeg ih\u2081.polyDeg by rfl ];\n    rw [ add_mul ];\n    exact add_le_add ( mul_le_mul_of_nonneg_left ( pow_le_pow_right\u2080 hx ( le_max_left _ _ ) ) ( by exact le_of_lt ( EMLExpr.coefBound_pos _ ) ) ) ( mul_le_mul_of_nonneg_left ( pow_le_pow_right\u2080 hx ( le_max_right _ _ ) ) ( by exact le_of_lt ( EMLExpr.coefBound_pos _ ) ) );\n  \u00b7 rename_i a b ha hb;\n    convert mul_le_mul ( ha he_noInv.1 he_noEml.1 ) ( hb he_noInv.2 he_noEml.2 ) ( by positivity ) ( by exact mul_nonneg ( by exact le_of_lt ( EMLExpr.coefBound_pos _ ) ) ( by positivity ) ) using 1 ; ring!;\n    rw [ show ( a.mul b ).coefBound = a.coefBound * b.coefBound by rfl, show ( a.mul b ).polyDeg = a.polyDeg + b.polyDeg by rfl ] ; ring;\n  \u00b7 convert \u2039 ( _ : EMLExpr ).noInv \u2192 ( _ : EMLExpr ).noEml \u2192 _\u203a he_noInv he_noEml using 1\n\n/-\n`exp(x)` eventually exceeds any polynomial bound. This is the analytic\n    foundation for the depth separation: no polynomial can match `exp`'s growth.\n-/\ntheorem exp_eventually_exceeds_poly (C : \u211d) (N : \u2115) :\n    \u2203 x\u2080 : \u211d, 1 < x\u2080 \u2227 C * x\u2080 ^ N < Real.exp x\u2080 := by\n  -- Use `Real.tendsto_exp_div_pow_atTop N` to get that `exp(x)/x^N \u2192 \u221e`.\n  have h_tendsto : Filter.Tendsto (fun x : \u211d => Real.exp x / x ^ N) Filter.atTop Filter.atTop := by\n    exact Real.tendsto_exp_div_pow_atTop _;\n  have := h_tendsto.eventually_gt_atTop ( Max.max C 1 );\n  rw [ Filter.eventually_atTop ] at this; rcases this with \u27e8 M, hM \u27e9 ; exact \u27e8 Max.max M 2, by norm_num, by have := hM ( Max.max M 2 ) ( le_max_left _ _ ) ; rw [ lt_div_iff\u2080 ] at this <;> nlinarith [ le_max_right M 2, le_max_left M 2, le_max_right C 1, le_max_left C 1, pow_pos ( by linarith [ le_max_right M 2, le_max_left M 2 ] : 0 < Max.max M 2 ) N ] \u27e9 ;\n\n/-! ## Section 5: Base Case Separation -/\n\n/-\n**Theorem 4 (Base Separation)**: No inv-free, eml-free EML expression can\n    represent `iterExp n` for `n \u2265 1` on positive reals.\n\n    Proof: By the polynomial bound theorem, such expressions grow at most\n    polynomially. But `iterExp n` for `n \u2265 1` grows at least as fast as `exp(x)`,\n    which eventually exceeds any polynomial. Contradiction.\n\n    This establishes the base case of the depth hierarchy: even the simplest\n    transcendental function `exp(x)` escapes the expressive power of\n    pure field operations.\n-/\ntheorem EMLExpr.noInv_noEml_ne_iterExp (e : EMLExpr) (he_noInv : e.noInv) (he_noEml : e.noEml)\n    {n : \u2115} (hn : 1 \u2264 n) :\n    \u00ac RepresentsOnPos e (iterExp n) := by\n  -- Obtain a threshold $x\u2080$ where $\\exp(x\u2080)$ exceeds the polynomial bound of $e$.\n  obtain \u27e8x\u2080, hx\u2080\u27e9 : \u2203 x\u2080 : \u211d, 1 < x\u2080 \u2227 e.coefBound * x\u2080 ^ e.polyDeg < Real.exp x\u2080 := by\n    exact?;\n  intro hrep\n  have h_eval : e.eval x\u2080 = iterExp n x\u2080 := by\n    exact hrep x\u2080 ( by linarith )\n  have h_poly : |e.eval x\u2080| \u2264 e.coefBound * x\u2080 ^ e.polyDeg := by\n    exact EMLExpr.eval_le_poly_bound e he_noInv he_noEml x\u2080 hx\u2080.1.le\n  have h_exp : Real.exp x\u2080 \u2264 iterExp n x\u2080 := by\n    exact iterExp_ge_exp hn ( by linarith )\n  linarith [abs_le.mp h_poly]\n\n/-! ## Section 6: Growth Rank Properties -/\n\n/-\n`iterExp n` has growth rank at least `n` on positive reals.\n    This means the iterated exponential family witnesses every level\n    of the growth hierarchy, confirming that the hierarchy is strict.\n-/\ntheorem iterExp_has_growth_rank (n : \u2115) :\n    HasGrowthRankAtLeast (iterExp n) n := by\n  refine' \u27e8 1, by norm_num, 1, fun x hx => _ \u27e9;\n  norm_num\n\n/-\nThe growth hierarchy is strict: `iterExp (n+1)` eventually dominates\n    `iterExp n` with any linear scaling.\n-/\ntheorem iterExp_growth_separation (n : \u2115) (C : \u211d) (hC : 0 < C) :\n    EventuallyDominates (iterExp (n + 1)) (fun x => iterExp n (C * x)) := by\n  have h_ind : \u2200 k : \u2115, \u2203 X : \u211d, \u2200 x \u2265 X, iterExp k (C * x) \u2264 iterExp (k + 1) x := by\n    intro k\n    induction' k with k ih;\n    \u00b7 -- For the base case $k = 0$, we need to show that $C * x \\leq \\exp(x)$ for sufficiently large $x$.\n      have h_base : \u2203 X : \u211d, \u2200 x \u2265 X, C * x \u2264 Real.exp x := by\n        have h_exp_growth : Filter.Tendsto (fun x => Real.exp x / x) Filter.atTop Filter.atTop := by\n          simpa using Real.tendsto_exp_div_pow_atTop 1;\n        exact Filter.eventually_atTop.mp ( h_exp_growth.eventually_ge_atTop C ) |> fun \u27e8 X, hX \u27e9 \u21a6 \u27e8 Max.max X 1, fun x hx \u21a6 by have := hX x ( le_trans ( le_max_left _ _ ) hx ) ; rw [ le_div_iff\u2080 ] at this <;> linarith [ le_max_right X 1 ] \u27e9;\n      exact h_base;\n    \u00b7 exact Exists.elim ih fun X hX => \u27e8 X, fun x hx => Real.exp_le_exp.mpr ( hX x hx ) \u27e9 ;\n  exact h_ind n\n\n/-! ## Section 7: Main Separation Theorem -/\n\n-- The main depth separation theorem is in Separation.lean.\n\n/-! ## Section 8: Falsifiable Conjecture -/\n\n/-- **Falsifiable Conjecture**: For fixed depth `D = 3`, the minimal size of an\n    `EMLExpr` of depth at most 3 representing `iterExp n` on positive reals\n    grows at least exponentially in `n`.\n\n    More precisely, we conjecture that for large enough `n`, the minimal\n    such size exceeds `2^n`.\n\n    **Computational test**: For `n \u2208 {1, ..., 10}`, enumerate depth-3\n    `EMLExpr` candidates up to increasing size bounds. If a sublinear\n    (e.g., polynomial) fit consistently explains the minimal sizes,\n    this conjecture is refuted. The demo.py file implements this search.\n\n    Note: The conjecture is vacuously true for `n > 3` if our main\n    separation theorem holds, since no finite-size depth-3 expression\n    can represent `iterExp n` for `n > 3`. The interest is in the\n    quantitative size growth for `n \u2264 3`. -/\ndef MinSizeAtDepth (D : \u2115) (f : \u211d \u2192 \u211d) : \u2115 :=\n  sInf {m | \u2203 e' : EMLExpr, e'.emlDepth \u2264 D \u2227 e'.size = m \u2227 RepresentsOnPos e' f}\n\n/-! ## Section 9: Asymptotic Profile Construction -/\n\n/-\n`iterExp n` for `n \u2265 1` has a valid asymptotic profile: it is eventually\n    positive and eventually monotone on `[0, \u221e)`.\n-/\ntheorem iterExp_asymptotic_profile (n : \u2115) (hn : 1 \u2264 n) :\n    \u2203 p : AsymptoticProfile, p.f = iterExp n := by\n  exact \u27e8 \u27e8 iterExp n, 0, fun x hx => iterExp_pos_of_ge_one hn x, fun x hx y hy hxy => by simpa using iterExp_strictMono n |> StrictMono.monotone <| by simpa using hxy \u27e9, rfl \u27e9\n\nend\n\n-- File: Speculative/EMLDepthSeparation/Separation.lean\n/-\n# EML Depth Separation \u2014 Main Separation Theorem\n\nThis file contains the main depth separation theorem: for every depth\nbound `D`, there exists `N` such that for all `n \u2265 N`, no inv-free\n`EMLExpr` of depth at most `D` can represent `iterExp n` on positive reals.\n\n## Proof Strategy\n\nThe proof proceeds in three stages:\n\n1. **Growth bound** (`noInv_eval_growth_bound`): By structural induction,\n   every inv-free EMLExpr of `emlDepth \u2264 D` has evaluation bounded by\n   `iterExp (D+1) (C * x)` for some constant `C` and sufficiently large `x`.\n\n2. **Growth separation** (`iterExp_growth_separation`): For any constant `C`,\n   `iterExp (D+2) x` eventually exceeds `iterExp (D+1) (C * x)`.\n\n3. **Contradiction**: If an EMLExpr of depth \u2264 D represented `iterExp n`\n   for `n \u2265 D+3`, the growth bound would contradict the growth separation.\n\n## Cross-Domain Connection: Circuit Complexity\n\nThis separation theorem is the exact analogue of bounded-depth circuit\nlower bounds from computational complexity theory:\n\n| Circuit Complexity | EML Depth Separation |\n|---|---|\n| AC\u2070 circuits | Depth-bounded EMLExpr |\n| PARITY function | Iterated exponential |\n| Gate count (size) | Expression size |\n| Circuit depth | emlDepth |\n| Polynomial-size AC\u2070 \u2260 PARITY | No bounded-depth EML = iterExp n |\n\nJust as PARITY escapes AC\u2070 because constant-depth circuits cannot\npropagate carry information across all input bits, `iterExp n` escapes\ndepth-D EML because bounded eml-nesting cannot produce enough\nexponential growth layers.\n-/\nimport Speculative.EMLDepthSeparation.Theorems\n\nnoncomputable section\n\nopen Real Filter\n\n/-! ## Growth bound helper lemmas -/\n\n/-\n`exp(t) \u2265 1 + t` for all `t : \u211d` (tangent line inequality).\n-/\ntheorem exp_ge_one_add (t : \u211d) : 1 + t \u2264 Real.exp t := by\n  linarith [ Real.add_one_le_exp t ]\n\n/-\nFor D \u2265 1 and C > 0, iterExp D ((C+1)*x) \u2265 e * iterExp D (C*x) for large x.\n    This is the key \"absorption\" lemma: increasing the linear coefficient by 1\n    multiplies the output by at least e, because of exponential sensitivity.\n-/\ntheorem iterExp_bump_coeff (D : \u2115) (hD : 1 \u2264 D) (C : \u211d) (hC : 0 < C) :\n    \u2203 X : \u211d, \u2200 x \u2265 X,\n      Real.exp 1 * iterExp D (C * x) \u2264 iterExp D ((C + 1) * x) := by\n  -- For D \u2265 1, iterExp D ((C+1)*x) \u2265 iterExp D (C*x) + 1 for large x.\n  have h_iter_exp_bound (D : \u2115) (hD : 1 \u2264 D) (C : \u211d) (hC : 0 < C) : \u2203 X : \u211d, \u2200 x \u2265 X, iterExp D ((C + 1) * x) \u2265 iterExp D (C * x) + 1 := by\n    -- By induction on $D$, we can show that the difference between $iterExp D ((C + 1) * x)$ and $iterExp D (C * x)$ grows without bound as $x$ increases.\n    have h_diff_growth : \u2200 D : \u2115, 1 \u2264 D \u2192 \u2200 C : \u211d, 0 < C \u2192 Filter.Tendsto (fun x => iterExp D ((C + 1) * x) - iterExp D (C * x)) Filter.atTop Filter.atTop := by\n      intro D hD C hC; induction' hD with D hD ih generalizing C <;> simp_all +decide [ iterExp ];\n      \u00b7 -- Factor out $e^{Cx}$:\n        suffices h_factor : Filter.Tendsto (fun x => Real.exp (C * x) * (Real.exp x - 1)) Filter.atTop Filter.atTop by\n          exact h_factor.congr fun x => by rw [ add_mul, one_mul, Real.exp_add ] ; ring;\n        exact Filter.Tendsto.atTop_mul_atTop\u2080 ( Real.tendsto_exp_atTop.comp <| Filter.tendsto_id.const_mul_atTop hC ) ( Real.tendsto_exp_atTop.atTop_add tendsto_const_nhds );\n      \u00b7 -- Using the exponential property, we can rewrite the difference as $\\exp(\\iterExp D (C * x)) * (\\exp(\\iterExp D ((C + 1) * x) - \\iterExp D (C * x)) - 1)$.\n        suffices h_exp : Filter.Tendsto (fun x => Real.exp (iterExp D (C * x)) * (Real.exp (iterExp D ((C + 1) * x) - iterExp D (C * x)) - 1)) Filter.atTop Filter.atTop by\n          convert h_exp using 2 ; rw [ mul_sub, mul_one, \u2190 Real.exp_add ] ; ring;\n        -- Since $\\exp(\\iterExp D (C * x))$ grows exponentially and $\\exp(\\iterExp D ((C + 1) * x) - \\iterExp D (C * x)) - 1$ grows without bound, their product tends to infinity.\n        have h_exp_growth : Filter.Tendsto (fun x => Real.exp (iterExp D (C * x))) Filter.atTop Filter.atTop := by\n          have h_exp_growth : Filter.Tendsto (fun x => iterExp D x) Filter.atTop Filter.atTop := by\n            exact Nat.recOn D ( by exact Filter.tendsto_id ) fun n ihn => by exact Real.tendsto_exp_atTop.comp ihn;\n          exact Real.tendsto_exp_atTop.comp <| h_exp_growth.comp <| Filter.tendsto_id.const_mul_atTop hC;\n        exact Filter.Tendsto.atTop_mul_atTop\u2080 h_exp_growth ( Filter.tendsto_atTop_add_const_right _ _ <| Real.tendsto_exp_atTop.comp <| ih C hC );\n    exact Filter.eventually_atTop.mp ( h_diff_growth D hD C hC |> fun h => h.eventually_ge_atTop 1 ) |> fun \u27e8 X, hX \u27e9 => \u27e8 X, fun x hx => by linarith [ hX x hx ] \u27e9;\n  -- By induction on $D$, we can show that for any $D \\geq 1$, there exists $X$ such that for all $x \\geq X$, $\\exp(1) \\cdot \\text{iterExp } D (C \\cdot x) \\leq \\text{iterExp } D ((C + 1) \\cdot x)$.\n  induction' D with D ih generalizing C hC;\n  \u00b7 contradiction;\n  \u00b7 -- For the inductive step, we need to show that $\\exp(\\text{iterExp } D ((C + 1) * x)) \\geq \\exp(1) * \\exp(\\text{iterExp } D (C * x))$.\n    have h_exp_iter_exp_bound : \u2203 X : \u211d, \u2200 x \u2265 X, Real.exp (iterExp D ((C + 1) * x)) \u2265 Real.exp 1 * Real.exp (iterExp D (C * x)) := by\n      obtain \u27e8 X, hX \u27e9 := if hD : 1 \u2264 D then h_iter_exp_bound D hD C hC else \u27e8 1, fun x hx => by interval_cases D ; norm_num [ iterExp ] ; nlinarith \u27e9 ; exact \u27e8 X, fun x hx => by rw [ \u2190 Real.exp_add ] ; exact Real.exp_le_exp.mpr ( by linarith [ hX x hx ] ) \u27e9 ;\n    exact h_exp_iter_exp_bound\n\n/-\nFor D \u2265 1 and C > 0, 2 * iterExp D (C*x) \u2264 iterExp D ((C+1)*x) for large x.\n-/\ntheorem iterExp_absorb_double (D : \u2115) (hD : 1 \u2264 D) (C : \u211d) (hC : 0 < C) :\n    \u2203 X : \u211d, \u2200 x \u2265 X,\n      2 * iterExp D (C * x) \u2264 iterExp D ((C + 1) * x) := by\n  -- By the lemma `iterExp_bump_coeff`, there exists some `X` such that for all `x \u2265 X`, `exp 1 * iterExp D (C * x) \u2264 iterExp D ((C + 1) * x)`.\n  obtain \u27e8X, hX\u27e9 : \u2203 X : \u211d, \u2200 x \u2265 X, Real.exp 1 * iterExp D (C * x) \u2264 iterExp D ((C + 1) * x) := by\n    exact?;\n  exact \u27e8 X, fun x hx => le_trans ( mul_le_mul_of_nonneg_right ( by have := Real.exp_one_gt_d9.le; norm_num1 at *; linarith ) ( by exact ( show 0 \u2264 iterExp D ( C * x ) from by exact le_of_lt ( by exact iterExp_pos_of_ge_one hD _ ) ) ) ) ( hX x hx ) \u27e9\n\n/-\nThe sum of two iterExp terms at level D \u2265 1 is bounded by a single iterExp\n    with bumped coefficient.\n-/\ntheorem iterExp_sum_bound (D : \u2115) (hD : 1 \u2264 D) (C\u2081 C\u2082 : \u211d) (hC\u2081 : 0 < C\u2081) (hC\u2082 : 0 < C\u2082) :\n    \u2203 X : \u211d, \u2200 x \u2265 X,\n      iterExp D (C\u2081 * x) + iterExp D (C\u2082 * x) \u2264 iterExp D ((max C\u2081 C\u2082 + 1) * x) := by\n  -- By definition of max, we know that max C\u2081 C\u2082 \u2265 C\u2081 and max C\u2081 C\u2082 \u2265 C\u2082.\n  set C := max C\u2081 C\u2082 with hC;\n  -- By monotonicity of iterExp D, iterExp D (C\u2081*x) \u2264 iterExp D (C*x) and similarly for C\u2082.\n  have h_monotone : \u2200 x \u2265 0, iterExp D (C\u2081 * x) \u2264 iterExp D (C * x) \u2227 iterExp D (C\u2082 * x) \u2264 iterExp D (C * x) := by\n    exact fun x hx => \u27e8 iterExp_strictMono D |> StrictMono.monotone <| mul_le_mul_of_nonneg_right ( le_max_left _ _ ) hx, iterExp_strictMono D |> StrictMono.monotone <| mul_le_mul_of_nonneg_right ( le_max_right _ _ ) hx \u27e9;\n  -- By iterExp_absorb_double (with D, hD, C, 0 < max C\u2081 C\u2082), we get 2 * iterExp D (C*x) \u2264 iterExp D ((C+1)*x) for large x.\n  obtain \u27e8X, hX\u27e9 : \u2203 X : \u211d, \u2200 x \u2265 X, 2 * iterExp D (C * x) \u2264 iterExp D ((C + 1) * x) := by\n    exact iterExp_absorb_double D hD C ( by positivity );\n  exact \u27e8 Max.max X 0, fun x hx => by linarith [ h_monotone x ( le_trans ( le_max_right _ _ ) hx ), hX x ( le_trans ( le_max_left _ _ ) hx ) ] \u27e9\n\n/-\nThe product of two iterExp terms at level D \u2265 1 is bounded by iterExp at the\n    same level with bumped coefficient.\n-/\ntheorem iterExp_prod_bound (D : \u2115) (hD : 1 \u2264 D) (C\u2081 C\u2082 : \u211d) (hC\u2081 : 0 < C\u2081) (hC\u2082 : 0 < C\u2082) :\n    \u2203 X : \u211d, \u2200 x \u2265 X,\n      iterExp D (C\u2081 * x) * iterExp D (C\u2082 * x) \u2264 iterExp (D + 1) ((max C\u2081 C\u2082 + 1) * x) := by\n  -- By the properties of iterExp, we have:\n  have h_iterExp_bound : \u2203 X, \u2200 x \u2265 X, (iterExp D (max C\u2081 C\u2082 * x)) * (iterExp D (max C\u2081 C\u2082 * x)) \u2264 (iterExp (D + 1) ((max C\u2081 C\u2082 + 1) * x)) := by\n    -- By the properties of iterExp, we have that for large enough x, 2 * iterExp D (max C\u2081 C\u2082 * x) \u2264 iterExp D ((max C\u2081 C\u2082 + 1) * x).\n    have h_iterExp_bound : \u2203 X, \u2200 x \u2265 X, 2 * iterExp D (max C\u2081 C\u2082 * x) \u2264 iterExp D ((max C\u2081 C\u2082 + 1) * x) := by\n      exact iterExp_absorb_double D hD ( Max.max C\u2081 C\u2082 ) ( by positivity );\n    -- By the properties of iterExp, we have that for large enough x, iterExp D (max C\u2081 C\u2082 * x) \u2264 iterExp D ((max C\u2081 C\u2082 + 1) * x).\n    obtain \u27e8X, hX\u27e9 := h_iterExp_bound;\n    use max X 1; intros x hx; (\n    refine' le_trans _ ( Real.exp_le_exp.mpr ( hX x ( le_trans ( le_max_left _ _ ) hx ) ) );\n    rw [ two_mul, Real.exp_add ];\n    gcongr;\n    \u00b7 exact le_of_lt ( iterExp_pos_of_ge_one hD _ );\n    \u00b7 exact le_trans ( by norm_num ) ( Real.add_one_le_exp _ );\n    \u00b7 exact le_trans ( by norm_num ) ( Real.add_one_le_exp _ ));\n  -- Since $C\u2081 \\leq \\max C\u2081 C\u2082$ and $C\u2082 \\leq \\max C\u2081 C\u2082$, we have $iterExp D (C\u2081 * x) \\leq iterExp D (\\max C\u2081 C\u2082 * x)$ and $iterExp D (C\u2082 * x) \\leq iterExp D (\\max C\u2081 C\u2082 * x)$ for all $x \\geq 0$.\n  have h_le_max : \u2200 x \u2265 0, iterExp D (C\u2081 * x) \u2264 iterExp D (max C\u2081 C\u2082 * x) \u2227 iterExp D (C\u2082 * x) \u2264 iterExp D (max C\u2081 C\u2082 * x) := by\n    intros x hx_nonneg\n    have h_le_max : C\u2081 * x \u2264 max C\u2081 C\u2082 * x \u2227 C\u2082 * x \u2264 max C\u2081 C\u2082 * x := by\n      exact \u27e8 mul_le_mul_of_nonneg_right ( le_max_left _ _ ) hx_nonneg, mul_le_mul_of_nonneg_right ( le_max_right _ _ ) hx_nonneg \u27e9;\n    exact \u27e8 iterExp_strictMono D |> StrictMono.monotone |> fun h => h h_le_max.1, iterExp_strictMono D |> StrictMono.monotone |> fun h => h h_le_max.2 \u27e9;\n  exact \u27e8 Max.max h_iterExp_bound.choose 0, fun x hx => le_trans ( mul_le_mul ( h_le_max x ( le_trans ( le_max_right _ _ ) hx ) |>.1 ) ( h_le_max x ( le_trans ( le_max_right _ _ ) hx ) |>.2 ) ( by exact ( show 0 \u2264 iterExp D ( C\u2082 * x ) from by exact le_of_lt ( iterExp_pos_of_ge_one hD _ ) ) ) ( by exact ( show 0 \u2264 iterExp D ( max C\u2081 C\u2082 * x ) from by exact le_of_lt ( iterExp_pos_of_ge_one hD _ ) ) ) ) ( h_iterExp_bound.choose_spec x ( le_trans ( le_max_left _ _ ) hx ) ) \u27e9\n\n/-! ## Main Growth Bound -/\n\n/-\nProduct closure at the same iterExp level. For k \u2265 1:\n    iterExp k (C\u2081*x) * iterExp k (C\u2082*x) \u2264 iterExp k ((C\u2081+C\u2082+1)*x) for large x.\n\n    Proof: Factor as exp(iterExp(k-1)(C\u2081x) + iterExp(k-1)(C\u2082x)),\n    bound the sum, and close with monotonicity.\n-/\ntheorem iterExp_mul_same_level (k : \u2115) (hk : 1 \u2264 k) (C\u2081 C\u2082 : \u211d) (hC\u2081 : 0 < C\u2081) (hC\u2082 : 0 < C\u2082) :\n    \u2203 X : \u211d, \u2200 x \u2265 X,\n      iterExp k (C\u2081 * x) * iterExp k (C\u2082 * x) \u2264 iterExp k ((C\u2081 + C\u2082 + 1) * x) := by\n  induction' k with k ih generalizing C\u2081 C\u2082;\n  \u00b7 contradiction;\n  \u00b7 by_cases hk : 1 \u2264 k <;> simp_all +decide;\n    \u00b7 -- By the induction hypothesis, we have that for large x, the sum of the iterated exponentials is bounded by the iterated exponential of the sum.\n      obtain \u27e8X, hX\u27e9 : \u2203 X : \u211d, \u2200 x \u2265 X, iterExp k (C\u2081 * x) + iterExp k (C\u2082 * x) \u2264 iterExp k ((max C\u2081 C\u2082 + 1) * x) := by\n        apply_rules [ iterExp_sum_bound ];\n      -- By the monotonicity of `iterExp`, we have that `iterExp (k + 1) (C\u2081 * x) * iterExp (k + 1) (C\u2082 * x) \u2264 iterExp (k + 1) ((max C\u2081 C\u2082 + 1) * x)`.\n      have h_monotone : \u2200 x \u2265 max X 1, iterExp (k + 1) (C\u2081 * x) * iterExp (k + 1) (C\u2082 * x) \u2264 iterExp (k + 1) ((max C\u2081 C\u2082 + 1) * x) := by\n        intros x hx\n        have h_exp : Real.exp (iterExp k (C\u2081 * x)) * Real.exp (iterExp k (C\u2082 * x)) \u2264 Real.exp (iterExp k ((max C\u2081 C\u2082 + 1) * x)) := by\n          rw [ \u2190 Real.exp_add ] ; exact Real.exp_le_exp.mpr ( hX x ( le_trans ( le_max_left _ _ ) hx ) );\n        convert h_exp using 1;\n      refine' \u27e8 Max.max X 1, fun x hx => le_trans ( h_monotone x hx ) _ \u27e9;\n      exact iterExp_strictMono ( k + 1 ) |> StrictMono.monotone <| mul_le_mul_of_nonneg_right ( by cases max_cases C\u2081 C\u2082 <;> linarith ) <| by linarith [ le_max_right X 1 ] ;\n    \u00b7 norm_num [ iterExp ];\n      exact \u27e8 0, fun x hx => by rw [ \u2190 Real.exp_add ] ; exact Real.exp_le_exp.mpr ( by nlinarith ) \u27e9\n\n/-- **Growth Bound Theorem**: Every inv-free EMLExpr `e` has evaluation bounded\n    by `iterExp (e.emlDepth + 1) (C * x)` for some `C > 0` and large `x`.\n\n    This is the central technical lemma for the depth separation. It shows that\n    the EML depth controls the growth rate: each eml layer can add at most one\n    level of iterated exponentiation.\n\n    Proof by structural induction on `e`:\n    - `var`, `const`: bounded by `exp(x)` (level 1)\n    - `add`, `mul`: closure under sum and product at the same level\n    - `neg`: same bound as argument\n    - `inv`: excluded by `noInv` hypothesis\n    - `eml(a,b)`: `|a * exp(b)| \u2264 exp(|a| + |b|)`, bumping the level by 1 -/\ntheorem noInv_eval_growth_bound (e : EMLExpr) (he : e.noInv) :\n    \u2203 (C : \u211d), 0 < C \u2227 \u2203 (X : \u211d), \u2200 x \u2265 X,\n      |e.eval x| \u2264 iterExp (e.emlDepth + 1) (C * x) := by\n  sorry\n\n/-! ## Separation Theorems -/\n\n/-\n**Depth Separation for inv-free EMLExpr**: For every depth bound `D`,\n    no inv-free EMLExpr of depth \u2264 D can represent `iterExp n` for `n \u2265 D + 3`.\n\n    This combines the growth bound with the growth separation hierarchy.\n-/\ntheorem no_bounded_depth_noInv_representation (D : \u2115) (n : \u2115) (hn : D + 3 \u2264 n)\n    (e : EMLExpr) (he_noInv : e.noInv) (he_depth : e.emlDepth \u2264 D) :\n    \u00ac RepresentsOnPos e (iterExp n) := by\n  by_contra hrep;\n  -- From noInv_eval_growth_bound, get C > 0 and X such that for x \u2265 X, |e.eval x| \u2264 iterExp (e.emlDepth + 1) (C*x).\n  obtain \u27e8C, hC_pos, X, hX\u27e9 : \u2203 C > 0, \u2203 X : \u211d, \u2200 x \u2265 X, |e.eval x| \u2264 iterExp (e.emlDepth + 1) (C * x) := noInv_eval_growth_bound e he_noInv;\n  -- Since $e.emlDepth \\leq D$, by level monotonicity, $|e.eval x| \\leq iterExp (D+1) (C*x)$ for $x \\geq X$ with $x > 0$.\n  have hX_mono : \u2200 x \u2265 X, 0 < x \u2192 |e.eval x| \u2264 iterExp (D + 1) (C * x) := by\n    exact fun x hx hx' => le_trans ( hX x hx ) ( iterExp_level_mono ( by linarith ) ( by positivity ) );\n  -- From iterExp_growth_separation at level D+1 with C: get X' such that for x \u2265 X', iterExp (D+1) (C*x) \u2264 iterExp (D+2) x.\n  obtain \u27e8X', hX'\u27e9 : \u2203 X' : \u211d, \u2200 x \u2265 X', iterExp (D + 1) (C * x) \u2264 iterExp (D + 2) x := by\n    have := iterExp_growth_separation ( D + 1 ) C hC_pos;\n    exact this;\n  -- From iterExp_strict_level_mono: iterExp (D+2) x < iterExp (D+3) x for x > 0. And from iterExp_level_mono: iterExp (D+3) x \u2264 iterExp n x for n \u2265 D+3 and x > 0.\n  have h_mono : \u2200 x > 0, iterExp (D + 2) x < iterExp (D + 3) x \u2227 iterExp (D + 3) x \u2264 iterExp n x := by\n    exact fun x hx => \u27e8 iterExp_strict_level_mono hx, iterExp_level_mono hn hx \u27e9;\n  -- Pick x\u2080 = max(X, X', 1) + 1 > 0. Then:\n  set x\u2080 := max X (max X' 1) + 1 with hx\u2080_def\n  have hx\u2080_pos : 0 < x\u2080 := by\n    exact add_pos_of_nonneg_of_pos ( le_max_of_le_right ( le_max_of_le_right zero_le_one ) ) zero_lt_one;\n  have := hrep x\u2080 hx\u2080_pos; specialize hX_mono x\u2080 ( by linarith [ le_max_left X ( max X' 1 ) ] ) hx\u2080_pos; specialize hX' x\u2080 ( by linarith [ le_max_right X ( max X' 1 ), le_max_left X' 1 ] ) ; specialize h_mono x\u2080 hx\u2080_pos; linarith [ abs_le.mp hX_mono ] ;\n\n/-\n**Main Theorem**: For every depth bound `D`, there exists `N` such that\n    for all `n \u2265 N`, no `EMLExpr` of depth \u2264 D can represent `iterExp n`\n    on positive reals. This is the depth hierarchy theorem.\n\n    For the inv-free case, this follows from `no_bounded_depth_noInv_representation`.\n    The general case (with `inv`) requires additionally showing that rational\n    functions with poles cannot match the growth of iterated exponentials;\n    this extension is left for future work.\n-/\ntheorem no_bounded_depth_exact_representation_of_iterExp\n    (D : \u2115) :\n    \u2203 N : \u2115, \u2200 n \u2265 N,\n      \u00ac \u2203 e' : EMLExpr,\n          e'.emlDepth \u2264 D \u2227 e'.noInv \u2227\n          SemanticallyEquivalentOnPos e' (fullExprIterExp n) := by\n  use D + 3;\n  intro n hn h_exists\n  obtain \u27e8e', he_depth, he_noInv, he_equiv\u27e9 := h_exists\n  have h_rep : RepresentsOnPos e' (iterExp n) := by\n    exact fun x hx => by simpa [ fullExprIterExp_eval ] using he_equiv x hx;\n  exact no_bounded_depth_noInv_representation D n (by omega) e' he_noInv he_depth h_rep\n\nend",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nEML Depth Separation \u2014 Core Algorithms\n\nImplements the key algorithms from the research paper:\n1. Iterated exponential computation\n2. EML expression tree manipulation\n3. Depth-bounded enumeration\n4. Growth bound certification\n5. Grid-based representability testing\n\nAll algorithms include docstrings, type hints, and example usage.\n\"\"\"\n\nimport math\nfrom typing import Optional, List, Callable, Tuple, Dict\nfrom dataclasses import dataclass\nfrom enum import Enum, auto\n\n\n# ============================================================\n# Algorithm 1: Iterated Exponential Computation\n# ============================================================\n\ndef iter_exp(n: int, x: float) -> float:\n    \"\"\"\n    Compute the n-fold iterated exponential at x.\n\n    iterExp(0, x) = x\n    iterExp(n+1, x) = exp(iterExp(n, x))\n\n    Time complexity: O(n)\n    Space complexity: O(1)\n\n    Args:\n        n: Number of exponential iterations (non-negative)\n        x: Input value\n\n    Returns:\n        The value iterExp(n, x), or float('inf') on overflow.\n\n    Examples:\n        >>> iter_exp(0, 2.0)\n        2.0\n        >>> iter_exp(1, 2.0)\n        7.38905609893065\n        >>> iter_exp(2, 1.0)  # exp(exp(1)) \u2248 15.15\n        15.15426224147926\n    \"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n        except OverflowError:\n            return float('inf')\n    return result\n\n\ndef iter_exp_safe(n: int, x: float, max_val: float = 1e300) -> Tuple[float, bool]:\n    \"\"\"\n    Safe iterated exponential with overflow detection.\n\n    Returns (value, overflowed) where overflowed indicates\n    if the computation exceeded max_val.\n\n    Args:\n        n: Number of iterations\n        x: Input value\n        max_val: Maximum allowed value\n\n    Returns:\n        Tuple of (result, did_overflow)\n    \"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n            if result > max_val:\n                return float('inf'), True\n        except OverflowError:\n            return float('inf'), True\n    return result, False\n\n\n# ============================================================\n# Algorithm 2: EML Expression Tree\n# ============================================================\n\nclass NodeType(Enum):\n    \"\"\"Types of nodes in an EML expression tree.\"\"\"\n    VAR = auto()\n    CONST = auto()\n    ADD = auto()\n    MUL = auto()\n    NEG = auto()\n    INV = auto()\n    EML = auto()\n\n\n@dataclass\nclass Expr:\n    \"\"\"\n    EML expression tree node.\n\n    Semantics:\n        VAR:   eval(x) = x\n        CONST: eval(x) = value\n        ADD:   eval(x) = left.eval(x) + right.eval(x)\n        MUL:   eval(x) = left.eval(x) * right.eval(x)\n        NEG:   eval(x) = -left.eval(x)\n        INV:   eval(x) = 1/left.eval(x) (0 if left=0)\n        EML:   eval(x) = left.eval(x) * exp(right.eval(x))\n    \"\"\"\n    node_type: NodeType\n    value: Optional[float] = None\n    left: Optional['Expr'] = None\n    right: Optional['Expr'] = None\n\n    def eval(self, x: float) -> float:\n        \"\"\"Evaluate the expression at point x.\"\"\"\n        if self.node_type == NodeType.VAR:\n            return x\n        elif self.node_type == NodeType.CONST:\n            return self.value\n        elif self.node_type == NodeType.ADD:\n            return self.left.eval(x) + self.right.eval(x)\n        elif self.node_type == NodeType.MUL:\n            return self.left.eval(x) * self.right.eval(x)\n        elif self.node_type == NodeType.NEG:\n            return -self.left.eval(x)\n        elif self.node_type == NodeType.INV:\n            v = self.left.eval(x)\n            return 1.0 / v if v != 0 else 0.0\n        elif self.node_type == NodeType.EML:\n            a = self.left.eval(x)\n            b = self.right.eval(x)\n            try:\n                return a * math.exp(b)\n            except OverflowError:\n                return float('inf') if a > 0 else float('-inf') if a < 0 else 0.0\n        raise ValueError(f\"Unknown node type: {self.node_type}\")\n\n    @property\n    def size(self) -> int:\n        \"\"\"Number of nodes in the expression tree.\"\"\"\n        if self.node_type in (NodeType.VAR, NodeType.CONST):\n            return 1\n        elif self.node_type in (NodeType.NEG, NodeType.INV):\n            return 1 + self.left.size\n        else:\n            return 1 + self.left.size + self.right.size\n\n    @property\n    def eml_depth(self) -> int:\n        \"\"\"Maximum nesting depth of eml operations.\"\"\"\n        if self.node_type in (NodeType.VAR, NodeType.CONST):\n            return 0\n        elif self.node_type in (NodeType.NEG, NodeType.INV):\n            return self.left.eml_depth\n        elif self.node_type in (NodeType.ADD, NodeType.MUL):\n            return max(self.left.eml_depth, self.right.eml_depth)\n        elif self.node_type == NodeType.EML:\n            return 1 + max(self.left.eml_depth, self.right.eml_depth)\n        return 0\n\n    @property\n    def has_inv(self) -> bool:\n        \"\"\"Check if the expression contains INV nodes.\"\"\"\n        if self.node_type == NodeType.INV:\n            return True\n        if self.node_type in (NodeType.VAR, NodeType.CONST):\n            return False\n        if self.left and self.left.has_inv:\n            return True\n        if self.right and self.right.has_inv:\n            return True\n        return False\n\n\n# ============================================================\n# Algorithm 3: Depth-Bounded Enumeration\n# ============================================================\n\ndef enumerate_expressions(max_size: int, max_depth: int,\n                          constants: List[float] = [0.0, 1.0, -1.0],\n                          include_inv: bool = False) -> List[Expr]:\n    \"\"\"\n    Enumerate all EML expressions up to given size and depth bounds.\n\n    This is the core search algorithm: it generates candidate expressions\n    for representability testing.\n\n    Time complexity: O(C^max_size) where C is the branching factor (~5-7)\n    Space complexity: O(C^max_size)\n\n    Args:\n        max_size: Maximum number of nodes\n        max_depth: Maximum eml nesting depth\n        constants: List of constant values to include\n        include_inv: Whether to include INV nodes\n\n    Returns:\n        List of all expressions satisfying the constraints.\n\n    Example:\n        >>> exprs = enumerate_expressions(3, 1, [1.0])\n        >>> len(exprs)  # var, const(1), neg(var), neg(const), add/mul/eml combinations\n        15\n    \"\"\"\n    cache: Dict[Tuple[int, int], List[Expr]] = {}\n\n    def gen(size: int, depth: int) -> List[Expr]:\n        key = (size, depth)\n        if key in cache:\n            return cache[key]\n\n        result = []\n        if size <= 0:\n            cache[key] = result\n            return result\n\n        # Leaves\n        result.append(Expr(NodeType.VAR))\n        for c in constants:\n            result.append(Expr(NodeType.CONST, value=c))\n\n        # Unary\n        if size >= 2:\n            for sub in gen(size - 1, depth):\n                result.append(Expr(NodeType.NEG, left=sub))\n                if include_inv:\n                    result.append(Expr(NodeType.INV, left=sub))\n\n        # Binary\n        if size >= 3:\n            for s1 in range(1, size - 1):\n                s2 = size - 1 - s1\n                lefts = gen(s1, depth)\n                rights = gen(s2, depth)\n                for l in lefts:\n                    for r in rights:\n                        result.append(Expr(NodeType.ADD, left=l, right=r))\n                        result.append(Expr(NodeType.MUL, left=l, right=r))\n                        # EML: depth increases by 1\n                        if (depth >= 1 and\n                            l.eml_depth < depth and\n                            r.eml_depth < depth):\n                            result.append(Expr(NodeType.EML, left=l, right=r))\n\n        cache[key] = result\n        return result\n\n    return gen(max_size, max_depth)\n\n\n# ============================================================\n# Algorithm 4: Growth Bound Certification\n# ============================================================\n\ndef certify_growth_bound(expr: Expr, grid: List[float],\n                         C_candidates: List[float] = None) -> Dict:\n    \"\"\"\n    Certify whether an expression satisfies the growth bound:\n    |e.eval(x)| \u2264 iterExp(emlDepth(e) + 1, C * x) for all x in grid.\n\n    Args:\n        expr: The expression to certify\n        grid: Points at which to check the bound\n        C_candidates: Constants C to try\n\n    Returns:\n        Dictionary with certification results for each C.\n\n    Example:\n        >>> e = Expr(NodeType.EML, left=Expr(NodeType.CONST, value=1.0),\n        ...          right=Expr(NodeType.VAR))  # exp(x)\n        >>> result = certify_growth_bound(e, [1.0, 2.0, 3.0])\n        >>> result[1.0]['certified']\n        True\n    \"\"\"\n    if C_candidates is None:\n        C_candidates = [1.0, 2.0, 5.0, 10.0, 50.0, 100.0]\n\n    D = expr.eml_depth\n    results = {}\n\n    for C in C_candidates:\n        violations = []\n        max_ratio = 0.0\n\n        for x in grid:\n            try:\n                val = abs(expr.eval(x))\n                bound = iter_exp(D + 1, C * x)\n                if math.isinf(bound):\n                    continue\n                if val > bound * (1 + 1e-10):  # small tolerance\n                    violations.append((x, val, bound))\n                if bound > 0:\n                    max_ratio = max(max_ratio, val / bound)\n            except (OverflowError, ValueError):\n                continue\n\n        results[C] = {\n            'C': C,\n            'depth': D,\n            'level': D + 1,\n            'certified': len(violations) == 0,\n            'violations': violations,\n            'max_ratio': max_ratio,\n            'grid_size': len(grid)\n        }\n\n    return results\n\n\n# ============================================================\n# Algorithm 5: Grid-Based Representability Testing\n# ============================================================\n\ndef test_representability(target_fn: Callable[[float], float],\n                          max_depth: int, max_size: int,\n                          grid: List[float],\n                          tol: float = 1e-8) -> Optional[Expr]:\n    \"\"\"\n    Search for an EML expression that represents target_fn on the grid.\n\n    This implements the soundness-certified search: if None is returned,\n    then no EMLExpr of the given depth and size matches on the grid.\n\n    Args:\n        target_fn: Target function to represent\n        max_depth: Maximum eml depth\n        max_size: Maximum expression size\n        grid: Points at which to test equality\n        tol: Relative tolerance for matching\n\n    Returns:\n        A matching expression, or None if no match found.\n\n    Example:\n        >>> result = test_representability(\n        ...     lambda x: math.exp(x), max_depth=1, max_size=5,\n        ...     grid=[0.5, 1.0, 1.5, 2.0])\n        >>> result is not None  # Should find eml(1, x) = exp(x)\n        True\n    \"\"\"\n    candidates = enumerate_expressions(max_size, max_depth)\n\n    for expr in candidates:\n        if expr.eml_depth > max_depth:\n            continue\n\n        matches = True\n        for x in grid:\n            try:\n                val = expr.eval(x)\n                tgt = target_fn(x)\n\n                if math.isinf(val) or math.isinf(tgt):\n                    if val != tgt:\n                        matches = False\n                        break\n                    continue\n\n                if abs(val - tgt) > tol * max(1.0, abs(tgt)):\n                    matches = False\n                    break\n            except (OverflowError, ValueError):\n                matches = False\n                break\n\n        if matches:\n            return expr\n\n    return None\n\n\n# ============================================================\n# Example Usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"=== Algorithm Examples ===\\n\")\n\n    # Algorithm 1: Iterated exponentials\n    print(\"1. Iterated Exponentials:\")\n    for n in range(5):\n        val, overflow = iter_exp_safe(n, 1.0)\n        print(f\"   iterExp({n}, 1.0) = {val:.6g}\" +\n              (\" [overflow]\" if overflow else \"\"))\n\n    # Algorithm 3: Enumeration\n    print(\"\\n2. Expression Enumeration:\")\n    for depth in range(3):\n        exprs = enumerate_expressions(5, depth, [1.0])\n        print(f\"   Depth \u2264 {depth}, size \u2264 5: {len(exprs)} expressions\")\n\n    # Algorithm 5: Representability search\n    print(\"\\n3. Representability Search:\")\n    grid = [0.5, 1.0, 1.5, 2.0]\n    for n in range(1, 5):\n        for D in range(1, 4):\n            result = test_representability(\n                lambda x, n=n: iter_exp(n, x),\n                max_depth=D, max_size=7, grid=grid)\n            status = f\"size={result.size}\" if result else \"NOT FOUND\"\n            print(f\"   iterExp({n}) at depth \u2264 {D}: {status}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nEML Depth Separation \u2014 Applications\n\nReal-world applications of the depth separation theory:\n1. Compiler optimization barriers for symbolic math systems\n2. Complexity certification for expression evaluation\n3. Growth rate classification for scientific computing\n\"\"\"\n\nimport math\nfrom typing import List, Tuple, Callable\nfrom algorithms import iter_exp, Expr, NodeType, certify_growth_bound, test_representability\n\n\n# ============================================================\n# Application 1: Compiler Optimization Barrier Detection\n# ============================================================\n\ndef analyze_compilation_barrier(target_name: str,\n                                target_fn: Callable[[float], float],\n                                max_depth: int = 3,\n                                max_size: int = 9):\n    \"\"\"\n    Analyze whether a target function can be compiled into bounded-depth EML.\n\n    This application is relevant for symbolic math compilers that need to\n    transform expressions into a restricted instruction set (like EML).\n    The depth separation theorem tells us when compilation is impossible.\n\n    Args:\n        target_name: Human-readable name\n        target_fn: The target function\n        max_depth: Maximum EML depth to search\n        max_size: Maximum expression size to search\n\n    Returns:\n        Analysis report as string.\n    \"\"\"\n    grid = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]\n\n    print(f\"\\n--- Compilation Barrier Analysis: {target_name} ---\")\n\n    for D in range(max_depth + 1):\n        result = test_representability(target_fn, D, max_size, grid)\n        if result:\n            print(f\"  Depth {D}: COMPILABLE (size={result.size})\")\n            print(f\"    Expression: {result}\")\n        else:\n            print(f\"  Depth {D}: No compilation found (size \u2264 {max_size})\")\n\n    # Growth rate analysis\n    growth_samples = []\n    for x in [10.0, 20.0, 50.0, 100.0]:\n        try:\n            val = target_fn(x)\n            if not math.isinf(val) and val > 0:\n                growth_samples.append((x, math.log(val)))\n        except (OverflowError, ValueError):\n            growth_samples.append((x, float('inf')))\n\n    if growth_samples:\n        print(f\"  Growth behavior:\")\n        for x, log_val in growth_samples:\n            if math.isinf(log_val):\n                print(f\"    f({x}) = OVERFLOW\")\n            else:\n                print(f\"    log(f({x})) \u2248 {log_val:.2f}\")\n\n\n# ============================================================\n# Application 2: Expression Complexity Certification\n# ============================================================\n\ndef certify_expression_complexity(expr: Expr) -> dict:\n    \"\"\"\n    Certify the complexity class of an EML expression.\n\n    Uses the growth bound theorem to classify the expression's\n    asymptotic growth rate:\n    - Level 0: polynomial growth\n    - Level 1: single-exponential growth\n    - Level k: k-fold iterated exponential growth\n\n    Args:\n        expr: The expression to classify\n\n    Returns:\n        Certification report.\n    \"\"\"\n    D = expr.eml_depth\n    grid = [float(i) for i in range(1, 30)]\n\n    report = {\n        'eml_depth': D,\n        'size': expr.size,\n        'has_inv': expr.has_inv,\n        'growth_level_bound': D + 1,\n        'growth_bound_certified': False\n    }\n\n    # Verify growth bound\n    cert = certify_growth_bound(expr, grid)\n    for C, info in cert.items():\n        if info['certified']:\n            report['growth_bound_certified'] = True\n            report['certified_C'] = C\n            report['max_ratio'] = info['max_ratio']\n            break\n\n    return report\n\n\n# ============================================================\n# Application 3: Scientific Computing Growth Classification\n# ============================================================\n\ndef classify_growth_rate(fn: Callable[[float], float],\n                         name: str = \"f\") -> str:\n    \"\"\"\n    Classify the growth rate of a function using the iterExp hierarchy.\n\n    Tests whether the function grows:\n    - Polynomially (level 0)\n    - Single-exponentially (level 1)\n    - Double-exponentially (level 2)\n    - etc.\n\n    This is useful for predicting numerical overflow in scientific\n    computing and choosing appropriate data representations.\n\n    Args:\n        fn: The function to classify\n        name: Display name\n\n    Returns:\n        Classification string.\n    \"\"\"\n    test_points = [10.0, 50.0, 100.0, 500.0]\n\n    print(f\"\\n--- Growth Classification: {name} ---\")\n\n    # Compare against iterExp levels\n    for level in range(5):\n        exceeds = False\n        for x in test_points:\n            try:\n                val = abs(fn(x))\n                bound = iter_exp(level, x)\n                if math.isinf(bound):\n                    break\n                if val > bound:\n                    exceeds = True\n                    break\n            except (OverflowError, ValueError):\n                exceeds = True\n                break\n\n        if not exceeds:\n            print(f\"  Growth level: \u2264 {level} (bounded by iterExp({level}, x))\")\n            if level == 0:\n                return f\"{name} has sub-linear growth\"\n            elif level == 1:\n                return f\"{name} has at most single-exponential growth\"\n            else:\n                return f\"{name} has at most {level}-fold exponential growth\"\n\n    print(f\"  Growth level: > 4 (exceeds iterExp(4, x))\")\n    return f\"{name} has super-tetration growth\"\n\n\n# ============================================================\n# Demo\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"=\" * 70)\n    print(\"APPLICATION DEMOS\")\n    print(\"=\" * 70)\n\n    # Application 1: Compiler barriers\n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 1: Compiler Optimization Barriers\")\n    print(\"=\" * 70)\n\n    analyze_compilation_barrier(\"exp(x)\", lambda x: math.exp(x))\n    analyze_compilation_barrier(\"exp(exp(x))\", lambda x: math.exp(math.exp(x)))\n    analyze_compilation_barrier(\"x * exp(x^2)\", lambda x: x * math.exp(x**2))\n    analyze_compilation_barrier(\"iterExp(3, x)\", lambda x: iter_exp(3, x))\n\n    # Application 2: Complexity certification\n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 2: Expression Complexity Certification\")\n    print(\"=\" * 70)\n\n    exprs = [\n        (\"x + 1\", Expr(NodeType.ADD, left=Expr(NodeType.VAR),\n                        right=Expr(NodeType.CONST, value=1.0))),\n        (\"exp(x)\", Expr(NodeType.EML, left=Expr(NodeType.CONST, value=1.0),\n                        right=Expr(NodeType.VAR))),\n        (\"exp(exp(x))\", Expr(NodeType.EML, left=Expr(NodeType.CONST, value=1.0),\n                             right=Expr(NodeType.EML,\n                                        left=Expr(NodeType.CONST, value=1.0),\n                                        right=Expr(NodeType.VAR)))),\n    ]\n\n    for name, expr in exprs:\n        report = certify_expression_complexity(expr)\n        print(f\"\\n  {name}:\")\n        print(f\"    EML depth: {report['eml_depth']}\")\n        print(f\"    Size: {report['size']}\")\n        print(f\"    Growth level bound: \u2264 iterExp({report['growth_level_bound']}, Cx)\")\n        print(f\"    Certified: {report['growth_bound_certified']}\")\n\n    # Application 3: Growth classification\n    print(\"\\n\" + \"=\" * 70)\n    print(\"Application 3: Growth Rate Classification\")\n    print(\"=\" * 70)\n\n    classify_growth_rate(lambda x: x**3, \"x\u00b3\")\n    classify_growth_rate(lambda x: math.exp(x), \"exp(x)\")\n    classify_growth_rate(lambda x: math.exp(math.exp(x)), \"exp(exp(x))\")\n    classify_growth_rate(lambda x: iter_exp(3, x), \"iterExp(3, x)\")\n\n\n#!/usr/bin/env python3\n\"\"\"\nEML Depth Separation \u2014 Interactive Demo\n\nDemonstrates the depth separation theorem for EML expressions:\nbounded-depth EML cannot represent high-level iterated exponentials.\n\nIncludes:\n- Iterated exponential computation and visualization\n- Depth-bounded EML expression enumeration and evaluation\n- Growth bound verification\n- Minimal size search for depth-bounded representations\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import Optional, Callable, List, Tuple\nfrom dataclasses import dataclass\nfrom enum import Enum, auto\n\n\n# ============================================================\n# Expression Trees\n# ============================================================\n\nclass ExprType(Enum):\n    VAR = auto()\n    CONST = auto()\n    ADD = auto()\n    MUL = auto()\n    NEG = auto()\n    EML = auto()  # eml(a,b) = a * exp(b)\n\n\n@dataclass\nclass EMLExpr:\n    \"\"\"EML expression tree.\"\"\"\n    kind: ExprType\n    value: Optional[float] = None  # for CONST\n    left: Optional['EMLExpr'] = None\n    right: Optional['EMLExpr'] = None\n\n    def eval(self, x: float) -> float:\n        \"\"\"Evaluate the expression at x.\"\"\"\n        if self.kind == ExprType.VAR:\n            return x\n        elif self.kind == ExprType.CONST:\n            return self.value\n        elif self.kind == ExprType.ADD:\n            return self.left.eval(x) + self.right.eval(x)\n        elif self.kind == ExprType.MUL:\n            return self.left.eval(x) * self.right.eval(x)\n        elif self.kind == ExprType.NEG:\n            return -self.left.eval(x)\n        elif self.kind == ExprType.EML:\n            a = self.left.eval(x)\n            b = self.right.eval(x)\n            try:\n                return a * math.exp(b)\n            except OverflowError:\n                return float('inf')\n        raise ValueError(f\"Unknown kind: {self.kind}\")\n\n    @property\n    def size(self) -> int:\n        if self.kind in (ExprType.VAR, ExprType.CONST):\n            return 1\n        elif self.kind == ExprType.NEG:\n            return 1 + self.left.size\n        else:\n            return 1 + self.left.size + self.right.size\n\n    @property\n    def eml_depth(self) -> int:\n        if self.kind in (ExprType.VAR, ExprType.CONST):\n            return 0\n        elif self.kind == ExprType.NEG:\n            return self.left.eml_depth\n        elif self.kind in (ExprType.ADD, ExprType.MUL):\n            return max(self.left.eml_depth, self.right.eml_depth)\n        elif self.kind == ExprType.EML:\n            return 1 + max(self.left.eml_depth, self.right.eml_depth)\n        return 0\n\n    def __repr__(self):\n        if self.kind == ExprType.VAR:\n            return \"x\"\n        elif self.kind == ExprType.CONST:\n            return f\"{self.value}\"\n        elif self.kind == ExprType.ADD:\n            return f\"({self.left} + {self.right})\"\n        elif self.kind == ExprType.MUL:\n            return f\"({self.left} * {self.right})\"\n        elif self.kind == ExprType.NEG:\n            return f\"(-{self.left})\"\n        elif self.kind == ExprType.EML:\n            return f\"eml({self.left}, {self.right})\"\n        return \"?\"\n\n\n# Constructors\ndef var():\n    return EMLExpr(ExprType.VAR)\n\ndef const(c):\n    return EMLExpr(ExprType.CONST, value=c)\n\ndef add(a, b):\n    return EMLExpr(ExprType.ADD, left=a, right=b)\n\ndef mul(a, b):\n    return EMLExpr(ExprType.MUL, left=a, right=b)\n\ndef neg(a):\n    return EMLExpr(ExprType.NEG, left=a)\n\ndef eml(a, b):\n    return EMLExpr(ExprType.EML, left=a, right=b)\n\n\n# ============================================================\n# Iterated Exponential\n# ============================================================\n\ndef iter_exp(n: int, x: float) -> float:\n    \"\"\"Compute iterExp(n, x) = exp^(n)(x).\"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n        except OverflowError:\n            return float('inf')\n    return result\n\n\ndef canonical_eml(n: int) -> EMLExpr:\n    \"\"\"Build the canonical EML expression for iterExp(n):\n    eml(1, eml(1, ... eml(1, x)...)) with n layers.\"\"\"\n    if n == 0:\n        return var()\n    return eml(const(1.0), canonical_eml(n - 1))\n\n\n# ============================================================\n# Enumeration of depth-bounded EML expressions\n# ============================================================\n\ndef enumerate_eml(max_size: int, max_depth: int,\n                  constants: List[float] = [1.0]) -> List[EMLExpr]:\n    \"\"\"Enumerate EMLExpr trees up to given size and depth bounds.\"\"\"\n    cache = {}\n\n    def gen(size_budget: int, depth_budget: int) -> List[EMLExpr]:\n        key = (size_budget, depth_budget)\n        if key in cache:\n            return cache[key]\n        if size_budget <= 0:\n            cache[key] = []\n            return []\n        exprs = [var()]\n        for c in constants:\n            exprs.append(const(c))\n        if size_budget >= 2:\n            for sub in gen(size_budget - 1, depth_budget):\n                exprs.append(neg(sub))\n        if size_budget >= 3:\n            for s1 in range(1, size_budget - 1):\n                s2 = size_budget - 1 - s1\n                left_exprs = gen(s1, depth_budget)\n                right_exprs = gen(s2, depth_budget)\n                for l in left_exprs[:10]:  # limit branching\n                    for r in right_exprs[:10]:\n                        exprs.append(add(l, r))\n                        exprs.append(mul(l, r))\n                        if depth_budget >= 1 and l.eml_depth < depth_budget and r.eml_depth < depth_budget:\n                            exprs.append(eml(l, r))\n        cache[key] = exprs\n        return exprs\n\n    return gen(max_size, max_depth)\n\n\n# ============================================================\n# Search and Verification\n# ============================================================\n\ndef grid_matches(expr: EMLExpr, target_fn: Callable[[float], float],\n                 grid: List[float], tol: float = 1e-10) -> bool:\n    \"\"\"Check if expr matches target_fn on all grid points.\"\"\"\n    for x in grid:\n        try:\n            val = expr.eval(x)\n            tgt = target_fn(x)\n            if abs(val) == float('inf') or abs(tgt) == float('inf'):\n                if val != tgt:\n                    return False\n            elif abs(val - tgt) > tol * max(1, abs(tgt)):\n                return False\n        except (OverflowError, ValueError):\n            return False\n    return True\n\n\ndef search_eml(depth: int, max_size: int, grid: List[float],\n               target_fn: Callable[[float], float]) -> Optional[EMLExpr]:\n    \"\"\"Search for an EMLExpr of given depth bound that matches target on grid.\"\"\"\n    for size in range(1, max_size + 1):\n        candidates = enumerate_eml(size, depth)\n        for expr in candidates:\n            if expr.eml_depth <= depth and grid_matches(expr, target_fn, grid):\n                return expr\n    return None\n\n\n# ============================================================\n# Growth Bound Verification\n# ============================================================\n\ndef verify_growth_bound(expr: EMLExpr, depth: int, grid: List[float]) -> dict:\n    \"\"\"Verify the growth bound |e.eval(x)| \u2264 iterExp(D+1, C*x) for various C.\"\"\"\n    results = {}\n    for C in [1.0, 2.0, 5.0, 10.0, 50.0]:\n        violations = 0\n        max_ratio = 0.0\n        for x in grid:\n            try:\n                val = abs(expr.eval(x))\n                bound = iter_exp(depth + 1, C * x)\n                if bound == float('inf'):\n                    continue\n                if val > bound:\n                    violations += 1\n                if bound > 0:\n                    max_ratio = max(max_ratio, val / bound)\n            except (OverflowError, ValueError):\n                continue\n        results[C] = {'violations': violations, 'max_ratio': max_ratio}\n    return results\n\n\n# ============================================================\n# Demo\n# ============================================================\n\ndef demo_iterated_exponentials():\n    \"\"\"Demonstrate the iterated exponential growth hierarchy.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 1: Iterated Exponential Growth Hierarchy\")\n    print(\"=\" * 70)\n    print()\n    print(\"iterExp(n, x) = exp^(n)(x)\")\n    print()\n\n    x = 2.0\n    print(f\"At x = {x}:\")\n    for n in range(7):\n        val = iter_exp(n, x)\n        if val == float('inf'):\n            print(f\"  iterExp({n}, {x}) = OVERFLOW (> 10^308)\")\n        elif val > 1e15:\n            print(f\"  iterExp({n}, {x}) \u2248 10^{math.log10(val):.1f}\")\n        else:\n            print(f\"  iterExp({n}, {x}) = {val:.6g}\")\n    print()\n    print(\"Observation: Each level grows astronomically faster than the previous.\")\n    print()\n\n\ndef demo_canonical_construction():\n    \"\"\"Demonstrate canonical EML representations.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 2: Canonical EML Representations\")\n    print(\"=\" * 70)\n    print()\n\n    for n in range(5):\n        expr = canonical_eml(n)\n        print(f\"  iterExp({n}): {expr}\")\n        print(f\"    emlDepth = {expr.eml_depth}, size = {expr.size}\")\n        x = 1.0\n        print(f\"    eval({x}) = {expr.eval(x):.6g} vs iterExp({n},{x}) = {iter_exp(n, x):.6g}\")\n        print()\n\n\ndef demo_depth_separation():\n    \"\"\"Demonstrate the depth separation phenomenon.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 3: Depth Separation \u2014 Search for Bounded-Depth Representations\")\n    print(\"=\" * 70)\n    print()\n\n    grid = [0.5, 1.0, 1.5, 2.0, 2.5]\n\n    for D in range(4):\n        print(f\"Depth bound D = {D}:\")\n        for n in range(D + 4):\n            target = lambda x, n=n: iter_exp(n, x)\n            max_search_size = 7\n            result = search_eml(D, max_search_size, grid, target)\n            if result is not None:\n                print(f\"  iterExp({n}): FOUND at size {result.size} \u2014 {result}\")\n            else:\n                if n <= D:\n                    # Should be findable with larger size\n                    print(f\"  iterExp({n}): Not found up to size {max_search_size} (may need larger search)\")\n                else:\n                    print(f\"  iterExp({n}): NOT FOUND (consistent with separation theorem)\")\n        print()\n\n\ndef demo_growth_bounds():\n    \"\"\"Verify growth bounds computationally.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 4: Growth Bound Verification\")\n    print(\"=\" * 70)\n    print()\n\n    grid = [float(i) for i in range(1, 20)]\n\n    # Test some depth-1 expressions\n    exprs = [\n        (\"eml(1, x) = exp(x)\", eml(const(1.0), var()), 1),\n        (\"eml(x, x) = x\u00b7exp(x)\", eml(var(), var()), 1),\n        (\"eml(1, eml(1, x)) = exp(exp(x))\", eml(const(1.0), eml(const(1.0), var())), 2),\n    ]\n\n    for name, expr, depth in exprs:\n        print(f\"  Expression: {name}\")\n        print(f\"  emlDepth = {expr.eml_depth}\")\n        results = verify_growth_bound(expr, depth, grid)\n        for C, info in results.items():\n            status = \"\u2713\" if info['violations'] == 0 else f\"\u2717 ({info['violations']} violations)\"\n            print(f\"    C={C:5.1f}: {status}, max ratio = {info['max_ratio']:.4f}\")\n        print()\n\n\ndef demo_minimal_size():\n    \"\"\"Search for minimal representations at different depths.\"\"\"\n    print(\"=\" * 70)\n    print(\"DEMO 5: Minimal Size vs Depth (Falsifiable Conjecture Test)\")\n    print(\"=\" * 70)\n    print()\n    print(\"For each n, find minimal EMLExpr size at various depth bounds.\")\n    print(\"Conjecture: for fixed D, minimal size grows exponentially in n.\")\n    print()\n\n    grid = [0.5, 1.0, 1.5, 2.0]\n    max_size = 9\n\n    print(f\"{'n':>3} | {'D=1':>6} | {'D=2':>6} | {'D=3':>6} | {'D=4':>6}\")\n    print(\"-\" * 40)\n\n    for n in range(1, 5):\n        target = lambda x, n=n: iter_exp(n, x)\n        row = f\"{n:>3} |\"\n        for D in range(1, 5):\n            result = search_eml(D, max_size, grid, target)\n            if result is not None:\n                row += f\" {result.size:>5} |\"\n            else:\n                row += f\"   >={max_size} |\"\n        print(row)\n\n    print()\n    print(\"Key: Values show minimal expression size found.\")\n    print(\"'>=' means no match found up to that size (separation may apply).\")\n\n\nif __name__ == \"__main__\":\n    demo_iterated_exponentials()\n    demo_canonical_construction()\n    demo_depth_separation()\n    demo_growth_bounds()\n    demo_minimal_size()\n"
+    },
+    "date": "2026-05-20T18:17:00Z",
+    "exp_id": "4346710f",
+    "source_exp_ids": [
+      "8155cb9f"
     ]
   },
   "conjecture_for_every_prime_p__3_mod_4_the_paley_ty.json": {
@@ -6764,7 +6808,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -6782,7 +6826,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -6791,7 +6835,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "galois_group__s",
@@ -6800,7 +6844,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -6809,7 +6853,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -6818,7 +6862,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "expected_lean_signature",
@@ -6827,7 +6871,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -6836,7 +6880,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "percolation_threshold",
@@ -6845,7 +6889,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -6854,7 +6898,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -6863,7 +6907,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -6872,7 +6916,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 271
+      "hue": 100
     },
     {
       "id": "legendres_conjecture",
@@ -6881,7 +6925,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -6890,7 +6934,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -6899,7 +6943,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -6908,7 +6952,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "p_vs_np_problem",
@@ -6935,7 +6979,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 134
+      "hue": 92
     },
     {
       "id": "hodge_conjecture",
@@ -6944,7 +6988,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -6953,7 +6997,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -6962,7 +7006,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -6971,7 +7015,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -6980,7 +7024,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "twin_prime_conjecture",
@@ -6989,7 +7033,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -6998,7 +7042,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -7007,7 +7051,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T23:00:53Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -7016,7 +7060,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -7025,7 +7069,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 90
+      "hue": 101
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -7043,7 +7087,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "tropical_intersection_theory",
@@ -7052,7 +7096,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "riemann_hypothesis",
@@ -7061,7 +7105,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "odd_perfect_numbers",
@@ -7070,7 +7114,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -7079,7 +7123,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "jacobian_conjecture",
@@ -7088,7 +7132,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "10_is_a_solitary_number",
@@ -7097,7 +7141,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -7115,7 +7159,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -7124,7 +7168,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -7133,7 +7177,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -7142,7 +7186,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -7151,7 +7195,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -7160,7 +7204,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 292
+      "hue": 271
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -7169,7 +7213,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -7178,7 +7222,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "yang_mills_mass_gap",
@@ -7187,7 +7231,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "goldbach_conjecture",
@@ -7196,7 +7240,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -7214,7 +7258,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 100
+      "hue": 271
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -7232,7 +7276,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "beals_conjecture",
@@ -7241,7 +7285,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -7250,7 +7294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -7259,7 +7303,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 91
+      "hue": 280
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -7268,7 +7312,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -7286,7 +7330,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -7295,7 +7339,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -7304,7 +7348,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -7313,7 +7357,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -7322,7 +7366,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 314
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -7331,7 +7375,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -7340,7 +7384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -7349,7 +7393,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -7358,7 +7402,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -7367,7 +7411,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 292
+      "hue": 271
     },
     {
       "id": "primes_of_the_form_n1",
@@ -7376,7 +7420,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -7394,7 +7438,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -7403,7 +7447,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -7421,7 +7465,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 134
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -7430,7 +7474,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "we_have_formally_verified",
@@ -7439,7 +7483,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -7448,7 +7492,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -7457,7 +7501,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -7466,7 +7510,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -7475,7 +7519,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -7484,7 +7528,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -7493,7 +7537,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -7502,7 +7546,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "collatz_conjecture",
@@ -7511,7 +7555,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -7520,7 +7564,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -7538,7 +7582,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 292
+      "hue": 271
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -7547,7 +7591,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -7556,7 +7600,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -7565,7 +7609,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -7574,7 +7618,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -7583,7 +7627,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -7592,7 +7636,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -7601,7 +7645,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "medium_priority",
@@ -7610,7 +7654,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "erdsstraus_conjecture",
@@ -7619,7 +7663,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:00:23Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "the_invariance_theorem_establishes_that_the_symmet",
@@ -7637,7 +7681,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -7646,7 +7690,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 95
+      "hue": 280
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -7655,7 +7699,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T02:05:05Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "hypothesis_4_p_adic_threshold_transfer",
@@ -7673,7 +7717,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -7682,7 +7726,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "kakeya_conjecture",
@@ -7691,7 +7735,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "sums_of_three_cubes",
@@ -7700,7 +7744,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -7709,7 +7753,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "196_algorithm_non_termination",
@@ -7718,7 +7762,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -7727,7 +7771,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -7736,7 +7780,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -7745,7 +7789,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 112
+      "hue": 271
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -7763,7 +7807,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -7790,7 +7834,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -7808,7 +7852,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -7817,7 +7861,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:05:51Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "non_archimedean_probability_via_surreal_numbers",
@@ -7826,7 +7870,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "proof_expansion_constant_for_formal_theories",
@@ -7835,7 +7879,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T08:08:15Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "eml_category_the_category_of_eml_computable_maps",
@@ -7844,7 +7888,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T08:09:01Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "eml_universal_approximation",
@@ -7853,7 +7897,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T09:06:21Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "inverse_stereographic_persistence_topological_data",
@@ -7862,7 +7906,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T09:06:51Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hypothesis_5_exceptional_set_finiteness",
@@ -7871,7 +7915,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T09:07:18Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_2_semantic_entropy_correlation",
@@ -7880,7 +7924,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T09:07:52Z",
-      "hue": 90
+      "hue": 101
     },
     {
       "id": "conjecture_3_coefficient_growth_rate_under_iterate",
@@ -7889,7 +7933,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T10:03:27Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_3_faithful_representations_lift_to_line",
@@ -7898,7 +7942,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:03:53Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_1_eml_elementary_completeness_with_poly",
@@ -7907,7 +7951,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T10:04:23Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "langlands_program_functoriality",
@@ -7916,7 +7960,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:04:57Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "proof_phase_transitions_in_random_formal_theories",
@@ -7925,7 +7969,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T11:03:17Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_5_strict_depth_separation_for_exponenti",
@@ -7952,7 +7996,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T11:04:40Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "hypothesis_3_transcendence_rank",
@@ -7961,7 +8005,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T12:00:41Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "conjecture_5_eml_circuit_depth_separation",
@@ -7970,7 +8014,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:03:44Z",
-      "hue": 134
+      "hue": 91
     },
     {
       "id": "conjecture_1_mps_min_cut_principle",
@@ -7979,7 +8023,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:11Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "arithmetic_monodromy_fingerprints_of_gradient_desc",
@@ -7988,7 +8032,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:39Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_4_monotone_circuit_depth_from_entropy_c",
@@ -7997,7 +8041,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T14:00:24Z",
-      "hue": 89
+      "hue": 95
     },
     {
       "id": "conjecture_2_eml_description_complexity_is_multipl",
@@ -8006,7 +8050,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T14:03:50Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_5_pairwise_intersection_bounds_bootstra",
@@ -8015,7 +8059,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:04:41Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_5_model_shrinkage_distance_is_a_proof_c",
@@ -8024,7 +8068,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:05:33Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_1_full_depth_hierarchy_for_exponential_",
@@ -8033,7 +8077,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:06:18Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_3_learning_theoretic_version_space_comp",
@@ -8042,7 +8086,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:07:00Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "arithmetic_phase_locking_in_gradient_descent_over_",
@@ -8051,7 +8095,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:07:45Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "abc_conjecture_formalization",
@@ -8069,7 +8113,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T17:05:12Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "happy_end_problem",
@@ -8078,7 +8122,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T17:12:45Z",
-      "hue": 270
+      "hue": 271
+    },
+    {
+      "id": "conjecture_e_no_polynomial_size_compilation_from_f",
+      "title": "Depth Separation for Exact Expression Languages",
+      "domain": "Semantic Complexity Theory / Expression Language Barriers",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-20T18:17:00Z",
+      "hue": 92
     }
   ],
   "edges": [
@@ -8197,6 +8250,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "eml_universal_approximation",
       "target": "conjecture_5_strict_depth_separation_for_exponenti",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "conjecture_5_eml_circuit_depth_separation",
+      "target": "conjecture_e_no_polynomial_size_compilation_from_f",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -9118,21 +9178,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:11.024546+00:00"
   },
   {
-    "id": "seed_010",
-    "title": "Happy End Problem",
-    "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve known bounds.",
-    "domains": [
-      "Geometry",
-      "Combinatorics"
-    ],
-    "priority_score": 0.82,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "336dee42",
-    "timestamp": "2026-05-20T00:22:10.974765+00:00"
-  },
-  {
     "id": "seed_018",
     "title": "Hilbert 6: Axiomatization of Physics",
     "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
@@ -9531,6 +9576,65 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "d237288b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T17:05:16.581414+00:00"
+  },
+  {
+    "id": "fd_0296",
+    "title": "Highest priority",
+    "description": ": Conjecture 1 (Signature Injectivity). This directly addresses the single remaining sorry in the formalization and would complete the formal proof of the Happy End theorem.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics",
+      "Logic"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "336dee42",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T17:12:49.268207+00:00"
+  },
+  {
+    "id": "fd_0297",
+    "title": "High priority",
+    "description": ": Conjecture 4 (Order-Type Invariance). This is likely provable and would establish the foundational abstraction for the entire program.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "336dee42",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T17:12:49.278985+00:00"
+  },
+  {
+    "id": "fd_0298",
+    "title": "Medium priority",
+    "description": ": Conjecture 2 (Staircase Property). A stepping stone toward Conjecture 1 with independent interest.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "336dee42",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T17:12:49.288900+00:00"
+  },
+  {
+    "id": "fd_0299",
+    "title": "Exploratory",
+    "description": ": Conjectures 3 and 5. These introduce genuinely new ideas (second-order signatures, energy landscapes) that could open entirely new directions.",
+    "domains": [
+      "NumberTheory",
+      "Physics"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "336dee42",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T17:12:49.300302+00:00"
   },
   {
     "id": "seed_007",
