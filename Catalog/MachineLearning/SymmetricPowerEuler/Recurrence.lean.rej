@@ -1,6 +1,6 @@
 --- Recurrence.lean
 +++ Recurrence.lean
-@@ -56,22 +66,25 @@
+@@ -56,22 +56,25 @@
  
  /-! ## symmTraceRec equals e1SymmPower -/
  

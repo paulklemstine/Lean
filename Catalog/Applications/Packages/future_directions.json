@@ -2217,6 +2217,109 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T02:03:53.773483+00:00"
+    },
+    {
+      "id": "fd_0120",
+      "title": "Hypothesis 1: Primitive Embedding via Discriminant Forms",
+      "description": "**Conjecture.** Let $(L, Q)$ be a nondegenerate even lattice of signature $(1, r-1)$ with $r \\leq 20$. Then $L$ admits a primitive embedding into the K3 lattice $\\Lambda_{K3} = U^3 \\oplus E_8(-1)^2$ if and only if the discriminant form $q_L: A_L \\to \\mathbb{Q}/2\\mathbb{Z}$ satisfies the Nikulin embedding conditions:\n1. $\\text{rank}(\\Lambda_{K3}) - \\text{rank}(L) \\geq \\ell(A_L)$ (length condition),\n2. The signature modulo 8 is compatible.\n\n**Test.** Formalize the discriminant form as a finite bilinear form on $L^\\vee / L$ and state the embedding criterion as a decidable predicate. Implement a verified algorithm that checks the Nikulin conditions for explicit lattices. For refutation, construct an explicit lattice satisfying the numerical conditions but failing to embed (which would reveal a",
+      "source_exp_id": "825b3b9b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/825b3b9b",
+      "domains": [
+        "NumberTheory",
+        "Cryptography",
+        "Logic",
+        "Computation",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T02:04:18.473641+00:00"
+    },
+    {
+      "id": "fd_0121",
+      "title": "Hypothesis 2: Semisimplicity of Polarizable Rational Hodge Structures",
+      "description": "**Conjecture.** Every polarized rational Hodge structure $(V, Q, H^{p,q})$ is semisimple: for any Hodge substructure $W \\subseteq V$, the Q-orthogonal complement $W^\\perp$ is also a Hodge substructure, giving a Hodge-theoretic complement $V = W \\oplus W^\\perp$.\n\n**Test.** The proof requires showing that the polarization form restricts nondegenerately to every Hodge substructure. Formalize the positive-definiteness of the Hodge-Riemann bilinear relations $(−1)^p Q(v, \\bar{v}) > 0$ for $v \\in H^{p,q}$, and derive nondegeneracy of $Q|_W$ from this. The key bridge lemma is: the Hodge-Riemann relations imply the Hodge index theorem, which implies nondegeneracy.\n\n**Refutation.** If the formalization fails, it will identify the exact point where the positivity argument breaks down — likely a miss",
+      "source_exp_id": "825b3b9b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/825b3b9b",
+      "domains": [
+        "NumberTheory",
+        "Bridges",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T02:04:18.477954+00:00"
+    },
+    {
+      "id": "fd_0122",
+      "title": "Hypothesis 3: Mumford–Tate Group via Tensor Invariants",
+      "description": "**Conjecture.** For a weight-1 rational Hodge structure $W$ of dimension $2g$, the Mumford–Tate group $\\text{MT}(W) \\subseteq \\text{GL}(W)$ can be recovered as the stabilizer of all tensor Hodge classes:\n$$\\text{MT}(W) = \\bigcap_{p,q \\geq 0} \\text{Stab}(\\text{Hdg}(W^{\\otimes p} \\otimes (W^\\vee)^{\\otimes q}))$$\n\nFor $g \\leq 2$ and generic $W$, $\\text{MT}(W) = \\text{GSp}_{2g}$.\n\n**Test.** Formalize the tensor construction $W^{\\otimes p} \\otimes (W^\\vee)^{\\otimes q}$ with its induced Hodge structure. Compute the Hodge classes explicitly for $p + q \\leq 4$ in the case $g = 1$ (elliptic curves). Verify that the stabilizer of these classes is $\\text{GL}_2$ for non-CM curves and a proper subgroup for CM curves.\n\n**Refutation.** Failure would manifest as either (a) the tensor Hodge class computati",
+      "source_exp_id": "825b3b9b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/825b3b9b",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T02:04:18.482196+00:00"
+    },
+    {
+      "id": "fd_0123",
+      "title": "Hypothesis 4: Kuga–Satake Construction for Weight-2 Structures",
+      "description": "**Conjecture.** For a polarized weight-2 rational Hodge structure $(V, Q)$ of K3 type (i.e., $\\dim H^{2,0} = 1$), the even Clifford algebra $\\text{Cl}^+(V, Q)$ carries a canonically induced weight-1 Hodge structure. The resulting abelian variety (the Kuga–Satake variety) has dimension $2^{(\\dim V - 2)/2}$.\n\n**Test.** Formalize the Clifford algebra $\\text{Cl}(V, Q)$ using Mathlib's `CliffordAlgebra` API. Define the even subalgebra and construct the Hodge decomposition on it by extending the weight-2 decomposition multiplicatively. Verify that the construction produces a valid weight-1 Hodge structure (i.e., $H^{1,0} \\oplus H^{0,1} = \\text{Cl}^+_\\mathbb{C}$ with $H^{1,0} \\cap H^{0,1} = 0$).\n\n**Refutation.** The construction could fail if the multiplicative extension of the Hodge decompositio",
+      "source_exp_id": "825b3b9b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/825b3b9b",
+      "domains": [
+        "NumberTheory",
+        "Bridges",
+        "Algebra",
+        "Logic",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T02:04:18.486818+00:00"
+    },
+    {
+      "id": "fd_0124",
+      "title": "Hypothesis 5: Derived Torelli via Lattice Isometries",
+      "description": "**Conjecture.** Let $(V_1, Q_1, A_1, T_1)$ and $(V_2, Q_2, A_2, T_2)$ be two polarized weight-2 rational Hodge structures with their algebraic/transcendental decompositions. An isometry $\\phi: (V_1, Q_1) \\to (V_2, Q_2)$ that preserves the decomposition ($\\phi(A_1) = A_2$ and $\\phi(T_1) = T_2$) and induces Hodge isometries on both summands determines a unique Hodge isometry of the full structures.\n\n**Test.** Formalize the gluing condition: given Hodge isometries $\\phi_A: A_1 \\to A_2$ and $\\phi_T: T_1 \\to T_2$ that are compatible with the ambient bilinear forms (i.e., $Q_2(\\phi_A(a), \\phi_T(t)) = Q_1(a, t) = 0$), prove that $\\phi_A \\oplus \\phi_T$ is a Hodge isometry of $(V_1, Q_1) \\to (V_2, Q_2)$.\n\n**Refutation.** The conjecture could fail if there exist \"exotic\" isometries that permute the ",
+      "source_exp_id": "825b3b9b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/825b3b9b",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Cryptography",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T02:04:18.490592+00:00"
     }
   ],
   "pruned": [
