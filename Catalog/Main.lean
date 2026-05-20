@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1593 of the highest-quality
+A curated collection of 1596 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1593
+Total files: 1596
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -856,6 +856,9 @@ import FINAL.EML.RepulsorTheory
 import FINAL.EML.RepulsorTheoryExtended
 import FINAL.EML.SPBResearchExploration
 import FINAL.EML.ScalingLaws
+import FINAL.EML.SingleOperatorClosure
+import FINAL.EML.SingleOperatorCompilation
+import FINAL.EML.SingleOperatorRepresentability
 import FINAL.EML.StochasticSelfImprovement
 import FINAL.EML.StoneWeierstrassApprox
 import FINAL.EML.SymbolicRegression
