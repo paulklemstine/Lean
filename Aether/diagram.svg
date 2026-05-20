@@ -24,42 +24,42 @@
 <text x="720" y="240" font-size="11" fill="#c44" font-weight="bold">B</text>
 <line x1="675" y1="190" x2="825" y2="290" stroke="#888" stroke-width="1.5"/>
 <text x="758" y="240" font-size="11" fill="#c44" font-weight="bold">C</text>
-<rect x="395" y="35" width="110" height="30" rx="5" fill="#4a90d9" fill-opacity="0.15" stroke="#4a90d9" stroke-width="1.5"/>
+<rect x="395" y="35" width="110" height="30" rx="5" fill="#e6194b" fill-opacity="0.15" stroke="#e6194b" stroke-width="1.5"/>
 <text x="450" y="55" text-anchor="middle" font-size="11" fill="#333">(3,4,5)</text>
-<rect x="170" y="155" width="110" height="30" rx="5" fill="#e6a23c" fill-opacity="0.15" stroke="#e6a23c" stroke-width="1.5"/>
+<rect x="170" y="155" width="110" height="30" rx="5" fill="#f58231" fill-opacity="0.15" stroke="#f58231" stroke-width="1.5"/>
 <text x="225" y="175" text-anchor="middle" font-size="11" fill="#333">(5,12,13)</text>
 <text x="225" y="195" text-anchor="middle" font-size="9" fill="#666">w=A</text>
-<rect x="395" y="155" width="110" height="30" rx="5" fill="#67c23a" fill-opacity="0.15" stroke="#67c23a" stroke-width="1.5"/>
+<rect x="395" y="155" width="110" height="30" rx="5" fill="#ffe119" fill-opacity="0.15" stroke="#ffe119" stroke-width="1.5"/>
 <text x="450" y="175" text-anchor="middle" font-size="11" fill="#333">(21,20,29)</text>
 <text x="450" y="195" text-anchor="middle" font-size="9" fill="#666">w=B</text>
-<rect x="620" y="155" width="110" height="30" rx="5" fill="#f56c6c" fill-opacity="0.15" stroke="#f56c6c" stroke-width="1.5"/>
+<rect x="620" y="155" width="110" height="30" rx="5" fill="#3cb44b" fill-opacity="0.15" stroke="#3cb44b" stroke-width="1.5"/>
 <text x="675" y="175" text-anchor="middle" font-size="11" fill="#333">(15,8,17)</text>
 <text x="675" y="195" text-anchor="middle" font-size="9" fill="#666">w=C</text>
-<rect x="20" y="295" width="110" height="30" rx="5" fill="#909399" fill-opacity="0.15" stroke="#909399" stroke-width="1.5"/>
+<rect x="20" y="295" width="110" height="30" rx="5" fill="#42d4f4" fill-opacity="0.15" stroke="#42d4f4" stroke-width="1.5"/>
 <text x="75" y="315" text-anchor="middle" font-size="11" fill="#333">(7,24,25)</text>
 <text x="75" y="335" text-anchor="middle" font-size="9" fill="#666">w=AA</text>
-<rect x="95" y="295" width="110" height="30" rx="5" fill="#909399" fill-opacity="0.15" stroke="#909399" stroke-width="1.5"/>
+<rect x="95" y="295" width="110" height="30" rx="5" fill="#4363d8" fill-opacity="0.15" stroke="#4363d8" stroke-width="1.5"/>
 <text x="150" y="315" text-anchor="middle" font-size="11" fill="#333">(55,48,73)</text>
 <text x="150" y="335" text-anchor="middle" font-size="9" fill="#666">w=AB</text>
-<rect x="170" y="295" width="110" height="30" rx="5" fill="#909399" fill-opacity="0.15" stroke="#909399" stroke-width="1.5"/>
+<rect x="170" y="295" width="110" height="30" rx="5" fill="#911eb4" fill-opacity="0.15" stroke="#911eb4" stroke-width="1.5"/>
 <text x="225" y="315" text-anchor="middle" font-size="11" fill="#333">(45,28,53)</text>
 <text x="225" y="335" text-anchor="middle" font-size="9" fill="#666">w=AC</text>
-<rect x="320" y="295" width="110" height="30" rx="5" fill="#909399" fill-opacity="0.15" stroke="#909399" stroke-width="1.5"/>
+<rect x="320" y="295" width="110" height="30" rx="5" fill="#f032e6" fill-opacity="0.15" stroke="#f032e6" stroke-width="1.5"/>
 <text x="375" y="315" text-anchor="middle" font-size="11" fill="#333">(39,80,89)</text>
 <text x="375" y="335" text-anchor="middle" font-size="9" fill="#666">w=BA</text>
-<rect x="395" y="295" width="110" height="30" rx="5" fill="#909399" fill-opacity="0.15" stroke="#909399" stroke-width="1.5"/>
+<rect x="395" y="295" width="110" height="30" rx="5" fill="#bfef45" fill-opacity="0.15" stroke="#bfef45" stroke-width="1.5"/>
 <text x="450" y="315" text-anchor="middle" font-size="11" fill="#333">(119,120,169)</text>
 <text x="450" y="335" text-anchor="middle" font-size="9" fill="#666">w=BB</text>
-<rect x="470" y="295" width="110" height="30" rx="5" fill="#909399" fill-opacity="0.15" stroke="#909399" stroke-width="1.5"/>
+<rect x="470" y="295" width="110" height="30" rx="5" fill="#469990" fill-opacity="0.15" stroke="#469990" stroke-width="1.5"/>
 <text x="525" y="315" text-anchor="middle" font-size="11" fill="#333">(77,36,85)</text>
 <text x="525" y="335" text-anchor="middle" font-size="9" fill="#666">w=BC</text>
-<rect x="620" y="295" width="110" height="30" rx="5" fill="#909399" fill-opacity="0.15" stroke="#909399" stroke-width="1.5"/>
+<rect x="620" y="295" width="110" height="30" rx="5" fill="#dcbeff" fill-opacity="0.15" stroke="#dcbeff" stroke-width="1.5"/>
 <text x="675" y="315" text-anchor="middle" font-size="11" fill="#333">(33,56,65)</text>
 <text x="675" y="335" text-anchor="middle" font-size="9" fill="#666">w=CA</text>
-<rect x="695" y="295" width="110" height="30" rx="5" fill="#909399" fill-opacity="0.15" stroke="#909399" stroke-width="1.5"/>
+<rect x="695" y="295" width="110" height="30" rx="5" fill="#fabed4" fill-opacity="0.15" stroke="#fabed4" stroke-width="1.5"/>
 <text x="750" y="315" text-anchor="middle" font-size="11" fill="#333">(65,72,97)</text>
 <text x="750" y="335" text-anchor="middle" font-size="9" fill="#666">w=CB</text>
-<rect x="770" y="295" width="110" height="30" rx="5" fill="#909399" fill-opacity="0.15" stroke="#909399" stroke-width="1.5"/>
+<rect x="770" y="295" width="110" height="30" rx="5" fill="#aaffc3" fill-opacity="0.15" stroke="#aaffc3" stroke-width="1.5"/>
 <text x="825" y="315" text-anchor="middle" font-size="11" fill="#333">(35,12,37)</text>
 <text x="825" y="335" text-anchor="middle" font-size="9" fill="#666">w=CC</text>
 <text x="50" y="380" font-size="12" font-weight="bold" fill="#333">Minor Profile Injectivity (Collision Resistance):</text>

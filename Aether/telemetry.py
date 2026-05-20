@@ -13,6 +13,23 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, List, Any
 
+# Rainbow-spanning domain colors — each domain gets a distinct hue
+DOMAIN_COLORS = {
+    "Algebra": "#e6194b",        # red
+    "Bridges": "#f58231",        # orange
+    "Computation": "#ffe119",    # yellow
+    "Cryptography": "#bfef45",  # lime green
+    "EML": "#3cb44b",           # green
+    "Geometry": "#42d4f4",      # cyan
+    "Logic": "#4363d8",         # blue
+    "MachineLearning": "#911eb4",# purple
+    "Physics": "#f032e6",       # magenta
+    "Pythagorean": "#aaffc3",   # mint
+    "Shared": "#dcbeff",        # lavender
+    "Speculative": "#fabed4",   # pink
+    "Tropical": "#469990",      # teal
+}
+
 
 @dataclass
 class ExperimentRecord:
@@ -149,11 +166,13 @@ class TelemetryLogger:
 
         rows = ""
         for r in recent:
+            domain = r.get('domain', '')
+            domain_color = DOMAIN_COLORS.get(domain, "#8b949e")
             rows += f"""
             <tr>
                 <td>{r.get('timestamp', '')[:19]}</td>
                 <td>{r.get('arc_name', '')}</td>
-                <td>{r.get('domain', '')}</td>
+                <td><span style="background:{domain_color};color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">{domain}</span></td>
                 <td><code>{r.get('experiment_id', '')[:8]}</code></td>
                 <td><span class="status-{r.get('status', '')}">{r.get('status', '')}</span></td>
                 <td>{r.get('novelty_score', 0):.2f}</td>
