@@ -1541,7 +1541,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T00:22:11.045133+00:00"
     },
@@ -2637,7 +2637,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T03:01:41.317104+00:00"
     },
@@ -2794,7 +2794,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "135bffd4",
       "timestamp": "2026-05-20T03:09:29.635644+00:00"
     },
@@ -3848,7 +3848,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:09:04.566243+00:00"
     },
@@ -3890,7 +3890,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:09:04.583579+00:00"
     },
@@ -3911,7 +3911,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T08:09:04.592376+00:00"
     },
@@ -4827,7 +4827,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:03:48.348242+00:00"
     },
@@ -4847,7 +4847,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:03:48.358849+00:00"
     },
@@ -5114,7 +5114,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:03:57.608186+00:00"
     },
@@ -5156,6 +5156,24 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:04:12.052920+00:00"
+    },
+    {
+      "id": "fd_0265",
+      "title": "Prime-Modular Morse Stability for Neural Loss Landscapes",
+      "description": "Conjecture: Let L(theta) be a polynomial loss with integer coefficients for a fixed architecture and dataset, and let C_p(t)=sum_i b_i({theta in F_p^n : grad L(theta)=0, L(theta)=t}) be the Poincare polynomial of the critical locus fiber at value t over F_p. Then outside a density-0 set of primes, the multiset of normalized Betti profiles p^(-dim/2) C_p(t) over all t determines and is determined by the real Morse index histogram of nondegenerate critical points of L over R up to finitely many ambiguities. Test: Compute critical loci modulo many primes for small polynomial models, extract Betti/profile statistics by etale or point-count methods, and compare against exact real critical-point counts and Morse indices from symbolic/numeric algebraic geometry; refuted if two losses have asymptotically identical prime-side profiles but different real Morse histograms, or if one loss shows no stable prime-to-real correspondence across growing prime samples. Impact: This would create a new arithmetic microscope for optimization, letting one infer real training-landscape complexity from finite-field computations and potentially enabling ultrafast hardness diagnostics for neural architectures.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Geometry",
+        "Optimization Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T14:05:05.316658+00:00"
     }
   ],
   "pruned": [

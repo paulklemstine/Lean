@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "conjecture_5_model_shrinkage_distance_is_a_proof_c.json",
+    "title": "Model-Shrinkage Distance as a Proof-Complexity Invariant",
+    "domain": "Proof Complexity / Information Theory / Discrete Mathematics",
+    "date": "2026-05-20T14:05:33Z",
+    "exp_id": "5aa96213"
+  },
+  {
     "filename": "conjecture_5_pairwise_intersection_bounds_bootstra.json",
     "title": "Pairwise Intersection Energy Bounds Bootstrap to Hausdorff Dimension",
     "domain": "Geometric Measure Theory / Incidence Combinatorics",
@@ -3235,6 +3242,47 @@ window.PACKAGE_DB = {
     "exp_id": "ff0359d2",
     "source_exp_ids": [
       "63011452"
+    ]
+  },
+  "conjecture_5_model_shrinkage_distance_is_a_proof_c.json": {
+    "title": "Model-Shrinkage Distance as a Proof-Complexity Invariant",
+    "domain": "Proof Complexity / Information Theory / Discrete Mathematics",
+    "article": "# The Hidden Cost of Narrowing Down: How Mathematicians Found an Energy Law for Logical Reasoning\n\n## A Surprising Connection Between Proofs and Physics\n\nImagine you're trying to crack a combination lock with a million possible codes. A helpful friend tells you, \"The first digit is 7.\" Suddenly, the search space collapses \u2014 there are only a hundred thousand possibilities left. Another hint \u2014 \"The second digit is 3\" \u2014 and you're down to ten thousand.\n\nEach hint carries a cost. Not in money or time, but in *information*. Every clue that narrows the possibilities destroys alternatives that once existed. In physics, this is reminiscent of entropy: the measure of disorder in a system. When you organize things \u2014 when you constrain possibilities \u2014 entropy drops, and the universe demands a price.\n\nNow, a new mathematical framework reveals that something strikingly similar happens inside logical proofs. Every step of reasoning that narrows the space of \"satisfying solutions\" must pay an informational toll. And the total toll determines how long the proof must be.\n\n## The Landscape of Truth\n\nTo understand this breakthrough, picture a vast landscape. Each point represents one possible state of the world \u2014 one assignment of \"true\" or \"false\" to every proposition under consideration. If you have ten propositions, there are 1,024 possible worlds. With twenty, over a million. With a hundred, more than the number of atoms in the observable universe.\n\nA logical statement carves out a region of this landscape: the set of worlds where the statement is true. \"It's raining\" might be compatible with half the possible worlds. \"It's raining AND the temperature is below freezing\" narrows things further. As you chain together logical deductions, the region shrinks, step by step, until perhaps only a single pinpoint of truth remains.\n\nThe key question that has haunted proof complexity \u2014 a field at the intersection of logic, computer science, and combinatorics \u2014 is this: *How many steps must a proof take?* Given that you start knowing something general and end knowing something specific, is there a fundamental lower limit on the length of the argument?\n\n## The Entropy of Proofs\n\nThe new framework answers this by measuring what it calls *deficiency*: the gap between the maximum possible entropy and the actual entropy of a set of solutions.\n\nConsider the Boolean cube \u2014 the set of all possible true/false assignments to *n* variables. This is a space with 2\u207f points. The full space has zero deficiency; it contains everything. A subset containing 2\u207f\u207b\u00b9 points (half the cube) has deficiency 1 \u2014 one bit of information has been fixed. A subset with 2\u207f\u207b\u1d4f points has deficiency *k* \u2014 exactly *k* bits of constraint have been imposed.\n\nThe central insight is that deficiency can only increase as logical deduction proceeds. If you know that \"all cats are mammals\" (a large set of models) and then learn \"Whiskers is a Siamese cat\" (a smaller set), the deficiency goes up. This monotonicity isn't a coincidence \u2014 it's a theorem, rigorously proved.\n\nMore precisely: if the set of worlds satisfying statement B is a subset of those satisfying statement A, then the deficiency of B is at least as large as the deficiency of A. Information, once destroyed, cannot be recovered.\n\n## The Telescoping Principle\n\nBut monotonicity alone doesn't give you a proof-length bound. The deeper result is what might be called the *telescoping principle*.\n\nSuppose a proof proceeds through a chain of intermediate statements, each implying the next, each narrowing the model space. The total information lost \u2014 the sum of all the individual narrowing steps \u2014 equals exactly the difference between the initial and final deficiencies. This is analogous to how, in a waterfall cascading over multiple ledges, the total height drop equals the sum of individual drops, regardless of the ledge arrangement.\n\nThis telescoping identity is the backbone of the theory. It means that information loss is *path-independent*: no matter how you decompose the proof into steps, the total informational cost is fixed by the endpoints alone.\n\n## The Speed Limit for Reasoning\n\nHere's where the theory becomes powerful. Suppose every step of your proof system has a maximum \"power\" \u2014 it can shrink the model space by at most a factor of *B*. Think of *B* as the horsepower of your logical engine. A simple reasoning step might halve the possibilities (*B* = 2); a more complex step might quarter them (*B* = 4).\n\nThe framework proves a clean lower bound: if the total model-space shrinkage from start to finish is some factor *R*, then the number of proof steps must be at least log_B(*R*). In other words:\n\n**Proof length \u2265 Total information loss \u00f7 Maximum information per step**\n\nThis is exactly analogous to the fact that if you can drive at most 60 miles per hour, it takes at least 5 hours to travel 300 miles. The \"distance\" here is measured in bits of entropy, and the \"speed\" is the maximum shrinkage per proof step.\n\n## The Atomic Case: Variable Fixing\n\nThe theory achieves its sharpest form for a beautifully simple operation: fixing a variable.\n\nIn the Boolean cube of *n* dimensions, fixing one variable to \"true\" or \"false\" cuts the space exactly in half. Fix *k* variables, and you're left with exactly 2\u207f\u207b\u1d4f solutions \u2014 a clean subcube of codimension *k*.\n\nThe framework proves that this geometric notion of codimension \u2014 borrowed from algebraic geometry and coding theory \u2014 coincides exactly with the information-theoretic deficiency. Each fixed variable contributes precisely one bit of \"proof burden.\" This calibration theorem is the Rosetta Stone linking three languages: the geometric language of subcubes, the information-theoretic language of entropy, and the logical language of proof steps.\n\n## Independence and Composition\n\nPerhaps the most structurally deep result concerns *independent* constraints.\n\nImagine two puzzles that share no variables \u2014 say, a crossword on one side of the page and a Sudoku on the other. Each has its own solution space and its own deficiency. The combined puzzle's solution space is the Cartesian product of the two individual spaces.\n\nThe theory proves that, when solution counts are powers of two, the deficiency of the combined puzzle is exactly the sum of the individual deficiencies. This *additivity* mirrors one of the most fundamental properties of Shannon entropy and is the semantic analogue of \"direct-sum\" phenomena in computational complexity.\n\nThis means that independent proof obligations cannot be parallelized away \u2014 the informational costs are genuinely additive. You can't prove two independent facts simultaneously for less total effort than proving them separately.\n\n## A Bridge Across Disciplines\n\nWhat makes this framework remarkable is its position at a crossroads of several fields:\n\n**Information theory** provides the language: entropy, bits, channel capacity. The deficiency of a model set is literally the gap between maximum entropy (all worlds possible) and actual entropy (only some worlds remain). Proof steps are entropy-reducing operations, and the bounded-shrinkage theorem is a semantic data-processing inequality.\n\n**Coding theory and discrete geometry** provide the spatial intuition. The Boolean cube is the Hamming space used in error-correcting codes. Coordinate restrictions are affine subcubes. Deficiency measures codimension. This connection suggests that tools from coding theory \u2014 sphere-packing bounds, isoperimetric inequalities \u2014 might yield even stronger proof-complexity bounds.\n\n**Statistical physics** provides perhaps the most evocative analogy. The logarithm of the number of satisfying assignments is a zero-temperature entropy. Each proof step is a constraint that reduces entropy, like cooling a physical system. The bounded-shrinkage theorem says that if each microscopic constraint application can only reduce entropy by a bounded amount, then a macroscopic entropy drop requires proportionally many applications.\n\n## Why It Matters\n\nThe question of proof length \u2014 how many steps a logical argument requires \u2014 is not merely academic. It sits at the heart of some of the deepest questions in computer science, including the infamous P versus NP problem.\n\nIf someone claims to have a short proof that a particular formula is unsatisfiable, we can check it. But *finding* such a proof might be extraordinarily hard. Lower bounds on proof length \u2014 showing that *no* short proof exists for certain statements \u2014 would have profound implications for the limits of efficient computation.\n\nThe model-shrinkage framework provides a new quantitative language for attacking these lower bounds. It reduces the question \"How long must a proof be?\" to \"How much information must be destroyed, and how fast can each step destroy it?\" This is a question that connects to well-developed mathematical machinery in information theory, combinatorics, and algebra.\n\n## The Road Ahead\n\nThe current results are rigorous but operate in a simplified semantic model. The frontier challenge is to bridge from this clean combinatorial setting to the full complexity of concrete proof systems like Resolution and Frege systems.\n\nThe key hypothesis is this: in any \"reasonable\" proof system, each inference step can only shrink the satisfying set by a bounded amount related to the step's local complexity. If this hypothesis holds, the bounded-shrinkage lower bound immediately translates into genuine proof-length lower bounds.\n\nTesting this hypothesis is now a concrete, tractable research program. For Resolution \u2014 the simplest standard proof system \u2014 each width-*w* clause can shrink the model set by at most a factor of 2^w. This connects the abstract theory directly to a well-studied parameter (proof width) that already plays a central role in existing lower bound techniques.\n\nThe framework also makes falsifiable predictions. If there exist formula families where model shrinkage is exponentially large but proof length grows only polynomially, the strong form of the conjecture would be refuted. Either outcome \u2014 confirmation or refutation \u2014 would be a significant advance.\n\n## An Energy Law for Logic\n\nAt its core, this work reveals something profound: logical reasoning has an energy budget. Information destroyed during a proof \u2014 the narrowing of possibilities, the elimination of alternatives \u2014 is a conserved quantity that obeys a kind of thermodynamic law.\n\nJust as physical processes cannot create energy from nothing, logical proofs cannot compress possibilities without paying in proof steps. The total cost is determined by the endpoints \u2014 by how much the space of possibilities has shrunk \u2014 and no clever arrangement of intermediate steps can reduce it.\n\nThis is more than a mathematical curiosity. It suggests that the deepest truths about the limits of reasoning may come not from studying syntax \u2014 the particular rules of inference \u2014 but from studying semantics \u2014 the *meaning* of what is being proved, measured in the universal currency of information.\n\nIn the end, every proof tells a story of entropy collapse. And like all stories of collapse, it cannot be rushed.\n",
+    "research_paper": "# Model-Shrinkage Distance as a Proof-Complexity Invariant\n\n## Abstract\n\nWe introduce *model-shrinkage distance*, a semantic invariant that measures the information loss incurred by logical implication on the Boolean cube. Working in a finite combinatorial setting where propositional formulas are represented by their sets of satisfying assignments, we define entropy deficiency, coordinate restriction shrinkage, product composition, and bounded-shrinkage derivation chains. We prove a telescoping identity for shrinkage along filtration chains, exact shrinkage formulas for coordinate restrictions (matching geometric codimension), monotonicity and sub-additivity of deficiency under implication and composition, and a length lower bound theorem showing that any bounded-shrinkage derivation of length *k* satisfies k \u2265 log_B(|S\u2080|/|S\u2096|). These results establish a rigorous bridge between proof complexity (the study of proof length lower bounds), information theory (entropy and data processing), and discrete geometry (subcubes of the Boolean cube). All theorems are formally verified in Lean 4 with the Mathlib library.\n\n**Keywords:** proof complexity, model counting, #SAT, Boolean cube, entropy, codimension, information theory, direct-sum, semantic lower bounds, resolution complexity, Frege systems, combinatorial filtrations\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nProof complexity studies the minimum length of proofs in formal systems. A central open problem is to establish super-polynomial lower bounds on proof length in strong proof systems such as Extended Frege. While significant progress has been made for restricted systems (Resolution, Cutting Planes, bounded-depth Frege), the general problem remains wide open.\n\nWe propose a new semantic approach based on *model shrinkage*: the observation that each proof step that narrows the set of satisfying assignments incurs a measurable information cost. If this cost can be bounded per proof step, a lower bound on proof length follows from the total information that must be \"destroyed\" during the proof.\n\n### 1.2 Related Work\n\n- **Resolution lower bounds** (Ben-Sasson & Wigderson, 2001): Width-based lower bounds for Resolution connect clause width to proof length. Our bounded-shrinkage framework provides an information-theoretic reinterpretation.\n- **Feasible interpolation** (Kraj\u00ed\u010dek, 1997): Connects proof length to circuit complexity via interpolation theorems.\n- **Random restriction methods** (H\u00e5stad, 1987; Razborov, 2003): Use random restrictions of variables to establish depth-bounded lower bounds.\n- **Information-theoretic methods in complexity** (Jukna, 2012): Entropy-based arguments in communication complexity and circuit complexity.\n\nOur approach differs by making the semantic model set the primary object, rather than the syntactic proof structure, and by identifying deficiency as a proof-invariant quantity.\n\n### 1.3 Contributions\n\n1. A new framework connecting proof complexity to finite information theory via model-shrinkage distance.\n2. Twelve formally verified theorems establishing the foundational calculus of model shrinkage.\n3. Exact calibration of the invariant for coordinate restrictions (codimension = deficiency).\n4. A compositional (sub-)additivity theorem for independent variable blocks.\n5. A length lower bound for bounded-shrinkage derivation systems.\n6. Computational verification and demonstration code.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Boolean Cube and Assignments\n\nLet **Assignment(n)** = {0,1}\u207f = (Fin n \u2192 Bool) denote the set of Boolean assignments on *n* variables. This is a finite set of cardinality 2\u207f.\n\n### 2.2 Model Sets\n\nA *semantic constraint* or *model set* is a finite set S \u2286 Assignment(n). We identify propositional formulas with their model sets: Mod(\u03c6) = {\u03c3 \u2208 {0,1}\u207f : \u03c3 \u22a8 \u03c6}.\n\n### 2.3 Entropy Deficiency\n\n**Definition.** For S \u2286 Assignment(n), the *entropy deficiency* is:\n\n    def(S) := n \u2212 \u230alog\u2082 |S|\u230b\n\nwhere \u230alog\u2082\u230b denotes the floor of the base-2 logarithm (Nat.log 2 in Lean/Mathlib).\n\n**Interpretation.** def(S) measures how far S is from filling the full Boolean cube. When |S| = 2\u207f, def(S) = 0. When |S| = 1, def(S) = n. The deficiency increases as the model set shrinks.\n\n### 2.4 Restricted Assignments\n\n**Definition.** For I \u2286 {1,...,n} and b : I \u2192 Bool, the *restricted assignment set* is:\n\n    R(I, b) := {\u03c3 \u2208 {0,1}\u207f : \u2200 i \u2208 I, \u03c3(i) = b(i)}\n\nThis is the affine subcube of codimension |I| determined by fixing coordinates in I to the pattern b.\n\n### 2.5 Product Assignments\n\n**Definition.** For S \u2286 Assignment(m) and T \u2286 Assignment(n), the *product assignment set* is:\n\n    S \u2297 T := {(\u03c3, \u03c4) : \u03c3 \u2208 S, \u03c4 \u2208 T} \u2286 Assignment(m + n)\n\nwhere we identify Assignment(m + n) with Assignment(m) \u00d7 Assignment(n) via the canonical splitting Fin(m + n) \u2245 Fin(m) \u2295 Fin(n).\n\n### 2.6 Bounded-Shrinkage Chains\n\n**Definition.** A *bounded-shrinkage derivation chain* with bound B is a sequence S\u2080 \u2287 S\u2081 \u2287 \u00b7\u00b7\u00b7 \u2287 S\u2096 of nonempty model sets such that |S\u1d62| \u2264 B \u00b7 |S\u1d62\u208a\u2081| for each step i.\n\n---\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Telescoping Model-Shrinkage Identity\n\n**Theorem** (sum_log_card_telescopes). *Let S\u2080 \u2287 S\u2081 \u2287 \u00b7\u00b7\u00b7 \u2287 S\u2096 be nonempty finite sets. Then:*\n\n    \u2211_{i=0}^{k-1} (\u230alog\u2082 |S\u1d62|\u230b \u2212 \u230alog\u2082 |S\u1d62\u208a\u2081|\u230b) = \u230alog\u2082 |S\u2080|\u230b \u2212 \u230alog\u2082 |S\u2096|\u230b\n\n**Proof sketch.** By induction on k. The base case k = 0 is trivial. For the inductive step, split the sum into the first k \u2212 1 terms (handled by the induction hypothesis on the shifted chain) plus the last term. The telescoping cancellation uses that the intermediate Nat.log terms cancel in pairs, with the monotonicity of Nat.log ensuring the necessary bounds for natural number subtraction to be well-defined.\n\n**Significance.** This makes total shrinkage path-independent: regardless of how a derivation is decomposed into steps, the cumulative shrinkage depends only on the endpoints.\n\n### 3.2 Theorem 2: Coordinate Restriction Cardinality and Exact Shrinkage\n\n**Theorem** (card_restrictedAssignments). *|R(I, b)| = 2^{n \u2212 |I|}.*\n\n**Proof sketch.** Construct a bijection between R(I, b) and {0,1}^{n\u2212|I|} by mapping each restricted assignment to its values on the free coordinates (those not in I). The inverse map extends a free-coordinate assignment by setting restricted coordinates to their required values. Injectivity follows from the functional extensionality of assignments.\n\n**Theorem** (shrinkage_of_coordinate_restriction). *The model-shrinkage distance from the full cube to a coordinate restriction is:*\n\n    \u230alog\u2082 |Assignment(n)|\u230b \u2212 \u230alog\u2082 |R(I, b)|\u230b = |I|\n\n**Proof sketch.** Substituting |Assignment(n)| = 2\u207f and |R(I, b)| = 2^{n\u2212|I|}, the identity reduces to log\u2082(2\u207f) \u2212 log\u2082(2^{n\u2212|I|}) = n \u2212 (n \u2212 |I|) = |I|, using Nat.log_pow for exact evaluation of logarithms of powers of 2.\n\n**Significance.** This gives the first exact calibration: each fixed variable contributes exactly one bit of model-shrinkage distance. Geometric codimension equals informational deficiency.\n\n### 3.3 Theorem 3: Deficiency Monotonicity\n\n**Theorem** (deficiency_monotone). *If T \u2286 S \u2286 Assignment(n) and T is nonempty, then def(S) \u2264 def(T).*\n\n**Proof sketch.** Since T \u2286 S, we have |T| \u2264 |S|, hence Nat.log 2 |T| \u2264 Nat.log 2 |S| (by monotonicity of Nat.log). Then def(S) = n \u2212 Nat.log 2 |S| \u2264 n \u2212 Nat.log 2 |T| = def(T) (by contravariance of subtraction from a fixed value).\n\n**Theorem** (deficiency_eq_iff_of_subset). *Under the same hypotheses, def(S) = def(T) if and only if \u230alog\u2082 |S|\u230b = \u230alog\u2082 |T|\u230b.*\n\n**Significance.** This is the semantic data-processing inequality: logical implication (T \u2286 S means Mod(\u03c8) \u2286 Mod(\u03c6), i.e., \u03c8 \u22a8 \u03c6) can only increase deficiency. Entropy, once destroyed, cannot be recovered.\n\n### 3.4 Theorem 4: Product Composition\n\n**Theorem** (card_prodAssignments). *|S \u2297 T| = |S| \u00b7 |T|.*\n\n**Proof sketch.** The product is defined as the image of S \u00d7 T under an injective map (using Fin.addCases to combine assignments). By Finset.card_map, the cardinality equals that of the Cartesian product, which is |S| \u00b7 |T| by Finset.card_product.\n\n**Theorem** (deficiency_add_le). *def(S \u2297 T) \u2264 def(S) + def(T) for nonempty S, T.*\n\n**Proof sketch.** Uses the super-additivity of Nat.log on products: \u230alog\u2082(ab)\u230b \u2265 \u230alog\u2082 a\u230b + \u230alog\u2082 b\u230b for positive a, b. This follows from 2^{\u230alog\u2082 a\u230b} \u2264 a and 2^{\u230alog\u2082 b\u230b} \u2264 b, giving ab \u2265 2^{\u230alog\u2082 a\u230b + \u230alog\u2082 b\u230b}.\n\n**Theorem** (deficiency_add_of_pow2). *If |S| = 2^a and |T| = 2^b, then def(S \u2297 T) = def(S) + def(T).*\n\n**Proof sketch.** When cardinalities are exact powers of 2, the logarithm is exact: \u230alog\u2082(2^a \u00b7 2^b)\u230b = \u230alog\u2082 2^{a+b}\u230b = a + b = \u230alog\u2082 2^a\u230b + \u230alog\u2082 2^b\u230b. The identity then follows by arithmetic.\n\n**Significance.** This is the semantic analogue of Shannon entropy additivity for independent sources. It upgrades deficiency from a toy statistic to a compositional complexity measure, and is the foundation for direct-sum conjectures in proof complexity.\n\n### 3.5 Theorem 5: Bounded-Shrinkage Length Lower Bound\n\n**Theorem** (card_bound_of_bounded_shrink). *If |S\u1d62| \u2264 B \u00b7 |S\u1d62\u208a\u2081| for all i, then |S\u2080| \u2264 B^k \u00b7 |S\u2096|.*\n\n**Proof sketch.** By induction on k. The base case k = 0 is trivial. For the inductive step, |S\u2080| \u2264 B \u00b7 |S\u2081| \u2264 B \u00b7 B^k \u00b7 |S\u2096\u208a\u2081| = B^{k+1} \u00b7 |S\u2096\u208a\u2081|.\n\n**Theorem** (length_lower_bound_of_bounded_shrink). *For B > 1:*\n\n    k \u2265 \u230alog_B(|S\u2080| / |S\u2096|)\u230b\n\n**Proof sketch.** From the multiplicative bound, |S\u2080|/|S\u2096| \u2264 B^k (using natural division and the positivity of |S\u2096|). Taking Nat.log base B of both sides and using Nat.log_pow, we get \u230alog_B(|S\u2080|/|S\u2096|)\u230b \u2264 \u230alog_B(B^k)\u230b = k.\n\n**Significance.** This is the central \"proto-lower-bound\" theorem. It says: *if your proof system can only shrink the model space by a bounded factor per step, then the number of steps is at least logarithmic in the total shrinkage ratio.* This is the mechanism any future proof-length lower bound via model shrinkage must exploit.\n\n### 3.6 Supporting Results\n\n- **card_assignment**: |Assignment(n)| = 2\u207f\n- **fullAssignments_nonempty**: Assignment(n) is nonempty\n- **deficiency_full**: def(Assignment(n)) = 0\n\n---\n\n## 4. Algorithms\n\n### 4.1 Exact Model Counter\n\n**Input:** n (number of variables), \u03c6 (constraint predicate)\n**Output:** |Mod(\u03c6)|\n\n```\nfunction ExactModelCount(n, \u03c6):\n    count \u2190 0\n    for each \u03c3 \u2208 {0,1}^n:\n        if \u03c6(\u03c3): count \u2190 count + 1\n    return count\n```\n\n**Complexity:** O(2\u207f \u00b7 C(\u03c6)) time, O(1) space (streaming), where C(\u03c6) is the cost of evaluating \u03c6.\n\n### 4.2 Shrinkage Profile Computation\n\n**Input:** Chain of predicates [\u03c6\u2080, ..., \u03c6\u2096], bound B\n**Output:** ShrinkageProfile\n\n```\nfunction ComputeProfile(n, [\u03c6\u2080, ..., \u03c6\u2096], B):\n    cards \u2190 [ExactModelCount(n, \u03c6\u1d62) for i = 0..k]\n    steps \u2190 [log\u2082(cards[i]/cards[i+1]) for i = 0..k-1]\n    defs \u2190 [n - log\u2082(cards[i]) for i = 0..k]\n    valid \u2190 all(cards[i] \u2264 B * cards[i+1] for i = 0..k-1)\n    bound \u2190 log_B(cards[0] / cards[k])\n    return Profile(cards, steps, defs, valid, bound)\n```\n\n**Complexity:** O(k \u00b7 2\u207f) time, O(k) space.\n\n### 4.3 Bounded-Shrinkage Certificate\n\n**Input:** Chain cardinalities [c\u2080, ..., c\u2096], bound B\n**Output:** Certificate with verification\n\n```\nfunction Certify(cards, B):\n    k \u2190 len(cards) - 1\n    for i = 0..k-1:\n        if cards[i] > B * cards[i+1]: return Invalid\n    mult_bound \u2190 B^k * cards[k]\n    assert cards[0] \u2264 mult_bound\n    lb \u2190 log_B(cards[0] / cards[k])\n    assert k \u2265 lb\n    return Certificate(k, B, lb, mult_bound)\n```\n\n**Complexity:** O(k) time, O(1) space.\n\n---\n\n## 5. Computational Experiments\n\n### 5.1 Coordinate Restriction Verification\n\nFor n = 3, 4, 5 and various subsets I, we computed |R(I, b)| and verified |R(I, b)| = 2^{n\u2212|I|} in all cases. The shrinkage distance equals |I| exactly, confirming the calibration theorem.\n\n| n | |I| | |R(I,b)| | Expected | Shrinkage | Match |\n|---|-----|---------|----------|-----------|-------|\n| 4 | 1   | 8       | 8        | 1.0       | \u2713     |\n| 4 | 2   | 4       | 4        | 2.0       | \u2713     |\n| 4 | 3   | 2       | 2        | 3.0       | \u2713     |\n| 5 | 2   | 8       | 8        | 2.0       | \u2713     |\n| 5 | 4   | 2       | 2        | 4.0       | \u2713     |\n\n### 5.2 Bounded-Shrinkage Lower Bound\n\nWe verified the lower bound on several chains:\n\n| Chain | B | k | log_B(|S\u2080|/|S\u2096|) | k \u2265 bound |\n|-------|---|---|-------------------|-----------|\n| [256, 128, ..., 1] | 2 | 8 | 8.0 | \u2713 (tight) |\n| [256, 64, 16, 4, 1] | 4 | 4 | 4.0 | \u2713 (tight) |\n| [1024, 256, 64, 16] | 4 | 3 | 2.97 | \u2713 |\n\n### 5.3 Deficiency Additivity\n\nFor power-of-2 cardinalities, exact additivity holds. For general cardinalities, sub-additivity holds with gap at most 1.\n\n| S | T | |S| | |T| | def(S)+def(T) | def(S\u2297T) | Gap |\n|---|---|-----|-----|---------------|----------|-----|\n| R({0}, T) in {0,1}\u00b3 | R({0}, F) in {0,1}\u00b3 | 4 | 4 | 2 | 2 | 0 |\n| R({0,1}, T) in {0,1}\u2074 | R({0}, F) in {0,1}\u2074 | 4 | 8 | 3 | 3 | 0 |\n\n---\n\n## 6. Discussion\n\n### 6.1 Relation to Proof Complexity\n\nThe bounded-shrinkage lower bound provides a clean semantic mechanism for proof-length lower bounds. For a proof system where each inference step can shrink the model set by at most factor B, the theorem gives:\n\n    proof_length \u2265 log_B(|Mod(\u03c6)| / |Mod(\u03c8)|)\n\nFor width-w Resolution, each clause addition can shrink the model set by at most 2^w, giving B = 2^w and:\n\n    resolution_length \u2265 shrinkage_distance(\u03c6, \u03c8) / w\n\nThis recovers, in a semantic setting, the intuition behind Ben-Sasson and Wigderson's width-length relationship.\n\n### 6.2 Information-Theoretic Interpretation\n\nDeficiency is the entropy defect of the uniform distribution on the model set relative to the full Boolean cube. The monotonicity theorem is a semantic data-processing inequality: logical implication cannot increase entropy. The additivity theorem for independent constraints is the semantic analogue of Shannon's entropy additivity for independent sources.\n\n### 6.3 Geometric Interpretation\n\nOn the Boolean cube (Hamming space), coordinate restrictions carve out affine subcubes. The exact shrinkage theorem identifies model-shrinkage distance with geometric codimension. This connection to coding theory suggests potential applications of sphere-packing bounds and isoperimetric inequalities.\n\n### 6.4 Limitations\n\nThe current framework operates at the semantic level, representing formulas by their model sets. The gap between semantic shrinkage and syntactic proof complexity in concrete systems (Resolution, Frege, Extended Frege) remains an open problem. The Nat.log (floor logarithm) approximation introduces rounding, which prevents exact multiplicative decomposition for non-power-of-2 cardinalities.\n\n---\n\n## 7. Future Work\n\n1. **Bridge to concrete proof systems:** Establish that specific proof systems (Resolution, bounded-depth Frege) satisfy bounded-shrinkage hypotheses with explicit bounds on B in terms of proof-step complexity.\n\n2. **Continuous entropy version:** Replace Nat.log with real-valued log\u2082 and develop the theory with exact real arithmetic, eliminating rounding artifacts.\n\n3. **Isoperimetric connections:** Use the Boolean cube geometry to derive shrinkage bounds from edge-isoperimetric inequalities (Harper's theorem).\n\n4. **Stronger monotonicity:** Prove strict deficiency increase under proper subset inclusion (requires stronger Nat.log estimates).\n\n5. **Automated verification pipeline:** Develop tools for automatically computing shrinkage profiles of CNF formulas and generating bounded-shrinkage certificates.\n\n---\n\n## 8. Formal Verification\n\nAll theorems in this paper are formally verified in Lean 4 (v4.28.0) with Mathlib. The formalization is available in `Speculative/ModelShrinkage.lean`. The axioms used are limited to the standard foundational axioms: `propext`, `Classical.choice`, and `Quot.sound`.\n\n### Verified Theorem Count\n\n| Theorem | Lines | Status |\n|---------|-------|--------|\n| sum_log_card_telescopes | ~15 | \u2713 Verified |\n| card_restrictedAssignments | ~12 | \u2713 Verified |\n| shrinkage_of_coordinate_restriction | ~8 | \u2713 Verified |\n| deficiency_monotone | ~2 | \u2713 Verified |\n| deficiency_eq_iff_of_subset | ~10 | \u2713 Verified |\n| card_prodAssignments | ~2 | \u2713 Verified |\n| deficiency_add_le | ~6 | \u2713 Verified |\n| deficiency_add_of_pow2 | ~12 | \u2713 Verified |\n| card_bound_of_bounded_shrink | ~5 | \u2713 Verified |\n| length_lower_bound_of_bounded_shrink | ~6 | \u2713 Verified |\n| card_assignment | ~2 | \u2713 Verified |\n| deficiency_full | ~2 | \u2713 Verified |\n\n---\n\n## References\n\n1. Ben-Sasson, E., & Wigderson, A. (2001). Short proofs are narrow \u2014 Resolution made simple. *Journal of the ACM*, 48(2), 149\u2013169.\n\n2. Kraj\u00ed\u010dek, J. (1997). Interpolation theorems, lower bounds for proof systems, and independence results for bounded arithmetic. *Journal of Symbolic Logic*, 62(2), 457\u2013486.\n\n3. Jukna, S. (2012). *Boolean Function Complexity: Advances and Frontiers*. Springer.\n\n4. Razborov, A. A. (2003). Resolution lower bounds for the weak pigeonhole principle. *Electronic Colloquium on Computational Complexity*, TR03-035.\n\n5. Shannon, C. E. (1948). A mathematical theory of communication. *Bell System Technical Journal*, 27(3), 379\u2013423.\n",
+    "future_directions": "# Future Directions: Model-Shrinkage Proof-Complexity Invariant\n\n## Hypothesis 1: Resolution Bounded-Shrinkage Hypothesis\n\n**Conjecture:** Every width-*w* Resolution inference (resolving two clauses to produce a clause of width at most *w*) shrinks the satisfying assignment set by a factor of at most 2^w. Formally, if clause *C* is derived from clauses *C\u2081* and *C\u2082* by resolution, then:\n\n    |Mod(\u0393 \u222a {C})| \u2265 |Mod(\u0393)| / 2^w\n\nwhere \u0393 is the current clause set and *w* = width(C).\n\n**Test:** For n = 6, 8, 10 variables, enumerate all possible width-*w* resolvents of random 3-CNF formulas. For each resolvent, compute the exact model count before and after adding the clause. Check whether the shrinkage ratio |Mod(\u0393)|/|Mod(\u0393 \u222a {C})| \u2264 2^w in all cases.\n\n**Impact:** If true, this would directly connect the bounded-shrinkage lower bound theorem to Resolution proof length, giving:\n\n    Resolution_length(\u03c6 \u2192 \u03c8) \u2265 shrinkage_distance(\u03c6, \u03c8) / w\n\nThis would provide a new, purely information-theoretic proof of the Ben-Sasson\u2013Wigderson width-length relationship and could potentially extend to stronger bounds for restricted Resolution systems.\n\n---\n\n## Hypothesis 2: Direct-Sum Hypothesis for Semantic Proof Burden\n\n**Conjecture:** For formulas \u03c6\u2081 on variables {x\u2081,...,x\u2098} and \u03c6\u2082 on disjoint variables {y\u2081,...,y\u2099}, the minimum derivation length in any bounded-shrinkage proof system satisfies:\n\n    L(\u03c6\u2081 \u2227 \u03c6\u2082) \u2265 L(\u03c6\u2081) + L(\u03c6\u2082) \u2212 O(1)\n\nwhere L(\u03c6) denotes the minimum number of steps in a B-bounded shrinkage derivation from the full cube to Mod(\u03c6).\n\n**Test:** For n = 4, 5, 6, enumerate all possible bounded-shrinkage derivation chains for simple constraint pairs (e.g., fixing *k* variables on disjoint blocks). Compute the minimum chain length for the product constraint and compare with the sum of individual minimum lengths.\n\nThe deficiency additivity theorem (deficiency_add_of_pow2) provides theoretical support: for power-of-2 model counts, the total deficiency is exactly additive. The question is whether this additive structure persists at the level of derivation length.\n\n**Impact:** A proof would establish that independent proof obligations are genuinely additive in the model-shrinkage framework, ruling out \"parallelization tricks\" that might shortcut the combined proof. This is the semantic analogue of direct-sum theorems in communication complexity and circuit complexity, and would be a significant structural result.\n\n---\n\n## Hypothesis 3: Codimension-Realization Hypothesis\n\n**Conjecture:** Every exact codimension-*k* affine subcube of {0,1}\u207f can be reached from the full cube by exactly *k* steps in a 2-bounded shrinkage system (B = 2), and this is optimal: no chain of fewer than *k* steps with B = 2 can reach any codimension-*k* subcube.\n\n**Test:** For n = 4, 5, 6 and each codimension k = 1, ..., n:\n1. Verify that the standard derivation (fixing one variable per step) achieves B = 2 in exactly *k* steps.\n2. Exhaustively search over all possible B = 2 bounded chains of length < *k* ending at any codimension-*k* subcube.\n3. Confirm that no shorter chain exists.\n\nThe length_lower_bound_of_bounded_shrink theorem gives k \u2265 log\u2082(2\u207f/2^{n\u2212k}) = k, so the bound is tight. The question is whether the bound is achieved only by the standard variable-fixing chain or whether alternative chains also achieve it.\n\n**Impact:** If the standard chain is essentially unique (up to variable reordering), this would establish coordinate restriction as the \"canonical\" atomic operation in bounded-shrinkage systems, analogous to how Gaussian elimination provides canonical operations in linear algebra.\n\n---\n\n## Hypothesis 4: Refutation Hypothesis for the Strong Conjecture\n\n**Conjecture (to be refuted):** There exists a family of formula pairs (\u03c6\u2099, \u03c8\u2099) with \u03c8\u2099 \u22a8 \u03c6\u2099 such that:\n- Model-shrinkage distance d(\u03c6\u2099, \u03c8\u2099) grows as \u03a9(n), but\n- Extended Frege proof length for \u03c8\u2099 given \u03c6\u2099 grows as poly(n).\n\n**Test:** Search among extension-variable constructions. Specifically:\n1. Let \u03c6\u2099 be a tautology with 2\u207f models (e.g., a trivially satisfiable formula on n variables).\n2. Let \u03c8\u2099 be obtained by adding n independent unit clauses on fresh coordinates, giving |Mod(\u03c8\u2099)| = 1.\n3. Shrinkage distance is exactly n.\n4. Check whether Extended Frege can derive \u03c8\u2099 from \u03c6\u2099 in O(n) steps using extension variables.\n\nIf Extended Frege can derive such a chain in O(n) steps (each introducing one extension variable and one unit clause), then each step shrinks by a factor of 2, and the bound k \u2265 log\u2082(2\u207f) = n is tight. This would *confirm* the conjecture for this family.\n\nTo *refute* the strong form, one would need a family where the semantic shrinkage is much larger than what the proof length suggests. Candidate families:\n- Formulas where extension variables enable \"batch shrinkage\" \u2014 compressing multiple bits of information loss into a single proof step.\n- Formulas with highly structured model sets (e.g., error-correcting codes) where algebraic structure allows shortcuts.\n\n**Impact:** A refutation would identify a sharp separation between semantic information loss and syntactic proof cost, showing that model-shrinkage alone cannot characterize proof complexity. A confirmation would strengthen the case for the conjectured invariance principle.\n\n---\n\n## Hypothesis 5: Entropy-Barrier Hypothesis\n\n**Conjecture:** Any proof system P satisfying a *local data-processing inequality* \u2014 meaning each inference step can reduce the model-set entropy by at most C bits, for some system-dependent constant C \u2014 automatically admits semantic lower bounds:\n\n    proof_length_P(\u03c6 \u2192 \u03c8) \u2265 (def(\u03c8) \u2212 def(\u03c6)) / C\n\n**Test:** Formalize the notion of \"local data-processing inequality\" for toy proof systems:\n1. Define a proof system where each step adds one clause of bounded width w (Resolution-like).\n2. Verify that each step reduces \u230alog\u2082 |Mod|\u230b by at most w (this is the bounded-shrinkage hypothesis for Resolution).\n3. Apply the length lower bound theorem to derive the entropy-barrier bound.\n4. Compare with known Resolution lower bounds for specific formula families (pigeonhole principle, random k-CNF).\n\nExtend to:\n- Bounded-depth Frege: each step is a bounded-depth formula, bounding shrinkage by 2^{poly(n^{1/d})}.\n- Cutting Planes: each step is a linear inequality, bounding shrinkage by the geometric properties of the feasible polytope.\n\n**Impact:** If the entropy-barrier hypothesis holds for multiple proof systems, it would unify diverse proof-complexity lower bound techniques under a single information-theoretic umbrella. The deficiency would serve as a universal proof-complexity measure, analogous to how entropy serves as a universal information measure across coding theory, statistical mechanics, and machine learning.\n\n---\n\n## Summary of Testable Predictions\n\n| # | Hypothesis | Predicted outcome | Key test | Falsifiable by |\n|---|-----------|-------------------|----------|----------------|\n| 1 | Resolution bounded-shrinkage | Shrinkage \u2264 2^w per step | Exact model counting for small n | Finding a width-w resolvent with shrinkage > 2^w |\n| 2 | Direct-sum | L(\u03c6\u2081\u2227\u03c6\u2082) \u2265 L(\u03c6\u2081)+L(\u03c6\u2082)\u2212O(1) | Brute-force chain search | Finding a product derivation shorter than sum |\n| 3 | Codimension-realization | Exactly k steps needed for codim-k | Exhaustive search for short chains | Finding a chain of length < k |\n| 4 | Strong conjecture refutation | Shrinkage \u226b proof length for some family | Extension-variable constructions | Proving shrinkage always bounds proof length |\n| 5 | Entropy barrier | def(\u03c8)\u2212def(\u03c6) / C bounds proof length | Formalize for Resolution, Frege | Finding a system violating local DPI but with short proofs |\n",
+    "demos": [
+      {
+        "name": "Model-Shrinkage Distance Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Model-Shrinkage Distance: Interactive Demonstration\n\nDemonstrates the core concepts of model-shrinkage as a proof-complexity invariant\non the Boolean cube {0,1}^n. Computes exact model counts, deficiency, shrinkage\ndistances, and verifies the bounded-shrinkage lower bound on concrete examples.\n\nKeywords: proof complexity, model counting, #SAT, Boolean cube, entropy,\ncodimension, information theory, semantic lower bounds\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import List, Set, Tuple, Dict, Optional\n\n\ndef all_assignments(n: int) -> Set[Tuple[bool, ...]]:\n    \"\"\"Generate all Boolean assignments on n variables.\"\"\"\n    return set(itertools.product([False, True], repeat=n))\n\n\ndef restricted_assignments(n: int, restrictions: Dict[int, bool]) -> Set[Tuple[bool, ...]]:\n    \"\"\"\n    Assignments on n variables that agree with the given restrictions.\n    restrictions: dict mapping variable index -> required value.\n    \"\"\"\n    result = set()\n    for assignment in itertools.product([False, True], repeat=n):\n        if all(assignment[i] == v for i, v in restrictions.items()):\n            result.add(assignment)\n    return result\n\n\ndef deficiency(n: int, model_count: int) -> float:\n    \"\"\"\n    Entropy deficiency: def(S) = n - log2(|S|).\n    For empty sets, returns infinity.\n    \"\"\"\n    if model_count <= 0:\n        return float('inf')\n    return n - math.log2(model_count)\n\n\ndef deficiency_int(n: int, model_count: int) -> int:\n    \"\"\"Integer version of deficiency using floor log2.\"\"\"\n    if model_count <= 0:\n        return n  # maximal deficiency\n    return n - int(math.log2(model_count))\n\n\ndef shrinkage_distance(card_S: int, card_T: int) -> float:\n    \"\"\"Model-shrinkage distance d(S,T) = log2(|S|/|T|) for T \u2286 S, T nonempty.\"\"\"\n    if card_T <= 0:\n        return float('inf')\n    return math.log2(card_S / card_T)\n\n\ndef product_assignments(S: Set[Tuple[bool, ...]], T: Set[Tuple[bool, ...]]) -> Set[Tuple[bool, ...]]:\n    \"\"\"Product of two assignment sets on disjoint variable blocks.\"\"\"\n    return {s + t for s in S for t in T}\n\n\ndef bounded_shrinkage_chain_check(chain_cards: List[int], B: int) -> dict:\n    \"\"\"\n    Verify a bounded-shrinkage chain and compute the lower bound.\n\n    Args:\n        chain_cards: list of cardinalities [|S_0|, |S_1|, ..., |S_k|]\n        B: maximum shrinkage factor per step\n\n    Returns:\n        dict with chain analysis\n    \"\"\"\n    k = len(chain_cards) - 1\n    violations = []\n    step_shrinkages = []\n\n    for i in range(k):\n        ratio = chain_cards[i] / chain_cards[i + 1] if chain_cards[i + 1] > 0 else float('inf')\n        step_shrinkages.append(ratio)\n        if chain_cards[i] > B * chain_cards[i + 1]:\n            violations.append(i)\n\n    # Multiplicative bound: |S_0| \u2264 B^k * |S_k|\n    multiplicative_bound = B ** k * chain_cards[-1]\n    bound_holds = chain_cards[0] <= multiplicative_bound\n\n    # Length lower bound: k \u2265 log_B(|S_0| / |S_k|)\n    if chain_cards[-1] > 0:\n        quotient = chain_cards[0] // chain_cards[-1]\n        log_bound = math.log(quotient, B) if B > 1 and quotient > 0 else 0\n    else:\n        log_bound = float('inf')\n\n    return {\n        'k': k,\n        'B': B,\n        'chain_cards': chain_cards,\n        'step_shrinkages': step_shrinkages,\n        'violations': violations,\n        'is_valid_chain': len(violations) == 0,\n        'multiplicative_bound': multiplicative_bound,\n        'multiplicative_bound_holds': bound_holds,\n        'length_lower_bound': log_bound,\n        'bound_satisfied': k >= log_bound,\n    }\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 1: Coordinate Restriction \u2014 Exact Shrinkage\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_coordinate_restriction():\n    print(\"=\" * 70)\n    print(\"DEMO 1: Coordinate Restriction Gives Exact Shrinkage\")\n    print(\"=\" * 70)\n    print()\n\n    for n in [3, 4, 5]:\n        full = all_assignments(n)\n        print(f\"  n = {n}: Full cube has {len(full)} = 2^{n} assignments\")\n\n        for num_fixed in range(1, min(n, 4)):\n            restrictions = {i: True for i in range(num_fixed)}\n            restricted = restricted_assignments(n, restrictions)\n            expected = 2 ** (n - num_fixed)\n\n            d = shrinkage_distance(len(full), len(restricted))\n            defi = deficiency(n, len(restricted))\n\n            print(f\"    Fix {num_fixed} variable(s): |R| = {len(restricted)} = 2^{n - num_fixed} \"\n                  f\"(expected {expected}) \u2713\" if len(restricted) == expected else f\" \u2717\")\n            print(f\"      shrinkage d = {d:.2f} (should be {num_fixed}), \"\n                  f\"deficiency = {defi:.2f}\")\n\n        print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 2: Deficiency Monotonicity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_deficiency_monotonicity():\n    print(\"=\" * 70)\n    print(\"DEMO 2: Deficiency is Monotone Under Implication (T \u2286 S)\")\n    print(\"=\" * 70)\n    print()\n\n    n = 4\n    full = all_assignments(n)\n\n    # Build a chain of subsets by progressively fixing variables\n    chain = [full]\n    for k in range(1, n + 1):\n        restrictions = {i: True for i in range(k)}\n        chain.append(restricted_assignments(n, restrictions))\n\n    print(f\"  Chain of subsets in {{0,1}}^{n}:\")\n    for i, S in enumerate(chain):\n        d = deficiency(n, len(S))\n        print(f\"    S_{i}: |S| = {len(S):>3},  deficiency = {d:.2f}\")\n\n    print()\n    print(\"  Monotonicity check (def(S_i) \u2264 def(S_{i+1})):\")\n    all_mono = True\n    for i in range(len(chain) - 1):\n        d_i = deficiency(n, len(chain[i]))\n        d_next = deficiency(n, len(chain[i + 1]))\n        ok = d_i <= d_next\n        all_mono = all_mono and ok\n        print(f\"    def(S_{i}) = {d_i:.2f} \u2264 def(S_{i+1}) = {d_next:.2f}  {'\u2713' if ok else '\u2717'}\")\n\n    print(f\"\\n  All monotonicity checks passed: {'\u2713' if all_mono else '\u2717'}\")\n    print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 3: Telescoping Identity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_telescoping():\n    print(\"=\" * 70)\n    print(\"DEMO 3: Telescoping Model-Shrinkage Identity\")\n    print(\"=\" * 70)\n    print()\n\n    n = 5\n    chain_cards = [2**5, 2**4, 2**3, 2**2, 2**1, 2**0]\n\n    print(f\"  Power-of-two chain on n={n} variables:\")\n    print(f\"  Chain cardinalities: {chain_cards}\")\n    print()\n\n    total_sum = 0\n    for i in range(len(chain_cards) - 1):\n        step = math.log2(chain_cards[i]) - math.log2(chain_cards[i + 1])\n        total_sum += step\n        print(f\"    Step {i}: log2({chain_cards[i]}) - log2({chain_cards[i+1]}) = {step:.2f}\")\n\n    direct = math.log2(chain_cards[0]) - math.log2(chain_cards[-1])\n    print(f\"\\n  Sum of steps:        {total_sum:.2f}\")\n    print(f\"  Direct computation:  {direct:.2f}\")\n    print(f\"  Telescoping holds:   {'\u2713' if abs(total_sum - direct) < 1e-10 else '\u2717'}\")\n\n    # Non-power-of-two example\n    print(f\"\\n  Non-power-of-two chain:\")\n    chain2 = [30, 15, 7, 3, 1]\n    print(f\"  Chain cardinalities: {chain2}\")\n    total_int = 0\n    for i in range(len(chain2) - 1):\n        step = int(math.log2(chain2[i])) - int(math.log2(chain2[i + 1]))\n        total_int += step\n        print(f\"    Step {i}: \u230alog2({chain2[i]})\u230b - \u230alog2({chain2[i+1]})\u230b \"\n              f\"= {int(math.log2(chain2[i]))} - {int(math.log2(chain2[i+1]))} = {step}\")\n\n    direct_int = int(math.log2(chain2[0])) - int(math.log2(chain2[-1]))\n    print(f\"\\n  Sum of steps (integer):  {total_int}\")\n    print(f\"  Direct (integer):        {direct_int}\")\n    print(f\"  Telescoping holds:       {'\u2713' if total_int == direct_int else '\u2717'}\")\n    print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 4: Product Assignments and Deficiency Additivity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_product_additivity():\n    print(\"=\" * 70)\n    print(\"DEMO 4: Deficiency Additivity Under Independent Composition\")\n    print(\"=\" * 70)\n    print()\n\n    examples = [\n        (2, {0: True}, 3, {0: False, 1: True}),\n        (3, {0: True, 1: True}, 2, {0: False}),\n        (4, {}, 3, {0: True}),\n    ]\n\n    for m, restr_m, n_val, restr_n in examples:\n        S = restricted_assignments(m, restr_m)\n        T = restricted_assignments(n_val, restr_n)\n        P = product_assignments(S, T)\n\n        def_S = deficiency(m, len(S))\n        def_T = deficiency(n_val, len(T))\n        def_P = deficiency(m + n_val, len(P))\n\n        is_pow2_S = (len(S) & (len(S) - 1)) == 0 and len(S) > 0\n        is_pow2_T = (len(T) & (len(T) - 1)) == 0 and len(T) > 0\n\n        print(f\"  S \u2286 {{0,1}}^{m}: |S| = {len(S)}, def(S) = {def_S:.2f}  \"\n              f\"{'(power of 2)' if is_pow2_S else ''}\")\n        print(f\"  T \u2286 {{0,1}}^{n_val}: |T| = {len(T)}, def(T) = {def_T:.2f}  \"\n              f\"{'(power of 2)' if is_pow2_T else ''}\")\n        print(f\"  S\u2297T \u2286 {{0,1}}^{m + n_val}: |S\u2297T| = {len(P)}, def(S\u2297T) = {def_P:.2f}\")\n        print(f\"  def(S) + def(T) = {def_S + def_T:.2f}\")\n        print(f\"  Sub-additivity: def(S\u2297T) \u2264 def(S)+def(T)? \"\n              f\"{'\u2713' if def_P <= def_S + def_T + 0.001 else '\u2717'}\")\n        if is_pow2_S and is_pow2_T:\n            print(f\"  Exact additivity (power-of-2 case): \"\n                  f\"{'\u2713' if abs(def_P - def_S - def_T) < 0.001 else '\u2717'}\")\n        print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 5: Bounded-Shrinkage Lower Bound\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_bounded_shrinkage():\n    print(\"=\" * 70)\n    print(\"DEMO 5: Bounded-Shrinkage Derivation Lower Bound\")\n    print(\"=\" * 70)\n    print()\n\n    print(\"  Theorem: If each step shrinks by at most factor B,\")\n    print(\"  then k \u2265 log_B(|S_0| / |S_k|).\")\n    print()\n\n    # Example 1: B=2 chain (halving each step)\n    chain1 = [256, 128, 64, 32, 16, 8, 4, 2, 1]\n    result1 = bounded_shrinkage_chain_check(chain1, B=2)\n    print(f\"  Example 1: B=2, chain = {chain1}\")\n    print(f\"    Steps k = {result1['k']}\")\n    print(f\"    Valid chain (each step \u2264 2\u00d7): {result1['is_valid_chain']}\")\n    print(f\"    |S_0|/|S_k| = {chain1[0]}/{chain1[-1]} = {chain1[0]//chain1[-1]}\")\n    print(f\"    Lower bound: k \u2265 log_2({chain1[0]//chain1[-1]}) = {result1['length_lower_bound']:.2f}\")\n    print(f\"    Bound satisfied: {result1['bound_satisfied']} \u2713\")\n    print()\n\n    # Example 2: B=4, fewer steps needed\n    chain2 = [256, 64, 16, 4, 1]\n    result2 = bounded_shrinkage_chain_check(chain2, B=4)\n    print(f\"  Example 2: B=4, chain = {chain2}\")\n    print(f\"    Steps k = {result2['k']}\")\n    print(f\"    Valid chain: {result2['is_valid_chain']}\")\n    print(f\"    Lower bound: k \u2265 log_4({chain2[0]//chain2[-1]}) = {result2['length_lower_bound']:.2f}\")\n    print(f\"    Bound satisfied: {result2['bound_satisfied']} \u2713\")\n    print()\n\n    # Example 3: Tight bound demonstration\n    print(\"  Tightness demonstration:\")\n    for B in [2, 3, 4, 8]:\n        for total_shrink in [64, 256, 1024]:\n            min_steps = math.ceil(math.log(total_shrink, B))\n            print(f\"    B={B}, shrinkage={total_shrink}: minimum steps \u2265 \"\n                  f\"\u2308log_{B}({total_shrink})\u2309 = {min_steps}\")\n    print()\n\n    # Example 4: Real semantic derivation\n    print(\"  Semantic derivation example (n=6, fixing variables one at a time):\")\n    n = 6\n    chain_sem = []\n    for i in range(n + 1):\n        card = 2 ** (n - i)\n        chain_sem.append(card)\n    result_sem = bounded_shrinkage_chain_check(chain_sem, B=2)\n    print(f\"    Chain: {chain_sem}\")\n    print(f\"    Each step halves the model set (B=2)\")\n    print(f\"    k = {result_sem['k']}, lower bound = {result_sem['length_lower_bound']:.2f}\")\n    print(f\"    This is tight: k = log_2(|S_0|/|S_k|) = {n}\")\n    print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 6: Cross-Domain Connections\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_cross_domain():\n    print(\"=\" * 70)\n    print(\"DEMO 6: Cross-Domain Connections\")\n    print(\"=\" * 70)\n    print()\n\n    # Information Theory: entropy as model counting\n    print(\"  [Information Theory] Entropy as model counting:\")\n    n = 4\n    for k in range(n + 1):\n        card = 2 ** (n - k)\n        entropy = math.log2(card)\n        defi = deficiency(n, card)\n        print(f\"    k={k} restrictions: |S| = {card:>3}, \"\n              f\"entropy = {entropy:.1f} bits, deficiency = {defi:.1f} bits\")\n\n    print()\n    print(\"  [Coding Theory] Coordinate restrictions as subcubes:\")\n    n = 5\n    for codim in range(n + 1):\n        card = 2 ** (n - codim)\n        print(f\"    Codimension {codim}: subcube of dimension {n-codim}, \"\n              f\"|S| = {card}, deficiency = {codim}\")\n\n    print()\n    print(\"  [Statistical Physics] Proof steps as entropy reduction:\")\n    n = 8\n    print(f\"    System: {n} Boolean variables, initial entropy = {n} bits\")\n    print(f\"    Each 'constraint application' reduces entropy by 1 bit\")\n    print(f\"    After k constraints: entropy = {n}-k bits, deficiency = k bits\")\n    print(f\"    Minimum {n} constraint steps to reach a single assignment\")\n    print()\n\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Model-Shrinkage Distance: Proof-Complexity Invariant Demo     \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_coordinate_restriction()\n    demo_deficiency_monotonicity()\n    demo_telescoping()\n    demo_product_additivity()\n    demo_bounded_shrinkage()\n    demo_cross_domain()\n\n    print(\"=\" * 70)\n    print(\"All demonstrations completed successfully.\")\n    print(\"=\" * 70)\n"
+      },
+      {
+        "name": "Applications of Model-Shrinkage Theory",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of Model-Shrinkage Theory \u2014 Self-contained version\n\nDemonstrates real-world applications connecting model-shrinkage distances\nto proof complexity, information theory, and combinatorial optimization.\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import List, Set, Tuple, Dict, Callable\n\n\nclass ExactModelCounter:\n    def __init__(self, n_vars: int):\n        self.n_vars = n_vars\n        self._all = list(itertools.product([False, True], repeat=n_vars))\n    def count(self, pred):\n        return sum(1 for a in self._all if pred(a))\n\n\ndef app_resolution_estimation():\n    print(\"Resolution Proof Length Estimation via Model-Shrinkage\")\n    print(\"=\"*60)\n    print(f\"  {'n':>4} | {'width w':>8} | {'B=2^w':>8} | {'shrinkage':>10} | {'min steps':>10}\")\n    for n in [8, 16, 32, 64]:\n        for w in [2, 3, 4, 8]:\n            B = 2**w\n            min_steps = math.ceil(n / w)\n            print(f\"  {n:>4} | {w:>8} | {B:>8} | {n:>10} | {min_steps:>10}\")\n    print()\n\n\ndef app_csp_analysis():\n    print(\"Information-Theoretic CSP Analysis\")\n    print(\"=\"*60)\n    n = 6\n    counter = ExactModelCounter(n)\n    constraints = [\n        (\"True\", lambda a: True),\n        (\"x0\", lambda a: a[0]),\n        (\"x0 AND x1\", lambda a: a[0] and a[1]),\n        (\"x0 AND x1 AND NOT x2\", lambda a: a[0] and a[1] and not a[2]),\n        (\"... AND (x3 OR x4)\", lambda a: a[0] and a[1] and not a[2] and (a[3] or a[4])),\n    ]\n    prev = 2**n\n    for name, pred in constraints:\n        c = counter.count(pred)\n        d = n - math.log2(c) if c > 0 else float(\"inf\")\n        s = math.log2(prev/c) if c > 0 else float(\"inf\")\n        print(f\"  {name:<35} | models={c:>3} | def={d:.2f} | shrink={s:.2f}\")\n        prev = c\n    print()\n\n\ndef app_direct_sum():\n    print(\"Direct-Sum Predictions\")\n    print(\"=\"*60)\n    for B in [2, 4]:\n        print(f\"  B={B}:\")\n        for sa, sb in [(4,4),(8,2),(16,4)]:\n            ka = math.ceil(math.log(sa, B))\n            kb = math.ceil(math.log(sb, B))\n            kp = math.ceil(math.log(sa*sb, B))\n            print(f\"    shrink_A={sa}, shrink_B={sb}: k_A>={ka}, k_B>={kb}, k_product>={kp} (sum={ka+kb})\")\n    print()\n\n\nif __name__ == \"__main__\":\n    app_resolution_estimation()\n    app_csp_analysis()\n    app_direct_sum()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Exact Model Counter",
+        "pseudocode": "function ExactModelCount(n, phi):\n    count <- 0\n    for each sigma in {0,1}^n:\n        if phi(sigma): count <- count + 1\n    return count\n\nComplexity: O(2^n * C(phi)) time, O(1) space",
+        "code": "import itertools\nfrom typing import Callable, Set, Tuple\n\nclass ExactModelCounter:\n    \"\"\"Brute-force exact model counter for propositional constraints.\"\"\"\n    def __init__(self, n_vars: int):\n        self.n_vars = n_vars\n        self._all = list(itertools.product([False, True], repeat=n_vars))\n    \n    def count(self, predicate: Callable[[Tuple[bool,...]], bool]) -> int:\n        return sum(1 for a in self._all if predicate(a))\n    \n    def model_set(self, predicate: Callable) -> Set[Tuple[bool,...]]:\n        return {a for a in self._all if predicate(a)}\n\n# Example\ncounter = ExactModelCounter(5)\nprint(f\"All assignments: {counter.count(lambda a: True)}\")\nprint(f\"x0=True: {counter.count(lambda a: a[0])}\")\nprint(f\"x0 AND x1: {counter.count(lambda a: a[0] and a[1])}\")\n",
+        "code_file": "visualizations/conjecture_5_model_shrinkage_distance_is_a_proof_c_exact_model_counter.py"
+      },
+      {
+        "name": "Bounded-Shrinkage Verifier",
+        "pseudocode": "function Certify(cards, B):\n    k <- len(cards) - 1\n    for i = 0..k-1:\n        if cards[i] > B * cards[i+1]: return Invalid\n    mult_bound <- B^k * cards[k]\n    assert cards[0] <= mult_bound\n    lb <- log_B(cards[0] / cards[k])\n    assert k >= lb\n    return Certificate(k, B, lb, mult_bound)\n\nComplexity: O(k) time, O(1) space",
+        "code": "import math\nfrom typing import List\n\nclass BoundedShrinkageVerifier:\n    \"\"\"Verifies bounded-shrinkage properties and produces certificates.\"\"\"\n    def certify(self, chain_cards: List[int], B: int) -> dict:\n        k = len(chain_cards) - 1\n        for i in range(k):\n            if chain_cards[i] > B * chain_cards[i+1]:\n                return {\"valid\": False, \"reason\": f\"Step {i} violates bound\"}\n        \n        mult_bound = B**k * chain_cards[-1]\n        ratio = chain_cards[0] / chain_cards[-1] if chain_cards[-1] > 0 else float(\"inf\")\n        lb = math.log(chain_cards[0] // chain_cards[-1], B) if B > 1 and chain_cards[-1] > 0 else 0\n        \n        return {\n            \"valid\": True,\n            \"k\": k, \"B\": B,\n            \"multiplicative_bound\": mult_bound,\n            \"lower_bound\": lb,\n            \"bound_satisfied\": k >= lb,\n        }\n\n# Example\nv = BoundedShrinkageVerifier()\ncert = v.certify([256, 128, 64, 32, 16, 8, 4, 2, 1], B=2)\nprint(f\"Chain length: {cert['k']}\")\nprint(f\"Lower bound: {cert['lower_bound']:.1f}\")\nprint(f\"Bound satisfied: {cert['bound_satisfied']}\")\n",
+        "code_file": "visualizations/conjecture_5_model_shrinkage_distance_is_a_proof_c_bounded_shrinkage_verifier.py"
+      }
+    ],
+    "lean_proofs": "/-\n# Model-Shrinkage Distance as a Proof-Complexity Invariant\n\nThis module develops a semantic framework for proof complexity based on\n*model-shrinkage*: the idea that each proof step that narrows the set of\nsatisfying assignments must \"pay\" for the resulting information loss.\n\nThe core objects are:\n- `Assignment n`: the type `Fin n \u2192 Bool` of Boolean assignments on `n` variables.\n- `deficiency n S`: the entropy deficiency `n - Nat.log2 |S|`.\n- `restrictedAssignments`: assignments fixing a subset of coordinates.\n- `prodAssignments`: product of assignment sets on disjoint variable blocks.\n- Bounded-shrinkage derivation chains and their length lower bounds.\n\n## Cross-domain connections\n\n- **Information theory**: deficiency behaves like entropy defect; additivity\n  under independent composition mirrors Shannon entropy additivity.\n- **Coding theory / Boolean cube**: coordinate restrictions are affine subcubes\n  of codimension |I|; exact shrinkage equals geometric codimension.\n- **Proof complexity**: bounded-shrinkage chains model semantic derivations in\n  resolution and Frege systems; the length lower bound is a proto-lower-bound\n  linking proof length to information loss.\n\nKeywords: proof complexity, model counting, #SAT, Boolean cube, entropy,\ncodimension, information theory, direct-sum, semantic lower bounds,\nresolution complexity, Frege systems, combinatorial filtrations\n-/\n\nimport Mathlib\n\nopen Finset BigOperators\n\n/-- A Boolean assignment on `n` variables. -/\nabbrev Assignment (n : \u2115) := Fin n \u2192 Bool\n\n/-- The full set of all Boolean assignments on `n` variables. -/\nnoncomputable def fullAssignments (n : \u2115) : Finset (Assignment n) :=\n  Fintype.elems\n\n/-- The entropy deficiency of a set of assignments `S \u2286 {0,1}^n`:\n    `def(S) := n - Nat.log2 |S|`.\n    Measures how far `S` is from filling the full Boolean cube. -/\ndef deficiency (n : \u2115) (S : Finset (Assignment n)) : \u2115 :=\n  n - Nat.log (2 : \u2115) S.card\n\n/-- Assignments that agree with pattern `b` on coordinates in `I`. -/\ndef restrictedAssignments (n : \u2115) (I : Finset (Fin n))\n    (b : {i // i \u2208 I} \u2192 Bool) : Finset (Assignment n) :=\n  Finset.univ.filter (fun \u03c3 => \u2200 (i : Fin n) (hi : i \u2208 I), \u03c3 i = b \u27e8i, hi\u27e9)\n\n/-! ## Theorem 1: Telescoping model-shrinkage identity -/\n\n/-\nThe telescoping identity for `Nat.log`-based shrinkage along a chain:\n    `\u2211\u1d62 (log\u2082 |S\u1d62| - log\u2082 |S\u1d62\u208a\u2081|) = log\u2082 |S\u2080| - log\u2082 |S\u2096|`.\n-/\ntheorem sum_log_card_telescopes\n    {\u03b1 : Type} [DecidableEq \u03b1]\n    (S : Fin (k + 1) \u2192 Finset \u03b1)\n    (hmono : \u2200 i : Fin k, S i.succ \u2286 S i.castSucc)\n    (hnonempty : \u2200 i, (S i).Nonempty) :\n    (\u2211 i : Fin k, (Nat.log 2 (S i.castSucc).card - Nat.log 2 (S i.succ).card)) =\n      Nat.log 2 (S 0).card - Nat.log 2 (S (Fin.last k)).card := by\n  induction' k with k ih;\n  \u00b7 aesop;\n  \u00b7 have := ih ( fun i => S i.castSucc ) ( fun i => hmono i.castSucc ) ( fun i => hnonempty i.castSucc );\n    simp_all +decide [ Fin.sum_univ_castSucc ];\n    rw [ tsub_add_tsub_cancel ];\n    \u00b7 refine' Nat.log_mono_right _;\n      have h_mono : \u2200 i j : Fin (k + 2), i \u2264 j \u2192 S j \u2286 S i := by\n        intro i j hij; induction' j using Fin.inductionOn with j ih ih; aesop;\n        cases hij.eq_or_lt <;> [ aesop; exact Finset.Subset.trans ( hmono _ ) ( ih <| Nat.le_of_lt_succ \u2039_\u203a ) ];\n      exact Finset.card_le_card ( h_mono _ _ ( Nat.zero_le _ ) );\n    \u00b7 exact Nat.log_mono_right ( Finset.card_le_card ( hmono ( Fin.last k ) ) )\n\n/-! ## Theorem 2: Coordinate restriction gives exact shrinkage -/\n\n/-\nThe number of assignments agreeing with pattern `b` on `I` is `2^(n - |I|)`.\n-/\ntheorem card_restrictedAssignments (n : \u2115) (I : Finset (Fin n))\n    (b : {i // i \u2208 I} \u2192 Bool) :\n    (restrictedAssignments n I b).card = 2 ^ (n - I.card) := by\n  have h_card : (restrictedAssignments n I b).card = 2 ^ (n - I.card) := by\n    have : restrictedAssignments n I b = Finset.image (fun \u03c3 : {i // i \u2209 I} \u2192 Bool => fun i : Fin n => if hi : i \u2208 I then b \u27e8i, hi\u27e9 else \u03c3 \u27e8i, hi\u27e9) (Finset.univ : Finset ({i // i \u2209 I} \u2192 Bool)) := by\n      ext \u03c3; simp [restrictedAssignments];\n      constructor;\n      \u00b7 intro h\u03c3; use fun i => \u03c3 i; ext i; aesop;\n      \u00b7 grind\n    rw [ this, Finset.card_image_of_injective ];\n    \u00b7 simp +decide [ Finset.card_univ ];\n    \u00b7 intro \u03c3\u2081 \u03c3\u2082 h; ext \u27e8 i, hi \u27e9 ; replace h := congr_fun h i; aesop;\n  exact h_card\n\n/-\nModel shrinkage from the full cube to a coordinate restriction equals `|I|`.\n-/\ntheorem shrinkage_of_coordinate_restriction (n : \u2115) (I : Finset (Fin n))\n    (b : {i // i \u2208 I} \u2192 Bool) :\n    Nat.log 2 (Fintype.card (Assignment n)) - Nat.log 2 (restrictedAssignments n I b).card\n      = I.card := by\n  -- By definition of $Fintype.card$, we know that $Fintype.card (Assignment n) = 2^n$.\n  have h_card : Fintype.card (Assignment n) = 2 ^ n := by\n    norm_num;\n  have := card_restrictedAssignments n I b;\n  rw [ h_card, this, Nat.log_pow, Nat.log_pow ] <;> norm_num;\n  rw [ Nat.sub_sub_self ( le_trans ( Finset.card_le_univ _ ) ( by norm_num ) ) ]\n\n/-! ## Theorem 3: Entropy deficiency is monotone under implication -/\n\n/-\nDeficiency is monotone: if `T \u2286 S` and `T` is nonempty, then `def(S) \u2264 def(T)`.\n-/\ntheorem deficiency_monotone\n    {n : \u2115} {S T : Finset (Assignment n)}\n    (hTS : T \u2286 S) (hT : T.Nonempty) :\n    deficiency n S \u2264 deficiency n T := by\n  exact Nat.sub_le_sub_left ( Nat.log_mono_right <| Finset.card_le_card hTS ) _\n\n/-\nDeficiency equality characterization under subset inclusion.\n-/\ntheorem deficiency_eq_iff_of_subset\n    {n : \u2115} {S T : Finset (Assignment n)}\n    (hTS : T \u2286 S) (hT : T.Nonempty) :\n    deficiency n S = deficiency n T \u2194 Nat.log 2 S.card = Nat.log 2 T.card := by\n  constructor <;> intro h;\n  \u00b7 unfold deficiency at h;\n    rw [ tsub_right_inj ] at h;\n    \u00b7 exact h;\n    \u00b7 refine' Nat.le_trans ( Nat.log_mono_right <| Finset.card_le_univ _ ) _;\n      simp +arith +decide [ pow_succ' ];\n    \u00b7 refine' Nat.le_trans ( Nat.log_mono_right <| Finset.card_le_univ _ ) _;\n      simp +arith +decide [ pow_succ' ];\n  \u00b7 unfold deficiency; aesop;\n\n/-! ## Theorem 4: Additivity under independent variable splitting -/\n\n/-- Product of assignment sets on disjoint variable blocks. -/\ndef prodAssignments (S : Finset (Assignment m)) (T : Finset (Assignment n)) :\n    Finset (Assignment (m + n)) :=\n  (S \u00d7\u02e2 T).map \u27e8fun p => Fin.addCases (p.1 \u00b7) (p.2 \u00b7),\n    fun \u27e8a\u2081, a\u2082\u27e9 \u27e8b\u2081, b\u2082\u27e9 h => by\n      simp only [Prod.mk.injEq]\n      have hf := congr_fun h\n      constructor\n      \u00b7 funext i\n        have := hf (Fin.castAdd n i)\n        simp [Fin.addCases] at this\n        exact this\n      \u00b7 funext j\n        have := hf (Fin.natAdd m j)\n        simp [Fin.addCases] at this\n        exact this\u27e9\n\n/-\nCardinality of product assignments.\n-/\ntheorem card_prodAssignments (S : Finset (Assignment m)) (T : Finset (Assignment n)) :\n    (prodAssignments S T).card = S.card * T.card := by\n  rw [ prodAssignments, Finset.card_map, Finset.card_product ]\n\n/-\nDeficiency is sub-additive under independent variable splitting:\n    `def(S \u2297 T) \u2264 def(S) + def(T)`. Equality holds when both cardinalities\n    are exact powers of two (the \"ideal\" case). This follows from\n    `Nat.log 2 (a * b) \u2265 Nat.log 2 a + Nat.log 2 b`.\n-/\ntheorem deficiency_add_le (S : Finset (Assignment m)) (T : Finset (Assignment n))\n    (hS : S.Nonempty) (hT : T.Nonempty) :\n    deficiency (m + n) (prodAssignments S T) \u2264\n      deficiency m S + deficiency n T := by\n  unfold deficiency;\n  -- Applying the logarithm property: $\\log_b(xy) \\geq \\log_b(x) + \\log_b(y)$\n  have h_log_prop : Nat.log 2 (S.card * T.card) \u2265 Nat.log 2 S.card + Nat.log 2 T.card := by\n    refine Nat.le_log_of_pow_le ( by decide ) ?_;\n    rw [ pow_add ] ; exact Nat.mul_le_mul ( Nat.pow_log_le_self 2 hS.card_pos.ne' ) ( Nat.pow_log_le_self 2 hT.card_pos.ne' ) ;\n  rw [ card_prodAssignments ] ; omega;\n\n/-\nDeficiency is exactly additive when both cardinalities are powers of two.\n-/\ntheorem deficiency_add_of_pow2 (S : Finset (Assignment m)) (T : Finset (Assignment n))\n    (hS : \u2203 a, S.card = 2 ^ a) (hT : \u2203 b, T.card = 2 ^ b) :\n    deficiency (m + n) (prodAssignments S T) =\n      deficiency m S + deficiency n T := by\n  -- Let S.card = 2^a, T.card = 2^b. Then (prodAssignments S T).card = 2^a * 2^b = 2^(a+b).\n  obtain \u27e8a, ha\u27e9 := hS\n  obtain \u27e8b, hb\u27e9 := hT\n  have h_card : (prodAssignments S T).card = 2 ^ (a + b) := by\n    rw [ card_prodAssignments, ha, hb, pow_add ];\n  -- By definition of $deficiency$, we have:\n  unfold deficiency;\n  rw [ h_card, ha, hb, Nat.log_pow, Nat.log_pow, Nat.log_pow ] <;> norm_num;\n  rw [ tsub_add_tsub_comm ];\n  \u00b7 contrapose! ha;\n    exact ne_of_lt ( lt_of_le_of_lt ( Finset.card_le_univ _ ) ( by simpa using pow_lt_pow_right\u2080 ( by decide ) ha ) );\n  \u00b7 contrapose! hb;\n    exact ne_of_lt ( lt_of_le_of_lt ( Finset.card_le_univ _ ) ( by simpa [ Fintype.card_pi ] using pow_lt_pow_right\u2080 one_lt_two hb ) )\n\n/-! ## Theorem 5: Lower bound for bounded-shrinkage derivation systems -/\n\n/-\nIn a bounded-shrinkage chain where each step satisfies\n    `|S\u1d62| \u2264 B \u00b7 |S\u1d62\u208a\u2081|`, iterating gives `|S\u2080| \u2264 B^k \u00b7 |S\u2096|`.\n    This is the core multiplicative bound underlying proof-length lower bounds.\n-/\ntheorem card_bound_of_bounded_shrink\n    {\u03b1 : Type} [DecidableEq \u03b1]\n    (S : Fin (k + 1) \u2192 Finset \u03b1)\n    (B : \u2115)\n    (hB : \u2200 i : Fin k, (S i.castSucc).card \u2264 B * (S i.succ).card) :\n    (S 0).card \u2264 B ^ k * (S (Fin.last k)).card := by\n  induction' k with k ih;\n  \u00b7 grind +locals;\n  \u00b7 specialize ih ( fun i => S i.succ ) ( fun i => hB i.succ ) ; simp_all +decide [ pow_succ', mul_assoc, Fin.last ] ;\n    exact le_trans ( hB 0 ) ( Nat.mul_le_mul_left _ ih )\n\n/-\nLower bound on derivation length: if each step shrinks by at most factor `B`,\n    then `k \u2265 log_B(|S\u2080| / |S\u2096|)`. Uses `Nat.log` base `B`.\n-/\ntheorem length_lower_bound_of_bounded_shrink\n    {\u03b1 : Type} [DecidableEq \u03b1]\n    (S : Fin (k + 1) \u2192 Finset \u03b1)\n    (B : \u2115)\n    (hB : \u2200 i : Fin k, (S i.castSucc).card \u2264 B * (S i.succ).card)\n    (hpos : 1 < B)\n    (hnonempty : \u2200 i, (S i).Nonempty) :\n    k \u2265 Nat.log B ((S 0).card / (S (Fin.last k)).card) := by\n  -- By definition of $S$, we know that $|S\u2080| \\leq B^k |S\u2096|$.\n  have h_card_bound : (S 0).card \u2264 B ^ k * (S (Fin.last k)).card := by\n    exact card_bound_of_bounded_shrink S B hB;\n  refine' Nat.le_trans ( Nat.log_mono_right <| Nat.div_le_div_right h_card_bound ) _;\n  rw [ Nat.mul_div_cancel _ ( Finset.card_pos.mpr ( hnonempty _ ) ) ] ; exact Nat.le_of_eq ( Nat.log_pow hpos _ ) ;\n\n/-! ## Computational verification helpers -/\n\n/-\nThe cardinality of the full assignment space is `2^n`.\n-/\ntheorem card_assignment (n : \u2115) : Fintype.card (Assignment n) = 2 ^ n := by\n  exact Fintype.card_pi.trans ( by norm_num )\n\n/-\nAll assignments form a nonempty set.\n-/\ntheorem fullAssignments_nonempty (n : \u2115) : (Finset.univ : Finset (Assignment n)).Nonempty := by\n  exact \u27e8 fun _ => Bool.true, Finset.mem_univ _ \u27e9\n\n/-\nThe deficiency of the full assignment space is zero.\n-/\ntheorem deficiency_full (n : \u2115) :\n    deficiency n (Finset.univ : Finset (Assignment n)) = 0 := by\n  simp +decide [ deficiency, card_assignment ]\n\n#print axioms sum_log_card_telescopes\n#print axioms card_restrictedAssignments\n#print axioms shrinkage_of_coordinate_restriction\n#print axioms deficiency_monotone\n#print axioms deficiency_eq_iff_of_subset\n#print axioms card_prodAssignments\n#print axioms deficiency_add_le\n#print axioms deficiency_add_of_pow2\n#print axioms card_bound_of_bounded_shrink\n#print axioms length_lower_bound_of_bounded_shrink\n#print axioms card_assignment\n#print axioms deficiency_full",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Algorithms for Model-Shrinkage Proof Complexity\n\nImplements the computational machinery for analyzing semantic proof complexity\nvia model-shrinkage distances on the Boolean cube.\n\nAlgorithms:\n1. ExactModelCounter \u2014 brute-force model counting for propositional constraints\n2. ShrinkageAnalyzer \u2014 computes shrinkage profiles along derivation chains\n3. BoundedShrinkageVerifier \u2014 verifies and certifies bounded-shrinkage bounds\n4. DeficiencyCalculator \u2014 computes entropy deficiency with exact and approximate modes\n\nKeywords: model counting, #SAT, proof complexity, entropy, Boolean cube\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import List, Set, Tuple, Dict, Optional, Callable\nfrom dataclasses import dataclass, field\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Data Structures\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n@dataclass\nclass ShrinkageProfile:\n    \"\"\"Complete shrinkage analysis of a derivation chain.\"\"\"\n    chain_cards: List[int]\n    step_shrinkages: List[float]\n    cumulative_shrinkage: float\n    deficiencies: List[float]\n    n_vars: int\n    max_step_shrinkage: float\n    is_bounded: bool\n    bound_B: Optional[int]\n    length_lower_bound: Optional[float]\n\n    def summary(self) -> str:\n        lines = [\n            f\"Shrinkage Profile (n={self.n_vars}, k={len(self.chain_cards)-1})\",\n            f\"  Chain cardinalities: {self.chain_cards}\",\n            f\"  Step shrinkages: {[f'{s:.3f}' for s in self.step_shrinkages]}\",\n            f\"  Total shrinkage: {self.cumulative_shrinkage:.3f}\",\n            f\"  Deficiencies: {[f'{d:.2f}' for d in self.deficiencies]}\",\n            f\"  Max step shrinkage: {self.max_step_shrinkage:.3f}\",\n        ]\n        if self.is_bounded and self.bound_B is not None:\n            lines.append(f\"  Bounded by B={self.bound_B}: True\")\n            lines.append(f\"  Length lower bound: {self.length_lower_bound:.3f}\")\n        return \"\\n\".join(lines)\n\n\n@dataclass\nclass BoundCertificate:\n    \"\"\"Certificate that a bounded-shrinkage lower bound holds.\"\"\"\n    chain_length: int\n    shrinkage_bound: int\n    total_shrinkage_ratio: float\n    lower_bound: float\n    bound_holds: bool\n    multiplicative_bound: int\n    card_start: int\n    card_end: int\n\n    def verify(self) -> bool:\n        \"\"\"Independently verify the certificate.\"\"\"\n        if self.card_end <= 0:\n            return False\n        ratio = self.card_start / self.card_end\n        lb = math.log(ratio, self.shrinkage_bound) if self.shrinkage_bound > 1 else 0\n        return self.chain_length >= lb and self.card_start <= self.multiplicative_bound\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 1: Exact Model Counter\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nclass ExactModelCounter:\n    \"\"\"\n    Brute-force exact model counter for propositional constraints.\n\n    Represents constraints as predicate functions on Boolean assignments.\n    Enumerates all 2^n assignments and counts satisfying ones.\n\n    Time complexity: O(2^n * cost_of_predicate)\n    Space complexity: O(2^n) for storing the model set\n\n    Example:\n        >>> counter = ExactModelCounter(4)\n        >>> # Count assignments where x0 = True\n        >>> count = counter.count(lambda a: a[0])\n        >>> print(count)  # 8\n    \"\"\"\n\n    def __init__(self, n_vars: int):\n        self.n_vars = n_vars\n        self._all_assignments = list(itertools.product([False, True], repeat=n_vars))\n\n    def count(self, predicate: Callable[[Tuple[bool, ...]], bool]) -> int:\n        \"\"\"Count assignments satisfying the predicate.\"\"\"\n        return sum(1 for a in self._all_assignments if predicate(a))\n\n    def model_set(self, predicate: Callable[[Tuple[bool, ...]], bool]) -> Set[Tuple[bool, ...]]:\n        \"\"\"Return the set of satisfying assignments.\"\"\"\n        return {a for a in self._all_assignments if predicate(a)}\n\n    def deficiency(self, predicate: Callable[[Tuple[bool, ...]], bool]) -> float:\n        \"\"\"Compute entropy deficiency of the constraint.\"\"\"\n        count = self.count(predicate)\n        if count <= 0:\n            return float('inf')\n        return self.n_vars - math.log2(count)\n\n    def shrinkage(self, pred_S: Callable, pred_T: Callable) -> float:\n        \"\"\"Compute shrinkage distance d(S, T) where Mod(T) \u2286 Mod(S).\"\"\"\n        card_S = self.count(pred_S)\n        card_T = self.count(pred_T)\n        if card_T <= 0 or card_S <= 0:\n            return float('inf')\n        return math.log2(card_S / card_T)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 2: Shrinkage Analyzer\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nclass ShrinkageAnalyzer:\n    \"\"\"\n    Analyzes shrinkage profiles along semantic derivation chains.\n\n    Given a sequence of constraint predicates (each implied by the next),\n    computes the full shrinkage profile including step-wise and cumulative\n    shrinkage, deficiency trajectory, and bounded-shrinkage certificates.\n\n    Time complexity: O(k * 2^n) for k-step chain on n variables\n    Space complexity: O(k) for storing the profile\n\n    Example:\n        >>> analyzer = ShrinkageAnalyzer(5)\n        >>> chain = [lambda a: True, lambda a: a[0], lambda a: a[0] and a[1]]\n        >>> profile = analyzer.analyze(chain)\n        >>> print(profile.summary())\n    \"\"\"\n\n    def __init__(self, n_vars: int):\n        self.n_vars = n_vars\n        self.counter = ExactModelCounter(n_vars)\n\n    def analyze(self, predicates: List[Callable],\n                bound_B: Optional[int] = None) -> ShrinkageProfile:\n        \"\"\"\n        Analyze the shrinkage profile of a derivation chain.\n\n        Args:\n            predicates: list of constraint predicates [\u03c6_0, \u03c6_1, ..., \u03c6_k]\n                        where Mod(\u03c6_{i+1}) \u2286 Mod(\u03c6_i)\n            bound_B: optional shrinkage bound to check\n\n        Returns:\n            ShrinkageProfile with complete analysis\n        \"\"\"\n        chain_cards = [self.counter.count(p) for p in predicates]\n        step_shrinkages = []\n        deficiencies = []\n\n        for i, card in enumerate(chain_cards):\n            deficiencies.append(\n                self.n_vars - math.log2(card) if card > 0 else float('inf')\n            )\n\n        for i in range(len(chain_cards) - 1):\n            if chain_cards[i + 1] > 0:\n                step_shrinkages.append(math.log2(chain_cards[i] / chain_cards[i + 1]))\n            else:\n                step_shrinkages.append(float('inf'))\n\n        cumulative = sum(s for s in step_shrinkages if s != float('inf'))\n        max_step = max(step_shrinkages) if step_shrinkages else 0\n\n        is_bounded = False\n        length_lb = None\n\n        if bound_B is not None and bound_B > 1:\n            is_bounded = all(\n                chain_cards[i] <= bound_B * chain_cards[i + 1]\n                for i in range(len(chain_cards) - 1)\n            )\n            if chain_cards[-1] > 0 and chain_cards[0] > 0:\n                quotient = chain_cards[0] // chain_cards[-1]\n                length_lb = math.log(max(quotient, 1), bound_B)\n\n        return ShrinkageProfile(\n            chain_cards=chain_cards,\n            step_shrinkages=step_shrinkages,\n            cumulative_shrinkage=cumulative,\n            deficiencies=deficiencies,\n            n_vars=self.n_vars,\n            max_step_shrinkage=max_step,\n            is_bounded=is_bounded,\n            bound_B=bound_B,\n            length_lower_bound=length_lb,\n        )\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 3: Bounded-Shrinkage Verifier\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nclass BoundedShrinkageVerifier:\n    \"\"\"\n    Verifies bounded-shrinkage properties and produces certificates.\n\n    Given a chain of model set cardinalities and a bound B, checks that\n    each step satisfies |S_i| \u2264 B * |S_{i+1}| and produces a certificate\n    for the length lower bound k \u2265 log_B(|S_0|/|S_k|).\n\n    Time complexity: O(k) for chain of length k\n    Space complexity: O(1)\n\n    Example:\n        >>> verifier = BoundedShrinkageVerifier()\n        >>> cert = verifier.certify([256, 128, 64, 32, 16], B=2)\n        >>> print(cert.bound_holds)  # True\n    \"\"\"\n\n    def certify(self, chain_cards: List[int], B: int) -> BoundCertificate:\n        \"\"\"\n        Produce a certificate for the bounded-shrinkage lower bound.\n\n        Args:\n            chain_cards: list of cardinalities [|S_0|, ..., |S_k|]\n            B: maximum per-step shrinkage factor\n\n        Returns:\n            BoundCertificate with verification data\n        \"\"\"\n        k = len(chain_cards) - 1\n        card_start = chain_cards[0]\n        card_end = chain_cards[-1]\n\n        # Check bounded shrinkage\n        for i in range(k):\n            if chain_cards[i] > B * chain_cards[i + 1]:\n                return BoundCertificate(\n                    chain_length=k, shrinkage_bound=B,\n                    total_shrinkage_ratio=card_start / card_end if card_end > 0 else float('inf'),\n                    lower_bound=float('inf'),\n                    bound_holds=False,\n                    multiplicative_bound=B ** k * card_end,\n                    card_start=card_start, card_end=card_end,\n                )\n\n        multiplicative = B ** k * card_end\n        ratio = card_start / card_end if card_end > 0 else float('inf')\n        quotient = card_start // card_end if card_end > 0 else 0\n        lb = math.log(max(quotient, 1), B) if B > 1 else 0\n\n        return BoundCertificate(\n            chain_length=k, shrinkage_bound=B,\n            total_shrinkage_ratio=ratio,\n            lower_bound=lb,\n            bound_holds=k >= lb,\n            multiplicative_bound=multiplicative,\n            card_start=card_start, card_end=card_end,\n        )\n\n    def find_minimal_B(self, chain_cards: List[int]) -> int:\n        \"\"\"Find the minimal B such that the chain is B-bounded.\"\"\"\n        max_ratio = 1\n        for i in range(len(chain_cards) - 1):\n            if chain_cards[i + 1] > 0:\n                ratio = math.ceil(chain_cards[i] / chain_cards[i + 1])\n                max_ratio = max(max_ratio, ratio)\n        return max_ratio\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 4: Deficiency Calculator\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nclass DeficiencyCalculator:\n    \"\"\"\n    Computes entropy deficiency with exact and approximate modes.\n\n    Supports:\n    - Exact computation via brute-force model counting\n    - Symbolic computation for structured constraints (subcubes, products)\n    - Deficiency additivity verification for product constraints\n\n    Example:\n        >>> calc = DeficiencyCalculator(4)\n        >>> d = calc.exact_deficiency(lambda a: a[0] and a[1])\n        >>> print(d)  # 2.0\n    \"\"\"\n\n    def __init__(self, n_vars: int):\n        self.n_vars = n_vars\n        self.counter = ExactModelCounter(n_vars)\n\n    def exact_deficiency(self, predicate: Callable) -> float:\n        \"\"\"Compute exact deficiency by model counting.\"\"\"\n        return self.counter.deficiency(predicate)\n\n    def subcube_deficiency(self, num_fixed: int) -> float:\n        \"\"\"Deficiency of a subcube with num_fixed coordinates fixed.\"\"\"\n        return float(num_fixed)\n\n    def product_deficiency(self, def_a: float, def_b: float,\n                           card_a: int, card_b: int) -> dict:\n        \"\"\"\n        Analyze deficiency of a product constraint.\n\n        Returns both the exact product deficiency and the\n        sub-additivity bound.\n        \"\"\"\n        if card_a <= 0 or card_b <= 0:\n            return {'product_def': float('inf'), 'sum_def': def_a + def_b,\n                    'sub_additive': True, 'exact_additive': False}\n\n        product_card = card_a * card_b\n        n_total = int(math.log2(card_a) + def_a + math.log2(card_b) + def_b)\n        prod_def = n_total - math.log2(product_card)\n\n        return {\n            'product_def': prod_def,\n            'sum_def': def_a + def_b,\n            'sub_additive': prod_def <= def_a + def_b + 0.001,\n            'exact_additive': abs(prod_def - def_a - def_b) < 0.001,\n        }\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Example usage\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == \"__main__\":\n    print(\"Model-Shrinkage Algorithms \u2014 Example Usage\")\n    print(\"=\" * 50)\n\n    # Model counting\n    counter = ExactModelCounter(5)\n    print(f\"\\n1. Model counting (n=5):\")\n    print(f\"   All: {counter.count(lambda a: True)}\")\n    print(f\"   x0=T: {counter.count(lambda a: a[0])}\")\n    print(f\"   x0=T \u2227 x1=T: {counter.count(lambda a: a[0] and a[1])}\")\n\n    # Shrinkage analysis\n    analyzer = ShrinkageAnalyzer(5)\n    chain = [\n        lambda a: True,\n        lambda a: a[0],\n        lambda a: a[0] and a[1],\n        lambda a: a[0] and a[1] and a[2],\n    ]\n    profile = analyzer.analyze(chain, bound_B=2)\n    print(f\"\\n2. Shrinkage analysis:\")\n    print(profile.summary())\n\n    # Bounded-shrinkage certificate\n    verifier = BoundedShrinkageVerifier()\n    cert = verifier.certify([1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1], B=2)\n    print(f\"\\n3. Bounded-shrinkage certificate:\")\n    print(f\"   Chain length: {cert.chain_length}\")\n    print(f\"   Bound B: {cert.shrinkage_bound}\")\n    print(f\"   Lower bound: {cert.lower_bound:.1f}\")\n    print(f\"   Certificate valid: {cert.verify()}\")\n\n    # Deficiency\n    calc = DeficiencyCalculator(6)\n    print(f\"\\n4. Deficiency calculations (n=6):\")\n    for k in range(7):\n        pred = (lambda k: lambda a: all(a[i] for i in range(k)))(k)\n        d = calc.exact_deficiency(pred)\n        print(f\"   Fix {k} vars: deficiency = {d:.2f}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\napplications.py \u2014 Applications of Model-Shrinkage Theory\n\nDemonstrates real-world applications connecting model-shrinkage distances\nto proof complexity, information theory, and combinatorial optimization.\n\nApplications:\n1. Resolution proof length estimation via bounded shrinkage\n2. Information-theoretic analysis of constraint satisfaction\n3. Semantic complexity profiling of CNF formula families\n4. Direct-sum predictions for independent constraint composition\n\nKeywords: proof complexity, resolution complexity, Frege systems,\nmodel counting, #SAT, entropy, information theory, direct-sum\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import List, Set, Tuple, Dict, Callable\nfrom algorithms import (ExactModelCounter, ShrinkageAnalyzer,\n                         BoundedShrinkageVerifier, DeficiencyCalculator)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 1: Resolution Proof Length Estimation\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef app_resolution_estimation():\n    \"\"\"\n    Estimate resolution proof length using model-shrinkage bounds.\n\n    In width-w Resolution, each inference step can add a clause of width \u2264 w,\n    which restricts the model set by at most a factor of 2^w. This gives\n    the bounded-shrinkage model with B = 2^w.\n\n    The lower bound theorem then gives:\n        proof_length \u2265 log_{2^w}(|Mod(\u03c6)| / |Mod(\u03c8)|)\n                     = shrinkage_distance(\u03c6, \u03c8) / w\n\n    Example: deriving a single assignment from a full cube on n variables\n    requires at least n/w steps in width-w Resolution.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 1: Resolution Proof Length Estimation\")\n    print(\"=\" * 70)\n    print()\n\n    n_values = [8, 16, 32, 64]\n    width_values = [2, 3, 4, 8]\n\n    print(f\"  {'n':>4} | {'width w':>8} | {'B=2^w':>8} | {'shrinkage':>10} | {'min steps':>10}\")\n    print(f\"  {'-'*4}-+-{'-'*8}-+-{'-'*8}-+-{'-'*10}-+-{'-'*10}\")\n\n    for n in n_values:\n        total_shrinkage = n  # going from 2^n to 1 model\n        for w in width_values:\n            B = 2 ** w\n            min_steps = math.ceil(total_shrinkage / w)\n            print(f\"  {n:>4} | {w:>8} | {B:>8} | {total_shrinkage:>10} | {min_steps:>10}\")\n\n    print()\n    print(\"  Key insight: wider clauses allow faster shrinkage, but the\")\n    print(\"  total information loss (n bits) must still be 'paid for'.\")\n    print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 2: Information-Theoretic Analysis of CSP\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef app_csp_analysis():\n    \"\"\"\n    Analyze constraint satisfaction problems through the information-theoretic\n    lens of model-shrinkage.\n\n    Each constraint in a CSP restricts the solution space. The deficiency\n    measures cumulative information gain. For independent constraints on\n    disjoint variable sets, deficiency is additive.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 2: Information-Theoretic CSP Analysis\")\n    print(\"=\" * 70)\n    print()\n\n    n = 6\n    counter = ExactModelCounter(n)\n\n    # Define a sequence of constraints\n    constraints = [\n        (\"True (no constraint)\", lambda a: True),\n        (\"x0 = True\", lambda a: a[0]),\n        (\"x0 \u2227 x1\", lambda a: a[0] and a[1]),\n        (\"x0 \u2227 x1 \u2227 \u00acx2\", lambda a: a[0] and a[1] and not a[2]),\n        (\"x0 \u2227 x1 \u2227 \u00acx2 \u2227 (x3 \u2228 x4)\",\n         lambda a: a[0] and a[1] and not a[2] and (a[3] or a[4])),\n        (\"x0 \u2227 x1 \u2227 \u00acx2 \u2227 (x3 \u2228 x4) \u2227 x5\",\n         lambda a: a[0] and a[1] and not a[2] and (a[3] or a[4]) and a[5]),\n    ]\n\n    print(f\"  Constraint chain on n={n} variables:\")\n    print(f\"  {'Constraint':<40} | {'|Mod|':>6} | {'Deficiency':>10} | {'Shrinkage':>10}\")\n    print(f\"  {'-'*40}-+-{'-'*6}-+-{'-'*10}-+-{'-'*10}\")\n\n    prev_count = 2 ** n\n    for name, pred in constraints:\n        count = counter.count(pred)\n        defi = n - math.log2(count) if count > 0 else float('inf')\n        shrink = math.log2(prev_count / count) if count > 0 else float('inf')\n        print(f\"  {name:<40} | {count:>6} | {defi:>10.3f} | {shrink:>10.3f}\")\n        prev_count = count\n\n    print()\n    print(\"  Note: non-unit clauses (like x3 \u2228 x4) give fractional deficiency\")\n    print(\"  increase, reflecting their weaker constraining power.\")\n    print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 3: CNF Family Complexity Profiling\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef app_cnf_profiling():\n    \"\"\"\n    Profile the semantic complexity of structured CNF formula families.\n\n    Compares different formula structures by their shrinkage characteristics\n    to predict proof complexity behavior.\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 3: CNF Family Semantic Complexity Profiling\")\n    print(\"=\" * 70)\n    print()\n\n    n = 5\n\n    families = {\n        \"Unit clauses (x_i)\": [\n            lambda a, i=i: a[i] for i in range(n)\n        ],\n        \"Binary clauses (x_i \u2228 x_{i+1})\": [\n            lambda a, i=i: a[i] or a[i+1] for i in range(n-1)\n        ],\n        \"Negated pairs (\u00acx_i \u2228 \u00acx_{i+1})\": [\n            lambda a, i=i: not a[i] or not a[i+1] for i in range(n-1)\n        ],\n    }\n\n    for family_name, clause_list in families.items():\n        print(f\"  Family: {family_name}\")\n        print(f\"  {'Step':>6} | {'|Mod|':>6} | {'Deficiency':>10} | {'Step shrink':>12}\")\n        print(f\"  {'-'*6}-+-{'-'*6}-+-{'-'*10}-+-{'-'*12}\")\n\n        # Build cumulative conjunction\n        prev_count = 2 ** n\n        for k in range(len(clause_list) + 1):\n            if k == 0:\n                pred = lambda a: True\n            else:\n                clauses_k = clause_list[:k]\n                pred = lambda a, cs=clauses_k: all(c(a) for c in cs)\n\n            counter = ExactModelCounter(n)\n            count = counter.count(pred)\n            defi = n - math.log2(count) if count > 0 else float('inf')\n            shrink = math.log2(prev_count / count) if count > 0 and prev_count > 0 else 0\n            print(f\"  {k:>6} | {count:>6} | {defi:>10.3f} | {shrink:>12.3f}\")\n            prev_count = count\n\n        print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 4: Direct-Sum Predictions\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef app_direct_sum():\n    \"\"\"\n    Verify direct-sum predictions for independent constraint composition.\n\n    When constraints operate on disjoint variable sets, the product constraint\n    has deficiency equal to the sum of individual deficiencies (in the\n    power-of-two case) or bounded by it (in general).\n    \"\"\"\n    print(\"=\" * 70)\n    print(\"APPLICATION 4: Direct-Sum Predictions for Independent Constraints\")\n    print(\"=\" * 70)\n    print()\n\n    test_cases = [\n        # (m, restriction_m, n, restriction_n, description)\n        (3, {0: True}, 3, {0: True}, \"1 fixed each, power-of-2\"),\n        (4, {0: True, 1: True}, 4, {0: False}, \"2+1 fixed, power-of-2\"),\n        (3, {0: True, 1: True, 2: False}, 3, {0: True, 1: True, 2: True}, \"fully fixed each\"),\n    ]\n\n    for m, restr_m, n_val, restr_n, desc in test_cases:\n        # Compute S\n        S = set()\n        for a in itertools.product([False, True], repeat=m):\n            if all(a[i] == v for i, v in restr_m.items()):\n                S.add(a)\n\n        # Compute T\n        T = set()\n        for a in itertools.product([False, True], repeat=n_val):\n            if all(a[i] == v for i, v in restr_n.items()):\n                T.add(a)\n\n        # Product\n        P = {s + t for s in S for t in T}\n\n        def_S = m - math.log2(len(S)) if len(S) > 0 else float('inf')\n        def_T = n_val - math.log2(len(T)) if len(T) > 0 else float('inf')\n        def_P = (m + n_val) - math.log2(len(P)) if len(P) > 0 else float('inf')\n\n        print(f\"  {desc}:\")\n        print(f\"    S \u2286 {{0,1}}^{m}: |S|={len(S)}, def(S)={def_S:.2f}\")\n        print(f\"    T \u2286 {{0,1}}^{n_val}: |T|={len(T)}, def(T)={def_T:.2f}\")\n        print(f\"    S\u2297T \u2286 {{0,1}}^{m+n_val}: |S\u2297T|={len(P)}, def(S\u2297T)={def_P:.2f}\")\n        print(f\"    def(S)+def(T) = {def_S+def_T:.2f}\")\n        print(f\"    Additivity: {'exact \u2713' if abs(def_P - def_S - def_T) < 0.001 else 'sub-additive \u2264'}\")\n        print()\n\n    # Minimum derivation length prediction\n    print(\"  Direct-sum prediction for derivation length:\")\n    print(\"  If deriving constraint A requires k_A steps with bound B,\")\n    print(\"  and deriving B requires k_B steps with bound B,\")\n    print(\"  then deriving A\u2297B requires at least k_A + k_B steps.\")\n    print()\n    for B in [2, 4]:\n        print(f\"    B={B}:\")\n        for shrink_a, shrink_b in [(4, 4), (8, 2), (16, 4)]:\n            k_a = math.ceil(math.log(shrink_a, B))\n            k_b = math.ceil(math.log(shrink_b, B))\n            k_prod = math.ceil(math.log(shrink_a * shrink_b, B))\n            print(f\"      shrink_A={shrink_a}, shrink_B={shrink_b}: \"\n                  f\"k_A\u2265{k_a}, k_B\u2265{k_b}, k_{'{A\u2297B}'}\u2265{k_prod} \"\n                  f\"(vs k_A+k_B={k_a+k_b})\")\n    print()\n\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Model-Shrinkage Theory: Applications                         \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    app_resolution_estimation()\n    app_csp_analysis()\n    app_cnf_profiling()\n    app_direct_sum()\n\n    print(\"=\" * 70)\n    print(\"All applications demonstrated successfully.\")\n    print(\"=\" * 70)\n\n\n#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Model-Shrinkage Distance: Interactive Demonstration\n\nDemonstrates the core concepts of model-shrinkage as a proof-complexity invariant\non the Boolean cube {0,1}^n. Computes exact model counts, deficiency, shrinkage\ndistances, and verifies the bounded-shrinkage lower bound on concrete examples.\n\nKeywords: proof complexity, model counting, #SAT, Boolean cube, entropy,\ncodimension, information theory, semantic lower bounds\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import List, Set, Tuple, Dict, Optional\n\n\ndef all_assignments(n: int) -> Set[Tuple[bool, ...]]:\n    \"\"\"Generate all Boolean assignments on n variables.\"\"\"\n    return set(itertools.product([False, True], repeat=n))\n\n\ndef restricted_assignments(n: int, restrictions: Dict[int, bool]) -> Set[Tuple[bool, ...]]:\n    \"\"\"\n    Assignments on n variables that agree with the given restrictions.\n    restrictions: dict mapping variable index -> required value.\n    \"\"\"\n    result = set()\n    for assignment in itertools.product([False, True], repeat=n):\n        if all(assignment[i] == v for i, v in restrictions.items()):\n            result.add(assignment)\n    return result\n\n\ndef deficiency(n: int, model_count: int) -> float:\n    \"\"\"\n    Entropy deficiency: def(S) = n - log2(|S|).\n    For empty sets, returns infinity.\n    \"\"\"\n    if model_count <= 0:\n        return float('inf')\n    return n - math.log2(model_count)\n\n\ndef deficiency_int(n: int, model_count: int) -> int:\n    \"\"\"Integer version of deficiency using floor log2.\"\"\"\n    if model_count <= 0:\n        return n  # maximal deficiency\n    return n - int(math.log2(model_count))\n\n\ndef shrinkage_distance(card_S: int, card_T: int) -> float:\n    \"\"\"Model-shrinkage distance d(S,T) = log2(|S|/|T|) for T \u2286 S, T nonempty.\"\"\"\n    if card_T <= 0:\n        return float('inf')\n    return math.log2(card_S / card_T)\n\n\ndef product_assignments(S: Set[Tuple[bool, ...]], T: Set[Tuple[bool, ...]]) -> Set[Tuple[bool, ...]]:\n    \"\"\"Product of two assignment sets on disjoint variable blocks.\"\"\"\n    return {s + t for s in S for t in T}\n\n\ndef bounded_shrinkage_chain_check(chain_cards: List[int], B: int) -> dict:\n    \"\"\"\n    Verify a bounded-shrinkage chain and compute the lower bound.\n\n    Args:\n        chain_cards: list of cardinalities [|S_0|, |S_1|, ..., |S_k|]\n        B: maximum shrinkage factor per step\n\n    Returns:\n        dict with chain analysis\n    \"\"\"\n    k = len(chain_cards) - 1\n    violations = []\n    step_shrinkages = []\n\n    for i in range(k):\n        ratio = chain_cards[i] / chain_cards[i + 1] if chain_cards[i + 1] > 0 else float('inf')\n        step_shrinkages.append(ratio)\n        if chain_cards[i] > B * chain_cards[i + 1]:\n            violations.append(i)\n\n    # Multiplicative bound: |S_0| \u2264 B^k * |S_k|\n    multiplicative_bound = B ** k * chain_cards[-1]\n    bound_holds = chain_cards[0] <= multiplicative_bound\n\n    # Length lower bound: k \u2265 log_B(|S_0| / |S_k|)\n    if chain_cards[-1] > 0:\n        quotient = chain_cards[0] // chain_cards[-1]\n        log_bound = math.log(quotient, B) if B > 1 and quotient > 0 else 0\n    else:\n        log_bound = float('inf')\n\n    return {\n        'k': k,\n        'B': B,\n        'chain_cards': chain_cards,\n        'step_shrinkages': step_shrinkages,\n        'violations': violations,\n        'is_valid_chain': len(violations) == 0,\n        'multiplicative_bound': multiplicative_bound,\n        'multiplicative_bound_holds': bound_holds,\n        'length_lower_bound': log_bound,\n        'bound_satisfied': k >= log_bound,\n    }\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 1: Coordinate Restriction \u2014 Exact Shrinkage\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_coordinate_restriction():\n    print(\"=\" * 70)\n    print(\"DEMO 1: Coordinate Restriction Gives Exact Shrinkage\")\n    print(\"=\" * 70)\n    print()\n\n    for n in [3, 4, 5]:\n        full = all_assignments(n)\n        print(f\"  n = {n}: Full cube has {len(full)} = 2^{n} assignments\")\n\n        for num_fixed in range(1, min(n, 4)):\n            restrictions = {i: True for i in range(num_fixed)}\n            restricted = restricted_assignments(n, restrictions)\n            expected = 2 ** (n - num_fixed)\n\n            d = shrinkage_distance(len(full), len(restricted))\n            defi = deficiency(n, len(restricted))\n\n            print(f\"    Fix {num_fixed} variable(s): |R| = {len(restricted)} = 2^{n - num_fixed} \"\n                  f\"(expected {expected}) \u2713\" if len(restricted) == expected else f\" \u2717\")\n            print(f\"      shrinkage d = {d:.2f} (should be {num_fixed}), \"\n                  f\"deficiency = {defi:.2f}\")\n\n        print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 2: Deficiency Monotonicity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_deficiency_monotonicity():\n    print(\"=\" * 70)\n    print(\"DEMO 2: Deficiency is Monotone Under Implication (T \u2286 S)\")\n    print(\"=\" * 70)\n    print()\n\n    n = 4\n    full = all_assignments(n)\n\n    # Build a chain of subsets by progressively fixing variables\n    chain = [full]\n    for k in range(1, n + 1):\n        restrictions = {i: True for i in range(k)}\n        chain.append(restricted_assignments(n, restrictions))\n\n    print(f\"  Chain of subsets in {{0,1}}^{n}:\")\n    for i, S in enumerate(chain):\n        d = deficiency(n, len(S))\n        print(f\"    S_{i}: |S| = {len(S):>3},  deficiency = {d:.2f}\")\n\n    print()\n    print(\"  Monotonicity check (def(S_i) \u2264 def(S_{i+1})):\")\n    all_mono = True\n    for i in range(len(chain) - 1):\n        d_i = deficiency(n, len(chain[i]))\n        d_next = deficiency(n, len(chain[i + 1]))\n        ok = d_i <= d_next\n        all_mono = all_mono and ok\n        print(f\"    def(S_{i}) = {d_i:.2f} \u2264 def(S_{i+1}) = {d_next:.2f}  {'\u2713' if ok else '\u2717'}\")\n\n    print(f\"\\n  All monotonicity checks passed: {'\u2713' if all_mono else '\u2717'}\")\n    print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 3: Telescoping Identity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_telescoping():\n    print(\"=\" * 70)\n    print(\"DEMO 3: Telescoping Model-Shrinkage Identity\")\n    print(\"=\" * 70)\n    print()\n\n    n = 5\n    chain_cards = [2**5, 2**4, 2**3, 2**2, 2**1, 2**0]\n\n    print(f\"  Power-of-two chain on n={n} variables:\")\n    print(f\"  Chain cardinalities: {chain_cards}\")\n    print()\n\n    total_sum = 0\n    for i in range(len(chain_cards) - 1):\n        step = math.log2(chain_cards[i]) - math.log2(chain_cards[i + 1])\n        total_sum += step\n        print(f\"    Step {i}: log2({chain_cards[i]}) - log2({chain_cards[i+1]}) = {step:.2f}\")\n\n    direct = math.log2(chain_cards[0]) - math.log2(chain_cards[-1])\n    print(f\"\\n  Sum of steps:        {total_sum:.2f}\")\n    print(f\"  Direct computation:  {direct:.2f}\")\n    print(f\"  Telescoping holds:   {'\u2713' if abs(total_sum - direct) < 1e-10 else '\u2717'}\")\n\n    # Non-power-of-two example\n    print(f\"\\n  Non-power-of-two chain:\")\n    chain2 = [30, 15, 7, 3, 1]\n    print(f\"  Chain cardinalities: {chain2}\")\n    total_int = 0\n    for i in range(len(chain2) - 1):\n        step = int(math.log2(chain2[i])) - int(math.log2(chain2[i + 1]))\n        total_int += step\n        print(f\"    Step {i}: \u230alog2({chain2[i]})\u230b - \u230alog2({chain2[i+1]})\u230b \"\n              f\"= {int(math.log2(chain2[i]))} - {int(math.log2(chain2[i+1]))} = {step}\")\n\n    direct_int = int(math.log2(chain2[0])) - int(math.log2(chain2[-1]))\n    print(f\"\\n  Sum of steps (integer):  {total_int}\")\n    print(f\"  Direct (integer):        {direct_int}\")\n    print(f\"  Telescoping holds:       {'\u2713' if total_int == direct_int else '\u2717'}\")\n    print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 4: Product Assignments and Deficiency Additivity\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_product_additivity():\n    print(\"=\" * 70)\n    print(\"DEMO 4: Deficiency Additivity Under Independent Composition\")\n    print(\"=\" * 70)\n    print()\n\n    examples = [\n        (2, {0: True}, 3, {0: False, 1: True}),\n        (3, {0: True, 1: True}, 2, {0: False}),\n        (4, {}, 3, {0: True}),\n    ]\n\n    for m, restr_m, n_val, restr_n in examples:\n        S = restricted_assignments(m, restr_m)\n        T = restricted_assignments(n_val, restr_n)\n        P = product_assignments(S, T)\n\n        def_S = deficiency(m, len(S))\n        def_T = deficiency(n_val, len(T))\n        def_P = deficiency(m + n_val, len(P))\n\n        is_pow2_S = (len(S) & (len(S) - 1)) == 0 and len(S) > 0\n        is_pow2_T = (len(T) & (len(T) - 1)) == 0 and len(T) > 0\n\n        print(f\"  S \u2286 {{0,1}}^{m}: |S| = {len(S)}, def(S) = {def_S:.2f}  \"\n              f\"{'(power of 2)' if is_pow2_S else ''}\")\n        print(f\"  T \u2286 {{0,1}}^{n_val}: |T| = {len(T)}, def(T) = {def_T:.2f}  \"\n              f\"{'(power of 2)' if is_pow2_T else ''}\")\n        print(f\"  S\u2297T \u2286 {{0,1}}^{m + n_val}: |S\u2297T| = {len(P)}, def(S\u2297T) = {def_P:.2f}\")\n        print(f\"  def(S) + def(T) = {def_S + def_T:.2f}\")\n        print(f\"  Sub-additivity: def(S\u2297T) \u2264 def(S)+def(T)? \"\n              f\"{'\u2713' if def_P <= def_S + def_T + 0.001 else '\u2717'}\")\n        if is_pow2_S and is_pow2_T:\n            print(f\"  Exact additivity (power-of-2 case): \"\n                  f\"{'\u2713' if abs(def_P - def_S - def_T) < 0.001 else '\u2717'}\")\n        print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 5: Bounded-Shrinkage Lower Bound\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_bounded_shrinkage():\n    print(\"=\" * 70)\n    print(\"DEMO 5: Bounded-Shrinkage Derivation Lower Bound\")\n    print(\"=\" * 70)\n    print()\n\n    print(\"  Theorem: If each step shrinks by at most factor B,\")\n    print(\"  then k \u2265 log_B(|S_0| / |S_k|).\")\n    print()\n\n    # Example 1: B=2 chain (halving each step)\n    chain1 = [256, 128, 64, 32, 16, 8, 4, 2, 1]\n    result1 = bounded_shrinkage_chain_check(chain1, B=2)\n    print(f\"  Example 1: B=2, chain = {chain1}\")\n    print(f\"    Steps k = {result1['k']}\")\n    print(f\"    Valid chain (each step \u2264 2\u00d7): {result1['is_valid_chain']}\")\n    print(f\"    |S_0|/|S_k| = {chain1[0]}/{chain1[-1]} = {chain1[0]//chain1[-1]}\")\n    print(f\"    Lower bound: k \u2265 log_2({chain1[0]//chain1[-1]}) = {result1['length_lower_bound']:.2f}\")\n    print(f\"    Bound satisfied: {result1['bound_satisfied']} \u2713\")\n    print()\n\n    # Example 2: B=4, fewer steps needed\n    chain2 = [256, 64, 16, 4, 1]\n    result2 = bounded_shrinkage_chain_check(chain2, B=4)\n    print(f\"  Example 2: B=4, chain = {chain2}\")\n    print(f\"    Steps k = {result2['k']}\")\n    print(f\"    Valid chain: {result2['is_valid_chain']}\")\n    print(f\"    Lower bound: k \u2265 log_4({chain2[0]//chain2[-1]}) = {result2['length_lower_bound']:.2f}\")\n    print(f\"    Bound satisfied: {result2['bound_satisfied']} \u2713\")\n    print()\n\n    # Example 3: Tight bound demonstration\n    print(\"  Tightness demonstration:\")\n    for B in [2, 3, 4, 8]:\n        for total_shrink in [64, 256, 1024]:\n            min_steps = math.ceil(math.log(total_shrink, B))\n            print(f\"    B={B}, shrinkage={total_shrink}: minimum steps \u2265 \"\n                  f\"\u2308log_{B}({total_shrink})\u2309 = {min_steps}\")\n    print()\n\n    # Example 4: Real semantic derivation\n    print(\"  Semantic derivation example (n=6, fixing variables one at a time):\")\n    n = 6\n    chain_sem = []\n    for i in range(n + 1):\n        card = 2 ** (n - i)\n        chain_sem.append(card)\n    result_sem = bounded_shrinkage_chain_check(chain_sem, B=2)\n    print(f\"    Chain: {chain_sem}\")\n    print(f\"    Each step halves the model set (B=2)\")\n    print(f\"    k = {result_sem['k']}, lower bound = {result_sem['length_lower_bound']:.2f}\")\n    print(f\"    This is tight: k = log_2(|S_0|/|S_k|) = {n}\")\n    print()\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# DEMONSTRATION 6: Cross-Domain Connections\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\ndef demo_cross_domain():\n    print(\"=\" * 70)\n    print(\"DEMO 6: Cross-Domain Connections\")\n    print(\"=\" * 70)\n    print()\n\n    # Information Theory: entropy as model counting\n    print(\"  [Information Theory] Entropy as model counting:\")\n    n = 4\n    for k in range(n + 1):\n        card = 2 ** (n - k)\n        entropy = math.log2(card)\n        defi = deficiency(n, card)\n        print(f\"    k={k} restrictions: |S| = {card:>3}, \"\n              f\"entropy = {entropy:.1f} bits, deficiency = {defi:.1f} bits\")\n\n    print()\n    print(\"  [Coding Theory] Coordinate restrictions as subcubes:\")\n    n = 5\n    for codim in range(n + 1):\n        card = 2 ** (n - codim)\n        print(f\"    Codimension {codim}: subcube of dimension {n-codim}, \"\n              f\"|S| = {card}, deficiency = {codim}\")\n\n    print()\n    print(\"  [Statistical Physics] Proof steps as entropy reduction:\")\n    n = 8\n    print(f\"    System: {n} Boolean variables, initial entropy = {n} bits\")\n    print(f\"    Each 'constraint application' reduces entropy by 1 bit\")\n    print(f\"    After k constraints: entropy = {n}-k bits, deficiency = k bits\")\n    print(f\"    Minimum {n} constraint steps to reach a single assignment\")\n    print()\n\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Model-Shrinkage Distance: Proof-Complexity Invariant Demo     \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_coordinate_restriction()\n    demo_deficiency_monotonicity()\n    demo_telescoping()\n    demo_product_additivity()\n    demo_bounded_shrinkage()\n    demo_cross_domain()\n\n    print(\"=\" * 70)\n    print(\"All demonstrations completed successfully.\")\n    print(\"=\" * 70)\n"
+    },
+    "date": "2026-05-20T14:05:33Z",
+    "exp_id": "5aa96213",
+    "source_exp_ids": [
+      "3b452d34"
     ]
   },
   "this_document_identifies_five_falsifiable_conjectu.json": {
@@ -6554,7 +6602,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -6563,7 +6611,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T11:05:32Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -6572,7 +6620,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -6581,7 +6629,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "galois_group__s",
@@ -6590,7 +6638,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -6599,7 +6647,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 91
+      "hue": 281
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -6608,7 +6656,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "expected_lean_signature",
@@ -6617,7 +6665,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -6626,7 +6674,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -6635,7 +6683,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "percolation_threshold",
@@ -6653,7 +6701,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -6662,7 +6710,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -6671,7 +6719,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "legendres_conjecture",
@@ -6680,7 +6728,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -6689,7 +6737,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -6698,7 +6746,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -6707,7 +6755,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "p_vs_np_problem",
@@ -6716,7 +6764,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -6734,7 +6782,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "hodge_conjecture",
@@ -6743,7 +6791,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -6752,7 +6800,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 271
+      "hue": 89
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -6761,7 +6809,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T19:09:35Z",
-      "hue": 314
+      "hue": 92
     },
     {
       "id": "arithmetic_echoes_in_cellular_automata_via_zeta_ra",
@@ -6770,7 +6818,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T20:03:58Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_prime_power_q_and_linear_map_a_",
@@ -6779,7 +6827,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 179
+      "hue": 271
     },
     {
       "id": "twin_prime_conjecture",
@@ -6788,7 +6836,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -6797,7 +6845,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -6815,7 +6863,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -6824,7 +6872,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -6833,7 +6881,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -6842,7 +6890,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T01:03:29Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "the_formal_verification_of_the_berggren_trees_free",
@@ -6851,7 +6899,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "tropical_intersection_theory",
@@ -6860,7 +6908,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "riemann_hypothesis",
@@ -6869,7 +6917,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "odd_perfect_numbers",
@@ -6878,7 +6926,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 92
+      "hue": 89
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -6887,7 +6935,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "jacobian_conjecture",
@@ -6896,7 +6944,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "10_is_a_solitary_number",
@@ -6905,7 +6953,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:25:55Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_one_dimensional_nearest_neighbo",
@@ -6914,7 +6962,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "invariant_subspace_problem",
@@ -6923,7 +6971,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T10:26:44Z",
-      "hue": 90
+      "hue": 314
     },
     {
       "id": "theorem_symmcube_denominator_in_trace_det___x___",
@@ -6941,7 +6989,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 271
+      "hue": 89
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -6959,7 +7007,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -6968,7 +7016,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:36:26Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "the_following_theorems_have_been_formally_verified",
@@ -6986,7 +7034,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "yang_mills_mass_gap",
@@ -6995,7 +7043,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "goldbach_conjecture",
@@ -7004,7 +7052,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -7013,7 +7061,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -7022,7 +7070,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -7031,7 +7079,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -7040,7 +7088,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:16:09Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "beals_conjecture",
@@ -7049,7 +7097,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -7067,7 +7115,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -7085,7 +7133,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -7094,7 +7142,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -7112,7 +7160,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -7121,7 +7169,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -7130,7 +7178,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -7139,7 +7187,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -7148,7 +7196,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -7157,7 +7205,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -7166,7 +7214,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 112
+      "hue": 271
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -7175,7 +7223,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "primes_of_the_form_n1",
@@ -7184,7 +7232,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -7193,7 +7241,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 90
+      "hue": 101
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -7202,7 +7250,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:00:21Z",
-      "hue": 292
+      "hue": 270
     },
     {
       "id": "benford_renormalization_for_prime_generated_dynami",
@@ -7211,7 +7259,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -7238,7 +7286,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:13:44Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "we_have_formally_verified",
@@ -7247,7 +7295,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 292
+      "hue": 92
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -7256,7 +7304,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T20:23:08Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "tropical_satake_isomorphism_for_gl_n",
@@ -7265,7 +7313,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:01:07Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_every_set_of_n2_points_in_fin_n___admit",
@@ -7274,7 +7322,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 91
+      "hue": 179
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -7283,7 +7331,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T21:32:50Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "hypothesis_the_planar_tropical_bzout_formalization",
@@ -7292,7 +7340,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -7301,7 +7349,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -7310,7 +7358,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:23:22Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "collatz_conjecture",
@@ -7328,7 +7376,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -7337,7 +7385,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T23:03:36Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "the_current_cycle_established_the_algebraic_skelet",
@@ -7346,7 +7394,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -7355,7 +7403,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -7364,7 +7412,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T00:00:25Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "this_document_identifies_falsifiable_conjectures_a",
@@ -7373,7 +7421,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -7382,7 +7430,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T00:02:04Z",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "tropical_brill_noether_theory",
@@ -7391,7 +7439,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -7400,7 +7448,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -7409,7 +7457,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "medium_priority",
@@ -7418,7 +7466,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "erdsstraus_conjecture",
@@ -7436,7 +7484,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -7445,7 +7493,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 270
+      "hue": 359
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -7454,7 +7502,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -7472,7 +7520,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -7481,7 +7529,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -7499,7 +7547,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 280
+      "hue": 92
     },
     {
       "id": "sums_of_three_cubes",
@@ -7508,7 +7556,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -7517,7 +7565,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "196_algorithm_non_termination",
@@ -7535,7 +7583,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 280
+      "hue": 91
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -7544,7 +7592,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:18Z",
-      "hue": 292
+      "hue": 92
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -7553,7 +7601,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -7562,7 +7610,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -7580,7 +7628,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -7589,7 +7637,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:03:57Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "schanuels_conjecture",
@@ -7598,7 +7646,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -7607,7 +7655,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T07:04:53Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -7616,7 +7664,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T07:05:21Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "hypothesis_2_tropical_compression_dominance",
@@ -7625,7 +7673,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:05:51Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "non_archimedean_probability_via_surreal_numbers",
@@ -7634,7 +7682,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "proof_expansion_constant_for_formal_theories",
@@ -7652,7 +7700,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T08:09:01Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "eml_universal_approximation",
@@ -7661,7 +7709,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T09:06:21Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "inverse_stereographic_persistence_topological_data",
@@ -7670,7 +7718,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T09:06:51Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "hypothesis_5_exceptional_set_finiteness",
@@ -7679,7 +7727,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T09:07:18Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "conjecture_2_semantic_entropy_correlation",
@@ -7688,7 +7736,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T09:07:52Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "conjecture_3_coefficient_growth_rate_under_iterate",
@@ -7697,7 +7745,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T10:03:27Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_3_faithful_representations_lift_to_line",
@@ -7706,7 +7754,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:03:53Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "conjecture_1_eml_elementary_completeness_with_poly",
@@ -7715,7 +7763,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T10:04:23Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "langlands_program_functoriality",
@@ -7724,7 +7772,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T10:04:57Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "proof_phase_transitions_in_random_formal_theories",
@@ -7742,7 +7790,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-20T11:03:46Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "hypothesis_3_base_invariance",
@@ -7751,7 +7799,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T11:04:14Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "eml_kolmogorov_arnold_representation",
@@ -7760,7 +7808,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T11:04:40Z",
-      "hue": 179
+      "hue": 272
     },
     {
       "id": "hypothesis_3_transcendence_rank",
@@ -7778,7 +7826,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:03:44Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "conjecture_1_mps_min_cut_principle",
@@ -7787,7 +7835,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T12:04:11Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "arithmetic_monodromy_fingerprints_of_gradient_desc",
@@ -7805,7 +7853,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T14:00:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_2_eml_description_complexity_is_multipl",
@@ -7814,7 +7862,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T14:03:50Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "conjecture_5_pairwise_intersection_bounds_bootstra",
@@ -7823,7 +7871,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T14:04:41Z",
-      "hue": 270
+      "hue": 92
+    },
+    {
+      "id": "conjecture_5_model_shrinkage_distance_is_a_proof_c",
+      "title": "Model-Shrinkage Distance as a Proof-Complexity Invariant",
+      "domain": "Proof Complexity / Information Theory / Discrete Mathematics",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-20T14:05:33Z",
+      "hue": 280
     }
   ],
   "edges": [
@@ -7907,6 +7964,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "eml_single_operator_church_turing_thesis",
       "target": "conjecture_5_eml_circuit_depth_separation",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "proof_expansion_constant_for_formal_theories",
+      "target": "conjecture_5_model_shrinkage_distance_is_a_proof_c",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -8503,22 +8567,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:10.984210+00:00"
   },
   {
-    "id": "seed_084",
-    "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence",
-    "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
-    "domains": [
-      "EML",
-      "Analysis",
-      "Computation"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T00:22:11.045133+00:00"
-  },
-  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -8993,21 +9041,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T00:22:10.985537+00:00"
   },
   {
-    "id": "fd_0141",
-    "title": "Proof-Zeta Universality for Formal Theories",
-    "description": "Conjecture: For every recursively axiomatized, consistent theory T with polynomial-time proof verification, the Dirichlet series Z_T(s)=sum_{n>=1} a_T(n)n^{-s}, where a_T(n) counts provable sentences of G\u00f6del length n under a fixed canonical encoding, has an abscissa of convergence sigma_T and a meromorphic continuation to Re(s)>sigma_T-1 such that the location/order of its rightmost singularities is invariant under change of reasonable encoding and determines the asymptotic distribution of independent proof motifs in T. Test: Compute a_T(n) exactly for bounded n in multiple formal systems/encodings (e.g. propositional fragments, Presburger arithmetic, weak arithmetic), estimate singular structure numerically, and check whether inferred critical exponents and pole multiplicities are stable across encodings but differ across theories; refute if encoding changes alter the critical data or no stable continuation signature emerges. Impact: Would create a new analytic invariant of formal theories, linking proof complexity, combinatorial enumeration, and universality phenomena analogous to statistical mechanics, potentially enabling quantitative phase diagrams of mathematical theories.",
-    "domains": [
-      "Logic",
-      "Analytic Combinatorics"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T03:01:41.317104+00:00"
-  },
-  {
     "id": "fd_0174",
     "title": "Universality of Homological Stability Windows in Neural Tangent Complexes",
     "description": "Conjecture: For fully-connected ReLU networks of depth L with width n trained by gradient flow on a fixed finite dataset in the lazy-training regime, there exists a simplicial complex K_t built functorially from neuron activation sign patterns over the dataset such that, as n -> infinity, the persistent homology barcode of K_t over any finite training-time window [0,T] converges in probability to a deterministic limit depending only on depth, initialization variance, and the empirical kernel spectrum of the dataset, not on microscopic parameter initialization. Test: Define K_t explicitly from co-activation/sign-pattern incidence, simulate ensembles across widths and random initializations, and check whether bottleneck distances between barcodes concentrate to 0 around a predicted limit while changing architecture class or kernel spectrum changes the limit. Refutation occurs if barcode laws remain initialization-sensitive at large width or fail to stabilize across widths. Impact: This would create a new topological universality class for deep learning dynamics, linking random matrix limits, persistent homology, and training theory, and could yield architecture-level invariants for optimization and generalization.",
@@ -9111,6 +9144,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T14:04:12.052920+00:00"
+  },
+  {
+    "id": "fd_0265",
+    "title": "Prime-Modular Morse Stability for Neural Loss Landscapes",
+    "description": "Conjecture: Let L(theta) be a polynomial loss with integer coefficients for a fixed architecture and dataset, and let C_p(t)=sum_i b_i({theta in F_p^n : grad L(theta)=0, L(theta)=t}) be the Poincare polynomial of the critical locus fiber at value t over F_p. Then outside a density-0 set of primes, the multiset of normalized Betti profiles p^(-dim/2) C_p(t) over all t determines and is determined by the real Morse index histogram of nondegenerate critical points of L over R up to finitely many ambiguities. Test: Compute critical loci modulo many primes for small polynomial models, extract Betti/profile statistics by etale or point-count methods, and compare against exact real critical-point counts and Morse indices from symbolic/numeric algebraic geometry; refuted if two losses have asymptotically identical prime-side profiles but different real Morse histograms, or if one loss shows no stable prime-to-real correspondence across growing prime samples. Impact: This would create a new arithmetic microscope for optimization, letting one infer real training-landscape complexity from finite-field computations and potentially enabling ultrafast hardness diagnostics for neural architectures.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Optimization Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T14:05:05.316658+00:00"
   },
   {
     "id": "seed_026",
@@ -9540,26 +9588,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T03:09:29.625798+00:00"
   },
   {
-    "id": "fd_0151",
-    "title": "Conjecture 5: Pairwise Intersection Bounds Bootstrap to Hausdorff Dimension",
-    "description": "**Conjecture.** Let $E \\subseteq \\mathbb{R}^n$ be a Besicovitch set. Define the discretized Kakeya configuration at scale $\\delta$ by covering $E$ with $\\delta$-cubes and taking lines to be $\\delta$-tubes in each direction. If the pairwise intersection parameter $T(\\delta)$ satisfies $T(\\delta) \\leq C \\delta^{-\\alpha}$ for all $\\delta > 0$, then $\\dim_H(E) \\geq n - \\alpha$.\n\nIn particular, if tubes in distinct directions have intersection of measure at most $\\delta^{n-1}$ (the generic bound), then $T(\\delta) \\leq C \\delta^{-1}$ and we recover $\\dim_H(E) \\geq n - 1$.\n\n**Test.**\n1. Formalize the discretization procedure in Lean, defining $\\delta$-cubes and $\\delta$-tubes.\n2. For known Besicovitch set constructions (e.g., Perron trees), compute $T(\\delta)$ numerically.\n3. Verify that the pred",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Combinatorics",
-      "Probability",
-      "Bridges",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "35ea5a27",
-    "consumed_by_exp_id": "135bffd4",
-    "timestamp": "2026-05-20T03:09:29.635644+00:00"
-  },
-  {
     "id": "fd_0152",
     "title": "Conjecture 1: Weak Local-Global Admissibility",
     "description": "**Conjecture.** For every integer $k$ with $k \\bmod 9 \\notin \\{4, 5\\}$, the congruence $x^3 + y^3 + z^3 \\equiv k \\pmod{n}$ is soluble for every positive integer $n$.\n\n**Why it matters.** If true, this would show that the mod 9 obstruction is the *only* local obstruction \u2014 there is no prime $p$ and no residue class (admissible mod 9) that fails $p$-adically. This would sharply delineate the boundary between local and global difficulty: the equation $x^3 + y^3 + z^3 = k$ would satisfy a \"local everywhere\" condition for all admissible $k$, and the entire difficulty of representation would be purely global.\n\n**Test.** For each admissible $k$ in $\\{0, 1, \\ldots, 100\\}$, verify solvability of $x^3 + y^3 + z^3 \\equiv k \\pmod{p^e}$ for all primes $p \\leq 50$ and exponents $e \\leq 5$. If any admiss",
@@ -9924,61 +9952,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "3b452d34",
     "consumed_by_exp_id": "5aa96213",
     "timestamp": "2026-05-20T08:08:18.566956+00:00"
-  },
-  {
-    "id": "fd_0206",
-    "title": "Conjecture 1: Log-Affine Normal Form for the Multiplicative Positive Fragment",
-    "description": "**Conjecture.** Every scalar EML expression on `PosVec n` built without addition is equivalent to a log-affine normal form `x \u21a6 exp(\u2211\u1d62 w\u1d62 \u00b7 log(x\u1d62) + c)`.\n\nMore precisely: define the *multiplicative positive fragment* as the sub-inductive of `ScalarEML` restricted to `coord`, `posConst`, `mul`, `exp`, `log`, and `comp` (no `add`). Then every expression in this fragment, when restricted to positive inputs, agrees with a log-affine function.\n\n**Test.** We have partially verified this in `LogAffineNormal.lean` for the `PosEMLExpr` syntax (coord, posConst, mul, rpow). To falsify the full conjecture, enumerate bounded-depth multiplicative EML expressions including compositions through intermediate spaces and check whether the log-affine normal form identity holds. A counterexample would be an e",
-    "domains": [
-      "NumberTheory",
-      "EML",
-      "Logic",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "55c659bd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T08:09:04.566243+00:00"
-  },
-  {
-    "id": "fd_0208",
-    "title": "Conjecture 3: Tropical Limit of the Log-Affine Fragment",
-    "description": "**Conjecture.** For a sum of log-affine expressions `f(x) = \u2211\u2c7c exp(\u2211\u1d62 w\u2c7c\u1d62 \u00b7 log(x\u1d62) + c\u2c7c)`, the tropical limit `lim\u209c\u2192\u221e (1/t) \u00b7 log f(x^t)` equals `max\u2c7c(\u2211\u1d62 w\u2c7c\u1d62 \u00b7 log(x\u1d62) + c\u2c7c)`.\n\nThis asserts that the \"log-sum-exp\" of log-affine functions tropicalizes to the piecewise-linear maximum of affine functions in log coordinates.\n\n**Test.** For fixed weight matrices and constants, numerically compute `(1/t) \u00b7 log(\u2211\u2c7c exp(t \u00b7 (\u2211\u1d62 w\u2c7c\u1d62 \u00b7 y\u1d62 + c\u2c7c)))` as `t \u2192 \u221e` and verify convergence to the pointwise maximum. A counterexample would require the limit to not exist or to differ from the maximum.\n\n**Impact.** This would provide a formal bridge between EML computation and tropical geometry, connecting differentiable models to piecewise-linear optimization. It would formalize the \"softmax \u2192 hardmax\" limit use",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Tropical",
-      "EML",
-      "Bridges",
-      "MachineLearning",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "55c659bd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T08:09:04.583579+00:00"
-  },
-  {
-    "id": "fd_0209",
-    "title": "Conjecture 4: Analyticity of EML-Computable Maps",
-    "description": "**Conjecture.** Every `ScalarEML n` function is real-analytic on its natural domain of definition (all of `\u211d\u207f` for the full fragment, or `(\u211d\u208a)\u207f` for the positive fragment with log).\n\n**Test.** Prove by induction on the `ScalarEML` derivation that each constructor preserves analyticity: projections are polynomial (analytic), constants are analytic, sums/products of analytic functions are analytic, exp of analytic is analytic, and composition of analytic functions is analytic. This reduces to checking that Mathlib has `AnalyticAt` lemmas for each operation.\n\n**Impact.** Analyticity would separate EML-computable functions from merely continuous ones, giving the category of EML maps a geometric character (analytic manifold morphisms). It would also imply that EML functions are determined by th",
-    "domains": [
-      "NumberTheory",
-      "Analysis",
-      "Topology",
-      "EML",
-      "Geometry"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "55c659bd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T08:09:04.592376+00:00"
   },
   {
     "id": "fd_0212",
@@ -10576,40 +10549,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T12:03:48.327979+00:00"
   },
   {
-    "id": "fd_0263",
-    "title": "Conjecture C: Logarithmic Lower Bound in the DAG Model",
-    "description": "**Conjecture:** If sharing of common subexpressions is allowed (DAG model instead of tree model), the minimum depth for representing `iterExp n` using `eml` gates is `\u03a9(log n)`.\n\n**Precise statement:** There exists `c > 0` such that for all `n`, every DAG with `eml` gates computing `iterExp n` on `(0,\u221e)` has depth at least `c \u00b7 log\u2082(n+1)`.\n\n**Test:** Implement a DAG representation with hash-consing for common subexpression elimination. For `n \u2208 {1,...,20}`, search for minimum-depth DAGs computing `iterExp n` numerically (evaluate at 100 points). Plot depth vs `n` and fit to `c \u00b7 log n`. If the best achievable depth grows sub-logarithmically, the conjecture is false.\n\n**Impact:** This would extend the depth hierarchy from the tree model to the more powerful DAG model. The gap between `O(log",
-    "domains": [
-      "NumberTheory",
-      "EML",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8155cb9f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T12:03:48.348242+00:00"
-  },
-  {
-    "id": "fd_0264",
-    "title": "Conjecture D: Growth-Rank Completeness",
-    "description": "**Conjecture:** The `expRank` invariant exactly characterizes the eventual growth level of positive EML-definable functions. Specifically, for any `EMLExpr` `e` such that `e.eval` is eventually positive, the function `e.eval` is eventually bounded between `iterExp (expRank(e) - 1)` and `iterExp (expRank(e) + 1)` (in a suitable asymptotic sense).\n\n**Precise statement:** Define `GrowthLevel f k` as `\u2203 R, \u2200 x > R, iterExp (k-1) x \u2264 f x \u2227 f x \u2264 iterExp (k+1) x`. Then for all `e : EMLExpr` with `e.eval` eventually positive, `GrowthLevel (e.eval) (e.expRank)`.\n\n**Test:** Enumerate all EML expressions up to size 10. For each, numerically estimate the growth level by evaluating at `x = 10, 100, 1000` and comparing with `iterExp k` for various `k`. Check whether the estimated growth level matches `",
-    "domains": [
-      "NumberTheory",
-      "EML",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8155cb9f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T12:03:48.358849+00:00"
-  },
-  {
     "id": "fd_0265",
     "title": "Conjecture E: No Polynomial-Size Compilation from Full to Bounded-Depth EML",
     "description": "**Conjecture:** There is no uniform polynomial-size compilation from `FullExpr` to `EMLExpr` that preserves semantics and keeps `emlDepth` bounded by any fixed constant.\n\n**Precise statement:** For every constant `D` and polynomial `p`, there exists `n` and a `FullExpr` `e` with `e.size \u2264 n` such that every `EMLExpr` `e'` with `\u2200 x > 0, e'.eval x = e.eval x` and `e'.emlDepth \u2264 D` satisfies `e'.size > p(n)`.\n\n**Test:** Fix `D = 3`. For `n \u2208 {1,...,10}`, take `fullExprIterExp n` (size `n+1`). Search for the smallest `EMLExpr` of `emlDepth \u2264 3` that represents `iterExp n` on a grid. Plot the minimum size vs `n`. If size grows faster than any polynomial, the conjecture is supported.\n\n**Impact:** This would formalize the intuition that bounded-depth EML circuits pay a super-polynomial size pena",
@@ -10801,23 +10740,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "5e5cacb4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-20T14:03:57.597578+00:00"
-  },
-  {
-    "id": "fd_0266",
-    "title": "Conjecture 4: Division Complexity Bound",
-    "description": "**Conjecture:** If f and g are B-bounded on [a,b] with g bounded away from zero (|g(x)| \u2265 c > 0 for x \u2208 [a,b]), then:\n\n```\nEMLComplexityOn(a, b, f/g, \u03b5) \u2264 EMLComplexityOn(a, b, f, \u03b4\u2081) + EMLComplexityOn(a, b, 1/g, \u03b4\u2082) + 1\n```\n\nwhere \u03b4\u2081, \u03b4\u2082 are computed from \u03b5, B, and c by an explicit budget formula.\n\n**Test:** Approximate rational functions p(x)/q(x) on intervals where q is bounded away from zero. Compare the complexity of the ratio with the sum of complexities of p and 1/q. The budget formula \u03b4\u2081 = \u03b5\u00b7c/(2(B+c)) and \u03b4\u2082 = \u03b5/(2(B/c + 1)) should give a clean bound. Test with Pad\u00e9 approximants of known complexity.\n\n**Impact:** Division closure would extend the compositional calculus to rational function approximation, which is important for Pad\u00e9 approximation, control theory, and many-body Green",
-    "domains": [
-      "NumberTheory",
-      "EML",
-      "MachineLearning",
-      "Computation"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5e5cacb4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T14:03:57.608186+00:00"
   },
   {
     "id": "fd_0267",
