@@ -1,55 +1,98 @@
 /-
-# Erdős–Straus Conjecture: Core Definitions and Equivalences
+# Erdős–Straus Conjecture: Core Definitions
 
-The Erdős–Straus conjecture (1948) asserts that for every integer n ≥ 2,
-the fraction 4/n can be written as a sum of three unit fractions:
+This module defines the fundamental structures and predicates for studying
+Egyptian fraction decompositions of 4/n, the central object of the
+Erdős–Straus conjecture (1948).
+
+The conjecture asserts that for every integer n ≥ 2, the fraction 4/n
+can be written as a sum of three unit fractions:
   4/n = 1/x + 1/y + 1/z
-for positive integers x, y, z.
+with x, y, z positive integers.
 
-## Diophantine Surface Viewpoint
+We provide two equivalent formulations:
+1. `ESDecomposition n` — a structure carrying rational-equation witnesses
+2. `ESWitness n x y z` — a denominator-cleared integer predicate:
+     4·x·y·z = n·(x·y + x·z + y·z)
 
-Clearing denominators, the equation 4/n = 1/x + 1/y + 1/z becomes
-  4·x·y·z = n·(x·y + x·z + y·z),
-which defines an affine surface in (x,y,z)-space parameterized by n.
-Parametric solution families correspond to rational curves on this surface.
-
-This file provides the integer-cleared formulation and proves its equivalence
-with the rational statement.
+The integer form is the affine cubic surface viewpoint: solutions are
+positive lattice points on 4xyz = n(xy + xz + yz).
 -/
+
 import Mathlib
 
-/-- `ErdosStrausRep n x y z` asserts that `(x, y, z)` is a valid Erdős–Straus
-decomposition for `n`: all three denominators are positive and the cleared
-Diophantine equation `4·x·y·z = n·(x·y + x·z + y·z)` holds over ℤ. -/
-def ErdosStrausRep (n x y z : ℕ) : Prop :=
-  0 < x ∧ 0 < y ∧ 0 < z ∧
-    (4 : ℤ) * x * y * z = (n : ℤ) * (x * y + x * z + y * z)
+/-! ## Core structures and predicates -/
 
-/-- `ErdosStrausSolvable n` asserts that `n` admits an Erdős–Straus decomposition. -/
-def ErdosStrausSolvable (n : ℕ) : Prop :=
-  ∃ x y z : ℕ, ErdosStrausRep n x y z
+/-- A certified Egyptian-fraction decomposition of 4/n into three unit fractions. -/
+structure ESDecomposition (n : ℕ) where
+  x : ℕ
+  y : ℕ
+  z : ℕ
+  hx : 1 ≤ x
+  hy : 1 ≤ y
+  hz : 1 ≤ z
+  eqn : (4 : ℚ) / n = (1 : ℚ) / x + (1 : ℚ) / y + (1 : ℚ) / z
+
+/-- Denominator-cleared predicate: 4xyz = n(xy + xz + yz).
+    This is the integer surface formulation of the Erdős–Straus equation. -/
+def ESWitness (n x y z : ℕ) : Prop :=
+  1 ≤ x ∧ 1 ≤ y ∧ 1 ≤ z ∧
+  (4 * x * y * z : ℤ) = (n : ℤ) * ((x : ℤ) * y + (x : ℤ) * z + (y : ℤ) * z)
+
+/-- Ordered witnesses: x ≤ y ≤ z. This normal form reduces the search space
+    and connects to discrete geometry of the solution set. -/
+def OrderedESWitness (n x y z : ℕ) : Prop :=
+  ESWitness n x y z ∧ x ≤ y ∧ y ≤ z
+
+/-- The solution surface for a given n, viewed as a set of lattice points. -/
+def ESSurface (n : ℕ) : Set (ℕ × ℕ × ℕ) :=
+  {p | ESWitness n p.1 p.2.1 p.2.2}
+
+/-! ## The full conjecture and bounded verification -/
+
+/-- The Erdős–Straus conjecture: every n ≥ 2 admits a 3-term Egyptian
+    fraction decomposition of 4/n. -/
+def ErdosStrausConjecture : Prop :=
+  ∀ n : ℕ, 2 ≤ n → ∃ x y z : ℕ,
+    1 ≤ x ∧ 1 ≤ y ∧ 1 ≤ z ∧
+    (4 : ℚ) / n = (1 : ℚ) / x + (1 : ℚ) / y + (1 : ℚ) / z
+
+/-- Bounded verification: the conjecture holds for all n in [2, N]. -/
+def VerifiedUpTo (N : ℕ) : Prop :=
+  ∀ n : ℕ, 2 ≤ n → n ≤ N →
+    ∃ x y z : ℕ, ESWitness n x y z
+
+/-! ## Conjectures -/
+
+/-- Conjecture: every n ≥ 2 has an ordered witness with x ≤ n. -/
+def ESOrderedSmallFirstDenominatorConjecture : Prop :=
+  ∀ n : ℕ, 2 ≤ n →
+    ∃ x y z : ℕ,
+      OrderedESWitness n x y z ∧ x ≤ n
+
+/-! ## Equivalence between rational and integer formulations -/
 
 /-
-The integer-cleared equation is equivalent to the rational unit-fraction identity,
-provided all parameters are positive. This is the foundational bridge between the
-algebraic (Diophantine) and analytic (rational arithmetic) formulations.
+The rational formulation implies the integer (denominator-cleared) formulation.
 -/
-theorem erdos_straus_rep_iff_rat
-    {n x y z : ℕ} (hn : 0 < n) (hx : 0 < x) (hy : 0 < y) (hz : 0 < z) :
-    ErdosStrausRep n x y z ↔
-      ((4 : ℚ) / n = (1 : ℚ) / x + (1 : ℚ) / y + (1 : ℚ) / z) := by
-  unfold ErdosStrausRep; simp +decide [ *, div_eq_mul_inv ] ;
-  field_simp;
-  norm_cast; ring;
+theorem ESDecomposition.toWitness {n : ℕ} (d : ESDecomposition n) (hn : 1 ≤ n) :
+    ESWitness n d.x d.y d.z := by
+  refine' ⟨ d.hx, d.hy, d.hz, _ ⟩;
+  convert congr_arg ( fun x : ℚ => x * ( n * d.x * d.y * d.z ) ) d.eqn using 1 ; ring;
+  simp +decide [ mul_assoc, mul_comm, mul_left_comm, ne_of_gt ( zero_lt_one.trans_le hn ), ne_of_gt ( zero_lt_one.trans_le d.hx ), ne_of_gt ( zero_lt_one.trans_le d.hy ), ne_of_gt ( zero_lt_one.trans_le d.hz ) ];
+  norm_cast ; ring
 
 /-
-Rearrangement lemma: the Erdős–Straus equation is equivalent to the factored form
-`(4x - n)·y·z = n·x·(y + z)`. This form is useful for algorithmic search since it
-reveals that we need `4x > n` (i.e., `x > n/4`) for any solution.
+The integer formulation implies the rational formulation (under positivity).
 -/
-theorem erdos_straus_rearrange
-    {n x y z : ℕ} (hx : 0 < x) (hy : 0 < y) (hz : 0 < z) :
-    ErdosStrausRep n x y z ↔
-      ((4 : ℤ) * x - n) * y * z = (n : ℤ) * x * (y + z) := by
-  unfold ErdosStrausRep; ring;
-  grind
+noncomputable def ESWitness.toDecomposition {n x y z : ℕ} (h : ESWitness n x y z) (hn : 1 ≤ n) :
+    ESDecomposition n where
+  x := x
+  y := y
+  z := z
+  hx := h.1
+  hy := h.2.1
+  hz := h.2.2.1
+  eqn := by
+    rcases h with ⟨ hx, hy, hz, h ⟩;
+    rw [ div_add_div, div_add_div, div_eq_div_iff ] <;> first | positivity | norm_cast at * ; linarith

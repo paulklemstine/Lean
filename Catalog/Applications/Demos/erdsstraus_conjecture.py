@@ -1,387 +1,500 @@
 #!/usr/bin/env python3
 """
-Erdős–Straus Conjecture: Applications
+applications.py — Real-World Applications of Egyptian Fraction Decompositions
 
-This module demonstrates applications of Egyptian fraction decompositions
-and the mathematical infrastructure developed for the conjecture.
-
-Applications include:
-  1. Fair division / resource allocation
-  2. Scheduling with unit-fraction time slots
-  3. Covering system analysis
-  4. Computational number theory exploration
+Demonstrates connections between Erdős–Straus decompositions and:
+1. Fair division / resource allocation
+2. Simplex geometry and probability distributions
+3. Lattice point geometry on cubic surfaces
+4. Scheduling with unit-fraction time slots
 """
 
 from fractions import Fraction
 from typing import Optional
-import itertools
+import math
 
 
-# ─── Application 1: Fair Division ─────────────────────────────────────────
+# ─── Core solver (self-contained) ────────────────────────────────────
 
-def fair_division_erdos_straus(total_shares: int, num_items: int = 4) -> list[Fraction]:
-    """
-    Divide `num_items` items equally among `total_shares` people using
-    at most 3 unit-fraction portions.
+def _candidate_z(n: int, x: int, y: int) -> Optional[int]:
+    denom = 4 * x * y - n * x - n * y
+    if denom <= 0:
+        return None
+    num = n * x * y
+    if num % denom != 0:
+        return None
+    z = num // denom
+    return z if z >= 1 else None
 
-    This models the ancient Egyptian approach to fair division:
-    instead of giving each person 4/n of an item (requiring precise
-    cutting), we give them whole-number fractions 1/x, 1/y, 1/z of items.
 
-    Example: 4 loaves among 7 people → each gets 1/2 + 1/14 + 1/14
-    """
-    n = total_shares
-
-    # Try parametric families first
+def solve_es(n: int, bound: int = 10000) -> Optional[tuple[int, int, int]]:
+    """Find a decomposition 4/n = 1/x + 1/y + 1/z."""
+    if n < 2:
+        return None
     if n % 2 == 0:
-        k = n // 2
-        portions = [Fraction(1, k), Fraction(1, 2 * k), Fraction(1, 2 * k)]
-    elif n % 3 == 0:
-        m = n // 3
-        portions = [Fraction(1, m), Fraction(1, 2 * n), Fraction(1, 2 * n)]
-    elif n % 3 == 2:
-        m = (n + 1) // 3
-        portions = [Fraction(1, n), Fraction(1, m), Fraction(1, n * m)]
-    elif n % 4 == 3:
-        x = (n + 1) // 4
-        portions = [Fraction(1, x), Fraction(1, 2 * x * n), Fraction(1, 2 * x * n)]
-    else:
-        # Search
-        for x in range(1, 10 * n):
-            for y in range(x, 10 * n):
-                denom = 4 * x * y - n * (x + y)
-                if denom > 0 and (n * x * y) % denom == 0:
-                    z = (n * x * y) // denom
-                    portions = [Fraction(1, x), Fraction(1, y), Fraction(1, z)]
-                    break
-            else:
-                continue
-            break
-        else:
-            return []
-
-    assert sum(portions) == Fraction(num_items, n), f"Division error for n={n}"
-    return portions
+        m = n // 2
+        return (m, 2 * m, 2 * m)
+    if n % 4 == 3:
+        k = (n - 3) // 4
+        return (k + 2, (k + 1) * (k + 2), (k + 1) * (4 * k + 3))
+    for x in range(1, min(bound, 3 * n // 4) + 1):
+        for y in range(x, bound + 1):
+            z = _candidate_z(n, x, y)
+            if z is not None and z >= y:
+                return (x, y, z)
+    return None
 
 
-# ─── Application 2: Covering System Analysis ─────────────────────────────
+# ─── Application 1: Fair Division ────────────────────────────────────
 
-def covering_system_analysis(modulus: int = 60) -> dict:
+def fair_division_example():
     """
-    Analyze how parametric families form a covering system.
+    APPLICATION: Fair Division with Egyptian Fractions
 
-    A covering system of congruences ensures every integer belongs to
-    at least one congruence class. The Erdős–Straus families provide
-    a near-covering system mod 12 (missing only n ≡ 1 mod 12).
+    Problem: A resource of size 4/n must be divided among 3 recipients
+    as unit fractions 1/x, 1/y, 1/z (each gets a "standard slice"
+    from a denominator system).
 
-    This function computes the covering for a general modulus.
+    This models situations where:
+    - Shares must be standard fractions (1/2, 1/3, 1/4, ...)
+    - The total allocation must be exact (no waste)
+    - Recipients get different-sized shares
+
+    Example: Divide 4/7 of a resource among 3 people.
     """
-    families = {
-        "even (n%2=0)": lambda n: n % 2 == 0,
-        "mod3=0": lambda n: n % 3 == 0,
-        "mod3=2": lambda n: n % 3 == 2,
-        "mod4=3": lambda n: n % 4 == 3,
-    }
-
-    coverage = {}
-    for r in range(modulus):
-        covering_families = []
-        for name, pred in families.items():
-            if pred(r):
-                covering_families.append(name)
-        coverage[r] = covering_families
-
-    uncovered = [r for r, fams in coverage.items() if not fams]
-    total = modulus
-    covered_count = total - len(uncovered)
-
-    return {
-        "modulus": modulus,
-        "covered_residues": covered_count,
-        "uncovered_residues": uncovered,
-        "coverage_density": covered_count / total,
-        "details": coverage,
-    }
-
-
-# ─── Application 3: Diophantine Surface Visualization Data ───────────────
-
-def surface_solutions(n: int, max_coord: int = 100) -> list[tuple[int, int, int]]:
-    """
-    Find all integer points on the Erdős–Straus surface
-        4xyz = n(xy + xz + yz)
-    with 1 ≤ x ≤ y ≤ z ≤ max_coord.
-
-    These are the rational points on a cubic surface parameterized by n.
-    Each solution is a point where a rational curve (from a parametric
-    family or search) intersects the integer lattice.
-    """
-    solutions = []
-    for x in range(1, max_coord + 1):
-        for y in range(x, max_coord + 1):
-            denom = 4 * x * y - n * (x + y)
-            if denom <= 0:
-                continue
-            num = n * x * y
-            if num % denom == 0:
-                z = num // denom
-                if z >= y and z <= max_coord:
-                    solutions.append((x, y, z))
-    return solutions
-
-
-# ─── Application 4: Witness Complexity Analysis ──────────────────────────
-
-def witness_complexity(N: int) -> dict[str, list]:
-    """
-    For each n in [2, N], compute the minimal ordered solution
-    and analyze the growth of the largest denominator.
-
-    This explores the conjecture that z ≤ O(n²) for all n,
-    which would have implications for search complexity.
-    """
-    data = {"n": [], "x": [], "y": [], "z": [], "z_over_n": [], "z_over_n2": []}
-
-    for n in range(2, N + 1):
-        solutions = surface_solutions(n, max_coord=n * n)
-        if not solutions:
-            # Fall back to parametric
-            if n % 2 == 0:
-                k = n // 2
-                sol = (k, 2 * k, 2 * k)
-            elif n % 3 == 2:
-                m = (n + 1) // 3
-                sol = tuple(sorted([n, m, n * m]))
-            elif n % 3 == 0:
-                m = n // 3
-                sol = (m, 2 * n, 2 * n)
-            elif n % 4 == 3:
-                x = (n + 1) // 4
-                sol = tuple(sorted([x, 2 * x * n, 2 * x * n]))
-            else:
-                continue
-            solutions = [sol]
-
-        # Take solution with smallest z
-        best = min(solutions, key=lambda s: s[2])
-        x, y, z = best
-        data["n"].append(n)
-        data["x"].append(x)
-        data["y"].append(y)
-        data["z"].append(z)
-        data["z_over_n"].append(z / n)
-        data["z_over_n2"].append(z / (n * n))
-
-    return data
-
-
-# ─── Main ─────────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    print("Erdős–Straus Applications")
+    print("=" * 60)
+    print("APPLICATION 1: Fair Division with Egyptian Fractions")
     print("=" * 60)
 
-    # Application 1: Fair division
-    print("\n── Application 1: Fair Division ──")
-    print("Dividing 4 items among n people using unit fractions:")
-    for n in [3, 5, 7, 11, 13, 17]:
-        portions = fair_division_erdos_straus(n)
-        total = sum(portions)
-        print(f"  n={n:2d}: each person gets {' + '.join(str(p) for p in portions)} = {total}")
+    print("\nScenario: Divide a resource proportional to 4/n among 3 recipients,")
+    print("where each share must be a unit fraction 1/k.\n")
 
-    # Application 2: Covering analysis
-    print("\n── Application 2: Covering System Analysis ──")
-    analysis = covering_system_analysis(60)
-    print(f"  Modulus: {analysis['modulus']}")
-    print(f"  Covered: {analysis['covered_residues']}/{analysis['modulus']} "
-          f"({analysis['coverage_density']*100:.1f}%)")
-    print(f"  Uncovered residues mod {analysis['modulus']}: {analysis['uncovered_residues']}")
+    for n in [3, 5, 7, 11, 13]:
+        result = solve_es(n)
+        if result:
+            x, y, z = result
+            total = Fraction(1, x) + Fraction(1, y) + Fraction(1, z)
+            print(f"  Resource = 4/{n}:")
+            print(f"    Recipient A gets 1/{x} = {1/x:.4f} ({Fraction(1,x)})")
+            print(f"    Recipient B gets 1/{y} = {1/y:.6f} ({Fraction(1,y)})")
+            print(f"    Recipient C gets 1/{z} = {1/z:.8f} ({Fraction(1,z)})")
+            print(f"    Total = {total} = {float(total):.6f}")
+            print(f"    Exact? {total == Fraction(4, n)}")
+            print()
 
-    # Application 3: Surface solutions
-    print("\n── Application 3: Diophantine Surface Solutions ──")
-    for n in [5, 7, 13]:
-        sols = surface_solutions(n, max_coord=500)
-        print(f"  n={n}: {len(sols)} solutions with coords ≤ 500")
-        for s in sols[:5]:
-            print(f"    ({s[0]}, {s[1]}, {s[2]})")
-        if len(sols) > 5:
-            print(f"    ... and {len(sols) - 5} more")
 
-    # Application 4: Witness complexity
-    print("\n── Application 4: Witness Complexity ──")
-    data = witness_complexity(200)
-    if data["z_over_n"]:
-        max_ratio = max(data["z_over_n"])
-        max_idx = data["z_over_n"].index(max_ratio)
-        print(f"  Max z/n ratio in [2,200]: {max_ratio:.1f} at n={data['n'][max_idx]}")
-        print(f"  Max z/n² ratio: {max(data['z_over_n2']):.4f}")
-        print(f"  Supports conjecture: z = O(n²)")
+# ─── Application 2: Simplex Geometry ─────────────────────────────────
+
+def simplex_geometry_example():
+    """
+    APPLICATION: Simplex Geometry of Decompositions
+
+    Each decomposition 4/n = 1/x + 1/y + 1/z maps to a point on
+    the probability simplex via:
+      (n/(4x), n/(4y), n/(4z))
+
+    These points always sum to 1 (Theorem 3.8) and lie on a
+    discrete sublattice of the simplex determined by the reciprocal
+    constraint.
+    """
+    print("=" * 60)
+    print("APPLICATION 2: Simplex Geometry")
+    print("=" * 60)
+
+    print("\nEach decomposition maps to the probability simplex Δ²:")
+    print("  (a, b, c) where a + b + c = 1, a = n/(4x), etc.\n")
+
+    for n in [2, 3, 5, 7, 11, 13, 17]:
+        result = solve_es(n)
+        if result:
+            x, y, z = result
+            a = Fraction(n, 4 * x)
+            b = Fraction(n, 4 * y)
+            c = Fraction(n, 4 * z)
+            print(f"  n={n:>3}: ({float(a):.4f}, {float(b):.6f}, {float(c):.8f})")
+            print(f"         Exact: ({a}, {b}, {c})")
+            print(f"         Sum = {a + b + c}")
+
+            # Distance from center (1/3, 1/3, 1/3) — measures "unevenness"
+            center = Fraction(1, 3)
+            dist_sq = (a - center)**2 + (b - center)**2 + (c - center)**2
+            print(f"         Distance² from center = {float(dist_sq):.6f}")
+            print()
+
+
+# ─── Application 3: Lattice Points on Cubic Surfaces ────────────────
+
+def cubic_surface_analysis():
+    """
+    APPLICATION: Lattice Point Geometry
+
+    The equation 4xyz = n(xy + xz + yz) defines a cubic surface S_n.
+    We analyze the distribution of lattice points on these surfaces.
+    """
+    print("=" * 60)
+    print("APPLICATION 3: Lattice Points on Cubic Surfaces")
+    print("=" * 60)
+
+    print("\nThe cubic surface S_n: 4xyz = n(xy + xz + yz)")
+    print("Counting ordered lattice points (x ≤ y ≤ z ≤ B):\n")
+
+    for n in [5, 7, 11, 13]:
+        print(f"  S_{n}:")
+        points = []
+        for x in range(1, 201):
+            for y in range(x, 201):
+                z = _candidate_z(n, x, y)
+                if z is not None and z >= y and z <= 500:
+                    points.append((x, y, z))
+
+        print(f"    Found {len(points)} lattice points with z ≤ 500")
+        if points:
+            xs = [p[0] for p in points]
+            print(f"    x range: [{min(xs)}, {max(xs)}]")
+            print(f"    Bound 3n/4 = {3*n/4:.1f}")
+            print(f"    First 5: {points[:5]}")
+
+            # Check geometric bound
+            all_bounded = all(4 * p[0] <= 3 * n for p in points)
+            print(f"    All satisfy 4x ≤ 3n? {all_bounded}")
+        print()
+
+
+# ─── Application 4: Scheduling ──────────────────────────────────────
+
+def scheduling_example():
+    """
+    APPLICATION: Task Scheduling with Unit-Fraction Time Slots
+
+    Problem: Schedule 3 tasks that together consume 4/n of the total
+    time, where each task must occupy exactly 1/k of the time for
+    some positive integer k.
+
+    This models discrete scheduling where time slots must be
+    "standard durations" (1/2 hour, 1/3 hour, 1/4 hour, etc.).
+    """
+    print("=" * 60)
+    print("APPLICATION 4: Task Scheduling")
+    print("=" * 60)
+
+    print("\nSchedule 3 tasks using unit-fraction time slots summing to 4/n.\n")
+
+    total_minutes = 60  # one hour
+    for n in [3, 5, 7, 10, 12]:
+        result = solve_es(n)
+        if result:
+            x, y, z = result
+            t1 = total_minutes / x
+            t2 = total_minutes / y
+            t3 = total_minutes / z
+
+            print(f"  Total allocation: 4/{n} of {total_minutes} min "
+                  f"= {4*total_minutes/n:.2f} min")
+            print(f"    Task A: 1/{x} of hour = {t1:.2f} min")
+            print(f"    Task B: 1/{y} of hour = {t2:.2f} min")
+            print(f"    Task C: 1/{z} of hour = {t3:.4f} min")
+            print(f"    Sum: {t1 + t2 + t3:.4f} min")
+            print(f"    Target: {4*total_minutes/n:.4f} min")
+            print(f"    Match: {abs(t1 + t2 + t3 - 4*total_minutes/n) < 1e-10}")
+            print()
+
+
+# ─── Application 5: Coverage Analysis ────────────────────────────────
+
+def coverage_analysis():
+    """
+    APPLICATION: Coverage Analysis — Which integers are "easy"?
+
+    Analyze the fraction of integers covered by each family,
+    demonstrating the 75% coverage theorem.
+    """
+    print("=" * 60)
+    print("APPLICATION 5: Coverage Analysis (75% Theorem)")
+    print("=" * 60)
+
+    N = 1000
+    even_count = 0
+    mod3_count = 0
+    search_count = 0
+    total = 0
+
+    for n in range(2, N + 1):
+        total += 1
+        if n % 2 == 0:
+            even_count += 1
+        elif n % 4 == 3:
+            mod3_count += 1
+        else:
+            # n ≡ 1 (mod 4) — need search
+            result = solve_es(n, bound=1000)
+            if result:
+                search_count += 1
+
+    family_covered = even_count + mod3_count
+    total_covered = family_covered + search_count
+    remaining = total - total_covered
+
+    print(f"\n  Range: n = 2 to {N}")
+    print(f"  Total integers: {total}")
+    print(f"  Covered by even family:    {even_count:>5} ({even_count/total*100:.1f}%)")
+    print(f"  Covered by mod-4≡3 family: {mod3_count:>5} ({mod3_count/total*100:.1f}%)")
+    print(f"  Covered by families total: {family_covered:>5} ({family_covered/total*100:.1f}%)")
+    print(f"  Covered by search (n≡1):   {search_count:>5}")
+    print(f"  Total covered:             {total_covered:>5} ({total_covered/total*100:.1f}%)")
+    print(f"  Uncovered:                 {remaining:>5}")
+    print(f"\n  The 75% theorem predicts: {family_covered/total*100:.1f}% from families alone")
+
+
+# ─── Main ────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  Applications of Egyptian Fraction Decompositions       ║")
+    print("╚══════════════════════════════════════════════════════════╝\n")
+
+    fair_division_example()
+    print()
+    simplex_geometry_example()
+    print()
+    cubic_surface_analysis()
+    print()
+    scheduling_example()
+    print()
+    coverage_analysis()
 
 
 #!/usr/bin/env python3
 """
-Erdős–Straus Conjecture: Demonstrations
+demo.py — Erdős–Straus Conjecture: Egyptian Fraction Decompositions
 
-This script demonstrates the key mathematical results about the
-Erdős–Straus conjecture: 4/n = 1/x + 1/y + 1/z for positive integers x,y,z.
+Demonstrates the formally verified families and search algorithm for
+decomposing 4/n into three unit fractions: 4/n = 1/x + 1/y + 1/z.
 
-It illustrates:
-  1. The four parametric families covering 11/12 of all integers
-  2. Computational search for exceptional cases
-  3. Verification of the conjecture up to large bounds
+Usage:
+    python demo.py          # Run demos for sample values
+    python demo.py 17       # Find decomposition for specific n
+    python demo.py 2 100    # Find decompositions for all n in [2, 100]
 """
 
 from fractions import Fraction
-from typing import Optional
+import sys
 
 
-def verify_decomposition(n: int, x: int, y: int, z: int) -> bool:
-    """Verify that 4/n = 1/x + 1/y + 1/z using exact rational arithmetic."""
-    if x <= 0 or y <= 0 or z <= 0 or n <= 0:
-        return False
-    return Fraction(4, n) == Fraction(1, x) + Fraction(1, y) + Fraction(1, z)
+def decompose_even(n: int) -> tuple[int, int, int] | None:
+    """Try the even family: 4/(2m) = 1/m + 1/(2m) + 1/(2m)."""
+    if n % 2 != 0 or n < 2:
+        return None
+    m = n // 2
+    return (m, 2 * m, 2 * m)
 
 
-def diophantine_check(n: int, x: int, y: int, z: int) -> bool:
-    """Verify using the integer-cleared equation: 4xyz = n(xy + xz + yz)."""
-    return 4 * x * y * z == n * (x * y + x * z + y * z)
+def decompose_mod4_eq3(n: int) -> tuple[int, int, int] | None:
+    """Try the mod-4≡3 family:
+    4/(4k+3) = 1/(k+2) + 1/((k+1)(k+2)) + 1/((k+1)(4k+3))."""
+    if n % 4 != 3:
+        return None
+    k = (n - 3) // 4
+    x = k + 2
+    y = (k + 1) * (k + 2)
+    z = (k + 1) * (4 * k + 3)
+    return (x, y, z)
 
 
-# ─── Family 1: Even numbers ───────────────────────────────────────────────
-def family_even(k: int) -> tuple[int, int, int, int]:
-    """For n = 2k: 4/(2k) = 1/k + 1/(2k) + 1/(2k)."""
-    n = 2 * k
-    return n, k, 2 * k, 2 * k
-
-
-# ─── Family 2: n ≡ 3 mod 4 ────────────────────────────────────────────────
-def family_mod4_eq3(n: int) -> tuple[int, int, int]:
-    """For n ≡ 3 mod 4: x = (n+1)/4, y = z = 2xn."""
-    assert n % 4 == 3
-    x = (n + 1) // 4
-    y = 2 * x * n
-    return x, y, y
-
-
-# ─── Family 3: n ≡ 0 mod 3 ────────────────────────────────────────────────
-def family_mod3_eq0(n: int) -> tuple[int, int, int]:
-    """For n ≡ 0 mod 3: x = n/3, y = z = 2n."""
-    assert n % 3 == 0
-    x = n // 3
-    return x, 2 * n, 2 * n
-
-
-# ─── Family 4: n ≡ 2 mod 3 ────────────────────────────────────────────────
-def family_mod3_eq2(n: int) -> tuple[int, int, int]:
-    """For n ≡ 2 mod 3: x = n, y = (n+1)/3, z = n·(n+1)/3."""
-    assert n % 3 == 2
-    m = (n + 1) // 3
-    return n, m, n * m
-
-
-# ─── Computational search ─────────────────────────────────────────────────
-def smart_search(n: int, B: int) -> Optional[tuple[int, int, int]]:
-    """
-    Search for x,y ≤ B and compute z from the equation.
-    From 4xyz = n(xy + xz + yz), solving for z:
-      z = nxy / (4xy - n(x+y))
-    """
-    for x in range(1, B + 1):
-        for y in range(x, B + 1):
-            denom = 4 * x * y - n * (x + y)
+def search_es(n: int, bound: int = 10000) -> tuple[int, int, int] | None:
+    """Search for an ESWitness: ordered pairs (x, y) with x ≤ y ≤ bound,
+    solving for z = nxy / (4xy - nx - ny)."""
+    for x in range(1, bound + 1):
+        for y in range(x, bound + 1):
+            denom = 4 * x * y - n * x - n * y
             if denom <= 0:
                 continue
             num = n * x * y
             if num % denom == 0:
                 z = num // denom
-                if z > 0:
-                    return x, y, z
+                if z >= 1:
+                    return (x, y, z)
     return None
 
 
-def classify_and_solve(n: int) -> tuple[str, tuple[int, int, int]]:
-    """Classify n by its residue class and return the appropriate decomposition."""
+def scale_solution(x: int, y: int, z: int, k: int) -> tuple[int, int, int]:
+    """Apply the scaling principle: (x,y,z) → (kx,ky,kz)."""
+    return (k * x, k * y, k * z)
+
+
+def verify(n: int, x: int, y: int, z: int) -> bool:
+    """Verify that 4/n = 1/x + 1/y + 1/z exactly using rational arithmetic."""
+    lhs = Fraction(4, n)
+    rhs = Fraction(1, x) + Fraction(1, y) + Fraction(1, z)
+    return lhs == rhs
+
+
+def verify_integer(n: int, x: int, y: int, z: int) -> bool:
+    """Verify using the denominator-cleared equation: 4xyz = n(xy + xz + yz)."""
+    return 4 * x * y * z == n * (x * y + x * z + y * z)
+
+
+def normalized_mass(n: int, x: int, y: int, z: int) -> tuple[Fraction, Fraction, Fraction]:
+    """Compute the simplex coordinates: (n/(4x), n/(4y), n/(4z))."""
+    return (Fraction(n, 4 * x), Fraction(n, 4 * y), Fraction(n, 4 * z))
+
+
+def find_decomposition(n: int) -> tuple[int, int, int] | None:
+    """Find a decomposition for 4/n, trying parametric families first."""
+    # Try even family
+    result = decompose_even(n)
+    if result and verify(n, *result):
+        return result
+
+    # Try mod-4≡3 family
+    result = decompose_mod4_eq3(n)
+    if result and verify(n, *result):
+        return result
+
+    # Fall back to search
+    result = search_es(n)
+    if result and verify(n, *result):
+        return result
+
+    return None
+
+
+def demo_single(n: int) -> None:
+    """Demonstrate decomposition for a single n."""
+    print(f"\n{'='*60}")
+    print(f"  Erdős–Straus decomposition for n = {n}")
+    print(f"{'='*60}")
+
+    result = find_decomposition(n)
+    if result is None:
+        print(f"  No decomposition found for n = {n}")
+        return
+
+    x, y, z = result
+    print(f"  4/{n} = 1/{x} + 1/{y} + 1/{z}")
+    print()
+
+    # Rational verification
+    lhs = Fraction(4, n)
+    rhs = Fraction(1, x) + Fraction(1, y) + Fraction(1, z)
+    print(f"  Rational check:  4/{n} = {lhs} = {rhs}  ✓" if lhs == rhs
+          else f"  Rational check:  FAILED ✗")
+
+    # Integer surface verification
+    int_ok = verify_integer(n, x, y, z)
+    print(f"  Surface check:   4·{x}·{y}·{z} = {4*x*y*z}")
+    print(f"                   {n}·({x}·{y} + {x}·{z} + {y}·{z}) = {n*(x*y + x*z + y*z)}")
+    print(f"                   {'✓' if int_ok else '✗'}")
+
+    # Simplex normalization
+    m1, m2, m3 = normalized_mass(n, x, y, z)
+    print(f"  Simplex coords:  ({m1}, {m2}, {m3})")
+    print(f"  Sum = {m1 + m2 + m3}  {'✓' if m1 + m2 + m3 == 1 else '✗'}")
+
+    # Method used
     if n % 2 == 0:
-        k = n // 2
-        return "even", (k, 2 * k, 2 * k)
-    elif n % 3 == 0:
-        return "mod3=0", family_mod3_eq0(n)
-    elif n % 3 == 2:
-        return "mod3=2", family_mod3_eq2(n)
+        print(f"  Method: Even family (n = 2·{n//2})")
     elif n % 4 == 3:
-        return "mod4=3", family_mod4_eq3(n)
+        k = (n - 3) // 4
+        print(f"  Method: Mod-4≡3 family (k = {k})")
     else:
-        # n ≡ 1 mod 12 — exceptional case, requires search
-        result = smart_search(n, 10 * n)
-        if result:
-            return "search", result
-        return "unknown", (0, 0, 0)
+        print(f"  Method: Computational search")
 
 
-# ─── Main demonstration ───────────────────────────────────────────────────
-if __name__ == "__main__":
-    print("=" * 70)
-    print("ERDŐS–STRAUS CONJECTURE: 4/n = 1/x + 1/y + 1/z")
-    print("=" * 70)
+def demo_range(start: int, end: int) -> None:
+    """Find decompositions for a range of n values."""
+    print(f"\nErdős–Straus decompositions for n = {start} to {end}")
+    print(f"{'n':>5} | {'x':>6} {'y':>8} {'z':>10} | {'Method':>12} | Check")
+    print("-" * 60)
 
-    # Demo 1: Show all four families
-    print("\n── Family 1: Even numbers (n = 2k) ──")
-    for k in [1, 2, 5, 10, 50]:
-        n, x, y, z = family_even(k)
-        ok = verify_decomposition(n, x, y, z)
-        print(f"  4/{n} = 1/{x} + 1/{y} + 1/{z}  ✓" if ok else f"  FAIL for n={n}")
-
-    print("\n── Family 2: n ≡ 3 mod 4 ──")
-    for n in [3, 7, 11, 19, 23, 43, 103]:
-        x, y, z = family_mod4_eq3(n)
-        ok = verify_decomposition(n, x, y, z)
-        print(f"  4/{n} = 1/{x} + 1/{y} + 1/{z}  ✓" if ok else f"  FAIL for n={n}")
-
-    print("\n── Family 3: n ≡ 0 mod 3 ──")
-    for n in [3, 9, 15, 21, 33, 99]:
-        x, y, z = family_mod3_eq0(n)
-        ok = verify_decomposition(n, x, y, z)
-        print(f"  4/{n} = 1/{x} + 1/{y} + 1/{z}  ✓" if ok else f"  FAIL for n={n}")
-
-    print("\n── Family 4: n ≡ 2 mod 3 ──")
-    for n in [2, 5, 8, 11, 14, 17, 53]:
-        x, y, z = family_mod3_eq2(n)
-        ok = verify_decomposition(n, x, y, z)
-        print(f"  4/{n} = 1/{x} + 1/{y} + 1/{z}  ✓" if ok else f"  FAIL for n={n}")
-
-    # Demo 2: Exceptional cases (n ≡ 1 mod 12)
-    print("\n── Exceptional cases (n ≡ 1 mod 12, require search) ──")
-    exceptional = [n for n in range(2, 200) if n % 12 == 1]
-    for n in exceptional:
-        family, (x, y, z) = classify_and_solve(n)
-        ok = verify_decomposition(n, x, y, z)
-        print(f"  4/{n:3d} = 1/{x} + 1/{y} + 1/{z}  ✓ [{family}]"
-              if ok else f"  FAIL for n={n}")
-
-    # Demo 3: Coverage statistics
-    print("\n── Coverage analysis ──")
-    N = 10000
-    covered_by_family = 0
-    need_search = 0
-    for n in range(2, N + 1):
-        if n % 2 == 0 or n % 3 == 0 or n % 3 == 2 or n % 4 == 3:
-            covered_by_family += 1
+    failures = []
+    for n in range(start, end + 1):
+        result = find_decomposition(n)
+        if result is None:
+            failures.append(n)
+            print(f"{n:>5} | {'NONE':>26} | {'FAILED':>12} | ✗")
         else:
-            need_search += 1
+            x, y, z = result
+            ok = verify(n, x, y, z)
+            if n % 2 == 0:
+                method = "even"
+            elif n % 4 == 3:
+                method = "mod4≡3"
+            else:
+                method = "search"
+            print(f"{n:>5} | {x:>6} {y:>8} {z:>10} | {method:>12} | {'✓' if ok else '✗'}")
 
-    print(f"  Range [2, {N}]: {N - 1} integers")
-    print(f"  Covered by algebraic families: {covered_by_family} ({100*covered_by_family/(N-1):.1f}%)")
-    print(f"  Require computational search: {need_search} ({100*need_search/(N-1):.1f}%)")
-    print(f"  Theoretical density covered: 11/12 = {11/12*100:.1f}%")
+    print(f"\nTotal: {end - start + 1} values, {len(failures)} failures")
+    if failures:
+        print(f"Failures: {failures}")
+    else:
+        print("All decompositions verified ✓")
 
-    # Demo 4: Verify conjecture up to a bound
-    print(f"\n── Verification up to n = {N} ──")
-    all_ok = True
-    for n in range(2, N + 1):
-        _, (x, y, z) = classify_and_solve(n)
-        if not verify_decomposition(n, x, y, z):
-            print(f"  COUNTEREXAMPLE at n = {n}!")
-            all_ok = False
-            break
-    if all_ok:
-        print(f"  ✓ Verified for all n in [2, {N}]")
+
+def demo_scaling() -> None:
+    """Demonstrate the scaling principle."""
+    print(f"\n{'='*60}")
+    print(f"  Scaling Principle Demonstration")
+    print(f"{'='*60}")
+
+    n, x, y, z = 5, 2, 4, 20
+    print(f"\n  Seed: 4/{n} = 1/{x} + 1/{y} + 1/{z}")
+    print(f"  Verify: {verify(n, x, y, z)}")
+
+    for k in [2, 3, 5, 7, 10]:
+        kn = k * n
+        kx, ky, kz = scale_solution(x, y, z, k)
+        ok = verify(kn, kx, ky, kz)
+        print(f"  k={k}: 4/{kn} = 1/{kx} + 1/{ky} + 1/{kz}  {'✓' if ok else '✗'}")
+
+
+def demo_bound() -> None:
+    """Demonstrate the geometric bound 4x ≤ 3n for ordered witnesses."""
+    print(f"\n{'='*60}")
+    print(f"  Geometric Bound: 4x ≤ 3n for Ordered Witnesses")
+    print(f"{'='*60}")
+    print(f"\n  {'n':>5} | {'x':>5} {'y':>6} {'z':>8} | {'4x':>5} {'3n':>5} | Bound")
+    print("  " + "-" * 50)
+
+    for n in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]:
+        result = find_decomposition(n)
+        if result:
+            xyz = sorted(result)
+            x, y, z = xyz
+            bound_ok = 4 * x <= 3 * n
+            print(f"  {n:>5} | {x:>5} {y:>6} {z:>8} | {4*x:>5} {3*n:>5} | {'✓' if bound_ok else '✗'}")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        # Run all demos
+        print("╔══════════════════════════════════════════════════════════╗")
+        print("║  Erdős–Straus Conjecture: Egyptian Fraction Explorer    ║")
+        print("╚══════════════════════════════════════════════════════════╝")
+
+        # Demo individual cases
+        for n in [2, 3, 5, 7, 13, 17, 97, 101]:
+            demo_single(n)
+
+        # Demo range
+        demo_range(2, 50)
+
+        # Demo scaling
+        demo_scaling()
+
+        # Demo bound
+        demo_bound()
+
+    elif len(sys.argv) == 2:
+        n = int(sys.argv[1])
+        if n < 2:
+            print("Error: n must be ≥ 2")
+            sys.exit(1)
+        demo_single(n)
+
+    elif len(sys.argv) == 3:
+        start = int(sys.argv[1])
+        end = int(sys.argv[2])
+        demo_range(start, end)
+
+    else:
+        print("Usage: python demo.py [n] or python demo.py [start] [end]")

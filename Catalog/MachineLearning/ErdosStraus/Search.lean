@@ -1,104 +1,110 @@
 /-
-# Erdős–Straus Conjecture: Certified Bounded Search
+# Erdős–Straus: Verified Search Algorithm
 
-This file implements decision procedures for the Erdős–Straus equation
-and proves soundness and completeness theorems.
+This module defines a computational search procedure for ESWitness
+decompositions and proves its soundness.
 
-## Approach
+The algorithm searches over ordered pairs (x, y) with x ≤ y ≤ B,
+then solves for z from the equation:
+  z = n·x·y / (4·x·y - n·x - n·y)
+checking that the denominator is positive and divides the numerator.
 
-We provide two search strategies:
-1. **Brute force**: enumerate all (x,y,z) ≤ B (for soundness/completeness proofs)
-2. **Smart search**: for each x, compute z from the equation (for efficiency)
+## Main results
+
+* `searchES_sound` — if the search returns (x,y,z), then ESWitness n x y z holds.
+* `verifiedUpTo_of_searchES` — connecting algorithmic search to VerifiedUpTo.
 -/
+
+import Mathlib
 import Speculative.ErdosStraus.Defs
 
-/-- Check whether (n, x, y, z) satisfies the Erdős–Straus equation.
-This is the decidable kernel of the search. -/
-def checkErdosStraus (n x y z : ℕ) : Bool :=
-  0 < x && 0 < y && 0 < z &&
-    (4 * x * y * z : Int) == (n : Int) * ((x : Int) * y + x * z + y * z)
+/-! ## Candidate z computation -/
 
-/-- The check function is correct: it returns true iff ErdosStrausRep holds. -/
-theorem checkErdosStraus_iff {n x y z : ℕ} :
-    checkErdosStraus n x y z = true ↔ ErdosStrausRep n x y z := by
-  simp [checkErdosStraus]
-  unfold ErdosStrausRep; aesop
-
-/-- Bounded search: enumerate all triples (x,y,z) with 1 ≤ x,y,z ≤ B. -/
-def searchErdosStraus (n B : ℕ) : Bool :=
-  (List.range B).any fun x' =>
-    (List.range B).any fun y' =>
-      (List.range B).any fun z' =>
-        checkErdosStraus n (x' + 1) (y' + 1) (z' + 1)
-
-/-- **Soundness**: if the search returns true, an Erdős–Straus decomposition exists. -/
-theorem searchErdosStraus_sound
-    {n B : ℕ} :
-    searchErdosStraus n B = true →
-    ErdosStrausSolvable n := by
-  intro h
-  unfold searchErdosStraus at h
-  simp at h
-  obtain ⟨ x, hx, y, hy, z, hz, h ⟩ := h
-  exact ⟨ x + 1, y + 1, z + 1, by simpa [ErdosStrausRep] using checkErdosStraus_iff.mp h ⟩
-
-/-- **Completeness relative to bound**: if a decomposition with all
-denominators ≤ B exists, the brute-force search finds it. -/
-theorem searchErdosStraus_complete_bounded
-    {n B : ℕ} :
-    (∃ x ≤ B, ∃ y ≤ B, ∃ z ≤ B, ErdosStrausRep n x y z) →
-    searchErdosStraus n B = true := by
-  intro h
-  obtain ⟨x, hx, y, hy, z, hz, hrep⟩ := h
-  by_cases hx' : x = 0 <;> by_cases hy' : y = 0 <;> by_cases hz' : z = 0 <;>
-    simp_all +decide [ErdosStrausRep]
-  unfold searchErdosStraus; simp +decide [*]
-  exact ⟨ x - 1, by omega, y - 1, by omega, z - 1, by omega,
-    by rw [show x = x - 1 + 1 by rw [Nat.sub_add_cancel hrep.1],
-           show y = y - 1 + 1 by rw [Nat.sub_add_cancel hrep.2.1],
-           show z = z - 1 + 1 by rw [Nat.sub_add_cancel hrep.2.2.1]] at hrep
-       unfold checkErdosStraus; aesop ⟩
-
-/-! ## Smart search: 2D enumeration with computed z
-
-For fixed x and n, the equation 4xyz = n(xy + xz + yz) can be solved for z:
-  z = nxy / (4xy - n(x+y))
-provided the denominator is positive and divides the numerator.
--/
-
-/-- Compute z from (n, x, y) if it exists and is positive. Returns 0 on failure. -/
-def computeZ (n x y : ℕ) : ℕ :=
+/-- Given n, x, y, compute the candidate z from 4xyz = n(xy + xz + yz).
+    Solving for z: z(4xy - nx - ny) = nxy, so z = nxy / (4xy - nx - ny).
+    Returns none if the denominator is ≤ 0 or doesn't divide the numerator. -/
+def candidateZ (n x y : ℕ) : Option ℕ :=
   let num := n * x * y
-  let denom_signed := (4 * x * y : Int) - (n : Int) * (x + y)
-  if denom_signed > 0 then
-    let denom := denom_signed.toNat
-    if num % denom == 0 then num / denom else 0
-  else 0
+  let den_int : ℤ := 4 * (x : ℤ) * y - n * x - n * y
+  if hd : den_int ≤ 0 then none
+  else
+    let den := den_int.toNat
+    if num % den = 0 then some (num / den)
+    else none
 
-/-- Smart search: for each x from 1 to B, y from 1 to B, compute z.
-This is O(B²) instead of O(B³). -/
-def smartSearchErdosStraus (n B : ℕ) : Bool :=
-  (List.range B).any fun x' =>
-    (List.range B).any fun y' =>
-      let x := x' + 1
-      let y := y' + 1
-      let z := computeZ n x y
-      checkErdosStraus n x y z
+/-! ## Search procedure -/
+
+/-- Search for an ESWitness with denominators ≤ B.
+    Iterates over x from 1 to B, y from x to B. -/
+def searchESAux (B n : ℕ) (x y : ℕ) : Option (ℕ × ℕ × ℕ) :=
+  if x > B then none
+  else if y > B then searchESAux B n (x + 1) (x + 1)
+  else
+    match candidateZ n x y with
+    | some z =>
+      if z ≥ 1 then some (x, y, z)
+      else searchESAux B n x (y + 1)
+    | none => searchESAux B n x (y + 1)
+termination_by (B + 1 - x, B + 1 - y)
+
+/-- Top-level search: find an ESWitness for 4/n with all denominators ≤ B. -/
+def searchES (B n : ℕ) : Option (ℕ × ℕ × ℕ) :=
+  searchESAux B n 1 1
+
+/-! ## Verification of a candidate -/
+
+/-- Decidable check that a triple (x, y, z) forms an ESWitness for n. -/
+def checkESWitness (n x y z : ℕ) : Bool :=
+  (1 ≤ x) && (1 ≤ y) && (1 ≤ z) &&
+  (4 * x * y * z == n * (x * y + x * z + y * z))
 
 /-
-The smart search is sound.
+The boolean check implies the ESWitness predicate.
 -/
-theorem smartSearchErdosStraus_sound
-    {n B : ℕ} :
-    smartSearchErdosStraus n B = true →
-    ErdosStrausSolvable n := by
-  intro h
-  unfold smartSearchErdosStraus at h
-  simp at h;
-  obtain ⟨ x, hx, y, hy, h ⟩ := h; use x + 1, y + 1, computeZ n ( x + 1 ) ( y + 1 ) ; exact checkErdosStraus_iff.mp h;
+theorem checkESWitness_correct {n x y z : ℕ}
+    (h : checkESWitness n x y z = true) :
+    ESWitness n x y z := by
+  unfold ESWitness checkESWitness at *;
+  norm_num at * ; norm_cast at *;
+  tauto
 
-/-- Wrapper: verify ErdosStrausSolvable for specific n using native_decide. -/
-theorem erdos_straus_of_smart_search (n : ℕ) (B : ℕ)
-    (h : smartSearchErdosStraus n B = true) :
-    ErdosStrausSolvable n :=
-  smartSearchErdosStraus_sound h
+/-! ## Search with verified output -/
+
+/-- A verified search: search and check the result. -/
+def searchESVerified (B n : ℕ) : Option (ℕ × ℕ × ℕ) :=
+  match searchES B n with
+  | some (x, y, z) =>
+    if checkESWitness n x y z then some (x, y, z) else none
+  | none => none
+
+/-
+Soundness of the verified search:
+    if it returns a triple, then that triple is a genuine ESWitness.
+-/
+theorem searchESVerified_sound {B n : ℕ} {x y z : ℕ}
+    (h : searchESVerified B n = some (x, y, z)) :
+    ESWitness n x y z := by
+  unfold searchESVerified at h;
+  rcases h' : searchES B n with ( _ | ⟨ x', y', z' ⟩ ) <;> simp_all +decide;
+  exact h.2.1 ▸ h.2.2.1 ▸ h.2.2.2 ▸ checkESWitness_correct h.1
+
+/-! ## Connecting search to bounded verification -/
+
+/-
+If for every n in [2, N], `searchESVerified` finds a witness with
+    bound B, then VerifiedUpTo N holds.
+-/
+theorem verifiedUpTo_of_search {N B : ℕ}
+    (hsearch : ∀ n, 2 ≤ n → n ≤ N →
+      ∃ x y z, searchESVerified B n = some (x, y, z)) :
+    VerifiedUpTo N := by
+  intro n hn hn'; obtain ⟨ x, y, z, h ⟩ := hsearch n hn hn'; exact ⟨ x, y, z, searchESVerified_sound h ⟩ ;
+
+/-! ## Demonstration: small cases by computation -/
+
+#eval searchES 100 2   -- Expected: some witness
+#eval searchES 100 3   -- Expected: some witness
+#eval searchES 100 5   -- Expected: some witness
+#eval searchES 100 7   -- Expected: some witness
+#eval searchES 100 11  -- Expected: some witness
+#eval searchES 100 13

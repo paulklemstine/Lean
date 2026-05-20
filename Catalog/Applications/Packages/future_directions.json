@@ -156,8 +156,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.78,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "074c9bf8",
       "timestamp": "2026-05-20T00:22:10.974360+00:00"
     },
     {
@@ -711,8 +711,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "d15eb484",
       "timestamp": "2026-05-20T00:22:10.991349+00:00"
     },
     {
@@ -1792,8 +1792,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "279b6db7",
       "timestamp": "2026-05-20T01:00:25.457998+00:00"
     },
     {
@@ -2054,6 +2054,40 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T01:04:09.579595+00:00"
+    },
+    {
+      "id": "fd_0111",
+      "title": "Impact",
+      "description": "This would establish a tropical analogue of the classical result that matrix rank equals the size of the largest nonvanishing minor. It would give polynomial-time certificates for tropical rank bounds.",
+      "source_exp_id": "1a0f1a30",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1a0f1a30",
+      "domains": [
+        "Tropical"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:04:31.714756+00:00"
+    },
+    {
+      "id": "fd_0112",
+      "title": "Test",
+      "description": "Construct matrices where all $2 \\times 2$ submatrix certificates hold on $3 \\times 3$ sub-selections but the full certificate fails. If no such matrix exists (across exhaustive search for small sizes), the conjecture is supported. A counterexample would refute it.",
+      "source_exp_id": "1a0f1a30",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1a0f1a30",
+      "domains": [
+        "NumberTheory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T01:04:31.717955+00:00"
     }
   ],
   "pruned": [

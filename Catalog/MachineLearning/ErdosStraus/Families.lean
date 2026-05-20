@@ -1,81 +1,77 @@
 /-
-# Erdős–Straus Conjecture: Infinite Parametric Families
+# Erdős–Straus: Parametric Families
 
-This file proves that the Erdős–Straus conjecture holds for several
-infinite families of integers, each corresponding to a congruence class.
+This module proves that infinite families of integers satisfy the
+Erdős–Straus conjecture via explicit symbolic constructions.
 
-## Families proved here
+## Main results
 
-1. **Even numbers** (n ≡ 0 mod 2): 4/(2k) = 1/k + 1/(2k) + 1/(2k)
-2. **n ≡ 3 mod 4**: 4/n = 1/x + 1/(2xn) + 1/(2xn) where x = (n+1)/4
-3. **n ≡ 0 mod 3**: 4/n = 1/(n/3) + 1/(2n) + 1/(2n)
-4. **n ≡ 2 mod 3**: 4/n = 1/n + 1/((n+1)/3) + 1/(n·(n+1)/3)
+* `erdos_straus_even` — Every even n ≥ 2 has a decomposition:
+    4/(2m) = 1/m + 1/(2m) + 1/(2m)
 
-Together these cover all integers not congruent to 1 mod 12, which is
-a set of density 11/12 among all positive integers ≥ 2.
+* `erdos_straus_mod4_eq3` — Every n ≡ 3 (mod 4) has a decomposition:
+    4/(4k+3) = 1/(k+2) + 1/((k+1)(k+2)) + 1/((k+1)(4k+3))
+
+Together these cover 3/4 of all positive integers ≥ 2.
 -/
+
+import Mathlib
 import Speculative.ErdosStraus.Defs
 
-/-- **Theorem A: Even-denominator family.**
-For every k ≥ 1, the identity 4/(2k) = 1/k + 1/(2k) + 1/(2k) gives
-an Erdős–Straus decomposition. This is the simplest infinite family. -/
-theorem erdos_straus_even (k : ℕ) (hk : 1 ≤ k) :
-    ErdosStrausSolvable (2 * k) := by
-  refine ⟨k, 2 * k, 2 * k, ?_⟩
-  exact ⟨ hk, by positivity, by positivity, by push_cast; ring ⟩
+/-! ## Even family: 4/(2m) = 1/m + 1/(2m) + 1/(2m) -/
 
 /-
-**Theorem B: Family n ≡ 3 mod 4.**
-For n = 4k+3, set x = k+1 = (n+1)/4, then
-4/n = 1/x + 1/(2xn) + 1/(2xn).
-Proof: 1/x + 2/(2xn) = 1/x + 1/(xn) = (n+1)/(xn) = 4(k+1)/((k+1)(4k+3)) = 4/n.
+Every even number 2m (m ≥ 1) satisfies the Erdős–Straus equation.
+    The identity: 4/(2m) = 2/(2m) + 1/(2m) + 1/(2m) = 1/m + 1/(2m) + 1/(2m).
 -/
-theorem erdos_straus_mod4_eq3 (n : ℕ)
-    (hn : 2 ≤ n) (hmod : n % 4 = 3) :
-    ErdosStrausSolvable n := by
-  refine ⟨(n + 1) / 4, 2 * ((n + 1) / 4) * n, 2 * ((n + 1) / 4) * n, ?_⟩
-  constructor <;> norm_num;
-  · omega;
-  · exact ⟨ ⟨ by omega, by omega ⟩, by nlinarith [ Nat.div_mul_cancel ( show 4 ∣ n + 1 from Nat.dvd_of_mod_eq_zero ( by norm_num [ Nat.add_mod, hmod ] ) ), pow_pos ( Nat.div_pos ( show n + 1 ≥ 4 by omega ) zero_lt_four ) 2, pow_pos ( Nat.div_pos ( show n + 1 ≥ 4 by omega ) zero_lt_four ) 3 ] ⟩
+noncomputable def erdos_straus_even
+    (m : ℕ) (hm : 1 ≤ m) :
+    ESDecomposition (2 * m) where
+  x := m
+  y := 2 * m
+  z := 2 * m
+  hx := hm
+  hy := by linarith
+  hz := by linarith
+  eqn := by
+    push_cast; ring
 
 /-
-**Theorem C: Family n ≡ 0 mod 3.**
-For n = 3m, set x = m = n/3, y = z = 2n.
-Then 4/n = 1/m + 1/(2·3m) + 1/(2·3m) = 1/m + 1/(6m) + 1/(6m)
-     = (6 + 1 + 1)/(6m) = 8/(6m)... wait, let me recheck.
-Actually 1/m + 1/(6m) + 1/(6m) = (6+1+1)/(6m) = 8/(6m) = 4/(3m) = 4/n. ✓
+Every even n ≥ 2 admits a decomposition.
 -/
-theorem erdos_straus_mod3_eq0 (n : ℕ)
-    (hn : 2 ≤ n) (hmod : n % 3 = 0) :
-    ErdosStrausSolvable n := by
-  refine ⟨n / 3, 2 * n, 2 * n, ?_⟩
-  exact ⟨ Nat.div_pos ( Nat.le_of_dvd ( by positivity ) ( Nat.dvd_of_mod_eq_zero hmod ) ) ( by norm_num ), by positivity, by positivity, by norm_cast; nlinarith [ Nat.div_mul_cancel ( Nat.dvd_of_mod_eq_zero hmod ) ] ⟩
+theorem erdos_straus_of_even
+    (n : ℕ) (hn : 2 ≤ n) (he : Even n) :
+    ∃ d : ESDecomposition n, True := by
+  obtain ⟨ m, rfl ⟩ := he;
+  use ⟨ m, 2 * m, 2 * m, by linarith, by linarith, by linarith, by push_cast; ring ⟩
+
+/-! ## Residue class n ≡ 3 (mod 4)
+
+The identity used is:
+  4/(4k+3) = 1/(k+2) + 1/((k+1)(k+2)) + 1/((k+1)(4k+3))
+
+Derivation: Start from the 2-term decomposition
+  4/(4k+3) = 1/(k+1) + 1/((k+1)(4k+3))
+since 4(k+1) - (4k+3) = 1, so 4/(4k+3) - 1/(k+1) = 1/((k+1)(4k+3)).
+
+Then split 1/(k+1) using partial fractions:
+  1/(k+1) = 1/(k+2) + 1/((k+1)(k+2))
+
+Combining: 4/(4k+3) = 1/(k+2) + 1/((k+1)(k+2)) + 1/((k+1)(4k+3)).
+-/
 
 /-
-**Theorem D: Family n ≡ 2 mod 3.**
-For n ≡ 2 mod 3, 3|(n+1). Set m = (n+1)/3, then
-4/n = 1/n + 3/n = 1/n + 1/m + 1/(nm).
-Proof: 1/m + 1/(nm) = (n+1)/(nm) = 3m/(nm) = 3/n. ✓
+Every n ≡ 3 (mod 4) satisfies the Erdős–Straus equation.
+    Uses the parametric family with n = 4k+3.
 -/
-theorem erdos_straus_mod3_eq2 (n : ℕ)
-    (hn : 2 ≤ n) (hmod : n % 3 = 2) :
-    ErdosStrausSolvable n := by
-  refine ⟨n, (n + 1) / 3, n * ((n + 1) / 3), ?_⟩
-  constructor <;> norm_num;
-  · linarith;
-  · rw [ ← Nat.mod_add_div n 3, hmod ] ; ring_nf ; norm_cast;
-    norm_num [ Nat.add_div ] ; ring
-
-/-
-**Synthesis: Large covered set.**
-The union of four families covers all n ≥ 2 except n ≡ 1 mod 12
-(odd, ≡ 1 mod 4, ≡ 1 mod 3). This gives density 11/12 coverage.
--/
-theorem erdos_straus_large_covered_set (n : ℕ) (hn : 2 ≤ n)
-    (h : n % 2 = 0 ∨ n % 3 = 0 ∨ n % 3 = 2 ∨ n % 4 = 3) :
-    ErdosStrausSolvable n := by
-  rcases h with ( h | h | h | h );
-  · exact erdos_straus_even ( n / 2 ) ( by linarith [ Nat.mod_add_div n 2 ] ) |> fun ⟨ x, y, z, h ⟩ => ⟨ x, y, z, by rwa [ show n = 2 * ( n / 2 ) by linarith [ Nat.mod_add_div n 2 ] ] ⟩;
-  · exact erdos_straus_mod3_eq0 n hn h
-  · exact erdos_straus_mod3_eq2 n hn h
-  · exact erdos_straus_mod4_eq3 n hn h
+noncomputable def erdos_straus_mod4_eq3
+    (k : ℕ) :
+    ESDecomposition (4 * k + 3) where
+  x := k + 2
+  y := (k + 1) * (k + 2)
+  z := (k + 1) * (4 * k + 3)
+  hx := by omega
+  hy := by nlinarith
+  hz := by nlinarith
+  eqn := by
+    grind
