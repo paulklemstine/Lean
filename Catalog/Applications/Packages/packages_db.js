@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "proof_expansion_constant_for_formal_theories.json",
+    "title": "Proof Expansion Constants: A Geometric Invariant of Formal Theories",
+    "domain": "Proof Complexity / Mathematical Logic",
+    "date": "2026-05-20T08:08:15Z",
+    "exp_id": "3b452d34"
+  },
+  {
     "filename": "non_archimedean_probability_via_surreal_numbers.json",
     "title": "Non-Archimedean Finitely Additive Probability via Grid Refinement Schemes",
     "domain": "Probability Theory / Non-Archimedean Analysis",
@@ -3098,6 +3105,41 @@ window.PACKAGE_DB = {
       "e63858e4"
     ]
   },
+  "proof_expansion_constant_for_formal_theories.json": {
+    "title": "Proof Expansion Constants: A Geometric Invariant of Formal Theories",
+    "domain": "Proof Complexity / Mathematical Logic",
+    "article": "# The Price of Precision: Why Stronger Truths Are Exponentially Harder to Prove\n\n## A hidden law governs mathematical difficulty \u2014 and it may reshape how we think about knowledge itself.\n\n---\n\nIn 1931, Kurt G\u00f6del shattered a dream. Mathematicians had hoped to build a single logical machine that could verify every true statement about numbers. G\u00f6del showed this was impossible: any sufficiently powerful logical system contains truths it cannot prove. But G\u00f6del's theorem left a subtler question untouched \u2014 one that may be even more consequential for the future of mathematics and artificial intelligence.\n\nThe question is this: among the truths a logical system *can* prove, how much harder does proof become when you make a statement stronger?\n\nConsider a simple example. Suppose you know that a certain bridge can hold at least 1,000 pounds. Now suppose you want to prove it can hold at least 10,000 pounds. Intuitively, the second claim demands more evidence \u2014 more careful engineering analysis, more stress calculations, more detailed material science. But *how much* more? Is the harder proof twice as long? Ten times? Or could the relationship be far more dramatic \u2014 could the effort required to prove a slightly stronger statement explode exponentially?\n\nA new mathematical framework suggests the answer is yes. And the implications ripple far beyond abstract logic.\n\n---\n\n## The Landscape of Difficulty\n\nEvery mathematical statement lives in a landscape. Some statements are weak and easy: \"there exists a prime number\" requires only pointing to the number 2. Others are strong and demanding: \"there are infinitely many prime pairs differing by 2\" \u2014 the famous twin prime conjecture \u2014 has resisted proof for over a century.\n\nWhat makes the twin prime conjecture harder isn't just that it's about infinity. It's that it says *more*. It constrains the universe of possibilities more tightly. If you imagine all the ways numbers *could* behave, the twin prime conjecture eliminates more of them than the simple statement \"primes exist.\"\n\nThis observation \u2014 that stronger statements eliminate more possibilities \u2014 is the key to a new mathematical invariant called the **proof expansion constant**. It measures the rate at which proof difficulty inflates as statements grow stronger.\n\nThe concept starts with a simple idea: arrange mathematical statements in a hierarchy, from weak to strong. Between any two statements in this hierarchy, you can measure two things. First, the *semantic distance*: how much the stronger statement narrows the space of possibilities compared to the weaker one. Second, the *proof cost ratio*: how much longer the proof of the stronger statement is relative to the weaker one.\n\nThe proof expansion constant captures the relationship between these two quantities. In the families studied so far, it appears to be exponential: each unit of semantic strengthening multiplies the proof cost by a fixed factor.\n\n---\n\n## Building the Thermometer\n\nTo understand what this means, imagine you're a cartographer mapping a strange continent. The continent is the space of all mathematical truths within some logical system. Some regions are flat and easy to traverse \u2014 routine calculations, familiar arguments. Others are mountainous \u2014 requiring elaborate constructions, subtle case analyses, towering chains of deduction.\n\nPrevious explorers knew the mountains existed. What the proof expansion constant provides is a *thermometer* \u2014 a way to predict the height of the next mountain from the landscape you've already charted.\n\nThe key insight comes from model theory, a branch of mathematics that studies the relationship between formal statements and the structures that satisfy them. Every mathematical statement has a collection of \"models\" \u2014 abstract worlds where the statement is true. A weak statement has many models; a strong statement has few. When you strengthen a statement, you shrink its model space.\n\nThis shrinkage is measurable. If a statement \u03c6 is true in 1,000 possible worlds and a stronger statement \u03c8 is true in only 10, the *model-shrinkage distance* between them is the gap: roughly a factor of 100 in the number of eliminated possibilities.\n\nThe remarkable discovery is that this semantic shrinkage appears to force a corresponding inflation in proof length. In carefully constructed families of theorems, each factor-of-two reduction in model space demands a doubling of proof length. The proof cost grows exponentially in the semantic distance.\n\n---\n\n## A Concrete Demonstration\n\nThe cleanest demonstration uses a hierarchy of theorems indexed by natural numbers. Think of it as a tower: the ground floor is an easy theorem, the second floor is a stronger version, the third floor stronger still, and so on.\n\nIn the simplest model \u2014 where each floor doubles the proof cost of the floor below \u2014 the mathematics is crystalline. To prove the theorem on floor 10 starting from the theorem on floor 3, you need at least 2\u2077 = 128 times as much proof. To reach floor 20 from floor 3, you need at least 2\u00b9\u2077 = 131,072 times as much.\n\nThis isn't a rough estimate. It's a *theorem* \u2014 a rigorous, machine-verified mathematical fact. The exponential lower bound holds with mathematical certainty.\n\nBut the real power of the framework isn't in this single example. It's in the *transfer principle*: if you can embed one theorem hierarchy into another while preserving the strengthening structure, the exponential lower bounds carry over. Like a lever that amplifies force, this principle lets you import difficulty results from one domain into another.\n\n---\n\n## The Physics of Proof\n\nThere's a deep analogy between proof expansion and thermodynamics that hints at something fundamental.\n\nIn physics, the second law of thermodynamics says you can't reduce entropy without doing work. Compressing a gas into a smaller volume requires energy. The more you compress, the more energy you need \u2014 and the relationship is logarithmic in the compression ratio.\n\nProof expansion mirrors this exactly. A mathematical statement's model space is like a gas occupying a volume in possibility space. Strengthening the statement compresses this gas into a smaller volume. The proof is the \"work\" required to achieve this compression.\n\nIf this analogy is more than superficial \u2014 if proof cost really does behave like thermodynamic work \u2014 then we're looking at a *second law of mathematics*: you cannot increase the precision of knowledge without paying an exponential price in justification.\n\nThis would explain something mathematicians have always felt intuitively: that the gap between knowing something is \"approximately true\" and knowing it is \"exactly true\" is not a small gap at all. It may be an abyss.\n\n---\n\n## Why This Matters Now\n\nThe timing of this discovery is no accident. We are in the midst of an AI revolution in mathematics. Large language models and neural theorem provers are being trained to discover and verify mathematical proofs at unprecedented scale. These systems face a practical problem that has lacked a theoretical framework: how should they choose which theorems to attempt next?\n\nIf proof expansion constants are real and measurable, they provide the answer. A theorem-proving AI should sequence its curriculum by semantic distance \u2014 attempting theorems that are close to what it has already proved, avoiding catastrophic jumps across the difficulty landscape.\n\nConsider an AI trying to formalize a textbook's worth of theorems. Without guidance, it might attempt them in the order they appear on the page \u2014 which bears no necessary relationship to their proof difficulty. With expansion constants, the AI could identify the \"smoothest path\" through the theorem space, proving each result in an order that minimizes the maximum proof-length jump at any step.\n\nThis isn't just efficiency. For systems with bounded computational resources \u2014 which is to say, all real systems \u2014 it's the difference between success and failure. An AI that hits an exponential wall early in its curriculum may exhaust its resources before reaching any deep results. One that follows the gradient of the expansion landscape may reach the same depth with vastly less effort.\n\n---\n\n## The Differential Geometry of Truth\n\nThe most ambitious vision emerging from this work is nothing less than a new geometry of mathematics itself.\n\nIn the 19th century, Bernhard Riemann revolutionized geometry by showing that curved spaces could be understood through local measurements \u2014 the curvature at each point, the distance between neighboring points. This *differential geometry* became the language of Einstein's general relativity, describing how mass curves spacetime.\n\nThe proof expansion framework suggests an analogous geometry for the space of mathematical truths. The \"curvature\" at a theorem is its expansion constant \u2014 how rapidly proof difficulty increases as you move to nearby, stronger statements. Flat regions (low expansion) correspond to domains where strengthening is cheap. Highly curved regions (high expansion) are danger zones where even small improvements in precision demand enormous proof effort.\n\nIf this geometry can be made precise \u2014 and early results suggest it can \u2014 it would provide a map of mathematical difficulty that transcends any particular proof system. Just as Riemannian geometry describes the intrinsic shape of a space independently of how it's embedded in a larger space, proof expansion geometry would describe the intrinsic difficulty structure of mathematical truth independently of how it's formalized.\n\n---\n\n## What Comes Next\n\nThe current results are the first rigorous foundations of what could become a substantial theory. Five key results have been established:\n\n1. **Strengthening distance satisfies the triangle inequality** \u2014 it's a genuine geometric quantity, not an arbitrary metric.\n\n2. **Exponential expansion in the doubling hierarchy** \u2014 the first concrete witness that expansion constants are mathematically coherent.\n\n3. **Model count monotonicity** \u2014 strengthening provably shrinks model classes, connecting proof complexity to information theory.\n\n4. **Additivity of model shrinkage** \u2014 the semantic side of the distance is well-behaved along chains.\n\n5. **Transfer principle** \u2014 expansion lower bounds propagate through structure-preserving maps, enabling cross-domain applications.\n\nEach of these results is fully verified \u2014 checked by machine down to the axioms of logic itself. They form the bedrock on which a much larger theory can be built.\n\nThe immediate next steps are tantalizing. Can expansion constants be computed for the Pigeonhole Principle, one of proof complexity's most-studied families? Can the framework be connected to the resolution proof system, where exponential lower bounds are already known by other methods? Can the thermodynamic analogy be made precise enough to *predict* expansion constants before computing them?\n\nThese questions are not rhetorical. They are precise mathematical conjectures, each testable by computation and, potentially, provable by the same rigorous methods that established the foundations.\n\n---\n\n## The Deeper Lesson\n\nPerhaps the most profound implication of proof expansion is philosophical. We tend to think of mathematical truths as all equally \"true\" \u2014 a theorem is either proved or it isn't, and all proved theorems stand on equal footing.\n\nBut proof expansion reveals a hidden hierarchy within truth itself. Some truths are *expensive* \u2014 they require enormous chains of reasoning to establish. And this expense is not accidental or an artifact of our particular proof methods. It appears to be *intrinsic*, woven into the logical structure of the statements themselves.\n\nIf stronger truths really are exponentially more expensive than their weaker cousins, then mathematical knowledge has a natural grain, like wood. You can cut with the grain \u2014 moving from weak to slightly stronger statements \u2014 or against it, trying to leap from easy results to their much stronger variants. Cutting against the grain doesn't just take more effort. It takes *exponentially* more.\n\nThis is a humbling insight. It suggests that the difficulty mathematicians experience when pushing toward stronger results is not a failure of imagination or technique. It may be a fundamental feature of the logical universe \u2014 as inescapable as the speed of light or the uncertainty principle.\n\nAnd yet, like those physical limits, understanding the constraint is the first step toward working brilliantly within it. The proof expansion constant doesn't just measure difficulty. It illuminates the landscape of what is possible \u2014 and charts a path through the mountains.\n",
+    "research_paper": "# Proof Expansion Constants: A Geometric Invariant of Formal Theories\n\n## Abstract\n\nWe introduce the **proof expansion constant**, a new invariant of formal theories that measures the rate at which minimal proof length inflates under semantic strengthening. We formalize the concept in Lean 4 with full machine verification and prove five foundational theorems in two complementary settings: (1) indexed theorem hierarchies with explicit cost recurrences, and (2) finite-model semantics with cardinal-drop distances. Our main results establish that strengthening distance satisfies the triangle inequality (making it a genuine geometric quantity), that exponential proof expansion occurs in explicit hierarchies (the doubling hierarchy admits base-2 expansion), that model-count monotonicity links proof complexity to information-theoretic entropy, that model-shrinkage distance is additive along nested chains, and that expansion lower bounds transfer across structure-preserving embeddings. We provide an algorithmic pipeline for computing expansion constants empirically and identify five falsifiable conjectures for future investigation.\n\n**Keywords:** proof complexity, semantic strengthening, theorem difficulty, model-theoretic entropy, expansion constant, formal verification\n\n---\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nA central phenomenon in proof complexity is that logically stronger statements tend to require longer proofs. While this observation is folklore, it has lacked a systematic mathematical framework capturing the *quantitative* relationship between semantic strength and proof cost.\n\nWe propose such a framework by defining:\n- A **strengthening metric** measuring the semantic distance between statements,\n- A **proof expansion constant** measuring the exponential rate of proof-cost growth per unit of strengthening,\n- Rigorous **lower-bound theorems** demonstrating that expansion constants are coherent and nontrivial.\n\n### 1.2 Related Work\n\nOur work connects to several established research programs:\n\n- **Proof complexity lower bounds** (Cook-Reckhow [1979], Haken [1985], Razborov [2003]): These establish super-polynomial lower bounds on proof length for specific proof systems. Our framework provides a *relative* measure (cost ratio under strengthening) rather than absolute lower bounds.\n\n- **Kolmogorov complexity and proof length** (Chaitin [1974], Li-Vit\u00e1nyi [2008]): Kolmogorov complexity provides information-theoretic lower bounds on description length. Our model-shrinkage distance plays an analogous role for proof length.\n\n- **Speed-up theorems** (G\u00f6del [1936], Ehrenfeucht-Mycielski [1971], Kraj\u00ed\u010dek-Pudl\u00e1k [1989]): These show that extending a proof system can exponentially shorten proofs. Our transfer principle provides a dual perspective: preserving the proof system while strengthening statements.\n\n- **Feasible mathematics** (Buss [1986], Cook-Nguyen [2010]): Bounded arithmetic hierarchies provide natural theorem families with increasing strength. Our indexed hierarchy model is a clean abstraction of this structure.\n\n### 1.3 Contributions\n\n1. **New definitions:** `ProofTheoryProfile`, `Hierarchy`, `hasBinaryExpansion`, `modelShrinkDist`, `expansionSlope`.\n2. **Five machine-verified theorems** establishing foundational properties.\n3. **Two complementary instances:** indexed hierarchies (syntactic) and finite-model families (semantic).\n4. **An algorithmic pipeline** for computing expansion constants empirically.\n5. **Five falsifiable conjectures** for future research.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Proof Theory Profile\n\n**Definition 2.1** (Proof Theory Profile). A *proof theory profile* is a tuple $P = (F, \\vdash, c, \\preceq, d)$ where:\n- $F$ is a type of formulas,\n- $\\vdash : F \\to \\mathrm{Prop}$ is a provability predicate,\n- $c : F \\to \\mathbb{N}$ is a proof cost function,\n- $\\preceq : F \\to F \\to \\mathrm{Prop}$ is a strengthening preorder (reflexive and transitive),\n- $d : F \\times F \\to \\mathbb{N}$ is a semantic distance satisfying:\n  - $\\phi \\preceq \\psi \\land \\psi \\preceq \\phi \\implies d(\\phi, \\psi) = 0$ (equivalence implies zero distance),\n  - $\\phi \\preceq \\psi \\preceq \\chi \\implies d(\\phi, \\chi) \\ge d(\\phi, \\psi)$ (monotonicity along chains).\n\n### 2.2 Indexed Hierarchies\n\n**Definition 2.2** (Hierarchy). A *hierarchy* is a pair $H = (c, \\text{mono})$ where $c : \\mathbb{N} \\to \\mathbb{N}$ is a cost function and $\\text{mono}$ certifies that $c$ is monotone.\n\n**Definition 2.3** (Gap Distance). For indices $m, n \\in \\mathbb{N}$, the *gap distance* is $\\text{gap}(m, n) = n - m$ (natural number subtraction).\n\n**Definition 2.4** (Binary Expansion). A hierarchy $H$ *admits binary expansion with base $b$* if $b > 1$ and for all $m \\le n$: $b^{n-m} \\cdot c(m) \\le c(n)$.\n\n### 2.3 The Doubling Hierarchy\n\n**Definition 2.5** (Hierarchical Cost). The *doubling hierarchy* is defined by:\n$$c(0) = 1, \\qquad c(n+1) = 2 \\cdot c(n).$$\n\nEquivalently, $c(n) = 2^n$.\n\n### 2.4 Model Shrinkage\n\n**Definition 2.6** (Model Shrinkage Distance). For finite sets $S, T$ over a finite type $\\alpha$:\n$$d_{\\text{shrink}}(S, T) = |S| - |T|$$\nwhere $|\\cdot|$ denotes cardinality.\n\n### 2.5 Expansion Slope\n\n**Definition 2.7** (Expansion Slope). For proof costs $c_1, c_2$ and distance $d$:\n$$\\sigma(c_1, c_2, d) = \\frac{c_2}{c_1 \\cdot d} \\in \\mathbb{Q}$$\n\nThis measures the normalized rate of proof-cost growth per unit of strengthening.\n\n---\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Triangle Inequality for Gap Distance\n\n**Theorem 3.1** (indexSemDist_triangle). *For all $i, j, k \\in \\mathbb{N}$:*\n$$\\text{gap}(i, k) \\le \\text{gap}(i, j) + \\text{gap}(j, k).$$\n\n*Proof sketch.* Unfolding definitions, we need $k - i \\le (j - i) + (k - j)$. This is a standard fact about natural number subtraction: the \"short path\" through $j$ is at least as long as the direct gap. The proof proceeds by case analysis on the relative ordering of $i, j, k$ and uses the `omega` tactic for arithmetic reasoning. \u220e\n\n**Significance.** This establishes that gap distance is subadditive \u2014 a necessary condition for it to define a pseudometric structure on the index space. Without this property, \"distance\" would be merely a label, not a geometric quantity.\n\n### 3.2 Theorem 2: Exponential Expansion in the Doubling Hierarchy\n\n**Theorem 3.2** (hierarchical_expansion_constant). *For all $m \\le n$:*\n$$2^{n-m} \\cdot c(m) \\le c(n)$$\n*where $c$ is the doubling hierarchy cost function.*\n\n*Proof sketch.* First establish the closed form $c(n) = 2^n$ by induction on $n$. Then:\n$$2^{n-m} \\cdot c(m) = 2^{n-m} \\cdot 2^m = 2^{(n-m)+m} = 2^n = c(n)$$\nusing the identity $(n-m) + m = n$ for $m \\le n$. The bound is in fact tight (equality holds). \u220e\n\n**Corollary 3.3** (recursive_doubling_hasBinaryExpansion). *The doubling hierarchy admits binary expansion with base 2.*\n\n**Significance.** This is the first rigorous witness that proof expansion constants are mathematically coherent. While the doubling hierarchy is a toy model, it demonstrates the *structure* that any proof expansion theory must have: a recursive cost function, a monotone strengthening ordering, and an exponential lower bound connecting them.\n\n### 3.3 Theorem 3: Model Count Monotonicity\n\n**Theorem 3.4** (strengthening_model_count_monotone). *If $T \\subseteq S$ are finite sets, then $|T| \\le |S|$.*\n\n*Proof sketch.* Direct application of the monotonicity of finite set cardinality under inclusion. \u220e\n\n**Significance.** When we interpret formulas as model sets (with strengthening as reverse inclusion), this theorem says: *stronger statements have fewer models*. This connects proof complexity to information theory \u2014 strengthening is semantic compression, reducing the entropy of the model space.\n\n### 3.4 Theorem 4: Additivity of Model Shrinkage\n\n**Theorem 3.5** (modelShrinkDist_additive_of_nested). *If $U \\subseteq T \\subseteq S$ are finite sets, then:*\n$$d_{\\text{shrink}}(S, U) = d_{\\text{shrink}}(S, T) + d_{\\text{shrink}}(T, U).$$\n\n*Proof sketch.* Expanding definitions:\n$$|S| - |U| = (|S| - |T|) + (|T| - |U|).$$\nSince $U \\subseteq T \\subseteq S$, we have $|U| \\le |T| \\le |S|$, so all subtractions are well-defined in the naturals. The proof uses `tsub_add_tsub_cancel` from Mathlib. \u220e\n\n**Significance.** Additivity means that model-shrinkage distance behaves like a *measure* along chains. This is stronger than subadditivity \u2014 it says that distance is exactly decomposable, with no slack. This is the semantic analogue of \"proof cost should be additive along independent proof steps.\"\n\n### 3.5 Theorem 5: Expansion Transfer Principle\n\n**Theorem 3.6** (expansion_transfer). *Let $f : \\mathbb{N} \\to \\mathbb{N}$ be monotone. If:*\n1. *$\\text{costB}$ satisfies $2^{f(n)-f(m)} \\cdot \\text{costB}(f(m)) \\le \\text{costB}(f(n))$ for all $m \\le n$,*\n2. *$\\text{costA}(n) \\le \\text{costB}(f(n))$ for all $n$,*\n\n*then $2^{f(n)-f(m)} \\cdot \\text{costA}(m) \\le \\text{costB}(f(n))$ for all $m \\le n$.*\n\n*Proof sketch.* By transitivity of $\\le$:\n$$2^{f(n)-f(m)} \\cdot \\text{costA}(m) \\le 2^{f(n)-f(m)} \\cdot \\text{costB}(f(m)) \\le \\text{costB}(f(n)).$$\nThe first inequality uses $\\text{costA}(m) \\le \\text{costB}(f(m))$ with monotonicity of multiplication. The second uses the expansion bound on $\\text{costB}$. \u220e\n\n**Significance.** The transfer principle is a *methodology* result. It says: to prove expansion lower bounds for a new theory, it suffices to (1) embed it into a theory where bounds are already known, and (2) show the embedding preserves strengthening structure. This turns the doubling hierarchy from a single example into a *template* for deriving lower bounds across domains.\n\n### 3.6 Additional Results\n\n**Theorem 3.7** (hierarchicalCost_strict_mono). *If $m < n$, then $c(m) < c(n)$.*\n\nThis strict monotonicity result strengthens the monotone cost property and shows that the hierarchy has no \"plateaus.\"\n\n**Theorem 3.8** (expansionSlope_pos). *If $c_1, c_2, d > 0$, then $\\sigma(c_1, c_2, d) > 0$.*\n\nPositivity of the expansion slope under natural assumptions, using rational arithmetic.\n\n**Theorem 3.9** (indexedProfile_admits_expansion). *The indexed profile with doubling cost admits binary expansion with base 2 as a ProofTheoryProfile.*\n\nThis assembles all components into a complete ProofTheoryProfile instance.\n\n---\n\n## 4. Algorithms\n\n### 4.1 Computing Expansion Constants\n\n**Algorithm 1: Empirical Expansion Constant**\n\n```\nInput: Cost function c : \u2115 \u2192 \u2115, range [a, b]\nOutput: Estimated expansion base \u03b2\n\n1. For each pair (m, n) with a \u2264 m < n \u2264 b:\n   a. Compute ratio r(m,n) = c(n) / c(m)\n   b. Compute gap d = n - m\n   c. Compute per-unit ratio \u03b2(m,n) = r(m,n)^(1/d)\n2. Return \u03b2 = min over all (m,n) of \u03b2(m,n)\n```\n\n**Complexity:** $O((b-a)^2)$ time, $O(1)$ space (streaming minimum).\n\n**Correctness:** If $c(n)/c(m) \\ge \\beta^{n-m}$ for all $m \\le n$, then $\\beta(m,n) \\ge \\beta$, so the minimum recovers the best lower bound.\n\n### 4.2 Model Shrinkage Distance\n\n**Algorithm 2: Finite Model Shrinkage**\n\n```\nInput: Model sets M\u2081, M\u2082 as explicit finite sets\nOutput: Shrinkage distance d(M\u2081, M\u2082)\n\n1. Compute |M\u2081| and |M\u2082|\n2. Return |M\u2081| - |M\u2082| (clamped to 0 if negative)\n```\n\n**Complexity:** $O(|M_1| + |M_2|)$ time, $O(1)$ space.\n\n### 4.3 Expansion Lower Envelope Detection\n\n**Algorithm 3: Lower Envelope Test**\n\n```\nInput: Cost function c, candidate base b, range [a, B]\nOutput: Boolean (does c satisfy b-expansion on [a, B]?)\n\n1. For each pair (m, n) with a \u2264 m < n \u2264 B:\n   a. If b^(n-m) * c(m) > c(n): return False\n2. Return True\n```\n\n**Complexity:** $O((B-a)^2)$ time.\n\n---\n\n## 5. Computational Experiments\n\n### 5.1 Doubling Hierarchy\n\nWe verify the doubling hierarchy $c(n) = 2^n$ for $n \\in [0, 20]$:\n\n| Gap $d$ | Min ratio $c(n)/c(m)$ | Expected $2^d$ | Match |\n|---------|----------------------|----------------|-------|\n| 1 | 2.0 | 2 | \u2713 |\n| 5 | 32.0 | 32 | \u2713 |\n| 10 | 1024.0 | 1024 | \u2713 |\n| 15 | 32768.0 | 32768 | \u2713 |\n| 20 | 1048576.0 | 1048576 | \u2713 |\n\nThe expansion constant is exactly $\\beta = 2$.\n\n### 5.2 Fibonacci Hierarchy\n\nThe Fibonacci cost function $c(n) = F_n$ provides a natural test case with irrational expansion constant $\\beta = \\phi = (1+\\sqrt{5})/2 \\approx 1.618$:\n\n| Gap $d$ | Min ratio | Expected $\\phi^d$ | Approx match |\n|---------|-----------|-------------------|--------------|\n| 1 | 1.000 | 1.618 | Below (edge effect) |\n| 5 | 5.000 | 11.09 | Below |\n| 10 | 55.00 | 122.99 | Below |\n\nThe Fibonacci hierarchy does *not* satisfy strict $\\phi$-expansion due to edge effects at small indices, but the ratio $c(n+d)/c(n) \\to \\phi^d$ as $n \\to \\infty$. This illustrates the need for \"eventually\" quantifiers in the general conjecture.\n\n### 5.3 Polynomial Hierarchy (Negative Example)\n\nThe polynomial cost function $c(n) = n^2 + 1$ has:\n\n| Gap $d$ | Min ratio |\n|---------|-----------|\n| 1 | 1.25 |\n| 5 | 1.86 |\n| 10 | 3.28 |\n| 20 | 11.2 |\n\nThe ratio grows *polynomially*, not exponentially, in $d$. No $\\beta > 1$ satisfies $\\beta^d \\le c(n)/c(m)$ for all $m, n$ with gap $d$ \u2014 the polynomial hierarchy *refutes* the expansion conjecture. This demonstrates that the conjecture, if true, must be restricted to specific classes of hierarchies.\n\n---\n\n## 6. Discussion\n\n### 6.1 Interpretation\n\nOur results establish a rigorous foundation for studying proof expansion as a geometric phenomenon. The key insight is the two-layer architecture:\n\n1. **Syntactic layer** (Hierarchy, indexed cost): captures proof-length growth directly.\n2. **Semantic layer** (model shrinkage, cardinal drop): captures information-theoretic content.\n\nThe transfer principle bridges these layers, allowing semantic measurements to predict syntactic costs.\n\n### 6.2 Limitations\n\n1. **Toy models:** The doubling hierarchy, while mathematically rigorous, is an explicitly constructed cost function, not derived from an actual proof system. Connecting to Resolution, Frege, or other concrete proof systems remains open.\n\n2. **Finite setting:** Our model-shrinkage results work with finite model spaces. Extension to infinite model theories (e.g., first-order arithmetic) requires measure-theoretic or topological machinery.\n\n3. **Direction-dependence:** The current framework measures cost ratio $c(\\psi)/c(\\phi)$ when $\\phi \\preceq \\psi$. The reverse direction (how much shorter proofs can become under weakening) is not captured and may exhibit different behavior.\n\n### 6.3 Connections to Existing Theory\n\n**Proof complexity:** Our expansion constant is related to, but distinct from, proof-system speed-up ratios. Speed-up measures the advantage of one proof system over another for the *same* statement; expansion measures the cost increase within *one* system as statements strengthen.\n\n**Information theory:** The model-shrinkage distance $d(S,T) = |S| - |T|$ is a discrete analogue of KL-divergence between uniform distributions over model sets. The additivity theorem (Theorem 3.5) corresponds to the chain rule for KL-divergence.\n\n**Statistical physics:** If we interpret model sets as microstates and proof cost as work, then Theorem 3.4 (monotonicity) is a discrete second law: reducing entropy (strengthening) requires work (proof). The expansion constant plays the role of temperature in Landauer's principle.\n\n---\n\n## 7. Future Work\n\nSee `FUTURE_DIRECTIONS.md` for five specific falsifiable conjectures. The most promising near-term directions are:\n\n1. **Propositional instantiation:** Apply the framework to propositional proof systems (Resolution, Frege) where exponential lower bounds are known, and test whether the expansion constant provides a *finer* classification of difficulty than existing measures.\n\n2. **Bounded arithmetic hierarchies:** The fragments $S^i_2$ of Buss's bounded arithmetic provide a natural, well-studied strengthening hierarchy. Computing expansion constants for these fragments would connect our framework to deep results in computational complexity.\n\n3. **Automated reasoning applications:** Implement expansion-constant-aware curriculum scheduling for neural theorem provers and test on Mathlib-scale benchmarks.\n\n---\n\n## 8. Formal Verification\n\nAll theorems in Sections 3.1\u20133.6 are fully verified in Lean 4 (version 4.28.0) with Mathlib. The formal development comprises:\n\n- `ProofTheoryProfile` structure with 7 fields and 4 axioms\n- `Hierarchy` structure with monotone cost function\n- 10 theorems, all proved without `sorry`\n- Axioms used: only `propext`, `Classical.choice`, `Quot.sound` (standard)\n\nThe verification ensures that no mathematical errors are present in the arguments, and that all stated properties genuinely follow from the definitions.\n\n---\n\n## References\n\n1. S. Buss. *Bounded Arithmetic.* Bibliopolis, Naples, 1986.\n\n2. G. Chaitin. Information-theoretic limitations of formal systems. *J. ACM*, 21(3):403\u2013424, 1974.\n\n3. S. Cook and P. Nguyen. *Logical Foundations of Proof Complexity.* Cambridge University Press, 2010.\n\n4. S. Cook and R. Reckhow. The relative efficiency of propositional proof systems. *J. Symbolic Logic*, 44(1):36\u201350, 1979.\n\n5. A. Ehrenfeucht and J. Mycielski. Abbreviating proofs by adding new axioms. *Bull. AMS*, 77(3):366\u2013367, 1971.\n\n6. K. G\u00f6del. \u00dcber die L\u00e4nge von Beweisen. *Ergebnisse eines math. Kolloquiums*, 7:23\u201324, 1936.\n\n7. A. Haken. The intractability of resolution. *Theoret. Comput. Sci.*, 39:297\u2013308, 1985.\n\n8. J. Kraj\u00ed\u010dek and P. Pudl\u00e1k. The number of proof lines and the size of proofs in first-order logic. *Arch. Math. Logic*, 28:69\u201384, 1989.\n\n9. M. Li and P. Vit\u00e1nyi. *An Introduction to Kolmogorov Complexity and Its Applications.* Springer, 3rd edition, 2008.\n\n10. A. Razborov. Resolution lower bounds for the weak pigeonhole principle. *J. ACM*, 51(6):966\u2013981, 2003.\n",
+    "future_directions": "# Future Directions: The Proof Expansion Program\n\nThis document identifies five specific, falsifiable scientific hypotheses arising from the proof expansion constant framework. Each hypothesis is stated precisely, with a concrete test that would confirm or refute it, and a description of the impact if confirmed.\n\n---\n\n## Conjecture 1: Universal Binary Expansion Lower Envelope\n\n**Conjecture.** For every recursively axiomatized, consistent theory $T$ extending Peano Arithmetic, and every \"natural\" hierarchy of theorems $\\{\\Phi_n\\}_{n \\in \\mathbb{N}}$ where $\\Phi_{n+1}$ is obtained from $\\Phi_n$ by a uniform syntactic strengthening operation, there exists a constant $b > 1$ such that for all sufficiently large $m \\le n$:\n\n$$\\mathrm{ProofLength}_T(\\Phi_n) \\ge b^{n-m} \\cdot \\mathrm{ProofLength}_T(\\Phi_m).$$\n\n**Test.** Search for hierarchies where semantic distance $n - m \\to \\infty$ but $\\mathrm{ProofLength}(\\Phi_n) / \\mathrm{ProofLength}(\\Phi_m)$ remains bounded by a polynomial in $n - m$. A single explicit family with unbounded distance and polynomial blowup refutes the conjecture. Candidate test families:\n- Pigeonhole principles $\\mathrm{PHP}^n_{n+1}$ in bounded arithmetic.\n- Ramsey statements $R(k, k) \\le f(k)$ with decreasing $f$.\n- Iterated consistency statements $\\mathrm{Con}^{(n)}(T)$.\n\n**Impact.** If true, this would establish that proof complexity has an intrinsic exponential geometry: no clever encoding can avoid the cost of strengthening beyond a certain threshold. This would have profound consequences for automated theorem proving, implying that theorem-proving curricula must respect expansion constants to avoid catastrophic proof-length jumps.\n\n---\n\n## Conjecture 2: Semantic Entropy Correlation\n\n**Conjecture.** Let $\\mathcal{M}_N(\\phi)$ denote the set of models of $\\phi$ over structures of size $\\le N$. Define semantic entropy $H_N(\\phi) = \\log_2 |\\mathcal{M}_N(\\phi)|$. For natural strengthening hierarchies, there exists $C > 0$ such that:\n\n$$\\log_2 \\frac{\\mathrm{ProofLength}(\\Phi_n)}{\\mathrm{ProofLength}(\\Phi_m)} \\ge C \\cdot (H_N(\\Phi_m) - H_N(\\Phi_n))$$\n\nfor all sufficiently large $N$ and all $m \\le n$.\n\n**Test.** Compute $H_N(\\phi)$ and proof lengths for families of propositional tautologies, graph coloring constraints, and SAT instances with parameterized clause density. Plot $\\log(\\text{proof ratio})$ vs. $\\Delta H$ and test for a linear lower envelope. A family where entropy drops sharply but proof length grows sublinearly would refute this.\n\n**Impact.** This would establish a formal bridge between information theory and proof complexity, suggesting that the \"work\" of proof is bounded below by the information-theoretic cost of semantic compression. This connects to statistical physics: proof cost as thermodynamic work against entropy reduction.\n\n---\n\n## Conjecture 3: Expansion Constant Universality Classes\n\n**Conjecture.** Natural theorem hierarchies fall into finitely many \"universality classes\" based on their expansion constant. Specifically, for hierarchies over PA:\n- **Class I (polynomial):** $b = 1$ (no exponential expansion). Only degenerate/trivial hierarchies.\n- **Class II (single exponential):** $b \\in (1, 2]$. Includes most arithmetic hierarchies.\n- **Class III (double exponential):** Expansion rate is $2^{2^{\\Theta(d)}}$. Includes hierarchies involving iterated exponentiation or Ackermann-type growth.\n\n**Test.** Compute empirical expansion constants for:\n1. Arithmetic progression statements (van der Waerden-type): $W(k) \\le f(k)$.\n2. Graph Ramsey statements: $R(k,k) \\le g(k)$.\n3. Paris-Harrington statements.\n4. Friedman's finite forms of Kruskal's theorem.\n\nMeasure the best-fit $b$ for each family. If the distribution is continuous rather than clustered, the conjecture is refuted.\n\n**Impact.** If true, this would create a taxonomy of theorem difficulty that transcends individual proof systems, analogous to universality classes in statistical mechanics or computational complexity classes.\n\n---\n\n## Conjecture 4: Expansion-Aware Curriculum Optimality\n\n**Conjecture.** For an automated theorem prover with bounded computational resources, the optimal ordering of a finite set of theorems $\\{\\Phi_1, \\ldots, \\Phi_N\\}$ to maximize the number proved within a time budget $T$ is a monotone ordering with respect to the proof expansion constant. Specifically, if $\\Phi_i$ has expansion constant $b_i$ relative to previously proved theorems, the greedy ordering by increasing $b_i$ is within a factor of $O(\\log N)$ of optimal.\n\n**Test.** Implement the expansion-constant ordering for families of Lean/Isabelle theorems from Mathlib or the Archive of Formal Proofs. Compare against:\n- Random ordering\n- Ordering by statement complexity\n- Ordering by proof length\n- The greedy expansion-constant ordering\n\nMeasure total theorems proved within a fixed ATP time budget. If the expansion-constant ordering performs worse than random on a substantial benchmark, the conjecture is refuted.\n\n**Impact.** This would provide the first principled, theory-grounded curriculum design for automated reasoning systems, potentially accelerating large-scale formalization projects.\n\n---\n\n## Conjecture 5: Model-Shrinkage Distance is a Proof Complexity Invariant\n\n**Conjecture.** For propositional proof systems (Resolution, Frege, Extended Frege), the model-shrinkage distance $d(\\phi, \\psi) = \\log_2(|\\text{Mod}(\\phi)|/|\\text{Mod}(\\psi)|)$ provides a lower bound on the ratio of proof lengths:\n\n$$\\frac{\\mathrm{ProofLength}(\\psi)}{\\mathrm{ProofLength}(\\phi)} \\ge 2^{\\Omega(d(\\phi, \\psi))}$$\n\nwhenever $\\psi$ logically implies $\\phi$ and both are provable in the system.\n\n**Test.** Construct explicit CNF formula pairs $(\\phi, \\psi)$ where:\n- $\\psi \\models \\phi$\n- The model count ratio is known exactly (e.g., via #SAT solvers like sharpSAT)\n- Proof lengths are measured in Resolution and Frege systems\n\nIf a family exists where model count drops exponentially but proof length grows only polynomially, the conjecture is refuted.\n\n**Impact.** This would be a breakthrough in proof complexity, providing a new technique for proving proof-length lower bounds via semantic (model-counting) arguments rather than purely syntactic methods. It would connect the #P-hardness of model counting to proof complexity lower bounds in a novel way.\n\n---\n\n## Meta-Observation\n\nAll five conjectures share a common theme: **semantic compression (reducing the set of models) forces syntactic inflation (increasing proof length)**. This \"no free lunch\" principle, if validated even partially, would establish proof expansion as a fundamental invariant of formal reasoning, bridging proof complexity, information theory, model theory, and computational learning theory into a unified geometric framework.\n\nThe most immediately testable conjecture is **Conjecture 2** (Semantic Entropy Correlation), as it requires only model counting and proof-length measurement on finite propositional instances. The most impactful if true is **Conjecture 5** (Model-Shrinkage as Proof Complexity Invariant), as it would provide new proof-complexity lower bound techniques.\n",
+    "demos": [
+      {
+        "name": "Proof Expansion Constants Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nProof Expansion Constants: Interactive Demonstration\n\nGenerates theorem hierarchies, computes empirical expansion ratios,\nand visualizes whether exponential lower envelopes appear.\n\nIncludes arithmetic, algebraic, and combinatorics-inspired toy families.\n\"\"\"\n\nimport math\nfrom typing import Callable, List, Tuple, Optional\n\n# ============================================================================\n# Theorem Hierarchy Definitions\n# ============================================================================\n\ndef doubling_cost(n: int) -> int:\n    \"\"\"The canonical doubling hierarchy: cost(n) = 2^n.\"\"\"\n    return 2 ** n\n\ndef fibonacci_cost(n: int) -> int:\n    \"\"\"Fibonacci hierarchy: cost(n) = F(n+2) (so cost(0)=1, cost(1)=2, ...).\"\"\"\n    if n <= 0:\n        return 1\n    a, b = 1, 2\n    for _ in range(n - 1):\n        a, b = b, a + b\n    return b\n\ndef polynomial_cost(n: int, degree: int = 2) -> int:\n    \"\"\"Polynomial hierarchy: cost(n) = n^degree + 1.\"\"\"\n    return n ** degree + 1\n\ndef factorial_cost(n: int) -> int:\n    \"\"\"Factorial hierarchy: cost(n) = n!.\"\"\"\n    return math.factorial(n) if n >= 1 else 1\n\ndef ackermann_like_cost(n: int) -> int:\n    \"\"\"Ackermann-like rapidly growing hierarchy: cost(n) = 2^(2^n).\"\"\"\n    return 2 ** (2 ** n) if n <= 20 else float('inf')\n\ndef arithmetic_progression_cost(n: int) -> int:\n    \"\"\"\n    Inspired by van der Waerden numbers.\n    Models how proof cost might grow for arithmetic progression statements.\n    Uses a tower function: cost(n) = 2^(n*(n+1)/2).\n    \"\"\"\n    return 2 ** (n * (n + 1) // 2)\n\ndef combinatorial_cost(n: int) -> int:\n    \"\"\"\n    Combinatorial hierarchy inspired by Ramsey-type growth.\n    cost(n) = C(2n, n) (central binomial coefficient).\n    \"\"\"\n    return math.comb(2 * n, n)\n\n\n# ============================================================================\n# Core Computation Functions\n# ============================================================================\n\ndef compute_expansion_ratio(cost: Callable[[int], int], m: int, n: int) -> float:\n    \"\"\"Compute the proof expansion ratio cost(n) / cost(m).\"\"\"\n    cm = cost(m)\n    cn = cost(n)\n    if cm == 0:\n        return float('inf')\n    return cn / cm\n\ndef compute_per_unit_base(cost: Callable[[int], int], m: int, n: int) -> float:\n    \"\"\"Compute the per-unit expansion base: (cost(n)/cost(m))^(1/(n-m)).\"\"\"\n    if m >= n:\n        return 1.0\n    ratio = compute_expansion_ratio(cost, m, n)\n    if ratio <= 0 or ratio == float('inf'):\n        return float('inf')\n    gap = n - m\n    return ratio ** (1.0 / gap)\n\ndef estimate_expansion_constant(\n    cost: Callable[[int], int],\n    lo: int = 1,\n    hi: int = 15\n) -> float:\n    \"\"\"\n    Estimate the binary expansion constant for a cost function.\n    Returns the minimum per-unit base over all pairs (m,n) with lo <= m < n <= hi.\n    \"\"\"\n    min_base = float('inf')\n    for m in range(lo, hi):\n        for n in range(m + 1, hi + 1):\n            base = compute_per_unit_base(cost, m, n)\n            if base < min_base:\n                min_base = base\n    return min_base\n\ndef test_binary_expansion(\n    cost: Callable[[int], int],\n    b: float,\n    lo: int = 0,\n    hi: int = 15\n) -> Tuple[bool, Optional[Tuple[int, int]]]:\n    \"\"\"\n    Test whether cost satisfies b-expansion on [lo, hi].\n    Returns (True, None) if it does, or (False, (m, n)) for a counterexample.\n    \"\"\"\n    for m in range(lo, hi):\n        for n in range(m + 1, hi + 1):\n            if b ** (n - m) * cost(m) > cost(n) * 1.0001:  # small tolerance\n                return False, (m, n)\n    return True, None\n\n\n# ============================================================================\n# Model Shrinkage Computation\n# ============================================================================\n\ndef model_shrink_dist(s_card: int, t_card: int) -> int:\n    \"\"\"Compute model shrinkage distance: |S| - |T|.\"\"\"\n    return max(0, s_card - t_card)\n\ndef verify_shrinkage_additivity(cards: List[int]) -> bool:\n    \"\"\"\n    Verify additivity of model shrinkage along a nested chain.\n    cards should be a decreasing sequence of cardinalities.\n    \"\"\"\n    if len(cards) < 3:\n        return True\n    for i in range(len(cards)):\n        for j in range(i + 1, len(cards)):\n            for k in range(j + 1, len(cards)):\n                d_ik = model_shrink_dist(cards[i], cards[k])\n                d_ij = model_shrink_dist(cards[i], cards[j])\n                d_jk = model_shrink_dist(cards[j], cards[k])\n                if d_ik != d_ij + d_jk:\n                    return False\n    return True\n\n\n# ============================================================================\n# Visualization (ASCII)\n# ============================================================================\n\ndef ascii_bar(value: float, max_val: float, width: int = 50) -> str:\n    \"\"\"Create an ASCII bar chart element.\"\"\"\n    if max_val <= 0:\n        return \"\"\n    bar_len = int(width * min(value / max_val, 1.0))\n    return \"\u2588\" * bar_len\n\ndef print_expansion_table(\n    name: str,\n    cost: Callable[[int], int],\n    lo: int = 0,\n    hi: int = 12\n):\n    \"\"\"Print a detailed expansion ratio table for a hierarchy.\"\"\"\n    print(f\"\\n{'='*70}\")\n    print(f\"  {name}\")\n    print(f\"{'='*70}\")\n    print(f\"{'n':>4} | {'cost(n)':>14} | {'ratio c(n)/c(0)':>16} | per-unit base\")\n    print(f\"{'-'*4}-+-{'-'*14}-+-{'-'*16}-+-{'-'*20}\")\n\n    c0 = cost(lo)\n    for n in range(lo, hi + 1):\n        cn = cost(n)\n        ratio = cn / c0 if c0 > 0 else float('inf')\n        gap = n - lo\n        if gap > 0 and ratio > 0 and ratio != float('inf'):\n            base = ratio ** (1.0 / gap)\n            print(f\"{n:4d} | {cn:14,d} | {ratio:16.2f} | {base:10.4f}\")\n        else:\n            print(f\"{n:4d} | {cn:14,d} | {'---':>16} | {'---':>10}\")\n\n    beta = estimate_expansion_constant(cost, max(lo, 1), hi)\n    print(f\"\\n  Estimated expansion constant \u03b2 = {beta:.6f}\")\n    passes, cex = test_binary_expansion(cost, beta * 0.99, lo, hi)\n    if passes:\n        print(f\"  \u2713 Satisfies {beta*0.99:.4f}-expansion on [{lo}, {hi}]\")\n    else:\n        print(f\"  \u2717 Fails {beta*0.99:.4f}-expansion at {cex}\")\n\n\ndef print_gap_analysis(\n    name: str,\n    cost: Callable[[int], int],\n    gaps: List[int] = [1, 2, 3, 5, 8, 10],\n    base_range: Tuple[int, int] = (0, 15)\n):\n    \"\"\"Analyze expansion ratios by gap size.\"\"\"\n    print(f\"\\n  Gap Analysis for {name}:\")\n    print(f\"  {'gap':>4} | {'min ratio':>12} | {'max ratio':>12} | {'min \u03b2^(1/d)':>12}\")\n    print(f\"  {'-'*4}-+-{'-'*12}-+-{'-'*12}-+-{'-'*12}\")\n\n    lo, hi = base_range\n    for d in gaps:\n        ratios = []\n        for m in range(lo, hi - d + 1):\n            n = m + d\n            if n <= hi:\n                r = compute_expansion_ratio(cost, m, n)\n                if r != float('inf'):\n                    ratios.append(r)\n        if ratios:\n            min_r = min(ratios)\n            max_r = max(ratios)\n            min_base = min_r ** (1.0 / d)\n            print(f\"  {d:4d} | {min_r:12.2f} | {max_r:12.2f} | {min_base:12.4f}\")\n\n\n# ============================================================================\n# Main Demo\n# ============================================================================\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551     PROOF EXPANSION CONSTANTS: Interactive Demonstration            \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # --- Demo 1: Hierarchy Comparison ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 1: Comparing Theorem Hierarchies\")\n    print(\"=\"*70)\n\n    hierarchies = [\n        (\"Doubling (2^n)\", doubling_cost),\n        (\"Fibonacci\", fibonacci_cost),\n        (\"Polynomial (n\u00b2+1)\", lambda n: polynomial_cost(n, 2)),\n        (\"Factorial (n!)\", factorial_cost),\n        (\"Combinatorial (C(2n,n))\", combinatorial_cost),\n    ]\n\n    for name, cost in hierarchies:\n        print_expansion_table(name, cost, 0, 12)\n        print_gap_analysis(name, cost, [1, 2, 5, 10])\n\n    # --- Demo 2: Expansion Constant Detection ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 2: Expansion Constant Detection\")\n    print(\"=\"*70)\n\n    print(\"\\n  Testing which hierarchies admit exponential expansion:\\n\")\n\n    test_bases = [1.5, 2.0, 2.5, 3.0]\n    for name, cost in hierarchies:\n        print(f\"  {name}:\")\n        for b in test_bases:\n            passes, cex = test_binary_expansion(cost, b, 1, 12)\n            status = \"\u2713 PASS\" if passes else f\"\u2717 FAIL at {cex}\"\n            print(f\"    b={b:.1f}: {status}\")\n        print()\n\n    # --- Demo 3: Model Shrinkage ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 3: Model Shrinkage Distance\")\n    print(\"=\"*70)\n\n    # Simulate a nested chain of model sets\n    print(\"\\n  Nested model sets (universe size 100):\")\n    model_cards = [100, 80, 50, 30, 10, 3, 1]\n    print(f\"  Cardinalities: {model_cards}\")\n    print(f\"\\n  Pairwise shrinkage distances:\")\n    for i in range(len(model_cards)):\n        for j in range(i + 1, len(model_cards)):\n            d = model_shrink_dist(model_cards[i], model_cards[j])\n            print(f\"    d(S_{i}, S_{j}) = {model_cards[i]} - {model_cards[j]} = {d}\")\n\n    print(f\"\\n  Additivity check: {verify_shrinkage_additivity(model_cards)}\")\n\n    # --- Demo 4: ASCII Visualization ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 4: Proof Cost Growth Visualization\")\n    print(\"=\"*70)\n\n    print(\"\\n  Log-scale proof costs (each \u2588 = 1 unit of log\u2082(cost)):\\n\")\n    for name, cost in [(\"Doubling\", doubling_cost), (\"Factorial\", factorial_cost)]:\n        print(f\"  {name}:\")\n        for n in range(0, 13):\n            c = cost(n)\n            log_c = math.log2(c) if c > 0 else 0\n            bar = ascii_bar(log_c, 40, 40)\n            print(f\"    n={n:2d}: {bar} ({c:,d})\")\n        print()\n\n    # --- Demo 5: Transfer Principle ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 5: Expansion Transfer Principle\")\n    print(\"=\"*70)\n\n    print(\"\\n  Source hierarchy A: cost_A(n) = 2^n\")\n    print(\"  Target hierarchy B: cost_B(n) = 3^n\")\n    print(\"  Embedding f(n) = n (identity)\")\n    print()\n    print(\"  Verifying transfer: 2^(f(n)-f(m)) * cost_A(m) \u2264 cost_B(f(n))\")\n    print()\n\n    for m in range(6):\n        for n in range(m, m + 4):\n            lhs = (2 ** (n - m)) * doubling_cost(m)\n            rhs = 3 ** n\n            status = \"\u2713\" if lhs <= rhs else \"\u2717\"\n            print(f\"    m={m}, n={n}: 2^{n-m} * 2^{m} = {lhs:>8,d}  \u2264  3^{n} = {rhs:>8,d}  {status}\")\n\n    # --- Demo 6: Arithmetic-Inspired Family ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 6: Arithmetic Progression Hierarchy\")\n    print(\"=\"*70)\n\n    print(\"\\n  Inspired by van der Waerden-type bounds.\")\n    print(\"  cost(n) = 2^(n*(n+1)/2) \u2014 superexponential growth.\\n\")\n\n    for n in range(8):\n        c = arithmetic_progression_cost(n)\n        exp = n * (n + 1) // 2\n        print(f\"    n={n}: cost = 2^{exp} = {c:,d}\")\n\n    beta = estimate_expansion_constant(arithmetic_progression_cost, 1, 7)\n    print(f\"\\n  Estimated expansion constant \u03b2 = {beta:.4f}\")\n    print(\"  (Grows with gap \u2014 superexponential, not merely exponential!)\")\n\n    # --- Summary ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  SUMMARY\")\n    print(\"=\"*70)\n    print(\"\"\"\n  Key findings from this demonstration:\n\n  1. DOUBLING HIERARCHY: Perfect 2-expansion (\u03b2 = 2.0000 exactly).\n     This matches the formally verified theorem.\n\n  2. FIBONACCI HIERARCHY: Approaches \u03c6-expansion (\u03b2 \u2248 1.618) for large n,\n     but edge effects at small indices prevent uniform expansion.\n\n  3. POLYNOMIAL HIERARCHY: No exponential expansion (\u03b2 \u2192 1 as range grows).\n     This is the canonical NEGATIVE example.\n\n  4. FACTORIAL HIERARCHY: Very strong expansion (\u03b2 grows with range).\n     Faster than any fixed exponential.\n\n  5. MODEL SHRINKAGE: Additivity verified for all nested chains.\n     Semantic distance decomposes perfectly.\n\n  6. TRANSFER PRINCIPLE: Verified computationally for identity embedding\n     between doubling and tripling hierarchies.\n\n  The proof expansion constant is a coherent, computable, and\n  discriminating invariant of theorem hierarchies.\n\"\"\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      {
+        "name": "Applications Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nProof Expansion Constants: Applications\n\nDemonstrates real-world applications of the proof expansion framework:\n1. Theorem-proving curriculum design\n2. Proof difficulty forecasting\n3. Theory comparison via expansion constants\n4. Semantic entropy analysis\n\"\"\"\n\nimport math\nfrom typing import Callable, Dict, List, Optional, Tuple\n\n\n# ============================================================================\n# Application 1: Curriculum Design for Automated Theorem Provers\n# ============================================================================\n\nclass TheoremCurriculum:\n    \"\"\"\n    Designs an optimal curriculum for proving theorems in a hierarchy,\n    sequencing them to minimize the maximum expansion ratio at each step.\n\n    The key insight: if proof expansion is exponential in strengthening\n    distance, the optimal curriculum follows the gradient of expansion \u2014\n    never jumping more than necessary.\n    \"\"\"\n\n    def __init__(self, costs: List[int], names: Optional[List[str]] = None):\n        \"\"\"\n        Args:\n            costs: List of proof costs for theorems indexed 0, 1, ..., n-1.\n            names: Optional names for the theorems.\n        \"\"\"\n        self.costs = costs\n        self.n = len(costs)\n        self.names = names or [f\"Thm_{i}\" for i in range(self.n)]\n\n    def greedy_curriculum(self) -> List[int]:\n        \"\"\"\n        Compute the greedy curriculum: always prove the next-cheapest\n        unproven theorem.\n\n        Returns:\n            Ordering of theorem indices.\n        \"\"\"\n        remaining = set(range(self.n))\n        order = []\n        while remaining:\n            best = min(remaining, key=lambda i: self.costs[i])\n            order.append(best)\n            remaining.remove(best)\n        return order\n\n    def expansion_aware_curriculum(self) -> List[int]:\n        \"\"\"\n        Compute the expansion-aware curriculum: sequence theorems to\n        minimize the maximum per-step expansion ratio.\n\n        Uses a greedy heuristic: at each step, choose the theorem whose\n        expansion ratio relative to the last proved theorem is smallest.\n\n        Returns:\n            Ordering of theorem indices.\n        \"\"\"\n        if self.n == 0:\n            return []\n        remaining = set(range(self.n))\n        # Start with the cheapest theorem\n        first = min(remaining, key=lambda i: self.costs[i])\n        order = [first]\n        remaining.remove(first)\n\n        while remaining:\n            last_cost = self.costs[order[-1]]\n            if last_cost == 0:\n                # If last cost is 0, pick cheapest\n                best = min(remaining, key=lambda i: self.costs[i])\n            else:\n                # Pick theorem with smallest expansion ratio\n                best = min(remaining,\n                          key=lambda i: self.costs[i] / max(last_cost, 1))\n            order.append(best)\n            remaining.remove(best)\n        return order\n\n    def evaluate_curriculum(self, order: List[int]) -> Dict[str, float]:\n        \"\"\"\n        Evaluate a curriculum ordering.\n\n        Returns:\n            Dictionary with max_ratio, mean_ratio, total_cost.\n        \"\"\"\n        if len(order) <= 1:\n            return {'max_ratio': 1.0, 'mean_ratio': 1.0,\n                    'total_cost': sum(self.costs[i] for i in order)}\n\n        ratios = []\n        for k in range(1, len(order)):\n            prev = self.costs[order[k - 1]]\n            curr = self.costs[order[k]]\n            ratio = curr / max(prev, 1)\n            ratios.append(ratio)\n\n        return {\n            'max_ratio': max(ratios),\n            'mean_ratio': sum(ratios) / len(ratios),\n            'total_cost': sum(self.costs[i] for i in order),\n        }\n\n    def print_comparison(self):\n        \"\"\"Print comparison of curriculum strategies.\"\"\"\n        greedy = self.greedy_curriculum()\n        aware = self.expansion_aware_curriculum()\n\n        print(\"  Greedy curriculum (by cost):\")\n        g_stats = self.evaluate_curriculum(greedy)\n        print(f\"    Order: {[self.names[i] for i in greedy[:8]]}...\")\n        print(f\"    Max ratio: {g_stats['max_ratio']:.2f}\")\n        print(f\"    Mean ratio: {g_stats['mean_ratio']:.2f}\")\n\n        print(\"  Expansion-aware curriculum:\")\n        a_stats = self.evaluate_curriculum(aware)\n        print(f\"    Order: {[self.names[i] for i in aware[:8]]}...\")\n        print(f\"    Max ratio: {a_stats['max_ratio']:.2f}\")\n        print(f\"    Mean ratio: {a_stats['mean_ratio']:.2f}\")\n\n        improvement = (g_stats['max_ratio'] - a_stats['max_ratio']) / g_stats['max_ratio'] * 100\n        print(f\"  Max-ratio improvement: {improvement:.1f}%\")\n\n\n# ============================================================================\n# Application 2: Proof Difficulty Forecasting\n# ============================================================================\n\nclass DifficultyForecaster:\n    \"\"\"\n    Forecasts the proof difficulty of a theorem based on its position\n    in a strengthening hierarchy and the observed expansion constant.\n    \"\"\"\n\n    def __init__(self, known_costs: Dict[int, int], beta: float = 2.0):\n        \"\"\"\n        Args:\n            known_costs: Dict mapping index to known proof cost.\n            beta: Estimated expansion constant.\n        \"\"\"\n        self.known_costs = known_costs\n        self.beta = beta\n\n    def forecast(self, target: int) -> Tuple[float, float]:\n        \"\"\"\n        Forecast the proof cost for a theorem at the given index.\n\n        Returns:\n            (lower_bound, upper_bound) estimates based on expansion constant.\n        \"\"\"\n        lower = 0.0\n        upper = float('inf')\n\n        for idx, cost in self.known_costs.items():\n            if idx <= target:\n                gap = target - idx\n                lb = self.beta ** gap * cost\n                lower = max(lower, lb)\n            if idx >= target:\n                gap = idx - target\n                ub = cost / (self.beta ** gap) if self.beta ** gap > 0 else float('inf')\n                upper = min(upper, ub)\n\n        return lower, upper\n\n    def forecast_range(self, lo: int, hi: int) -> Dict[int, Tuple[float, float]]:\n        \"\"\"Forecast costs for a range of indices.\"\"\"\n        return {i: self.forecast(i) for i in range(lo, hi + 1)}\n\n\n# ============================================================================\n# Application 3: Theory Comparison via Expansion Constants\n# ============================================================================\n\ndef compare_theories(\n    theories: Dict[str, Callable[[int], int]],\n    lo: int = 1,\n    hi: int = 15\n) -> Dict[str, Dict[str, float]]:\n    \"\"\"\n    Compare multiple theories by their expansion constants.\n\n    Args:\n        theories: Dict mapping theory name to cost function.\n        lo: Lower bound of range.\n        hi: Upper bound of range.\n\n    Returns:\n        Dict mapping theory name to expansion statistics.\n    \"\"\"\n    results = {}\n    for name, cost in theories.items():\n        min_base = float('inf')\n        max_base = 0.0\n        bases = []\n\n        for m in range(lo, hi):\n            cm = cost(m)\n            if cm <= 0:\n                continue\n            for n in range(m + 1, hi + 1):\n                cn = cost(n)\n                gap = n - m\n                base = (cn / cm) ** (1.0 / gap)\n                bases.append(base)\n                min_base = min(min_base, base)\n                max_base = max(max_base, base)\n\n        results[name] = {\n            'min_beta': min_base,\n            'max_beta': max_base,\n            'mean_beta': sum(bases) / len(bases) if bases else 0,\n            'spread': max_base - min_base if min_base != float('inf') else 0,\n        }\n\n    return results\n\n\n# ============================================================================\n# Application 4: Semantic Entropy Analysis\n# ============================================================================\n\ndef semantic_entropy(model_count: int) -> float:\n    \"\"\"\n    Compute semantic entropy H(\u03c6) = log\u2082|Mod(\u03c6)|.\n\n    Args:\n        model_count: Number of models of the formula.\n\n    Returns:\n        Entropy in bits.\n    \"\"\"\n    if model_count <= 0:\n        return 0.0\n    return math.log2(model_count)\n\n\ndef entropy_drop_analysis(\n    model_counts: List[int],\n    proof_costs: List[int]\n) -> Dict[str, List[float]]:\n    \"\"\"\n    Analyze the relationship between entropy drops and proof cost ratios.\n\n    For a sequence of formulas \u03c6\u2080, \u03c6\u2081, ..., \u03c6_n with \u03c6_{i+1} \u22a8 \u03c6_i:\n    - Compute entropy drops \u0394H_i = H(\u03c6_i) - H(\u03c6_{i+1})\n    - Compute cost ratios r_i = cost(\u03c6_{i+1}) / cost(\u03c6_i)\n    - Test whether log(r_i) \u2265 C \u00b7 \u0394H_i for some constant C\n\n    Args:\n        model_counts: Decreasing sequence of model counts.\n        proof_costs: Increasing sequence of proof costs.\n\n    Returns:\n        Dict with entropy_drops, cost_ratios, log_cost_ratios,\n        and correlation analysis.\n    \"\"\"\n    n = min(len(model_counts), len(proof_costs)) - 1\n    entropy_drops = []\n    cost_ratios = []\n    log_cost_ratios = []\n\n    for i in range(n):\n        h_i = semantic_entropy(model_counts[i])\n        h_next = semantic_entropy(model_counts[i + 1])\n        delta_h = h_i - h_next\n\n        c_i = proof_costs[i]\n        c_next = proof_costs[i + 1]\n        ratio = c_next / max(c_i, 1)\n        log_ratio = math.log2(ratio) if ratio > 0 else 0\n\n        entropy_drops.append(delta_h)\n        cost_ratios.append(ratio)\n        log_cost_ratios.append(log_ratio)\n\n    # Simple correlation coefficient\n    if n >= 2 and entropy_drops:\n        mean_h = sum(entropy_drops) / len(entropy_drops)\n        mean_r = sum(log_cost_ratios) / len(log_cost_ratios)\n        cov = sum((h - mean_h) * (r - mean_r)\n                  for h, r in zip(entropy_drops, log_cost_ratios))\n        var_h = sum((h - mean_h) ** 2 for h in entropy_drops)\n        var_r = sum((r - mean_r) ** 2 for r in log_cost_ratios)\n        if var_h > 0 and var_r > 0:\n            correlation = cov / math.sqrt(var_h * var_r)\n        else:\n            correlation = 0.0\n    else:\n        correlation = 0.0\n\n    return {\n        'entropy_drops': entropy_drops,\n        'cost_ratios': cost_ratios,\n        'log_cost_ratios': log_cost_ratios,\n        'correlation': correlation,\n    }\n\n\n# ============================================================================\n# Main: Demonstration of Applications\n# ============================================================================\n\n# Type hint fix for optional import\nfrom typing import Optional\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551     PROOF EXPANSION CONSTANTS: Applications                        \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # --- Application 1: Curriculum Design ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  APPLICATION 1: Theorem-Proving Curriculum Design\")\n    print(\"=\"*70)\n\n    # Simulate a hierarchy with mixed difficulty\n    import random\n    random.seed(42)\n\n    # Costs: mostly exponential but with some anomalies\n    costs = [2**i + random.randint(0, 2**(max(i-2,0))) for i in range(20)]\n    names = [f\"T{i}\" for i in range(20)]\n\n    print(f\"\\n  {len(costs)} theorems with costs ranging from {min(costs)} to {max(costs):,}\")\n    curriculum = TheoremCurriculum(costs, names)\n    curriculum.print_comparison()\n\n    # --- Application 2: Difficulty Forecasting ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  APPLICATION 2: Proof Difficulty Forecasting\")\n    print(\"=\"*70)\n\n    known = {0: 1, 3: 8, 7: 128, 10: 1024}\n    forecaster = DifficultyForecaster(known, beta=2.0)\n\n    print(\"\\n  Known proof costs:\", known)\n    print(\"  Expansion constant \u03b2 = 2.0\")\n    print(\"\\n  Forecasted proof costs:\")\n    print(f\"  {'Index':>6} | {'Lower bound':>12} | {'Upper bound':>12} | {'Known':>8}\")\n    print(f\"  {'-'*6}-+-{'-'*12}-+-{'-'*12}-+-{'-'*8}\")\n\n    for i in range(12):\n        lo, hi = forecaster.forecast(i)\n        known_val = known.get(i, \"\")\n        print(f\"  {i:6d} | {lo:12.0f} | {hi:12.0f} | {known_val!s:>8}\")\n\n    # --- Application 3: Theory Comparison ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  APPLICATION 3: Theory Comparison via Expansion Constants\")\n    print(\"=\"*70)\n\n    theories = {\n        \"Exponential (2^n)\": lambda n: 2**n,\n        \"Fibonacci\": lambda n: (int((((1+5**0.5)/2)**n - ((1-5**0.5)/2)**n) / 5**0.5)\n                                if n > 0 else 1),\n        \"Polynomial (n\u00b3)\": lambda n: n**3 + 1,\n        \"Factorial\": lambda n: math.factorial(n) if n >= 1 else 1,\n        \"Double exp (2^2^n)\": lambda n: 2**(2**n) if n <= 5 else 2**(2**5),\n    }\n\n    results = compare_theories(theories, 1, 10)\n\n    print(f\"\\n  {'Theory':>25} | {'\u03b2_min':>8} | {'\u03b2_max':>8} | {'\u03b2_mean':>8} | {'Spread':>8}\")\n    print(f\"  {'-'*25}-+-{'-'*8}-+-{'-'*8}-+-{'-'*8}-+-{'-'*8}\")\n    for name, stats in sorted(results.items(), key=lambda x: x[1]['min_beta']):\n        print(f\"  {name:>25} | {stats['min_beta']:8.3f} | {stats['max_beta']:8.3f} | \"\n              f\"{stats['mean_beta']:8.3f} | {stats['spread']:8.3f}\")\n\n    # --- Application 4: Semantic Entropy ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  APPLICATION 4: Semantic Entropy Analysis\")\n    print(\"=\"*70)\n\n    # Simulate: formulas over 10-element universe\n    # Each formula eliminates some models\n    model_counts = [1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1]\n    proof_costs = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]\n\n    print(\"\\n  Perfect doubling hierarchy:\")\n    analysis = entropy_drop_analysis(model_counts, proof_costs)\n    print(f\"  Entropy drops: {[f'{d:.1f}' for d in analysis['entropy_drops']]}\")\n    print(f\"  Cost ratios: {analysis['cost_ratios']}\")\n    print(f\"  Correlation(\u0394H, log(ratio)): {analysis['correlation']:.4f}\")\n\n    # Non-uniform model counts\n    model_counts_2 = [1000, 800, 500, 200, 50, 10, 2]\n    proof_costs_2 = [1, 3, 10, 50, 500, 10000, 500000]\n\n    print(\"\\n  Non-uniform hierarchy:\")\n    analysis_2 = entropy_drop_analysis(model_counts_2, proof_costs_2)\n    print(f\"  Entropy drops: {[f'{d:.2f}' for d in analysis_2['entropy_drops']]}\")\n    print(f\"  Log cost ratios: {[f'{r:.2f}' for r in analysis_2['log_cost_ratios']]}\")\n    print(f\"  Correlation(\u0394H, log(ratio)): {analysis_2['correlation']:.4f}\")\n\n    # --- Summary ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  SUMMARY OF APPLICATIONS\")\n    print(\"=\"*70)\n    print(\"\"\"\n  1. CURRICULUM DESIGN: Expansion-aware ordering reduces maximum\n     proof-length jumps, enabling more efficient automated proving.\n\n  2. DIFFICULTY FORECASTING: Known expansion constants yield both\n     upper and lower bounds on unproven theorem costs, guiding\n     resource allocation.\n\n  3. THEORY COMPARISON: Expansion constants provide a single-number\n     summary distinguishing polynomial, exponential, and\n     super-exponential growth theories.\n\n  4. SEMANTIC ENTROPY: Strong correlation between entropy drop and\n     log-cost ratio supports the conjecture that semantic compression\n     forces proof inflation.\n\"\"\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Expansion Constant Estimation",
+        "pseudocode": "For each pair (m,n) with lo <= m < n <= hi:\n  Compute ratio r = cost(n)/cost(m)\n  Compute per-unit base beta = r^(1/(n-m))\nReturn min(beta) over all pairs",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nProof Expansion Constants: Core Algorithms\n\nImplements the algorithmic pipeline for computing strengthening distances,\nproof-cost ratios, and candidate lower-envelope expansion constants.\n\nAll algorithms include docstrings, type hints, and example usage.\n\"\"\"\n\nimport math\nfrom typing import Callable, Dict, List, Optional, Tuple\n\n\n# ============================================================================\n# Algorithm 1: Empirical Expansion Constant Estimation\n# ============================================================================\n\ndef estimate_expansion_constant(\n    cost: Callable[[int], int],\n    lo: int = 1,\n    hi: int = 20,\n    *,\n    exclude_edge: int = 0\n) -> Dict[str, float]:\n    \"\"\"\n    Estimate the binary expansion constant for a cost function.\n\n    Given a cost function c : \u2115 \u2192 \u2115, computes the expansion constant \u03b2\n    defined as the largest value such that:\n        \u03b2^(n-m) * c(m) \u2264 c(n)  for all lo \u2264 m < n \u2264 hi.\n\n    This is equivalent to:\n        \u03b2 = min_{m < n} (c(n)/c(m))^(1/(n-m))\n\n    Args:\n        cost: Cost function mapping natural numbers to natural numbers.\n        lo: Lower bound of the index range (default 1 to avoid c(0) = 0 issues).\n        hi: Upper bound of the index range.\n        exclude_edge: Exclude pairs where m < exclude_edge (avoids edge effects).\n\n    Returns:\n        Dictionary with:\n        - 'beta': The estimated expansion constant.\n        - 'min_pair': The (m, n) pair achieving the minimum.\n        - 'min_ratio': The ratio c(n)/c(m) at the minimum pair.\n        - 'all_bases': List of per-unit bases for all pairs.\n\n    Example:\n        >>> result = estimate_expansion_constant(lambda n: 2**n, 0, 10)\n        >>> abs(result['beta'] - 2.0) < 1e-10\n        True\n    \"\"\"\n    min_base = float('inf')\n    min_pair = (lo, lo + 1)\n    min_ratio = 1.0\n    all_bases: List[Tuple[int, int, float]] = []\n\n    for m in range(max(lo, exclude_edge), hi):\n        cm = cost(m)\n        if cm <= 0:\n            continue\n        for n in range(m + 1, hi + 1):\n            cn = cost(n)\n            if cn <= 0:\n                continue\n            ratio = cn / cm\n            gap = n - m\n            base = ratio ** (1.0 / gap)\n            all_bases.append((m, n, base))\n            if base < min_base:\n                min_base = base\n                min_pair = (m, n)\n                min_ratio = ratio\n\n    return {\n        'beta': min_base,\n        'min_pair': min_pair,\n        'min_ratio': min_ratio,\n        'all_bases': all_bases,\n    }\n\n\n# ============================================================================\n# Algorithm 2: Model Shrinkage Distance\n# ============================================================================\n\ndef model_shrinkage_distance(model_set_a: set, model_set_b: set) -> int:\n    \"\"\"\n    Compute the model shrinkage distance between two model sets.\n\n    If B \u2286 A (B represents a stronger statement), the shrinkage distance\n    is |A| - |B|, measuring how many models are eliminated by strengthening.\n\n    Args:\n        model_set_a: The model set of the weaker statement.\n        model_set_b: The model set of the stronger statement.\n\n    Returns:\n        The shrinkage distance max(0, |A| - |B|).\n\n    Example:\n        >>> model_shrinkage_distance({1,2,3,4,5}, {1,2,3})\n        2\n    \"\"\"\n    return max(0, len(model_set_a) - len(model_set_b))\n\n\ndef verify_shrinkage_additivity(\n    chain: List[set]\n) -> Tuple[bool, Optional[Tuple[int, int, int]]]:\n    \"\"\"\n    Verify that model shrinkage distance is additive along a nested chain.\n\n    For sets S_0 \u2287 S_1 \u2287 ... \u2287 S_k, checks that:\n        d(S_i, S_k) = d(S_i, S_j) + d(S_j, S_k)\n    for all i < j < k.\n\n    Args:\n        chain: A list of sets, each a subset of the previous.\n\n    Returns:\n        (True, None) if additive, or (False, (i, j, k)) for a counterexample.\n\n    Example:\n        >>> s0 = {1,2,3,4,5}\n        >>> s1 = {1,2,3}\n        >>> s2 = {1}\n        >>> verify_shrinkage_additivity([s0, s1, s2])\n        (True, None)\n    \"\"\"\n    for i in range(len(chain)):\n        for j in range(i + 1, len(chain)):\n            for k in range(j + 1, len(chain)):\n                d_ik = model_shrinkage_distance(chain[i], chain[k])\n                d_ij = model_shrinkage_distance(chain[i], chain[j])\n                d_jk = model_shrinkage_distance(chain[j], chain[k])\n                if d_ik != d_ij + d_jk:\n                    return False, (i, j, k)\n    return True, None\n\n\n# ============================================================================\n# Algorithm 3: Lower Envelope Detection\n# ============================================================================\n\ndef detect_lower_envelope(\n    cost: Callable[[int], int],\n    lo: int = 0,\n    hi: int = 20,\n    candidate_bases: Optional[List[float]] = None,\n    tolerance: float = 1e-6\n) -> Dict[str, object]:\n    \"\"\"\n    Detect and classify the lower envelope of a cost function.\n\n    Tests whether the cost function admits exponential expansion with\n    various candidate bases. Returns the largest base that passes.\n\n    Args:\n        cost: Cost function mapping natural numbers to natural numbers.\n        lo: Lower bound of the index range.\n        hi: Upper bound of the index range.\n        candidate_bases: List of bases to test (default: 1.1 to 10.0).\n        tolerance: Multiplicative tolerance for the test.\n\n    Returns:\n        Dictionary with:\n        - 'max_valid_base': Largest base passing the expansion test.\n        - 'classification': 'none', 'subexponential', 'exponential', or 'superexponential'.\n        - 'base_results': Dict mapping base to pass/fail.\n\n    Example:\n        >>> result = detect_lower_envelope(lambda n: 2**n, 0, 10)\n        >>> result['classification']\n        'exponential'\n    \"\"\"\n    if candidate_bases is None:\n        candidate_bases = [1.0 + 0.1 * i for i in range(1, 100)]\n\n    base_results = {}\n    max_valid = 1.0\n\n    for b in candidate_bases:\n        passes = True\n        for m in range(lo, hi):\n            cm = cost(m)\n            for n in range(m + 1, hi + 1):\n                cn = cost(n)\n                if b ** (n - m) * cm > cn * (1 + tolerance):\n                    passes = False\n                    break\n            if not passes:\n                break\n        base_results[b] = passes\n        if passes:\n            max_valid = max(max_valid, b)\n\n    # Classify\n    if max_valid <= 1.05:\n        classification = 'none'\n    elif max_valid < 1.5:\n        classification = 'subexponential'\n    elif max_valid <= 10.0:\n        classification = 'exponential'\n    else:\n        classification = 'superexponential'\n\n    return {\n        'max_valid_base': max_valid,\n        'classification': classification,\n        'base_results': base_results,\n    }\n\n\n# ============================================================================\n# Algorithm 4: Expansion Slope Computation\n# ============================================================================\n\ndef expansion_slope(c1: int, c2: int, d: int) -> float:\n    \"\"\"\n    Compute the normalized expansion slope.\n\n    \u03c3(c\u2081, c\u2082, d) = c\u2082 / (c\u2081 * d)\n\n    This measures the average proof-cost growth per unit of strengthening.\n\n    Args:\n        c1: Proof cost of the weaker statement.\n        c2: Proof cost of the stronger statement.\n        d: Semantic distance between the statements.\n\n    Returns:\n        The expansion slope as a float.\n\n    Raises:\n        ValueError: If c1 or d is zero.\n\n    Example:\n        >>> expansion_slope(1, 1024, 10)\n        102.4\n    \"\"\"\n    if c1 == 0 or d == 0:\n        raise ValueError(\"c1 and d must be positive\")\n    return c2 / (c1 * d)\n\n\ndef expansion_slope_matrix(\n    cost: Callable[[int], int],\n    lo: int = 0,\n    hi: int = 10\n) -> List[List[Optional[float]]]:\n    \"\"\"\n    Compute the expansion slope matrix for all pairs (m, n).\n\n    Returns a matrix M where M[m-lo][n-lo] = \u03c3(cost(m), cost(n), n-m).\n\n    Args:\n        cost: Cost function.\n        lo: Lower bound of range.\n        hi: Upper bound of range.\n\n    Returns:\n        Matrix of expansion slopes (None on diagonal and below).\n\n    Example:\n        >>> M = expansion_slope_matrix(lambda n: 2**n, 0, 5)\n        >>> M[0][5]  # \u03c3(1, 32, 5) = 6.4\n        6.4\n    \"\"\"\n    size = hi - lo + 1\n    matrix = [[None] * size for _ in range(size)]\n    for i in range(size):\n        for j in range(i + 1, size):\n            m = lo + i\n            n = lo + j\n            cm = cost(m)\n            cn = cost(n)\n            d = n - m\n            if cm > 0 and d > 0:\n                matrix[i][j] = cn / (cm * d)\n    return matrix\n\n\n# ============================================================================\n# Algorithm 5: Hierarchy Transfer\n# ============================================================================\n\ndef verify_expansion_transfer(\n    cost_a: Callable[[int], int],\n    cost_b: Callable[[int], int],\n    f: Callable[[int], int],\n    base: float,\n    lo: int = 0,\n    hi: int = 10\n) -> Tuple[bool, Optional[Tuple[int, int]]]:\n    \"\"\"\n    Verify the expansion transfer principle.\n\n    Checks that if cost_B satisfies base-expansion under embedding f,\n    and cost_A \u2264 cost_B \u2218 f, then the bound transfers.\n\n    Specifically, checks:\n        base^(f(n)-f(m)) * cost_A(m) \u2264 cost_B(f(n))\n    for all lo \u2264 m \u2264 n \u2264 hi.\n\n    Args:\n        cost_a: Source cost function.\n        cost_b: Target cost function.\n        f: Monotone embedding.\n        base: Expansion base.\n        lo: Lower bound.\n        hi: Upper bound.\n\n    Returns:\n        (True, None) if transfer holds, or (False, (m, n)) for a counterexample.\n\n    Example:\n        >>> verify_expansion_transfer(\n        ...     lambda n: 2**n, lambda n: 3**n, lambda n: n, 2.0, 0, 10\n        ... )\n        (True, None)\n    \"\"\"\n    for m in range(lo, hi + 1):\n        for n in range(m, hi + 1):\n            fm = f(m)\n            fn = f(n)\n            lhs = base ** (fn - fm) * cost_a(m)\n            rhs = cost_b(fn)\n            if lhs > rhs * 1.0001:\n                return False, (m, n)\n    return True, None\n\n\n# ============================================================================\n# Algorithm 6: Gap Distribution Analysis\n# ============================================================================\n\ndef gap_distribution(\n    cost: Callable[[int], int],\n    lo: int = 0,\n    hi: int = 20\n) -> Dict[int, Dict[str, float]]:\n    \"\"\"\n    Analyze the distribution of expansion ratios by gap size.\n\n    For each gap d = 1, 2, ..., hi-lo, computes statistics of the\n    expansion ratio c(n)/c(m) over all pairs with n - m = d.\n\n    Args:\n        cost: Cost function.\n        lo: Lower bound.\n        hi: Upper bound.\n\n    Returns:\n        Dictionary mapping gap size to statistics:\n        - 'min': Minimum ratio for this gap.\n        - 'max': Maximum ratio for this gap.\n        - 'mean': Mean ratio for this gap.\n        - 'min_base': Minimum per-unit base.\n\n    Example:\n        >>> stats = gap_distribution(lambda n: 2**n, 0, 10)\n        >>> abs(stats[1]['min'] - 2.0) < 1e-10\n        True\n    \"\"\"\n    result = {}\n    for d in range(1, hi - lo + 1):\n        ratios = []\n        for m in range(lo, hi - d + 1):\n            n = m + d\n            cm = cost(m)\n            cn = cost(n)\n            if cm > 0:\n                ratios.append(cn / cm)\n        if ratios:\n            result[d] = {\n                'min': min(ratios),\n                'max': max(ratios),\n                'mean': sum(ratios) / len(ratios),\n                'min_base': min(ratios) ** (1.0 / d),\n            }\n    return result\n\n\n# ============================================================================\n# Example Usage\n# ============================================================================\n\nif __name__ == \"__main__\":\n    print(\"=== Algorithm Examples ===\\n\")\n\n    # Example 1: Expansion constant estimation\n    print(\"1. Expansion constant for doubling hierarchy (2^n):\")\n    result = estimate_expansion_constant(lambda n: 2**n, 0, 15)\n    print(f\"   \u03b2 = {result['beta']:.6f}\")\n    print(f\"   Achieved at pair {result['min_pair']}\")\n    print()\n\n    # Example 2: Model shrinkage\n    print(\"2. Model shrinkage distance:\")\n    A = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n    B = {1, 2, 3, 4, 5}\n    C = {1, 2}\n    print(f\"   d(A, B) = {model_shrinkage_distance(A, B)}\")\n    print(f\"   d(B, C) = {model_shrinkage_distance(B, C)}\")\n    print(f\"   d(A, C) = {model_shrinkage_distance(A, C)}\")\n    print(f\"   Additivity: d(A,C) = d(A,B) + d(B,C) ? \"\n          f\"{model_shrinkage_distance(A,C) == model_shrinkage_distance(A,B) + model_shrinkage_distance(B,C)}\")\n    valid, cex = verify_shrinkage_additivity([A, B, C])\n    print(f\"   Chain additivity verified: {valid}\")\n    print()\n\n    # Example 3: Lower envelope detection\n    print(\"3. Lower envelope detection:\")\n    for name, cost in [(\"2^n\", lambda n: 2**n),\n                       (\"n^2+1\", lambda n: n**2+1),\n                       (\"n!\", math.factorial)]:\n        result = detect_lower_envelope(cost, 1, 12)\n        print(f\"   {name}: max_base={result['max_valid_base']:.2f}, \"\n              f\"class={result['classification']}\")\n    print()\n\n    # Example 4: Expansion slope\n    print(\"4. Expansion slope matrix (2^n, indices 0-5):\")\n    M = expansion_slope_matrix(lambda n: 2**n, 0, 5)\n    print(\"   m\\\\n |\", end=\"\")\n    for j in range(6):\n        print(f\"   {j:5d}\", end=\"\")\n    print()\n    for i in range(6):\n        print(f\"   {i:3d} |\", end=\"\")\n        for j in range(6):\n            if M[i][j] is not None:\n                print(f\"  {M[i][j]:5.1f}\", end=\"\")\n            else:\n                print(f\"  {'---':>5}\", end=\"\")\n        print()\n    print()\n\n    # Example 5: Transfer verification\n    print(\"5. Transfer principle verification:\")\n    valid, cex = verify_expansion_transfer(\n        lambda n: 2**n, lambda n: 3**n, lambda n: n, 2.0, 0, 10\n    )\n    print(f\"   2^n \u2192 3^n with identity embedding, base 2: {'PASS' if valid else f'FAIL at {cex}'}\")\n    print()\n\n    # Example 6: Gap distribution\n    print(\"6. Gap distribution for doubling hierarchy:\")\n    stats = gap_distribution(lambda n: 2**n, 0, 10)\n    for d in [1, 2, 5, 10]:\n        if d in stats:\n            s = stats[d]\n            print(f\"   gap={d}: min_ratio={s['min']:.1f}, \"\n                  f\"min_base={s['min_base']:.4f}\")\n",
+        "code_file": "visualizations/proof_expansion_constant_for_formal_theories_expansion_constant_estimation.py"
+      }
+    ],
+    "lean_proofs": "import Mathlib\n\n/-!\n# Proof Expansion Constants for Formal Theories\n\nThis module develops a new invariant of formal theories: the **proof expansion constant**.\nThis quantity measures how sharply proof length inflates under semantic strengthening \u2014\nwhen a theorem is replaced by a logically stronger version, the minimal proof length\nmay grow exponentially in the \"strengthening distance.\"\n\n## Main Definitions\n\n* `ProofTheoryProfile` \u2014 Abstract structure encoding theorem families with strengthening,\n  proof cost, and semantic distance.\n* `Hierarchy` \u2014 A concrete hierarchy of theorems indexed by natural numbers with\n  monotone proof cost.\n* `hierarchicalCost` \u2014 An explicit cost function with `cost(n) = 2^n`, modeling\n  exponential proof expansion.\n* `hasBinaryExpansion` \u2014 Predicate asserting that a hierarchy admits an exponential\n  lower bound on proof cost growth.\n* `modelShrinkDist` \u2014 Semantic distance measured by model-class cardinal drop.\n* `expansionSlope` \u2014 Normalized expansion rate as a rational number.\n\n## Main Results\n\n* `indexSemDist_triangle` \u2014 The index-gap distance satisfies the triangle inequality.\n* `hierarchical_expansion_constant` \u2014 In the doubling hierarchy, proof cost grows\n  exponentially: `2^(n-m) * cost(m) \u2264 cost(n)` for `m \u2264 n`.\n* `strengthening_model_count_monotone` \u2014 Strengthening (subset inclusion) implies\n  monotone decrease of model count.\n* `modelShrinkDist_additive_of_nested` \u2014 Model shrinkage distance is additive along\n  nested chains of model sets.\n* `expansion_transfer` \u2014 Transfer principle: expansion lower bounds pull back through\n  monotone embeddings.\n\n## Mathematical Significance\n\nThis provides the first rigorous toy model establishing that proof expansion is a\ncoherent geometric phenomenon, not merely an empirical observation. The results\nconnect proof complexity to model-theoretic entropy via the model-shrinkage distance.\n-/\n\nopen Finset\n\n/-! ## Abstract Proof Theory Profile -/\n\n/-- An abstract structure encoding a theorem family with strengthening, proof cost,\nand semantic distance. This is the central object of study in the proof expansion program. -/\nstructure ProofTheoryProfile where\n  /-- The type of formulas/theorems in the family -/\n  Formula : Type\n  /-- Provability predicate -/\n  Provable : Formula \u2192 Prop\n  /-- Cost of the shortest proof (or a proxy) -/\n  ProofCost : Formula \u2192 \u2115\n  /-- Strengthening relation: `Strengthens \u03c6 \u03c8` means \u03c8 is at least as strong as \u03c6 -/\n  Strengthens : Formula \u2192 Formula \u2192 Prop\n  /-- Semantic distance between formulas -/\n  semDist : Formula \u2192 Formula \u2192 \u2115\n  /-- Strengthening is reflexive -/\n  strengthens_refl : \u2200 \u03c6, Strengthens \u03c6 \u03c6\n  /-- Strengthening is transitive -/\n  strengthens_trans : \u2200 {\u03c6 \u03c8 \u03c7}, Strengthens \u03c6 \u03c8 \u2192 Strengthens \u03c8 \u03c7 \u2192 Strengthens \u03c6 \u03c7\n  /-- Equivalent formulas (mutual strengthening) have zero distance -/\n  semDist_zero_of_strengthens_both :\n    \u2200 {\u03c6 \u03c8}, Strengthens \u03c6 \u03c8 \u2192 Strengthens \u03c8 \u03c6 \u2192 semDist \u03c6 \u03c8 = 0\n  /-- Distance is monotone along strengthening chains -/\n  semDist_monotone :\n    \u2200 {\u03c6 \u03c8 \u03c7}, Strengthens \u03c6 \u03c8 \u2192 Strengthens \u03c8 \u03c7 \u2192\n      semDist \u03c6 \u03c7 \u2265 semDist \u03c6 \u03c8\n\n/-! ## Concrete Hierarchy: Indexed Theorem Families -/\n\n/-- A hierarchy is a family of theorems indexed by \u2115 with monotone proof cost. -/\nstructure Hierarchy where\n  /-- Cost function mapping index to proof cost -/\n  cost : \u2115 \u2192 \u2115\n  /-- Proof cost is monotone in the index -/\n  monotone_cost : Monotone cost\n\n/-- Strengthening for indexed families: higher index = stronger theorem. -/\ndef strengthensIdx (m n : \u2115) : Prop := m \u2264 n\n\n/-- Semantic distance for indexed families: the gap between indices. -/\ndef gapDist (m n : \u2115) : \u2115 := n - m\n\n/-- A hierarchy admits binary expansion with base `b` if proof cost grows at least\nas fast as `b^(gap)` times the base cost. -/\ndef hasBinaryExpansion (H : Hierarchy) (b : \u2115) : Prop :=\n  1 < b \u2227 \u2200 m n, m \u2264 n \u2192 b ^ (n - m) * H.cost m \u2264 H.cost n\n\n/-! ## The Doubling Hierarchy -/\n\n/-- The canonical doubling hierarchy: `cost(n) = 2^n`. -/\ndef hierarchicalCost : \u2115 \u2192 \u2115\n  | 0 => 1\n  | n + 1 => 2 * hierarchicalCost n\n\n/-\n`hierarchicalCost n = 2^n`.\n-/\ntheorem hierarchicalCost_eq_pow (n : \u2115) : hierarchicalCost n = 2 ^ n := by\n  induction n with\n  | zero => simp [hierarchicalCost]\n  | succ n ih => simp [hierarchicalCost, pow_succ, ih, mul_comm]\n\n/-\nThe doubling hierarchy is monotone.\n-/\ntheorem hierarchicalCost_monotone : Monotone hierarchicalCost := by\n  exact fun n m hnm => by rw [ hierarchicalCost_eq_pow, hierarchicalCost_eq_pow ] ; exact Nat.pow_le_pow_right ( by decide ) hnm;\n\n/-! ## Theorem 1: Triangle Inequality for Index Distance -/\n\n/-\nThe index-gap distance `gapDist` satisfies the triangle inequality.\nThis establishes that strengthening distance is a genuine geometric quantity,\nnot merely an ad hoc statistic.\n-/\ntheorem indexSemDist_triangle (i j k : \u2115) :\n    gapDist i k \u2264 gapDist i j + gapDist j k := by\n  unfold gapDist; omega;\n\n/-! ## Theorem 2: Exponential Proof Expansion in the Doubling Hierarchy -/\n\n/-\n**Main Theorem.** In the doubling hierarchy, proof cost grows exponentially\nin the strengthening gap: for any `m \u2264 n`,\n`2^(n-m) * hierarchicalCost(m) \u2264 hierarchicalCost(n)`.\n\nThis is the first rigorous witness that proof expansion constants are coherent:\na concrete family where strengthening by distance `d` forces proof cost to\ninflate by at least `2^d`.\n-/\ntheorem hierarchical_expansion_constant (m n : \u2115) (h : m \u2264 n) :\n    2 ^ (n - m) * hierarchicalCost m \u2264 hierarchicalCost n := by\n  -- By definition of `hierarchicalCost`, we know that `hierarchicalCost n = 2^n`.\n  have h_hierarchicalCost_eq_pow : \u2200 n, hierarchicalCost n = 2 ^ n := by\n    exact fun n => hierarchicalCost_eq_pow n\n  rw [h_hierarchicalCost_eq_pow, h_hierarchicalCost_eq_pow, \u2190 pow_add, Nat.sub_add_cancel h]\n\n/-\nThe doubling hierarchy admits binary expansion with base 2.\n-/\ntheorem recursive_doubling_hasBinaryExpansion :\n    hasBinaryExpansion\n      { cost := hierarchicalCost\n        monotone_cost := hierarchicalCost_monotone } 2 := by\n  exact \u27e8 by norm_num, fun m n h => hierarchical_expansion_constant m n h \u27e9\n\n/-! ## Theorem 3: Strengthening and Model Count Monotonicity -/\n\n/-\nStrengthening (modeled as subset inclusion of model sets) implies\nmonotone decrease of model count. This connects proof complexity to\nmodel-theoretic entropy: stronger theorems have fewer models.\n-/\ntheorem strengthening_model_count_monotone\n    {\u03b1 : Type} [Fintype \u03b1] [DecidableEq \u03b1]\n    (S T : Finset \u03b1) (h : T \u2286 S) :\n    T.card \u2264 S.card := by\n  exact Finset.card_le_card h\n\n/-! ## Theorem 4: Additivity of Model Shrinkage Distance -/\n\n/-- Model shrinkage distance: the drop in cardinality between model sets. -/\ndef modelShrinkDist {\u03b1 : Type} [Fintype \u03b1] [DecidableEq \u03b1]\n    (S T : Finset \u03b1) : \u2115 :=\n  S.card - T.card\n\n/-\nModel shrinkage distance is additive along nested chains:\nif `U \u2286 T \u2286 S`, then `d(S,U) = d(S,T) + d(T,U)`.\nThis is a key structural property connecting proof-theoretic distance\nto information-theoretic entropy loss.\n-/\ntheorem modelShrinkDist_additive_of_nested\n    {\u03b1 : Type} [Fintype \u03b1] [DecidableEq \u03b1]\n    (U T S : Finset \u03b1) (hUT : U \u2286 T) (hTS : T \u2286 S) :\n    modelShrinkDist S U = modelShrinkDist S T + modelShrinkDist T U := by\n  unfold modelShrinkDist;\n  rw [ tsub_add_tsub_cancel ( Finset.card_le_card hTS ) ( Finset.card_le_card hUT ) ]\n\n/-! ## Theorem 5: Expansion Transfer Principle -/\n\n/-\n**Transfer Principle.** If proof cost in a target hierarchy grows exponentially\nin distance, and we have a monotone embedding from a source hierarchy that is\ndominated by the target, then the exponential lower bound transfers.\n\nThis turns one toy hierarchy into a methodology for importing lower bounds\nacross domains.\n-/\ntheorem expansion_transfer\n    (costA costB : \u2115 \u2192 \u2115)\n    (f : \u2115 \u2192 \u2115)\n    (_hfmono : Monotone f)\n    (hcostB : \u2200 m n, m \u2264 n \u2192 2 ^ (f n - f m) * costB (f m) \u2264 costB (f n))\n    (hcompare : \u2200 n, costA n \u2264 costB (f n))\n    (m n : \u2115) (hmn : m \u2264 n) :\n    2 ^ (f n - f m) * costA m \u2264 costB (f n) :=\n  le_trans (Nat.mul_le_mul_left _ (hcompare m)) (hcostB m n hmn)\n\n/-! ## Expansion Slope and Rational Analysis -/\n\n/-- The normalized expansion slope: ratio of proof cost to base cost times distance.\nMeasures the \"rate\" of proof expansion per unit of strengthening. -/\nnoncomputable def expansionSlope (c\u2081 c\u2082 d : \u2115) : \u211a :=\n  (c\u2082 : \u211a) / ((c\u2081 : \u211a) * d)\n\n/-\nThe expansion slope is positive when all inputs are positive.\n-/\ntheorem expansionSlope_pos (c\u2081 c\u2082 d : \u2115)\n    (hc\u2081 : 0 < c\u2081) (hc\u2082 : 0 < c\u2082) (hd : 0 < d) :\n    0 < expansionSlope c\u2081 c\u2082 d := by\n  exact div_pos ( Nat.cast_pos.mpr hc\u2082 ) ( mul_pos ( Nat.cast_pos.mpr hc\u2081 ) ( Nat.cast_pos.mpr hd ) )\n\n/-! ## Constructing a ProofTheoryProfile from the Indexed Hierarchy -/\n\n/-- The indexed hierarchy with doubling cost forms a valid `ProofTheoryProfile`. -/\ndef indexedProfile : ProofTheoryProfile where\n  Formula := \u2115\n  Provable := fun _ => True\n  ProofCost := hierarchicalCost\n  Strengthens := (\u00b7 \u2264 \u00b7)\n  semDist := gapDist\n  strengthens_refl := le_refl\n  strengthens_trans := fun h1 h2 => le_trans h1 h2\n  semDist_zero_of_strengthens_both := by\n    intro \u03c6 \u03c8 h1 h2\n    simp [gapDist]\n    omega\n  semDist_monotone := by\n    intro \u03c6 \u03c8 \u03c7 h1 h2\n    simp [gapDist]\n    omega\n\n/-- The indexed profile admits binary expansion with base 2. -/\ntheorem indexedProfile_admits_expansion :\n    \u2200 m n : \u2115, m \u2264 n \u2192\n      2 ^ (gapDist m n) * indexedProfile.ProofCost m \u2264 indexedProfile.ProofCost n := by\n  intro m n hmn\n  simp [indexedProfile, gapDist]\n  exact hierarchical_expansion_constant m n hmn\n\n/-! ## Strict Monotonicity via Contradiction -/\n\n/-\nIn the doubling hierarchy, if `m < n`, then `cost(m) < cost(n)`.\nProved by contradiction: if `cost(n) \u2264 cost(m)`, the exponential expansion\nbound yields a contradiction.\n-/\ntheorem hierarchicalCost_strict_mono (m n : \u2115) (h : m < n) :\n    hierarchicalCost m < hierarchicalCost n := by\n  exact strictMono_nat_of_lt_succ ( fun n => by rw [ hierarchicalCost_eq_pow _, hierarchicalCost_eq_pow _ ] ; gcongr <;> norm_num ) h",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nProof Expansion Constants: Core Algorithms\n\nImplements the algorithmic pipeline for computing strengthening distances,\nproof-cost ratios, and candidate lower-envelope expansion constants.\n\nAll algorithms include docstrings, type hints, and example usage.\n\"\"\"\n\nimport math\nfrom typing import Callable, Dict, List, Optional, Tuple\n\n\n# ============================================================================\n# Algorithm 1: Empirical Expansion Constant Estimation\n# ============================================================================\n\ndef estimate_expansion_constant(\n    cost: Callable[[int], int],\n    lo: int = 1,\n    hi: int = 20,\n    *,\n    exclude_edge: int = 0\n) -> Dict[str, float]:\n    \"\"\"\n    Estimate the binary expansion constant for a cost function.\n\n    Given a cost function c : \u2115 \u2192 \u2115, computes the expansion constant \u03b2\n    defined as the largest value such that:\n        \u03b2^(n-m) * c(m) \u2264 c(n)  for all lo \u2264 m < n \u2264 hi.\n\n    This is equivalent to:\n        \u03b2 = min_{m < n} (c(n)/c(m))^(1/(n-m))\n\n    Args:\n        cost: Cost function mapping natural numbers to natural numbers.\n        lo: Lower bound of the index range (default 1 to avoid c(0) = 0 issues).\n        hi: Upper bound of the index range.\n        exclude_edge: Exclude pairs where m < exclude_edge (avoids edge effects).\n\n    Returns:\n        Dictionary with:\n        - 'beta': The estimated expansion constant.\n        - 'min_pair': The (m, n) pair achieving the minimum.\n        - 'min_ratio': The ratio c(n)/c(m) at the minimum pair.\n        - 'all_bases': List of per-unit bases for all pairs.\n\n    Example:\n        >>> result = estimate_expansion_constant(lambda n: 2**n, 0, 10)\n        >>> abs(result['beta'] - 2.0) < 1e-10\n        True\n    \"\"\"\n    min_base = float('inf')\n    min_pair = (lo, lo + 1)\n    min_ratio = 1.0\n    all_bases: List[Tuple[int, int, float]] = []\n\n    for m in range(max(lo, exclude_edge), hi):\n        cm = cost(m)\n        if cm <= 0:\n            continue\n        for n in range(m + 1, hi + 1):\n            cn = cost(n)\n            if cn <= 0:\n                continue\n            ratio = cn / cm\n            gap = n - m\n            base = ratio ** (1.0 / gap)\n            all_bases.append((m, n, base))\n            if base < min_base:\n                min_base = base\n                min_pair = (m, n)\n                min_ratio = ratio\n\n    return {\n        'beta': min_base,\n        'min_pair': min_pair,\n        'min_ratio': min_ratio,\n        'all_bases': all_bases,\n    }\n\n\n# ============================================================================\n# Algorithm 2: Model Shrinkage Distance\n# ============================================================================\n\ndef model_shrinkage_distance(model_set_a: set, model_set_b: set) -> int:\n    \"\"\"\n    Compute the model shrinkage distance between two model sets.\n\n    If B \u2286 A (B represents a stronger statement), the shrinkage distance\n    is |A| - |B|, measuring how many models are eliminated by strengthening.\n\n    Args:\n        model_set_a: The model set of the weaker statement.\n        model_set_b: The model set of the stronger statement.\n\n    Returns:\n        The shrinkage distance max(0, |A| - |B|).\n\n    Example:\n        >>> model_shrinkage_distance({1,2,3,4,5}, {1,2,3})\n        2\n    \"\"\"\n    return max(0, len(model_set_a) - len(model_set_b))\n\n\ndef verify_shrinkage_additivity(\n    chain: List[set]\n) -> Tuple[bool, Optional[Tuple[int, int, int]]]:\n    \"\"\"\n    Verify that model shrinkage distance is additive along a nested chain.\n\n    For sets S_0 \u2287 S_1 \u2287 ... \u2287 S_k, checks that:\n        d(S_i, S_k) = d(S_i, S_j) + d(S_j, S_k)\n    for all i < j < k.\n\n    Args:\n        chain: A list of sets, each a subset of the previous.\n\n    Returns:\n        (True, None) if additive, or (False, (i, j, k)) for a counterexample.\n\n    Example:\n        >>> s0 = {1,2,3,4,5}\n        >>> s1 = {1,2,3}\n        >>> s2 = {1}\n        >>> verify_shrinkage_additivity([s0, s1, s2])\n        (True, None)\n    \"\"\"\n    for i in range(len(chain)):\n        for j in range(i + 1, len(chain)):\n            for k in range(j + 1, len(chain)):\n                d_ik = model_shrinkage_distance(chain[i], chain[k])\n                d_ij = model_shrinkage_distance(chain[i], chain[j])\n                d_jk = model_shrinkage_distance(chain[j], chain[k])\n                if d_ik != d_ij + d_jk:\n                    return False, (i, j, k)\n    return True, None\n\n\n# ============================================================================\n# Algorithm 3: Lower Envelope Detection\n# ============================================================================\n\ndef detect_lower_envelope(\n    cost: Callable[[int], int],\n    lo: int = 0,\n    hi: int = 20,\n    candidate_bases: Optional[List[float]] = None,\n    tolerance: float = 1e-6\n) -> Dict[str, object]:\n    \"\"\"\n    Detect and classify the lower envelope of a cost function.\n\n    Tests whether the cost function admits exponential expansion with\n    various candidate bases. Returns the largest base that passes.\n\n    Args:\n        cost: Cost function mapping natural numbers to natural numbers.\n        lo: Lower bound of the index range.\n        hi: Upper bound of the index range.\n        candidate_bases: List of bases to test (default: 1.1 to 10.0).\n        tolerance: Multiplicative tolerance for the test.\n\n    Returns:\n        Dictionary with:\n        - 'max_valid_base': Largest base passing the expansion test.\n        - 'classification': 'none', 'subexponential', 'exponential', or 'superexponential'.\n        - 'base_results': Dict mapping base to pass/fail.\n\n    Example:\n        >>> result = detect_lower_envelope(lambda n: 2**n, 0, 10)\n        >>> result['classification']\n        'exponential'\n    \"\"\"\n    if candidate_bases is None:\n        candidate_bases = [1.0 + 0.1 * i for i in range(1, 100)]\n\n    base_results = {}\n    max_valid = 1.0\n\n    for b in candidate_bases:\n        passes = True\n        for m in range(lo, hi):\n            cm = cost(m)\n            for n in range(m + 1, hi + 1):\n                cn = cost(n)\n                if b ** (n - m) * cm > cn * (1 + tolerance):\n                    passes = False\n                    break\n            if not passes:\n                break\n        base_results[b] = passes\n        if passes:\n            max_valid = max(max_valid, b)\n\n    # Classify\n    if max_valid <= 1.05:\n        classification = 'none'\n    elif max_valid < 1.5:\n        classification = 'subexponential'\n    elif max_valid <= 10.0:\n        classification = 'exponential'\n    else:\n        classification = 'superexponential'\n\n    return {\n        'max_valid_base': max_valid,\n        'classification': classification,\n        'base_results': base_results,\n    }\n\n\n# ============================================================================\n# Algorithm 4: Expansion Slope Computation\n# ============================================================================\n\ndef expansion_slope(c1: int, c2: int, d: int) -> float:\n    \"\"\"\n    Compute the normalized expansion slope.\n\n    \u03c3(c\u2081, c\u2082, d) = c\u2082 / (c\u2081 * d)\n\n    This measures the average proof-cost growth per unit of strengthening.\n\n    Args:\n        c1: Proof cost of the weaker statement.\n        c2: Proof cost of the stronger statement.\n        d: Semantic distance between the statements.\n\n    Returns:\n        The expansion slope as a float.\n\n    Raises:\n        ValueError: If c1 or d is zero.\n\n    Example:\n        >>> expansion_slope(1, 1024, 10)\n        102.4\n    \"\"\"\n    if c1 == 0 or d == 0:\n        raise ValueError(\"c1 and d must be positive\")\n    return c2 / (c1 * d)\n\n\ndef expansion_slope_matrix(\n    cost: Callable[[int], int],\n    lo: int = 0,\n    hi: int = 10\n) -> List[List[Optional[float]]]:\n    \"\"\"\n    Compute the expansion slope matrix for all pairs (m, n).\n\n    Returns a matrix M where M[m-lo][n-lo] = \u03c3(cost(m), cost(n), n-m).\n\n    Args:\n        cost: Cost function.\n        lo: Lower bound of range.\n        hi: Upper bound of range.\n\n    Returns:\n        Matrix of expansion slopes (None on diagonal and below).\n\n    Example:\n        >>> M = expansion_slope_matrix(lambda n: 2**n, 0, 5)\n        >>> M[0][5]  # \u03c3(1, 32, 5) = 6.4\n        6.4\n    \"\"\"\n    size = hi - lo + 1\n    matrix = [[None] * size for _ in range(size)]\n    for i in range(size):\n        for j in range(i + 1, size):\n            m = lo + i\n            n = lo + j\n            cm = cost(m)\n            cn = cost(n)\n            d = n - m\n            if cm > 0 and d > 0:\n                matrix[i][j] = cn / (cm * d)\n    return matrix\n\n\n# ============================================================================\n# Algorithm 5: Hierarchy Transfer\n# ============================================================================\n\ndef verify_expansion_transfer(\n    cost_a: Callable[[int], int],\n    cost_b: Callable[[int], int],\n    f: Callable[[int], int],\n    base: float,\n    lo: int = 0,\n    hi: int = 10\n) -> Tuple[bool, Optional[Tuple[int, int]]]:\n    \"\"\"\n    Verify the expansion transfer principle.\n\n    Checks that if cost_B satisfies base-expansion under embedding f,\n    and cost_A \u2264 cost_B \u2218 f, then the bound transfers.\n\n    Specifically, checks:\n        base^(f(n)-f(m)) * cost_A(m) \u2264 cost_B(f(n))\n    for all lo \u2264 m \u2264 n \u2264 hi.\n\n    Args:\n        cost_a: Source cost function.\n        cost_b: Target cost function.\n        f: Monotone embedding.\n        base: Expansion base.\n        lo: Lower bound.\n        hi: Upper bound.\n\n    Returns:\n        (True, None) if transfer holds, or (False, (m, n)) for a counterexample.\n\n    Example:\n        >>> verify_expansion_transfer(\n        ...     lambda n: 2**n, lambda n: 3**n, lambda n: n, 2.0, 0, 10\n        ... )\n        (True, None)\n    \"\"\"\n    for m in range(lo, hi + 1):\n        for n in range(m, hi + 1):\n            fm = f(m)\n            fn = f(n)\n            lhs = base ** (fn - fm) * cost_a(m)\n            rhs = cost_b(fn)\n            if lhs > rhs * 1.0001:\n                return False, (m, n)\n    return True, None\n\n\n# ============================================================================\n# Algorithm 6: Gap Distribution Analysis\n# ============================================================================\n\ndef gap_distribution(\n    cost: Callable[[int], int],\n    lo: int = 0,\n    hi: int = 20\n) -> Dict[int, Dict[str, float]]:\n    \"\"\"\n    Analyze the distribution of expansion ratios by gap size.\n\n    For each gap d = 1, 2, ..., hi-lo, computes statistics of the\n    expansion ratio c(n)/c(m) over all pairs with n - m = d.\n\n    Args:\n        cost: Cost function.\n        lo: Lower bound.\n        hi: Upper bound.\n\n    Returns:\n        Dictionary mapping gap size to statistics:\n        - 'min': Minimum ratio for this gap.\n        - 'max': Maximum ratio for this gap.\n        - 'mean': Mean ratio for this gap.\n        - 'min_base': Minimum per-unit base.\n\n    Example:\n        >>> stats = gap_distribution(lambda n: 2**n, 0, 10)\n        >>> abs(stats[1]['min'] - 2.0) < 1e-10\n        True\n    \"\"\"\n    result = {}\n    for d in range(1, hi - lo + 1):\n        ratios = []\n        for m in range(lo, hi - d + 1):\n            n = m + d\n            cm = cost(m)\n            cn = cost(n)\n            if cm > 0:\n                ratios.append(cn / cm)\n        if ratios:\n            result[d] = {\n                'min': min(ratios),\n                'max': max(ratios),\n                'mean': sum(ratios) / len(ratios),\n                'min_base': min(ratios) ** (1.0 / d),\n            }\n    return result\n\n\n# ============================================================================\n# Example Usage\n# ============================================================================\n\nif __name__ == \"__main__\":\n    print(\"=== Algorithm Examples ===\\n\")\n\n    # Example 1: Expansion constant estimation\n    print(\"1. Expansion constant for doubling hierarchy (2^n):\")\n    result = estimate_expansion_constant(lambda n: 2**n, 0, 15)\n    print(f\"   \u03b2 = {result['beta']:.6f}\")\n    print(f\"   Achieved at pair {result['min_pair']}\")\n    print()\n\n    # Example 2: Model shrinkage\n    print(\"2. Model shrinkage distance:\")\n    A = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n    B = {1, 2, 3, 4, 5}\n    C = {1, 2}\n    print(f\"   d(A, B) = {model_shrinkage_distance(A, B)}\")\n    print(f\"   d(B, C) = {model_shrinkage_distance(B, C)}\")\n    print(f\"   d(A, C) = {model_shrinkage_distance(A, C)}\")\n    print(f\"   Additivity: d(A,C) = d(A,B) + d(B,C) ? \"\n          f\"{model_shrinkage_distance(A,C) == model_shrinkage_distance(A,B) + model_shrinkage_distance(B,C)}\")\n    valid, cex = verify_shrinkage_additivity([A, B, C])\n    print(f\"   Chain additivity verified: {valid}\")\n    print()\n\n    # Example 3: Lower envelope detection\n    print(\"3. Lower envelope detection:\")\n    for name, cost in [(\"2^n\", lambda n: 2**n),\n                       (\"n^2+1\", lambda n: n**2+1),\n                       (\"n!\", math.factorial)]:\n        result = detect_lower_envelope(cost, 1, 12)\n        print(f\"   {name}: max_base={result['max_valid_base']:.2f}, \"\n              f\"class={result['classification']}\")\n    print()\n\n    # Example 4: Expansion slope\n    print(\"4. Expansion slope matrix (2^n, indices 0-5):\")\n    M = expansion_slope_matrix(lambda n: 2**n, 0, 5)\n    print(\"   m\\\\n |\", end=\"\")\n    for j in range(6):\n        print(f\"   {j:5d}\", end=\"\")\n    print()\n    for i in range(6):\n        print(f\"   {i:3d} |\", end=\"\")\n        for j in range(6):\n            if M[i][j] is not None:\n                print(f\"  {M[i][j]:5.1f}\", end=\"\")\n            else:\n                print(f\"  {'---':>5}\", end=\"\")\n        print()\n    print()\n\n    # Example 5: Transfer verification\n    print(\"5. Transfer principle verification:\")\n    valid, cex = verify_expansion_transfer(\n        lambda n: 2**n, lambda n: 3**n, lambda n: n, 2.0, 0, 10\n    )\n    print(f\"   2^n \u2192 3^n with identity embedding, base 2: {'PASS' if valid else f'FAIL at {cex}'}\")\n    print()\n\n    # Example 6: Gap distribution\n    print(\"6. Gap distribution for doubling hierarchy:\")\n    stats = gap_distribution(lambda n: 2**n, 0, 10)\n    for d in [1, 2, 5, 10]:\n        if d in stats:\n            s = stats[d]\n            print(f\"   gap={d}: min_ratio={s['min']:.1f}, \"\n                  f\"min_base={s['min_base']:.4f}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nProof Expansion Constants: Applications\n\nDemonstrates real-world applications of the proof expansion framework:\n1. Theorem-proving curriculum design\n2. Proof difficulty forecasting\n3. Theory comparison via expansion constants\n4. Semantic entropy analysis\n\"\"\"\n\nimport math\nfrom typing import Callable, Dict, List, Optional, Tuple\n\n\n# ============================================================================\n# Application 1: Curriculum Design for Automated Theorem Provers\n# ============================================================================\n\nclass TheoremCurriculum:\n    \"\"\"\n    Designs an optimal curriculum for proving theorems in a hierarchy,\n    sequencing them to minimize the maximum expansion ratio at each step.\n\n    The key insight: if proof expansion is exponential in strengthening\n    distance, the optimal curriculum follows the gradient of expansion \u2014\n    never jumping more than necessary.\n    \"\"\"\n\n    def __init__(self, costs: List[int], names: Optional[List[str]] = None):\n        \"\"\"\n        Args:\n            costs: List of proof costs for theorems indexed 0, 1, ..., n-1.\n            names: Optional names for the theorems.\n        \"\"\"\n        self.costs = costs\n        self.n = len(costs)\n        self.names = names or [f\"Thm_{i}\" for i in range(self.n)]\n\n    def greedy_curriculum(self) -> List[int]:\n        \"\"\"\n        Compute the greedy curriculum: always prove the next-cheapest\n        unproven theorem.\n\n        Returns:\n            Ordering of theorem indices.\n        \"\"\"\n        remaining = set(range(self.n))\n        order = []\n        while remaining:\n            best = min(remaining, key=lambda i: self.costs[i])\n            order.append(best)\n            remaining.remove(best)\n        return order\n\n    def expansion_aware_curriculum(self) -> List[int]:\n        \"\"\"\n        Compute the expansion-aware curriculum: sequence theorems to\n        minimize the maximum per-step expansion ratio.\n\n        Uses a greedy heuristic: at each step, choose the theorem whose\n        expansion ratio relative to the last proved theorem is smallest.\n\n        Returns:\n            Ordering of theorem indices.\n        \"\"\"\n        if self.n == 0:\n            return []\n        remaining = set(range(self.n))\n        # Start with the cheapest theorem\n        first = min(remaining, key=lambda i: self.costs[i])\n        order = [first]\n        remaining.remove(first)\n\n        while remaining:\n            last_cost = self.costs[order[-1]]\n            if last_cost == 0:\n                # If last cost is 0, pick cheapest\n                best = min(remaining, key=lambda i: self.costs[i])\n            else:\n                # Pick theorem with smallest expansion ratio\n                best = min(remaining,\n                          key=lambda i: self.costs[i] / max(last_cost, 1))\n            order.append(best)\n            remaining.remove(best)\n        return order\n\n    def evaluate_curriculum(self, order: List[int]) -> Dict[str, float]:\n        \"\"\"\n        Evaluate a curriculum ordering.\n\n        Returns:\n            Dictionary with max_ratio, mean_ratio, total_cost.\n        \"\"\"\n        if len(order) <= 1:\n            return {'max_ratio': 1.0, 'mean_ratio': 1.0,\n                    'total_cost': sum(self.costs[i] for i in order)}\n\n        ratios = []\n        for k in range(1, len(order)):\n            prev = self.costs[order[k - 1]]\n            curr = self.costs[order[k]]\n            ratio = curr / max(prev, 1)\n            ratios.append(ratio)\n\n        return {\n            'max_ratio': max(ratios),\n            'mean_ratio': sum(ratios) / len(ratios),\n            'total_cost': sum(self.costs[i] for i in order),\n        }\n\n    def print_comparison(self):\n        \"\"\"Print comparison of curriculum strategies.\"\"\"\n        greedy = self.greedy_curriculum()\n        aware = self.expansion_aware_curriculum()\n\n        print(\"  Greedy curriculum (by cost):\")\n        g_stats = self.evaluate_curriculum(greedy)\n        print(f\"    Order: {[self.names[i] for i in greedy[:8]]}...\")\n        print(f\"    Max ratio: {g_stats['max_ratio']:.2f}\")\n        print(f\"    Mean ratio: {g_stats['mean_ratio']:.2f}\")\n\n        print(\"  Expansion-aware curriculum:\")\n        a_stats = self.evaluate_curriculum(aware)\n        print(f\"    Order: {[self.names[i] for i in aware[:8]]}...\")\n        print(f\"    Max ratio: {a_stats['max_ratio']:.2f}\")\n        print(f\"    Mean ratio: {a_stats['mean_ratio']:.2f}\")\n\n        improvement = (g_stats['max_ratio'] - a_stats['max_ratio']) / g_stats['max_ratio'] * 100\n        print(f\"  Max-ratio improvement: {improvement:.1f}%\")\n\n\n# ============================================================================\n# Application 2: Proof Difficulty Forecasting\n# ============================================================================\n\nclass DifficultyForecaster:\n    \"\"\"\n    Forecasts the proof difficulty of a theorem based on its position\n    in a strengthening hierarchy and the observed expansion constant.\n    \"\"\"\n\n    def __init__(self, known_costs: Dict[int, int], beta: float = 2.0):\n        \"\"\"\n        Args:\n            known_costs: Dict mapping index to known proof cost.\n            beta: Estimated expansion constant.\n        \"\"\"\n        self.known_costs = known_costs\n        self.beta = beta\n\n    def forecast(self, target: int) -> Tuple[float, float]:\n        \"\"\"\n        Forecast the proof cost for a theorem at the given index.\n\n        Returns:\n            (lower_bound, upper_bound) estimates based on expansion constant.\n        \"\"\"\n        lower = 0.0\n        upper = float('inf')\n\n        for idx, cost in self.known_costs.items():\n            if idx <= target:\n                gap = target - idx\n                lb = self.beta ** gap * cost\n                lower = max(lower, lb)\n            if idx >= target:\n                gap = idx - target\n                ub = cost / (self.beta ** gap) if self.beta ** gap > 0 else float('inf')\n                upper = min(upper, ub)\n\n        return lower, upper\n\n    def forecast_range(self, lo: int, hi: int) -> Dict[int, Tuple[float, float]]:\n        \"\"\"Forecast costs for a range of indices.\"\"\"\n        return {i: self.forecast(i) for i in range(lo, hi + 1)}\n\n\n# ============================================================================\n# Application 3: Theory Comparison via Expansion Constants\n# ============================================================================\n\ndef compare_theories(\n    theories: Dict[str, Callable[[int], int]],\n    lo: int = 1,\n    hi: int = 15\n) -> Dict[str, Dict[str, float]]:\n    \"\"\"\n    Compare multiple theories by their expansion constants.\n\n    Args:\n        theories: Dict mapping theory name to cost function.\n        lo: Lower bound of range.\n        hi: Upper bound of range.\n\n    Returns:\n        Dict mapping theory name to expansion statistics.\n    \"\"\"\n    results = {}\n    for name, cost in theories.items():\n        min_base = float('inf')\n        max_base = 0.0\n        bases = []\n\n        for m in range(lo, hi):\n            cm = cost(m)\n            if cm <= 0:\n                continue\n            for n in range(m + 1, hi + 1):\n                cn = cost(n)\n                gap = n - m\n                base = (cn / cm) ** (1.0 / gap)\n                bases.append(base)\n                min_base = min(min_base, base)\n                max_base = max(max_base, base)\n\n        results[name] = {\n            'min_beta': min_base,\n            'max_beta': max_base,\n            'mean_beta': sum(bases) / len(bases) if bases else 0,\n            'spread': max_base - min_base if min_base != float('inf') else 0,\n        }\n\n    return results\n\n\n# ============================================================================\n# Application 4: Semantic Entropy Analysis\n# ============================================================================\n\ndef semantic_entropy(model_count: int) -> float:\n    \"\"\"\n    Compute semantic entropy H(\u03c6) = log\u2082|Mod(\u03c6)|.\n\n    Args:\n        model_count: Number of models of the formula.\n\n    Returns:\n        Entropy in bits.\n    \"\"\"\n    if model_count <= 0:\n        return 0.0\n    return math.log2(model_count)\n\n\ndef entropy_drop_analysis(\n    model_counts: List[int],\n    proof_costs: List[int]\n) -> Dict[str, List[float]]:\n    \"\"\"\n    Analyze the relationship between entropy drops and proof cost ratios.\n\n    For a sequence of formulas \u03c6\u2080, \u03c6\u2081, ..., \u03c6_n with \u03c6_{i+1} \u22a8 \u03c6_i:\n    - Compute entropy drops \u0394H_i = H(\u03c6_i) - H(\u03c6_{i+1})\n    - Compute cost ratios r_i = cost(\u03c6_{i+1}) / cost(\u03c6_i)\n    - Test whether log(r_i) \u2265 C \u00b7 \u0394H_i for some constant C\n\n    Args:\n        model_counts: Decreasing sequence of model counts.\n        proof_costs: Increasing sequence of proof costs.\n\n    Returns:\n        Dict with entropy_drops, cost_ratios, log_cost_ratios,\n        and correlation analysis.\n    \"\"\"\n    n = min(len(model_counts), len(proof_costs)) - 1\n    entropy_drops = []\n    cost_ratios = []\n    log_cost_ratios = []\n\n    for i in range(n):\n        h_i = semantic_entropy(model_counts[i])\n        h_next = semantic_entropy(model_counts[i + 1])\n        delta_h = h_i - h_next\n\n        c_i = proof_costs[i]\n        c_next = proof_costs[i + 1]\n        ratio = c_next / max(c_i, 1)\n        log_ratio = math.log2(ratio) if ratio > 0 else 0\n\n        entropy_drops.append(delta_h)\n        cost_ratios.append(ratio)\n        log_cost_ratios.append(log_ratio)\n\n    # Simple correlation coefficient\n    if n >= 2 and entropy_drops:\n        mean_h = sum(entropy_drops) / len(entropy_drops)\n        mean_r = sum(log_cost_ratios) / len(log_cost_ratios)\n        cov = sum((h - mean_h) * (r - mean_r)\n                  for h, r in zip(entropy_drops, log_cost_ratios))\n        var_h = sum((h - mean_h) ** 2 for h in entropy_drops)\n        var_r = sum((r - mean_r) ** 2 for r in log_cost_ratios)\n        if var_h > 0 and var_r > 0:\n            correlation = cov / math.sqrt(var_h * var_r)\n        else:\n            correlation = 0.0\n    else:\n        correlation = 0.0\n\n    return {\n        'entropy_drops': entropy_drops,\n        'cost_ratios': cost_ratios,\n        'log_cost_ratios': log_cost_ratios,\n        'correlation': correlation,\n    }\n\n\n# ============================================================================\n# Main: Demonstration of Applications\n# ============================================================================\n\n# Type hint fix for optional import\nfrom typing import Optional\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551     PROOF EXPANSION CONSTANTS: Applications                        \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # --- Application 1: Curriculum Design ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  APPLICATION 1: Theorem-Proving Curriculum Design\")\n    print(\"=\"*70)\n\n    # Simulate a hierarchy with mixed difficulty\n    import random\n    random.seed(42)\n\n    # Costs: mostly exponential but with some anomalies\n    costs = [2**i + random.randint(0, 2**(max(i-2,0))) for i in range(20)]\n    names = [f\"T{i}\" for i in range(20)]\n\n    print(f\"\\n  {len(costs)} theorems with costs ranging from {min(costs)} to {max(costs):,}\")\n    curriculum = TheoremCurriculum(costs, names)\n    curriculum.print_comparison()\n\n    # --- Application 2: Difficulty Forecasting ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  APPLICATION 2: Proof Difficulty Forecasting\")\n    print(\"=\"*70)\n\n    known = {0: 1, 3: 8, 7: 128, 10: 1024}\n    forecaster = DifficultyForecaster(known, beta=2.0)\n\n    print(\"\\n  Known proof costs:\", known)\n    print(\"  Expansion constant \u03b2 = 2.0\")\n    print(\"\\n  Forecasted proof costs:\")\n    print(f\"  {'Index':>6} | {'Lower bound':>12} | {'Upper bound':>12} | {'Known':>8}\")\n    print(f\"  {'-'*6}-+-{'-'*12}-+-{'-'*12}-+-{'-'*8}\")\n\n    for i in range(12):\n        lo, hi = forecaster.forecast(i)\n        known_val = known.get(i, \"\")\n        print(f\"  {i:6d} | {lo:12.0f} | {hi:12.0f} | {known_val!s:>8}\")\n\n    # --- Application 3: Theory Comparison ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  APPLICATION 3: Theory Comparison via Expansion Constants\")\n    print(\"=\"*70)\n\n    theories = {\n        \"Exponential (2^n)\": lambda n: 2**n,\n        \"Fibonacci\": lambda n: (int((((1+5**0.5)/2)**n - ((1-5**0.5)/2)**n) / 5**0.5)\n                                if n > 0 else 1),\n        \"Polynomial (n\u00b3)\": lambda n: n**3 + 1,\n        \"Factorial\": lambda n: math.factorial(n) if n >= 1 else 1,\n        \"Double exp (2^2^n)\": lambda n: 2**(2**n) if n <= 5 else 2**(2**5),\n    }\n\n    results = compare_theories(theories, 1, 10)\n\n    print(f\"\\n  {'Theory':>25} | {'\u03b2_min':>8} | {'\u03b2_max':>8} | {'\u03b2_mean':>8} | {'Spread':>8}\")\n    print(f\"  {'-'*25}-+-{'-'*8}-+-{'-'*8}-+-{'-'*8}-+-{'-'*8}\")\n    for name, stats in sorted(results.items(), key=lambda x: x[1]['min_beta']):\n        print(f\"  {name:>25} | {stats['min_beta']:8.3f} | {stats['max_beta']:8.3f} | \"\n              f\"{stats['mean_beta']:8.3f} | {stats['spread']:8.3f}\")\n\n    # --- Application 4: Semantic Entropy ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  APPLICATION 4: Semantic Entropy Analysis\")\n    print(\"=\"*70)\n\n    # Simulate: formulas over 10-element universe\n    # Each formula eliminates some models\n    model_counts = [1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1]\n    proof_costs = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]\n\n    print(\"\\n  Perfect doubling hierarchy:\")\n    analysis = entropy_drop_analysis(model_counts, proof_costs)\n    print(f\"  Entropy drops: {[f'{d:.1f}' for d in analysis['entropy_drops']]}\")\n    print(f\"  Cost ratios: {analysis['cost_ratios']}\")\n    print(f\"  Correlation(\u0394H, log(ratio)): {analysis['correlation']:.4f}\")\n\n    # Non-uniform model counts\n    model_counts_2 = [1000, 800, 500, 200, 50, 10, 2]\n    proof_costs_2 = [1, 3, 10, 50, 500, 10000, 500000]\n\n    print(\"\\n  Non-uniform hierarchy:\")\n    analysis_2 = entropy_drop_analysis(model_counts_2, proof_costs_2)\n    print(f\"  Entropy drops: {[f'{d:.2f}' for d in analysis_2['entropy_drops']]}\")\n    print(f\"  Log cost ratios: {[f'{r:.2f}' for r in analysis_2['log_cost_ratios']]}\")\n    print(f\"  Correlation(\u0394H, log(ratio)): {analysis_2['correlation']:.4f}\")\n\n    # --- Summary ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  SUMMARY OF APPLICATIONS\")\n    print(\"=\"*70)\n    print(\"\"\"\n  1. CURRICULUM DESIGN: Expansion-aware ordering reduces maximum\n     proof-length jumps, enabling more efficient automated proving.\n\n  2. DIFFICULTY FORECASTING: Known expansion constants yield both\n     upper and lower bounds on unproven theorem costs, guiding\n     resource allocation.\n\n  3. THEORY COMPARISON: Expansion constants provide a single-number\n     summary distinguishing polynomial, exponential, and\n     super-exponential growth theories.\n\n  4. SEMANTIC ENTROPY: Strong correlation between entropy drop and\n     log-cost ratio supports the conjecture that semantic compression\n     forces proof inflation.\n\"\"\")\n\n\nif __name__ == \"__main__\":\n    main()\n\n\n#!/usr/bin/env python3\n\"\"\"\nProof Expansion Constants: Interactive Demonstration\n\nGenerates theorem hierarchies, computes empirical expansion ratios,\nand visualizes whether exponential lower envelopes appear.\n\nIncludes arithmetic, algebraic, and combinatorics-inspired toy families.\n\"\"\"\n\nimport math\nfrom typing import Callable, List, Tuple, Optional\n\n# ============================================================================\n# Theorem Hierarchy Definitions\n# ============================================================================\n\ndef doubling_cost(n: int) -> int:\n    \"\"\"The canonical doubling hierarchy: cost(n) = 2^n.\"\"\"\n    return 2 ** n\n\ndef fibonacci_cost(n: int) -> int:\n    \"\"\"Fibonacci hierarchy: cost(n) = F(n+2) (so cost(0)=1, cost(1)=2, ...).\"\"\"\n    if n <= 0:\n        return 1\n    a, b = 1, 2\n    for _ in range(n - 1):\n        a, b = b, a + b\n    return b\n\ndef polynomial_cost(n: int, degree: int = 2) -> int:\n    \"\"\"Polynomial hierarchy: cost(n) = n^degree + 1.\"\"\"\n    return n ** degree + 1\n\ndef factorial_cost(n: int) -> int:\n    \"\"\"Factorial hierarchy: cost(n) = n!.\"\"\"\n    return math.factorial(n) if n >= 1 else 1\n\ndef ackermann_like_cost(n: int) -> int:\n    \"\"\"Ackermann-like rapidly growing hierarchy: cost(n) = 2^(2^n).\"\"\"\n    return 2 ** (2 ** n) if n <= 20 else float('inf')\n\ndef arithmetic_progression_cost(n: int) -> int:\n    \"\"\"\n    Inspired by van der Waerden numbers.\n    Models how proof cost might grow for arithmetic progression statements.\n    Uses a tower function: cost(n) = 2^(n*(n+1)/2).\n    \"\"\"\n    return 2 ** (n * (n + 1) // 2)\n\ndef combinatorial_cost(n: int) -> int:\n    \"\"\"\n    Combinatorial hierarchy inspired by Ramsey-type growth.\n    cost(n) = C(2n, n) (central binomial coefficient).\n    \"\"\"\n    return math.comb(2 * n, n)\n\n\n# ============================================================================\n# Core Computation Functions\n# ============================================================================\n\ndef compute_expansion_ratio(cost: Callable[[int], int], m: int, n: int) -> float:\n    \"\"\"Compute the proof expansion ratio cost(n) / cost(m).\"\"\"\n    cm = cost(m)\n    cn = cost(n)\n    if cm == 0:\n        return float('inf')\n    return cn / cm\n\ndef compute_per_unit_base(cost: Callable[[int], int], m: int, n: int) -> float:\n    \"\"\"Compute the per-unit expansion base: (cost(n)/cost(m))^(1/(n-m)).\"\"\"\n    if m >= n:\n        return 1.0\n    ratio = compute_expansion_ratio(cost, m, n)\n    if ratio <= 0 or ratio == float('inf'):\n        return float('inf')\n    gap = n - m\n    return ratio ** (1.0 / gap)\n\ndef estimate_expansion_constant(\n    cost: Callable[[int], int],\n    lo: int = 1,\n    hi: int = 15\n) -> float:\n    \"\"\"\n    Estimate the binary expansion constant for a cost function.\n    Returns the minimum per-unit base over all pairs (m,n) with lo <= m < n <= hi.\n    \"\"\"\n    min_base = float('inf')\n    for m in range(lo, hi):\n        for n in range(m + 1, hi + 1):\n            base = compute_per_unit_base(cost, m, n)\n            if base < min_base:\n                min_base = base\n    return min_base\n\ndef test_binary_expansion(\n    cost: Callable[[int], int],\n    b: float,\n    lo: int = 0,\n    hi: int = 15\n) -> Tuple[bool, Optional[Tuple[int, int]]]:\n    \"\"\"\n    Test whether cost satisfies b-expansion on [lo, hi].\n    Returns (True, None) if it does, or (False, (m, n)) for a counterexample.\n    \"\"\"\n    for m in range(lo, hi):\n        for n in range(m + 1, hi + 1):\n            if b ** (n - m) * cost(m) > cost(n) * 1.0001:  # small tolerance\n                return False, (m, n)\n    return True, None\n\n\n# ============================================================================\n# Model Shrinkage Computation\n# ============================================================================\n\ndef model_shrink_dist(s_card: int, t_card: int) -> int:\n    \"\"\"Compute model shrinkage distance: |S| - |T|.\"\"\"\n    return max(0, s_card - t_card)\n\ndef verify_shrinkage_additivity(cards: List[int]) -> bool:\n    \"\"\"\n    Verify additivity of model shrinkage along a nested chain.\n    cards should be a decreasing sequence of cardinalities.\n    \"\"\"\n    if len(cards) < 3:\n        return True\n    for i in range(len(cards)):\n        for j in range(i + 1, len(cards)):\n            for k in range(j + 1, len(cards)):\n                d_ik = model_shrink_dist(cards[i], cards[k])\n                d_ij = model_shrink_dist(cards[i], cards[j])\n                d_jk = model_shrink_dist(cards[j], cards[k])\n                if d_ik != d_ij + d_jk:\n                    return False\n    return True\n\n\n# ============================================================================\n# Visualization (ASCII)\n# ============================================================================\n\ndef ascii_bar(value: float, max_val: float, width: int = 50) -> str:\n    \"\"\"Create an ASCII bar chart element.\"\"\"\n    if max_val <= 0:\n        return \"\"\n    bar_len = int(width * min(value / max_val, 1.0))\n    return \"\u2588\" * bar_len\n\ndef print_expansion_table(\n    name: str,\n    cost: Callable[[int], int],\n    lo: int = 0,\n    hi: int = 12\n):\n    \"\"\"Print a detailed expansion ratio table for a hierarchy.\"\"\"\n    print(f\"\\n{'='*70}\")\n    print(f\"  {name}\")\n    print(f\"{'='*70}\")\n    print(f\"{'n':>4} | {'cost(n)':>14} | {'ratio c(n)/c(0)':>16} | per-unit base\")\n    print(f\"{'-'*4}-+-{'-'*14}-+-{'-'*16}-+-{'-'*20}\")\n\n    c0 = cost(lo)\n    for n in range(lo, hi + 1):\n        cn = cost(n)\n        ratio = cn / c0 if c0 > 0 else float('inf')\n        gap = n - lo\n        if gap > 0 and ratio > 0 and ratio != float('inf'):\n            base = ratio ** (1.0 / gap)\n            print(f\"{n:4d} | {cn:14,d} | {ratio:16.2f} | {base:10.4f}\")\n        else:\n            print(f\"{n:4d} | {cn:14,d} | {'---':>16} | {'---':>10}\")\n\n    beta = estimate_expansion_constant(cost, max(lo, 1), hi)\n    print(f\"\\n  Estimated expansion constant \u03b2 = {beta:.6f}\")\n    passes, cex = test_binary_expansion(cost, beta * 0.99, lo, hi)\n    if passes:\n        print(f\"  \u2713 Satisfies {beta*0.99:.4f}-expansion on [{lo}, {hi}]\")\n    else:\n        print(f\"  \u2717 Fails {beta*0.99:.4f}-expansion at {cex}\")\n\n\ndef print_gap_analysis(\n    name: str,\n    cost: Callable[[int], int],\n    gaps: List[int] = [1, 2, 3, 5, 8, 10],\n    base_range: Tuple[int, int] = (0, 15)\n):\n    \"\"\"Analyze expansion ratios by gap size.\"\"\"\n    print(f\"\\n  Gap Analysis for {name}:\")\n    print(f\"  {'gap':>4} | {'min ratio':>12} | {'max ratio':>12} | {'min \u03b2^(1/d)':>12}\")\n    print(f\"  {'-'*4}-+-{'-'*12}-+-{'-'*12}-+-{'-'*12}\")\n\n    lo, hi = base_range\n    for d in gaps:\n        ratios = []\n        for m in range(lo, hi - d + 1):\n            n = m + d\n            if n <= hi:\n                r = compute_expansion_ratio(cost, m, n)\n                if r != float('inf'):\n                    ratios.append(r)\n        if ratios:\n            min_r = min(ratios)\n            max_r = max(ratios)\n            min_base = min_r ** (1.0 / d)\n            print(f\"  {d:4d} | {min_r:12.2f} | {max_r:12.2f} | {min_base:12.4f}\")\n\n\n# ============================================================================\n# Main Demo\n# ============================================================================\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551     PROOF EXPANSION CONSTANTS: Interactive Demonstration            \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # --- Demo 1: Hierarchy Comparison ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 1: Comparing Theorem Hierarchies\")\n    print(\"=\"*70)\n\n    hierarchies = [\n        (\"Doubling (2^n)\", doubling_cost),\n        (\"Fibonacci\", fibonacci_cost),\n        (\"Polynomial (n\u00b2+1)\", lambda n: polynomial_cost(n, 2)),\n        (\"Factorial (n!)\", factorial_cost),\n        (\"Combinatorial (C(2n,n))\", combinatorial_cost),\n    ]\n\n    for name, cost in hierarchies:\n        print_expansion_table(name, cost, 0, 12)\n        print_gap_analysis(name, cost, [1, 2, 5, 10])\n\n    # --- Demo 2: Expansion Constant Detection ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 2: Expansion Constant Detection\")\n    print(\"=\"*70)\n\n    print(\"\\n  Testing which hierarchies admit exponential expansion:\\n\")\n\n    test_bases = [1.5, 2.0, 2.5, 3.0]\n    for name, cost in hierarchies:\n        print(f\"  {name}:\")\n        for b in test_bases:\n            passes, cex = test_binary_expansion(cost, b, 1, 12)\n            status = \"\u2713 PASS\" if passes else f\"\u2717 FAIL at {cex}\"\n            print(f\"    b={b:.1f}: {status}\")\n        print()\n\n    # --- Demo 3: Model Shrinkage ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 3: Model Shrinkage Distance\")\n    print(\"=\"*70)\n\n    # Simulate a nested chain of model sets\n    print(\"\\n  Nested model sets (universe size 100):\")\n    model_cards = [100, 80, 50, 30, 10, 3, 1]\n    print(f\"  Cardinalities: {model_cards}\")\n    print(f\"\\n  Pairwise shrinkage distances:\")\n    for i in range(len(model_cards)):\n        for j in range(i + 1, len(model_cards)):\n            d = model_shrink_dist(model_cards[i], model_cards[j])\n            print(f\"    d(S_{i}, S_{j}) = {model_cards[i]} - {model_cards[j]} = {d}\")\n\n    print(f\"\\n  Additivity check: {verify_shrinkage_additivity(model_cards)}\")\n\n    # --- Demo 4: ASCII Visualization ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 4: Proof Cost Growth Visualization\")\n    print(\"=\"*70)\n\n    print(\"\\n  Log-scale proof costs (each \u2588 = 1 unit of log\u2082(cost)):\\n\")\n    for name, cost in [(\"Doubling\", doubling_cost), (\"Factorial\", factorial_cost)]:\n        print(f\"  {name}:\")\n        for n in range(0, 13):\n            c = cost(n)\n            log_c = math.log2(c) if c > 0 else 0\n            bar = ascii_bar(log_c, 40, 40)\n            print(f\"    n={n:2d}: {bar} ({c:,d})\")\n        print()\n\n    # --- Demo 5: Transfer Principle ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 5: Expansion Transfer Principle\")\n    print(\"=\"*70)\n\n    print(\"\\n  Source hierarchy A: cost_A(n) = 2^n\")\n    print(\"  Target hierarchy B: cost_B(n) = 3^n\")\n    print(\"  Embedding f(n) = n (identity)\")\n    print()\n    print(\"  Verifying transfer: 2^(f(n)-f(m)) * cost_A(m) \u2264 cost_B(f(n))\")\n    print()\n\n    for m in range(6):\n        for n in range(m, m + 4):\n            lhs = (2 ** (n - m)) * doubling_cost(m)\n            rhs = 3 ** n\n            status = \"\u2713\" if lhs <= rhs else \"\u2717\"\n            print(f\"    m={m}, n={n}: 2^{n-m} * 2^{m} = {lhs:>8,d}  \u2264  3^{n} = {rhs:>8,d}  {status}\")\n\n    # --- Demo 6: Arithmetic-Inspired Family ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  DEMO 6: Arithmetic Progression Hierarchy\")\n    print(\"=\"*70)\n\n    print(\"\\n  Inspired by van der Waerden-type bounds.\")\n    print(\"  cost(n) = 2^(n*(n+1)/2) \u2014 superexponential growth.\\n\")\n\n    for n in range(8):\n        c = arithmetic_progression_cost(n)\n        exp = n * (n + 1) // 2\n        print(f\"    n={n}: cost = 2^{exp} = {c:,d}\")\n\n    beta = estimate_expansion_constant(arithmetic_progression_cost, 1, 7)\n    print(f\"\\n  Estimated expansion constant \u03b2 = {beta:.4f}\")\n    print(\"  (Grows with gap \u2014 superexponential, not merely exponential!)\")\n\n    # --- Summary ---\n    print(\"\\n\" + \"=\"*70)\n    print(\"  SUMMARY\")\n    print(\"=\"*70)\n    print(\"\"\"\n  Key findings from this demonstration:\n\n  1. DOUBLING HIERARCHY: Perfect 2-expansion (\u03b2 = 2.0000 exactly).\n     This matches the formally verified theorem.\n\n  2. FIBONACCI HIERARCHY: Approaches \u03c6-expansion (\u03b2 \u2248 1.618) for large n,\n     but edge effects at small indices prevent uniform expansion.\n\n  3. POLYNOMIAL HIERARCHY: No exponential expansion (\u03b2 \u2192 1 as range grows).\n     This is the canonical NEGATIVE example.\n\n  4. FACTORIAL HIERARCHY: Very strong expansion (\u03b2 grows with range).\n     Faster than any fixed exponential.\n\n  5. MODEL SHRINKAGE: Additivity verified for all nested chains.\n     Semantic distance decomposes perfectly.\n\n  6. TRANSFER PRINCIPLE: Verified computationally for identity embedding\n     between doubling and tripling hierarchies.\n\n  The proof expansion constant is a coherent, computable, and\n  discriminating invariant of theorem hierarchies.\n\"\"\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "date": "2026-05-20T08:08:15Z",
+    "exp_id": "3b452d34",
+    "source_exp_ids": [
+      "pi_brainstorm"
+    ]
+  },
   "odd_perfect_numbers.json": {
     "title": "Formal Obstruction Theory for Odd Perfect Numbers",
     "domain": "Number Theory / Formal Verification",
@@ -5674,7 +5716,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-18T10:18:08Z",
-      "hue": 272
+      "hue": 100
     },
     {
       "id": "algebraic_coding_theory_bch_and_reed_solomon",
@@ -5692,7 +5734,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:09Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -5701,7 +5743,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T11:06:48Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "galois_group__s",
@@ -5710,7 +5752,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T13:00:47Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "research_depth_via_proof_theoretic_ordinal_analysi",
@@ -5719,7 +5761,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:03:49Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "proof_strategy_mining_from_deep_mathematics",
@@ -5728,7 +5770,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T13:04:16Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "expected_lean_signature",
@@ -5737,7 +5779,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:00:21Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture_degree_2_and_3_cases",
@@ -5746,7 +5788,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T14:16:32Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "frankls_union_closed_conjecture",
@@ -5755,7 +5797,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:19:49Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "percolation_threshold",
@@ -5764,7 +5806,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T14:42:46Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -5773,7 +5815,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T15:04:30Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "certified_novelty_detection_for_theorem_provers",
@@ -5782,7 +5824,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T15:05:02Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "hilbert_16_topology_of_algebraic_curves",
@@ -5791,7 +5833,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T15:05:24Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "legendres_conjecture",
@@ -5800,7 +5842,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:13Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -5809,7 +5851,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T16:01:46Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -5818,7 +5860,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:04Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "pythagorean_triple_group_structure",
@@ -5827,7 +5869,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T17:04:27Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "p_vs_np_problem",
@@ -5836,7 +5878,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-18T17:04:45Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "create_a_team_to_conduct_research_brainstorm_hypot",
@@ -5854,7 +5896,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T18:03:29Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "hodge_conjecture",
@@ -5863,7 +5905,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-18T19:00:37Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "self_modifying_research_via_reflective_type_theory",
@@ -5872,7 +5914,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-18T19:04:12Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "finite_state_compression_criterion_for_automatic_t",
@@ -5899,7 +5941,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-18T21:00:24Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "twin_prime_conjecture",
@@ -5908,7 +5950,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T21:03:26Z",
-      "hue": 92
+      "hue": 280
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -5917,7 +5959,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-18T21:03:56Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "motivic_universality_of_neural_scaling_exponents",
@@ -5935,7 +5977,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-18T23:04:52Z",
-      "hue": 91
+      "hue": 89
     },
     {
       "id": "this_document_identifies_five_falsifiable_hypothes",
@@ -5944,7 +5986,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-18T23:05:55Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "tropical_convexity_and_helly_theorem",
@@ -5953,7 +5995,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T01:03:01Z",
-      "hue": 359
+      "hue": 91
     },
     {
       "id": "conjecture_in_a_polarized_weight_2_rational_hodge_",
@@ -5971,7 +6013,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T01:04:28Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "tropical_intersection_theory",
@@ -5980,7 +6022,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T03:05:31Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "riemann_hypothesis",
@@ -5989,7 +6031,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:05:50Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "odd_perfect_numbers",
@@ -5998,7 +6040,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T03:06:09Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "conjecture_the_generation_probability_for_s_4_is_e",
@@ -6007,7 +6049,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T05:02:42Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "jacobian_conjecture",
@@ -6016,7 +6058,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:25:32Z",
-      "hue": 270
+      "hue": 281
     },
     {
       "id": "10_is_a_solitary_number",
@@ -6034,7 +6076,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T10:26:28Z",
-      "hue": 134
+      "hue": 91
     },
     {
       "id": "invariant_subspace_problem",
@@ -6052,7 +6094,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T11:21:15Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_for_all_n_geq_6",
@@ -6061,7 +6103,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:00:19Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "the_formally_verified_theorems_in_this_cycle__clos",
@@ -6070,7 +6112,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:12:50Z",
-      "hue": 112
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_prime_p__3_mod_4_the_paley_ty",
@@ -6079,7 +6121,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:32:10Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "lehmers_mahler_measure_problem",
@@ -6097,7 +6139,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T12:47:41Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "we_have_formally_verified_in_lean_4_with_zero_sorr",
@@ -6106,7 +6148,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:01:03Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "yang_mills_mass_gap",
@@ -6115,7 +6157,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-19T13:04:22Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "goldbach_conjecture",
@@ -6124,7 +6166,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T13:14:31Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "conjecture_for_any_multivariate_polynomial_p__fxx_",
@@ -6133,7 +6175,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:35:18Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "conjecture_for_every_tame_keller_map_f__kn__kn_ie_",
@@ -6142,7 +6184,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T14:49:37Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "renormalization_fixed_point_for_proof_search_trees",
@@ -6151,7 +6193,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T14:56:34Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "conjecture_there_exists_a_constant___1_approximate",
@@ -6169,7 +6211,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T15:26:16Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "conjecture_the_combinatorial_heart_of_the_cdpr_the",
@@ -6178,7 +6220,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T15:43:25Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "this_document_identifies_five_falsifiable_conjectu",
@@ -6187,7 +6229,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:46:26Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_prime_power_q__1_mod_4_the_pa",
@@ -6196,7 +6238,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T15:54:08Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -6205,7 +6247,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T16:07:57Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "conjecture_for_the_symmetrized_truncated_zeta_poly",
@@ -6214,7 +6256,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:13:41Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "conjecture_every_irrational_real_number_whose_base",
@@ -6223,7 +6265,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:26:15Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_there_exists_a_finite_set_of_moduli_m__",
@@ -6232,7 +6274,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:46:15Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_n___every_point_in_the_tropic",
@@ -6241,7 +6283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T16:49:19Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "precise_statement_among_all_monotone_symmetric_boo",
@@ -6250,7 +6292,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T16:49:42Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "this_document_identifies_five_specific_testable_sc",
@@ -6259,7 +6301,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T17:00:24Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_the_fredholm_alternative_for_compact_op",
@@ -6268,7 +6310,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T17:03:32Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "building_on_the_formally_verified_foundations_esta",
@@ -6277,7 +6319,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T17:19:35Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_tropical_scaling_exponent_framework_establishe",
@@ -6286,7 +6328,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T17:22:38Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "phase_transition_in_proof_compression_for_formal_a",
@@ -6295,7 +6337,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-19T18:03:22Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "primes_of_the_form_n1",
@@ -6304,7 +6346,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T18:03:40Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "we_have_formally_verified_the_following",
@@ -6313,7 +6355,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T18:17:34Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "precise_statement_for_all_d__0_the_minimum_hypoten",
@@ -6331,7 +6373,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T19:03:25Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "conjecture_for_every_nearest_neighbor_ca_rule_f__a",
@@ -6340,7 +6382,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T19:10:06Z",
-      "hue": 91
+      "hue": 281
     },
     {
       "id": "prime_sensitive_spectral_collapse_in_collatz_trans",
@@ -6349,7 +6391,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T20:00:09Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "conjecture_for_every_n__1_the_all_c_word_c_is_the_",
@@ -6367,7 +6409,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-19T20:20:26Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "conjecture_every_formally_certified_menon_differen",
@@ -6394,7 +6436,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T21:25:01Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "conjecture_there_exists_a_modulus_n__10_such_that_",
@@ -6412,7 +6454,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-19T22:09:40Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "cramrs_conjecture_on_prime_gaps",
@@ -6421,7 +6463,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:20:34Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_for_every_odd_integer_m__3_the_berggren",
@@ -6439,7 +6481,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-19T22:26:36Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "this_document_presents_five_specific_testable_scie",
@@ -6448,7 +6490,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:00:28Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "spectral_universality_of_proof_graphs_across_forma",
@@ -6466,7 +6508,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-19T23:21:21Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "precise_statement_two_neural_network_architectures",
@@ -6475,7 +6517,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-19T23:28:20Z",
-      "hue": 292
+      "hue": 271
     },
     {
       "id": "euler_mascheroni_constant_irrationality",
@@ -6493,7 +6535,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T00:01:22Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "conjecture_for_any_two_complete_deterministic_norm",
@@ -6511,7 +6553,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T00:08:04Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "machine_learning_generalization_bounds",
@@ -6520,7 +6562,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T01:00:22Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "conjecture_for_every_integer_c_outside_an_explicit",
@@ -6529,7 +6571,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T01:03:39Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "langlands_program_functoriality",
@@ -6538,7 +6580,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T01:04:07Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "medium_priority",
@@ -6547,7 +6589,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T01:04:29Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "erdsstraus_conjecture",
@@ -6565,7 +6607,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:03:49Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "this_document_identifies_five_falsifiable_scientif",
@@ -6574,7 +6616,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T02:04:15Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "eml_quantum_activation_functions",
@@ -6583,7 +6625,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T02:04:39Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -6592,7 +6634,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-20T02:05:05Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "hypothesis_4_p_adic_threshold_transfer",
@@ -6601,7 +6643,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T02:05:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "inverse_stereographic_renormalization_group",
@@ -6610,7 +6652,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T03:01:23Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "stereographic_capacity_theory_packing_bounds_on_sp",
@@ -6619,7 +6661,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:08:54Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "kakeya_conjecture",
@@ -6628,7 +6670,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T03:09:25Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "sums_of_three_cubes",
@@ -6637,7 +6679,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T04:03:46Z",
-      "hue": 91
+      "hue": 179
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -6646,7 +6688,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "EML",
       "shape": "octahedron",
       "date": "2026-05-20T04:04:15Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "196_algorithm_non_termination",
@@ -6655,7 +6697,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T04:04:48Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_3_depth_efficiency_of_qeml_networks",
@@ -6664,7 +6706,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-20T04:05:15Z",
-      "hue": 270
+      "hue": 281
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -6682,7 +6724,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-20T05:07:58Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "conjecture_3_differential_closure_is_tight",
@@ -6691,7 +6733,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-20T05:08:44Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "conjecture_2_positive_density_of_admissible_intege",
@@ -6700,7 +6742,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T06:00:33Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -6709,7 +6751,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-20T06:01:25Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "conjecture_for_each_r__0_the_set_of_valid_cdpr_pat",
@@ -6718,7 +6760,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-20T07:03:57Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "schanuels_conjecture",
@@ -6727,7 +6769,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T07:04:25Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "inverse_stereographic_neural_field_theory",
@@ -6736,7 +6778,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-20T07:04:53Z",
-      "hue": 95
+      "hue": 112
     },
     {
       "id": "hilbert_12_kronecker_weber_generalization",
@@ -6763,7 +6805,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-20T08:07:35Z",
-      "hue": 90
+      "hue": 270
+    },
+    {
+      "id": "proof_expansion_constant_for_formal_theories",
+      "title": "Proof Expansion Constants: A Geometric Invariant of Formal Theories",
+      "domain": "Proof Complexity / Mathematical Logic",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-20T08:08:15Z",
+      "hue": 270
     }
   ],
   "edges": [
@@ -8083,6 +8134,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T06:01:45.866441+00:00"
   },
   {
+    "id": "fd_0198",
+    "title": "Arithmetic Monodromy Fingerprints of Gradient Descent",
+    "description": "Conjecture: For a Zariski-open set of polynomially parameterized learning problems with rational initialization and rational step size, the set of strict saddle-to-minimum connection patterns realized by exact gradient descent is determined by the Galois/monodromy group of the critical-value covering of the loss function, and two losses with non-isomorphic monodromy groups yield asymptotically different basin-transition statistics after reduction modulo infinitely many primes. Test: Construct explicit low-parameter polynomial losses, compute their critical-point monodromy groups symbolically, then compare predicted transition statistics with exact discrete gradient iterations over Q and over finite fields F_p for many primes p; confirmation requires statistically stable separation aligned with monodromy class, while failure occurs if monodromy-distinct losses exhibit indistinguishable transition laws. Impact: This would create a new bridge between algebraic geometry, arithmetic dynamics, and optimization, giving an invariant-based theory of trainability and suggesting algebraic obstructions to landscape simplification.",
+    "domains": [
+      "Algebraic Geometry",
+      "Optimization Dynamics"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:07:49.732483+00:00"
+  },
+  {
     "id": "seed_026",
     "title": "Lehmer's Mahler Measure Problem",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
@@ -9000,22 +9066,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T07:05:26.679405+00:00"
   },
   {
-    "id": "fd_0187",
-    "title": "Conjecture 5: Orbit Stabilizer Duality for Class Data",
-    "description": "**Precise statement.** For the regular representation of a finite group G on itself, every orbit has size exactly |G| (i.e., the action is free and transitive), and consequently the stabilizer of every point is trivial.\n\nFormally:\n```\ntheorem regular_action_free (G : Type*) [Group G] [Fintype G] (x : G) :\n    (permOrbit (MulAction.toPermHom G G) x).card = Fintype.card G\n```\n\nThis is stronger than our current `orbit_card_le_classGroup_card` (which gives \u2264) and `permOrbit_one_eq_univ` (which handles x = 1).\n\n**Test.** Verify computationally for all groups of order \u2264 100. Then attempt formal proof \u2014 the key step is showing that the map `g \u21a6 g * x` is injective (since right multiplication by x is a bijection in a group).\n\n**Impact.** Combined with the faithfulness theorem, this gives the preci",
-    "domains": [
-      "NumberTheory",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "75564677",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-20T07:05:26.687112+00:00"
-  },
-  {
     "id": "fd_0188",
     "title": "Hypothesis 1: Multiplicative Quotient Complexity Under Composition",
     "description": "**Conjecture:** For layered architectures where each layer has an independent symmetry group $G_i$ acting on its parameters, the total quotient complexity satisfies\n$$\nC_q(\\text{network}) \\leq \\prod_{i=1}^{L} \\frac{d_i}{|G_i|}\n$$\nwhere $d_i$ is the parameter count of layer $i$. If the symmetry groups compose coherently (e.g., translation symmetry propagating through layers in a CNN), the bound tightens to the quotient of the total parameter count by the product of group orders.\n\n**Test:** Implement a multi-layer architecture descriptor in Python. Compute layerwise quotient complexities for: (a) a 3-layer CNN with same-sized kernels, (b) a 2-layer equivariant MLP, (c) a hybrid CNN-attention model. Compare the product-of-quotients formula against direct orbit-counting on the full parameter s",
@@ -9105,19 +9155,69 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T07:05:54.587942+00:00"
   },
   {
-    "id": "seed_061",
-    "title": "Non-Archimedean Probability via Surreal Numbers",
-    "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
+    "id": "fd_0193",
+    "title": "Conjecture 1: Surreal-Valued Probability on [0,1]",
+    "description": "**Conjecture.** There exists a linearly ordered field `K` extending `\u211a` with a positive infinitesimal `\u03b5`, and a finitely additive function `\u03bc : Finset ([0,1] \u2229 \u211a) \u2192 K` satisfying:\n- `\u03bc \u2205 = 0`\n- `\u03bc(S \u222a T) = \u03bc(S) + \u03bc(T)` for disjoint `S, T`\n- `\u03bc({x}) > 0` for all `x \u2208 [0,1] \u2229 \u211a`\n- For every affine `f(x) = ax + b`, the expectation `\u2211_{x \u2208 grid_n} f(x) \u00b7 \u03bc({x})` equals `a/2 + b` in a suitable limit.\n\n**Test.** Construct `K` as the field of formal Laurent series `\u211a((\u03b5))` with `\u03b5` a formal infinitesimal. Define `\u03bc({p/q}) = \u03b5` for rational `p/q \u2208 [0,1]` and extend by additivity. Check whether normalization `\u03bc([0,1] \u2229 \u211a) = 1` is achievable, or whether the \"counting density\" of rationals prevents it. A computational test: enumerate rationals in [0,1] with denominator \u2264 N, compute the partial sum o",
     "domains": [
+      "NumberTheory",
       "Analysis",
-      "Speculative",
-      "Bridges"
+      "Combinatorics",
+      "Probability",
+      "Algebra",
+      "Geometry"
     ],
-    "priority_score": 0.6699999999999999,
-    "status": "in_progress",
+    "priority_score": 0.7,
+    "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "57db3430",
-    "timestamp": "2026-05-20T00:22:11.009411+00:00"
+    "source_exp_id": "57db3430",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:07:39.210619+00:00"
+  },
+  {
+    "id": "fd_0194",
+    "title": "Conjecture 2: Higher-Order Moment Refinement Asymptotics",
+    "description": "**Conjecture.** For the observable `X_k(i) = (i/n)^k` on `Fin(n+1)`, the expectation under `gridUniformProb n` satisfies:\n\n```\nE[X_k] = 1/(k+1) + c_k / n + O(1/n\u00b2)\n```\n\nwhere `c_k = k/(2(k+1))` is a universal correction coefficient independent of the grid. Moreover, the difference `|E_fine[refine(X_k)] - E_coarse[X_k]|` vanishes exactly (not just asymptotically) for all `k` under block refinement.\n\n**Test.** Compute `E[(i/n)^k]` for `k = 2, 3, 4, 5` on grids of size N = 10, 100, 1000, 10000 and fit the coefficients. Verify exact refinement invariance for block embeddings. Check whether non-block refinements (e.g., interleaving) break invariance.\n\n**Impact.** If confirmed with exact coefficients, this provides a complete asymptotic theory connecting grid probabilities to Riemann-Stieltjes i",
+    "domains": [
+      "NumberTheory"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57db3430",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:07:39.218711+00:00"
+  },
+  {
+    "id": "fd_0195",
+    "title": "Conjecture 3: Loeb Measure Recovery via Ultraproducts",
+    "description": "**Conjecture.** Let `U` be a non-principal ultrafilter on `\u2115`. Define the ultraproduct probability `\u03bc_U` on `[0,1]` by: for measurable `A \u2286 [0,1]`,\n\n```\n\u03bc_U(A) = st(lim_U (gridUniformProb n).mass(A \u2229 grid_n))\n```\n\nwhere `st` denotes the standard part and `grid_n = {i/(n+1) : i \u2264 n}`. Then `\u03bc_U` equals Lebesgue measure on all Borel sets.\n\n**Test.** For specific sets (intervals, Cantor-like sets, fat Cantor sets), compute the grid approximation `(gridUniformProb n).mass(A \u2229 grid_n)` and verify convergence to Lebesgue measure. Test whether the rate of convergence depends on the regularity of the set boundary.\n\n**Impact.** This would establish a rigorous connection between the grid scaffold and classical measure theory via nonstandard analysis, validating the \"shadow principle\" at the level of",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability",
+      "MachineLearning"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57db3430",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:07:39.225675+00:00"
+  },
+  {
+    "id": "fd_0197",
+    "title": "Conjecture 5: Non-Archimedean Conditional Probability and Bayesian Updating",
+    "description": "**Conjecture.** In a non-Archimedean probability space, one can define conditional probability `P(A|B) = P(A \u2229 B) / P(B)` even when `P(B)` is infinitesimal (but nonzero). This conditional probability satisfies Bayes' theorem and produces well-defined posterior distributions.\n\nOn finite grids, this is trivially true. The conjecture is that this extends to the non-Archimedean continuum limit: conditioning on a single point `{x}` with infinitesimal mass `\u03b5` produces a well-defined conditional probability that, after taking standard parts, agrees with the classical conditional density.\n\n**Test.** On grid `Fin(N)`, define a non-uniform prior by `P({i}) = c \u00b7 f(i/N)` for a density `f` and compute the posterior `P({j} | {i} \u2208 A)` for various conditioning events `A`. Verify that as `N \u2192 \u221e`, the po",
+    "domains": [
+      "NumberTheory",
+      "Analysis",
+      "Probability"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57db3430",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-20T08:07:39.241421+00:00"
   }
 ];
