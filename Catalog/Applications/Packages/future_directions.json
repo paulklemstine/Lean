@@ -4659,7 +4659,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "df0960fe",
       "timestamp": "2026-05-20T11:04:44.119328+00:00"
     },
@@ -5601,25 +5601,6 @@
       "timestamp": "2026-05-20T14:07:49.484618+00:00"
     },
     {
-      "id": "fd_0291",
-      "title": "Conjecture E: Phase Locking Density Is Computable from the Chebotarev Distributi",
-      "description": "**Precise Statement.** For a polynomial gradient descent map $T : \\mathbb{Q}^n \\to \\mathbb{Q}^n$ with good reduction at all but finitely many primes, the density of primes $p$ for which the reduced orbit has period dividing $m$ equals the density of Frobenius elements in a specific conjugacy class of the arithmetic monodromy group $G$ of the $m$-th dynatomic polynomial of $T$. In particular, this density is a rational number computable from $G$.\n\n**Test.** For 1D quadratic maps $T(x) = x^2 + c$ with $c \\in \\mathbb{Q}$, compute the dynatomic polynomials for periods $m = 1, 2, 3$. Factor them and determine their Galois groups. Use the Chebotarev density theorem to predict the density of primes where the orbit from $x_0 = 0$ has period dividing $m$. Compare against empirical counts for primes",
-      "source_exp_id": "fc6b3f4a",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/fc6b3f4a",
-      "domains": [
-        "NumberTheory",
-        "Probability",
-        "Algebra"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "pruned",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T14:07:49.494775+00:00"
-    },
-    {
       "id": "fd_0289",
       "title": "Arithmetic Universality of Betti Barcodes for Polynomial Critical Loci",
       "description": "Conjecture: Let F and G be two polynomial loss functions with integer coefficients, possibly from different architectures, such that for all sufficiently large primes p their critical loci over \\(\\overline{\\mathbb{F}}_p\\) have the same point counts over \\(\\mathbb{F}_{p^r}\\) for every \\(r \\le R\\) and the same dimensions of singular strata. Then there exists a prime-independent finite filtration on their complex critical loci whose persistent Betti numbers agree in a stable range determined by R. Test: Compute critical schemes for families of polynomial models modulo many primes, estimate Frobenius zeta data and singular-stratum dimensions, then compare with persistent homology of complex or real critical sets after coefficient lifting. The conjecture is refuted by a pair with matching finite-field trace data but different stable barcodes, and supported by repeated cross-architecture matches. Impact: This would create a new arithmetic-to-topological transfer principle for loss landscapes, allowing modular computations over finite fields to predict global topological structure of optimization landscapes in characteristic zero.",
@@ -5654,23 +5635,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:08:49.211921+00:00"
-    },
-    {
-      "id": "fd_0291",
-      "title": "Direction 1",
-      "description": "(Average-Threshold) — Highest impact, directly implies Frankl if true, computationally testable now.",
-      "source_exp_id": "d237288b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
-      "domains": [
-        "Combinatorics"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T17:05:16.548869+00:00"
     },
     {
       "id": "fd_0296",
@@ -5744,24 +5708,6 @@
       "timestamp": "2026-05-20T17:12:49.300302+00:00"
     },
     {
-      "id": "fd_0300",
-      "title": "Conjecture 1: Full Growth Bound Theorem (inv case)",
-      "description": "**Conjecture:** For every EMLExpr `e` (including those with `inv` nodes), if `e.emlDepth ≤ D`, then there exist `C > 0` and `X` such that for all `x ≥ X`, `|e.eval x| ≤ iterExp (D + 1) (C * x)`.\n\n**Test:** Formalize the growth bound for expressions with `inv` by showing that rational functions (built from `+`, `*`, `neg`, `inv` applied to `x` and constants) have polynomial growth, and that `eml` layers add exactly one exponential level regardless of `inv` presence. The key step is proving that `inv` preserves eventual polynomial growth for no-eml subexpressions.\n\n**Impact:** This would extend the depth separation from inv-free to all EMLExpr, giving the fully general theorem: no bounded-depth EMLExpr can represent `iterExp n` for large `n`.\n\n---",
-      "source_exp_id": "4346710f",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
-      "domains": [
-        "NumberTheory",
-        "EML"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T18:17:04.929325+00:00"
-    },
-    {
       "id": "fd_0301",
       "title": "Conjecture 2: Tight Depth Bound (D+1 instead of D+3)",
       "description": "**Conjecture:** For every `D ≥ 0` and `n > D`, no inv-free EMLExpr of `emlDepth ≤ D` can represent `iterExp n` on positive reals.\n\nCurrently we prove separation for `n ≥ D + 3` due to slack in the growth comparison. The gap of 2 comes from the interplay between growth bound level (D+1) and the strict comparison chain (D+1 < D+2 < D+3).\n\n**Test:** Improve the growth bound to `iterExp (D + 1) (C * x)` → show `iterExp n x > iterExp (D + 1) (C * x)` directly for `n ≥ D + 2`, eliminating one level. Alternatively, prove the tight bound `n > D` by a direct structural induction argument that avoids the growth bound entirely.\n\n**Impact:** The tight bound would show that `emlExprIterExp n` with `emlDepth = n` is essentially optimal: no representation with fewer eml layers exists.\n\n---",
@@ -5798,25 +5744,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T18:17:04.954179+00:00"
-    },
-    {
-      "id": "fd_0303",
-      "title": "Conjecture 4: Depth Hierarchy for Trigonometric Extensions",
-      "description": "**Conjecture:** If the EML language is extended with a `trig(a,b) = a * sin(b)` primitive, the resulting \"EML+Trig\" language still cannot represent `iterExp n` at bounded depth, and furthermore the trig primitive does not help compress iterated exponentials.\n\n**Test:** Define `EMLTrigExpr` with both `eml` and `trig` constructors. Extend the growth bound theorem to show that `trig` nodes do not increase the exponential nesting level (since `|sin(t)| ≤ 1`). Prove that the depth separation still holds in the extended language.\n\n**Impact:** This would show that the depth hierarchy is robust under natural extensions of the expression language, strengthening the claim that it captures a fundamental structural property of iterated exponentials rather than an artifact of the EML formalism.\n\n---",
-      "source_exp_id": "4346710f",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
-      "domains": [
-        "NumberTheory",
-        "Analysis",
-        "EML"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "pruned",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T18:17:04.966156+00:00"
     },
     {
       "id": "fd_0304",
@@ -5875,23 +5802,6 @@
       "timestamp": "2026-05-20T18:18:00.033851+00:00"
     },
     {
-      "id": "fd_0303",
-      "title": "Refutation Criterion",
-      "description": "Find two extensionally equal functions with minimal depths *d₁* and *d₂* where |*d₁* - *d₂*| ≥ 2 but identical derivative envelopes. Alternatively, find an expression where the derivative growth class underestimates the true depth by ≥ 2.",
-      "source_exp_id": "c6c90908",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c6c90908",
-      "domains": [
-        "Bridges"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T18:18:26.990930+00:00"
-    },
-    {
       "id": "fd_0304",
       "title": "Prime-Uniform Spectral Gap for Pollard-Rho Functional Graphs",
       "description": "Conjecture: Let f_c(x)=x^2+c over F_p with c fixed in Z and excluding the exceptional PCF/monomial-Chebyshev-type parameters. Form the directed functional graph G_{p,c} on F_p and let P_{p,c} be the Markov operator of the random walk that with probability 1/2 stays put and with probability 1/2 follows x->f_c(x). Then there exists an absolute epsilon>0 such that for a density-1 set of primes p, every nontrivial eigenvalue lambda of P_{p,c} satisfies |lambda|<=1-epsilon. Test: For many non-exceptional c, compute spectra of P_{p,c} over large prime ranges and estimate whether the second-largest eigenvalue is uniformly bounded away from 1 on a density-1 subset; refute by exhibiting a non-exceptional c with lambda_2->1 along a positive-density prime subsequence. Impact: Establishes a new pseudorandomness universality class for arithmetic dynamical systems, with consequences for collision times, mixing of polynomial iteration modulo primes, and randomness guarantees for rho-style integer factorization heuristics.",
@@ -5908,6 +5818,127 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T18:18:38.209090+00:00"
+    },
+    {
+      "id": "fd_0305",
+      "title": "Conjecture 1: Stability of Approximate Log-Separability",
+      "description": "**Conjecture.** For every compact rectangle $K \\subset (0,\\infty)^2$, there exists a constant $C_K > 0$ such that if a positive continuous function $f$ has uniformly small interaction defect on $K$:\n\n$$\\sup_{x_1,x_2,y_1,y_2 \\in K} |\\log f(x_1,y_1) + \\log f(x_2,y_2) - \\log f(x_1,y_2) - \\log f(x_2,y_1)| \\le \\varepsilon,$$\n\nthen $f$ is uniformly close on $K$ to a multiplicatively separable function $\\phi(x)\\psi(y)$:\n\n$$\\inf_{\\phi,\\psi} \\sup_{(x,y) \\in K} |\\log f(x,y) - \\log \\phi(x) - \\log \\psi(y)| \\le C_K \\cdot \\varepsilon.$$\n\n**Test.** Sample smooth perturbations of separable functions (e.g., $f(x,y) = x^2 y^3 (1 + \\varepsilon \\sin(xy))$), compute both sides numerically for varying $\\varepsilon$, and test whether a linear bound $C_K \\cdot \\varepsilon$ holds. Our computational demo already sh",
+      "source_exp_id": "df0960fe",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/df0960fe",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:01.648257+00:00"
+    },
+    {
+      "id": "fd_0306",
+      "title": "Conjecture 2: Smooth Mixed-Derivative Characterization",
+      "description": "**Conjecture.** Let $f : (0,\\infty)^2 \\to (0,\\infty)$ be $C^2$ and define $G(s,t) = \\log f(e^s, e^t)$. Then $f$ is multiplicatively separable if and only if the mixed partial derivative $\\frac{\\partial^2 G}{\\partial s \\partial t} = 0$ everywhere.\n\n**Test.** For $f(x,y) = x^a y^b$, compute $G(s,t) = as + bt$ and verify $\\partial^2 G / \\partial s \\partial t = 0$. For $f(x,y) = (x+y)^2$, compute $G(s,t) = 2\\log(e^s + e^t)$ and verify that $\\partial^2 G / \\partial s \\partial t = e^{s+t}/(e^s + e^t)^2 \\neq 0$. For the formal proof, integrate $\\partial^2 G / \\partial s \\partial t = 0$ using the fundamental theorem of calculus to get $G(s,t) = u(s) + v(t)$.\n\n**Impact.** This connects the algebraic characterization (cross-ratio identity) to an analytic one (PDE condition), bridging the discrete an",
+      "source_exp_id": "df0960fe",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/df0960fe",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Physics",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:01.660231+00:00"
+    },
+    {
+      "id": "fd_0307",
+      "title": "Conjecture 3: Multivariate Generalization (Tensor Rank One)",
+      "description": "**Conjecture.** A positive continuous function $f : (0,\\infty)^n \\to (0,\\infty)$ satisfies $f(x_1, \\ldots, x_n) = \\prod_{i=1}^n \\phi_i(x_i)$ for continuous positive $\\phi_i$ if and only if for every pair of coordinates $i \\neq j$ and every fixing of the remaining coordinates, the resulting bivariate function satisfies the cross-ratio identity.\n\n**Test.** Implement the trivariate case: test $f(x,y,z) = x^2 y^3 z$ (separable) and $f(x,y,z) = (x+y) z$ (non-separable in $x,y$ but separable in $(x,y)$ vs $z$). Verify that the pairwise cross-ratio test correctly detects which coordinate pairs interact.\n\n**Impact.** This would extend the theory from bivariate to arbitrary dimension, enabling tensor decomposition tests for multivariate positive kernels. It connects to Tucker decomposition and CP-r",
+      "source_exp_id": "df0960fe",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/df0960fe",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Algebra",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:01.671542+00:00"
+    },
+    {
+      "id": "fd_0308",
+      "title": "Conjecture 4: Information-Geometric Interpretation",
+      "description": "**Conjecture.** The log interaction defect $D_f(x_1, x_2, y_1, y_2)$ is the exponential of a signed area in the Fisher information geometry of the exponential family generated by $f$. Specifically, if $f$ defines a bivariate exponential family $p_\\theta(x,y) \\propto f(x,y)^{\\theta}$, then the interaction defect equals $\\exp(\\theta^2 \\cdot A)$ where $A$ is the mixed Fisher curvature.\n\n**Test.** Compute the Fisher information matrix for parametric families of the form $f_\\theta(x,y) = (x^a y^b)^\\theta$ and $(x+y)^{2\\theta}$. Check whether the defect's dependence on $\\theta$ matches the predicted quadratic scaling via Fisher curvature.\n\n**Impact.** This would establish a deep connection between multiplicative separability and information geometry, showing that the interaction defect is not ju",
+      "source_exp_id": "df0960fe",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/df0960fe",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Topology",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:01.683258+00:00"
+    },
+    {
+      "id": "fd_0309",
+      "title": "Conjecture 5: Categorical Characterization via Monoidal Functors",
+      "description": "**Conjecture.** The log-linearization equivalence is an instance of a natural isomorphism between two monoidal functors: the \"multiplicative\" functor $(\\mathbb{R}_{>0}, \\times) \\to (\\text{Pos}, \\times)$ and the \"additive\" functor $(\\mathbb{R}, +) \\to (\\text{Pos}, +_{\\log})$, where $\\text{Pos}$ is the category of positive continuous functions on the positive quadrant and $+_{\\log}$ denotes pointwise addition in log coordinates.\n\n**Test.** Formalize the categories and functors in Lean 4 using Mathlib's category theory library. Verify that the main theorem corresponds to the existence of a natural isomorphism. Check functoriality: does composition of separable functions remain separable? (Yes: $f \\cdot g$ separable if both $f, g$ are.)\n\n**Impact.** A categorical formulation would make the the",
+      "source_exp_id": "df0960fe",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/df0960fe",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Bridges",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:01.694482+00:00"
+    },
+    {
+      "id": "fd_0305",
+      "title": "Prime-Indexed Persistent Cohomology Recovers Galois Monodromy for Polynomial Dyn",
+      "description": "Conjecture: Let f,g in Z[x] be non-exceptional polynomials of the same degree d >= 2. For each sufficiently large prime p, form the directed functional graph of f on F_p and extract a persistence module from the filtration by preperiodic depth together with cycle-length strata. If the resulting barcode distributions agree for f and g for a density-1 set of primes p, then f and g have the same geometric monodromy group over Q(t), and conversely distinct geometric monodromy groups force asymptotically different barcode statistics on a positive-density set of primes. Test: Compute these barcodes for broad families with known monodromy groups (e.g. unicritical, Chebyshev-type, generic full symmetric/alternating monodromy) and check whether clustering by barcode statistics matches monodromy classification; a counterexample is any pair with distinct monodromy groups but asymptotically indistinguishable barcode laws, or same monodromy but systematically separated laws. Impact: This would create a new bridge from arithmetic dynamics to topological data analysis, giving a computable topological fingerprint for hidden Galois symmetry and potentially a new route to classifying polynomial dynamical systems from finite-field experiments alone.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Topological Data Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:19:18.070551+00:00"
     }
   ],
   "pruned": [
@@ -6375,6 +6406,58 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T17:05:16.565043+00:00"
+    },
+    {
+      "id": "fd_0300",
+      "title": "Conjecture 1: Full Growth Bound Theorem (inv case)",
+      "description": "**Conjecture:** For every EMLExpr `e` (including those with `inv` nodes), if `e.emlDepth ≤ D`, then there exist `C > 0` and `X` such that for all `x ≥ X`, `|e.eval x| ≤ iterExp (D + 1) (C * x)`.\n\n**Test:** Formalize the growth bound for expressions with `inv` by showing that rational functions (built from `+`, `*`, `neg`, `inv` applied to `x` and constants) have polynomial growth, and that `eml` layers add exactly one exponential level regardless of `inv` presence. The key step is proving that `inv` preserves eventual polynomial growth for no-eml subexpressions.\n\n**Impact:** This would extend the depth separation from inv-free to all EMLExpr, giving the fully general theorem: no bounded-depth EMLExpr can represent `iterExp n` for large `n`.\n\n---",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:17:04.929325+00:00"
+    },
+    {
+      "id": "fd_0303",
+      "title": "Refutation Criterion",
+      "description": "Find two extensionally equal functions with minimal depths *d₁* and *d₂* where |*d₁* - *d₂*| ≥ 2 but identical derivative envelopes. Alternatively, find an expression where the derivative growth class underestimates the true depth by ≥ 2.",
+      "source_exp_id": "c6c90908",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c6c90908",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:18:26.990930+00:00"
+    },
+    {
+      "id": "fd_0291",
+      "title": "Direction 1",
+      "description": "(Average-Threshold) — Highest impact, directly implies Frankl if true, computationally testable now.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Combinatorics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.548869+00:00"
     }
   ]
 }
