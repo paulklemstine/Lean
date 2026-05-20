@@ -71,18 +71,18 @@
 
         // ─── Colors by domain ───
         const DOMAIN_COLORS = {
-            'Algebra': { h: 220, s: 80, l: 60 },
-            'Bridges': { h: 280, s: 70, l: 65 },
-            'Computation': { h: 160, s: 70, l: 50 },
-            'Cryptography': { h: 45, s: 80, l: 55 },
-            'EML': { h: 190, s: 75, l: 55 },
-            'Geometry': { h: 120, s: 60, l: 50 },
-            'Logic': { h: 300, s: 70, l: 60 },
-            'MachineLearning': { h: 30, s: 80, l: 55 },
-            'Physics': { h: 200, s: 80, l: 55 },
-            'Pythagorean': { h: 340, s: 70, l: 55 },
-            'Speculative': { h: 260, s: 65, l: 60 },
-            'Tropical': { h: 10, s: 75, l: 55 }
+            'Algebra':        { h: 0,   s: 80, l: 55 },
+            'Tropical':       { h: 30,  s: 75, l: 55 },
+            'MachineLearning': { h: 60,  s: 80, l: 50 },
+            'Cryptography':   { h: 90,  s: 70, l: 50 },
+            'Geometry':       { h: 120, s: 60, l: 50 },
+            'EML':            { h: 150, s: 70, l: 50 },
+            'Computation':    { h: 180, s: 70, l: 50 },
+            'Physics':        { h: 210, s: 80, l: 55 },
+            'Speculative':    { h: 240, s: 70, l: 60 },
+            'Bridges':        { h: 270, s: 70, l: 60 },
+            'Logic':          { h: 300, s: 70, l: 60 },
+            'Pythagorean':    { h: 330, s: 70, l: 55 }
         };
         function nodeColor(node) {
             const d = node.primary_domain || 'Bridges';
