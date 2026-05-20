@@ -584,8 +584,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "4406ba90",
       "timestamp": "2026-05-20T00:22:10.986872+00:00"
     },
     {
@@ -2381,8 +2381,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "4d7cdd64",
       "timestamp": "2026-05-20T02:04:42.915129+00:00"
     },
     {
@@ -2747,6 +2747,107 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T03:08:58.160015+00:00"
+    },
+    {
+      "id": "fd_0147",
+      "title": "Conjecture 1: Extremizers Minimize Overlaps, Not Maximize Concurrency",
+      "description": "**Conjecture.** For line families in $\\mathbb{F}_p^2$ consisting of one affine line per slope (slopes $0, 1, \\ldots, p-1$), the minimum carrier size is exactly $p(p+1)/2$, achieved by configurations where pairwise intersection points are all distinct — *not* by star-like (maximal concurrency) configurations.\n\n**Test.** Exhaustive enumeration for primes $p = 3, 5, 7, 11, 13$:\n1. Enumerate all $p^p$ intercept choices.\n2. Compute carrier size.\n3. Verify that the minimum equals $p(p+1)/2$.\n4. Verify that all minimizers have the property that every pair of lines intersects in a *distinct* point (i.e., the $\\binom{p}{2}$ pairwise intersection points are all distinct).\n\n**Refutation criterion.** A single prime $p$ where the minimum carrier size differs from $p(p+1)/2$, or where a minimizer has tw",
+      "source_exp_id": "35ea5a27",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/35ea5a27",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T03:09:29.613697+00:00"
+    },
+    {
+      "id": "fd_0148",
+      "title": "Conjecture 2: Energy–Carrier Duality and Tight Cauchy–Schwarz",
+      "description": "**Conjecture.** For any discrete Kakeya configuration with $|D|$ directions and constant line size $L$, the Cauchy–Schwarz bound\n$$|D| \\cdot L \\leq \\sqrt{|\\text{carrier}| \\cdot E}$$\nis tight (equality holds) if and only if the multiplicity function is constant on the carrier.\n\n**Test.** For each prime $p \\leq 11$:\n1. Generate all one-line-per-slope families.\n2. Compute carrier size, energy, and the Cauchy–Schwarz ratio $\\frac{(|D| \\cdot L)^2}{|\\text{carrier}| \\cdot E}$.\n3. For configurations achieving ratio $= 1$, verify that point multiplicity is constant.\n4. For configurations with ratio $< 1$, verify that multiplicity is non-constant.\n\n**Refutation criterion.** A configuration where the ratio equals 1 but the multiplicity function is non-constant, or vice versa.\n\n**Impact.** Would chara",
+      "source_exp_id": "35ea5a27",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/35ea5a27",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Physics",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T03:09:29.620021+00:00"
+    },
+    {
+      "id": "fd_0149",
+      "title": "Conjecture 3: Additive Energy Controls Kakeya Compression",
+      "description": "**Conjecture.** Let $A \\subseteq \\mathbb{Z}/N\\mathbb{Z}$ contain arithmetic progressions of length $m$ in each of $D$ directions. Then\n$$|A| \\geq \\frac{D \\cdot m}{\\sqrt{E_+(A) / |A|}}$$\nwhere $E_+(A) = |\\{(a_1, a_2, a_3, a_4) \\in A^4 : a_1 + a_2 = a_3 + a_4\\}|$ is the additive energy.\n\nMore precisely, the Cauchy–Schwarz energy inequality applied to the AP configuration gives\n$$(D \\cdot m)^2 \\leq |A| \\cdot E_{\\text{Kakeya}}$$\nwhere $E_{\\text{Kakeya}} \\leq E_+(A)$ under suitable distinctness conditions.\n\n**Test.** For $N = p$ prime, $p \\leq 23$:\n1. For random direction sets $V \\subseteq \\mathbb{F}_p^*$ of size $D = \\lfloor p/2 \\rfloor$, find optimal base points minimizing $|A|$.\n2. Compute $E_+(A)$ and the Kakeya energy $E_{\\text{Kakeya}}$.\n3. Verify that $E_{\\text{Kakeya}} \\leq E_+(A)$ and ",
+      "source_exp_id": "35ea5a27",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/35ea5a27",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Physics",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T03:09:29.625798+00:00"
+    },
+    {
+      "id": "fd_0150",
+      "title": "Conjecture 4: Polynomial Method Gives Sharp Bounds in $\\mathbb{F}_q^n$",
+      "description": "**Conjecture.** For the Dvir-style finite-field Kakeya problem: a subset of $\\mathbb{F}_q^n$ containing a line in every direction has size at least $\\binom{q + n - 1}{n}$. Moreover, for $n = 2$, the extremizers are precisely the complements of degree-$(q-1)$ algebraic curves (i.e., sets defined by $\\{x : f(x) \\neq 0\\}$ for a homogeneous polynomial of degree $q - 1$).\n\n**Test.** For small $(q, n)$ pairs with $q$ prime, $q \\leq 7$, $n = 2$:\n1. Enumerate all subsets containing a line in every direction.\n2. Verify the lower bound $\\binom{q+1}{2} = q(q+1)/2$.\n3. Check whether minimizers correspond to curve complements.\n\n**Refutation criterion.** A minimizer that is not the complement of a degree-$(q-1)$ curve.\n\n**Impact.** Would give a complete algebraic characterization of finite-field Kakeya ",
+      "source_exp_id": "35ea5a27",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/35ea5a27",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T03:09:29.630899+00:00"
+    },
+    {
+      "id": "fd_0151",
+      "title": "Conjecture 5: Pairwise Intersection Bounds Bootstrap to Hausdorff Dimension",
+      "description": "**Conjecture.** Let $E \\subseteq \\mathbb{R}^n$ be a Besicovitch set. Define the discretized Kakeya configuration at scale $\\delta$ by covering $E$ with $\\delta$-cubes and taking lines to be $\\delta$-tubes in each direction. If the pairwise intersection parameter $T(\\delta)$ satisfies $T(\\delta) \\leq C \\delta^{-\\alpha}$ for all $\\delta > 0$, then $\\dim_H(E) \\geq n - \\alpha$.\n\nIn particular, if tubes in distinct directions have intersection of measure at most $\\delta^{n-1}$ (the generic bound), then $T(\\delta) \\leq C \\delta^{-1}$ and we recover $\\dim_H(E) \\geq n - 1$.\n\n**Test.**\n1. Formalize the discretization procedure in Lean, defining $\\delta$-cubes and $\\delta$-tubes.\n2. For known Besicovitch set constructions (e.g., Perron trees), compute $T(\\delta)$ numerically.\n3. Verify that the pred",
+      "source_exp_id": "35ea5a27",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/35ea5a27",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "Combinatorics",
+        "Probability",
+        "Bridges",
+        "Algebra",
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T03:09:29.635644+00:00"
     }
   ],
   "pruned": [
