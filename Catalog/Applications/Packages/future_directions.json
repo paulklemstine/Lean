@@ -353,7 +353,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "75564677",
       "timestamp": "2026-05-20T00:22:10.980099+00:00"
     },
@@ -3450,6 +3450,101 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T06:01:45.866441+00:00"
+    },
+    {
+      "id": "fd_0183",
+      "title": "Conjecture 1: Cycle Type Signatures Distinguish Finite Abelian Groups",
+      "description": "**Precise statement.** For any two non-isomorphic finite abelian groups G and H of the same order, the multiset of cycle types of their regular permutation representations are distinct.\n\nFormally: if G ≇ H, then the Counter `{cycle_type(ρ_G(g)) : g ∈ G, g ≠ 1}` differs from `{cycle_type(ρ_H(h)) : h ∈ H, h ≠ 1}`.\n\n**Test.** Enumerate all pairs of non-isomorphic abelian groups up to order N and compare cycle type signatures. Our current computation confirms the conjecture for N ≤ 30 (all 11 orders with multiple abelian groups). Extending to N ≤ 1000 would provide strong computational evidence. A counterexample immediately disproves the conjecture.\n\n**Impact.** If true, this provides a purely combinatorial invariant that classifies abelian groups — a representation-theoretic fingerprint compu",
+      "source_exp_id": "75564677",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/75564677",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:26.659533+00:00"
+    },
+    {
+      "id": "fd_0184",
+      "title": "Conjecture 2: Extension from Finite Class Actions to Ray Class Data",
+      "description": "**Precise statement.** The `ExplicitClassFieldDatum` structure can be extended with a modulus (a formal product of primes) to model ray class groups, and the collapse theorem generalizes: if the ray class group modulo m is trivial, then every abelian extension of conductor dividing m is trivial.\n\nFormally: define `RayClassFieldDatum R m` extending `ExplicitClassFieldDatum R` with conductor data, and prove:\n```\ntheorem ray_class_collapse (D : RayClassFieldDatum R m) [Subsingleton D.Cl] :\n    -- the associated extension is trivial\n```\n\n**Test.** Implement `RayClassFieldDatum` in Lean 4 and verify that it specializes correctly for known examples: (a) ℚ with modulus m should recover the cyclotomic field ℚ(ζ_m); (b) imaginary quadratic fields with trivial ray class group should yield no new ext",
+      "source_exp_id": "75564677",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/75564677",
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:26.666460+00:00"
+    },
+    {
+      "id": "fd_0185",
+      "title": "Conjecture 3: Faithful Representations Lift to Linear Representations",
+      "description": "**Precise statement.** For any finite abelian group G (modeling a class group), the faithful permutation representation ρ : G →* Equiv.Perm G decomposes over ℂ into a direct sum of one-dimensional representations (characters), and the multiplicity of each character equals 1.\n\nFormally:\n```\ntheorem regular_rep_decomposition (G : Type*) [CommGroup G] [Fintype G] :\n    ∃ (chars : Finset (G →* ℂˣ)),\n      chars.card = Fintype.card G ∧\n      -- the regular representation decomposes as ⊕ χ over chars\n```\n\n**Test.** For small abelian groups (Z/n, Z/2 × Z/2, Z/2 × Z/4), compute the character table and verify that the regular representation decomposes with multiplicity one. The standard theory (Maschke's theorem + Schur's lemma for abelian groups) guarantees this, but the formalization would create",
+      "source_exp_id": "75564677",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/75564677",
+      "domains": [
+        "NumberTheory",
+        "Combinatorics",
+        "Bridges",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:26.673262+00:00"
+    },
+    {
+      "id": "fd_0186",
+      "title": "Conjecture 4: Class Group Structure from Fixed-Point Statistics",
+      "description": "**Precise statement.** The isomorphism type of a finite abelian group G is uniquely determined by the function `f(g) = |Fix(ρ(g))|` — the number of fixed points of each element's regular permutation.\n\nNote: for the regular representation, `f(g) = |G|` if `g = 1` and `f(g) = 0` otherwise. So this conjecture is trivially true for the regular representation itself. The non-trivial version asks: for *any* faithful representation ρ (not just the regular one), does the fixed-point function determine G?\n\n**Test.** For each abelian group of order ≤ 50, enumerate all faithful representations (not just the regular one) and compute fixed-point statistics. Check whether any two non-isomorphic groups share the same fixed-point function for some pair of faithful representations.\n\n**Impact.** If true, th",
+      "source_exp_id": "75564677",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/75564677",
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:26.679405+00:00"
+    },
+    {
+      "id": "fd_0187",
+      "title": "Conjecture 5: Orbit Stabilizer Duality for Class Data",
+      "description": "**Precise statement.** For the regular representation of a finite group G on itself, every orbit has size exactly |G| (i.e., the action is free and transitive), and consequently the stabilizer of every point is trivial.\n\nFormally:\n```\ntheorem regular_action_free (G : Type*) [Group G] [Fintype G] (x : G) :\n    (permOrbit (MulAction.toPermHom G G) x).card = Fintype.card G\n```\n\nThis is stronger than our current `orbit_card_le_classGroup_card` (which gives ≤) and `permOrbit_one_eq_univ` (which handles x = 1).\n\n**Test.** Verify computationally for all groups of order ≤ 100. Then attempt formal proof — the key step is showing that the map `g ↦ g * x` is injective (since right multiplication by x is a bijection in a group).\n\n**Impact.** Combined with the faithfulness theorem, this gives the preci",
+      "source_exp_id": "75564677",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/75564677",
+      "domains": [
+        "NumberTheory",
+        "Algebra",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T07:05:26.687112+00:00"
     }
   ],
   "pruned": [
