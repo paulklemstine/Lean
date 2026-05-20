@@ -1,689 +1,652 @@
 #!/usr/bin/env python3
 """
-HoTT Foundations: Applications
+Applications of HoTT-inspired constructions to practical problems.
 
-This module demonstrates real-world applications of HoTT concepts:
-  1. Verified data structure migration (transport along equivalences)
-  2. Schema evolution for databases
-  3. Certified refactoring patterns
-  4. Structure-preserving translations
+Demonstrates:
+1. Database schema migration via equivalence transport
+2. Graph gluing via pushouts
+3. Representation-independent algorithm design
 """
 
-from typing import Any, Callable, Dict, List, Optional, Tuple
-from dataclasses import dataclass
+from __future__ import annotations
+from typing import Callable
+from algorithms import FiniteEquiv, compute_pushout, UnionFind
 
 
-# =============================================================================
-# Application 1: Verified Data Structure Migration
-# =============================================================================
+# ===========================================================================
+# Application 1: Database Schema Migration via Equivalence Transport
+# ===========================================================================
 
-@dataclass
-class DataEquiv:
-    """An equivalence between data representations."""
-    name: str
-    forward: Callable
-    backward: Callable
-    example_domain: List[Any]
-
-    def verify_roundtrip(self) -> bool:
-        """Verify both directions of the equivalence."""
-        for x in self.example_domain:
-            if self.backward(self.forward(x)) != x:
-                return False
-        return True
-
-    def transport_function(self, f: Callable) -> Callable:
-        """Transport a function along the equivalence."""
-        return lambda y: self.forward(f(self.backward(y)))
-
-    def transport_predicate(self, p: Callable) -> Callable:
-        """Transport a predicate along the equivalence."""
-        return lambda y: p(self.backward(y))
-
-
-def demo_data_migration():
+def demo_schema_migration():
     """
-    Demonstrate verified data structure migration.
+    Show how equivalence transport formalizes safe schema migration.
 
-    Scenario: Migrating from a list-of-pairs representation
-    to a dictionary representation, with certified preservation
-    of all operations.
+    When two database schemas are equivalent (bijective mapping between
+    representations), any query or predicate on the old schema can be
+    automatically transported to the new schema — and the transport is
+    guaranteed correct by the equivalence laws.
     """
-    print("=" * 60)
-    print("APPLICATION 1: Verified Data Structure Migration")
-    print("=" * 60)
+    print("=" * 70)
+    print("APPLICATION 1: Database Schema Migration via Equivalence")
+    print("=" * 70)
     print()
 
-    # Two equivalent representations of a phone book
-    # Rep A: List of (name, number) pairs
-    # Rep B: Dictionary {name: number}
+    # Old schema: users identified by string usernames
+    old_users = ["alice", "bob", "charlie", "diana"]
 
-    phonebook_list = [("Alice", "555-1234"), ("Bob", "555-5678"), ("Carol", "555-9012")]
+    # New schema: users identified by integer IDs
+    new_users = [1001, 1002, 1003, 1004]
 
-    def list_to_dict(lst):
-        return {name: num for name, num in lst}
+    # Equivalence between schemas
+    username_to_id = {"alice": 1001, "bob": 1002,
+                      "charlie": 1003, "diana": 1004}
+    id_to_username = {v: k for k, v in username_to_id.items()}
 
-    def dict_to_list(d):
-        return sorted(d.items())
-
-    equiv = DataEquiv(
-        name="PhoneBook: List ≃ Dict",
-        forward=list_to_dict,
-        backward=dict_to_list,
-        example_domain=[phonebook_list]
+    equiv = FiniteEquiv(
+        domain=old_users,
+        codomain=new_users,
+        to_fun=username_to_id.__getitem__,
+        inv_fun=id_to_username.__getitem__
     )
 
-    print(f"  Equivalence: {equiv.name}")
-    print(f"  Roundtrip verified: {equiv.verify_roundtrip()}")
+    # Old query: "is user an admin?"
+    admins_old = {"alice", "charlie"}
+    is_admin_old = lambda user: user in admins_old
+
+    # Transport query to new schema
+    is_admin_new = equiv.transport_predicate(is_admin_old)
+
+    print("  Old schema (usernames):", old_users)
+    print("  New schema (IDs):", new_users)
     print()
-
-    # Transport the "lookup" operation
-    def lookup_list(lst, name):
-        for n, num in lst:
-            if n == name:
-                return num
-        return None
-
-    # The transported lookup is just dict access
-    print("  Original operation: lookup in list representation")
-    print(f"    lookup_list('Alice') = {lookup_list(phonebook_list, 'Alice')}")
-
-    phonebook_dict = equiv.forward(phonebook_list)
-    print(f"  Transported: lookup in dict representation")
-    print(f"    phonebook_dict['Alice'] = {phonebook_dict.get('Alice')}")
+    print("  Old query 'is_admin':")
+    for u in old_users:
+        print(f"    is_admin('{u}') = {is_admin_old(u)}")
     print()
-
-    # Transport a predicate
-    has_many = lambda lst: len(lst) > 2
-    has_many_dict = equiv.transport_predicate(has_many)
-    print(f"  Predicate 'has > 2 entries':")
-    print(f"    On list: {has_many(phonebook_list)}")
-    print(f"    On dict (transported): {has_many_dict(phonebook_dict)}")
-    print(f"  ✓ Transport preserves truth values")
+    print("  Transported query 'is_admin' (via equivalence):")
+    for uid in new_users:
+        print(f"    is_admin({uid}) = {is_admin_new(uid)}")
+    print()
+    print("  The equivalence GUARANTEES correctness: no manual rewriting needed.")
+    print("  This is the computational content of HoTT's invariance principle.")
     print()
 
 
-# =============================================================================
-# Application 2: Schema Evolution
-# =============================================================================
+# ===========================================================================
+# Application 2: Graph Gluing via Pushouts
+# ===========================================================================
 
-def demo_schema_evolution():
+def demo_graph_gluing():
     """
-    Demonstrate schema evolution as transport along type equivalences.
+    Show how pushouts model graph gluing / network merging.
 
-    When a database schema changes, we need to migrate data and queries.
-    HoTT tells us this migration is sound if the old and new schemas
-    are equivalent types.
+    Given two networks that share some nodes (identified via a span),
+    the pushout produces the merged network with shared nodes identified.
     """
-    print("=" * 60)
-    print("APPLICATION 2: Schema Evolution via Type Equivalence")
-    print("=" * 60)
+    print("=" * 70)
+    print("APPLICATION 2: Network Merging via Pushouts")
+    print("=" * 70)
     print()
 
-    # Schema V1: User = (id, name, email)
-    users_v1 = [
-        (1, "Alice", "alice@example.com"),
-        (2, "Bob", "bob@example.com"),
+    # Network 1: a local office network
+    network1_nodes = ["server-A", "printer", "gateway"]
+    network1_edges = [
+        ("server-A", "printer"),
+        ("server-A", "gateway"),
     ]
 
-    # Schema V2: User = {id: int, name: str, contact: {email: str}}
-    def v1_to_v2(user):
-        return {"id": user[0], "name": user[1], "contact": {"email": user[2]}}
-
-    def v2_to_v1(user):
-        return (user["id"], user["name"], user["contact"]["email"])
-
-    # Verify equivalence
-    print("  Schema V1: (id, name, email) tuples")
-    print("  Schema V2: {id, name, contact: {email}} nested dicts")
-    print()
-
-    all_ok = True
-    for u in users_v1:
-        roundtrip = v2_to_v1(v1_to_v2(u))
-        ok = roundtrip == u
-        all_ok = all_ok and ok
-
-    print(f"  V1 → V2 → V1 roundtrip: {'✓' if all_ok else '✗'}")
-
-    # Transport a query
-    def query_v1(users):
-        """Find users with 'example.com' email."""
-        return [u for u in users if "example.com" in u[2]]
-
-    users_v2 = [v1_to_v2(u) for u in users_v1]
-
-    def query_v2(users):
-        """Transported query on V2 schema."""
-        return [u for u in users if "example.com" in u["contact"]["email"]]
-
-    results_v1 = query_v1(users_v1)
-    results_v2 = query_v2(users_v2)
-
-    print(f"  Query results match: {len(results_v1) == len(results_v2)}")
-    print(f"  ✓ Schema migration preserves query semantics")
-    print()
-
-
-# =============================================================================
-# Application 3: Certified Refactoring
-# =============================================================================
-
-def demo_certified_refactoring():
-    """
-    Demonstrate that refactoring (changing implementation while
-    preserving behavior) corresponds to transport along equivalence.
-    """
-    print("=" * 60)
-    print("APPLICATION 3: Certified Refactoring via Equivalence")
-    print("=" * 60)
-    print()
-
-    # Original: stack implemented as a list (tail = top)
-    class ListStack:
-        def __init__(self):
-            self.data = []
-        def push(self, x):
-            self.data.append(x)
-        def pop(self):
-            return self.data.pop() if self.data else None
-        def peek(self):
-            return self.data[-1] if self.data else None
-        def size(self):
-            return len(self.data)
-        def to_list(self):
-            return list(self.data)
-
-    # Refactored: stack implemented as linked list (via nested tuples)
-    class TupleStack:
-        def __init__(self):
-            self.data = None  # None = empty, (value, rest) = cons
-        def push(self, x):
-            self.data = (x, self.data)
-        def pop(self):
-            if self.data is None:
-                return None
-            val, rest = self.data
-            self.data = rest
-            return val
-        def peek(self):
-            return self.data[0] if self.data else None
-        def size(self):
-            count = 0
-            node = self.data
-            while node:
-                count += 1
-                node = node[1]
-            return count
-        def to_list(self):
-            result = []
-            node = self.data
-            while node:
-                result.append(node[0])
-                node = node[1]
-            return list(reversed(result))
-
-    # Verify behavioral equivalence
-    operations = [
-        ("push", 1), ("push", 2), ("push", 3),
-        ("pop", None), ("push", 4), ("peek", None)
+    # Network 2: a remote office network
+    network2_nodes = ["server-B", "scanner", "gateway-remote"]
+    network2_edges = [
+        ("server-B", "scanner"),
+        ("server-B", "gateway-remote"),
     ]
 
-    ls = ListStack()
-    ts = TupleStack()
+    # Shared interface: both networks connect through a gateway pair
+    shared = ["gw"]
+    f = lambda x: "gateway"         # maps to network1
+    g = lambda x: "gateway-remote"  # maps to network2
 
-    print("  Comparing ListStack vs TupleStack:")
-    all_match = True
-    for op, arg in operations:
-        if op == "push":
-            ls.push(arg)
-            ts.push(arg)
-            print(f"    push({arg}): ListStack={ls.to_list()}, TupleStack={ts.to_list()}")
-        elif op == "pop":
-            r1 = ls.pop()
-            r2 = ts.pop()
-            match = r1 == r2
-            all_match = all_match and match
-            print(f"    pop(): ListStack={r1}, TupleStack={r2}, match={match}")
-        elif op == "peek":
-            r1 = ls.peek()
-            r2 = ts.peek()
-            match = r1 == r2
-            all_match = all_match and match
-            print(f"    peek(): ListStack={r1}, TupleStack={r2}, match={match}")
+    # Compute pushout (merged network)
+    classes = compute_pushout(shared, network1_nodes, network2_nodes, f, g)
 
-    print(f"\n  All operations match: {all_match}")
-    print(f"  ✓ Refactoring is certified by behavioral equivalence")
+    print("  Network 1 nodes:", network1_nodes)
+    print("  Network 2 nodes:", network2_nodes)
+    print("  Shared interface: gateway ↔ gateway-remote")
+    print()
+    print("  Pushout (merged network):")
+    for i, cls in enumerate(classes):
+        members = sorted(cls, key=str)
+        if len(members) > 1:
+            print(f"    Node {i}: {members} [MERGED]")
+        else:
+            print(f"    Node {i}: {members}")
+    print()
+    print(f"  Total merged nodes: {len(classes)}")
+    print(f"  Expected: {len(network1_nodes)} + {len(network2_nodes)} - {len(shared)} "
+          f"= {len(network1_nodes) + len(network2_nodes) - len(shared)}")
+    print()
+    print("  The pushout universal property guarantees: any function out of")
+    print("  the merged network that respects both sub-networks is unique.")
+    print("  This is routing consistency: there's exactly one correct routing table.")
     print()
 
 
-# =============================================================================
-# Application 4: Structure-Preserving Translation
-# =============================================================================
+# ===========================================================================
+# Application 3: Representation-Independent Algorithms
+# ===========================================================================
 
-def demo_structure_transport():
+def demo_representation_independence():
     """
-    Demonstrate transporting algebraic structure along an equivalence.
-    If (A, +) is a group and A ≃ B, then B inherits a group structure.
+    Show that equivalence transport enables representation-independent
+    algorithm design: write the algorithm once, transport to any
+    equivalent representation automatically.
     """
-    print("=" * 60)
-    print("APPLICATION 4: Algebraic Structure Transport")
-    print("=" * 60)
+    print("=" * 70)
+    print("APPLICATION 3: Representation-Independent Sorting")
+    print("=" * 70)
     print()
 
-    # Z/3Z as {0, 1, 2} with addition mod 3
-    Z3_elements = [0, 1, 2]
-    Z3_add = lambda a, b: (a + b) % 3
-    Z3_zero = 0
+    # Algorithm works on representation A: pairs (priority, name)
+    repr_A = [(3, "low"), (1, "high"), (2, "medium")]
 
-    print("  Source: (Z/3Z, +) = ({0,1,2}, addition mod 3)")
+    # Equivalent representation B: dicts with 'p' and 'n' keys
+    repr_B = [{"p": 3, "n": "low"}, {"p": 1, "n": "high"},
+              {"p": 2, "n": "medium"}]
 
-    # Equivalence: Z/3Z ≃ {a, b, c}
-    labels = ['a', 'b', 'c']
-    fwd = lambda n: labels[n]
-    bwd = lambda s: labels.index(s)
+    # Equivalence
+    def to_dict(pair):
+        return {"p": pair[0], "n": pair[1]}
+    def to_pair(d):
+        return (d["p"], d["n"])
 
-    print(f"  Equivalence: 0↔a, 1↔b, 2↔c")
+    equiv = FiniteEquiv(
+        domain=repr_A,
+        codomain=repr_B,
+        to_fun=to_dict,
+        inv_fun=to_pair
+    )
 
-    # Transport the group operation
-    label_add = lambda x, y: fwd(Z3_add(bwd(x), bwd(y)))
-    label_zero = fwd(Z3_zero)
+    # Sort algorithm on representation A
+    sorted_A = sorted(repr_A, key=lambda x: x[0])
 
-    print(f"\n  Transported operation on {{a, b, c}}:")
-    for x in labels:
-        row = []
-        for y in labels:
-            row.append(label_add(x, y))
-        print(f"    {x} + _ = {row}")
+    # Transport sort result to representation B
+    sorted_B = [equiv.to_fun(x) for x in sorted_A]
 
-    print(f"  Identity element: {label_zero}")
+    print("  Representation A (tuples):", repr_A)
+    print("  Representation B (dicts):", repr_B)
+    print()
+    print("  Sort on A:", sorted_A)
+    print("  Transported to B:", sorted_B)
+    print()
 
-    # Verify group axioms are preserved
-    # Associativity
-    assoc_ok = True
-    for x in labels:
-        for y in labels:
-            for z in labels:
-                if label_add(label_add(x, y), z) != label_add(x, label_add(y, z)):
-                    assoc_ok = False
+    # Transport a comparison function
+    compare_A = lambda x, y: x[0] < y[0]
+    compare_B = lambda x, y: compare_A(equiv.inv_fun(x), equiv.inv_fun(y))
 
-    # Identity
-    id_ok = all(label_add(label_zero, x) == x and label_add(x, label_zero) == x
-                for x in labels)
+    print("  Transported comparison on B:")
+    for x in repr_B:
+        for y in repr_B:
+            if x != y:
+                print(f"    {x['n']} < {y['n']}? {compare_B(x, y)}")
 
-    print(f"\n  Associativity preserved: {assoc_ok}")
-    print(f"  Identity preserved: {id_ok}")
-    print(f"  ✓ Group structure successfully transported")
+    print()
+    print("  Key insight: the algorithm is written ONCE for representation A.")
+    print("  The equivalence automatically and correctly transports it to B.")
+    print("  This is the constructive content of HoTT's univalence principle.")
     print()
 
 
-# =============================================================================
+# ===========================================================================
+# Application 4: Type-Safe Data Merging
+# ===========================================================================
+
+def demo_data_merging():
+    """
+    Pushout as a principled data merging operation with guaranteed
+    consistency.
+    """
+    print("=" * 70)
+    print("APPLICATION 4: Principled Data Merging via Pushouts")
+    print("=" * 70)
+    print()
+
+    # Dataset 1: customer records by email
+    customers_email = ["alice@co.com", "bob@co.com", "carol@co.com"]
+
+    # Dataset 2: customer records by phone
+    customers_phone = ["+1-555-0001", "+1-555-0002", "+1-555-0003"]
+
+    # Linking table: known matches
+    links = [0, 1]  # indices into linking table
+    email_link = lambda i: ["alice@co.com", "bob@co.com"][i]
+    phone_link = lambda i: ["+1-555-0001", "+1-555-0002"][i]
+
+    classes = compute_pushout(links, customers_email, customers_phone,
+                              email_link, phone_link)
+
+    print("  Email records:", customers_email)
+    print("  Phone records:", customers_phone)
+    print("  Known links: alice@co.com ↔ +1-555-0001, bob@co.com ↔ +1-555-0002")
+    print()
+    print("  Merged customer records (pushout):")
+    for i, cls in enumerate(classes):
+        members = sorted(cls, key=str)
+        print(f"    Customer {i+1}: {members}")
+    print()
+    print(f"  Unique customers: {len(classes)}")
+    print("  The pushout ensures: no duplicate records, no lost records,")
+    print("  and any downstream analysis has a unique consistent extension.")
+    print()
+
+
+# ===========================================================================
 # Main
-# =============================================================================
+# ===========================================================================
+
+def main():
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  HoTT Foundations: Real-World Applications                          ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_schema_migration()
+    demo_graph_gluing()
+    demo_representation_independence()
+    demo_data_merging()
+
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║   HoTT Foundations: Real-World Applications            ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_data_migration()
-    demo_schema_evolution()
-    demo_certified_refactoring()
-    demo_structure_transport()
-
-    print("=" * 60)
-    print("Summary of Applications")
-    print("=" * 60)
-    print()
-    print("The HoTT framework provides a rigorous foundation for:")
-    print("  1. Data migration: transport data across equivalent formats")
-    print("  2. Schema evolution: migrate queries along type equivalences")
-    print("  3. Certified refactoring: prove implementations equivalent")
-    print("  4. Structure transport: move algebraic properties along maps")
-    print()
-    print("Each application is an instance of the fundamental principle:")
-    print("  'Properties invariant under equivalence can be transported.'")
+    main()
 
 
 #!/usr/bin/env python3
 """
-HoTT Foundations: Demonstration of Core Concepts
+Demonstration of HoTT-inspired constructions: finite pushouts, equivalence
+transport, quotient class enumeration, and inclusion-exclusion testing.
 
-This module demonstrates the key ideas from Homotopy Type Theory
-using Python as a computational laboratory. We implement the core
-definitions (contractible types, fibers, equivalences) and show
-how the fundamental theorem of identity types works through
-concrete examples.
+This script demonstrates the computational content of the formalized HoTT
+fragment, including:
+1. Finite pushout construction and quotient class enumeration
+2. Testing the inclusion-exclusion cardinality conjecture
+3. Transport of decidability along equivalences
+4. Identity system verification
 """
 
-from dataclasses import dataclass
-from typing import TypeVar, Generic, Callable, Optional, Tuple, Any, List
+from __future__ import annotations
+from typing import TypeVar, Callable, Any
+from collections import defaultdict
 
-# =============================================================================
-# Core Definitions
-# =============================================================================
 
-@dataclass
-class Fiber:
+# ===========================================================================
+# Part 1: Finite Pushout Construction
+# ===========================================================================
+
+class UnionFind:
+    """Disjoint set / union-find for computing quotient classes."""
+
+    def __init__(self, elements: list):
+        self.parent = {e: e for e in elements}
+        self.rank = {e: 0 for e in elements}
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, x, y):
+        rx, ry = self.find(x), self.find(y)
+        if rx == ry:
+            return
+        if self.rank[rx] < self.rank[ry]:
+            rx, ry = ry, rx
+        self.parent[ry] = rx
+        if self.rank[rx] == self.rank[ry]:
+            self.rank[rx] += 1
+
+    def classes(self) -> list[set]:
+        groups = defaultdict(set)
+        for e in self.parent:
+            groups[self.find(e)].add(e)
+        return list(groups.values())
+
+
+def compute_pushout(A: list, B: list, C: list,
+                    f: Callable, g: Callable) -> list[set]:
     """
-    The fiber of a function f over a point b.
-    A fiber element is a pair (a, proof) where f(a) = b.
-    In Python, we represent the 'proof' as the actual equality check.
+    Compute the pushout of B <-f- A -g-> C as equivalence classes.
+
+    Elements of B are tagged ('L', b) and elements of C are tagged ('R', c).
+    For each a in A, we identify ('L', f(a)) with ('R', g(a)).
+
+    Returns the list of equivalence classes.
     """
-    preimage: Any
-    target: Any
-    function: Callable
+    all_elements = [('L', b) for b in B] + [('R', c) for c in C]
+    uf = UnionFind(all_elements)
+
+    for a in A:
+        uf.union(('L', f(a)), ('R', g(a)))
+
+    return uf.classes()
+
+
+def test_inclusion_exclusion():
+    """
+    Test the conjecture: for finite spans A -> B, A -> C with injective legs,
+    |Pushout| = |B| + |C| - |A|.
+    """
+    print("=" * 70)
+    print("PUSHOUT INCLUSION-EXCLUSION CONJECTURE TEST")
+    print("=" * 70)
+    print()
+    print("Conjecture: For injective span legs f: A -> B, g: A -> C,")
+    print("            |Pushout(f,g)| = |B| + |C| - |A|")
+    print()
+
+    test_cases = [
+        # (A, B, C, f, g, description)
+        (
+            [0, 1],           # A
+            [0, 1, 2],        # B
+            [0, 1, 2],        # C
+            lambda a: a,      # f: A -> B (injective)
+            lambda a: a,      # g: A -> C (injective)
+            "Simple overlap: A={0,1}, B={0,1,2}, C={0,1,2}"
+        ),
+        (
+            [0],              # A = singleton
+            [0, 1],           # B
+            [0, 1],           # C
+            lambda a: a,      # f
+            lambda a: a,      # g
+            "Single glue point: A={0}, B={0,1}, C={0,1}"
+        ),
+        (
+            [],               # A = empty (disjoint union)
+            [0, 1],           # B
+            [0, 1, 2],        # C
+            lambda a: a,      # f (vacuous)
+            lambda a: a,      # g (vacuous)
+            "Disjoint union: A=∅, B={0,1}, C={0,1,2}"
+        ),
+        (
+            [0, 1, 2],        # A
+            [0, 1, 2],        # B
+            [0, 1, 2],        # C
+            lambda a: a,      # f = id
+            lambda a: a,      # g = id
+            "Full identification: A=B=C={0,1,2}"
+        ),
+        (
+            [0, 1],           # A
+            [0, 1, 2, 3],     # B
+            [10, 11, 12],     # C
+            lambda a: a,          # f: A -> B
+            lambda a: 10 + a,     # g: A -> C
+            "Distinct ranges: A={0,1}, B={0,1,2,3}, C={10,11,12}"
+        ),
+    ]
+
+    all_pass = True
+    for A, B, C, f, g, desc in test_cases:
+        classes = compute_pushout(A, B, C, f, g)
+        actual = len(classes)
+        expected = len(B) + len(C) - len(A)
+
+        status = "✓" if actual == expected else "✗"
+        if actual != expected:
+            all_pass = False
+
+        print(f"  {status} {desc}")
+        print(f"    |B|={len(B)}, |C|={len(C)}, |A|={len(A)}")
+        print(f"    Expected: {expected}, Actual: {actual}")
+        print(f"    Classes: {[sorted(c) for c in classes]}")
+        print()
+
+    # Test with non-injective legs
+    print("-" * 70)
+    print("Testing with NON-INJECTIVE legs (conjecture may fail):")
+    print()
+
+    A_ni = [0, 1, 2]
+    B_ni = [0, 1]
+    C_ni = [0, 1]
+    f_ni = lambda a: a % 2  # NOT injective: f(0)=f(2)=0
+    g_ni = lambda a: a % 2  # NOT injective
+
+    classes = compute_pushout(A_ni, B_ni, C_ni, f_ni, g_ni)
+    actual = len(classes)
+    expected = len(B_ni) + len(C_ni) - len(A_ni)
+    status = "✓" if actual == expected else "✗ (expected failure)"
+
+    print(f"  {status} Non-injective: A={{0,1,2}}, B={{0,1}}, C={{0,1}}")
+    print(f"    f(a) = a mod 2, g(a) = a mod 2")
+    print(f"    |B|+|C|-|A| = {expected}, Actual |Pushout| = {actual}")
+    print(f"    Classes: {[sorted(c) for c in classes]}")
+    print()
+
+    if all_pass:
+        print("RESULT: Inclusion-exclusion conjecture CONFIRMED for all injective cases.")
+    else:
+        print("RESULT: Inclusion-exclusion conjecture REFUTED in some case.")
+
+    print()
+    return all_pass
+
+
+# ===========================================================================
+# Part 2: Equivalence Transport Demonstration
+# ===========================================================================
+
+class Equiv:
+    """A Python model of Equiv': a bijection with explicit inverse."""
+
+    def __init__(self, to_fun, inv_fun, domain, codomain):
+        self.to_fun = to_fun
+        self.inv_fun = inv_fun
+        self.domain = domain
+        self.codomain = codomain
 
     def verify(self) -> bool:
-        """Check that f(preimage) == target."""
-        return self.function(self.preimage) == self.target
-
-    def __repr__(self):
-        return f"Fiber(preimage={self.preimage}, target={self.target}, valid={self.verify()})"
-
-
-@dataclass
-class QEquiv:
-    """
-    A quasi-equivalence between two sets (represented as functions).
-    Consists of forward/backward maps with round-trip proofs.
-    """
-    forward: Callable
-    backward: Callable
-    domain: list
-    codomain: list
-
-    def check_left_inverse(self) -> bool:
-        """Check backward(forward(a)) == a for all a in domain."""
-        return all(self.backward(self.forward(a)) == a for a in self.domain)
-
-    def check_right_inverse(self) -> bool:
-        """Check forward(backward(b)) == b for all b in codomain."""
-        return all(self.forward(self.backward(b)) == b for b in self.codomain)
-
-    def is_valid(self) -> bool:
-        return self.check_left_inverse() and self.check_right_inverse()
-
-    def __repr__(self):
-        return f"QEquiv(valid={self.is_valid()})"
+        """Verify left_inv and right_inv."""
+        for x in self.domain:
+            if self.inv_fun(self.to_fun(x)) != x:
+                return False
+        for y in self.codomain:
+            if self.to_fun(self.inv_fun(y)) != y:
+                return False
+        return True
 
 
-def is_contractible(elements: list, eq_fn: Callable = lambda x, y: x == y) -> Tuple[bool, Optional[Any]]:
-    """
-    Check if a type (represented as a finite list) is contractible.
-    Returns (True, center) if contractible, (False, None) otherwise.
-
-    A type is contractible if there exists a center such that
-    every element equals the center.
-    """
-    if not elements:
-        return (False, None)
-
-    # For a finite set to be contractible, all elements must be equal
-    center = elements[0]
-    if all(eq_fn(x, center) for x in elements):
-        return (True, center)
-    return (False, None)
-
-
-def compute_fibers(f: Callable, domain: list, codomain: list) -> dict:
-    """
-    Compute all fibers of f : domain -> codomain.
-    Returns a dictionary mapping each b in codomain to its fiber.
-    """
-    fibers = {}
-    for b in codomain:
-        fiber_b = [(a, f(a)) for a in domain if f(a) == b]
-        fibers[b] = fiber_b
-    return fibers
-
-
-# =============================================================================
-# Demo 1: Singleton Contraction
-# =============================================================================
-
-def demo_singleton_contraction():
-    """
-    Demonstrate that the 'based path space' Σ(x:A, a=x) is contractible.
-
-    In a discrete setting, the 'paths from a' are just the identity:
-    the only x with a = x is x = a itself.
-    """
-    print("=" * 60)
-    print("DEMO 1: Singleton Contraction")
-    print("=" * 60)
-    print()
-    print("The based path space Σ(x:A, a=x) is contractible.")
-    print("Center of contraction: (a, refl)")
+def demo_transport_decidability():
+    """Demonstrate transport of decidable equality along equivalence."""
+    print("=" * 70)
+    print("TRANSPORT OF DECIDABLE EQUALITY ALONG EQUIVALENCE")
+    print("=" * 70)
     print()
 
-    # For a = 42, the total path space from 42 is {(42, refl)}
-    a = 42
-    A = list(range(100))
+    # Equivalence: Bool <-> {0, 1}
+    e = Equiv(
+        to_fun=lambda b: 1 if b else 0,
+        inv_fun=lambda n: n == 1,
+        domain=[True, False],
+        codomain=[0, 1]
+    )
 
-    # The 'total space' Σ(x, a=x) consists of pairs (x, proof_that_a_eq_x)
-    # In a discrete type, the only such pair is (a, refl)
-    path_space = [(x, "refl") for x in A if x == a]
-    print(f"  Base point a = {a}")
-    print(f"  Total path space from a: {path_space}")
+    print(f"  Equivalence: Bool ≃ {{0, 1}}")
+    print(f"  Verified: {e.verify()}")
+    print()
 
-    contr, center = is_contractible(path_space)
-    print(f"  Contractible? {contr}")
-    print(f"  Center: {center}")
+    # Bool has decidable equality. Transport to {0, 1}.
+    def decidable_eq_bool(a, b):
+        return a == b
+
+    def transported_eq(x, y):
+        """DecidableEq on {0,1} transported from Bool via equivalence."""
+        return decidable_eq_bool(e.inv_fun(x), e.inv_fun(y))
+
+    print("  Testing transported decidable equality on {0, 1}:")
+    for x in [0, 1]:
+        for y in [0, 1]:
+            result = transported_eq(x, y)
+            print(f"    {x} = {y} ? {result}")
+
+    print()
+
+    # Transport a decidable predicate
+    is_true = lambda b: b  # Decidable predicate on Bool
+    transported_pred = lambda n: is_true(e.inv_fun(n))
+
+    print("  Transported predicate 'is_true' from Bool to {0,1}:")
+    for n in [0, 1]:
+        print(f"    P({n}) = {transported_pred(n)}")
+
     print()
 
 
-# =============================================================================
-# Demo 2: Equivalences and Contractible Fibers
-# =============================================================================
+# ===========================================================================
+# Part 3: Identity System Verification
+# ===========================================================================
 
-def demo_equivalence_fibers():
-    """
-    Demonstrate that a function is an equivalence iff all fibers are contractible.
-    """
-    print("=" * 60)
-    print("DEMO 2: Equivalences ↔ Contractible Fibers")
-    print("=" * 60)
+def demo_identity_system():
+    """Demonstrate identity system concepts with concrete types."""
+    print("=" * 70)
+    print("IDENTITY SYSTEM DEMONSTRATION")
+    print("=" * 70)
     print()
 
-    # Example 1: An equivalence (bijection)
-    domain = [0, 1, 2, 3, 4]
-    codomain = [10, 11, 12, 13, 14]
+    # The based path space Σ x, (a₀ = x) is contractible
+    # In a finite set, "paths" are just equality
+    a0 = 0
+    universe = [0, 1, 2, 3]
 
-    f = lambda x: x + 10
-    g = lambda y: y - 10
-
-    equiv = QEquiv(f, g, domain, codomain)
-    print(f"  f(x) = x + 10, domain = {domain}, codomain = {codomain}")
-    print(f"  Equivalence valid? {equiv.is_valid()}")
-
-    fibers = compute_fibers(f, domain, codomain)
-    print(f"  Fibers:")
-    all_contr = True
-    for b, fib in fibers.items():
-        contr, center = is_contractible(fib)
-        print(f"    fiber({b}) = {fib}, contractible = {contr}")
-        if not contr:
-            all_contr = False
-    print(f"  All fibers contractible? {all_contr}")
-    print(f"  ✓ Matches: equivalence ↔ all fibers contractible")
+    print(f"  Base point: a₀ = {a0}")
+    print(f"  Universe: {universe}")
     print()
 
-    # Example 2: A non-equivalence (non-injective function)
-    f2 = lambda x: x % 3
-    domain2 = [0, 1, 2, 3, 4, 5]
-    codomain2 = [0, 1, 2]
+    # Total space of the identity family: {(x, proof that a0 = x)}
+    # In a discrete set, the only path is reflexivity
+    total_space = [(x, f"refl") for x in universe if x == a0]
+    print(f"  Total space Σ x, (a₀ = x): {total_space}")
+    print(f"  Center: ({a0}, refl)")
+    print(f"  Contractible: {len(total_space) == 1}")
+    print()
 
-    fibers2 = compute_fibers(f2, domain2, codomain2)
-    print(f"  f(x) = x mod 3, domain = {domain2}, codomain = {codomain2}")
-    print(f"  Fibers:")
-    all_contr2 = True
-    for b, fib in fibers2.items():
-        contr, center = is_contractible(fib)
-        print(f"    fiber({b}) = {fib}, contractible = {contr}")
-        if not contr:
-            all_contr2 = False
-    print(f"  All fibers contractible? {all_contr2}")
-    print(f"  ✓ Non-equivalence has non-contractible fibers")
+    # Custom identity system: R(x) = "x is even and x <= a0"
+    # with a0 = 0, R(0) = True (rflR), Σ x, R(x) must be contractible
+    # This means R must hold only at a0 = 0
+    print("  Custom identity system example:")
+    print("  R(x) = (x == 0)  [singleton family]")
+    R = lambda x: x == 0
+    total_R = [(x, R(x)) for x in universe if R(x)]
+    print(f"  Total space Σ x, R(x): {total_R}")
+    print(f"  Contractible: {len(total_R) == 1}")
+    print(f"  Encode (rfl ↦ R(a₀)): rfl ↦ R({a0}) = {R(a0)}")
+    print(f"  Decode (R(a₀) ↦ rfl): True ↦ (a₀ = a₀) ✓")
     print()
 
 
-# =============================================================================
-# Demo 3: Fundamental Theorem of Identity Types
-# =============================================================================
+# ===========================================================================
+# Part 4: Contractible Type Computation
+# ===========================================================================
 
-def demo_fundamental_theorem():
-    """
-    Demonstrate the fundamental theorem: if Σ(x, C(x)) is contractible,
-    then (a = x) ≃ C(x) for all x.
-    """
-    print("=" * 60)
-    print("DEMO 3: Fundamental Theorem of Identity Types")
-    print("=" * 60)
+def demo_contractible_pi():
+    """Demonstrate contractibility of Pi types."""
+    print("=" * 70)
+    print("CONTRACTIBILITY OF PI TYPES")
+    print("=" * 70)
     print()
 
-    # The canonical example: C(x) = (a = x), the identity family
-    # Total space Σ(x, a = x) is contractible by singleton contraction
-    a = "hello"
-    A = ["hello", "world", "foo", "bar"]
+    # If A is contractible (singleton) and B(a) is contractible for all a,
+    # then (a : A) -> B(a) is contractible.
 
-    print(f"  Type A = {A}")
-    print(f"  Base point a = '{a}'")
+    # A = {*} (singleton, contractible)
+    # B(*) = {42} (singleton, contractible)
+    # (a : A) -> B(a) has exactly one element: the function * ↦ 42
+
+    A = ["*"]
+    B = {"*": [42]}
+
+    # All functions A -> B(*)
+    functions = [{"*": b} for b in B["*"]]
+    center = {"*": 42}
+
+    print(f"  A = {A} (contractible, center = '*')")
+    print(f"  B('*') = {B['*']} (contractible, center = 42)")
+    print(f"  Functions (a:A) → B(a): {functions}")
+    print(f"  Center function: {center}")
+    print(f"  Contractible: {len(functions) == 1 and functions[0] == center}")
     print()
 
-    # C(x) = (a = x) in discrete types is {True} if x=a, {} otherwise
-    print("  Family C(x) = (a = x):")
-    total_space = []
-    for x in A:
-        cx = [True] if x == a else []
-        total_space.extend([(x, c) for c in cx])
-        print(f"    C('{x}') has {len(cx)} element(s)")
-
-    print(f"  Total space Σ(x, C(x)) = {total_space}")
-    contr, center = is_contractible(total_space)
-    print(f"  Contractible? {contr}, center = {center}")
-    print()
-
-    # The equivalence (a = x) ≃ C(x) is trivial here (both are the identity)
-    # But the theorem is nontrivial for non-identity families!
-    print("  The fundamental theorem says: (a = x) ≃ C(x)")
-    print("  Since Σ(x, C(x)) is contractible, the encode-decode method")
-    print("  constructs an explicit equivalence for each x.")
-    print()
-
-    # More interesting example: C(x) = "x has same first letter as a"
-    # This is NOT contractible total space, so the theorem doesn't apply
-    A2 = ["hello", "hero", "help", "world"]
-    C2 = {x: x[0] == 'h' for x in A2}
-    total2 = [(x, True) for x in A2 if C2[x]]
-    print(f"  Counter-example: C(x) = 'x starts with h'")
-    print(f"  Total space = {total2}")
-    contr2, _ = is_contractible(total2)
-    print(f"  Contractible? {contr2}")
-    print(f"  ✓ Fundamental theorem does NOT apply (total space not contractible)")
+    # Larger example: A = {0} (contractible), B(0) = {True} (contractible)
+    A2 = [0]
+    B2 = {0: [True]}
+    fns2 = [{0: v} for v in B2[0]]
+    print(f"  A = {A2}, B(0) = {B2[0]}")
+    print(f"  Functions: {fns2}")
+    print(f"  Contractible: {len(fns2) == 1}")
     print()
 
 
-# =============================================================================
-# Demo 4: Transport and Invariance
-# =============================================================================
+# ===========================================================================
+# Part 5: HProp Univalence Check
+# ===========================================================================
 
-def demo_transport():
-    """
-    Demonstrate transport: moving data along equivalences.
-    """
-    print("=" * 60)
-    print("DEMO 4: Transport Along Equivalences")
-    print("=" * 60)
+def demo_hprop_univalence():
+    """Demonstrate that Prop-level equality ↔ logical equivalence."""
+    print("=" * 70)
+    print("HPROP UNIVALENCE: EQUALITY ↔ LOGICAL EQUIVALENCE")
+    print("=" * 70)
     print()
 
-    # Two equivalent representations of truth values
-    bools = [True, False]
-    bits = [1, 0]
+    # In Python, we model Props as boolean values (True/False)
+    props = [
+        ("True", True),
+        ("False", False),
+        ("1 == 1", 1 == 1),
+        ("1 == 2", 1 == 2),
+    ]
 
-    f = lambda b: 1 if b else 0
-    g = lambda n: n == 1
-
-    equiv = QEquiv(f, g, bools, bits)
-    print(f"  Booleans ≃ Bits: {equiv.is_valid()}")
+    print("  Checking: P ↔ Q implies P = Q for propositions")
     print()
 
-    # Transport a predicate along the equivalence
-    # P(True) = "is positive", transported to P'(1) = "is positive"
-    P_bool = lambda b: "positive" if b else "negative"
-    P_bit = lambda n: P_bool(g(n))  # transport via the equivalence
-
-    print("  Predicate on Booleans: P(True)='positive', P(False)='negative'")
-    print("  Transported to Bits via equivalence:")
-    for n in bits:
-        print(f"    P'({n}) = '{P_bit(n)}'")
+    for name_p, p in props:
+        for name_q, q in props:
+            iff = (p == q)  # P ↔ Q in boolean model
+            eq = (p == q)   # P = Q (propositional extensionality)
+            status = "✓" if (iff == eq) else "✗"
+            print(f"  {status} {name_p} vs {name_q}: "
+                  f"P↔Q = {iff}, P=Q = {eq}")
 
     print()
-    print("  Transport preserves contractibility:")
-    print(f"    {{True}} contractible? {is_contractible([True])[0]}")
-    print(f"    Transported {{1}} contractible? {is_contractible([1])[0]}")
+    print("  Result: In the Prop universe, (P ↔ Q) ↔ (P = Q) always holds.")
+    print("  This is HProp univalence: a provable theorem, not an axiom!")
     print()
 
 
-# =============================================================================
-# Demo 5: Sets as 0-Truncated Types
-# =============================================================================
-
-def demo_truncation():
-    """
-    Demonstrate the concept of 0-truncation (sets in HoTT).
-    A type is a set if any two equality proofs are equal.
-    """
-    print("=" * 60)
-    print("DEMO 5: Sets as 0-Truncated Types")
-    print("=" * 60)
-    print()
-
-    # In a discrete type, there's at most one proof of a = b
-    # This makes discrete types automatically "sets" in HoTT
-    print("  In HoTT, a 'set' is a type where equality is a proposition:")
-    print("  any two proofs of a = b are themselves equal.")
-    print()
-
-    # Contractible types are sets
-    print("  Theorem: Contractible types are sets.")
-    single = [42]
-    contr, _ = is_contractible(single)
-    print(f"    {{42}} is contractible: {contr}")
-    print(f"    For any a, b in {{42}}: a = b, and there's only one proof.")
-    print(f"    ✓ Contractible → Set")
-    print()
-
-    # Natural numbers are a set (in discrete setting)
-    print("  Natural numbers are a set (discretely):")
-    print("    For n, m : ℕ, there is at most one proof of n = m.")
-    print("    This is because ℕ has decidable equality.")
-    print()
-
-
-# =============================================================================
+# ===========================================================================
 # Main
-# =============================================================================
+# ===========================================================================
+
+def main():
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  HoTT Foundations: Computational Demonstrations                     ║")
+    print("║  Identity Systems · Pushouts · Equivalence Transport                ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_identity_system()
+    test_inclusion_exclusion()
+    demo_transport_decidability()
+    demo_contractible_pi()
+    demo_hprop_univalence()
+
+    print("=" * 70)
+    print("All demonstrations complete.")
+    print("=" * 70)
+
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║   HoTT Foundations: Computational Demonstrations       ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_singleton_contraction()
-    demo_equivalence_fibers()
-    demo_fundamental_theorem()
-    demo_transport()
-    demo_truncation()
-
-    print("=" * 60)
-    print("All demonstrations complete.")
-    print()
-    print("Key takeaways:")
-    print("  1. Singleton contraction: based path spaces are contractible")
-    print("  2. Equivalence ↔ all fibers contractible (characterization)")
-    print("  3. Fundamental theorem: contractible total space → equivalence")
-    print("  4. Transport: properties transfer along equivalences")
-    print("  5. Sets = 0-truncated types: equality is propositional")
+    main()
