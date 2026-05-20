@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1614 of the highest-quality
+A curated collection of 1615 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1614
+Total files: 1615
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -503,6 +503,7 @@ import FINAL.Bridges.ThermodynamicStonePrimeCompleteness
 import FINAL.Bridges.ThreeNewFrontiers
 import FINAL.Bridges.ThresholdPhaseTransition
 import FINAL.Bridges.TopologicalZKProofs
+import FINAL.Bridges.TranscendenceRank
 import FINAL.Bridges.TransferLearning
 import FINAL.Bridges.TransferMatrix
 import FINAL.Bridges.TropicalACCanonical
