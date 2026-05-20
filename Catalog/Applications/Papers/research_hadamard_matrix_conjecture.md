@@ -1,349 +1,352 @@
-# A Certified Construction Calculus for Hadamard Matrices
+# A Formally Verified Theory of Hadamard Matrices: Constructions, Obstructions, and Cross-Domain Applications
 
 ## Abstract
 
-We present a formally verified theory of Hadamard matrices developed in Lean 4 with Mathlib, establishing a machine-checked construction calculus for Hadamard matrix existence. The formalization encompasses: (1) core definitions and algebraic consequences of Hadamard matrices, including row orthogonality, entry characterization, and closure under transposition and permutation; (2) the Kronecker product closure theorem, proving that the set of Hadamard orders forms a multiplicative semigroup; (3) the Sylvester recursive construction, certifying that every power of 2 is a Hadamard order; (4) explicit verification of Paley-type Hadamard matrices of orders 4 and 12; (5) the necessary divisibility condition that n > 2 implies 4 | n for Hadamard orders; and (6) a counterexample theorem disproving symmetry as a general property. Combined, these results generate certified infinite families of Hadamard orders through Kronecker closure of explicit seeds. All proofs are machine-verified down to the axioms of type theory, with no sorry placeholders or non-standard axioms.
+We present a machine-verified formal development of Hadamard matrix theory in the Lean 4 proof assistant, comprising core definitions, structural theorems, infinite construction families, and cross-domain applications. Our development includes: (1) a robust definition of Hadamard matrices with supporting infrastructure for normalization and equivalence; (2) a proof of the classical divisibility obstruction (order > 2 implies 4 | n); (3) the Sylvester recursive construction establishing Hadamard matrices at all powers of 2; (4) a proof that the Kronecker product preserves the Hadamard property, yielding multiplicative closure of Hadamard orders; (5) the equidistance theorem for Hadamard codes (Hamming distance n/2 between all distinct codewords); (6) the Walsh-Hadamard energy identity; and (7) an excess bound σ(H)² ≤ n³. All proofs are fully verified with no sorry statements and depend only on standard axioms. We accompany the formal development with computational demonstrations and formulate five falsifiable conjectures for future investigation.
+
+**Keywords:** Hadamard matrices, formal verification, Lean 4, Mathlib, orthogonal matrices, coding theory, Walsh-Hadamard transform, combinatorial design, Kronecker product.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Background
+### 1.1 Background and Motivation
 
-A Hadamard matrix of order n is an n × n matrix H with entries in {+1, −1} satisfying HH^T = nI, where I is the identity matrix. The Hadamard conjecture, open since the early 20th century, asserts that such matrices exist for every order n that is a multiple of 4 (and trivially for orders 1 and 2).
+A **Hadamard matrix** of order n is an n × n matrix H with entries in {+1, −1} satisfying HHᵀ = nI, where I is the identity matrix. Equivalently, all pairs of distinct rows are orthogonal, and each row has Euclidean norm √n.
 
-The conjecture is remarkable for the gap between its simple statement and the depth of mathematics required to approach it. Known constructions draw on:
+The **Hadamard conjecture** (1893) asserts that Hadamard matrices exist for every order n that is 1, 2, or a multiple of 4. The necessity of the divisibility condition (n > 2 implies 4 | n) was established classically; existence remains open, with the smallest unresolved case being n = 668.
 
-- **Recursive algebra**: Sylvester's 1867 construction via tensor products
-- **Finite field theory**: Paley's 1933 construction via quadratic residues
-- **Combinatorial designs**: Connections to symmetric BIBDs and difference sets
-- **Coding theory**: Equivalence with optimal equidistant binary codes
-
-Despite over 150 years of effort, the conjecture remains unresolved. The first unsettled order is 668 (as of the latest survey), though many smaller orders were resolved only through exhaustive computer search.
+Hadamard matrices arise naturally in:
+- **Coding theory**: as generators of equidistant binary codes (Hadamard codes) achieving the Plotkin bound.
+- **Signal processing**: as the basis of the Walsh-Hadamard transform, a discrete orthogonal transform computable with only additions and subtractions.
+- **Combinatorial design**: as generators of symmetric 2-designs (BIBDs) through the normalization-deletion construction.
+- **Compressed sensing**: as deterministic measurement matrices with optimal incoherence properties.
 
 ### 1.2 Contributions
 
-This work provides the first comprehensive formally verified theory of Hadamard matrices in a modern proof assistant. Our specific contributions are:
+Our formal development establishes:
 
-1. **Formal definitions** of Hadamard matrices, normalized Hadamard matrices, and Hadamard orders over ℤ, with a clean API for downstream use.
+| Theorem | Statement | Proof Technique |
+|---------|-----------|----------------|
+| Divisibility obstruction | n > 2 ∧ HadamardOrder n → 4 ∣ n | Sign-pattern partition, parity |
+| Sylvester family | ∀ k, HadamardOrder (2^k) | Induction + Kronecker |
+| Kronecker closure | HadamardOrder m ∧ HadamardOrder n → HadamardOrder (m·n) | Generalized Hadamard on product types |
+| Code equidistance | Hamming distance = n/2 for distinct rows | Orthogonality + sign counting |
+| Energy identity | ‖Hx‖² = n·‖x‖² for all x ∈ ℤⁿ | Column orthogonality |
+| Excess bound | σ(H)² ≤ n³ | Cauchy-Schwarz + energy identity |
+| Normalization existence | ∃ normalized equivalent | Explicit sign-flip construction |
+| Equivalence invariance | Hadamard property preserved under equivalence | Direct computation |
 
-2. **Entry-level characterization**: Formal proofs that entries of Hadamard matrices have square 1 and absolute value 1.
+All proofs are machine-verified in Lean 4 using the Mathlib library, with no sorry axioms, and depend only on propext, Classical.choice, and Quot.sound.
 
-3. **Row orthogonality**: Formal derivation that diagonal entries of HH^T are n and off-diagonal entries are 0, expressed as dot-product equalities.
-
-4. **Transpose closure**: A formally verified proof that the transpose of a Hadamard matrix is Hadamard, using invertibility over ℚ to establish that H^TH = nI follows from HH^T = nI.
-
-5. **Permutation invariance**: Hadamard property is invariant under simultaneous permutation of rows and columns.
-
-6. **Kronecker closure theorem**: The tensor product of Hadamard matrices is Hadamard, establishing the multiplicative semigroup structure of Hadamard orders.
-
-7. **Sylvester family**: Formal certification that 2^k is a Hadamard order for all k ≥ 0.
-
-8. **Explicit Paley-type matrices**: Computationally verified Hadamard matrices of orders 4 and 12, providing non-power-of-2 seeds for the Kronecker closure.
-
-9. **Necessary condition**: Formal proof that any Hadamard order greater than 2 must be divisible by 4, via a three-row counting argument.
-
-10. **Counterexample**: Formal proof that not every Hadamard matrix is symmetric, via an explicit 2×2 counterexample.
-
-11. **Infinite families**: Formal certification that every order of the form 2^a · 12^b is a Hadamard order.
-
-### 1.3 Related Work
-
-To our knowledge, no prior formally verified theory of Hadamard matrices exists in Lean 4, Coq, Isabelle, or other proof assistants. The closest related work includes:
-
-- Combinatorial design formalization in Lean/Mathlib (Fisher's inequality by Dahmen et al.)
-- Matrix theory in Mathlib (determinants, eigenvalues, Kronecker products)
-- Formal coding theory (Hamming codes in Coq by Affeldt et al.)
-
-Our work builds directly on Mathlib's matrix library, using `Matrix`, `dotProduct`, `kroneckerMap`, and `finProdFinEquiv` extensively.
+---
 
 ## 2. Definitions and Notation
 
-### 2.1 Core Definitions
+### 2.1 Core Definition
 
-**Definition 2.1** (Hadamard matrix). A matrix H ∈ M_n(ℤ) is *Hadamard* if:
-1. ∀ i j, H_{ij} ∈ {+1, −1}
-2. HH^T = nI_n
-
-In Lean 4:
-```
+```lean
 def IsHadamard {n : ℕ} (H : Matrix (Fin n) (Fin n) ℤ) : Prop :=
   (∀ i j, H i j = 1 ∨ H i j = -1) ∧
   H * H.transpose = (n : ℤ) • (1 : Matrix (Fin n) (Fin n) ℤ)
 ```
 
-**Definition 2.2** (Normalized Hadamard matrix). A Hadamard matrix H is *normalized* if H_{0j} = H_{i0} = 1 for all i, j.
+This definition works over ℤ to avoid real-number coercion issues while retaining the full algebraic content.
 
-**Definition 2.3** (Hadamard order). A natural number n is a *Hadamard order* if there exists a Hadamard matrix of order n.
+### 2.2 Normalized Hadamard Matrices
 
+```lean
+def IsNormalizedHadamard {n : ℕ} [NeZero n] (H : Matrix (Fin n) (Fin n) ℤ) : Prop :=
+  IsHadamard H ∧ (∀ j, H 0 j = 1) ∧ (∀ i, H i 0 = 1)
 ```
-def HadamardOrder (n : ℕ) : Prop :=
-  ∃ H : Matrix (Fin n) (Fin n) ℤ, IsHadamard H
+
+### 2.3 Hadamard Equivalence
+
+```lean
+def HadamardEquivalent {n : ℕ} (H K : Matrix (Fin n) (Fin n) ℤ) : Prop :=
+  ∃ (σ τ : Equiv.Perm (Fin n)) (d₁ d₂ : Fin n → ℤ),
+    (∀ i, d₁ i = 1 ∨ d₁ i = -1) ∧
+    (∀ j, d₂ j = 1 ∨ d₂ j = -1) ∧
+    (∀ i j, K i j = d₁ i * H (σ i) (τ j) * d₂ j)
 ```
 
-### 2.2 Index Types
+### 2.4 Generalized Hadamard (for Kronecker)
 
-We use `Fin n` as the index type throughout, leveraging Mathlib's extensive `Fin` API for arithmetic, permutations, and equivalences.
+```lean
+def IsHadamardGen {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (H : Matrix ι ι ℤ) : Prop :=
+  (∀ i j, H i j = 1 ∨ H i j = -1) ∧
+  H * H.transpose = (Fintype.card ι : ℤ) • (1 : Matrix ι ι ℤ)
+```
+
+### 2.5 Excess
+
+```lean
+def hadamardExcess {n : ℕ} (H : Matrix (Fin n) (Fin n) ℤ) : ℤ :=
+  ∑ i, ∑ j, H i j
+```
+
+---
 
 ## 3. Main Results
 
-### 3.1 Entry-Level Properties
+### 3.1 Divisibility Obstruction
 
-**Theorem 3.1** (Entry squares). If H is Hadamard, then H_{ij}² = 1 for all i, j.
+**Theorem 1.** If n > 2 and a Hadamard matrix of order n exists, then 4 ∣ n.
 
-*Proof sketch*: Since H_{ij} ∈ {+1, −1}, we case-split and compute: 1² = 1 and (−1)² = 1. □
+*Proof sketch.* Take any three rows r₁, r₂, r₃. For each column k, the product (1 + r₁(k)r₂(k))(1 + r₁(k)r₃(k)) equals either 0 or 4 (by exhaustive case analysis on ±1 entries). The sum over all columns equals n (using orthogonality ∑r₁r₂ = 0, ∑r₁r₃ = 0, and ∑r₁²r₂r₃ = ∑r₂r₃ = 0). Since each term is divisible by 4 and they sum to n, we conclude 4 ∣ n. □
 
-**Theorem 3.2** (Absolute values). If H is Hadamard, then |H_{ij}| = 1 for all i, j.
+This proof avoids the traditional normalization step entirely, working directly with any three rows. The key insight is that the product (1 + ab)(1 + ac) filters for the pattern where a agrees with both b and c, and its four-valuedness forces the divisibility.
 
-### 3.2 Row Orthogonality
+### 3.2 Sylvester Construction
 
-**Theorem 3.3** (Self dot product). For a Hadamard matrix H of order n:
-∀ i, ⟨H_i, H_i⟩ = n
+**Theorem 2.** For every k ∈ ℕ, there exists a Hadamard matrix of order 2^k.
 
-*Proof sketch*: The (i,i) entry of HH^T is ⟨H_i, H_i⟩ = dotProduct(H_i, H_i). By the Hadamard condition, (HH^T)_{ii} = (nI)_{ii} = n. □
+*Proof sketch.* By induction on k, using the Kronecker closure theorem (Theorem 3). The base case k = 0 is the 1×1 matrix [1]. The inductive step uses HadamardOrder(2^k) and HadamardOrder(2) (the matrix [[1,1],[1,−1]]) to obtain HadamardOrder(2^(k+1)) via Kronecker. □
 
-**Theorem 3.4** (Cross orthogonality). For distinct rows i ≠ j:
-⟨H_i, H_j⟩ = 0
+### 3.3 Kronecker Closure
 
-*Proof sketch*: The (i,j) entry of HH^T is ⟨H_i, H_j⟩. By the Hadamard condition, (HH^T)_{ij} = (nI)_{ij} = 0 for i ≠ j. □
+**Theorem 3.** If H₁ is a Hadamard matrix indexed by ι₁ and H₂ is indexed by ι₂, then their Kronecker product (kroneckerMap (· * ·) H₁ H₂) is Hadamard on ι₁ × ι₂.
 
-These theorems are derived by extracting individual entries from the matrix equation HH^T = nI using `congr_fun` applied twice.
+*Proof sketch.* Entries: the product of two ±1 values is ±1. Orthogonality: expand (H₁ ⊗ H₂)(H₁ ⊗ H₂)ᵀ using the mixed-product property of Kronecker products. The key identity is:
 
-### 3.3 Transpose Closure
+(H₁ ⊗ H₂)(H₁ᵀ ⊗ H₂ᵀ) = (H₁H₁ᵀ) ⊗ (H₂H₂ᵀ) = (n₁·I) ⊗ (n₂·I) = n₁n₂ · (I ⊗ I) = n₁n₂ · I
 
-**Theorem 3.5**. If H is Hadamard, then H^T is Hadamard.
+The formal proof expands this at the level of sums over product types and uses `Fintype.sum_prod_type_right` to factor the double sum. □
 
-*Proof sketch*: The ±1 condition for H^T follows immediately since (H^T)_{ij} = H_{ji}. For orthogonality, we need H^T(H^T)^T = H^TH = nI. We know HH^T = nI. Over ℚ, this implies H is invertible (since det(H)² = det(HH^T) = n^n > 0 for n > 0), with inverse n⁻¹H^T. Therefore H^T · (n⁻¹H) = I, which gives H^TH = nI. The ℤ equation follows by casting. For n = 0, the result is trivial. □
+A corollary gives multiplicativity of Hadamard orders via reindexing from Fin m × Fin n to Fin (m·n).
 
-This proof required lifting to ℚ to use invertibility, a technique that appears frequently in formalized number theory.
+### 3.4 Code Equidistance
 
-### 3.4 Permutation Invariance
+**Theorem 4.** For a Hadamard matrix H of order n, the Hamming distance between the binary codes of any two distinct rows equals n/2.
 
-**Theorem 3.6**. For permutations σ, τ of Fin n, if H is Hadamard, then H.submatrix(σ, τ) is Hadamard.
+*Proof sketch.* Map +1 → false, −1 → true. Two codes disagree at position k iff H(i,k) · H(j,k) = −1. Partition columns into "agree" (product = +1) and "disagree" (product = −1). Since entries are ±1, the sum ∑ H(i,k)H(j,k) = |agree| − |disagree| = 0 (by orthogonality), and |agree| + |disagree| = n. Thus |disagree| = n/2. □
 
-*Proof sketch*: Entries are preserved by permutation. For orthogonality, the key identity is that the sum ∑_k H_{σ(i),τ(k)} · H_{σ(j),τ(k)} equals ∑_k H_{σ(i),k} · H_{σ(j),k} by the substitution k ↦ τ(k), which is a bijection. □
+### 3.5 Walsh-Hadamard Energy Identity
 
-### 3.5 Kronecker Product Closure
+**Theorem 5.** For any Hadamard matrix H of order n and any integer vector x ∈ ℤⁿ:
 
-**Theorem 3.7** (Kronecker closure). If A ∈ M_m(ℤ) and B ∈ M_n(ℤ) are Hadamard, then their Kronecker product A ⊗ B is Hadamard of order mn.
+∑ᵢ (∑ₖ Hᵢₖ xₖ)² = n · ∑ₖ xₖ²
 
-*Proof sketch*: 
-- **Entries**: (A ⊗ B)_{(i₁,i₂),(j₁,j₂)} = A_{i₁,j₁} · B_{i₂,j₂}. Since both factors are ±1, the product is ±1.
-- **Orthogonality**: 
-  ((A ⊗ B)(A ⊗ B)^T)_{(i₁,i₂),(j₁,j₂)} = ∑_{(k₁,k₂)} A_{i₁,k₁}B_{i₂,k₂} · A_{j₁,k₁}B_{j₂,k₂}
-  = (∑_{k₁} A_{i₁,k₁}A_{j₁,k₁})(∑_{k₂} B_{i₂,k₂}B_{j₂,k₂})
-  = (AA^T)_{i₁,j₁} · (BB^T)_{i₂,j₂}
-  = (mI)_{i₁,j₁} · (nI)_{i₂,j₂}
+*Proof sketch.* Expand the left side as a double sum and swap summation order to obtain ∑ₖ ∑ₗ xₖ xₗ (∑ᵢ Hᵢₖ Hᵢₗ). The inner sum is the (k,l)-entry of HᵀH. To establish column orthogonality (HᵀH = nI), we cast to ℚ, use invertibility of H (from HHᵀ = nI), and derive HᵀH = nI. The result follows: only diagonal terms (k = l) survive, giving n · ∑ₖ xₖ². □
 
-This equals mn if (i₁,i₂) = (j₁,j₂) and 0 otherwise, giving (A ⊗ B)(A ⊗ B)^T = mnI. □
+### 3.6 Excess Bound
 
-The formal proof uses `finProdFinEquiv` to reindex from Fin m × Fin n to Fin(mn), and `Finset.sum_product` to factor the sum.
+**Theorem 6.** For any Hadamard matrix H of order n, σ(H)² ≤ n³.
 
-**Corollary 3.8** (Multiplicative semigroup). HadamardOrder m ∧ HadamardOrder n → HadamardOrder (mn).
+*Proof sketch.* Let sᵢ = ∑ⱼ Hᵢⱼ be the i-th row sum. Then σ(H) = ∑ᵢ sᵢ. By Cauchy-Schwarz: (∑ᵢ sᵢ)² ≤ n · ∑ᵢ sᵢ². The energy identity with x = (1,...,1) gives ∑ᵢ sᵢ² = n². Hence σ(H)² ≤ n · n² = n³. □
 
-### 3.6 Sylvester Construction
+### 3.7 Normalization and Equivalence
 
-**Theorem 3.9**. For all k ≥ 0, HadamardOrder(2^k).
+**Theorem 7.** Every Hadamard matrix of positive order is equivalent (under sign flips) to a normalized Hadamard matrix.
 
-*Proof sketch*: By induction on k. The base case k = 0 uses the 1×1 identity matrix. The inductive step uses the Kronecker closure (Theorem 3.7): HadamardOrder(2^k) and HadamardOrder(2) give HadamardOrder(2^(k+1)). □
+*Proof.* Define H'(i,j) = H(0,0) · H(i,0) · H(0,j) · H(i,j). Then:
+- H'(0,j) = H(0,0)² · H(0,j)² = 1 (first row all +1)
+- H'(i,0) = H(0,0)² · H(i,0)² = 1 (first column all +1)
+- Entries are products of four ±1 values, hence ±1
+- Orthogonality is preserved because sign factors cancel in the inner products. □
 
-The key simplification in our formalization is that we avoid defining the Sylvester matrix recursively with rewriting-based type coercions, instead reducing the entire construction to the Kronecker product of the 2×2 seed matrix H₂ = [[1,1],[1,−1]].
+**Theorem 8.** Hadamard equivalence preserves the Hadamard property.
 
-### 3.7 Explicit Paley-Type Constructions
-
-**Theorem 3.10**. HadamardOrder(4), verified via the explicit matrix H₄.
-
-**Theorem 3.11**. HadamardOrder(12), verified via an explicit 12×12 Paley-type matrix constructed from quadratic residues modulo 11.
-
-Both verifications use `native_decide`, which executes the matrix multiplication and entry checks as compiled code, providing certainty through computation.
-
-### 3.8 Necessary Divisibility Condition
-
-**Theorem 3.12**. If HadamardOrder(n) and n > 2, then 4 | n.
-
-*Proof sketch*: Take three distinct rows r₁, r₂, r₃ of H (possible since n > 2). Since entries are ±1, each row squares to n: ∑_j r_k(j)² = n. From orthogonality:
-
-- ∑_j r₁(j)r₂(j) = 0
-- ∑_j r₁(j)r₃(j) = 0  
-- ∑_j r₂(j)r₃(j) = 0
-
-Partition the n columns by the sign pattern of (r₁, r₂, r₃). Let a be the count of columns where all three entries have a particular pattern. The orthogonality equations give a linear system whose solution requires n to be divisible by 4. □
-
-This is the most technically demanding proof in the formalization, requiring careful management of integer sums, sign partitions, and divisibility arguments over ℤ.
-
-### 3.9 Counterexample
-
-**Theorem 3.13**. Not every Hadamard matrix is symmetric.
-
-*Proof*: The 2×2 matrix H = [[1,1],[−1,1]] is Hadamard (entries are ±1 and HH^T = 2I) but H^T = [[1,−1],[1,1]] ≠ H. □
-
-### 3.10 Infinite Families
-
-**Theorem 3.14**. For all a, b ≥ 0, HadamardOrder(2^a · 12^b).
-
-*Proof*: By induction on b, using Theorems 3.9 (Sylvester for the base case) and 3.8 (Kronecker closure for the inductive step). □
-
-This gives the first formally certified infinite family of Hadamard orders containing non-power-of-2 members.
+---
 
 ## 4. Algorithms
 
-### 4.1 Sylvester Construction
+### 4.1 Sylvester Matrix Construction
+
+**Input:** k ∈ ℕ  
+**Output:** 2^k × 2^k Hadamard matrix
 
 ```
-function SylvesterHadamard(k):
+function Sylvester(k):
     H ← [[1]]
     for i = 1 to k:
         H ← [[H, H], [H, -H]]
     return H
 ```
 
-**Complexity**: O(4^k) = O(n²) time and space, where n = 2^k.
+**Complexity:** O(4^k) time and space. Each iteration quadruples the matrix size.
 
-### 4.2 Paley Type I Construction
+**Correctness:** Certified by `hadamardOrder_pow_two` in Lean.
 
-```
-function PaleyTypeI(q):
-    // q: prime, q ≡ 3 (mod 4)
-    Q ← Jacobsthal matrix of order q
-    H ← [[1, 1...1], [-1...1, Q + I]]
-    return H   // order q+1
-```
+### 4.2 Normalization Procedure
 
-**Complexity**: O(q²) = O(n²) for construction, O(q^(3/2)) for quadratic residue computation.
-
-### 4.3 Kronecker Closure Engine
+**Input:** Hadamard matrix H of order n  
+**Output:** Normalized Hadamard matrix H'
 
 ```
-function CertifiedOrders(bound):
-    orders ← {1, 2} ∪ {2^k : 2^k ≤ bound}
-    orders ← orders ∪ {q+1 : q prime, q ≡ 3 (mod 4), q+1 ≤ bound}
-    orders ← orders ∪ {2(q+1) : q prime, q ≡ 1 (mod 4), 2(q+1) ≤ bound}
-    repeat until stable:
-        for a, b in orders:
-            if a·b ≤ bound: orders ← orders ∪ {a·b}
-    return orders
+function Normalize(H):
+    for j = 0 to n-1:
+        H[*, j] ← H[*, j] * H[0, j]    // Fix first row
+    for i = 0 to n-1:
+        H[i, *] ← H[i, *] * H[i, 0]    // Fix first column
+    return H
 ```
 
-**Complexity**: O(bound² · log(bound)) approximately.
+**Complexity:** O(n²) time, O(1) additional space (in-place).
+
+**Correctness:** Certified by `exists_normalized_of_isHadamard` in Lean.
+
+### 4.3 Hadamard Code Generator
+
+**Input:** Hadamard matrix H of order n  
+**Output:** n binary codewords of length n
+
+```
+function HadamardCode(H):
+    C ← empty n × n binary matrix
+    for i = 0 to n-1:
+        for j = 0 to n-1:
+            C[i,j] ← (1 - H[i,j]) / 2    // +1→0, -1→1
+    return C
+```
+
+**Properties (certified):**
+- n codewords of length n
+- All pairwise Hamming distances equal n/2
+- Minimum distance n/2 (meets Plotkin bound)
+
+---
 
 ## 5. Applications
 
-### 5.1 CDMA Spreading Codes
+### 5.1 Error-Correcting Codes
 
-Rows of Hadamard matrices serve as spreading codes in CDMA communication systems. The orthogonality condition ensures that multiple users' signals can be separated at the receiver. The Kronecker closure theorem guarantees that spreading codes of any required length 2^a · 12^b can be constructed from certified seeds.
+A Hadamard code of order n = 2^k:
+- Has 2^k codewords of length 2^k
+- Minimum distance 2^(k-1)
+- Can correct up to 2^(k-2) − 1 errors
+- Code rate: k/2^k (exponentially small, traded for robustness)
 
-### 5.2 Experimental Design
+The equidistance property (Theorem 4) means these codes are optimal for channels with high noise: they maximize the guaranteed separation between any pair of transmitted messages.
 
-Normalized Hadamard matrices provide optimal Plackett-Burman screening designs. An n×n Hadamard matrix tests (n−1) factors in n runs with:
-- Perfect balance: each factor appears at each level equally often
-- Orthogonality: main effects are uncorrelated
-- D-optimality: minimum variance of effect estimates
+### 5.2 Walsh-Hadamard Transform
 
-### 5.3 Error-Correcting Codes
+The energy identity (Theorem 5) guarantees lossless signal transformation. For a signal x of length 2^k:
+- Forward transform: y = H_k · x (O(n log n) via fast algorithm)
+- Inverse transform: x = (1/n) · H_k · y
+- Energy preservation: ‖y‖² = n · ‖x‖²
 
-From an n×n Hadamard matrix, one extracts a binary code of 2n codewords of length n with minimum Hamming distance n/2. This achieves the Plotkin bound and gives first-order Reed-Muller codes when n = 2^k.
+Applications include: image compression, spectral analysis, Boolean function analysis, and quantum computing (the Hadamard gate is the 2×2 case).
 
-### 5.4 Symmetric BIBDs
+### 5.3 Combinatorial Designs
 
-A normalized Hadamard matrix of order 4n produces a symmetric (4n−1, 2n−1, n−1)-BIBD from its core matrix. This bridges Hadamard theory to finite geometry and combinatorial design theory.
+A normalized Hadamard matrix of order 4t yields a symmetric 2-(4t−1, 2t−1, t−1) design by deleting the first row and column and mapping +1 → "in block", −1 → "not in block". This design has:
+- v = 4t − 1 points and b = 4t − 1 blocks
+- Each block contains k = 2t − 1 points
+- Each pair of points appears in λ = t − 1 blocks
+
+These are optimal for balanced experimental design.
+
+---
 
 ## 6. Computational Experiments
 
-### 6.1 Coverage Analysis
+### 6.1 Sylvester Family Verification
 
-Using the Kronecker closure engine with seeds from Sylvester and Paley constructions:
+| k | Order n = 2^k | Excess σ | σ²/n³ | Verified |
+|---|---------------|----------|-------|----------|
+| 1 | 2 | 2 | 0.5000 | ✓ |
+| 2 | 4 | 4 | 0.2500 | ✓ |
+| 3 | 8 | 8 | 0.1250 | ✓ |
+| 4 | 16 | 16 | 0.0625 | ✓ |
+| 5 | 32 | 32 | 0.0312 | ✓ |
+| 6 | 64 | 64 | 0.0156 | ✓ |
+| 7 | 128 | 128 | 0.0078 | ✓ |
 
-| Bound | Multiples of 4 | Covered | Coverage |
-|-------|----------------|---------|----------|
-| 100   | 25             | 18      | 72%      |
-| 200   | 50             | 37      | 74%      |
-| 500   | 125            | 95      | 76%      |
-| 1000  | 250            | 194     | 77.6%    |
+The Sylvester excess follows σ = n, giving σ²/n³ = 1/n → 0.
 
-Uncovered orders up to 100: {28, 36, 52, 56, 76, 92, 100}
+### 6.2 Paley Construction
 
-### 6.2 Code Parameters
+| q (prime) | Order q+1 | Construction | Verified |
+|-----------|-----------|--------------|----------|
+| 3 | 4 | Paley I | ✓ |
+| 7 | 8 | Paley I | ✓ |
+| 11 | 12 | Paley I | ✓ |
+| 19 | 20 | Paley I | ✓ |
+| 23 | 24 | Paley I | ✓ |
+| 31 | 32 | Paley I | ✓ |
+| 43 | 44 | Paley I | ✓ |
 
-| k | n=2^k | Codewords | Distance | Rate   |
-|---|-------|-----------|----------|--------|
-| 2 | 4     | 8         | 2        | 0.750  |
-| 3 | 8     | 16        | 4        | 0.500  |
-| 4 | 16    | 32        | 8        | 0.312  |
-| 5 | 32    | 64        | 16       | 0.188  |
+### 6.3 Code Equidistance Verification
 
-### 6.3 BIBD Parameters
+| Order | Codewords | Distance | Equidistant |
+|-------|-----------|----------|-------------|
+| 4 | 4 | 2 | ✓ |
+| 8 | 8 | 4 | ✓ |
+| 16 | 16 | 8 | ✓ |
+| 32 | 32 | 16 | ✓ |
 
-| n   | v = n−1 | k = n/2−1 | λ = n/4−1 | Verified |
-|-----|---------|-----------|-----------|----------|
-| 4   | 3       | 1         | 0         | ✓        |
-| 8   | 7       | 3         | 1         | ✓        |
-| 12  | 11      | 5         | 2         | ✓        |
+---
 
 ## 7. Discussion
 
-### 7.1 Proof Architecture
+### 7.1 Formal Verification Methodology
 
-The formalization reveals several architectural insights:
+The development uses Lean 4 with the Mathlib library. Key design decisions:
 
-1. **Kronecker product as backbone**: By proving the tensor closure theorem first, all subsequent existence results reduce to verifying small seed matrices.
+1. **ℤ vs ℝ:** Working over ℤ avoids coercion overhead and aligns naturally with the ±1 entry constraint. The column orthogonality proof required a brief excursion to ℚ for invertibility arguments.
 
-2. **Computation vs. deduction**: Small matrices (orders 2, 4, 12) are verified by `native_decide` (computation), while structural theorems (Kronecker closure, divisibility condition) require deductive proofs.
+2. **Fin n vs general Fintype:** The Kronecker closure theorem required a generalized IsHadamardGen predicate on arbitrary Fintype indices, since kroneckerMap produces matrices indexed by product types. A reindexing lemma bridges back to Fin n.
 
-3. **ℤ vs ℚ lifting**: The transpose theorem required lifting to ℚ for invertibility, illustrating a common pattern in formalized algebra.
-
-4. **Type management**: The Kronecker product involves reindexing from Fin m × Fin n to Fin(mn) via `finProdFinEquiv`, which is a significant formalization burden.
+3. **Normalization:** The explicit formula H'(i,j) = H(0,0)·H(i,0)·H(0,j)·H(i,j) avoids iterative sign-flipping and gives a direct existential witness.
 
 ### 7.2 Limitations
 
-The current formalization does not include:
-- A general Paley construction theorem (parametric over primes)
-- Formal extraction of BIBDs or codes (computational only)
-- Conference matrix theory
-- Williamson and Goethals-Seidel constructions
-- The Hadamard conjecture itself (which remains open)
+- The Paley construction is implemented computationally in Python but not yet formally verified in Lean (this requires substantial finite field infrastructure).
+- The BIBD connection is described but not formalized due to the lack of design-theory infrastructure in Mathlib.
+- The Hadamard conjecture itself remains unresolved.
 
-### 7.3 Comparison with Informal Mathematics
+### 7.3 Comparison with Prior Work
 
-The total formalization comprises approximately 300 lines of Lean 4 across 5 files. The most significant formalization challenge was the divisibility theorem (Theorem 3.12), where the counting argument over integer partitions required careful management of ℤ arithmetic. The transpose theorem (Theorem 3.5) was also non-trivial due to the need for ℚ-lifting.
+To our knowledge, this is the first comprehensive formal verification of Hadamard matrix theory including the divisibility obstruction, Sylvester construction, Kronecker closure, code distance theorem, and energy identity in a single unified development.
+
+---
 
 ## 8. Future Work
 
-### 8.1 Short-term
+1. **Paley construction formalization:** Verify the Paley Type I construction for primes q ≡ 3 (mod 4) using Mathlib's finite field and Legendre symbol infrastructure.
 
-- Formalize the parametric Paley Type I construction for all primes p ≡ 3 (mod 4)
-- Prove the Hadamard-to-BIBD bridge theorem (Theorem 5.4) formally
-- Extract equidistant codes formally and prove the distance property
-- Verify Hadamard matrices of order 20 (Paley from p = 19)
+2. **BIBD formalization:** Build a formal design theory library and prove the Hadamard-to-BIBD correspondence.
 
-### 8.2 Medium-term
+3. **Equivalence classification:** Formally verify the classification of Hadamard equivalence classes at small orders.
 
-- Formalize conference matrices and Williamson-type constructions
-- Develop formal quadratic character theory for finite fields
-- Connect to formal coding theory (Hamming bound, Plotkin bound)
-- Build a formal existence oracle: a decision procedure for "is n a constructible Hadamard order?"
+4. **Fast Walsh-Hadamard transform:** Verify the O(n log n) butterfly algorithm for the Walsh-Hadamard transform.
 
-### 8.3 Long-term
+5. **Approach the conjecture:** Formalize additional construction families (Williamson, Turyn) to expand the set of certified Hadamard orders.
 
-- Formalize Turyn-type constructions and product theorems
-- Establish formal connections to strongly regular graphs
-- Develop certified hardware implementations of Hadamard transforms
-- Progress toward a formal resolution of the Hadamard conjecture for specific infinite families
+See `FUTURE_DIRECTIONS.md` for five specific falsifiable conjectures.
 
-## 9. References
+---
 
-1. Hadamard, J. (1893). Résolution d'une question relative aux déterminants. *Bull. des Sciences Math.*, 17, 240–246.
-2. Sylvester, J.J. (1867). Thoughts on inverse orthogonal matrices. *Phil. Mag.*, 34, 461–475.
-3. Paley, R.E.A.C. (1933). On orthogonal matrices. *J. Math. Phys.*, 12, 311–320.
+## 9. File Organization
+
+| File | Contents |
+|------|----------|
+| `Algebra/Hadamard/Defs.lean` | Core definitions: IsHadamard, NormalizedHadamard, HadamardEquivalent, excess, bundled structure, basic lemmas |
+| `Algebra/Hadamard/Kronecker.lean` | Generalized Hadamard, Kronecker closure, reindexing, multiplicativity |
+| `Algebra/Hadamard/Sylvester.lean` | 2×2 seed, Sylvester family for all 2^k |
+| `Algebra/Hadamard/Obstruction.lean` | Divisibility obstruction: n > 2 → 4 ∣ n |
+| `Algebra/Hadamard/Code.lean` | Hadamard codes, equidistance, column orthogonality, energy identity, excess bound |
+| `Algebra/Hadamard/Normalization.lean` | Sign-flipping, normalization existence, equivalence invariance |
+| `demo.py` | Interactive demonstration of all constructions |
+| `algorithms.py` | Core algorithms with docstrings and type hints |
+| `applications.py` | Cross-domain application demonstrations |
+
+---
+
+## References
+
+1. Hadamard, J. (1893). Résolution d'une question relative aux déterminants. *Bull. Sci. Math.* 17, 240–246.
+
+2. Sylvester, J.J. (1867). Thoughts on inverse orthogonal matrices. *Phil. Mag.* 34, 461–475.
+
+3. Paley, R.E.A.C. (1933). On orthogonal matrices. *J. Math. Phys.* 12, 311–320.
+
 4. Horadam, K.J. (2007). *Hadamard Matrices and Their Applications*. Princeton University Press.
-5. Seberry, J. & Yamada, M. (1992). Hadamard matrices, sequences, and block designs. In *Contemporary Design Theory*, Wiley.
-6. The Mathlib Community (2024). *Mathlib4*. https://github.com/leanprover-community/mathlib4
 
-## Appendix A: File Structure
+5. Hedayat, A. and Wallis, W.D. (1978). Hadamard matrices and their applications. *Ann. Statist.* 6, 1184–1238.
 
-| File | Contents | Lines |
-|------|----------|-------|
-| `Basic.lean` | Core definitions, entry lemmas, dot products, transpose, permutation, orders 1 and 2, divisibility theorem | ~130 |
-| `Kronecker.lean` | Kronecker product closure, multiplicative order closure | ~45 |
-| `Sylvester.lean` | H₂ definition, Sylvester family via Kronecker iteration | ~30 |
-| `Examples.lean` | Explicit H₄, counterexample (non-symmetry) | ~35 |
-| `Orders.lean` | H₁₂ (Paley), infinite families, explicit small orders | ~90 |
+6. de Launey, W. and Levin, M.D. (2010). A Fourier-analytic approach to counting partial Hadamard matrices. *Cryptogr. Commun.* 2, 307–334.
 
-All proofs use only the standard axioms: propext, Classical.choice, Quot.sound, plus Lean.ofReduceBool and Lean.trustCompiler for native_decide computations.
+7. The Mathlib Community (2024). Mathlib4: The mathematics library for Lean 4. https://github.com/leanprover-community/mathlib4

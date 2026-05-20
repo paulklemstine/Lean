@@ -156,7 +156,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.78,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "074c9bf8",
       "timestamp": "2026-05-20T00:22:10.974360+00:00"
     },
@@ -1974,7 +1974,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T01:04:09.565356+00:00"
     },
@@ -2255,7 +2255,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T02:04:18.477954+00:00"
     },
@@ -2517,7 +2517,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T02:05:08.968810+00:00"
     },
@@ -2553,7 +2553,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T03:01:31.751551+00:00"
     },
@@ -2822,7 +2822,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T03:09:29.630899+00:00"
     },
@@ -2924,7 +2924,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T04:03:49.245260+00:00"
     },
@@ -2945,7 +2945,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T04:03:49.255264+00:00"
     },
@@ -3148,6 +3148,130 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T04:04:51.088347+00:00"
+    },
+    {
+      "id": "fd_0167",
+      "title": "What would refute",
+      "description": ": P_n^{(3)} bounded away from 1, which would require three permutations to all have correlated parity constraints beyond the simple product.\n\n**Impact**: This would establish a sharp threshold: two generators give probability 3/4 (due to parity), but three generators eliminate the parity obstruction (probability that all three are even is 1/8, but the parity constraint becomes less rigid) and achieve probability → 1. This has direct implications for randomized algorithms that use three random permutations as building blocks.\n\n---\n\n## Experimental Infrastructure Needed\n\nTo test these conjectures, the following computational tools are needed:",
+      "source_exp_id": "074c9bf8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/074c9bf8",
+      "domains": [
+        "NumberTheory",
+        "Probability",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T05:07:22.814850+00:00"
+    },
+    {
+      "id": "fd_0168",
+      "title": "GAP scripts",
+      "description": "for exact subgroup generation in S_n for n ≤ 12",
+      "source_exp_id": "074c9bf8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/074c9bf8",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T05:07:22.819272+00:00"
+    },
+    {
+      "id": "fd_0169",
+      "title": "High-performance Monte Carlo",
+      "description": "sampling of random permutations for n ≤ 10⁵",
+      "source_exp_id": "074c9bf8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/074c9bf8",
+      "domains": [
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T05:07:22.824742+00:00"
+    },
+    {
+      "id": "fd_0170",
+      "title": "Subgroup lattice enumeration",
+      "description": "using the O'Nan-Scott classification",
+      "source_exp_id": "074c9bf8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/074c9bf8",
+      "domains": [
+        "Cryptography",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T05:07:22.828966+00:00"
+    },
+    {
+      "id": "fd_0171",
+      "title": "Lean 4 formalization",
+      "description": "of the orbit-stabilizer theorem connecting orbits to preserved subsets",
+      "source_exp_id": "074c9bf8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/074c9bf8",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T05:07:22.832812+00:00"
+    },
+    {
+      "id": "fd_0172",
+      "title": "Spectral methods",
+      "description": "for bounding mixing times of random walks on Cayley graphs of S_n",
+      "source_exp_id": "074c9bf8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/074c9bf8",
+      "domains": [
+        "Analysis",
+        "Probability"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T05:07:22.836852+00:00"
+    },
+    {
+      "id": "fd_0173",
+      "title": "Proof Expansion Constant for Formal Theories",
+      "description": "Conjecture: For every recursively axiomatized, consistent theory T with polynomial-time proof verification, there exists a theory-dependent constant h(T) > 0 such that for infinitely many theorem pairs (phi, psi) with psi a nontrivial strengthening of phi, every proof of psi has length at least exp(h(T) * d(phi, psi)) times the minimum proof length of phi, where d(phi, psi) is a formally defined semantic strengthening distance (e.g. quantifier alternation plus model-class shrinkage). Test: Define a precise strengthening metric in a fixed proof assistant, compute empirical proof-length ratios across large theorem families in arithmetic, algebra, and combinatorics, and refute the conjecture by exhibiting a family with unbounded strengthening distance but only polynomial proof-length blowup. Confirming evidence would be persistent exponential lower envelopes across unrelated domains. Impact: This would create a geometric invariant of theories measuring how rapidly stronger truths become harder to prove, enabling principled forecasting of theorem difficulty, curriculum design for automated provers, and a new bridge between proof complexity, model theory, and mathematical practice.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Proof Complexity",
+        "Model Theory"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T05:07:35.464824+00:00"
     }
   ],
   "pruned": [
