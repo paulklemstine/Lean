@@ -1,521 +1,654 @@
 #!/usr/bin/env python3
 """
-applications.py — Applications of Reverse-and-Add Dynamics Theory
+Applications of Reverse-and-Add Dynamics
+=========================================
 
-Demonstrates practical applications of the formal theory:
-1. Automated Lychrel candidate screening via modular obstructions
-2. Carry pattern analysis for orbit classification
-3. Multi-base palindrome dynamics comparison
-4. Finite-horizon certification engine
+This module demonstrates practical applications of the formally verified
+theorems about reverse-and-add dynamics:
+
+1. Palindrome sieving using modular obstructions
+2. Lychrel candidate classification
+3. Orbit complexity analysis
+4. Signature-based orbit prediction
+
+Each application references the corresponding formally verified result.
 """
 
-from collections import Counter
+from typing import List, Dict, Tuple, Optional, Set
+from collections import defaultdict
+import time
 
 
-def digits_base(b: int, n: int) -> list[int]:
+# ============================================================================
+# Core Functions (self-contained)
+# ============================================================================
+
+def digits10(n: int) -> List[int]:
+    """Base-10 digits, least significant first."""
     if n == 0:
         return []
     result = []
     while n > 0:
-        result.append(n % b)
-        n //= b
+        result.append(n % 10)
+        n //= 10
     return result
 
 
-def of_digits_base(b: int, digits: list[int]) -> int:
-    result = 0
-    power = 1
-    for d in digits:
-        result += d * power
-        power *= b
-    return result
+def reverse_nat(n: int) -> int:
+    """Digit reversal."""
+    d = digits10(n)
+    return sum(digit * 10**i for i, digit in enumerate(reversed(d)))
 
 
-def reverse_digits(b: int, n: int) -> int:
-    d = digits_base(b, n)
-    return of_digits_base(b, list(reversed(d)))
+def rev_add(n: int) -> int:
+    """Reverse-and-add: T(n) = n + rev(n)."""
+    return n + reverse_nat(n)
 
 
-def is_palindrome_base(b: int, n: int) -> bool:
-    d = digits_base(b, n)
-    return d == list(reversed(d))
+def is_palindrome(n: int) -> bool:
+    """Check palindromicity."""
+    s = str(n)
+    return s == s[::-1]
 
 
-def rev_add_step(b: int, n: int) -> int:
-    return n + reverse_digits(b, n)
+def symmetry_defect(n: int) -> int:
+    """Symmetry defect of n's digit representation."""
+    d = digits10(n)
+    length = len(d)
+    return sum(abs(d[i] - d[length - 1 - i]) for i in range(length // 2))
 
 
-# ============================================================
-# Application 1: Modular Obstruction Screening
-# ============================================================
+# ============================================================================
+# Application 1: Palindrome Sieving via Modular Obstructions
+# ============================================================================
 
-def modular_obstruction_screen(b: int, n: int, moduli: list[int], horizon: int = 100) -> dict:
+def palindrome_sieve(limit: int) -> Dict[str, List[int]]:
     """
-    Screen a number for Lychrel candidacy using modular obstructions.
-    
-    For each modulus m, check whether the residue orbit of n mod m
-    ever matches the residue set of palindromes mod m.
-    
-    This is the computational implementation of Theorem F.
-    
-    Returns analysis showing which moduli provide obstructions at which steps.
+    Classify numbers by palindrome reachability using modular sieves.
+
+    Uses the formally verified theorem:
+        palindrome_mod11_of_even_length: even-length palindromes ≡ 0 (mod 11)
+
+    This creates a sieve: at each step of the orbit, if the number has an
+    even number of digits and is not ≡ 0 (mod 11), it cannot be an
+    even-length palindrome.
+
+    Application: Pre-filter palindrome candidates to reduce search space.
     """
-    results = {}
-    
-    for m in moduli:
-        if m <= 0:
-            continue
-            
-        # Compute palindrome residues mod m (for small palindromes)
-        pal_residues = set()
-        # Generate palindromes up to reasonable size
-        for length in range(1, 8):
-            half = (length + 1) // 2
-            for seed in range(b ** half):
-                first = digits_base(b, seed) if seed > 0 else [0]
-                while len(first) < half:
-                    first.append(0)
-                first = first[:half]
-                if length % 2 == 0:
-                    full = first + list(reversed(first))
+    results = {
+        'quick_palindromes': [],      # Reach palindrome within 10 steps
+        'delayed_palindromes': [],     # Reach palindrome in 11-100 steps
+        'persistent_candidates': [],   # No palindrome in 100 steps
+        'mod11_obstructed_steps': [],  # Steps where mod 11 obstruction applies
+    }
+
+    for seed in range(1, limit + 1):
+        n = seed
+        found = False
+        obstructed_count = 0
+
+        for step in range(100):
+            if is_palindrome(n) and step > 0:
+                if step <= 10:
+                    results['quick_palindromes'].append((seed, step))
                 else:
-                    full = first + list(reversed(first[:-1]))
-                if length > 1 and full[-1] == 0:
-                    continue
-                p = of_digits_base(b, full)
-                pal_residues.add(p % m)
-        pal_residues.add(0)
-        
-        # Track orbit residues
-        current = n
-        obstructed = []
-        for k in range(horizon + 1):
-            r = current % m
-            if r not in pal_residues:
-                obstructed.append(k)
-            current = rev_add_step(b, current)
-        
-        results[m] = {
-            "palindrome_residues": sorted(pal_residues),
-            "obstruction_rate": len(obstructed) / (horizon + 1) if horizon > 0 else 0,
-            "first_obstructed": obstructed[:5] if obstructed else None,
-            "total_obstructed": len(obstructed),
-        }
-    
-    return results
-
-
-# ============================================================
-# Application 2: Carry Pattern Analysis
-# ============================================================
-
-def carry_pattern_analysis(b: int, n: int, steps: int = 50) -> dict:
-    """
-    Analyze carry patterns over multiple reverse-and-add steps.
-    
-    The carry automaton theorem (Theorem G) shows that arithmetic
-    addition equals carry-based digit processing. This function
-    extracts statistical features of carry behavior that may
-    predict Lychrel candidacy.
-    """
-    carry_stats = []
-    current = n
-    
-    for k in range(steps):
-        d = digits_base(b, current)
-        rev_d = list(reversed(d))
-        
-        carries = []
-        c = 0
-        for a, r in zip(d, rev_d):
-            s = a + r + c
-            c = s // b
-            carries.append(c)
-        
-        # Statistics
-        num_carries = sum(1 for c in carries if c > 0)
-        max_carry = max(carries) if carries else 0
-        carry_density = num_carries / len(d) if d else 0
-        
-        carry_stats.append({
-            "step": k,
-            "num_digits": len(d),
-            "num_carries": num_carries,
-            "max_carry": max_carry,
-            "carry_density": round(carry_density, 3),
-            "final_carry": carries[-1] if carries else 0,
-        })
-        
-        current = rev_add_step(b, current)
-    
-    return {
-        "seed": n,
-        "base": b,
-        "avg_carry_density": round(
-            sum(s["carry_density"] for s in carry_stats) / len(carry_stats), 3
-        ),
-        "digit_growth": [s["num_digits"] for s in carry_stats],
-        "carry_densities": [s["carry_density"] for s in carry_stats],
-        "details": carry_stats[:10],
-    }
-
-
-# ============================================================
-# Application 3: Multi-Base Dynamics Comparison
-# ============================================================
-
-def multi_base_comparison(n: int, bases: list[int], max_steps: int = 200) -> dict:
-    """
-    Compare reverse-and-add behavior of n across multiple bases.
-    
-    This reveals how base choice affects convergence/divergence,
-    illustrating that Lychrel behavior is base-dependent.
-    """
-    results = {}
-    
-    for b in bases:
-        current = n
-        converged = False
-        convergence_step = None
-        
-        for k in range(1, max_steps + 1):
-            current = rev_add_step(b, current)
-            if is_palindrome_base(b, current):
-                converged = True
-                convergence_step = k
+                    results['delayed_palindromes'].append((seed, step))
+                found = True
                 break
-        
-        # Compute modular orbit mod (b-1) for first 20 steps
-        mod_orbit = []
-        temp = n
-        m = b - 1
-        for k in range(min(20, max_steps)):
-            if m > 0:
-                mod_orbit.append(temp % m)
-            temp = rev_add_step(b, temp)
-        
-        results[b] = {
-            "converged": converged,
-            "convergence_step": convergence_step,
-            "final_value": current if converged else None,
-            "mod_orbit": mod_orbit,
-        }
-    
+
+            # Check mod 11 obstruction
+            d = digits10(n)
+            if len(d) % 2 == 0 and n % 11 != 0:
+                obstructed_count += 1
+
+            n = rev_add(n)
+
+        if not found:
+            results['persistent_candidates'].append(seed)
+            results['mod11_obstructed_steps'].append((seed, obstructed_count))
+
     return results
 
 
-# ============================================================
-# Application 4: Finite-Horizon Certification
-# ============================================================
+# ============================================================================
+# Application 2: Lychrel Candidate Classification
+# ============================================================================
 
-def finite_horizon_certificate(b: int, n: int, K: int) -> dict:
+def classify_lychrel_candidates(limit: int, depth: int = 200) -> Dict[str, any]:
     """
-    Produce a finite-horizon non-palindrome certificate for n in base b.
-    
-    For each step k ≤ K, explicitly verify that the iterate is not
-    a palindrome, and record the modular evidence.
-    
-    This is the computational counterpart of the formal Theorem F.
+    Classify potential Lychrel candidates by their orbit characteristics.
+
+    Uses formally verified properties:
+    - strict_growth_of_nonpalindrome: orbit grows strictly
+    - revAdd_mod9: mod 9 evolves as 2n
+    - palindrome_mod11_of_even_length: even-length palindrome obstruction
+
+    Returns classification by:
+    - Mod 9 residue class
+    - Growth rate (digit length increase per step)
+    - Maximum carry frequency
     """
-    certificate = {
-        "seed": n,
-        "base": b,
-        "horizon": K,
-        "steps": [],
+    candidates = []
+    classes = defaultdict(list)
+
+    for seed in range(1, limit + 1):
+        n = seed
+        found_palindrome = False
+
+        for _ in range(depth):
+            n = rev_add(n)
+            if is_palindrome(n):
+                found_palindrome = True
+                break
+
+        if not found_palindrome:
+            mod9_class = seed % 9
+            digit_growth = len(str(n)) - len(str(seed))
+            candidates.append({
+                'seed': seed,
+                'mod9': mod9_class,
+                'digit_growth': digit_growth,
+                'final_digits': len(str(n)),
+            })
+            classes[mod9_class].append(seed)
+
+    return {
+        'candidates': candidates,
+        'by_mod9': dict(classes),
+        'total': len(candidates),
     }
-    
-    m = b - 1  # Primary modulus
-    current = n
-    
-    for k in range(K + 1):
-        d = digits_base(b, current)
-        rev = reverse_digits(b, current)
-        is_pal = is_palindrome_base(b, current)
-        
-        step_data = {
-            "k": k,
-            "value_digits": len(d),
-            "is_palindrome": is_pal,
-            "residue_mod_bm1": current % m if m > 0 else 0,
-            "predicted_residue": pow(2, k, m) * n % m if m > 0 else 0,
-            "value_mod_11": current % 11,
-            "rev_mod_11": rev % 11,
-        }
-        certificate["steps"].append(step_data)
-        
-        if is_pal:
-            certificate["palindrome_found_at"] = k
+
+
+# ============================================================================
+# Application 3: Orbit Complexity Analysis
+# ============================================================================
+
+def orbit_complexity_profile(seed: int, steps: int = 50) -> Dict:
+    """
+    Analyze the complexity profile of a reverse-and-add orbit.
+
+    Measures:
+    - Digit length growth rate
+    - Symmetry defect trajectory
+    - Carry density (fraction of positions with carry)
+    - Mod 9 and mod 11 trajectories
+
+    Application: Identify structural patterns that distinguish Lychrel
+    candidates from numbers that eventually reach palindromes.
+    """
+    n = seed
+    profile = {
+        'seed': seed,
+        'digit_lengths': [],
+        'defects': [],
+        'carry_densities': [],
+        'mod9': [],
+        'mod11': [],
+        'values': [],
+    }
+
+    for step in range(steps):
+        d = digits10(n)
+        rev_d = list(reversed(d))
+
+        # Compute carries
+        carries = 0
+        c = 0
+        for i in range(len(d)):
+            s = d[i] + rev_d[i] + c
+            if s >= 10:
+                carries += 1
+            c = s // 10
+
+        profile['digit_lengths'].append(len(d))
+        profile['defects'].append(symmetry_defect(n))
+        profile['carry_densities'].append(carries / max(len(d), 1))
+        profile['mod9'].append(n % 9)
+        profile['mod11'].append(n % 11)
+        profile['values'].append(n)
+
+        if is_palindrome(n) and step > 0:
+            profile['palindrome_step'] = step
             break
-        
-        current = rev_add_step(b, current)
-    
-    certificate["all_non_palindromic"] = all(
-        not s["is_palindrome"] for s in certificate["steps"]
-    )
-    
-    return certificate
+
+        n = rev_add(n)
+
+    # Compute growth rate
+    lengths = profile['digit_lengths']
+    if len(lengths) > 1:
+        profile['avg_growth_rate'] = (lengths[-1] - lengths[0]) / (len(lengths) - 1)
+    else:
+        profile['avg_growth_rate'] = 0
+
+    return profile
 
 
-# ============================================================
-# Main demonstrations
-# ============================================================
+# ============================================================================
+# Application 4: Signature-Based Orbit Prediction
+# ============================================================================
+
+def signature_prediction_accuracy(limit: int = 500, steps: int = 50) -> Dict:
+    """
+    Test how well the mod 9 algebraic prediction matches actual orbits.
+
+    By revAdd_mod9_iter: T^k(n) % 9 = (2^k * n) % 9
+
+    This prediction is exact (formally verified) and can be computed in O(1)
+    per step without performing the actual reverse-and-add.
+
+    Application: Fast pre-screening of orbit properties.
+    """
+    total_predictions = 0
+    correct_predictions = 0
+    mod9_period = 6  # ord_9(2) = 6
+
+    for seed in range(1, limit + 1):
+        n = seed
+        for k in range(steps):
+            predicted_mod9 = (pow(2, k, 9) * seed) % 9
+            actual_mod9 = n % 9
+
+            total_predictions += 1
+            if predicted_mod9 == actual_mod9:
+                correct_predictions += 1
+            else:
+                print(f"  MISMATCH at seed={seed}, step={k}: "
+                      f"predicted={predicted_mod9}, actual={actual_mod9}")
+
+            n = rev_add(n)
+            if is_palindrome(n):
+                break
+
+    return {
+        'total_predictions': total_predictions,
+        'correct_predictions': correct_predictions,
+        'accuracy': correct_predictions / total_predictions if total_predictions > 0 else 0,
+        'mod9_period': mod9_period,
+    }
+
+
+# ============================================================================
+# Application 5: Comparative Orbit Statistics
+# ============================================================================
+
+def comparative_statistics(seeds: List[int], steps: int = 100) -> None:
+    """
+    Compare orbit statistics across multiple seeds.
+
+    Highlights differences between numbers that reach palindromes
+    and Lychrel candidates.
+    """
+    print(f"\n{'Seed':>8} {'Steps':>8} {'Palindrome':>12} {'Final Len':>10} "
+          f"{'Avg Defect':>12} {'Avg Carry%':>12} {'Mod9':>6} {'Mod11':>6}")
+    print("-" * 82)
+
+    for seed in seeds:
+        profile = orbit_complexity_profile(seed, steps)
+        pal_step = profile.get('palindrome_step', None)
+        avg_defect = sum(profile['defects']) / len(profile['defects']) if profile['defects'] else 0
+        avg_carry = sum(profile['carry_densities']) / len(profile['carry_densities']) if profile['carry_densities'] else 0
+
+        print(f"{seed:8d} {len(profile['values']):8d} "
+              f"{'Step ' + str(pal_step) if pal_step else 'NO':>12} "
+              f"{profile['digit_lengths'][-1]:10d} "
+              f"{avg_defect:12.2f} {avg_carry:12.3f} "
+              f"{seed % 9:6d} {seed % 11:6d}")
+
+
+# ============================================================================
+# Main Demonstration
+# ============================================================================
 
 if __name__ == "__main__":
     print("=" * 70)
-    print("APPLICATION 1: Modular Obstruction Screening for 196")
+    print("  APPLICATIONS OF REVERSE-AND-ADD DYNAMICS")
+    print("  Based on Formally Verified Theorems")
     print("=" * 70)
-    
-    screen = modular_obstruction_screen(10, 196, [9, 11, 99, 109], horizon=50)
-    for m, data in screen.items():
-        print(f"\n  Modulus m = {m}:")
-        print(f"    Palindrome residues mod {m}: {data['palindrome_residues'][:20]}...")
-        print(f"    Obstruction rate: {data['obstruction_rate']:.1%}")
-        print(f"    Total obstructed steps: {data['total_obstructed']}")
-        if data['first_obstructed']:
-            print(f"    First obstructed at steps: {data['first_obstructed']}")
-    
+
+    # Application 1: Palindrome Sieving
     print("\n" + "=" * 70)
-    print("APPLICATION 2: Carry Pattern Analysis for 196")
+    print("  APPLICATION 1: Palindrome Sieving via Mod 11 Obstruction")
     print("=" * 70)
-    
-    carry = carry_pattern_analysis(10, 196, steps=20)
-    print(f"\n  Average carry density: {carry['avg_carry_density']}")
-    print(f"  Digit growth: {carry['digit_growth']}")
-    print(f"\n  First 10 steps detail:")
-    for s in carry["details"]:
-        print(f"    Step {s['step']:2d}: {s['num_digits']:3d} digits, "
-              f"{s['num_carries']:3d} carries, density={s['carry_density']:.3f}")
-    
+    sieve = palindrome_sieve(200)
+    print(f"\n  Numbers 1-200:")
+    print(f"    Quick palindromes (≤10 steps): {len(sieve['quick_palindromes'])}")
+    print(f"    Delayed palindromes (11-100 steps): {len(sieve['delayed_palindromes'])}")
+    print(f"    Persistent candidates (>100 steps): {len(sieve['persistent_candidates'])}")
+    print(f"    Persistent candidates: {sieve['persistent_candidates'][:20]}...")
+
+    # Application 2: Lychrel Classification
     print("\n" + "=" * 70)
-    print("APPLICATION 3: Multi-Base Comparison for 196")
+    print("  APPLICATION 2: Lychrel Candidate Classification")
     print("=" * 70)
-    
-    comparison = multi_base_comparison(196, [2, 4, 8, 10, 16], max_steps=500)
-    for b, data in comparison.items():
-        status = f"palindrome at step {data['convergence_step']}" if data["converged"] else "Lychrel candidate"
-        print(f"\n  Base {b:2d}: {status}")
-        if data["mod_orbit"]:
-            print(f"    Mod {b-1} orbit: {data['mod_orbit'][:10]}...")
-    
+    classification = classify_lychrel_candidates(500, depth=100)
+    print(f"\n  Lychrel candidates up to 500: {classification['total']}")
+    print(f"  Distribution by mod 9 residue:")
+    for mod9, seeds in sorted(classification['by_mod9'].items()):
+        print(f"    mod 9 ≡ {mod9}: {len(seeds)} candidates ({seeds[:5]}{'...' if len(seeds) > 5 else ''})")
+
+    # Application 3: Mod 9 Prediction Verification
     print("\n" + "=" * 70)
-    print("APPLICATION 4: Finite-Horizon Certificate for 196 (K=25)")
+    print("  APPLICATION 3: Mod 9 Algebraic Prediction Accuracy")
     print("=" * 70)
-    
-    cert = finite_horizon_certificate(10, 196, 25)
-    print(f"\n  Seed: {cert['seed']}, Base: {cert['base']}, Horizon: {cert['horizon']}")
-    print(f"  All non-palindromic: {cert['all_non_palindromic']}")
-    print(f"\n  {'Step':>5s}  {'Digits':>6s}  {'Pal?':>5s}  {'mod 9':>6s}  {'pred':>6s}  {'mod 11':>7s}  {'rev%11':>7s}")
-    print("  " + "-" * 50)
-    for s in cert["steps"][:26]:
-        print(f"  {s['k']:5d}  {s['value_digits']:6d}  "
-              f"{'YES' if s['is_palindrome'] else 'no':>5s}  "
-              f"{s['residue_mod_bm1']:6d}  {s['predicted_residue']:6d}  "
-              f"{s['value_mod_11']:7d}  {s['rev_mod_11']:7d}")
-    
+    accuracy = signature_prediction_accuracy(200, 30)
+    print(f"\n  Total predictions: {accuracy['total_predictions']}")
+    print(f"  Correct: {accuracy['correct_predictions']}")
+    print(f"  Accuracy: {accuracy['accuracy']:.4%}")
+    print(f"  (This is 100% by formal verification of revAdd_mod9)")
+
+    # Application 4: Comparative Statistics
     print("\n" + "=" * 70)
-    print("All applications completed successfully.")
+    print("  APPLICATION 4: Comparative Orbit Statistics")
+    print("=" * 70)
+    test_seeds = [89, 196, 197, 295, 394, 493, 592, 689, 691, 788, 879, 978]
+    comparative_statistics(test_seeds, steps=50)
+
+    # Application 5: Orbit Complexity for 196
+    print("\n" + "=" * 70)
+    print("  APPLICATION 5: Orbit Complexity Profile for 196")
+    print("=" * 70)
+    profile = orbit_complexity_profile(196, steps=40)
+    print(f"\n  Digit length growth: {profile['digit_lengths'][:15]}...")
+    print(f"  Average growth rate: {profile['avg_growth_rate']:.3f} digits/step")
+    print(f"  Symmetry defects: {profile['defects'][:15]}...")
+    print(f"  All defects positive: {all(d > 0 for d in profile['defects'])}")
+    print(f"  Carry densities: {[f'{c:.2f}' for c in profile['carry_densities'][:10]]}...")
+
+    print("\n" + "=" * 70)
+    print("  All applications demonstrated successfully.")
     print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-demo.py — Demonstrating Reverse-and-Add Dynamics
+Reverse-and-Add Dynamics Explorer
+=================================
 
-Concrete numerical examples illustrating the formally verified theorems
-about the 196 algorithm and Lychrel candidates.
+Interactive exploration of reverse-and-add orbits, demonstrating:
+- Digit strings, reversals, and carries
+- Symmetry defect evolution
+- Modular signatures (mod 9, mod 11)
+- Palindrome detection and obstruction analysis
+
+Usage:
+    python demo.py [seed]
+
+If no seed is given, defaults to 196.
 """
 
-def digits_base(b: int, n: int) -> list[int]:
-    """Return digits of n in base b, least-significant first."""
+import sys
+from typing import List, Tuple
+
+
+def digits10(n: int) -> List[int]:
+    """Return base-10 digits of n (least significant first), matching the Lean definition."""
     if n == 0:
         return []
     result = []
     while n > 0:
-        result.append(n % b)
-        n //= b
+        result.append(n % 10)
+        n //= 10
     return result
 
-def of_digits_base(b: int, digits: list[int]) -> int:
-    """Reconstruct number from base-b digits (least-significant first)."""
+
+def of_digits10(L: List[int]) -> int:
+    """Reconstruct a number from its base-10 digit list (little-endian)."""
     result = 0
-    for i, d in enumerate(digits):
-        result += d * (b ** i)
+    for i, d in enumerate(L):
+        result += d * (10 ** i)
     return result
 
-def reverse_digits(b: int, n: int) -> int:
-    """Reverse the base-b digits of n."""
-    return of_digits_base(b, list(reversed(digits_base(b, n))))
 
-def is_palindrome_base(b: int, n: int) -> bool:
-    """Check if n is a palindrome in base b."""
-    d = digits_base(b, n)
+def reverse_nat(n: int) -> int:
+    """Digit reversal: reverse base-10 digits and reconstruct."""
+    return of_digits10(list(reversed(digits10(n))))
+
+
+def rev_add(n: int) -> int:
+    """The reverse-and-add map: T(n) = n + rev(n)."""
+    return n + reverse_nat(n)
+
+
+def is_palindrome(n: int) -> bool:
+    """Check if n is a base-10 palindrome."""
+    d = digits10(n)
     return d == list(reversed(d))
 
-def rev_add_step(b: int, n: int) -> int:
-    """One step of reverse-and-add."""
-    return n + reverse_digits(b, n)
 
-def rev_add_iter(b: int, k: int, n: int) -> int:
-    """k iterations of reverse-and-add."""
-    for _ in range(k):
-        n = rev_add_step(b, n)
-    return n
-
-
-def demo_basic_operations():
-    """Demonstrate basic digit operations."""
-    print("=" * 60)
-    print("DEMO 1: Basic Digit Operations")
-    print("=" * 60)
-    
-    n = 196
-    b = 10
-    d = digits_base(b, n)
-    print(f"\ndigits_base({b}, {n}) = {d}")
-    print(f"of_digits_base({b}, {d}) = {of_digits_base(b, d)}")
-    print(f"reverse_digits({b}, {n}) = {reverse_digits(b, n)}")
-    print(f"is_palindrome_base({b}, {n}) = {is_palindrome_base(b, n)}")
-    print(f"is_palindrome_base({b}, 121) = {is_palindrome_base(b, 121)}")
-    print(f"rev_add_step({b}, {n}) = {rev_add_step(b, n)}")
+def symmetry_defect(L: List[int]) -> int:
+    """
+    Compute the symmetry defect of a digit list.
+    Sum of |L[i] - L[len-1-i]| for i < len/2.
+    Zero iff L is a palindrome.
+    """
+    length = len(L)
+    total = 0
+    for i in range(length // 2):
+        j = length - 1 - i
+        total += abs(L[i] - L[j])
+    return total
 
 
-def demo_theorem_b():
-    """Demonstrate Theorem B: palindrome ↔ reverseDigits fixed point."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Theorem B — Palindrome ↔ Fixed Point")
-    print("=" * 60)
-    
-    test_values = [0, 1, 11, 121, 1221, 196, 887, 1675]
-    for n in test_values:
-        is_pal = is_palindrome_base(10, n)
-        is_fixed = reverse_digits(10, n) == n
-        print(f"  n={n:6d}  palindrome={is_pal!s:5s}  rev(n)==n: {is_fixed!s:5s}  match: {is_pal == is_fixed}")
+def compute_carries(n: int) -> Tuple[List[int], List[int]]:
+    """
+    Compute the carry profile when adding n to its reversal.
+    Returns (output_digits, carries) where carries[i] is the carry into position i.
+    """
+    d = digits10(n)
+    r = list(reversed(d))
+    # Pad to same length
+    max_len = max(len(d), len(r))
+    d = d + [0] * (max_len - len(d))
+    r = r + [0] * (max_len - len(r))
+
+    carries = [0] * (max_len + 1)
+    output = []
+    for i in range(max_len):
+        s = d[i] + r[i] + carries[i]
+        output.append(s % 10)
+        carries[i + 1] = s // 10
+    if carries[max_len] > 0:
+        output.append(carries[max_len])
+    return output, carries
 
 
-def demo_theorem_c_corrected():
-    """Show that Theorem C (base-10 evenness) is FALSE, with counterexamples."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Theorem C Corrected — Evenness Claim is FALSE")
-    print("=" * 60)
-    
-    print("\nCounterexamples to 'revAddStep 10 n is always even':")
-    for n in [12, 14, 196, 295]:
-        result = rev_add_step(10, n)
-        print(f"  revAddStep(10, {n}) = {n} + {reverse_digits(10, n)} = {result} ({'even' if result % 2 == 0 else 'ODD'})")
-    
-    print("\nThe CORRECT invariant is mod (b-1):")
-    print("  revAddStep(b, n) ≡ 2n [MOD b-1]")
+def digit_signature(n: int) -> dict:
+    """Compute the digit signature of n."""
+    d = digits10(n)
+    return {
+        'len': len(d),
+        'mod9': n % 9,
+        'mod11': n % 11,
+        'first_digit': d[-1] if d else 0,
+        'last_digit': d[0] if d else 0,
+        'defect': symmetry_defect(d),
+    }
 
 
-def demo_theorem_d_e():
-    """Demonstrate Theorems D and E: modular congruence."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Theorems D & E — Modular Congruence mod (b-1)")
-    print("=" * 60)
-    
-    b = 10
-    m = b - 1  # = 9
-    n = 196
-    
-    print(f"\nBase b={b}, modulus m=b-1={m}, seed n={n}")
-    print(f"{'k':>3s}  {'iterate':>15s}  {'iter mod 9':>10s}  {'2^k·n mod 9':>12s}  {'match':>6s}")
-    print("-" * 55)
-    
-    for k in range(12):
-        iterate = rev_add_iter(b, k, n)
-        iter_mod = iterate % m
-        predicted = (pow(2, k) * n) % m
-        print(f"{k:3d}  {iterate:15d}  {iter_mod:10d}  {predicted:12d}  {'✓' if iter_mod == predicted else '✗':>6s}")
+def format_number_big_endian(n: int) -> str:
+    """Return the number as a big-endian digit string."""
+    if n == 0:
+        return "0"
+    return str(n)
 
 
-def demo_monotonicity():
-    """Demonstrate monotonicity: n ≤ revAddStep(b, n)."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Monotonicity — n ≤ revAddStep(b, n)")
-    print("=" * 60)
-    
-    n = 196
-    print(f"\nOrbit of 196 under reverse-and-add (base 10):")
-    current = n
-    for k in range(15):
-        next_val = rev_add_step(10, current)
-        pal = is_palindrome_base(10, current)
-        print(f"  Step {k:2d}: {current:>15d}  palindrome={pal!s:5s}  ≤ next={next_val}")
-        current = next_val
+def explore_orbit(seed: int, max_steps: int = 50, verbose: bool = True) -> List[int]:
+    """
+    Explore the reverse-and-add orbit starting from seed.
+
+    Args:
+        seed: Starting number
+        max_steps: Maximum number of iterations
+        verbose: Print detailed information at each step
+
+    Returns:
+        List of orbit values
+    """
+    orbit = [seed]
+    n = seed
+
+    if verbose:
+        print(f"{'='*80}")
+        print(f"  REVERSE-AND-ADD ORBIT STARTING AT {seed}")
+        print(f"{'='*80}")
+        print()
+
+    for step in range(max_steps):
+        d = digits10(n)
+        rev_d = list(reversed(d))
+        rev_n = reverse_nat(n)
+        sig = digit_signature(n)
+        output_digits, carries = compute_carries(n)
+
+        if verbose:
+            print(f"Step {step:4d}: n = {n}")
+            print(f"          digits (LE) = {d}")
+            print(f"          reversed    = {rev_d}")
+            print(f"          rev(n)      = {rev_n}")
+            print(f"          carries     = {carries[:len(d)+1]}")
+            print(f"          defect      = {sig['defect']}")
+            print(f"          mod 9 = {sig['mod9']}, mod 11 = {sig['mod11']}, "
+                  f"len = {sig['len']}")
+
+            if is_palindrome(n):
+                print(f"  *** PALINDROME FOUND at step {step}! ***")
+                print()
+                break
+
+            # Verify mod 9 theorem: revAdd(n) % 9 == (2*n) % 9
+            next_n = rev_add(n)
+            assert next_n % 9 == (2 * n) % 9, "Mod 9 theorem violated!"
+
+            # For even-length palindromes, verify mod 11 = 0
+            if is_palindrome(n) and len(d) % 2 == 0:
+                assert n % 11 == 0, "Even-length palindrome mod 11 theorem violated!"
+
+            print()
+
+        n = rev_add(n)
+        orbit.append(n)
+
+        if is_palindrome(n) and not verbose:
+            break
+
+    return orbit
 
 
-def demo_involutivity():
-    """Demonstrate Theorem A: reverseDigits is involutive when n % b ≠ 0."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Theorem A — Involutivity of Digit Reversal")
-    print("=" * 60)
-    
-    b = 10
-    print(f"\nFor numbers NOT divisible by {b}:")
-    for n in [1, 7, 13, 196, 887, 1675, 9999]:
-        rr = reverse_digits(b, reverse_digits(b, n))
-        print(f"  rev(rev({n})) = {rr}  {'✓' if rr == n else '✗ FAIL'}")
-    
-    print(f"\nFor numbers divisible by {b} (involutivity fails):")
-    for n in [10, 100, 1000, 250]:
-        rev_n = reverse_digits(b, n)
-        rr = reverse_digits(b, rev_n)
-        print(f"  rev({n}) = {rev_n}, rev(rev({n})) = {rr}  {'✓' if rr == n else '✗ (expected)'}")
+def demonstrate_mod9_invariant(seed: int = 196, steps: int = 20):
+    """Demonstrate the mod 9 evolution law: T^k(n) ≡ 2^k * n (mod 9)."""
+    print(f"\n{'='*60}")
+    print(f"  MOD 9 EVOLUTION LAW: T^k(n) ≡ 2^k · n (mod 9)")
+    print(f"  Starting from n = {seed}")
+    print(f"{'='*60}\n")
+
+    n = seed
+    print(f"{'Step':>6} {'Value':>20} {'val%9':>6} {'2^k*{0}%9'.format(seed):>12} {'Match':>6}")
+    print(f"{'-'*56}")
+
+    for k in range(steps):
+        val_mod9 = n % 9
+        predicted = (pow(2, k, 9) * seed) % 9
+        match = "✓" if val_mod9 == predicted else "✗"
+        print(f"{k:6d} {n:20d} {val_mod9:6d} {predicted:12d} {match:>6}")
+        n = rev_add(n)
 
 
-def demo_carry_automaton():
-    """Demonstrate Theorem G: carry automaton simulation."""
-    print("\n" + "=" * 60)
-    print("DEMO 7: Theorem G — Carry Automaton Simulation")
-    print("=" * 60)
-    
-    def carry_add(b: int, pairs: list[tuple[int,int]], c: int) -> int:
-        if not pairs:
-            return c
-        a, d = pairs[0]
-        s = a + d + c
-        return (s % b) + b * carry_add(b, pairs[1:], s // b)
-    
-    def carry_automaton_eval(b: int, digits: list[int]) -> int:
-        pairs = list(zip(digits, list(reversed(digits))))
-        return carry_add(b, pairs, 0)
-    
-    b = 10
-    for n in [196, 887, 1675, 7436, 13783]:
-        d = digits_base(b, n)
-        arith = rev_add_step(b, n)
-        autom = carry_automaton_eval(b, d)
-        print(f"  n={n:>8d}  digits={d!s:>20s}  arith={arith:>8d}  automaton={autom:>8d}  {'✓' if arith == autom else '✗'}")
+def demonstrate_mod11_obstruction():
+    """Demonstrate the mod 11 obstruction for even-length palindromes."""
+    print(f"\n{'='*60}")
+    print(f"  MOD 11 OBSTRUCTION: Even-length palindromes ≡ 0 (mod 11)")
+    print(f"{'='*60}\n")
+
+    # Find some even-length palindromes
+    palindromes = []
+    for n in range(10, 10000):
+        if is_palindrome(n) and len(digits10(n)) % 2 == 0:
+            palindromes.append(n)
+
+    print(f"{'Palindrome':>12} {'Digits':>8} {'Length':>8} {'mod 11':>8} {'Div by 11':>10}")
+    print(f"{'-'*50}")
+
+    for p in palindromes[:25]:
+        d = digits10(p)
+        print(f"{p:12d} {str(p):>8} {len(d):8d} {p % 11:8d} {'YES' if p % 11 == 0 else 'NO':>10}")
 
 
-def demo_196_orbit():
-    """Show the first 30 steps of the 196 orbit."""
-    print("\n" + "=" * 60)
-    print("DEMO 8: The 196 Orbit — First 30 Steps")
-    print("=" * 60)
-    
-    n = 196
-    b = 10
-    print(f"\n{'Step':>5s}  {'Value':>25s}  {'Digits':>6s}  {'Palindrome':>10s}  {'mod 9':>6s}")
-    print("-" * 60)
-    
-    current = n
-    for k in range(31):
-        d = digits_base(b, current)
-        pal = is_palindrome_base(b, current)
-        print(f"{k:5d}  {current:25d}  {len(d):6d}  {pal!s:>10s}  {current % 9:6d}")
-        current = rev_add_step(b, current)
+def demonstrate_symmetry_defect(seed: int = 196, steps: int = 30):
+    """Track symmetry defect evolution along the orbit."""
+    print(f"\n{'='*60}")
+    print(f"  SYMMETRY DEFECT EVOLUTION FROM {seed}")
+    print(f"{'='*60}\n")
+
+    n = seed
+    print(f"{'Step':>6} {'Value':>15} {'Defect':>8} {'Len':>5} {'Palindrome':>12}")
+    print(f"{'-'*50}")
+
+    for k in range(steps):
+        d = digits10(n)
+        defect = symmetry_defect(d)
+        pal = is_palindrome(n)
+        print(f"{k:6d} {n:15d} {defect:8d} {len(d):5d} {'YES' if pal else 'no':>12}")
+        if pal:
+            print(f"\n  Palindrome reached at step {k}!")
+            break
+        n = rev_add(n)
+
+
+def search_lychrel_candidates(limit: int = 1000, test_steps: int = 200):
+    """Search for Lychrel candidates up to a given limit."""
+    print(f"\n{'='*60}")
+    print(f"  LYCHREL CANDIDATE SEARCH (up to {limit}, {test_steps} steps each)")
+    print(f"{'='*60}\n")
+
+    candidates = []
+    for seed in range(1, limit + 1):
+        n = seed
+        found_palindrome = False
+        for _ in range(test_steps):
+            n = rev_add(n)
+            if is_palindrome(n):
+                found_palindrome = True
+                break
+        if not found_palindrome:
+            candidates.append(seed)
+
+    print(f"Found {len(candidates)} Lychrel candidates up to {limit}:")
+    for i, c in enumerate(candidates):
+        sig = digit_signature(c)
+        print(f"  {c:6d}  (mod9={sig['mod9']}, mod11={sig['mod11']}, "
+              f"len={sig['len']}, defect={sig['defect']})")
+        if i >= 30:
+            print(f"  ... and {len(candidates) - i - 1} more")
+            break
+
+
+def main():
+    seed = int(sys.argv[1]) if len(sys.argv) > 1 else 196
+
+    # Main orbit exploration
+    explore_orbit(seed, max_steps=30)
+
+    # Demonstrate the formally verified mod 9 invariant
+    demonstrate_mod9_invariant(seed)
+
+    # Demonstrate the mod 11 obstruction theorem
+    demonstrate_mod11_obstruction()
+
+    # Track symmetry defect
+    demonstrate_symmetry_defect(seed)
+
+    # Search for Lychrel candidates
+    search_lychrel_candidates(limit=300, test_steps=100)
+
+    print(f"\n{'='*60}")
+    print("  All demonstrations complete.")
+    print("  Key formally verified properties:")
+    print("    • revAdd(n) % 9 = (2*n) % 9")
+    print("    • Even-length palindromes are divisible by 11")
+    print("    • symmetryDefect = 0 ⟺ palindrome")
+    print("    • n < revAdd(n) for n > 0 (strict growth)")
+    print(f"{'='*60}")
 
 
 if __name__ == "__main__":
-    demo_basic_operations()
-    demo_theorem_b()
-    demo_theorem_c_corrected()
-    demo_theorem_d_e()
-    demo_monotonicity()
-    demo_involutivity()
-    demo_carry_automaton()
-    demo_196_orbit()
-    print("\n" + "=" * 60)
-    print("All demos completed successfully.")
-    print("=" * 60)
+    main()
