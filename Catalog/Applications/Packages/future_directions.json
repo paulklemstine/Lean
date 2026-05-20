@@ -3054,7 +3054,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "8155cb9f",
       "timestamp": "2026-05-20T04:04:18.190183+00:00"
     },
@@ -4399,23 +4399,6 @@
       "timestamp": "2026-05-20T10:03:56.849055+00:00"
     },
     {
-      "id": "fd_0229",
-      "title": "Domain-trivial:",
-      "description": "Expressions where every `log` wraps a syntactically positive subexpression.",
-      "source_exp_id": "1f252cf0",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
-      "domains": [
-        "Bridges"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T10:04:27.227012+00:00"
-    },
-    {
       "id": "fd_0230",
       "title": "Domain-complex:",
       "description": "Expressions where `log` arguments involve the variable `x` in ways that make positivity non-obvious.\n\nMeasure normalized sizes and fit growth models separately for each family.\n\n**Impact:** If confirmed, this identifies domain analysis (proving positivity of arguments to `log`) as the core computational bottleneck, suggesting that advances in automated positivity proving would directly translate to better EML normalization. This connects EML complexity to real algebraic geometry and semidefinite programming.\n\n---\n\n## Hypothesis 5: EML Compilation Preserves Straight-Line Program Complexity\n\n**Conjecture:** If a unary elementary function $f$ can be computed by a straight-line program (SLP) of length $L$ over the operations $\\{+, -, \\times, \\div, \\exp, \\log\\}$, then there exists an EML straig",
@@ -4456,23 +4439,6 @@
       "timestamp": "2026-05-20T10:04:27.241981+00:00"
     },
     {
-      "id": "fd_0232",
-      "title": "Hypothesis 4 (Domain obstruction)",
-      "description": "— high impact, moderate difficulty",
-      "source_exp_id": "1f252cf0",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
-      "domains": [
-        "Bridges"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T10:04:27.249830+00:00"
-    },
-    {
       "id": "fd_0233",
       "title": "Hypothesis 1 (Polynomial normalization)",
       "description": "— the central conjecture, hardest to resolve",
@@ -4505,23 +4471,6 @@
       "status": "completed",
       "consumed_by_exp_id": "2ea43f0c",
       "timestamp": "2026-05-20T10:04:27.264443+00:00"
-    },
-    {
-      "id": "fd_0235",
-      "title": "Hypothesis 5 (SLP preservation)",
-      "description": "— connects to the broadest existing theory",
-      "source_exp_id": "1f252cf0",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
-      "domains": [
-        "Bridges"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T10:04:27.270829+00:00"
     },
     {
       "id": "fd_0236",
@@ -5031,6 +4980,104 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T12:00:44.637100+00:00"
+    },
+    {
+      "id": "fd_0261",
+      "title": "Conjecture A: Full Linear Lower Bound for No-EML Expressions with Inverse",
+      "description": "**Conjecture:** For any `n ≥ 1` and any `EMLExpr` `e` with `e.noEml` (no `eml` nodes, but possibly with `inv` nodes), `e` cannot represent `iterExp n` on `(0,∞)`.\n\n**Precise statement:** `∀ (e : EMLExpr), e.noEml → ∀ {n : ℕ}, 0 < n → ¬ RepresentsOnPos e (iterExp n)`\n\n**Status:** Proved for the `noInv` subcase (polynomial growth bound argument). The `inv` case remains open because inverse operations produce rational functions whose growth analysis requires tracking both upper and lower bounds through the induction.\n\n**Test:** Enumerate all EML expression trees up to size 15 with `inv` nodes (but no `eml`), evaluate at 100 uniformly-spaced points on `[1, 10]`, and check whether any matches `exp(x)` to within `10⁻⁸` tolerance. If found, verify symbolically. This can be automated in Python wit",
+      "source_exp_id": "8155cb9f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8155cb9f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:03:48.327979+00:00"
+    },
+    {
+      "id": "fd_0262",
+      "title": "Conjecture B: Full Linear Lower Bound (emlDepth ≥ n)",
+      "description": "**Conjecture:** For every `n ≥ 0`, every `EMLExpr` `e` satisfying `∀ x > 0, e.eval x = iterExp n x` has `e.emlDepth ≥ n`.\n\n**Precise statement:** `∀ (n : ℕ) (e : EMLExpr), RepresentsOnPos e (iterExp n) → n ≤ e.emlDepth`\n\n**Status:** This is the central open theorem. The proof architecture (Strategy A) is in place: `expRank ≤ emlDepth` is proved, and the canonical construction achieves `expRank = emlDepth = n`. What remains is proving the semantic lower bound: any expression computing `iterExp n` must have `expRank ≥ n`.\n\n**Test:** For each `n ∈ {1,2,3,4,5}`, exhaustively generate all `EMLExpr` trees of `emlDepth < n` with constants from `{-1, 0, 1, 2, e}`, evaluate at 50 points in `[0.1, 5]`, and verify no tree matches `iterExp n`. A match would disprove the conjecture.\n\n**Impact:** A full",
+      "source_exp_id": "8155cb9f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8155cb9f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Logic",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:03:48.337646+00:00"
+    },
+    {
+      "id": "fd_0263",
+      "title": "Conjecture C: Logarithmic Lower Bound in the DAG Model",
+      "description": "**Conjecture:** If sharing of common subexpressions is allowed (DAG model instead of tree model), the minimum depth for representing `iterExp n` using `eml` gates is `Ω(log n)`.\n\n**Precise statement:** There exists `c > 0` such that for all `n`, every DAG with `eml` gates computing `iterExp n` on `(0,∞)` has depth at least `c · log₂(n+1)`.\n\n**Test:** Implement a DAG representation with hash-consing for common subexpression elimination. For `n ∈ {1,...,20}`, search for minimum-depth DAGs computing `iterExp n` numerically (evaluate at 100 points). Plot depth vs `n` and fit to `c · log n`. If the best achievable depth grows sub-logarithmically, the conjecture is false.\n\n**Impact:** This would extend the depth hierarchy from the tree model to the more powerful DAG model. The gap between `O(log",
+      "source_exp_id": "8155cb9f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8155cb9f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:03:48.348242+00:00"
+    },
+    {
+      "id": "fd_0264",
+      "title": "Conjecture D: Growth-Rank Completeness",
+      "description": "**Conjecture:** The `expRank` invariant exactly characterizes the eventual growth level of positive EML-definable functions. Specifically, for any `EMLExpr` `e` such that `e.eval` is eventually positive, the function `e.eval` is eventually bounded between `iterExp (expRank(e) - 1)` and `iterExp (expRank(e) + 1)` (in a suitable asymptotic sense).\n\n**Precise statement:** Define `GrowthLevel f k` as `∃ R, ∀ x > R, iterExp (k-1) x ≤ f x ∧ f x ≤ iterExp (k+1) x`. Then for all `e : EMLExpr` with `e.eval` eventually positive, `GrowthLevel (e.eval) (e.expRank)`.\n\n**Test:** Enumerate all EML expressions up to size 10. For each, numerically estimate the growth level by evaluating at `x = 10, 100, 1000` and comparing with `iterExp k` for various `k`. Check whether the estimated growth level matches `",
+      "source_exp_id": "8155cb9f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8155cb9f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:03:48.358849+00:00"
+    },
+    {
+      "id": "fd_0265",
+      "title": "Conjecture E: No Polynomial-Size Compilation from Full to Bounded-Depth EML",
+      "description": "**Conjecture:** There is no uniform polynomial-size compilation from `FullExpr` to `EMLExpr` that preserves semantics and keeps `emlDepth` bounded by any fixed constant.\n\n**Precise statement:** For every constant `D` and polynomial `p`, there exists `n` and a `FullExpr` `e` with `e.size ≤ n` such that every `EMLExpr` `e'` with `∀ x > 0, e'.eval x = e.eval x` and `e'.emlDepth ≤ D` satisfies `e'.size > p(n)`.\n\n**Test:** Fix `D = 3`. For `n ∈ {1,...,10}`, take `fullExprIterExp n` (size `n+1`). Search for the smallest `EMLExpr` of `emlDepth ≤ 3` that represents `iterExp n` on a grid. Plot the minimum size vs `n`. If size grows faster than any polynomial, the conjecture is supported.\n\n**Impact:** This would formalize the intuition that bounded-depth EML circuits pay a super-polynomial size pena",
+      "source_exp_id": "8155cb9f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8155cb9f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T12:03:48.370272+00:00"
     }
   ],
   "pruned": [
@@ -5101,6 +5148,57 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-18T07:11:10.415496+00:00"
+    },
+    {
+      "id": "fd_0229",
+      "title": "Domain-trivial:",
+      "description": "Expressions where every `log` wraps a syntactically positive subexpression.",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.227012+00:00"
+    },
+    {
+      "id": "fd_0232",
+      "title": "Hypothesis 4 (Domain obstruction)",
+      "description": "— high impact, moderate difficulty",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.249830+00:00"
+    },
+    {
+      "id": "fd_0235",
+      "title": "Hypothesis 5 (SLP preservation)",
+      "description": "— connects to the broadest existing theory",
+      "source_exp_id": "1f252cf0",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1f252cf0",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T10:04:27.270829+00:00"
     }
   ]
 }
