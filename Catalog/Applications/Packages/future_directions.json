@@ -5615,7 +5615,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:07:49.494775+00:00"
     },
@@ -5673,74 +5673,6 @@
       "timestamp": "2026-05-20T17:05:16.548869+00:00"
     },
     {
-      "id": "fd_0292",
-      "title": "Direction 4",
-      "description": "(Compression) — Classical technique, could yield a full proof strategy.",
-      "source_exp_id": "d237288b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
-      "domains": [
-        "Logic"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T17:05:16.556894+00:00"
-    },
-    {
-      "id": "fd_0293",
-      "title": "Direction 5",
-      "description": "(Entropy Monotonicity) — Novel connection to information theory, experimentally accessible.",
-      "source_exp_id": "d237288b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
-      "domains": [
-        "Bridges"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T17:05:16.565043+00:00"
-    },
-    {
-      "id": "fd_0294",
-      "title": "Direction 3",
-      "description": "(Lattice Fixed Points) — Deep structural insight, harder to test.",
-      "source_exp_id": "d237288b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
-      "domains": [
-        "Cryptography"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T17:05:16.573139+00:00"
-    },
-    {
-      "id": "fd_0295",
-      "title": "Direction 2",
-      "description": "(Disjoint Generators) — Clean but limited scope; best as a base case for inductive arguments.",
-      "source_exp_id": "d237288b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
-      "domains": [
-        "Analysis"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.75,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-20T17:05:16.581414+00:00"
-    },
-    {
       "id": "fd_0296",
       "title": "Highest priority",
       "description": ": Conjecture 1 (Signature Injectivity). This directly addresses the single remaining sorry in the formalization and would complete the formal proof of the Happy End theorem.",
@@ -5755,7 +5687,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T17:12:49.268207+00:00"
     },
@@ -5772,7 +5704,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T17:12:49.278985+00:00"
     },
@@ -5789,7 +5721,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T17:12:49.288900+00:00"
     },
@@ -5807,9 +5739,122 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.75,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T17:12:49.300302+00:00"
+    },
+    {
+      "id": "fd_0300",
+      "title": "Conjecture 1: Full Growth Bound Theorem (inv case)",
+      "description": "**Conjecture:** For every EMLExpr `e` (including those with `inv` nodes), if `e.emlDepth ≤ D`, then there exist `C > 0` and `X` such that for all `x ≥ X`, `|e.eval x| ≤ iterExp (D + 1) (C * x)`.\n\n**Test:** Formalize the growth bound for expressions with `inv` by showing that rational functions (built from `+`, `*`, `neg`, `inv` applied to `x` and constants) have polynomial growth, and that `eml` layers add exactly one exponential level regardless of `inv` presence. The key step is proving that `inv` preserves eventual polynomial growth for no-eml subexpressions.\n\n**Impact:** This would extend the depth separation from inv-free to all EMLExpr, giving the fully general theorem: no bounded-depth EMLExpr can represent `iterExp n` for large `n`.\n\n---",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:17:04.929325+00:00"
+    },
+    {
+      "id": "fd_0301",
+      "title": "Conjecture 2: Tight Depth Bound (D+1 instead of D+3)",
+      "description": "**Conjecture:** For every `D ≥ 0` and `n > D`, no inv-free EMLExpr of `emlDepth ≤ D` can represent `iterExp n` on positive reals.\n\nCurrently we prove separation for `n ≥ D + 3` due to slack in the growth comparison. The gap of 2 comes from the interplay between growth bound level (D+1) and the strict comparison chain (D+1 < D+2 < D+3).\n\n**Test:** Improve the growth bound to `iterExp (D + 1) (C * x)` → show `iterExp n x > iterExp (D + 1) (C * x)` directly for `n ≥ D + 2`, eliminating one level. Alternatively, prove the tight bound `n > D` by a direct structural induction argument that avoids the growth bound entirely.\n\n**Impact:** The tight bound would show that `emlExprIterExp n` with `emlDepth = n` is essentially optimal: no representation with fewer eml layers exists.\n\n---",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:17:04.942192+00:00"
+    },
+    {
+      "id": "fd_0302",
+      "title": "Conjecture 3: Exponential Size Lower Bound",
+      "description": "**Conjecture:** For fixed depth `D`, the minimal size of an EMLExpr of depth ≤ D that represents `iterExp n` on a finite grid of positive reals grows exponentially in `n` (for `n ≤ D`).\n\n**Test:** For `D = 5` and `n ∈ {1, ..., 5}`, enumerate all EMLExpr of depth ≤ D up to size 100. Evaluate each on a grid of 20 positive points. Record the minimal size that matches `iterExp n`. Plot size vs `n` and fit exponential vs polynomial models. A polynomial fit with R² > 0.99 would refute the conjecture.\n\n**Impact:** This would provide quantitative lower bounds beyond the qualitative depth separation, analogous to exponential size lower bounds for bounded-depth Boolean circuits computing specific functions.\n\n---",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:17:04.954179+00:00"
+    },
+    {
+      "id": "fd_0303",
+      "title": "Conjecture 4: Depth Hierarchy for Trigonometric Extensions",
+      "description": "**Conjecture:** If the EML language is extended with a `trig(a,b) = a * sin(b)` primitive, the resulting \"EML+Trig\" language still cannot represent `iterExp n` at bounded depth, and furthermore the trig primitive does not help compress iterated exponentials.\n\n**Test:** Define `EMLTrigExpr` with both `eml` and `trig` constructors. Extend the growth bound theorem to show that `trig` nodes do not increase the exponential nesting level (since `|sin(t)| ≤ 1`). Prove that the depth separation still holds in the extended language.\n\n**Impact:** This would show that the depth hierarchy is robust under natural extensions of the expression language, strengthening the claim that it captures a fundamental structural property of iterated exponentials rather than an artifact of the EML formalism.\n\n---",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "Analysis",
+        "EML"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:17:04.966156+00:00"
+    },
+    {
+      "id": "fd_0304",
+      "title": "Conjecture 5: Connection to Hardy Field Hierarchy",
+      "description": "**Conjecture:** The `growthRank` invariant defined in our framework is equivalent to the level in the Hardy field hierarchy for germs of functions definable by EML expressions.\n\nMore precisely: an EML expression of `emlDepth ≤ D` defines a germ in the Hardy field `\\mathcal{H}_D` (the D-th level of the log-exp hierarchy), and `iterExp n` lies in `\\mathcal{H}_n \\setminus \\mathcal{H}_{n-1}`.\n\n**Test:** Formalize the connection between `emlDepth` and Hardy field levels. The key step is showing that `eml(a,b) = a * exp(b)` maps `\\mathcal{H}_D × \\mathcal{H}_D → \\mathcal{H}_{D+1}`. If this can be formalized, the depth separation would follow from the known strict hierarchy of Hardy fields.\n\n**Impact:** This would connect our mechanized complexity theory to a rich body of classical analysis (Hardy",
+      "source_exp_id": "4346710f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4346710f",
+      "domains": [
+        "NumberTheory",
+        "EML",
+        "Algebra",
+        "Computation"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:17:04.978792+00:00"
+    },
+    {
+      "id": "fd_0301",
+      "title": "Prime-Specific Persistent Homology Distinguishes Integer Polynomial Dynamics",
+      "description": "Conjecture: Let f,g ∈ Z[x] be non-exceptional polynomials of the same degree at least 2, not related by affine conjugacy over Qbar. For all sufficiently large primes p, form the functional digraphs Γ_f(p), Γ_g(p) of x ↦ f(x) mod p on F_p, and let PD_k(f,p) be the k-th persistence diagram obtained from the clique complex of Γ_f(p) endowed with the graph shortest-path filtration. Then the set of primes p for which PD_k(f,p) = PD_k(g,p) for all k up to 2 has natural density 0. Test: Compute these persistence diagrams for many primes for candidate pairs f,g (for example x^2+c families, quartics with matched degree, or maps with same point-count statistics) and estimate the density of agreement; the conjecture is refuted by a non-affinely-conjugate pair exhibiting positive-density agreement, and supported if agreement frequencies decay toward 0 across broad families. Impact: This would introduce a new topological fingerprint for arithmetic dynamical systems, potentially stronger than cycle-length or point-count statistics, and could create a bridge between arithmetic dynamics, finite-field graph theory, and topological data analysis.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Dynamics",
+        "Topological Data Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T18:17:19.457007+00:00"
     }
   ],
   "pruned": [
@@ -6209,6 +6254,74 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-20T14:07:03.852444+00:00"
+    },
+    {
+      "id": "fd_0295",
+      "title": "Direction 2",
+      "description": "(Disjoint Generators) — Clean but limited scope; best as a base case for inductive arguments.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.581414+00:00"
+    },
+    {
+      "id": "fd_0292",
+      "title": "Direction 4",
+      "description": "(Compression) — Classical technique, could yield a full proof strategy.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.556894+00:00"
+    },
+    {
+      "id": "fd_0294",
+      "title": "Direction 3",
+      "description": "(Lattice Fixed Points) — Deep structural insight, harder to test.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Cryptography"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.573139+00:00"
+    },
+    {
+      "id": "fd_0293",
+      "title": "Direction 5",
+      "description": "(Entropy Monotonicity) — Novel connection to information theory, experimentally accessible.",
+      "source_exp_id": "d237288b",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d237288b",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-20T17:05:16.565043+00:00"
     }
   ]
 }
