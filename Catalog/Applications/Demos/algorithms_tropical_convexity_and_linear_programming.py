@@ -1,379 +1,439 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Tropical Optimization Algorithms
+Algorithms for Tropical Convexity and Mean-Payoff Game Reduction
+================================================================
 
-Implements:
-1. Floyd-Warshall closure for difference constraints
-2. Bellman-Ford feasibility solver with witness extraction
-3. Tropical convex hull membership test
-4. Tropical projection / normalization
+Implements the core algorithms from the formal development:
+1. Tropical convex hull membership (certified)
+2. Shapley operator iteration for tropical feasibility
+3. Mean-payoff game construction from tropical LP instances
+4. Policy iteration for mean-payoff games
+
+All algorithms include complexity analysis and docstrings matching
+the formal Lean 4 definitions.
 """
 
 import numpy as np
-from typing import Optional, Tuple, List
-from itertools import product
+from typing import Optional, Tuple, List, Dict
 
 
-# ═══════════════════════════════════════════════════════════════
-# 1. Floyd-Warshall Closure
-# ═══════════════════════════════════════════════════════════════
-
-def floyd_warshall_closure(c: np.ndarray) -> Tuple[np.ndarray, bool]:
-    """
-    Compute the Floyd-Warshall shortest-path closure of a weight matrix.
-
-    Given c[i,j] representing the constraint x_i - x_j ≤ c[i,j],
-    computes the tightest implied constraints (transitive closure).
-
-    Args:
-        c: n×n weight matrix with c[i,i] = 0 initially
-
-    Returns:
-        (closure, feasible): The closed matrix and whether the system
-        is feasible (no negative diagonal = no negative cycle).
-
-    Time complexity: O(n³)
-    Space complexity: O(n²)
-
-    Example:
-        >>> c = np.array([[0, 5, np.inf], [-2, 0, 3], [np.inf, np.inf, 0]])
-        >>> closure, feasible = floyd_warshall_closure(c)
-        >>> print(feasible)
-        True
-        >>> print(closure[0, 2])  # Tightest bound on x0 - x2
-        8.0
-    """
-    n = c.shape[0]
-    d = c.copy()
-
-    for k in range(n):
-        for i in range(n):
-            for j in range(n):
-                if d[i, k] + d[k, j] < d[i, j]:
-                    d[i, j] = d[i, k] + d[k, j]
-
-    # Check for negative cycles (negative diagonal)
-    feasible = all(d[i, i] >= -1e-12 for i in range(n))
-
-    # Clean up diagonal
-    if feasible:
-        for i in range(n):
-            d[i, i] = 0.0
-
-    return d, feasible
-
-
-# ═══════════════════════════════════════════════════════════════
-# 2. Bellman-Ford Feasibility Solver
-# ═══════════════════════════════════════════════════════════════
-
-def bellman_ford_solve(
-    n: int,
-    edges: List[Tuple[int, int, float]]
-) -> Tuple[bool, Optional[np.ndarray], Optional[List[int]]]:
-    """
-    Solve a system of difference constraints using Bellman-Ford.
-
-    Each edge (i, j, w) encodes the constraint x_i ≤ w + x_j.
-
-    Args:
-        n: Number of variables
-        edges: List of (i, j, w) triples
-
-    Returns:
-        (feasible, witness, neg_cycle):
-        - feasible: True if the system has a solution
-        - witness: A feasible assignment x if feasible, else None
-        - neg_cycle: Vertex indices of a negative cycle if infeasible, else None
-
-    Time complexity: O(n * |E|)
-    Space complexity: O(n)
-
-    Example:
-        >>> feas, x, _ = bellman_ford_solve(3, [(0,1,3), (1,2,-1), (2,0,1)])
-        >>> print(feas)
-        True
-        >>> print(x)
-        [0.  0. -1.]
-    """
-    INF = float('inf')
-    dist = np.zeros(n)
-    parent = [-1] * n
-
-    # Relax edges n-1 times
-    for iteration in range(n - 1):
-        updated = False
-        for (i, j, w) in edges:
-            if dist[j] + w < dist[i]:
-                dist[i] = dist[j] + w
-                parent[i] = j
-                updated = True
-        if not updated:
-            break
-
-    # Check for negative cycles
-    for (i, j, w) in edges:
-        if dist[j] + w < dist[i] - 1e-12:
-            # Find the negative cycle
-            cycle = _extract_negative_cycle(n, edges, parent, i)
-            return False, None, cycle
-
-    return True, dist, None
-
-
-def _extract_negative_cycle(
-    n: int,
-    edges: List[Tuple[int, int, float]],
-    parent: List[int],
-    start: int
-) -> List[int]:
-    """Extract a negative cycle from Bellman-Ford parent pointers."""
-    visited = {}
-    node = start
-
-    # Walk back n steps to ensure we're in a cycle
-    for _ in range(n):
-        node = parent[node] if parent[node] != -1 else node
-
-    # Now trace the cycle
-    cycle_start = node
-    cycle = [cycle_start]
-    node = parent[cycle_start] if parent[cycle_start] != -1 else cycle_start
-
-    while node != cycle_start:
-        cycle.append(node)
-        node = parent[node] if parent[node] != -1 else node
-
-    cycle.append(cycle_start)
-    cycle.reverse()
-    return cycle
-
-
-# ═══════════════════════════════════════════════════════════════
-# 3. Tropical Convex Hull Operations
-# ═══════════════════════════════════════════════════════════════
-
-def tropical_normalize(x: np.ndarray) -> np.ndarray:
-    """
-    Normalize a tropical vector so that max(x) = 0.
-
-    This is the tropical analogue of projective normalization.
-
-    Args:
-        x: A real vector
-
-    Returns:
-        x - max(x), so that the maximum coordinate is 0.
-
-    Example:
-        >>> tropical_normalize(np.array([3.0, 1.0, 5.0]))
-        array([-2., -4.,  0.])
-    """
-    return x - np.max(x)
-
-
-def tropical_convex_combination(lam: np.ndarray, V: np.ndarray) -> np.ndarray:
-    """
-    Compute a tropical convex combination.
-
-    x_i = max_j (lambda_j + V[j, i])
-
-    Args:
-        lam: Coefficient vector of shape (m,) with max(lam) = 0
-        V: Generator matrix of shape (m, n)
-
-    Returns:
-        The tropical combination, shape (n,)
-
-    Example:
-        >>> V = np.array([[0, -1], [-1, 0]])
-        >>> lam = np.array([0, -1])
-        >>> tropical_convex_combination(lam, V)
-        array([ 0., -1.])
-    """
-    return np.max(lam[:, None] + V, axis=0)
-
+# ============================================================================
+# Algorithm 1: Tropical Convex Hull Membership
+# ============================================================================
 
 def tropical_hull_membership(
+    generators: np.ndarray,
     x: np.ndarray,
-    V: np.ndarray,
-    tol: float = 1e-8
+    tol: float = 1e-9
 ) -> Tuple[bool, Optional[np.ndarray]]:
     """
-    Test if a point x lies in the tropical convex hull of generators V.
-
-    For difference-constraint generators, the membership test reduces to
-    checking if x satisfies the constraints defined by the generators.
-
+    Decide membership in the tropical convex hull of a finite generator set.
+    
+    Given generators v_1, ..., v_m ∈ ℝ^n, check whether x ∈ tconv(v_1,...,v_m),
+    i.e., whether there exist c_1, ..., c_m ∈ ℝ such that
+        x_i = max_j (c_j + v_{j,i})  for all i ∈ {0,...,n-1}.
+    
+    Algorithm:
+        For each generator j, the maximum feasible coefficient is
+            c_j^* = min_i (x_i - v_{j,i})
+        because c_j + v_{j,i} ≤ x_i must hold for all i where j is not the maximizer.
+        We set c_j = c_j^* and verify max_j(c_j + v_{j,i}) = x_i for all i.
+    
+    Complexity: O(m * n)
+    
     Args:
-        x: Point to test, shape (n,)
-        V: Generator matrix, shape (m, n)
-        tol: Numerical tolerance
-
+        generators: (m, n) array of generator points
+        x: (n,) target point
+        tol: numerical tolerance
+    
     Returns:
-        (is_member, coefficients): Whether x is in the hull, and if so,
-        the lambda coefficients.
-
-    Example:
-        >>> V = np.array([[0, -2], [-1, 0]])
-        >>> x = np.array([0, -1])
-        >>> in_hull, lam = tropical_hull_membership(x, V)
+        (is_member, coefficients): membership flag and optimal coefficients if member
     """
-    x_norm = tropical_normalize(x)
-    m, n_dim = V.shape
-
-    # Try lambda = x_norm (works for difference-constraint generators)
-    lam = x_norm[:m] if m <= len(x_norm) else np.zeros(m)
-    lam = tropical_normalize(lam)
-    recon = tropical_convex_combination(lam, V)
-
-    if np.allclose(recon, x_norm, atol=tol):
-        return True, lam
-
-    # Brute-force search over grid of lambda values
-    # (only practical for small m)
-    if m <= 5:
-        grid = np.linspace(-3, 0, 20)
-        best_err = float('inf')
-        best_lam = None
-
-        from itertools import product as iprod
-        for combo in iprod(grid, repeat=m):
-            lam_try = np.array(combo)
-            lam_try = tropical_normalize(lam_try)
-            recon_try = tropical_convex_combination(lam_try, V)
-            err = np.max(np.abs(recon_try - x_norm))
-            if err < best_err:
-                best_err = err
-                best_lam = lam_try.copy()
-
-        if best_err < tol:
-            return True, best_lam
-
+    m, n = generators.shape
+    assert x.shape == (n,), f"Point dimension {x.shape} doesn't match generators {(n,)}"
+    
+    if m == 0:
+        return False, None
+    
+    # Compute optimal coefficients: c_j = min_i(x_i - v_{j,i})
+    c = np.min(x[np.newaxis, :] - generators, axis=1)  # shape (m,)
+    
+    # Reconstruct: hull_i = max_j(c_j + v_{j,i})
+    shifted = c[:, np.newaxis] + generators  # shape (m, n)
+    hull_point = np.max(shifted, axis=0)     # shape (n,)
+    
+    if np.allclose(hull_point, x, atol=tol):
+        return True, c
     return False, None
 
 
-# ═══════════════════════════════════════════════════════════════
-# 4. Difference Constraint Polyhedra
-# ═══════════════════════════════════════════════════════════════
-
-def make_diff_constraint_generators(c: np.ndarray) -> np.ndarray:
+def tropical_hull_support(
+    generators: np.ndarray,
+    x: np.ndarray,
+    tol: float = 1e-9
+) -> Tuple[bool, Optional[np.ndarray], Optional[set]]:
     """
-    Compute the canonical generators for a closed difference-constraint polyhedron.
-
-    For a constraint matrix c with c[i,i]=0 and triangle inequality,
-    the generators are the columns of -c: V[j,i] = -c[j,i].
-
-    Args:
-        c: n×n closed constraint matrix
-
-    Returns:
-        V: n×n generator matrix where V[j] is the j-th generator
-
-    Example:
-        >>> c = np.array([[0, 2, 3], [1, 0, 1], [2, 3, 0]])
-        >>> V = make_diff_constraint_generators(c)
-        >>> print(V[0])  # First generator
-        [ 0. -1. -2.]
+    Compute membership and active support of a tropical hull point.
+    
+    The active support is the set of generator indices j such that
+    c_j + v_{j,i} = x_i for at least one coordinate i.
+    
+    Related to the Tropical Carathéodory conjecture: is |support| ≤ n+1?
+    
+    Complexity: O(m * n)
     """
-    return -c
-
-
-def check_diff_constraints(x: np.ndarray, c: np.ndarray) -> bool:
-    """
-    Check if x satisfies the difference constraints x_i - x_j ≤ c[i,j].
-
-    Args:
-        x: Point to check, shape (n,)
-        c: Constraint matrix, shape (n, n)
-
-    Returns:
-        True if all constraints are satisfied.
-
-    Example:
-        >>> c = np.array([[0, 2], [1, 0]])
-        >>> check_diff_constraints(np.array([1.0, 0.0]), c)
-        True
-    """
-    n = len(x)
+    is_member, c = tropical_hull_membership(generators, x, tol)
+    if not is_member:
+        return False, None, None
+    
+    m, n = generators.shape
+    active = set()
     for i in range(n):
-        for j in range(n):
-            if x[i] - x[j] > c[i, j] + 1e-10:
-                return False
-    return True
+        vals = c + generators[:, i]
+        max_val = np.max(vals)
+        for j in range(m):
+            if abs(vals[j] - max_val) < tol:
+                active.add(j)
+    
+    return True, c, active
 
 
-# ═══════════════════════════════════════════════════════════════
-# Main: Run examples
-# ═══════════════════════════════════════════════════════════════
+# ============================================================================
+# Algorithm 2: Shapley Operator and Tropical Feasibility
+# ============================================================================
+
+def shapley_operator(
+    A: np.ndarray,
+    B: np.ndarray,
+    x: np.ndarray
+) -> np.ndarray:
+    """
+    Compute the Shapley operator T(x) for a tropical inequality system.
+    
+    Definition (matching Lean formalization):
+        T(x)_i = min_j (max_k (B_{j,k} + x_k) - A_{j,i})
+    
+    Properties (formally verified):
+        - Monotone: x ≤ y ⟹ T(x) ≤ T(y)
+        - Additively homogeneous: T(x + c·1) = T(x) + c·1
+    
+    The sub-fixed-point condition x ≤ T(x) is equivalent to feasibility
+    of the tropical halfspace system (tropical_feasibility_iff_subfixed_point).
+    
+    Complexity: O(p * n) per evaluation
+    
+    Args:
+        A: (p, n) left-hand side coefficient matrix
+        B: (p, n) right-hand side coefficient matrix
+        x: (n,) current point
+    
+    Returns:
+        T(x): (n,) Shapley operator value
+    """
+    p, n = A.shape
+    
+    # sup_k (B_{j,k} + x_k) for each j
+    Bx = np.max(B + x[np.newaxis, :], axis=1)  # shape (p,)
+    
+    # T(x)_i = min_j (Bx_j - A_{j,i})
+    # For each i, compute min over j of (Bx_j - A_{j,i})
+    result = np.min(Bx[:, np.newaxis] - A, axis=0)  # shape (n,)
+    
+    return result
+
+
+def tropical_feasibility_shapley(
+    A: np.ndarray,
+    B: np.ndarray,
+    x0: Optional[np.ndarray] = None,
+    max_iter: int = 1000,
+    tol: float = 1e-10,
+    step_size: float = 0.5
+) -> Tuple[Optional[np.ndarray], bool, int, List[np.ndarray]]:
+    """
+    Solve tropical feasibility via Shapley operator iteration.
+    
+    Finds x such that x ≤ T(x), which by the formally verified theorem
+    `tropical_feasibility_iff_subfixed_point` is equivalent to feasibility
+    of max_i(A_{j,i} + x_i) ≤ max_i(B_{j,i} + x_i) for all j.
+    
+    Algorithm (Krasnoselskii-Mann iteration):
+        x_{k+1} = (1-α) x_k + α T(x_k)
+    where α ∈ (0,1) is the step size.
+    
+    Complexity: O(p * n * max_iter) worst case
+    
+    Args:
+        A, B: (p, n) coefficient matrices
+        x0: initial point (default: zero vector)
+        max_iter: maximum iterations
+        tol: convergence tolerance
+        step_size: damping parameter α
+    
+    Returns:
+        (solution, converged, iterations, trajectory)
+    """
+    p, n = A.shape
+    if x0 is None:
+        x0 = np.zeros(n)
+    
+    x = x0.copy()
+    trajectory = [x.copy()]
+    
+    for it in range(max_iter):
+        Tx = shapley_operator(A, B, x)
+        
+        # Check sub-fixed-point condition
+        if np.all(x <= Tx + tol):
+            return x, True, it, trajectory
+        
+        # Krasnoselskii-Mann update
+        x = (1 - step_size) * x + step_size * Tx
+        trajectory.append(x.copy())
+    
+    # Check final point
+    Tx = shapley_operator(A, B, x)
+    if np.all(x <= Tx + tol):
+        return x, True, max_iter, trajectory
+    
+    return None, False, max_iter, trajectory
+
+
+def verify_tropical_feasibility(
+    A: np.ndarray,
+    B: np.ndarray,
+    x: np.ndarray,
+    tol: float = 1e-9
+) -> Tuple[bool, Optional[int]]:
+    """
+    Verify that x satisfies the tropical halfspace system.
+    
+    Checks: ∀ j, max_i(A_{j,i} + x_i) ≤ max_i(B_{j,i} + x_i)
+    
+    Returns: (feasible, first_violated_constraint_index)
+    """
+    p, n = A.shape
+    for j in range(p):
+        lhs = np.max(A[j] + x)
+        rhs = np.max(B[j] + x)
+        if lhs > rhs + tol:
+            return False, j
+    return True, None
+
+
+# ============================================================================
+# Algorithm 3: Mean-Payoff Game Construction
+# ============================================================================
+
+class MeanPayoffGame:
+    """
+    Mean-payoff game constructed from a tropical LP instance.
+    
+    Matches the formal Lean definition:
+        structure MeanPayoffGame where
+          numVerts : ℕ
+          isMaxVertex : Fin numVerts → Bool
+          numEdges : ℕ
+          edgeSrc, edgeTgt : Fin numEdges → Fin numVerts
+          edgeWeight : Fin numEdges → ℝ
+          hasOutEdge : ∀ v, ∃ e, edgeSrc e = v
+    """
+    
+    def __init__(self, num_verts: int, is_max_vertex: List[bool],
+                 edges: List[Tuple[int, int, float]]):
+        self.num_verts = num_verts
+        self.is_max_vertex = is_max_vertex
+        self.edges = edges  # List of (src, tgt, weight)
+    
+    def check_potential(self, pot: np.ndarray, tol: float = 1e-9) -> bool:
+        """
+        Check if potential certifies nonneg game value.
+        
+        HasNonnegValue: ∃ pot, ∀ e, w(e) + pot(tgt) ≥ pot(src) ∨ isMax(src)
+        """
+        for src, tgt, w in self.edges:
+            if not self.is_max_vertex[src]:
+                if w + pot[tgt] < pot[src] - tol:
+                    return False
+        return True
+    
+    def describe(self) -> str:
+        """Human-readable description of the game."""
+        lines = [f"Mean-Payoff Game: {self.num_verts} vertices, {len(self.edges)} edges"]
+        for v in range(self.num_verts):
+            player = "Max" if self.is_max_vertex[v] else "Min"
+            lines.append(f"  Vertex {v}: {player}")
+        for src, tgt, w in self.edges:
+            lines.append(f"  Edge {src} → {tgt}, weight {w:.3f}")
+        return "\n".join(lines)
+
+
+def tropical_to_game(A: np.ndarray, B: np.ndarray) -> MeanPayoffGame:
+    """
+    Reduce tropical feasibility to a mean-payoff game.
+    
+    Construction (matching formal theorem `tropical_feasibility_reduces_to_mean_payoff`):
+    - n Max vertices (variables x_0, ..., x_{n-1})
+    - p Min vertices (constraints C_0, ..., C_{p-1})
+    - Edges Max(i) → Min(j) with weight -A_{j,i}
+    - Edges Min(j) → Max(k) with weight B_{j,k}
+    
+    The game has nonneg value ⟺ the tropical system is feasible.
+    
+    Complexity: O(n*p) edges
+    """
+    p, n = A.shape
+    
+    is_max = [True] * n + [False] * p
+    edges = []
+    
+    # Max → Min edges
+    for i in range(n):
+        for j in range(p):
+            edges.append((i, n + j, -A[j][i]))
+    
+    # Min → Max edges
+    for j in range(p):
+        for k in range(n):
+            edges.append((n + j, k, B[j][k]))
+    
+    return MeanPayoffGame(n + p, is_max, edges)
+
+
+def potential_from_feasible_point(
+    A: np.ndarray, B: np.ndarray, x: np.ndarray
+) -> np.ndarray:
+    """
+    Construct a game potential from a feasible point of the tropical system.
+    
+    If x satisfies max_i(A_{j,i} + x_i) ≤ max_i(B_{j,i} + x_i) for all j,
+    then the potential pot with:
+        pot(Max(i)) = x_i
+        pot(Min(j)) = max_i(A_{j,i} + x_i)
+    certifies nonneg game value.
+    """
+    p, n = A.shape
+    pot = np.zeros(n + p)
+    pot[:n] = x
+    for j in range(p):
+        pot[n + j] = np.max(A[j] + x)
+    return pot
+
+
+# ============================================================================
+# Algorithm 4: Policy Iteration for Mean-Payoff Games
+# ============================================================================
+
+def policy_iteration_mean_payoff(
+    game: MeanPayoffGame,
+    max_iter: int = 100
+) -> Tuple[Optional[np.ndarray], bool, int]:
+    """
+    Policy iteration for mean-payoff games (simplified version).
+    
+    This implements the standard policy iteration algorithm:
+    1. Start with an arbitrary Min strategy (choose one outgoing edge per Min vertex)
+    2. Solve the resulting linear system for the potential
+    3. Improve the strategy by switching edges where beneficial
+    4. Repeat until stable
+    
+    Complexity: O(|V| * |E|) per iteration, at most O(|E|^|V_Min|) iterations
+    (but empirically polynomial).
+    
+    Returns: (potential, has_nonneg_value, iterations)
+    """
+    n_verts = game.num_verts
+    
+    # Build adjacency lists
+    out_edges = [[] for _ in range(n_verts)]
+    for idx, (src, tgt, w) in enumerate(game.edges):
+        out_edges[src].append((idx, tgt, w))
+    
+    # Initialize Min strategy: pick first outgoing edge for each Min vertex
+    min_strategy = {}
+    for v in range(n_verts):
+        if not game.is_max_vertex[v] and out_edges[v]:
+            min_strategy[v] = out_edges[v][0]
+    
+    for iteration in range(max_iter):
+        # Under current Min strategy, try to find a potential
+        # For Min vertices, the chosen edge gives: w + pot(tgt) ≥ pot(src)
+        # For Max vertices, at least one edge must satisfy it
+        
+        # Simple approach: set all potentials to 0 and check
+        pot = np.zeros(n_verts)
+        
+        # Iterate value updates
+        for _ in range(n_verts * 10):
+            new_pot = pot.copy()
+            for v in range(n_verts):
+                if game.is_max_vertex[v]:
+                    # Max vertex: take max over outgoing edges
+                    if out_edges[v]:
+                        new_pot[v] = max(w + pot[tgt] for _, tgt, w in out_edges[v])
+                else:
+                    # Min vertex: use strategy edge
+                    if v in min_strategy:
+                        _, tgt, w = min_strategy[v]
+                        new_pot[v] = w + pot[tgt]
+            
+            # Normalize (subtract mean to prevent drift)
+            new_pot -= np.mean(new_pot)
+            if np.allclose(pot, new_pot, atol=1e-12):
+                break
+            pot = new_pot
+        
+        # Try to improve Min strategy
+        improved = False
+        for v in range(n_verts):
+            if not game.is_max_vertex[v]:
+                current_val = pot[v]
+                best_val = current_val
+                best_edge = min_strategy.get(v)
+                for edge_data in out_edges[v]:
+                    _, tgt, w = edge_data
+                    val = w + pot[tgt]
+                    if val < best_val - 1e-10:
+                        best_val = val
+                        best_edge = edge_data
+                        improved = True
+                if best_edge is not None:
+                    min_strategy[v] = best_edge
+        
+        if not improved:
+            return pot, game.check_potential(pot), iteration
+    
+    return pot, game.check_potential(pot), max_iter
+
+
+# ============================================================================
+# Example Usage
+# ============================================================================
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Algorithm 1: Floyd-Warshall Closure")
-    print("=" * 60)
-
-    c_raw = np.array([
-        [0.0, 5.0, 100.0],
-        [-2.0, 0.0, 3.0],
-        [100.0, 100.0, 0.0],
-    ])
-    print(f"Input matrix:\n{c_raw}\n")
-
-    closure, feasible = floyd_warshall_closure(c_raw)
-    print(f"Feasible: {feasible}")
-    print(f"Closure:\n{closure}\n")
-
-    # Verify triangle inequality
-    n = closure.shape[0]
-    tri_ok = all(
-        closure[i, k] <= closure[i, j] + closure[j, k] + 1e-10
-        for i, j, k in product(range(n), repeat=3)
-    )
-    print(f"Triangle inequality holds: {tri_ok}")
-
-    print("\n" + "=" * 60)
-    print("Algorithm 2: Bellman-Ford Feasibility")
-    print("=" * 60)
-
-    edges = [(0, 1, 3), (1, 2, -1), (2, 0, 1), (1, 0, -2)]
-    print("Edges (x_i ≤ w + x_j):")
-    for (i, j, w) in edges:
-        print(f"  x_{i} ≤ {w} + x_{j}")
-
-    feas, witness, cycle = bellman_ford_solve(3, edges)
-    print(f"\nFeasible: {feas}")
-    if witness is not None:
-        print(f"Witness: {witness}")
-        print("Verification:")
-        for (i, j, w) in edges:
-            sat = witness[i] <= w + witness[j] + 1e-10
-            print(f"  x_{i}={witness[i]:.2f} ≤ {w}+x_{j}={w+witness[j]:.2f}: {sat}")
-
-    print("\n" + "=" * 60)
-    print("Algorithm 3: Tropical Hull Membership")
-    print("=" * 60)
-
-    c = np.array([
-        [0.0, 2.0, 3.0],
-        [1.0, 0.0, 1.0],
-        [2.0, 3.0, 0.0],
-    ])
-    V = make_diff_constraint_generators(c)
-    print(f"Generators:\n{V}\n")
-
-    test_points = [
-        np.array([0.0, -0.5, -1.0]),
-        np.array([0.0, 0.0, 0.0]),
-        np.array([0.0, -1.0, -2.0]),
-    ]
-
-    for pt in test_points:
-        pt_norm = tropical_normalize(pt)
-        in_poly = check_diff_constraints(pt_norm, c)
-        in_hull, lam = tropical_hull_membership(pt_norm, V)
-        print(f"Point {pt_norm}: in polyhedron={in_poly}, in hull={in_hull}")
-        if lam is not None:
-            recon = tropical_convex_combination(lam, V)
-            print(f"  λ = {lam}, reconstruction = {recon}")
-
-    print("\nAll algorithms completed successfully!")
+    print("Tropical Convexity Algorithms")
+    print("=" * 50)
+    
+    # Example 1: Hull membership
+    gens = np.array([[0, 0], [3, 1], [1, 4]], dtype=float)
+    x = np.array([1.5, 2.0])
+    member, coeff = tropical_hull_membership(gens, x)
+    print(f"\nHull membership: {member}")
+    if coeff is not None:
+        print(f"Coefficients: {coeff}")
+    
+    # Example 2: Feasibility
+    A = np.array([[2.0, 0.0], [0.0, 1.0]])
+    B = np.array([[0.0, 3.0], [2.0, 0.0]])
+    sol, converged, iters, _ = tropical_feasibility_shapley(A, B)
+    print(f"\nFeasibility: converged={converged}, iterations={iters}")
+    if sol is not None:
+        print(f"Solution: {sol}")
+        feasible, _ = verify_tropical_feasibility(A, B, sol)
+        print(f"Verified: {feasible}")
+    
+    # Example 3: Game reduction
+    game = tropical_to_game(A, B)
+    print(f"\n{game.describe()}")
+    pot, has_val, iters = policy_iteration_mean_payoff(game)
+    print(f"Policy iteration: nonneg_value={has_val}, iterations={iters}")

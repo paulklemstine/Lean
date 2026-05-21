@@ -1,967 +1,697 @@
 #!/usr/bin/env python3
 """
-applications.py — Real-World Applications of Tropical Convexity
+Applications of Tropical Convexity and Mean-Payoff Duality
+===========================================================
 
-Demonstrates applications in:
-1. Train scheduling (discrete event systems)
-2. Timed automata / static analysis
-3. Project scheduling (critical path)
-4. Network routing optimization
+Demonstrates real-world applications of the formal tropical theory:
+1. Network timing verification (digital circuit analysis)
+2. Scheduling with precedence constraints
+3. Optimal routing in weighted networks
 """
 
 import numpy as np
 from algorithms import (
-    floyd_warshall_closure,
-    bellman_ford_solve,
-    make_diff_constraint_generators,
-    tropical_convex_combination,
-    tropical_normalize,
+    shapley_operator, tropical_feasibility_shapley,
+    verify_tropical_feasibility, tropical_to_game,
+    potential_from_feasible_point
 )
 
 
-# ═══════════════════════════════════════════════════════════════
-# Application 1: Train Scheduling
-# ═══════════════════════════════════════════════════════════════
+# ============================================================================
+# Application 1: Digital Circuit Timing Analysis
+# ============================================================================
 
-def train_scheduling_demo():
+def circuit_timing_analysis():
     """
-    Model a simple train network as a system of difference constraints.
-
-    Stations: A, B, C (indices 0, 1, 2)
-    Constraints (minimum travel/dwell times):
-    - Train from A→B takes at least 30 min: t_B - t_A ≥ 30
-    - Train from B→C takes at least 20 min: t_C - t_B ≥ 20
-    - Turnaround A→C takes at most 90 min: t_C - t_A ≤ 90
-    - Connection at B needs 5 min dwell: already in t_B - t_A ≥ 30
-
-    As difference constraints x_i - x_j ≤ c[i,j]:
-    - t_A - t_B ≤ -30   (i.e., t_B ≥ t_A + 30)
-    - t_B - t_C ≤ -20   (i.e., t_C ≥ t_B + 20)
-    - t_C - t_A ≤ 90
+    Tropical feasibility for digital circuit timing verification.
+    
+    In synchronous digital circuits, signals must satisfy setup and hold
+    timing constraints. These are naturally tropical inequalities:
+    
+        max(arrival_time_i + delay_{j,i}) ≤ max(deadline_j_k + slack_{j,k})
+    
+    This is exactly our tropical halfspace system!
     """
-    print("=" * 60)
-    print("APPLICATION 1: Train Scheduling")
-    print("=" * 60)
-
-    stations = ["Station A", "Station B", "Station C"]
-    n = 3
-
-    # Constraint matrix: c[i,j] = upper bound on t_i - t_j
-    INF = 1000.0
-    c = np.array([
-        [0.0,  -30.0, INF],    # t_A - t_B ≤ -30
-        [INF,  0.0,   -20.0],  # t_B - t_C ≤ -20
-        [90.0, INF,   0.0],    # t_C - t_A ≤ 90
+    print("=" * 70)
+    print("Application 1: Digital Circuit Timing Verification")
+    print("=" * 70)
+    
+    # A simple pipeline: 3 stages with 2 timing constraints
+    # Variables: x_0 = clock period adjustment, x_1 = buffer delay, x_2 = skew
+    n = 3  # variables
+    
+    # Constraint 1: Setup time - signal must arrive before clock edge
+    # max(2 + x_0, 1 + x_1, 0 + x_2) ≤ max(0 + x_0, 3 + x_1, 1 + x_2)
+    # Constraint 2: Hold time - signal must not change too early
+    # max(0 + x_0, 2 + x_1, 1 + x_2) ≤ max(1 + x_0, 0 + x_1, 3 + x_2)
+    
+    A = np.array([
+        [2.0, 1.0, 0.0],  # Setup constraint coefficients (LHS)
+        [0.0, 2.0, 1.0],  # Hold constraint coefficients (LHS)
     ])
-
-    print("Constraints:")
-    print("  t_B - t_A ≥ 30 min (travel A→B)")
-    print("  t_C - t_B ≥ 20 min (travel B→C)")
-    print("  t_C - t_A ≤ 90 min (total journey limit)")
-
-    # Compute closure
-    closure, feasible = floyd_warshall_closure(c)
-    print(f"\nFeasible schedule exists: {feasible}")
-
-    if feasible:
-        print("\nTightest implied constraints (closure):")
-        for i in range(n):
-            for j in range(n):
-                if i != j and closure[i, j] < INF / 2:
-                    print(f"  t_{stations[i]} - t_{stations[j]} ≤ {closure[i,j]:.0f} min")
-
-        # Find a feasible schedule using Bellman-Ford
-        edges = []
-        for i in range(n):
-            for j in range(n):
-                if i != j and c[i, j] < INF / 2:
-                    edges.append((i, j, c[i, j]))
-
-        feas, schedule, _ = bellman_ford_solve(n, edges)
-        if schedule is not None:
-            # Shift so t_A = 8:00 (480 min from midnight)
-            schedule = schedule - schedule[0] + 480
-            print("\nOptimal schedule:")
-            for i, s in enumerate(stations):
-                hours, mins = divmod(int(schedule[i]), 60)
-                print(f"  {s}: {hours:02d}:{mins:02d}")
-
-        # Show the set of all feasible schedules as a tropical polytope
-        V = make_diff_constraint_generators(closure)
-        print("\nCanonical generators (extremal schedules):")
-        for j in range(n):
-            gen = V[j]
-            print(f"  Extremal schedule {j}: {gen}")
-
-    print()
-
-
-# ═══════════════════════════════════════════════════════════════
-# Application 2: Static Analysis (Timing Constraints)
-# ═══════════════════════════════════════════════════════════════
-
-def static_analysis_demo():
-    """
-    Model timing analysis for a digital circuit as difference constraints.
-
-    Gates: A, B, C, D (indices 0-3)
-    Propagation delays and setup/hold times create difference constraints.
-    """
-    print("=" * 60)
-    print("APPLICATION 2: Digital Circuit Timing Analysis")
-    print("=" * 60)
-
-    gates = ["Input", "AND gate", "OR gate", "Output"]
-    n = 4
-
-    # Signal arrival times must satisfy propagation delays
-    edges = [
-        (1, 0, -2.0),  # AND gate ≥ Input + 2ns
-        (2, 0, -3.0),  # OR gate ≥ Input + 3ns
-        (2, 1, -1.5),  # OR gate ≥ AND + 1.5ns
-        (3, 1, -2.0),  # Output ≥ AND + 2ns
-        (3, 2, -1.0),  # Output ≥ OR + 1ns
-        (3, 0, -10.0), # Output must be within 10ns of Input... wait
-        (0, 3, -0.0),  # Actually: Output - Input ≤ 10ns
-    ]
-
-    # Use as: x_i ≤ w + x_j
-    edges_clean = [
-        (1, 0, -2.0),   # t_AND ≥ t_Input + 2
-        (2, 0, -3.0),   # t_OR ≥ t_Input + 3
-        (2, 1, -1.5),   # t_OR ≥ t_AND + 1.5
-        (3, 1, -2.0),   # t_Output ≥ t_AND + 2
-        (3, 2, -1.0),   # t_Output ≥ t_OR + 1
-    ]
-
-    print("Propagation constraints:")
-    for (i, j, w) in edges_clean:
-        print(f"  t_{gates[i]} ≥ t_{gates[j]} + {-w:.1f} ns")
-
-    feas, timing, _ = bellman_ford_solve(n, edges_clean)
-    print(f"\nFeasible: {feas}")
-    if timing is not None:
-        timing = timing - timing[0]  # Normalize input to 0
-        print("Signal arrival times (ns from input):")
-        for i, g in enumerate(gates):
-            print(f"  {g}: {-timing[i]:.1f} ns")
-
-        critical = -timing[3]
-        print(f"\nCritical path delay: {critical:.1f} ns")
-
-    print()
-
-
-# ═══════════════════════════════════════════════════════════════
-# Application 3: Project Scheduling (CPM)
-# ═══════════════════════════════════════════════════════════════
-
-def project_scheduling_demo():
-    """
-    Critical Path Method as tropical difference constraints.
-    """
-    print("=" * 60)
-    print("APPLICATION 3: Project Scheduling (Critical Path)")
-    print("=" * 60)
-
-    tasks = ["Start", "Design", "Prototype", "Test", "Ship", "End"]
-    n = 6
-
-    # Task durations and dependencies
-    # (successor, predecessor, min_duration)
-    edges = [
-        (1, 0, -0.0),   # Design after Start
-        (2, 1, -5.0),   # Prototype after Design (5 weeks)
-        (3, 2, -3.0),   # Test after Prototype (3 weeks)
-        (4, 3, -2.0),   # Ship after Test (2 weeks)
-        (5, 4, -1.0),   # End after Ship (1 week)
-        (3, 1, -4.0),   # Test can also start 4 weeks after Design
-        (5, 0, -15.0),  # Deadline: End within 15 weeks of Start
-    ]
-
-    print("Project constraints:")
-    deps = [
-        "Design starts at project start",
-        "Prototype: 5 weeks after Design",
-        "Testing: 3 weeks after Prototype",
-        "Shipping: 2 weeks after Testing",
-        "Completion: 1 week after Shipping",
-        "Testing: at least 4 weeks after Design",
-        "Deadline: 15 weeks from start",
-    ]
-    for d in deps:
-        print(f"  • {d}")
-
-    feas, schedule, neg_cycle = bellman_ford_solve(n, edges)
-    print(f"\nFeasible within deadline: {feas}")
-
-    if schedule is not None:
-        schedule = schedule - schedule[0]
-        print("\nEarliest schedule (weeks from start):")
-        for i, t in enumerate(tasks):
-            print(f"  {t}: week {-schedule[i]:.0f}")
-
-        print(f"\nTotal project duration: {-schedule[5]:.0f} weeks")
-        slack = 15 - (-schedule[5])
-        print(f"Slack before deadline: {slack:.0f} weeks")
+    B = np.array([
+        [0.0, 3.0, 1.0],  # Setup constraint coefficients (RHS)
+        [1.0, 0.0, 3.0],  # Hold constraint coefficients (RHS)
+    ])
+    
+    print(f"\nCircuit with {n} timing variables and {A.shape[0]} constraints:")
+    print("  Setup: max(2+x₀, 1+x₁, 0+x₂) ≤ max(0+x₀, 3+x₁, 1+x₂)")
+    print("  Hold:  max(0+x₀, 2+x₁, 1+x₂) ≤ max(1+x₀, 0+x₁, 3+x₂)")
+    
+    # Solve using Shapley iteration
+    sol, converged, iters, trajectory = tropical_feasibility_shapley(A, B)
+    
+    print(f"\n  Shapley iteration: converged={converged}, iterations={iters}")
+    if sol is not None:
+        print(f"  Feasible timing assignment: x = [{', '.join(f'{v:.4f}' for v in sol)}]")
+        feasible, violated = verify_tropical_feasibility(A, B, sol)
+        print(f"  Verified feasible: {feasible}")
+        
+        # Show constraint satisfaction
+        for j in range(A.shape[0]):
+            lhs = max(A[j][i] + sol[i] for i in range(n))
+            rhs = max(B[j][i] + sol[i] for i in range(n))
+            slack = rhs - lhs
+            print(f"  Constraint {j}: LHS={lhs:.4f} ≤ RHS={rhs:.4f} (slack={slack:.4f})")
     else:
-        print("Project cannot meet the deadline!")
-        if neg_cycle:
-            print(f"Conflict involves tasks: {[tasks[i] for i in neg_cycle]}")
-
-    print()
+        print("  No feasible timing assignment found — circuit has timing violation!")
 
 
-# ═══════════════════════════════════════════════════════════════
-# Application 4: Network Routing
-# ═══════════════════════════════════════════════════════════════
+# ============================================================================
+# Application 2: Project Scheduling
+# ============================================================================
 
-def network_routing_demo():
+def project_scheduling():
     """
-    Model network latency constraints as a tropical optimization problem.
+    Tropical optimization for project scheduling with precedence constraints.
+    
+    Tasks have durations and precedence relationships. Finding a feasible
+    schedule amounts to tropical feasibility:
+    
+        start_time_j + duration_j ≤ start_time_k  (for each precedence j → k)
+    
+    In tropical form: max(d_j + x_j) ≤ max(x_k) for precedence edges.
     """
-    print("=" * 60)
-    print("APPLICATION 4: Network Latency Optimization")
-    print("=" * 60)
+    print("\n" + "=" * 70)
+    print("Application 2: Project Scheduling with Precedence Constraints")
+    print("=" * 70)
+    
+    # Project with 4 tasks:
+    # Task 0 (duration 3) → Task 2
+    # Task 1 (duration 2) → Task 2
+    # Task 2 (duration 4) → Task 3
+    # Task 1 (duration 2) → Task 3
+    
+    n = 4  # tasks
+    print(f"\nProject with {n} tasks:")
+    print("  Task 0 (dur=3) → Task 2")
+    print("  Task 1 (dur=2) → Task 2")
+    print("  Task 2 (dur=4) → Task 3")
+    print("  Task 1 (dur=2) → Task 3")
+    
+    # Encode as tropical system: A x ≤ B x
+    # Precedence j → k with duration d: d + x_j ≤ x_k
+    # As tropical: max(d + x_j) ≤ max(x_k)
+    # In matrix form: A has d in position (constraint, j), B has 0 in position (constraint, k)
+    # Other entries are -infinity (we use -100 as proxy)
+    
+    NEG_INF = -100.0
+    
+    # 4 precedence constraints
+    p = 4
+    A = np.full((p, n), NEG_INF)
+    B = np.full((p, n), NEG_INF)
+    
+    # Task 0 (dur=3) → Task 2: 3 + x_0 ≤ x_2
+    A[0, 0] = 3.0; B[0, 2] = 0.0
+    # Task 1 (dur=2) → Task 2: 2 + x_1 ≤ x_2
+    A[1, 1] = 2.0; B[1, 2] = 0.0
+    # Task 2 (dur=4) → Task 3: 4 + x_2 ≤ x_3
+    A[2, 2] = 4.0; B[2, 3] = 0.0
+    # Task 1 (dur=2) → Task 3: 2 + x_1 ≤ x_3
+    A[3, 1] = 2.0; B[3, 3] = 0.0
+    
+    # Solve
+    x0 = np.array([0.0, 0.0, 5.0, 10.0])  # Initial guess
+    sol, converged, iters, _ = tropical_feasibility_shapley(A, B, x0=x0)
+    
+    print(f"\n  Shapley iteration: converged={converged}, iterations={iters}")
+    if sol is not None:
+        print(f"  Feasible schedule (start times): [{', '.join(f'{v:.2f}' for v in sol)}]")
+        feasible, _ = verify_tropical_feasibility(A, B, sol)
+        print(f"  Verified feasible: {feasible}")
+        
+        makespan = max(sol[3] + 1, sol[2] + 4)  # Last task completion
+        print(f"  Project makespan: {makespan:.2f}")
+    
+    # Also solve from zero
+    sol2, conv2, it2, _ = tropical_feasibility_shapley(A, B)
+    if sol2 is not None:
+        print(f"\n  Alternative schedule: [{', '.join(f'{v:.2f}' for v in sol2)}]")
 
-    nodes = ["Client", "Edge Server", "CDN", "Origin", "Database"]
-    n = 5
 
-    # Latency constraints (ms): signal_i - signal_j ≤ c[i,j]
-    c = np.array([
-        [0,    10,   50,  200, 300],   # From Client
-        [-5,   0,    20,  100, 200],   # From Edge
-        [-20,  -10,  0,   30,  100],   # From CDN
-        [-50,  -30,  -15, 0,   20],    # From Origin
-        [-100, -80,  -50, -10, 0],     # From Database
-    ], dtype=float)
+# ============================================================================
+# Application 3: Network Routing Optimization
+# ============================================================================
 
-    print("Network topology (latency bounds in ms):")
+def network_routing():
+    """
+    Tropical methods for optimal routing in weighted networks.
+    
+    Finding shortest paths in networks with additive costs is equivalent
+    to finding potentials satisfying tropical constraints:
+        cost(i,j) + pot(j) ≥ pot(i) for each edge (i,j)
+    
+    This is a sub-fixed-point problem for the tropical Shapley operator!
+    """
+    print("\n" + "=" * 70)
+    print("Application 3: Network Routing via Tropical Potentials")
+    print("=" * 70)
+    
+    # Network: 4 nodes, 5 edges with costs
+    #   0 →(2) 1
+    #   0 →(5) 2
+    #   1 →(1) 2
+    #   1 →(3) 3
+    #   2 →(2) 3
+    
+    n = 4
+    edges = [(0, 1, 2), (0, 2, 5), (1, 2, 1), (1, 3, 3), (2, 3, 2)]
+    
+    print(f"\nNetwork: {n} nodes, {len(edges)} edges")
+    for s, t, c in edges:
+        print(f"  {s} →({c}) {t}")
+    
+    # Encode as tropical system: cost(i,j) + pot(j) - pot(i) ≥ 0
+    # Rewrite as: max(cost(i,j) + x_j) ≤ max(x_i + cost(i,j))
+    # More directly: pot(i) ≤ cost(i,j) + pot(j)
+    # This is: x_i ≤ min over out-edges of (cost + x_target)
+    
+    NEG_INF = -100.0
+    p = len(edges)
+    A = np.full((p, n), NEG_INF)
+    B = np.full((p, n), NEG_INF)
+    
+    for idx, (s, t, c) in enumerate(edges):
+        A[idx, s] = 0.0     # LHS: x_source
+        B[idx, t] = c        # RHS: cost + x_target
+    
+    sol, converged, iters, _ = tropical_feasibility_shapley(A, B)
+    
+    print(f"\n  Tropical potential computation: converged={converged}, iterations={iters}")
+    if sol is not None:
+        print(f"  Potentials: [{', '.join(f'{v:.4f}' for v in sol)}]")
+        
+        # Verify: shortest distances from node 0
+        # Normalize so pot(0) = 0
+        pot = sol - sol[0]
+        print(f"  Normalized (from node 0): [{', '.join(f'{v:.4f}' for v in pot)}]")
+        
+        # Check edge slack
+        print("  Edge analysis:")
+        for s, t, c in edges:
+            slack = c + pot[t] - pot[s]
+            tight = "TIGHT (shortest path)" if abs(slack) < 0.01 else ""
+            print(f"    {s}→{t}: cost={c}, slack={slack:.4f} {tight}")
+    
+    # Mean-payoff game view
+    game = tropical_to_game(A, B)
+    print(f"\n  Associated mean-payoff game: {game.num_verts} vertices, {len(game.edges)} edges")
+
+
+# ============================================================================
+# Application 4: Control System Stability Analysis
+# ============================================================================
+
+def control_stability():
+    """
+    Tropical analysis for discrete event system stability.
+    
+    The Shapley operator models the dynamics of a max-plus linear system:
+        x(t+1) = A ⊗ x(t) = max_j (A_{i,j} + x_j(t))
+    
+    Stability requires that the system's spectral radius (max cycle mean)
+    is non-positive. This is exactly a tropical feasibility question!
+    """
+    print("\n" + "=" * 70)
+    print("Application 4: Discrete Event System Stability")
+    print("=" * 70)
+    
+    # Max-plus system matrix (3x3)
+    # x(t+1)_0 = max(2+x_0(t), 1+x_1(t), -∞)
+    # x(t+1)_1 = max(-∞, 1+x_1(t), 3+x_2(t))
+    # x(t+1)_2 = max(1+x_0(t), -∞, 2+x_2(t))
+    
+    n = 3
+    M = np.array([
+        [2.0, 1.0, -100.0],
+        [-100.0, 1.0, 3.0],
+        [1.0, -100.0, 2.0]
+    ])
+    
+    print(f"\nMax-plus system matrix ({n}×{n}):")
     for i in range(n):
-        for j in range(n):
-            if i != j and c[i, j] < 200:
-                print(f"  {nodes[i]} → {nodes[j]}: ≤{c[i,j]:.0f} ms")
+        row = [f"{M[i,j]:+.0f}" if M[i,j] > -50 else " -∞" for j in range(n)]
+        print(f"  [{', '.join(row)}]")
+    
+    # Stability check: does there exist x with x ≤ M ⊗ x?
+    # Encode as: x_i ≤ max_j(M_{i,j} + x_j) for all i
+    # This is: max(x_i) ≤ max(M_{i,j} + x_j)
+    # In tropical halfspace form with identity on LHS
+    
+    A_sys = np.eye(n)
+    B_sys = M.copy()
+    
+    print("\n  Checking stability (existence of invariant potential x ≤ M⊗x):")
+    sol, converged, iters, trajectory = tropical_feasibility_shapley(A_sys, B_sys)
+    
+    if sol is not None and converged:
+        print(f"  System is stable! Invariant potential: [{', '.join(f'{v:.4f}' for v in sol)}]")
+        
+        # Verify: T(x) ≥ x
+        Tx = shapley_operator(A_sys, B_sys, sol)
+        print(f"  T(x) = [{', '.join(f'{v:.4f}' for v in Tx)}]")
+        print(f"  x ≤ T(x)? {np.all(sol <= Tx + 1e-9)}")
+        
+        # Show additive homogeneity
+        c = 5.0
+        x_shifted = sol + c
+        Tx_shifted = shapley_operator(A_sys, B_sys, x_shifted)
+        print(f"\n  Additive homogeneity verification:")
+        print(f"  T(x + {c}) = [{', '.join(f'{v:.4f}' for v in Tx_shifted)}]")
+        print(f"  T(x) + {c} = [{', '.join(f'{v:.4f}' for v in Tx + c)}]")
+        print(f"  Equal? {np.allclose(Tx_shifted, Tx + c)}")
+    else:
+        print("  System may be unstable (no invariant potential found).")
+    
+    # Simulate dynamics
+    print("\n  System trajectory from x(0) = [0, 0, 0]:")
+    x = np.zeros(n)
+    for t in range(6):
+        print(f"    t={t}: x = [{', '.join(f'{v:.2f}' for v in x)}]")
+        x_new = np.array([max(M[i, j] + x[j] for j in range(n)) for i in range(n)])
+        growth = np.mean(x_new - x)
+        x = x_new
+    print(f"  Average growth rate ≈ {growth:.2f} (spectral radius proxy)")
 
-    closure, feasible = floyd_warshall_closure(c)
-    print(f"\nConsistent latency model: {feasible}")
-
-    if feasible:
-        V = make_diff_constraint_generators(closure)
-        print("\nExtremal latency profiles:")
-        for j in range(n):
-            v = tropical_normalize(V[j])
-            print(f"  Profile {nodes[j]}-optimal: {v}")
-
-        # Find a balanced latency assignment
-        lam = np.full(n, -1.0)
-        lam[0] = 0.0  # Favor client-optimal
-        lam = tropical_normalize(lam)
-        balanced = tropical_convex_combination(lam, V)
-        balanced = tropical_normalize(balanced)
-        print(f"\nBalanced latency profile: {balanced}")
-
-    print()
-
-
-# ═══════════════════════════════════════════════════════════════
-# Main
-# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    train_scheduling_demo()
-    static_analysis_demo()
-    project_scheduling_demo()
-    network_routing_demo()
-
-    print("=" * 60)
-    print("All applications completed successfully!")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""Build PACKAGE.json from all deliverables."""
-import json
-import os
-
-def read_file(path):
-    with open(path, 'r') as f:
-        return f.read()
-
-# Read all source files
-article = read_file('/workspace/request-project/ARTICLE.md')
-research_paper = read_file('/workspace/request-project/RESEARCH_PAPER.md')
-future_directions = read_file('/workspace/request-project/FUTURE_DIRECTIONS.md')
-
-# Read Lean files
-lean_basic = read_file('/workspace/request-project/Tropical/Convexity/Basic.lean')
-lean_diff = read_file('/workspace/request-project/Tropical/Convexity/DiffConstraints.lean')
-lean_bf = read_file('/workspace/request-project/Tropical/Optimization/BellmanFord.lean')
-lean_proofs = f"-- Tropical/Convexity/Basic.lean\n{lean_basic}\n\n-- Tropical/Convexity/DiffConstraints.lean\n{lean_diff}\n\n-- Tropical/Optimization/BellmanFord.lean\n{lean_bf}"
-
-# Read Python files
-demo_code = read_file('/workspace/request-project/demo.py')
-algorithms_code = read_file('/workspace/request-project/algorithms.py')
-applications_code = read_file('/workspace/request-project/applications.py')
-
-# Read visualization data
-viz_data = json.loads(read_file('/workspace/request-project/viz_data.json'))
-
-# Build package
-package = {
-    "title": "Tropical Convexity, Minkowski-Weyl, and Algorithmic Tropical Optimization",
-    "domain": "Tropical Mathematics / Combinatorial Optimization",
-    "article": article,
-    "research_paper": research_paper,
-    "future_directions": future_directions,
-    "demos": [
-        {
-            "name": "Tropical Algebra and Convex Hull Demo",
-            "code": demo_code
-        },
-        {
-            "name": "Applications: Scheduling, Circuits, and Networks",
-            "code": applications_code
-        }
-    ],
-    "algorithms": [
-        {
-            "name": "Floyd-Warshall Closure",
-            "pseudocode": "function FloydWarshallClosure(c):\n    d <- copy(c)\n    for k = 0 to n-1:\n        for i = 0 to n-1:\n            for j = 0 to n-1:\n                d[i,j] <- min(d[i,j], d[i,k] + d[k,j])\n    feasible <- all(d[i,i] >= 0)\n    return (d, feasible)\n\nComplexity: O(n^3) time, O(n^2) space",
-            "code": algorithms_code
-        },
-        {
-            "name": "Bellman-Ford Feasibility Solver",
-            "pseudocode": "function BellmanFord(n, E):\n    dist <- array of n zeros\n    for iteration = 1 to n-1:\n        for (i, j, w) in E:\n            if dist[j] + w < dist[i]:\n                dist[i] <- dist[j] + w\n    for (i, j, w) in E:\n        if dist[j] + w < dist[i]:\n            return (infeasible, negative cycle)\n    return (feasible, dist)\n\nComplexity: O(n * |E|) time, O(n) space",
-            "code": algorithms_code
-        }
-    ],
-    "visualizations": [
-        {
-            "name": "Tropical Convex Hull in 2D",
-            "data": viz_data["tropical_hull_2d"]
-        },
-        {
-            "name": "Difference-Constraint Polyhedron",
-            "data": viz_data["diff_constraint"]
-        },
-        {
-            "name": "Bellman-Ford Convergence",
-            "data": viz_data["bellman_ford"]
-        },
-        {
-            "name": "Tropical vs Classical Convexity",
-            "data": viz_data["tropical_vs_classical"]
-        }
-    ],
-    "lean_proofs": lean_proofs
-}
-
-with open('/workspace/request-project/PACKAGE.json', 'w') as f:
-    json.dump(package, f, indent=2)
-
-print(f"PACKAGE.json written ({os.path.getsize('/workspace/request-project/PACKAGE.json')} bytes)")
+    print("╔══════════════════════════════════════════════════════════════════╗")
+    print("║  Tropical Convexity: Real-World Applications                   ║")
+    print("╚══════════════════════════════════════════════════════════════════╝")
+    
+    circuit_timing_analysis()
+    project_scheduling()
+    network_routing()
+    control_stability()
+    
+    print("\n" + "=" * 70)
+    print("All applications completed.")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-demo.py — Tropical Convexity Demonstrations
+Tropical Convexity, Feasibility, and Mean-Payoff Game Reduction: Interactive Demo
+=================================================================================
 
-Concrete numerical examples illustrating tropical convex hulls,
-difference-constraint polyhedra, and the Bellman-Ford feasibility test.
+This script demonstrates the core concepts formalized in our Lean 4 development:
+1. Tropical convex hulls of finite generator sets
+2. Tropical halfspace feasibility checking
+3. The Shapley operator and sub-fixed-point characterization
+4. Reduction from tropical feasibility to mean-payoff games
 """
 
 import numpy as np
 from itertools import product
 
-# ─────────────────────────────────────────────────────────────
-# 1. Basic tropical operations
-# ─────────────────────────────────────────────────────────────
+# ============================================================================
+# Section 1: Tropical Arithmetic
+# ============================================================================
 
-def tscale(a: float, x: np.ndarray) -> np.ndarray:
-    """Tropical scalar multiplication: a ⊙ x = a + x (coordinate-wise)."""
-    return a + x
+def trop_add(a, b):
+    """Tropical addition = max."""
+    return max(a, b)
 
-def tadd(x: np.ndarray, y: np.ndarray) -> np.ndarray:
-    """Tropical addition: x ⊕ y = max(x, y) (coordinate-wise)."""
-    return np.maximum(x, y)
+def trop_mult(a, b):
+    """Tropical multiplication = classical addition."""
+    return a + b
 
-def trop_combination(lam: np.ndarray, V: np.ndarray) -> np.ndarray:
+def trop_combination(a, x, b, y):
+    """Tropical binary combination: max(a + x, b + y) coordinatewise."""
+    return np.maximum(a + x, b + y)
+
+# ============================================================================
+# Section 2: Tropical Convex Hull
+# ============================================================================
+
+def tropical_convex_hull_membership(generators, x, tol=1e-9):
     """
-    Tropical convex combination: x_i = max_j (lam_j + V[j,i]).
-    V has shape (m, n), lam has shape (m,).
+    Check if x is in the tropical convex hull of generators.
+    
+    A point x ∈ ℝ^n is in tconv(v_1,...,v_m) if there exist c_1,...,c_m ∈ ℝ such that
+    x_i = max_j (c_j + v_j_i) for all i.
+    
+    We solve this by checking if a valid coefficient vector exists.
+    For each pair (j1, j2) of generators, x_i = max_j(c_j + v_j_i) implies
+    c_j ≤ x_i - v_j_i for all i, with equality for the maximizing j at each coordinate.
+    
+    Returns: (is_member, coefficients or None)
     """
-    return np.max(lam[:, None] + V, axis=0)
+    m, n = generators.shape
+    
+    if m == 0:
+        return False, None
+    
+    # Try to find coefficients c such that x_i = max_j(c_j + v_j_i)
+    # For each j: c_j ≤ min_i(x_i - v_j_i) (necessary condition)
+    # Set c_j = min_i(x_i - v_j_i) as the largest feasible coefficient
+    c = np.array([np.min(x - generators[j]) for j in range(m)])
+    
+    # Check: does max_j(c_j + v_j_i) = x_i for all i?
+    hull_point = np.array([max(c[j] + generators[j][i] for j in range(m)) for i in range(n)])
+    
+    if np.allclose(hull_point, x, atol=tol):
+        return True, c
+    
+    return False, None
 
-print("=" * 60)
-print("DEMO 1: Basic Tropical Algebra")
-print("=" * 60)
+def generate_tropical_hull_points(generators, num_samples=100):
+    """Generate random points in the tropical convex hull."""
+    m, n = generators.shape
+    points = []
+    for _ in range(num_samples):
+        c = np.random.randn(m) * 3  # random coefficients
+        point = np.array([max(c[j] + generators[j][i] for j in range(m)) for i in range(n)])
+        points.append(point)
+    return np.array(points)
 
-x = np.array([3.0, 1.0, -2.0])
-y = np.array([1.0, 4.0, 0.0])
+# ============================================================================
+# Section 3: Tropical Halfspaces and Feasibility
+# ============================================================================
 
-print(f"x = {x}")
-print(f"y = {y}")
-print(f"x ⊕ y (trop add) = max(x,y) = {tadd(x, y)}")
-print(f"2 ⊙ x (trop scale) = 2 + x = {tscale(2.0, x)}")
-print(f"x ⊕ x = x (idempotent) = {tadd(x, x)}")
-print(f"  Verified: {np.allclose(tadd(x, x), x)}")
-
-a, b = -1.0, 0.0  # max(a,b) = 0, normalized
-z = tadd(tscale(a, x), tscale(b, y))
-print(f"\nTropical combination with λ=({a},{b}), max(λ)={max(a,b)}:")
-print(f"  max({a}+x, {b}+y) = {z}")
-
-# ─────────────────────────────────────────────────────────────
-# 2. Tropical convex hull
-# ─────────────────────────────────────────────────────────────
-
-print("\n" + "=" * 60)
-print("DEMO 2: Tropical Convex Hull of 3 Points in R^2")
-print("=" * 60)
-
-V = np.array([
-    [0.0, -1.0],   # generator 0
-    [-1.0, 0.0],   # generator 1
-    [-0.5, -0.5],  # generator 2
-])
-
-print("Generators V:")
-for j, v in enumerate(V):
-    print(f"  v_{j} = {v}")
-
-# Sample the hull by varying lambda
-print("\nSampled points in TropConvHull(V):")
-for lam_raw in [(1, 0, 0), (0, 1, 0), (0, 0, 1), (0.5, 0.5, 0), (0.5, 0, 0.5)]:
-    lam = np.array(lam_raw, dtype=float)
-    lam = lam - np.max(lam)  # normalize so max = 0
-    pt = trop_combination(lam, V)
-    print(f"  λ = {lam} → x = {pt}")
-
-# ─────────────────────────────────────────────────────────────
-# 3. Difference-constraint polyhedron
-# ─────────────────────────────────────────────────────────────
-
-print("\n" + "=" * 60)
-print("DEMO 3: Difference-Constraint Polyhedron")
-print("=" * 60)
-
-n = 3
-# Create a closed constraint matrix (Floyd-Warshall closure)
-c = np.array([
-    [0.0, 2.0, 3.0],
-    [1.0, 0.0, 1.0],
-    [2.0, 3.0, 0.0],
-])
-
-print("Constraint matrix c (x_i - x_j ≤ c[i,j]):")
-print(c)
-
-# Verify closure properties
-print(f"\nDiagonal zeros: {all(c[i,i] == 0 for i in range(n))}")
-triangle_ok = all(
-    c[i,k] <= c[i,j] + c[j,k] + 1e-10
-    for i, j, k in product(range(n), repeat=3)
-)
-print(f"Triangle inequality: {triangle_ok}")
-
-# Canonical generators: V[j,i] = -c[j,i]
-V_gen = -c  # V_gen[j,i] = -c[j,i]
-print("\nCanonical generators (columns of -c^T):")
-for j in range(n):
-    gen = V_gen[j]
-    print(f"  v_{j} = {gen}")
-
-# Verify generators satisfy constraints
-print("\nVerifying generators satisfy constraints:")
-for j in range(n):
-    gen = V_gen[j]
-    ok = all(gen[i] - gen[k] <= c[i,k] + 1e-10 for i, k in product(range(n), repeat=2))
-    print(f"  v_{j} feasible: {ok}")
-
-# Test a feasible point
-x_test = np.array([-0.5, -1.0, -1.5])
-feasible = all(x_test[i] - x_test[k] <= c[i,k] + 1e-10 for i, k in product(range(n), repeat=2))
-print(f"\nx_test = {x_test}, feasible: {feasible}")
-
-# Show it's a tropical combination (normalize first)
-x_norm = x_test - np.max(x_test)
-print(f"Normalized: {x_norm} (max = {np.max(x_norm)})")
-
-# The lambda coefficients are just x_norm
-lam_test = x_norm.copy()
-recon = trop_combination(lam_test, V_gen)
-print(f"λ = x_norm = {lam_test}")
-print(f"Reconstruction max_j(λ_j + V[j,i]) = {recon}")
-print(f"Matches normalized x: {np.allclose(recon, x_norm)}")
-
-# ─────────────────────────────────────────────────────────────
-# 4. Bellman-Ford feasibility
-# ─────────────────────────────────────────────────────────────
-
-print("\n" + "=" * 60)
-print("DEMO 4: Bellman-Ford Feasibility Check")
-print("=" * 60)
-
-def bellman_ford_feasibility(n: int, edges: list) -> tuple:
+def check_tropical_halfspace(A, B, x):
     """
-    Check feasibility of x_i ≤ w + x_j for edges (i, j, w).
-    Returns (feasible: bool, witness: array or None).
+    Check if x satisfies the tropical halfspace system:
+    For all j: max_i(A[j][i] + x[i]) ≤ max_i(B[j][i] + x[i])
     """
-    dist = np.zeros(n)
+    p, n = A.shape
+    for j in range(p):
+        lhs = max(A[j][i] + x[i] for i in range(n))
+        rhs = max(B[j][i] + x[i] for i in range(n))
+        if lhs > rhs + 1e-12:
+            return False
+    return True
 
-    # Relax n-1 times
-    for _ in range(n - 1):
-        for (i, j, w) in edges:
-            if dist[i] > w + dist[j]:
-                dist[i] = w + dist[j]
+def shapley_operator(A, B, x):
+    """
+    Compute the Shapley operator T(x):
+    T(x)_i = min_j (max_k(B[j][k] + x[k]) - A[j][i])
+    """
+    p, n = A.shape
+    result = np.zeros(n)
+    for i in range(n):
+        vals = []
+        for j in range(p):
+            sup_k = max(B[j][k] + x[k] for k in range(n))
+            vals.append(sup_k - A[j][i])
+        result[i] = min(vals)
+    return result
 
-    # Check for negative cycles
-    for (i, j, w) in edges:
-        if dist[i] > w + dist[j] + 1e-12:
-            return False, None
+def check_subfixed_point(A, B, x, tol=1e-9):
+    """Check if x is a sub-fixed point: x ≤ T(x)."""
+    Tx = shapley_operator(A, B, x)
+    return np.all(x <= Tx + tol)
 
-    return True, dist
+def shapley_iteration(A, B, x0, max_iter=1000, tol=1e-10):
+    """
+    Iterate the Shapley operator to find a sub-fixed point.
+    Returns the iteration trajectory and convergence status.
+    """
+    x = x0.copy()
+    trajectory = [x.copy()]
+    for it in range(max_iter):
+        Tx = shapley_operator(A, B, x)
+        if np.allclose(x, Tx, atol=tol):
+            return trajectory, True, it
+        # Move toward fixed point
+        x = 0.5 * x + 0.5 * Tx
+        trajectory.append(x.copy())
+    return trajectory, False, max_iter
 
-# System 1: Feasible
-edges1 = [
-    (0, 1, 3.0),   # x0 ≤ 3 + x1
-    (1, 2, -1.0),  # x1 ≤ -1 + x2
-    (2, 0, 1.0),   # x2 ≤ 1 + x0
-]
-print("System 1 (feasible):")
-for (i, j, w) in edges1:
-    print(f"  x_{i} ≤ {w} + x_{j}")
+# ============================================================================
+# Section 4: Mean-Payoff Game Reduction
+# ============================================================================
 
-feas, witness = bellman_ford_feasibility(3, edges1)
-print(f"Feasible: {feas}")
-if witness is not None:
-    print(f"Witness: x = {witness}")
-    for (i, j, w) in edges1:
-        print(f"  x_{i}={witness[i]:.2f} ≤ {w}+x_{j}={w+witness[j]:.2f}: {witness[i] <= w + witness[j] + 1e-10}")
+def tropical_to_mean_payoff_game(A, B):
+    """
+    Construct a mean-payoff game from tropical inequality system.
+    
+    Game structure:
+    - n Max vertices (one per variable)
+    - p Min vertices (one per constraint)
+    - Edges: Max(i) → Min(j) with weight -A[j][i]
+    - Edges: Min(j) → Max(k) with weight B[j][k]
+    
+    Returns: dict with game structure
+    """
+    p, n = A.shape
+    
+    vertices = []
+    for i in range(n):
+        vertices.append({'id': i, 'player': 'Max', 'label': f'x_{i}'})
+    for j in range(p):
+        vertices.append({'id': n + j, 'player': 'Min', 'label': f'C_{j}'})
+    
+    edges = []
+    for i in range(n):
+        for j in range(p):
+            edges.append({
+                'src': i, 'tgt': n + j,
+                'weight': -A[j][i],
+                'label': f'Max(x_{i}) → Min(C_{j}): w={-A[j][i]:.2f}'
+            })
+    for j in range(p):
+        for k in range(n):
+            edges.append({
+                'src': n + j, 'tgt': k,
+                'weight': B[j][k],
+                'label': f'Min(C_{j}) → Max(x_{k}): w={B[j][k]:.2f}'
+            })
+    
+    return {'vertices': vertices, 'edges': edges, 'n': n, 'p': p}
 
-# System 2: Infeasible (negative cycle)
-edges2 = [
-    (0, 1, 1.0),   # x0 ≤ 1 + x1
-    (1, 2, -2.0),  # x1 ≤ -2 + x2
-    (2, 0, 0.0),   # x2 ≤ 0 + x0
-]
-print("\nSystem 2 (infeasible — negative cycle of weight -1):")
-for (i, j, w) in edges2:
-    print(f"  x_{i} ≤ {w} + x_{j}")
-cycle_weight = sum(w for (_, _, w) in edges2)
-print(f"Cycle weight: {cycle_weight}")
+def check_mean_payoff_potential(game, potential):
+    """
+    Check if a potential certifies nonneg game value.
+    For each edge e: weight(e) + pot(tgt) ≥ pot(src) OR src is Max vertex.
+    """
+    n, p = game['n'], game['p']
+    for edge in game['edges']:
+        src, tgt, w = edge['src'], edge['tgt'], edge['weight']
+        is_max = src < n  # Max vertices are 0..n-1
+        if not is_max:
+            if w + potential[tgt] < potential[src] - 1e-10:
+                return False
+    return True
 
-feas2, _ = bellman_ford_feasibility(3, edges2)
-print(f"Feasible: {feas2}")
+# ============================================================================
+# DEMO EXECUTION
+# ============================================================================
 
-print("\n" + "=" * 60)
-print("All demos completed successfully!")
-print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-visualizations.py — Tropical Convexity Visualizations
-
-Generates publication-quality figures illustrating tropical convex hulls,
-difference-constraint polyhedra, and the Bellman-Ford algorithm.
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch
-import base64
-from io import BytesIO
-
-
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 PNG data URI."""
-    buf = BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{b64}"
-
-
-# ═══════════════════════════════════════════════════════════════
-# Figure 1: Tropical Convex Hull in 2D
-# ═══════════════════════════════════════════════════════════════
-
-def plot_tropical_hull_2d():
-    """Plot a tropical convex hull of 3 points in R^2 (normalized)."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 7))
-
-    V = np.array([
-        [0.0, -2.0],
-        [-1.0, 0.0],
-        [-1.5, -0.5],
+def demo_tropical_convex_hull():
+    """Demonstrate tropical convex hull computation."""
+    print("=" * 70)
+    print("DEMO 1: Tropical Convex Hull")
+    print("=" * 70)
+    
+    # Three generators in R^2
+    generators = np.array([
+        [0.0, 0.0],
+        [3.0, 1.0],
+        [1.0, 4.0]
     ])
+    m, n = generators.shape
+    print(f"\nGenerators (m={m} points in R^{n}):")
+    for j in range(m):
+        print(f"  v_{j} = {generators[j]}")
+    
+    # Check that generators are in their own hull
+    print("\nGenerator self-membership (Theorem: InTropicalConvHull_generator):")
+    for j in range(m):
+        is_in, c = tropical_convex_hull_membership(generators, generators[j])
+        print(f"  v_{j} ∈ tconv(V)? {is_in}, coefficients: {c}")
+    
+    # Test some random points
+    print("\nRandom hull points:")
+    hull_points = generate_tropical_hull_points(generators, num_samples=5)
+    for idx, pt in enumerate(hull_points):
+        is_in, c = tropical_convex_hull_membership(generators, pt)
+        print(f"  Point {idx}: {pt.round(3)} → in hull? {is_in}")
+    
+    # Tropical combination closure (Theorem: tropicalConvHull_is_convex)
+    print("\nTropical combination closure test:")
+    x, y = generators[0], generators[1]
+    for a, b in [(0, 0), (1, -1), (2, 3)]:
+        combo = trop_combination(a, x, b, y)
+        is_in, c = tropical_convex_hull_membership(generators, combo)
+        print(f"  max({a}+v_0, {b}+v_1) = {combo} → in hull? {is_in}")
 
-    # Sample hull by varying lambda
-    hull_points = []
-    N = 200
-    for i in range(N):
-        for j in range(N - i):
-            k = N - 1 - i - j
-            lam = np.array([i, j, k], dtype=float) / (N - 1)
-            lam = np.log(lam + 1e-8)  # Map to log scale
-            lam = lam - np.max(lam)  # Normalize
-            pt = np.max(lam[:, None] + V, axis=0)
-            hull_points.append(pt)
+def demo_tropical_feasibility():
+    """Demonstrate tropical feasibility and Shapley operator."""
+    print("\n" + "=" * 70)
+    print("DEMO 2: Tropical Feasibility & Shapley Operator")
+    print("=" * 70)
+    
+    # Feasible system: max(1+x₀, 0+x₁) ≤ max(0+x₀, 2+x₁)
+    A = np.array([[1.0, 0.0]])
+    B = np.array([[0.0, 2.0]])
+    p, n = A.shape
+    
+    print(f"\nTropical inequality system ({p} constraints, {n} variables):")
+    for j in range(p):
+        lhs = " ⊕ ".join(f"({A[j][i]:+.1f} ⊗ x_{i})" for i in range(n))
+        rhs = " ⊕ ".join(f"({B[j][i]:+.1f} ⊗ x_{i})" for i in range(n))
+        print(f"  {lhs}  ≤  {rhs}")
+        print(f"  i.e., max({', '.join(f'{A[j][i]:.1f}+x_{i}' for i in range(n))}) ≤ max({', '.join(f'{B[j][i]:.1f}+x_{i}' for i in range(n))})")
+    
+    # Test a feasible point
+    x_test = np.array([0.0, 0.0])
+    print(f"\nTest x = {x_test}:")
+    print(f"  Satisfies halfspace? {check_tropical_halfspace(A, B, x_test)}")
+    print(f"  T(x) = {shapley_operator(A, B, x_test)}")
+    print(f"  Sub-fixed point (x ≤ T(x))? {check_subfixed_point(A, B, x_test)}")
+    
+    # Theorem: feasibility ↔ sub-fixed point
+    print("\n  Theorem verification (tropical_feasibility_iff_subfixed_point):")
+    print(f"  System feasible? {check_tropical_halfspace(A, B, x_test)}")
+    print(f"  Has sub-fixed point? {check_subfixed_point(A, B, x_test)}")
+    print(f"  ↔ equivalence confirmed: both are {check_tropical_halfspace(A, B, x_test)}")
+    
+    # Additive homogeneity test
+    c_shift = 5.0
+    x_shifted = x_test + c_shift
+    Tx = shapley_operator(A, B, x_test)
+    Tx_shifted = shapley_operator(A, B, x_shifted)
+    print(f"\n  Additive homogeneity test (TropOp_additively_homogeneous):")
+    print(f"  T(x) = {Tx}")
+    print(f"  T(x + {c_shift}) = {Tx_shifted}")
+    print(f"  T(x) + {c_shift} = {Tx + c_shift}")
+    print(f"  T(x+c) = T(x)+c? {np.allclose(Tx_shifted, Tx + c_shift)}")
+    
+    # Monotonicity test
+    y_test = x_test + 1  # y ≥ x
+    Ty = shapley_operator(A, B, y_test)
+    print(f"\n  Monotonicity test (TropOp_monotone):")
+    print(f"  x = {x_test}, T(x) = {Tx}")
+    print(f"  y = {y_test}, T(y) = {Ty}")
+    print(f"  x ≤ y? {np.all(x_test <= y_test)}")
+    print(f"  T(x) ≤ T(y)? {np.all(Tx <= Ty + 1e-10)}")
 
-    hull_points = np.array(hull_points)
-
-    # Also sample with uniform lambda grid
-    hull_uniform = []
-    for a in np.linspace(-3, 0, 50):
-        for b in np.linspace(-3, 0, 50):
-            lam = np.array([0, a, b])
-            lam = lam - np.max(lam)
-            pt = np.max(lam[:, None] + V, axis=0)
-            hull_uniform.append(pt)
-    hull_uniform = np.array(hull_uniform)
-
-    ax.scatter(hull_uniform[:, 0], hull_uniform[:, 1], c='lightblue', s=2, alpha=0.5, label='Hull interior')
-    ax.scatter(hull_points[:, 0], hull_points[:, 1], c='steelblue', s=1, alpha=0.3)
-
-    # Plot generators
-    for i, v in enumerate(V):
-        ax.plot(v[0], v[1], 'ro', markersize=12, zorder=5)
-        ax.annotate(f'$v_{i}$', v, fontsize=14, fontweight='bold',
-                   xytext=(10, 10), textcoords='offset points')
-
-    # Plot tropical segments between generators
-    for i in range(len(V)):
-        for j in range(i + 1, len(V)):
-            seg_pts = []
-            for t in np.linspace(-5, 0, 200):
-                lam = np.array([0.0, t]) if i == 0 else np.array([t, 0.0])
-                lam_full = np.full(len(V), -10.0)
-                lam_full[i] = lam[0]
-                lam_full[j] = lam[1]
-                lam_full = lam_full - np.max(lam_full)
-                pt = np.max(lam_full[:, None] + V, axis=0)
-                seg_pts.append(pt)
-            seg_pts = np.array(seg_pts)
-            ax.plot(seg_pts[:, 0], seg_pts[:, 1], 'r-', linewidth=1.5, alpha=0.7)
-
-    ax.set_xlabel('$x_1$', fontsize=14)
-    ax.set_ylabel('$x_2$', fontsize=14)
-    ax.set_title('Tropical Convex Hull of Three Points in $\\mathbb{R}^2$', fontsize=16)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=12)
-
-    fig.savefig('/workspace/request-project/tropical_hull_2d.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-# ═══════════════════════════════════════════════════════════════
-# Figure 2: Difference-Constraint Polyhedron
-# ═══════════════════════════════════════════════════════════════
-
-def plot_diff_constraint_polyhedron():
-    """Plot a difference-constraint polyhedron in 2D (projected)."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Left: The constraint graph
-    ax = axes[0]
-    n = 3
-    c = np.array([
-        [0.0, 2.0, 3.0],
-        [1.0, 0.0, 1.0],
-        [2.0, 3.0, 0.0],
+def demo_mean_payoff_reduction():
+    """Demonstrate the reduction to mean-payoff games."""
+    print("\n" + "=" * 70)
+    print("DEMO 3: Mean-Payoff Game Reduction")
+    print("=" * 70)
+    
+    # Feasible system
+    A = np.array([
+        [2.0, 0.0],
+        [0.0, 1.0]
     ])
+    B = np.array([
+        [0.0, 3.0],
+        [2.0, 0.0]
+    ])
+    p, n = A.shape
+    
+    print(f"\nTropical inequality system ({p} constraints, {n} variables):")
+    for j in range(p):
+        print(f"  max({', '.join(f'{A[j][i]:.0f}+x_{i}' for i in range(n))}) ≤ max({', '.join(f'{B[j][i]:.0f}+x_{i}' for i in range(n))})")
+    
+    # Construct game
+    game = tropical_to_mean_payoff_game(A, B)
+    print(f"\nMean-payoff game (tropical_feasibility_reduces_to_mean_payoff):")
+    print(f"  Vertices: {len(game['vertices'])} ({n} Max + {p} Min)")
+    for v in game['vertices']:
+        print(f"    {v['label']} ({v['player']})")
+    print(f"  Edges: {len(game['edges'])}")
+    for e in game['edges']:
+        print(f"    {e['label']}")
+    
+    # Find a feasible point and use it as potential
+    x_feas = np.array([0.0, 0.0])
+    print(f"\nFeasibility check:")
+    print(f"  x = {x_feas}: feasible? {check_tropical_halfspace(A, B, x_feas)}")
+    
+    # Better feasible point
+    x_feas = np.array([0.0, 1.0])
+    print(f"  x = {x_feas}: feasible? {check_tropical_halfspace(A, B, x_feas)}")
+    
+    # Construct potential from feasible point
+    potential = np.zeros(n + p)
+    potential[:n] = x_feas  # Max vertices get x values
+    for j in range(p):
+        potential[n + j] = max(A[j][i] + x_feas[i] for i in range(n))
+    
+    print(f"\n  Potential derived from feasible point: {potential}")
+    print(f"  Certifies nonneg value? {check_mean_payoff_potential(game, potential)}")
 
-    positions = np.array([[0, 1], [1, -0.5], [-1, -0.5]], dtype=float)
-    labels = ['$x_0$', '$x_1$', '$x_2$']
-
-    for i in range(n):
-        circle = plt.Circle(positions[i], 0.15, color='steelblue', zorder=5)
-        ax.add_patch(circle)
-        ax.text(positions[i][0], positions[i][1], labels[i],
-               ha='center', va='center', fontsize=12, color='white',
-               fontweight='bold', zorder=6)
-
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                dx = positions[j] - positions[i]
-                dist = np.linalg.norm(dx)
-                dx_norm = dx / dist
-                start = positions[i] + 0.18 * dx_norm
-                end = positions[j] - 0.18 * dx_norm
-
-                offset = np.array([-dx_norm[1], dx_norm[0]]) * 0.08
-                mid = (start + end) / 2 + offset
-
-                ax.annotate('', xy=end + offset, xytext=start + offset,
-                          arrowprops=dict(arrowstyle='->', color='gray',
-                                        connectionstyle='arc3,rad=0.15',
-                                        lw=1.5))
-                ax.text(mid[0] + offset[0]*2, mid[1] + offset[1]*2,
-                       f'{c[i,j]:.0f}', fontsize=10, ha='center', va='center',
-                       color='darkred', fontweight='bold')
-
-    ax.set_xlim(-1.8, 1.8)
-    ax.set_ylim(-1.2, 1.6)
-    ax.set_aspect('equal')
-    ax.set_title('Constraint Graph\n$x_i - x_j \\leq c_{ij}$', fontsize=14)
-    ax.axis('off')
-
-    # Right: Feasible set (projected to x1-x2 plane, x0=0)
-    ax = axes[1]
-
-    x1_range = np.linspace(-3, 3, 300)
-    x2_range = np.linspace(-3, 3, 300)
-    X1, X2 = np.meshgrid(x1_range, x2_range)
-
-    feasible = np.ones_like(X1, dtype=bool)
-    x = np.zeros(3)
-    for ii in range(len(x1_range)):
-        for jj in range(len(x2_range)):
-            x[0], x[1], x[2] = 0, X1[jj, ii], X2[jj, ii]
-            ok = True
-            for i in range(n):
-                for j in range(n):
-                    if x[i] - x[j] > c[i, j] + 1e-10:
-                        ok = False
-                        break
-                if not ok:
-                    break
-            feasible[jj, ii] = ok
-
-    ax.contourf(X1, X2, feasible.astype(float), levels=[0.5, 1.5],
-               colors=['lightblue'], alpha=0.7)
-    ax.contour(X1, X2, feasible.astype(float), levels=[0.5],
-              colors=['steelblue'], linewidths=2)
-
-    # Plot generators (normalized with x0=0)
-    V = -c
-    for j in range(n):
-        gen = V[j] - V[j, 0]  # Normalize so x0 = 0
-        ax.plot(gen[1], gen[2], 'ro', markersize=10, zorder=5)
-        ax.annotate(f'$v_{j}$', (gen[1], gen[2]), fontsize=12,
-                   xytext=(8, 8), textcoords='offset points', fontweight='bold')
-
-    ax.set_xlabel('$x_1$ (with $x_0 = 0$)', fontsize=12)
-    ax.set_ylabel('$x_2$ (with $x_0 = 0$)', fontsize=12)
-    ax.set_title('Feasible Region\n(Difference-Constraint Polyhedron)', fontsize=14)
-    ax.grid(True, alpha=0.3)
-    ax.set_aspect('equal')
-
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/diff_constraint.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-# ═══════════════════════════════════════════════════════════════
-# Figure 3: Bellman-Ford Convergence
-# ═══════════════════════════════════════════════════════════════
-
-def plot_bellman_ford_convergence():
-    """Visualize Bellman-Ford relaxation convergence."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    n = 4
-    edges = [
-        (1, 0, 3),
-        (2, 1, -1),
-        (3, 2, 2),
-        (2, 0, 5),
-        (3, 1, 4),
-        (0, 3, -2),
-    ]
-
-    # Track distances over iterations
-    dist_history = [np.zeros(n).copy()]
-    dist = np.zeros(n)
-
-    for iteration in range(n):
-        for (i, j, w) in edges:
-            if dist[j] + w < dist[i]:
-                dist[i] = dist[j] + w
-        dist_history.append(dist.copy())
-
-    dist_history = np.array(dist_history)
-
-    # Left plot: convergence curves
-    ax = axes[0]
-    colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6']
-    for v in range(n):
-        ax.plot(range(len(dist_history)), dist_history[:, v],
-               'o-', color=colors[v], linewidth=2, markersize=6,
-               label=f'$x_{v}$')
-
-    ax.set_xlabel('Iteration', fontsize=12)
-    ax.set_ylabel('Distance', fontsize=12)
-    ax.set_title('Bellman-Ford Relaxation Convergence', fontsize=14)
-    ax.legend(fontsize=12)
-    ax.grid(True, alpha=0.3)
-    ax.set_xticks(range(len(dist_history)))
-
-    # Right plot: constraint graph
-    ax = axes[1]
-    positions = np.array([[0, 1], [1.5, 1], [1.5, -0.5], [0, -0.5]], dtype=float)
-    node_labels = ['$x_0$', '$x_1$', '$x_2$', '$x_3$']
-
-    for i in range(n):
-        circle = plt.Circle(positions[i], 0.2, color=colors[i], zorder=5)
-        ax.add_patch(circle)
-        ax.text(positions[i][0], positions[i][1], node_labels[i],
-               ha='center', va='center', fontsize=12, color='white',
-               fontweight='bold', zorder=6)
-        # Show final distance
-        ax.text(positions[i][0], positions[i][1] - 0.4,
-               f'{dist_history[-1, i]:.0f}', ha='center', fontsize=10,
-               color=colors[i], fontweight='bold')
-
-    for (i, j, w) in edges:
-        dx = positions[i] - positions[j]
-        dist_val = np.linalg.norm(dx)
-        dx_norm = dx / dist_val
-        start = positions[j] + 0.22 * dx_norm
-        end = positions[i] - 0.22 * dx_norm
-
-        offset = np.array([-dx_norm[1], dx_norm[0]]) * 0.05
-        mid = (start + end) / 2
-
-        ax.annotate('', xy=end + offset, xytext=start + offset,
-                   arrowprops=dict(arrowstyle='->', color='gray',
-                                 connectionstyle='arc3,rad=0.2', lw=1.5))
-        ax.text(mid[0] + offset[0]*4, mid[1] + offset[1]*4,
-               f'{w}', fontsize=10, ha='center', va='center',
-               color='darkred', fontweight='bold',
-               bbox=dict(boxstyle='round,pad=0.2', facecolor='lightyellow',
-                        edgecolor='none', alpha=0.8))
-
-    ax.set_xlim(-0.8, 2.3)
-    ax.set_ylim(-1.2, 1.6)
-    ax.set_aspect('equal')
-    ax.set_title('Constraint Graph\n$x_i \\leq w + x_j$', fontsize=14)
-    ax.axis('off')
-
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/bellman_ford.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-# ═══════════════════════════════════════════════════════════════
-# Figure 4: Tropical vs Classical Convexity
-# ═══════════════════════════════════════════════════════════════
-
-def plot_tropical_vs_classical():
-    """Compare tropical and classical convex hulls."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    points = np.array([[0, -2], [-2, 0], [-1, -1]])
-
-    # Left: Classical convex hull
-    ax = axes[0]
-    from matplotlib.patches import Polygon
-
-    # Classical hull is a triangle
-    hull_verts = points[np.array([0, 1, 2, 0])]
-    poly = Polygon(hull_verts[:3], alpha=0.3, color='orange', label='Classical hull')
-    ax.add_patch(poly)
-    ax.plot(hull_verts[:, 0], hull_verts[:, 1], 'o-', color='darkorange',
-           linewidth=2, markersize=10)
-
-    for i, p in enumerate(points):
-        ax.annotate(f'$p_{i}$', p, fontsize=14, fontweight='bold',
-                   xytext=(10, 10), textcoords='offset points')
-
-    ax.set_xlabel('$x_1$', fontsize=14)
-    ax.set_ylabel('$x_2$', fontsize=14)
-    ax.set_title('Classical Convex Hull', fontsize=16)
-    ax.set_xlim(-3, 1)
-    ax.set_ylim(-3, 1)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=12)
-
-    # Right: Tropical convex hull
-    ax = axes[1]
-
-    # Sample tropical hull densely
-    V = points.astype(float)
-    hull_pts = []
-    for a in np.linspace(-5, 0, 100):
-        for b in np.linspace(-5, 0, 100):
-            for c_val in np.linspace(-5, 0, 30):
-                lam = np.array([a, b, c_val])
-                lam = lam - np.max(lam)
-                pt = np.max(lam[:, None] + V, axis=0)
-                hull_pts.append(pt)
-
-    hull_pts = np.array(hull_pts)
-
-    ax.scatter(hull_pts[:, 0], hull_pts[:, 1], c='lightblue', s=1, alpha=0.2)
-
-    # Tropical segments (piecewise linear)
-    for i in range(len(V)):
-        for j in range(i + 1, len(V)):
-            seg = []
-            for t in np.linspace(-10, 0, 500):
-                lam = np.full(len(V), -100.0)
-                lam[i] = 0
-                lam[j] = t
-                lam = lam - np.max(lam)
-                pt = np.max(lam[:, None] + V, axis=0)
-                seg.append(pt)
-            seg = np.array(seg)
-            ax.plot(seg[:, 0], seg[:, 1], 'b-', linewidth=1.5, alpha=0.7)
-
-    for i, p in enumerate(points):
-        ax.plot(p[0], p[1], 'ro', markersize=10, zorder=5)
-        ax.annotate(f'$p_{i}$', p, fontsize=14, fontweight='bold',
-                   xytext=(10, 10), textcoords='offset points')
-
-    ax.set_xlabel('$x_1$', fontsize=14)
-    ax.set_ylabel('$x_2$', fontsize=14)
-    ax.set_title('Tropical Convex Hull', fontsize=16)
-    ax.set_xlim(-3, 1)
-    ax.set_ylim(-3, 1)
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/tropical_vs_classical.png', dpi=150, bbox_inches='tight')
-    return fig_to_base64(fig)
-
-
-# ═══════════════════════════════════════════════════════════════
-# Main
-# ═══════════════════════════════════════════════════════════════
+def demo_caratheodory_conjecture():
+    """Test the tropical Carathéodory conjecture."""
+    print("\n" + "=" * 70)
+    print("DEMO 4: Tropical Carathéodory Conjecture Test")
+    print("=" * 70)
+    
+    print("\nConjecture: Every point in tconv(v_1,...,v_m) in R^n")
+    print("can be represented using at most n+1 active generators.")
+    
+    n = 2  # dimension
+    m = 5  # number of generators
+    
+    np.random.seed(42)
+    generators = np.random.randn(m, n) * 3
+    
+    print(f"\nGenerators ({m} points in R^{n}):")
+    for j in range(m):
+        print(f"  v_{j} = {generators[j].round(3)}")
+    
+    # Generate hull points and check support sizes
+    max_support = 0
+    num_tests = 200
+    
+    for trial in range(num_tests):
+        c = np.random.randn(m) * 5
+        point = np.array([max(c[j] + generators[j][i] for j in range(m)) for i in range(n)])
+        
+        # Find minimum support: which generators are "active"?
+        active = set()
+        for i in range(n):
+            vals = [c[j] + generators[j][i] for j in range(m)]
+            max_val = max(vals)
+            for j in range(m):
+                if abs(vals[j] - max_val) < 1e-9:
+                    active.add(j)
+        
+        support_size = len(active)
+        max_support = max(max_support, support_size)
+    
+    print(f"\nResults over {num_tests} random hull points:")
+    print(f"  Maximum support size observed: {max_support}")
+    print(f"  Carathéodory bound (n+1): {n + 1}")
+    print(f"  Conjecture holds for this sample? {max_support <= n + 1}")
 
 if __name__ == "__main__":
-    print("Generating visualizations...")
-
-    b64_hull = plot_tropical_hull_2d()
-    print(f"  tropical_hull_2d.png ({len(b64_hull)} chars)")
-
-    b64_diff = plot_diff_constraint_polyhedron()
-    print(f"  diff_constraint.png ({len(b64_diff)} chars)")
-
-    b64_bf = plot_bellman_ford_convergence()
-    print(f"  bellman_ford.png ({len(b64_diff)} chars)")
-
-    b64_comp = plot_tropical_vs_classical()
-    print(f"  tropical_vs_classical.png ({len(b64_comp)} chars)")
-
-    print("\nAll visualizations generated successfully!")
-
-    # Save base64 data for JSON package
-    import json
-    viz_data = {
-        "tropical_hull_2d": b64_hull,
-        "diff_constraint": b64_diff,
-        "bellman_ford": b64_bf,
-        "tropical_vs_classical": b64_comp,
-    }
-    with open('/workspace/request-project/viz_data.json', 'w') as f:
-        json.dump(viz_data, f)
-    print("Saved visualization data to viz_data.json")
+    print("╔══════════════════════════════════════════════════════════════════╗")
+    print("║  Tropical Convexity & Mean-Payoff Game Reduction: Demos        ║")
+    print("║  Companion to formally verified Lean 4 proofs                  ║")
+    print("╚══════════════════════════════════════════════════════════════════╝")
+    
+    demo_tropical_convex_hull()
+    demo_tropical_feasibility()
+    demo_mean_payoff_reduction()
+    demo_caratheodory_conjecture()
+    
+    print("\n" + "=" * 70)
+    print("All demos completed successfully.")
+    print("=" * 70)

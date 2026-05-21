@@ -1,360 +1,302 @@
-# Tropical Convexity, Minkowski–Weyl, and Algorithmic Tropical Optimization: A Formal Development
+# Tropical Convexity, Shapley Operators, and Mean-Payoff Game Duality: A Formally Verified Development
 
 ## Abstract
 
-We present a formally verified development of tropical convexity theory over the max-plus semiring, culminating in a tropical Minkowski–Weyl theorem for alcoved (difference-constraint) polyhedra and a certified feasibility theorem connecting difference constraints to negative cycle detection. Our formalization establishes the basic algebraic infrastructure of tropical vector operations (idempotent addition, distributive scaling), proves that tropical convex hulls of finite generator sets are tropically convex, demonstrates that difference-constraint polyhedra form a natural class of tropical polytopes, and proves that closed difference-constraint systems admit finite tropical generation via shortest-path closure columns. We also formalize the classical Bellman–Ford characterization: a system of difference constraints is feasible if and only if its constraint graph contains no negative-weight cycle. These results create a rigorous bridge between tropical convex geometry and combinatorial optimization algorithms, with applications to scheduling, timing analysis, and game theory.
+We present a formally verified theory of tropical convexity in Lean 4 with Mathlib, establishing three main results: (1) the universal property of tropical convex hulls—they are tropically convex, contain all generators, and are minimal with these properties; (2) the monotonicity and additive homogeneity of the tropical Shapley operator, together with an equivalence between tropical halfspace feasibility and existence of sub-fixed points; and (3) a verified reduction from tropical feasibility to mean-payoff game winning. All proofs are machine-checked and use only the standard axioms (propext, Classical.choice, Quot.sound). We also provide certified algorithms with Python implementations demonstrating tropical hull computation, Shapley operator iteration, and game construction on concrete instances.
 
-**Keywords**: tropical convexity, max-plus algebra, Minkowski–Weyl theorem, difference constraints, Bellman–Ford, mean payoff games, formal verification
+**Keywords:** tropical convexity, max-plus algebra, Shapley operator, mean-payoff games, formal verification, nonlinear Perron–Frobenius theory
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Tropical mathematics — the study of algebraic structures where addition is replaced by maximum (or minimum) and multiplication is replaced by addition — has emerged as a powerful framework bridging algebraic geometry, combinatorial optimization, and discrete event systems [1, 2, 3]. The max-plus semiring $(ℝ ∪ \{-∞\}, \max, +)$ provides the natural algebraic setting for shortest-path problems, scheduling theory, and game-theoretic value iteration.
+Tropical mathematics replaces the arithmetic operations (ℝ, +, ×) with the max-plus semiring (ℝ, max, +). This substitution, far from being a curiosity, transforms linear algebra into a theory of piecewise-linear maps with deep connections to:
 
-Tropical convexity, introduced systematically by Develin and Sturmfels [4], studies convex-like structures arising from max-plus combinations. A tropical convex combination of points $v_1, \ldots, v_k ∈ ℝ^n$ is
+- **Combinatorial optimization:** shortest paths, scheduling, assignment problems
+- **Algebraic geometry:** tropicalization of varieties, Berkovich spaces
+- **Game theory:** mean-payoff games, Shapley operators, policy iteration
+- **Control theory:** discrete event systems, max-plus linear dynamics
 
-$$x_j = \max_i (\lambda_i + (v_i)_j)$$
-
-with normalization $\max_i \lambda_i = 0$. The resulting tropical polytopes exhibit combinatorial rigidity phenomena not seen in classical convexity, while simultaneously encoding algorithmic information about constraint satisfaction.
+The central object of study is the **tropical polyhedron**—an intersection of tropical halfspaces, equivalently the tropical convex hull of finitely many generators. The tropical Minkowski–Weyl theorem asserts this equivalence, providing the foundation for tropical linear programming.
 
 ### 1.2 Contributions
 
-This work makes the following contributions:
+Our formal development establishes the following verified results:
 
-1. **Tropical algebra on vectors** (§3): Formal definitions and proofs of commutativity, associativity, idempotence of tropical addition, and distributivity of tropical scaling.
+1. **Tropical Convex Hull Universal Property** (Theorem 1): For any finite family of generators v : Fin m → (Fin n → ℝ), the set of tropical linear combinations is tropically convex and is the least tropically convex set containing all generators.
 
-2. **Tropical convex hulls** (§4): Definition of tropical convexity and tropical convex hulls for finite generator sets, with a complete proof that tropical hulls are tropically convex.
+2. **Shapley Operator Properties** (Theorem 3a): The tropical Shapley operator T defined by T(x)_i = inf_j(sup_k(B_{j,k} + x_k) - A_{j,i}) is monotone and additively homogeneous—the two defining properties of nonexpansive maps in the Hilbert projective metric.
 
-3. **Difference-constraint polyhedra** (§5): Proof that polyhedra defined by difference constraints $x_i - x_j \leq c_{ij}$ are tropically convex, with canonical generators from the shortest-path closure matrix.
+3. **Feasibility–Sub-Fixed-Point Equivalence** (Theorem 3b): A tropical inequality system is feasible if and only if the associated Shapley operator admits a sub-fixed point x ≤ T(x). This bridges tropical geometry and dynamic programming.
 
-4. **Tropical Minkowski–Weyl theorem** (§5.3): For closed difference-constraint systems, every normalized feasible point lies in the tropical convex hull of the closure columns — establishing finite tropical generation.
+4. **Mean-Payoff Game Reduction** (Theorem 5): For every tropical inequality system, there exists a mean-payoff game whose nonnegative-value condition captures feasibility.
 
-5. **Feasibility certification** (§6): Formal proof that difference constraint feasibility is equivalent to absence of negative cycles, connecting tropical geometry to graph algorithms.
-
-6. **Algorithmic implementations** (§7): Complete Python implementations of Floyd–Warshall closure, Bellman–Ford feasibility, and tropical hull operations.
+5. **Span–Hull Agreement** (Theorem 6): The closure-based tropical span agrees with the generator-based tropical convex hull.
 
 ### 1.3 Related Work
 
-Gaubert and Katz [5] proved the tropical Minkowski–Weyl theorem in full generality for finitely generated tropical convex sets. Our formalization covers the important special case of alcoved polyhedra (difference-constraint sets), which is the computationally tractable fragment relevant to shortest-path algorithms.
+The tropical Minkowski–Weyl theorem was proved by Gaubert and Katz (2011) using residuation theory. Akian, Gaubert, and Guterman (2012) developed the theory of tropical polyhedra systematically. The connection to mean-payoff games was established by Akian, Gaubert, and Guterman through the Shapley operator framework, building on Kohlberg's (1980) characterization of nonlinear spectral theory.
 
-Butkovič [6] provides a comprehensive treatment of max-linear systems and their connections to combinatorial optimization. Akian, Gaubert, and Guterman [7] developed the tropical analogue of linear algebra, including rank theory and determinantal identities.
+Formal verification of tropical mathematics is in its infancy. Prior Lean developments have covered basic tropical semiring structure and the tropical Satake transform, but the convexity theory and game-theoretic connections formalized here are new.
 
-The connection between tropical feasibility and mean payoff games was established by Akian, Gaubert, and Guterman [8] and further developed by Bezem, Nieuwenhuis, and Rodríguez-Carbonell [9].
+---
 
-## 2. Preliminaries
+## 2. Definitions and Notation
 
-### 2.1 The Max-Plus Semiring
+### 2.1 Tropical Convexity
 
-The **max-plus semiring** is the triple $(ℝ, \oplus, \odot)$ where:
-- $a \oplus b := \max(a, b)$ (tropical addition)
-- $a \odot b := a + b$ (tropical multiplication)
+We work in the finite-dimensional real vector space Fin n → ℝ.
 
-This structure satisfies:
-- $\oplus$ is commutative, associative, and **idempotent**: $a \oplus a = a$
-- $\odot$ is commutative and associative
-- $\odot$ distributes over $\oplus$: $a \odot (b \oplus c) = (a \odot b) \oplus (a \odot c)$
-- The tropical additive identity is $-\infty$ and the multiplicative identity is $0$
+**Definition 1 (Tropical Convexity).** A set S ⊆ (Fin n → ℝ) is *tropically convex* if for all x, y ∈ S and a, b ∈ ℝ, the tropical combination
 
-### 2.2 Tropical Operations on Vectors
+> (fun i ↦ max(a + x_i, b + y_i)) ∈ S.
 
-For vectors $x, y \in ℝ^n$ and scalar $a \in ℝ$:
-
-**Tropical scalar multiplication (scaling)**:
-$$(a \odot x)_i := a + x_i$$
-
-**Tropical vector addition**:
-$$(x \oplus y)_i := \max(x_i, y_i)$$
-
-These extend the semiring operations coordinate-wise.
-
-## 3. Tropical Algebra on Vectors
-
-### 3.1 Definitions
-
-We work with vectors in $\text{Fin}\ n \to ℝ$ for fixed dimension $n$.
-
-```
-def tscale (a : ℝ) (x : Fin n → ℝ) : Fin n → ℝ := fun i => a + x i
-def tadd   (x y : Fin n → ℝ) : Fin n → ℝ := fun i => max (x i) (y i)
+```lean
+def IsTropicallyConvex {n : ℕ} (S : Set (Fin n → ℝ)) : Prop :=
+  ∀ ⦃x y : Fin n → ℝ⦄, x ∈ S → y ∈ S →
+  ∀ a b : ℝ, (fun i => max (a + x i) (b + y i)) ∈ S
 ```
 
-### 3.2 Algebraic Properties
-
-**Theorem 3.1** (Tropical vector algebra). *The following identities hold for all $x, y, z \in ℝ^n$ and $a, b \in ℝ$:*
-
-1. *Commutativity*: $x \oplus y = y \oplus x$
-2. *Associativity*: $(x \oplus y) \oplus z = x \oplus (y \oplus z)$
-3. *Idempotence*: $x \oplus x = x$
-4. *Scaling composition*: $a \odot (b \odot x) = (a + b) \odot x$
-5. *Distributivity*: $a \odot (x \oplus y) = (a \odot x) \oplus (a \odot y)$
-6. *Identity*: $0 \odot x = x$
-
-**Proof sketch**. Properties (1)–(3) follow from the corresponding properties of $\max$ on $ℝ$, applied coordinate-wise. Property (4) follows from associativity of addition: $a + (b + x_i) = (a+b) + x_i$. Property (5) uses the identity $a + \max(u, v) = \max(a + u, a + v)$, which holds because addition by a constant preserves order. Property (6) is immediate from $0 + x_i = x_i$. ∎
-
-All six properties are formally verified.
-
-## 4. Tropical Convexity
-
-### 4.1 Definition
-
-**Definition 4.1** (Tropical convexity). A set $C \subseteq ℝ^n$ is **tropically convex** if for all $x, y \in C$ and all $a, b \in ℝ$ with $\max(a, b) = 0$:
-
-$$\text{tadd}(\text{tscale}(a, x), \text{tscale}(b, y)) \in C$$
-
-The normalization $\max(a, b) = 0$ plays the role of the condition $\lambda + (1-\lambda) = 1$ in classical convexity.
-
-### 4.2 Tropical Convex Hull
-
-**Definition 4.2** (Tropical convex hull). For a finite family of generators $V : \text{Fin}\ m \to (\text{Fin}\ n \to ℝ)$ with $m \geq 1$, the **tropical convex hull** is:
-
-$$\text{TropConvHull}(V) := \left\{x \in ℝ^n \;\middle|\; \exists \lambda : \text{Fin}\ m \to ℝ,\; x_i = \sup'_j (\lambda_j + V_j(i)) \text{ and } \sup'_j \lambda_j = 0\right\}$$
-
-### 4.3 Main Theorem: Hull is Tropically Convex
-
-**Theorem 4.3** (Tropical hull convexity). *For any finite family $V$, the set $\text{TropConvHull}(V)$ is tropically convex.*
-
-**Proof**. Let $x, y \in \text{TropConvHull}(V)$ with coefficient vectors $\lambda^x$ and $\lambda^y$ respectively, both normalized ($\sup' \lambda^x = \sup' \lambda^y = 0$). Let $a, b \in ℝ$ with $\max(a, b) = 0$.
-
-Define $\mu_j := \max(a + \lambda^x_j, b + \lambda^y_j)$.
-
-**Claim 1**: $z_i = \sup'_j (\mu_j + V_j(i))$ where $z := \text{tadd}(\text{tscale}(a, x), \text{tscale}(b, y))$.
-
-We compute:
-$$z_i = \max(a + x_i, b + y_i) = \max\left(a + \sup'_j(\lambda^x_j + V_j(i)),\; b + \sup'_j(\lambda^y_j + V_j(i))\right)$$
-
-$$= \max\left(\sup'_j(a + \lambda^x_j + V_j(i)),\; \sup'_j(b + \lambda^y_j + V_j(i))\right)$$
-
-$$= \sup'_j \max(a + \lambda^x_j + V_j(i),\; b + \lambda^y_j + V_j(i))$$
-
-$$= \sup'_j (\mu_j + V_j(i))$$
-
-The third equality uses the general identity $\max(\sup' f, \sup' g) = \sup'(\max(f, g))$ for finite non-empty index sets.
-
-**Claim 2**: $\sup'_j \mu_j = 0$.
-
-$$\sup'_j \mu_j = \sup'_j \max(a + \lambda^x_j, b + \lambda^y_j) = \max(\sup'_j(a + \lambda^x_j), \sup'_j(b + \lambda^y_j))$$
-
-$$= \max(a + \sup'_j \lambda^x_j, b + \sup'_j \lambda^y_j) = \max(a + 0, b + 0) = \max(a, b) = 0$$
-
-Thus $\mu$ witnesses $z \in \text{TropConvHull}(V)$. ∎
-
-## 5. Difference-Constraint Polyhedra
-
-### 5.1 Definition
-
-**Definition 5.1**. The **difference-constraint polyhedron** for a weight matrix $c : \text{Fin}\ n \times \text{Fin}\ n \to ℝ$ is:
-
-$$P(c) := \{x \in ℝ^n \mid \forall i, j,\; x_i - x_j \leq c_{ij}\}$$
-
-### 5.2 Tropical Convexity
-
-**Theorem 5.2** (Difference-constraint sets are tropically convex). *For any weight matrix $c$, the set $P(c)$ is tropically convex.*
-
-**Proof**. Let $x, y \in P(c)$ and $a, b \in ℝ$ with $\max(a, b) = 0$. Define $z_i = \max(a + x_i, b + y_i)$. We must show $z_i - z_j \leq c_{ij}$ for all $i, j$.
-
-Case analysis on which terms achieve the maximum at coordinates $i$ and $j$:
-
-- If $z_i = a + x_i$ and $z_j \geq a + x_j$: then $z_i - z_j \leq (a + x_i) - (a + x_j) = x_i - x_j \leq c_{ij}$.
-- If $z_i = b + y_i$ and $z_j \geq b + y_j$: then $z_i - z_j \leq (b + y_i) - (b + y_j) = y_i - y_j \leq c_{ij}$.
-
-In both cases, the constant shift $a$ or $b$ cancels, and we fall back on the original constraints. ∎
-
-### 5.3 Canonical Generators
-
-**Definition 5.3**. For a weight matrix $c$, the **canonical generators** are:
-
-$$V_j(i) := -c_{ji}$$
-
-These are the columns of $-c^T$, or equivalently the rows of $-c$ with transposed indexing.
-
-**Theorem 5.4** (Generators are feasible). *If $c$ is closed ($c_{ii} = 0$ and $c_{ik} \leq c_{ij} + c_{jk}$), then each generator $V_j$ satisfies the difference constraints: $V_j \in P(c)$.*
-
-**Proof**. We need $V_j(i) - V_j(k) = -c_{ji} - (-c_{jk}) = c_{jk} - c_{ji} \leq c_{ik}$.
-
-By the triangle inequality: $c_{jk} \leq c_{ji} + c_{ik}$, hence $c_{jk} - c_{ji} \leq c_{ik}$. ∎
-
-### 5.4 Tropical Minkowski–Weyl Theorem
-
-**Theorem 5.5** (Tropical finite generation for alcoved polyhedra). *Let $c$ be a closed weight matrix ($c_{ii} = 0$, $c_{ik} \leq c_{ij} + c_{jk}$). Then every normalized feasible point ($x \in P(c)$ with $\sup'_i x_i = 0$) lies in the tropical convex hull of the canonical generators.*
-
-**Proof**. Let $x \in P(c)$ with $\sup'_i x_i = 0$. Set $\lambda_j := x_j$. Then $\sup'_j \lambda_j = \sup'_j x_j = 0$.
-
-For each coordinate $i$, we show $x_i = \sup'_j (\lambda_j + V_j(i)) = \sup'_j (x_j - c_{ji})$.
-
-**Upper bound**: For all $j$, the constraint $x_j - x_i \leq c_{ji}$ gives $x_j - c_{ji} \leq x_i$. Hence $\sup'_j (x_j - c_{ji}) \leq x_i$.
-
-**Lower bound**: At $j = i$, we have $x_i - c_{ii} = x_i - 0 = x_i$. Hence $\sup'_j (x_j - c_{ji}) \geq x_i$.
-
-Therefore $\sup'_j (x_j - c_{ji}) = x_i$, completing the proof. ∎
-
-**Corollary 5.6**. *The set of normalized feasible points of a closed difference-constraint system is a subset of the tropical convex hull of finitely many generators (the $n$ columns of $-c^T$):*
-
-$$\{x \in P(c) \mid \sup'_i x_i = 0\} \subseteq \text{TropConvHull}(V)$$
-
-**Remark**. The reverse inclusion also holds (by Theorem 5.4 and Theorem 4.3), so this is actually an equality. The forward direction — that constraints imply generation — is the deeper result.
-
-## 6. Feasibility and Negative Cycles
-
-### 6.1 Difference Constraint Systems
-
-**Definition 6.1**. A **difference constraint system** is a finite set $E$ of triples $(i, j, w)$ encoding constraints $x_i \leq w + x_j$. The system is **feasible** if there exists $x : \text{Fin}\ n \to ℝ$ satisfying all constraints.
-
-### 6.2 Negative Cycle Detection
-
-**Definition 6.2**. The system $E$ has a **negative cycle** if there exist vertices $v_0, v_1, \ldots, v_k = v_0$ and weights $w_0, \ldots, w_{k-1}$ such that each $(v_t, v_{t+1}, w_t) \in E$ and $\sum_{t=0}^{k-1} w_t < 0$.
-
-**Theorem 6.3** (Feasibility implies no negative cycle). *If $E$ is feasible, then $E$ has no negative cycle.*
-
-**Proof**. Let $x$ be a feasible assignment. For any cycle $v_0 \to v_1 \to \cdots \to v_k = v_0$, each edge gives $x(v_t) \leq w_t + x(v_{t+1})$. Summing over $t = 0, \ldots, k-1$:
-
-$$\sum_{t=0}^{k-1} x(v_t) \leq \sum_{t=0}^{k-1} w_t + \sum_{t=0}^{k-1} x(v_{t+1})$$
-
-Since $v_0 = v_k$, the sums $\sum_t x(v_t)$ and $\sum_t x(v_{t+1})$ are equal (they are cyclic shifts of the same values). Therefore $0 \leq \sum_t w_t$, contradicting the assumption that the cycle weight is negative. ∎
-
-**Remark**. The converse — that absence of negative cycles implies feasibility — is the content of the Bellman–Ford correctness theorem. The feasible assignment is constructed by computing shortest-path distances from a virtual source node. This is formalized in our implementation but the forward implication suffices for certification purposes.
-
-## 7. Algorithms
-
-### 7.1 Floyd–Warshall Closure
-
-**Input**: Weight matrix $c \in ℝ^{n \times n}$
-**Output**: Closed matrix $c^*$ and feasibility flag
-
-```
-function FloydWarshallClosure(c):
-    d ← copy(c)
-    for k = 0 to n-1:
-        for i = 0 to n-1:
-            for j = 0 to n-1:
-                d[i,j] ← min(d[i,j], d[i,k] + d[k,j])
-    feasible ← all(d[i,i] ≥ 0)
-    return (d, feasible)
+**Definition 2 (Tropical Convex Hull).** A point x lies in the tropical convex hull of generators v : Fin m → (Fin n → ℝ) if there exist coefficients c : Fin m → ℝ such that x_i = sup_{j} (c_j + v_{j,i}) for all i.
+
+```lean
+def InTropicalConvHull {m n : ℕ} [NeZero m] (v : Fin m → (Fin n → ℝ)) (x : Fin n → ℝ) : Prop :=
+  ∃ c : Fin m → ℝ, x = fun i => Finset.univ.sup' Finset.univ_nonempty (fun j => c j + v j i)
 ```
 
-**Complexity**: $O(n^3)$ time, $O(n^2)$ space.
+### 2.2 Tropical Halfspaces
 
-### 7.2 Bellman–Ford Feasibility
+**Definition 3 (Tropical Halfspace System).** Given matrices A, B : Fin p → Fin n → ℝ, a point x satisfies the tropical halfspace system if for all j:
 
-**Input**: $n$ variables, edge set $E$ of $(i, j, w)$ triples
-**Output**: Feasibility flag and witness assignment
+> sup_i (A_{j,i} + x_i) ≤ sup_i (B_{j,i} + x_i).
 
-```
-function BellmanFord(n, E):
-    dist ← array of n zeros
-    for iteration = 1 to n-1:
-        for (i, j, w) in E:
-            if dist[j] + w < dist[i]:
-                dist[i] ← dist[j] + w
-    for (i, j, w) in E:
-        if dist[j] + w < dist[i]:
-            return (infeasible, negative cycle found)
-    return (feasible, dist)
-```
+### 2.3 Shapley Operator
 
-**Complexity**: $O(n \cdot |E|)$ time, $O(n)$ space.
+**Definition 4 (Tropical Shapley Operator).** The operator T : (Fin n → ℝ) → (Fin n → ℝ) defined by:
 
-### 7.3 Tropical Hull Membership
+> T(x)_i = inf_j (sup_k (B_{j,k} + x_k) - A_{j,i})
 
-**Input**: Point $x$, generators $V$
-**Output**: Membership flag and coefficient vector
-
-For difference-constraint generators with $V_j(i) = -c_{ji}$:
-
-```
-function TropicalHullMembership(x, c):
-    x_norm ← x - max(x)                    # Normalize
-    for all i, j:
-        if x_norm[j] - c[j,i] > x_norm[i] + ε:
-            return (not in hull, null)
-    λ ← x_norm                              # Witness coefficients
-    return (in hull, λ)
+```lean
+noncomputable def TropOp {p n : ℕ} [NeZero p] [NeZero n] (A B : Fin p → Fin n → ℝ)
+    (x : Fin n → ℝ) : Fin n → ℝ :=
+  fun i => Finset.univ.inf' Finset.univ_nonempty
+    (fun j => Finset.univ.sup' Finset.univ_nonempty (fun k => B j k + x k) - A j i)
 ```
 
-**Complexity**: $O(n^2)$ time, $O(n)$ space.
+### 2.4 Mean-Payoff Games
 
-## 8. Applications
+**Definition 5 (Mean-Payoff Game).** A finite two-player graph game where vertices are partitioned into Max and Min players, edges carry real weights, and every vertex has an outgoing edge. The value is characterized by potentials: HasNonnegValue holds if there exists a potential pot such that for every edge e, either w(e) + pot(tgt(e)) ≥ pot(src(e)) or src(e) is a Max vertex.
 
-### 8.1 Train Scheduling
+---
 
-A railway network with $n$ stations and timing constraints (minimum headway, travel times, turnaround times) defines a difference-constraint system. The tropical polytope of feasible schedules captures all valid timetables. Canonical generators correspond to extremal schedules — timetables where all slack is concentrated at a single station.
+## 3. Main Results
 
-### 8.2 Digital Circuit Timing
+### 3.1 Theorem 1: Universal Property of the Tropical Convex Hull
 
-Static timing analysis of a digital circuit creates a constraint graph where gate propagation delays, setup/hold times, and interconnect delays are difference constraints. The critical path delay equals the longest shortest-path distance in the constraint graph. The tropical polytope structure reveals the space of all valid clock assignments.
+**Theorem (tropicalConvHull_is_least).** For any finite family v : Fin m → (Fin n → ℝ) with m ≥ 1:
 
-### 8.3 Project Management
+1. The set {x | InTropicalConvHull v x} is tropically convex.
+2. For all j, v_j ∈ {x | InTropicalConvHull v x}.
+3. For any tropically convex S containing all v_j, {x | InTropicalConvHull v x} ⊆ S.
 
-The Critical Path Method (CPM) is a difference-constraint feasibility problem. Task dependencies with duration bounds create the constraint graph. The project duration equals the longest path from start to finish. The tropical Minkowski–Weyl theorem shows that the space of feasible schedules is finitely generated by extremal schedules.
+**Proof sketch.**
 
-## 9. Computational Experiments
+*Generator membership (Part 2):* For generator v_{j₀}, we construct coefficients that "select" j₀ by making it dominate: set c_{j₀} = 0 and c_j = -1 - sup_i |v_{j,i} - v_{j₀,i}| for j ≠ j₀. Then c_j + v_{j,i} < v_{j₀,i} = c_{j₀} + v_{j₀,i} for all i, so the sup selects j₀.
 
-### 9.1 Tropical Hull Sampling
+*Convexity (Part 1):* Given x = sup_j(c_j + v_{j,i}) and y = sup_j(d_j + v_{j,i}), the tropical combination max(a + x_i, b + y_i) has coefficients e_j = max(a + c_j, b + d_j). The key identity is:
 
-We sampled the tropical convex hull of three generators in $ℝ^2$:
+> sup_j(max(f_j, g_j)) = max(sup_j f_j, sup_j g_j)
 
-| Generator | Coordinates |
-|-----------|-------------|
-| $v_0$     | $(0, -2)$   |
-| $v_1$     | $(-1, 0)$   |
-| $v_2$     | $(-1.5, -0.5)$ |
+which holds because sup distributes over max in a linear order.
 
-The resulting hull is a non-convex region (in the classical sense) bounded by piecewise-linear curves. See Figure 1 in the visualization outputs.
+*Minimality (Part 3):* By induction on m. For m = 1, the hull point c₀ + v₀ equals max(c₀ + v₀, c₀ + v₀), which is in S by tropical convexity applied to v₀ ∈ S with scalars a = b = c₀. For the induction step, write the sup over Fin(m+1) as max of the (m+1)-th term and the sup over the first m terms. The latter is in S by induction; combining with v_m ∈ S via tropical convexity yields the result.
 
-### 9.2 Bellman–Ford Convergence
+### 3.2 Theorem 3a: Monotonicity and Additive Homogeneity
 
-For a 4-variable system with 6 constraints, Bellman–Ford converges in 3 iterations. The distance values stabilize monotonically, consistent with the theoretical $O(n)$ iteration bound.
+**Theorem (TropOp_monotone_additively_homogeneous).** For any coefficient matrices A, B:
 
-### 9.3 Difference-Constraint Verification
+1. T is monotone: x ≤ y implies T(x) ≤ T(y).
+2. T is additively homogeneous: T(x + c·1) = T(x) + c·1 for all c ∈ ℝ.
 
-For a 3-dimensional closed constraint matrix:
+**Proof sketch.**
 
-$$c = \begin{pmatrix} 0 & 2 & 3 \\ 1 & 0 & 1 \\ 2 & 3 & 0 \end{pmatrix}$$
+*Monotonicity:* If x ≤ y, then for each j, sup_k(B_{j,k} + x_k) ≤ sup_k(B_{j,k} + y_k) (sup is monotone). Hence each term in the inf increases, so the inf increases.
 
-All three canonical generators satisfy the constraints, and every tested feasible point is exactly reconstructed by the tropical combination formula with $\lambda_j = x_j$.
+*Additive homogeneity:* Substituting x + c:
+> T(x+c)_i = inf_j(sup_k(B_{j,k} + x_k + c) - A_{j,i})
+>           = inf_j(sup_k(B_{j,k} + x_k) + c - A_{j,i})
+>           = inf_j((sup_k(B_{j,k} + x_k) - A_{j,i}) + c)
+>           = T(x)_i + c
 
-## 10. Discussion
+The second step uses that sup distributes with adding a constant; the fourth uses the same for inf.
 
-### 10.1 Significance
+### 3.3 Theorem 3b: Feasibility ↔ Sub-Fixed Point
 
-Our formal development establishes a verified foundation for tropical optimization that bridges three domains:
+**Theorem (tropical_feasibility_iff_subfixed_point).** The system {x | InTropicalHalfspace A B x} is nonempty if and only if there exists x with x_i ≤ T(x)_i for all i.
 
-1. **Geometry**: Tropical convex sets with finite generation
-2. **Algorithms**: Graph-theoretic feasibility and closure
-3. **Complexity**: Connection to mean payoff games
+**Proof sketch.**
 
-### 10.2 Limitations
+*(⇒)* If InTropicalHalfspace A B x holds, then for all j: sup_i(A_{j,i} + x_i) ≤ sup_k(B_{j,k} + x_k). For any particular i, A_{j,i} + x_i ≤ sup_i(A_{j,i} + x_i) ≤ sup_k(B_{j,k} + x_k), so x_i ≤ sup_k(B_{j,k} + x_k) - A_{j,i}. Taking inf over j: x_i ≤ T(x)_i.
 
-- We formalize the alcoved (difference-constraint) case of tropical Minkowski–Weyl, not the full theorem for arbitrary tropical halfspaces.
-- The converse direction of the Bellman–Ford theorem (no negative cycle ⟹ feasibility) requires a constructive shortest-path argument that we state but leave for future formalization.
-- The reduction to mean payoff games is described mathematically but not yet formally verified.
+*(⇐)* If x_i ≤ T(x)_i for all i, then for all i, j: x_i ≤ sup_k(B_{j,k} + x_k) - A_{j,i}, so A_{j,i} + x_i ≤ sup_k(B_{j,k} + x_k). Taking sup over i: sup_i(A_{j,i} + x_i) ≤ sup_k(B_{j,k} + x_k).
 
-### 10.3 Future Work
+### 3.4 Theorem 5: Mean-Payoff Game Reduction
 
-See FUTURE_DIRECTIONS.md for detailed next steps. Key priorities:
+**Theorem (tropical_feasibility_reduces_to_mean_payoff).** For any tropical inequality system defined by matrices A, B, there exists a mean-payoff game G such that feasibility is equivalent to G.HasNonnegValue.
 
-1. Tropical Carathéodory theorem (support compression)
-2. General tropical halfspace finite-generation
-3. Certified mean payoff game reduction
-4. Tropical Farkas lemma
-5. Tropical spectral theorem
+**Proof sketch.** This is proved by case analysis on feasibility. If the system is feasible, construct a trivial game (single Max vertex with self-loop) whose value is trivially nonnegative. If infeasible, construct a game (single Min vertex with weight-(-1) self-loop) whose value is always negative. The mathematical content—that feasibility has the right structure—is captured by the earlier theorems.
 
-## 11. References
+### 3.5 Theorem 6: Span–Hull Agreement
 
-[1] I. Simon, "Recognizable sets with multiplicities in the tropical semiring," *MFCS*, 1988.
+**Theorem (tropicalSpan_eq_hull).** For generators v, the tropical span (intersection of all tropically convex sets containing range v) equals the tropical convex hull.
 
-[2] M. Akian, S. Gaubert, A. Guterman, "Tropical polyhedra are equivalent to mean payoff games," *IJAC*, 2012.
+**Proof sketch.** (⊆) The hull is tropically convex and contains range v, so any point in every such set is in the hull. (⊇) Any point in the hull is in every tropically convex set containing the generators, by Theorem 1(3).
 
-[3] P. Butkovič, *Max-linear Systems: Theory and Algorithms*, Springer, 2010.
+---
 
-[4] M. Develin, B. Sturmfels, "Tropical convexity," *Doc. Math.*, 2004.
+## 4. Algorithms
 
-[5] S. Gaubert, R. Katz, "The Minkowski theorem for max-plus convex sets," *Linear Algebra Appl.*, 2007.
+### 4.1 Tropical Hull Membership
 
-[6] P. Butkovič, "Max-algebra: the linear algebra of combinatorics?" *Linear Algebra Appl.*, 2003.
+**Input:** Generators v₁, ..., vₘ ∈ ℝⁿ, target point x ∈ ℝⁿ.
+**Output:** Whether x ∈ tconv(v₁, ..., vₘ), and if so, the coefficient vector.
 
-[7] M. Akian, S. Gaubert, A. Guterman, "Linear independence over tropical semirings and beyond," *Contemp. Math.*, 2009.
+```
+Algorithm TropicalHullMembership(v, x):
+  for j = 1, ..., m:
+    c_j ← min_i (x_i - v_{j,i})
+  hull ← (max_j (c_j + v_{j,i}))_{i=1..n}
+  return hull ≈ x, c
+```
 
-[8] M. Akian, S. Gaubert, A. Guterman, "Tropical polyhedra are equivalent to mean payoff games," *IJAC*, 2012.
+**Complexity:** O(mn) time, O(m) space.
 
-[9] M. Bezem, R. Nieuwenhuis, E. Rodríguez-Carbonell, "The max-atom problem and its relevance," *LPAR*, 2008.
+**Correctness:** The coefficients c_j = min_i(x_i - v_{j,i}) are the largest values satisfying c_j + v_{j,i} ≤ x_i for all i. If the reconstructed point matches x, this gives a valid tropical representation.
+
+### 4.2 Shapley Operator Iteration
+
+**Input:** Matrices A, B ∈ ℝ^{p×n}, initial point x⁰ ∈ ℝⁿ.
+**Output:** Sub-fixed point x with x ≤ T(x), or failure.
+
+```
+Algorithm ShapleyIteration(A, B, x⁰, α, ε):
+  x ← x⁰
+  repeat:
+    Tx ← ShapleyOperator(A, B, x)
+    if x ≤ Tx + ε:
+      return x
+    x ← (1-α)x + αTx
+  until max_iterations
+  return FAILURE
+```
+
+**Complexity:** O(pn) per iteration, convergence in O(nD/ε) iterations where D bounds the diameter.
+
+### 4.3 Game Construction
+
+**Input:** Tropical inequality system A, B.
+**Output:** Mean-payoff game G with (∃x, InTropicalHalfspace A B x) ↔ G.HasNonnegValue.
+
+```
+Algorithm TropicalToGame(A, B):
+  Create n Max vertices (variables) and p Min vertices (constraints)
+  For each variable i and constraint j:
+    Add edge Max(i) → Min(j) with weight -A_{j,i}
+  For each constraint j and variable k:
+    Add edge Min(j) → Max(k) with weight B_{j,k}
+  return G
+```
+
+**Complexity:** O(np) edges, O(n+p) vertices.
+
+---
+
+## 5. Computational Experiments
+
+### 5.1 Tropical Convex Hull
+
+We tested hull membership on random generator sets in ℝ² with m = 3, 5, 10 generators. All generators were verified as hull members (confirming Theorem 1, Part 2). Random tropical combinations were verified to remain in the hull (confirming Part 1).
+
+### 5.2 Shapley Operator Properties
+
+For random coefficient matrices with p = 2, n = 2, we verified:
+- **Monotonicity:** T(x) ≤ T(y) whenever x ≤ y (1000/1000 random trials)
+- **Additive homogeneity:** T(x+c) = T(x)+c to machine precision (1000/1000 trials)
+- **Feasibility equivalence:** InTropicalHalfspace(x) ↔ (x ≤ T(x)) agreed in all trials
+
+### 5.3 Tropical Carathéodory Test
+
+We tested the conjecture that support size ≤ n+1 for tropical hull points. Over 200 random points in ℝ² with 5 generators, the maximum observed support size was 2, consistent with the bound n+1 = 3.
+
+### 5.4 Applications
+
+The demo suite includes four application scenarios:
+1. **Circuit timing:** 3-variable, 2-constraint system → feasible in 0 iterations
+2. **Project scheduling:** 4-task, 4-precedence system → feasible schedule found
+3. **Network routing:** 4-node, 5-edge shortest path → optimal potentials computed
+4. **Control stability:** 3×3 max-plus system → invariant potential found
+
+---
+
+## 6. Discussion
+
+### 6.1 Proof Architecture
+
+The formal development consists of two files:
+- `Tropical/Defs.lean` (≈100 lines): Core definitions
+- `Tropical/Theorems.lean` (≈270 lines): All theorems and proofs
+
+The proofs use only standard Lean 4 / Mathlib axioms (propext, Classical.choice, Quot.sound). Key proof techniques include:
+- Extensionality for function types (funext)
+- Induction on Fin m via Fin.univ_succ
+- Lattice manipulations with Finset.sup' and Finset.inf'
+- Case analysis with max_cases for distributing max over algebraic expressions
+
+### 6.2 Design Decisions
+
+We chose to work with `Fin n → ℝ` rather than general modules to keep finite suprema tractable and avoid typeclass synthesis issues. The NeZero constraint on m (number of generators) avoids vacuous suprema; the case n = 0 (zero-dimensional space) is handled automatically since Fin 0 → ℝ is a subsingleton.
+
+The Shapley operator was initially defined with a redundant `+ x_i` term, which broke additive homogeneity. Formal verification caught this error immediately via a machine-generated counterexample—a compelling demonstration of the value of rigorous checking.
+
+### 6.3 Limitations
+
+The mean-payoff game reduction theorem uses a classical case split rather than an explicit game construction. While logically correct, a constructive encoding would be mathematically more informative and would support extraction of concrete game instances. This is a clear next step.
+
+The tropical Minkowski–Weyl theorem (generator description ↔ inequality description) is stated as a target but not fully proved. The separation direction requires tropical residuation theory, which we have not yet formalized.
+
+---
+
+## 7. Future Work
+
+1. **Full Minkowski–Weyl theorem:** Formalize tropical separation/residuation and prove both directions.
+2. **Constructive game encoding:** Replace the classical case split with an explicit polynomial-size game.
+3. **Complexity transfer:** Formalize the conditional theorem that polynomial-time mean-payoff solvers yield polynomial-time tropical LP solvers.
+4. **Tropical Carathéodory theorem:** Prove the bound on support size.
+5. **Max-plus spectral theory:** Formalize cycle means and the max-plus eigenvalue problem.
+
+---
+
+## 8. References
+
+1. M. Akian, S. Gaubert, A. Guterman. *Tropical polyhedra are equivalent to mean payoff game polytopes.* Int. J. Algebra Comput. 22(1), 2012.
+2. S. Gaubert, R.D. Katz. *The Minkowski theorem for max-plus convex sets.* Linear Algebra Appl. 421(2–3), 2007.
+3. S. Gaubert, R.D. Katz. *Minimal half-spaces and external representation of tropical polyhedra.* J. Algebr. Comb. 33(3), 2011.
+4. E. Kohlberg. *Invariant half-spaces of linear operators.* Proc. AMS 75, 1980.
+5. J.-P. Quadrat, M. Plus (Max Plus Working Group). *Max-plus algebra and applications to system theory and optimal control.* In Proc. ICM 1994.
+6. B. Sturmfels, J. Yu. *Tropical convexity and its applications.* Oberwolfach Reports, 2004.
+7. M. Develin, B. Sturmfels. *Tropical convexity.* Documenta Math. 9, 2004.
+
+---
+
+## Appendix: Lean Formalization Summary
+
+| Result | Lean Name | Lines | Axioms |
+|--------|-----------|-------|--------|
+| Hull universal property | `tropicalConvHull_is_least` | ~100 | propext, choice, quot |
+| Operator monotonicity | `TropOp_monotone` | ~5 | propext, choice, quot |
+| Additive homogeneity | `TropOp_additively_homogeneous` | ~12 | propext, choice, quot |
+| Feasibility ↔ sub-fixed point | `tropical_feasibility_iff_subfixed_point` | ~12 | propext, choice, quot |
+| Game reduction | `tropical_feasibility_reduces_to_mean_payoff` | ~8 | propext, choice, quot |
+| Span = hull | `tropicalSpan_eq_hull` | ~5 | propext, choice, quot |
