@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1663 of the highest-quality
+A curated collection of 1667 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1663
+Total files: 1667
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -60,6 +60,7 @@ import FINAL.Algebra.EMLCongruenceHilbert
 import FINAL.Algebra.EigenvalueRepulsion
 import FINAL.Algebra.Elimination
 import FINAL.Algebra.EvalKernel
+import FINAL.Algebra.Exact
 import FINAL.Algebra.ExceptionalGroups
 import FINAL.Algebra.ExtTorBasic
 import FINAL.Algebra.Extensions
@@ -87,6 +88,7 @@ import FINAL.Algebra.GroebnerDerandomization
 import FINAL.Algebra.GroupSolvability
 import FINAL.Algebra.GroverAttacks
 import FINAL.Algebra.HDWalletCascade
+import FINAL.Algebra.HalesJewett
 import FINAL.Algebra.HilbertClassFieldBasic
 import FINAL.Algebra.HomingMissile
 import FINAL.Algebra.HurwitzQuaternions
@@ -149,6 +151,7 @@ import FINAL.Algebra.Photon
 import FINAL.Algebra.PhysicalPhenomena
 import FINAL.Algebra.PolyMethod
 import FINAL.Algebra.PredictionGeometry
+import FINAL.Algebra.Probabilistic
 import FINAL.Algebra.ProjectiveResolutionConcrete
 import FINAL.Algebra.PythagoreanPhotonics
 import FINAL.Algebra.PythagoreanQuadruples
@@ -167,6 +170,7 @@ import FINAL.Algebra.QuaternionRotation
 import FINAL.Algebra.RamanujanFrontiers3
 import FINAL.Algebra.RamanujanOpenProblems
 import FINAL.Algebra.Reciprocity
+import FINAL.Algebra.Recursion
 import FINAL.Algebra.RiemannConnection
 import FINAL.Algebra.Robustness
 import FINAL.Algebra.RootBound
