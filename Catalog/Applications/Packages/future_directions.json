@@ -759,7 +759,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "9e659d12",
       "timestamp": "2026-05-20T20:11:05.499703+00:00",
       "catalog_references": [],
@@ -4911,6 +4911,151 @@
       "ambition_level": "extension",
       "lineage_refs": [],
       "domain_bridges": []
+    },
+    {
+      "id": "fd_0204",
+      "title": "Strong Normalization for STLC via Reducibility Candidates",
+      "description": "Conjecture: Every well-typed simply-typed lambda term is strongly normalizing, provable via Tait's reducibility method with a formal semantic interpretation indexed by types.\n\nTest: Define `Red : Ty → Lam → Prop` by recursion on types. Prove the fundamental theorem: every well-typed term under a reducible substitution is reducible. Instantiate with identity to get SN. If any step fails, the reducibility predicate needs adjustment.\n\nImpact: Completes the theoretical stack from syntax to proof theory. SN is the gateway to decidable type checking, canonicity, and certified compilation.",
+      "source_exp_id": "9e659d12",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/9e659d12",
+      "domains": [
+        "Pythagorean",
+        "Logic"
+      ],
+      "proof_strategy": "Define reducibility by recursion on Ty. Base type: SN. Arrow type: closed under application to reducible arguments. Prove closure properties (CR1-CR3). Prove fundamental theorem by induction on typing derivations.",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-21T12:13:07.699977+00:00",
+      "catalog_references": [
+        "Logic/LambdaCalculus/STLC.lean",
+        "Catalog/FINAL/Logic/TropicalCurryHoward.lean"
+      ],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [
+        "Connects to proof theory (Curry-Howard)",
+        "certified compilation",
+        "and type-theoretic foundations."
+      ]
+    },
+    {
+      "id": "fd_0205",
+      "title": "Reduction Tree Branching Bounded by Type Complexity",
+      "description": "Conjecture: For closed simply-typed lambda terms of size n with maximum type depth d, the number of distinct β-reducts reachable within k steps grows as O(n^d) rather than exponentially.\n\nTest: Enumerate simply-typed closed terms up to size 15. For each, compute `|reductsUpToDepth(t, k)|` and compare against n^d and 2^k. A single family achieving exponential growth falsifies the conjecture.\n\nImpact: Would establish a formal complexity-theoretic separation between typed and untyped reduction, connecting type theory to computational complexity.",
+      "source_exp_id": "9e659d12",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/9e659d12",
+      "domains": [
+        "Pythagorean",
+        "Computation",
+        "Logic"
+      ],
+      "proof_strategy": "Define a weight function on typed terms that decreases under reduction. Show the weight bounds the branching factor at each step. Use the catalog's `binary_tree_leaves_bound` to bound total reachable terms.",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-21T12:13:07.708989+00:00",
+      "catalog_references": [
+        "Catalog/FINAL/Logic/QueryComplexity.lean",
+        "Catalog/FINAL/Logic/EntanglementDifficulty.lean"
+      ],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [
+        "Connects lambda calculus to query complexity",
+        "branching processes",
+        "and computational complexity theory."
+      ]
+    },
+    {
+      "id": "fd_0206",
+      "title": "Böhm Approximant Separation Depth is Linear",
+      "description": "Conjecture: For closed lambda terms of size ≤ N, if t and u are not βη-equivalent, then there exists n ≤ 2N such that `bohmApprox n t ≠ bohmApprox n u`.\n\nTest: Enumerate all closed terms up to size N = 10. For each pair, compute approximants up to depth 2N. Any pair that is inequivalent but indistinguishable at depth 2N falsifies the conjecture.\n\nImpact: Would give a practical decidability criterion for equivalence within bounded term classes, connecting infinitary semantics to finite computation.",
+      "source_exp_id": "9e659d12",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/9e659d12",
+      "domains": [
+        "Pythagorean"
+      ],
+      "proof_strategy": "Relate separation depth to the structure of head normal forms. Show that the \"depth\" of the first point of disagreement in Böhm trees is bounded by term size via a structural argument.",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-21T12:13:07.717276+00:00",
+      "catalog_references": [
+        "Logic/LambdaCalculus/Bohm.lean"
+      ],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [
+        "Connects Böhm tree semantics to computational decidability and observational equivalence."
+      ]
+    },
+    {
+      "id": "fd_0207",
+      "title": "Tropical Energy Interpretation of Normalization",
+      "description": "Conjecture: There exists a function `tropicalPotential : STm Γ A → ℕ` such that every typed β-reduction step strictly decreases the potential, providing an \"energy dissipation\" interpretation of normalization.\n\nTest: Define candidate potentials (e.g., sum of subterm sizes weighted by type depth). Verify monotone decrease on all reduction steps for terms up to size 20. A single counterexample (increase under reduction) falsifies the candidate.\n\nImpact: Would create a formal bridge between normalization and tropical/energy semantics, connecting proof theory to optimization.",
+      "source_exp_id": "9e659d12",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/9e659d12",
+      "domains": [
+        "Pythagorean",
+        "Tropical",
+        "Physics",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "Mirror the architecture of `normalization_is_semantics` from the tropical Curry-Howard module. Define potential as a tropical cost function. Prove monotone decrease by case analysis on typed reduction rules.",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-21T12:13:07.726696+00:00",
+      "catalog_references": [
+        "Catalog/FINAL/Logic/TropicalCurryHoward.lean"
+      ],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [
+        "Connects lambda calculus to tropical geometry",
+        "optimization theory",
+        "and energy-based models of computation."
+      ]
+    },
+    {
+      "id": "fd_0208",
+      "title": "Behavioral Equivalence via Finite Transition Systems",
+      "description": "Conjecture: β-equivalent lambda terms induce bisimilar finite transition systems under a bounded reduction semantics, connecting Church-Rosser to behavioral equivalence in temporal logic.\n\nTest: Define `toFTS : Lam → FTS` mapping terms to finite transition systems (states = reducts up to depth d, transitions = one-step β). Verify that β-equivalent terms produce bisimilar FTS for d ≤ 10.\n\nImpact: Would formally bridge operational semantics of lambda calculus to model checking and temporal logic, enabling verification of higher-order programs via finite-state methods.",
+      "source_exp_id": "9e659d12",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/9e659d12",
+      "domains": [
+        "Pythagorean",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "Use Church-Rosser to show that β-equivalent terms have isomorphic reduction DAGs up to any finite depth. Transfer this isomorphism to FTS bisimulation using the catalog's `behavEquivTLF_equivalence`.",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-21T12:13:07.735740+00:00",
+      "catalog_references": [
+        "Catalog/FINAL/Logic/TemporalFixpointSemantics.lean",
+        "Catalog/FINAL/Logic/TemporalStoneBridge.lean"
+      ],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [
+        "Connects lambda calculus to temporal logic",
+        "model checking",
+        "and process algebra."
+      ]
     }
   ],
   "pruned": [],
