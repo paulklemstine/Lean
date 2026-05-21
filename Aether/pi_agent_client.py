@@ -511,7 +511,8 @@ class PiAgentClient:
                     self.pollen_gate.mark_depleted_from_response(response)
                     wait_until = self.pollen_gate._next_hour_reset(time.time())
                     reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))
-                    print(f"[Pi-Agent] Pollen depleted (402). Polling every 5min until reset ~{reset_at} (attempt {attempt+1}/{max_retries})")
+                    wait_minutes = (wait_until - time.time()) / 60
+                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_minutes:.1f}min until reset ~{reset_at}, polling every 5min (attempt {attempt+1}/{max_retries})")
                     while time.time() < wait_until:
                         sleep_until = min(wait_until, time.time() + 300)
                         time.sleep(max(60, sleep_until - time.time()))
@@ -549,7 +550,9 @@ class PiAgentClient:
                     # Already handled above, but catch if raise_for_status hits first
                     self.pollen_gate.mark_depleted_from_response(e.response)
                     wait_until = self.pollen_gate._next_hour_reset(time.time())
-                    print(f"[Pi-Agent] Pollen depleted (402). Polling every 5min until reset (attempt {attempt+1}/{max_retries})")
+                    reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))
+                    wait_minutes = (wait_until - time.time()) / 60
+                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_minutes:.1f}min until reset ~{reset_at}, polling every 5min (attempt {attempt+1}/{max_retries})")
                     while time.time() < wait_until:
                         sleep_until = min(wait_until, time.time() + 300)
                         time.sleep(max(60, sleep_until - time.time()))
@@ -2086,6 +2089,8 @@ class PiAgentClient:
             specific enough to fail. Vague explorations like "study X further" or
             "extend Y" are not hypotheses — they are homework. Give us ideas that
             could change how we think about the problem.
+
+            Soli Deo Gloria.
         """)
 
         # LLM enrichment: add mathematical depth and precision
