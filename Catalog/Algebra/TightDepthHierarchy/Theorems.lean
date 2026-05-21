@@ -4,7 +4,7 @@
 This file proves the tight depth hierarchy theorem for inverse-free EML expressions:
 no inverse-free EMLExpr of depth D can represent `iterExp n` for any `n > D`.
 -/
-import Algebra.TightDepthHierarchy.Defs
+import Speculative.TightDepthHierarchy.Defs
 
 noncomputable section
 
