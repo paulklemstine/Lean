@@ -1,1001 +1,724 @@
 #!/usr/bin/env python3
 """
-Applications: Primality Testing in Practice
+Applications of the Unified Witness Framework for Primality Testing
 
-Demonstrates real-world applications of Miller-Rabin and AKS primality testing
-in cryptography, random number generation, and computational number theory.
+Demonstrates real-world applications:
+1. Certified primality testing with confidence bounds
+2. Carmichael number detection and analysis
+3. Spectral analysis of pseudoprime structure
+4. Deterministic hitting set construction
+5. AKS certificate verification
+
+Each application connects to formally verified theorems in Lean 4.
 """
 
-import math
-import random
-import time
-from typing import List, Tuple, Optional
 from algorithms import (
-    miller_rabin, miller_rabin_single_round, decompose_twos,
-    euler_totient, all_miller_rabin_liars, jacobi_symbol,
-    solovay_strassen, aks_primality_test, find_strong_pseudoprimes,
-    is_perfect_power
+    is_strong_probable_prime, miller_rabin_test,
+    compute_strong_liar_set, compute_mr_base_set,
+    aks_poly_congruence_check, aks_full_check,
+    additive_energy, sumset_size, spectral_regularity_score,
+    repeated_squaring_orbit, orbit_period,
+    two_adic_decomposition, euler_totient,
+    liar_density, find_carmichael_numbers
 )
+from math import gcd, isqrt, log2, log
+from typing import List, Set, Tuple
 
 
-# ============================================================
-# CRYPTOGRAPHIC KEY GENERATION
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════════════════
+#  APPLICATION 1: Certified Primality Testing
+# ═══════════════════════════════════════════════════════════════════════════════
 
-def generate_probable_prime(bits: int, rounds: int = 40) -> int:
+def certified_primality_test(n: int, confidence_bits: int = 128) -> dict:
     """
-    Generate a probable prime of given bit length using Miller-Rabin.
-    
-    This mirrors what real cryptographic libraries do (e.g., OpenSSL).
-    
-    Expected attempts: O(bits) by the Prime Number Theorem
-    Each attempt: O(rounds · bits²) for Miller-Rabin
+    Primality test with formal confidence guarantee.
+
+    By the amplification theorem (millerRabin_k_round_error_bound'),
+    k rounds of Miller–Rabin give error probability ≤ (1/4)^k.
+    For confidence_bits bits of security, we need k ≥ confidence_bits/2.
+
+    Args:
+        n: Integer to test
+        confidence_bits: Desired security level (e.g., 128 for 2^{-128} error)
+
+    Returns:
+        Dictionary with test results and confidence analysis
     """
-    while True:
-        # Generate random odd number of correct bit length
-        n = random.getrandbits(bits)
-        n |= (1 << (bits - 1)) | 1  # Set MSB and LSB
-        
-        result = miller_rabin(n, k=rounds)
-        if result.is_probable_prime:
-            return n
-
-
-def generate_safe_prime(bits: int, rounds: int = 40) -> int:
-    """
-    Generate a safe prime p where (p-1)/2 is also prime.
-    
-    Safe primes are important for Diffie-Hellman and related protocols.
-    """
-    while True:
-        q = generate_probable_prime(bits - 1, rounds)
-        p = 2 * q + 1
-        if miller_rabin(p, k=rounds).is_probable_prime:
-            return p
-
-
-def rsa_key_generation_demo(bits: int = 64) -> dict:
-    """
-    Demonstrate RSA key generation using Miller-Rabin primality testing.
-    """
-    print(f"\n  Generating {bits}-bit RSA key pair...")
-    
-    start = time.time()
-    p = generate_probable_prime(bits // 2)
-    q = generate_probable_prime(bits // 2)
-    while p == q:
-        q = generate_probable_prime(bits // 2)
-    
-    n = p * q
-    phi = (p - 1) * (q - 1)
-    e = 65537
-    while math.gcd(e, phi) != 1:
-        e += 2
-    d = pow(e, -1, phi)
-    elapsed = time.time() - start
-    
-    # Test encryption/decryption
-    message = random.randint(2, n - 1)
-    ciphertext = pow(message, e, n)
-    decrypted = pow(ciphertext, d, n)
-    
-    result = {
-        'p': p, 'q': q, 'n': n, 'e': e, 'd': d,
-        'message': message, 'ciphertext': ciphertext,
-        'decrypted': decrypted, 'correct': message == decrypted,
-        'time': elapsed
-    }
-    
-    print(f"    p = {p}")
-    print(f"    q = {q}")
-    print(f"    n = {n}")
-    print(f"    e = {e}")
-    print(f"    Message: {message}")
-    print(f"    Encrypted: {ciphertext}")
-    print(f"    Decrypted: {decrypted}")
-    print(f"    Correct: {result['correct']}")
-    print(f"    Time: {elapsed:.4f}s")
-    
-    return result
-
-
-# ============================================================
-# PSEUDOPRIME ANALYSIS
-# ============================================================
-
-def carmichael_number_check(n: int) -> bool:
-    """Check if n is a Carmichael number (composite and a^(n-1) ≡ 1 for all coprime a)."""
+    if n < 2:
+        return {"n": n, "is_prime": False, "certain": True, "method": "trivial"}
     if n < 4:
-        return False
-    # Check composite
-    if all(n % i != 0 for i in range(2, int(n**0.5) + 1)):
-        return False
-    # Check Korselt's criterion
-    for a in range(2, n):
-        if math.gcd(a, n) == 1:
-            if pow(a, n - 1, n) != 1:
-                return False
-    return True
+        return {"n": n, "is_prime": True, "certain": True, "method": "trivial"}
+    if n % 2 == 0:
+        return {"n": n, "is_prime": False, "certain": True, "method": "even"}
 
+    k = (confidence_bits + 1) // 2  # Each round gives 2 bits of security
+    bases = list(range(2, min(2 + k, n)))
 
-def find_carmichael_numbers(limit: int) -> List[int]:
-    """Find Carmichael numbers up to limit using Korselt's criterion."""
-    result = []
-    for n in range(3, limit, 2):
-        # Quick composite check
-        if all(n % i != 0 for i in range(2, min(int(n**0.5) + 1, 100))):
-            continue
-        if is_perfect_power(n) is not None:
-            continue
-        # Korselt's criterion: n is Carmichael iff
-        # n is squarefree and (p-1) | (n-1) for all prime p | n
-        factors = []
-        temp = n
-        p = 2
-        is_squarefree = True
-        while p * p <= temp:
-            count = 0
-            while temp % p == 0:
-                temp //= p
-                count += 1
-            if count > 1:
-                is_squarefree = False
-                break
-            if count == 1:
-                factors.append(p)
-            p += 1
-        if temp > 1:
-            factors.append(temp)
-        
-        if not is_squarefree or len(factors) < 3:
-            continue
-        
-        if all((n - 1) % (p - 1) == 0 for p in factors):
-            result.append(n)
-    
-    return result
+    results = []
+    for a in bases:
+        if gcd(a, n) != 1:
+            return {
+                "n": n, "is_prime": False, "certain": True,
+                "method": f"gcd witness: gcd({a}, {n}) = {gcd(a, n)}",
+                "witness": a
+            }
+        results.append(is_strong_probable_prime(n, a))
 
+    all_pass = all(results)
+    witnesses = [bases[i] for i, r in enumerate(results) if not r]
 
-def pseudoprime_statistics(limit: int = 1000) -> None:
-    """Analyze pseudoprime statistics for various bases."""
-    print(f"\n  Strong pseudoprimes to various bases up to {limit}:")
-    
-    for base in [2, 3, 5, 7, 11, 13]:
-        spsp = find_strong_pseudoprimes(base, limit)
-        print(f"    Base {base:>2}: {len(spsp)} strong pseudoprimes — {spsp[:5]}{'...' if len(spsp) > 5 else ''}")
-    
-    # Multi-base strong pseudoprimes
-    print(f"\n  Numbers that fool multiple bases simultaneously:")
-    multi_base_fools = {}
-    for n in range(9, limit, 2):
-        if all(n % i != 0 for i in range(2, int(n**0.5) + 1)):
-            continue
-        bases_fooled = []
-        for b in [2, 3, 5, 7, 11, 13]:
-            if miller_rabin_single_round(n, b):
-                bases_fooled.append(b)
-        if len(bases_fooled) >= 2:
-            multi_base_fools[n] = bases_fooled
-    
-    for n, bases in sorted(multi_base_fools.items())[:10]:
-        print(f"    n={n}: fools bases {bases}")
+    error_bound = (0.25) ** len(bases)
 
-
-# ============================================================
-# PERFORMANCE COMPARISON
-# ============================================================
-
-def benchmark_primality_tests() -> None:
-    """Compare performance of different primality tests."""
-    print("\n  Performance Comparison:")
-    print(f"  {'Method':>20} | {'10-digit':>10} | {'15-digit':>10} | {'20-digit':>10}")
-    print(f"  {'-'*20}-+-{'-'*10}-+-{'-'*10}-+-{'-'*10}")
-    
-    test_numbers = {
-        '10-digit': 1000000007,
-        '15-digit': 100000000000031,
-        '20-digit': 10000000000000000051,
+    return {
+        "n": n,
+        "is_prime": all_pass,
+        "certain": not all_pass,  # If composite, we found a witness
+        "rounds": len(bases),
+        "error_bound": error_bound,
+        "confidence_bits": -log2(error_bound) if error_bound > 0 else float('inf'),
+        "witnesses": witnesses if not all_pass else [],
+        "method": "Miller-Rabin"
     }
-    
-    for method_name, method in [
-        ('Miller-Rabin (k=1)', lambda n: miller_rabin(n, k=1).is_probable_prime),
-        ('Miller-Rabin (k=10)', lambda n: miller_rabin(n, k=10).is_probable_prime),
-        ('Miller-Rabin (k=40)', lambda n: miller_rabin(n, k=40).is_probable_prime),
-        ('Solovay-Strassen', lambda n: solovay_strassen(n, k=20)),
-    ]:
-        times = {}
-        for label, n in test_numbers.items():
-            start = time.time()
-            for _ in range(100):
-                method(n)
-            elapsed = (time.time() - start) / 100
-            times[label] = f"{elapsed*1000:.3f}ms"
-        
-        print(f"  {method_name:>20} | {times['10-digit']:>10} | {times['15-digit']:>10} | {times['20-digit']:>10}")
 
 
-# ============================================================
-# INTERACTIVE DEMOS
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════════════════
+#  APPLICATION 2: Carmichael Number Analysis
+# ═══════════════════════════════════════════════════════════════════════════════
 
-def demo_cryptographic_application():
-    """Full demonstration of cryptographic primality testing."""
-    print("=" * 60)
-    print("APPLICATION: RSA Key Generation")
-    print("=" * 60)
-    rsa_key_generation_demo(64)
+def analyze_carmichael_structure(n: int) -> dict:
+    """
+    Detailed structural analysis of a Carmichael number.
+
+    Carmichael numbers are the worst case for Fermat tests (all coprime
+    bases pass), but Miller–Rabin still detects them with high probability.
+    The quarter bound (strongLiarSet_card_le_quarter') guarantees ≤ 25% liars.
+
+    Args:
+        n: Suspected Carmichael number
+
+    Returns:
+        Structural analysis dictionary
+    """
+    liars = compute_strong_liar_set(n)
+    bases = compute_mr_base_set(n)
+
+    # Factor n
+    factors = []
+    temp = n
+    p = 2
+    while p * p <= temp:
+        while temp % p == 0:
+            factors.append(p)
+            temp //= p
+        p += 1
+    if temp > 1:
+        factors.append(temp)
+
+    s, d = two_adic_decomposition(n - 1)
+    phi = euler_totient(n)
+
+    # Check Korselt's criterion
+    unique_factors = list(set(factors))
+    is_squarefree = len(factors) == len(unique_factors)
+    korselt = is_squarefree and all((n - 1) % (p - 1) == 0 for p in unique_factors)
+
+    # Spectral analysis
+    reg_score = spectral_regularity_score(liars, n) if len(liars) > 1 else 0
+
+    return {
+        "n": n,
+        "factorization": factors,
+        "is_squarefree": is_squarefree,
+        "is_carmichael": korselt and len(unique_factors) >= 3,
+        "phi_n": phi,
+        "n_minus_1_decomp": f"2^{s} * {d}",
+        "liar_count": len(liars),
+        "base_count": len(bases),
+        "liar_density": len(liars) / len(bases) if bases else 0,
+        "quarter_bound_satisfied": 4 * len(liars) <= len(bases),
+        "spectral_regularity": reg_score,
+        "first_witness": min(bases - liars) if bases - liars else None,
+    }
 
 
-def demo_pseudoprime_landscape():
-    """Explore the pseudoprime landscape."""
-    print("\n" + "=" * 60)
-    print("APPLICATION: Pseudoprime Landscape Analysis")
-    print("=" * 60)
-    
-    print("\n  Carmichael numbers up to 10000:")
-    carmichaels = find_carmichael_numbers(10000)
-    for c in carmichaels:
-        # Factor it
-        factors = []
-        temp = c
-        p = 2
-        while p * p <= temp:
-            while temp % p == 0:
-                factors.append(p)
-                temp //= p
-            p += 1
-        if temp > 1:
-            factors.append(temp)
-        liars = all_miller_rabin_liars(c)
-        print(f"    {c} = {'×'.join(map(str, factors))}, "
-              f"MR liars: {len(liars)}/{c-1} = {len(liars)/(c-1):.4f}")
-    
-    pseudoprime_statistics()
+# ═══════════════════════════════════════════════════════════════════════════════
+#  APPLICATION 3: Deterministic Hitting Set Construction
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def find_minimal_hitting_set(n: int, max_size: int = 20) -> List[int]:
+    """
+    Find a small set of bases that certifies compositeness of n.
+
+    A "hitting set" for Miller–Rabin is a set of bases such that
+    every composite passes through at least one witness. The liar
+    cardinality bound (strongLiarSet_card_le_quarter') guarantees
+    that random bases work with probability ≥ 3/4 each round.
+
+    This function greedily constructs a minimal-size witness set.
+
+    Args:
+        n: Composite number to certify
+        max_size: Maximum hitting set size
+
+    Returns:
+        List of witness bases, or empty if n appears prime
+    """
+    for a in range(2, min(n, 2 + max_size)):
+        if gcd(a, n) > 1 and gcd(a, n) < n:
+            return [a]  # GCD witness
+        if not is_strong_probable_prime(n, a):
+            return [a]  # Single MR witness
+
+    return []  # No witness found; n is likely prime
 
 
-def demo_performance():
-    """Performance benchmarks."""
-    print("\n" + "=" * 60)
-    print("APPLICATION: Performance Benchmarks")
-    print("=" * 60)
-    benchmark_primality_tests()
+# ═══════════════════════════════════════════════════════════════════════════════
+#  APPLICATION 4: Spectral Pseudoprime Classification
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def classify_composite_spectrally(n: int) -> dict:
+    """
+    Classify a composite number by the spectral properties of its liar set.
+
+    The spectral sparsity conjecture predicts that Carmichael numbers
+    maximize spectral regularity among squarefree composites.
+
+    Related to Lean theorems:
+    - many_strong_liars_force_collision_obstruction'
+    - strongLiar_spectral_upper_bound'
+
+    Args:
+        n: Odd composite ≥ 9
+
+    Returns:
+        Classification dictionary
+    """
+    liars = compute_strong_liar_set(n)
+    bases = compute_mr_base_set(n)
+    m = len(liars)
+
+    if m < 2:
+        return {"n": n, "class": "trivial", "liar_count": m}
+
+    energy = additive_energy(liars, n)
+    sset = sumset_size(liars, n)
+    reg = spectral_regularity_score(liars, n)
+
+    # Classify
+    if m == len(bases):
+        cls = "prime"
+    elif 4 * m > len(bases):
+        cls = "anomalous"  # Shouldn't happen for composites
+    elif reg > 0.5:
+        cls = "high_regularity"
+    elif reg > 0.1:
+        cls = "moderate_regularity"
+    else:
+        cls = "low_regularity"
+
+    return {
+        "n": n,
+        "class": cls,
+        "liar_count": m,
+        "base_count": len(bases),
+        "density": m / len(bases) if bases else 0,
+        "additive_energy": energy,
+        "sumset_size": sset,
+        "regularity_score": reg,
+        "energy_ratio": energy / m**3 if m > 0 else 0,
+        "random_threshold": m**3 / n if n > 0 else 0,
+    }
 
 
-def demo_prime_generation():
-    """Prime generation for various applications."""
-    print("\n" + "=" * 60)
-    print("APPLICATION: Prime Number Generation")
-    print("=" * 60)
-    
-    for bits in [16, 32, 64, 128]:
-        start = time.time()
-        p = generate_probable_prime(bits)
-        elapsed = time.time() - start
-        print(f"\n  {bits}-bit probable prime: {p}")
-        print(f"    Time: {elapsed:.4f}s")
-        print(f"    Digits: {len(str(p))}")
-    
-    print("\n  Safe prime generation:")
-    for bits in [16, 32]:
-        start = time.time()
-        p = generate_safe_prime(bits)
-        q = (p - 1) // 2
-        elapsed = time.time() - start
-        print(f"    {bits}-bit safe prime: p={p}, q=(p-1)/2={q}")
-        print(f"    Time: {elapsed:.4f}s")
+# ═══════════════════════════════════════════════════════════════════════════════
+#  APPLICATION 5: AKS Certificate Verification
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def verify_aks_certificate(n: int, r: int, amax: int) -> dict:
+    """
+    Verify an AKS primality certificate.
+
+    Corresponds to Lean structure `AKSCertificate'` and theorem
+    `aks_prime_certificate'`.
+
+    An AKS certificate (n, r, amax) certifies primality if:
+    1. ordLarge: multiplicative order of n mod r > (log₂ n)²
+    2. gcdClean: no d in {2,…,r} divides n (or d = n)
+    3. congruenceWindow: (X+a)^n ≡ X^n + a mod (X^r-1, n) for a=1,…,amax
+    4. amaxSufficient: amax ≥ ⌊√φ(r)⌋ · log₂(n)
+
+    Args:
+        n: Integer to certify
+        r: Order parameter
+        amax: Test window size
+
+    Returns:
+        Certificate verification results
+    """
+    if n <= 1:
+        return {"valid": False, "reason": "n ≤ 1"}
+
+    # Check ordLarge
+    log_n_sq = int(log2(n)) ** 2 if n > 1 else 0
+    ord_check = True
+    for k in range(1, log_n_sq + 1):
+        if pow(n, k, r) == 1:
+            ord_check = False
+            break
+
+    # Check gcdClean
+    gcd_check = True
+    gcd_failure = None
+    for d in range(2, r + 1):
+        g = gcd(d, n)
+        if g > 1 and g < n:
+            gcd_check = False
+            gcd_failure = d
+            break
+
+    # Check amaxSufficient
+    phi_r = euler_totient(r)
+    required_amax = isqrt(phi_r) * int(log2(n)) if n > 1 else 0
+    amax_check = amax >= required_amax
+
+    # Check polynomial congruences
+    cong_results = {}
+    all_cong = True
+    for a in range(1, amax + 1):
+        result = aks_poly_congruence_check(n, r, a)
+        cong_results[a] = result
+        if not result:
+            all_cong = False
+
+    return {
+        "n": n, "r": r, "amax": amax,
+        "ordLarge": ord_check,
+        "gcdClean": gcd_check,
+        "gcd_failure": gcd_failure,
+        "amaxSufficient": amax_check,
+        "required_amax": required_amax,
+        "congruences_pass": all_cong,
+        "congruence_details": cong_results,
+        "certificate_valid": ord_check and gcd_check and amax_check and all_cong,
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  MAIN DEMO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def main():
+    print("=" * 70)
+    print("  Applications of the Unified Witness Framework")
+    print("=" * 70)
+
+    # Application 1: Certified Testing
+    print("\n─── APPLICATION 1: Certified Primality Testing ───")
+    for n in [127, 561, 1009, 2047, 1729]:
+        result = certified_primality_test(n, confidence_bits=64)
+        status = "PRIME" if result["is_prime"] else "COMPOSITE"
+        cert = "certain" if result["certain"] else f"error ≤ 2^{-result.get('confidence_bits', 0):.0f}"
+        print(f"  n = {n:5d}: {status:9s} ({cert})")
+        if result.get("witnesses"):
+            print(f"            witness: base {result['witnesses'][0]}")
+
+    # Application 2: Carmichael Analysis
+    print("\n─── APPLICATION 2: Carmichael Number Analysis ───")
+    carmichaels = [561, 1105, 1729]
+    for n in carmichaels:
+        info = analyze_carmichael_structure(n)
+        print(f"\n  n = {n}: factors = {info['factorization']}")
+        print(f"    Carmichael: {info['is_carmichael']}, "
+              f"φ(n) = {info['phi_n']}")
+        print(f"    Liars: {info['liar_count']}/{info['base_count']} "
+              f"(density {info['liar_density']:.4f})")
+        print(f"    Quarter bound: {'✓' if info['quarter_bound_satisfied'] else '✗'}")
+        print(f"    First witness: base {info['first_witness']}")
+
+    # Application 3: Hitting Sets
+    print("\n─── APPLICATION 3: Deterministic Hitting Sets ───")
+    composites = [9, 15, 25, 341, 561, 1105, 1729, 2821]
+    for n in composites:
+        hs = find_minimal_hitting_set(n)
+        print(f"  n = {n:5d}: hitting set = {hs}")
+
+    # Application 4: Spectral Classification
+    print("\n─── APPLICATION 4: Spectral Classification ───")
+    print(f"  {'n':>5s}  {'Class':>18s}  {'|L|':>4s}  {'Density':>8s}  {'E/|L|³':>8s}")
+    for n in [9, 15, 21, 25, 35, 49, 77, 91, 221, 341, 561, 1105, 1729]:
+        info = classify_composite_spectrally(n)
+        if info["liar_count"] > 1:
+            print(f"  {n:5d}  {info['class']:>18s}  {info['liar_count']:4d}  "
+                  f"{info['density']:8.4f}  {info['energy_ratio']:8.4f}")
+
+    # Application 5: AKS Certificates
+    print("\n─── APPLICATION 5: AKS Certificate Verification ───")
+    for p in [7, 11, 13]:
+        cert = verify_aks_certificate(p, r=5, amax=4)
+        print(f"  n = {p:3d}, r = 5, amax = 4: "
+              f"congruences {'ALL PASS' if cert['congruences_pass'] else 'SOME FAIL'}")
+
+    for n in [9, 15, 21]:
+        cert = verify_aks_certificate(n, r=5, amax=4)
+        print(f"  n = {n:3d}, r = 5, amax = 4: "
+              f"congruences {'ALL PASS' if cert['congruences_pass'] else 'SOME FAIL'}")
+
+    print("\n" + "=" * 70)
+    print("  Applications demo complete.")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
-    print("\n" + "█" * 60)
-    print("  PRIMALITY TESTING: Real-World Applications")
-    print("█" * 60)
-    
-    demo_cryptographic_application()
-    demo_pseudoprime_landscape()
-    demo_prime_generation()
-    demo_performance()
-    
-    print("\nAll application demos complete!")
+    main()
 
 
 #!/usr/bin/env python3
 """
-Demo: Miller-Rabin and AKS Primality Testing
+Primality Testing Demo — Unified Witness Framework
 
-Demonstrates the key mathematical concepts behind randomized and
-deterministic primality testing with concrete numerical examples.
+Interactive demonstration of Miller–Rabin, AKS polynomial congruences,
+and spectral analysis of strong liar sets.
+
+Usage:
+    python demo.py [n]
+
+If n is provided, analyze that specific integer.
+Otherwise, run a comprehensive demo on various interesting integers.
 """
 
-import math
-import random
-from typing import List, Tuple, Optional
+import sys
+from math import gcd, isqrt, log2
+from collections import Counter
+from typing import List, Tuple, Set, Optional
 
 
-def decompose_twos(m: int) -> Tuple[int, int]:
+# ─── Core Arithmetic ─────────────────────────────────────────────────────────
+
+def two_adic_decomposition(m: int) -> Tuple[int, int]:
     """Decompose m = 2^s * d with d odd."""
+    if m == 0:
+        return (0, 0)
     s = 0
     d = m
     while d % 2 == 0:
         d //= 2
         s += 1
-    return s, d
+    return (s, d)
 
 
-def is_strong_pseudoprime_base(n: int, a: int) -> bool:
-    """Check if a is a strong pseudoprime base for n (Miller-Rabin liar)."""
-    if math.gcd(a, n) != 1:
+def mod_pow(base: int, exp: int, mod: int) -> int:
+    """Modular exponentiation."""
+    return pow(base, exp, mod)
+
+
+def is_strong_probable_prime(n: int, a: int) -> bool:
+    """Test if a is a strong probable prime base for n (Miller–Rabin)."""
+    if n < 2:
         return False
-    s, d = decompose_twos(n - 1)
-    x = pow(a, d, n)
+    if gcd(a, n) != 1:
+        return False
+    s, d = two_adic_decomposition(n - 1)
+    x = mod_pow(a, d, n)
     if x == 1 or x == n - 1:
         return True
     for _ in range(s - 1):
-        x = pow(x, 2, n)
+        x = mod_pow(x, 2, n)
         if x == n - 1:
             return True
     return False
 
 
-def miller_rabin_liars(n: int) -> List[int]:
-    """Find all Miller-Rabin liars for n in {1, ..., n-1}."""
-    return [a for a in range(1, n) if is_strong_pseudoprime_base(n, a)]
-
-
-def miller_rabin_test(n: int, k: int = 20) -> bool:
-    """Miller-Rabin primality test with k rounds."""
+def is_prime_trial(n: int) -> bool:
+    """Trial division primality test."""
     if n < 2:
         return False
     if n < 4:
         return True
-    if n % 2 == 0:
+    if n % 2 == 0 or n % 3 == 0:
         return False
-    for _ in range(k):
-        a = random.randint(2, n - 2)
-        if not is_strong_pseudoprime_base(n, a):
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
             return False
+        i += 6
     return True
 
 
-def aks_polynomial_congruence(n: int, r: int, a: int) -> bool:
-    """Check (X + a)^n ≡ X^n + a (mod n, X^r - 1) using polynomial arithmetic."""
-    # Work with polynomials mod (n, X^r - 1)
-    # Represent polynomial as list of coefficients mod n, length r
-    
-    # Start with (X + a) mod (n, X^r - 1)
+def miller_rabin_check(n: int, bases: List[int]) -> bool:
+    """Multi-round Miller–Rabin: returns True if n passes for all bases."""
+    return all(is_strong_probable_prime(n, a) for a in bases)
+
+
+# ─── Strong Liar Set Computation ─────────────────────────────────────────────
+
+def compute_strong_liar_set(n: int) -> Set[int]:
+    """Compute the set of strong liars for n in {2, …, n-1}."""
+    if n < 3:
+        return set()
+    return {a for a in range(2, n) if gcd(a, n) == 1 and is_strong_probable_prime(n, a)}
+
+
+def compute_mr_base_set(n: int) -> Set[int]:
+    """Compute the set of admissible MR bases: {a ∈ {2,…,n-1} | gcd(a,n)=1}."""
+    if n < 3:
+        return set()
+    return {a for a in range(2, n) if gcd(a, n) == 1}
+
+
+# ─── AKS Polynomial Congruence ───────────────────────────────────────────────
+
+def poly_mod_xr_minus_1(coeffs: List[int], r: int, n: int) -> List[int]:
+    """Reduce polynomial mod (X^r - 1) and mod n."""
+    result = [0] * r
+    for i, c in enumerate(coeffs):
+        result[i % r] = (result[i % r] + c) % n
+    return result
+
+
+def poly_mul_mod(p: List[int], q: List[int], r: int, n: int) -> List[int]:
+    """Multiply two polynomials mod (X^r - 1, n)."""
+    result = [0] * r
+    for i, a in enumerate(p):
+        if a == 0:
+            continue
+        for j, b in enumerate(q):
+            if b == 0:
+                continue
+            idx = (i + j) % r
+            result[idx] = (result[idx] + a * b) % n
+    return result
+
+
+def poly_pow_mod(base_coeffs: List[int], exp: int, r: int, n: int) -> List[int]:
+    """Compute polynomial^exp mod (X^r - 1, n) by repeated squaring."""
+    result = [0] * r
+    result[0] = 1  # polynomial "1"
+    b = base_coeffs[:]
+    while exp > 0:
+        if exp % 2 == 1:
+            result = poly_mul_mod(result, b, r, n)
+        b = poly_mul_mod(b, b, r, n)
+        exp //= 2
+    return result
+
+
+def aks_poly_check(n: int, r: int, a: int) -> bool:
+    """Check (X + a)^n ≡ X^n + a mod (X^r - 1, n)."""
+    # LHS: (X + a)^n mod (X^r - 1, n)
     base = [0] * r
     base[0] = a % n  # constant term
     if r > 1:
         base[1] = 1  # X term
     elif r == 1:
         base[0] = (base[0] + 1) % n
-    
-    # Compute base^n mod (n, X^r - 1) by repeated squaring
-    result = [0] * r
-    result[0] = 1  # start with 1
-    
-    exp = n
-    b = base[:]
-    while exp > 0:
-        if exp % 2 == 1:
-            result = poly_mul_mod(result, b, n, r)
-        b = poly_mul_mod(b, b, n, r)
-        exp //= 2
-    
-    # Compute X^n + a mod (n, X^r - 1)
-    target = [0] * r
-    target[n % r] = (target[n % r] + 1) % n
-    target[0] = (target[0] + a) % n
-    
-    return result == target
+    lhs = poly_pow_mod(base, n, r, n)
+
+    # RHS: X^n + a mod (X^r - 1, n)
+    rhs = [0] * r
+    rhs[n % r] = (rhs[n % r] + 1) % n
+    rhs[0] = (rhs[0] + a) % n
+
+    return lhs == rhs
 
 
-def poly_mul_mod(p1: List[int], p2: List[int], n: int, r: int) -> List[int]:
-    """Multiply two polynomials mod (n, X^r - 1)."""
-    result = [0] * r
-    for i in range(r):
-        if p1[i] == 0:
-            continue
-        for j in range(r):
-            if p2[j] == 0:
-                continue
-            idx = (i + j) % r
-            result[idx] = (result[idx] + p1[i] * p2[j]) % n
-    return result
+# ─── Additive Energy / Spectral Analysis ─────────────────────────────────────
+
+def additive_energy(S: Set[int], n: int) -> int:
+    """Compute additive energy E(S) = |{(a,b,c,d) ∈ S^4 : a+b ≡ c+d (mod n)}|."""
+    sum_counts = Counter()
+    for a in S:
+        for b in S:
+            sum_counts[(a + b) % n] += 1
+    return sum(c * c for c in sum_counts.values())
 
 
-def order_mod(n: int, r: int) -> int:
-    """Compute the multiplicative order of n modulo r."""
-    if math.gcd(n, r) != 1:
-        return 0
-    order = 1
-    current = n % r
-    while current != 1:
-        current = (current * n) % r
-        order += 1
-    return order
+def sumset_size(S: Set[int], n: int) -> int:
+    """Compute |S + S mod n|."""
+    return len({(a + b) % n for a in S for b in S})
 
 
-def euler_totient(n: int) -> int:
-    """Compute Euler's totient function φ(n)."""
-    result = n
-    p = 2
-    temp = n
-    while p * p <= temp:
-        if temp % p == 0:
-            while temp % p == 0:
-                temp //= p
-            result -= result // p
-        p += 1
-    if temp > 1:
-        result -= result // temp
-    return result
+# ─── Demo Functions ──────────────────────────────────────────────────────────
+
+def analyze_integer(n: int, verbose: bool = True):
+    """Comprehensive primality analysis of n."""
+    if verbose:
+        print(f"\n{'='*60}")
+        print(f"  Analyzing n = {n}")
+        print(f"{'='*60}")
+
+    prime = is_prime_trial(n)
+    print(f"  Prime: {prime}")
+    print(f"  Odd:   {n % 2 == 1}")
+
+    if n < 3 or n % 2 == 0:
+        print(f"  (Skipping MR analysis for n < 3 or even n)")
+        return
+
+    s, d = two_adic_decomposition(n - 1)
+    print(f"  n - 1 = 2^{s} × {d}")
+
+    base_set = compute_mr_base_set(n)
+    liar_set = compute_strong_liar_set(n)
+
+    print(f"\n  MR Base Set size:    |B| = {len(base_set)}")
+    print(f"  Strong Liar Set:     |L| = {len(liar_set)}")
+
+    if len(base_set) > 0:
+        ratio = len(liar_set) / len(base_set)
+        print(f"  Liar density:        |L|/|B| = {ratio:.4f}")
+        print(f"  Quarter bound check: 4·|L| ≤ |B|? "
+              f"{'YES ✓' if 4 * len(liar_set) <= len(base_set) else 'NO (prime!)'}")
+
+    if not prime and len(liar_set) > 0 and len(liar_set) <= 50:
+        print(f"  Liars: {sorted(liar_set)[:20]}{'...' if len(liar_set) > 20 else ''}")
+
+    # Miller–Rabin with standard bases
+    standard_bases = [2, 3, 5, 7, 11, 13]
+    for b in standard_bases:
+        if b < n:
+            result = is_strong_probable_prime(n, b)
+            print(f"  MR base {b:2d}: {'PASS (liar)' if result else 'FAIL (witness)'}")
+
+    # AKS polynomial check for small r
+    if n <= 1000:
+        for r in [3, 5, 7]:
+            if r > 1:
+                results = [aks_poly_check(n, r, a) for a in range(1, min(6, n))]
+                all_pass = all(results)
+                print(f"  AKS(r={r}): {['✓' if x else '✗' for x in results]} "
+                      f"{'ALL PASS' if all_pass else 'SOME FAIL'}")
+
+    # Spectral analysis
+    if not prime and len(liar_set) > 2 and len(liar_set) <= 200:
+        energy = additive_energy(liar_set, n)
+        m = len(liar_set)
+        generic_threshold = m ** 3 / n if n > 0 else 0
+        print(f"\n  Spectral Analysis:")
+        print(f"    Additive energy E(L):     {energy}")
+        print(f"    |L|³/n (random threshold): {generic_threshold:.1f}")
+        print(f"    E(L) / |L|³:              {energy / m**3:.4f}" if m > 0 else "")
+        print(f"    Sumset |L+L|:             {sumset_size(liar_set, n)}")
 
 
-def is_perfect_power(n: int) -> bool:
-    """Check if n is a perfect power (n = a^b, b ≥ 2)."""
-    if n <= 3:
-        return False
-    for b in range(2, int(math.log2(n)) + 1):
-        a = round(n ** (1.0 / b))
-        for candidate in [a - 1, a, a + 1]:
-            if candidate >= 2 and candidate ** b == n:
-                return True
-    return False
+def demo_carmichael():
+    """Analyze Carmichael numbers — the hardest composites for Fermat tests."""
+    print("\n" + "─" * 60)
+    print("  CARMICHAEL NUMBERS")
+    print("  These pass the Fermat test for ALL coprime bases,")
+    print("  but Miller–Rabin detects them.")
+    print("─" * 60)
 
-
-def aks_test(n: int) -> bool:
-    """Simplified AKS primality test."""
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    
-    # Check perfect power
-    if is_perfect_power(n):
-        return False
-    
-    # Find suitable r
-    max_k = int(math.log2(n)) ** 2
-    r = 2
-    while r < n:
-        if math.gcd(n, r) > 1:
-            if r == n:
-                return True
-            r += 1
-            continue
-        if order_mod(n, r) > max_k:
-            break
-        r += 1
-    
-    # Check for small factors
-    for a in range(2, min(r + 1, n)):
-        if n % a == 0:
-            return n == a
-    
-    if n <= r:
-        return True
-    
-    # Polynomial congruence checks
-    bound = int(math.sqrt(euler_totient(r)) * math.log2(n))
-    for a in range(1, bound + 1):
-        if not aks_polynomial_congruence(n, r, a):
-            return False
-    
-    return True
-
-
-# ============================================================
-# DEMONSTRATIONS
-# ============================================================
-
-def demo_two_adic_decomposition():
-    """Show two-adic decompositions for various numbers."""
-    print("=" * 60)
-    print("TWO-ADIC DECOMPOSITION: m = 2^s · d (d odd)")
-    print("=" * 60)
-    for m in [1, 2, 3, 4, 6, 12, 24, 100, 1000, 340]:
-        s, d = decompose_twos(m)
-        print(f"  {m:>5} = 2^{s} × {d}")
-    print()
-
-
-def demo_miller_rabin_liars():
-    """Demonstrate Miller-Rabin liars for small composites."""
-    print("=" * 60)
-    print("MILLER-RABIN LIARS FOR SMALL ODD COMPOSITES")
-    print("=" * 60)
-    composites = [9, 15, 21, 25, 27, 33, 35, 45, 49, 51, 55, 63, 65, 75, 77, 91]
-    for n in composites:
-        liars = miller_rabin_liars(n)
-        ratio = len(liars) / (n - 1)
-        quarter = (n - 1) / 4
-        print(f"  n={n:>3}: liars={len(liars):>3}/{n-1}, "
-              f"ratio={ratio:.4f}, bound=(n-1)/4={quarter:.1f}, "
-              f"≤1/4? {'YES' if len(liars) <= quarter else 'NO'}")
-    print()
-
-
-def demo_carmichael_numbers():
-    """Demonstrate Carmichael numbers - where Fermat test fails but MR succeeds."""
-    print("=" * 60)
-    print("CARMICHAEL NUMBERS: Fermat vs Miller-Rabin")
-    print("=" * 60)
-    carmichaels = [561, 1105, 1729, 2465, 2821, 6601]
+    carmichaels = [561, 1105, 1729, 2465, 2821, 6601, 8911]
     for n in carmichaels:
-        # Fermat liars: a with a^(n-1) ≡ 1 (mod n) and gcd(a,n) = 1
-        fermat_liars = sum(1 for a in range(1, n) 
-                          if math.gcd(a, n) == 1 and pow(a, n-1, n) == 1)
-        mr_liars_list = miller_rabin_liars(n)
-        mr_count = len(mr_liars_list)
-        euler_tot = euler_totient(n)
-        
-        print(f"  n={n}: φ(n)={euler_tot}, "
-              f"Fermat liars={fermat_liars} ({fermat_liars/euler_tot*100:.1f}% of units), "
-              f"MR liars={mr_count} ({mr_count/(n-1)*100:.1f}% of {n-1})")
-    print()
-    print("  Observation: Fermat liars = ALL units for Carmichael numbers!")
-    print("  But MR liars are always ≤ (n-1)/4 for composites.\n")
+        analyze_integer(n)
 
 
-def demo_aks_congruence():
-    """Demonstrate the AKS polynomial congruence."""
-    print("=" * 60)
-    print("AKS POLYNOMIAL CONGRUENCE: (X+a)^n ≡ X^n+a mod (n, X^r-1)")
-    print("=" * 60)
-    
-    # For primes, congruence always holds
-    print("\n  Primes (should all pass):")
-    for p in [2, 3, 5, 7, 11, 13]:
-        results = []
-        for r in [2, 3, 5]:
-            for a in range(1, 4):
-                results.append(aks_polynomial_congruence(p, r, a))
-        print(f"    p={p:>2}: all pass? {all(results)}")
-    
-    # For composites, congruence fails for some a
-    print("\n  Composites (should fail for some a):")
-    for n in [4, 6, 9, 15, 21]:
-        r = 3
-        results = [(a, aks_polynomial_congruence(n, r, a)) for a in range(1, 6)]
-        failures = [a for a, passed in results if not passed]
-        print(f"    n={n:>2}, r={r}: failures at a={failures}")
-    print()
+def demo_primes():
+    """Analyze primes — all bases should be liars."""
+    print("\n" + "─" * 60)
+    print("  PRIME NUMBERS")
+    print("  All coprime bases are 'liars' (they all pass).")
+    print("─" * 60)
+
+    primes = [7, 13, 97, 127, 541]
+    for p in primes:
+        analyze_integer(p)
+
+
+def demo_composites():
+    """Analyze random odd composites."""
+    print("\n" + "─" * 60)
+    print("  ODD COMPOSITES")
+    print("  Most bases should be witnesses (detect compositeness).")
+    print("─" * 60)
+
+    composites = [9, 15, 21, 25, 35, 49, 77, 91, 221, 341]
+    for n in composites:
+        analyze_integer(n)
 
 
 def demo_error_amplification():
-    """Demonstrate error amplification with repeated rounds."""
-    print("=" * 60)
-    print("ERROR AMPLIFICATION: k rounds → error ≤ (1/4)^k")
-    print("=" * 60)
-    print(f"\n  {'k rounds':>10} | {'Max error prob':>15} | {'Decimal':>15} | {'Bits of security':>18}")
-    print(f"  {'-'*10}-+-{'-'*15}-+-{'-'*15}-+-{'-'*18}")
-    for k in [1, 2, 5, 10, 20, 40, 64, 128]:
-        error = (1/4) ** k
-        bits = 2 * k
-        if error > 1e-300:
-            print(f"  {k:>10} | {'(1/4)^' + str(k):>15} | {error:>15.2e} | {bits:>18}")
-        else:
-            print(f"  {k:>10} | {'(1/4)^' + str(k):>15} | {'< 10^-300':>15} | {bits:>18}")
-    print()
+    """Demonstrate error amplification with multiple rounds."""
+    print("\n" + "─" * 60)
+    print("  ERROR AMPLIFICATION")
+    print("  k rounds → error ≤ (1/4)^k")
+    print("─" * 60)
+
+    n = 561  # Carmichael number
+    base_set = compute_mr_base_set(n)
+    liar_set = compute_strong_liar_set(n)
+    B = len(base_set)
+    L = len(liar_set)
+
+    print(f"\n  n = {n} (Carmichael), |B| = {B}, |L| = {L}")
+    print(f"  Single-round error: |L|/|B| = {L/B:.4f}")
+    print(f"\n  {'k':>3s}  {'(|L|/|B|)^k':>15s}  {'(1/4)^k':>15s}  {'Bound holds?':>12s}")
+    print(f"  {'─'*50}")
+
+    for k in range(1, 11):
+        empirical = (L / B) ** k
+        bound = (1 / 4) ** k
+        holds = empirical <= bound
+        print(f"  {k:3d}  {empirical:15.10f}  {bound:15.10f}  {'✓' if holds else '✗':>12s}")
 
 
-def demo_primality_testing():
-    """Compare Miller-Rabin and AKS on various inputs."""
-    print("=" * 60)
-    print("PRIMALITY TESTING COMPARISON")
-    print("=" * 60)
-    
-    test_numbers = [
-        (2, "smallest prime"),
-        (7, "small prime"),
-        (15, "composite (3×5)"),
-        (17, "prime"),
-        (561, "Carmichael number"),
-        (1009, "prime"),
-        (1729, "Carmichael (Hardy-Ramanujan)"),
-        (7919, "1000th prime"),
-        (10007, "prime"),
-        (10009, "prime"),
-        (10201, "101²"),
-    ]
-    
-    print(f"\n  {'n':>8} | {'MR result':>10} | {'AKS result':>10} | {'Actually prime?':>15} | Note")
-    print(f"  {'-'*8}-+-{'-'*10}-+-{'-'*10}-+-{'-'*15}-+------")
-    
-    from sympy import isprime
-    
-    for n, note in test_numbers:
-        mr = miller_rabin_test(n, k=20)
+def demo_spectral_conjecture():
+    """Test the spectral sparsity conjecture on small composites."""
+    print("\n" + "─" * 60)
+    print("  SPECTRAL SPARSITY CONJECTURE TEST")
+    print("  Checking additive energy of liar sets")
+    print("─" * 60)
+
+    print(f"\n  {'n':>5s}  {'Prime?':>6s}  {'|L|':>4s}  {'|B|':>4s}  {'E(L)':>8s}  "
+          f"{'|L|³':>8s}  {'E/|L|³':>8s}")
+    print(f"  {'─'*55}")
+
+    for n in range(9, 200, 2):
+        if n % 2 == 0:
+            continue
+        if is_prime_trial(n):
+            continue
+
+        liar_set = compute_strong_liar_set(n)
+        base_set = compute_mr_base_set(n)
+        m = len(liar_set)
+
+        if m < 2:
+            continue
+
+        energy = additive_energy(liar_set, n)
+        cube = m ** 3
+
+        print(f"  {n:5d}  {'N':>6s}  {m:4d}  {len(base_set):4d}  "
+              f"{energy:8d}  {cube:8d}  {energy/cube:.4f}")
+
+
+# ─── Main ────────────────────────────────────────────────────────────────────
+
+def main():
+    if len(sys.argv) > 1:
         try:
-            ak = aks_test(n)
-        except Exception:
-            ak = "timeout"
-        actual = isprime(n)
-        match = "✓" if mr == actual else "✗"
-        print(f"  {n:>8} | {str(mr):>10} | {str(ak):>10} | {str(actual):>15} | {note} {match}")
-    print()
+            n = int(sys.argv[1])
+            analyze_integer(n)
+        except ValueError:
+            print(f"Error: '{sys.argv[1]}' is not a valid integer.")
+            sys.exit(1)
+    else:
+        print("╔══════════════════════════════════════════════════════════╗")
+        print("║   Unified Witness Framework for Primality Testing       ║")
+        print("║   Demo: Miller–Rabin, AKS, and Spectral Analysis       ║")
+        print("╚══════════════════════════════════════════════════════════╝")
 
+        demo_primes()
+        demo_composites()
+        demo_carmichael()
+        demo_error_amplification()
+        demo_spectral_conjecture()
 
-def demo_witness_density():
-    """Show that witness density is always > 3/4 for composites."""
-    print("=" * 60)
-    print("WITNESS DENSITY: Always > 3/4 for odd composites")
-    print("=" * 60)
-    
-    max_ratio = 0
-    worst_n = 0
-    
-    for n in range(3, 500, 2):
-        if all(n % i != 0 for i in range(2, int(n**0.5) + 1)):
-            continue  # skip primes
-        if n < 3:
-            continue
-        liars = miller_rabin_liars(n)
-        ratio = len(liars) / (n - 1)
-        if ratio > max_ratio:
-            max_ratio = ratio
-            worst_n = n
-    
-    print(f"\n  Worst case among odd composites 3..499:")
-    print(f"    n = {worst_n}")
-    print(f"    Liar ratio = {max_ratio:.6f}")
-    print(f"    ≤ 1/4 = 0.25? {'YES' if max_ratio <= 0.25 else 'NO'}")
-    
-    liars = miller_rabin_liars(worst_n)
-    s, d = decompose_twos(worst_n - 1)
-    print(f"    {worst_n} - 1 = 2^{s} × {d}")
-    print(f"    Liars: {liars}")
-    print()
+        print("\n" + "=" * 60)
+        print("  Demo complete. Run with a specific n: python demo.py 561")
+        print("=" * 60)
 
 
 if __name__ == "__main__":
-    print("\n" + "█" * 60)
-    print("  PRIMALITY TESTING: Miller-Rabin & AKS Demonstration")
-    print("█" * 60 + "\n")
-    
-    demo_two_adic_decomposition()
-    demo_miller_rabin_liars()
-    demo_carmichael_numbers()
-    demo_aks_congruence()
-    demo_error_amplification()
-    demo_witness_density()
-    
-    # Only run full comparison if sympy available
-    try:
-        import sympy
-        demo_primality_testing()
-    except ImportError:
-        print("(Skipping full comparison - sympy not installed)")
-    
-    print("Demo complete!")
-
-
-#!/usr/bin/env python3
-"""
-Visualizations: Primality Testing
-
-Generates publication-quality visualizations of Miller-Rabin liar densities,
-pseudoprime distributions, error amplification, and AKS polynomial congruences.
-"""
-
-import math
-import random
-import base64
-import io
-from typing import List, Tuple, Dict
-
-# Use Agg backend for headless rendering
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-
-
-def decompose_twos(m: int) -> Tuple[int, int]:
-    s, d = 0, m
-    while d % 2 == 0:
-        d //= 2
-        s += 1
-    return s, d
-
-
-def miller_rabin_single_round(n: int, a: int) -> bool:
-    if n < 2 or a % n == 0:
-        return n >= 2
-    s, d = decompose_twos(n - 1)
-    x = pow(a, d, n)
-    if x == 1 or x == n - 1:
-        return True
-    for _ in range(s - 1):
-        x = pow(x, 2, n)
-        if x == n - 1:
-            return True
-        if x == 1:
-            return False
-    return False
-
-
-def all_liars(n: int) -> List[int]:
-    return [a for a in range(1, n) if miller_rabin_single_round(n, a)]
-
-
-def is_prime(n: int) -> bool:
-    if n < 2: return False
-    if n < 4: return True
-    if n % 2 == 0: return False
-    for i in range(3, int(n**0.5) + 1, 2):
-        if n % i == 0:
-            return False
-    return True
-
-
-def euler_totient(n: int) -> int:
-    result = n
-    p = 2
-    temp = n
-    while p * p <= temp:
-        if temp % p == 0:
-            while temp % p == 0:
-                temp //= p
-            result -= result // p
-        p += 1
-    if temp > 1:
-        result -= result // temp
-    return result
-
-
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight',
-                facecolor='white', edgecolor='none')
-    buf.seek(0)
-    b64 = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{b64}"
-
-
-def viz_liar_density():
-    """Visualize Miller-Rabin liar density for odd composites."""
-    composites = []
-    densities = []
-    
-    for n in range(9, 500, 2):
-        if is_prime(n):
-            continue
-        liars = all_liars(n)
-        density = len(liars) / (n - 1)
-        composites.append(n)
-        densities.append(density)
-    
-    fig, ax = plt.subplots(1, 1, figsize=(12, 6))
-    
-    ax.scatter(composites, densities, s=15, alpha=0.7, c='steelblue', edgecolors='none')
-    ax.axhline(y=0.25, color='red', linestyle='--', linewidth=2, label='1/4 bound')
-    ax.set_xlabel('Composite number n', fontsize=13)
-    ax.set_ylabel('Liar density |L(n)| / (n-1)', fontsize=13)
-    ax.set_title('Miller-Rabin Liar Density for Odd Composites', fontsize=15, fontweight='bold')
-    ax.legend(fontsize=12)
-    ax.set_ylim(-0.02, 0.35)
-    ax.grid(True, alpha=0.3)
-    
-    return fig_to_base64(fig)
-
-
-def viz_carmichael_vs_fermat():
-    """Compare Fermat liars vs Miller-Rabin liars for Carmichael numbers."""
-    carmichaels = [561, 1105, 1729, 2465, 2821]
-    
-    fermat_ratios = []
-    mr_ratios = []
-    labels = []
-    
-    for n in carmichaels:
-        fermat_liars = sum(1 for a in range(1, n)
-                          if math.gcd(a, n) == 1 and pow(a, n-1, n) == 1)
-        mr_liars = len(all_liars(n))
-        phi = euler_totient(n)
-        
-        fermat_ratios.append(fermat_liars / (n - 1))
-        mr_ratios.append(mr_liars / (n - 1))
-        labels.append(str(n))
-    
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-    
-    x = np.arange(len(labels))
-    width = 0.35
-    
-    bars1 = ax.bar(x - width/2, fermat_ratios, width, label='Fermat liars / (n-1)',
-                   color='#e74c3c', alpha=0.8)
-    bars2 = ax.bar(x + width/2, mr_ratios, width, label='MR liars / (n-1)',
-                   color='#2ecc71', alpha=0.8)
-    
-    ax.axhline(y=0.25, color='orange', linestyle='--', linewidth=2, label='1/4 bound')
-    ax.set_xlabel('Carmichael Number', fontsize=13)
-    ax.set_ylabel('Liar Ratio', fontsize=13)
-    ax.set_title('Fermat vs Miller-Rabin: Carmichael Numbers', fontsize=15, fontweight='bold')
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels)
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3, axis='y')
-    
-    return fig_to_base64(fig)
-
-
-def viz_error_amplification():
-    """Visualize error probability decay with repeated rounds."""
-    ks = list(range(1, 65))
-    errors = [(1/4)**k for k in ks]
-    
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-    
-    ax.semilogy(ks, errors, 'b-', linewidth=2, label='Error ≤ (1/4)^k')
-    
-    # Mark interesting points
-    interesting = {1: '25%', 5: '~10⁻³', 10: '~10⁻⁶',
-                   20: '~10⁻¹²', 40: '~10⁻²⁴', 64: '~10⁻³⁹'}
-    for k, label in interesting.items():
-        if k <= 64:
-            ax.plot(k, (1/4)**k, 'ro', markersize=8)
-            ax.annotate(f'k={k}: {label}', (k, (1/4)**k),
-                       textcoords="offset points", xytext=(10, 10),
-                       fontsize=9, color='red')
-    
-    ax.set_xlabel('Number of rounds k', fontsize=13)
-    ax.set_ylabel('Error probability upper bound', fontsize=13)
-    ax.set_title('Miller-Rabin Error Amplification', fontsize=15, fontweight='bold')
-    ax.legend(fontsize=12)
-    ax.grid(True, alpha=0.3)
-    ax.set_xlim(0, 66)
-    
-    return fig_to_base64(fig)
-
-
-def viz_liar_heatmap():
-    """Create a heatmap showing which bases are liars for which composites."""
-    composites = [n for n in range(9, 100, 2) if not is_prime(n)]
-    bases = list(range(2, 20))
-    
-    data = np.zeros((len(composites), len(bases)))
-    for i, n in enumerate(composites):
-        for j, a in enumerate(bases):
-            if a < n and miller_rabin_single_round(n, a):
-                data[i, j] = 1
-    
-    fig, ax = plt.subplots(1, 1, figsize=(10, 12))
-    
-    im = ax.imshow(data, aspect='auto', cmap='RdYlGn', interpolation='nearest')
-    ax.set_xticks(range(len(bases)))
-    ax.set_xticklabels(bases, fontsize=9)
-    ax.set_yticks(range(0, len(composites), 2))
-    ax.set_yticklabels([composites[i] for i in range(0, len(composites), 2)], fontsize=8)
-    ax.set_xlabel('Base a', fontsize=13)
-    ax.set_ylabel('Composite n', fontsize=13)
-    ax.set_title('Miller-Rabin Liar Heatmap\n(Green = liar, Red = witness)', 
-                 fontsize=14, fontweight='bold')
-    
-    return fig_to_base64(fig)
-
-
-def viz_pseudoprime_distribution():
-    """Show distribution of strong pseudoprimes to base 2."""
-    limit = 5000
-    spsp_2 = []
-    
-    for n in range(3, limit, 2):
-        if is_prime(n):
-            continue
-        if miller_rabin_single_round(n, 2):
-            spsp_2.append(n)
-    
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    
-    # Distribution plot
-    ax1.hist(spsp_2, bins=50, color='steelblue', alpha=0.7, edgecolor='navy')
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('Count', fontsize=12)
-    ax1.set_title(f'Strong Pseudoprimes to Base 2\n(up to {limit})', fontsize=13, fontweight='bold')
-    ax1.grid(True, alpha=0.3)
-    
-    # Cumulative count
-    counts = list(range(1, len(spsp_2) + 1))
-    ax2.plot(spsp_2, counts, 'b-', linewidth=1.5)
-    ax2.set_xlabel('n', fontsize=12)
-    ax2.set_ylabel('Cumulative count', fontsize=12)
-    ax2.set_title(f'Cumulative Strong Pseudoprimes\n(base 2, total: {len(spsp_2)})',
-                  fontsize=13, fontweight='bold')
-    ax2.grid(True, alpha=0.3)
-    
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def viz_squaring_chain():
-    """Visualize the squaring chain for Miller-Rabin test."""
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    
-    examples = [
-        (561, 2, "Composite: 561, base 2 (witness)"),
-        (561, 50, "Composite: 561, base 50 (liar)"),
-        (17, 3, "Prime: 17, base 3"),
-        (1729, 2, "Carmichael: 1729, base 2"),
-    ]
-    
-    for ax, (n, a, title) in zip(axes.flat, examples):
-        s, d = decompose_twos(n - 1)
-        chain = []
-        x = pow(a, d, n)
-        chain.append(x)
-        for _ in range(s):
-            x = pow(x, 2, n)
-            chain.append(x)
-        
-        colors = []
-        for val in chain:
-            if val == 1:
-                colors.append('#2ecc71')  # green for 1
-            elif val == n - 1:
-                colors.append('#f39c12')  # orange for n-1
-            else:
-                colors.append('#e74c3c')  # red for other
-        
-        bars = ax.bar(range(len(chain)), chain, color=colors, edgecolor='black', linewidth=0.5)
-        ax.set_xticks(range(len(chain)))
-        labels = [f'a^(d·2^{i})' if i > 0 else 'a^d' for i in range(len(chain))]
-        ax.set_xticklabels(labels, fontsize=8, rotation=30)
-        ax.set_ylabel('Value mod n', fontsize=10)
-        ax.set_title(title, fontsize=11, fontweight='bold')
-        ax.axhline(y=1, color='green', linestyle=':', alpha=0.5)
-        ax.axhline(y=n-1, color='orange', linestyle=':', alpha=0.5)
-        
-        is_liar = miller_rabin_single_round(n, a)
-        verdict = "LIAR" if is_liar else "WITNESS"
-        ax.text(0.98, 0.95, verdict, transform=ax.transAxes,
-                fontsize=12, fontweight='bold',
-                color='green' if is_liar else 'red',
-                ha='right', va='top',
-                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-    
-    fig.suptitle('Miller-Rabin Squaring Chains', fontsize=15, fontweight='bold', y=1.02)
-    fig.tight_layout()
-    return fig_to_base64(fig)
-
-
-def generate_all_visualizations() -> Dict[str, str]:
-    """Generate all visualizations and return as dict of name -> base64 URI."""
-    print("Generating visualizations...")
-    
-    vizs = {}
-    
-    print("  1/5: Liar density scatter plot...")
-    vizs['liar_density'] = viz_liar_density()
-    
-    print("  2/5: Carmichael comparison...")
-    vizs['carmichael_comparison'] = viz_carmichael_vs_fermat()
-    
-    print("  3/5: Error amplification...")
-    vizs['error_amplification'] = viz_error_amplification()
-    
-    print("  4/5: Pseudoprime distribution...")
-    vizs['pseudoprime_distribution'] = viz_pseudoprime_distribution()
-    
-    print("  5/5: Squaring chains...")
-    vizs['squaring_chains'] = viz_squaring_chain()
-    
-    print("All visualizations generated!")
-    return vizs
-
-
-if __name__ == "__main__":
-    vizs = generate_all_visualizations()
-    
-    # Save individual PNGs for convenience
-    for name, data_uri in vizs.items():
-        # Extract base64 data
-        b64_data = data_uri.split(',')[1]
-        img_bytes = base64.b64decode(b64_data)
-        filename = f"viz_{name}.png"
-        with open(filename, 'wb') as f:
-            f.write(img_bytes)
-        print(f"Saved {filename}")
+    main()
