@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -52,7 +52,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T04:04:01Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "tropical_convexity_and_linear_programming",
@@ -61,7 +61,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "arithmetic_resonance_in_neural_proof_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "collatz_stopping_times_density_analysis",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:41Z",
-      "hue": 112
+      "hue": 91
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -97,7 +97,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T05:58:00Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
@@ -106,7 +106,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:58:35Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_1_kan_composition_and_groupoid_structure",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:59:07Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_2_path_space_cardinality_invariants_for_",
@@ -124,7 +124,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:10:21Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_differential_closure_and_transseries_f",
@@ -133,7 +133,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T07:13:37Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "proof_compression_phase_transition_in_formal_mathe",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:14:00Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "lattice_cryptography_lwe_hardness",
@@ -160,7 +160,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T08:10:20Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_2_tight_depth_bound_d1_instead_of_d3",
@@ -169,7 +169,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:13:20Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_3_deterministic_hitting_sets_for_millerr",
@@ -178,7 +178,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:13:44Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "representation_theory_character_tables_of_s_n",
@@ -196,7 +196,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:14:39Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "euler_characteristic_and_gauss_bonnet",
@@ -205,7 +205,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T08:15:03Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "homological_algebra_derived_functors",
@@ -214,7 +214,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T09:14:59Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "tropical_curves_and_chip_firing_games",
@@ -223,7 +223,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T09:15:37Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_3_explicit_forman_gradient_fields_and_pe",
@@ -232,7 +232,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T09:16:14Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "direction_2_quantitative_fiat_shamir_security_via_",
@@ -241,7 +241,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:13:08Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "extremal_graph_theory_turn_and_szemerdi",
@@ -250,7 +250,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T10:13:38Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "domain_bridges",
@@ -268,7 +268,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T10:14:31Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_4_normalizing_derivative_compiler_with_i",
@@ -286,7 +286,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T11:14:42Z",
-      "hue": 101
+      "hue": 112
     },
     {
       "id": "categorical_foundations_yoneda_and_adjunctions",
@@ -295,7 +295,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T11:15:08Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "information_geometry_fisher_metric_on_statistical_",
@@ -304,7 +304,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T11:28:55Z",
-      "hue": 281
+      "hue": 89
     },
     {
       "id": "lambda_calculus_church_rosser_and_normalization",
@@ -313,7 +313,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:04Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_4_persistent_torsion_detection_for_tda",
@@ -322,7 +322,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:31Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_1_complete_verified_regev_reduction",
@@ -331,7 +331,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T12:24:54Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "formal_verification_of_algorithms",
@@ -340,7 +340,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T12:32:49Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "arithmetic_universality_classes_in_tropical_degene",
@@ -349,7 +349,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T13:10:29Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_1_complete_strict_hierarchy_separation",
@@ -367,7 +367,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T13:14:08Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -376,7 +376,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T13:14:34Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "homological_phase_transition_in_automated_conjectu",
@@ -385,7 +385,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T14:10:33Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_4_growth_rank_completeness_grand_challen",
@@ -394,7 +394,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:13:43Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_5_ordinal_classification_of_eml_growth",
@@ -403,7 +403,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:14:17Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "noethers_theorem_symmetries_and_conservation_laws",
@@ -412,7 +412,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T14:14:53Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_5_lower_bound_certificates_via_communica",
@@ -421,6 +421,15 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T14:15:32Z",
+      "hue": 270
+    },
+    {
+      "id": "direction_3_dag_sharing_does_not_reduce_depth_gran",
+      "title": "Depth Rigidity Under Sharing: DAG Lower Bounds for Iterated Exponentiation",
+      "domain": "Computational Complexity / Algebraic Circuits",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-21T15:14:27Z",
       "hue": 270
     }
   ],
@@ -458,6 +467,13 @@
       "target": "direction_2_phase_aware_lemma_synthesis_for_ai_the",
       "strength": 1.0,
       "label": "provers",
+      "type": "provenance"
+    },
+    {
+      "source": "conjecture_2_tight_depth_bound_d1_instead_of_d3",
+      "target": "direction_3_dag_sharing_does_not_reduce_depth_gran",
+      "strength": 1.0,
+      "label": "inspired by",
       "type": "provenance"
     },
     {
@@ -539,6 +555,12 @@
     },
     {
       "domain_a": "Algebra",
+      "domain_b": "Computation",
+      "package_count": 2,
+      "strength": 0.7
+    },
+    {
+      "domain_a": "Algebra",
       "domain_b": "Logic",
       "package_count": 2,
       "strength": 0.7
@@ -564,12 +586,6 @@
     {
       "domain_a": "Logic",
       "domain_b": "Speculative",
-      "package_count": 1,
-      "strength": 0.5
-    },
-    {
-      "domain_a": "Algebra",
-      "domain_b": "Computation",
       "package_count": 1,
       "strength": 0.5
     },
