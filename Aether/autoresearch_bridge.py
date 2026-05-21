@@ -137,11 +137,13 @@ echo "METRIC $QUALITY concept_quality"
         sorry_count: int = 0,
         has_cross_domain: bool = False,
         advances_open_problem: bool = False,
+        breakthrough_grade: str = "incremental",
     ) -> float:
         """Evaluate concept quality using a composite score.
 
         Quality score (0-1) based on multiple dimensions:
-        - Aristotle result quality: substantial=0.85, partial=0.45, trivial=0.05
+        - Aristotle result quality: substantial=0.75, partial=0.35, trivial=0.05
+        - Breakthrough grade: incremental=0.0, significant=0.12, breakthrough=0.25
         - Novelty: penalize repetition, reward unique concepts
         - Mathematical depth: more theorems, fewer sorries = better
         - Cross-domain bridges: bonus for connecting disparate fields
@@ -151,10 +153,10 @@ echo "METRIC $QUALITY concept_quality"
 
         Returns a float 0-1.
         """
-        # Base quality from Aristotle result
+        # Base quality from Aristotle result (recalibrated: partial=0.35 was 0.45)
         quality_map = {
-            "substantial": 0.85,
-            "partial": 0.45,
+            "substantial": 0.75,
+            "partial": 0.35,
             "trivial": 0.05,
         }
         base_quality = quality_map.get(quality_assessment.get("quality", "partial"), 0.45)
@@ -232,9 +234,22 @@ echo "METRIC $QUALITY concept_quality"
         if quality_assessment.get("compiles", False):
             compile_bonus = 0.20  # Major bonus for compilable results
 
+        # LLM-graded breakthrough bonus (or structural fallback)
+        breakthrough_bonus_map = {"incremental": 0.0, "significant": 0.12, "breakthrough": 0.25}
+        if breakthrough_grade in breakthrough_bonus_map:
+            breakthrough_bonus = breakthrough_bonus_map[breakthrough_grade]
+        else:
+            # Structural fallback if LLM grade is invalid
+            breakthrough_bonus = 0.0
+            if sorry_count == 0 and theorem_count >= 3:
+                breakthrough_bonus = 0.12
+            elif has_cross_domain and theorem_count >= 5:
+                breakthrough_bonus = 0.12
+
         score = (base_quality + depth_bonus + cross_domain_bonus +
                  open_problem_bonus + ref_bonus + mode_bonus +
-                 compile_bonus - length_penalty - novelty_penalty)
+                 compile_bonus + breakthrough_bonus -
+                 length_penalty - novelty_penalty)
         return max(0.0, min(1.0, score))
 
     def log_result(

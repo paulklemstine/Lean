@@ -48,7 +48,7 @@ DOMAIN_KEYWORDS = {
 
 @dataclass
 class QualityScore:
-    """8-dimensional quality assessment of Aristotle's output."""
+    """9-dimensional quality assessment of Aristotle's output."""
     proof_depth: float = 0.0
     novelty: float = 0.0
     cross_domain: float = 0.0
@@ -57,31 +57,33 @@ class QualityScore:
     importance: float = 0.0
     usefulness: float = 0.0
     applications: float = 0.0
+    catalog_anchoring: float = 0.0
 
     @property
     def composite(self) -> float:
-        """Weighted composite score."""
+        """Weighted composite score (9 axes)."""
         return (
-            0.20 * self.proof_depth +
-            0.15 * self.novelty +
-            0.15 * self.cross_domain +
-            0.08 * self.artifact_richness +
+            0.18 * self.proof_depth +
+            0.13 * self.novelty +
+            0.13 * self.cross_domain +
+            0.07 * self.artifact_richness +
             0.07 * self.actionability +
-            0.15 * self.importance +
+            0.14 * self.importance +
             0.10 * self.usefulness +
-            0.10 * self.applications
+            0.08 * self.applications +
+            0.10 * self.catalog_anchoring
         )
 
     @property
     def grade(self) -> str:
         c = self.composite
-        if c >= 0.8:
+        if c >= 0.7:
             return "world_class"
-        if c >= 0.6:
+        if c >= 0.5:
             return "substantial"
-        if c >= 0.4:
+        if c >= 0.3:
             return "partial"
-        if c >= 0.2:
+        if c >= 0.15:
             return "shallow"
         return "trivial"
 
@@ -95,6 +97,7 @@ class QualityScore:
             "importance": round(self.importance, 4),
             "usefulness": round(self.usefulness, 4),
             "applications": round(self.applications, 4),
+            "catalog_anchoring": round(self.catalog_anchoring, 4),
             "composite": round(self.composite, 4),
             "grade": self.grade,
         }
@@ -103,7 +106,8 @@ class QualityScore:
         """Human-readable breakdown."""
         lines = [f"Quality: {self.grade.upper()} (composite={self.composite:.3f})"]
         for dim in ["proof_depth", "novelty", "cross_domain", "artifact_richness",
-                     "actionability", "importance", "usefulness", "applications"]:
+                     "actionability", "importance", "usefulness", "applications",
+                     "catalog_anchoring"]:
             val = getattr(self, dim)
             bar = "█" * int(val * 10) + "░" * (10 - int(val * 10))
             lines.append(f"  {dim:20s} {bar} {val:.2f}")
@@ -130,10 +134,11 @@ class QualityEvaluator:
         concept_title: str = "",
         concept_description: str = "",
         existing_titles: Optional[set] = None,
+        catalog_references: Optional[list] = None,
     ) -> QualityScore:
-        """Evaluate Aristotle's output across all 8 dimensions.
+        """Evaluate Aristotle's output across all 9 dimensions.
 
-        The first 5 dimensions are computed locally (no API cost).
+        The first 6 dimensions are computed locally (no API cost).
         The last 3 use a single Pi-Agent call if available.
         """
         score = QualityScore()
@@ -144,6 +149,9 @@ class QualityEvaluator:
         score.cross_domain = self._eval_cross_domain(lean_source)
         score.artifact_richness = self._eval_artifacts(result_dir)
         score.actionability = self._eval_actionability(result_dir)
+        score.catalog_anchoring = self._eval_catalog_anchoring(
+            concept_title, catalog_references or [], existing_titles
+        )
 
         # LLM evaluations (single call for all 3)
         if self.pi_agent:
@@ -162,6 +170,44 @@ class QualityEvaluator:
         return score
 
     # ── Local Evaluators ──
+
+    def _eval_catalog_anchoring(self, concept_title: str, catalog_references: list,
+                                 existing_titles: Optional[set] = None) -> float:
+        """Evaluate how well the concept is anchored in existing Catalog theorems.
+
+        0.3 base + 0.3 if has catalog_references + 0.2 if refs exist in FINAL/
+        + 0.2 if concept title matches a Catalog declaration.
+        """
+        score = 0.3
+
+        # Bonus for having catalog references
+        if catalog_references:
+            score += 0.3
+
+            # Bonus if references point to FINAL/ files
+            final_refs = [r for r in catalog_references if "FINAL" in r or "final" in r.lower()]
+            if final_refs:
+                score += 0.2
+
+            # Verify files exist if catalog_root is available
+            if self.catalog_root and not final_refs:
+                for ref in catalog_references[:3]:
+                    ref_path = self.catalog_root / ref
+                    if ref_path.exists():
+                        if "FINAL" in str(ref_path):
+                            score += 0.2
+                            break
+
+        # Bonus if concept title matches a declaration in existing Catalog
+        if existing_titles and concept_title:
+            title_words = set(concept_title.lower().replace("-", " ").replace("_", " ").split())
+            for decl in existing_titles:
+                decl_words = set(decl.lower().replace("_", " ").split())
+                if title_words & decl_words:
+                    score += 0.2
+                    break
+
+        return min(1.0, score)
 
     def _eval_proof_depth(self, lean_source: str) -> float:
         """Score proof depth based on tactics, structure, and non-triviality."""

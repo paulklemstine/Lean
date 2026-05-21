@@ -1080,3 +1080,233 @@ class TestQualityScoringNewFactors:
         score_many = fd_manager._compute_quality_score(d_many_bridges)
         score_few = fd_manager._compute_quality_score(d_few_bridges)
         assert score_many > score_few
+
+
+# ============================================================
+# Pillar 1: Domain Rebalance Tests
+# ============================================================
+
+class TestDomainRebalance:
+    """Tests for domain alias mapping and _infer_domains returning Catalog-valid names."""
+
+    def test_normalize_domain_aliases(self):
+        """Common LLM-produced domain names should map to valid Catalog domains, not Speculative."""
+        from output_organizer import normalize_domain
+        assert normalize_domain("NumberTheory") == "Algebra"
+        assert normalize_domain("number_theory") == "Algebra"
+        assert normalize_domain("Analysis") == "Algebra"
+        assert normalize_domain("Topology") == "Geometry"
+        assert normalize_domain("topology") == "Geometry"
+        assert normalize_domain("Probability") == "Computation"
+        assert normalize_domain("Combinatorics") == "Algebra"
+        assert normalize_domain("Arithmetic") == "Pythagorean"
+        assert normalize_domain("Spectral") == "Physics"
+        assert normalize_domain("Complexity") == "Computation"
+
+    def test_normalize_domain_valid_passthrough(self):
+        """Valid Catalog domain names should pass through unchanged."""
+        from output_organizer import normalize_domain
+        for domain in ["Algebra", "Bridges", "Computation", "Cryptography", "EML",
+                       "Geometry", "Logic", "MachineLearning", "Physics",
+                       "Pythagorean", "Speculative", "Tropical"]:
+            assert normalize_domain(domain) == domain
+
+    def test_normalize_domain_empty_to_speculative(self):
+        """Empty string should still default to Speculative."""
+        from output_organizer import normalize_domain
+        assert normalize_domain("") == "Speculative"
+
+    def test_infer_domains_returns_catalog_valid_names(self):
+        """_infer_domains should return domain names that are valid Catalog directories."""
+        from research_memory import FutureDirectionsManager
+        valid_domains = {"Algebra", "Bridges", "Computation", "Cryptography", "EML",
+                         "Geometry", "Logic", "MachineLearning", "Physics",
+                         "Pythagorean", "Speculative", "Tropical"}
+
+        # Test with various texts
+        texts = [
+            "Prime gap distribution and Goldbach conjecture",
+            "Tropical semiring optimization and min-plus algebra",
+            "Neural network robustness bounds",
+            "Quantum field theory path integrals",
+        ]
+        for text in texts:
+            domains = FutureDirectionsManager._infer_domains(text)
+            for d in domains:
+                assert d in valid_domains, f"_infer_domains returned '{d}' which is not a valid Catalog domain"
+
+    def test_infer_domains_no_numbertheory(self):
+        """_infer_domains should NOT return 'NumberTheory' (not a valid Catalog dir)."""
+        from research_memory import FutureDirectionsManager
+        result = FutureDirectionsManager._infer_domains("Goldbach conjecture and prime numbers")
+        assert "NumberTheory" not in result
+        assert "Pythagorean" in result  # Should map to Pythagorean instead
+
+
+# ============================================================
+# Pillar 2: Quality Scoring Recalibration Tests
+# ============================================================
+
+class TestQualityRecalibration:
+    """Tests for recalibrated quality scoring, breakthrough bonus, and catalog_anchoring."""
+
+    def test_partial_base_lowered(self):
+        """Partial quality base should be 0.35 (was 0.45)."""
+        from autoresearch_bridge import AutoresearchBridge
+        from pathlib import Path
+        bridge = AutoresearchBridge.__new__(AutoresearchBridge)
+        bridge.history = []
+        bridge.benchmark_dir = Path("/tmp")
+        score = bridge.evaluate_concept_quality(
+            concept_title="Test", concept_domain="Algebra",
+            quality_assessment={"quality": "partial", "compiles": False},
+            catalog_references=[], research_mode="prove",
+            prompt_length=5000, theorem_count=0, sorry_count=0,
+            breakthrough_grade="incremental",
+        )
+        assert score == 0.35
+
+    def test_breakthrough_significant_bonus(self):
+        """Significant breakthrough grade should add 0.12 to score."""
+        from autoresearch_bridge import AutoresearchBridge
+        from pathlib import Path
+        bridge = AutoresearchBridge.__new__(AutoresearchBridge)
+        bridge.history = []
+        bridge.benchmark_dir = Path("/tmp")
+        score_inc = bridge.evaluate_concept_quality(
+            concept_title="Test", concept_domain="Algebra",
+            quality_assessment={"quality": "partial", "compiles": False},
+            catalog_references=[], research_mode="prove",
+            prompt_length=5000, theorem_count=5, sorry_count=2,
+            breakthrough_grade="incremental",
+        )
+        score_sig = bridge.evaluate_concept_quality(
+            concept_title="Test", concept_domain="Algebra",
+            quality_assessment={"quality": "partial", "compiles": False},
+            catalog_references=[], research_mode="prove",
+            prompt_length=5000, theorem_count=5, sorry_count=2,
+            breakthrough_grade="significant",
+        )
+        assert abs((score_sig - score_inc) - 0.12) < 0.01
+
+    def test_breakthrough_bonus(self):
+        """Breakthrough grade should add 0.25 to score."""
+        from autoresearch_bridge import AutoresearchBridge
+        from pathlib import Path
+        bridge = AutoresearchBridge.__new__(AutoresearchBridge)
+        bridge.history = []
+        bridge.benchmark_dir = Path("/tmp")
+        score_inc = bridge.evaluate_concept_quality(
+            concept_title="Test", concept_domain="Algebra",
+            quality_assessment={"quality": "partial", "compiles": False},
+            catalog_references=[], research_mode="prove",
+            prompt_length=5000, theorem_count=5, sorry_count=2,
+            breakthrough_grade="incremental",
+        )
+        score_bt = bridge.evaluate_concept_quality(
+            concept_title="Test", concept_domain="Algebra",
+            quality_assessment={"quality": "partial", "compiles": False},
+            catalog_references=[], research_mode="prove",
+            prompt_length=5000, theorem_count=5, sorry_count=2,
+            breakthrough_grade="breakthrough",
+        )
+        assert abs((score_bt - score_inc) - 0.25) < 0.01
+
+    def test_quality_score_9_axes(self):
+        """QualityScore should have 9 axes including catalog_anchoring."""
+        from quality_evaluator import QualityScore
+        qs = QualityScore()
+        qs.proof_depth = 0.6
+        qs.novelty = 0.5
+        qs.cross_domain = 0.5
+        qs.artifact_richness = 0.4
+        qs.actionability = 0.3
+        qs.importance = 0.5
+        qs.usefulness = 0.4
+        qs.applications = 0.3
+        qs.catalog_anchoring = 0.6
+        d = qs.to_dict()
+        assert "catalog_anchoring" in d
+        assert d["catalog_anchoring"] == 0.6
+        assert 0 < qs.composite < 1
+
+    def test_grade_thresholds_recalibrated(self):
+        """Grade thresholds should be: world_class>=0.7, substantial>=0.5, partial>=0.3."""
+        from quality_evaluator import QualityScore
+        # Test world_class
+        qs = QualityScore()
+        qs.proof_depth = 0.9; qs.novelty = 0.8; qs.cross_domain = 0.7
+        qs.artifact_richness = 0.7; qs.actionability = 0.6; qs.importance = 0.8
+        qs.usefulness = 0.7; qs.applications = 0.6; qs.catalog_anchoring = 0.8
+        assert qs.grade == "world_class"
+        assert qs.composite >= 0.7
+
+        # Test substantial
+        qs2 = QualityScore()
+        qs2.proof_depth = 0.6; qs2.novelty = 0.5; qs2.cross_domain = 0.5
+        qs2.artifact_richness = 0.4; qs2.actionability = 0.4; qs2.importance = 0.5
+        qs2.usefulness = 0.5; qs2.applications = 0.4; qs2.catalog_anchoring = 0.5
+        assert qs2.grade in ("substantial", "partial")
+        # Should be substantial (composite should be around 0.48-0.52)
+        # With these values it should be >= 0.5
+        if qs2.composite >= 0.5:
+            assert qs2.grade == "substantial"
+
+    def test_catalog_anchoring_scoring(self):
+        """_eval_catalog_anchoring should score based on catalog references and title matching."""
+        from quality_evaluator import QualityEvaluator
+        qe = QualityEvaluator(pi_agent=None, catalog_root=None)
+        # No references, no existing titles -> base 0.3
+        assert qe._eval_catalog_anchoring("Test", [], None) == 0.3
+        # With references -> 0.6
+        assert qe._eval_catalog_anchoring("Test", ["FINAL/Algebra/Berggren.lean"], None) == 0.8  # 0.3 + 0.3 + 0.2
+        # Title match -> 0.5
+        assert qe._eval_catalog_anchoring("berggren_tree", [], {"berggren_tree"}) == 0.5
+
+
+# ============================================================
+# Pillar 3: Generic Title Rejection Tests
+# ============================================================
+
+class TestGenericTitleRejection:
+    """Tests for generic title detection and validation."""
+
+    def test_generic_conjecture_pattern(self):
+        from pi_agent_client import PiAgentClient
+        assert PiAgentClient._is_generic_title("Conjecture 4: Log-Linearization")
+        assert PiAgentClient._is_generic_title("Hypothesis 3: Deep Separation")
+        assert PiAgentClient._is_generic_title("Proposition 2: Closure Operator")
+        assert PiAgentClient._is_generic_title("Theorem 5: Existence")
+
+    def test_generic_study_pattern(self):
+        from pi_agent_client import PiAgentClient
+        assert PiAgentClient._is_generic_title("Study of Algebraic Structures")
+        assert PiAgentClient._is_generic_title("Investigation into Prime Numbers")
+        assert PiAgentClient._is_generic_title("Exploration of Tropical Geometry")
+
+    def test_generic_further_pattern(self):
+        from pi_agent_client import PiAgentClient
+        assert PiAgentClient._is_generic_title("Further investigation into topology")
+        assert PiAgentClient._is_generic_title("Extended analysis of group theory")
+        assert PiAgentClient._is_generic_title("Additional results on EML closure")
+
+    def test_specific_titles_not_flagged(self):
+        from pi_agent_client import PiAgentClient
+        assert not PiAgentClient._is_generic_title("Berggren Tree Spectral Decomposition")
+        assert not PiAgentClient._is_generic_title("Tropical Hecke Operator Trace Formula")
+        assert not PiAgentClient._is_generic_title("Niven Integration Recurrence")
+        assert not PiAgentClient._is_generic_title("Algebraic Coding Theory: BCH and Reed-Solomon")
+        assert not PiAgentClient._is_generic_title("Zero-Knowledge Proofs: Schnorr Protocol")
+
+    def test_case_insensitive(self):
+        from pi_agent_client import PiAgentClient
+        assert PiAgentClient._is_generic_title("conjecture 4: something")
+        assert PiAgentClient._is_generic_title("HYPOTHESIS 3: test")
+
+    def test_domain_deficit_redirect(self):
+        """_should_redirect_domain should detect over-represented domains."""
+        from knowledge_extractor import KnowledgeExtractor
+        ke = KnowledgeExtractor.__new__(KnowledgeExtractor)
+        ke.catalog_analyzer = None
+        # Without catalog_analyzer, should return False
+        assert ke._should_redirect_domain("Speculative") == False

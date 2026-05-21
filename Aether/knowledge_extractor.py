@@ -204,6 +204,45 @@ class KnowledgeExtractor:
     # Phase 1: DISCOVER — Pi decides what to research
     # ==================================================================
 
+    def _should_redirect_domain(self, domain: str) -> bool:
+        """Check if a domain has >3x more cycles than its Catalog share.
+
+        Self-adjusting: as under-explored domains catch up, redirect probability
+        drops. Over-represented domains (like Speculative at 3% Catalog / 74% cycles)
+        are redirected to under-explored domains.
+        """
+        if not self.catalog_analyzer:
+            return False
+
+        # Count cycles per domain from autoresearch history
+        domain_cycles = {}
+        total_cycles = 0
+        for rec in self.memory._cache:
+            d = rec.domain
+            domain_cycles[d] = domain_cycles.get(d, 0) + 1
+            total_cycles += 1
+        if total_cycles == 0:
+            return False
+
+        # Count files per domain from Catalog
+        catalog_files = {}
+        total_files = 0
+        for s in self.catalog_analyzer.scan():
+            d = s.domain
+            catalog_files[d] = catalog_files.get(d, 0) + 1
+            total_files += 1
+        if total_files == 0:
+            return False
+
+        cycle_share = domain_cycles.get(domain, 0) / total_cycles
+        catalog_share = catalog_files.get(domain, 0) / total_files
+
+        # Redirect if domain has 3x+ its fair share
+        # Also redirect if catalog share is 0 (domain shouldn't exist in Catalog at all)
+        if catalog_share == 0 and cycle_share > 0.05:
+            return True
+        return cycle_share > catalog_share * 3.0
+
     def discover(self, forced_domain: Optional[str] = None) -> ResearchJob:
         """Pi analyzes the catalog and selects a research direction.
 
@@ -233,6 +272,19 @@ class KnowledgeExtractor:
 
         print(f"[Loop] domain={loop_result['domain']}, mode={loop_result['mode']}, "
               f"ucb={loop_result['ucb_score']:.2f}")
+
+        # Dynamic deficit-based domain redirect: if selected domain is over-represented
+        # relative to its Catalog share, redirect to an under-explored domain
+        domain = loop_result['domain']
+        if self._should_redirect_domain(domain):
+            under_explored = self.catalog_analyzer.find_under_explored_domains()
+            if under_explored:
+                redirect = under_explored[self.cycle_count % len(under_explored)]
+                old_domain = domain
+                domain = redirect['domain']
+                loop_result['domain'] = domain
+                print(f"[Domain] Deficit redirect: {old_domain} -> {domain} "
+                      f"({redirect.get('exploration_ratio', '?')} exploration ratio)")
 
         # Build domains config for Pi-Agent
         arcs = self.config.get("research", {}).get("arcs", [])
@@ -994,6 +1046,11 @@ Research mode: {concept.research_mode}
         job.quality_assessment = qa
 
         # Compute the heuristic composite score
+        # First, get LLM-graded breakthrough assessment
+        breakthrough_grade = "incremental"
+        if self.pi_agent and hasattr(self.pi_agent, 'evaluate_breakthrough'):
+            breakthrough_grade = self.pi_agent.evaluate_breakthrough(job.result_lean, job.concept)
+
         heuristic_score = self.autoresearch.evaluate_concept_quality(
             concept_title=job.concept.title,
             concept_domain=job.concept.domain,
@@ -1005,6 +1062,7 @@ Research mode: {concept.research_mode}
             sorry_count=job.sorry_count,
             has_cross_domain="Bridge" in (job.concept.title or "") or "bridge" in (job.concept.domain or "").lower(),
             advances_open_problem=job.concept.research_mode == "sorry_fill" and job.sorry_count == 0,
+            breakthrough_grade=breakthrough_grade,
         )
 
         # 8-axis structural quality evaluation
@@ -1023,10 +1081,11 @@ Research mode: {concept.research_mode}
                 concept_title=job.concept.title,
                 concept_description=job.concept.concept_description,
                 existing_titles=existing_titles,
+                catalog_references=job.concept.catalog_references or [],
             )
             job.quality_detail = qscore
-            # Blend heuristic and structural scores equally
-            job.quality_score = 0.5 * heuristic_score + 0.5 * qscore.composite
+            # Blend heuristic and structural scores (40/60 — more weight to structural)
+            job.quality_score = 0.4 * heuristic_score + 0.6 * qscore.composite
         except Exception as e:
             print(f"[Evaluate] Warning: QualityEvaluator failed, using heuristic only: {e}")
             job.quality_score = heuristic_score
@@ -2088,7 +2147,7 @@ Research mode: {concept.research_mode}
         from research_memory import ExperimentRecord
         import datetime
         status = "success" if job.quality_score > 0 else "trivial_rejected"
-        proof_quality = "substantial" if job.quality_score >= 0.8 else ("partial" if job.quality_score > 0 else "trivial")
+        proof_quality = "substantial" if job.quality_score >= 0.7 else ("partial" if job.quality_score > 0 else "trivial")
 
         record = ExperimentRecord(
             exp_id=job.job_id,

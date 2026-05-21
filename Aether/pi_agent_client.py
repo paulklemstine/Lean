@@ -1083,7 +1083,11 @@ class PiAgentClient:
                 from output_organizer import normalize_domain
                 domain = normalize_domain(domain)
             else:
-                domain = domains[0]["id"] if domains else "speculative"
+                # Use first arc's seed domain instead of defaulting to "speculative"
+                seed_domains = domains[0].get("seed_domains", []) if domains else []
+                domain = seed_domains[0] if seed_domains else (domains[0]["id"] if domains else "Bridges")
+                from output_organizer import normalize_domain
+                domain = normalize_domain(domain)
             
             concept = ResearchConcept(
                 title=parsed.get("concept_title", parsed.get("title", "unnamed_concept")),
@@ -1098,6 +1102,56 @@ class PiAgentClient:
                 breakthrough_potential=float(parsed.get("breakthrough_potential", 0.5) or 0.5),
                 key_references=parsed.get("key_references", []),
             )
+
+            # Reject generic titles: re-prompt once if title is too vague
+            if self._is_generic_title(concept.title):
+                print(f"[Pi-Agent] Generic title detected: '{concept.title}' — re-prompting for specific title")
+                retry_suffix = (
+                    "\n\nIMPORTANT: Your concept title is too generic. It must reference a "
+                    "specific mathematical object, theorem, or Catalog file path. Example "
+                    "good titles: 'Berggren Tree Spectral Decomposition', 'Tropical Hecke "
+                    "Operator Trace Formula', 'Niven Integration Recurrence'. Pick a "
+                    "specific, concrete title that names the mathematical object. "
+                    "Return JSON with the same schema but a better 'concept_title'."
+                )
+                try:
+                    retry_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt + retry_suffix, timeout=120)
+                    retry_parsed = self._parse_json_response(retry_raw)
+                    if retry_parsed and not self._is_generic_title(retry_parsed.get("concept_title", retry_parsed.get("title", ""))):
+                        new_title = retry_parsed.get("concept_title", retry_parsed.get("title", concept.title))
+                        concept = ResearchConcept(
+                            title=new_title,
+                            domain=domain,
+                            concept_description=retry_parsed.get("concept_description", concept.concept_description),
+                            mathematical_framing=retry_parsed.get("mathematical_framing", concept.mathematical_framing),
+                            lean_guess=retry_parsed.get("lean_guess", concept.lean_guess),
+                            catalog_references=retry_parsed.get("catalog_references", concept.catalog_references),
+                            research_mode=concept.research_mode,
+                            novelty_estimate=float(retry_parsed.get("novelty_estimate", concept.novelty_estimate) or concept.novelty_estimate),
+                            breakthrough_potential=float(retry_parsed.get("breakthrough_potential", concept.breakthrough_potential) or concept.breakthrough_potential),
+                            key_references=retry_parsed.get("key_references", concept.key_references),
+                        )
+                        print(f"[Pi-Agent] Re-prompted title: '{concept.title}'")
+                    else:
+                        print(f"[Pi-Agent] Re-prompt still generic — accepting with reduced novelty")
+                        concept.novelty_estimate = max(0.0, concept.novelty_estimate - 0.2)
+                except Exception:
+                    print(f"[Pi-Agent] Re-prompt failed — accepting generic title with reduced novelty")
+                    concept.novelty_estimate = max(0.0, concept.novelty_estimate - 0.2)
+
+            # Auto-populate catalog_references if empty
+            if not concept.catalog_references and self.catalog_analyzer:
+                try:
+                    refs = self.catalog_analyzer.select_references(
+                        domain=concept.domain,
+                        keywords=concept.concept_description.split()[:5],
+                    )
+                    if refs:
+                        concept.catalog_references = refs[:3]
+                        print(f"[Pi-Agent] Auto-populated catalog_references: {refs[:3]}")
+                except Exception:
+                    pass
+
             # Validate concept quality
             if concept.novelty_estimate >= 0.1 and concept.breakthrough_potential >= 0.1 and not concept.title.startswith("research_concept_"):
                 return concept
@@ -1670,6 +1724,22 @@ class PiAgentClient:
             key_references=d["refs"][:3],
         )
 
+    # Generic title patterns that indicate low-quality concept selection
+    GENERIC_TITLE_PATTERNS = [
+        r"^(Conjecture|Hypothesis|Proposition|Theorem)\s+\d+",
+        r"^(Research|Investigation|Exploration|Study)\s+(of|on|into)",
+        r"^(Further|Continued|Extended|Additional)\s+",
+    ]
+
+    @staticmethod
+    def _is_generic_title(title: str) -> bool:
+        """Check if a concept title is generic (e.g., 'Conjecture 4: ...')."""
+        import re
+        for pattern in PiAgentClient.GENERIC_TITLE_PATTERNS:
+            if re.match(pattern, title.strip(), re.IGNORECASE):
+                return True
+        return False
+
     @staticmethod
     def _infer_domain_from_text(text: str) -> str:
         """Infer the most likely Catalog domain from text content."""
@@ -2117,6 +2187,48 @@ class PiAgentClient:
     # ------------------------------------------------------------------
     # Result quality evaluation
     # ------------------------------------------------------------------
+
+    def evaluate_breakthrough(self, result_lean: str, concept: ResearchConcept) -> str:
+        """LLM grades the research result as incremental, significant, or breakthrough.
+
+        Fallback to structural heuristics if LLM is unavailable.
+        """
+        # Structural fallback: check sorry-free + theorem count
+        sorry_count = result_lean.count("sorry")
+        theorem_count = result_lean.count("theorem ") + result_lean.count("lemma ")
+
+        try:
+            prompt = textwrap.dedent(f"""\
+                Grade this research result on a 3-level scale:
+                - "incremental": Minor extension of known results
+                - "significant": New theorem with non-trivial proof technique, or
+                  connects two previously disconnected domains
+                - "breakthrough": Opens a new area, proves a long-standing conjecture,
+                  or establishes a deep structural result
+
+                Concept: {concept.title} ({concept.domain})
+                Result summary (first 1500 chars):
+                {result_lean[:1500]}
+
+                Reply with ONLY one word: incremental, significant, or breakthrough
+            """)
+            response = self._call_ollama(
+                "You are a senior mathematician evaluating research breakthroughs.",
+                prompt, timeout=30,
+            )
+            grade = response.strip().lower().split()[-1] if response.strip() else ""
+            if grade in ("incremental", "significant", "breakthrough"):
+                print(f"[Breakthrough] LLM grade: {grade} for '{concept.title}'")
+                return grade
+        except Exception as e:
+            print(f"[Breakthrough] LLM call failed: {e}")
+
+        # Structural fallback
+        if sorry_count == 0 and theorem_count >= 3:
+            print(f"[Breakthrough] Structural fallback: significant (sorry-free, {theorem_count} theorems)")
+            return "significant"
+        print(f"[Breakthrough] Structural fallback: incremental ({sorry_count} sorries, {theorem_count} theorems)")
+        return "incremental"
 
     def evaluate_result_quality(
         self,
