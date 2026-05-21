@@ -3718,7 +3718,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "86b0228e",
       "timestamp": "2026-05-21T07:14:03.523931+00:00",
       "catalog_references": [],
