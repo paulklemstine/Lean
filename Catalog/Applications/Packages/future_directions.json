@@ -5719,7 +5719,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "8098e230",
       "timestamp": "2026-05-21T14:14:20.807422+00:00",
       "catalog_references": [],
