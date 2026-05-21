@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 280
+      "hue": 100
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -25,7 +25,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 95
+      "hue": 91
+    },
+    {
+      "id": "conjecture_5_connection_to_hardy_field_hierarchy",
+      "title": "EML Depth as a Certified Asymptotic Hierarchy Level",
+      "domain": "Formal Asymptotic Analysis / Hardy Field Hierarchy",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-21T02:15:16Z",
+      "hue": 270
     }
   ],
   "edges": [],
