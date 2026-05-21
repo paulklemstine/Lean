@@ -507,7 +507,7 @@ class PiAgentClient:
 
                 if response.status_code in (402, 429):
                     # Pollen depleted — poll every 5 min until it's back
-                    # Pollen resets at the top of the hour, we wait until :05
+                    # Pollen resets at the top of the hour, we wait until :10
                     self.pollen_gate.mark_depleted_from_response(response)
                     wait_until = self.pollen_gate._next_hour_reset(time.time())
                     reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))

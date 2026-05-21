@@ -15,7 +15,7 @@ pi_agent:
     min_balance: 0.0
     defer_when_low: true
     balance_cache_seconds: 60
-    reset_buffer_seconds: 10
+    reset_buffer_seconds: 600
     max_sleep_seconds: 30
     forecast_safety_multiplier: 1.35
     forecast_alpha: 0.25
