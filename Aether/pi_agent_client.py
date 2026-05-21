@@ -973,6 +973,11 @@ class PiAgentClient:
         if self.catalog_analyzer and hasattr(self.catalog_analyzer, 'analyze_catalog_breakthrough_potential'):
             breakthrough_analysis = self.catalog_analyzer.analyze_catalog_breakthrough_potential()
 
+        # Build theorem listing for concept selection context
+        theorem_listing = ""
+        if self.catalog_analyzer and hasattr(self.catalog_analyzer, 'get_key_theorem_listing'):
+            theorem_listing = self.catalog_analyzer.get_key_theorem_listing(max_per_domain=3, max_total=20)
+
         # Build domain list for prompt
         domain_descriptions = []
         for d in domains:
@@ -1024,6 +1029,9 @@ class PiAgentClient:
 
             ## Catalog Breakthrough Analysis
             {breakthrough_analysis if breakthrough_analysis else "Breakthrough analysis not available."}
+
+            ## Key Theorems Available (for catalog references)
+            {theorem_listing if theorem_listing else "Theorem listing not available."}
 
             ## What Worked Before (emulate these approaches)
             {success_patterns if success_patterns else "No prior successes recorded."}
@@ -1833,6 +1841,15 @@ class PiAgentClient:
         elif catalog_context:
             ref_section = catalog_context[:3000]
 
+        # Build catalog context for FUTURE_DIRECTIONS — breakthrough analysis + theorem listing
+        fd_breakthrough = ""
+        fd_theorem_listing = ""
+        if self.catalog_analyzer:
+            if hasattr(self.catalog_analyzer, 'analyze_catalog_breakthrough_potential'):
+                fd_breakthrough = self.catalog_analyzer.analyze_catalog_breakthrough_potential()
+            if hasattr(self.catalog_analyzer, 'get_key_theorem_listing'):
+                fd_theorem_listing = self.catalog_analyzer.get_key_theorem_listing(max_per_domain=5, max_total=30)
+
         # Concise mode instructions
         mode_brief = {
             "prove": "Prove new, non-trivial theorems. Build on catalog theorems. Minimize sorry.",
@@ -1940,6 +1957,17 @@ class PiAgentClient:
             Required: Lean 4 proofs, FUTURE_DIRECTIONS.md, RESEARCH_PAPER.md,
                       ARTICLE.md (Scientific American style), algorithm, demo.py
             Optional: (none — all key deliverables are mandatory)
+
+            ## Catalog Context for Future Directions
+            Below is information about the current state of the Catalog. Reference
+            specific theorems by their Catalog file paths when writing FUTURE_DIRECTIONS.md.
+            Use the **Catalog References** field to cite the exact file paths.
+
+            ### Catalog Breakthrough Analysis
+            {fd_breakthrough if fd_breakthrough else "Breakthrough analysis not available."}
+
+            ### Key Theorems Available (for lineage references)
+            {fd_theorem_listing if fd_theorem_listing else "Theorem listing not available."}
 
             FUTURE_DIRECTIONS.md MUST be a standalone research roadmap. It will be
             used to steer future research rounds WITHOUT access to this cycle's code.

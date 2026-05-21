@@ -910,6 +910,48 @@ class CatalogAnalyzer:
         opportunities.sort(key=lambda x: -len(x["shared_structures"]))
         return opportunities
 
+    def get_key_theorem_listing(self, max_per_domain: int = 5, max_total: int = 30) -> str:
+        """Generate a compact listing of key theorems from each domain.
+
+        Returns a string listing theorem file paths grouped by domain,
+        suitable for injection into the FUTURE_DIRECTIONS prompt so
+        Aristotle can reference specific Catalog theorems.
+        """
+        if self._summaries is None:
+            self.scan()
+
+        lines = []
+        total_listed = 0
+
+        # Prioritize FINAL files, then files with deep proofs, then everything else
+        for domain in sorted(self._domain_index.keys()):
+            if total_listed >= max_total:
+                break
+            files = self._domain_index[domain]
+            # Sort: FINAL files first, then by declaration count descending
+            sorted_files = sorted(
+                files,
+                key=lambda f: (
+                    0 if "FINAL" in f.relative_path else 1,
+                    -len(f.declarations),
+                ),
+            )
+            domain_lines = []
+            for f in sorted_files[:max_per_domain]:
+                if total_listed >= max_total:
+                    break
+                decl_preview = ", ".join(f.declarations[:3])
+                sorry_note = f" ({f.sorry_count} sorries)" if f.has_sorries else ""
+                domain_lines.append(
+                    f"  `{f.relative_path}`: {decl_preview}{sorry_note}"
+                )
+                total_listed += 1
+            if domain_lines:
+                lines.append(f"**{domain}**:")
+                lines.extend(domain_lines)
+
+        return "\n".join(lines)
+
     def analyze_catalog_breakthrough_potential(self) -> str:
         """Generate a breakthrough potential analysis of the catalog.
 
