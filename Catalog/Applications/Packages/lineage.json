@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -61,7 +61,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "arithmetic_resonance_in_neural_proof_search",
@@ -71,6 +71,15 @@
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
       "hue": 271
+    },
+    {
+      "id": "langlands_correspondence_gl1_case",
+      "title": "GL(1) Langlands Correspondence: Formally Verified Algebraic Skeleton",
+      "domain": "Algebra / Number Theory / Langlands Program",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-21T04:05:13Z",
+      "hue": 91
     }
   ],
   "edges": [],

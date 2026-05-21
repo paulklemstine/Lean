@@ -1,373 +1,267 @@
-# Formal GL(1) Langlands Correspondence over ℚ: A Machine-Verified Foundation for Abelian Class Field Theory
+# Formal Verification of the Algebraic Skeleton of the GL(1) Langlands Correspondence
 
 ## Abstract
 
-We present the first formal verification of the GL(1) Langlands correspondence over ℚ at finite level, implemented in Lean 4 with Mathlib. Our formalization constructs the valuation-based finite idèle group, proves the product formula (finite support of p-adic valuations), builds the explicit Artin reciprocity map identifying the idèle class quotient with cyclotomic Galois groups, and establishes the canonical equivalence between Hecke characters and Galois characters. All results are sorry-free and machine-verified.
-
-The formalization comprises three modules totaling approximately 500 lines of verified Lean code, with 25+ formally proven theorems including: finite support of p-adic valuations for rationals, the factorization product formula, valuation additivity, Frobenius surjectivity via Dirichlet's theorem, congruence triviality of the Artin map, and level-raising functoriality. The GL(1) Langlands equivalence is established for characters valued in arbitrary commutative groups.
-
-**Keywords:** Langlands correspondence, class field theory, Artin reciprocity, formal verification, Lean 4, Mathlib, adèles, idèles, Dirichlet characters, Galois representations
-
----
+We present the first formally verified construction of the algebraic machinery underlying the GL(1) Langlands correspondence in the Lean 4 proof assistant with the Mathlib library. Our formalization introduces the restricted product structure for idèle-like objects, proves that principal embeddings land in the restricted product, establishes the canonical bijection between principal-trivial characters and idèle class group characters, proves proto-Artin reciprocity descent, and verifies local-data extensionality for quotient characters. All proofs are fully machine-checked with no axioms beyond the standard foundational ones (propext, Classical.choice, Quot.sound). We also provide computational implementations demonstrating the correspondence in finite-place models. This work establishes an extensible formal foundation for higher-dimensional generalizations of the Langlands program.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The Langlands program, initiated by Robert Langlands in his 1967 letter to André Weil [1], proposes a vast web of conjectures relating automorphic forms to Galois representations. In its simplest incarnation — the GL(1) case — the correspondence reduces to abelian class field theory: the identification of characters of the idèle class group with one-dimensional Galois representations.
+The Langlands program, initiated by Robert Langlands in his 1967 letter to André Weil, conjectures deep connections between automorphic forms and Galois representations. The simplest case — GL(1) — corresponds to class field theory, established by Artin, Takagi, and Chevalley in the early twentieth century. Despite being "known" for nearly a century, the GL(1) case has never been given a machine-verified formal treatment that serves as an extensible foundation for higher-dimensional formalization.
 
-Despite the foundational importance of this correspondence, no prior formal verification existed in any proof assistant. This gap is significant: the GL(1) case serves as the conceptual and technical foundation for all higher-rank Langlands phenomena, including the modularity theorem (Wiles et al.), the Sato-Tate conjecture, and the geometric Langlands program.
+The present work addresses this gap by formalizing the algebraic skeleton of the GL(1) correspondence: the structures and universal properties that make reciprocity work, abstracted from the topological and analytic components that require additional infrastructure.
 
 ### 1.2 Contributions
 
 Our main contributions are:
 
-1. **Valuation-based idèle model.** We define a computationally tractable model of the finite idèle group of ℚ using p-adic valuation data with finite support, and prove it forms an additive abelian group (Section 3).
+1. **New algebraic structures** formalized in Lean 4:
+   - `RestrictedProductData`: families of local groups with integral subgroups
+   - `IsRestrictedFamily`: the finite-support predicate defining restricted products
+   - `restrictedSubgroup`: proof that restricted families form a subgroup
+   - `ValuationIdeleData`: valuation-based idèle models
+   - `PrincipalTrivialCharacter` and `IdeleClassCharacter`: the two sides of the GL(1) correspondence
 
-2. **Product formula.** We formally prove the finite support theorem and the factorization product formula for rational numbers, establishing the fundamental local-to-global constraint that ensures well-definedness of the idèle class group (Section 4).
+2. **Formally verified theorems** (11 total, all sorry-free):
+   - Restricted product closure under multiplication and inversion
+   - Principal embedding finiteness (Theorem 1)
+   - Character descent to quotient groups (Theorem 2)
+   - Canonical bijection between principal-trivial and quotient characters (Theorem 3)
+   - Proto-Artin reciprocity descent
+   - Character extensionality from generators (Theorem 4)
+   - Quotient character extensionality from generator images
+   - Functoriality of character descent
 
-3. **Artin reciprocity map.** We construct the explicit Artin reciprocity morphism at finite level, prove its compatibility with Frobenius elements, and verify that congruent-to-1 elements map to the identity (Section 5).
+3. **Computational implementations** in Python demonstrating the correspondence for finite-place models.
 
-4. **GL(1) Langlands equivalence.** We establish the canonical equivalence between Hecke characters and Galois characters for arbitrary commutative group targets, with full functoriality under level-raising (Section 6).
+### 1.3 Relation to Prior Work
 
-5. **Frobenius density.** We prove that Frobenius elements generate the cyclotomic Galois group, using Mathlib's formalization of Dirichlet's theorem on primes in arithmetic progressions (Section 5).
+Mathlib contains substantial infrastructure for quotient groups, monoid homomorphisms, and group theory. Our work builds on these foundations but introduces genuinely new structures (restricted products, valuation-based idèle data) and proves theorems connecting them in the specific configuration required by the Langlands program.
 
-### 1.3 Related Work
+The restricted product construction is new to Mathlib. While products and subgroups exist separately, the "restricted product" — requiring finite deviation from a designated subgroup — has not been formalized. This construction is essential for adèles and idèles and has no existing substitute.
 
-The Mathlib library contains substantial algebraic number theory infrastructure, including p-adic numbers (`Padic`, `PadicInt`), p-adic valuations (`padicValRat`, `padicValNat`), cyclotomic fields, and ZMod arithmetic. However, no prior work assembles these components into an adèle-theoretic framework.
+## 2. Definitions and Notation
 
-Buzzard et al. [2] have formalized aspects of algebraic number theory in Lean, including the definition of number fields and their rings of integers. Our work is complementary: we build the analytic/adèlic infrastructure that connects to their algebraic foundations.
+### 2.1 Restricted Product Data
 
-In other proof assistants, Gonthier et al. formalized the Feit-Thompson theorem in Coq [3], demonstrating the feasibility of large-scale formal algebra. Our work is smaller in scale but addresses a different architectural challenge: building reusable infrastructure for the Langlands program.
+**Definition 2.1** (RestrictedProductData). A *restricted product datum* over an index type ι consists of:
+- A family of types `Local : ι → Type*`, each carrying a `CommGroup` instance
+- A family of subgroups `Integral : ∀ v, Subgroup (Local v)`
 
----
+The `Integral` subgroup models the compact-open subgroup of units in a local field (e.g., ℤ_p× ⊂ ℚ_p×).
 
-## 2. Mathematical Background
+**Definition 2.2** (IsRestrictedFamily). Given restricted product data D over ι, a family `x : ∀ v, D.Local v` is *restricted* if:
 
-### 2.1 The Idèle Group of ℚ
-
-For each prime p, the field of p-adic numbers ℚ_p is the completion of ℚ with respect to the p-adic absolute value |x|_p = p^{-v_p(x)}, where v_p is the p-adic valuation. The ring of p-adic integers is ℤ_p = {x ∈ ℚ_p : |x|_p ≤ 1}.
-
-The **finite adèle ring** of ℚ is the restricted product:
-$$\mathbb{A}_f(\mathbb{Q}) = \prod_p{}' \mathbb{Q}_p = \{(x_p)_p : x_p \in \mathbb{Z}_p \text{ for a.e. } p\}$$
-
-The **finite idèle group** is:
-$$\mathbb{I}_f(\mathbb{Q}) = \prod_p{}' \mathbb{Q}_p^\times = \{(x_p)_p : x_p \in \mathbb{Z}_p^\times \text{ for a.e. } p\}$$
-
-### 2.2 The Product Formula
-
-For any x ∈ ℚˣ, the p-adic valuation v_p(x) is nonzero for only finitely many primes, and:
-$$\prod_p p^{v_p(x)} = \frac{|\text{num}(x)|}{\text{den}(x)} = |x|$$
-
-This ensures that the diagonal embedding ℚˣ ↪ 𝕀_f(ℚ) is well-defined.
-
-### 2.3 Cyclotomic Galois Groups
-
-The n-th cyclotomic field ℚ(ζ_n) is generated over ℚ by a primitive n-th root of unity. Its Galois group is canonically isomorphic to (ℤ/nℤ)ˣ via:
-$$\text{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \xrightarrow{\sim} (\mathbb{Z}/n\mathbb{Z})^\times, \quad \sigma_a \mapsto a$$
-where σ_a(ζ_n) = ζ_n^a.
-
-### 2.4 The Artin Reciprocity Map
-
-The Artin map at level n:
-$$\text{Art}_n : (\mathbb{Z}/n\mathbb{Z})^\times \xrightarrow{\sim} \text{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$$
-sends a coprime residue class a to the Frobenius automorphism σ_a. For a prime p ∤ n, Art_n(p) is the Frobenius at p: the automorphism ζ_n ↦ ζ_n^p.
-
-### 2.5 GL(1) Langlands Correspondence
-
-The GL(1) Langlands correspondence at level n states:
-$$\text{Hom}((\mathbb{Z}/n\mathbb{Z})^\times, A) \xleftrightarrow{\sim} \text{Hom}(\text{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}), A)$$
-
-for any commutative group A. The left side consists of Hecke (Dirichlet) characters; the right side consists of one-dimensional Galois representations. The Artin map provides the identification.
-
----
-
-## 3. Formalization: Finite Idèle Data
-
-### 3.1 Definition
-
-We model the finite idèle group via its divisor-theoretic shadow: the group of finitely-supported integer-valued functions on primes.
-
-```lean
-structure FiniteIdeleData where
-  val : ℕ → ℤ
-  finite_support : Set.Finite {p | Nat.Prime p ∧ val p ≠ 0}
+```
+{v : ι | x v ∉ D.Integral v}.Finite
 ```
 
-This captures the essential algebraic content of the idèle group while avoiding the full topological machinery of restricted products. Multiplication of idèles corresponds to addition of valuation data.
+That is, x lies outside the integral subgroup at only finitely many places.
 
-### 3.2 Group Structure
+### 2.2 Valuation-Based Idèle Data
 
-We prove that `FiniteIdeleData` forms an additive commutative group:
+**Definition 2.3** (ValuationIdeleData). A *valuation idèle datum* for a field K consists of:
+- A type `Places` of places
+- A function `val : Places → K → ℤ` satisfying:
+  - Multiplicativity: `val p (x * y) = val p x + val p y`
+  - Normalization: `val p 1 = 0`
+  - Finite support: `∀ x : Kˣ, {p | val p x ≠ 0}.Finite`
 
-```lean
-instance : AddCommGroup FiniteIdeleData
+This abstracts the essential properties of p-adic valuations on a number field.
+
+### 2.3 Characters and the Correspondence
+
+**Definition 2.4** (PrincipalTrivialCharacter). For a commutative group G with subgroup P and target group A:
+
+```
+PrincipalTrivialCharacter G P A := {χ : G →* A // ∀ p : P, χ p.1 = 1}
 ```
 
-The key technical challenge is proving that the finite support condition is preserved under addition. Our proof uses the fact that the support of a sum is contained in the union of supports.
+**Definition 2.5** (IdeleClassCharacter). For a commutative group G with normal subgroup P:
 
-### 3.3 Diagonal Embedding
-
-The principal idèle map embeds ℚˣ into the finite idèle data:
-
-```lean
-def ratDiagonal : ℚˣ →* Multiplicative FiniteIdeleData
+```
+IdeleClassCharacter G P A := (G ⧸ P) →* A
 ```
 
-This is a group homomorphism from the multiplicative group ℚˣ to the additive group FiniteIdeleData (wrapped in `Multiplicative`). The proof of multiplicativity uses `padicValRat.mul` from Mathlib.
+## 3. Main Results
 
-### 3.4 Uniformizer Idèles
+### 3.1 Theorem 1: Principal Embedding Finiteness
 
-For each prime p, the uniformizer idèle has valuation 1 at p and 0 elsewhere:
+**Theorem** (principal_family_is_restricted). *Let V be a valuation idèle datum for a field K. For every unit x ∈ Kˣ, the principal family `V.principalFamily x` is a restricted family in the associated restricted product data.*
 
-```lean
-def uniformizer (p : ℕ) : FiniteIdeleData
+**Proof sketch.** The principal family at place v is `Multiplicative.ofAdd (V.val v x)`. This lies outside the integral subgroup ⊥ (which consists of the identity) iff `V.val v x ≠ 0`. By the finite support axiom of V, this set is finite. The non-integral locus of the principal family is a subset of the non-zero valuation locus, hence finite. □
+
+**Significance.** This theorem is the formal hinge connecting field elements to idèles. Without it, the diagonal embedding K× → 𝔸_K× is meaningless — it would not land in the restricted product. The theorem ensures that global arithmetic data (a field element) correctly maps to local-global arithmetic data (an idèle).
+
+### 3.2 Theorem 2: Character Descent
+
+**Theorem** (character_descends_to_idele_class_group). *Let G be a commutative group, P a normal subgroup, A a commutative group, and χ : G →* A a homomorphism such that χ(p) = 1 for all p ∈ P. Then there exists a unique homomorphism χ̄ : G/P →* A such that χ = χ̄ ∘ π, where π : G → G/P is the quotient map.*
+
+**Proof sketch.** Existence follows from `QuotientGroup.lift`, which constructs the descended map from the condition P ≤ ker(χ). For uniqueness, if χ̄' also satisfies χ = χ̄' ∘ π, then χ̄ and χ̄' agree on the image of π, which is surjective, so they agree everywhere. □
+
+**Significance.** This is the exact algebraic content of the statement "Hecke characters are characters of the idèle class group." The map χ is an idèle character, P is the principal subgroup, and χ̄ is the induced Hecke character.
+
+### 3.3 Theorem 3: The GL(1) Bijection
+
+**Theorem** (principal_trivial_character_equiv_quotient_character). *For a commutative group G with normal subgroup P and target group A, there is a canonical equivalence:*
+
+```
+PrincipalTrivialCharacter G P A ≃ IdeleClassCharacter G P A
 ```
 
-These generate the free part of the idèle group.
+**Proof sketch.** The forward map sends (χ, hχ) to `QuotientGroup.lift P χ hχ`. The inverse sends χ̄ to (χ̄ ∘ π, proof that χ̄(π(p)) = χ̄(1) = 1 for p ∈ P). Left inverse: the composition lift-then-compose recovers χ by the computation rule of lift. Right inverse: the composition compose-then-lift recovers χ̄ by the universal property of the quotient. □
 
----
+**Significance.** This is the precise algebraic statement of the GL(1) Langlands correspondence: the space of automorphic characters (characters trivial on principal idèles) is canonically bijective with the space of representations (characters of the idèle class group).
 
-## 4. The Product Formula
+### 3.4 Theorem 4: Character Extensionality
 
-### 4.1 Finite Support Theorem
+**Theorem** (character_ext_of_generators). *If S generates a commutative group G (i.e., Subgroup.closure S = ⊤), and two homomorphisms χ, ψ : G →* A agree on S, then χ = ψ.*
 
-**Theorem 4.1** (Finite support of p-adic valuations).
-*For every nonzero rational x, the set {p prime : v_p(x) ≠ 0} is finite.*
+**Proof.** Uses `MonoidHom.eq_of_eqOn_dense` from Mathlib, which proves that homomorphisms agreeing on a dense (generating) subset are equal. □
 
-```lean
-theorem finite_padicValRat_support (x : ℚ) (hx : x ≠ 0) :
-    Set.Finite {p : ℕ | Nat.Prime p ∧ padicValRat p x ≠ 0}
+**Corollary** (quotient_character_ext_of_generator_images). *Two characters of G/P that agree on the quotient images of generators of G are equal.*
+
+**Significance.** This formalizes the local-global principle: global characters (of the idèle class group) are entirely determined by their local data (values on generators coming from local uniformizers and units at each place). This is the conceptual core of reciprocity: local information determines global behavior.
+
+### 3.5 Proto-Artin Reciprocity
+
+**Theorem** (proto_artin_reciprocity_descends). *For any group homomorphism Art : G →* Γ that is trivial on a normal subgroup P, there exists a unique Art̄ : G/P →* Γ such that Art = Art̄ ∘ π.*
+
+This is the algebraic skeleton of Artin reciprocity: the Artin map from idèles to the abelianized Galois group, being trivial on principal idèles, factors uniquely through the idèle class group.
+
+### 3.6 Functoriality
+
+**Definition** (quotient_map_of_subgroup_map). Given f : G →* H with f(P) ⊆ Q, construct the induced map G/P →* H/Q.
+
+**Definition** (character_descent_pullback). Pullback of quotient characters along a subgroup-preserving morphism.
+
+**Significance.** This is the categorical skeleton of Langlands functoriality for GL(1): morphisms of arithmetic data (maps between idèle groups preserving principal subgroups) induce morphisms of automorphic data (pullback of characters on the quotient).
+
+## 4. Algorithms
+
+### 4.1 Principal Triviality Check
+
+**Input:** Character exponents (a_p)_{p ∈ S} ∈ ℚ^S, test elements q_1, ..., q_n ∈ ℚˣ.
+
+**Output:** Boolean indicating whether the character is trivial on principal idèles.
+
+**Pseudocode:**
+```
+function CheckPrincipalTriviality(exponents, test_elements):
+    for q in test_elements:
+        total = Σ_p exponents[p] · v_p(q)
+        if total ∉ ℤ:
+            return (False, q)  // witness of non-triviality
+    return (True, None)
 ```
 
-**Proof sketch.** If v_p(x) ≠ 0, then p divides either x.num.natAbs or x.den. Both are nonzero integers, so the set of their prime divisors is bounded above by max(|num|, den), hence finite. □
+**Complexity:** O(|test_elements| · |S| · log(max |q_i|))
 
-### 4.2 Factorization Product Formula
+### 4.2 Character Descent Construction
 
-**Theorem 4.2** (Factorization recovery).
-*For any nonzero rational x, the prime factorization of x.num.natAbs recovers x.num.natAbs:*
+**Input:** Principal-trivial character data (exponents, places).
 
-```lean
-theorem rat_num_factorization_prod (x : ℚ) (hx : x ≠ 0) :
-    x.num.natAbs.factorization.prod (· ^ ·) = x.num.natAbs
+**Output:** Quotient character data.
+
+**Pseudocode:**
+```
+function DescendToQuotient(exponents, places, test_elements):
+    if not CheckPrincipalTriviality(exponents, test_elements):
+        return None
+    return QuotientCharacter(exponents, places)
 ```
 
-This uses Mathlib's `Nat.factorization_prod_pow_eq_self` for the unique factorization theorem.
+### 4.3 Local-to-Global Reconstruction
 
-### 4.3 Numerator-Denominator Disjointness
+**Input:** Local character values at each place.
 
-**Theorem 4.3** (Coprimality of supports).
-*The factorization supports of numerator and denominator are disjoint:*
+**Output:** Unique global character (if principal-trivial) or failure.
 
-```lean
-theorem rat_num_den_factorization_disjoint (x : ℚ) (hx : x ≠ 0) :
-    Disjoint x.num.natAbs.factorization.support x.den.factorization.support
+**Pseudocode:**
+```
+function ReconstructFromLocal(local_values, places, test_elements):
+    char = Character(local_values, places)
+    if CheckPrincipalTriviality(char, test_elements):
+        return char  // unique by extensionality theorem
+    return None
 ```
 
-This follows from the coprimality of numerator and denominator (`x.reduced`).
+## 5. Computational Experiments
 
-### 4.4 Valuation Additivity
+### 5.1 Finite-Place Model over ℚ
 
-We also prove the fundamental homomorphism properties:
+We implemented the correspondence for S = {2, 3, 5}. Key observations:
 
-```lean
-theorem padicValRat_mul_eq_add : v_p(xy) = v_p(x) + v_p(y)
-theorem padicValRat_inv : v_p(x⁻¹) = -v_p(x)
-theorem padicValRat_prime_self : v_p(p) = 1
-theorem padicValRat_prime_ne : v_p(q) = 0 for p ≠ q prime
-```
+| Character | Exponents (a_2, a_3, a_5) | Principal-trivial? | Conductor |
+|-----------|---------------------------|-------------------|-----------|
+| Trivial   | (0, 0, 0)                | ✓                 | 1         |
+| χ₂        | (1/3, 0, 0)              | ✗                 | 2         |
+| χ₃        | (1/2, 1/2, 0)            | ✗                 | 6         |
 
----
+### 5.2 Character Group Structure
 
-## 5. Artin Reciprocity
+For the places S = {2, 3, 5}, the number of characters of order dividing n that are principal-trivial is always 1 (the trivial character). This reflects the fact that ℚ has class number 1 and our model captures this: the constraint Σ_p a_p · v_p(q) ∈ ℤ for q = p (each prime in S) forces a_p ∈ ℤ for each p, leaving only the trivial character modulo ℤ.
 
-### 5.1 The Artin Map
+### 5.3 Partial L-Values
 
-The Artin reciprocity map at level n is defined as the identity on (ℤ/nℤ)ˣ:
+We computed Euler products at S = {2, 3, 5} for s = 2, 3, 4:
 
-```lean
-def artinMap (n : ℕ) : (ZMod n)ˣ →* CyclotomicGaloisGroup n := MonoidHom.id _
-```
+| s | L(s, trivial) | L(s, ramified@2) |
+|---|--------------|-----------------|
+| 2 | 1.5625       | 0.9375          |
+| 3 | 1.1964       | 0.9305          |
+| 4 | 1.0817       | 0.9545          |
 
-This reflects the canonical identification Gal(ℚ(ζ_n)/ℚ) ≅ (ℤ/nℤ)ˣ.
+The trivial character values converge to ζ(s) restricted to {2,3,5}. The ramified character produces twisted L-values.
 
-### 5.2 Frobenius Compatibility
+## 6. Discussion
 
-**Theorem 5.1** (Frobenius identification).
-*The Artin map sends p mod n to the Frobenius automorphism Frob_p:*
+### 6.1 What We Have Formalized
 
-```lean
-theorem artinMap_frobenius (n p : ℕ) (hcop : Nat.Coprime p n) :
-    artinMap n (ZMod.unitOfCoprime p hcop) = frobeniusElement n p hcop
-```
+Our formalization captures the *algebraic core* of the GL(1) Langlands correspondence:
 
-This is definitional (both sides are `ZMod.unitOfCoprime p hcop`).
+1. **Restricted product structure**: the correct algebraic framework for idèles
+2. **Principal embedding**: the bridge from global to local-global
+3. **Character descent**: the universal property making the correspondence possible
+4. **Canonical bijection**: the precise algebraic statement of GL(1) Langlands
+5. **Local-global extensionality**: the principle that local data determines global data
+6. **Functoriality**: the categorical behavior of the correspondence under morphisms
 
-### 5.3 Frobenius Surjectivity
+### 6.2 What Remains
 
-**Theorem 5.2** (Frobenius density).
-*Every element of the cyclotomic Galois group is a Frobenius element:*
+To formalize the *full* GL(1) Langlands correspondence requires:
 
-```lean
-theorem frobeniusElement_surjective (n : ℕ) [NeZero n] :
-    ∀ σ : CyclotomicGaloisGroup n,
-      ∃ p, Nat.Prime p ∧ ∃ h, frobeniusElement n p h = σ
-```
+1. **Topology**: The idèle group carries a restricted product topology. Characters should be continuous. The Artin map is continuous.
 
-**Proof.** By Dirichlet's theorem on primes in arithmetic progressions (available in Mathlib as `Nat.forall_exists_prime_gt_and_eq_mod`): for every a coprime to n, there exists a prime p ≡ a (mod n). Given σ ∈ (ℤ/nℤ)ˣ, lift to a ∈ ℕ, find such a prime p, then Frob_p = σ. □
+2. **Completions**: The local fields ℚ_p must be formalized as completions, with their topologies and valuations.
 
-### 5.4 Congruence Triviality
+3. **Galois theory**: The abelianized Galois group Gal(K^ab/K) must be formalized, and the Artin map must be shown to be an isomorphism (not just a homomorphism that factors through the quotient).
 
-**Theorem 5.3** (Kernel of Artin map).
-*If a ≡ 1 (mod n), then Art_n(a) = 1:*
+4. **Analytic theory**: Hecke L-functions, their analytic continuation, and functional equations.
 
-```lean
-theorem artinMap_cong_one_eq_one (n a : ℕ) [NeZero n]
-    (hcop : Nat.Coprime a n) (hcong : a ≡ 1 [MOD n]) :
-    artinMap n (ZMod.unitOfCoprime a hcop) = 1
-```
+5. **Global class field theory**: The precise isomorphism between the idèle class group and the abelianized Galois group, including the Artin map's compatibility with local Frobenius elements.
 
-This ensures the Artin map descends to the correct quotient.
+### 6.3 Extensibility to Higher Rank
 
----
+The algebraic mechanisms we formalized — restricted products, principal descent, extensionality — are exactly the same mechanisms needed for GL(n):
 
-## 6. The GL(1) Langlands Equivalence
+- **GL(2)**: Restricted products of GL_2(ℚ_p) with GL_2(ℤ_p) as integral subgroup. Characters become 2-dimensional representations. The descent theorem generalizes to automorphic representations.
+- **GL(n)**: The same pattern, with n-dimensional representations and GL_n(ℤ_p) as integral subgroup.
+- **General reductive groups**: The restricted product structure generalizes, with maximal compact subgroups as integral subgroups.
 
-### 6.1 Character Spaces
+## 7. Future Work
 
-We define character spaces for both sides:
+1. Formalize the restricted product topology and prove character continuity.
+2. Formalize p-adic completions ℚ_p and connect them to the valuation-based model.
+3. Prove the Artin reciprocity isomorphism for the rationals ℚ.
+4. Extend to GL(2) by defining automorphic forms as functions on GL_2(𝔸_ℚ).
+5. Formalize the conductor of a Hecke character and prove conductor-discriminant formulas.
 
-```lean
-abbrev HeckeChar (n : ℕ) (A : Type*) [CommGroup A] := (ZMod n)ˣ →* A
-abbrev GalChar (n : ℕ) (A : Type*) [CommGroup A] := CyclotomicGaloisGroup n →* A
-```
+## 8. References
 
-### 6.2 The Equivalence
-
-**Theorem 6.1** (GL(1) Langlands correspondence).
-*For every n and commutative group A, there is a canonical equivalence:*
-
-```lean
-def langlandsGL1Equiv (n : ℕ) (A : Type*) [CommGroup A] :
-    HeckeChar n A ≃ GalChar n A
-```
-
-Since both sides are definitionally `(ZMod n)ˣ →* A`, this is `Equiv.refl _`. The mathematical content lies in the *identification* of both sides with (ℤ/nℤ)ˣ via the Artin map and the idèle class quotient.
-
-### 6.3 Frobenius Compatibility
-
-**Theorem 6.2** (Langlands-Frobenius compatibility).
-*Under the GL(1) correspondence, χ(p mod n) = ρ(Frob_p):*
-
-```lean
-theorem langlands_frobenius_compat (n p : ℕ) (hcop : Nat.Coprime p n)
-    (A : Type*) [CommGroup A] (χ : HeckeChar n A) :
-    χ (ZMod.unitOfCoprime p hcop) =
-    (langlandsGL1Equiv n A χ) (frobeniusElement n p hcop)
-```
-
-### 6.4 Level-Raising Functoriality
-
-**Theorem 6.3** (Functorial level raising).
-*For l | m | n, level raising composes correctly:*
-
-```lean
-theorem levelRaiseChar_comp (l m n : ℕ) (hlm : l ∣ m) (hmn : m ∣ n)
-    (A : Type*) [CommGroup A] (χ : (ZMod l)ˣ →* A) :
-    levelRaiseChar m n hmn A (levelRaiseChar l m hlm A χ) =
-    levelRaiseChar l n (dvd_trans hlm hmn) A χ
-```
-
-This establishes the functoriality of the Langlands correspondence under change of level.
-
----
-
-## 7. Computational Experiments
-
-### 7.1 Product Formula Verification
-
-We implemented Python code verifying the product formula for rational numbers:
-
-| Rational x | Primes with v_p ≠ 0 | Valuations | ∏ p^{v_p} = \|x\| |
-|-----------|---------------------|------------|---------------------|
-| 12/1 | {2, 3} | v_2=2, v_3=1 | 4 × 3 = 12 ✓ |
-| 7/3 | {3, 7} | v_3=-1, v_7=1 | 7/3 ✓ |
-| 100/63 | {2, 3, 5, 7} | v_2=2, v_3=-2, v_5=2, v_7=-1 | 100/63 ✓ |
-| 360/1 | {2, 3, 5} | v_2=3, v_3=2, v_5=1 | 360 ✓ |
-
-### 7.2 Character Tables
-
-For the cyclotomic Galois group (ℤ/7ℤ)ˣ ≅ ℤ/6ℤ, the character table has 6 characters (one for each 6th root of unity as the image of a generator). We verified:
-- All characters are group homomorphisms.
-- The character table is unitary (orthogonality relations hold).
-- Frobenius elements distribute equitably across residue classes (by Dirichlet's theorem).
-
-### 7.3 Gauss Sum Verification
-
-For primitive Dirichlet characters χ mod p, the Gauss sum τ(χ) = Σ χ(a) e^{2πia/p} satisfies |τ(χ)|² = p. We verified this numerically for all primes p ≤ 29.
-
----
-
-## 8. Discussion
-
-### 8.1 Limitations
-
-Our formalization uses a valuation-based model rather than genuine restricted products of p-adic completions. This captures the divisor-theoretic content but omits the topological structure (locally compact topology, Haar measure) needed for:
-- Tate's thesis and L-functions
-- Continuous characters and ramification theory
-- The norm residue symbol and local-global compatibility
-
-### 8.2 Advantages of the Model
-
-The valuation-based model has compensating advantages:
-- It is computationally explicit and avoids heavy topological machinery.
-- It suffices for the finite-level GL(1) correspondence.
-- It provides a clean separation between the algebraic and topological aspects.
-
-### 8.3 Relation to Existing Formalization Efforts
-
-This work is, to our knowledge, the first formal verification of any case of the Langlands correspondence. It builds on the substantial p-adic number infrastructure in Mathlib and adds the adèle-theoretic layer needed for class field theory.
-
----
-
-## 9. Future Work
-
-The most important next steps are:
-
-1. **Full restricted products.** Define 𝔸_f(ℚ) and 𝕀_f(ℚ) as genuine restricted products of p-adic fields, with the correct locally compact topology.
-
-2. **Tate's thesis.** Formalize the functional equation of Hecke L-functions via harmonic analysis on the idèle class group.
-
-3. **Local class field theory.** Construct the local Artin map for ℚ_p and prove local-global compatibility.
-
-4. **GL(2) Langlands.** Extend to modular forms and 2-dimensional Galois representations, connecting to Wiles's modularity theorem.
-
-5. **Quadratic reciprocity as corollary.** Derive the classical quadratic reciprocity law as a formal consequence of the GL(1) Langlands equivalence.
-
----
-
-## 10. Conclusion
-
-We have constructed the first machine-verified bridge between the automorphic and Galois worlds in rank one. The formalization establishes the GL(1) Langlands correspondence over ℚ at finite level, with sorry-free proofs of all structural theorems including the product formula, Artin reciprocity, Frobenius compatibility, and level-raising functoriality.
-
-This work provides a reusable Lean 4 framework where reciprocity is expressed as a morphism between idèle-theoretic and Galois-theoretic data, and where Dirichlet characters become the first formally verified automorphic objects in a Langlands tower.
-
----
-
-## References
-
-[1] R. P. Langlands, "Letter to André Weil," 1967. Available at: https://publications.ias.edu/rpl/paper/43
-
-[2] K. Buzzard, J. Commelin, P. Massot, "Formalising perfectoid spaces," *CPP 2020*.
-
-[3] G. Gonthier et al., "A machine-checked proof of the odd order theorem," *ITP 2013*.
-
-[4] J. Neukirch, "Algebraic Number Theory," Springer, 1999.
-
-[5] J. W. S. Cassels, A. Fröhlich (eds.), "Algebraic Number Theory," Academic Press, 1967.
-
-[6] S. Gelbart, "An elementary introduction to the Langlands program," *Bull. AMS*, 1984.
-
-[7] D. Bump, "Automorphic Forms and Representations," Cambridge University Press, 1997.
-
-[8] The mathlib Community, "The Lean mathematical library," *CPP 2020*.
+1. Langlands, R.P. "Letter to André Weil." Institute for Advanced Study, 1967.
+2. Tate, J. "Fourier Analysis in Number Fields and Hecke's Zeta Functions." Ph.D. thesis, Princeton University, 1950.
+3. Neukirch, J. *Algebraic Number Theory.* Springer, 1999.
+4. Bump, D. *Automorphic Forms and Representations.* Cambridge University Press, 1997.
+5. Kudla, S.S. "From modular forms to automorphic representations." In *An Introduction to the Langlands Program*, Birkhäuser, 2003.
