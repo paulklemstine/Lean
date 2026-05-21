@@ -1,4 +1,4 @@
-import MachineLearning.HardyHierarchy.Defs
+import Speculative.HardyHierarchy.Defs
 
 /-!
 # Hardy Field Hierarchy — Main Theorems
@@ -262,17 +262,161 @@ theorem iterExp_base_separation :
     HardyLevel 1 (iterExp 1) ∧ ¬ HardyLevel 0 (iterExp 1) :=
   ⟨iterExp_mem_hardyLevel 1, exp_not_hardyLevel_zero⟩
 
-/-- **Conjecture** (open): `iterExp n` for `n ≥ 1` does not belong to Hardy level `n - 1`.
-    Proved for `n = 1` above. The general case requires growth bounds for all levels. -/
+/-
+**Conjecture** (open): `iterExp n` for `n ≥ 1` does not belong to Hardy level `n - 1`.
+    Proved for `n = 1` above. The general case requires growth bounds for all levels.
+-/
 theorem iterExp_not_mem_lower_hardyLevel_conj :
     ∀ n, 1 ≤ n → ¬ HardyLevel (n - 1) (iterExp n) := by
-  sorry
+  intro n hn
+  -- Proved in Pythagorean.HardyHierarchy.Separation via growth bounds.
+  -- Here we give a direct proof using the same strategy.
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
+  simp only [Nat.add_sub_cancel]
+  -- Need: ¬ HardyLevel m (iterExp (m + 1))
+  -- iterExp (m+1) x = exp(iterExp m x)
+  -- If HardyLevel m (iterExp (m+1)), by hardyLevel_zero_poly_bound when m=0,
+  -- or by structural induction showing |f| ≤ exp(C * iterExp m x) for any C > 0,
+  -- we get exp(iterExp m x) ≤ exp(1/2 * iterExp m x), giving iterExp m x ≤ 1/2 * iterExp m x, contradiction.
+  intro h;
+  -- By induction on $m$, we can show that for any $f$ at level $m$, $|f(x)| \leq \exp(C \cdot \iterExp m x)$ for any $C > 0$ and sufficiently large $x$.
+  have h_ind : ∀ m : ℕ, ∀ f : ℝ → ℝ, HardyLevel m f → ∀ C > 0, ∃ N : ℝ, ∀ x ≥ N, |f x| ≤ Real.exp (C * iterExp m x) := by
+    intro m f hf C hC_pos;
+    induction' hf with n f g hf hg ihf ihg generalizing C;
+    all_goals norm_num [ iterExp ] at *;
+    -- For the base case, we can choose $N$ such that for all $x \geq N$, $x \leq \exp(Cx)$.
+    have h_base : ∃ N : ℝ, ∀ x ≥ N, x ≤ Real.exp (C * x) := by
+      have h_base : Filter.Tendsto (fun x => x / Real.exp (C * x)) Filter.atTop (nhds 0) := by
+        -- Let $y = Cx$, therefore the limit becomes $\lim_{y \to \infty} \frac{y}{e^y}$.
+        suffices h_lim_y : Filter.Tendsto (fun y => y / Real.exp y) Filter.atTop (nhds 0) by
+          have := h_lim_y.comp ( Filter.tendsto_id.const_mul_atTop hC_pos );
+          convert this.const_mul C⁻¹ using 2 <;> norm_num [ div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm, hC_pos.ne' ];
+        simpa [ Real.exp_neg ] using Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero 1;
+      exact Filter.eventually_atTop.mp ( h_base.eventually ( gt_mem_nhds zero_lt_one ) ) |> fun ⟨ N, hN ⟩ => ⟨ N, fun x hx => by have := hN x hx; rw [ div_lt_iff₀ ( Real.exp_pos _ ) ] at this; linarith ⟩;
+    exact ⟨ Max.max h_base.choose 0, fun x hx => by rw [ abs_of_nonneg ( by linarith [ le_max_right h_base.choose 0 ] ) ] ; exact h_base.choose_spec x ( le_trans ( le_max_left _ _ ) hx ) ⟩;
+    · exact ⟨ |n| / C, fun x hx => by rw [ div_le_iff₀ hC_pos ] at hx; linarith [ Real.add_one_le_exp ( C * x ), abs_nonneg n ] ⟩;
+    · -- By the induction hypothesis, we can find $N_1$ and $N_2$ such that for all $x \geq N_1$, $|g x| \leq \exp(C/2 * \iterExp f x)$ and for all $x \geq N_2$, $|hf x| \leq \exp(C/2 * \iterExp f x)$.
+      obtain ⟨N1, hN1⟩ : ∃ N1 : ℝ, ∀ x ≥ N1, |g x| ≤ Real.exp (C / 2 * iterExp f x) := by
+        exact ihg _ ( half_pos hC_pos )
+      obtain ⟨N2, hN2⟩ : ∃ N2 : ℝ, ∀ x ≥ N2, |hf x| ≤ Real.exp (C / 2 * iterExp f x) := by
+        exact ‹∀ C : ℝ, 0 < C → ∃ N, ∀ x ≥ N, |hf x| ≤ Real.exp (C * iterExp f x)› ( C / 2 ) ( half_pos hC_pos );
+      -- Choose $N$ such that for all $x \geq N$, $\exp(C/2 * \iterExp f x) \leq \exp(C * \iterExp f x) / 2$.
+      obtain ⟨N3, hN3⟩ : ∃ N3 : ℝ, ∀ x ≥ N3, Real.exp (C / 2 * iterExp f x) ≤ Real.exp (C * iterExp f x) / 2 := by
+        have h_exp_bound : Filter.Tendsto (fun x => Real.exp (C / 2 * iterExp f x) / Real.exp (C * iterExp f x)) Filter.atTop (nhds 0) := by
+          norm_num [ ← Real.exp_sub ];
+          ring_nf;
+          exact Filter.Tendsto.atTop_mul_const_of_neg ( by norm_num ) ( Filter.Tendsto.const_mul_atTop hC_pos ( show Filter.Tendsto ( fun x => iterExp f x ) Filter.atTop Filter.atTop from by exact Nat.recOn f ( by exact Filter.tendsto_id ) fun n ihn => by exact Real.tendsto_exp_atTop.comp ihn ) );
+        exact Filter.eventually_atTop.mp ( h_exp_bound.eventually ( gt_mem_nhds <| show 0 < 1 / 2 by norm_num ) ) |> fun ⟨ N3, hN3 ⟩ => ⟨ N3, fun x hx => by have := hN3 x hx; rw [ div_lt_iff₀ <| Real.exp_pos _ ] at this; linarith ⟩;
+      exact ⟨ Max.max N1 ( Max.max N2 N3 ), fun x hx => by rw [ abs_le ] ; constructor <;> linarith [ abs_le.mp ( hN1 x ( le_trans ( le_max_left _ _ ) hx ) ), abs_le.mp ( hN2 x ( le_trans ( le_max_of_le_right ( le_max_left _ _ ) ) hx ) ), hN3 x ( le_trans ( le_max_of_le_right ( le_max_right _ _ ) ) hx ) ] ⟩;
+    · rename_i k hk₁ hk₂ ih₁ ih₂;
+      obtain ⟨ N₁, hN₁ ⟩ := ih₁ ( C / 2 ) ( half_pos hC_pos ) ; obtain ⟨ N₂, hN₂ ⟩ := ih₂ ( C / 2 ) ( half_pos hC_pos ) ; use Max.max N₁ N₂; intro x hx; rw [ ← Real.exp_log ( show 0 < Real.exp ( C * iterExp _ x ) by positivity ) ] ; ring_nf; norm_num;
+      exact le_trans ( mul_le_mul ( hN₁ x ( le_trans ( le_max_left _ _ ) hx ) ) ( hN₂ x ( le_trans ( le_max_right _ _ ) hx ) ) ( by positivity ) ( by positivity ) ) ( by rw [ ← Real.exp_add ] ; ring_nf; norm_num );
+    · rename_i k hk₁ hk₂ ih₁ ih₂;
+      -- Choose $D = \min(C, 1)/4$.
+      set D := min C 1 / 4 with hD;
+      -- Choose $N$ such that for all $x \geq N$, $D \cdot \text{iterExp } n x + \exp(D \cdot \text{iterExp } n x) \leq C \cdot \exp(\text{iterExp } n x)$.
+      obtain ⟨N, hN⟩ : ∃ N : ℝ, ∀ x ≥ N, D * iterExp ‹_› x + Real.exp (D * iterExp ‹_› x) ≤ C * Real.exp (iterExp ‹_› x) := by
+        have h_exp_growth : Filter.Tendsto (fun x => (D * x + Real.exp (D * x)) / Real.exp x) Filter.atTop (nhds 0) := by
+          -- We can factor out $e^x$ in the numerator and denominator.
+          suffices h_factor : Filter.Tendsto (fun x => D * x / Real.exp x + Real.exp ((D - 1) * x)) Filter.atTop (nhds 0) by
+            convert h_factor using 2 ; ring;
+            rw [ ← Real.exp_neg, ← Real.exp_add ] ; ring;
+          -- We'll use the fact that $D * x / \exp x$ tends to $0$ as $x$ tends to infinity.
+          have h_exp_div : Filter.Tendsto (fun x => D * x / Real.exp x) Filter.atTop (nhds 0) := by
+            simpa [ Real.exp_neg, mul_div_assoc ] using tendsto_const_nhds.mul ( Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero 1 );
+          simpa using h_exp_div.add ( Real.tendsto_exp_atBot.comp <| Filter.tendsto_id.const_mul_atTop_of_neg <| show D - 1 < 0 by linarith [ show D < 1 by linarith [ min_le_left C 1, min_le_right C 1 ] ] );
+        have := h_exp_growth.eventually ( gt_mem_nhds <| show 0 < C by positivity );
+        rw [ Filter.eventually_atTop ] at this; rcases this with ⟨ N, hN ⟩ ; use N; intro x hx; have := hN ( iterExp ‹_› x ) ( by
+          rename_i n;
+          rename_i n';
+          exact le_trans hx ( show x ≤ iterExp n' x from Nat.recOn n' ( by norm_num [ iterExp ] ) fun n ihn => by rw [ iterExp ] ; exact le_trans ihn ( by linarith [ Real.add_one_le_exp ( iterExp n x ) ] ) ) ) ; rw [ div_lt_iff₀ ( Real.exp_pos _ ) ] at this; linarith;
+      obtain ⟨ N₁, hN₁ ⟩ := ih₁ D ( by positivity ) ; obtain ⟨ N₂, hN₂ ⟩ := ih₂ D ( by positivity ) ; use Max.max N ( Max.max N₁ N₂ ) ; intros x hx ; specialize hN x ( le_trans ( le_max_left _ _ ) hx ) ; specialize hN₁ x ( le_trans ( le_max_of_le_right ( le_max_left _ _ ) ) hx ) ; specialize hN₂ x ( le_trans ( le_max_of_le_right ( le_max_right _ _ ) ) hx ) ; simp_all +decide [ abs_mul, Real.exp_add ] ;
+      refine' le_trans ( mul_le_mul_of_nonneg_right hN₁ ( Real.exp_nonneg _ ) ) _;
+      rw [ ← Real.exp_add ] ; exact Real.exp_le_exp.mpr ( by nlinarith [ abs_le.mp hN₂, Real.add_one_le_exp ( min C 1 / 4 * iterExp ‹_› x ), Real.add_one_le_exp ( k x ), min_le_left C 1, min_le_right C 1 ] ) ;
+    · rename_i k hk₁ hk₂ hk₃;
+      obtain ⟨ N, hN ⟩ := hk₃ C hC_pos;
+      obtain ⟨ M, hM ⟩ := hk₂;
+      exact ⟨ Max.max N M, fun x hx => by rw [ ← hM x ( le_trans ( le_max_right _ _ ) hx ) ] ; exact hN x ( le_trans ( le_max_left _ _ ) hx ) ⟩;
+  -- Choose $C = 1/2$.
+  obtain ⟨N, hN⟩ : ∃ N : ℝ, ∀ x ≥ N, |iterExp (m + 1) x| ≤ Real.exp ((1 / 2) * iterExp m x) := h_ind m (iterExp (m + 1)) h (1 / 2) (by norm_num);
+  -- Since $\iterExp m x \to \infty$ as $x \to \infty$, we can choose $x$ large enough such that $\iterExp m x > 2$.
+  obtain ⟨x₀, hx₀⟩ : ∃ x₀ : ℝ, ∀ x ≥ x₀, iterExp m x > 2 := by
+    have h_iterExp_inf : Filter.Tendsto (fun x => iterExp m x) Filter.atTop Filter.atTop := by
+      refine' Nat.recOn m _ _ <;> simp_all +decide [ iterExp ];
+      exact Filter.tendsto_id;
+    exact Filter.eventually_atTop.mp ( h_iterExp_inf.eventually_gt_atTop 2 );
+  -- Choose $x$ large enough such that $x \geq \max(N, x₀)$.
+  obtain ⟨x, hx⟩ : ∃ x : ℝ, x ≥ max N x₀ ∧ iterExp m x > 2 := by
+    exact ⟨ Max.max N x₀, le_rfl, hx₀ _ <| le_max_right _ _ ⟩;
+  have := hN x ( le_trans ( le_max_left _ _ ) hx.1 ) ; rw [ abs_of_nonneg ( iterExp_pos_of_succ m x |> le_of_lt ) ] at this; rw [ show iterExp ( m + 1 ) x = Real.exp ( iterExp m x ) by rfl ] at this; norm_num at * ; linarith [ Real.add_one_le_exp ( iterExp m x ), Real.exp_lt_exp.2 ( show 1 / 2 * iterExp m x < iterExp m x by linarith ) ] ;
 
-/-- **Conjecture** (open): every function at Hardy level `n` is eventually bounded
-    by `C * iterExp (n+1) x`. -/
+/-
+**Conjecture** (open): every function at Hardy level `n` is eventually bounded
+    by `C * iterExp (n+1) x`.
+-/
 theorem hardyLevel_n_bounded_by_iterExp_succ (n : ℕ) (f : ℝ → ℝ)
     (hf : HardyLevel n f) :
     ∃ A C : ℝ, ∀ x ≥ A, |f x| ≤ C * iterExp (n + 1) x := by
-  sorry
+  -- Use the growth bound: |f x| ≤ exp(1 * iterExp n x) = iterExp (n+1) x
+  -- The growth bound is proved by the same induction as in iterExp_not_mem_lower_hardyLevel_conj.
+  suffices h_growth : ∃ N : ℝ, ∀ x ≥ N, |f x| ≤ Real.exp (iterExp n x) by
+    obtain ⟨N, hN⟩ := h_growth
+    exact ⟨N, 1, fun x hx => by simp only [one_mul, iterExp]; exact hN x hx⟩
+  have h_ind : ∀ m f, HardyLevel m f → ∀ C > 0, ∃ N, ∀ x ≥ N, |f x| ≤ Real.exp (C * iterExp m x) := by
+    intro m f hf C hC_pos;
+    induction' hf with m f f g hf hg ihf ihg m f hf ihf generalizing C <;> norm_num at *;
+    all_goals norm_num [ iterExp ] at *;
+    -- For the base case, we can choose $N$ such that for all $x \geq N$, $|x| \leq \exp(Cx)$.
+    have h_base_id : ∃ N, ∀ x ≥ N, |x| ≤ Real.exp (C * x) := by
+      have h_base_id : Filter.Tendsto (fun x : ℝ => x / Real.exp (C * x)) Filter.atTop (nhds 0) := by
+        -- Let $y = Cx$, therefore the limit becomes $\lim_{y \to \infty} \frac{y}{e^y}$.
+        suffices h_lim_y : Filter.Tendsto (fun y : ℝ => y / Real.exp y) Filter.atTop (nhds 0) by
+          have := h_lim_y.comp ( Filter.tendsto_id.const_mul_atTop hC_pos );
+          convert this.const_mul C⁻¹ using 2 <;> norm_num [ div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm, hC_pos.ne' ];
+        simpa [ Real.exp_neg ] using Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero 1;
+      exact Filter.eventually_atTop.mp ( h_base_id.eventually ( gt_mem_nhds zero_lt_one ) ) |> fun ⟨ N, hN ⟩ ↦ ⟨ Max.max N 0, fun x hx ↦ by rw [ abs_of_nonneg ( by linarith [ le_max_right N 0 ] ) ] ; have := hN x ( le_trans ( le_max_left N 0 ) hx ) ; rw [ div_lt_iff₀ ( Real.exp_pos _ ) ] at this; linarith ⟩ ;
+    exact h_base_id;
+    · exact ⟨ |m| / C, fun x hx => by rw [ div_le_iff₀ hC_pos ] at hx; linarith [ Real.add_one_le_exp ( C * x ), abs_nonneg m ] ⟩;
+    · -- By the induction hypothesis, we can find $N_1$ and $N_2$ such that for all $x \geq N_1$, $|f x| \leq \exp(C/2 * \text{iterExp} f✝ x)$ and for all $x \geq N_2$, $|g x| \leq \exp(C/2 * \text{iterExp} f✝ x)$.
+      obtain ⟨N1, hN1⟩ := ihf (C / 2) (half_pos hC_pos)
+      obtain ⟨N2, hN2⟩ := ihg (C / 2) (half_pos hC_pos);
+      -- Choose $N$ such that for all $x \geq N$, $2 \exp(C/2 * \text{iterExp} f✝ x) \leq \exp(C * \text{iterExp} f✝ x)$.
+      obtain ⟨N3, hN3⟩ : ∃ N3, ∀ x ≥ N3, 2 * Real.exp (C / 2 * iterExp ‹_› x) ≤ Real.exp (C * iterExp ‹_› x) := by
+        have h_exp_growth : Filter.Tendsto (fun x => 2 * Real.exp (C / 2 * iterExp ‹_› x) / Real.exp (C * iterExp ‹_› x)) Filter.atTop (nhds 0) := by
+          norm_num [ mul_div_assoc, ← Real.exp_sub ];
+          ring_nf;
+          norm_num [ Real.exp_neg ];
+          exact le_trans ( Filter.Tendsto.mul ( Filter.Tendsto.inv_tendsto_atTop <| Real.tendsto_exp_atTop.comp <| Filter.Tendsto.atTop_mul_const ( by positivity ) <| Filter.Tendsto.const_mul_atTop hC_pos <| show Filter.Tendsto ( fun x => iterExp _ x ) Filter.atTop Filter.atTop from by
+                                                                                                                                                                                                                  rename_i k hk;
+                                                                                                                                                                                                                  exact Nat.recOn hk ( Filter.tendsto_id ) fun n ihn => by simpa only [ iterExp ] using Real.tendsto_exp_atTop.comp ihn; ) tendsto_const_nhds ) ( by norm_num );
+        exact Filter.eventually_atTop.mp ( h_exp_growth.eventually ( gt_mem_nhds zero_lt_one ) ) |> fun ⟨ N3, hN3 ⟩ => ⟨ N3, fun x hx => by have := hN3 x hx; rw [ div_lt_one ( Real.exp_pos _ ) ] at this; linarith ⟩;
+      exact ⟨ Max.max N1 ( Max.max N2 N3 ), fun x hx => by rw [ abs_le ] ; constructor <;> linarith [ abs_le.mp ( hN1 x ( le_trans ( le_max_left _ _ ) hx ) ), abs_le.mp ( hN2 x ( le_trans ( le_max_of_le_right ( le_max_left _ _ ) ) hx ) ), hN3 x ( le_trans ( le_max_of_le_right ( le_max_right _ _ ) ) hx ) ] ⟩;
+    · rename_i h₁ h₂;
+      obtain ⟨ N₁, hN₁ ⟩ := h₁ ( C / 2 ) ( half_pos hC_pos ) ; obtain ⟨ N₂, hN₂ ⟩ := h₂ ( C / 2 ) ( half_pos hC_pos ) ; exact ⟨ Max.max N₁ N₂, fun x hx => by rw [ show C * iterExp m x = C / 2 * iterExp m x + C / 2 * iterExp m x by ring ] ; rw [ Real.exp_add ] ; exact mul_le_mul ( hN₁ x ( le_trans ( le_max_left _ _ ) hx ) ) ( hN₂ x ( le_trans ( le_max_right _ _ ) hx ) ) ( by positivity ) ( by positivity ) ⟩ ;
+    · rename_i k f g hf hg ih_f ih_g;
+      -- Choose $D$ such that $D < \min(C, 1)$.
+      obtain ⟨D, hD_pos, hD_lt⟩ : ∃ D > 0, D < min C 1 := by
+        exact exists_between <| lt_min hC_pos zero_lt_one;
+      -- Choose $N$ such that for all $x \geq N$, $D * \exp(iterExp k x) + \exp(D * iterExp k x) \leq C * \exp(iterExp k x)$.
+      obtain ⟨N, hN⟩ : ∃ N, ∀ x ≥ N, D * Real.exp (iterExp k x) + Real.exp (D * iterExp k x) ≤ C * Real.exp (iterExp k x) := by
+        -- We'll use that $D * \exp(iterExp k x) + \exp(D * iterExp k x) \leq C * \exp(iterExp k x)$ simplifies to $D + \exp((D-1) * iterExp k x) \leq C$.
+        suffices h_simplified : ∃ N, ∀ x ≥ N, D + Real.exp ((D - 1) * iterExp k x) ≤ C by
+          obtain ⟨ N, hN ⟩ := h_simplified; use N; intro x hx; convert mul_le_mul_of_nonneg_right ( hN x hx ) ( Real.exp_nonneg ( iterExp k x ) ) using 1 ; ring;
+          rw [ ← Real.exp_add ] ; ring;
+        -- Since $D < 1$, we have $(D - 1) < 0$, and thus $\exp((D - 1) * \exp(iterExp k x)) \to 0$ as $x \to \infty$.
+        have h_exp_zero : Filter.Tendsto (fun x => Real.exp ((D - 1) * iterExp k x)) Filter.atTop (nhds 0) := by
+          norm_num +zetaDelta at *;
+          exact Filter.Tendsto.const_mul_atTop_of_neg ( by linarith ) ( show Filter.Tendsto ( fun x => iterExp k x ) Filter.atTop Filter.atTop from by exact Nat.recOn k ( by exact Filter.tendsto_id ) fun n ihn => by exact Real.tendsto_exp_atTop.comp ihn );
+        exact Filter.eventually_atTop.mp ( h_exp_zero.eventually ( ge_mem_nhds <| show 0 < C - D by linarith [ min_le_left C 1, min_le_right C 1 ] ) ) |> fun ⟨ N, hN ⟩ => ⟨ N, fun x hx => by linarith [ hN x hx ] ⟩;
+      obtain ⟨ N₁, hN₁ ⟩ := ih_f D hD_pos
+      obtain ⟨ N₂, hN₂ ⟩ := ih_g D hD_pos
+      use max N (max N₁ N₂) ; intros x hx; specialize hN x ( le_trans ( le_max_left _ _ ) hx ) ; specialize hN₁ x ( le_trans ( le_max_of_le_right ( le_max_left _ _ ) ) hx ) ; specialize hN₂ x ( le_trans ( le_max_of_le_right ( le_max_right _ _ ) ) hx ) ; simp_all +decide [ abs_mul, Real.exp_add ] ;
+      refine' le_trans ( mul_le_mul_of_nonneg_right hN₁ ( Real.exp_nonneg _ ) ) _;
+      rw [ ← Real.exp_add ] ; exact Real.exp_le_exp.mpr ( by nlinarith [ abs_le.mp hN₂, Real.add_one_le_exp ( iterExp k x ), Real.add_one_le_exp ( D * iterExp k x ) ] ) ;
+    · rename_i k hk₁ hk₂ hk₃;
+      obtain ⟨ N₁, hN₁ ⟩ := hk₃ C hC_pos
+      obtain ⟨ N₂, hN₂ ⟩ := hk₂;
+      exact ⟨ Max.max N₁ N₂, fun x hx => by simpa only [ hN₂ x ( le_trans ( le_max_right _ _ ) hx ) ] using hN₁ x ( le_trans ( le_max_left _ _ ) hx ) ⟩;
+  simpa using h_ind n f hf 1 zero_lt_one
 
 end
