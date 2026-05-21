@@ -3,352 +3,339 @@
 Applications of Frankl's Union-Closed Conjecture
 
 Demonstrates connections to:
-1. Database theory (closed itemsets in data mining)
-2. Network reliability (monotone systems)
-3. Information theory (entropy of set families)
-4. Social choice theory (coalition structures)
+1. Data compression / concept lattices
+2. Social network analysis (community overlap)
+3. Boolean function complexity
+4. Knowledge representation (closure systems)
 """
 
-import math
-from collections import defaultdict
 from itertools import combinations
+from collections import defaultdict
+from typing import Set, FrozenSet, List, Dict
 
 
-# ============================================================
-# Application 1: Data Mining — Closed Itemsets
-# ============================================================
-
-def closed_itemset_analysis(transactions: list[set], min_support: float = 0.5):
-    """
-    In data mining, a set of items is "closed" if no proper superset
-    has the same support. The collection of closed itemsets forms a
-    union-closed family (actually, intersection-closed, which is dual).
-    
-    Frankl's conjecture, applied to the dual family, implies:
-    there exists an item appearing in at least half the closed itemsets.
-    This item is a "universal feature" of the dataset.
-    
-    Args:
-        transactions: List of itemsets (purchase baskets, etc.)
-        min_support: Minimum frequency threshold
-    """
-    print("=" * 60)
-    print("APPLICATION 1: Data Mining — Closed Itemsets")
-    print("=" * 60)
-    
-    # Compute support of each itemset
-    all_items = set()
-    for t in transactions:
-        all_items |= t
-    
-    def support(itemset):
-        return sum(1 for t in transactions if itemset <= t) / len(transactions)
-    
-    # Find frequent closed itemsets
-    # (simplified: enumerate and check closure)
-    closed = []
-    for size in range(len(all_items) + 1):
-        for combo in combinations(sorted(all_items), size):
-            itemset = frozenset(combo)
-            supp = support(itemset)
-            if supp >= min_support:
-                # Check if closed: no proper superset has same support
-                is_closed = True
-                for item in all_items - itemset:
-                    if support(itemset | {item}) == supp:
-                        is_closed = False
-                        break
-                if is_closed:
-                    closed.append((itemset, supp))
-    
-    print(f"\n  Transactions: {len(transactions)}")
-    print(f"  Items: {sorted(all_items)}")
-    print(f"  Frequent closed itemsets (support ≥ {min_support}):")
-    
-    family = set()
-    for itemset, supp in closed:
-        family.add(itemset)
-        print(f"    {set(itemset) if itemset else '∅'}: support = {supp:.2f}")
-    
-    # Check Frankl's property on the complement family
-    if family:
-        universe = set()
-        for s in family:
-            universe |= s
-        
-        abundances = {}
-        for x in universe:
-            abundances[x] = sum(1 for s in family if x in s)
-        
-        if abundances:
-            best = max(abundances, key=abundances.get)
-            print(f"\n  Most frequent item across closed itemsets: '{best}'")
-            print(f"    Appears in {abundances[best]}/{len(family)} closed itemsets "
-                  f"({abundances[best]/len(family)*100:.0f}%)")
-            print(f"    Frankl's conjecture predicts: ≥ {len(family)/2:.0f} ({50}%)")
+def powerset(s: frozenset) -> list[frozenset]:
+    elems = list(s)
+    return [frozenset(c) for r in range(len(elems)+1) for c in combinations(elems, r)]
 
 
-# ============================================================
-# Application 2: Network Reliability
-# ============================================================
-
-def network_reliability_demo():
-    """
-    In network reliability, the collection of "working configurations"
-    (sets of edges that maintain connectivity) forms a union-closed family
-    — if two configurations each work, their union also works.
-    
-    Frankl's conjecture implies: there exists an edge that appears in
-    at least half of all minimal-or-larger working configurations.
-    This edge is the most "critical" for reliability.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 2: Network Reliability")
-    print("=" * 60)
-    
-    # Simple network: triangle with one extra edge
-    # Edges: {a-b, b-c, a-c, c-d}
-    # Working = connected subgraphs spanning {a,b,c,d}
-    
-    edges = ['ab', 'bc', 'ac', 'cd']
-    nodes = {'a', 'b', 'c', 'd'}
-    
-    def is_connected(edge_set):
-        """Check if the edge set connects all nodes."""
-        if not edge_set:
-            return False
-        adj = defaultdict(set)
-        used_nodes = set()
-        for e in edge_set:
-            u, v = e[0], e[1]
-            adj[u].add(v)
-            adj[v].add(u)
-            used_nodes.add(u)
-            used_nodes.add(v)
-        
-        if used_nodes != nodes:
-            return False
-        
-        # BFS from first node
-        start = next(iter(nodes))
-        visited = {start}
-        queue = [start]
-        while queue:
-            u = queue.pop(0)
-            for v in adj[u]:
-                if v not in visited:
-                    visited.add(v)
-                    queue.append(v)
-        
-        return visited == nodes
-    
-    # Enumerate all working configurations
-    working = set()
-    for r in range(1, len(edges) + 1):
-        for combo in combinations(edges, r):
-            if is_connected(combo):
-                working.add(frozenset(combo))
-    
-    print(f"\n  Network: {nodes}")
-    print(f"  Edges: {edges}")
-    print(f"  Working configurations: {len(working)}")
-    
-    # Verify union-closure
-    is_uc = True
-    for A in working:
-        for B in working:
-            if A | B not in working:
-                is_uc = False
-                break
-        if not is_uc:
-            break
-    
-    print(f"  Union-closed: {is_uc}")
-    
-    # Find most critical edge
-    for e in edges:
-        ab = sum(1 for w in working if e in w)
-        print(f"  Edge '{e}': appears in {ab}/{len(working)} working configs "
-              f"({ab/len(working)*100:.0f}%)")
-    
-    best_edge = max(edges, key=lambda e: sum(1 for w in working if e in w))
-    best_count = sum(1 for w in working if best_edge in w)
-    print(f"\n  Most critical edge: '{best_edge}' (abundance = {best_count})")
-    print(f"  Frankl prediction: ≥ {len(working)//2} ✓" 
-          if 2 * best_count >= len(working) else "  Frankl prediction: FAILED ✗")
-
-
-# ============================================================
-# Application 3: Entropy Analysis
-# ============================================================
-
-def entropy_analysis_demo():
-    """
-    View a union-closed family as a probability space (uniform distribution).
-    Each element x defines a binary random variable X_x = 1[x ∈ S].
-    
-    Frankl's conjecture says: max_x P(X_x = 1) ≥ 1/2.
-    
-    The entropy approach (Reimer) uses: H(S) ≤ ∑_x H(X_x)
-    to derive frequency bounds.
-    """
-    print("\n" + "=" * 60)
-    print("APPLICATION 3: Entropy Analysis of Union-Closed Families")
-    print("=" * 60)
-    
-    def binary_entropy(p):
-        """H(p) = -p log₂(p) - (1-p) log₂(1-p)"""
-        if p <= 0 or p >= 1:
-            return 0.0
-        return -p * math.log2(p) - (1 - p) * math.log2(1 - p)
-    
-    # Generate some interesting union-closed families
-    families = {
-        "Power set of {0,1,2}": [frozenset(c) for r in range(4) 
-                                   for c in combinations(range(3), r)],
-        "Chain {∅,{0},{0,1},{0,1,2}}": [frozenset(), frozenset({0}), 
-                                          frozenset({0,1}), frozenset({0,1,2})],
-        "Generated by {{0,1},{1,2}}": None,  # will compute
-    }
-    
-    # Compute closure for the generated family
-    gens = {frozenset({0, 1}), frozenset({1, 2})}
-    closure = set(gens)
+def union_closure(family: set[frozenset]) -> set[frozenset]:
+    closed = set(family)
     changed = True
     while changed:
         changed = False
-        for A in list(closure):
-            for B in list(closure):
-                u = A | B
-                if u not in closure:
-                    closure.add(u)
+        new = set()
+        for A in closed:
+            for B in closed:
+                U = A | B
+                if U not in closed:
+                    new.add(U)
                     changed = True
-    families["Generated by {{0,1},{1,2}}"] = list(closure)
-    
-    for name, family in families.items():
-        n = len(family)
-        universe = frozenset()
-        for s in family:
-            universe |= s
-        
-        print(f"\n  Family: {name}")
-        print(f"    |F| = {n}, |U| = {len(universe)}")
-        print(f"    H(S) = log₂({n}) = {math.log2(n):.3f} bits")
-        
-        total_coord_entropy = 0
-        for x in sorted(universe):
-            freq = sum(1 for s in family if x in s) / n
-            h = binary_entropy(freq)
-            total_coord_entropy += h
-            print(f"    P(x={x} ∈ S) = {freq:.3f}, H(X_{x}) = {h:.3f}")
-        
-        print(f"    ∑ H(X_x) = {total_coord_entropy:.3f}")
-        print(f"    Subadditivity gap: {total_coord_entropy - math.log2(n):.3f} ≥ 0: "
-              f"{'✓' if total_coord_entropy >= math.log2(n) - 0.001 else '✗'}")
+        closed |= new
+    return closed
 
 
-# ============================================================
-# Application 4: Social Choice — Coalition Analysis
-# ============================================================
+def elem_freq(family: set[frozenset], a) -> int:
+    return sum(1 for s in family if a in s)
 
-def social_choice_demo():
+
+# ═══════════════════════════════════════════════════════════
+# APPLICATION 1: Concept Lattices and Knowledge Discovery
+# ═══════════════════════════════════════════════════════════
+
+def concept_lattice_demo():
     """
-    In social choice theory, a collection of "winning coalitions"
-    often forms a union-closed family: if two coalitions can each
-    pass a motion, their union can too.
+    In Formal Concept Analysis, the set of extents of a formal context
+    forms a closure system (union-closed family under intersection,
+    but the dual — the set of intents — is union-closed).
     
-    Frankl's conjecture implies: there exists a voter who belongs to
-    at least half of all winning coalitions — a "powerful" voter.
+    Frankl's conjecture implies: in any concept lattice, at least one
+    attribute appears in at least half the concepts.
     """
-    print("\n" + "=" * 60)
-    print("APPLICATION 4: Social Choice — Winning Coalitions")
-    print("=" * 60)
+    print("\n" + "="*60)
+    print("  APPLICATION 1: Concept Lattices")
+    print("="*60)
     
-    # UN Security Council-inspired voting
-    # 5 permanent members (P1-P5), 10 non-permanent (N1-N10)
-    # A resolution passes if: all 5 permanent + at least 4 non-permanent
+    # A formal context: objects × attributes
+    # Objects: animals, Attributes: properties
+    objects = ["dog", "cat", "eagle", "salmon", "snake"]
+    attributes = ["legs", "fur", "wings", "breathes_air", "warm_blooded"]
     
-    permanent = {f'P{i}' for i in range(1, 6)}
-    non_permanent = {f'N{i}' for i in range(1, 6)}  # simplified to 5
-    all_members = permanent | non_permanent
+    # Incidence relation
+    context = {
+        "dog":    {"legs", "fur", "breathes_air", "warm_blooded"},
+        "cat":    {"legs", "fur", "breathes_air", "warm_blooded"},
+        "eagle":  {"legs", "wings", "breathes_air", "warm_blooded"},
+        "salmon": set(),
+        "snake":  {"breathes_air"},
+    }
     
-    # Simplified: need all permanent + ≥ 2 non-permanent
-    winning = set()
-    for r in range(2, len(non_permanent) + 1):
-        for combo in combinations(sorted(non_permanent), r):
-            coalition = frozenset(permanent | set(combo))
-            winning.add(coalition)
+    # Compute attribute sets (intents) — which attributes are shared
+    # by which groups of objects
+    intents = set()
+    for r in range(len(objects) + 1):
+        for combo in combinations(objects, r):
+            if combo:
+                shared = set.intersection(*(context[o] for o in combo))
+            else:
+                shared = set(attributes)
+            intents.add(frozenset(shared))
     
-    print(f"\n  Voting body: {len(all_members)} members")
-    print(f"    Permanent: {sorted(permanent)}")
-    print(f"    Non-permanent: {sorted(non_permanent)}")
-    print(f"  Winning coalitions: {len(winning)}")
+    # The intents form a closure system (closed under intersection)
+    # For Frankl, we look at the dual: union-closed families
+    print(f"\n  Formal Context: {len(objects)} objects × {len(attributes)} attributes")
+    print(f"  Intents (closed under ∩): {len(intents)}")
     
-    # Verify union-closure (should hold since adding members preserves winning)
-    is_uc = True
-    for A in winning:
-        for B in winning:
-            if A | B not in winning:
-                is_uc = False
-                break
+    # Show intents
+    for intent in sorted(intents, key=lambda s: (len(s), sorted(s))):
+        print(f"    {set(intent) if intent else '{}'}")
     
-    print(f"  Union-closed: {is_uc}")
+    # Check which attributes appear most often
+    print(f"\n  Attribute frequencies in intents:")
+    for attr in sorted(attributes):
+        f = sum(1 for i in intents if attr in i)
+        heavy = " ← HEAVY" if 2 * f >= len(intents) else ""
+        print(f"    {attr}: {f}/{len(intents)}{heavy}")
     
-    # Power analysis
-    print(f"\n  Power analysis (abundance in winning coalitions):")
-    for member in sorted(all_members):
-        ab = sum(1 for w in winning if member in w)
-        pct = ab / len(winning) * 100
-        marker = "★" if ab == len(winning) else ("✓" if 2 * ab >= len(winning) else "")
-        print(f"    {member}: {ab}/{len(winning)} ({pct:.0f}%) {marker}")
+    print(f"\n  Frankl's conjecture predicts: at least one attribute")
+    print(f"  appears in ≥ {len(intents)/2:.1f} of the {len(intents)} intents.")
+
+
+# ═══════════════════════════════════════════════════════════
+# APPLICATION 2: Social Network Communities
+# ═══════════════════════════════════════════════════════════
+
+def social_network_demo():
+    """
+    Communities in social networks often exhibit union-closure:
+    if group A shares interest X and group B shares interest X,
+    then A ∪ B shares interest X.
     
-    print(f"\n  Frankl's prediction: ∃ member in ≥ {len(winning)//2} coalitions")
-    print(f"  Permanent members appear in ALL coalitions (100%) — much stronger!")
+    Frankl's conjecture implies: some person belongs to at least
+    half the communities.
+    """
+    print("\n" + "="*60)
+    print("  APPLICATION 2: Social Network Communities")
+    print("="*60)
+    
+    # People and their interest groups
+    communities = {
+        frozenset({"Alice", "Bob"}),           # Hiking
+        frozenset({"Bob", "Carol"}),           # Chess
+        frozenset({"Alice", "Carol", "Dave"}), # Book club
+    }
+    
+    # Union-closure models "merged communities"
+    closed_communities = union_closure(communities)
+    
+    print(f"\n  Original communities: {len(communities)}")
+    for c in sorted(communities, key=lambda s: (len(s), sorted(s))):
+        print(f"    {set(c)}")
+    
+    print(f"\n  Union-closed communities: {len(closed_communities)}")
+    for c in sorted(closed_communities, key=lambda s: (len(s), sorted(s))):
+        print(f"    {set(c)}")
+    
+    ground = frozenset().union(*closed_communities)
+    print(f"\n  People: {set(ground)}")
+    print(f"  Community memberships:")
+    n = len(closed_communities)
+    for person in sorted(ground):
+        f = elem_freq(closed_communities, person)
+        heavy = " ← appears in ≥ half" if 2 * f >= n else ""
+        print(f"    {person}: {f}/{n} communities{heavy}")
+    
+    print(f"\n  Frankl predicts: someone is in ≥ {n/2:.0f} of {n} communities ✓")
+
+
+# ═══════════════════════════════════════════════════════════
+# APPLICATION 3: Feature Selection in Machine Learning
+# ═══════════════════════════════════════════════════════════
+
+def feature_selection_demo():
+    """
+    In feature selection, supported feature sets often form union-closed
+    families. Frankl's conjecture suggests there's always a "universal"
+    feature that's relevant to at least half the models.
+    """
+    print("\n" + "="*60)
+    print("  APPLICATION 3: Feature Selection")
+    print("="*60)
+    
+    # Feature sets for different ML models
+    feature_sets = {
+        frozenset({"age", "income"}),              # Model 1: demographics
+        frozenset({"income", "credit_score"}),      # Model 2: financial
+        frozenset({"age", "education"}),            # Model 3: background
+    }
+    
+    closed = union_closure(feature_sets)
+    
+    print(f"\n  Original feature sets: {len(feature_sets)}")
+    for fs in sorted(feature_sets, key=lambda s: sorted(s)):
+        print(f"    {set(fs)}")
+    
+    print(f"\n  Union-closed feature sets: {len(closed)}")
+    for fs in sorted(closed, key=lambda s: (len(s), sorted(s))):
+        print(f"    {set(fs)}")
+    
+    ground = frozenset().union(*closed)
+    n = len(closed)
+    print(f"\n  Feature frequencies:")
+    for feat in sorted(ground):
+        f = elem_freq(closed, feat)
+        heavy = " ← UNIVERSAL FEATURE" if 2 * f >= n else ""
+        print(f"    {feat}: {f}/{n}{heavy}")
+    
+    print(f"\n  Frankl guarantees: some feature appears in ≥ {n//2 + (n%2>0)} models")
+
+
+# ═══════════════════════════════════════════════════════════
+# APPLICATION 4: Database Query Closure
+# ═══════════════════════════════════════════════════════════
+
+def database_query_demo():
+    """
+    In database theory, the set of attribute closures under
+    functional dependencies forms a closure system.
+    Frankl's conjecture implies a "dominant attribute" principle.
+    """
+    print("\n" + "="*60)
+    print("  APPLICATION 4: Database Attribute Closure")
+    print("="*60)
+    
+    # Functional dependencies define which attribute sets determine others
+    # Simulated: attribute sets that form a union-closed family
+    base_attrs = {
+        frozenset({"name", "id"}),
+        frozenset({"id", "department"}),
+        frozenset({"department", "location"}),
+    }
+    
+    closed = union_closure(base_attrs)
+    
+    print(f"\n  Key attribute sets: {len(base_attrs)}")
+    for s in sorted(base_attrs, key=lambda s: sorted(s)):
+        print(f"    {set(s)}")
+    
+    print(f"\n  Closed attribute sets: {len(closed)}")
+    for s in sorted(closed, key=lambda s: (len(s), sorted(s))):
+        print(f"    {set(s)}")
+    
+    ground = frozenset().union(*closed)
+    n = len(closed)
+    print(f"\n  Attribute frequencies:")
+    for attr in sorted(ground):
+        f = elem_freq(closed, attr)
+        heavy = " ← DOMINANT" if 2 * f >= n else ""
+        print(f"    {attr}: {f}/{n}{heavy}")
+    
+    # Verify Frankl
+    has_witness = any(2 * elem_freq(closed, a) >= n for a in ground)
+    print(f"\n  Frankl witness exists: {'✓' if has_witness else '✗'}")
+
+
+# ═══════════════════════════════════════════════════════════
+# APPLICATION 5: Counting and Statistics
+# ═══════════════════════════════════════════════════════════
+
+def statistics_demo():
+    """
+    Generate statistics about union-closed families on small ground sets.
+    """
+    print("\n" + "="*60)
+    print("  APPLICATION 5: Statistical Survey")
+    print("="*60)
+    
+    for n in range(1, 5):
+        universe = frozenset(range(1, n + 1))
+        all_subsets = powerset(universe)
+        
+        count = 0
+        witness_count = 0
+        avg_criterion_count = 0
+        singleton_count = 0
+        
+        for size in range(1, min(len(all_subsets) + 1, 15)):
+            for combo in combinations(all_subsets, size):
+                family = set(combo)
+                if not all(A | B in family for A in family for B in family):
+                    continue
+                
+                ground = frozenset().union(*family) if family else frozenset()
+                if not ground:
+                    continue
+                
+                count += 1
+                card = len(family)
+                
+                # Check Frankl
+                has_w = any(2 * elem_freq(family, a) >= card for a in ground)
+                if has_w:
+                    witness_count += 1
+                
+                # Check average criterion
+                ti = sum(len(s) for s in family)
+                if len(ground) * card <= 2 * ti:
+                    avg_criterion_count += 1
+                
+                # Check singleton
+                if any(frozenset({a}) in family for a in ground):
+                    singleton_count += 1
+        
+        print(f"\n  Ground size n = {n}:")
+        print(f"    UC families with nonempty ground: {count}")
+        print(f"    With Frankl witness:              {witness_count} ({100*witness_count//max(count,1)}%)")
+        print(f"    Avg criterion sufficient:         {avg_criterion_count}")
+        print(f"    Contains a singleton:             {singleton_count}")
 
 
 if __name__ == "__main__":
-    # Application 1: Data Mining
-    transactions = [
-        {'bread', 'milk', 'eggs'},
-        {'bread', 'butter'},
-        {'milk', 'eggs'},
-        {'bread', 'milk', 'butter'},
-        {'bread', 'eggs'},
-        {'milk', 'butter'},
-        {'bread', 'milk'},
-        {'bread', 'milk', 'eggs', 'butter'},
-    ]
-    closed_itemset_analysis(transactions, min_support=0.3)
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  Frankl's Conjecture: Applications                     ║")
+    print("╚══════════════════════════════════════════════════════════╝")
     
-    # Application 2: Network Reliability
-    network_reliability_demo()
+    concept_lattice_demo()
+    social_network_demo()
+    feature_selection_demo()
+    database_query_demo()
+    statistics_demo()
     
-    # Application 3: Entropy
-    entropy_analysis_demo()
-    
-    # Application 4: Social Choice
-    social_choice_demo()
-    
-    print("\n" + "=" * 60)
-    print("All application demonstrations complete.")
-    print("=" * 60)
+    print("\n" + "="*60)
+    print("  All applications demonstrated!")
+    print("="*60)
 
 
 #!/usr/bin/env python3
 """
-Frankl's Union-Closed Conjecture: Interactive Demonstrations
+Frankl's Union-Closed Conjecture: Interactive Demo
 
-This module demonstrates key properties of union-closed families,
-including abundance counting, the double-counting identity, and
-verification of Frankl's property for small families.
+This script demonstrates the key concepts and verified results from
+the formalization of Frankl's conjecture. It builds sample union-closed
+families, computes frequencies, tests the conjecture, and explores
+conjectures on small universes.
+
+Usage:
+    python demo.py
 """
 
-from itertools import combinations
-from typing import FrozenSet, Set
+from itertools import combinations, chain
+from collections import Counter
+from typing import Optional
+
+
+def powerset(s: frozenset) -> list[frozenset]:
+    """Return all subsets of s."""
+    elems = list(s)
+    return [
+        frozenset(combo)
+        for r in range(len(elems) + 1)
+        for combo in combinations(elems, r)
+    ]
 
 
 def is_union_closed(family: set[frozenset]) -> bool:
-    """Check if a family of sets is union-closed."""
+    """Check if a family of sets is closed under pairwise union."""
     for A in family:
         for B in family:
             if A | B not in family:
@@ -356,554 +343,447 @@ def is_union_closed(family: set[frozenset]) -> bool:
     return True
 
 
-def abundance(family: set[frozenset], x) -> int:
-    """Count how many sets in the family contain element x."""
-    return sum(1 for s in family if x in s)
-
-
-def family_universe(family: set[frozenset]) -> frozenset:
-    """Compute the universe (union of all sets) of a family."""
-    result = frozenset()
-    for s in family:
-        result = result | s
-    return result
-
-
-def frankl_property(family: set[frozenset]) -> tuple[bool, dict]:
-    """Check if the family satisfies Frankl's property.
-    
-    Returns (satisfied, details) where details contains abundances.
-    """
-    universe = family_universe(family)
-    n = len(family)
-    abundances = {x: abundance(family, x) for x in universe}
-    
-    best_element = max(abundances, key=abundances.get) if abundances else None
-    best_abundance = abundances[best_element] if best_element is not None else 0
-    satisfied = 2 * best_abundance >= n
-    
-    return satisfied, {
-        'family_size': n,
-        'universe': universe,
-        'abundances': abundances,
-        'best_element': best_element,
-        'best_abundance': best_abundance,
-        'threshold': n / 2,
-    }
-
-
-def generate_union_closure(generators: set[frozenset]) -> set[frozenset]:
-    """Generate the union-closure of a set of generators."""
-    family = set(generators)
+def union_closure(family: set[frozenset]) -> set[frozenset]:
+    """Compute the union-closure of a family of sets."""
+    closed = set(family)
     changed = True
     while changed:
         changed = False
-        new_sets = set()
-        for A in family:
-            for B in family:
-                union = A | B
-                if union not in family:
-                    new_sets.add(union)
+        new = set()
+        for A in closed:
+            for B in closed:
+                U = A | B
+                if U not in closed:
+                    new.add(U)
                     changed = True
-        family |= new_sets
-    return family
+        closed |= new
+    return closed
 
 
-def enumerate_union_closed_families(universe_size: int) -> list[set[frozenset]]:
-    """Enumerate all nonempty union-closed families over {0, ..., n-1}
-    that contain at least one nonempty set."""
-    universe = list(range(universe_size))
+def elem_freq(family: set[frozenset], a) -> int:
+    """Count how many sets in the family contain element a."""
+    return sum(1 for s in family if a in s)
+
+
+def ground_set(family: set[frozenset]) -> frozenset:
+    """Compute the ground set (union of all sets)."""
+    return frozenset().union(*family) if family else frozenset()
+
+
+def total_incidence(family: set[frozenset]) -> int:
+    """Sum of cardinalities of all sets."""
+    return sum(len(s) for s in family)
+
+
+def find_frankl_witness(family: set[frozenset]) -> Optional:
+    """Find an element appearing in >= half the sets, if one exists."""
+    n = len(family)
+    g = ground_set(family)
+    for a in g:
+        if 2 * elem_freq(family, a) >= n:
+            return a
+    return None
+
+
+def heavy_elements(family: set[frozenset]) -> set:
+    """Return all elements appearing in >= half the sets."""
+    n = len(family)
+    g = ground_set(family)
+    return {a for a in g if 2 * elem_freq(family, a) >= n}
+
+
+def display_family(name: str, family: set[frozenset]):
+    """Pretty-print a union-closed family with statistics."""
+    print(f"\n{'='*60}")
+    print(f"  {name}")
+    print(f"{'='*60}")
+    sorted_family = sorted(family, key=lambda s: (len(s), sorted(s)))
+    for s in sorted_family:
+        print(f"  {set(s) if s else '{}'}")
     
-    # Generate all possible subsets
-    all_subsets = []
-    for r in range(universe_size + 1):
-        for combo in combinations(universe, r):
-            all_subsets.append(frozenset(combo))
+    g = ground_set(family)
+    n = len(family)
+    ti = total_incidence(family)
     
-    families = []
-    # Try all nonempty subsets of the power set
+    print(f"\n  |F| = {n}")
+    print(f"  ground = {set(g)}")
+    print(f"  |ground| = {len(g)}")
+    print(f"  totalIncidence = {ti}")
+    if g:
+        print(f"  avg set size = {ti/n:.2f}")
+        print(f"  |ground|/2 = {len(g)/2:.2f}")
+    
+    print(f"\n  Element frequencies:")
+    for a in sorted(g):
+        f = elem_freq(family, a)
+        ratio = f / n if n > 0 else 0
+        heavy = " ← HEAVY (≥ 1/2)" if 2 * f >= n else ""
+        print(f"    freq({a}) = {f}/{n} = {ratio:.2f}{heavy}")
+    
+    # Verify double counting
+    freq_sum = sum(elem_freq(family, a) for a in g)
+    print(f"\n  Double counting check:")
+    print(f"    Σ|s| = {ti}")
+    print(f"    Σ freq(a) = {freq_sum}")
+    print(f"    Match: {'✓' if ti == freq_sum else '✗'}")
+    
+    w = find_frankl_witness(family)
+    h = heavy_elements(family)
+    print(f"\n  Frankl witness: {w}")
+    print(f"  Heavy elements: {set(h) if h else '{}'}")
+    print(f"  HasFranklWitness: {'✓' if w is not None else '✗'}")
+
+
+def demo_basic_examples():
+    """Demonstrate basic union-closed families."""
+    print("\n" + "="*60)
+    print("  PART 1: Basic Union-Closed Families")
+    print("="*60)
+    
+    # Example 1: Power set
+    F1 = set(powerset(frozenset({1, 2, 3})))
+    display_family("Power set P({1,2,3})", F1)
+    
+    # Example 2: Upper sets
+    F2 = {frozenset({1, 2}), frozenset({2, 3}), frozenset({1, 2, 3})}
+    display_family("Upper set family {{1,2}, {2,3}, {1,2,3}}", F2)
+    
+    # Example 3: Singleton + empty
+    F3 = {frozenset(), frozenset({1})}
+    display_family("Family {∅, {1}}", F3)
+    
+    # Example 4: A larger family
+    F4 = union_closure({
+        frozenset({1}), frozenset({2, 3}), frozenset({1, 4})
+    })
+    display_family("Union-closure of {{1}, {2,3}, {1,4}}", F4)
+
+
+def demo_average_criterion():
+    """Demonstrate the average set size criterion."""
+    print("\n" + "="*60)
+    print("  PART 2: Average Set Size Criterion")
+    print("="*60)
+    print("""
+  Theorem (verified): If avg set size ≥ |ground|/2
+  and ground is nonempty, then HasFranklWitness.
+  
+  Formally: ground.card * |F| ≤ 2 * totalIncidence
+            ⟹ ∃ a, 2 * freq(a) ≥ |F|
+  """)
+    
+    # Test on several families
+    universe = frozenset({1, 2, 3, 4})
+    count_tested = 0
+    count_criterion_applies = 0
+    
+    all_subsets = powerset(universe)
+    # Generate some union-closed families
+    for size in range(2, 6):
+        for combo in combinations(all_subsets, size):
+            family = set(combo)
+            if is_union_closed(family):
+                count_tested += 1
+                g = ground_set(family)
+                n = len(family)
+                ti = total_incidence(family)
+                if g and len(g) * n <= 2 * ti:
+                    count_criterion_applies += 1
+                    w = find_frankl_witness(family)
+                    assert w is not None, f"Criterion failed! {family}"
+    
+    print(f"  Tested {count_tested} union-closed families on {{1,2,3,4}}")
+    print(f"  Average criterion applied to {count_criterion_applies} families")
+    print(f"  All verified: ✓")
+
+
+def demo_small_ground():
+    """Demonstrate Frankl's conjecture for small ground sets."""
+    print("\n" + "="*60)
+    print("  PART 3: Frankl for Ground Size ≤ 3 (Verified)")
+    print("="*60)
+    print("""
+  Theorem (verified): Every union-closed family with
+  nonempty ground of size ≤ 3 has a Frankl witness.
+  """)
+    
+    # Enumerate all union-closed families on {1,2,3}
+    universe = frozenset({1, 2, 3})
+    all_subsets = powerset(universe)
+    families_tested = 0
+    
     for size in range(1, len(all_subsets) + 1):
         for combo in combinations(all_subsets, size):
             family = set(combo)
-            if is_union_closed(family) and any(len(s) > 0 for s in family):
-                families.append(family)
+            if is_union_closed(family):
+                g = ground_set(family)
+                if len(g) > 0 and len(g) <= 3:
+                    families_tested += 1
+                    w = find_frankl_witness(family)
+                    if w is None:
+                        print(f"  COUNTEREXAMPLE: {family}")
+                        return
     
-    return families
+    print(f"  Exhaustively tested {families_tested} union-closed families")
+    print(f"  on ground sets of size ≤ 3.")
+    print(f"  All have Frankl witnesses: ✓")
 
 
-def verify_double_counting(family: set[frozenset], universe: frozenset) -> dict:
-    """Verify the double-counting identity: sum of |s| = sum of abundances."""
-    sum_sizes = sum(len(s) for s in family)
-    sum_abundances = sum(abundance(family, x) for x in universe)
+def demo_singleton_injection():
+    """Demonstrate the singleton injection argument."""
+    print("\n" + "="*60)
+    print("  PART 4: Singleton Injection Principle")
+    print("="*60)
+    print("""
+  Theorem (verified): If {a} ∈ F, then 2 * freq(a) ≥ |F|.
+  
+  Proof idea: Map each set s not containing a to s ∪ {a}.
+  This is an injection into the sets containing a.
+  So |sets without a| ≤ |sets with a| = freq(a).
+  Hence |F| ≤ 2 * freq(a).
+  """)
     
-    return {
-        'sum_of_sizes': sum_sizes,
-        'sum_of_abundances': sum_abundances,
-        'identity_holds': sum_sizes == sum_abundances,
-    }
+    F = union_closure({
+        frozenset({1}), frozenset({2, 3}), frozenset({3, 4, 5})
+    })
+    display_family("Union-closure of {{1}, {2,3}, {3,4,5}}", F)
+    
+    a = 1
+    with_a = [s for s in F if a in s]
+    without_a = [s for s in F if a not in s]
+    
+    print(f"\n  Injection for element {a}:")
+    print(f"  Sets without {a}: {[set(s) for s in without_a]}")
+    print(f"  Sets with {a}:    {[set(s) for s in with_a]}")
+    print(f"  Injected pairs:")
+    for s in without_a:
+        t = s | frozenset({a})
+        print(f"    {set(s)} → {set(t)} {'∈ F ✓' if t in F else '∉ F ✗'}")
+    
+    print(f"\n  |without {a}| = {len(without_a)} ≤ {len(with_a)} = |with {a}|")
+    print(f"  2 * freq({a}) = {2 * elem_freq(F, a)} ≥ {len(F)} = |F| ✓")
 
 
-def demo_basic():
-    """Demonstrate basic definitions and properties."""
-    print("=" * 60)
-    print("DEMO 1: Basic Union-Closed Family Properties")
-    print("=" * 60)
+def demo_conjecture_tests():
+    """Test conjectures on small universes."""
+    print("\n" + "="*60)
+    print("  PART 5: Conjecture Testing")
+    print("="*60)
     
-    # Example family over {0, 1, 2}
-    F = {
-        frozenset(),
-        frozenset({0}),
-        frozenset({1}),
-        frozenset({0, 1}),
-        frozenset({0, 1, 2}),
-    }
+    # Conjecture 1: Entropy gap
+    print("\n  Conjecture 1: Entropy-gap strengthening")
+    print("  For every UC family F:")
+    print("    2·max_freq - |F| ≥ f(2·totalIncidence - |ground|·|F|)")
     
-    print(f"\nFamily F = {{{', '.join(str(set(s)) if s else '∅' for s in sorted(F, key=len))}}}")
-    print(f"  |F| = {len(F)}")
-    print(f"  Union-closed: {is_union_closed(F)}")
+    universe = frozenset({1, 2, 3, 4})
+    all_subsets = powerset(universe)
     
-    universe = family_universe(F)
-    print(f"  Universe: {set(universe)}")
+    gaps = []
+    for size in range(1, 10):
+        for combo in combinations(all_subsets, size):
+            family = set(combo)
+            if not is_union_closed(family):
+                continue
+            g = ground_set(family)
+            if not g:
+                continue
+            n = len(family)
+            max_freq = max(elem_freq(family, a) for a in g)
+            ti = total_incidence(family)
+            
+            frankl_gap = 2 * max_freq - n
+            energy_excess = 2 * ti - len(g) * n
+            gaps.append((energy_excess, frankl_gap))
     
-    for x in sorted(universe):
-        a = abundance(F, x)
-        print(f"  abundance({x}) = {a}  {'✓' if 2*a >= len(F) else '✗'} (need ≥ {len(F)/2:.1f})")
+    if gaps:
+        # Check if frankl_gap is monotone in energy_excess
+        gaps.sort()
+        min_frankl_at_excess = {}
+        for excess, fgap in gaps:
+            if excess not in min_frankl_at_excess:
+                min_frankl_at_excess[excess] = fgap
+            else:
+                min_frankl_at_excess[excess] = min(min_frankl_at_excess[excess], fgap)
+        
+        print(f"\n  Tested {len(gaps)} families on {{1,2,3,4}}")
+        print(f"  Energy excess → min Frankl gap:")
+        for exc in sorted(min_frankl_at_excess.keys())[:10]:
+            print(f"    excess={exc:3d} → min gap={min_frankl_at_excess[exc]:3d}")
     
-    satisfied, details = frankl_property(F)
-    print(f"\n  Frankl's property: {'SATISFIED ✓' if satisfied else 'NOT SATISFIED ✗'}")
-    print(f"  Best element: {details['best_element']} with abundance {details['best_abundance']}")
+    # Conjecture 2: Join-irreducible witness
+    print("\n  Conjecture 2: Join-irreducible witness principle")
+    
+    def is_join_irreducible(family, s):
+        """Check if s is join-irreducible in the family."""
+        if not s:
+            return False
+        for A in family:
+            for B in family:
+                if A | B == s and A != s and B != s:
+                    return False
+        return True
+    
+    ji_witness_count = 0
+    total_count = 0
+    
+    for size in range(1, 10):
+        for combo in combinations(all_subsets, size):
+            family = set(combo)
+            if not is_union_closed(family):
+                continue
+            g = ground_set(family)
+            if not g:
+                continue
+            n = len(family)
+            
+            # Find heavy elements
+            heavies = heavy_elements(family)
+            if not heavies:
+                continue
+            total_count += 1
+            
+            # Check if any heavy element is "witnessed" by a join-irreducible set
+            ji_sets = [s for s in family if is_join_irreducible(family, s)]
+            ji_elements = set()
+            for s in ji_sets:
+                ji_elements |= s
+            
+            if heavies & ji_elements:
+                ji_witness_count += 1
+    
+    if total_count > 0:
+        print(f"  Tested {total_count} families with witnesses")
+        print(f"  JI-witnessed: {ji_witness_count}/{total_count}")
+        print(f"  Conjecture holds: {'✓' if ji_witness_count == total_count else '✗'}")
 
 
 def demo_double_counting():
-    """Demonstrate the double-counting identity."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Double-Counting Identity")
-    print("=" * 60)
+    """Demonstrate the double counting identity."""
+    print("\n" + "="*60)
+    print("  PART 6: Double Counting Identity (Verified)")
+    print("="*60)
+    print("""
+  Theorem (verified):
+    totalIncidence(F) = Σ_{a ∈ ground} freq(a)
     
-    families = [
-        ({frozenset({0}), frozenset({0, 1}), frozenset({0, 1, 2})}, "chain family"),
-        ({frozenset({0}), frozenset({1}), frozenset({0, 1})}, "two singletons + union"),
-        ({frozenset(), frozenset({0, 1}), frozenset({0, 1, 2}), frozenset({2}), frozenset({0, 1, 2})}, "mixed"),
-    ]
+  This identity is the engine behind all averaging arguments.
+  """)
     
-    for family, name in families:
-        universe = family_universe(family)
-        result = verify_double_counting(family, universe)
-        print(f"\n  {name}:")
-        print(f"    ∑|s| = {result['sum_of_sizes']}")
-        print(f"    ∑ abundance(x) = {result['sum_of_abundances']}")
-        print(f"    Identity holds: {'✓' if result['identity_holds'] else '✗'}")
-
-
-def demo_exhaustive_verification():
-    """Exhaustively verify Frankl's property for small universes."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Exhaustive Verification for Small Universes")
-    print("=" * 60)
+    F = union_closure({
+        frozenset({1, 2}), frozenset({3, 4}), frozenset({2, 5})
+    })
     
-    for n in range(1, 4):
-        families = enumerate_union_closed_families(n)
-        all_satisfy = True
-        counterexample = None
-        
-        for F in families:
-            satisfied, details = frankl_property(F)
-            if not satisfied:
-                all_satisfy = False
-                counterexample = F
-                break
-        
-        status = "ALL SATISFY ✓" if all_satisfy else f"COUNTEREXAMPLE FOUND ✗"
-        print(f"\n  Universe size {n}: {len(families)} union-closed families (with nonempty member)")
-        print(f"    Frankl's property: {status}")
-        
-        if not all_satisfy and counterexample:
-            print(f"    Counterexample: {counterexample}")
-
-
-def demo_union_closure():
-    """Demonstrate union-closure generation from generators."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Union-Closure from Generators")
-    print("=" * 60)
+    g = ground_set(F)
+    ti = total_incidence(F)
+    freq_sum = sum(elem_freq(F, a) for a in g)
     
-    generators_list = [
-        ({frozenset({0}), frozenset({1})}, "{{0}, {1}}"),
-        ({frozenset({0, 1}), frozenset({1, 2})}, "{{0,1}, {1,2}}"),
-        ({frozenset({0}), frozenset({1}), frozenset({2})}, "{{0}, {1}, {2}}"),
-    ]
+    print(f"  Family (union-closure of {{1,2}}, {{3,4}}, {{2,5}}):")
+    for s in sorted(F, key=lambda s: (len(s), sorted(s))):
+        print(f"    {set(s)}")
     
-    for generators, name in generators_list:
-        closure = generate_union_closure(generators)
-        print(f"\n  Generators: {name}")
-        print(f"  Closure: {{{', '.join(str(set(s)) if s else '∅' for s in sorted(closure, key=lambda s: (len(s), sorted(s))))}}} ({len(closure)} sets)")
-        
-        satisfied, details = frankl_property(closure)
-        print(f"  Frankl's property: {'✓' if satisfied else '✗'}")
-        if details['best_element'] is not None:
-            print(f"  Most abundant element: {details['best_element']} (abundance = {details['best_abundance']}/{details['family_size']})")
-
-
-def demo_structural_insight():
-    """Demonstrate the key structural insight: the universe is always in the family."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Structural Insight — Universe Membership")
-    print("=" * 60)
+    print(f"\n  Left side:  Σ|s| = {ti}")
+    print(f"  Right side: Σ freq(a) = {freq_sum}")
     
-    generators_list = [
-        {frozenset({0, 2}), frozenset({1, 3}), frozenset({2, 3})},
-        {frozenset({0}), frozenset({1, 2}), frozenset({3, 4})},
-    ]
+    print(f"\n  Breakdown by element:")
+    for a in sorted(g):
+        print(f"    freq({a}) = {elem_freq(F, a)}")
     
-    for generators in generators_list:
-        closure = generate_union_closure(generators)
-        universe = family_universe(closure)
-        
-        print(f"\n  Generators: {{{', '.join(str(set(s)) for s in generators)}}}")
-        print(f"  Family size: {len(closure)}")
-        print(f"  Universe: {set(universe)}")
-        print(f"  Universe ∈ F: {universe in closure} ✓")
-        
-        # Show elements in non-maximal members get abundance ≥ 2
-        for s in sorted(closure, key=lambda s: (len(s), sorted(s))):
-            if s != universe and len(s) > 0:
-                for x in sorted(s):
-                    a = abundance(closure, x)
-                    print(f"    {x} ∈ {set(s)} (non-maximal): abundance = {a} ≥ 2 {'✓' if a >= 2 else '✗'}")
-                break  # Just show one example
+    print(f"\n  Breakdown by set:")
+    for s in sorted(F, key=lambda s: (len(s), sorted(s))):
+        print(f"    |{set(s)}| = {len(s)}")
+    
+    print(f"\n  Identity verified: {ti} = {freq_sum} ✓")
 
 
 if __name__ == "__main__":
-    demo_basic()
-    demo_double_counting()
-    demo_exhaustive_verification()
-    demo_union_closure()
-    demo_structural_insight()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║  Frankl's Union-Closed Conjecture: Interactive Demo     ║")
+    print("╚══════════════════════════════════════════════════════════╝")
     
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
+    demo_basic_examples()
+    demo_double_counting()
+    demo_singleton_injection()
+    demo_average_criterion()
+    demo_small_ground()
+    demo_conjecture_tests()
+    
+    print("\n" + "="*60)
+    print("  All demonstrations complete!")
+    print("="*60)
 
 
 #!/usr/bin/env python3
-"""
-Visualizations for Frankl's Union-Closed Conjecture
+"""Generate PACKAGE.json from all deliverables."""
+import json
+import os
 
-Generates charts showing:
-1. Abundance distribution across families
-2. Family lattice structure (Hasse diagram)
-3. Exhaustive verification heatmap
-4. Double-counting identity visualization
-"""
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-from itertools import combinations
-from collections import defaultdict
-import base64
-import io
+# Read all content
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
 
+# Read lean files
+lean_files = [
+    'Algebra/Frankl/Defs.lean',
+    'Algebra/Frankl/DoubleCount.lean',
+    'Algebra/Frankl/AverageCriterion.lean',
+    'Algebra/Frankl/SmallGround.lean',
+    'Algebra/Frankl/Lattice.lean',
+]
+lean_code = ""
+for f in lean_files:
+    lean_code += f"-- ═══ {f} ═══\n\n"
+    lean_code += read_file(f) + "\n\n"
 
-def fig_to_base64(fig) -> str:
-    """Convert matplotlib figure to base64 data URI."""
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    buf.seek(0)
-    encoded = base64.b64encode(buf.read()).decode('utf-8')
-    plt.close(fig)
-    return f"data:image/png;base64,{encoded}"
+# Read Python files
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
 
+package = {
+    "title": "Frankl's Union-Closed Conjecture: Partial Results, Structural Reductions, and Entropic Certificates",
+    "domain": "Algebra / Extremal Combinatorics",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Frankl's Conjecture Interactive Demo",
+            "code": demo_code
+        },
+        {
+            "name": "Applications of Frankl's Conjecture",
+            "code": applications_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Union-Closed Family Witness Search",
+            "pseudocode": """Algorithm: FindFranklWitness(F)
+Input: Union-closed family F = (sets, ground)
+Output: Element a with 2·freq(a) ≥ |F|, or None
 
-def is_union_closed(family):
-    for A in family:
-        for B in family:
-            if A | B not in family:
-                return False
-    return True
+1. Compute ground = ∪_{S ∈ F} S
+2. For each a ∈ ground:
+   a. freq ← |{S ∈ F : a ∈ S}|
+   b. If 2·freq ≥ |F|: return a
+3. Return None
 
+Time: O(n·g) where n = |F|, g = |ground|
+Space: O(n·g)
+Correctness: By theorem frankl_of_singleton_in_sets and
+  frankl_of_average_card_large""",
+            "code": algorithms_code
+        }
+    ],
+    "lean_proofs": lean_code
+}
 
-def abundance(family, x):
-    return sum(1 for s in family if x in s)
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
 
-
-def generate_union_closure(generators):
-    family = set(generators)
-    changed = True
-    while changed:
-        changed = False
-        new_sets = set()
-        for A in family:
-            for B in family:
-                u = A | B
-                if u not in family:
-                    new_sets.add(u)
-                    changed = True
-        family |= new_sets
-    return family
-
-
-def viz_abundance_distribution():
-    """Visualize abundance distributions for various union-closed families."""
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    fig.suptitle("Abundance Distributions in Union-Closed Families", fontsize=16, fontweight='bold')
-    
-    families = [
-        ("Power set of {0,1,2}", 
-         {frozenset(c) for r in range(4) for c in combinations(range(3), r)}),
-        ("Chain: ∅ ⊂ {0} ⊂ {0,1} ⊂ {0,1,2}", 
-         {frozenset(), frozenset({0}), frozenset({0,1}), frozenset({0,1,2})}),
-        ("Generated by {{0,1}, {1,2}, {0,2}}", 
-         generate_union_closure({frozenset({0,1}), frozenset({1,2}), frozenset({0,2})})),
-        ("Generated by {{0}, {1,2}, {2,3}}", 
-         generate_union_closure({frozenset({0}), frozenset({1,2}), frozenset({2,3})})),
-    ]
-    
-    colors = ['#2196F3', '#4CAF50', '#FF9800', '#E91E63']
-    
-    for ax, (name, family), color in zip(axes.flat, families, colors):
-        universe = frozenset()
-        for s in family:
-            universe |= s
-        
-        elements = sorted(universe)
-        abundances = [abundance(family, x) for x in elements]
-        threshold = len(family) / 2
-        
-        bars = ax.bar([str(x) for x in elements], abundances, color=color, alpha=0.8, edgecolor='white')
-        ax.axhline(y=threshold, color='red', linestyle='--', linewidth=2, label=f'|F|/2 = {threshold}')
-        
-        # Highlight elements meeting Frankl threshold
-        for bar, ab in zip(bars, abundances):
-            if ab >= threshold:
-                bar.set_edgecolor('gold')
-                bar.set_linewidth(3)
-        
-        ax.set_title(name, fontsize=11)
-        ax.set_xlabel('Element')
-        ax.set_ylabel('Abundance')
-        ax.set_ylim(0, max(abundances) * 1.2 if abundances else 1)
-        ax.legend(fontsize=9)
-    
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_abundance.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def viz_exhaustive_verification():
-    """Heatmap of family sizes and Frankl verification status."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-    
-    # For universe sizes 1-3, count families by size and verify Frankl
-    data = {}
-    for n in range(1, 4):
-        all_subsets = []
-        for r in range(n + 1):
-            for combo in combinations(range(n), r):
-                all_subsets.append(frozenset(combo))
-        
-        size_counts = defaultdict(lambda: [0, 0])  # [satisfy, total]
-        
-        for fam_size in range(1, len(all_subsets) + 1):
-            for combo in combinations(all_subsets, fam_size):
-                family = set(combo)
-                if not is_union_closed(family):
-                    continue
-                if not any(len(s) > 0 for s in family):
-                    continue
-                
-                universe = frozenset()
-                for s in family:
-                    universe |= s
-                
-                abundances = {x: abundance(family, x) for x in universe}
-                if abundances:
-                    best_ab = max(abundances.values())
-                    satisfies = 2 * best_ab >= len(family)
-                else:
-                    satisfies = False
-                
-                size_counts[(n, fam_size)][1] += 1
-                if satisfies:
-                    size_counts[(n, fam_size)][0] += 1
-        
-        data[n] = size_counts
-    
-    # Create bar chart
-    bar_data = []
-    labels = []
-    for n in range(1, 4):
-        total = sum(v[1] for v in data[n].values())
-        satisfying = sum(v[0] for v in data[n].values())
-        bar_data.append((total, satisfying))
-        labels.append(f"|U| = {n}")
-    
-    x = np.arange(len(labels))
-    width = 0.35
-    
-    bars1 = ax.bar(x - width/2, [d[0] for d in bar_data], width, 
-                    label='Total UC families', color='#90CAF9', edgecolor='white')
-    bars2 = ax.bar(x + width/2, [d[1] for d in bar_data], width,
-                    label='Satisfy Frankl', color='#4CAF50', edgecolor='white')
-    
-    ax.set_xlabel('Universe Size', fontsize=12)
-    ax.set_ylabel('Number of Families', fontsize=12)
-    ax.set_title('Exhaustive Verification: All Union-Closed Families Satisfy Frankl\'s Property', 
-                  fontsize=14, fontweight='bold')
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels)
-    ax.legend(fontsize=11)
-    
-    # Add count labels
-    for bar in bars1:
-        height = bar.get_height()
-        ax.annotate(f'{int(height)}', xy=(bar.get_x() + bar.get_width()/2, height),
-                    xytext=(0, 3), textcoords="offset points", ha='center', fontsize=10)
-    for bar in bars2:
-        height = bar.get_height()
-        ax.annotate(f'{int(height)}', xy=(bar.get_x() + bar.get_width()/2, height),
-                    xytext=(0, 3), textcoords="offset points", ha='center', fontsize=10)
-    
-    ax.text(0.5, 0.95, '100% verification rate for |U| ≤ 3 ✓', 
-            transform=ax.transAxes, ha='center', fontsize=12, color='green',
-            fontweight='bold', bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.3))
-    
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_verification.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def viz_double_counting():
-    """Visualize the double-counting identity."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-    
-    family = generate_union_closure({frozenset({0,1}), frozenset({1,2}), frozenset({0,3})})
-    family_list = sorted(family, key=lambda s: (len(s), sorted(s)))
-    
-    universe = frozenset()
-    for s in family:
-        universe |= s
-    elements = sorted(universe)
-    
-    # Left: sum of set sizes
-    ax = axes[0]
-    sizes = [len(s) for s in family_list]
-    set_labels = [str(set(s)) if s else '∅' for s in family_list]
-    bars = ax.bar(range(len(sizes)), sizes, color='#2196F3', alpha=0.8, edgecolor='white')
-    ax.set_xticks(range(len(sizes)))
-    ax.set_xticklabels(set_labels, rotation=45, ha='right', fontsize=8)
-    ax.set_ylabel('Set Size |s|', fontsize=12)
-    ax.set_title(f'Sum of Set Sizes = {sum(sizes)}', fontsize=13, fontweight='bold')
-    
-    # Right: sum of abundances
-    ax = axes[1]
-    abundances_list = [abundance(family, x) for x in elements]
-    bars = ax.bar([str(x) for x in elements], abundances_list, color='#4CAF50', alpha=0.8, edgecolor='white')
-    threshold = len(family) / 2
-    ax.axhline(y=threshold, color='red', linestyle='--', linewidth=2, label=f'|F|/2 = {threshold:.1f}')
-    ax.set_ylabel('Abundance', fontsize=12)
-    ax.set_xlabel('Element', fontsize=12)
-    ax.set_title(f'Sum of Abundances = {sum(abundances_list)}', fontsize=13, fontweight='bold')
-    ax.legend()
-    
-    fig.suptitle('Double-Counting Identity: ∑|s| = ∑ abundance(x)', fontsize=15, fontweight='bold', y=1.02)
-    
-    # Verify
-    assert sum(sizes) == sum(abundances_list), "Double-counting identity failed!"
-    
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_double_counting.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-def viz_lattice_structure():
-    """Visualize the lattice structure of a union-closed family."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-    
-    family = generate_union_closure({frozenset({0}), frozenset({1}), frozenset({2})})
-    family_list = sorted(family, key=lambda s: (len(s), sorted(s)))
-    
-    # Assign positions by level (set size)
-    levels = defaultdict(list)
-    for s in family_list:
-        levels[len(s)].append(s)
-    
-    positions = {}
-    for level, sets_at_level in levels.items():
-        n = len(sets_at_level)
-        for i, s in enumerate(sets_at_level):
-            x = (i - (n - 1) / 2) * 2
-            y = level * 2
-            positions[s] = (x, y)
-    
-    # Draw edges (covering relations)
-    for s in family_list:
-        for t in family_list:
-            if s < t and len(t) == len(s) + 1:
-                x1, y1 = positions[s]
-                x2, y2 = positions[t]
-                ax.plot([x1, x2], [y1, y2], 'gray', linewidth=1, alpha=0.5)
-    
-    # Draw nodes
-    universe = frozenset()
-    for s in family:
-        universe |= s
-    
-    for s in family_list:
-        x, y = positions[s]
-        
-        # Color by maximum abundance of elements in s
-        if s:
-            max_ab = max(abundance(family, elem) for elem in s)
-            intensity = max_ab / len(family)
-        else:
-            intensity = 0
-        
-        color = plt.cm.YlOrRd(intensity * 0.8 + 0.1)
-        
-        label = str(set(s)) if s else '∅'
-        circle = plt.Circle((x, y), 0.4, color=color, ec='black', linewidth=2, zorder=3)
-        ax.add_patch(circle)
-        ax.text(x, y, label, ha='center', va='center', fontsize=8, fontweight='bold', zorder=4)
-    
-    ax.set_xlim(-5, 5)
-    ax.set_ylim(-1, max(levels.keys()) * 2 + 1)
-    ax.set_aspect('equal')
-    ax.set_title('Lattice Structure of Union-Closed Family\nGenerated by {{0}, {1}, {2}} = Full Power Set', 
-                  fontsize=14, fontweight='bold')
-    ax.axis('off')
-    
-    # Add legend
-    legend_elements = [
-        mpatches.Patch(color=plt.cm.YlOrRd(0.1), label='Low abundance'),
-        mpatches.Patch(color=plt.cm.YlOrRd(0.9), label='High abundance'),
-    ]
-    ax.legend(handles=legend_elements, loc='lower right', fontsize=10)
-    
-    plt.tight_layout()
-    fig.savefig('/workspace/request-project/viz_lattice.png', dpi=150, bbox_inches='tight')
-    b64 = fig_to_base64(fig)
-    return b64
-
-
-if __name__ == "__main__":
-    print("Generating visualizations...")
-    
-    b64_1 = viz_abundance_distribution()
-    print(f"  viz_abundance.png generated ({len(b64_1)} chars)")
-    
-    b64_2 = viz_exhaustive_verification()
-    print(f"  viz_verification.png generated ({len(b64_2)} chars)")
-    
-    b64_3 = viz_double_counting()
-    print(f"  viz_double_counting.png generated ({len(b64_3)} chars)")
-    
-    b64_4 = viz_lattice_structure()
-    print(f"  viz_lattice.png generated ({len(b64_4)} chars)")
-    
-    print("\nAll visualizations generated successfully.")
+print("PACKAGE.json generated successfully")

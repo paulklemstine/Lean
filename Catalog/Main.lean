@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1636 of the highest-quality
+A curated collection of 1639 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1636
+Total files: 1639
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.Agent
@@ -13,6 +13,7 @@ import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.ArbitrageProfit
 import FINAL.Algebra.ArithmeticDarkMatter
 import FINAL.Algebra.AttackComposition
+import FINAL.Algebra.AverageCriterion
 import FINAL.Algebra.Basic
 import FINAL.Algebra.BayesOptimal
 import FINAL.Algebra.Berggren
@@ -105,6 +106,7 @@ import FINAL.Algebra.KernelCardinality
 import FINAL.Algebra.KernelDensity
 import FINAL.Algebra.Kronecker
 import FINAL.Algebra.Langlands
+import FINAL.Algebra.Lattice
 import FINAL.Algebra.LatticeNonceAttack
 import FINAL.Algebra.LatticeTreeDuality
 import FINAL.Algebra.LightConeTheory
@@ -170,6 +172,7 @@ import FINAL.Algebra.SchwartzZippel
 import FINAL.Algebra.SchwartzZippelBridge
 import FINAL.Algebra.SieveAndLattice
 import FINAL.Algebra.SingleTree
+import FINAL.Algebra.SmallGround
 import FINAL.Algebra.SpectralArithmetic
 import FINAL.Algebra.SpectralContractionAlgebra
 import FINAL.Algebra.SpectralCorollaries

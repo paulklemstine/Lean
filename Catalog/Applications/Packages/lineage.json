@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 100
+      "hue": 134
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 91
+      "hue": 134
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -34,7 +34,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 270
+      "hue": 271
+    },
+    {
+      "id": "frankls_union_closed_conjecture_partial_results",
+      "title": "Frankl's Union-Closed Conjecture: Partial Results, Structural Reductions, and Entropic Certificates",
+      "domain": "Algebra / Extremal Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-21T04:03:30Z",
+      "hue": 359
     }
   ],
   "edges": [],
