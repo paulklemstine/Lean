@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -16,7 +16,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 91
+      "hue": 272
+    },
+    {
+      "id": "quaternion_algebras_and_rotations",
+      "title": "Quaternion Algebras, Spin Geometry, and Certified Rotation Algorithms",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-21T02:14:23Z",
+      "hue": 95
     }
   ],
   "edges": [],
