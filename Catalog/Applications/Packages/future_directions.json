@@ -6422,7 +6422,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "c1a81524",
       "timestamp": "2026-05-21T15:15:31.743283+00:00",
       "catalog_references": [],
