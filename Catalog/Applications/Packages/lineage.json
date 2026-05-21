@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -52,7 +52,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T04:04:01Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "tropical_convexity_and_linear_programming",
@@ -70,7 +70,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "collatz_stopping_times_density_analysis",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:41Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -97,7 +97,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T05:58:00Z",
-      "hue": 91
+      "hue": 280
     },
     {
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
@@ -106,7 +106,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:58:35Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "direction_1_kan_composition_and_groupoid_structure",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:59:07Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "direction_2_path_space_cardinality_invariants_for_",
@@ -124,7 +124,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:10:21Z",
-      "hue": 271
+      "hue": 91
+    },
+    {
+      "id": "direction_3_differential_closure_and_transseries_f",
+      "title": "Differential Closure in the Hardy Hierarchy: Certified Transseries Fragments",
+      "domain": "Asymptotic Analysis / Differential Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-21T07:13:37Z",
+      "hue": 270
     }
   ],
   "edges": [
@@ -138,6 +147,13 @@
     {
       "source": "type_theory_cubical_type_theory_foundations",
       "target": "direction_2_path_space_cardinality_invariants_for_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "conjecture_5_connection_to_hardy_field_hierarchy",
+      "target": "direction_3_differential_closure_and_transseries_f",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
