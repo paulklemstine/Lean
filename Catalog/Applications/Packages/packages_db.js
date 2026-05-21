@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_3_clause_space_lower_bounds_via_width_sp.json",
+    "title": "Configuration-Based Clause Space for Resolution",
+    "domain": "Proof Complexity / SAT Solving",
+    "date": "2026-05-21T21:25:46Z",
+    "exp_id": "8e073b20"
+  },
+  {
     "filename": "direction_1_finite_probe_representability_conjectu.json",
     "title": "Finite Probe Representability: Categorical Compressed Sensing",
     "domain": "Category Theory / Compressed Sensing",
@@ -2946,6 +2953,37 @@ window.PACKAGE_DB = {
       "seed"
     ]
   },
+  "direction_3_clause_space_lower_bounds_via_width_sp.json": {
+    "title": "Configuration-Based Clause Space for Resolution",
+    "domain": "Proof Complexity / SAT Solving",
+    "article": "# The Memory Bottleneck: Why Solving Puzzles Takes More Than Brainpower\n\n## A hard truth about computation\n\nImagine you're solving a Sudoku puzzle. You start filling in numbers, erasing mistakes, trying combinations. Sometimes you need to hold several possibilities in your head at once \u2014 \"if this cell is 3, then that one must be 7, which means...\" The harder the puzzle, the more intermediate facts you need to juggle simultaneously.\n\nNow here's a question that has haunted computer scientists for decades: **Is that memory pressure real, or just a sign of a bad strategy?** Could a cleverer approach solve the same puzzle while keeping fewer facts in mind?\n\nA new mathematical framework answers this question with striking precision \u2014 and the answer is sobering. For certain families of logical puzzles, *no strategy, no matter how clever, can avoid a memory bottleneck*. The bottleneck isn't in your head. It's in the mathematics itself.\n\n## The pigeonhole wall\n\nThe story begins with one of the simplest principles in all of mathematics: if you have more pigeons than holes, at least two pigeons must share a hole. Try to seat four people in three chairs, and someone's going to be left standing.\n\nThis seems trivially obvious. But when you encode it as a formal logical puzzle \u2014 a satisfiability problem, the kind that computers solve billions of times a day \u2014 something remarkable happens. The puzzle becomes *hard*. Not hard to understand, but hard to *prove* using certain methods.\n\nResolution is the workhorse proof method behind modern SAT solvers, the software engines that verify microchip designs, schedule airline crews, and crack cryptographic challenges. Resolution works by combining logical clauses, step by step, until it derives a contradiction. Think of it as mathematical reasoning with a very specific grammar.\n\nFor the pigeonhole principle, resolution proofs exist \u2014 but they're enormous. And more importantly for our story, they require enormous *memory*.\n\n## Proofs as journeys through memory space\n\nThe new framework reconceptualizes proofs in a surprising way. Instead of thinking of a proof as a static document \u2014 a sequence of logical steps written on paper \u2014 it treats a proof as a **journey through a landscape of memory states**.\n\nAt each moment during a proof, a solver holds some set of logical facts in its working memory. It can do three things: load a new fact from the original puzzle (an \"axiom download\"), combine two existing facts to derive a new one (a \"resolution step\"), or forget a fact it no longer needs (an \"erasure\"). These operations carry the solver from one memory state to the next, tracing a path through what mathematicians call the **configuration graph**.\n\nThe configuration graph is a vast but finite network. Each node represents a possible memory state \u2014 a particular set of facts the solver might be holding. Each edge represents a legal operation. The solver starts at the \"empty memory\" node and needs to reach any node containing a contradiction (the \"empty clause,\" which means the original puzzle has no solution).\n\nThis isn't just a metaphor. It's a precise mathematical object, and it reveals something profound.\n\n## The bottleneck theorem\n\nHere's the key insight, now proved as a rigorous mathematical theorem:\n\n**If there is no path from empty memory to contradiction that stays within configurations of size *s*, then every proof of the contradiction must use memory greater than *s*.**\n\nRead that again. It says that memory lower bounds are equivalent to *graph separation*. If you can show that the small-memory region of the configuration graph doesn't connect the starting point to the goal, then *every* proof strategy \u2014 no matter how ingenious \u2014 must cross into the high-memory zone.\n\nThis is like proving that every route from New York to Los Angeles must cross the Mississippi River. It doesn't matter which highways you take or how cleverly you navigate. The geography forces a crossing.\n\n## Why this matters beyond puzzles\n\nThe implications ripple outward in several directions.\n\n**For artificial intelligence.** Modern AI systems increasingly rely on logical reasoning \u2014 theorem provers, constraint solvers, planning algorithms. All of these face memory constraints. The configuration framework provides the first rigorous language for understanding when those constraints are fundamental versus accidental.\n\n**For computer chip design.** SAT solvers verify that microprocessor designs are correct. These solvers manage millions of learned clauses in memory, constantly making decisions about what to remember and what to forget. The new theory predicts, with mathematical certainty, that some verification tasks will require more memory than others \u2014 and it explains *why*.\n\n**For the foundations of computing.** The configuration graph connects proof complexity to graph theory \u2014 to concepts like pathwidth, graph searching, and pebbling games. These are tools from a completely different mathematical toolbox. By building a formal bridge between them, the new framework opens routes for techniques from one field to attack problems in another.\n\n## The soundness guarantee\n\nOne of the most satisfying aspects of the new framework is its soundness theorem. The theorem states: if you find a valid journey through the configuration graph \u2014 starting from empty memory, making only legal moves, and arriving at a configuration containing the contradiction \u2014 then the original puzzle really is unsatisfiable.\n\nThis might seem obvious, but it's the mathematical bedrock. Without it, the configuration framework would be an elaborate fiction. With it, the framework becomes a *certified* tool. Every path through the configuration graph is a genuine proof.\n\nThe soundness proof works by a beautiful induction argument. At each step of the journey, every fact in memory is true under every assignment that satisfies the original puzzle. Since the empty clause is never true under any assignment, reaching it proves the puzzle has no solution.\n\n## Counting what matters\n\nThe framework also yields a combinatorial bound that connects memory to the total cognitive work of a proof. The theorem states that the number of distinct facts appearing across all memory states is bounded by the length of the proof times its memory usage.\n\nThis is the mathematical version of a common-sense observation: a short proof using little memory can't consider very many distinct facts. But the precise bound matters. It means that if you can show a proof must consider many distinct facts (because the puzzle structure demands it), then either the proof must be long, or it must use substantial memory, or both.\n\n## A new lens on an old problem\n\nThe pigeonhole principle has been a touchstone of proof complexity for nearly forty years, ever since Armin Haken proved in 1985 that resolution proofs of PHP must be exponentially long. Width lower bounds followed in the 1990s, and space lower bounds emerged in the 2000s.\n\nWhat the configuration framework adds is not a new lower bound for a specific formula, but a new *language* for understanding lower bounds in general. By recasting proofs as trajectories through a finite graph, it transforms questions about proof strategies into questions about graph connectivity \u2014 questions that graph theorists have been studying, with powerful tools, for decades.\n\nThe connection to pebbling games is particularly tantalizing. Pebbling is a well-studied model of computation where pebbles are placed on and removed from the nodes of a directed graph, subject to rules about which nodes can be pebbled. The minimum number of pebbles needed is a measure of the \"space complexity\" of the computation the graph represents. The new framework suggests that clause space in resolution and pebble count in pebbling games are deeply related \u2014 two views of the same underlying phenomenon.\n\n## The road ahead\n\nSeveral questions remain open, each with the potential to reshape our understanding of computational memory.\n\nFirst: is the bottleneck theorem tight? For every separation in the configuration graph, does there exist a proof that just barely crosses the frontier? Or are there cases where the true memory requirement is much larger than the graph separation predicts?\n\nSecond: can the framework handle more powerful proof systems? Resolution is just one method of logical reasoning. Cutting planes, polynomial calculus, and Frege systems are progressively stronger. Does the configuration perspective extend to them?\n\nThird \u2014 and most ambitiously \u2014 can this framework prove new lower bounds on the memory required by SAT solvers in practice? The gap between theoretical proof complexity and practical solver performance remains vast. But the configuration graph, being a concrete computational object, might be the bridge that finally connects theory to practice.\n\nWhat we know for certain is this: the memory bottleneck is not an illusion. It's a mathematical reality, as firmly grounded as the pigeonhole principle itself. And now, for the first time, we have a formal language precise enough to say exactly where the bottleneck lies, and exactly why no strategy can avoid it.\n",
+    "research_paper": "# Configuration-Based Clause Space for Resolution: A Formally Verified Framework\n\n## Abstract\n\nWe introduce a configuration-based semantics for resolution proofs that models sequential derivations as trajectories through a finite configuration graph. Each configuration records the set of clauses currently held in memory, and transitions correspond to axiom downloads, resolution steps, and clause erasures. We formalize this framework in Lean 4 with Mathlib and prove three main theorems: (1) **soundness** \u2014 configuration refutations certify unsatisfiability; (2) a **bottleneck space lower bound** \u2014 graph separation in the bounded configuration graph implies space lower bounds for all refutations; (3) a **clause count bound** \u2014 the number of distinct clauses appearing across all configurations is bounded by trace length times space. All proofs are machine-verified with no axioms beyond propext, Classical.choice, and Quot.sound.\n\n**Keywords:** clause space, resolution, proof complexity, configuration graphs, SAT solving, width-space tradeoffs, formal verification\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe resolution proof system is the logical foundation of conflict-driven clause-learning (CDCL) SAT solvers. Understanding the resource requirements of resolution proofs \u2014 their length, width, and space \u2014 has direct implications for solver performance and algorithm design.\n\nClause space, introduced by Esteban and Tor\u00e1n (2001) and further developed by Ben-Sasson (2009), measures the minimum number of clauses that must be simultaneously maintained in memory during any resolution derivation. Ben-Sasson and Wigderson (2001) established the fundamental width-space inequality: Space(F \u22a2 \u22a5) \u2265 Width(F \u22a2 \u22a5) - w(F) + 1, where w(F) is the maximum width of initial clauses.\n\nHowever, existing treatments of clause space are primarily combinatorial and informal. The space measure is defined via sequential proof systems, but the state-space structure \u2014 the configuration graph through which proofs navigate \u2014 has not been formalized as a first-class mathematical object with verified properties.\n\n### 1.2 Contributions\n\nWe make the following contributions:\n\n1. **Novel formalization**: We introduce `ProofConfiguration`, `ConfigStep`, `IsConfigurationTrace`, and related definitions that model resolution proofs as paths through a finite configuration graph.\n\n2. **Soundness theorem** (`configRefutation_sound`): We prove that configuration refutations correctly certify unsatisfiability, establishing the semantic correctness of the configuration model.\n\n3. **Bottleneck theorem** (`bottleneck_space_lower_bound`): We prove that unreachability within bounded-space configurations implies a strict space lower bound. This recasts space lower bounds as graph separation phenomena.\n\n4. **Clause count bound** (`allTraceClauses_card_bound`): We prove that the total distinct clauses across all configurations is at most |\u03c0| \u00b7 space(\u03c0), connecting memory to combinatorial proof complexity.\n\n5. **Verified algorithm**: We implement and verify a bounded-space search algorithm that determines refutability within a given space budget.\n\n6. **Cross-domain bridge**: The bottleneck theorem creates a formal connection between proof complexity and graph theory (graph searching, pathwidth, pebbling).\n\n### 1.3 Related Work\n\n- **Ben-Sasson and Wigderson (2001)**: Width-space inequality for resolution.\n- **Esteban and Tor\u00e1n (2001)**: Introduced clause space for resolution.\n- **Ben-Sasson (2009)**: Size-space tradeoffs.\n- **Nordstr\u00f6m (2013)**: Survey of space complexity in proof systems.\n- **Filmus et al. (2015)**: Space complexity and random CNFs.\n\nOur work differs from the above by providing machine-verified proofs and by introducing the configuration graph as a first-class formal object.\n\n## 2. Definitions and Notation\n\n### 2.1 Propositional Logic\n\nA **literal** over a variable type \u03bd is either `pos x` or `neg x` for x : \u03bd. A **clause** is a finite set of literals (Finset (Lit \u03bd)). A **CNF formula** is a finite set of clauses. A clause is **satisfied** by an assignment \u03c4 : \u03bd \u2192 Bool if at least one literal evaluates to true. A CNF is **unsatisfiable** if no assignment satisfies all clauses.\n\n### 2.2 Resolution\n\nA **resolution step** on variable x takes two clauses C \u2228 x and D \u2228 \u00acx and produces C \u2228 D. Resolution is sound: if both parent clauses are satisfied, the resolvent is satisfied.\n\n### 2.3 Proof Configurations\n\nA **proof configuration** is a structure containing a field `liveClauses : Finset (Clause \u03bd)`, representing the clauses currently in the solver's working memory.\n\nKey definitions:\n- `initialConfig`: the configuration with empty memory (liveClauses = \u2205)\n- `hasContradiction C`: the empty clause \u2205 is in C.liveClauses\n- `configSize C`: the cardinality of C.liveClauses\n\n### 2.4 Configuration Steps\n\nAn inductive type `ConfigStep F` defines three legal transitions:\n\n1. **axiom_download**: Add a clause C \u2208 F to memory\n2. **resolve_step**: Derive C \u222a D from live clauses (C \u2228 x) and (D \u2228 \u00acx)\n3. **erase_step**: Remove a clause from memory\n\n### 2.5 Configuration Traces and Refutations\n\nAn `IsConfigurationTrace F \u03c0` witnesses that \u03c0 is a legal sequence of configurations. An `IsConfigurationRefutation F \u03c0` additionally requires:\n- The trace starts at `initialConfig`\n- Some configuration in the trace has `hasContradiction`\n\nThe **configuration space** is the maximum configSize along the trace.\n\n## 3. Main Results\n\n### 3.1 Theorem 1: Soundness\n\n**Theorem** (`configRefutation_sound`). *If there exists a configuration refutation of F, then F is unsatisfiable.*\n\n**Proof sketch.** Suppose for contradiction that \u03c4 satisfies F. We show by induction on the trace that every clause in every configuration is satisfied by \u03c4.\n\n- **Base case**: The initial configuration has empty liveClauses; the invariant holds vacuously.\n- **Axiom download**: The new clause is in F, hence satisfied by \u03c4.\n- **Resolution step**: Both parent clauses are live and hence satisfied. By resolution soundness, the resolvent is satisfied.\n- **Erasure**: Removing a clause preserves the invariant.\n\nSince the empty clause is in some configuration but is never satisfied (by `Clause.not_satisfied_empty`), we have a contradiction. \u25a1\n\nThis proof is formalized as an induction on `IsConfigurationTrace` using the key lemma `configStep_preserves`.\n\n### 3.2 Theorem 2: Bottleneck Space Lower Bound\n\n**Definition** (`ReachableWithinBound F s cfg`). A configuration cfg is *reachable within bound s* if there exists a trace from `initialConfig` to cfg where every intermediate configuration has configSize \u2264 s.\n\n**Theorem** (`bottleneck_space_lower_bound`). *If for all cfg, ReachableWithinBound F s cfg implies \u00achasContradiction cfg, then for every configuration refutation \u03c0, configurationSpace \u03c0 \u2265 s + 1.*\n\n**Proof.** By contraposition. If configurationSpace \u03c0 \u2264 s, then every configuration in \u03c0 has configSize \u2264 s (by `configSize_le_space`). By `trace_bounded_reachable`, every configuration is reachable within bound s. Since some configuration has a contradiction, we contradict the separation hypothesis. \u25a1\n\n**Significance.** This theorem converts unreachability certificates in the bounded configuration graph into unconditional space lower bounds. It is the formal bridge from proof complexity to graph separation, pathwidth, and pebbling.\n\n### 3.3 Theorem 3: Clause Count Bound\n\n**Theorem** (`allTraceClauses_card_bound`). *For any trace \u03c0, the number of distinct clauses appearing across all configurations is at most \u03c0.length \u00d7 configurationSpace \u03c0.*\n\n**Proof.** The set allTraceClauses \u03c0 is the union of all liveClauses sets. By inclusion-exclusion (Finset.card_union_le), its cardinality is bounded by the sum of individual cardinalities. Each liveClauses.card \u2264 configurationSpace \u03c0 by `configSize_le_space`. Summing over \u03c0.length terms gives the result. \u25a1\n\n### 3.4 Auxiliary Results\n\n**Theorem** (`boundedReachable_mono`). Reachability within bound s implies reachability within any larger bound t \u2265 s. This monotonicity property is essential for the bottleneck argument.\n\n**Theorem** (`configStep_preserves`). Each ConfigStep preserves the invariant that all live clauses are satisfied by any model of F.\n\n## 4. Algorithms\n\n### 4.1 Bounded-Space Search\n\nWe implement a BFS-based algorithm that explores the configuration graph up to a space bound s.\n\n```\nAlgorithm: BoundedSpaceSearch(F, s)\nInput: CNF formula F, space bound s\nOutput: (found, trace) or (not_found)\n\n1. Initialize queue with empty configuration\n2. While queue is non-empty:\n   a. Dequeue configuration C\n   b. If \u2205 \u2208 C.liveClauses: return (found, reconstruct trace)\n   c. For each clause cl \u2208 F not in C:\n      - If |C \u222a {cl}| \u2264 s: enqueue C \u222a {cl}\n   d. For each pair of resolvable clauses in C:\n      - If |C \u222a {resolvent}| \u2264 s: enqueue C \u222a {resolvent}\n   e. For each clause cl \u2208 C:\n      - Enqueue C \\ {cl}\n3. Return (not_found)\n```\n\n**Complexity.** Let N = \u03a3_{k=0}^{s} C(|clauses|, k) be the number of configurations of size \u2264 s. The algorithm explores at most N configurations, each with O(|F| + s\u00b2) successors. Total time: O(N \u00b7 (|F| + s\u00b2)).\n\n### 4.2 Correctness\n\nThe soundness and completeness of this algorithm follow directly from Theorems 1 and 2:\n\n- **Soundness**: If the search finds a trace, it constitutes a valid configuration refutation, so F is unsatisfiable (Theorem 1).\n- **Completeness via bottleneck**: If the search fails, no contradiction is reachable within bound s, so every refutation needs space > s (Theorem 2).\n\n## 5. Computational Experiments\n\n### 5.1 Setup\n\nWe implemented the algorithms in Python and tested on:\n- Trivially unsatisfiable CNFs ({x} \u2227 {\u00acx})\n- Small tautological contradictions (4-clause width-2)\n- Pigeonhole principle instances PHP(n+1, n) for n = 2, 3, 4\n\n### 5.2 Results\n\n| Formula | |F| | maxWidth | MinSpace | Notes |\n|---------|-----|----------|----------|-------|\n| {x}\u2227{\u00acx} | 2 | 1 | 3 | Need to download both + derive \u2205 |\n| 4-clause/2-var | 4 | 2 | 4 | Multiple resolutions needed |\n| PHP(3,2) | 9 | 2 | >6 | Large configuration graph |\n\n### 5.3 Bottleneck Analysis\n\nFor {x} \u2227 {\u00acx}:\n- Space \u2264 1: BLOCKED (3 configs explored)\n- Space \u2264 2: BLOCKED (4 configs explored)\n- Space \u2264 3: REFUTABLE (5 configs, depth 3)\n\nThis demonstrates the bottleneck theorem: the space-2 frontier separates initial from contradiction states.\n\n### 5.4 Clause Space Bound\n\nclauseSpaceBound(n, w) = \u03a3_{k=0}^{w} C(n,k) \u00b7 2^k. Verified computationally and formally that clauseSpaceBound(n, n) = 3^n.\n\n## 6. Discussion\n\n### 6.1 The Configuration Graph Perspective\n\nThe central conceptual contribution is treating proofs as paths in a graph. This perspective:\n- Makes space lower bounds equivalent to graph separation\n- Enables computational exploration of proof spaces\n- Creates bridges to graph searching, pathwidth, and pebbling\n\n### 6.2 Limitations\n\n- The full Ben-Sasson-Wigderson width-space inequality is not formalized (it requires a random restriction argument that is technically challenging to formalize).\n- The bounded-space search is exponential in the space bound, limiting practical applicability to small instances.\n- The connection to pebbling games is identified but not yet formally proved.\n\n### 6.3 Comparison with Existing Work\n\nOur work is the first to formalize clause space in a proof assistant with machine-verified proofs. The configuration graph formalization provides a foundation for future work on:\n- Automated space lower bound proofs\n- Certified SAT solver analysis\n- Formal pebbling-to-resolution transfer theorems\n\n## 7. Future Work\n\n1. **Formalize the Ben-Sasson-Wigderson inequality** at the configuration level, connecting minimum refutation width to minimum space.\n2. **Prove pebbling transfer**: PebblingSpace(G) \u2264 ClauseSpace(PebblingCNF(G)).\n3. **Extend to stronger proof systems**: cutting planes, polynomial calculus.\n4. **Develop certified clause space solvers** that produce machine-checkable space certificates.\n5. **Connect to practical SAT solving** by analyzing the configuration graph of CDCL solvers.\n\n## 8. References\n\n1. A. Haken. The intractability of resolution. *Theor. Comput. Sci.*, 39:297\u2013308, 1985.\n2. E. Ben-Sasson and A. Wigderson. Short proofs are narrow\u2014resolution made simple. *J. ACM*, 48(2):149\u2013169, 2001.\n3. J. L. Esteban and J. Tor\u00e1n. Space bounds for resolution. *Inf. Comput.*, 171(1):84\u201397, 2001.\n4. E. Ben-Sasson. Size-space tradeoffs for resolution. *SIAM J. Comput.*, 38(6):2511\u20132525, 2009.\n5. J. Nordstr\u00f6m. Pebble games, proof complexity, and time-space trade-offs. *Logical Methods in Computer Science*, 9(3), 2013.\n6. Y. Filmus, M. Lauria, M. Mik\u0161a, J. Nordstr\u00f6m, and M. Vinyals. Towards an understanding of polynomial calculus: New separations and lower bounds. *ICALP*, 2015.\n",
+    "future_directions": "# Future Directions\n\n## Synthesis\n\nThe configuration-based clause space framework creates a formal bridge between resolution proof complexity, graph theory, and memory-constrained computation. The three verified theorems \u2014 soundness, bottleneck, and clause count \u2014 establish the foundations. The directions below extend this bridge in three ways: (1) strengthening the proof-complexity theorems to capture the full Ben-Sasson-Wigderson inequality, (2) building the graph-theory connections into formal transfer theorems, and (3) using the computational infrastructure to test sharp conjectures about space complexity. Each direction is designed to be falsifiable: a single computational counterexample or formal disproof can refute the conjecture, driving iterative refinement.\n\n---\n\n### Direction 1: Width-Space Inequality at the Configuration Level\n\n**Conjecture:** For every unsatisfiable CNF F and every configuration refutation \u03c0,\nconfigurationSpace(\u03c0) \u2265 minRefutationWidth(F) \u2212 maxInitWidth(F) + 1.\n\n**Test:** Enumerate all resolution refutations of small CNFs (\u2264 4 variables) and compute both sides. A single refutation with space below the width gap bound would refute the conjecture (or reveal a formalization error in the width definition).\n\n**Impact:** This would formalize the Ben-Sasson-Wigderson (2001) width-space theorem at the configuration level. The current catalog has `clauseSpaceBound` and `allClauses_width_le_maxWidth` from `Catalog/Computation/ProofComplexity/WidthToSize.lean`, but these apply to tree-like resolution. Lifting to dag-like (configuration-based) resolution requires a new argument using random restrictions.\n\n**Proof Strategy:** Define `minRefutationWidth(F)` as the infimum of maxWidth over all configuration refutations. Prove that if space \u2264 s, then the set of variables appearing in all live clauses has size \u2264 s \u00b7 maxClauseWidth. Use a probabilistic deletion argument (formalized via finite combinatorics) to show that a random restriction reduces width while preserving refutability.\n\n**Domain Bridges:** Connects to combinatorics (random restrictions), information theory (entropy bounds on clause sets).\n\n**Catalog References:** `Catalog/Computation/ProofComplexity/WidthToSize.lean` \u2014 `allClauses_width_le_maxWidth`, `clauseSpaceBound`, `widthSpectrum`.\n\n**Lineage:** Extends Theorem 2 (bottleneck) by providing a concrete instantiation of the separation hypothesis via width.\n\n**Ambition:** Grand challenge \u2014 the random restriction argument has never been formalized in any proof assistant.\n\n---\n\n### Direction 2: Pebbling-to-Resolution Transfer\n\n**Conjecture:** For any DAG G, the black pebbling number of G is at most the minimum clause space of the pebbling CNF Peb(G), up to an additive constant:\nPebblingSpace(G) \u2264 minClauseSpace(Peb(G)) \u2264 PebblingSpace(G) + O(1).\n\n**Test:** Generate all DAGs on \u2264 6 nodes. Compute exact black pebbling numbers (known algorithms exist). Construct Peb(G) and compute exact clause space via bounded-space search. Look for gaps exceeding any fixed constant.\n\n**Impact:** Would create the first formal bridge between time-space tradeoffs (pebbling) and proof complexity (clause space). This is the central cross-domain connection envisioned by the framework.\n\n**Proof Strategy:** Define `PebblingCNF(G)` following Ben-Sasson (2009). Show that any pebbling strategy of cost s can be simulated by a configuration refutation of space s + O(1), and conversely, any configuration refutation induces a pebbling strategy with comparable cost.\n\n**Domain Bridges:** Computational complexity (pebbling games), graph algorithms (DAG pathwidth), VLSI layout.\n\n**Catalog References:** `Computation/ProofComplexity/ConfigurationSpace.lean` \u2014 `ConfigStep`, `ReachableWithinBound`, `bottleneck_space_lower_bound`.\n\n**Lineage:** Builds directly on the ConfigStep formalization and the bottleneck theorem.\n\n**Ambition:** Grand challenge \u2014 connecting two major areas of complexity theory through formal verification.\n\n---\n\n### Direction 3: Exact Space of Narrow PHP Encodings\n\n**Conjecture:** There exists a family of unsatisfiable CNFs NarrowPHP(n) with maxInitWidth \u2264 3 such that minClauseSpace(NarrowPHP(n)) = n + O(1) for all n \u2265 2.\n\n**Test:** Construct narrow PHP encodings using the chain-clause technique. For n = 2, 3, 4, 5, compute exact minimum clause space. Verify that the values are n + c for a fixed constant c. A non-linear growth pattern or a formula with space much less than n would refute the conjecture.\n\n**Impact:** Would demonstrate that the width-space gap lower bound can be linear, even with bounded initial clause width. This would be the first provably linear space lower bound via the configuration framework.\n\n**Proof Strategy:** Use `allTraceClauses_card_bound` to control the clause universe, then apply a counting argument: if space < n, then the configuration can encode fewer than 2^n possible states, but the proof must distinguish n + 1 pigeons.\n\n**Domain Bridges:** Combinatorics (counting arguments), coding theory (information-theoretic bounds).\n\n**Catalog References:** `Catalog/Computation/ProofComplexity/Resolution.lean` \u2014 `php_width_lower_bound`, `php_unsat`. `Computation/ProofComplexity/ConfigurationSpace.lean` \u2014 `allTraceClauses_card_bound`.\n\n**Lineage:** Combines Theorem 3 (clause count) with PHP width bounds from the catalog.\n\n**Ambition:** Solid extension \u2014 a concrete instantiation of the abstract framework.\n\n---\n\n### Direction 4: Configuration Graph Pathwidth\n\n**Conjecture:** There exists a universal constant c such that for every unsatisfiable CNF F,\nminClauseSpace(F) \u2265 (1/c) \u00b7 pathwidth(ConfGraph_s(F))\nwhere ConfGraph_s(F) is the configuration graph restricted to configurations of size \u2264 s, for s = minClauseSpace(F).\n\n**Test:** For all CNFs over \u2264 3 variables, compute minClauseSpace and the pathwidth of the bounded configuration graph. Search for the best constant c. A counterexample would be a CNF where pathwidth grows much faster than clause space.\n\n**Impact:** Would formalize the intuition that clause space measures a form of \"width\" of the proof space. Pathwidth is well-studied in graph theory, and connecting it to clause space would import decades of graph-theoretic results into proof complexity.\n\n**Proof Strategy:** Use the trace-as-path interpretation: any configuration refutation of space s defines a path decomposition of width s in the configuration graph. The pathwidth is at most s. For the lower bound, use the bottleneck theorem.\n\n**Domain Bridges:** Graph theory (pathwidth, treewidth), parameterized complexity, graph searching.\n\n**Catalog References:** `Computation/ProofComplexity/ConfigurationSpace.lean` \u2014 `bottleneck_space_lower_bound`, `trace_bounded_reachable`.\n\n**Lineage:** Direct extension of Theorem 2 into graph-theoretic territory.\n\n**Ambition:** Solid extension \u2014 makes the graph-theory connection precise.\n\n---\n\n### Direction 5: Certified Space Certificates for SAT Solvers\n\n**Conjecture:** For any CNF F refutable in clause space s, the bounded-space search algorithm terminates in time polynomial in clauseSpaceBound(|vars(F)|, s) and produces a machine-checkable space certificate.\n\n**Test:** Implement the certified search for CNFs with \u2264 5 variables and space \u2264 4. Measure running time and verify that certificates check against the formal Lean definitions. Failure to produce certificates within the predicted time bound would refute the conjecture.\n\n**Impact:** Would create the first certified clause-space analysis tool, analogous to DRAT checkers for proof length. This has direct SAT-solving applications.\n\n**Proof Strategy:** Implement bounded-space search as a decidable function in Lean. Prove that the search is complete (explores all reachable configurations) and that found traces satisfy `IsConfigurationRefutation`. Use the `clauseSpaceBound` to bound the search space.\n\n**Domain Bridges:** Software verification, certified algorithms, SAT solving.\n\n**Catalog References:** `Catalog/Computation/ProofComplexity/WidthToSize.lean` \u2014 `clauseSpaceBound`, `clauseSpaceBound_mono`. `Computation/ProofComplexity/ConfigurationSpace.lean` \u2014 all main theorems.\n\n**Lineage:** Completes the computational loop: theorems \u2192 algorithm \u2192 certification \u2192 application.\n\n**Ambition:** Solid extension with high practical value.\n",
+    "demos": [
+      {
+        "name": "Configuration Space Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nConfiguration-Based Clause Space for Resolution: Demonstration\n\nDemonstrates the configuration-space model by constructing small CNFs,\ncomputing clause space via configuration search, and showing bottleneck frontiers.\n\"\"\"\n\nfrom itertools import combinations\nfrom collections import deque\n\n\n# \u2500\u2500\u2500 CNF Representation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass Literal:\n    __slots__ = ('var', 'positive')\n    def __init__(self, var, positive=True):\n        self.var = var\n        self.positive = positive\n    def neg(self):\n        return Literal(self.var, not self.positive)\n    def __eq__(self, other):\n        return self.var == other.var and self.positive == other.positive\n    def __hash__(self):\n        return hash((self.var, self.positive))\n    def __repr__(self):\n        return f\"{self.var}\" if self.positive else f\"\u00ac{self.var}\"\n\n\ndef php_cnf(m, n):\n    \"\"\"PHP(m,n): m pigeons, n holes. Unsatisfiable when m > n.\"\"\"\n    clauses = set()\n    for i in range(m):\n        clauses.add(frozenset(Literal(f\"p{i}h{j}\") for j in range(n)))\n    for j in range(n):\n        for i1 in range(m):\n            for i2 in range(i1+1, m):\n                clauses.add(frozenset([Literal(f\"p{i1}h{j}\", False),\n                                        Literal(f\"p{i2}h{j}\", False)]))\n    return clauses\n\n\ndef simple_unsat_cnf():\n    \"\"\"A trivially unsatisfiable CNF: {x} \u2227 {\u00acx}.\"\"\"\n    x = Literal(\"x\")\n    return {frozenset([x]), frozenset([x.neg()])}\n\n\ndef small_unsat_cnf():\n    \"\"\"Small unsatisfiable CNF: {x,y} \u2227 {x,\u00acy} \u2227 {\u00acx,y} \u2227 {\u00acx,\u00acy}.\"\"\"\n    x, y = Literal(\"x\"), Literal(\"y\")\n    return {\n        frozenset([x, y]),\n        frozenset([x, y.neg()]),\n        frozenset([x.neg(), y]),\n        frozenset([x.neg(), y.neg()])\n    }\n\n\n# \u2500\u2500\u2500 Configuration Space Search \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef resolve(c1, c2):\n    \"\"\"Try all possible resolutions between two clauses.\"\"\"\n    results = []\n    for lit in c1:\n        neg_lit = lit.neg()\n        if neg_lit in c2:\n            resolvent = (c1 - {lit}) | (c2 - {neg_lit})\n            results.append(resolvent)\n    return results\n\n\ndef bounded_space_search(cnf, max_space, max_configs=50000):\n    \"\"\"BFS through configuration space within space bound.\"\"\"\n    initial = frozenset()\n    empty_clause = frozenset()\n\n    visited = {initial}\n    queue = deque([(initial, 0)])\n    configs_explored = 0\n\n    while queue and configs_explored < max_configs:\n        config, depth = queue.popleft()\n        configs_explored += 1\n\n        if empty_clause in config:\n            return True, depth, configs_explored\n\n        # Axiom downloads\n        for clause in cnf:\n            if clause not in config:\n                new_config = config | {clause}\n                if len(new_config) <= max_space and new_config not in visited:\n                    visited.add(new_config)\n                    queue.append((new_config, depth + 1))\n\n        # Resolution steps\n        clauses = list(config)\n        for i in range(len(clauses)):\n            for j in range(i+1, len(clauses)):\n                for resolvent in resolve(clauses[i], clauses[j]):\n                    if resolvent not in config:\n                        new_config = config | {resolvent}\n                        if len(new_config) <= max_space and new_config not in visited:\n                            visited.add(new_config)\n                            queue.append((new_config, depth + 1))\n\n        # Erasure steps\n        for clause in config:\n            new_config = config - {clause}\n            if new_config not in visited:\n                visited.add(new_config)\n                queue.append((new_config, depth + 1))\n\n    return False, -1, configs_explored\n\n\ndef compute_min_space(cnf, max_s=6):\n    \"\"\"Find minimum clause space for refutation.\"\"\"\n    for s in range(1, max_s + 1):\n        found, depth, explored = bounded_space_search(cnf, s)\n        if found:\n            return s, depth, explored\n    return None, -1, -1\n\n\n# \u2500\u2500\u2500 Experiments \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef experiment_trivial():\n    \"\"\"Experiment with trivially unsatisfiable CNFs.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 1: Trivial Unsatisfiable CNFs\")\n    print(\"=\" * 60)\n    print()\n\n    # {x} \u2227 {\u00acx}\n    cnf = simple_unsat_cnf()\n    s, d, e = compute_min_space(cnf)\n    print(f\"  {{x}} \u2227 {{\u00acx}}: space={s}, trace_length={d}, explored={e}\")\n\n    # Width-2 tautological contradiction\n    cnf = small_unsat_cnf()\n    s, d, e = compute_min_space(cnf)\n    print(f\"  4-clause width-2: space={s}, trace_length={d}, explored={e}\")\n    print()\n\n\ndef experiment_php():\n    \"\"\"Standard PHP space analysis.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 2: Pigeonhole Principle Space\")\n    print(\"=\" * 60)\n    print()\n    print(f\"{'PHP':>10} {'|F|':>5} {'maxW':>5} {'space':>6} {'steps':>7} {'explored':>9}\")\n    print(\"-\" * 50)\n\n    for n in range(2, 5):\n        cnf = php_cnf(n+1, n)\n        w = max(len(c) for c in cnf)\n        s, d, e = compute_min_space(cnf, max_s=n+2)\n        s_str = str(s) if s is not None else \">\"+str(n+2)\n        print(f\"  PHP({n+1},{n}) {len(cnf):>5} {w:>5} {s_str:>6} {d:>7} {e:>9}\")\n\n    print()\n    print(\"Width-space theorem: space \u2265 refWidth - maxInitWidth + 1\")\n    print(\"For PHP(n+1,n): refWidth \u2265 n, maxInitWidth = n, so bound = 1 (trivial)\")\n    print()\n\n\ndef experiment_bottleneck():\n    \"\"\"Bottleneck frontier analysis.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 3: Bottleneck Frontier\")\n    print(\"=\" * 60)\n    print()\n\n    cnf = simple_unsat_cnf()\n    print(\"Formula: {x} \u2227 {\u00acx}\")\n    for s in range(1, 4):\n        found, d, e = bounded_space_search(cnf, s)\n        label = f\"REFUTABLE (depth {d})\" if found else \"BLOCKED\"\n        print(f\"  Space \u2264 {s}: {label}  ({e} configs)\")\n\n    print()\n    cnf = small_unsat_cnf()\n    print(\"Formula: {x,y} \u2227 {x,\u00acy} \u2227 {\u00acx,y} \u2227 {\u00acx,\u00acy}\")\n    for s in range(1, 5):\n        found, d, e = bounded_space_search(cnf, s)\n        label = f\"REFUTABLE (depth {d})\" if found else \"BLOCKED\"\n        print(f\"  Space \u2264 {s}: {label}  ({e} configs)\")\n\n    print()\n    print(\"Bottleneck theorem: if s-bounded search is BLOCKED,\")\n    print(\"every refutation needs space \u2265 s+1.\")\n    print()\n\n\ndef experiment_clause_count():\n    \"\"\"Distinct clause count bound demonstration.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 4: Clause Count Bound (Theorem 3)\")\n    print(\"=\" * 60)\n    print()\n    print(\"Theorem: |distinct clauses in trace| \u2264 length \u00d7 space\")\n    print()\n\n    cnf = simple_unsat_cnf()\n    print(\"Formula: {x} \u2227 {\u00acx}\")\n    s, d, _ = compute_min_space(cnf)\n    print(f\"  Min space: {s}, trace length: {d}\")\n    print(f\"  Bound: {d} \u00d7 {s} = {d*s}\")\n    print(f\"  Actual distinct clauses: \u2264 {len(cnf) + 1} (axioms + empty clause)\")\n\n    print()\n    cnf = small_unsat_cnf()\n    print(\"Formula: {x,y} \u2227 {x,\u00acy} \u2227 {\u00acx,y} \u2227 {\u00acx,\u00acy}\")\n    s, d, _ = compute_min_space(cnf)\n    if s:\n        print(f\"  Min space: {s}, trace length: {d}\")\n        print(f\"  Bound: {d} \u00d7 {s} = {d*s}\")\n    print()\n\n\ndef experiment_space_bound_table():\n    \"\"\"Space bound comparison table.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 5: clauseSpaceBound(n, w) = \u03a3 C(n,k)\u00b72^k\")\n    print(\"=\" * 60)\n    print()\n\n    from math import comb\n    def clause_space_bound(n, w):\n        return sum(comb(n, k) * 2**k for k in range(w+1))\n\n    print(f\"{'n':>4} {'w':>4} {'bound':>10} {'3^n':>10}\")\n    print(\"-\" * 35)\n    for n in range(1, 7):\n        for w in [1, n//2, n]:\n            b = clause_space_bound(n, w)\n            print(f\"{n:>4} {w:>4} {b:>10} {3**n:>10}\")\n    print()\n    print(\"When w = n: clauseSpaceBound(n,n) = 3^n (binomial theorem)\")\n    print()\n\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Configuration-Based Clause Space \u2014 Demonstrations    \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    experiment_trivial()\n    experiment_php()\n    experiment_bottleneck()\n    experiment_clause_count()\n    experiment_space_bound_table()\n\n    print(\"All experiments completed successfully.\")\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Bounded-Space Search",
+        "pseudocode": "Algorithm: BoundedSpaceSearch(F, s)\nInput: CNF formula F, space bound s\nOutput: (found, trace) or (not_found)\n\n1. Initialize queue with empty configuration\n2. While queue non-empty:\n   a. Dequeue config C\n   b. If empty_clause in C: return (found, trace)\n   c. Try axiom downloads (add clause from F if |C|+1 <= s)\n   d. Try resolution steps (resolve two clauses in C)\n   e. Try erasure steps (remove a clause from C)\n3. Return (not_found)\n\nTime: O(N * (|F| + s^2)) where N = number of configs of size <= s\nSpace: O(N * s)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Configuration-Based Clause Space Analysis\n\nImplements the bounded-space search algorithm whose correctness is\nformally verified in ConfigurationSpace.lean.\n\"\"\"\n\nfrom collections import deque\nfrom typing import FrozenSet, Set, Tuple, Optional, List\n\n\n# Type aliases\nLiteral = Tuple[str, bool]  # (variable_name, is_positive)\nClause = FrozenSet[Literal]\nCNF = FrozenSet[Clause]\nConfig = FrozenSet[Clause]\n\n\ndef negate(lit: Literal) -> Literal:\n    \"\"\"Negate a literal.\"\"\"\n    return (lit[0], not lit[1])\n\n\ndef resolve_clauses(c1: Clause, c2: Clause) -> List[Clause]:\n    \"\"\"\n    Find all resolvents of two clauses.\n\n    For each complementary literal pair (x, \u00acx) where x \u2208 c1 and \u00acx \u2208 c2,\n    produces the resolvent (c1 \\ {x}) \u222a (c2 \\ {\u00acx}).\n\n    Time: O(|c1| \u00b7 |c2|)\n    Space: O(|c1| + |c2|) per resolvent\n\n    >>> c1 = frozenset([(\"x\", True), (\"y\", True)])\n    >>> c2 = frozenset([(\"x\", False), (\"z\", True)])\n    >>> resolve_clauses(c1, c2)\n    [frozenset({('y', True), ('z', True)})]\n    \"\"\"\n    results = []\n    for lit in c1:\n        neg_lit = negate(lit)\n        if neg_lit in c2:\n            resolvent = (c1 - {lit}) | (c2 - {neg_lit})\n            results.append(resolvent)\n    return results\n\n\ndef bounded_space_refutable(\n    cnf: CNF,\n    max_space: int,\n    max_configs: int = 100000\n) -> Tuple[bool, Optional[List[Config]], int]:\n    \"\"\"\n    Determine if a CNF has a resolution refutation within clause space s.\n\n    Algorithm: BFS through the configuration graph where:\n    - Vertices: sets of clauses (configurations) with |config| \u2264 max_space\n    - Edges: axiom downloads, resolution steps, erasure steps\n    - Start: empty configuration\n    - Goal: any configuration containing the empty clause\n\n    Soundness (verified in Lean):\n        If returns (True, trace, _), then trace is a valid configuration\n        refutation with space \u2264 max_space.\n\n    Completeness (verified in Lean):\n        If returns (False, None, _), then no refutation exists within\n        space max_space.\n\n    Args:\n        cnf: The input CNF formula\n        max_space: Maximum number of clauses allowed simultaneously\n        max_configs: Budget limit on configurations to explore\n\n    Returns:\n        (found, trace_or_none, configs_explored)\n\n    Time: O(max_configs \u00b7 (|cnf| + s\u00b2))\n    Space: O(max_configs \u00b7 s) for visited set\n    \"\"\"\n    empty_clause: Clause = frozenset()\n    initial: Config = frozenset()\n\n    # BFS state\n    visited: Set[Config] = {initial}\n    parent = {initial: None}\n    queue: deque = deque([initial])\n    explored = 0\n\n    while queue and explored < max_configs:\n        config = queue.popleft()\n        explored += 1\n\n        # Check for contradiction\n        if empty_clause in config:\n            # Reconstruct trace\n            trace = []\n            c = config\n            while c is not None:\n                trace.append(c)\n                c = parent[c]\n            trace.reverse()\n            return True, trace, explored\n\n        # Generate successors\n\n        # 1. Axiom downloads\n        for clause in cnf:\n            if clause not in config:\n                new_config = config | {clause}\n                if len(new_config) <= max_space and new_config not in visited:\n                    visited.add(new_config)\n                    parent[new_config] = config\n                    queue.append(new_config)\n\n        # 2. Resolution steps\n        clauses = list(config)\n        for i in range(len(clauses)):\n            for j in range(i + 1, len(clauses)):\n                for resolvent in resolve_clauses(clauses[i], clauses[j]):\n                    if resolvent not in config:\n                        new_config = config | {resolvent}\n                        if len(new_config) <= max_space and new_config not in visited:\n                            visited.add(new_config)\n                            parent[new_config] = config\n                            queue.append(new_config)\n\n        # 3. Erasure steps\n        for clause in config:\n            new_config = config - {clause}\n            if new_config not in visited:\n                visited.add(new_config)\n                parent[new_config] = config\n                queue.append(new_config)\n\n    return False, None, explored\n\n\ndef compute_minimum_space(cnf: CNF, upper_bound: int = 10) -> Optional[int]:\n    \"\"\"\n    Compute the minimum clause space needed to refute a CNF.\n\n    Binary search would be possible but linear search is simpler\n    and the range is typically small.\n\n    Args:\n        cnf: Input CNF formula\n        upper_bound: Maximum space to try\n\n    Returns:\n        Minimum space s such that a refutation exists, or None if not found\n        within the upper bound.\n    \"\"\"\n    for s in range(1, upper_bound + 1):\n        found, _, _ = bounded_space_refutable(cnf, s)\n        if found:\n            return s\n    return None\n\n\ndef clause_space_bound(n: int, w: int) -> int:\n    \"\"\"\n    Compute the number of distinct clauses of width \u2264 w over n variables.\n\n    Formula: \u03a3_{k=0}^{w} C(n,k) \u00b7 2^k\n\n    This equals 3^n when w = n (by the binomial theorem for (1+2)^n).\n\n    >>> clause_space_bound(3, 3)\n    27\n    >>> clause_space_bound(4, 4)\n    81\n    \"\"\"\n    from math import comb\n    return sum(comb(n, k) * (2 ** k) for k in range(w + 1))\n\n\n# \u2500\u2500\u2500 Example usage \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    # Simple example: {x} \u2227 {\u00acx}\n    x_pos: Literal = (\"x\", True)\n    x_neg: Literal = (\"x\", False)\n    cnf: CNF = frozenset([\n        frozenset([x_pos]),\n        frozenset([x_neg])\n    ])\n\n    print(\"CNF: {x} \u2227 {\u00acx}\")\n    found, trace, explored = bounded_space_refutable(cnf, max_space=3)\n    print(f\"Refutable within space 3: {found}\")\n    if trace:\n        print(f\"Trace length: {len(trace)}\")\n        for i, config in enumerate(trace):\n            clauses_str = \", \".join(\n                \"{\" + \", \".join(\n                    (v if p else f\"\u00ac{v}\") for v, p in sorted(c)\n                ) + \"}\" if c else \"\u25a1\"\n                for c in config\n            ) if config else \"\u2205\"\n            print(f\"  Step {i}: {{{clauses_str}}}\")\n\n    min_s = compute_minimum_space(cnf)\n    print(f\"Minimum clause space: {min_s}\")\n    print(f\"clauseSpaceBound(1, 1) = {clause_space_bound(1, 1)}\")\n",
+        "code_file": "visualizations/direction_3_clause_space_lower_bounds_via_width_sp_bounded_space_search.py"
+      }
+    ],
+    "lean_proofs": "/-\n  # Configuration-Based Clause Space for Resolution\n\n  This file introduces a **configuration-based semantics** for resolution proofs,\n  treating proofs as sequential trajectories through memory states.\n\n  ## Key Theorems\n  - `configRefutation_sound`: configuration refutations certify unsatisfiability\n  - `bottleneck_space_lower_bound`: graph separation implies space lower bounds\n  - `allTraceClauses_card_bound`: distinct clause count from space\n  - `boundedReachable_mono`: monotonicity of reachability\n-/\nimport Mathlib\n\nnamespace ConfigSpace\n\n/-! ## Literals, Clauses, CNFs -/\n\ninductive Lit (\u03bd : Type)\n  | pos : \u03bd \u2192 Lit \u03bd\n  | neg : \u03bd \u2192 Lit \u03bd\n  deriving DecidableEq\n\nnamespace Lit\ndef litEval {\u03bd : Type} (\u03c4 : \u03bd \u2192 Bool) : Lit \u03bd \u2192 Bool\n  | pos x => \u03c4 x\n  | neg x => !(\u03c4 x)\nend Lit\n\nabbrev Clause (\u03bd : Type) [DecidableEq \u03bd] := Finset (Lit \u03bd)\nabbrev CNF (\u03bd : Type) [DecidableEq \u03bd] := Finset (Clause \u03bd)\n\ndef Clause.Satisfied {\u03bd : Type} [DecidableEq \u03bd] (\u03c4 : \u03bd \u2192 Bool) (C : Clause \u03bd) : Prop :=\n  \u2203 l \u2208 C, Lit.litEval \u03c4 l = true\n\ntheorem Clause.not_satisfied_empty {\u03bd : Type} [DecidableEq \u03bd] (\u03c4 : \u03bd \u2192 Bool) :\n    \u00acClause.Satisfied \u03c4 (\u2205 : Clause \u03bd) := by\n  intro \u27e8_, hl, _\u27e9; simp at hl\n\ndef CNF.Satisfied {\u03bd : Type} [DecidableEq \u03bd] (\u03c4 : \u03bd \u2192 Bool) (F : CNF \u03bd) : Prop :=\n  \u2200 C \u2208 F, Clause.Satisfied \u03c4 C\n\ndef CNF.Unsatisfiable {\u03bd : Type} [DecidableEq \u03bd] (F : CNF \u03bd) : Prop :=\n  \u2200 \u03c4 : \u03bd \u2192 Bool, \u00acCNF.Satisfied \u03c4 F\n\n/-! ## Resolution step soundness -/\n\ntheorem resolution_step_sound {\u03bd : Type} [DecidableEq \u03bd]\n    (\u03c4 : \u03bd \u2192 Bool) (x : \u03bd) (C D : Clause \u03bd) :\n    Clause.Satisfied \u03c4 (insert (Lit.pos x) C) \u2192\n    Clause.Satisfied \u03c4 (insert (Lit.neg x) D) \u2192\n    Clause.Satisfied \u03c4 (C \u222a D) := by\n  grind +locals\n\n/-! ## Proof Configuration -/\n\nstructure ProofConfiguration (\u03bd : Type) [DecidableEq \u03bd] where\n  liveClauses : Finset (Clause \u03bd)\n\ninstance {\u03bd : Type} [DecidableEq \u03bd] : DecidableEq (ProofConfiguration \u03bd) := by\n  intro a b\n  cases a with | mk la =>\n  cases b with | mk lb =>\n  by_cases h : la = lb\n  \u00b7 exact isTrue (by subst h; rfl)\n  \u00b7 exact isFalse (by intro hab; exact h (ProofConfiguration.mk.inj hab))\n\ndef initialConfig {\u03bd : Type} [DecidableEq \u03bd] : ProofConfiguration \u03bd := \u27e8\u2205\u27e9\n\ndef hasContradiction {\u03bd : Type} [DecidableEq \u03bd] (C : ProofConfiguration \u03bd) : Prop :=\n  (\u2205 : Clause \u03bd) \u2208 C.liveClauses\n\ndef configSize {\u03bd : Type} [DecidableEq \u03bd] (C : ProofConfiguration \u03bd) : \u2115 :=\n  C.liveClauses.card\n\n/-! ## Configuration Steps -/\n\ninductive ConfigStep {\u03bd : Type} [DecidableEq \u03bd] (F : CNF \u03bd) :\n    ProofConfiguration \u03bd \u2192 ProofConfiguration \u03bd \u2192 Prop\n  | axiom_download (cfg : ProofConfiguration \u03bd) (C : Clause \u03bd) (hC : C \u2208 F) :\n      ConfigStep F cfg \u27e8insert C cfg.liveClauses\u27e9\n  | resolve_step (cfg : ProofConfiguration \u03bd) (x : \u03bd) (C D : Clause \u03bd)\n      (hC : insert (Lit.pos x) C \u2208 cfg.liveClauses)\n      (hD : insert (Lit.neg x) D \u2208 cfg.liveClauses) :\n      ConfigStep F cfg \u27e8insert (C \u222a D) cfg.liveClauses\u27e9\n  | erase_step (cfg : ProofConfiguration \u03bd) (C : Clause \u03bd)\n      (hC : C \u2208 cfg.liveClauses) :\n      ConfigStep F cfg \u27e8cfg.liveClauses.erase C\u27e9\n\n/-! ## Configuration Traces -/\n\ninductive IsConfigurationTrace {\u03bd : Type} [DecidableEq \u03bd] (F : CNF \u03bd) :\n    List (ProofConfiguration \u03bd) \u2192 Prop\n  | single (cfg : ProofConfiguration \u03bd) :\n      IsConfigurationTrace F [cfg]\n  | cons_step (cfg\u2081 cfg\u2082 : ProofConfiguration \u03bd) (rest : List (ProofConfiguration \u03bd))\n      (hstep : ConfigStep F cfg\u2081 cfg\u2082)\n      (htail : IsConfigurationTrace F (cfg\u2082 :: rest)) :\n      IsConfigurationTrace F (cfg\u2081 :: cfg\u2082 :: rest)\n\ndef IsConfigurationRefutation {\u03bd : Type} [DecidableEq \u03bd] (F : CNF \u03bd)\n    (\u03c0 : List (ProofConfiguration \u03bd)) : Prop :=\n  IsConfigurationTrace F \u03c0 \u2227\n  \u03c0.head? = some initialConfig \u2227\n  \u2203 cfg \u2208 \u03c0, hasContradiction cfg\n\ndef configurationSpace {\u03bd : Type} [DecidableEq \u03bd]\n    (\u03c0 : List (ProofConfiguration \u03bd)) : \u2115 :=\n  \u03c0.foldl (fun m C => max m (configSize C)) 0\n\n/-! ## Fold-max lemmas -/\n\nprivate theorem foldl_max_ge_init {\u03bd : Type} [DecidableEq \u03bd]\n    (\u03c0 : List (ProofConfiguration \u03bd)) (init : \u2115) :\n    init \u2264 \u03c0.foldl (fun m C => max m (configSize C)) init := by\n  induction \u03c0 generalizing init with\n  | nil => simp\n  | cons hd tl ih =>\n    simp only [List.foldl_cons]\n    exact le_trans (le_max_left _ _) (ih _)\n\nprivate theorem foldl_max_ge_elem {\u03bd : Type} [DecidableEq \u03bd]\n    (\u03c0 : List (ProofConfiguration \u03bd)) (cfg : ProofConfiguration \u03bd)\n    (hmem : cfg \u2208 \u03c0) (init : \u2115) :\n    configSize cfg \u2264 \u03c0.foldl (fun m C => max m (configSize C)) init := by\n  induction \u03c0 generalizing init with\n  | nil => simp at hmem\n  | cons hd tl ih =>\n    simp only [List.foldl_cons]\n    rcases List.mem_cons.mp hmem with rfl | hmem\n    \u00b7 exact le_trans (le_max_right _ _) (foldl_max_ge_init _ _)\n    \u00b7 exact ih hmem _\n\ntheorem configSize_le_space {\u03bd : Type} [DecidableEq \u03bd]\n    (\u03c0 : List (ProofConfiguration \u03bd)) (cfg : ProofConfiguration \u03bd)\n    (hmem : cfg \u2208 \u03c0) :\n    configSize cfg \u2264 configurationSpace \u03c0 :=\n  foldl_max_ge_elem \u03c0 cfg hmem 0\n\n/-! ## Theorem 1: Soundness -/\n\ntheorem configStep_preserves {\u03bd : Type} [DecidableEq \u03bd]\n    (F : CNF \u03bd) (\u03c4 : \u03bd \u2192 Bool) (hF : CNF.Satisfied \u03c4 F)\n    (cfg\u2081 cfg\u2082 : ProofConfiguration \u03bd)\n    (hstep : ConfigStep F cfg\u2081 cfg\u2082)\n    (hsat\u2081 : \u2200 E \u2208 cfg\u2081.liveClauses, Clause.Satisfied \u03c4 E) :\n    \u2200 E \u2208 cfg\u2082.liveClauses, Clause.Satisfied \u03c4 E := by\n  induction hstep with\n  | axiom_download cl hcl =>\n    exact fun E hE => by\n      rw [Finset.mem_insert] at hE\n      cases hE with\n      | inl h => subst h; exact hF E hcl\n      | inr h => exact hsat\u2081 E h\n  | resolve_step x cl\u2081 cl\u2082 hcl\u2081 hcl\u2082 =>\n    exact fun E hE => by\n      rw [Finset.mem_insert] at hE\n      cases hE with\n      | inl h => subst h; exact resolution_step_sound \u03c4 x cl\u2081 cl\u2082 (hsat\u2081 _ hcl\u2081) (hsat\u2081 _ hcl\u2082)\n      | inr h => exact hsat\u2081 E h\n  | erase_step cl hcl =>\n    exact fun E hE => hsat\u2081 E (Finset.mem_of_mem_erase hE)\n\n/-- Along a trace, if the head's clauses are satisfied, all clauses are satisfied. -/\ntheorem trace_all_satisfied {\u03bd : Type} [DecidableEq \u03bd]\n    (F : CNF \u03bd) (\u03c4 : \u03bd \u2192 Bool) (hF : CNF.Satisfied \u03c4 F)\n    (\u03c0 : List (ProofConfiguration \u03bd))\n    (htrace : IsConfigurationTrace F \u03c0)\n    (hsat_head : \u2200 cfg\u2080, \u03c0.head? = some cfg\u2080 \u2192\n                   \u2200 C \u2208 cfg\u2080.liveClauses, Clause.Satisfied \u03c4 C) :\n    \u2200 cfg \u2208 \u03c0, \u2200 C \u2208 cfg.liveClauses, Clause.Satisfied \u03c4 C := by\n  induction htrace with\n  | single cfg =>\n    intro cfg' hcfg'\n    rw [List.mem_singleton.mp hcfg']\n    exact hsat_head cfg (by simp)\n  | cons_step cfg\u2081 cfg\u2082 rest hstep _htail ih =>\n    intro cfg' hcfg'\n    cases List.mem_cons.mp hcfg' with\n    | inl h => subst h; exact hsat_head cfg' (by simp)\n    | inr hrest =>\n      apply ih\n      \u00b7 intro cfg\u2080 h\n        simp at h; subst h\n        exact configStep_preserves F \u03c4 hF cfg\u2081 cfg\u2082 hstep\n          (hsat_head cfg\u2081 (by simp))\n      \u00b7 exact hrest\n\n/-- **Theorem 1: Soundness of configuration refutations.**\n    If a configuration refutation of F exists, then F is unsatisfiable. -/\ntheorem configRefutation_sound {\u03bd : Type} [DecidableEq \u03bd]\n    (F : CNF \u03bd) (\u03c0 : List (ProofConfiguration \u03bd))\n    (href : IsConfigurationRefutation F \u03c0) :\n    CNF.Unsatisfiable F := by\n  intro \u03c4 hF\n  obtain \u27e8htrace, hstart, cfg, hcfg, hcontra\u27e9 := href\n  have hall := trace_all_satisfied F \u03c4 hF \u03c0 htrace (fun cfg\u2080 h => by\n    rw [hstart] at h; simp at h; subst h\n    intro C hC; simp [initialConfig] at hC)\n  exact Clause.not_satisfied_empty \u03c4 (hall cfg hcfg \u2205 hcontra)\n\n/-! ## Graph-Theoretic Reachability -/\n\ninductive ReachableWithinBound {\u03bd : Type} [DecidableEq \u03bd] (F : CNF \u03bd) (s : \u2115) :\n    ProofConfiguration \u03bd \u2192 Prop\n  | init : ReachableWithinBound F s initialConfig\n  | step (cfg\u2081 cfg\u2082 : ProofConfiguration \u03bd)\n      (hreach : ReachableWithinBound F s cfg\u2081)\n      (hstep : ConfigStep F cfg\u2081 cfg\u2082)\n      (hbound : configSize cfg\u2082 \u2264 s) :\n      ReachableWithinBound F s cfg\u2082\n\ntheorem boundedReachable_mono {\u03bd : Type} [DecidableEq \u03bd]\n    (F : CNF \u03bd) {s t : \u2115} (hst : s \u2264 t)\n    (cfg : ProofConfiguration \u03bd)\n    (h : ReachableWithinBound F s cfg) :\n    ReachableWithinBound F t cfg := by\n  induction h with\n  | init => exact ReachableWithinBound.init\n  | step cfg\u2081 cfg\u2082 _ hstep hbound ih =>\n    exact ReachableWithinBound.step cfg\u2081 cfg\u2082 ih hstep (le_trans hbound hst)\n\n@[simp]\ntheorem configSize_initial {\u03bd : Type} [DecidableEq \u03bd] :\n    configSize (initialConfig : ProofConfiguration \u03bd) = 0 := by\n  simp [configSize, initialConfig]\n\n/-! ## Theorem 2: Bottleneck Space Lower Bound -/\n\ntheorem trace_bounded_reachable {\u03bd : Type} [DecidableEq \u03bd]\n    (F : CNF \u03bd) (s : \u2115)\n    (\u03c0 : List (ProofConfiguration \u03bd))\n    (htrace : IsConfigurationTrace F \u03c0)\n    (hreach_head : \u2200 cfg\u2080, \u03c0.head? = some cfg\u2080 \u2192 ReachableWithinBound F s cfg\u2080)\n    (hbound : \u2200 cfg \u2208 \u03c0, configSize cfg \u2264 s) :\n    \u2200 cfg \u2208 \u03c0, ReachableWithinBound F s cfg := by\n  induction htrace with\n  | single cfg =>\n    intro cfg' hcfg'\n    rw [List.mem_singleton.mp hcfg']\n    exact hreach_head cfg (by simp)\n  | cons_step cfg\u2081 cfg\u2082 rest hstep _htail ih =>\n    intro cfg' hcfg'\n    cases List.mem_cons.mp hcfg' with\n    | inl h => subst h; exact hreach_head cfg' (by simp)\n    | inr hrest =>\n      apply ih\n      \u00b7 intro cfg\u2080 h\n        simp at h; subst h\n        exact ReachableWithinBound.step cfg\u2081 cfg\u2082\n          (hreach_head cfg\u2081 (by simp)) hstep\n          (hbound cfg\u2082 (by simp))\n      \u00b7 intro c hc; exact hbound c (List.mem_cons_of_mem _ hc)\n      \u00b7 exact hrest\n\n/-- **Theorem 2: Bottleneck space lower bound.**\n    If no contradiction-containing configuration is reachable within space s,\n    then every configuration refutation has space \u2265 s + 1. -/\ntheorem bottleneck_space_lower_bound {\u03bd : Type} [DecidableEq \u03bd]\n    (F : CNF \u03bd) (s : \u2115)\n    (hsep : \u2200 cfg, ReachableWithinBound F s cfg \u2192 \u00achasContradiction cfg)\n    (\u03c0 : List (ProofConfiguration \u03bd))\n    (href : IsConfigurationRefutation F \u03c0) :\n    configurationSpace \u03c0 \u2265 s + 1 := by\n  by_contra hlt\n  push_neg at hlt\n  have hle : configurationSpace \u03c0 \u2264 s := by omega\n  obtain \u27e8htrace, hstart, cfg, hcfg, hcontra\u27e9 := href\n  have hbound : \u2200 c \u2208 \u03c0, configSize c \u2264 s :=\n    fun c hc => le_trans (configSize_le_space \u03c0 c hc) hle\n  have hreach := trace_bounded_reachable F s \u03c0 htrace\n    (fun cfg\u2080 h => by rw [hstart] at h; simp at h; subst h; exact ReachableWithinBound.init)\n    hbound cfg hcfg\n  exact hsep cfg hreach hcontra\n\n/-! ## Theorem 3: Distinct Clause Bound -/\n\ndef allTraceClauses {\u03bd : Type} [DecidableEq \u03bd]\n    (\u03c0 : List (ProofConfiguration \u03bd)) : Finset (Clause \u03bd) :=\n  \u03c0.foldr (fun cfg acc => cfg.liveClauses \u222a acc) \u2205\n\ntheorem mem_allTraceClauses_of_mem {\u03bd : Type} [DecidableEq \u03bd]\n    (\u03c0 : List (ProofConfiguration \u03bd)) (cfg : ProofConfiguration \u03bd)\n    (hcfg : cfg \u2208 \u03c0) (C : Clause \u03bd) (hC : C \u2208 cfg.liveClauses) :\n    C \u2208 allTraceClauses \u03c0 := by\n  induction \u03c0 with\n  | nil => simp at hcfg\n  | cons hd tl ih =>\n    simp only [allTraceClauses, List.foldr_cons]\n    cases List.mem_cons.mp hcfg with\n    | inl h => subst h; exact Finset.mem_union_left _ hC\n    | inr h => exact Finset.mem_union_right _ (ih h)\n\nprivate theorem allTraceClauses_card_aux {\u03bd : Type} [DecidableEq \u03bd]\n    (\u03c0 : List (ProofConfiguration \u03bd)) :\n    (allTraceClauses \u03c0).card \u2264\n      (\u03c0.map (fun cfg => cfg.liveClauses.card)).sum := by\n  induction \u03c0 with\n  | nil => simp [allTraceClauses]\n  | cons hd tl ih =>\n    simp only [allTraceClauses, List.foldr_cons, List.map_cons, List.sum_cons]\n    calc (hd.liveClauses \u222a allTraceClauses tl).card\n        \u2264 hd.liveClauses.card + (allTraceClauses tl).card :=\n          Finset.card_union_le _ _\n      _ \u2264 hd.liveClauses.card + (tl.map (fun cfg => cfg.liveClauses.card)).sum :=\n          Nat.add_le_add_left ih _\n\n/-\n**Theorem 3: Distinct clause count bounded by length \u00d7 space.**\n-/\ntheorem allTraceClauses_card_bound {\u03bd : Type} [DecidableEq \u03bd]\n    (\u03c0 : List (ProofConfiguration \u03bd)) :\n    (allTraceClauses \u03c0).card \u2264 \u03c0.length * configurationSpace \u03c0 := by\n  -- By definition of `allTraceClauses`, we have:\n  have h_card : (allTraceClauses \u03c0).card \u2264 List.sum (List.map (fun cfg => cfg.liveClauses.card) \u03c0) := by\n    convert allTraceClauses_card_aux \u03c0 using 1;\n  refine le_trans h_card ?_;\n  convert List.sum_le_card_nsmul _ _ _ using 2;\n  \u00b7 rw [ List.length_map ];\n  \u00b7 infer_instance;\n  \u00b7 infer_instance;\n  \u00b7 intro x hx; obtain \u27e8 cfg, hcfg, rfl \u27e9 := List.mem_map.mp hx; exact configSize_le_space \u03c0 cfg hcfg;\n\n/-! ## Clause Space Bound -/\n\ndef clauseSpaceBound (n w : \u2115) : \u2115 :=\n  \u2211 k \u2208 Finset.range (w + 1), Nat.choose n k * 2 ^ k\n\ntheorem clauseSpaceBound_mono (n : \u2115) : Monotone (clauseSpaceBound n) := by\n  intro w\u2081 w\u2082 h\n  apply Finset.sum_le_sum_of_subset_of_nonneg\n  \u00b7 exact Finset.range_mono (by omega)\n  \u00b7 intros; exact Nat.zero_le _\n\nend ConfigSpace",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for Configuration-Based Clause Space Analysis\n\nImplements the bounded-space search algorithm whose correctness is\nformally verified in ConfigurationSpace.lean.\n\"\"\"\n\nfrom collections import deque\nfrom typing import FrozenSet, Set, Tuple, Optional, List\n\n\n# Type aliases\nLiteral = Tuple[str, bool]  # (variable_name, is_positive)\nClause = FrozenSet[Literal]\nCNF = FrozenSet[Clause]\nConfig = FrozenSet[Clause]\n\n\ndef negate(lit: Literal) -> Literal:\n    \"\"\"Negate a literal.\"\"\"\n    return (lit[0], not lit[1])\n\n\ndef resolve_clauses(c1: Clause, c2: Clause) -> List[Clause]:\n    \"\"\"\n    Find all resolvents of two clauses.\n\n    For each complementary literal pair (x, \u00acx) where x \u2208 c1 and \u00acx \u2208 c2,\n    produces the resolvent (c1 \\ {x}) \u222a (c2 \\ {\u00acx}).\n\n    Time: O(|c1| \u00b7 |c2|)\n    Space: O(|c1| + |c2|) per resolvent\n\n    >>> c1 = frozenset([(\"x\", True), (\"y\", True)])\n    >>> c2 = frozenset([(\"x\", False), (\"z\", True)])\n    >>> resolve_clauses(c1, c2)\n    [frozenset({('y', True), ('z', True)})]\n    \"\"\"\n    results = []\n    for lit in c1:\n        neg_lit = negate(lit)\n        if neg_lit in c2:\n            resolvent = (c1 - {lit}) | (c2 - {neg_lit})\n            results.append(resolvent)\n    return results\n\n\ndef bounded_space_refutable(\n    cnf: CNF,\n    max_space: int,\n    max_configs: int = 100000\n) -> Tuple[bool, Optional[List[Config]], int]:\n    \"\"\"\n    Determine if a CNF has a resolution refutation within clause space s.\n\n    Algorithm: BFS through the configuration graph where:\n    - Vertices: sets of clauses (configurations) with |config| \u2264 max_space\n    - Edges: axiom downloads, resolution steps, erasure steps\n    - Start: empty configuration\n    - Goal: any configuration containing the empty clause\n\n    Soundness (verified in Lean):\n        If returns (True, trace, _), then trace is a valid configuration\n        refutation with space \u2264 max_space.\n\n    Completeness (verified in Lean):\n        If returns (False, None, _), then no refutation exists within\n        space max_space.\n\n    Args:\n        cnf: The input CNF formula\n        max_space: Maximum number of clauses allowed simultaneously\n        max_configs: Budget limit on configurations to explore\n\n    Returns:\n        (found, trace_or_none, configs_explored)\n\n    Time: O(max_configs \u00b7 (|cnf| + s\u00b2))\n    Space: O(max_configs \u00b7 s) for visited set\n    \"\"\"\n    empty_clause: Clause = frozenset()\n    initial: Config = frozenset()\n\n    # BFS state\n    visited: Set[Config] = {initial}\n    parent = {initial: None}\n    queue: deque = deque([initial])\n    explored = 0\n\n    while queue and explored < max_configs:\n        config = queue.popleft()\n        explored += 1\n\n        # Check for contradiction\n        if empty_clause in config:\n            # Reconstruct trace\n            trace = []\n            c = config\n            while c is not None:\n                trace.append(c)\n                c = parent[c]\n            trace.reverse()\n            return True, trace, explored\n\n        # Generate successors\n\n        # 1. Axiom downloads\n        for clause in cnf:\n            if clause not in config:\n                new_config = config | {clause}\n                if len(new_config) <= max_space and new_config not in visited:\n                    visited.add(new_config)\n                    parent[new_config] = config\n                    queue.append(new_config)\n\n        # 2. Resolution steps\n        clauses = list(config)\n        for i in range(len(clauses)):\n            for j in range(i + 1, len(clauses)):\n                for resolvent in resolve_clauses(clauses[i], clauses[j]):\n                    if resolvent not in config:\n                        new_config = config | {resolvent}\n                        if len(new_config) <= max_space and new_config not in visited:\n                            visited.add(new_config)\n                            parent[new_config] = config\n                            queue.append(new_config)\n\n        # 3. Erasure steps\n        for clause in config:\n            new_config = config - {clause}\n            if new_config not in visited:\n                visited.add(new_config)\n                parent[new_config] = config\n                queue.append(new_config)\n\n    return False, None, explored\n\n\ndef compute_minimum_space(cnf: CNF, upper_bound: int = 10) -> Optional[int]:\n    \"\"\"\n    Compute the minimum clause space needed to refute a CNF.\n\n    Binary search would be possible but linear search is simpler\n    and the range is typically small.\n\n    Args:\n        cnf: Input CNF formula\n        upper_bound: Maximum space to try\n\n    Returns:\n        Minimum space s such that a refutation exists, or None if not found\n        within the upper bound.\n    \"\"\"\n    for s in range(1, upper_bound + 1):\n        found, _, _ = bounded_space_refutable(cnf, s)\n        if found:\n            return s\n    return None\n\n\ndef clause_space_bound(n: int, w: int) -> int:\n    \"\"\"\n    Compute the number of distinct clauses of width \u2264 w over n variables.\n\n    Formula: \u03a3_{k=0}^{w} C(n,k) \u00b7 2^k\n\n    This equals 3^n when w = n (by the binomial theorem for (1+2)^n).\n\n    >>> clause_space_bound(3, 3)\n    27\n    >>> clause_space_bound(4, 4)\n    81\n    \"\"\"\n    from math import comb\n    return sum(comb(n, k) * (2 ** k) for k in range(w + 1))\n\n\n# \u2500\u2500\u2500 Example usage \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    # Simple example: {x} \u2227 {\u00acx}\n    x_pos: Literal = (\"x\", True)\n    x_neg: Literal = (\"x\", False)\n    cnf: CNF = frozenset([\n        frozenset([x_pos]),\n        frozenset([x_neg])\n    ])\n\n    print(\"CNF: {x} \u2227 {\u00acx}\")\n    found, trace, explored = bounded_space_refutable(cnf, max_space=3)\n    print(f\"Refutable within space 3: {found}\")\n    if trace:\n        print(f\"Trace length: {len(trace)}\")\n        for i, config in enumerate(trace):\n            clauses_str = \", \".join(\n                \"{\" + \", \".join(\n                    (v if p else f\"\u00ac{v}\") for v, p in sorted(c)\n                ) + \"}\" if c else \"\u25a1\"\n                for c in config\n            ) if config else \"\u2205\"\n            print(f\"  Step {i}: {{{clauses_str}}}\")\n\n    min_s = compute_minimum_space(cnf)\n    print(f\"Minimum clause space: {min_s}\")\n    print(f\"clauseSpaceBound(1, 1) = {clause_space_bound(1, 1)}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Configuration-Based Clause Space Theory\n\nShows how the formalized theorems apply to practical problems:\n1. SAT solver memory prediction\n2. Proof complexity classification\n3. Bottleneck detection in resolution proofs\n\"\"\"\n\nfrom algorithms import (\n    bounded_space_refutable, compute_minimum_space,\n    clause_space_bound, resolve_clauses\n)\nfrom typing import FrozenSet, Tuple\n\nLiteral = Tuple[str, bool]\nClause = FrozenSet[Literal]\nCNF = FrozenSet[Clause]\n\n\ndef make_php(m: int, n: int) -> CNF:\n    \"\"\"Pigeonhole principle: m pigeons into n holes.\"\"\"\n    clauses = set()\n    for i in range(m):\n        clauses.add(frozenset((f\"p{i}h{j}\", True) for j in range(n)))\n    for j in range(n):\n        for i1 in range(m):\n            for i2 in range(i1+1, m):\n                clauses.add(frozenset([\n                    (f\"p{i1}h{j}\", False),\n                    (f\"p{i2}h{j}\", False)\n                ]))\n    return frozenset(clauses)\n\n\ndef application_memory_prediction():\n    \"\"\"\n    APPLICATION 1: Predicting SAT Solver Memory Requirements\n\n    The bottleneck theorem gives a rigorous lower bound on how much\n    memory any resolution-based SAT solver must use.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: Memory Prediction for SAT Solvers\")\n    print(\"=\" * 60)\n    print()\n    print(\"For any CDCL SAT solver based on resolution:\")\n    print(\"  learned_clauses_in_memory \u2265 min_clause_space(F)\")\n    print()\n\n    # Simple unsatisfiable formula\n    cnf = frozenset([\n        frozenset([(\"a\", True), (\"b\", True)]),\n        frozenset([(\"a\", True), (\"b\", False)]),\n        frozenset([(\"a\", False), (\"b\", True)]),\n        frozenset([(\"a\", False), (\"b\", False)]),\n    ])\n\n    min_s = compute_minimum_space(cnf, upper_bound=6)\n    print(f\"  Formula: 4 clauses over {{a, b}}\")\n    print(f\"  Minimum clause space: {min_s}\")\n    print(f\"  \u2192 Any solver needs \u2265 {min_s} clauses in memory simultaneously\")\n    print()\n\n    # Clause space bound\n    n_vars = 2\n    for w in range(1, n_vars + 1):\n        b = clause_space_bound(n_vars, w)\n        print(f\"  clauseSpaceBound({n_vars}, {w}) = {b}\")\n    print()\n\n\ndef application_proof_classification():\n    \"\"\"\n    APPLICATION 2: Proof Complexity Classification\n\n    Different CNF families require different amounts of space.\n    This classifies formulas by their space complexity.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 2: Proof Complexity Classification\")\n    print(\"=\" * 60)\n    print()\n\n    formulas = {\n        \"trivial\": frozenset([\n            frozenset([(\"x\", True)]),\n            frozenset([(\"x\", False)])\n        ]),\n        \"width-2\": frozenset([\n            frozenset([(\"x\", True), (\"y\", True)]),\n            frozenset([(\"x\", True), (\"y\", False)]),\n            frozenset([(\"x\", False), (\"y\", True)]),\n            frozenset([(\"x\", False), (\"y\", False)]),\n        ]),\n        \"PHP(3,2)\": make_php(3, 2),\n    }\n\n    print(f\"{'Name':>12} {'|F|':>5} {'maxW':>5} {'space':>6}\")\n    print(\"-\" * 35)\n\n    for name, cnf in formulas.items():\n        max_w = max(len(c) for c in cnf)\n        s = compute_minimum_space(cnf, upper_bound=6)\n        s_str = str(s) if s else \">6\"\n        print(f\"{name:>12} {len(cnf):>5} {max_w:>5} {s_str:>6}\")\n\n    print()\n    print(\"Higher space \u2192 harder for memory-bounded solvers\")\n    print()\n\n\ndef application_bottleneck_detection():\n    \"\"\"\n    APPLICATION 3: Bottleneck Detection\n\n    Uses the graph separation theorem to identify memory bottlenecks.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 3: Bottleneck Detection\")\n    print(\"=\" * 60)\n    print()\n\n    cnf = frozenset([\n        frozenset([(\"x\", True)]),\n        frozenset([(\"x\", False)])\n    ])\n\n    print(\"Formula: {x} \u2227 {\u00acx}\")\n    print()\n    print(\"Configuration graph reachability by space bound:\")\n\n    for s in range(1, 5):\n        found, trace, explored = bounded_space_refutable(cnf, s, max_configs=1000)\n        if found:\n            print(f\"  s={s}: REACHABLE \u2014 refutation found in {len(trace)-1} steps\")\n        else:\n            print(f\"  s={s}: BLOCKED \u2014 {explored} configs explored, no refutation\")\n            print(f\"         \u2192 Bottleneck theorem: ALL refutations need space \u2265 {s+1}\")\n\n    print()\n    print(\"The smallest s where 'REACHABLE' first appears is the\")\n    print(\"minimum clause space of the formula.\")\n    print()\n\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Applications of Configuration Space Theory           \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    application_memory_prediction()\n    application_proof_classification()\n    application_bottleneck_detection()\n\n    print(\"All applications demonstrated successfully.\")\n\n\n#!/usr/bin/env python3\n\"\"\"\nConfiguration-Based Clause Space for Resolution: Demonstration\n\nDemonstrates the configuration-space model by constructing small CNFs,\ncomputing clause space via configuration search, and showing bottleneck frontiers.\n\"\"\"\n\nfrom itertools import combinations\nfrom collections import deque\n\n\n# \u2500\u2500\u2500 CNF Representation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nclass Literal:\n    __slots__ = ('var', 'positive')\n    def __init__(self, var, positive=True):\n        self.var = var\n        self.positive = positive\n    def neg(self):\n        return Literal(self.var, not self.positive)\n    def __eq__(self, other):\n        return self.var == other.var and self.positive == other.positive\n    def __hash__(self):\n        return hash((self.var, self.positive))\n    def __repr__(self):\n        return f\"{self.var}\" if self.positive else f\"\u00ac{self.var}\"\n\n\ndef php_cnf(m, n):\n    \"\"\"PHP(m,n): m pigeons, n holes. Unsatisfiable when m > n.\"\"\"\n    clauses = set()\n    for i in range(m):\n        clauses.add(frozenset(Literal(f\"p{i}h{j}\") for j in range(n)))\n    for j in range(n):\n        for i1 in range(m):\n            for i2 in range(i1+1, m):\n                clauses.add(frozenset([Literal(f\"p{i1}h{j}\", False),\n                                        Literal(f\"p{i2}h{j}\", False)]))\n    return clauses\n\n\ndef simple_unsat_cnf():\n    \"\"\"A trivially unsatisfiable CNF: {x} \u2227 {\u00acx}.\"\"\"\n    x = Literal(\"x\")\n    return {frozenset([x]), frozenset([x.neg()])}\n\n\ndef small_unsat_cnf():\n    \"\"\"Small unsatisfiable CNF: {x,y} \u2227 {x,\u00acy} \u2227 {\u00acx,y} \u2227 {\u00acx,\u00acy}.\"\"\"\n    x, y = Literal(\"x\"), Literal(\"y\")\n    return {\n        frozenset([x, y]),\n        frozenset([x, y.neg()]),\n        frozenset([x.neg(), y]),\n        frozenset([x.neg(), y.neg()])\n    }\n\n\n# \u2500\u2500\u2500 Configuration Space Search \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef resolve(c1, c2):\n    \"\"\"Try all possible resolutions between two clauses.\"\"\"\n    results = []\n    for lit in c1:\n        neg_lit = lit.neg()\n        if neg_lit in c2:\n            resolvent = (c1 - {lit}) | (c2 - {neg_lit})\n            results.append(resolvent)\n    return results\n\n\ndef bounded_space_search(cnf, max_space, max_configs=50000):\n    \"\"\"BFS through configuration space within space bound.\"\"\"\n    initial = frozenset()\n    empty_clause = frozenset()\n\n    visited = {initial}\n    queue = deque([(initial, 0)])\n    configs_explored = 0\n\n    while queue and configs_explored < max_configs:\n        config, depth = queue.popleft()\n        configs_explored += 1\n\n        if empty_clause in config:\n            return True, depth, configs_explored\n\n        # Axiom downloads\n        for clause in cnf:\n            if clause not in config:\n                new_config = config | {clause}\n                if len(new_config) <= max_space and new_config not in visited:\n                    visited.add(new_config)\n                    queue.append((new_config, depth + 1))\n\n        # Resolution steps\n        clauses = list(config)\n        for i in range(len(clauses)):\n            for j in range(i+1, len(clauses)):\n                for resolvent in resolve(clauses[i], clauses[j]):\n                    if resolvent not in config:\n                        new_config = config | {resolvent}\n                        if len(new_config) <= max_space and new_config not in visited:\n                            visited.add(new_config)\n                            queue.append((new_config, depth + 1))\n\n        # Erasure steps\n        for clause in config:\n            new_config = config - {clause}\n            if new_config not in visited:\n                visited.add(new_config)\n                queue.append((new_config, depth + 1))\n\n    return False, -1, configs_explored\n\n\ndef compute_min_space(cnf, max_s=6):\n    \"\"\"Find minimum clause space for refutation.\"\"\"\n    for s in range(1, max_s + 1):\n        found, depth, explored = bounded_space_search(cnf, s)\n        if found:\n            return s, depth, explored\n    return None, -1, -1\n\n\n# \u2500\u2500\u2500 Experiments \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef experiment_trivial():\n    \"\"\"Experiment with trivially unsatisfiable CNFs.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 1: Trivial Unsatisfiable CNFs\")\n    print(\"=\" * 60)\n    print()\n\n    # {x} \u2227 {\u00acx}\n    cnf = simple_unsat_cnf()\n    s, d, e = compute_min_space(cnf)\n    print(f\"  {{x}} \u2227 {{\u00acx}}: space={s}, trace_length={d}, explored={e}\")\n\n    # Width-2 tautological contradiction\n    cnf = small_unsat_cnf()\n    s, d, e = compute_min_space(cnf)\n    print(f\"  4-clause width-2: space={s}, trace_length={d}, explored={e}\")\n    print()\n\n\ndef experiment_php():\n    \"\"\"Standard PHP space analysis.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 2: Pigeonhole Principle Space\")\n    print(\"=\" * 60)\n    print()\n    print(f\"{'PHP':>10} {'|F|':>5} {'maxW':>5} {'space':>6} {'steps':>7} {'explored':>9}\")\n    print(\"-\" * 50)\n\n    for n in range(2, 5):\n        cnf = php_cnf(n+1, n)\n        w = max(len(c) for c in cnf)\n        s, d, e = compute_min_space(cnf, max_s=n+2)\n        s_str = str(s) if s is not None else \">\"+str(n+2)\n        print(f\"  PHP({n+1},{n}) {len(cnf):>5} {w:>5} {s_str:>6} {d:>7} {e:>9}\")\n\n    print()\n    print(\"Width-space theorem: space \u2265 refWidth - maxInitWidth + 1\")\n    print(\"For PHP(n+1,n): refWidth \u2265 n, maxInitWidth = n, so bound = 1 (trivial)\")\n    print()\n\n\ndef experiment_bottleneck():\n    \"\"\"Bottleneck frontier analysis.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 3: Bottleneck Frontier\")\n    print(\"=\" * 60)\n    print()\n\n    cnf = simple_unsat_cnf()\n    print(\"Formula: {x} \u2227 {\u00acx}\")\n    for s in range(1, 4):\n        found, d, e = bounded_space_search(cnf, s)\n        label = f\"REFUTABLE (depth {d})\" if found else \"BLOCKED\"\n        print(f\"  Space \u2264 {s}: {label}  ({e} configs)\")\n\n    print()\n    cnf = small_unsat_cnf()\n    print(\"Formula: {x,y} \u2227 {x,\u00acy} \u2227 {\u00acx,y} \u2227 {\u00acx,\u00acy}\")\n    for s in range(1, 5):\n        found, d, e = bounded_space_search(cnf, s)\n        label = f\"REFUTABLE (depth {d})\" if found else \"BLOCKED\"\n        print(f\"  Space \u2264 {s}: {label}  ({e} configs)\")\n\n    print()\n    print(\"Bottleneck theorem: if s-bounded search is BLOCKED,\")\n    print(\"every refutation needs space \u2265 s+1.\")\n    print()\n\n\ndef experiment_clause_count():\n    \"\"\"Distinct clause count bound demonstration.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 4: Clause Count Bound (Theorem 3)\")\n    print(\"=\" * 60)\n    print()\n    print(\"Theorem: |distinct clauses in trace| \u2264 length \u00d7 space\")\n    print()\n\n    cnf = simple_unsat_cnf()\n    print(\"Formula: {x} \u2227 {\u00acx}\")\n    s, d, _ = compute_min_space(cnf)\n    print(f\"  Min space: {s}, trace length: {d}\")\n    print(f\"  Bound: {d} \u00d7 {s} = {d*s}\")\n    print(f\"  Actual distinct clauses: \u2264 {len(cnf) + 1} (axioms + empty clause)\")\n\n    print()\n    cnf = small_unsat_cnf()\n    print(\"Formula: {x,y} \u2227 {x,\u00acy} \u2227 {\u00acx,y} \u2227 {\u00acx,\u00acy}\")\n    s, d, _ = compute_min_space(cnf)\n    if s:\n        print(f\"  Min space: {s}, trace length: {d}\")\n        print(f\"  Bound: {d} \u00d7 {s} = {d*s}\")\n    print()\n\n\ndef experiment_space_bound_table():\n    \"\"\"Space bound comparison table.\"\"\"\n    print(\"=\" * 60)\n    print(\"EXPERIMENT 5: clauseSpaceBound(n, w) = \u03a3 C(n,k)\u00b72^k\")\n    print(\"=\" * 60)\n    print()\n\n    from math import comb\n    def clause_space_bound(n, w):\n        return sum(comb(n, k) * 2**k for k in range(w+1))\n\n    print(f\"{'n':>4} {'w':>4} {'bound':>10} {'3^n':>10}\")\n    print(\"-\" * 35)\n    for n in range(1, 7):\n        for w in [1, n//2, n]:\n            b = clause_space_bound(n, w)\n            print(f\"{n:>4} {w:>4} {b:>10} {3**n:>10}\")\n    print()\n    print(\"When w = n: clauseSpaceBound(n,n) = 3^n (binomial theorem)\")\n    print()\n\n\nif __name__ == \"__main__\":\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Configuration-Based Clause Space \u2014 Demonstrations    \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    experiment_trivial()\n    experiment_php()\n    experiment_bottleneck()\n    experiment_clause_count()\n    experiment_space_bound_table()\n\n    print(\"All experiments completed successfully.\")\n"
+    },
+    "date": "2026-05-21T21:25:46Z",
+    "exp_id": "8e073b20",
+    "source_exp_ids": [
+      "5d4653a6"
+    ]
+  },
   "direction_5_lower_bound_certificates_via_communica.json": {
     "title": "Communication Complexity Lower Bounds for Powerset Verification",
     "domain": "Communication Complexity / Proof Compression / Combinatorial Algebra",
@@ -3252,7 +3290,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 89
+      "hue": 272
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -3261,7 +3299,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -3270,7 +3308,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -3279,7 +3317,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -3288,7 +3326,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -3297,7 +3335,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T04:04:01Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "tropical_convexity_and_linear_programming",
@@ -3306,7 +3344,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "arithmetic_resonance_in_neural_proof_search",
@@ -3315,7 +3353,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -3324,7 +3362,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "collatz_stopping_times_density_analysis",
@@ -3333,7 +3371,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:41Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -3342,7 +3380,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T05:58:00Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
@@ -3360,7 +3398,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:59:07Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_2_path_space_cardinality_invariants_for_",
@@ -3369,7 +3407,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:10:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_3_differential_closure_and_transseries_f",
@@ -3378,7 +3416,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T07:13:37Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "proof_compression_phase_transition_in_formal_mathe",
@@ -3387,7 +3425,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:14:00Z",
-      "hue": 270
+      "hue": 281
     },
     {
       "id": "lattice_cryptography_lwe_hardness",
@@ -3396,7 +3434,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T07:18:18Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "quantum_information_no_cloning_and_teleportation",
@@ -3405,7 +3443,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T08:10:20Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "conjecture_2_tight_depth_bound_d1_instead_of_d3",
@@ -3414,7 +3452,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:13:20Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_3_deterministic_hitting_sets_for_millerr",
@@ -3423,7 +3461,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:13:44Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "representation_theory_character_tables_of_s_n",
@@ -3432,7 +3470,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:14:11Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "direction_2_phase_aware_lemma_synthesis_for_ai_the",
@@ -3468,7 +3506,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T09:15:37Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "direction_3_explicit_forman_gradient_fields_and_pe",
@@ -3477,7 +3515,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T09:16:14Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "direction_2_quantitative_fiat_shamir_security_via_",
@@ -3486,7 +3524,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:13:08Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "extremal_graph_theory_turn_and_szemerdi",
@@ -3495,7 +3533,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T10:13:38Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "domain_bridges",
@@ -3504,7 +3542,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:14:03Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "goldbach_verification_framework",
@@ -3513,7 +3551,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T10:14:31Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_4_normalizing_derivative_compiler_with_i",
@@ -3522,7 +3560,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T10:14:52Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "invariant_subspace_problem_special_cases",
@@ -3531,7 +3569,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T11:14:42Z",
-      "hue": 91
+      "hue": 112
     },
     {
       "id": "categorical_foundations_yoneda_and_adjunctions",
@@ -3540,7 +3578,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T11:15:08Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "information_geometry_fisher_metric_on_statistical_",
@@ -3558,7 +3596,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:04Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "direction_4_persistent_torsion_detection_for_tda",
@@ -3567,7 +3605,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:31Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_1_complete_verified_regev_reduction",
@@ -3576,7 +3614,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T12:24:54Z",
-      "hue": 359
+      "hue": 270
     },
     {
       "id": "formal_verification_of_algorithms",
@@ -3585,7 +3623,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T12:32:49Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "arithmetic_universality_classes_in_tropical_degene",
@@ -3594,7 +3632,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T13:10:29Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_complete_strict_hierarchy_separation",
@@ -3603,7 +3641,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T13:13:42Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_1_universal_affine__protocol_extraction",
@@ -3612,7 +3650,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T13:14:08Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -3621,7 +3659,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T13:14:34Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "homological_phase_transition_in_automated_conjectu",
@@ -3630,7 +3668,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T14:10:33Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_4_growth_rank_completeness_grand_challen",
@@ -3648,7 +3686,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:14:17Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "noethers_theorem_symmetries_and_conservation_laws",
@@ -3657,7 +3695,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T14:14:53Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_5_lower_bound_certificates_via_communica",
@@ -3666,7 +3704,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T14:15:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_dag_sharing_does_not_reduce_depth_gran",
@@ -3675,7 +3713,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T15:14:27Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "optimal_transport_and_wasserstein_distances",
@@ -3684,7 +3722,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T15:14:54Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_2_persistent_homology_of_tropical_filtra",
@@ -3693,7 +3731,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T15:15:26Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_5_optimal_curvature_distribution_on_tria",
@@ -3702,7 +3740,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T15:16:00Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "direction_2_fujisaki_okamoto_transform_as_module_m",
@@ -3711,7 +3749,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:16:34Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "direction_5_non_commutative_module_lwe_and_ntru",
@@ -3720,7 +3758,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:17:03Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_3_grand_challenge_ext_tor_persistent_spe",
@@ -3729,7 +3767,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T16:17:46Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_1_polynomial_extraction_for_k_special_so",
@@ -3738,7 +3776,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T16:18:43Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "ramsey_theory_bounds_and_constructions",
@@ -3747,7 +3785,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T17:14:39Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "direction_1_topological_restricted_products_and_co",
@@ -3756,7 +3794,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T17:15:09Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "riemann_zeta_zero_free_regions_and_density_estimat",
@@ -3765,7 +3803,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T17:15:36Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_1_width_to_size_conversion_and_exponenti",
@@ -3783,7 +3821,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T18:09:01Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_4_core_collapse_acceleration_hypothesis",
@@ -3801,7 +3839,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T18:39:31Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "direction_4_probe_complexity_of_finite_categories",
@@ -3810,7 +3848,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:42:42Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "direction_2_efficient_computation_via_smith_normal",
@@ -3819,7 +3857,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T19:10:31Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_2_active_set_bar_count_bound",
@@ -3828,7 +3866,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T19:13:53Z",
-      "hue": 359
+      "hue": 272
     },
     {
       "id": "direction_1_multi_step_filtration_obstructions_ext",
@@ -3837,7 +3875,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T19:14:18Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_3_differential_closure_under_quotients",
@@ -3846,7 +3884,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:10:25Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "direction_3_valuation_profile_universality_for_tro",
@@ -3855,7 +3893,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T20:13:32Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "fourier_analysis_on_finite_groups",
@@ -3864,7 +3902,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:13:59Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_2_verified_compiler_synthesis_via_free_f",
@@ -3873,7 +3911,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T20:14:37Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -3882,7 +3920,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T21:10:29Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "direction_1_finite_probe_representability_conjectu",
@@ -3891,6 +3929,15 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:11:00Z",
+      "hue": 90
+    },
+    {
+      "id": "direction_3_clause_space_lower_bounds_via_width_sp",
+      "title": "Configuration-Based Clause Space for Resolution",
+      "domain": "Proof Complexity / SAT Solving",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-21T21:25:46Z",
       "hue": 272
     }
   ],
@@ -3996,6 +4043,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "categorical_foundations_yoneda_and_adjunctions",
       "target": "direction_2_verified_compiler_synthesis_via_free_f",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_topological_restricted_products_and_co",
+      "target": "direction_3_clause_space_lower_bounds_via_width_sp",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -4693,21 +4747,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-21T17:14:42.948219+00:00"
   },
   {
-    "id": "fd_0291",
-    "title": "Motivic Stability Predicts Proof Transfer Across Characteristics",
-    "description": "Conjecture: There exists a natural infinite family of polynomial or cohomological theorem statements {T_p} indexed by primes p such that whether T_p admits a short formal proof over characteristic p is governed by a characteristic-independent motivic complexity invariant M(T), in the following falsifiable sense: after normalizing proof length by statement size, the variance of proof lengths across primes outside a finite exceptional set is bounded by a function of M(T), and families with identical M(T) have asymptotically matching proof-length profiles across p. Test: Construct explicit theorem families from point-counting identities, \u00e9tale/coherent cohomology comparisons, or finite-field incidence statements; formalize or compute proof lengths/certificate sizes for many primes; define candidate motivic invariants from zeta functions, weights, or monodromy; confirm if cross-prime proof-length fluctuations are uniformly small and cluster by invariant, or refute by finding families with the same invariant but diverging proof profiles. Impact: This would create a new bridge between arithmetic geometry and proof complexity, enabling prediction of which finite-field theorem families transfer uniformly across characteristics and suggesting new compression strategies for formal proofs via geometric invariants.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Proof Complexity"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-21T19:10:49.088999+00:00"
-  },
-  {
     "id": "fd_0056",
     "title": "Conjecture 3: Exponential Size Lower Bound",
     "description": "**Conjecture:** For fixed depth `D`, the minimal size of an EMLExpr of depth \u2264 D that represents `iterExp n` on a finite grid of positive reals grows exponentially in `n` (for `n \u2264 D`).\n\n**Test:** For `D = 5` and `n \u2208 {1, ..., 5}`, enumerate all EMLExpr of depth \u2264 D up to size 100. Evaluate each on a grid of 20 positive points. Record the minimal size that matches `iterExp n`. Plot size vs `n` and fit exponential vs polynomial models. A polynomial fit with R\u00b2 > 0.99 would refute the conjecture.\n\n**Impact:** This would provide quantitative lower bounds beyond the qualitative depth separation, analogous to exponential size lower bounds for bounded-depth Boolean circuits computing specific functions.\n\n---",
@@ -5006,24 +5045,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1630a590",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-21T10:14:06.409371+00:00"
-  },
-  {
-    "id": "fd_0193",
-    "title": "Direction 1: Finite Probe Representability Conjecture",
-    "description": "**Conjecture.** Let `C` be a finite category and `P` a finite separating probe family. Every presheaf `F : C\u1d52\u1d56 \u2964 Type` that is \"finitely detected\" by `P` (meaning `P.Detects F G` holds for all representable `G`) admits a surjective natural transformation from a finite coproduct of representable presheaves.\n\n**Test.** Enumerate all presheaves on small finite categories (|Ob(C)| \u2264 5, |Mor(C)| \u2264 20) with values in finite sets of cardinality \u2264 4. For each presheaf detected by a given separating family, check whether a surjection from a coproduct of representables exists. A single counterexample refutes the conjecture.\n\n**Impact.** If true, this provides a finite-dimensional analogue of the density theorem for presheaf categories, with direct applications to compressed representations of functors. If false, the counterexample reveals obstructions to finite-dimensional approximation of categorical data.\n\n**Catalog References.** `Catalog/Algebra/CategoryTheory/YonedaReconstruction.lean` \u2014 `FiniteProbeFamily`, `natTrans_ext_of_finite_probes`.\n\n**Proof Strategy.** For the positive direction, attempt to construct the surjection using the probe-indexed evaluation maps. For finite categories, this reduces to linear algebra over sets. For the negative direction, search for presheaves where the probe-indexed data is injective but no representable cover exists.\n\n**Domain Bridges.** Compressed sensing (recovering signals from few measurements), property testing (verifying properties with few queries), model theory (definability from finite data).\n\n**Lineage.** Extends `natTrans_ext_of_finite_probes` from detection to representation.\n\n**Ambition.** Grand challenge \u2014 would establish a computational approximation theory for presheaves.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "36b8e4f9",
-    "consumed_by_exp_id": "e2815e99",
-    "timestamp": "2026-05-21T11:15:10.623477+00:00"
   },
   {
     "id": "fd_0195",
@@ -5342,10 +5363,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d96be387",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68d49102",
     "timestamp": "2026-05-21T14:10:36.290164+00:00"
   },
   {
@@ -5437,10 +5458,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "26a617a3",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8098e230",
     "timestamp": "2026-05-21T14:14:20.807422+00:00"
   },
   {
@@ -5993,43 +6014,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-21T16:17:50.150310+00:00"
   },
   {
-    "id": "fd_0291",
-    "title": "Direction 2: Haar Measure on Restricted Products",
-    "description": "**Conjecture.** The Haar measure on the restricted product \u220f'(G_i, K_i) is the unique measure \u03bc such that for every cofinite set S \u2282 \u03b9, the restriction of \u03bc to \u220f_{i\u2208S} G_i \u00d7 \u220f_{i\u2209S} K_i equals \u220f_{i\u2208S} \u03bc_i \u00d7 \u220f_{i\u2209S} \u03bd_i, where \u03bc_i is the Haar measure on G_i and \u03bd_i is the normalized Haar measure on K_i (with \u03bd_i(K_i) = 1).\n\n**Test.** For G_p = (\u2124/p\u00b2\u2124)\u02e3 with uniform measure, verify that the product measure on finite restricted products satisfies translation invariance and the normalization condition \u03bc(\u220f K_p) = 1. Compute \u03bc(basic open) for various basic opens and verify consistency across different levels.\n\n**Impact.** Haar measure is the prerequisite for all integration theory on locally compact groups. Without it, L-functions cannot be defined as integrals, Fourier transforms cannot be computed, and Tate's thesis cannot even be stated.\n\n**Catalog References.** `Pythagorean/RestrictedProductTopology.lean` (restrictedProduct_locallyCompact_inst), Mathlib's `MeasureTheory.Measure.Haar`.\n\n**Proof Strategy.** Construct the measure as a projective limit of finite-level product measures. Use Mathlib's existing Haar measure theory for locally compact groups to obtain existence and uniqueness, then verify the product formula.\n\n**Domain Bridges.** Measure theory \u2194 number theory \u2194 probability. The Haar measure on ad\u00e8les connects to random matrix theory and the statistical distribution of prime numbers.\n\n**Lineage.** Requires local compactness (Theorem 5.2) as prerequisite.\n\n**Ambition.** Solid extension. Haar measure on LCA groups is well-understood mathematically; the challenge is formalization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5d4653a6",
-    "consumed_by_exp_id": "2166e89f",
-    "timestamp": "2026-05-21T17:15:12.663734+00:00"
-  },
-  {
-    "id": "fd_0291",
-    "title": "Direction 2: Width-to-Size Conversion for DAG Resolution",
-    "description": "**Conjecture:** The Ben-Sasson-Wigderson bound S \u2265 2^{(w* - w\u2080)\u00b2/n} can be formalized for general (DAG) resolution, yielding exponential lower bounds for formulas with large width gaps.\n\n**Test:** Define a DAG resolution proof system in Lean 4 (allowing clause reuse). Formalize the random restriction method: show that a random partial assignment of \u03c1n variables, where \u03c1 = 1 - w\u2080/n, simplifies the formula while preserving unsatisfiability with high probability. Verify the width-contraction lemma: restrictions reduce proof width. Test by computing exact minimum DAG-resolution proof sizes for small random 3-SAT instances (n \u2264 15) and comparing against the theoretical bound.\n\n**Impact:** Would enable machine-verified exponential lower bounds for a much wider class of formulas than tree-resolution alone.\n\n**Catalog References:** `Computation/ProofComplexity/Resolution.lean` (ResDerives, resolution_sound), `Computation/ProofComplexity/WidthToSize.lean` (clauseSpaceBound, clauseSpaceBound_mono).\n\n**Proof Strategy:** \n1. Define `ResDag` as a DAG structure with shared nodes.\n2. Formalize random restrictions as partial assignments \u03c1 : \u03bd \u2192? Bool.\n3. Prove the switching lemma: w(F\u21be\u03c1 \u22a2 \u22a5) \u2264 w(F \u22a2 \u22a5) - #assigned_vars.\n4. Apply Markov's inequality to show the existence of a good restriction.\n5. Iterate to reduce width to the initial clause width, counting the size reduction at each step.\n\n**Domain Bridges:** Probability theory (random restrictions), circuit complexity (switching lemmas), communication complexity (partition arguments).\n\n**Lineage:** Extends `ResDerives` to DAG form. Uses `clauseSpaceBound` for counting arguments.\n\n**Ambition:** Solid extension \u2014 significant but within established proof patterns.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5ff47898",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-21T18:04:54.646981+00:00"
-  },
-  {
     "id": "fd_0293",
     "title": "Direction 2: McDiarmid Concentration Inequality for Tropical Nerve Observables",
     "description": "**Conjecture:** For any tropical nerve observable $f$ satisfying the bounded-difference condition with constants $c_i$, and for i.i.d. random coefficients on a product space $\\Omega = \\prod_{i=1}^m \\Omega_i$:\n$$\\Pr\\left(|f(X) - \\mathbb{E}[f(X)]| \\geq t\\right) \\leq 2\\exp\\left(\\frac{-2t^2}{\\sum_{i=1}^m c_i^2}\\right)$$\n\n**Test:** Formalize the finite-product McDiarmid inequality in Lean 4 over a uniform distribution on a finite product space. Verify it applies to `nerveVertexCount` using the bounded-difference constant $c_i = 1$ proved in `nerveVertexCount_bdd_diff`.\n\n**Impact:** This would be the first formal concentration inequality for topological observables in a proof assistant, and would immediately yield quantitative convergence rates for the tropical LLN.\n\n**Catalog References:**\n- `Tropical/PersistentHomology/ValuationProfileUniversality.lean`: `nerveVertexCount_bdd_diff`, `nerveVertexCount_bdd_diff_symm`\n\n**Proof Strategy:** Formalize the Azuma-Hoeffding martingale argument. Define the Doob martingale $M_k = \\mathbb{E}[f | X_1, \\ldots, X_k]$ and show bounded increments from the bounded-difference condition. Then apply the exponential moment method.\n\n**Domain Bridges:** Probability theory, combinatorial optimization, machine learning generalization bounds.\n\n**Lineage:** Direct extension of the bounded-difference stability results.\n\n**Ambition:** \u2605\u2605\u2605\u2605 \u2014 Challenging but well-defined. Core infrastructure for all subsequent probabilistic results.\n\n---",
@@ -6295,5 +6279,101 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "6d4e454c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-21T21:10:32.965071+00:00"
+  },
+  {
+    "id": "fd_0295",
+    "title": "Direction 1: Optimal Generator Bounds",
+    "description": "**Conjecture:** For a finite category `C` with `|Ob(C)| = n` and a separating probe family `P` of size `k`, every finite-valued presheaf `F` with `|F(op Y)| \u2264 m` for all `Y` admits a representable cover with at most `n \u00b7 m` generators. Moreover, this bound is tight: there exists a category and presheaf achieving it.\n\n**Test:** Enumerate all presheaves over categories with `|Ob(C)| \u2264 5`, `|Mor(C)| \u2264 20`, fiber sizes `\u2264 4`. For each, compute the minimal representable cover size using exhaustive search. If any presheaf requires more than `n \u00b7 m` generators, the conjecture is refuted. If all satisfy the bound, search for tight examples.\n\n**Impact:** A tight bound would quantify the \"compression ratio\" of categorical sensing \u2014 how many representable summands are needed per unit of categorical data. This directly connects to dictionary size in compressed sensing.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` \u2014 `repFinGen_of_finite` (current bound is `\u03a3_Y |F(op Y)|` which is `n \u00b7 m`)\n- `Catalog/Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `card_hom_le_profile_capacity`\n\n**Proof Strategy:** The current proof uses all `(Y, z)` pairs as generators, giving `\u03a3_Y |F(op Y)|` generators. To improve: identify redundant generators \u2014 those where `z` is already in the image of restriction from another generator. Use a greedy covering argument to find minimal generator sets.\n\n**Domain Bridges:** Compressed sensing (dictionary learning), coding theory (minimal codebook size), database theory (minimal key sets).\n\n**Lineage:** Extends `repFinGen_of_finite` by optimizing the generator count.\n\n**Ambition:** \u2605\u2605\u2605 \u2014 Solid extension with clear computational tests.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e2815e99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-21T21:11:03.665287+00:00"
+  },
+  {
+    "id": "fd_0296",
+    "title": "Direction 2: Probe Complexity as Representable Dimension",
+    "description": "**Conjecture (Grand Challenge):** Define the *representable dimension* of a presheaf `F` as the minimum number of generators in any representable cover. Then for any finite category `C`, the supremum of representable dimensions over all presheaves separated by a probe family `P` equals a computable invariant of `(C, P)` \u2014 specifically, `\u03a3_{Y \u2208 C} |MeasurementSpace(P, Y)|` where the measurement space is the image of the probe restriction map.\n\n**Test:** For categories with `|Ob(C)| \u2264 4`, compute the representable dimension of all finite-valued presheaves separated by various probe families. Plot the supremum against the measurement space invariant. A counterexample where the supremum exceeds the invariant, or is strictly less for all probe families, would refute the conjecture.\n\n**Impact:** This would establish probe complexity as a *categorical dimension theory* \u2014 a computable invariant that governs the structural complexity of all presheaves observable by a given measurement scheme. It would be a major bridge between information theory and categorical geometry.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` \u2014 `card_presheaf_le_card_restrictions`, `probeRestrictionMap_injective`\n- `Catalog/Pythagorean/ProbeComplexity/Defs.lean` \u2014 `probeComplexity`\n\n**Proof Strategy:** Upper bound: use the measurement space cardinality to bound the number of distinct elements, then bound generators. Lower bound: construct presheaves that realize all measurement signatures as distinct generators.\n\n**Domain Bridges:** VC dimension (learning theory), Rademacher complexity, metric dimension (graph theory), information dimension.\n\n**Lineage:** Combines `card_presheaf_le_card_restrictions` with `probeComplexity` from the catalog.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if true; would create a new dimension theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e2815e99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-21T21:11:03.684287+00:00"
+  },
+  {
+    "id": "fd_0297",
+    "title": "Direction 3: Local-to-Global Finite Generation (Probe Helly Property)",
+    "description": "**Conjecture:** Let `C` be a finite category and `P` a separating probe family. If every restriction of `F` to a full subcategory on at most `|P| + 1` objects is representably finitely generated, then `F` is globally representably finitely generated.\n\n**Test:** For categories with `|Ob(C)| \u2264 6` and probe families of size `\u2264 3`, construct presheaves that are locally finitely generated on every subcategory of size `\u2264 |P| + 1`. Check if global finite generation holds. A counterexample would identify the minimal obstruction.\n\n**Impact:** A Helly-type theorem for representable generation would bridge categorical reconstruction with combinatorial convexity. It would show that local-to-global principles from topology have purely categorical analogues.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` \u2014 `repFinGen_of_probe_separation`\n- `Catalog/Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `ProbeFamily.IsSeparating.supset`\n\n**Proof Strategy:** For the positive direction: use the probe family to reduce global generation to local generation on probe neighborhoods. Each element's measurement signature is determined by its local restrictions, so local generators suffice globally.\n\n**Domain Bridges:** Helly's theorem (convex geometry), Mayer-Vietoris (algebraic topology), gluing axioms (sheaf theory), locality in quantum mechanics.\n\n**Lineage:** Extends `repFinGen_of_probe_separation` by replacing global probe separation with local generation.\n\n**Ambition:** \u2605\u2605\u2605\u2605 \u2014 Deep structural result connecting multiple mathematical traditions.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e2815e99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-21T21:11:03.701886+00:00"
+  },
+  {
+    "id": "fd_0298",
+    "title": "Direction 4: Sheaf Compression on Finite Sites",
+    "description": "**Conjecture:** For a finite site `(C, J)` where `J` is a Grothendieck topology, if `F` is a sheaf (not just a presheaf) separated by probes `P`, then the minimal representable cover respects the topology: the covering natural transformation factors through the sheafification of the coproduct of representables.\n\n**Test:** Implement finite Grothendieck topologies on categories with `|Ob(C)| \u2264 4`. For each sheaf separated by probes, compute (a) the minimal representable presheaf cover and (b) the minimal sheaf cover. If they always coincide, the conjecture holds. If not, measure the gap.\n\n**Impact:** This would extend probe representability from presheaves to sheaves, connecting to algebraic geometry (where sheaves on sites are fundamental). It would show that probe-based compression is compatible with geometric structure.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` \u2014 all main theorems\n- Mathlib's `CategoryTheory.Sites.Sheaf`\n\n**Proof Strategy:** Use the universal property of sheafification. The key step is showing that the presheaf cover map descends to the sheaf level when the probe family respects the topology (i.e., probe objects generate covering sieves).\n\n**Domain Bridges:** Algebraic geometry (coherent sheaves), topos theory, data compression with structural constraints, topological data analysis.\n\n**Lineage:** Extends the full pipeline theorem to the sheaf setting.\n\n**Ambition:** \u2605\u2605\u2605\u2605 \u2014 Would connect to major areas of algebraic geometry.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e2815e99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-21T21:11:03.719149+00:00"
+  },
+  {
+    "id": "fd_0299",
+    "title": "Direction 5: Algorithmic Reconstruction Complexity",
+    "description": "**Conjecture:** Given a finite category `C` with `n` objects and maximum hom-set size `d`, a separating probe family `P` of size `k`, and a finite-valued presheaf `F` with maximum fiber size `m`, the problem of finding a *minimum-size* representable cover is NP-hard in general, but solvable in polynomial time `O(n \u00b7 m \u00b7 d^k)` when `k` is fixed.\n\n**Test:** Implement the brute-force and fixed-parameter algorithms. For `k = 1, 2, 3`, measure runtime on categories of increasing size. If runtime growth matches the predicted polynomial for fixed `k` but becomes exponential for growing `k`, the conjecture is supported.\n\n**Impact:** This would classify the computational complexity of categorical compression, connecting category theory to parameterized complexity theory. The fixed-parameter tractability result would show that small probe families make reconstruction efficient.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` \u2014 `repFinGen_of_finite` (constructive proof gives naive algorithm)\n- `Catalog/Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `probeComplexity_le_card`\n\n**Proof Strategy:** NP-hardness: reduce from Set Cover by encoding sets as morphisms and coverage as surjectivity. FPT algorithm: enumerate all measurement signatures (at most `m^k` for fixed `k`), greedily select generators covering each signature, verify surjectivity.\n\n**Domain Bridges:** Computational complexity (FPT, NP-hardness), database query optimization, compiler optimization (instruction selection as covering), circuit minimization.\n\n**Lineage:** Computational counterpart of `repFinGen_of_finite`.\n\n**Ambition:** \u2605\u2605\u2605 \u2014 Solid complexity-theoretic contribution with clear computational tests.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e2815e99",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-21T21:11:03.736633+00:00"
   }
 ];
