@@ -1,160 +1,116 @@
-/-
-Copyright (c) 2025. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
--/
 import Mathlib
 
 /-!
-# Proof Compression: Definitions
+# Proof Compression Phase Transitions: Core Definitions
 
-Core definitions for the theory of proof compression phase transitions.
-We define abstract proof systems, normalizers, search trees, and the key
-measures of proof complexity (raw length, normalized length, shortest proofs).
+This module defines the mathematical framework for studying proof compression
+thresholds — the phenomenon where automation without intermediate lemma invention
+catastrophically fails beyond a critical complexity threshold.
 
-## Overview
+## Main definitions
 
-The central objects are:
-- `ProofSystem`: an abstract proof calculus with a notion of proof length
-- `Normalizer`: a deterministic transformation on proofs (modeling cut-elimination,
-  β-reduction, or any canonical normalization procedure)
-- `SearchTree`: a finite branching tree modeling explicit witness search
-- `shortestRaw`, `shortestNorm`: infimum-based measures of proof complexity
+* `CompressionInstance` — a theorem family with semantic complexity and two cost measures
+* `HasAsymptoticGap` — the compression ratio is unbounded along a family
+* `HasThreshold` — there is a critical complexity below which automation is within
+  constant factor, and above which it diverges
+* `Phase` — classification of theorem instances by predicted proof regime
+* `subsetExpansionInstance` — the canonical example: powerset expansion
+* `augmentedSubsetExpansion` — the same family after adding an inductive basis lemma
 
-The key properties connecting these objects are:
-- **Search extraction**: normalized proofs encode explicit search trees
-- **Size dominance**: search tree size is bounded by normalized proof length
-- **Search hardness**: certain families require exponentially large search trees
+## Mathematical context
+
+Human proofs with reusable lemmas behave like DAG circuits with shared subcomputations;
+naive automation behaves like tree-shaped formulas without sharing. The powerset expansion
+identity `∏ (1 + f_i) = ∑_{S ⊆ [n]} ∏_{i ∈ S} f_i` is the canonical example:
+the inductive proof costs O(n), while naive expansion produces 2^n terms.
 -/
 
-noncomputable section
+/-- A compression instance models a family of theorems equipped with:
+- `semanticComplexity`: a measure of structural complexity (e.g., number of variables)
+- `humanCost`: proof cost using structured reasoning with reusable lemmas
+- `autoCost`: proof cost using naive automation without lemma invention -/
+structure CompressionInstance where
+  theorem_id : Type
+  semanticComplexity : theorem_id → ℕ
+  humanCost : theorem_id → ℕ
+  autoCost : theorem_id → ℕ
 
-open Filter Finset
+/-- The compression ratio at a theorem instance, measuring how much more expensive
+automation is relative to structured human proofs. -/
+def compressionRatio (I : CompressionInstance) (t : I.theorem_id) : ℚ :=
+  (I.autoCost t : ℚ) / max 1 (I.humanCost t : ℚ)
 
-namespace ProofCompression
+/-- A theorem family `T : ℕ → theorem_id` has an asymptotic gap if the compression
+ratio is unbounded: for any constant K, there exists an instance where automation
+costs more than K times the structured proof cost. -/
+def HasAsymptoticGap (I : CompressionInstance) (T : ℕ → I.theorem_id) : Prop :=
+  ∀ K : ℕ, ∃ n : ℕ, K * I.humanCost (T n) < I.autoCost (T n)
 
-/-! ## Abstract Proof Systems -/
+/-- A compression instance has a threshold at complexity `c` if:
+1. Below threshold: automation cost is within constant factor of human cost
+2. Above threshold: no constant factor suffices -/
+def HasThreshold (I : CompressionInstance) (c : ℕ) : Prop :=
+  (∃ C : ℕ, ∀ t, I.semanticComplexity t ≤ c → I.autoCost t ≤ C * I.humanCost t) ∧
+  (∀ K : ℕ, ∃ t, c < I.semanticComplexity t ∧ K * I.humanCost t < I.autoCost t)
 
-/-- An abstract sentence in a formal language, indexed by a natural number.
-    In practice, this represents a formula in bounded arithmetic or a
-    total-search principle parameterized by size. -/
-structure Sentence where
-  /-- Parameter encoding the sentence -/
-  idx : ℕ
-  deriving DecidableEq, Inhabited
+/-- Phase classification for the algorithmic component.
+Theorem instances are classified as tractable (automation suffices),
+transitional (near the threshold), or intractable (lemma invention required). -/
+inductive Phase where
+  | tractable : Phase
+  | transitional : Phase
+  | intractable : Phase
+  deriving DecidableEq, Repr
 
-/-- An abstract proof system consists of:
-    - A type of proofs for each sentence
-    - A length function measuring proof size
-    - A witness that at least one proof exists for each sentence in our family
+/-- Numerical index of a phase, for monotonicity statements. -/
+def Phase.index : Phase → ℕ
+  | .tractable => 0
+  | .transitional => 1
+  | .intractable => 2
 
-    This captures any sound proof calculus: sequent calculus, natural deduction,
-    Frege systems, bounded-depth proof systems, etc. -/
-structure ProofSystem where
-  /-- The type of proofs for a given sentence -/
-  Proof : Sentence → Type
-  /-- The length (size) of a proof, measured in symbols, nodes, or lines -/
-  proofLength : {φ : Sentence} → Proof φ → ℕ
+/-- Complexity scoring function: identity on ℕ (semantic complexity = parameter). -/
+def complexityScore (n : ℕ) : ℕ := n
 
-/-- A deterministic normalizer transforms proofs into a canonical form.
-    This models cut-elimination, β-reduction, Herbrand expansion,
-    or any canonical proof transformation procedure.
+/-- Phase prediction given a threshold parameter.
+Below threshold: tractable. Up to 2× threshold: transitional. Above: intractable. -/
+def predictedPhase (threshold : ℕ) (n : ℕ) : Phase :=
+  if n ≤ threshold then Phase.tractable
+  else if n ≤ 2 * threshold then Phase.transitional
+  else Phase.intractable
 
-    Key property: normalization preserves the proven sentence
-    (captured by the type signature: `Proof φ → Proof φ`). -/
-structure Normalizer (P : ProofSystem) where
-  /-- The normalization function -/
-  normalize : {φ : Sentence} → P.Proof φ → P.Proof φ
+/-- The subset expansion compression instance.
+Models the theorem family `∏ᵢ (1 + fᵢ) = ∑_{S} ∏_{i∈S} fᵢ` where:
+- semantic complexity is the number of factors n
+- human cost is n + 1 (one induction step per element)
+- automation cost is 2^n (one term per subset in the powerset expansion) -/
+def subsetExpansionInstance : CompressionInstance where
+  theorem_id := ℕ
+  semanticComplexity := id
+  humanCost := fun n => n + 1
+  autoCost := fun n => 2 ^ n
 
-/-! ## Search Trees -/
+/-- The augmented subset expansion instance, modeling automation after adding
+the key inductive lemma `∏ (1 + f_i) = ∑ ∏ f_j` as a reusable basis lemma.
+With this lemma, each step reduces to one application, giving linear cost. -/
+def augmentedSubsetExpansion : CompressionInstance where
+  theorem_id := ℕ
+  semanticComplexity := id
+  humanCost := fun n => n + 1
+  autoCost := fun n => n + 1
 
-/-- A search tree models the explicit witness-finding computation that
-    a normalized proof must encode when proving a `Π₂` total-search statement.
+/-- A second compression instance modeling telescoping/geometric sum identities.
+The family `(x-1) * ∑ x^i = x^n - 1`:
+- human cost is linear (one induction step per n)
+- automation cost models naive expansion of the product-sum -/
+def telescopingInstance : CompressionInstance where
+  theorem_id := ℕ
+  semanticComplexity := id
+  humanCost := fun n => n + 1
+  autoCost := fun n => n * n + 1
 
-    In the normalized form of a proof of `∀x ≤ t. ∃y ≤ s. R(x,y)`,
-    the proof must contain an explicit strategy for finding `y` given `x`.
-    This strategy forms a tree: at each node, the proof branches on
-    possible inputs and provides witness computations at leaves. -/
-structure SearchTree where
-  /-- Total number of nodes in the search tree -/
-  size : ℕ
-  /-- Maximum depth (longest root-to-leaf path) -/
-  depth : ℕ
-  /-- Branching factor (maximum children per internal node) -/
-  branchingFactor : ℕ
-
-/-! ## Proof Complexity Measures -/
-
-/-- The shortest raw (un-normalized) proof length for a sentence.
-    This is `sInf` of the set of all proof lengths. -/
-def shortestRaw (P : ProofSystem) (φ : Sentence) : ℕ :=
-  sInf {ℓ | ∃ p : P.Proof φ, P.proofLength p = ℓ}
-
-/-- The shortest normalized proof length for a sentence.
-    This is the infimum over all proofs of the length of their normalization.
-    Note: we minimize over all raw proofs `p` and take the length of `normalize p`. -/
-def shortestNorm (P : ProofSystem) (N : Normalizer P) (φ : Sentence) : ℕ :=
-  sInf {ℓ | ∃ p : P.Proof φ, P.proofLength (N.normalize p) = ℓ}
-
-/-- The proof distortion ratio: how much normalization inflates proof length.
-    When this grows superpolynomially, we have a phase transition. -/
-def proofDistortion (P : ProofSystem) (N : Normalizer P) (φ : Sentence) : ℕ :=
-  shortestNorm P N φ
-
-/-! ## Search Complexity -/
-
-/-- The required search size for a sentence: the minimum size of any
-    search tree that correctly solves the witness-finding problem
-    encoded by the sentence. -/
-def requiredSearchSize
-    (searchLowerBound : ℕ) : Prop :=
-  ∀ (τ : SearchTree), τ.size ≥ searchLowerBound
-
-/-! ## Encoding Properties -/
-
-/-- Property that a normalized proof encodes an explicit search tree.
-    This is the key structural assumption: after normalization, the proof
-    must contain an explicit witness-search strategy, and that strategy
-    can be extracted as a `SearchTree`.
-
-    This property holds in proof calculi where:
-    - Cuts are eliminated (sequent calculus normalization)
-    - β-redexes are reduced (λ-calculus normalization)
-    - Herbrand expansion is performed (first-order logic)
-    In all these cases, normalized proofs of `∀∃` statements
-    contain explicit witness terms. -/
-structure SearchExtraction (P : ProofSystem) (N : Normalizer P) (φ : Sentence) where
-  /-- Every normalized proof yields a search tree -/
-  extract : P.Proof φ → SearchTree
-  /-- The search tree size is bounded by the normalized proof length -/
-  sizeBound : ∀ p : P.Proof φ, (extract p).size ≤ P.proofLength (N.normalize p)
-  /-- The search tree is a valid solution (its size is at least the required minimum) -/
-  searchValid : ∀ p : P.Proof φ, ∀ lb : ℕ,
-    (∀ τ : SearchTree, τ.size ≥ lb) → (extract p).size ≥ lb
-
-/-- A family of sentences parameterized by natural numbers.
-    E.g., `φ n` could be the pigeonhole principle for `n+1` pigeons in `n` holes,
-    or a bounded local-search principle on graphs of size `n`. -/
-def SentenceFamily := ℕ → Sentence
-
-/-- A sentence family has polynomial raw proofs if there exist constants
-    `C, k` such that the shortest raw proof of `φ n` has length ≤ `C * n^k`. -/
-def HasPolyRawProofs (P : ProofSystem) (φ : SentenceFamily) : Prop :=
-  ∃ C k : ℕ, 0 < C ∧ ∀ n, shortestRaw P (φ n) ≤ C * n ^ k
-
-/-- A sentence family has exponential normalization blowup if there exist
-    `b ≥ 2` and `a ≥ 1` such that for infinitely many `n`,
-    the shortest normalized proof has length ≥ `b^(n^a)`. -/
-def HasExpNormBlowup (P : ProofSystem) (N : Normalizer P)
-    (φ : SentenceFamily) : Prop :=
-  ∃ b a : ℕ, 2 ≤ b ∧ 1 ≤ a ∧
-    ∀ n, b ^ (n ^ a) ≤ shortestNorm P N (φ n)
-
-/-- A sentence family exhibits phase separation: polynomial raw proofs
-    coexist with exponential normalized proofs. -/
-def ExhibitsPhaseTransition (P : ProofSystem) (N : Normalizer P)
-    (φ : SentenceFamily) : Prop :=
-  HasPolyRawProofs P φ ∧ HasExpNormBlowup P N φ
-
-end ProofCompression
-
-end
+/-- Augmented telescoping instance after adding the telescoping lemma as a basis. -/
+def augmentedTelescopingInstance : CompressionInstance where
+  theorem_id := ℕ
+  semanticComplexity := id
+  humanCost := fun n => n + 1
+  autoCost := fun n => n + 1
