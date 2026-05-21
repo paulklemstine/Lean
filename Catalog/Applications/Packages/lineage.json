@@ -8,6 +8,15 @@
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
       "hue": 90
+    },
+    {
+      "id": "fixed_point_theorems_brouwer_banach_schauder",
+      "title": "Verified Fixed-Point Theory: From Banach Contraction to Certified Nonlinear Existence",
+      "domain": "Nonlinear Analysis / Fixed-Point Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-21T02:13:06Z",
+      "hue": 91
     }
   ],
   "edges": [],
