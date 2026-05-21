@@ -390,6 +390,11 @@ class FutureDirectionsManager:
                 "source_exp_id": d.source_exp_id,
                 "consumed_by_exp_id": d.consumed_by_exp_id,
                 "timestamp": d.timestamp,
+                "catalog_references": d.catalog_references,
+                "ambition_level": d.ambition_level,
+                "lineage_refs": d.lineage_refs,
+                "domain_bridges": d.domain_bridges,
+                "proof_strategy": d.proof_strategy,
             })
         display.sort(key=lambda x: x["priority_score"], reverse=True)
         snapshot_path.write_text(
@@ -481,12 +486,12 @@ class FutureDirectionsManager:
 
                 fd = FutureDirection(
                     id=f"fd_{len(self._directions):04d}",
-                    title=title[:120],
-                    description=description[:1200],
+                    title=title,
+                    description=description,
                     source_exp_id=source_exp_id,
                     source_path=source_path,
                     domains=self._infer_domains(title + " " + description),
-                    proof_strategy=proof_strategy[:500] if proof_strategy else "",
+                    proof_strategy=proof_strategy,
                     depth_estimate=3,
                     priority_score=0.80,  # Higher default for structured format
                     catalog_references=catalog_references,
@@ -509,7 +514,7 @@ class FutureDirectionsManager:
                     end_match = re.search(r'\n\n(?!\s)', remaining)
                     desc = remaining[:end_match.start()].strip() if end_match else remaining.strip()
 
-                desc = desc[:800]
+                desc = desc[:3000]
                 if len(desc) > 30:
                     fd = FutureDirection(
                         id=f"fd_{len(self._directions):04d}",
@@ -539,8 +544,8 @@ class FutureDirectionsManager:
                 ):
                     fd = FutureDirection(
                         id=f"fd_{len(self._directions):04d}",
-                        title=header[:80],
-                        description=body[:800],
+                        title=header[:200],
+                        description=body[:3000],
                         source_exp_id=source_exp_id,
                         source_path=source_path,
                         domains=self._infer_domains(header + " " + body),
@@ -560,8 +565,8 @@ class FutureDirectionsManager:
                 ):
                     fd = FutureDirection(
                         id=f"fd_{len(self._directions):04d}",
-                        title=item[:60].rstrip() + "...",
-                        description=item[:800],
+                        title=item[:200].rstrip() + ("..." if len(item) > 200 else ""),
+                        description=item[:3000],
                         source_exp_id=source_exp_id,
                         source_path=source_path,
                         domains=self._infer_domains(item),
