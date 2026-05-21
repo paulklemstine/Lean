@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1667 of the highest-quality
+A curated collection of 1668 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1667
+Total files: 1668
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -15,6 +15,7 @@ import FINAL.Algebra.ArbitrageProfit
 import FINAL.Algebra.ArithmeticDarkMatter
 import FINAL.Algebra.AttackComposition
 import FINAL.Algebra.AverageCriterion
+import FINAL.Algebra.Barrier
 import FINAL.Algebra.Basic
 import FINAL.Algebra.BayesOptimal
 import FINAL.Algebra.Berggren
