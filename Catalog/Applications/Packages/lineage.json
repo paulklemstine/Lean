@@ -7,7 +7,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -52,7 +52,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T04:04:01Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "tropical_convexity_and_linear_programming",
@@ -61,7 +61,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "arithmetic_resonance_in_neural_proof_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "collatz_stopping_times_density_analysis",
@@ -97,7 +97,16 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T05:58:00Z",
-      "hue": 280
+      "hue": 270
+    },
+    {
+      "id": "random_graphs_erds_rnyi_threshold_phenomena",
+      "title": "Formal Theory of Threshold Phenomena in Erdős–Rényi Random Graphs",
+      "domain": "Algebra / Probabilistic Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-21T05:58:35Z",
+      "hue": 92
     }
   ],
   "edges": [],
