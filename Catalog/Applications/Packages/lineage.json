@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -52,7 +52,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T04:04:01Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "tropical_convexity_and_linear_programming",
@@ -61,7 +61,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "arithmetic_resonance_in_neural_proof_search",
@@ -70,7 +70,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "collatz_stopping_times_density_analysis",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:41Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -97,7 +97,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T05:58:00Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
@@ -106,7 +106,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:58:35Z",
-      "hue": 90
+      "hue": 101
     },
     {
       "id": "direction_1_kan_composition_and_groupoid_structure",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:59:07Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "direction_2_path_space_cardinality_invariants_for_",
@@ -124,7 +124,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:10:21Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_differential_closure_and_transseries_f",
@@ -133,7 +133,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T07:13:37Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "proof_compression_phase_transition_in_formal_mathe",
@@ -151,7 +151,16 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T07:18:18Z",
-      "hue": 91
+      "hue": 90
+    },
+    {
+      "id": "quantum_information_no_cloning_and_teleportation",
+      "title": "Quantum Information Rigidity: No-Cloning, Teleportation, and Monogamy",
+      "domain": "Quantum Information Theory / Mathematical Physics",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-21T08:10:20Z",
+      "hue": 89
     }
   ],
   "edges": [
