@@ -1,4 +1,4 @@
-import Speculative.HardyHierarchy.Defs
+import MachineLearning.HardyHierarchy.Defs
 
 /-!
 # Hardy Field Hierarchy — Main Theorems
