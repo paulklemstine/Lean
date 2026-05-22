@@ -94,7 +94,7 @@
     "sorry_count": 0,
     "theorem_count": 355,
     "files_integrated": 0,
-    "error_message": null,
+    "error_message": "Extraction failed: There is no current event loop in thread 'MainThread'.",
     "source_exp_ids": [
       "0502ee5d"
     ]
