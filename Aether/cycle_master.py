@@ -292,6 +292,7 @@ class CycleMaster:
             use_ollama=_pi_cfg.get("use_ollama", False),
             ollama_base_url=_pi_cfg.get("ollama_base_url"),
             ollama_model=_pi_cfg.get("ollama_model"),
+            ollama_cloud=_pi_cfg.get("ollama_cloud", {}),
         ) if self.global_settings.get("pi_agent_enabled", True) else None
 
         self.prompt_engine = PromptEngine(config.get("prompts", {}))
@@ -1509,6 +1510,7 @@ async def main():
     parser.add_argument("--dry-run", action="store_true", help="Generate but do not dispatch")
     parser.add_argument("--parallel", action="store_true", help="Dispatch up to 10 jobs concurrently")
     parser.add_argument("--max-jobs", type=int, default=10, help="Max concurrent Aristotle jobs (default: 10)")
+    parser.add_argument("--ollama-cloud", action="store_true", help="Enable Ollama Cloud as fallback when Pollinations is depleted")
 
     args = parser.parse_args()
 
@@ -1521,6 +1523,10 @@ async def main():
     # Override paths to workspace
     config["catalog"] = config.get("catalog", {})
     config["catalog"]["root_dir"] = "../Catalog"
+
+    # Enable Ollama Cloud fallback if CLI flag is set
+    if args.ollama_cloud:
+        config.setdefault("pi_agent", {}).setdefault("ollama_cloud", {})["enabled"] = True
 
     master = CycleMaster(
         config=config,

@@ -176,7 +176,7 @@ class ArxivMiner:
             print(f"[ArXiv] Pi-Agent call failed: {e}")
             return None
 
-        if not raw or raw.startswith(("[API_ERROR", "[OLLAMA_ERROR", "[API_TIMEOUT")):
+        if not raw or raw.startswith(("[API_ERROR", "[OLLAMA_ERROR", "[API_TIMEOUT", "[OLLAMA_CLOUD_ERROR", "[OLLAMA_CLOUD_TIMEOUT")):
             print(f"[ArXiv] Pi-Agent returned error: {raw[:100]}")
             return None
 

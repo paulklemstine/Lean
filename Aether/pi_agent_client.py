@@ -419,6 +419,7 @@ class PiAgentClient:
         use_ollama: bool = False,
         ollama_base_url: Optional[str] = None,
         ollama_model: Optional[str] = None,
+        ollama_cloud: Optional[Dict[str, Any]] = None,
     ):
         self.model = model
         self.memory = memory
@@ -428,6 +429,14 @@ class PiAgentClient:
         self.use_ollama = use_ollama
         self.ollama_base_url = ollama_base_url or self.OLLAMA_BASE_URL
         self.ollama_model = ollama_model or model
+
+        # Ollama Cloud fallback configuration
+        _ocr = ollama_cloud or {}
+        self.ollama_cloud_enabled: bool = bool(_ocr.get("enabled", False))
+        self.ollama_cloud_api_key: str = os.getenv(_ocr.get("api_key_env", "OLLAMA_API_KEY"), "")
+        self.ollama_cloud_model: str = _ocr.get("model", "gpt-oss:120b-cloud")
+        self.ollama_cloud_base_url: str = _ocr.get("base_url", "https://ollama.com").rstrip("/")
+        self.ollama_cloud_timeout: int = int(_ocr.get("timeout", 300))
         # Use max timeout for client connection, use per-request timeouts for operations
         self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=300.0, write=30.0, pool=30.0))
         default_state_path = Path(__file__).parent / ".aether_workspace" / "pollinations_pollen_state.json"
@@ -447,12 +456,45 @@ class PiAgentClient:
             self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
 
     def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Dispatch LLM call to Pollinations or local Ollama based on use_ollama flag."""
+        """Dispatch LLM call through 3-tier fallback chain.
+
+        Tier 1: Pollinations (cloud, free, pollen-limited)
+        Tier 2: Ollama Cloud (paid, requires OLLAMA_API_KEY)
+        Tier 3: Local Ollama (self-hosted, always available if running)
+
+        When use_ollama=True, skip directly to Tier 3.
+        When ollama_cloud is enabled, Pollinations 402/429 triggers immediate
+        fallback instead of sleeping until reset.
+        """
+        # If user explicitly wants local Ollama, go straight there
         if self.use_ollama:
             return self._call_ollama_local(system, user, timeout=timeout)
-        return self._call_pollinations(system, user, timeout=timeout)
 
-    def _call_pollinations(self, system: str, user: str, timeout: Optional[int] = None) -> str:
+        # Tier 1: Pollinations
+        skip_wait = self.ollama_cloud_enabled
+        result = self._call_pollinations(system, user, timeout=timeout,
+                                         skip_wait_on_depletion=skip_wait)
+
+        # If Pollinations succeeded, return immediately
+        if not result.startswith(("[API_ERROR", "[API_TIMEOUT")):
+            return result
+
+        # Tier 2: Ollama Cloud (only if enabled and configured)
+        if self.ollama_cloud_enabled and self.ollama_cloud_api_key:
+            print(f"[Pi-Agent] Pollinations failed ({result[:80]}), falling back to Ollama Cloud")
+            cloud_result = self._call_ollama_cloud(system, user, timeout=timeout)
+            if not cloud_result.startswith(("[OLLAMA_CLOUD_ERROR", "[OLLAMA_CLOUD_TIMEOUT")):
+                return cloud_result
+            print(f"[Pi-Agent] Ollama Cloud also failed ({cloud_result[:80]})")
+        elif not self.ollama_cloud_enabled:
+            # No fallback configured — return the Pollinations error as-is
+            return result
+
+        # Tier 3: Local Ollama
+        print("[Pi-Agent] Falling back to local Ollama")
+        return self._call_ollama_local(system, user, timeout=timeout)
+
+    def _call_pollinations(self, system: str, user: str, timeout: Optional[int] = None, skip_wait_on_depletion: bool = False) -> str:
         """Call the Pollinations cloud API.
 
         On 402 (payment required / pollen depleted), waits until the next
@@ -520,6 +562,9 @@ class PiAgentClient:
                     # Pollen depleted — poll every 5 min until it's back
                     # Pollen resets at the top of the hour, we wait until :10
                     self.pollen_gate.mark_depleted_from_response(response)
+                    if skip_wait_on_depletion:
+                        print("[Pi-Agent] Pollen depleted (402) — skipping wait, falling through to fallback")
+                        return "[API_ERROR: Pollen depleted (402) — fallback requested]"
                     wait_until = self.pollen_gate._next_hour_reset(time.time())
                     reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))
                     wait_minutes = (wait_until - time.time()) / 60
@@ -560,6 +605,9 @@ class PiAgentClient:
                 if e.response.status_code in (402, 429):
                     # Already handled above, but catch if raise_for_status hits first
                     self.pollen_gate.mark_depleted_from_response(e.response)
+                    if skip_wait_on_depletion:
+                        print("[Pi-Agent] Pollen depleted (402) — skipping wait, falling through to fallback")
+                        return "[API_ERROR: Pollen depleted (402) — fallback requested]"
                     wait_until = self.pollen_gate._next_hour_reset(time.time())
                     reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))
                     wait_minutes = (wait_until - time.time()) / 60
@@ -664,6 +712,59 @@ class PiAgentClient:
                 err_msg += f" - {e.response.text}"
             print(f"[Pi-Agent] ← Ollama exception: {type(e).__name__}: {err_msg}")
             return f"[OLLAMA_ERROR: {err_msg}]"
+
+    def _call_ollama_cloud(self, system: str, user: str, timeout: Optional[int] = None) -> str:
+        """Call Ollama Cloud API as a fallback when Pollinations is depleted.
+
+        Uses the same OpenAI-compatible /v1/chat/completions endpoint as local
+        Ollama, but at the Ollama Cloud host with Bearer auth.
+        """
+        if not self.ollama_cloud_enabled or not self.ollama_cloud_api_key:
+            return "[OLLAMA_CLOUD_ERROR: Ollama Cloud not configured or API key missing]"
+
+        request_timeout = timeout or self.ollama_cloud_timeout
+        model = self.ollama_cloud_model
+        url = f"{self.ollama_cloud_base_url}/v1/chat/completions"
+        print(f"[Pi-Agent] → calling Ollama Cloud (model={model}, timeout={request_timeout}s)")
+
+        headers = {
+            "Authorization": f"Bearer {self.ollama_cloud_api_key}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user}
+            ],
+            "temperature": 0.85,
+            "top_p": 0.92,
+        }
+
+        try:
+            response = self.client.post(
+                url,
+                headers=headers,
+                json=payload,
+                timeout=request_timeout,
+            )
+            response.raise_for_status()
+            data = response.json()
+            content = data["choices"][0]["message"]["content"]
+
+            response_preview = content[:500].replace('\n', ' ')
+            print(f"[Pi-Agent] ← Ollama Cloud response ({len(content)} chars)")
+            print(f"[Pi-Agent]   {response_preview}...")
+            return content
+        except httpx.TimeoutException:
+            print(f"[Pi-Agent] ← Ollama Cloud TIMEOUT after {request_timeout}s")
+            return f"[OLLAMA_CLOUD_TIMEOUT: Request timed out after {request_timeout}s]"
+        except Exception as e:
+            err_msg = str(e)
+            if hasattr(e, 'response') and e.response:
+                err_msg += f" - {e.response.text}"
+            print(f"[Pi-Agent] ← Ollama Cloud exception: {type(e).__name__}: {err_msg}")
+            return f"[OLLAMA_CLOUD_ERROR: {err_msg}]"
 
     def wait_for_pollinations_pollen(
         self,
