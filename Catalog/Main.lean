@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1380 of the highest-quality
+A curated collection of 1385 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1380
+Total files: 1385
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -312,6 +312,7 @@ import FINAL.Bridges.LawvereEMLMetricSemantics
 import FINAL.Bridges.LawvereThermodynamicGalois
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
+import FINAL.Bridges.LocalizationGeneralization
 import FINAL.Bridges.LogSumExpVariational
 import FINAL.Bridges.Logic
 import FINAL.Bridges.LongestCommonValuedPrefix
@@ -327,6 +328,7 @@ import FINAL.Bridges.Minimality
 import FINAL.Bridges.ModularScatteringDuality
 import FINAL.Bridges.MoonshineCodingTheory
 import FINAL.Bridges.MorseInequalities
+import FINAL.Bridges.MultiClassCertificationBridge
 import FINAL.Bridges.Network
 import FINAL.Bridges.NeuralBirkhoffDecomposition
 import FINAL.Bridges.NeuralProofMining
@@ -340,6 +342,7 @@ import FINAL.Bridges.OperadicRealizationDuality
 import FINAL.Bridges.OperadicSemiringSemantics
 import FINAL.Bridges.OperadicTropicalization
 import FINAL.Bridges.OperadicUltrametricCompression
+import FINAL.Bridges.Optimization
 import FINAL.Bridges.OracleCobhamInvariance
 import FINAL.Bridges.OracleTraceUltrametricEntropy
 import FINAL.Bridges.OrderedAdditiveAggregation
@@ -394,6 +397,7 @@ import FINAL.Bridges.SpectralApplications
 import FINAL.Bridges.SpectralCrypto
 import FINAL.Bridges.SpectralProofSpace
 import FINAL.Bridges.SpectralRealization
+import FINAL.Bridges.SpectralReciprocity
 import FINAL.Bridges.StabilizerGaloisConcatenation
 import FINAL.Bridges.StoneChuClosureDuality
 import FINAL.Bridges.StoneDualityMLAdvanced
@@ -478,6 +482,7 @@ import FINAL.Bridges.TropicalRadonDuality
 import FINAL.Bridges.TropicalRadonGraphDuality
 import FINAL.Bridges.TropicalRateDistortion
 import FINAL.Bridges.TropicalRateDistortionExact
+import FINAL.Bridges.TropicalReLUDepthSeparation
 import FINAL.Bridges.TropicalResiduationRealization
 import FINAL.Bridges.TropicalResiduationTrapdoorDuality
 import FINAL.Bridges.TropicalSatake

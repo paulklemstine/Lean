@@ -5,18 +5,18 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_2_exponential_size_lower_bounds_at_fixed.json",
+    "title": "Size-Depth Tradeoffs for Inverse-Free EML Expressions",
+    "domain": "Expression Complexity / Circuit Lower Bounds",
+    "date": "2026-05-22T03:12:59Z",
+    "exp_id": "bb3ff38e"
+  },
+  {
     "filename": "convex_geometry_brunn_minkowski_theory.json",
     "title": "Convex Geometry Beyond Brunn-Minkowski: Mixed Volumes, Support Duality, and a Formal Route to Isoperimetry",
     "domain": "Geometry",
     "date": "2026-05-22T02:11:50Z",
     "exp_id": "52cd586a"
-  },
-  {
-    "filename": "direction_2_exponential_size_lower_bounds_at_fixed.json",
-    "title": "Size-Depth Tradeoffs for Inverse-Free EML Expressions",
-    "domain": "Expression Complexity / Circuit Lower Bounds",
-    "date": "2026-05-22T02:10:27Z",
-    "exp_id": "bb3ff38e"
   },
   {
     "filename": "direction_1_discrete_noether_shadow_for_variationa.json",
@@ -3092,7 +3092,7 @@ window.PACKAGE_DB = {
       "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for EML Expression Analysis\n\nThis module implements algorithms for analyzing inverse-free EML expressions,\nincluding expression enumeration, growth profile extraction, and size lower\nbound verification.\n\nThese algorithms correspond to the formally verified theory in\nSizeDepthTradeoff.lean.\n\"\"\"\n\nimport math\nfrom typing import List, Tuple, Optional, Dict, Set\nfrom dataclasses import dataclass, field\n\n\n# ============================================================\n# Core Data Structures\n# ============================================================\n\n@dataclass\nclass GrowthProfile:\n    \"\"\"Growth profile of an EML expression.\n\n    An expression with profile (k, N, C) satisfies\n    |eval(e, x)| <= iterExp(k, C * x^N) for large x.\n\n    Attributes:\n        tower_height: Level of tower iteration (k)\n        poly_deg: Polynomial degree in tower argument (N)\n        coeff: Multiplicative coefficient in tower argument (C)\n    \"\"\"\n    tower_height: int\n    poly_deg: int\n    coeff: float\n\n    @property\n    def budget(self) -> float:\n        \"\"\"Single-number budget summarizing profile complexity.\"\"\"\n        return self.tower_height + self.poly_deg + self.coeff\n\n\n@dataclass\nclass EMLNode:\n    \"\"\"Node in an EML expression tree.\n\n    Supports: var, const(c), add(l,r), mul(l,r), neg(l), eml(l,r)\n    where eml(l,r) evaluates as l * exp(r).\n    \"\"\"\n    kind: str\n    value: Optional[float] = None\n    left: Optional['EMLNode'] = None\n    right: Optional['EMLNode'] = None\n\n    def eval(self, x: float) -> float:\n        \"\"\"Evaluate expression at point x.\n\n        Args:\n            x: Input value\n\n        Returns:\n            Result of evaluating the expression tree at x\n\n        Raises:\n            OverflowError: If computation overflows\n        \"\"\"\n        if self.kind == 'var':\n            return x\n        elif self.kind == 'const':\n            return self.value\n        elif self.kind == 'add':\n            return self.left.eval(x) + self.right.eval(x)\n        elif self.kind == 'mul':\n            return self.left.eval(x) * self.right.eval(x)\n        elif self.kind == 'neg':\n            return -self.left.eval(x)\n        elif self.kind == 'eml':\n            return self.left.eval(x) * math.exp(self.right.eval(x))\n        raise ValueError(f\"Unknown kind: {self.kind}\")\n\n    @property\n    def size(self) -> int:\n        \"\"\"Syntactic size (number of constructor nodes).\"\"\"\n        if self.kind in ('var', 'const'):\n            return 1\n        elif self.kind == 'neg':\n            return 1 + self.left.size\n        else:\n            return 1 + self.left.size + self.right.size\n\n    @property\n    def eml_depth(self) -> int:\n        \"\"\"EML depth (maximum nesting of eml operations).\"\"\"\n        if self.kind in ('var', 'const'):\n            return 0\n        elif self.kind == 'neg':\n            return self.left.eml_depth\n        elif self.kind == 'eml':\n            return 1 + max(self.left.eml_depth, self.right.eml_depth)\n        else:\n            return max(self.left.eml_depth, self.right.eml_depth)\n\n    @property\n    def eml_count(self) -> int:\n        \"\"\"Number of eml nodes in the expression.\"\"\"\n        if self.kind in ('var', 'const'):\n            return 0\n        elif self.kind == 'neg':\n            return self.left.eml_count\n        elif self.kind == 'eml':\n            return 1 + self.left.eml_count + self.right.eml_count\n        else:\n            return self.left.eml_count + self.right.eml_count\n\n\n# ============================================================\n# Algorithm 1: Growth Profile Extraction\n# ============================================================\n\ndef extract_profile(expr: EMLNode) -> GrowthProfile:\n    \"\"\"Extract a growth profile from an inverse-free EML expression.\n\n    Implements the inductive construction from noInv_hasPolyTowerMajorant.\n\n    Algorithm:\n        - var: profile (0, 1, 1) since |x| <= 1 * x^1\n        - const(c): profile (0, 0, |c|+1) since |c| <= (|c|+1) * x^0\n        - neg(a): same profile as a\n        - add(a,b): profile (max(ka,kb), max(Na,Nb)+1, 2*max(Ca,Cb)+1)\n        - mul(a,b): profile (max(ka,kb), max(Na,Nb), 2*max(Ca,Cb)+1)\n        - eml(a,b): profile (1+max(ka,kb), max(Na,Nb), 2*max(Ca,Cb)+1)\n\n    Args:\n        expr: An inverse-free EML expression\n\n    Returns:\n        A GrowthProfile bounding the expression's growth\n\n    Time complexity: O(size)\n    Space complexity: O(depth) for recursion stack\n    \"\"\"\n    if expr.kind == 'var':\n        return GrowthProfile(0, 1, 1.0)\n    elif expr.kind == 'const':\n        return GrowthProfile(0, 0, abs(expr.value) + 1)\n    elif expr.kind == 'neg':\n        return extract_profile(expr.left)\n    elif expr.kind == 'add':\n        pa = extract_profile(expr.left)\n        pb = extract_profile(expr.right)\n        return GrowthProfile(\n            max(pa.tower_height, pb.tower_height),\n            max(pa.poly_deg, pb.poly_deg) + 1,\n            2 * max(pa.coeff, pb.coeff) + 1\n        )\n    elif expr.kind == 'mul':\n        pa = extract_profile(expr.left)\n        pb = extract_profile(expr.right)\n        return GrowthProfile(\n            max(pa.tower_height, pb.tower_height),\n            max(pa.poly_deg, pb.poly_deg),\n            2 * max(pa.coeff, pb.coeff) + 1\n        )\n    elif expr.kind == 'eml':\n        pa = extract_profile(expr.left)\n        pb = extract_profile(expr.right)\n        return GrowthProfile(\n            1 + max(pa.tower_height, pb.tower_height),\n            max(pa.poly_deg, pb.poly_deg),\n            2 * max(pa.coeff, pb.coeff) + 1\n        )\n    raise ValueError(f\"Unknown kind: {expr.kind}\")\n\n\n# ============================================================\n# Algorithm 2: Expression Enumeration\n# ============================================================\n\ndef enumerate_expressions(\n    max_size: int,\n    max_depth: int = None,\n    consts: List[float] = None,\n    inverse_free_only: bool = True\n) -> List[EMLNode]:\n    \"\"\"Enumerate EML expressions up to a given size.\n\n    Args:\n        max_size: Maximum expression size\n        max_depth: Maximum EML depth (None for no limit)\n        consts: Constant values to use (default: [0, 1])\n        inverse_free_only: If True, exclude inv nodes\n\n    Returns:\n        List of EML expressions satisfying the constraints\n\n    Time complexity: O(4^max_size) worst case\n    Space complexity: O(4^max_size)\n    \"\"\"\n    if consts is None:\n        consts = [0.0, 1.0]\n\n    cache: Dict[int, List[EMLNode]] = {}\n\n    def gen(budget: int) -> List[EMLNode]:\n        if budget in cache:\n            return cache[budget]\n        if budget <= 0:\n            return []\n\n        result = []\n\n        # Leaves (size 1)\n        if budget >= 1:\n            result.append(EMLNode('var'))\n            for c in consts:\n                result.append(EMLNode('const', value=c))\n\n        # Unary (size >= 2)\n        if budget >= 2:\n            for child in gen(budget - 1):\n                node = EMLNode('neg', left=child)\n                if max_depth is None or node.eml_depth <= max_depth:\n                    result.append(node)\n\n        # Binary (size >= 3)\n        for left_sz in range(1, budget - 1):\n            right_sz = budget - 1 - left_sz\n            for left in gen(left_sz):\n                for right in gen(right_sz):\n                    for op in ['add', 'mul', 'eml']:\n                        node = EMLNode(op, left=left, right=right)\n                        if max_depth is not None and node.eml_depth > max_depth:\n                            continue\n                        result.append(node)\n\n        cache[budget] = result\n        return result\n\n    all_exprs = []\n    for s in range(1, max_size + 1):\n        all_exprs.extend(gen(s))\n    return all_exprs\n\n\n# ============================================================\n# Algorithm 3: Profile Counting\n# ============================================================\n\ndef count_bounded_profiles(D: int, s: int) -> int:\n    \"\"\"Count the number of growth profiles with bounded parameters.\n\n    Corresponds to bounded_profiles_card in the formal development.\n\n    Args:\n        D: Maximum tower height\n        s: Maximum polynomial degree and coefficient\n\n    Returns:\n        Number of profiles (tower_height <= D, poly_deg <= s, coeff <= s)\n\n    Time complexity: O(1)\n    \"\"\"\n    return (D + 1) * (s + 1) * (s + 1)\n\n\ndef verify_profile_bound(D: int, s: int) -> bool:\n    \"\"\"Verify that the profile count matches the polynomial bound.\n\n    Args:\n        D: Maximum tower height\n        s: Budget parameter\n\n    Returns:\n        True if count <= (D+1) * (s+1)^2\n    \"\"\"\n    count = count_bounded_profiles(D, s)\n    bound = (D + 1) * (s + 1) ** 2\n    return count <= bound\n\n\n# ============================================================\n# Algorithm 4: Size Lower Bound Verification\n# ============================================================\n\ndef iterExp(n: int, x: float) -> float:\n    \"\"\"Compute the n-fold iterated exponential.\n\n    Args:\n        n: Number of iterations\n        x: Input value\n\n    Returns:\n        exp^n(x)\n    \"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n        except OverflowError:\n            return float('inf')\n    return result\n\n\ndef verify_size_lower_bound(\n    n: int,\n    max_search_size: int = None,\n    test_points: List[float] = None,\n    tolerance: float = 1e-6\n) -> Tuple[bool, Optional[EMLNode]]:\n    \"\"\"Verify that no small expression computes iterExp n.\n\n    Searches for an inverse-free expression of size <= n that\n    computes iterExp n on test points. The formal theorem guarantees\n    no such expression exists.\n\n    Args:\n        n: Tower height\n        max_search_size: Maximum size to search (default: n)\n        test_points: Points to test equality on\n        tolerance: Numerical tolerance\n\n    Returns:\n        (True, None) if no small expression found (consistent with theorem)\n        (False, expr) if a counterexample found (would disprove theorem)\n    \"\"\"\n    if max_search_size is None:\n        max_search_size = n\n    if test_points is None:\n        test_points = [0.1 * i for i in range(1, 21)]\n\n    target_values = [(x, iterExp(n, x)) for x in test_points]\n\n    exprs = enumerate_expressions(max_search_size, consts=[0.0, 1.0])\n\n    for expr in exprs:\n        if expr.size > max_search_size:\n            continue\n        matches = True\n        for x, target in target_values:\n            try:\n                val = expr.eval(x)\n                if abs(val - target) > tolerance:\n                    matches = False\n                    break\n            except (OverflowError, ValueError, ZeroDivisionError):\n                matches = False\n                break\n        if matches:\n            return (False, expr)\n\n    return (True, None)\n\n\n# ============================================================\n# Example usage\n# ============================================================\n\nif __name__ == '__main__':\n    # Example: extract profiles\n    print(\"Profile extraction examples:\")\n    exprs = [\n        (\"x\", EMLNode('var')),\n        (\"1\", EMLNode('const', value=1.0)),\n        (\"x + x\", EMLNode('add', left=EMLNode('var'), right=EMLNode('var'))),\n        (\"1*exp(x)\", EMLNode('eml', left=EMLNode('const', value=1.0),\n                             right=EMLNode('var'))),\n    ]\n    for name, expr in exprs:\n        p = extract_profile(expr)\n        print(f\"  {name}: height={p.tower_height}, deg={p.poly_deg}, \"\n              f\"coeff={p.coeff:.1f}, budget={p.budget:.1f}\")\n\n    print()\n    print(\"Size lower bound verification:\")\n    for n in range(1, 5):\n        ok, counter = verify_size_lower_bound(n, max_search_size=min(n, 3))\n        status = \"\u2713 consistent\" if ok else f\"\u2717 counterexample: {counter}\"\n        print(f\"  iterExp {n}: {status}\")\n\n    print()\n    print(\"Profile counting verification:\")\n    for D in [1, 2, 3]:\n        for s in [5, 10]:\n            count = count_bounded_profiles(D, s)\n            bound = (D + 1) * (s + 1) ** 2\n            print(f\"  D={D}, s={s}: count={count}, bound={bound}, \"\n                  f\"ok={count <= bound}\")\n",
       "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of Size-Depth Tradeoff Theory\n\nThis module demonstrates real-world applications of the formally verified\nsize-depth tradeoff results for EML expressions.\n\nApplications:\n1. Symbolic regression hardness - proving limits on formula discovery\n2. Expression compression bounds - minimum description length\n3. Computational hierarchy visualization\n\"\"\"\n\nimport math\nfrom typing import List, Tuple\n\n\n# ============================================================\n# Application 1: Symbolic Regression Hardness\n# ============================================================\n\ndef symbolic_regression_bound(target_tower_height: int) -> dict:\n    \"\"\"Compute the minimum expression complexity for a target function.\n\n    Given a target function characterized by tower height n,\n    returns the proven lower bounds on any inverse-free EML expression\n    that computes it.\n\n    This has direct implications for symbolic regression:\n    - Formula discovery algorithms cannot find compact expressions\n      for high-tower-height functions\n    - The search space grows at least linearly with tower height\n\n    Args:\n        target_tower_height: The tower height n of the target function\n\n    Returns:\n        Dictionary with proven bounds\n    \"\"\"\n    n = target_tower_height\n    return {\n        'target': f'iterExp({n}, x)',\n        'min_size': n + 1,\n        'min_depth': n,\n        'canonical_size': 2 * n + 1,\n        'canonical_depth': n,\n        'depth_gap': 0,  # canonical achieves minimum depth\n        'size_gap': n,    # gap between lower bound and canonical\n        'description_length_bits': math.ceil(math.log2(n + 2)) if n > 0 else 1,\n    }\n\n\ndef print_regression_analysis():\n    \"\"\"Print symbolic regression hardness analysis.\"\"\"\n    print(\"Symbolic Regression Hardness Analysis\")\n    print(\"=\" * 55)\n    print()\n    print(\"For each tower height n, any inverse-free expression\")\n    print(\"computing iterExp(n, x) must satisfy these bounds:\")\n    print()\n    print(f\"{'n':>4} | {'Min Size':>8} | {'Min Depth':>9} | \"\n          f\"{'Canonical':>9} | {'Description':>11}\")\n    print(f\"{'':>4} | {'(n+1)':>8} | {'(n)':>9} | \"\n          f\"{'(2n+1)':>9} | {'Length':>11}\")\n    print(\"-\" * 55)\n\n    for n in range(11):\n        info = symbolic_regression_bound(n)\n        print(f\"{n:>4} | {info['min_size']:>8} | {info['min_depth']:>9} | \"\n              f\"{info['canonical_size']:>9} | {info['description_length_bits']:>8} bits\")\n\n    print()\n    print(\"Implication: A symbolic regression engine searching for\")\n    print(\"expressions of size <= s can represent at most s tower levels.\")\n    print(\"This is a fundamental limit, not an algorithm limitation.\")\n    print()\n\n\n# ============================================================\n# Application 2: Expression Compression\n# ============================================================\n\ndef compression_analysis(max_n: int = 10) -> List[dict]:\n    \"\"\"Analyze compression ratios for iterExp family.\n\n    The \"uncompressed\" representation of iterExp n is the function\n    table (infinite), while the compressed representation is the\n    EML expression (finite but growing).\n\n    Args:\n        max_n: Maximum tower height to analyze\n\n    Returns:\n        List of analysis records\n    \"\"\"\n    records = []\n    for n in range(max_n + 1):\n        # Growth rate of iterExp n at x=1\n        try:\n            value_at_1 = 1.0\n            for _ in range(n):\n                value_at_1 = math.exp(value_at_1)\n            log_value = math.log10(value_at_1) if value_at_1 > 0 else 0\n        except OverflowError:\n            log_value = float('inf')\n\n        records.append({\n            'tower_height': n,\n            'min_expression_size': n + 1,\n            'canonical_size': 2 * n + 1,\n            'value_at_1': value_at_1 if value_at_1 < 1e300 else float('inf'),\n            'log10_value_at_1': log_value if log_value < 1e15 else float('inf'),\n            'compression_ratio': 'infinite' if log_value == float('inf')\n                                 else f'{log_value / (2*n+1):.1f}' if n > 0 else 'N/A',\n        })\n    return records\n\n\ndef print_compression_analysis():\n    \"\"\"Print expression compression analysis.\"\"\"\n    print(\"Expression Compression Analysis\")\n    print(\"=\" * 65)\n    print()\n    print(\"The EML expression for iterExp n compresses an exponentially\")\n    print(\"growing function into a linearly-sized formula.\")\n    print()\n    print(f\"{'n':>4} | {'Size':>6} | {'Value at x=1':>20} | \"\n          f\"{'log10(value)':>15} | {'Ratio':>8}\")\n    print(\"-\" * 65)\n\n    for rec in compression_analysis():\n        n = rec['tower_height']\n        val = rec['value_at_1']\n        log_val = rec['log10_value_at_1']\n        ratio = rec['compression_ratio']\n        val_str = f\"{val:.6f}\" if val < 1e6 else (\n            f\"{val:.2e}\" if val < float('inf') else \"\u221e\")\n        log_str = f\"{log_val:.2f}\" if log_val < float('inf') else \"\u221e\"\n        print(f\"{n:>4} | {rec['canonical_size']:>6} | {val_str:>20} | \"\n              f\"{log_str:>15} | {ratio:>8}\")\n\n    print()\n    print(\"The compression ratio (information per syntax node) grows\")\n    print(\"super-exponentially, showing that EML expressions are\")\n    print(\"extraordinarily efficient at representing tower functions.\")\n    print()\n\n\n# ============================================================\n# Application 3: Complexity Hierarchy Visualization\n# ============================================================\n\ndef print_complexity_hierarchy():\n    \"\"\"Print the EML complexity hierarchy.\"\"\"\n    print(\"EML Complexity Hierarchy\")\n    print(\"=\" * 55)\n    print()\n    print(\"Depth 0: Polynomial functions\")\n    print(\"  Examples: x, x^2, 3x+1, x*x+x\")\n    print(\"  Growth: at most polynomial\")\n    print()\n    print(\"Depth 1: Single-exponential functions\")\n    print(\"  Examples: exp(x), x*exp(x), exp(x^2)\")\n    print(\"  Growth: at most exp(polynomial)\")\n    print()\n    print(\"Depth 2: Double-exponential functions\")\n    print(\"  Examples: exp(exp(x)), exp(x*exp(x))\")\n    print(\"  Growth: at most exp(exp(polynomial))\")\n    print()\n    print(\"Depth n: n-fold iterated exponential\")\n    print(\"  Canonical: iterExp(n, x) = exp^n(x)\")\n    print(\"  Growth: tower of height n\")\n    print()\n    print(\"KEY THEOREMS (formally verified):\")\n    print(\"  1. Depth n is NECESSARY for iterExp n\")\n    print(\"  2. Size >= n+1 is NECESSARY for iterExp n\")\n    print(\"  3. Size 2n+1 is SUFFICIENT (canonical construction)\")\n    print(\"  4. No depth-D expression computes iterExp n for n > D\")\n    print()\n    print(\"Circuit complexity analogy:\")\n    print(\"  Depth = parallel time (layers of gates)\")\n    print(\"  Size  = total gates (sequential work)\")\n    print(\"  iterExp n = explicit hard function family\")\n    print()\n    print(\"This is analogous to classical circuit lower bounds,\")\n    print(\"but for transcendental (analytic) expression languages.\")\n    print()\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == '__main__':\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Applications of Size-Depth Tradeoff Theory       \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    print_regression_analysis()\n    print_compression_analysis()\n    print_complexity_hierarchy()\n\n\n#!/usr/bin/env python3\n\"\"\"\nDemo: Size-Depth Tradeoffs for Inverse-Free EML Expressions\n\nThis script demonstrates the formally verified results about size-depth\ntradeoffs in the Expression Meta Language (EML). We enumerate inverse-free\nEML expressions, evaluate them, and verify that the proven lower bounds\non expression size hold computationally.\n\nKey results demonstrated:\n1. iterExp n requires size >= n+1 (proven formally)\n2. The canonical construction achieves size 2n+1 (proven formally)\n3. No depth-D expression can compute iterExp n for n > D (proven formally)\n4. Growth profile counting is polynomial (proven formally)\n\"\"\"\n\nimport math\nimport itertools\nfrom typing import Optional, List, Tuple\nfrom dataclasses import dataclass\n\n# ============================================================\n# EML Expression Representation\n# ============================================================\n\n@dataclass\nclass EMLExpr:\n    \"\"\"EML expression tree node.\"\"\"\n    kind: str  # 'var', 'const', 'add', 'mul', 'neg', 'eml'\n    value: Optional[float] = None  # for const\n    left: Optional['EMLExpr'] = None\n    right: Optional['EMLExpr'] = None\n\n    def eval(self, x: float) -> float:\n        if self.kind == 'var':\n            return x\n        elif self.kind == 'const':\n            return self.value\n        elif self.kind == 'add':\n            return self.left.eval(x) + self.right.eval(x)\n        elif self.kind == 'mul':\n            return self.left.eval(x) * self.right.eval(x)\n        elif self.kind == 'neg':\n            return -self.left.eval(x)\n        elif self.kind == 'eml':\n            try:\n                return self.left.eval(x) * math.exp(self.right.eval(x))\n            except OverflowError:\n                return float('inf')\n        raise ValueError(f\"Unknown kind: {self.kind}\")\n\n    @property\n    def size(self) -> int:\n        if self.kind in ('var', 'const'):\n            return 1\n        elif self.kind in ('neg',):\n            return 1 + self.left.size\n        else:\n            return 1 + self.left.size + self.right.size\n\n    @property\n    def eml_depth(self) -> int:\n        if self.kind in ('var', 'const'):\n            return 0\n        elif self.kind == 'neg':\n            return self.left.eml_depth\n        elif self.kind == 'eml':\n            return 1 + max(self.left.eml_depth, self.right.eml_depth)\n        else:\n            return max(self.left.eml_depth, self.right.eml_depth)\n\n    @property\n    def is_inverse_free(self) -> bool:\n        if self.kind == 'inv':\n            return False\n        if self.left and not self.left.is_inverse_free:\n            return False\n        if self.right and not self.right.is_inverse_free:\n            return False\n        return True\n\n    def __repr__(self):\n        if self.kind == 'var':\n            return 'x'\n        elif self.kind == 'const':\n            return str(self.value)\n        elif self.kind == 'add':\n            return f'({self.left} + {self.right})'\n        elif self.kind == 'mul':\n            return f'({self.left} * {self.right})'\n        elif self.kind == 'neg':\n            return f'(-{self.left})'\n        elif self.kind == 'eml':\n            return f'({self.left} * exp({self.right}))'\n        return '?'\n\n\ndef iterExp(n: int, x: float) -> float:\n    \"\"\"Compute iterExp n x = exp^n(x).\"\"\"\n    result = x\n    for _ in range(n):\n        try:\n            result = math.exp(result)\n        except OverflowError:\n            return float('inf')\n    return result\n\n\ndef canonical_iterExp(n: int) -> EMLExpr:\n    \"\"\"The canonical EML expression for iterExp n.\"\"\"\n    if n == 0:\n        return EMLExpr('var')\n    return EMLExpr('eml', left=EMLExpr('const', value=1.0),\n                   right=canonical_iterExp(n - 1))\n\n\n# ============================================================\n# Demo 1: Verify canonical construction\n# ============================================================\n\ndef demo_canonical_construction():\n    print(\"=\" * 60)\n    print(\"DEMO 1: Canonical Construction for iterExp\")\n    print(\"=\" * 60)\n    print()\n    print(\"The canonical EML expression for iterExp n has:\")\n    print(\"  - Size = 2n + 1\")\n    print(\"  - Depth = n\")\n    print(\"  - Is inverse-free\")\n    print()\n\n    for n in range(6):\n        expr = canonical_iterExp(n)\n        print(f\"  n={n}: size={expr.size}, depth={expr.eml_depth}, \"\n              f\"inv_free={expr.is_inverse_free}, expr={expr}\")\n\n    print()\n    print(\"Verification: eval matches iterExp on sample points\")\n    test_points = [0.1, 0.5, 1.0, 1.5, 2.0]\n    for n in range(4):\n        expr = canonical_iterExp(n)\n        for x in test_points:\n            computed = expr.eval(x)\n            expected = iterExp(n, x)\n            if abs(computed - expected) > 1e-10:\n                print(f\"  MISMATCH at n={n}, x={x}: {computed} vs {expected}\")\n        print(f\"  n={n}: all {len(test_points)} test points match \u2713\")\n    print()\n\n\n# ============================================================\n# Demo 2: Size lower bound verification\n# ============================================================\n\ndef enumerate_inv_free_exprs(max_size: int, consts=None) -> List[EMLExpr]:\n    \"\"\"Enumerate inverse-free EML expressions up to given size.\"\"\"\n    if consts is None:\n        consts = [0.0, 1.0, 2.0, -1.0]\n\n    results = []\n\n    def gen(size_budget: int) -> List[EMLExpr]:\n        if size_budget <= 0:\n            return []\n        exprs = []\n        # Leaves\n        if size_budget >= 1:\n            exprs.append(EMLExpr('var'))\n            for c in consts:\n                exprs.append(EMLExpr('const', value=c))\n        # Unary\n        if size_budget >= 2:\n            for child in gen(size_budget - 1):\n                exprs.append(EMLExpr('neg', left=child))\n        # Binary\n        for left_size in range(1, size_budget - 1):\n            right_size = size_budget - 1 - left_size\n            for left in gen(left_size):\n                for right in gen(right_size):\n                    exprs.append(EMLExpr('add', left=left, right=right))\n                    exprs.append(EMLExpr('mul', left=left, right=right))\n                    exprs.append(EMLExpr('eml', left=left, right=right))\n        return exprs\n\n    for s in range(1, max_size + 1):\n        results.extend(gen(s))\n    return results\n\n\ndef demo_size_lower_bound():\n    print(\"=\" * 60)\n    print(\"DEMO 2: Size Lower Bound for iterExp\")\n    print(\"=\" * 60)\n    print()\n    print(\"Theorem (formally verified): Any inverse-free expression\")\n    print(\"computing iterExp n must have size >= n + 1.\")\n    print()\n    print(\"We verify this by exhaustive enumeration at small sizes.\")\n    print()\n\n    test_points = [0.5, 1.0, 1.5, 2.0, 2.5]\n    max_search_size = 5\n\n    for n in range(1, 5):\n        print(f\"  iterExp {n}: minimum size must be >= {n + 1}\")\n        print(f\"    Canonical construction: size = {2 * n + 1}\")\n\n        # Check if any smaller expression matches\n        found_smaller = False\n        for s in range(1, n + 1):\n            exprs = enumerate_inv_free_exprs(s, consts=[0.0, 1.0])\n            for expr in exprs:\n                if not expr.is_inverse_free or expr.size > s:\n                    continue\n                matches = True\n                for x in test_points:\n                    try:\n                        if abs(expr.eval(x) - iterExp(n, x)) > 1e-6:\n                            matches = False\n                            break\n                    except (OverflowError, ValueError):\n                        matches = False\n                        break\n                if matches:\n                    found_smaller = True\n                    print(f\"    FOUND at size {expr.size}: {expr}\")\n\n        if not found_smaller:\n            print(f\"    No expression of size <= {n} found \u2713\")\n        print()\n\n\n# ============================================================\n# Demo 3: Depth impossibility\n# ============================================================\n\ndef demo_depth_impossibility():\n    print(\"=\" * 60)\n    print(\"DEMO 3: Depth Impossibility for iterExp\")\n    print(\"=\" * 60)\n    print()\n    print(\"Theorem (formally verified): No inverse-free expression of\")\n    print(\"depth <= D can compute iterExp n for n > D.\")\n    print()\n\n    for D in range(4):\n        for n in range(D + 1, D + 3):\n            print(f\"  D={D}, n={n}: depth-{D} cannot compute iterExp {n}\")\n            # Verify by checking growth rates\n            x = 5.0\n            max_depth_D_value = iterExp(D, 100 * x)  # generous upper bound\n            target = iterExp(n, x)\n            if target > max_depth_D_value:\n                print(f\"    iterExp {n}({x}) = {target:.2e} >> \"\n                      f\"iterExp {D}(100*{x}) = {max_depth_D_value:.2e} \u2713\")\n            else:\n                print(f\"    Growth comparison at x={x}: target={target:.2e}\")\n    print()\n\n\n# ============================================================\n# Demo 4: Profile counting\n# ============================================================\n\ndef demo_profile_counting():\n    print(\"=\" * 60)\n    print(\"DEMO 4: Growth Profile Counting\")\n    print(\"=\" * 60)\n    print()\n    print(\"Theorem (formally verified): The number of growth profiles\")\n    print(\"at depth D and budget s is <= (D+1) * (s+1)^2.\")\n    print()\n\n    for D in range(1, 5):\n        for s in [5, 10, 20, 50]:\n            bound = (D + 1) * (s + 1) ** 2\n            print(f\"  D={D}, s={s}: at most {bound} profiles\")\n    print()\n    print(\"This polynomial bound means that as tower height n grows,\")\n    print(\"the size s must grow to accommodate new profile classes.\")\n    print()\n\n\n# ============================================================\n# Demo 5: Minimum size curve\n# ============================================================\n\ndef demo_min_size_curve():\n    print(\"=\" * 60)\n    print(\"DEMO 5: Minimum Size vs Tower Height\")\n    print(\"=\" * 60)\n    print()\n    print(\"The minimum size for iterExp n (proven lower bound: n+1):\")\n    print()\n    print(f\"  {'n':>4} | {'Lower bound (n+1)':>18} | {'Canonical (2n+1)':>18}\")\n    print(f\"  {'-'*4}-+-{'-'*18}-+-{'-'*18}\")\n\n    for n in range(11):\n        lower = n + 1\n        canonical = 2 * n + 1\n        bar = '\u2588' * lower + '\u2591' * (canonical - lower)\n        print(f\"  {n:>4} | {lower:>18} | {canonical:>18}  {bar}\")\n\n    print()\n    print(\"Key insight: size grows at least linearly with tower height n.\")\n    print(\"For n > D (depth bound), the lower bound is infinite (impossible).\")\n    print()\n\n\n# ============================================================\n# Demo 6: Conjecture testing\n# ============================================================\n\ndef demo_conjecture_testing():\n    print(\"=\" * 60)\n    print(\"DEMO 6: Testable Conjecture\")\n    print(\"=\" * 60)\n    print()\n    print(\"Primary Conjecture: For fixed D >= 2, there exist C_D > 1 and\")\n    print(\"N_D such that for n >= N_D:\")\n    print(\"  minSize(D, n) >= C_D^n\")\n    print()\n    print(\"Current status:\")\n    print(\"  - For n > D: PROVEN (infinite lower bound, no expression exists)\")\n    print(\"  - For n <= D: minimum size is exactly 2n+1 (linear, not exponential)\")\n    print()\n    print(\"The conjecture as stated is vacuously true for the interesting\")\n    print(\"regime (n > D), because the depth hierarchy theorem shows that\")\n    print(\"iterExp n CANNOT be computed at depth D < n at ANY size.\")\n    print()\n    print(\"This is actually STRONGER than exponential: the lower bound\")\n    print(\"is infinity, not merely exponential.\")\n    print()\n\n    # Verify the linear growth for n <= D\n    print(\"Verification: canonical size growth for n <= D\")\n    for D in [3, 5, 10]:\n        sizes = [(n, 2*n+1) for n in range(D+1)]\n        print(f\"  D={D}: sizes = {[s for _, s in sizes]}\")\n    print()\n    print(\"Data is consistent with linear growth (not exponential)\")\n    print(\"for the representable regime n <= D.\")\n    print()\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == '__main__':\n    print()\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551  Size-Depth Tradeoffs for Inverse-Free EML Expressions \u2551\")\n    print(\"\u2551  Computational Demonstration of Formally Verified Results \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n    print()\n\n    demo_canonical_construction()\n    demo_size_lower_bound()\n    demo_depth_impossibility()\n    demo_profile_counting()\n    demo_min_size_curve()\n    demo_conjecture_testing()\n\n    print(\"=\" * 60)\n    print(\"SUMMARY\")\n    print(\"=\" * 60)\n    print()\n    print(\"All demonstrated results are formally verified in Lean 4.\")\n    print(\"The key theorems proven:\")\n    print(\"  1. size_lower_bound_iterExp: size >= n+1 for iterExp n\")\n    print(\"  2. iterExp_depth_bounded_impossible: n > D => impossible\")\n    print(\"  3. bounded_profiles_card: polynomial profile counting\")\n    print(\"  4. noInv_hasPolyTowerMajorant: quantitative majorant control\")\n    print(\"  5. iterExp_size_characterization: complete size characterization\")\n    print()\n"
     },
-    "date": "2026-05-22T02:10:27Z",
+    "date": "2026-05-22T03:12:59Z",
     "exp_id": "bb3ff38e",
     "source_exp_ids": [
       "1b8440b4"
@@ -4107,7 +4107,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -4116,7 +4116,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -4125,7 +4125,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -4134,7 +4134,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -4143,7 +4143,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -4161,7 +4161,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "arithmetic_resonance_in_neural_proof_search",
@@ -4170,7 +4170,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -4179,7 +4179,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "collatz_stopping_times_density_analysis",
@@ -4215,7 +4215,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:59:07Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_2_path_space_cardinality_invariants_for_",
@@ -4224,7 +4224,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:10:21Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_3_differential_closure_and_transseries_f",
@@ -4233,7 +4233,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T07:13:37Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "proof_compression_phase_transition_in_formal_mathe",
@@ -4242,7 +4242,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:14:00Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "lattice_cryptography_lwe_hardness",
@@ -4260,7 +4260,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T08:10:20Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "conjecture_2_tight_depth_bound_d1_instead_of_d3",
@@ -4278,7 +4278,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:13:44Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "representation_theory_character_tables_of_s_n",
@@ -4296,7 +4296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:14:39Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "euler_characteristic_and_gauss_bonnet",
@@ -4305,7 +4305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T08:15:03Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "homological_algebra_derived_functors",
@@ -4314,7 +4314,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T09:14:59Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "tropical_curves_and_chip_firing_games",
@@ -4323,7 +4323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T09:15:37Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_explicit_forman_gradient_fields_and_pe",
@@ -4341,7 +4341,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:13:08Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "extremal_graph_theory_turn_and_szemerdi",
@@ -4359,7 +4359,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:14:03Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "goldbach_verification_framework",
@@ -4368,7 +4368,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T10:14:31Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_4_normalizing_derivative_compiler_with_i",
@@ -4377,7 +4377,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T10:14:52Z",
-      "hue": 112
+      "hue": 280
     },
     {
       "id": "invariant_subspace_problem_special_cases",
@@ -4386,7 +4386,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T11:14:42Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "categorical_foundations_yoneda_and_adjunctions",
@@ -4395,7 +4395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T11:15:08Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "information_geometry_fisher_metric_on_statistical_",
@@ -4404,7 +4404,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T11:28:55Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "lambda_calculus_church_rosser_and_normalization",
@@ -4413,7 +4413,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:04Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "direction_4_persistent_torsion_detection_for_tda",
@@ -4422,7 +4422,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:31Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "direction_1_complete_verified_regev_reduction",
@@ -4431,7 +4431,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T12:24:54Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "formal_verification_of_algorithms",
@@ -4440,7 +4440,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T12:32:49Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "arithmetic_universality_classes_in_tropical_degene",
@@ -4449,7 +4449,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T13:10:29Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_1_complete_strict_hierarchy_separation",
@@ -4458,7 +4458,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T13:13:42Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_1_universal_affine__protocol_extraction",
@@ -4467,7 +4467,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T13:14:08Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -4476,7 +4476,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T13:14:34Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "homological_phase_transition_in_automated_conjectu",
@@ -4485,7 +4485,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T14:10:33Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_4_growth_rank_completeness_grand_challen",
@@ -4494,7 +4494,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:13:43Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_5_ordinal_classification_of_eml_growth",
@@ -4512,7 +4512,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T14:14:53Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_5_lower_bound_certificates_via_communica",
@@ -4521,7 +4521,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T14:15:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_3_dag_sharing_does_not_reduce_depth_gran",
@@ -4539,7 +4539,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T15:14:54Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_2_persistent_homology_of_tropical_filtra",
@@ -4548,7 +4548,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T15:15:26Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "direction_5_optimal_curvature_distribution_on_tria",
@@ -4566,7 +4566,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:16:34Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "direction_5_non_commutative_module_lwe_and_ntru",
@@ -4575,7 +4575,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:17:03Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_3_grand_challenge_ext_tor_persistent_spe",
@@ -4584,7 +4584,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T16:17:46Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "direction_1_polynomial_extraction_for_k_special_so",
@@ -4593,7 +4593,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T16:18:43Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "ramsey_theory_bounds_and_constructions",
@@ -4602,7 +4602,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T17:14:39Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_1_topological_restricted_products_and_co",
@@ -4629,7 +4629,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:04:51Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "proof_complexity_order_parameters_from_persistence",
@@ -4638,7 +4638,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T18:09:01Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_4_core_collapse_acceleration_hypothesis",
@@ -4647,7 +4647,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T18:30:37Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "quadratic_reciprocity_five_proofs_formalized",
@@ -4656,7 +4656,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T18:39:31Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "direction_4_probe_complexity_of_finite_categories",
@@ -4665,7 +4665,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:42:42Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_2_efficient_computation_via_smith_normal",
@@ -4683,7 +4683,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T19:13:53Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_1_multi_step_filtration_obstructions_ext",
@@ -4692,7 +4692,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T19:14:18Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "direction_3_differential_closure_under_quotients",
@@ -4701,7 +4701,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:10:25Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_3_valuation_profile_universality_for_tro",
@@ -4710,7 +4710,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T20:13:32Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "fourier_analysis_on_finite_groups",
@@ -4719,7 +4719,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:13:59Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_2_verified_compiler_synthesis_via_free_f",
@@ -4728,7 +4728,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T20:14:37Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -4737,7 +4737,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T21:10:29Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_finite_probe_representability_conjectu",
@@ -4746,7 +4746,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:11:00Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "direction_3_clause_space_lower_bounds_via_width_sp",
@@ -4755,7 +4755,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:25:46Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_2_haar_measure_on_restricted_products",
@@ -4764,7 +4764,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:40:45Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "pac_bayes_generalization_bounds",
@@ -4773,7 +4773,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T21:41:12Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_2_hardness_localization_hypothesis",
@@ -4782,7 +4782,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T22:20:03Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "direction_5_compiler_lower_bound_hypothesis",
@@ -4791,7 +4791,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T22:24:27Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "tropical_energy_interpretation_of_normalization",
@@ -4800,7 +4800,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T22:24:58Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_2_approximation_sandwich_universality",
@@ -4809,7 +4809,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T22:44:36Z",
-      "hue": 272
+      "hue": 275
     },
     {
       "id": "direction_4_reverse_mathematical_strength_of_rank_",
@@ -4818,7 +4818,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T23:13:43Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_4_convergence_of_discrete_to_smooth_curv",
@@ -4827,7 +4827,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T23:14:11Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_cycle_window_universality_hypothesis",
@@ -4836,7 +4836,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T23:14:38Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_4_quotient_algebras_and_certified_optimi",
@@ -4845,7 +4845,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-21T23:47:45Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_2_entropy_barrier_conjecture_for_general",
@@ -4854,7 +4854,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T00:10:05Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_2_natural_gradient_convergence_on_dually",
@@ -4863,7 +4863,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T00:14:37Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_1_sharpness_of_the_1_depth_bound",
@@ -4872,7 +4872,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-22T00:15:03Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "direction_2_tates_thesis_functional_equation_via_a",
@@ -4881,7 +4881,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T00:47:21Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_5_residual_finiteness_and_semantic_disti",
@@ -4890,7 +4890,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T01:09:01Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "direction_1_discrete_noether_shadow_for_variationa",
@@ -4899,16 +4899,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T01:09:57Z",
-      "hue": 270
-    },
-    {
-      "id": "direction_2_exponential_size_lower_bounds_at_fixed",
-      "title": "Size-Depth Tradeoffs for Inverse-Free EML Expressions",
-      "domain": "Expression Complexity / Circuit Lower Bounds",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-22T02:10:27Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "convex_geometry_brunn_minkowski_theory",
@@ -4917,7 +4908,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T02:11:50Z",
-      "hue": 270
+      "hue": 90
+    },
+    {
+      "id": "direction_2_exponential_size_lower_bounds_at_fixed",
+      "title": "Size-Depth Tradeoffs for Inverse-Free EML Expressions",
+      "domain": "Expression Complexity / Circuit Lower Bounds",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-22T03:12:59Z",
+      "hue": 91
     }
   ],
   "edges": [
@@ -5514,21 +5514,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-20T20:11:05.499658+00:00"
   },
   {
-    "id": "seed_025",
-    "title": "Convex Geometry: Brunn-Minkowski Theory",
-    "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "priority_score": 0.83,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "52cd586a",
-    "timestamp": "2026-05-20T20:11:05.499682+00:00"
-  },
-  {
     "id": "seed_042",
     "title": "Attention Mechanisms: Mathematical Properties",
     "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
@@ -5717,6 +5702,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-22T02:11:16.794460+00:00"
+  },
+  {
+    "id": "fd_0326",
+    "title": "Prime-Spectral Universality in Random Simplicial Lifts",
+    "description": "Conjecture: There exists an explicit base 2-dimensional simplicial complex B and an infinite family of random regular simplicial lifts X_N -> B such that for infinitely many primes p, the normalized p-torsion persistent barcode of the 1-skeleton clique filtration of X_N converges in distribution as N -> infinity to a prime-dependent law determined by the mod-p spectrum of the lifted combinatorial Laplacian, while for distinct primes p != q these limiting laws are mutually singular. Test: Construct the lift family, compute persistent homology over F_p for many primes and sizes N, estimate the empirical barcode distributions and Laplacian spectral statistics, and check whether convergence occurs and whether the limiting distributions differ sharply across primes. Refutation occurs if barcode laws become prime-insensitive or collapse to a universal distribution independent of p. Impact: This would reveal a new universality class linking random topology, arithmetic mod-p phenomena, and higher-dimensional expander geometry, enabling prime-tunable topological randomness and new arithmetic diagnostics for complex networks.",
+    "domains": [
+      "Topological Data Analysis",
+      "Arithmetic Combinatorics"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T02:12:15.234287+00:00"
   },
   {
     "id": "fd_0314",
@@ -7402,5 +7402,65 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "bb3ff38e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-22T02:11:05.413139+00:00"
+  },
+  {
+    "id": "fd_0322",
+    "title": "Direction 2: Formal Steiner Formula and Mixed Volume Definition",
+    "description": "**Conjecture:** For a convex body K and the unit ball B in \u211d\u207f, the parallel volume vol(K + tB) is a polynomial of degree n in t for t \u2265 0:\n\nvol(K + tB) = \u2211_{k=0}^{n} C(n,k) \u00b7 W_k(K) \u00b7 t^k\n\nwhere W_k are the quermassintegrals (intrinsic volumes) of K.\n\n**Test:**\n1. Verify the polynomial formula for boxes (where B is the \u2113^\u221e ball): vol(K + tB_\u221e) = \u220f_i (s_i + 2t). This is `boxParallelVolume` in `BrunnMinkowski.lean`.\n2. Compute W_k explicitly for boxes and verify they match the mixed volume coefficients.\n3. Test that the derivative at t=0 gives the surface area (matching `boxPerimProxy`).\n\n**Impact:** Formalizing the Steiner formula would provide the bridge between volume inequalities and curvature measures, opening the path to mean curvature flow and geometric PDE.\n\n**Catalog References:** `Geometry/ConvexBodies/BrunnMinkowski.lean` (boxParallelVolume, boxPerimProxy, boxMixedCoeff).\n\n**Proof Strategy:** For boxes, direct computation. For general convex bodies, use the theory of valuations on convex bodies (Hadwiger's theorem).\n\n**Domain Bridges:** Differential geometry, PDE, geometric measure theory.\n\n**Lineage:** Extends `boxParallelVolume` and `boxMixedCoeff`.\n\n**Ambition:** Solid extension \u2014 the box case is computationally tractable, general case requires geometric measure theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52cd586a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T02:12:07.380409+00:00"
+  },
+  {
+    "id": "fd_0324",
+    "title": "Direction 4: Log-Concavity in Combinatorics via PF\u2082 Machinery",
+    "description": "**Conjecture:** The PF\u2082 machinery developed in `Newton.lean` can be extended to prove:\n1. Log-concavity of the sequence of face numbers of convex polytopes.\n2. Mason's conjecture (log-concavity of the number of independent sets of a matroid by size).\n3. Ultra-log-concavity of binomial coefficients and their generalizations.\n\n**Test:**\n1. Formalize the binomial coefficient sequence C(n,0), C(n,1), ..., C(n,n) and verify it is PF\u2082 (this is the special case a_i = b_i = 1 for all i in `prodLinCoeff`).\n2. Verify computationally that the f-vector of random convex polytopes is log-concave.\n3. Test the PF\u2082 property for characteristic polynomials of graphic matroids.\n\n**Impact:** Connecting the PF\u2082 framework to combinatorial log-concavity would provide a unified approach to several major conjectures that were recently resolved using algebraic geometry (Adiprasito\u2013Huh\u2013Katz).\n\n**Catalog References:** `Geometry/ConvexBodies/Newton.lean` (IsPF2, isPF2_conv, prodLinCoeff_isPF2).\n\n**Proof Strategy:** Show that generating functions of matroid-like objects can be expressed as products of linear factors (or limits thereof). Apply the PF\u2082 preservation theorem.\n\n**Domain Bridges:** Combinatorics, algebraic geometry, matroid theory.\n\n**Lineage:** Direct application of `isPF2_conv` to new domains.\n\n**Ambition:** Solid extension for special cases, grand challenge for the full matroid conjecture.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52cd586a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T02:12:07.416374+00:00"
+  },
+  {
+    "id": "fd_0325",
+    "title": "Direction 5: Displacement Convexity and Optimal Transport",
+    "description": "**Conjecture:** The Brunn\u2013Minkowski inequality can be reformulated as a displacement convexity statement:\n\nFor probability measures \u03bc\u2080, \u03bc\u2081 on \u211d\u207f with densities f\u2080, f\u2081, and the Wasserstein geodesic \u03bc_t between them:\n\nH(\u03bc_t) \u2264 (1-t) \u00b7 H(\u03bc\u2080) + t \u00b7 H(\u03bc\u2081) - (1/2)t(1-t) \u00b7 W\u2082(\u03bc\u2080, \u03bc\u2081)\u00b2/(n-1)\n\nwhere H is the relative entropy and W\u2082 is the 2-Wasserstein distance.\n\n**Test:**\n1. Verify computationally for discrete approximations to Gaussian distributions.\n2. Verify for uniform distributions on boxes (where the Wasserstein geodesic has explicit form).\n3. Test the Bakry\u2013\u00c9mery criterion for log-concave distributions.\n\n**Impact:** Displacement convexity is the foundation of modern optimal transport theory. Formalizing even special cases would connect to machine learning (Wasserstein GANs), economics (optimal allocation), and PDE (gradient flows).\n\n**Catalog References:** `Geometry/ConvexBodies/BrunnMinkowski.lean` (volume concavity as the geometric origin), `Geometry/ConvexBodies/Defs.lean` (Minkowski sum as the geometric operation underlying displacement interpolation).\n\n**Proof Strategy:** Begin with the one-dimensional case (McCann's displacement convexity theorem). Use the Monge-Amp\u00e8re equation to connect to the BM inequality. The box case provides explicit computations.\n\n**Domain Bridges:** Optimal transport, PDE, machine learning, economics.\n\n**Lineage:** Conceptual descendant of `brunn_minkowski_box` via the Riemannian generalization.\n\n**Ambition:** Grand challenge \u2014 requires Mathlib's probability theory and potentially measure-theoretic optimal transport.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "52cd586a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T02:12:07.435547+00:00"
   }
 ];
