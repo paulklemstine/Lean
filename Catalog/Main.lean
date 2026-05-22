@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1418 of the highest-quality
+A curated collection of 1445 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1418
+Total files: 1445
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1084,6 +1084,7 @@ import FINAL.Physics.V12_VariationalPrinciples
 import FINAL.Physics.VonNeumannEntropy
 import FINAL.Pythagorean.AdvancedFactoringResearch
 import FINAL.Pythagorean.Basic
+import FINAL.Pythagorean.BenfordCriterion
 import FINAL.Pythagorean.BerggrenCA
 import FINAL.Pythagorean.BerggrenCliffordEmbedding
 import FINAL.Pythagorean.BerggrenCompleteness
@@ -1114,23 +1115,39 @@ import FINAL.Pythagorean.BerggrenTeleportation
 import FINAL.Pythagorean.BerggrenTree
 import FINAL.Pythagorean.BerggrenUniformExpansion
 import FINAL.Pythagorean.BerggrenWordCubeSpectral
+import FINAL.Pythagorean.BoundedDivisorSearch
+import FINAL.Pythagorean.BoundedSearch
+import FINAL.Pythagorean.Catoni
+import FINAL.Pythagorean.CayleyTransform
 import FINAL.Pythagorean.Configurations
+import FINAL.Pythagorean.Congruence
 import FINAL.Pythagorean.Core
 import FINAL.Pythagorean.CoreCollapseEntropy
 import FINAL.Pythagorean.CoreFormalization
 import FINAL.Pythagorean.CoreTheorems
+import FINAL.Pythagorean.Cover
+import FINAL.Pythagorean.CramerModel
+import FINAL.Pythagorean.CubeResidues
+import FINAL.Pythagorean.CubeSubgroup
 import FINAL.Pythagorean.CycleWindowUniversality
+import FINAL.Pythagorean.CyclotomicGaloisGroup
 import FINAL.Pythagorean.DeepOpenProblems
 import FINAL.Pythagorean.Defs
+import FINAL.Pythagorean.Density
 import FINAL.Pythagorean.DepthSharpness
+import FINAL.Pythagorean.Derivative
 import FINAL.Pythagorean.DerivativeNormalizer
 import FINAL.Pythagorean.DescentTheory
 import FINAL.Pythagorean.DiffClosure
 import FINAL.Pythagorean.Duality
 import FINAL.Pythagorean.EmergentComputation
+import FINAL.Pythagorean.Equivalences
 import FINAL.Pythagorean.ExplicitMorseTheory
+import FINAL.Pythagorean.ExponentBounds
 import FINAL.Pythagorean.FactoringEnergyLandscape
+import FINAL.Pythagorean.Families
 import FINAL.Pythagorean.FiltrationObstruction
+import FINAL.Pythagorean.FiniteDimensional
 import FINAL.Pythagorean.FiveDirections
 import FINAL.Pythagorean.Foundations
 import FINAL.Pythagorean.GeodesicInvariants
@@ -1138,19 +1155,29 @@ import FINAL.Pythagorean.HardnessLocalization
 import FINAL.Pythagorean.HarmonicMusicTheory
 import FINAL.Pythagorean.HigherDimGhost
 import FINAL.Pythagorean.HigherDimQuadruples
+import FINAL.Pythagorean.Invariance
 import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.LagrangeFourSquare
+import FINAL.Pythagorean.LocalEulerExt
+import FINAL.Pythagorean.LocalGlobal
 import FINAL.Pythagorean.LogSumExp
+import FINAL.Pythagorean.MobiusTransport
 import FINAL.Pythagorean.ModularFormsAdvanced
 import FINAL.Pythagorean.NewResearchTheorems
 import FINAL.Pythagorean.NewTheorems
 import FINAL.Pythagorean.O31_Generators
 import FINAL.Pythagorean.OpenQuestions
+import FINAL.Pythagorean.ParityCensus
 import FINAL.Pythagorean.PhaseAwareLemmaSynthesis
+import FINAL.Pythagorean.PrimeCounting
+import FINAL.Pythagorean.PrimeDivisorCongruence
+import FINAL.Pythagorean.ProdBounds
 import FINAL.Pythagorean.PythagoreanFactoring
 import FINAL.Pythagorean.PythagoreanPairing
 import FINAL.Pythagorean.QuotientClosure
+import FINAL.Pythagorean.Radical
 import FINAL.Pythagorean.RankBoundedEML
+import FINAL.Pythagorean.Reduction
 import FINAL.Pythagorean.SandwichGraph
 import FINAL.Pythagorean.SandwichTheorems
 import FINAL.Pythagorean.Separation
